@@ -20,7 +20,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 throw new ArgumentNullException("Held_Ausrüstung enthält keinen Held oder keine Waffe.");
             _held = ha.Held;
             _waffe = ha.Ausrüstung.Waffe;
-            _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).FirstOrDefault();
+            _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).OrderByDescending(ht => ht.TaW).FirstOrDefault();
         }
 
         public KämpferNahkampfwaffe(Held held, Waffe waffe, Held_Talent ht)
@@ -42,6 +42,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //        return _held;
         //    }
         //}
+
+        public Held_Talent Talent
+        {
+            get
+            {
+                return _talent;
+            }
+        }
 
         public Logic.Distanzklasse Distanzklasse
         {
@@ -262,7 +270,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 throw new ArgumentNullException("Held_Ausrüstung enthält keinen Held oder keine Waffe.");
             _held = ha.Held;
             _waffe = ha.Ausrüstung.Fernkampfwaffe;
-            _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).FirstOrDefault();
+            _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).OrderByDescending(ht => ht.TaW).FirstOrDefault();
         }
 
         public KämpferFernkampfwaffe(Held held, Model.Fernkampfwaffe waffe, Held_Talent ht)
@@ -284,6 +292,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //        return _held;
         //    }
         //}
+
+        public Held_Talent Talent
+        {
+            get
+            {
+                return _talent;
+            }
+        }
 
         public string Reichweiten
         {

@@ -23,7 +23,8 @@
                 <Grid>
                     <Grid Margin="0,0,25,0" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="65" />
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -36,13 +37,31 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding EntityNW.Gewicht}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityNW.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityNW.Name}" TextWrapping="Wrap"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding TP}"  TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="5" Text="{Binding TPKK}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="6" Text="{Binding EntityNW.BF}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="7" Text="{Binding EntityNW.INI}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="8" Text="{Binding WM}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="9" Text="{Binding EntityNW.DK}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ListBox Grid.Column="10" ItemsSource="{Binding KämpferWaffen}" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
+                                                                                  StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                     <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{DynamicResource ReadOnlyButtonStyle}">
                         <Image>
@@ -60,8 +79,8 @@
                 <Grid>
                     <Grid Margin="0,0,25,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="65" />
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -73,15 +92,21 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding Gewicht}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="3" Text="{Binding TP}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Grid.ColumnSpan="2" Text="{Binding EntityFW.Reichweiten}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="6" Grid.ColumnSpan="2" Text="{Binding EntityFW.TPReichweiten}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="8" Text="{Binding EntityFW.Laden}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <ListBox Grid.Column="9" ItemsSource="{Binding Kampftalente}">
+                        <ListBox Grid.Column="9" ItemsSource="{Binding KämpferWaffen}" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Fernkampfwert}" ToolTip="{Binding Talentname}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding FernkampfOhneMod}" Wert="{Binding AT}" />
+                                        </StackPanel>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -102,9 +127,8 @@
                 <Grid>
                     <Grid Margin="0,0,25,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-
+                            <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="65" />
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -114,7 +138,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding EntityS.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityS.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityS.Name}" TextWrapping="Wrap"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding EntityS.Größe}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="5" Text="{Binding WM}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="6" Text="{Binding EntityS.INI}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -136,16 +160,15 @@
                 <Grid>
                     <Grid Margin="0,0,25,0">
                         <Grid.ColumnDefinitions>
-
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="65" />
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding EntityR.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityR.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityR.Name}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="3" Text="{Binding EntityR.RS}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding EntityR.BE}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
@@ -165,13 +188,13 @@
                 <Grid>
                     <Grid Margin="0,0,25,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="65" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding EntityHI.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding EntityI.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityI.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityI.Name}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </Grid>
                     <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveInventar}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         <Image>
@@ -932,6 +955,8 @@
                                             <Border Grid.Row="1" x:Name="NIHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
                                                 <Grid Margin="0,0,25,0" >
                                                     <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="45" />
+                                                        <ColumnDefinition Width="65" />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
@@ -941,10 +966,10 @@
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
-                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="25" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="1" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew." Grid.Column="1" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="2"  />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP" Grid.Column="4" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP/KK" Grid.Column="5" />
@@ -952,6 +977,7 @@
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="INI"  Grid.Column="7" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="WM"  Grid.Column="8" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="DK" Grid.Column="9" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT / PA" Grid.Column="10" />
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="2" x:Name="NIList" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
@@ -977,6 +1003,8 @@
                                             <Border Grid.Row="1" x:Name="FIHead" Visibility="{Binding IsFernkampfwaffevorhanden}" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
                                                 <Grid Margin="0,0,25,0">
                                                     <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="45" />
+                                                        <ColumnDefinition Width="65" />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
@@ -985,11 +1013,10 @@
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="25" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="1" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew." Grid.Column="1" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP" Grid.Column="3" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Reichweiten" Grid.Column="4" Grid.ColumnSpan="2" />
@@ -1025,17 +1052,18 @@
                                             <Border x:Name="SIHead" Grid.Row="1" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
                                                 <Grid Margin="0,0,25,0">
                                                     <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="45" />
+                                                        <ColumnDefinition Width="65" />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="25" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew."  Grid.Column="1" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"  Grid.Column="2" Grid.ColumnSpan="2" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Größe"  Grid.Column="4" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="WM"  Grid.Column="5" />
@@ -1067,14 +1095,15 @@
                                             <Border Grid.Row="1" x:Name="RIHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
                                                 <Grid Margin="0,0,25,0">
                                                     <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="45" />
+                                                        <ColumnDefinition Width="65" />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="25" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew."  Grid.Column="1" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="RS"  Grid.Column="3" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="BE"  Grid.Column="4" />
@@ -1105,12 +1134,13 @@
                                             <Border Grid.Row="1" x:Name="SOHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
                                                 <Grid Margin="0,0,25,0">
                                                     <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="45" />
+                                                        <ColumnDefinition Width="65" />
                                                         <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="25" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew."  Grid.Column="1" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
                                                 </Grid>
                                             </Border>

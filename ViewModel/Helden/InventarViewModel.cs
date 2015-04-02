@@ -1128,6 +1128,25 @@ namespace MeisterGeister.ViewModel.Inventar {
         public string TPKK { get { return tpKK; } set { tpKK = value; OnChanged("TPKK"); } }
         public string WM { get { return wM; } set { wM = value; OnChanged("WM"); } }
 
+        public List<Model.Held_Talent> Kampftalente
+        {
+            get
+            {
+                return EntityHA.Held.Kampftalente.Where(t => EntityNW.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).ToList(); ;
+            }
+        }
+
+        public List<Kampf.Logic.KämpferNahkampfwaffe> KämpferWaffen
+        {
+            get
+            {
+                List<Kampf.Logic.KämpferNahkampfwaffe> waffen = new List<Kampf.Logic.KämpferNahkampfwaffe>();
+                foreach (var talent in Kampftalente)
+                    waffen.Add(new Kampf.Logic.KämpferNahkampfwaffe(EntityHA.Held, EntityNW, talent));
+                return waffen;
+            }
+        }
+
         //Commands
         public Base.CommandBase OnRemoveNahkampfwaffe {
             get { return onRemoveNahkampfwaffe; }
@@ -1317,7 +1336,18 @@ namespace MeisterGeister.ViewModel.Inventar {
         {
             get
             {
-                return EntityHA.Held.Kampftalente.Where(t => EntityFW.Talent.Contains(t.Talent)).ToList(); ;
+                return EntityHA.Held.Kampftalente.Where(t => EntityFW.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).ToList(); ;
+            }
+        }
+
+        public List<Kampf.Logic.KämpferFernkampfwaffe> KämpferWaffen
+        {
+            get
+            {
+                List<Kampf.Logic.KämpferFernkampfwaffe> waffen = new List<Kampf.Logic.KämpferFernkampfwaffe>();
+                foreach (var talent in Kampftalente)
+                    waffen.Add(new Kampf.Logic.KämpferFernkampfwaffe(EntityHA.Held, EntityFW, talent));
+                return waffen;
             }
         }
 
