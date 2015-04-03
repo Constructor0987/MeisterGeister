@@ -22,7 +22,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     {
         #region //---- FELDER ----
 
-        private BitmapImage _listBoxItemIcon;
+        //private BitmapImage _listBoxItemIcon;
         private lbThemeItem _item = null;
         private string _suchtext = string.Empty;
 

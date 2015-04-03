@@ -38,39 +38,12 @@ using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using System.Windows.Interactivity;
 
-//public class MyTimer 
-//{
-//    static int start = 0;
-//    static int stop = 0;
-//    public static void start_timer()
-//    {
-//        start = Environment.TickCount;
-//    }
-
-//    public static void stop_timer()
-//    {
-//        stop_timer("");
-//    }
-
-//    public static void stop_timer(string msg)
-//    {
-//        stop = Environment.TickCount;
-//        print(msg);
-//    }
-
-//    private static void print(string msg)
-//    {
-//        string output = "MyTimer(" + msg + "): " + (stop - start) + " Millisekunden";
-//        System.Diagnostics.Debug.WriteLine(output);        
-//    }
-//}
-
 namespace MeisterGeister.View.AudioPlayer {
 	/// <summary>
 	/// Interaktionslogik für AudioPlayerView.xaml
 	/// </summary>
 	/// 
-
+     
 
     public class MouseWheelGesture : MouseGesture
     {
@@ -255,6 +228,105 @@ namespace MeisterGeister.View.AudioPlayer {
             set { DataContext = value; }
         }
 
+
+
+        private void AudioZeile_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                VM.pointerZeileDragDrop = e.GetPosition(null);
+        }
+
+        //private void lbiPlaylist_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (VM.rbEditorEditPlaylist) return;
+
+        //        if (e.Effects == DragDropEffects.Copy || e.Effects == DragDropEffects.Move)
+        //        {
+        //            if (VM._dndZeilenCursor == null && (VM.pointerZeileDragDrop != null || VM.DnDZielObject != null))
+        //            {
+                        
+        //                VM._dndZeilenCursor = CreateCursor(e.Source as UIElement, false);
+        //            }
+
+        //            if (VM._dndZeilenCursor != null)
+        //                e.UseDefaultCursors = false;
+        //        }
+        //        else
+        //            e.UseDefaultCursors = true;
+
+        //        e.Handled = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewHelper.ShowError("Feedback Fehler" + Environment.NewLine + "Beim Starten des Drag'n'Drop-Vorgangs ist ein Fehler aufgetreten.", ex);
+        //        e.UseDefaultCursors = true;
+        //    }
+        //}       
+
+        private void AudioZeile_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            try
+            {
+                if (!VM.rbEditorEditPlaylist) return;
+
+                if (e.Effects == DragDropEffects.Copy || e.Effects == DragDropEffects.Move)
+                {
+                    if (VM._dndZeilenCursor == null && (VM.pointerZeileDragDrop != null || VM.DnDZielObject != null))
+                    {
+                        VM._dndZeilenCursor = CreateCursor(((AudioZeile)(e.Source)).grdDnD as UIElement, false);
+                        VM._dndZeilenCursorPlus = CreateCursor(((AudioZeile)(e.Source)).grdDnD as UIElement, true);
+                    }
+
+                    if (VM._dndZeilenCursor != null)
+                    {
+                        e.UseDefaultCursors = false;
+                        if (Keyboard.Modifiers == ModifierKeys.Control)
+                            Mouse.SetCursor(VM._dndZeilenCursorPlus);
+                        else
+                            Mouse.SetCursor(VM._dndZeilenCursor);
+                    }
+                }
+                else
+                    e.UseDefaultCursors = true;
+
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                ViewHelper.ShowError("Feedback Fehler" + Environment.NewLine + "Beim Starten des Drag'n'Drop-Vorgangs ist ein Fehler aufgetreten.", ex);
+                e.UseDefaultCursors = true;
+            }
+        }
+
+
+        private void AudioZeile_MouseMove(object sender, MouseEventArgs e)
+        {
+            AudioZeile aZeile = sender as AudioZeile;
+            VM.audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(aZeile.VM);
+            if (VM.pointerZeileDragDrop == null)
+                return;
+
+            Point mousePos = e.GetPosition(null);
+            Vector diff = ((Point)VM.pointerZeileDragDrop) - mousePos;
+
+            Point mp = Mouse.GetPosition(aZeile);
+            VM.audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(aZeile.VM);
+            //Abfrage bei gedrückter Maustaste, wenn im Vorderen Bereich und nicht auf der ProgressBar (um Teilabspielen zu editieren)
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (mp.X < +aZeile.pbarTitel.ActualWidth) && mp.X > 0 && //35 + 10
+                ((mp.Y > 0 && mp.Y < aZeile.lbiEditorRow.ActualHeight / 2 - aZeile.pbarTitel.ActualHeight / 2) ||
+                 (mp.Y > aZeile.lbiEditorRow.ActualHeight / 2 + aZeile.pbarTitel.ActualHeight / 2)))
+            {
+                // Initialisiere drag & drop Operation
+                DataObject dragData = new DataObject("meineAudioZeile", aZeile);
+                DragDrop.DoDragDrop(aZeile, dragData, DragDropEffects.Copy);
+                VM.pointerZeileDragDrop = null;
+            }
+        }
+                
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (VM != null)
@@ -362,6 +434,7 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {
+                
                 MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);// .tbtnKlangPause == ((ToggleButton)sender));
                 if (grpobj == null)
                     return;
@@ -376,7 +449,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
                     if (grpobj._listZeile[i].istLaufend && grpobj._listZeile[i].aPlaylistTitel.Aktiv)
                     {
-                        if (grpobj.istMusik)
+                        if (grpobj.aPlaylist.Hintergrundmusik)// .istMusik)
                         {
                             grpobj._listZeile[i].FadingOutStarted = false;
                             VM.FadingIn(grpobj._listZeile[i], grpobj._listZeile[i]._mplayer, grpobj._listZeile[i].Aktuell_Volume / 100);
@@ -392,7 +465,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 }
                 VM.CheckPlayStandbySongs(grpobj);
 
-                if (!grpobj.istMusik && grpobj.aPlaylist.Fading)
+                if (!grpobj.aPlaylist.Hintergrundmusik && grpobj.aPlaylist.Fading)
                     VM.FadingInGeräusch(grpobj);
 
                 if (grpobj.visuell)
@@ -423,12 +496,12 @@ namespace MeisterGeister.View.AudioPlayer {
                     grpobj.sollBtnGedrueckt--;
                 grpobj.wirdAbgespielt = false;
 
-                if (!grpobj.istMusik && grpobj.aPlaylist.Fading)// && !_timerFadingOutGeräusche.IsEnabled)
+                if (!grpobj.aPlaylist.Hintergrundmusik && grpobj.aPlaylist.Fading)// && !_timerFadingOutGeräusche.IsEnabled)
                     VM.FadingOutGeräusch(true, true, grpobj);
 
                 for (int i = 0; i < grpobj._listZeile.Count; i++)
                 {
-                    if (!grpobj.istMusik)
+                    if (!grpobj.aPlaylist.Hintergrundmusik)
                     {
                         if (grpobj._listZeile[i]._mplayer != null && !grpobj.aPlaylist.Fading)
                         {
@@ -486,26 +559,13 @@ namespace MeisterGeister.View.AudioPlayer {
             grdEditorThemeWPnlUTheme.Children.Remove((ComboBox)sender);
         }
 
-        private void sortPlaylist(Audio_Playlist aPlaylist, int abPos)
-        {
-            int reihe = abPos;
-            foreach (Audio_Playlist_Titel playlisttitel in aPlaylist.Audio_Playlist_Titel.Where(t => t.Reihenfolge >= abPos).OrderBy(t => t.Reihenfolge))
-            {
-                if (playlisttitel.Reihenfolge != reihe)
-                {
-                    playlisttitel.Reihenfolge = reihe;
-                    Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel);
-                }
-                reihe++;
-            }
-        }
         
         private void lbEditor_Drop(object sender, DragEventArgs e)
         {
             if (VM.audioZeileMouseOverDropped == -1)
                 return;
             if (e.Data.GetDataPresent("meineAudioZeile"))
-                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, AktKlangPlaylist, e, sender);
+                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, null, AktKlangPlaylist, e, sender);
             else
             {
                 try
@@ -514,7 +574,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     if (e.Data.GetDataPresent(DataFormats.FileDrop))
                     {
                         List<string> gedroppteDateien = new List<string>((string[])e.Data.GetData(DataFormats.FileDrop, false));
-                        VM._DateienAufnehmen(gedroppteDateien, null, AktKlangPlaylist, 0, false);
+                        VM._DateienAufnehmen(gedroppteDateien, null,  null, AktKlangPlaylist, 0, false);
                     }
                     Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
                     //Audio_Playlist aPlaylist = AktKlangPlaylist;
@@ -563,7 +623,7 @@ namespace MeisterGeister.View.AudioPlayer {
             if (e.Data.GetDataPresent("meinListBoxItemIcon"))
             {
                 VM.ThemeItemIconAblegen(e.Data.GetData("meinListBoxItemIcon") as Audio_Playlist);
-                _dndZeilenCursor = null;
+                VM._dndZeilenCursor = null;
             }
         }
 
@@ -572,15 +632,15 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             if (e.Data.GetDataPresent("meineAudioZeile"))
             {
-                Audio_Playlist aplaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == (Guid)((ListboxItemIcon)sender).Tag);
-                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, aplaylist, e, sender);
+                Audio_Playlist aplaylist =(Audio_Playlist)((StackPanel)sender).Tag;
+                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, null, aplaylist, e, sender);
             }
             else
                 if (e.Data.GetDataPresent("meinListBoxItemIcon"))
-                    _dndZeilenCursor = null;
+                    VM._dndZeilenCursor = null;
         }
 
-        private void AudioZeileItemAblegen(AudioZeile aZeile, Audio_Playlist aPlaylist, DragEventArgs e, object sender)
+        private void AudioZeileItemAblegen(AudioZeile aZeile, AudioZeileViewModel aZeileVM, Audio_Playlist aPlaylist, DragEventArgs e, object sender)
         {
             try
             {
@@ -588,13 +648,21 @@ namespace MeisterGeister.View.AudioPlayer {
                 bool kopieren = Keyboard.Modifiers == ModifierKeys.Control? true: false;
 
                 List<string> gedroppteDateien = new List<string>();
-                gedroppteDateien.Add((string)aZeile.chkTitel.Tag);
+                if (aZeile != null)
+                    gedroppteDateien.Add(aZeile.VM.aPlayTitel.Audio_Titel.Pfad + '\\' + aZeile.VM.aPlayTitel.Audio_Titel.Datei); 
+                else
+                    gedroppteDateien.Add(aZeileVM.aPlayTitel.Audio_Titel.Pfad + '\\' + aZeileVM.aPlayTitel.Audio_Titel.Datei); 
+                    //(string)aZeile.chkTitel.Tag);
 
-                VM._DateienAufnehmen(gedroppteDateien, aZeile, aPlaylist, VM.audioZeileMouseOverDropped - 1, true);
+                VM._DateienAufnehmen(gedroppteDateien, aZeile, aZeileVM, aPlaylist, VM.audioZeileMouseOverDropped - 1, true);
                 
                 if (aPlaylist == AktKlangPlaylist && Keyboard.Modifiers != ModifierKeys.Control) // Verschieben in akt. Playliste
                 {
-                    Audio_Playlist_Titel aplytitel1 = aPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)aZeile.Tag);// Global.ContextAudio.PlaylistTitelListe
+                    Audio_Playlist_Titel aplytitel1 =
+                        aZeile != null ? (Audio_Playlist_Titel)aZeile.Tag : //aPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)aZeile.Tag) :
+                        aZeileVM.aPlayTitel;
+                        //aPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Audio_TitelGUID == aZeileVM.aPlayTitel.Audio_TitelGUID);
+                        // (Guid)aZeile.Tag);
                     int oldReihenfolge = aplytitel1.Reihenfolge;
                     Audio_Playlist_Titel aplytitel2 = aPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Reihenfolge == VM.audioZeileMouseOverDropped);// Global.ContextAudio.PlaylistTitelListe
                     
@@ -603,7 +671,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     else
                         aplytitel1.Reihenfolge = aplytitel2.Reihenfolge != aplytitel1.Reihenfolge ? aplytitel2.Reihenfolge : aplytitel2.Reihenfolge;
 
-                    sortPlaylist(aPlaylist, oldReihenfolge < aplytitel1.Reihenfolge ? oldReihenfolge : aplytitel1.Reihenfolge);
+                    VM.sortPlaylist(aPlaylist, oldReihenfolge < aplytitel1.Reihenfolge ? oldReihenfolge : aplytitel1.Reihenfolge);
 
                     lbEditorListe.SelectedIndex = lbEditorListe.Items.Count - 1;
                     lbEditorListe.Items.MoveCurrentToPosition(VM.audioZeileMouseOverDropped);
@@ -611,12 +679,18 @@ namespace MeisterGeister.View.AudioPlayer {
                
                 if (aPlaylist != AktKlangPlaylist && !kopieren)             //Verschieben = Löschen in akt. Playliste
                 {
-                    Audio_Titel aTitel = Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)aZeile.Tag);
+                    Audio_Titel aTitel =
+                        aZeile != null?  Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID  == (Guid)aZeile.Tag):
+                        Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == aZeileVM.aPlayTitel.Audio_TitelGUID);
+                        // (Guid)aZeile.Tag);
                     Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, aTitel);
-                    lbEditorListe.Items.Remove(aZeile);
+
+                    if (aZeileVM != null) VM.LbEditorAudioZeilenListe.Remove(aZeileVM);
+                    VM.LbEditorAudioZeilenListe = VM.LbEditorAudioZeilenListe;
+                    VM.FilterEditorPlaylistTitelListe();
                 }
                 VM.audioZeileMouseOverDropped = 0;
-                _dndZeilenCursor = null;
+                VM._dndZeilenCursor = null;
                 Mouse.OverrideCursor = null;
             }
             catch (Exception ex)
@@ -695,11 +769,9 @@ namespace MeisterGeister.View.AudioPlayer {
             using (var ms = new MemoryStream())
             {
                 encoder.Save(ms);
-
                 using (var bmp = new System.Drawing.Bitmap(ms))
                 {
                     string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
                     if (!andPlus)
                     {
                         BitmapImage bmpi1 = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/mouse_cursornormal.png"));
@@ -743,46 +815,14 @@ namespace MeisterGeister.View.AudioPlayer {
         private void lbiEditorPlaylist_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (VM.rbEditorEditPlaylist) return;
-            if (e.LeftButton == MouseButtonState.Pressed && !(lbEditor.Tag is ListboxItemIcon))
-                lbEditor.Tag = e.GetPosition(null);
-        }
-
-        private void audiozeile_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (VM.rbEditorEditPlaylist) return;
-            if (e.LeftButton == MouseButtonState.Pressed)
-                VM.pointerZeileDragDrop = e.GetPosition(null);
-        }
-
-        private Cursor _dndZeilenCursor = null;
-        private Cursor _dndZeilenCursorPlus = null;
-
-
-        private void lbiEditorPlaylist_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (VM.rbEditorEditPlaylist) return;
-            if (lbEditor.Tag == null || 
-                lbEditor.Tag is ListboxItemIcon ||
-                ((sender) as StackPanel).Tag == null)
-                return;
-
-            Point mousePos = e.GetPosition(null);
-            //Vector diff = (lbEditor.Tag is Point ? (Point)lbEditor.Tag : (Point){0;0}) - mousePos;
-
-            if (e.LeftButton == MouseButtonState.Pressed)// &&
-            //(Mouse.GetPosition((AudioZeile)sender).X > 35 + 10 + ((AudioZeile)sender)._audioZeile.pbarTitel.ActualWidth))
+            if (e.LeftButton == MouseButtonState.Pressed)// && !(lbEditor.Tag is ListboxItemIcon))
             {
-
-                Audio_Playlist aPlaylist = Global.ContextAudio.PlaylistListe.
-                    FirstOrDefault(t => t.Audio_PlaylistGUID == (Guid)((sender) as StackPanel).Tag);
-//                VM.EditorListBoxItemListe[0].
-                // Initialisiere drag & drop Operation
-                DataObject dragData = new DataObject("meinListBoxItemIcon", aPlaylist);// lbi);// ListboxItemIcon);
-                lbEditor.Tag = aPlaylist;
-                DragDrop.DoDragDrop(sender as StackPanel, dragData, DragDropEffects.All); //ListboxItemIcon
-                lbEditor.Tag = null;
+               // lbEditor.Tag = e.GetPosition(null);
+                VM.DnDZielObject = e.GetPosition(null);
             }
         }
+
+
 
 
         private void lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -836,8 +876,85 @@ namespace MeisterGeister.View.AudioPlayer {
             ((ToolTip)(sender as Slider).ToolTip).IsOpen = false;
         }
 
+
+
+        //private void lbMusiktitellist_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (e != null && e.Source != null && e.Source is TabItem
+        //            && Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
+        //        {
+        //            TabItem item = (TabItem)(e.Source);
+        //            DragDrop.DoDragDrop(item, item, DragDropEffects.All);
+        //            VM.DnDZielObject = null;
+        //           // lbEditor.Tag = null;
+        //        }
+        //    }
+        //    catch (Exception) { }
+        //}
+
+        private void grdEditorX_DragEnter(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                    e.Effects = DragDropEffects.Copy;
+                else
+                    e.Effects = DragDropEffects.None;
+            }
+            catch (Exception ex)
+            {
+                ViewHelper.ShowError("Allgemeiner Fehler" + Environment.NewLine + "Beim Drag-Mode über den Editor ist ein Fehler aufgetreten.", ex);
+            }
+        }
+
+
+
+        private void lbiEditorPlaylist_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (VM == null || VM.rbEditorEditPlaylist) return;
+            if (VM.DnDZielObject == null || //lbEditor.Tag 
+                VM.DnDZielObject is AudioZeile ||
+                ((sender) as StackPanel).Tag == null)
+                return;
+
+            Point mousePos = e.GetPosition(null);
+            //Vector diff = (lbEditor.Tag is Point ? (Point)lbEditor.Tag : (Point){0;0}) - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed)// &&
+            //(Mouse.GetPosition((AudioZeile)sender).X > 35 + 10 + ((AudioZeile)sender)._audioZeile.pbarTitel.ActualWidth))
+            {
+
+                Audio_Playlist aPlaylist = (Audio_Playlist)((sender) as StackPanel).Tag;
+                   // Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == (Guid)((sender) as StackPanel).Tag);
+                //                VM.EditorListBoxItemListe[0].
+                // Initialisiere drag & drop Operation
+                DataObject dragData = new DataObject("meinListBoxItemIcon", aPlaylist);// lbi);// ListboxItemIcon);
+                VM.DnDZielObject = aPlaylist;
+                DragDrop.DoDragDrop(sender as StackPanel, dragData, DragDropEffects.All); //ListboxItemIcon
+                VM.DnDZielObject = null;
+            }
+        }
+
+        private void sldPlaylistWartezeit_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double aktWert = ((Slider)sender).Value;
+            if (e.Delta < 0)
+            {
+                if (aktWert != ((Slider)sender).Minimum)
+                    ((Slider)sender).Value = ((Slider)sender).Ticks[((Slider)sender).Ticks.IndexOf(aktWert) - 1];
+            }
+            else
+            {
+                if (aktWert != ((Slider)sender).Maximum)
+                    ((Slider)sender).Value = ((Slider)sender).Ticks[((Slider)sender).Ticks.IndexOf(aktWert) + 1];
+            }
+        }
     }
 }
+
+
         //private double GetMusikdateiLength(string musikdatei)
         //{
         //    double max = -2;
@@ -917,21 +1034,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
         //    Global.ContextAudio.Update<Audio_Playlist_Titel>(kZeile.aPlaylistTitel);
         //}
-
-        //private void grdEditorX_DragEnter(object sender, DragEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        //            e.Effects = DragDropEffects.Copy;
-        //        else
-        //            e.Effects = DragDropEffects.None;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewHelper.ShowError("Allgemeiner Fehler" + Environment.NewLine + "Beim Drag-Mode über den Editor ist ein Fehler aufgetreten.", ex);
-        //    }
-        //}
+        
 
         //private Audio_Playlist UpdatePlaylist(Audio_Playlist AktPlaylist, string NeuerPlaylistName)
         //{
@@ -1052,20 +1155,7 @@ namespace MeisterGeister.View.AudioPlayer {
         //        ViewHelper.ShowError("Eingabefehler" + Environment.NewLine + "Das Auswählen des Standard-Verzeichnisses hat eine Exeption ausgelöst.", ex);
         //    }
         //}
-        //private void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (e != null && e.Source != null && e.Source is TabItem
-        //            && Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
-        //        {
-        //            TabItem item = (TabItem)(e.Source);
-        //            DragDrop.DoDragDrop(item, item, DragDropEffects.All);
-        //            lbEditor.Tag = null;
-        //        }
-        //    }
-        //    catch (Exception) { }
-        //}
+        
         //private void wartezeitTimer_Tick(object sender, EventArgs e)
         //{
         //    MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = (MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt)((DispatcherTimer)sender).Tag;
@@ -1115,72 +1205,12 @@ namespace MeisterGeister.View.AudioPlayer {
         //    }
         //}
 
-        //private void audiozeile_GiveFeedback(object sender, GiveFeedbackEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (!VM.rbEditorEditPlaylist) return;
-
-        //        if (e.Effects == DragDropEffects.Copy || e.Effects == DragDropEffects.Move)
-        //        {
-        //            if (_dndZeilenCursor == null && (VM.pointerZeileDragDrop != null || lbEditor.Tag != null))
-        //            {
-        //                _dndZeilenCursor = AudioPlayerView.CreateCursor(e.Source as UIElement, false);
-        //                _dndZeilenCursorPlus = AudioPlayerView.CreateCursor(e.Source as UIElement, true);
-        //            }
-
-        //            if (_dndZeilenCursor != null)
-        //            {
-        //                e.UseDefaultCursors = false;
-        //                if (Keyboard.Modifiers == ModifierKeys.Control)
-        //                    Mouse.SetCursor(_dndZeilenCursorPlus);
-        //                else
-        //                    Mouse.SetCursor(_dndZeilenCursor);
-        //            }
-        //        }
-        //        else
-        //            e.UseDefaultCursors = true;
-
-        //        e.Handled = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewHelper.ShowError("Feedback Fehler" + Environment.NewLine + "Beim Starten des Drag'n'Drop-Vorgangs ist ein Fehler aufgetreten.", ex);
-        //        e.UseDefaultCursors = true;
-        //    }
-        //}
-
         //private void tcAudioPlayer_SizeChanged(object sender, RoutedEventArgs e)
         //{
         //    if (IsInitialized)
         //        exErwPlayerTheme.MaxHeight = tcAudioPlayer.ActualHeight * 2 / 3;
         //}
 
-
-        //private void audiozeileLbi_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    AudioZeile aZeile = ((sender as ListBoxItem).Parent as Grid).Parent as AudioZeile;
-        //    VM.audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(aZeile);
-        //    if (VM.pointerZeileDragDrop == null)
-        //        return;
-
-        //    Point mousePos = e.GetPosition(null);
-        //    Vector diff = ((Point)VM.pointerZeileDragDrop) - mousePos;
-
-        //    Point mp = Mouse.GetPosition(aZeile);
-        //    VM.audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(aZeile);
-        //    //Abfrage bei gedrückter Maustaste, wenn im Vorderen Bereich und nicht auf der ProgressBar (um Teilabspielen zu editieren)
-        //    if (e.LeftButton == MouseButtonState.Pressed &&
-        //        (mp.X < 35 + 10 + aZeile.pbarTitel.ActualWidth) && mp.X > 0 &&
-        //        ((mp.Y > 0 && mp.Y < aZeile.lbiEditorRow.ActualHeight / 2 - aZeile.pbarTitel.ActualHeight / 2) ||
-        //         (mp.Y > aZeile.lbiEditorRow.ActualHeight / 2 + aZeile.pbarTitel.ActualHeight / 2)))
-        //    {
-        //        // Initialisiere drag & drop Operation
-        //        DataObject dragData = new DataObject("meineAudioZeile", aZeile);
-        //        DragDrop.DoDragDrop(aZeile, dragData, DragDropEffects.Copy);
-        //        VM.pointerZeileDragDrop = null;
-        //    }
-        //}
 
         
         //private void imgStdIconDelete_MouseUp(object sender, MouseButtonEventArgs e)

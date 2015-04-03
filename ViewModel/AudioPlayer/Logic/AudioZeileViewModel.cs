@@ -23,6 +23,7 @@ using MeisterGeister.View.AudioPlayer;
 using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.AudioPlayer;
 using System.Windows.Input;
+using System.IO;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -39,8 +40,154 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         #endregion
 
+        public DoubleCollection SliderTicks
+        {
+            get
+            {
+                return new DoubleCollection 
+                    {0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000, 5000, 7500, 8000, 9000, 10000, 15000, 
+                     20000, 25000, 30000, 40000, 50000, 60000, 90000, 120000, 180000, 240000, 300000, 450000, 600000, 900000}; 
+            }            
+        }
+
+        private void audiozeileLbi_MouseMove(object sender, MouseEventArgs e)
+        {
+            AudioZeile aZeile = ((sender as ListBoxItem).Parent as Grid).Parent as AudioZeile;
+            PlayerVM.audioZeileMouseOverDropped =  PlayerVM.LbEditorAudioZeilenListe.IndexOf(this);//aZeile);
+            if (PlayerVM.pointerZeileDragDrop == null)
+                return;
+
+            Point mousePos = e.GetPosition(null);
+            Vector diff = ((Point)PlayerVM.pointerZeileDragDrop) - mousePos;
+
+            Point mp = Mouse.GetPosition(aZeile);
+            PlayerVM.audioZeileMouseOverDropped = PlayerVM.LbEditorAudioZeilenListe.IndexOf(this);//aZeile);
+            //Abfrage bei gedrückter Maustaste, wenn im Vorderen Bereich und nicht auf der ProgressBar (um Teilabspielen zu editieren)
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (mp.X < 35 + 10 + aZeile.pbarTitel.ActualWidth) && mp.X > 0 &&
+                ((mp.Y > 0 && mp.Y < aZeile.lbiEditorRow.ActualHeight / 2 - aZeile.pbarTitel.ActualHeight / 2) ||
+                 (mp.Y > aZeile.lbiEditorRow.ActualHeight / 2 + aZeile.pbarTitel.ActualHeight / 2)))
+            {
+                // Initialisiere drag & drop Operation
+                DataObject dragData = new DataObject("meineAudioZeile", aZeile);
+                DragDrop.DoDragDrop(aZeile, dragData, DragDropEffects.Copy);
+                PlayerVM.pointerZeileDragDrop = null;
+            }
+        }
+
+
 
         #region //---- EIGENSCHAFTEN ----
+
+        [DependentProperty("PlayerVM"), DependentProperty("Reihenfolge"), DependentProperty("AktPlaylistTitel")]
+        public bool IstErsteZeile
+        {
+            get { return aPlayTitel.Reihenfolge == 0; }
+            set { OnChanged(); }
+        }
+
+        [DependentProperty("PlayerVM"), DependentProperty("Reihenfolge")]
+        public bool IstLetzteZeile
+        {
+            get { return PlayerVM == null? false: (PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count == aPlayTitel.Reihenfolge + 1); }
+            set { OnChanged(); }
+        }
+
+
+        public bool aPlayTitelVolumeChange
+        {
+            get { return _aPlayTitel.VolumeChange; }
+            set { OnChanged(); }            
+        }
+
+        private Base.CommandBase _onVolumeChange = null;
+        public Base.CommandBase OnVolumeChange
+        {
+            get
+            {
+                if (_onVolumeChange == null)
+                    _onVolumeChange = new Base.CommandBase(VolumeChange, null);
+                return _onVolumeChange;
+            }
+        }
+        void VolumeChange(object obj)
+        {
+            aPlayTitel.VolumeChange = !aPlayTitel.VolumeChange;
+            PlayerVM.IsVolumeChangeChecked = !(PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.VolumeChange) != PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.Aktiv));
+            OnChanged("aPlayTitelVolumeChange");
+        }
+
+        public bool aPlayTitelPauseChange
+        {
+            get { return aPlayTitel.PauseChange; }
+            set { OnChanged(); }
+        }
+
+        private Base.CommandBase _onPauseChange = null;
+        public Base.CommandBase OnPauseChange
+        {
+            get
+            {
+                if (_onPauseChange == null)
+                    _onPauseChange = new Base.CommandBase(PauseChange, null);
+                return _onPauseChange;
+            }
+        }
+        void PauseChange(object obj)
+        {
+            aPlayTitel.PauseChange = !aPlayTitel.PauseChange;
+            PlayerVM.IsPausenZeitChangeChecked = !(PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.PauseChange) != PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.Aktiv));
+            OnChanged("aPlayTitelPauseChange");
+        }
+
+
+        public int PauseMinIncValue
+        {
+            get
+            {
+                return (aPlayTitel.PauseMin >= 10000) ? 5000 :
+                         (aPlayTitel.PauseMin >= 2000) ? 1000 : 200;
+            }
+        }
+
+        public int PauseMaxIncValue
+        {
+            get
+            {
+                return (aPlayTitel.PauseMax >= 10000) ? 5000 :
+                         (aPlayTitel.PauseMax >= 2000) ? 1000 : 200;
+            }
+        }
+
+        private int _aPlayTitelPauseMin = 100;
+        public int aPlayTitelPauseMin
+        {
+            get { return _aPlayTitelPauseMin; }
+            set
+            {
+                _aPlayTitelPauseMin = value;
+                aPlayTitel.PauseMin = value;
+                if (aPlayTitelPauseMax < value)
+                    aPlayTitelPauseMax = value;
+                OnChanged();
+                OnChanged("PauseMinIncValue");
+            }
+        }
+
+        private int _aPlayTitelPauseMax = 100;
+        public int aPlayTitelPauseMax
+        {
+            get { return _aPlayTitelPauseMax; }
+            set
+            {
+                _aPlayTitelPauseMax = value;
+                aPlayTitel.PauseMax = value;
+                if (aPlayTitelPauseMin > value)
+                    aPlayTitelPauseMin = value;
+                OnChanged();
+                OnChanged("PauseMaxIncValue");
+            }
+        }
 
         private bool _fileNotExist = false;
         public bool FileNotExist
@@ -64,17 +211,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        //private SliderVM _sliderVM = new SliderVM();
-        //public SliderVM sliderVM
-        //{
-        //    get { return _sliderVM; }
-        //    set
-        //    {
-        //        _sliderVM = value;
-        //        OnChanged();
-        //    }
-        //}
-
         private AudioZeileViewModel _aZeile = null;
         public AudioZeileViewModel AZeile
         {
@@ -88,6 +224,18 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
+        public long aPlayTitelPause
+        {
+            get { return aPlayTitel.Pause; }
+            set
+            {
+                aPlayTitel.Pause = value;
+                OnChanged();
+                OnChanged("ZeigeAPlayTitelPause");
+            }
+        }
+                      
+
         private Audio_Playlist _aktKlangPlaylist = null;
         public Audio_Playlist AktKlangPlaylist
         {
@@ -98,24 +246,22 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged();
             }
         }
-
-        private List<string> _displayPath;
-        private List<string> DisplayPath
+                      
+        
+        public ObservableCollection<MenuItem> DisplayPath
         {
-            get { return _displayPath; }
-            set
-            {
-                List<string> mItemListe = new List<string>();
+            get {           
+                ObservableCollection<MenuItem> mItemListe = new ObservableCollection<MenuItem>();
                 foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe.OrderBy(t => t.Name))
                 {
                     MenuItem mitem = new MenuItem();
                     mitem.Header = aPlaylist.Name;
-                    mitem.Tag = aPlaylist.Audio_PlaylistGUID;
-
-                    mItemListe.Add(aPlaylist.Name);
+                    mitem.Tag = aPlaylist;
+                    mItemListe.Add(mitem);
                 }
-                _displayPath = mItemListe;
+                return mItemListe;
             }
+            set { OnChanged(); }
         }
         
         public string ZeigeAPlayTitelPause
@@ -186,7 +332,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         [DependentProperty("aPlayTitel")]
         public double aPlayTitelLänge
         {
-            get { return ((_aPlayTitel.Audio_Titel.Länge != null && _aPlayTitel.Audio_Titel.Länge.Value != 0) ? 
+            get
+            {
+                return (_aPlayTitel.Audio_Titel != null && (_aPlayTitel.Audio_Titel.Länge != null && _aPlayTitel.Audio_Titel.Länge.Value != 0) ? 
                 _aPlayTitel.Audio_Titel.Länge.Value : 100000); }
             set { OnChanged(); }
         }
@@ -232,8 +380,121 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
         }
 
+        #endregion
 
-        //Commands  
+        #region //---- Commands ----
+
+        private Base.CommandBase _onKopierenZuPlaylist;
+        public Base.CommandBase OnKopierenZuPlaylist
+        {
+            get
+            {
+                if (_onKopierenZuPlaylist == null)
+                    _onKopierenZuPlaylist = new Base.CommandBase(KopierenZuPlaylist, null);
+                return _onKopierenZuPlaylist;
+            }
+        }
+        void KopierenZuPlaylist(object obj)
+        {
+            Audio_Playlist zielPlaylist = (((MenuItem)obj).Tag) as Audio_Playlist;
+            if (zielPlaylist != null)
+            {
+                List<string> gedroppteDateien = new List<string>();
+                gedroppteDateien.Add(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei);
+
+                PlayerVM._DateienAufnehmen(gedroppteDateien, null, this, zielPlaylist, 0, false);
+                Global.ContextAudio.Update<Audio_Playlist>(zielPlaylist);
+            }
+            else
+            {
+                ViewHelper.Popup("Die Playliste konnte nicht gefunden werden." + Environment.NewLine + Environment.NewLine + "Vorgang abgebrochen");
+            }
+        }
+
+        private Base.CommandBase _onDateiPfadÄndern;
+        public Base.CommandBase OnDateiPfadÄndern
+        {
+            get
+            {
+                if (_onDateiPfadÄndern == null)
+                    _onDateiPfadÄndern = new Base.CommandBase(DateiPfadÄndern, null);
+                return _onDateiPfadÄndern;
+            }
+        }
+        void DateiPfadÄndern(object obj)
+        {
+            // Datei-Bezug ändern 
+            Audio_Titel aTitel = PlayerVM.setTitelStdPfad(aPlayTitel.Audio_Titel);
+
+            FileInfo fi = new FileInfo(aTitel.Pfad + @"\" + aTitel.Datei);
+            string aktDir = Environment.CurrentDirectory;
+            Environment.CurrentDirectory = fi.DirectoryName;
+            string datei = ViewHelper.ChooseFile("Datei auswählen", fi.Name, false, PlayerVM.validExt);
+            Environment.CurrentDirectory = aktDir;
+
+            if (datei != null)
+            {
+                aTitel.Pfad = System.IO.Path.GetDirectoryName(datei);
+                aTitel.Datei = System.IO.Path.GetFileName(datei);
+
+                string s = System.IO.Path.GetFileNameWithoutExtension(datei);
+                aTitel.Name = s.Length > 100 ? s.Substring(0, 99) : s;
+                aPlayTitel.Audio_Titel = PlayerVM.setTitelStdPfad(aTitel);
+                Global.ContextAudio.Update<Audio_Titel>(aPlayTitel.Audio_Titel);
+            }
+        }
+
+
+        private Base.CommandBase _onDateiPfadÖffnen;
+        public Base.CommandBase  OnDateiPfadÖffnen
+        {
+            get
+            {
+                if (_onDateiPfadÖffnen == null)
+                    _onDateiPfadÖffnen = new Base.CommandBase(DateiPfadÖffnen, null);
+                return _onDateiPfadÖffnen;
+            }
+        }
+        void DateiPfadÖffnen(object obj)
+        {
+            if (Directory.Exists(aPlayTitel.Audio_Titel.Pfad) &&
+                                        File.Exists(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei))
+            {
+                FileInfo fi2 = new FileInfo(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei);
+                System.Diagnostics.Process.Start("explorer.exe", "/e,/select," + fi2.DirectoryName + "\\" + @"""" + fi2.Name + @"""");
+            }
+            else
+                ViewHelper.Popup("Die Datei bzw. das Verzeichnis konnte nicht gefunden werden");
+        }
+
+        private Base.CommandBase _onTitelDuplizieren;
+        public Base.CommandBase  OnTitelDuplizieren
+        {
+            get
+            {
+                if (_onTitelDuplizieren == null)
+                    _onTitelDuplizieren = new Base.CommandBase(TitelDuplizieren, null);
+                return _onTitelDuplizieren;
+            }
+        }
+        void TitelDuplizieren(object obj)
+        {
+            try
+            {
+                List<string> gedroppteDateien = new List<string>();
+                gedroppteDateien.Add(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei);
+
+                UpdateReihenfolge();
+
+                PlayerVM._DateienAufnehmen(gedroppteDateien, null, this, _aPlayTitel.Audio_Playlist, this.aPlayTitel.Reihenfolge, false);
+                Global.ContextAudio.Update<Audio_Playlist>(_aPlayTitel.Audio_Playlist);
+            }
+            catch (Exception ex)
+            {
+                ViewHelper.ShowError("Fehler" + Environment.NewLine + "Beim Ausführen der Duplizierung in eine andere Playliste ist ein Fehler aufgetreten", ex);
+            }
+        }
+
 
         private Base.CommandBase _onMouseUpCommand;
         public Base.CommandBase  OnMouseUpCommand
@@ -302,12 +563,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
 
-        private Base.CommandBase _onAudioZeileAdd;
-        public Base.CommandBase OnAudioZeileAdd
-        {
-            get { return _onAudioZeileAdd; }
-        }
-
         private Base.CommandBase _onBtnGewichtung;
         public Base.CommandBase OnBtnGewichtung
         {
@@ -356,6 +611,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             try
             {
+                UpdateReihenfolge();
                 if (this.aPlayTitel.Reihenfolge > 0)
                     MoveItem(this.aPlayTitel, -1);
                 PlayerVM.FilteredLbEditorAudioZeilenListe = PlayerVM.FilteredLbEditorAudioZeilenListe.OrderBy(t => t.aPlayTitel.Reihenfolge).ToList();
@@ -380,6 +636,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             try
             {
+                UpdateReihenfolge();
                 if (this.aPlayTitel.Reihenfolge < AktKlangPlaylist.Audio_Playlist_Titel.Count - 1)
                     MoveItem(this.aPlayTitel, +1);
                 PlayerVM.FilteredLbEditorAudioZeilenListe = PlayerVM.FilteredLbEditorAudioZeilenListe.OrderBy(t => t.aPlayTitel.Reihenfolge).ToList();
@@ -390,29 +647,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
         
-        private void MoveItem(Audio_Playlist_Titel aPlaylistTitel, int dif)
-        {
-            Audio_Playlist_Titel aPlaylistTitel_alt = AktKlangPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Reihenfolge == aPlaylistTitel.Reihenfolge + dif);
-            aPlaylistTitel_alt.Reihenfolge = aPlaylistTitel_alt.Reihenfolge - dif;
-
-            Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlaylistTitel_alt);
-
-            aPlaylistTitel.Reihenfolge = aPlaylistTitel.Reihenfolge + dif;
-            Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlaylistTitel);
-
-            OnChanged("AktKlangPlaylist");
-            //object selected = audioZeile;
-            //lb.Items.Remove(selected);
-            //lb.Items.Insert(aPlaylistTitel.Reihenfolge, selected);
-            //lb.ScrollIntoView(selected);
-        }
-
-
-
         #endregion
-
-
-
+        
         #region //---- KONSTRUKTOR ----
 
         public AudioZeileViewModel()
@@ -420,9 +656,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             //Event-Handler zur DependentProperty-Notification
        //     PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
 
-            _onAudioZeileAdd = new Base.CommandBase(AudioZeileAdd, null); 
+         //   _onAudioZeileAdd = new Base.CommandBase(AudioZeileAdd, null); 
            // sliderVM.aPlaylistTitel = aPlayTitel;
         }
+
+
+        
+
+
+        //private Base.CommandBase _onAudioZeileAdd;
+        //public Base.CommandBase OnAudioZeileAdd
+        //{
+        //    get { return _onAudioZeileAdd; }
+        //}
 
         #endregion
 
@@ -453,7 +699,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
             return true;
         }
-
+        
+        private void UpdateReihenfolge()
+        {
+            if (PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count > 1 &&
+                PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.Reihenfolge == 0) > 1)
+                PlayerVM.sortPlaylist(PlayerVM.AktKlangPlaylist, -1);
+        }
 
         private void AudioZeileAdd(object sender)
         {
@@ -462,6 +714,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
         public event EventHandler AudioZeileAddEvent;
+
+
+        private void MoveItem(Audio_Playlist_Titel aPlaylistTitel, int dif)
+        {
+            Audio_Playlist_Titel aPlaylistTitel_alt = AktKlangPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Reihenfolge == aPlaylistTitel.Reihenfolge + dif);
+            aPlaylistTitel_alt.Reihenfolge = aPlaylistTitel_alt.Reihenfolge - dif;
+
+            Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlaylistTitel_alt);
+
+            aPlaylistTitel.Reihenfolge = aPlaylistTitel.Reihenfolge + dif;
+            Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlaylistTitel);
+
+            OnChanged("AktKlangPlaylist");
+        }
+
 
         #endregion
         

@@ -26,7 +26,7 @@ namespace MeisterGeister.View.General
         public IntBox()
         {
             InitializeComponent();
-            
+
             MinValue = int.MinValue;
             MaxValue = int.MaxValue;
         }
@@ -37,13 +37,45 @@ namespace MeisterGeister.View.General
             set;
         }
 
+        public int IncWheel
+        {
+            get { return (int)GetValue(IncWheelProperty); }
+            set { SetValue(IncWheelProperty, value); }
+        }
+        public static DependencyProperty IncWheelProperty = DependencyProperty.Register("IncWheel", typeof(int), typeof(IntBox),
+                new PropertyMetadata(1));
+
+        public int DecWheel
+        {
+            get { return (int)GetValue(DecWheelProperty); }
+            set { SetValue(DecWheelProperty, value); }
+        }
+        public static DependencyProperty DecWheelProperty = DependencyProperty.Register("DecWheel", typeof(int), typeof(IntBox),
+                new PropertyMetadata(1));
+
+        public int DecValue
+        {
+            get { return (int)GetValue(DecValueProperty); }
+            set { SetValue(DecValueProperty, value); }
+        }
+        public static DependencyProperty DecValueProperty = DependencyProperty.Register("DecValue", typeof(int), typeof(IntBox),
+                new PropertyMetadata(1));
+
+        public int IncValue
+        {
+            get { return (int)GetValue(IncValueProperty); }
+            set { SetValue(IncValueProperty, value); }
+        }
+        public static DependencyProperty IncValueProperty = DependencyProperty.Register("IncValue", typeof(int), typeof(IntBox),
+                new PropertyMetadata(1));
+
         public int MaxValue
         {
             get { return (int)GetValue(MaxValueProperty); }
             set { SetValue(MaxValueProperty, value); }
         }
         public static DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(int), typeof(IntBox),
-                new PropertyMetadata(0));
+                new PropertyMetadata(1));
 
         public Visibility ButtonHiddenMode
         {
@@ -208,13 +240,13 @@ namespace MeisterGeister.View.General
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
             if (!IsReadOnly)
-                IncreaseValue();
+                IncreaseValue(IncValue);
         }
 
         private void ButtonMinus_Click(object sender, RoutedEventArgs e)
         {
             if (!IsReadOnly)
-                DecreaseValue();
+                DecreaseValue(DecValue);
         }
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -222,9 +254,9 @@ namespace MeisterGeister.View.General
             if (!NoMouseWheel && !IsReadOnly)
             {
                 if (e.Delta < 0)
-                    DecreaseValue();
+                    DecreaseValue(DecWheel);
                 else
-                    IncreaseValue();
+                    IncreaseValue(IncWheel);
                 e.Handled = true;
             }
         }
@@ -244,9 +276,9 @@ namespace MeisterGeister.View.General
             if (!IsReadOnly)
             {
                 if (e.Key == Key.Up)
-                    IncreaseValue();
+                    IncreaseValue(IncValue);
                 else if (e.Key == Key.Down)
-                    DecreaseValue();
+                    DecreaseValue(DecValue);
             }
         }
 

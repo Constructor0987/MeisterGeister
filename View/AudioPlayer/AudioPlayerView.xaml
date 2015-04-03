@@ -90,10 +90,13 @@
          
         <DataTemplate x:Key="lbEditorListBoxItemIcon" >
             <StackPanel Name="spnllbiIcon" Orientation="Horizontal"
-                        Tag="{Binding Path=APlaylist.Audio_PlaylistGUID}"
+                        Tag="{Binding Path=APlaylist}"
                         PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"
                         PreviewMouseMove="lbiEditorPlaylist_MouseMove"
+                        Drop="lbitemEditor_Drop"   
                         Width="{Binding Path=ActualWidth, ElementName=lbEditor}">
+                        <!--GiveFeedback="lbiPlaylist_GiveFeedback"-->
+                
                 <StackPanel.InputBindings>
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OnLbiEditorPlaylist_DoubleClick}" />
                 </StackPanel.InputBindings>
@@ -585,7 +588,7 @@
                                                 ItemsSource="{Binding FilteredEditorListBoxItemListe, UpdateSourceTrigger=PropertyChanged}" 
                                                 ItemTemplate="{StaticResource lbEditorListBoxItemIcon}" 
                                                 SelectedItem="{Binding SelectedEditorItem}"    
-                                                SelectionChanged="lb_SelectionChanged">                                                
+                                                SelectionChanged="lb_SelectionChanged" >                                                
                                                 <ListBox.Style>
                                                     <Style TargetType="ListBox">
                                                         <Style.Triggers>
@@ -705,18 +708,30 @@
 
                                     <Slider Name="sldPlaylistWartezeit" Maximum="900000" IsSnapToTickEnabled="True" TickPlacement="BottomRight" Grid.RowSpan="2" 
                                         Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,3,4,0" 
-                                        Value="{Binding AktKlangPlaylist.WarteZeit}" 
+                                        Value="{Binding AktKlangPlaylistWarteZeit, UpdateSourceTrigger=PropertyChanged}" 
+                                        MouseWheel="sldPlaylistWartezeit_MouseWheel"
                                         Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000, 5000, 7500, 8000, 9000, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 60000, 90000, 120000, 180000, 240000, 300000, 450000, 600000, 900000" >
                                         <Slider.ToolTip>
-                                            <TextBlock Text="{Binding AktKlangPlaylist.WarteZeitToolTip}" />
+                                            <TextBlock Text="{Binding AktKlangPlaylistWarteZeitToolTip}" />
                                         </Slider.ToolTip>
                                     </Slider>
 
                                     <CheckBox Name="chkPlaylistWartezeitMove" Grid.Column="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,6,1,6" ToolTip="Wartezeit der Playliste automatisch variieren" Grid.RowSpan="2" 
-                                        IsChecked="{Binding AktKlangPlaylist.WarteZeitChange}" />                                    
-                                    <TextBox Name="tboxPlaylistWartezeitMin" Grid.Column="2" Margin="0.2,2,0,2.2" HorizontalContentAlignment="Center" Tag="0" Padding="0" Grid.RowSpan="2" HorizontalAlignment="Left" Width="44"
-                                        Text="{Binding AktKlangPlaylist.WarteZeitMin}" 
-                                        ToolTip="{Binding AktKlangPlaylist.WarteZeitMinToolTip }" 
+                                        IsChecked="{Binding AktKlangPlaylist.WarteZeitChange}" />
+
+                                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" ToolTip="Minimale Pause bei variabler Pausenzeit (in ms)" 
+                                        Value="{Binding AktKlangPlaylistWarteZeitMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PlaylistWarteZeitMinIncValue}" DecValue="{Binding PlaylistWarteZeitMinIncValue}" MinValue="0" MaxValue="900000" />
+                                    
+                                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" ToolTip="Maximale Pause bei variabler Pausenzeit (in ms)" 
+                                        Value="{Binding AktKlangPlaylistWarteZeitMax}" IncValue="{Binding PlaylistWarteZeitMaxIncValue}" DecValue="{Binding PlaylistWarteZeitMaxIncValue}" MinValue="0" MaxValue="900000" />
+
+
+
+
+
+                                    <!--<TextBox Name="tboxPlaylistWartezeitMin" Grid.Column="2" Margin="0.2,2,0,2.2" HorizontalContentAlignment="Center" Tag="0" Padding="0" Grid.RowSpan="2" HorizontalAlignment="Left" Width="44"
+                                        Text="{Binding AktKlangPlaylistWarteZeitMin, UpdateSourceTrigger=PropertyChanged}" 
+                                        ToolTip="{Binding AktKlangPlaylistWarteZeitMinToolTip }" 
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                                     <Button Name="_btnPlaylistWartezeitMinMinus" Grid.Column="2" Margin="0,3,18,4" Tag="-200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Grid.RowSpan="2" Command="{Binding OnWarteZeitMinMinus}" >
                                         <Image Source="/Images/Icons/General/entf_02.png" />
@@ -725,15 +740,15 @@
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                     <TextBox Name="tboxPlaylistWartezeitMax"  Grid.Column="3" Margin="0,2,36,2" HorizontalContentAlignment="Center" Tag="0" Padding="0" Grid.RowSpan="2" 
-                                        Text="{Binding AktKlangPlaylist.WarteZeitMax, UpdateSourceTrigger=PropertyChanged}" 
-                                        ToolTip="{Binding AktKlangPlaylist.WarteZeitMaxToolTip }"
+                                        Text="{Binding AktKlangPlaylistWarteZeitMax, UpdateSourceTrigger=PropertyChanged}" 
+                                        ToolTip="{Binding AktKlangPlaylistWarteZeitMaxToolTip }"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                                     <Button Name="_btnPlaylistWartezeitMaxMinus" Width="18" Height="18" Grid.Column="3" HorizontalAlignment="Right" Margin="0,3,18,4" Tag="-200" IsTabStop="False" Grid.RowSpan="2" Command="{Binding OnWarteZeitMaxMinus}" >
                                         <Image Source="/Images/Icons/General/entf_02.png" />
                                     </Button>
                                     <Button Name="_btnPlaylistWartezeitMaxPlus" Width="18" Height="18" Grid.Column="3" HorizontalAlignment="Right" Tag="200" IsTabStop="False" Margin="0,3,0,4" Grid.RowSpan="2" Command="{Binding OnWarteZeitMaxPlus}" >
                                         <Image Source="/Images/Icons/General/add.png" />
-                                    </Button>
+                                    </Button>-->
                                 </Grid>
                             </StackPanel>
                         </Grid>
@@ -1086,10 +1101,11 @@
                                         <CheckBox Name="chkbxTopAktiv1" Grid.Column="3" Grid.Row="2" Height="16" HorizontalAlignment="Left" 
                                                   VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Tag="0" IsTabStop="False" Content="Titel an/aus" 
                                                   Command="{Binding OncbAllTitelChecked}" IsChecked="{Binding AllTitelAktiv, UpdateSourceTrigger=PropertyChanged}" />
-                                        <!--Click="chkbxTopAktivX_Click"-->
+                                        
                                         <Label Name="lblTopDauer1" Content="Dauer" Grid.Column="4" Margin="10,3,0,4" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
 
-                                        <StackPanel Name="spnlTopGeräuschIcon1" Grid.Column="5" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom" Visibility="{Binding Path=IsChecked, ElementName=rbIstTopKlangPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                                        <StackPanel Name="spnlTopGeräuschIcon1" Grid.Column="5" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom" 
+                                                Visibility="{Binding Path=IsChecked, ElementName=rbIstTopKlangPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="23" />
@@ -1102,50 +1118,74 @@
                                                     <ColumnDefinition Width="80" />
                                                     <ColumnDefinition Width="80" />
                                                 </Grid.ColumnDefinitions>
-                                                <Image Name="imgLaufstärke1" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" ToolTip="Lautstärke aller aktiven Songs" />
-                                                <Button Name="btnTopVolMin1" Command="{Binding OnAllVol0, UpdateSourceTrigger=PropertyChanged}" Content="&lt;&lt;" Grid.Column="1" Height="21" Margin="0,-1,0,3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 0% setzen" IsTabStop="False" />
-                                                <Button Name="btnTopVolDown1" Command="{Binding OnAllVolDown, UpdateSourceTrigger=PropertyChanged}" Content="&lt;" Grid.Column="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% verringern" IsTabStop="False" />
-                                                <Button Name="btnTopVolUp1" Command="{Binding OnAllVolUp, UpdateSourceTrigger=PropertyChanged}" Content="&gt;" Grid.Column="1"  Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% erhöhen" IsTabStop="False"  />
-                                                <Button Name="btnTopVolMax1" Command="{Binding OnAllVol100, UpdateSourceTrigger=PropertyChanged}" Content="&gt;&gt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 100% setzen" IsTabStop="False" />
 
-                                                <CheckBox Name="chkbxTopVolChange1" IsChecked="{Binding IsVolumeChangeChecked}" Grid.Column="2" ToolTip="Lautstärke aller aktiven Klänge automatisch variieren" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Auto" FlowDirection="RightToLeft" Height="Auto" Margin="0,4" />
                                                 <Label Content="min" Grid.Column="3" HorizontalAlignment="Center" Margin="25,0" />
-                                                <Button Name="btnTopVolMinMinus1" Command="{Binding OnAllVolMinDown, UpdateSourceTrigger=PropertyChanged}" Height="21" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" HorizontalAlignment="Left" Width="21" ToolTip="Minimale Lautstärke aller variierbaren Klänge verringern" IsTabStop="False" >
+                                                <Label Content="max" Grid.Column="4" HorizontalAlignment="Center" Margin="24,0" />
+                                                <Label Content="min" Grid.Column="3" Grid.Row="1"  HorizontalAlignment="Center" />
+                                                <Label Content="max" Grid.Column="4" Grid.Row="1"  HorizontalAlignment="Center" />
+                                                
+                                                <Image Name="imgPause1" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" ToolTip="Pausenzeit aller aktiven Songs" />
+                                                <Image Name="imgLaufstärke1" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" ToolTip="Lautstärke aller aktiven Songs" />
+
+                                                <Button Name="btnTopVolMin1" Content="&lt;&lt;" Grid.Column="1" Height="21" Margin="0,-1,0,3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Lautstärke aller gefilterten Geräusche auf 0% setzen" IsTabStop="False" 
+                                                        Command="{Binding OnAllVol0, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Name="btnTopVolDown1" Content="&lt;" Grid.Column="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller gefilterten Geräusche um 10% verringern" IsTabStop="False" 
+                                                        Command="{Binding OnAllVolDown, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Name="btnTopVolUp1" Content="&gt;" Grid.Column="1"  Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller gefilterten Geräusche um 10% erhöhen" IsTabStop="False"  
+                                                        Command="{Binding OnAllVolUp, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Name="btnTopVolMax1" Content="&gt;&gt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Lautstärke aller gefilterten Geräusche auf 100% setzen" IsTabStop="False" 
+                                                        Command="{Binding OnAllVol100, UpdateSourceTrigger=PropertyChanged}" />
+
+                                                <CheckBox Name="chkbxTopVolChange1" Grid.Column="2" ToolTip="Lautstärke aller aktiven Klänge automatisch variieren" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Auto" FlowDirection="RightToLeft" Height="Auto" Margin="0,4" 
+                                                        IsChecked="{Binding IsVolumeChangeChecked, UpdateSourceTrigger=PropertyChanged}"
+                                                        Command="{Binding OnAllVolumeChange}" />
+
+                                                <Button Name="btnTopVolMinMinus1" Height="21" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" HorizontalAlignment="Left" Width="21" ToolTip="Minimale Lautstärke aller gefilterten variierbaren Geräusche verringern" IsTabStop="False" 
+                                                        Command="{Binding OnAllVolMinDown, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
-                                                <Button Name="btnTopVolMinPlus1" Command="{Binding OnAllVolMinUp, UpdateSourceTrigger=PropertyChanged}" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" ToolTip="Minimale Lautstärke aller variierbaren Klänge erhöhen" IsTabStop="False" >
+                                                <Button Name="btnTopVolMinPlus1" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" ToolTip="Minimale Lautstärke aller gefilterten variierbaren Geräusche erhöhen" IsTabStop="False" 
+                                                        Command="{Binding OnAllVolMinUp, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
-                                                <Label Content="max" Grid.Column="4" HorizontalAlignment="Center" Margin="24,0" />
-                                                <Button Name="btnTopVolMaxMinus1" Command="{Binding OnAllVolMaxDown, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Lautstärke aller variierbaren Klänge verringern" IsTabStop="False" >
+                                                <Button Name="btnTopVolMaxMinus1" Grid.Column="4" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Lautstärke aller gefilterten variierbaren Geräusche verringern" IsTabStop="False"
+                                                        Command="{Binding OnAllVolMaxDown, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
-                                                <Button Name="btnTopVolMaxPlus1" Command="{Binding OnAllVolMaxUp, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" ToolTip="Maximale Lautstärke aller variierbaren Klänge erhöhen" IsTabStop="False" >
+                                                <Button Name="btnTopVolMaxPlus1" Grid.Column="4" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" ToolTip="Maximale Lautstärke aller gefilterten variierbaren Geräusche erhöhen" IsTabStop="False"
+                                                        Command="{Binding OnAllVolMaxUp, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
 
                                                 <Border VerticalAlignment="Bottom" Grid.ColumnSpan="7" BorderBrush="Gray" Margin="-5,-1,-5,-1" Height="1" BorderThickness="1" Name="brdTrennstrich1" />
 
-                                                <Image Name="imgPause1" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" ToolTip="Pausenzeit aller aktiven Songs" />
-                                                <Button Name="btnTopPauseMin1" Command="{Binding OnAllPause0, UpdateSourceTrigger=PropertyChanged}" Content="&lt;&lt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Minimum setzen" IsTabStop="False" />
-                                                <Button Name="btnTopPauseDown1" Command="{Binding OnAllPauseDown, UpdateSourceTrigger=PropertyChanged}" Content="&lt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Pausenzeit aller aktiven Klänge verringern" IsTabStop="False" />
-                                                <Button Name="btnTopPauseMax1" Command="{Binding OnAllPause100, UpdateSourceTrigger=PropertyChanged}" Content="&gt;&gt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Maximum setzen" IsTabStop="False" />
-                                                <Button Name="btnTopPauseUp1" Command="{Binding OnAllPauseUp, UpdateSourceTrigger=PropertyChanged}"  Content="&gt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" IsTabStop="False" />
+                                                <Button Name="btnTopPauseMin1" Content="&lt;&lt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Pausenzeit aller gefilterten Geräusche auf Minimum setzen" IsTabStop="False" 
+                                                        Command="{Binding OnAllPause0, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Name="btnTopPauseDown1" Content="&lt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Pausenzeit aller gefilterten Geräusche verringern" IsTabStop="False" 
+                                                        Command="{Binding OnAllPauseDown, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Name="btnTopPauseMax1" Content="&gt;&gt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Pausenzeit aller gefilterten Geräusche auf Maximum setzen" IsTabStop="False" 
+                                                        Command="{Binding OnAllPause100, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Name="btnTopPauseUp1"  Content="&gt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller gefilterten Geräusche erhöhen" IsTabStop="False" 
+                                                        Command="{Binding OnAllPauseUp, UpdateSourceTrigger=PropertyChanged}" />
 
-                                                <CheckBox Name="chkbxTopPauseChange1" IsChecked="{Binding IsPausenZeitChangeChecked}" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" IsTabStop="False" Content="Auto" FlowDirection="RightToLeft" />
-                                                <Label Content="min" Grid.Column="3" Grid.Row="1"  HorizontalAlignment="Center" />
-                                                <Button Name="btnTopPauseMinMinus1" Command="{Binding OnPausenZeitMinMinus}" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="1" HorizontalAlignment="left" Width="20" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um eine Stelle verringern" IsTabStop="False" >
+                                                <CheckBox Name="chkbxTopPauseChange1" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" IsTabStop="False" Content="Auto" FlowDirection="RightToLeft" 
+                                                          IsChecked="{Binding IsPausenZeitChangeChecked, UpdateSourceTrigger=PropertyChanged}"
+                                                          Command="{Binding OnAllPausenZeitChange}"/>
+
+                                                <Button Name="btnTopPauseMinMinus1" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="1" HorizontalAlignment="left" Width="20" ToolTip="Minimale Pausenzeit aller variierbaren gefilterten Geräusche um eine Stelle verringern" IsTabStop="False" 
+                                                        Command="{Binding OnPausenZeitMinMinus, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
-                                                <Button Name="btnTopPauseMinPlus1" Command="{Binding OnPausenZeitMinPlus}" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um eine Stelle erhöhen" IsTabStop="False" >
+                                                <Button Name="btnTopPauseMinPlus1" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren gefilterten Geräusche um eine Stelle erhöhen" IsTabStop="False" 
+                                                        Command="{Binding OnPausenZeitMinPlus, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
-
-                                                <Label Content="max" Grid.Column="4" Grid.Row="1"  HorizontalAlignment="Center" />
-                                                <Button Name="btnTopPauseMaxMinus1" Command="{Binding OnPausenZeitMaxMinus}" Grid.Column="4" Grid.Row="1" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Pausenzeit aller variierbaren Geräusche eine Stelle verringern" IsTabStop="False" >
+                                                <Button Name="btnTopPauseMaxMinus1" Grid.Column="4" Grid.Row="1" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Pausenzeit aller variierbaren gefilterten Geräusche eine Stelle verringern" IsTabStop="False" 
+                                                        Command="{Binding OnPausenZeitMaxMinus, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
-                                                <Button Name="btnTopPauseMaxPlus1" Command="{Binding OnPausenZeitMaxPlus}" Grid.Column="4" Grid.Row="1" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="20" Margin="0,0,7,1" ToolTip="Maximale Pausenzeit aller variierbaren Geräusche eine Stelle erhöhen" IsTabStop="False" >
+                                                <Button Name="btnTopPauseMaxPlus1" Grid.Column="4" Grid.Row="1" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="20" Margin="0,0,7,1" ToolTip="Maximale Pausenzeit aller variierbaren gefilterten Geräusche eine Stelle erhöhen" IsTabStop="False" 
+                                                        Command="{Binding OnPausenZeitMaxPlus, UpdateSourceTrigger=PropertyChanged}" >
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
                                             </Grid>
@@ -1185,8 +1225,13 @@
                                             SelectionChanged="lb_SelectionChanged">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Margin="5">
-                                                    <Grid> <local:AudioZeile /> </Grid>                                                    
+                                                <Border Margin="2">
+                                                    <Grid> 
+                                                        <local:AudioZeile Tag="{Binding}"
+                                                            MouseMove="AudioZeile_MouseMove"
+                                                            GiveFeedback="AudioZeile_GiveFeedback"
+                                                            PreviewMouseLeftButtonDown="AudioZeile_PreviewMouseLeftButtonDown" /> 
+                                                    </Grid>                                                    
                                                 </Border>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -1206,9 +1251,9 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Border Height="55" Name="border1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}">
-                        <Grid>
+                        <Grid Visibility="{Binding BGPlayerAktPlaylist, UpdateSourceTrigger=PropertyChanged, TargetNullValue=Collapsed}" >
                             <Border BorderBrush="Silver" BorderThickness="1" Height="45" Name="border3" Width="402" CornerRadius="20" />
-                            
+
                             <ToggleButton Name="btnBGShuffle" Height="24" Margin="-320,0,0,0" Width="24" ClickMode="Press" IsChecked="{Binding BGPlayerAktPlaylist.Shuffle}" ToolTip="Shuffle-Mode" Focusable="False" IsTabStop="False" >
                                 <Image>
                                     <Image.Style>
@@ -1260,7 +1305,7 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Image.Style>
-                                </Image>                                
+                                </Image>
                             </ToggleButton>
 
                             <Border Width="2" Height="26" Margin="-205,0,0,0" />
@@ -1272,7 +1317,7 @@
                                         <Binding Path="HintergrundMusikListe.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter="1" />
                                     </MultiBinding>
                                 </Button.IsEnabled>
-                                <Image Name="imgbtnBGStoppen" Source="/DSA%20MeisterGeister;component/Images/Icons/General/stop.png" Style="{StaticResource ImageEnabled}" Margin="5,6,4,4" />                                
+                                <Image Name="imgbtnBGStoppen" Source="/DSA%20MeisterGeister;component/Images/Icons/General/stop.png" Style="{StaticResource ImageEnabled}" Margin="5,6,4,4" />
                             </Button>
 
                             <Button Name="btnBGPrev" Width="30" Height="30" Background="Black" Margin="-80,0,0,0" Style="{StaticResource GlasButton}" ToolTip="Zurück" 
@@ -1297,7 +1342,7 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </Image.Style>                                    
+                                    </Image.Style>
                                 </Image>
                             </Button>
 
@@ -1308,7 +1353,7 @@
                             </Button>
 
                             <Button Width="26" Height="26" Name="btnBGSpeaker" Command="{Binding OnBGSpeakerMuting}" Margin="170,0,0,0" Tag="-1" ToolTip="Ton aus/an" >
-                                <Image Width="20" Height="20" Margin="0,6,0,0"> 
+                                <Image Width="20" Height="20" Margin="0,6,0,0">
                                     <Image.Style>
                                         <Style TargetType="Image">
                                             <Style.Setters>
@@ -1321,17 +1366,17 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Image.Style>
-                                </Image>                               
+                                </Image>
                             </Button>
 
                             <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10" 
                                     Value="{Binding BGPlayerVolume, FallbackValue=50}" 
                                     MouseWheel="slBGVolume_MouseWheel" >
-                                    <Slider.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
-                                        </ToolTip>
-                                    </Slider.ToolTip>
+                                <Slider.ToolTip>
+                                    <ToolTip>
+                                        <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
+                                    </ToolTip>
+                                </Slider.ToolTip>
                                 <!--    ToolTip="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C}% }" 
                                     >
                                 <Slider.InputBindings>
@@ -1388,7 +1433,8 @@
                                 <!--MouseDoubleClick="lbMusik_MouseDoubleClick"-->
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <local:MusikZeile />
+                                        <local:MusikZeile  
+                                            />                                            
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
 
@@ -1404,7 +1450,7 @@
                                 <ListBox Background="Transparent" Name="lbMusiktitellist" VerticalAlignment="Stretch" 
                                          ItemsSource="{Binding HintergrundMusikListe}" 
                                          SelectedItem="{Binding SelectedMusikTitelItem, UpdateSourceTrigger=PropertyChanged}" 
-                                         ToolTip="Anklicken um den Titel abzuspielen" Focusable="True">                                    
+                                         ToolTip="Anklicken um den Titel abzuspielen" Focusable="True" >                                    
                                 </ListBox>
                             </Border>
                         </Expander>
@@ -1901,9 +1947,8 @@
                                 <TextBlock Padding="4,2,4,0" />
                                 <Button Name="btnPListPListAbspielen" ClickMode="Press" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black"                                         
                                         Command="{Binding OnBtnErwPlayerPListAbspielen}"
-                                        IsEnabled="{Binding FilteredErwPlayerGeräuscheListItemListe.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='1'}" >
+                                        IsEnabled="{Binding ErwPlayerGeräuscheAktiv}" >
                                     <Image Name="btnimgPListPListAbspielen" Width="30" Height="30" Margin="5" >
-                                           <!--Style="{StaticResource ImageEnabled}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" >-->
                                         <Image.Style>
                                             <Style TargetType="Image" BasedOn="{StaticResource ImageEnabled}"  >
                                                 <Style.Setters>
