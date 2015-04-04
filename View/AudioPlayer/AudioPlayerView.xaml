@@ -596,7 +596,7 @@
                                                             <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding ElementName=rbEditorEditTheme,Path=IsChecked}" Value="False">
-                                                            <Setter Property="ToolTip" Value="" />
+                                                            <Setter Property="ToolTip" Value="{x:Null}" />
                                                         </DataTrigger>
                                                         </Style.Triggers>                                                        
                                                     </Style>                                                    
@@ -712,7 +712,7 @@
                                         MouseWheel="sldPlaylistWartezeit_MouseWheel"
                                         Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000, 5000, 7500, 8000, 9000, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 60000, 90000, 120000, 180000, 240000, 300000, 450000, 600000, 900000" >
                                         <Slider.ToolTip>
-                                            <TextBlock Text="{Binding AktKlangPlaylistWarteZeitToolTip}" />
+                                            <TextBlock Text="{Binding AktKlangPlaylistWarteZeitTooltip}" />
                                         </Slider.ToolTip>
                                     </Slider>
 
@@ -913,9 +913,9 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1" />
                                             <ColumnDefinition Width="17" />
-                                            <ColumnDefinition Width="18"/>
-                                            <ColumnDefinition Width="350"/>
-                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="30"/>
+                                            <ColumnDefinition Width="345"/>
+                                            <ColumnDefinition Width="55" />
                                             <ColumnDefinition Width="23" />
                                             <ColumnDefinition Width="92" />
                                             <ColumnDefinition Width="56" />
@@ -1099,7 +1099,7 @@
                                             <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
                                         </ToggleButton>
                                         <CheckBox Name="chkbxTopAktiv1" Grid.Column="3" Grid.Row="2" Height="16" HorizontalAlignment="Left" 
-                                                  VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Tag="0" IsTabStop="False" Content="Titel an/aus" 
+                                                  VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Tag="0" IsTabStop="False" Content="Alle Titel an/aus" 
                                                   Command="{Binding OncbAllTitelChecked}" IsChecked="{Binding AllTitelAktiv, UpdateSourceTrigger=PropertyChanged}" />
                                         
                                         <Label Name="lblTopDauer1" Content="Dauer" Grid.Column="4" Margin="10,3,0,4" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
@@ -1225,9 +1225,9 @@
                                             SelectionChanged="lb_SelectionChanged">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Margin="2">
+                                                <Border Margin="2,-1">
                                                     <Grid> 
-                                                        <local:AudioZeile Tag="{Binding}"
+                                                        <local:AudioZeile Tag="{Binding}" 
                                                             MouseMove="AudioZeile_MouseMove"
                                                             GiveFeedback="AudioZeile_GiveFeedback"
                                                             PreviewMouseLeftButtonDown="AudioZeile_PreviewMouseLeftButtonDown" /> 

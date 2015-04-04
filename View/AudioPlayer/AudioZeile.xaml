@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:MeisterGeister.View.AudioPlayer"
              xmlns:vmAudioPlayer="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             d:DesignHeight="52" d:DesignWidth="900" 
+             d:DesignWidth="900" 
              Tag="{Binding aPlayTitel}">
     
     <UserControl.Resources>
@@ -18,7 +18,7 @@
         <vmAudioPlayer:DoubleToTimespanHHMMSSConverter x:Key="DoubleToTimespanHHMMSSConverter1" />
     </UserControl.Resources>
     
-    <ListBoxItem Name="lbiEditorRow" Height="52" >
+    <ListBoxItem Name="lbiEditorRow" Height="55" >
         <ListBoxItem.Style>
                 <Style TargetType="ListBoxItem">
                 <Setter Property="Background" Value="{x:Null}" />
@@ -62,7 +62,7 @@
             </ContextMenu>
         </ListBoxItem.ContextMenu>
 
-        <Grid VerticalAlignment="Center" Margin="0,2" Height="50">
+        <Grid VerticalAlignment="Center" Height="50">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25" />
                 <RowDefinition Height="25" />
@@ -135,7 +135,7 @@
             <TextBlock Grid.Column="3" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,5" 
                    Text="{Binding aPlayTitel.Audio_Titel.Länge, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}" />
             
-            <Button Grid.Column="3" Grid.Row="1" Command="{Binding OnBtnGewichtung, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,1" >
+            <Button Grid.Column="3" Grid.Row="1" Height="23" Command="{Binding OnBtnGewichtung, UpdateSourceTrigger=PropertyChanged}" Margin="2,-1,2,0" >
                 <Button.ToolTip>
                 <TextBlock Text="{Binding aPlayTitel.Rating, StringFormat='Gewichtung \{0\}'}" />
                 </Button.ToolTip>
@@ -152,7 +152,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
-                        <RowDefinition Height="25" />
+                        <RowDefinition Height="26" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="23" />
@@ -174,17 +174,17 @@
                         </Slider.ToolTip>
                     </Slider>
 
-                    <CheckBox Grid.Column="2" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,1,6" ToolTip="Lautstärke der Klangzeile automatisch variieren" 
+                    <CheckBox Grid.Column="2" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,1,4" ToolTip="Lautstärke der Klangzeile automatisch variieren" 
                               IsChecked="{Binding aPlayTitelVolumeChange, UpdateSourceTrigger=PropertyChanged}" 
                               Command="{Binding OnVolumeChange}"/>
 
-                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMin}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,2,0,0" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" />
-                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,2,0,0" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" />
+                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMin}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" />
+                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" />
 
-                    <Border VerticalAlignment="Bottom" Grid.ColumnSpan="6" BorderBrush="Gray" Margin="0,0,105,24" Height="1" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
+                    <Border VerticalAlignment="Bottom" Grid.ColumnSpan="6" BorderBrush="Gray" Margin="0,-2,105,24" Height="1" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
 
                     <Slider Grid.Column="1" Grid.Row="1" Maximum="900000" IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
-                        Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,3,4,0" 
+                        Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,1,4,-1" 
                         Value="{Binding aPlayTitelPause, UpdateSourceTrigger=PropertyChanged}" 
                         MouseWheel="PauseWert_MouseWheel"
                         Ticks="{Binding SliderTicks, UpdateSourceTrigger=PropertyChanged}" >
@@ -193,13 +193,13 @@
                         </Slider.ToolTip>
                     </Slider>
 
-                    <CheckBox Grid.Column="2" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,6,1,6" ToolTip="Pausezeiten der Klangzeile automatisch variieren" 
+                    <CheckBox Grid.Column="2" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,4,1,4" ToolTip="Pausezeiten der Klangzeile automatisch variieren" 
                               IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}"
                               Command="{Binding OnPauseChange}"/>
 
-                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" 
+                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" 
                             Value="{Binding aPlayTitelPauseMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PauseMinIncValue}" DecValue="{Binding PauseMinIncValue}" MinValue="0" MaxValue="900000" />
-                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" 
+                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" 
                             Value="{Binding aPlayTitelPauseMax}" IncValue="{Binding PauseMaxIncValue}" DecValue="{Binding PauseMaxIncValue}" MinValue="0" MaxValue="900000" />
 
                         <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="6,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />

@@ -2175,6 +2175,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                          (AktKlangPlaylist.WarteZeitMax >= 2000) ? 1000 : 200;
             }
         }
+        public string AktKlangPlaylistWarteZeitTooltip
+        {
+            get
+            {
+                return (AktKlangPlaylistWarteZeit < 1000 ? AktKlangPlaylistWarteZeit + " ms" : AktKlangPlaylistWarteZeit < 60000 ?
+                    Math.Round((double)AktKlangPlaylistWarteZeit / 1000, 2).ToString() + " sek." :
+                    AktKlangPlaylistWarteZeit / 60000 + " min.");
+            }
+        }
 
         public long AktKlangPlaylistWarteZeit
         {
@@ -3190,8 +3199,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
         void OnThemeGeräuscheAusClick(object obj)
         {
-            ErwPlayerGeräuscheListItemListe.FindAll(s => s.tbtnCheck.IsChecked.Value).
-                ForEach(delegate(MusikZeile mZeile) { mZeile.tbtnCheck.IsChecked = false; });
+            ErwPlayerGeräuscheListItemListe.FindAll(s => s.tbtnCheck.IsChecked.Value).ForEach(delegate(MusikZeile mZeile) { 
+                mZeile.tbtnCheck.IsChecked = false;
+                mZeile.VM.tbtnCheckUnChecked(mZeile.tbtnCheck);
+                });
         }
 
         private Base.CommandBase _onBtnCloseTheme;
@@ -3410,7 +3421,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             tiErstellt++;
 
             grpobj.objGruppe = Convert.ToInt16(tiErstellt);
-             
+
+            //grpobj.wartezeitTimer.Tick += new EventHandler(wartezeitTimer_Tick);
             grpobj.visuell = true;            
             _GrpObjecte.Add(grpobj);
         }
@@ -3431,6 +3443,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 mZeileErw.VM.aPlayerVM = this;
                 mZeileErw.VM.grpobj = grpobj;
                 mZeileErw.VM.aPlaylist = aplylist;
+                mZeileErw.VM.grpobj.wartezeitTimer.Tick += new EventHandler(mZeileErw.VM.wartezeitTimer_Tick);
 
                 Grid.SetRow(mZeileErw.grdForceVol, !PListNormalSize ? 0 : 1);
                 Grid.SetColumn(mZeileErw.grdForceVol, !PListNormalSize ? 2 : 0);
@@ -3442,6 +3455,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
             return mZeileList;
         }
+
+
         
         public List<MusikZeile> mZeileEditorMusikNeuErstellen()
         {

@@ -89,7 +89,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         [DependentProperty("PlayerVM"), DependentProperty("Reihenfolge")]
         public bool IstLetzteZeile
         {
-            get { return PlayerVM == null? false: (PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count == aPlayTitel.Reihenfolge + 1); }
+            get { return PlayerVM == null || PlayerVM.AktKlangPlaylist == null? 
+                false : (PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count == aPlayTitel.Reihenfolge + 1); }
             set { OnChanged(); }
         }
 
