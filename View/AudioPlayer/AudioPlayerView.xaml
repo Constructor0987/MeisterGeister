@@ -1425,16 +1425,16 @@
                                     <GradientStop Color="#FFFFFFC7" Offset="1" />
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <ListBox Padding="4" Name="lbMusik"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
+                            <ListBox Padding="4" Name="lbMusik"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" 
                                 ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" 
+                                ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                                 ItemsSource="{Binding FilteredMusikListItemListe}" 
-                                SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}" 
-                                SelectionChanged="lb_SelectionChanged1" >
-                                <!--MouseDoubleClick="lbMusik_MouseDoubleClick"-->
+                                         SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}" >                                    
+                                <!--SelectionChanged="lb_SelectionChanged1" >
+                                MouseDoubleClick="lbMusik_MouseDoubleClick"-->
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <local:MusikZeile  
-                                            />                                            
+                                        <local:MusikZeile />                                            
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
 
@@ -2039,9 +2039,9 @@
                                 <ListBox Name="lbPListMusik"  Background="Transparent" VerticalAlignment="Stretch" 
                                        ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" 
                                          ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
-                                         ItemsSource="{Binding FilteredErwPlayerMusikListItemListe}"                                          
+                                         ItemsSource="{Binding FilteredErwPlayerMusikListItemListe}"  
+                                         SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}" 
                                          SelectionChanged="lb_SelectionChanged2" />
-                                <!--SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}"--> 
 
                                 <!--SelectionChanged="lbPListMusik_SelectionChanged" ItemContainerStyle="{StaticResource SimpleListBoxItem}" />-->
                                 <!--ItemsSource="{Binding FilteredMusikListItemListe}" SelectedItem="{Binding SelectedMusikItem}"-->

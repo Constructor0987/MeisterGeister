@@ -1145,7 +1145,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }                    
                 OnChanged();                
             }
-        }        
+        }  
+
 
         private MusikZeile _selectedMusikItem;
         public MusikZeile SelectedMusikItem
@@ -1157,21 +1158,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                 BGPlayer.AktPlaylist = (value == null || value.VM.aPlaylist == null) ? null : value.VM.aPlaylist;
                 BGPlayer.AktPlaylistTitel = null;
+                BGPlayerAktPlaylist = BGPlayer.AktPlaylist;
                 BGPlayer.MusikNOK.Clear();
                 BGPlayer.NochZuSpielen.Clear();
                 BGPlayer.Gespielt.Clear();
+
                 BGPlayerGespieltCount = BGPlayer.Gespielt.Count;
 
                 RenewMusikNochZuSpielen();
-
-                OnChanged();
                 LoadMusikTitelListe();
                                 
                 if (HintergrundMusikListe.Count > 0)
                     SelectedMusikTitelItem = GetNextMusikTitel();
 
-                BGPlayerAktPlaylist = BGPlayer.AktPlaylist;
-                GetTotalLength(BGPlayerAktPlaylist, false);                
+                GetTotalLength(BGPlayerAktPlaylist, false);
+                OnChanged();
             }
         }
         
@@ -2647,7 +2648,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             BGPlayerGespieltCount = BGPlayer.Gespielt.Count;
             BGPlayer.NochZuSpielen.RemoveRange(0, BGPlayer.NochZuSpielen.Count);
 
-            BGStoppen();
+            //BGStoppen();
             SelectedMusikTitelItem = null;     
         }
   
@@ -4785,6 +4786,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
             if (FadingIn_Started != null && FadingIn_Started.Source != null || fadInfo.fadingOutSofort)
             {
+                if (!fadInfo.fadingOutSofort)
+                {
+                    fadInfo.Start = DateTime.Now;
+                    _vergangeneZeit = DateTime.Now.Subtract(fadInfo.Start).TotalMilliseconds;
+                }
                 fadInfo.fadingOutSofort = true;
 
                 //solange Volume runterregeln bis der Titel extern das Fadingstoppt
@@ -7346,7 +7352,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                     if (aTitel.Länge != mp.NaturalDuration.TimeSpan.TotalMilliseconds)
                                     {
                                         aTitel.Länge = mp.NaturalDuration.TimeSpan.TotalMilliseconds;
-                                        Global.ContextAudio.Update<Audio_Titel>(aTitel);
+                                        //Global.ContextAudio.Update<Audio_Titel>(aTitel);
                                     }
                                 }
                             }

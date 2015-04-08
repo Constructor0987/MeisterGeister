@@ -26,6 +26,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     {
         #region //---- FELDER ----
         //private bool MusikZeileIsChecked = false;
+        private bool InAnderemPfadSuchen = Einstellungen.AudioInAnderemPfadSuchen;
         private MusikZeileModel _model;
         private BackgroundWorker _worker;
         private int _iterations = 50;
@@ -404,7 +405,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
 
             _onlbThemeItemAdd = new Base.CommandBase(lbThemeItemAdd, null);
-            
             Iterations = aPlaylist != null? aPlaylist.Audio_Playlist_Titel.Count: 0;
                        
             _worker = new BackgroundWorker()
@@ -451,7 +451,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     {
                         aPlayerVM.KlangNewRow(grpobj, aPlaylistTitel);
 
-
                         if (aPlaylistTitel.Aktiv &&
                             !grpobj.NochZuSpielen.Contains(aPlaylistTitel.Audio_TitelGUID))
                         {
@@ -472,7 +471,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             if (!grpobj.wirdAbgespielt)
             {
                 grpobj.wirdAbgespielt = true;
-
+                //if (grpobj.aPlaylist.Hintergrundmusik)
+                //    aPlayerVM.SelectedMusikItem = aPlayerVM.MusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == grpobj.aPlaylist);
                 //WARTEZEIT DER PLAYLISTE EINBAUEN
                 grpobj.wartezeitTimer.Tag = grpobj;
                 if (!grpobj.aPlaylist.WarteZeitAktiv)
@@ -563,6 +563,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                         }
                     }
                 }
+                //aPlayerVM.BGPlayer.AktPlaylist = null;
+                //aPlayerVM.BGPlayerAktPlaylist = null;
                 aPlayerVM.CheckPlayStandbySongs(grpobj);
                 grpobj.totalTimePlylist = -1;
             }
@@ -932,7 +934,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }
             }
 
-            if (Einstellungen.AudioInAnderemPfadSuchen &&
+            if (InAnderemPfadSuchen &&
                 StdPfad.Count > 0)
             {
                 //ab hier: kein Std.-Pfad ist gültig -> Check in jedem Std.-Pfad mit Suche incl. Unterverzeichnisse nach dem Dateinamen                

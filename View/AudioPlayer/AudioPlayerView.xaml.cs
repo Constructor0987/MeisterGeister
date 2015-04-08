@@ -837,10 +837,13 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 ((ListBox)sender).ScrollIntoView((MusikZeile)e.AddedItems[0]);
                 ((ListBox)sender).UpdateLayout();
-                Audio_Playlist aPlaylist = ((MusikZeile)e.AddedItems[0]).VM.aPlaylist;
-                if (lbPListMusik.SelectedItem == null ||
-                    ((MusikZeile)lbPListMusik.SelectedItem).VM.aPlaylist != aPlaylist)
-                    lbPListMusik.SelectedItem = VM.ErwPlayerMusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aPlaylist);
+                //Audio_Playlist aPlaylist = ((MusikZeile)e.AddedItems[0]).VM.aPlaylist;
+                //if (((MusikZeile)lbPListMusik.SelectedItem).VM.aPlaylist.Audio_PlaylistGUID != VM.SelectedMusikItem.VM.aPlaylist.Audio_PlaylistGUID)
+                //    VM.SelectedMusikItem = VM.ErwPlayerMusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aPlaylist);
+                 //   lbPListMusik.SelectedItem = VM.SelectedMusikItem;
+                //if (lbPListMusik.SelectedItem == null ||
+                //    ((MusikZeile)lbPListMusik.SelectedItem).VM.aPlaylist != aPlaylist)
+                //    lbPListMusik.SelectedItem = VM.ErwPlayerMusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aPlaylist);
             }
         }
 
@@ -850,10 +853,11 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 ((ListBox)sender).ScrollIntoView(e.AddedItems[0]);
                 ((ListBox)sender).UpdateLayout();
-                Audio_Playlist aPlaylist = ((MusikZeile)e.AddedItems[0]).VM.aPlaylist;
-                if (lbMusik.SelectedItem == null ||
-                    ((MusikZeile)lbMusik.SelectedItem).VM.aPlaylist != aPlaylist)
-                    lbMusik.SelectedItem = VM.MusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aPlaylist);
+               // Audio_Playlist aPlaylist = ((MusikZeile)e.AddedItems[0]).VM.aPlaylist;
+                //if (lbMusik.SelectedItem == null ||
+                //    ((MusikZeile)lbMusik.SelectedItem).VM.aPlaylist.Audio_PlaylistGUID != ((MusikZeile)e.AddedItems[0]).VM.aPlaylist.Audio_PlaylistGUID)
+                //    VM.SelectedMusikItem = VM.MusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aPlaylist);
+                  //  lbMusik.SelectedItem = VM.MusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aPlaylist);
             }
         }
 
