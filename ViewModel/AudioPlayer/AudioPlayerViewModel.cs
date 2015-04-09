@@ -5546,8 +5546,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     else
                     {
                         _player.IsMuted = GeräuscheIsMuted;
-                        _player.Position = TimeSpan.FromMilliseconds(0);
-
+                        
                         if (_timerFadingOut.IsEnabled || !grpobj.aPlaylist.Fading)
                             _player.Volume =
                                 ((!notMusikPlayer || grpobj.visuell) ?

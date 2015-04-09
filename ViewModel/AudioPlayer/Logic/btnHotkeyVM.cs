@@ -16,6 +16,7 @@ using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using System.Windows.Media.Imaging;
 using MeisterGeister.View.General;
 using System.Windows.Media;
+using System.Threading;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -116,12 +117,17 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             // Event-Handler zur DependentProperty-Notification
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
 
+            mp.MediaEnded += mp_failed_ended;
+            mp.MediaFailed += mp_failed_ended;
             //_onlbEditorItemAdd = new Base.CommandBase(lbEditorItemAdd, null);
+            _timerTeilAbspielen.Interval = TimeSpan.FromMilliseconds(20);
+            _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);
         }
         #endregion
 
         #region //---- INSTANZMETHODEN ----
-
+        
+        public DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
 
         private Base.CommandBase _onBtn = null;
         public Base.CommandBase OnBtn
@@ -139,14 +145,44 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 //Audio_Playlist aPlaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == hkey.VM.aPlaylistGuid);
 
-                int zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count - 1);
-                Audio_Titel aTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen).Audio_Titel;
+                int zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count );
+                Audio_Playlist_Titel aPlayTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen);
 
-                mp.MediaEnded += mp_failed_ended;
-                mp.MediaFailed += mp_failed_ended;
-                mp.Open(new Uri(aTitel.Pfad + "\\" + aTitel.Datei));
+                if (mp.Source != null)
+                {
+                    _timerTeilAbspielen_Tick(_timerTeilAbspielen, null);
+                }
+                mp.Open(new Uri(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei));
                 mp.Volume = (double)(volume / 100);
+                if (aPlayTitel.TeilAbspielen)
+                {
+                    if (_timerTeilAbspielen.IsEnabled)
+                        _timerTeilAbspielen.Stop();
+                    mp.Position = TimeSpan.FromMilliseconds(0);
+                    // Bis zu 1000ms warten um die Musikdatei auszulesen und die Laufzeit zu ermitteln
+                    if (SpinWait.SpinUntil(() => { return mp.NaturalDuration.HasTimeSpan; }, 1000))
+                        mp.Position = TimeSpan.FromMilliseconds(aPlayTitel.TeilStart.Value);
+                }
+
                 mp.Play();
+                if (aPlayTitel.TeilAbspielen)
+                {
+                    _timerTeilAbspielen.Tag = aPlayTitel.TeilEnde.Value;     
+                    _timerTeilAbspielen.Start();
+                }
+            }
+        }
+        public void _timerTeilAbspielen_Tick(object sender, EventArgs e)
+        {
+            double Ende = (double)_timerTeilAbspielen.Tag;
+
+            if (mp.Source == null ||
+                mp.Position.TotalMilliseconds >= Ende ||
+                mp.Position.TotalMilliseconds == 0)
+            {
+                if (mp.Source != null) 
+                    mp.Stop();
+                _timerTeilAbspielen.Stop();
             }
         }
 

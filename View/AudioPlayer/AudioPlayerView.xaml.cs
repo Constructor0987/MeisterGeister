@@ -305,7 +305,7 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             AudioZeile aZeile = sender as AudioZeile;
             VM.audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(aZeile.VM);
-            if (VM.pointerZeileDragDrop == null)
+            if (VM.pointerZeileDragDrop == null )
                 return;
 
             Point mousePos = e.GetPosition(null);
@@ -433,8 +433,7 @@ namespace MeisterGeister.View.AudioPlayer {
         private void tbtnKlangPauseX_Checked(object sender, RoutedEventArgs e)
         {
             try
-            {
-                
+            {                
                 MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);// .tbtnKlangPause == ((ToggleButton)sender));
                 if (grpobj == null)
                     return;
