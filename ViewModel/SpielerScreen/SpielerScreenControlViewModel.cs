@@ -19,6 +19,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         #region //---- FELDER ----
 
         // Felder
+        private bool _isInSlideShowAll = true;
         private string _textToShow = string.Empty;
         private string _bildschirmInfo = "1 Bildschirm";
         private string _directoryPath = string.Empty;
@@ -39,6 +40,16 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
+
+        public bool IsInSlideShowAll
+        {
+            get { return _isInSlideShowAll; }
+            set
+            {
+                _isInSlideShowAll = value;
+                OnChanged("IsInSlideShowAll");
+            }
+        }
 
         public string TextToShow
         {
@@ -408,6 +419,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onIsInSlideShowAll = null;
+        public Base.CommandBase OnIsInSlideShowAll
+        {
+            get
+            {
+                if (onIsInSlideShowAll == null)
+                    onIsInSlideShowAll = new Base.CommandBase(SetInSlideShowAll, null);
+                return onIsInSlideShowAll;
+            }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -684,6 +706,14 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private void SetInSlideShowAll(object sender = null)
+        {
+            foreach (var item in Images)
+            {
+                item.IsInSlideShow = IsInSlideShowAll;
+            }
+        }
+
         public void ShowSlideShow(object sender = null)
         {
             if (SlideShowRunning)
@@ -790,7 +820,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
         public string Pfad { get; set; }
-        public bool IsInSlideShow { get; set; }
+
+        private bool _isInSlideShow = true;
+        public bool IsInSlideShow
+        {
+            get { return _isInSlideShow; }
+            set
+            {
+                _isInSlideShow = value;
+                OnChanged("IsInSlideShow");
+            }
+        }
 
         public ImageItem(string file)
         {

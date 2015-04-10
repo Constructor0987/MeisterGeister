@@ -97,7 +97,7 @@
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" Visibility="{Binding PathNotFound, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
                                 <TextBlock Text="{Binding DirectoryPath}" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bilder-Ordner" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
                                 <Image Margin="1" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchfilter" />
                                 <TextBox Margin="1,3" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchfilter" />
                             </StackPanel>
@@ -114,6 +114,7 @@
                             </CheckBox.Content>
                         </CheckBox>
                         <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding FilteredImages}" Background="Transparent" SelectedItem="{Binding SelectedImageObject}" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" MouseDoubleClick="_listBoxDirectory_MouseDoubleClick" />
+                        <CheckBox Grid.Column="0" Grid.Row="2" Margin="16,-8" VerticalAlignment="Top" ToolTip="Alle In Slide-Show einbeziehen bzw. nicht einbeziehen." Command="{Binding OnIsInSlideShowAll}" IsChecked="{Binding IsInSlideShowAll}" />
                         <Viewbox Grid.Column="1" Grid.Row="2" Name="viewboxImage" Margin="6" MinWidth="226">
                             <Viewbox.InputBindings>
                                 <MouseBinding MouseAction="MiddleClick" Command="{Binding OnOpenImageExtern}" />
