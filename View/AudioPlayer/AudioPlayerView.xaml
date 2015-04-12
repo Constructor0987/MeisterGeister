@@ -1774,8 +1774,8 @@
                                     </StackPanel>
                                 </Expander.Header>
                                 <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Liste aller erstellten Themes (Zusammenstellungen von Musik und Geräusche-Playlisten)">
-                                    <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
-                                        <ItemsControl ItemsSource="{Binding FilteredErwPlayerThemeListe}">
+                                    <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" >
+                                        <ItemsControl ItemsSource="{Binding FilteredErwPlayerThemeListe}" >
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel Name="wpnlPListThemes" ItemWidth="130" MinHeight="60" >
@@ -2040,10 +2040,10 @@
                                        ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" 
                                          ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                                          ItemsSource="{Binding FilteredErwPlayerMusikListItemListe}"  
-                                         SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}" 
-                                         SelectionChanged="lb_SelectionChanged2" />
+                                         SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}"  />
+                                  <!--       SelectionChanged="lb_SelectionChanged2"
 
-                                <!--SelectionChanged="lbPListMusik_SelectionChanged" ItemContainerStyle="{StaticResource SimpleListBoxItem}" />-->
+                                SelectionChanged="lbPListMusik_SelectionChanged" ItemContainerStyle="{StaticResource SimpleListBoxItem}" />-->
                                 <!--ItemsSource="{Binding FilteredMusikListItemListe}" SelectedItem="{Binding SelectedMusikItem}"-->
                             </Border>
                         </Expander>

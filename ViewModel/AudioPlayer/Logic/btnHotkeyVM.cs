@@ -177,8 +177,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             double Ende = (double)_timerTeilAbspielen.Tag;
 
             if (mp.Source == null ||
-                mp.Position.TotalMilliseconds >= Ende ||
-                mp.Position.TotalMilliseconds == 0)
+                mp.Position.TotalMilliseconds >= Ende)
+               // mp.Position.TotalMilliseconds == 0)
             {
                 if (mp.Source != null) 
                     mp.Stop();

@@ -936,10 +936,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         {
             get
             {
-                return ((_bgPlayerAktPlaylistTitel != null && 
-                    _bgPlayerAktPlaylistTitel.Audio_Titel.Länge != null && 
-                    _bgPlayerAktPlaylistTitel.Audio_Titel.Länge.Value != 0) ? 
-                _bgPlayerAktPlaylistTitel.Audio_Titel.Länge.Value : 100000); }
+                return ((_bgPlayerAktPlaylistTitel != null &&
+                    _bgPlayerAktPlaylistTitel.Länge != null && // .Audio_Titel.Länge 
+                    _bgPlayerAktPlaylistTitel.Länge != 0) ? 
+                _bgPlayerAktPlaylistTitel.Länge : 100000); }
             set { OnChanged(); }
         }
 
@@ -1159,10 +1159,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 BGPlayer.AktPlaylist = (value == null || value.VM.aPlaylist == null) ? null : value.VM.aPlaylist;
                 BGPlayer.AktPlaylistTitel = null;
                 BGPlayerAktPlaylist = BGPlayer.AktPlaylist;
+                BGPlayer.BG[BGPlayeraktiv].aPlaylist = BGPlayer.AktPlaylist;
                 BGPlayer.MusikNOK.Clear();
                 BGPlayer.NochZuSpielen.Clear();
                 BGPlayer.Gespielt.Clear();
-
                 BGPlayerGespieltCount = BGPlayer.Gespielt.Count;
 
                 RenewMusikNochZuSpielen();
@@ -3698,6 +3698,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     }
                     //Auswählen der Geräusche-Playlisst der untergeorgenten Themes
                     CheckUnterThemes(aTheme);
+                    FilterGeräuscheAktiv();
                 }
 
                 //  ----------- UNCHECKED ----------------
@@ -3715,7 +3716,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         }
                     }
                 }
-                FilterGeräuscheAktiv();
             }
             catch (Exception ex)
             {
@@ -4724,6 +4724,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
             else
                 SelectedMusikTitelItem = null;
+            OnChanged("BGPlayerAktPlaylistTitelLänge");
         }
 
 
@@ -5278,6 +5279,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     BGPlayer.AktPlaylistTitel.TeilAbspielen &&
                     BGPosition < BGPlayer.AktPlaylistTitel.TeilStart.Value)
                     BGPlayer.BG[BGPlayeraktiv].mPlayer.Position = TimeSpan.FromMilliseconds(BGPlayer.AktPlaylistTitel.TeilStart.Value);
+
+                if ((BGPlayer.BG[BGPlayeraktiv].mPlayer.NaturalDuration.HasTimeSpan &&BGPlayer.AktPlaylistTitel != null &&
+                    BGPlayer.BG[BGPlayeraktiv].mPlayer.NaturalDuration.TimeSpan.TotalMilliseconds != BGPlayer.AktPlaylistTitel.Länge))
+                {
+                    BGPlayer.AktPlaylistTitel.Länge = BGPlayer.BG[BGPlayeraktiv].mPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
+                    OnChanged("BGPlayerAktPlaylistTitelLänge");
+                }
 
                 //Bei Musikplaylists die Endposition vor Fading überprüfen
                 if ((BGPlayer.BG[BGPlayeraktiv].mPlayer.NaturalDuration.HasTimeSpan &&
