@@ -150,26 +150,7 @@ namespace MeisterGeister.View.Bodenplan
             {
                 if (vm.SelectedObject != null) vm.SelectionChangedUpdateSliders();
 
-                if (vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
-                {
-                    var currentcreature = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
-                    currentcreature.IsSticked = false;
-                   
-                    if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
-                    {
-                        vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
-                    }
-                    else if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
-                    {
-                        vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
-                    }
-                    else
-                    {
-                        vm.CurrentlySelectedCreature = "";
-                    }
-                    
-                }
-                else if (vm.CreateLine)
+                if (vm.CreateLine)
                 {
                     _x1 = e.GetPosition(ArenaGrid).X;
                     _y1 = e.GetPosition(ArenaGrid).Y;
@@ -206,8 +187,27 @@ namespace MeisterGeister.View.Bodenplan
                 }
                 else if (vm.SelectedObject != null)
                 {
-                    if (e.Device.Target is Image && vm.SelectedObject is Wesen)
+                    if (vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
                     {
+                        var currentcreature = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
+                        currentcreature.IsSticked = false;
+
+                        if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
+                        {
+                            vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
+                        }
+                        else if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
+                        {
+                            vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
+                        }
+                        else
+                        {
+                            vm.CurrentlySelectedCreature = "";
+                        }
+
+                    }else if (e.Device.Target is Image && vm.SelectedObject is Wesen)
+                    {
+
                         //Change position
                         //((BattlegroundCreature)vm.SelectedObject).UpdateCreaturePosition(Position.stehend, true);
                         if (((Wesen)vm.SelectedObject).Position == Position.stehend) ((Wesen)vm.SelectedObject).Position = Position.liegend;
