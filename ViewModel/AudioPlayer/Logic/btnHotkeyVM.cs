@@ -126,8 +126,25 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         #endregion
 
         #region //---- INSTANZMETHODEN ----
-        
+        public AudioPlayerViewModel AudioVM;
         public DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
+
+        private bool checkTitel(Audio_Titel titel)
+        {
+            if (//DriveInfo.GetDrives().FirstOrDefault(t => t.Name == titel.Pfad.Substring(0,3)) != null &&
+                !Directory.Exists(titel.Pfad) && !File.Exists(titel.Pfad + "\\" + titel.Datei))
+            {
+                titel = AudioVM.setTitelStdPfad(titel);
+                if (File.Exists(titel.Pfad + "\\" + titel.Datei))
+                    Global.ContextAudio.Update<Audio_Titel>(titel);
+            }
+
+            if (Directory.Exists(titel.Pfad) && !File.Exists(titel.Pfad + "\\" + titel.Datei) ||
+                    !Directory.Exists(System.IO.Path.GetDirectoryName(titel.Pfad + "\\" + titel.Datei)))
+                return false;
+            else
+                return true;
+        }
 
         private Base.CommandBase _onBtn = null;
         public Base.CommandBase OnBtn
@@ -143,14 +160,20 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             if (aPlaylistGuid != null)
             {
-                //Audio_Playlist aPlaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == hkey.VM.aPlaylistGuid);
 
                 int zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count );
                 Audio_Playlist_Titel aPlayTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen);
 
+                while (!checkTitel(aPlayTitel.Audio_Titel))
+                {                
+                    zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count);
+                    aPlayTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen);
+                }
+                
                 if (mp.Source != null)
                 {
-                    _timerTeilAbspielen_Tick(_timerTeilAbspielen, null);
+                    _timerTeilAbspielen.Stop();
+                    mp.Stop();
                 }
                 mp.Open(new Uri(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei));
                 mp.Volume = (double)(volume / 100);

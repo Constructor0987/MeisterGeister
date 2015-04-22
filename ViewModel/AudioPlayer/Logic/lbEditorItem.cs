@@ -396,6 +396,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                         lbFilteredTheme.Remove(lbFilteredTheme.First(t => t.ATheme == ATheme));
                         lbTheme.Remove(lbTheme.First(t => t.ATheme == ATheme));
 
+                        List<grdThemeButton> grdThBtnList = PlayerVM.ErwPlayerThemeListe.FindAll(t => t.VM.Theme.Audio_ThemeGUID != ATheme.Audio_ThemeGUID);
+                        PlayerVM.ErwPlayerThemeListe = grdThBtnList;
+                        
                         if (!Global.ContextAudio.Delete<Audio_Theme>(ATheme))
                             Global.ContextAudio.ThemeListe.Remove(ATheme);
 

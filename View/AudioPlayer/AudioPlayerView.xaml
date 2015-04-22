@@ -115,7 +115,7 @@
                                 <Style TargetType="Image">
                                     <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding APlaylist.Hintergrundmusik}" Value="True" >
+                                        <DataTrigger Binding="{Binding APlaylist.Hintergrundmusik, UpdateSourceTrigger=PropertyChanged}" Value="True" >
                                             <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1428,7 +1428,7 @@
                             <ListBox Padding="4" Name="lbMusik"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" 
                                 ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" 
                                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
-                                ItemsSource="{Binding FilteredMusikListItemListe}" 
+                                ItemsSource="{Binding FilteredMusikListItemListe, UpdateSourceTrigger=PropertyChanged}" 
                                          SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}" >                                    
                                 <!--SelectionChanged="lb_SelectionChanged1" >
                                 MouseDoubleClick="lbMusik_MouseDoubleClick"-->
@@ -1775,7 +1775,7 @@
                                 </Expander.Header>
                                 <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Liste aller erstellten Themes (Zusammenstellungen von Musik und Geräusche-Playlisten)">
                                     <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" >
-                                        <ItemsControl ItemsSource="{Binding FilteredErwPlayerThemeListe}" >
+                                        <ItemsControl ItemsSource="{Binding FilteredErwPlayerThemeListe, UpdateSourceTrigger=PropertyChanged}" >
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel Name="wpnlPListThemes" ItemWidth="130" MinHeight="60" >
@@ -2039,7 +2039,7 @@
                                 <ListBox Name="lbPListMusik"  Background="Transparent" VerticalAlignment="Stretch" 
                                        ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" 
                                          ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
-                                         ItemsSource="{Binding FilteredErwPlayerMusikListItemListe}"  
+                                         ItemsSource="{Binding FilteredErwPlayerMusikListItemListe, UpdateSourceTrigger=PropertyChanged}"  
                                          SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}"  />
                                   <!--       SelectionChanged="lb_SelectionChanged2"
 
@@ -2061,7 +2061,7 @@
                                 <ListBox Name="lbPListGeräusche" Background="Transparent" VerticalAlignment="Stretch" Style="{StaticResource ReadOnlyStyle}"
                                          ToolTip="Liste aller Geräusche-Playlisten. Zum Anspielen einen Haken setzen oder das entsprechende Theme auswählen"
                                          ItemContainerStyle="{StaticResource SimpleListBoxItem}"
-                                         ItemsSource="{Binding FilteredErwPlayerGeräuscheListItemListe}" 
+                                         ItemsSource="{Binding FilteredErwPlayerGeräuscheListItemListe, UpdateSourceTrigger=PropertyChanged}" 
                                          SelectedItem="{Binding SelectedGeräuschItem}"  
                                          SelectionChanged="lb_SelectionChanged" />
                             </Border>
