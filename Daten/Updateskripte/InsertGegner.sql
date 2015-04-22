@@ -6447,6 +6447,486 @@ Sonderfertigkeiten: Regeneration I, Große Meditation, Repräsentation Blutmagie
 Zauber: Goldene Haut 6, Attributo 6, Blick aufs Wesen 7, Horriphobus 8, Plumbumbarum 6, Arachnea 8, Spinnenlauf 6, Somnigravis 7, Höllenpein 7, Hexengalle 5, Odem Arcanum 7, Blutklinge 7
 
 Rituale: Ritualkenntnis Blutmagier 5, Blutopfer der Tetlachi (I), kleine Formung des Blutsteins, Apport (I), Kraft des Tieres (II)' ,N'U3 85' ,N'Uhruia' ,NULL ,NULL ,NULL ,NULL ,13 ,-5);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Veteranen-Mitglied der Alten Gilde' ,NULL ,NULL ,12 ,N'1W6' ,2 ,15 ,35 ,35 ,0 ,0 ,13 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 15 KL 12 
+IN 15 CH 11
+FF 15 GE 15
+KO 13 KK 14
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 10, Klettern 12, Körperbeherrschung 11, Schleichen 14, Selbstbeherrschung 8, Sich Verstecken 14, Sinnenschärfe 12, Taschendiebstahl 14, Zechen 7, Gassenwissen 15, Menschenkenntnis 10, Überreden 10, Fesseln/Entfesseln 6, Rechtskunde 5, Schätzen 5, Schlösser Knacken 15, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (drei Stadtteile); Aufmerksamkeit, Ausweichen I bis III, Schnellziehen, Waffenlos Bornländisch, Wuchtschlag, möglicherweise Schattenpfade I
+
+Ausrüstung: Ausrüstung: Beutelchen, drei Wurfdolche, Dolch, einfache Straßenkleidung, eventuell Seil mit Wurfhaken, Keule, Schlagring, Springarm oder Drolina, hochwertiges Set Dietriche
+
+Verhalten im Kampf: In den meisten Fällen wird ein Mitglied sich einem
+Kampf durch Flucht entziehen. Wird der Dieb jedoch gestellt, versucht er seine Wurfdolche einzusetzen und verteidigt sich notfalls mit einem Dolch. Bereitet sich das Mitglied auf einen Überfall vor, nutzt es auch eine Keule und setzt gelegentlich Wuchtschläge ein (+1 bis +3). Sobald das Mitglied ein Drittel seiner LeP verloren hat, wird es den Kampf abbrechen.
+Nach einer Flucht kehren sie nach 2W20+20 KR mit 1W6+2 Mann Verstärkung zurück.' ,N'GKuK 28' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,16 ,25);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000963' ,N'Spießbürger (erfahren)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/buerger.png' ,13 ,N'1W6' ,2 ,13 ,30 ,32 ,0 ,0 ,13 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,2 ,2 ,1 ,1 ,2 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 13   KL 11 
+IN 13     CH 12
+FF 12     GE 13 
+KO 13    KK 13
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+4 (3), Eisern (4), Guter Ruf 3 (5), Verbindungen (6); 1W6: kein (1-2), Arroganz (3), Goldgier (4), Jähzorn (5), Neugier (6)
+
+Talente: Athletik 5, Klettern 3, Körperbeherrschung 5, Selbstbeherrschung 6, Sich Verstecken 3, Sinnenschärfe 8, Zechen 7, Gassenwissen 7, Menschenkenntnis 7, Überreden 9, Fesseln/Entfesseln 3, Rechnen 7, Rechtskunde 6, Schätzen 6, spricht Garethi, gebrochen zwei andere Sprachen 
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Finte, Formation, Kampfreflexe, Wuchtschlag
+
+Verhalten im Kampf: Eine einzelne Spießbürgerin versucht ihren Gegner auf Distanz zu halten, setzt zudem gerne den Wuchtschlag ein (+1 bis +2). Zu mehreren nutzen sie die Vorteile der Formation und der Überzahl. Sie fliehen, sobald sie eine Wunde erlitten haben oder ein Drittel ihrer LeP eingebüßt haben.
+
+Gambeson/Wattierter Waffenrock (Rüstung)' ,N'GKuK 25' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000964' ,N'Geweihter des Namenlosen (Grad III)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/magier.png' ,13 ,N'1W6' ,2 ,12 ,38 ,33 ,0 ,48 ,13 ,8 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 18 KL 14 
+IN 16 CH 13
+FF 12 GE 13 
+KO 13 KK 13
+
+
+Vor- und Nachteile: W6: kein (1-2), Schwer zu verzaubern (3), Hohe Magieresistenz MR+3 (4), Adlige Abstammung (5), Verbindungen (6); W6: kein (1-2), Arroganz (3), Eitelkeit (4), Neugier (5), Widerwärtiges Aussehen (6) automatisch Geweiht (Namenlos)
+
+Talente: Athletik 7, Klettern 7, Körperbeherrschung 9, Selbstbeherrschung 16, Sich verstecken 13, Sinnenschärfe 15, Zechen 2, Gassenwissen 13, Menschenkenntnis 17, Überreden 14, Götter/Kulte 17, Magiekunde 12, Rechnen 5, Rechtskunde 4, spricht Garethi, bruchstückhaft drei andere Sprachen
+
+Liturgien: wie Grad II, zusätzlich NAMENLOSER ZWEIFEL, GOTT DER GÖTTER (bis Grad IV), SEELENSCHATTEN, SCHWINDENDE ZAUBERKRAFT
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (drei Stadtteile); Aufmerksamkeit, Wuchtschlag; Liturgiekenntnis (Namenloser) 15
+
+Ausrüstung: Geldbeutel, Geweihtenornat, Streitkolben, Basiliskenzunge
+
+Verhalten im Kampf: schwächt Gegner mittels Dunkler Wunder (PECH UND SCHWEFEL, NAMENLOSE KÄLTE) und geht erst dann in den Nahkampf; flieht, wenn seine LeP unter ein Drittel gesunken sind.' ,N'GKuK 32' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000965' ,N'Veteranen-Waisenmacher-Söldner' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/barbar.png' ,13 ,N'1W6' ,2 ,13 ,33 ,37 ,0 ,0 ,15 ,5 ,NULL ,6 ,NULL ,NULL ,2 ,5 ,1 ,0 ,0 ,2 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 15 KL 12 
+IN 15 CH 10
+FF 11 GE 15 
+KO 15 KK 16
+
+Vor- und Nachteile: 1W6: kein (1-2), Eisern (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 8, Klettern 4, Körperbeherrschung 7, Schleichen 6, Selbstbeherrschung 12, Sich Verstecken 3, Sinnenschärfe 10, Zechen 6, Gassenwissen 12, Menschenkenntnis 8, Überreden 6, Rechtskunde 4, Schätzen 5, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Ausfall, Defensiver Kampfstil, Finte, Kampfrefl exe, Klingenwand, Meisterparade, Niederwerfen, Rüstungsgewöhnung I (Kürass), Sturmangriff, Waffenlos Bornländisch, Wuchtschlag 
+
+Ausrüstung: Dolch, Schwert, Bastardschwert, Kürass, Tellerhelm, Schnapsflasche, Würfel, Boltankarten, persönliches gehärtetes Bastardschwert (WM 0/+1, BF –2, TP+1)
+
+Verhalten im Kampf: eröffnet Kämpfe mit einem Ausfall, später konzentriert er sich auf Finten und Angriffe zum Niederwerfen; bricht den Kampf ab, wenn seine LeP unter ein Drittel gesunken sind.
+
+Kürass (Rüstung)
+Tellerhelm (Rüstung)' ,N'GKuK 31' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,15 ,19);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Erfahrenes Mitglied der Tobrier' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/soeldner.png' ,12 ,N'1W6' ,2 ,14 ,34 ,35 ,0 ,0 ,14 ,5 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 15 KL 10 
+IN 14 CH 10
+FF 13 GE 14 
+KO 14 KK 16
+
+Vor- und Nachteile: 1W6: kein (1-2), Eisern (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 8, Klettern 5, Körperbeherrschung 7, Schleichen 8, Selbstbeherrschung 7, Sich Verstecken 8, Sinnenschärfe 9, Taschendiebstahl 8, Zechen 8, Gassenwissen 10, Menschenkenntnis 8, Überreden (Einschüchtern) 10 (12), Fesseln/Entfesseln 5, Rechtskunde 6, Schätzen 5, Schlösser Knacken 8, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Niederwerfen, Waffenlos Bornländisch, Wuchtschlag
+
+Ausrüstung: einfache Kleidung, Dolch, Knüppel oder Kurzschwert, Stemmeisen
+
+Verhalten im Kampf: Tobrier nutzen gerne den Vorteil der Überzahl aus und greifen bevorzugt mit ihren Knüppeln an, wobei sie auch einfache Wuchtschläge ausführen (+1 bis +2). Zudem versuchen sie Gegner mit Niederwerfen-Manövern zu Fall zu bringen. Wenn sie einen Hinterhalt legen, nutzen sie Leichte Armbrüste. Sie fliehen meist nach Verlust der halben LeP.
+Nahe Stützpunkten der Tobrier kehren Geflohene meist binnen 2W20+10 KR mit 1W6+3 neuen Bandenmitgliedern zurück' ,N'GKuK 30' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,17 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000967' ,N'Inspector der Garether Criminal-Kammer (erfahren)' ,NULL ,NULL ,16 ,N'1W6' ,2 ,12 ,33 ,35 ,0 ,0 ,12 ,6 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 16   KL 14 
+IN 13     CH 11
+FF 12     GE 14 
+KO 12    KK 14
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Herausragender Sinn (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Arroganz (3), Eitelkeit (4), Jähzorn (5), Rachsucht (6)
+Talente: Athletik 3, Klettern 2, Körperbeherrschung 5, Schleichen 7, Selbstbeherrschung 8, Sich Verstecken 6, Sinnenschärfe 8, Zechen 3, Etikette 8, Gassenwissen 8, Menschenkenntnis 8, Überreden 8, Fesseln/Entfesseln 6, Rechtskunde 6, spricht Garethi, gebrochen zwei andere Sprachen Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Finte
+
+Ausrüstung: Amulett der Kammer, Notizbuch, Schreibzeug, Ausrüstung zur Spurensicherung, persönliches Rapier (WM 0/+1)
+
+Verhalten im Kampf: Wenn er kämpfen muss, dann meist mit einer leichten Armbrust, im Nahkampf mit dem Rapier. Mit diesem schlägt er gelegentlich Finten (+1 bis +3). Sobald er ein Drittel seiner LeP verloren hat, wird er den Kampf abbrechen.' ,N'GKuK 26' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,14 ,17);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000968' ,N'Bürger oder Einwohner (Gareth)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/buerger.png' ,9 ,N'1W6' ,2 ,11 ,28 ,29 ,0 ,0 ,12 ,3 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 11   KL 12 
+IN 12     CH 12
+FF 13     GE 12 
+KO 12    KK 11
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+4 (3), Soziale Anpassungsfähigkeit (4), Verbindungen (5-6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Neugier (6)
+
+Talente: Athletik 2, Klettern 1, Körperbeherrschung 3, Selbstbeherrschung 3, Sich Verstecken 0, Sinnenschärfe 4, Zechen 3, Gassenwissen 5, Menschenkenntnis 5, Überreden 4, Rechtskunde 5, Schätzen 5, zwei Wissensund/ oder Handwerkstalente auf 10 bzw. 7 (je nach Beruf), spricht Garethi, bruchstückhaft eine andere Sprache
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); 
+Ausrüstung: einfache, ihrem Stand und Beruf angemessene Kleidung, Dolch, improvisierte Waffe wie etwa ein Beil, passende Ausrüstung nach Beruf
+Verhalten im Kampf: Bürger sind keine erfahrenen Kämpfer, versuchen
+Kämpfe zu vermeiden und wagen nur in deutlicher Überzahl (4 zu 1) einen
+Angriff. Sie fl iehen, sobald ein Drittel ihrer LeP eingebüßt haben.
+' ,N'GKuK 24' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Mitglied der Tobrier' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/soeldner.png' ,11 ,N'1W6' ,2 ,12 ,30 ,32 ,0 ,0 ,13 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 14 KL 10
+IN 14 CH 10
+FF 13 GE 13 
+KO 13 KK 14
+
+Vor- und Nachteile: 1W6: kein (1-2), Eisern (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 6, Klettern 4, Körperbeherrschung 5, Schleichen 6, Selbstbeherrschung 5, Sich Verstecken 6, Sinnenschärfe 7, Taschendiebstahl 6, Zechen 6, Gassenwissen 7, Menschenkenntnis 6, Überreden (Einschüchtern) 7 (9), Fesseln/Entfesseln 4, Rechtskunde 5, Schätzen 5, Schlösser Knacken 6, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Waffenlos Bornländisch, Wuchtschlag
+
+Ausrüstung: einfache Kleidung, Dolch, Knüppel oder Kurzschwert, Stemmeisen
+
+Verhalten im Kampf: Tobrier nutzen gerne den Vorteil der Überzahl aus und greifen bevorzugt mit ihren Knüppeln an, wobei sie auch einfache Wuchtschläge ausführen (+1). Wenn sie einen Hinterhalt legen, sind sie aber auch gerne mit leichten Armbrüsten bewaffnet. Sie fliehen meist nach Verlust der halben LeP.
+Nahe Stützpunkten der Tobrier kehren Geflohene meist binnen 2W20+10 KR mit 1W6+3 neuen Bandenmitgliedern zurück' ,N'GKuK 29' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,16);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000970' ,N'Stadtgardisten (Kettenhemnd)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/gardist.png' ,6 ,N'1W6' ,2 ,8 ,23 ,29 ,0 ,0 ,12 ,3 ,NULL ,11 ,NULL ,NULL ,0 ,4 ,4 ,3 ,3 ,4 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 12   KL 12 
+IN 12     CH 11
+FF 12     GE 12 
+KO 12    KK 12
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+6 (3), Eisern (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Krankheitsanfällig (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 4, Klettern 2, Körperbeherrschung 3, Selbstbeherrschung 3, Sich Verstecken 0, Sinnenschärfe 5, Zechen 3, Gassenwissen 6, Menschenkenntnis 7, Überreden 5, Fesseln/Entfesseln 5, Rechnen 4, Rechtskunde 5, Schätzen 5, spricht Garethi, bruchstückhaft eine andere Sprache
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Rüstungsgewöhnung I (Wappenrock) Ausrüstung: Geldbeutel, Wachstafel und Griffel, Pfeife oder Signalhorn, Mitgliedsring der Garde; Torwächter tragen Kurzschwert und Hellebarde, streifende Gardisten das Kurzschwert. Rüstung ist der Wappenrock, in gefährlichen Situationen wird Kettenhemd und Hellebarde (alternativ auch Säbel oder Langschwert) getragen. Etwa jeder dritte Gardist hat eine Armbrust dabei.
+
+Verhalten im Kampf: Gardisten versuchen ihre Gegner zunächst mit ihren Armbrüsten zu bedrohen und setzen sie – sofern man ihren Befehlen nicht Folge leistet – auch ein. Im Nahkampf halten sie ihre Gegner mit Hellebarden auf Distanz bis dies nicht mehr möglich ist. Sie nutzen gerne die Vorteile der Überzahl aus. Sobald sie ein Drittel ihrer LeP eingebüßt haben, versuchen sie sich zurückzuziehen.
+Kettenhemd (Rüstung)' ,N'GKuK 25' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,10 ,12);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000971' ,N'Geweihter des Namenlosen (Grad IV)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/magier.png' ,14 ,N'1W6' ,2 ,12 ,38 ,35 ,0 ,58 ,0 ,9 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 19 KL 15 
+IN 17 CH 14
+FF 12 GE 13 
+KO 13 KK 13
+
+Vor- und Nachteile: W6: kein (1-2), Schwer zu verzaubern (3), Hohe Magieresistenz MR+3 (4), Adlige Abstammung (5), Verbindungen (6); W6: kein (1-2), Arroganz (3), Eitelkeit (4), Neugier (5), Widerwärtiges Aussehen (6) automatisch Geweiht (Namenlos)
+
+Talente: Athletik 8, Klettern 7, Körperbeherrschung 9, Selbstbeherrschung 18, Sich Verstecken 15, Sinnenschärfe 17, Zechen 2, Gassenwissen 15, Menschenkenntnis 19, Überreden 16, Götter/Kulte 18, Magiekunde 12, Rechnen 5, Rechtskunde 4, spricht Garethi, bruchstückhaft drei andere Sprachen
+
+Liturgien: wie Grad III, zusätzlich FLUCH WI DER DIE UNGLÄUBIGEN, WAFFENFLÜCHE, SCHLEICHENDE FÄULNIS, EWI GE JUGEND, SEELENBANNUNG
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (drei Stadtteile); Aufmerksamkeit, Wuchtschlag; Liturgiekenntnis (Namenloser) 18
+
+Ausrüstung: Geldbeutel, Geweihtenornat, Streitkolben, Basiliskenzunge
+
+Verhalten im Kampf: schwächt Gegner mittels Dunkler Wunder (PECH UND
+SCHWEFEL, NAMENLOSE KÄLTE) und belegt Waffen mit WAFFENFLÜCHEN; Häufig ist er so fanatisch, dass er bis zum Tod kämpft.
+' ,N'GKuK 32' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Mitglied der Alten Gilde' ,NULL ,NULL ,10 ,N'1W6' ,2 ,11 ,30 ,30 ,0 ,-2 ,13 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 13 KL 10 
+IN 14 CH 11
+FF 13 GE 13 
+KO 13 KK 13
+
+SO 3 GT 2
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 6, Klettern 6, Körperbeherrschung 6, Schleichen 8, Selbstbeherrschung 4, Sich Verstecken 8, Sinnenschärfe 7, Taschendiebstahl 8, Zechen 3, Gassenwissen 8, Menschenkenntnis 7, Überreden 7, Fesseln/ Entfesseln 4, Rechtskunde 5, Schätzen 5, Schlösser Knacken 8, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Ausweichen I, Waffenlos Bornländisch, Wuchtschlag
+
+Ausrüstung: Beutelchen, drei Wurfdolche, Dolch, Dietriche, einfache Straßenkleidung, eventuell Seil mit Wurfhaken, Keule, Schlagring, Springarm oder Drolina
+
+Verhalten im Kampf: In den meisten Fällen wird ein unerfahrenes Mitglied sich einem Kampf durch Flucht entziehen. Wird der Dieb gestellt, setzt er seine Wurfdolche ein und verteidigt sich notfalls mit einem Dolch.
+Bereitet sich das Mitglied auf einen Überfall vor, nutzt es oft eine Keule und setzt gelegentlich auch Wuchtschläge ein (+1). Sobald das Mitglied ein Drittel seiner LeP verloren hat, wird es den Kampf abbrechen.
+Nach einer Flucht kehren sie nach 2W20+20 KR mit 1W6+2 Mann Verstärkung zurück.' ,N'GKuK 27' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Mitglied der Almadaner (Recambios)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/wegelagerer.png' ,10 ,N'1W6' ,2 ,13 ,29 ,30 ,0 ,0 ,12 ,3 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 13 KL 10 
+IN 13 CH 11
+FF 13 GE 13 
+KO 12 KK 13
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Verbindungen (4), Gefahreninstinkt (5), Eisern (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 4, Klettern 2, Körperbeherrschung 5, Schleichen 6, Selbstbeherrschung 3, Sich Verstecken 6, Sinnenschärfe 6, Taschendiebstahl 6, Zechen 5, Gassenwissen 8, Menschenkenntnis 7, Überreden (Einschüchtern) 7 (9), Fesseln/Entfesseln 4, Rechtskunde 5, Schätzen 5, Heilkunde Gift 5, Schlösser Knacken 5, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Almada, Mittelreich), Ortskenntnis (ein Stadtteil), Waffenlos Bornländisch, Wuchtschlag 
+
+Ausrüstung: Beutelchen, drei Wurfmesser, Schlagring, Kurzschwert oder Rapier, Straßenkleidung und bessere, almadanische Kleidung
+
+Verhalten im Kampf: Recambios greifen in Überzahl an und nutzen alle zur Verfügung stehenden Mittel. Sie fliehen meist nach dem Verlust der halben LeP.
+
+Nahe Stützpunkten der Almadaner kehren Gefl ohene meist binnen 2W20+10 KR mit 1W6+3 neuen Bandenmitgliedern zurück.' ,N'GKuK 28' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,13 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000974' ,N'Geweihter des Namenlosen (Grad I)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/magier.png' ,10 ,N'1W6' ,2 ,11 ,32 ,29 ,0 ,24 ,12 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 15 KL 12 
+IN 14 CH 12
+FF 12 GE 12 
+KO 12 KK 13
+
+
+Vor- und Nachteile: W6: kein (1-2), Schwer zu verzaubern (3), Hohe Magieresistenz MR+3 (4), Adlige Abstammung (5), Verbindungen (6); W6: kein (1-2), Arroganz (3), Eitelkeit (4), Neugier (5), Widerwärtiges Aussehen (6) automatisch Geweiht (Namenlos)
+
+Talente: Athletik 2, Klettern 2, Körperbeherrschung 2, Selbstbeherrschung 6, Sich Verstecken 4, Sinnenschärfe 6, Zechen 1, Gassenwissen 4, Menschenkenntnis 8, Überreden 6, Götter/Kulte 10, Magiekunde 4, Rechnen 5, Rechtskunde 4, spricht Garethi, bruchstückhaft drei andere Sprachen
+
+Liturgien: NAMENLOSES VERGESSEN, HERBEIRUFUNG DER DIENER DES HERRN, NAMENLOSE KÄLTE, NAMENLOSE RASEREI, PECH UND SCHWEFEL
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Liturgiekenntnis (Namenloser) 6
+
+Ausrüstung: Geldbeutel, Geweihtenornat, Streitkolben, Basiliskenzunge
+
+Verhalten im Kampf: schwächt Gegner mittels Dunkler Wunder (PECH UND SCHWEFEL, NAMENLOSE KÄLTE) und geht erst dann in den Nahkampf; flieht, wenn seine LeP unter die Hälfte gesunken sind.' ,N'GKuK 31' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,11 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000975' ,N'Stadtgardisten (Gambeson)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/gardist.png' ,9 ,N'1W6' ,2 ,10 ,23 ,29 ,0 ,0 ,12 ,3 ,NULL ,7 ,NULL ,NULL ,0 ,2 ,2 ,1 ,1 ,2 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 12   KL 12 
+IN 12     CH 11
+FF 12     GE 12 
+KO 12    KK 12
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+6 (3), Eisern (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Krankheitsanfällig (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 4, Klettern 2, Körperbeherrschung 3, Selbstbeherrschung 3, Sich Verstecken 0, Sinnenschärfe 5, Zechen 3, Gassenwissen 6, Menschenkenntnis 7, Überreden 5, Fesseln/Entfesseln 5, Rechnen 4, Rechtskunde 5, Schätzen 5, spricht Garethi, bruchstückhaft eine andere Sprache
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Rüstungsgewöhnung I (Wappenrock) Ausrüstung: Geldbeutel, Wachstafel und Griffel, Pfeife oder Signalhorn, Mitgliedsring der Garde; Torwächter tragen Kurzschwert und Hellebarde, streifende Gardisten das Kurzschwert. Rüstung ist der Wappenrock, in gefährlichen Situationen wird Kettenhemd und Hellebarde (alternativ auch Säbel oder Langschwert) getragen. Etwa jeder dritte Gardist hat eine Armbrust dabei.
+
+Verhalten im Kampf: Gardisten versuchen ihre Gegner zunächst mit ihren Armbrüsten zu bedrohen und setzen sie – sofern man ihren Befehlen nicht Folge leistet – auch ein. Im Nahkampf halten sie ihre Gegner mit Hellebarden auf Distanz bis dies nicht mehr möglich ist. Sie nutzen gerne die Vorteile der Überzahl aus. Sobald sie ein Drittel ihrer LeP eingebüßt haben, versuchen sie sich zurückzuziehen.
+Gambeson/Wattierter Waffenrock (Rüstung)' ,N'GKuK 25' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,11 ,12);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000976' ,N'Stadtgardist (Veteran, Gambeson)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/gardist.png' ,14 ,N'1W6' ,2 ,14 ,33 ,35 ,0 ,0 ,14 ,5 ,NULL ,7 ,NULL ,NULL ,0 ,2 ,2 ,1 ,1 ,2 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 14   KL 13 
+IN 14     CH 11
+FF 12     GE 14 
+KO 14    KK 15
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+6 (3), Eisern (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Krankheitsanfällig (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 11, Klettern 5, Körperbeherrschung 8, Selbstbeherrschung 10, Sich Verstecken 5, Sinnenschärfe 12, Zechen 10, Gassenwissen 11, Menschenkenntnis 11, Überreden 9, Fesseln/Entfesseln 8, Rechnen 6, Rechtskunde 8, Schätzen 7, spricht Garethi, mäßig zwei andere Sprachen Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Binden, Entwaffnen, Finte, Formation, Kampfreflexe, Meisterparade, Niederwerfen, Rüstungsgewöhnung II, Schnellziehen, Waffenlos Hammerfaust, Wuchtschlag
+
+Ausrüstung: Geldbeutel, Wachstafel und Griffel, Pfeife oder Signalhorn, Mitgliedsring der Garde; Torwächter tragen Kurzschwert und Hellebarde, streifende Gardisten das Kurzschwert. Rüstung ist der Wappenrock, in gefährlichen Situationen wird Kettenhemd und Hellebarde (alternativ auch Säbel oder Langschwert) getragen. Etwa jeder dritte Gardist hat eine Armbrust dabei. Zusätzlich besitzt er ein persönliches, gehärtetes Kurzschwert (WM 0/+1, BF -2, TP+1)
+
+Verhalten im Kampf: Gardisten versuchen ihre Gegner zunächst mit ihren Armbrüsten zu bedrohen und setzen sie – sofern man ihren Befehlennicht Folge leistet – auch ein. Im Nahkampf halten sie ihre Gegner mit
+Hellebarden auf Distanz und setzen Meisterparaden und Niederwerfen ein (+1 bis +2), um ihre Angriffe vorzubereiten. Ein Hammerschlag wird nur ausgeführt, wenn der Gegner in dieser KR all seine Aktionen verbraucht hat. In geringerer Distanz setzen sie auf ihr Kurzschwert und nutzen gelegentlich Finten (+1 bis +2). Zudem nutzen sie gerne die Vorteile der Überzahl aus. Sobald sie die Hälfte ihrer LeP eingebüßt haben, versuchen sie, sich zurückzuziehen.' ,N'GKuK 26' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,14 ,19);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000977' ,N'Stadtgardist (erfahren, Kettenhemnd)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/gardist.png' ,11 ,N'1W6' ,2 ,11 ,30 ,32 ,0 ,0 ,13 ,4 ,NULL ,5 ,NULL ,NULL ,0 ,4 ,4 ,3 ,3 ,4 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 13   KL 12 
+IN 13     CH 11
+FF 12     GE 13 
+KO 13    KK 13
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+6 (3), Eisern (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Krankheitsanfällig (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 6, Klettern 3, Körperbeherrschung 5, Selbstbeherrschung 6, Sich Verstecken 3, Sinnenschärfe 9, Zechen 7, Gassenwissen 8, Menschenkenntnis 8, Überreden 7, Fesseln/Entfesseln 6, Rechnen 5, Rechtskunde 6, Schätzen 6, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Finte, Kampfreflexe, Rüstungsgewöhnung II, Wuchtschlag
+
+Ausrüstung: Geldbeutel, Wachstafel und Griffel, Pfeife oder Signalhorn, Mitgliedsring der Garde; Torwächter tragen Kurzschwert und Hellebarde, streifende Gardisten das Kurzschwert. Rüstung ist der Wappenrock, in gefährlichen Situationen wird Kettenhemd und Hellebarde (alternativ auch Säbel oder Langschwert) getragen. Etwa jeder dritte Gardist hat eine Armbrust dabei. Zusätzlich besitzt er ein persönliches Kurzschwert (WM 0/+1)
+
+Verhalten im Kampf: Gardisten versuchen ihre Gegner zunächst mit ihren Armbrüsten zu bedrohen und setzen sie – sofern man ihren Befehlen nicht Folge leistet – auch ein. Im Nahkampf halten sie ihre Gegner mit Hellebarden auf Distanz. Zudem setzen sie auch Meisterparaden ein (+1 bis +2), um ihre Angriffe vorzubereiten. Ist dies nicht mehr möglich, setzen sie auf ihr Kurzschwert und nutzen gelegentlich Finten (+1 bis +2). Zudem nutzen sie gerne die Vorteile der Überzahl aus. Sobald sie die Hälfte ihrer LeP eingebüßt haben, versuchen sie sich zurückzuziehen.' ,N'GKuK 25' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,11 ,15);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000978' ,N'Waisenmacher-Söldner' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/barbar.png' ,0 ,N'1W6' ,2 ,12 ,31 ,32 ,0 ,0 ,13 ,4 ,NULL ,6 ,NULL ,NULL ,2 ,5 ,1 ,0 ,0 ,2 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 13 KL 12 
+IN 13 CH 10
+FF 11 GE 13 
+KO 13 KK 14
+
+Vor- und Nachteile: 1W6: kein (1-2), Eisern (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 4, Klettern 2, Körperbeherrschung 3, Schleichen 6, Selbstbeherrschung 6, Sich Verstecken 2, Sinnenschärfe 5, Zechen 6, Gassenwissen 7, Menschenkenntnis 6, Überreden 4, Rechtskunde 4, Schätzen 5, spricht Garethi, gebrochen zwei andere Sprachen Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Defensiver Kampfstil, Finte, Meisterparade, Rüstungsgewöhnung I (Kürass), Waffenlos Bornländisch, Wuchtschlag
+
+Ausrüstung: Dolch, Schwert, Bastardschwert, Kürass, Tellerhelm, Schnapsflasche, Würfel, Boltankarten
+
+Verhalten im Kampf: Ein unerfahrener Söldner wird nur dann Finten oder Meisterparaden einsetzen, wenn sein Gegner unterlegen ist, und dann auch nur +1 oder +2 Ansagen. Sobald er ein Drittel seiner LeP verloren hat, wird er den Kampf abbrechen.
+
+Kürass (Rüstung)
+Tellerhelm (Rüstung)
+
+' ,N'GKuK 30' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,17);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000979' ,N'Erfahrener Waisenmacher-Söldner' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/barbar.png' ,9 ,N'1W6' ,2 ,13 ,34 ,35 ,0 ,0 ,14 ,0 ,NULL ,6 ,NULL ,NULL ,2 ,5 ,1 ,0 ,0 ,2 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 14 KL 12 
+IN 14 CH 10
+FF 11 GE 14 
+KO 14 KK 15
+
+Vor- und Nachteile: 1W6: kein (1-2), Eisern (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 6, Klettern 4, Körperbeherrschung 5, Schleichen 6, Selbstbeherrschung 8, Sich Verstecken 3, Sinnenschärfe 7, Zechen 6, Gassenwissen 10, Menschenkenntnis 8, Überreden 4, Rechtskunde 4, Schätzen 5, spricht Garethi, gebrochen zwei andere Sprachen 
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Ausfall, Defensiver Kampfstil, Finte, Meisterparade, Niederwerfen, Rüstungsgewöhnung I (Kürass), Sturmangriff, Waffenlos Bornländisch, Wuchtschlag
+
+Ausrüstung: Dolch, Schwert, Bastardschwert, Kürass, Tellerhelm, Schnapsflasche, Würfel, Boltankarten, persönliches Bastardschwert (WM 0/+1)
+
+Verhalten im Kampf: versucht den Kampf früh durch einen Ausfall zu entscheiden oder bringt Gegner mittels Niederwerfen zu Fall; bricht den Kampf ab, sobald er die Hälfte seiner LeP eingebüßt hat
+
+Tellerhelm (Rüstung)
+Kürass (Rüstung)' ,N'GKuK 31' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,15 ,19);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000980' ,N'Inspector der Garether Criminal-Kammer (Veteran)' ,NULL ,NULL ,16 ,N'1W6' ,2 ,12 ,36 ,37 ,0 ,0 ,13 ,6 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 17   KL 15 
+IN 14    CH 12
+FF 12    GE 14 
+KO 13   KK 14
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Herausragender Sinn (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Arroganz (3), Eitelkeit (4), Jähzorn (5), Rachsucht (6)
+Talente: Athletik 3, Klettern 2, Körperbeherrschung 5, Schleichen 7, Selbstbeherrschung 8, Sich Verstecken 6, Sinnenschärfe 8, Zechen 3, Etikette 8, Gassenwissen 8, Menschenkenntnis 8, Überreden 8, Fesseln/Entfesseln 6, Rechtskunde 6, spricht Garethi, gebrochen zwei andere Sprachen Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Finte
+
+Talente: Athletik 8, Klettern 7, Körperbeherrschung 10, Schleichen 13, Selbstbeherrschung 14, Sich Verstecken 12, Sinnenschärfe 15, Zechen 5, Etikette 11, Gassenwissen 13, Menschenkenntnis 13, Überreden 13, Fesseln Entfesseln 8, Rechtskunde 11, spricht Garethi, gebrochen zwei andere Sprachen
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (drei Stadtteile); Aufmerksamkeit, Ausfall, Ausweichen I und II, Finte, Kampfreflexe, Meisterparade; Nandusgefälliges Wissen
+
+Ausrüstung: Amulett der Kammer, Notizbuch, Schreibzeug, Ausrüstung zur Spurensicherung, persönliches, gehärtetes Rapier (WM 0/+1, BF -2, TP+1)
+
+Verhalten im Kampf: Wenn er kämpfen muss, dann meist mit einer leichten Armbrust, im Nahkampf mit dem Rapier. Mit diesem schlägt er auch Finten (+1 bis +4) und nutzt gerne den Ausfall, um den Kampf schon zu Beginn für sich zu entscheiden. Sobald er eine Wunde erlitten oder ein Drittel seiner LeP verloren hat, wird er den Kampf abbrechen.' ,N'GKuK 27' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,14 ,19);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Erfahrenes Mitglied der Alten Gilde' ,NULL ,NULL ,11 ,N'1W6' ,2 ,13 ,33 ,33 ,0 ,0 ,13 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 14 KL 11 
+IN 15 CH 11
+FF 14 GE 14 
+KO 13 KK 13
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 8, Klettern 8, Körperbeherrschung 8, Schleichen 12, Selbstbeherrschung 6, Sich Verstecken 12, Sinnenschärfe 10, Taschendiebstahl 10, Zechen 5, Gassenwissen 12, Menschenkenntnis 8, Überreden 8, Fesseln/Entfesseln 4, Rechtskunde 5, Schätzen 5, Schlösser Knacken 12, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Ausweichen I und II, Schnellziehen, Waffenlos Bornländisch, Wuchtschlag 
+
+Ausrüstung: Ausrüstung: Beutelchen, drei Wurfdolche, Dolch, einfache Straßenkleidung, eventuell Seil mit Wurfhaken, Keule, Schlagring, Springarm oder Drolina, hochwertiges Set Dietriche
+
+Verhalten im Kampf: In den meisten Fällen wird ein Mitglied sich einem Kampf durch Flucht entziehen. Wird der Dieb gestellt, setzt er seine Wurfdolche ein und verteidigt sich notfalls mit einem Dolch. Bereitet sich das Mitglied auf einen Überfall vor, nutzt es auch eine Keule und setzt gelegentlich Wuchtschläge ein (+1 bis +2). Sobald das Mitglied ein Drittel seiner LeP verloren hat, wird es den Kampf abbrechen.
+Nach einer Flucht kehren sie nach 2W20+20 KR mit 1W6+2 Mann Verstärkung zurück.' ,N'GKuK 27, 28' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,22);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000982' ,N'Stadtgardist (Veteran, Kettenhemd)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/gardist.png' ,14 ,N'1W6' ,2 ,13 ,33 ,35 ,0 ,0 ,14 ,5 ,NULL ,7 ,NULL ,NULL ,0 ,4 ,4 ,3 ,3 ,4 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 14   KL 13 
+IN 14     CH 11
+FF 12     GE 14 
+KO 14    KK 15
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+6 (3), Eisern (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Krankheitsanfällig (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 11, Klettern 5, Körperbeherrschung 8, Selbstbeherrschung 10, Sich Verstecken 5, Sinnenschärfe 12, Zechen 10, Gassenwissen 11, Menschenkenntnis 11, Überreden 9, Fesseln/Entfesseln 8, Rechnen 6, Rechtskunde 8, Schätzen 7, spricht Garethi, mäßig zwei andere Sprachen Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Binden, Entwaffnen, Finte, Formation, Kampfreflexe, Meisterparade, Niederwerfen, Rüstungsgewöhnung II, Schnellziehen, Waffenlos Hammerfaust, Wuchtschlag
+
+Ausrüstung: Geldbeutel, Wachstafel und Griffel, Pfeife oder Signalhorn, Mitgliedsring der Garde; Torwächter tragen Kurzschwert und Hellebarde, streifende Gardisten das Kurzschwert. Rüstung ist der Wappenrock, in gefährlichen Situationen wird Kettenhemd und Hellebarde (alternativ auch Säbel oder Langschwert) getragen. Etwa jeder dritte Gardist hat eine Armbrust dabei. Zusätzlich besitzt er ein persönliches, gehärtetes Kurzschwert (WM 0/+1, BF -2, TP+1)
+
+Verhalten im Kampf: Gardisten versuchen ihre Gegner zunächst mit ihren Armbrüsten zu bedrohen und setzen sie – sofern man ihren Befehlennicht Folge leistet – auch ein. Im Nahkampf halten sie ihre Gegner mit
+Hellebarden auf Distanz und setzen Meisterparaden und Niederwerfen ein (+1 bis +2), um ihre Angriffe vorzubereiten. Ein Hammerschlag wird nur ausgeführt, wenn der Gegner in dieser KR all seine Aktionen verbraucht hat. In geringerer Distanz setzen sie auf ihr Kurzschwert und nutzen gelegentlich Finten (+1 bis +2). Zudem nutzen sie gerne die Vorteile der Überzahl aus. Sobald sie die Hälfte ihrer LeP eingebüßt haben, versuchen sie, sich zurückzuziehen.' ,N'GKuK 26' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,13 ,14);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000983' ,N'Stadtgardist (erfahren, Gambeson)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/gardist.png' ,13 ,N'1W6' ,2 ,12 ,30 ,32 ,0 ,0 ,13 ,4 ,NULL ,7 ,NULL ,NULL ,0 ,2 ,2 ,1 ,1 ,2 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 13   KL 12 
+IN 13     CH 11
+FF 12     GE 13 
+KO 13    KK 13
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+6 (3), Eisern (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Krankheitsanfällig (3), Goldgier (4), Jähzorn (5), Sucht, Alkohol (6)
+
+Talente: Athletik 6, Klettern 3, Körperbeherrschung 5, Selbstbeherrschung 6, Sich Verstecken 3, Sinnenschärfe 9, Zechen 7, Gassenwissen 8, Menschenkenntnis 8, Überreden 7, Fesseln/Entfesseln 6, Rechnen 5, Rechtskunde 6, Schätzen 6, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Finte, Kampfreflexe, Rüstungsgewöhnung II, Wuchtschlag
+
+Ausrüstung: Geldbeutel, Wachstafel und Griffel, Pfeife oder Signalhorn, Mitgliedsring der Garde; Torwächter tragen Kurzschwert und Hellebarde, streifende Gardisten das Kurzschwert. Rüstung ist der Wappenrock, in gefährlichen Situationen wird Kettenhemd und Hellebarde (alternativ auch Säbel oder Langschwert) getragen. Etwa jeder dritte Gardist hat eine Armbrust dabei. Zusätzlich besitzt er ein persönliches Kurzschwert (WM 0/+1)
+
+Verhalten im Kampf: Gardisten versuchen ihre Gegner zunächst mit ihren Armbrüsten zu bedrohen und setzen sie – sofern man ihren Befehlen nicht Folge leistet – auch ein. Im Nahkampf halten sie ihre Gegner mit Hellebarden auf Distanz. Zudem setzen sie auch Meisterparaden ein (+1 bis +2), um ihre Angriffe vorzubereiten. Ist dies nicht mehr möglich, setzen sie auf ihr Kurzschwert und nutzen gelegentlich Finten (+1 bis +2). Zudem nutzen sie gerne die Vorteile der Überzahl aus. Sobald sie die Hälfte ihrer LeP eingebüßt haben, versuchen sie sich zurückzuziehen.' ,N'GKuK 25' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,12 ,15);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000984' ,N'Veteranen-Spießbürger' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/buerger.png' ,14 ,N'1W6' ,2 ,16 ,33 ,35 ,0 ,0 ,14 ,5 ,NULL ,8 ,NULL ,NULL ,0 ,2 ,2 ,1 ,1 ,2 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 14 KL 12 
+IN 14 CH 12
+FF 12 GE 14 
+KO 14 KK 15
+
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+4 (3), Eisern (4), Guter Ruf 3 (5), Verbindungen (6); 1W6: kein (1-2), Arroganz (3), Goldgier (4), Jähzorn (5), Neugier (6)
+
+Talente: Athletik 7, Klettern 5, Körperbeherrschung 8, Selbstbeherrschung 10, Sich Verstecken 5, Sinnenschärfe 12, Zechen 10, Gassenwissen 10, Menschenkenntnis 11, Überreden 9, Fesseln/Entfesseln 8, Rechnen 6, Rechtskunde 8, Schätzen 7, spricht Garethi, mäßig zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (drei Stadtteile); Aufmerksamkeit, Formation, Kampfreflexe, Meisterparade, Niederwerfen, Schnellziehen, Waffenlos Hammerfaust, Wuchtschlag
+
+Verhalten im Kampf: Eine einzelner Spießbürgerin wird versuchen ihren Gegner mit der Partisane auf Distanz zu halten und setzt den Wuchtschlag ein (+1 bis +2). Zu mehreren nutzen sie die Vorteile der Formation und der Überzahl und bringen gerne Meisterparaden an. Sie fl iehen, sobald sie die Hälfte ihrer LeP eingebüßt haben.
+
+Gambeson/Wattierter Waffenrock (Rüstung)' ,N'GKuK 25' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,16 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Erfahrenes Mitglied der Almadaner (Bracero)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/wegelagerer.png' ,10 ,N'1W6' ,2 ,13 ,30 ,30 ,0 ,0 ,13 ,3 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 13 KL 10 
+IN 14 CH 11
+FF 13 GE 13 
+KO 13 KK 13
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Verbindungen (4), Gefahreninstinkt (5), Eisern (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 6, Klettern 4, Körperbeherrschung 6, Schleichen 7, Selbstbeherrschung 5, Sich Verstecken 8, Sinnenschärfe 8, Taschendiebstahl 8, Zechen 5, Gassenwissen 11, Menschenkenntnis 9, Überreden (Einschüchtern) 10 (12), Fesseln/Entfesseln 4, Rechtskunde 5, Schätzen 5, Heilkunde Gift 7, Schlösser Knacken 7, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Almada, Mittelreich), Ortskenntnis (zwei Stadtteile); Ausweichen I, Waffenlos Bornländisch, Wuchtschlag
+
+Ausrüstung: Beutelchen, drei Wurfmesser, Schlagring, Kurzschwert oder Rapier, Straßenkleidung und bessere, almadanische Kleidung
+
+Verhalten im Kampf: Braceros greifen in Überzahl an und nutzen alle zur Verfügung stehenden Mittel. Sie fliehen meist nach dem Verlust der halben LeP.**
+
+Nahe Stützpunkten der Almadaner kehren Geflohene meist binnen 2W20+10 KR mit 1W6+3 neuen Bandenmitgliedern zurück.' ,N'GKuK 28, 29' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Veteranen-Mitglied der Tobrier' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/soeldner.png' ,12 ,N'1W6' ,2 ,16 ,36 ,37 ,0 ,0 ,16 ,5 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 16 KL 10 
+IN 14 CH 10
+FF 13 GE 15 
+KO 16 KK 17
+
+
+Vor- und Nachteile: 1W6: kein (1-2), Eisern (3), Verbindungen (4), Gefahreninstinkt (5), Zäher Hund (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 10, Klettern 7, Körperbeherrschung 10, Schleichen 11, Selbstbeherrschung 10, Sich Verstecken 11, Sinnenschärfe 12, Taschendiebstahl 11, Zechen 9, Gassenwissen 13, Menschenkenntnis 9, Überreden (Einschüchtern) 13 (15), Fesseln/Entfesseln 5, Rechtskunde 6, Schätzen 5, Schlösser Knacken 10, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (drei Stadtteile); Aufmerksamkeit, Niederwerfen, Waffenlos Bornländisch, Wuchtschlag, möglicherweise Schattenpfade I
+
+Ausrüstung: einfache Kleidung, Dolch, Knüppel oder Kurzschwert, Stemmeisen, ein gehärteter Streitkolben (BF –2, TP+1)
+
+Verhalten im Kampf: Tobrier nutzen gerne den Vorteil der Überzahl aus und greifen bevorzugt mit ihren Streitkolben an, wobei sie auch einfache Wuchtschläge ausführen (+1 bis +3). Wenn sie einen Hinterhalt legen, nutzen sie Leichte Armbrüste. Sie fl iehen meist nach Verlust der halben LeP.
+Nahe Stützpunkten der Tobrier kehren Geflohene meist binnen 2W20+10 KR mit 1W6+3 neuen Bandenmitgliedern zurück' ,N'GKuK 30' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,19 ,20);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000987' ,N'Veteranen-Mitglied der Almadaner (Caballero)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/wegelagerer.png' ,13 ,N'1W6' ,2 ,15 ,38 ,42 ,0 ,0 ,14 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 14 KL 10 
+IN 14 CH 11
+FF 13 GE 14 
+KO 14 KK 15
+
+SO 6 (täuschen 9 vor)
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Verbindungen (4), Gefahreninstinkt (5), Eisern (6); 1W6: kein (1-2), Aberglaube (3), Goldgier (4), Jähzorn (5), Gesucht I (6)
+
+Talente: Athletik 9, Klettern 7, Körperbeherrschung 8, Schleichen 12, Selbstbeherrschung 8, Sich Verstecken 12, Sinnenschärfe 11, Taschendiebstahl 11, Zechen 7, Gassenwissen 12, Menschenkenntnis 11, Überreden (Einschüchtern) 12 (14), Fesseln/Entfesseln 6, Rechtskunde 7, Schätzen 5, Schlösser Knacken 11, spricht Garethi, gebrochen zwei andere Sprachen
+
+Sonderfertigkeiten: Kulturkunde (Almada, Mittelreich), Ortskenntnis (drei Stadtteile); Aufmerksamkeit, Ausfall, Ausweichen I und II, Finte, Gezielter Stich, Kampfrefl exe, Todesstoß, Waffenlos Bornländisch, Wuchtschlag, möglicherweise Schattenpfade I
+
+Ausrüstung: Beutelchen, drei Wurfmesser, Schlagring, Kurzschwert oder Rapier, Straßenkleidung und bessere, almadanische Kleidung, persönliches Rapier (WM 0/+1)
+
+Verhalten im Kampf: Caballeros werden meist von Braceros oder Recambios unterstützt und lassen diesen den Vortritt. Sind sie alleine, fordern sie einen Zweikampf, scheuen notfalls vor dem Gebrauch von Gift nicht zurück. Am häufigsten verwenden sie das Gift der Shurinknolle 
+
+Nahe Stützpunkten der Almadaner kehren Gefl ohene meist binnen 2W20+10 KR mit 1W6+3 neuen Bandenmitgliedern zurück.
+' ,N'GKuK 29' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,16 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000988' ,N'Geweihter des Namenlosen (Grad II)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/magier.png' ,12 ,N'1W6' ,2 ,12 ,34 ,31 ,0 ,31 ,12 ,7 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'MU 17 KL 13 
+IN 15 CH 12
+FF 12 GE 12 
+KO 12 KK 13
+
+Vor- und Nachteile: W6: kein (1-2), Schwer zu verzaubern (3), Hohe Magieresistenz MR+3 (4), Adlige Abstammung (5), Verbindungen (6); W6: kein (1-2), Arroganz (3), Eitelkeit (4), Neugier (5), Widerwärtiges Aussehen (6) automatisch Geweiht (Namenlos)
+
+Talente: Athletik 3, Klettern 3, Körperbeherrschung 4, Selbstbeherrschung 10, Sich Verstecken 7, Sinnenschärfe 9, Zechen 1, Gassenwissen 7, Menschenkenntnis 12, Überreden 9, Götter/Kulte 13, Magiekunde 7, Rechnen 5, Rechtskunde 4, spricht Garethi, bruchstückhaft drei andere Sprachen
+
+Liturgien: wie Grad I, zusätzlich DES EINEN BEZAUBERNDER SPHÄRENKLANG, GOTT DER GÖTTER (bis Grad III), HERBEIRUFUNG DER HEERSCHAREN DES RATTENKINDES
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (zwei Stadtteile); Aufmerksamkeit, Wuchtschlag; Liturgiekenntnis (Namenloser) 9
+
+Ausrüstung: Geldbeutel, Geweihtenornat, Streitkolben, Basiliskenzunge
+
+Verhalten im Kampf: schwächt Gegner mittels Dunkler Wunder (PECH UND SCHWEFEL, NAMENLOSE KÄLTE) und geht erst dann in den Nahkampf; flieht, wenn seine LeP unter ein Drittel gesunken sind
+' ,N'GKuK 31, 32' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000989' ,N'Inspector der Garether Criminal-Kammer' ,NULL ,NULL ,11 ,N'1W6' ,2 ,12 ,30 ,32 ,0 ,0 ,12 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 14    KL 13 
+IN 13      CH 11
+FF 12      GE 13 
+KO 12     KK 13
+
+Vor- und Nachteile: 1W6: kein (1-2), Soziale Anpassungsfähigkeit (3), Herausragender Sinn (4), Gefahreninstinkt (5), Verbindungen (6); 1W6: kein (1-2), Arroganz (3), Eitelkeit (4), Jähzorn (5), Rachsucht (6)
+Talente: Athletik 3, Klettern 2, Körperbeherrschung 5, Schleichen 7, Selbstbeherrschung 8, Sich Verstecken 6, Sinnenschärfe 8, Zechen 3, Etikette 8, Gassenwissen 8, Menschenkenntnis 8, Überreden 8, Fesseln/Entfesseln 6, Rechtskunde 6, spricht Garethi, gebrochen zwei andere Sprachen Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Finte
+
+Ausrüstung: Amulett der Kammer, Notizbuch, Schreibzeug, Ausrüstung zur Spurensicherung
+
+Verhalten im Kampf: So er Kämpfe nicht vermeiden kann, benutzt er meist eine leichte Armbrust, im Nahkampf ein Rapier und schlägt damit gelegentlich auch Finten (+1 bis +2). Sobald er ein Drittel seiner LeP verloren hat, wird er den Kampf abbrechen.' ,N'GKuK 26' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,12 ,15);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000990' ,N'Spießbürger' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/buerger.png' ,9 ,N'1W6' ,2 ,11 ,28 ,29 ,0 ,0 ,12 ,3 ,NULL ,7 ,NULL ,NULL ,-3 ,-3 ,-3 ,-3 ,-3 ,-3 ,-3 ,-3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Mittelländer, Güldenländer' ,N'Eigenschaften
+MU 12 KL 11 
+IN 12 CH 12
+FF 12 GE 12 
+KO 12 KK 12
+Vor- und Nachteile: 1W6: kein (1-2), Ausdauernd AuP+4 (3), Eisern (4), Guter Ruf 3 (5), Verbindungen (6); 1W6: kein (1-2), Arroganz (3), Goldgier (4), Jähzorn (5), Neugier (6)
+
+Talente: Athletik 3, Klettern 2, Körperbeherrschung 3, Selbstbeherrschung 3, Sich Verstecken 1, Sinnenschärfe 4, Zechen 3, Gassenwissen 5, Menschenkenntnis 6, Überreden 5, Fesseln/ Entfesseln 2, Rechnen 5, Rechtskunde 5, Schätzen 5, spricht Garethi, bruchstückhaft eine andere Sprache
+
+Sonderfertigkeiten: Kulturkunde (Mittelreich), Ortskenntnis (ein Stadtteil); Aufmerksamkeit, Formation, Rüstungsgewöhnung I (Wattierter Waffenrock)
+
+Ausrüstung: Geldbeutel, Pfeife oder Signalhorn, passende Waffe, Wappenrock(ein Gambeson)
+
+Verhalten im Kampf: Eine einzelne Spießbürgerin versucht ihren Gegner auf Distanz zu halten. Zu mehreren nutzen sie die Vorteile der Formation und der Überzahl. Sie fl iehen, sobald sie eine Wunde erlitten haben oder ein Drittel ihrer LeP eingebüßt haben.
+Gambeson/Wattierter Waffenrock (Rüstung)' ,N'GKuK 24' ,N'Aventurien' ,N'Gareth (Stadt)' ,NULL ,NULL ,NULL ,11 ,0);
+
 
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000001' ,N'Stoß ' ,6 ,1 ,2 ,6 ,N'H' ,NULL ,NULL ,4);
@@ -9084,3 +9564,313 @@ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [T
  VALUES ('00000000-0000-0000-006e-000000000961' ,N'Speer' ,6 ,1 ,5 ,13 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,9);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000961' ,N'Speer (Fernkampf)' ,6 ,1 ,5 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Dolch' ,6 ,1 ,1 ,17 ,N'H' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,25 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Keule' ,6 ,1 ,3 ,16 ,N'N' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Raufen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Schlagring' ,6 ,1 ,3 ,15 ,N'H' ,NULL ,N'Beachte die Regelung im Arsenal.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Wurfdolch' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000962' ,N'Wurfdolch (Fernkampf)' ,6 ,1 ,1 ,25 ,NULL ,15 ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000963' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000963' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,0 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000963' ,N'Hakenspieß' ,6 ,1 ,3 ,13 ,N'S' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000963' ,N'Raufen' ,6 ,1 ,0 ,14 ,N'N' ,NULL ,N'TP(A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000964' ,N'Basiliskenzunge' ,6 ,1 ,2 ,15 ,N'H' ,NULL ,N'Mit einer Basiliskenzunge können Schläge von Kettenwaffen (mit der Ausnahme von Geißel und Neunschwänziger), Zweihandflegeln und Zweihand-Hiebwaffen und Zweihandschwerter oder -säbeln nicht pariert werden.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000964' ,N'Raufen' ,6 ,1 ,0 ,14 ,N'H' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000964' ,N'Streitkolben' ,6 ,1 ,4 ,17 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000965' ,N'Bastardschwert' ,6 ,1 ,7 ,18 ,N'N' ,NULL ,N'Erfordert mindestens KK 15 für die einhändige Führung mit dem Talent Schwerter.' ,17);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000965' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000965' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,19 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000965' ,N'Leichte Armbrust' ,6 ,1 ,6 ,19 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000965' ,N'Raufen' ,6 ,1 ,2 ,15 ,N'H' ,NULL ,N'TP(A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000965' ,N'Schwert' ,6 ,1 ,4 ,15 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet die Waffe 2 zusätzliche TP an.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,18 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Knüppel' ,6 ,1 ,1 ,16 ,N'N' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Kurzschwert' ,6 ,1 ,2 ,14 ,N'HN' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Leichte Armbrust' ,6 ,1 ,6 ,18 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Raufen' ,6 ,1 ,2 ,17 ,N'H' ,NULL ,N'TP(A)' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Wurfdolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000966' ,N'Wurfdolch (Fernkampf)' ,6 ,1 ,2 ,18 ,NULL ,15 ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000967' ,N'Dolch' ,6 ,1 ,3 ,14 ,N'H' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000967' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,17 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000967' ,N'Leichte Armbrust' ,6 ,1 ,6 ,17 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000967' ,N'Rapier, Raufdegen (Almada)' ,6 ,1 ,3 ,16 ,N'N' ,NULL ,N'Beachte die Regelung im Arsenal.' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000967' ,N'Raufen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000968' ,N'Dolch' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000968' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,0 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000968' ,N'Fleischerbeil' ,6 ,1 ,2 ,11 ,N'H' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000968' ,N'Raufen' ,6 ,1 ,0 ,12 ,N'H' ,NULL ,N'TP(A)' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000968' ,N'Stuhlbein' ,6 ,1 ,0 ,11 ,N'HN' ,NULL ,N'Siehe die Regeln zu improvisierten Waffen.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Dolch' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,16 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Knüppel' ,6 ,1 ,1 ,14 ,N'N' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Kurzschwert' ,6 ,1 ,2 ,12 ,N'HN' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Leichte Armbrust' ,6 ,1 ,6 ,16 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Raufen' ,6 ,1 ,0 ,14 ,N'H' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Wurfdolch' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000969' ,N'Wurfdolch (Fernkampf)' ,6 ,1 ,1 ,16 ,NULL ,15 ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000970' ,N'Hellebarde' ,6 ,1 ,5 ,11 ,N'S' ,NULL ,N'Schläge einer Hellebarde können mit Dolchen und Fechtwaffen nicht pariert werden.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000970' ,N'Kurzschwert' ,6 ,1 ,2 ,10 ,N'HN' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000970' ,N'Leichte Armbrust' ,6 ,1 ,6 ,12 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000970' ,N'Raufen' ,6 ,1 ,0 ,10 ,N'H' ,NULL ,N'TP(A)' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000971' ,N'Basiliskenzunge' ,6 ,1 ,2 ,15 ,N'H' ,NULL ,N'Mit einer Basiliskenzunge können Schläge von Kettenwaffen (mit der Ausnahme von Geißel und Neunschwänziger), Zweihandflegeln und Zweihand-Hiebwaffen und Zweihandschwerter oder -säbeln nicht pariert werden.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000971' ,N'Raufen' ,6 ,1 ,1 ,14 ,N'N' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000971' ,N'Streitkolben' ,6 ,1 ,4 ,18 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,18 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Keule' ,6 ,1 ,2 ,12 ,N'N' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Raufen' ,6 ,1 ,0 ,12 ,N'H' ,NULL ,N'TP(A)' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Schlagring' ,6 ,1 ,2 ,11 ,N'H' ,NULL ,N'TP(A). Beachte die Regelung im Arsenal.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Wurfdolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000972' ,N'Wurfdolch (Fernkampf)' ,6 ,1 ,1 ,18 ,NULL ,15 ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Faust' ,6 ,2 ,5 ,16 ,N'HN' ,0 ,N'TP(A)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Keule' ,3 ,1 ,4 ,16 ,N'N' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,18 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Kurzschwert' ,6 ,1 ,2 ,13 ,N'HN' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Rapier, Raufdegen (Almada)' ,6 ,1 ,3 ,13 ,N'N' ,NULL ,N'Beachte die Regelung im Arsenal.' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Raufen' ,6 ,1 ,0 ,13 ,N'H' ,NULL ,N'TP(A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Schlagring' ,6 ,1 ,3 ,12 ,N'H' ,NULL ,N'Beachte die Regelung im Arsenal.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Wurfmesser' ,6 ,1 ,-1 ,11 ,N'H' ,NULL ,N'Es gelten nicht nur die üblichen Parade-Einschränkungen für Dolche, sondern zudem ist das Wurfmesser noch eine improvisierte Waffe für den Nahkampf.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000973' ,N'Wurfmesser (Fernkampf)' ,6 ,1 ,1 ,18 ,NULL ,15 ,N'Es gelten nicht nur die üblichen Parade-Einschränkungen für Dolche, sondern zudem ist das Wurfmesser noch eine improvisierte Waffe für den Nahkampf.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000974' ,N'Basiliskenzunge' ,6 ,1 ,2 ,13 ,N'H' ,NULL ,N'Mit einer Basiliskenzunge können Schläge von Kettenwaffen (mit der Ausnahme von Geißel und Neunschwänziger), Zweihandflegeln und Zweihand-Hiebwaffen und Zweihandschwerter oder -säbeln nicht pariert werden.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000974' ,N'Raufen' ,6 ,1 ,0 ,11 ,N'H' ,NULL ,N'TP(A)' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000974' ,N'Streitkolben' ,6 ,1 ,4 ,14 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000975' ,N'Hellebarde' ,6 ,1 ,5 ,11 ,N'S' ,NULL ,N'Schläge einer Hellebarde können mit Dolchen und Fechtwaffen nicht pariert werden.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000975' ,N'Kurzschwert' ,6 ,1 ,2 ,11 ,N'HN' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000975' ,N'Leichte Armbrust' ,6 ,1 ,6 ,12 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000975' ,N'Raufen' ,6 ,1 ,0 ,11 ,N'H' ,NULL ,N'TP(A)' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000976' ,N'Hellebarde' ,6 ,1 ,5 ,17 ,N'S' ,NULL ,N'Schläge einer Hellebarde können mit Dolchen und Fechtwaffen nicht pariert werden.' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000976' ,N'Kurzschwert' ,6 ,1 ,2 ,16 ,N'HN' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000976' ,N'Leichte Armbrust' ,6 ,1 ,6 ,19 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000976' ,N'Raufen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000977' ,N'Hellebarde' ,6 ,1 ,5 ,14 ,N'S' ,NULL ,N'Schläge einer Hellebarde können mit Dolchen und Fechtwaffen nicht pariert werden.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000977' ,N'Kurzschwert' ,6 ,1 ,2 ,13 ,N'HN' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000977' ,N'Leichte Armbrust' ,6 ,1 ,6 ,15 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000977' ,N'Raufen' ,6 ,1 ,1 ,11 ,N'H' ,NULL ,N'TP(A)' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000978' ,N'Bastardschwert' ,6 ,1 ,6 ,14 ,N'N' ,NULL ,N'Erfordert mindestens KK 15 für die einhändige Führung mit dem Talent Schwerter.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000978' ,N'Dolch' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000978' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,17 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000978' ,N'Leichte Armbrust' ,6 ,1 ,6 ,17 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000978' ,N'Raufen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000978' ,N'Schwert' ,6 ,1 ,4 ,13 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet die Waffe 2 zusätzliche TP an.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000979' ,N'Bastardschwert' ,6 ,1 ,6 ,16 ,N'N' ,NULL ,N'Erfordert mindestens KK 15 für die einhändige Führung mit dem Talent Schwerter.' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000979' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000979' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,19 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000979' ,N'Leichte Armbrust' ,6 ,1 ,6 ,19 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000979' ,N'Raufen' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'TP(A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000979' ,N'Schwert' ,6 ,1 ,4 ,15 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet die Waffe 2 zusätzliche TP an.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000980' ,N'Dolch' ,6 ,1 ,3 ,15 ,N'H' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000980' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,19 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000980' ,N'Leichte Armbrust' ,6 ,1 ,6 ,19 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000980' ,N'Rapier, Raufdegen (Almada)' ,6 ,1 ,3 ,18 ,N'N' ,NULL ,N'Beachte die Regelung im Arsenal.' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000980' ,N'Raufen ' ,6 ,1 ,0 ,14 ,N'H' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Dolch' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,22 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Keule' ,6 ,1 ,2 ,14 ,N'N' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Raufen' ,6 ,1 ,0 ,14 ,N'H' ,NULL ,N'TP(A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Schlagring' ,6 ,1 ,2 ,13 ,N'H' ,NULL ,N'Beachte die Regelung im Arsenal.' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Wurfdolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000981' ,N'Wurfdolch (Fernkampf)' ,6 ,1 ,2 ,22 ,NULL ,15 ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000982' ,N'Hellebarde' ,6 ,1 ,5 ,17 ,N'S' ,NULL ,N'Schläge einer Hellebarde können mit Dolchen und Fechtwaffen nicht pariert werden.' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000982' ,N'Kurzschwert' ,6 ,1 ,2 ,16 ,N'HN' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000982' ,N'Leichte Armbrust' ,6 ,1 ,6 ,19 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000982' ,N'Raufen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000983' ,N'Hellebarde' ,6 ,1 ,5 ,14 ,N'S' ,NULL ,N'Schläge einer Hellebarde können mit Dolchen und Fechtwaffen nicht pariert werden.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000983' ,N'Kurzschwert' ,6 ,1 ,2 ,13 ,N'HN' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000983' ,N'Leichte Armbrust' ,6 ,1 ,6 ,15 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000983' ,N'Raufen' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000984' ,N'Dolch' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000984' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,0 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000984' ,N'Hakenspieß' ,6 ,1 ,3 ,16 ,N'S' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000984' ,N'Partisane' ,6 ,1 ,5 ,17 ,N'S' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000984' ,N'Raufen' ,6 ,1 ,0 ,17 ,N'N' ,NULL ,N'TP(A)' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,18 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Kurzschwert' ,6 ,1 ,2 ,14 ,N'HN' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Rapier, Raufdegen (Almada)' ,6 ,1 ,3 ,14 ,N'N' ,NULL ,N'Beachte die Regelung im Arsenal.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Raufen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Schlagring' ,6 ,1 ,2 ,13 ,N'H' ,NULL ,N'Beachte die Regelung im Arsenal.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Wurfmesser' ,6 ,1 ,-1 ,12 ,N'H' ,NULL ,N'Es gelten nicht nur die üblichen Parade-Einschränkungen für Dolche, sondern zudem ist das Wurfmesser noch eine improvisierte Waffe für den Nahkampf.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000985' ,N'Wurfmesser (Fernkampf)' ,6 ,1 ,1 ,18 ,NULL ,15 ,N'Es gelten nicht nur die üblichen Parade-Einschränkungen für Dolche, sondern zudem ist das Wurfmesser noch eine improvisierte Waffe für den Nahkampf.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Dolch' ,6 ,1 ,2 ,14 ,N'H' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,20 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Kurzschwert' ,6 ,1 ,3 ,15 ,N'HN' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Leichte Armbrust' ,6 ,1 ,6 ,20 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Raufen' ,6 ,1 ,2 ,19 ,N'N' ,NULL ,N'TP(A)' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Streitkolben' ,6 ,1 ,4 ,18 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Wurfdolch' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000986' ,N'Wurfdolch (Fernkampf)' ,6 ,1 ,2 ,20 ,NULL ,15 ,N'Kann keine Schläge von Kettenwaffen, Zweihandhiebwaffen, Zweihandschwerter und -säbel parieren.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000987' ,N'Dolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,N'Gift der Shurinknolle (Wirkung: 1W6 SP/SR sowie GE, KO, KK sinken um 1/SR. Sind die drei Werte oder die LeP auf 0 gefallen, tritt der Tod ein / 1W3 SP/SR sowie GE, KO, KK sinken um 1/SR. Sind die drei Werte oder die LeP auf 0 gefallen, tritt der Tod ein; Beginn: 6 SR; Dauer: bis zum Tod / 6 SR; Stufe: 6' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000987' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,18 ,NULL ,10 ,N'Gift der Shurinknolle (Wirkung: 1W6 SP/SR sowie GE, KO, KK sinken um 1/SR. Sind die drei Werte oder die LeP auf 0 gefallen, tritt der Tod ein / 1W3 SP/SR sowie GE, KO, KK sinken um 1/SR. Sind die drei Werte oder die LeP auf 0 gefallen, tritt der Tod ein; Beginn: 6 SR; Dauer: bis zum Tod / 6 SR; Stufe: 6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000987' ,N'Kurzschwert' ,6 ,1 ,2 ,15 ,N'HN' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000987' ,N'Leichte Armbrust' ,6 ,1 ,6 ,18 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000987' ,N'Rapier, Raufdegen (Almada)' ,6 ,1 ,3 ,15 ,N'N' ,NULL ,N'Beachte die Regelung im Arsenal. Gift der Shurinknolle (Wirkung: 1W6 SP/SR sowie GE, KO, KK sinken um 1/SR. Sind die drei Werte oder die LeP auf 0 gefallen, tritt der Tod ein / 1W3 SP/SR sowie GE, KO, KK sinken um 1/SR. Sind die drei Werte oder die LeP auf 0 gefallen, tritt der Tod ein; Beginn: 6 SR; Dauer: bis zum Tod / 6 SR; Stufe: 6' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000987' ,N'Raufen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A)' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000988' ,N'Basiliskenzunge' ,6 ,1 ,2 ,14 ,N'H' ,NULL ,N'Mit einer Basiliskenzunge können Schläge von Kettenwaffen (mit der Ausnahme von Geißel und Neunschwänziger), Zweihandflegeln und Zweihand-Hiebwaffen und Zweihandschwerter oder -säbeln nicht pariert werden.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000988' ,N'Raufen' ,6 ,1 ,1 ,12 ,N'N' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000988' ,N'Streitkolben' ,6 ,1 ,4 ,16 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000989' ,N'Dolch' ,6 ,1 ,3 ,13 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000989' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,15 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000989' ,N'Leichte Armbrust' ,6 ,1 ,6 ,15 ,NULL ,60 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000989' ,N'Rapier, Raufdegen (Almada)' ,6 ,1 ,3 ,14 ,N'N' ,NULL ,N'Beachte die Regelung im Arsenal.' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000989' ,N'Raufen' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000990' ,N'Dolch' ,6 ,1 ,1 ,11 ,N'H' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000990' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,0 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000990' ,N'Raufen' ,6 ,1 ,0 ,12 ,N'H' ,NULL ,NULL ,11);
