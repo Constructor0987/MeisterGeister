@@ -614,6 +614,15 @@
                                                                 <ListBox.ItemTemplate>
                                                                     <DataTemplate>
                                                                         <StackPanel Orientation="Horizontal">
+                                                                            <StackPanel.ToolTip>
+                                                                                <StackPanel Orientation="Vertical">
+                                                                                    <StackPanel Orientation="Horizontal">
+                                                                                        <TextBlock Text="Talent " FontWeight="Bold" />
+                                                                                        <TextBlock Text="{Binding Talent.Talentname}" Margin="2,0,4,0" />
+                                                                                    </StackPanel>
+                                                                                    <TextBlock Text="{Binding Bemerkung}" Margin="2,0,2,0" />
+                                                                                </StackPanel>
+                                                                            </StackPanel.ToolTip>
                                                                             <TextBlock Text="{Binding Name}" MinWidth="150" />
                                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
                                                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
@@ -629,7 +638,11 @@
                                                                                 <StackPanel Orientation="Horizontal" MinWidth="50">
                                                                                     <StackPanel.ToolTip>
                                                                                         <StackPanel Orientation="Horizontal">
-                                                                                            <TextBlock Text="TP(KK) " FontWeight="Bold" />
+                                                                                            <TextBlock Text="TP " FontWeight="Bold" />
+                                                                                            <TextBlock Text="{Binding TPStringOhneKK}" Margin="2,0,4,0" />
+                                                                                            <TextBlock Text="TP/KK" FontWeight="Bold" />
+                                                                                            <TextBlock Text="{Binding TPKKString}" Margin="2,0,4,0" />
+                                                                                            <TextBlock Text="-> " FontWeight="Bold" />
                                                                                             <TextBlock Text="{Binding TPKKBonus}" Margin="2,0,0,0" />
                                                                                         </StackPanel>
                                                                                     </StackPanel.ToolTip>
@@ -639,6 +652,14 @@
                                                                                 <StackPanel Orientation="Horizontal">
                                                                                     <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
                                                                                     <TextBlock Text="{Binding Distanzklasse}" Margin="2,0,0,0" />
+                                                                                </StackPanel>
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <TextBlock Text="INI " FontWeight="Bold" Margin="20,0,0,0" />
+                                                                                    <TextBlock Text="{Binding INI}" Margin="2,0,0,0" />
+                                                                                </StackPanel>
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <TextBlock Text="WM " FontWeight="Bold" Margin="20,0,0,0" />
+                                                                                    <TextBlock Text="{Binding WMString}" Margin="2,0,0,0" />
                                                                                 </StackPanel>
                                                                             </StackPanel>
                                                                         </StackPanel>

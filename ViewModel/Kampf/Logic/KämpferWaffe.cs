@@ -64,6 +64,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public int? INI
+        {
+            get
+            {
+                if (_gegner_angriff != null)
+                    return 0;
+                return _waffe.INI;
+            }
+        }
+
+        public string WMString
+        {
+            get
+            {
+                if (_gegner_angriff != null)
+                    return "-";
+                return string.Format("{0}/{1}", _waffe.WMAT, _waffe.WMPA);
+            }
+        }
+
         public string Name
         {
             get
@@ -71,6 +91,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (_gegner_angriff != null)
                     return _gegner_angriff.Name;
                 return _waffe.Name;
+            }
+        }
+
+        public string Bemerkung
+        {
+            get
+            {
+                if (_gegner_angriff != null)
+                    return _gegner_angriff.Base_Angriff.Bemerkung;
+                return _waffe.Bemerkung;
+            }
+        }
+
+        public string TPStringOhneKK
+        {
+            get
+            {
+                return String.Format("{0}W{1}", TPWürfelAnzahl, TPWürfel)
+                    + ((TPBonus != 0) ? ((TPBonus > 0) ? "+" : "-") + TPBonus.ToString() : String.Empty);
             }
         }
 
@@ -121,6 +160,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (_gegner_angriff != null)
                     return _gegner_angriff.Base_Angriff.TPKKBonus;
                 return _waffe.TPKKBonus(_held);
+            }
+        }
+
+        public string TPKKString
+        {
+            get
+            {
+                if (_gegner_angriff != null)
+                    return "-";
+                return string.Format("{0}/{1}", _waffe.TPKKSchwelle, _waffe.TPKKSchritt);
             }
         }
 
