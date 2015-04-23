@@ -679,12 +679,16 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (aPlaylist != AktKlangPlaylist && !kopieren)             //Verschieben = Löschen in akt. Playliste
                 {
                     Audio_Titel aTitel =
-                        aZeile != null?  Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID  == (Guid)aZeile.Tag):
+                        aZeile != null?
+                        Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == ((Audio_Playlist_Titel)aZeile.Tag).Audio_Titel.Audio_TitelGUID) :
                         Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == aZeileVM.aPlayTitel.Audio_TitelGUID);
                         // (Guid)aZeile.Tag);
                     Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, aTitel);
 
                     if (aZeileVM != null) VM.LbEditorAudioZeilenListe.Remove(aZeileVM);
+                    lbEditorItem lbi = VM.SelectedEditorItem;
+                    VM.SelectedEditorItem = null;
+                    VM.SelectedEditorItem = lbi;
                     VM.LbEditorAudioZeilenListe = VM.LbEditorAudioZeilenListe;
                     VM.FilterEditorPlaylistTitelListe();
                 }
