@@ -97,7 +97,13 @@ namespace MeisterGeister.ViewModel.Proben
                 foreach (var item in EigenschaftWurfItemListe)
                     item.Held = value;
                 OnChanged("Held");
+                OnChanged("Readonly");
             }
+        }
+
+        public bool Readonly
+        {
+            get { return _held != null; }
         }
 
         private Probe _probe = new Probe();
@@ -117,6 +123,26 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        private int _fertigkeitswert = 0;
+        public int Fertigkeitswert
+        {
+            get { return Probe != null ? Probe.Fertigkeitswert : _fertigkeitswert; }
+            set
+            {
+                if (NichtProben)
+                    return;
+                _fertigkeitswert = value;
+                if (Probe != null)
+                {
+                    Probe.Fertigkeitswert = _fertigkeitswert;
+                    Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
+                }
+
+                OnChanged("Fertigkeitswert");
+                OnChanged("Erfolgschance");
+            }
+        }
+
         private int _modifikator = 0;
         public int Modifikator
         {
@@ -133,6 +159,7 @@ namespace MeisterGeister.ViewModel.Proben
                 }
 
                 OnChanged("Modifikator");
+                OnChanged("Erfolgschance");
             }
         }
 
@@ -206,6 +233,8 @@ namespace MeisterGeister.ViewModel.Proben
                 for (int i = 0; i < value; i++)
                 {
                     var item = new EigenschaftWurfItem();
+                    if (Probe != null)
+                        item.Wert = Probe.Werte[i];
                     item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
                     list.Add(item);
                 }
@@ -341,7 +370,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         private void EigenschaftWurfItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Wurf")
+            if (e.PropertyName == "Wurf" || e.PropertyName == "Wert")
             {
                 if (sender is EigenschaftWurfItem)
                 {
@@ -358,14 +387,28 @@ namespace MeisterGeister.ViewModel.Proben
                     if (Probe != null)
                     {
                         bool changed = false;
-                        if (Ergebnis.Würfe == null)
-                            Ergebnis.Würfe = new int[this.WertCount];
-                        for (int i = 0; i < Ergebnis.Würfe.Length; i++)
+                        if (e.PropertyName == "Wurf")
                         {
-                            if (Ergebnis.Würfe[i] != EigenschaftWurfItemListe[i].Wurf)
+                            if (Ergebnis.Würfe == null)
+                                Ergebnis.Würfe = new int[this.WertCount];
+                            for (int i = 0; i < Ergebnis.Würfe.Length; i++)
                             {
-                                Ergebnis.Würfe[i] = EigenschaftWurfItemListe[i].Wurf;
-                                changed = true;
+                                if (Ergebnis.Würfe[i] != EigenschaftWurfItemListe[i].Wurf)
+                                {
+                                    Ergebnis.Würfe[i] = EigenschaftWurfItemListe[i].Wurf;
+                                    changed = true;
+                                }
+                            }
+                        }
+                        else if (e.PropertyName == "Wert")
+                        {
+                            for (int i = 0; i < Probe.Werte.Length; i++)
+                            {
+                                if (Probe.Werte[i] != EigenschaftWurfItemListe[i].Wert)
+                                {
+                                    Probe.Werte[i] = EigenschaftWurfItemListe[i].Wert;
+                                    changed = true;
+                                }
                             }
                         }
 
@@ -444,7 +487,12 @@ namespace MeisterGeister.ViewModel.Proben
         public Model.Held Held 
         { 
             get { return _held; }
-            set { _held = value; OnChanged("Held"); OnChanged("StartWert"); OnChanged("ModList"); } 
+            set { _held = value; OnChanged("Held"); OnChanged("StartWert"); OnChanged("ModList"); OnChanged("Readonly"); } 
+        }
+
+        public bool Readonly
+        {
+            get { return _held != null; }
         }
 
         public int StartWert

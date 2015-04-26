@@ -9,6 +9,8 @@
              d:DataContext="{d:DesignData /SampleData/ProbeControlViewModelSampleData.xaml}"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed" />
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanInvertedToVisibilityConverter" True="Collapsed" False="Visible" />
         <Style x:Key="ContextMenu" TargetType="{x:Type ContextMenu}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -159,7 +161,8 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="33" />
                                 <ViewGeneral:TextBoxModInfo Grid.Column="0" Grid.Row="1" ModListe="{Binding ModList}" WertName="{Binding Name}" 
-                                                        StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
+                                                        StartWert="{Binding StartWert}" Wert="{Binding Wert}" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <ViewGeneral:IntBox Grid.Column="0" Grid.Row="1" Value="{Binding Wert}" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanInvertedToVisibilityConverter}}" />
                                 <Border Grid.Row="2" Width="24" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                     <Border.ToolTip>
                                         <StackPanel Width="225">
@@ -259,7 +262,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Width="65" Margin="5,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource WertVisibility}">
                     <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" FontWeight="Bold"  />
-                    <TextBlock Text="{Binding Probe.Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" />
+                    <TextBlock Text="{Binding Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <ViewGeneral:IntBox Value="{Binding Fertigkeitswert}" Margin="5,0,0,0" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanInvertedToVisibilityConverter}}" />
                 </StackPanel>
             </StackPanel>
 

@@ -968,6 +968,8 @@ namespace MeisterGeister.Model {
         /// Der TaW eines Talentes. Liefert bei exactMatch = false den höchsten TaW zurück.
         /// </summary>
         public int Talentwert(string talentName, bool nurPositiv, bool exactMatch = true) {
+            if (String.IsNullOrWhiteSpace(talentName))
+                return 0;
             int maxtaw = 0;
             Held_Talent ht = GetHeldTalent(talentName, nurPositiv, out maxtaw, exactMatch);
             return (maxtaw == Int32.MinValue) ? 0 : maxtaw;
@@ -991,6 +993,8 @@ namespace MeisterGeister.Model {
         /// Der TaW eines Talentes.
         /// </summary>
         public int Talentwert(Talent t, bool nurPositiv) {
+            if (t == null)
+                return 0;
             return Talentwert(t.Talentname, nurPositiv);
         }
 

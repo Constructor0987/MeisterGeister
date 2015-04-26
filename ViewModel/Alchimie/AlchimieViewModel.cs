@@ -37,8 +37,8 @@ namespace MeisterGeister.ViewModel.Alchimie
         private Held _selectedHeld;
         private string _selectedGruppe;
         private Alchimierezept _selectedRezept;
-        private string _selectedLaborArtListe;
-        private string _selectedLaborQualitätListe;
+        private string _selectedLaborArtListe = "Archaisches Labor";
+        private string _selectedLaborQualitätListe = "normal";
 
         //Rückgaben
         private int _modifikatorLabor;
@@ -129,8 +129,8 @@ namespace MeisterGeister.ViewModel.Alchimie
         private List<string> _qualitätListeVerdünnung = new List<string>(new string[] { "M", "A", "B", "C", "D", "E", "F" });
         private List<string> _verdünnungQualitätListeVerdünnung = new List<string>(new string[] { "M", "A", "B", "C", "D", "E", "F" });
         //Selections
-        private string _selectedQualitätVerdünnung;
-        private string _selectedVerdünnungQualitätVerdünnung;
+        private string _selectedQualitätVerdünnung = "B";
+        private string _selectedVerdünnungQualitätVerdünnung = "A";
         //Rückgaben
         private string _verdünnungProbe;
         private int _wertProbeVerdünnung;
@@ -404,9 +404,13 @@ namespace MeisterGeister.ViewModel.Alchimie
         {
             get { return _selectedTalentHerstellung; } 
             set {
-                _selectedTalentHerstellung = value; 
+                if (value == null)
+                {
+                    value = Global.ContextHeld.LoadTalentByName("Alchimie");
+                }
+                _selectedTalentHerstellung = value;
                 OnChanged("SelectedTalentHerstellung");
-                WertTaWTalent = SelectedHeld == null ? 0 : SelectedHeld.Talentwert(value);
+                WertTaWTalent = value == null ? 0 : SelectedHeld == null ? 0 : SelectedHeld.Talentwert(value);
             }
         }
         //Rückgaben
@@ -416,18 +420,23 @@ namespace MeisterGeister.ViewModel.Alchimie
             set { 
                 _wertTaWTalent = value;
                 OnChanged("WertTaWTalent");
+                WertTaPZurückhaltenHerstellung = WertTaPZurückhaltenHerstellung;
             } 
         }
         public int WertTaPZurückhaltenHerstellung
         { 
             get { return _wertTaPZurückhaltenHerstellung; } 
             set {
-                if (SelectedRezept!=null && value >= 0 && value <= SelectedRezept.Brauschwierigkeit) 
+                if (SelectedRezept!=null)
                 { 
-                    _wertTaPZurückhaltenHerstellung = value; 
-                    OnChanged("WertTaPZurückhaltenHerstellung"); 
-                    ModifikatorTaPZurückhaltenHerstellung = _wertTaPZurückhaltenHerstellung; 
-                    BonusTaPQualitätHerstellung = _wertTaPZurückhaltenHerstellung;
+                    value = Math.Max(0, Math.Min(value , WertTaWTalent - SelectedRezept.Brauschwierigkeit));
+                    if (value != _wertTaPZurückhaltenHerstellung)
+                    {
+                        _wertTaPZurückhaltenHerstellung = value;
+                        OnChanged("WertTaPZurückhaltenHerstellung");
+                        ModifikatorTaPZurückhaltenHerstellung = _wertTaPZurückhaltenHerstellung;
+                        BonusTaPQualitätHerstellung = _wertTaPZurückhaltenHerstellung;
+                    }
                 } 
             } 
         }
@@ -940,6 +949,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             _onClearSelectedHeld = new Base.CommandBase(ClearSelectedHeld, null);
             _onProbeVerdünnung = new Base.CommandBase(ProbeVerdünnung, null);
             _onProbeHaltbarkeit = new Base.CommandBase(ProbeHaltbarkeit, null);
+            SelectedTalentHerstellung = null;
         }
 
         #endregion
@@ -1348,16 +1358,22 @@ namespace MeisterGeister.ViewModel.Alchimie
         private void ProbeHerstellung(object sender)
         {
             //Probe auf Erstellung würfeln
-            if (SelectedHeld != null && SelectedTalentHerstellung != null)
+            if (SelectedTalentHerstellung != null)
             {
                 SelectedTalentHerstellung.Modifikator = ProbenModGesHerstellung;
                 SelectedTalentHerstellung.Fertigkeitswert = WertTaWTalent;
+                if(SelectedHeld == null && SelectedTalentHerstellung.Werte[0] == 0) //Wenn kein Held, dann die eigenschaften mit 10 vorbesetzen
+                {
+                    for (int i = 0; i < 3; i++)
+                        SelectedTalentHerstellung.Werte[i] = 10;
+                }
                 var ergebnis = ShowProbeDialog(SelectedTalentHerstellung, SelectedHeld);
                 if (ergebnis != null && ergebnis.Gelungen)
                 {
                     TaPHerstellung = ergebnis.Übrig;
                     BonusQualitätHerstellung = getQualität(MeisterGeister.Logic.General.Würfel.Parse("2W6", true) + TaPHerstellung + WertAstralesAufladenHerstellung);
-                    WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezept.Haltbarkeit, true).ToString();
+                    if (_selectedRezept != null)
+                        WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezept.Haltbarkeit, true).ToString();
                 }
                 else {
                     TaPHerstellung = -1;
