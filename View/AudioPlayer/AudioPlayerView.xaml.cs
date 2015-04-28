@@ -43,7 +43,33 @@ namespace MeisterGeister.View.AudioPlayer {
 	/// Interaktionslogik für AudioPlayerView.xaml
 	/// </summary>
 	/// 
-     
+
+    public class MyTimer
+    {
+        static int start = 0;
+        static int stop = 0;
+        public static void start_timer()
+        {
+            start = Environment.TickCount;
+        }
+
+        public static void stop_timer()
+        {
+            stop_timer("");
+        }
+
+        public static void stop_timer(string msg)
+        {
+            stop = Environment.TickCount;
+            print(msg);
+        }
+
+        private static void print(string msg)
+        {
+            string output = "MyTimer(" + msg + "): " + (stop - start) + " Millisekunden";
+            System.Diagnostics.Debug.WriteLine(output);
+        }
+    }
 
     public class MouseWheelGesture : MouseGesture
     {

@@ -9,7 +9,8 @@
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="55" d:DesignWidth="209" ToolTip="{Binding mZeileTooltip}" >
+             d:DesignHeight="55" d:DesignWidth="209" >
+    <!--ToolTip="{Binding mZeileTooltip}"-->
     <ListBoxItem.Resources>
         <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter" />
         <vmAudioPlayer:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>
