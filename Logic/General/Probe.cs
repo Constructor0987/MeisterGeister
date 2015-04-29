@@ -105,7 +105,7 @@ namespace MeisterGeister.Logic.General
             }
         }
 
-        virtual public string WerteNamen { get { return string.Empty; } }
+        virtual public string WerteNamen { set; get; }
 
         public double Erfolgschance {
             get

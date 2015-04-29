@@ -286,6 +286,12 @@
                     </ListBox>
 
                     <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Margin="5">
+                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnAddFreieProbe}" ToolTip="Eine frei editierbare Probe einfügen...">
+                            <Grid>
+                                <Image Source="/Images/Icons/meisterperson.png" />
+                                <Image Source="/Images/Icons/General/add.png" Opacity="0.8" Width="22" Margin="24,8,0,0" />
+                            </Grid>
+                        </Button>
                         <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="50" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>

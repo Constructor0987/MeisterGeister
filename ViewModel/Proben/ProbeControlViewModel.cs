@@ -101,6 +101,18 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        private string _name = string.Empty;
+        public string Name
+        {
+            get { return _held != null ? _held.Name : _name; }
+            set
+            {
+                _name = value;
+                OnChanged("Held");
+                OnChanged("Name");
+            }
+        }
+
         public bool Readonly
         {
             get { return _held != null; }

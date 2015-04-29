@@ -15,6 +15,22 @@ namespace MeisterGeister.ViewModel.Proben
     {
         #region //---- COMMANDS ----
 
+        private Base.CommandBase onAddFreieProbe;
+        public Base.CommandBase OnAddFreieProbe
+        {
+            get 
+            {
+                if (onAddFreieProbe == null)
+                    onAddFreieProbe = new Base.CommandBase(AddFreieProbe, null);
+                return onAddFreieProbe;
+            }
+        }
+        private void AddFreieProbe(object obj)
+        {
+            AddProbeItem(null);
+            OnChanged("ProbeErgebnisListe");
+        }
+
         private Base.CommandBase onWürfeln;
         public Base.CommandBase OnWürfeln
         {
@@ -645,6 +661,11 @@ namespace MeisterGeister.ViewModel.Proben
             vm.Modifikator = Modifikator;
             vm.Gewürfelt += ProbeControlGewürfelt;
 
+            if (held == null)
+            {
+                vm.Name = "NSC";
+            }
+
             if (SelectedProbe is Model.Talent)
             {
                 if ((SelectedProbe as Model.Talent).IsMetaTalent) // Meta-Talent
@@ -653,33 +674,75 @@ namespace MeisterGeister.ViewModel.Proben
                     vm.Probe = mt.Aktiviert ? mt : null;
                 }
                 else
-                    vm.Probe = held.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+                {
+                    if (held != null)
+                        vm.Probe = held.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+                    else //Wenn kein Held, dann die Eigenschaften mit 10 vorbesetzen
+                    {
+                        Model.Talent t = new Model.Talent();
+                        t.eBE = (SelectedProbe as Model.Talent).eBE;
+                        t.Eigenschaft1 = (SelectedProbe as Model.Talent).Eigenschaft1;
+                        t.Eigenschaft2 = (SelectedProbe as Model.Talent).Eigenschaft2;
+                        t.Eigenschaft3 = (SelectedProbe as Model.Talent).Eigenschaft3;
+                        t.TalentGUID = (SelectedProbe as Model.Talent).TalentGUID;
+                        t.Talentname = (SelectedProbe as Model.Talent).Talentname;
+                        vm.Probe = t;
+                        foreach (var item in vm.EigenschaftWurfItemListe)
+                            item.Wert = 10;
+                        vm.Probe.Fertigkeitswert = 5;
+                    }
+                }
 
                 if (vm.Probe != null)
                     _probeErgebnisListe.Add(vm);
             }
             else if (SelectedProbe is Eigenschaft)
             {
-                vm.Probe = held.Eigenschaft(SelectedProbe.Probenname);
+                if (held != null)
+                    vm.Probe = held.Eigenschaft(SelectedProbe.Probenname);
+                else //Wenn kein Held, dann die Eigenschaften mit 10 vorbesetzen
+                {
+                    vm.Probe = new Eigenschaft(SelectedProbe.Probenname, 10);
+                }
                 if (vm.Probe != null)
                     _probeErgebnisListe.Add(vm);
             }
             else if (SelectedProbe is Model.Zauber)
             {
-                var zauberList = held.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).ToList();
-                for (int i = 0; i < zauberList.Count(); i++)
+                if (held != null)
                 {
-                    vm = new ProbeControlViewModel();
-                    vm.Orientation = SelectedAnzeigeOrientation;
-                    vm.Held = held;
-                    vm.Modifikator = Modifikator;
-                    vm.Gewürfelt += ProbeControlGewürfelt;
-                    vm.Probe = zauberList[i];
-                    vm.NichtProben = i > 0;
+                    var zauberList = held.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).ToList();
+                    for (int i = 0; i < zauberList.Count(); i++)
+                    {
+                        vm = new ProbeControlViewModel();
+                        vm.Orientation = SelectedAnzeigeOrientation;
+                        vm.Held = held;
+                        vm.Modifikator = Modifikator;
+                        vm.Gewürfelt += ProbeControlGewürfelt;
+                        vm.Probe = zauberList[i];
+                        vm.NichtProben = i > 0;
+
+                        if (vm.Probe != null)
+                            _probeErgebnisListe.Add(vm);
+                    }
+                }
+                else //Wenn kein Held, dann die Eigenschaften mit 10 vorbesetzen
+                {
+                    Model.Zauber z = new Model.Zauber();
+                    z.Eigenschaft1 = (SelectedProbe as Model.Zauber).Eigenschaft1;
+                    z.Eigenschaft2 = (SelectedProbe as Model.Zauber).Eigenschaft2;
+                    z.Eigenschaft3 = (SelectedProbe as Model.Zauber).Eigenschaft3;
+                    z.ZauberGUID = (SelectedProbe as Model.Zauber).ZauberGUID;
+                    z.Name = (SelectedProbe as Model.Zauber).Name;
+                    vm.Probe = z;
+                    foreach (var item in vm.EigenschaftWurfItemListe)
+                        item.Wert = 10;
+                    vm.Probe.Fertigkeitswert = 5;
 
                     if (vm.Probe != null)
                         _probeErgebnisListe.Add(vm);
                 }
+                
             }
         }
 

@@ -114,7 +114,7 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <TextBlock.ToolTip>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -132,6 +132,8 @@
                         </Grid>
                     </TextBlock.ToolTip>
                 </TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanInvertedToVisibilityConverter}}" />
+                
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" ToolTip="{Binding Probe.Probenname, StringFormat=\{0\}-Probe}" TextTrimming="CharacterEllipsis">
                     <Run Text="{Binding Probe.Probenname}" FontStyle="Italic" />
                     <Run Text="-Probe" />
