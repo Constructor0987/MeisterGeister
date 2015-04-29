@@ -263,9 +263,9 @@
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Width="65" Margin="5,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource WertVisibility}">
-                    <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" FontWeight="Bold"  />
+                    <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" FontWeight="Bold"  VerticalAlignment="Center" />
                     <TextBlock Text="{Binding Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <ViewGeneral:IntBox Value="{Binding Fertigkeitswert}" Margin="5,0,0,0" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanInvertedToVisibilityConverter}}" />
+                    <ViewGeneral:IntBox Value="{Binding Fertigkeitswert}" Margin="5,0,0,0" MinWidth="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Path=Readonly, Converter={StaticResource BooleanInvertedToVisibilityConverter}}" />
                 </StackPanel>
             </StackPanel>
 
