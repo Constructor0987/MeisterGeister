@@ -229,18 +229,84 @@ namespace MeisterGeister.ViewModel.Proben
 
                 if (Probe != null && Probe.Werte.Length != value)
                     Probe.Werte = new int[value];
-                var list = new List<EigenschaftWurfItem>(value);
-                for (int i = 0; i < value; i++)
-                {
-                    var item = new EigenschaftWurfItem();
-                    if (Probe != null)
-                        item.Wert = Probe.Werte[i];
-                    item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
-                    list.Add(item);
-                }
-                EigenschaftWurfItemListe = list;
+                SetupEigenschaftWurfItemListe(value);
+                UpdateEigenschaftWurfItemListe();
 
                 OnChanged("WertCount");
+            }
+        }
+
+        private void SetupEigenschaftWurfItemListe(int length)
+        {
+            var list = new List<EigenschaftWurfItem>(length);
+            for (int i = 0; i < length; i++)
+            {
+                var item = new EigenschaftWurfItem();
+                if (Probe != null)
+                    item.Wert = Probe.Werte[i];
+                item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
+                list.Add(item);
+            }
+            EigenschaftWurfItemListe = list;
+        }
+
+        private void UpdateEigenschaftWurfItemListe()
+        {
+            foreach (var item in _eigenschaftWurfItemListe)
+            {
+                item.PropertyChanged -= EigenschaftWurfItem_PropertyChanged;
+                item.Held = Held;
+            }
+
+            Model.Talent talent = null;
+            Model.Zauber zauber = null;
+            Eigenschaft eigenschaft = null;
+            if (Probe is Model.Talent)
+                talent = Probe as Model.Talent;
+            else if (Probe is Model.Held_Talent)
+                talent = (Probe as Model.Held_Talent).Talent;
+            else if (Probe is MetaTalent)
+                talent = (Probe as MetaTalent).Talent;
+            else if (Probe is Model.Zauber)
+                zauber = Probe as Model.Zauber;
+            else if (Probe is Model.Held_Zauber)
+                zauber = (Probe as Model.Held_Zauber).Zauber;
+            else if (Probe is Eigenschaft)
+                eigenschaft = Probe as Eigenschaft;
+
+            if ((talent != null || zauber != null) && _eigenschaftWurfItemListe.Count >= 3)
+            {
+                // Eigenschaftsnamen setzen
+                string e1 = (talent != null) ? talent.Eigenschaft1
+                    : ((zauber != null) ? zauber.Eigenschaft1 : string.Empty);
+                string e2 = (talent != null) ? talent.Eigenschaft2
+                    : ((zauber != null) ? zauber.Eigenschaft2 : string.Empty);
+                string e3 = (talent != null) ? talent.Eigenschaft3
+                    : ((zauber != null) ? zauber.Eigenschaft3 : string.Empty);
+                string[] e = { e1, e2, e3 };
+
+                _eigenschaftWurfItemListe[0].Name = e1;
+                _eigenschaftWurfItemListe[1].Name = e2;
+                _eigenschaftWurfItemListe[2].Name = e3;
+
+                if (Held != null)
+                {
+                    // Eigenschaftswerte setzen
+                    for (int i = 0; i < _eigenschaftWurfItemListe.Count; i++)
+                    {
+                        _eigenschaftWurfItemListe[i].Wert = Held.EigenschaftWert(e[i]);
+                    }
+                }
+            }
+            else if (eigenschaft != null)
+            {
+                _eigenschaftWurfItemListe[0].Name = eigenschaft.Abkürzung;
+                _eigenschaftWurfItemListe[0].Wert = eigenschaft.Wert;
+            }
+
+            foreach (var item in _eigenschaftWurfItemListe)
+            {
+                item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
             }
         }
 
@@ -249,53 +315,6 @@ namespace MeisterGeister.ViewModel.Proben
         {
             get 
             {
-                foreach (var item in _eigenschaftWurfItemListe)
-                    item.Held = Held;
-
-                Model.Talent talent = null;
-                Model.Zauber zauber = null;
-                Eigenschaft eigenschaft = null;
-                if (Probe is Model.Talent)
-                    talent = Probe as Model.Talent;
-                else if (Probe is Model.Held_Talent)
-                    talent = (Probe as Model.Held_Talent).Talent;
-                else if (Probe is MetaTalent)
-                    talent = (Probe as MetaTalent).Talent;
-                else if (Probe is Model.Zauber)
-                    zauber = Probe as Model.Zauber;
-                else if (Probe is Model.Held_Zauber)
-                    zauber = (Probe as Model.Held_Zauber).Zauber;
-                else if (Probe is Eigenschaft)
-                    eigenschaft = Probe as Eigenschaft;
-
-                if ((talent != null || zauber != null) && _eigenschaftWurfItemListe.Count >= 3)
-                {
-                    // Eigenschaftsnamen setzen
-                    string e1 = (talent != null) ? talent.Eigenschaft1
-                        : ((zauber != null) ? zauber.Eigenschaft1 : string.Empty);
-                    string e2 = (talent != null) ? talent.Eigenschaft2
-                        : ((zauber != null) ? zauber.Eigenschaft2 : string.Empty);
-                    string e3 = (talent != null) ? talent.Eigenschaft3
-                        : ((zauber != null) ? zauber.Eigenschaft3 : string.Empty);
-
-                    _eigenschaftWurfItemListe[0].Name = e1;
-                    _eigenschaftWurfItemListe[1].Name = e2;
-                    _eigenschaftWurfItemListe[2].Name = e3;
-
-                    if (Held != null)
-                    {
-                        // Eigenschaftswerte setzen
-                        _eigenschaftWurfItemListe[0].Wert = Held.EigenschaftWert(e1);
-                        _eigenschaftWurfItemListe[1].Wert = Held.EigenschaftWert(e2);
-                        _eigenschaftWurfItemListe[2].Wert = Held.EigenschaftWert(e3);
-                    }
-                }
-                else if (eigenschaft != null)
-                {
-                    _eigenschaftWurfItemListe[0].Name = eigenschaft.Abkürzung;
-                    _eigenschaftWurfItemListe[0].Wert = eigenschaft.Wert;
-                }
-
                 return _eigenschaftWurfItemListe; 
             }
             set
@@ -329,6 +348,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         public void Würfeln(object obj = null)
         {
+            UpdateEigenschaftWurfItemListe();
             if (Probe != null && !NichtProben)
             {
                 for (int i = 0; i < Probe.Werte.Length; i++)
