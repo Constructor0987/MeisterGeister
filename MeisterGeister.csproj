@@ -1955,6 +1955,10 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)License\Apache License.txt" "$(ProjectDir)publish\$(TargetName)\License"
    copy "$(TargetDir)WPFExtensions.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Xceed.Wpf.Toolkit.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)NAudio.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)NAudio.xml" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)NVorbis.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)NVorbis.xml" "$(ProjectDir)publish\$(TargetName)"
    call "C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetName).zip" "$(ProjectDir)publish\$(TargetName)" -mx
    move  "$(TargetDir)$(TargetName).zip" "$(ProjectDir)publish"
 )</PostBuildEvent>
