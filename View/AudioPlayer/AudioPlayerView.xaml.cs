@@ -124,49 +124,41 @@ namespace MeisterGeister.View.AudioPlayer {
         TabItemControl AudioTIC = null;
 
         //private MusikView _bgPlayer = new MusikView();
-        private int _bgPlayeraktiv;
         public int BGPlayeraktiv
         {
             get { return VM.BGPlayeraktiv; }
             set
             {
                 VM.BGPlayeraktiv = value;
-                _bgPlayeraktiv = value;
             }
         }
 
-        private VM.AudioPlayerViewModel.MusikView _bgPlayer;
         public VM.AudioPlayerViewModel.MusikView BGPlayer
         {
             get { return VM.BGPlayer; }
             set
             {
                 VM.BGPlayer = value;
-                _bgPlayer = value;                
             }
         }
         
         //private List<GruppenObjekt> VM._GrpObjecte = new List<GruppenObjekt>();
 
-        private Audio_Playlist _aktKlangPlaylist;
         public Audio_Playlist AktKlangPlaylist
         {
             get { return VM.AktKlangPlaylist; }
             set
             {
                 VM.AktKlangPlaylist = value;
-                _aktKlangPlaylist = value;
             }
         }
         
-        private Audio_Theme _aktKlangTheme;
         public Audio_Theme AktKlangTheme
         {
             get { return VM.AktKlangTheme; }
             set
             {
                 VM.AktKlangTheme = value;
-                _aktKlangTheme = value;
             }
         }
 
