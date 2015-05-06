@@ -75,6 +75,7 @@ namespace MeisterGeister.View.General
             if (Parent != null && Parent is TabControl)
             {
                 ((TabControl)Parent).Items.Remove(this);
+                Content = null;
                 App.SaveAll();
             }
         }

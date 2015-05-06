@@ -231,7 +231,14 @@ namespace MeisterGeister
 
             IsInitialized = true;
 
-            Logic.Einstellung.Einstellungen.UpdateEinstellungen();
+            try
+            {
+                Logic.Einstellung.Einstellungen.UpdateEinstellungen();
+            }
+            catch(Exception exc)
+            {
+                string x = exc.Message;
+            }
 
             if (Logic.Einstellung.Einstellungen.SelectedHeld != null)
             {

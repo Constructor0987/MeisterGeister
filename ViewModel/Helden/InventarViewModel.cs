@@ -490,10 +490,10 @@ namespace MeisterGeister.ViewModel.Inventar {
 
         #region //KONSTRUKTOR
         public InventarViewModel() {
-            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("RSBerechnung", ""));
-            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("BEBerechnung", ""));
-            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));
-            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("IsMitUeberlastung", ""));            
+            EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("BEBerechnung", ""));
+            EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("RSBerechnung", ""));
+            EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));
+            EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("IsMitUeberlastung", ""));            
 
             onAddNahkampfwaffe = new Base.CommandBase(AddNahkampfwaffe, null);
             onAddFernkampfwaffe = new Base.CommandBase(AddFernkampfwaffe, null);
@@ -619,7 +619,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
-        void EinstellungenChangedHandler(MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs e) {
+        void EinstellungenChangedHandler(object sender, MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs e) {
             switch (e.PropertyName) {
                 case "RSBerechnung":
                     switch (E.RSBerechnung) {
@@ -687,7 +687,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 case "IsMitUeberlastung":
                     switch (E.IsMitUeberlastung) {                        
                         case true:                            
-                            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));
+                            EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));
                             break;
                         case false:
                             IsUeberlastungEingeben = false;

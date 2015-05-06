@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.Logic.Einstellung
 {
@@ -85,13 +86,17 @@ namespace MeisterGeister.Logic.Einstellung
             };
         }
 
-        public static event EinstellungChangedHandler EinstellungChanged;
+        private static WeakEvent<EinstellungChangedHandler> _einstellungChanged = new WeakEvent<EinstellungChangedHandler>();
+        public static event EinstellungChangedHandler EinstellungChanged
+        {
+            add { _einstellungChanged.Add(value); }
+            remove { _einstellungChanged.Remove(value); }
+        }
+
         private static void OnEinstellungChanged(string propertyName, string einstellungName)
         {
-            if (EinstellungChanged != null)
-                EinstellungChanged(new EinstellungChangedEventArgs(propertyName, einstellungName));
+            _einstellungChanged.Raise(null, new EinstellungChangedEventArgs(propertyName, einstellungName));
         }
-         
 
         private static Dictionary<string, Model.Einstellung> defaultValues = null;
         private static Dictionary<string, Model.Einstellung> DefaultValues
@@ -154,7 +159,7 @@ namespace MeisterGeister.Logic.Einstellung
             return null;
         }
 
-        // TODO: Einstellung wird gecached, um Absturz bei Poben zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        // TODO: Einstellung wird gecached, um Absturz bei Proben zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
         private static Nullable<bool> _cached_IsMitUeberlastung = null;
         public static bool IsMitUeberlastung
         {
@@ -317,13 +322,21 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("WuerfelSoundAbspielen", value);
-                if (WuerfelSoundAbspielenChanged != null)
-                    WuerfelSoundAbspielenChanged(null, new EventArgs());
+                RaiseWuerfelSoundAbspielenChanged();
             }
         }
 
-        public static EventHandler WuerfelSoundAbspielenChanged;
+        private static WeakEvent<EventHandler> _wuerfelSoundAbspielenChanged = new WeakEvent<EventHandler>();
+        public static event EventHandler WuerfelSoundAbspielenChanged
+        {
+            add { _wuerfelSoundAbspielenChanged.Add(value); }
+            remove { _wuerfelSoundAbspielenChanged.Remove(value); }
+        }
 
+        public static void RaiseWuerfelSoundAbspielenChanged(object sender = null, EventArgs args = null)
+        {
+            _wuerfelSoundAbspielenChanged.Raise(sender, args??EventArgs.Empty);
+        }
 
         public static string AudioVerzeichnis
         {
@@ -406,11 +419,20 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<int>("Fading", value);
-                if (Fading_Click != null)
-                    Fading_Click(null, new EventArgs());
+                RaiseFading_Click();
             }
         }
-        public static EventHandler Fading_Click;
+        private static WeakEvent<EventHandler> _fading_Click = new WeakEvent<EventHandler>();
+        public static event EventHandler Fading_Click
+        {
+            add { _fading_Click.Add(value); }
+            remove { _fading_Click.Remove(value); }
+        }
+
+        public static void RaiseFading_Click(object sender = null, EventArgs args = null)
+        {
+            _fading_Click.Raise(sender, args ?? EventArgs.Empty);
+        }
         
 
         public static int SelectedTab
@@ -616,12 +638,21 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("ToolTitelAusblenden", value);
-                if (ToolTitelAusblendenChanged != null)
-                    ToolTitelAusblendenChanged(null, new EventArgs());
+                RaiseToolTitelAusblendenChanged();
             }
         }
 
-        public static EventHandler ToolTitelAusblendenChanged;
+        private static WeakEvent<EventHandler> _toolTitelAusblendenChanged = new WeakEvent<EventHandler>();
+        public static event EventHandler ToolTitelAusblendenChanged
+        {
+            add { _toolTitelAusblendenChanged.Add(value); }
+            remove { _toolTitelAusblendenChanged.Remove(value); }
+        }
+
+        public static void RaiseToolTitelAusblendenChanged(object sender = null, EventArgs args = null)
+        {
+            _toolTitelAusblendenChanged.Raise(sender, args ?? EventArgs.Empty);
+        }
 
 
         /// <summary>
@@ -637,12 +668,21 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("IsReadOnly", value);
-                if (IsReadOnlyChanged != null)
-                    IsReadOnlyChanged(null, new EventArgs());
+                RaiseIsReadOnlyChanged();
             }
         }
 
-        public static EventHandler IsReadOnlyChanged;
+        private static WeakEvent<EventHandler> _isReadOnlyChanged = new WeakEvent<EventHandler>();
+        public static event EventHandler IsReadOnlyChanged
+        {
+            add { _isReadOnlyChanged.Add(value); }
+            remove { _isReadOnlyChanged.Remove(value); }
+        }
+
+        public static void RaiseIsReadOnlyChanged(object sender = null, EventArgs args = null)
+        {
+            _isReadOnlyChanged.Raise(sender, args ?? EventArgs.Empty);
+        }
 
         public static string KampfRecentColors
         {

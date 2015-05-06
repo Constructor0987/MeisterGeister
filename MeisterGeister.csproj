@@ -195,6 +195,7 @@
     <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\Domänen.cs" />
+    <Compile Include="Logic\General\WeakEvent.cs" />
     <Compile Include="Logic\General\KeyEqualityComparer.cs" />
     <Compile Include="Logic\General\Pdf.cs" />
     <Compile Include="Logic\General\MetaTalent.cs" />

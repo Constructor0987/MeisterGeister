@@ -178,12 +178,10 @@ namespace MeisterGeister.View.Settings
                 switch (tag.ToString())
                 {
                     case "ToolTitelAusblenden":
-                        if (Einstellungen.ToolTitelAusblendenChanged != null)
-                            Einstellungen.ToolTitelAusblendenChanged(null, new EventArgs());
+                        Einstellungen.RaiseToolTitelAusblendenChanged();
                         break;
                     case "WuerfelSoundAbspielen":
-                        if (Einstellungen.WuerfelSoundAbspielenChanged != null)
-                            Einstellungen.WuerfelSoundAbspielenChanged(null, new EventArgs());
+                        Einstellungen.RaiseWuerfelSoundAbspielenChanged(this);
                         break;
                     default:
                         break;
