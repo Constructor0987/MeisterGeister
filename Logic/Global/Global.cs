@@ -230,16 +230,7 @@ namespace MeisterGeister
             ContextZauber = new Service.ZauberService();
 
             IsInitialized = true;
-
-            try
-            {
-                Logic.Einstellung.Einstellungen.UpdateEinstellungen();
-            }
-            catch(Exception exc)
-            {
-                string x = exc.Message;
-            }
-
+            Logic.Einstellung.Einstellungen.UpdateEinstellungen();
             if (Logic.Einstellung.Einstellungen.SelectedHeld != null)
             {
                 Guid heldguid;
