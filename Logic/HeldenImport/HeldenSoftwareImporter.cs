@@ -1013,6 +1013,7 @@ namespace MeisterGeister.Logic.HeldenImport
             if (sf != null)
             {
                 Held_Sonderfertigkeit hs = null;
+                wertString = wertString ?? "";
                 hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && hs1.Wert == wertString).FirstOrDefault();
                 if (hs == null)
                 {
