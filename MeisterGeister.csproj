@@ -147,9 +147,6 @@
       <HintPath>packages\NVorbis.0.8.4.0\lib\NVorbis.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="protobuf-net">
-      <HintPath>packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -1959,6 +1956,7 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)EntityFramework.SqlServerCompact.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)EntityFramework.SqlServerCompact.xml" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)ImpromptuInterface.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)ImpromptuInterface.xml" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)ArtefaktGenerator.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Ares.MeisterGeisterPlugin.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)de\Ares.MeisterGeisterPlugin.resources.dll" "$(ProjectDir)publish\$(TargetName)\de"
@@ -1971,6 +1969,10 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)NAudio.xml" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)NVorbis.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)NVorbis.xml" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Aq.ExpressionJsonSerializer.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Newtonsoft.Json.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Newtonsoft.Json.xml" "$(ProjectDir)publish\$(TargetName)"
+   
    call "C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetName).zip" "$(ProjectDir)publish\$(TargetName)" -mx
    move  "$(TargetDir)$(TargetName).zip" "$(ProjectDir)publish"
 )</PostBuildEvent>

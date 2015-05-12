@@ -74,10 +74,9 @@
                                         <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                             <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
                                             <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
-                                        </StackPanel>
-                                        <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                             <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
                                             <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
+                                            <ViewGeneral:LiteraturControl Height="25" Padding="2" Literaturangabe="{Binding SelectedRezept.Literatur}" LiteraturAnzeigeArt="TextLang" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
@@ -225,17 +224,8 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="Kategorie"  Grid.Row="0" />
                                     <TextBlock Text="{Binding Path = SelectedRezept.Kategorie}" Grid.Row="0" Grid.Column="2" />
-                                    <TextBlock Text="Gruppe"  Grid.Row="1" />
-                                    <TextBlock Text="{Binding Path = SelectedRezept.Gruppe}" Grid.Row="1" Grid.Column="2" />
                                     <TextBlock Text="benötigtes Labor"  Grid.Row="2" />
                                     <TextBlock Text="{Binding Path = SelectedRezept.Labor}" Grid.Row="2" Grid.Column="2" />
-                                    <TextBlock Text="benutztes Labor"  Grid.Row="3" />
-                                    <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2">
-                                        <TextBlock Text="{Binding Path = SelectedLaborArtListe}" TextWrapping="Wrap" />
-                                        <TextBlock Text=" ("  TextWrapping="Wrap" />
-                                        <TextBlock Text="{Binding Path = SelectedLaborQualitätListe}" TextWrapping="Wrap" />
-                                        <TextBlock Text=")"  TextWrapping="Wrap" />
-                                    </StackPanel>
                                     <TextBlock Text="Proben-Modifikator: "  Grid.Row="4" />
                                     <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="4" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="TaP*: "  Grid.Row="5" />
@@ -270,7 +260,6 @@
                                     <TextBlock Text="{Binding Path = SelectedRezept.Merkmale}" Grid.Row="16" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="18" />
                                     <TextBlock Text="{Binding HerstellungWirkungM}" Grid.Row="18" Grid.Column="2" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                    <TextBlock Text="Zutaten"  Grid.Row="19" />
                                     <TextBlock Text="Bemerkung"  Grid.Row="20" />
                                     <TextBlock Text="{Binding Path = SelectedRezept.Bemerkung}" Grid.Row="20" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="vorgeschlagene Substitute"  Grid.Row="21" TextWrapping="Wrap" />
