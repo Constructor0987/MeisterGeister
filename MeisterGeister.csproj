@@ -100,6 +100,9 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aq.ExpressionJsonSerializer">
+      <HintPath>packages\Aq.ExpressionJsonSerializer.0.18\lib\net45\Aq.ExpressionJsonSerializer.dll</HintPath>
+    </Reference>
     <Reference Include="Ares.MeisterGeisterPlugin, Version=1.3.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Ares.MeisterGeisterPlugin.dll</HintPath>
@@ -120,8 +123,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\EntityFramework.SqlServerCompact.6.0.2\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
     </Reference>
-    <Reference Include="ImpromptuInterface">
-      <HintPath>.\ImpromptuInterface.dll</HintPath>
+    <Reference Include="ImpromptuInterface, Version=6.2.2.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\ImpromptuInterface.6.2.2\lib\net40\ImpromptuInterface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Expression.Effects, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -135,10 +139,17 @@
     <Reference Include="NAudio">
       <HintPath>packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NVorbis">
       <HintPath>packages\NVorbis.0.8.4.0\lib\NVorbis.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="protobuf-net">
+      <HintPath>packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -535,6 +546,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\NiedrigeEnergieModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Position.cs" />
+    <Compile Include="ViewModel\Modifikatoren\CustomModifikatorViewModel.cs" />
     <Compile Include="ViewModel\NscGeneratorAlt\NscGeneratorAltViewModel.cs" />
     <Compile Include="ViewModel\NscGeneratorAlt\Person.cs" />
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
@@ -1791,7 +1803,6 @@
     <Resource Include="Images\Logos\MG_Icon.ico" />
     <Resource Include="Images\Logos\MG_Logo.png" />
     <Resource Include="Images\Logos\MG_Icon_mit_Zeiger.png" />
-    <Content Include="Libs\ImpromptuInterface.dll" />
     <Content Include="Libs\DG-Suche.dll" />
     <Resource Include="Images\Icons\General\kreise.png" />
     <Resource Include="Images\Logos\facebook.png" />

@@ -289,7 +289,8 @@ namespace MeisterGeister_Tests
             Assert.IsTrue(d.ContainsKey("ApplyZauberwertMod"));
             Assert.IsTrue(d.ContainsKey("Zaubername"));
             Assert.AreEqual(2, d.Count);
-            auswirkungen += ", Zauberwert *3";
+            d["Zaubername"] = new SortedSet<string>() { "UNITATIO" };
+            auswirkungen += ", UNITATIO *3";
             cf.SetModifikator("ApplyZauberwertMod", "*", 3);
             Assert.AreEqual(0, cf.Errors.Count);
 
@@ -302,7 +303,7 @@ namespace MeisterGeister_Tests
             cf.SetModifikator("ApplyAEMod", "-", 2);
             Assert.AreEqual(0, cf.Errors.Count);
 
-            IModifikator result = cf.Finish();
+            ICustomModifikator result = cf.Finish();
             Assert.IsTrue(result is IModTalentprobe);
             Assert.IsTrue((result as IModTalentprobe).Talentname.Contains("Reiten"));
             Assert.IsTrue((result as IModTalentprobe).Talentname.Contains("Schleichen"));
@@ -318,6 +319,25 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(8, (result as IModAE).ApplyAEMod(10));
 
             Assert.AreEqual(auswirkungen, result.Auswirkung);
+
+            string serialized = CustomModifikatorFactory.Serialize(result);
+            ICustomModifikator deserialized = CustomModifikatorFactory.Deserialize(serialized);
+
+            Assert.IsTrue(deserialized is IModTalentprobe);
+            Assert.IsTrue((deserialized as IModTalentprobe).Talentname.Contains("Reiten"));
+            Assert.IsTrue((deserialized as IModTalentprobe).Talentname.Contains("Schleichen"));
+            Assert.AreEqual(5, (deserialized as IModTalentprobe).ApplyTalentprobeMod(0));
+
+            Assert.IsTrue(deserialized is IModTalentwert);
+            Assert.AreEqual(2, (deserialized as IModTalentwert).ApplyTalentwertMod(0));
+
+            Assert.IsTrue(deserialized is IModZauberwert);
+            Assert.AreEqual(27, (deserialized as IModZauberwert).ApplyZauberwertMod(9));
+
+            Assert.IsTrue(deserialized is IModAE);
+            Assert.AreEqual(8, (deserialized as IModAE).ApplyAEMod(10));
+
+            Assert.AreEqual(auswirkungen, deserialized.Auswirkung);
         }
     }
 }

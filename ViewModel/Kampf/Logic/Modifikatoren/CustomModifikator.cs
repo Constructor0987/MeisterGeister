@@ -7,9 +7,24 @@ using System.Reflection;
 using System.Text;
 using ImpromptuInterface;
 using MeisterGeister.Logic.Extensions;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System.IO;
+using Aq.ExpressionJsonSerializer;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 {
+    /// <summary>
+    /// Interface für CustomModifikatoren aus der CustomModifikatorFactory.
+    /// NICHT auf andere Klassen anwenden.
+    /// </summary>
+    public interface ICustomModifikator : IModifikator
+    {
+        //IDictionary<string, Expression<Func<int, int>>> Methoden;
+        //List<string> Types;
+    }
+
     /// <summary>
     /// Factory für einen Modifikator, der sich dynamisch, wie andere Modifikatoren verhalten kann.
     /// </summary>
@@ -33,6 +48,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             if (!typeof(IModifikator).IsAssignableFrom(modType))
                 throw new ArgumentException(String.Format("modType '{0}' ist kein IModifikator", modType));
             types.Add(modType);
+            modifikatorObj.Types.Add(modType.FullName);
             AddMembers(modType);
         }
 
@@ -44,6 +60,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
                 return;
             RemoveMembers(modType);
             types.Remove(modType);
+            modifikatorObj.Types.Remove(modType.FullName);
         }
 
         public void SetModifikator(string methodName, string operatorString, int modWert)
@@ -71,15 +88,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             }
             else
                 auswirkungen[methodName] = propertyName + " " + operatorString + modWert;
-            modifikatorObjAsDictionary[methodName] = GetApplyExpression(operatorString, modWert);
+            modifikatorObj.Methoden[methodName] = GetApplyExpression(operatorString, modWert);
         }
 
-        public IModifikator Finish()
+        public ICustomModifikator Finish()
         {
             if (Errors.Count > 0)
                 throw new Exception("Es gibt noch Fehler");
+            foreach(var name in modifikatorObj.Methoden.Keys)
+                modifikatorObjAsDictionary[name] = modifikatorObj.Methoden[name].Compile();
             modifikatorObj.Auswirkung = String.Join(", ", auswirkungen.Values.ToArray());
-            return Impromptu.ActLike<IModifikator>(modifikatorObj, types.ToArray());
+            return Impromptu.ActLike<ICustomModifikator>(modifikatorObj, types.ToArray());
         }
 
         public string Auswirkungen
@@ -131,6 +150,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             e.Literatur = null as String;
             e.Erstellt = DateTime.Now;
             e.Auswirkung = String.Empty;
+            e.Methoden = new Dictionary<string, Expression>();
+            e.Types = new List<string>();
             return e;
         }
 
@@ -190,8 +211,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
                 if (vt == null)
                 {
                     modifikatorObjAsDictionary[m.Name] = null;
-                    if(m.Name.StartsWith("Apply") && m.Name.EndsWith("Mod"))
+                    if (m.Name.StartsWith("Apply") && m.Name.EndsWith("Mod"))
+                    {
                         auswirkungen.Add(m.Name, null);
+                        modifikatorObj.Methoden.Add(m.Name, null);
+                    }
                 }
                 else
                     modifikatorObjAsDictionary[m.Name] = vt.GetDefaultValue();
@@ -222,12 +246,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
                 if (iModifikatorMembers.Contains(m.Name) || !modifikatorObjAsDictionary.ContainsKey(m.Name))
                     continue;
                 if (m.Name.StartsWith("Apply") && m.Name.EndsWith("Mod"))
+                {
                     auswirkungen.Remove(m.Name);
+                    modifikatorObj.Methoden.Remove(m.Name);
+                }
                 modifikatorObjAsDictionary.Remove(m.Name);
             }
         }
 
-        private static Func<int, int> GetApplyExpression(string actionString, int modWert)
+        private static Expression<Func<int, int>> GetApplyExpression(string actionString, int modWert)
         {
             ParameterExpression wertParam = Expression.Parameter(typeof(int), "wert");
             ConstantExpression mod = Expression.Constant(modWert, typeof(int));
@@ -242,7 +269,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
                 action = BinaryExpression.Multiply(wertParam, mod);
             else if (actionString == "=")
                 action = mod;
-            return Expression.Lambda<Func<int, int>>(action, new ParameterExpression[] { wertParam }).Compile();
+            return Expression.Lambda<Func<int, int>>(action, new ParameterExpression[] { wertParam });
         }
 
         private static int Div(int a, int b)
@@ -270,6 +297,67 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             foreach (var o in objectWithRegisteredEvents)
                 o.CollectionChanged -= d_CollectionChanged;
         }
+
+        #region De/Serialisierung
+        /// <summary>
+        /// Serialisiert einen ICustomModifikator zu JSON, was in der Datenbank abgelegt werden kann.
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <returns></returns>
+        public static string Serialize(ICustomModifikator mod)
+        {
+            // Impromptu Proxy entfernen
+            var obj = Impromptu.UndoActLike(mod);
+            // Klon erstellen, um das original nicht zu verändern (ist protected also per Reflection)
+            var obj2 = Impromptu.InvokeMember(obj, "MemberwiseClone");
+            var d = obj2 as IDictionary<string, object>;
+            // Delegat-Methoden löschen, weil diese nicht serialisiert werden können
+            foreach(var key in d.Keys.Where(k => k.StartsWith("Apply") && k.EndsWith("Mod")).ToArray())
+            {
+                d[key] = null;
+            }
+            string s = null;
+            //in JSON umwandeln - mit speziellem Expressionconverter
+            s = Newtonsoft.Json.JsonConvert.SerializeObject(d, new ExpressionJsonConverter(Assembly.GetAssembly(typeof(ICustomModifikator))) );
+            return s;
+        }
+
+
+        /// <summary>
+        /// Deserialisiert einen ICustomModifikator aus entsprechendem JSON.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static ICustomModifikator Deserialize(string str)
+        {
+            IDictionary<string, object> d = null;
+            //Converter für Expressions
+            ExpressionJsonConverter converter =  new ExpressionJsonConverter(Assembly.GetAssembly(typeof(ICustomModifikator)) );
+            //Deserialize als IDictionary
+            d = (IDictionary<string, object>)Newtonsoft.Json.JsonConvert.DeserializeObject(str, typeof(IDictionary<string, object>), converter);
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Converters.Add(converter);
+            //Manuelles Umwandeln von nicht korrekt umgesetzten Eigenschaften
+            d["Methoden"] = ((JObject)d["Methoden"]).ToObject<IDictionary<string, Expression<Func<int, int>>>>(serializer);
+            d["Types"] = ((JArray)d["Types"]).ToObject<List<string>>(serializer);
+            string[] filternamen = new string[] { "Zaubername", "Talentname" };
+            foreach(var filtername in filternamen)
+            if(d.ContainsKey(filtername))
+                d[filtername] = ((JArray)d[filtername]).ToObject<SortedSet<string>>(serializer);
+            //Kompilieren der Delegat-Methoden aus den serialisierten Expressions
+            var methoden = (IDictionary<string, Expression<Func<int, int>>>)d["Methoden"];
+            foreach(string key in methoden.Keys)
+            {
+                if(d.ContainsKey(key))
+                    d[key] = methoden[key].Compile();
+                else
+                    d.Add(key, methoden[key].Compile());
+            }
+            //Mit Impromptu wieder die gespeicherten Modifikator-Interfaces anwenden
+            Type[] types = ((List<string>)d["Types"]).Select(t => Type.GetType(t)).ToArray();
+            return Impromptu.ActLike<ICustomModifikator>(d.ToExpando(), types);
+        }
+        #endregion
 
         #region IEnumerable
         public IEnumerator<IDictionary<string, object>> GetEnumerator()
@@ -343,5 +431,50 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             // Compile and return the value.
             return e.Compile()();
         }
+
+        /// <summary>
+        /// Extension method that turns a dictionary of string and object to an ExpandoObject
+        /// </summary>
+        public static ExpandoObject ToExpando(this IDictionary<string, object> dictionary)
+        {
+            var expando = new ExpandoObject();
+            var expandoDic = (IDictionary<string, object>)expando;
+
+            // go through the items in the dictionary and copy over the key value pairs)
+            foreach (var kvp in dictionary)
+            {
+                // if the value can also be turned into an ExpandoObject, then do it!
+                if (kvp.Value is IDictionary<string, object>)
+                {
+                    var expandoValue = ((IDictionary<string, object>)kvp.Value).ToExpando();
+                    expandoDic.Add(kvp.Key, expandoValue);
+                }
+                else if (kvp.Value is System.Collections.ICollection)
+                {
+                    // iterate through the collection and convert any string-object dictionaries
+                    // along the way into expando objects
+                    var itemList = new List<object>();
+                    foreach (var item in (System.Collections.ICollection)kvp.Value)
+                    {
+                        if (item is IDictionary<string, object>)
+                        {
+                            var expandoItem = ((IDictionary<string, object>)item).ToExpando();
+                            itemList.Add(expandoItem);
+                        }
+                        else
+                        {
+                            itemList.Add(item);
+                        }
+                    }
+                    expandoDic.Add(kvp.Key, itemList);
+                }
+                else
+                {
+                    expandoDic.Add(kvp);
+                }
+            }
+            return expando;
+        }
     }
+
 }
