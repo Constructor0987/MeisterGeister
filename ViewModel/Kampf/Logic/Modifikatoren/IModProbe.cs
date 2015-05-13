@@ -5,6 +5,16 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 {
+    static class ModProbeInit
+    {
+        static void Initialize()
+        {
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModAlleProben), "Alle Proben", "Proben"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModAlleEigenschaftsProben), "Alle Eigenschaftsproben", "Proben"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModTalentprobe), "Talentprobe", "Proben"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModZauberprobe), "Zauberprobe", "Proben"));
+        }
+    }
     public interface IModProbe : IModifikator { }
 
     /// <summary>

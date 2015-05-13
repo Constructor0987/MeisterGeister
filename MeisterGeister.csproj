@@ -538,6 +538,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\CustomModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\ModifikatorenListe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\BehinderungModifikator.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\ModifikatorTyp.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\PABonusDurchHoheIni.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />

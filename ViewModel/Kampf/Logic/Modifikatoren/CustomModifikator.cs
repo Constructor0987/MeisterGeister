@@ -43,24 +43,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             auswirkungen = new Dictionary<string, string>();
         }
 
-        public void AddModifikator(Type modType)
+        public bool AddModifikator(Type modType)
         {
             if (!typeof(IModifikator).IsAssignableFrom(modType))
                 throw new ArgumentException(String.Format("modType '{0}' ist kein IModifikator", modType));
+            if (types.Contains(modType))
+                return false;
             types.Add(modType);
             modifikatorObj.Types.Add(modType.FullName);
             AddMembers(modType);
+            return true;
         }
 
-        public void RemoveModifikator(Type modType)
+        public bool RemoveModifikator(Type modType)
         {
             if (!typeof(IModifikator).IsAssignableFrom(modType))
                 throw new ArgumentException(String.Format("modType '{0}' ist kein IModifikator", modType));
             if (!types.Contains(modType))
-                return;
+                return false;
             RemoveMembers(modType);
             types.Remove(modType);
             modifikatorObj.Types.Remove(modType.FullName);
+            return true;
         }
 
         public void SetModifikator(string methodName, string operatorString, int modWert)

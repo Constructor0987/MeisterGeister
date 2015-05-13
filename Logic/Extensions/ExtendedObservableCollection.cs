@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace MeisterGeister.Logic.Extensions
 {
@@ -19,16 +20,44 @@ namespace MeisterGeister.Logic.Extensions
                 base.OnCollectionChanged(e);
         }
 
-        public void AddRange(IEnumerable<T> objects)
+        public void AddRange(IEnumerable<T> objects, bool supressNotification = true)
         {
             if (objects == null) throw new ArgumentNullException("objects");
 
-            _unterdrückeOnCollectionChanged = true;
+            if(supressNotification)
+                _unterdrückeOnCollectionChanged = true;
             foreach (T o in objects)
                 Add(o);
-            _unterdrückeOnCollectionChanged = false;
-                        
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            if (supressNotification)
+            {
+                _unterdrückeOnCollectionChanged = false;
+                //OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+                //OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
+
+        public int RemoveAll(Predicate<T> condition, bool supressNotification = true)
+        {
+            if(supressNotification)
+                _unterdrückeOnCollectionChanged = true;
+            int cnt = 0;
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                if (condition(this[i]))
+                {
+                    cnt++;
+                    RemoveAt(i);
+                }
+            }
+            if (supressNotification)
+            {
+                _unterdrückeOnCollectionChanged = false;
+                //OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+                //OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+            return cnt;
         }
     }
 }

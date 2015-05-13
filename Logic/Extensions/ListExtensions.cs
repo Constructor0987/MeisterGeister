@@ -10,7 +10,7 @@ namespace MeisterGeister.Logic.Extensions
     public static class ListExtensions
     {
         /// <summary>
-        /// Gibt ein zufälliges Element aus der übergenenen Liste zurück
+        /// Gibt ein zufälliges Element aus der übergebenen Liste zurück
         /// </summary>
         public static T RandomElement<T>(this IList<T> list)
         {

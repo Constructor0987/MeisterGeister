@@ -5,6 +5,51 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 {
+    static class ModEigenschaftInit
+    {
+        static void Initialize()
+        {
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModMitAuswirkungAufBerechneteWerte), "Auf berechnete Werte auswirken", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModMU), "Mut", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModKL), "Klugheit", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModIN), "Intuition", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModCH), "Charisma", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModFF), "Fingerfertigkeit", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModFFArmL), "Fingerfertigkeit (links)", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModFFArmR), "Fingerfertigkeit (rechts)", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModGE), "Gewandtheit", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModKO), "Konstitution", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModKK), "Körperkraft", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModKKArmL), "Körperkraft (links)", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModKKArmR), "Körperkraft (rechts)", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModMR), "Magieresistenz", "Eigenschaften"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModGS), "Geschwindigkeit", "Eigenschaften"));
+            
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModLE), "Lebensenergie", "Energie"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModAU), "Ausdauer", "Energie"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModAE), "Astralenergie", "Energie"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModKE), "Karmaenergie", "Energie"));
+            
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModINIBasis), "Initiative-Basis", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModINI), "Initiative", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModATBasis), "Attacke-Basis", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModAT), "Attacke", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModATArmL), "Attacke (links)", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModATArmR), "Attacke (rechts)", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModPABasis), "Parade-Basis", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModPA), "Parade", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModPAArmL), "Parade (links)", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModPAArmR), "Parade (rechts)", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModFKBasis), "Fernkampf-Basis", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModFK), "Fernkampf", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModAusweichen), "Ausweichen", "Kampf"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModBE), "Behinderung", "Kampf"));
+
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModTalentwert), "Talentwert", "Fertigkeit"));
+            ModifikatorTyp.Liste.Add(new ModifikatorTyp(typeof(IModZauberwert), "Zauberwert", "Fertigkeit"));
+        }
+    }
+
     public interface IModEigenschaft : IModifikator { }
     public interface IModMitAuswirkungAufBerechneteWerte : IModifikator { }
 
