@@ -18,6 +18,28 @@ namespace MeisterGeister.Model.Service
             get { return Liste<Held>().Where(h => h.AktiveHeldengruppe == true).OrderBy(h => h.Name).ToList(); }
         }
 
+        /// <summary>
+        /// Zauberliste mit angewandtem Setting-Filter.
+        /// </summary>
+        public List<Model.Zauber> ZauberListe
+        {
+            get {
+                return Context.Setting.Where(s => s.Aktiv == true).SelectMany(s => s.Zauber_Setting.Select(s_s => s_s.Zauber)).ToList().Distinct().ToList();
+            }
+        }
+
+        /// <summary>
+        /// Talentliste mit angewandtem Setting-Filter
+        /// </summary>
+        public List<Model.Talent> TalentListe
+        {
+            get
+            {
+                return Liste<Talent>().Where(t => t.TalentgruppeID != 0)
+                    .Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).ToList();
+            }
+        }
+
         #endregion
 
         #region //----- KONSTRUKTOR ----

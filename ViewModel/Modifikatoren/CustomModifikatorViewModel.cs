@@ -39,8 +39,54 @@ namespace MeisterGeister.ViewModel.Modifikatoren
             get { return operatoren; }
         }
 
-        // Liste von Zaubernamen
-        // Liste von Talentnamen
+        IEnumerable<string> zaubernamen = null;
+        /// <summary>
+        /// Liste von Zaubernamen
+        /// </summary>
+        public IEnumerable<string> Zaubernamen
+        {
+            get {
+                if (zaubernamen == null)
+                    zaubernamen = Global.ContextHeld.ZauberListe.Select(z => z.Name);
+                return zaubernamen; 
+            }
+            set { Set(ref zaubernamen, value); }
+        }
+
+        string selectedZaubername = null;
+        /// <summary>
+        /// Zum Hinzufügen ausgewählter Zaubername
+        /// </summary>
+        public string SelectedZaubername
+        {
+            get { return selectedZaubername; }
+            set { Set(ref selectedZaubername, value); }
+        }
+        
+        IEnumerable<string> talentnamen = null;
+        /// <summary>
+        /// Liste von Talentnamen
+        /// </summary>
+        public IEnumerable<string> Talentnamen
+        {
+            get
+            {
+                if (talentnamen == null)
+                    talentnamen = Global.ContextHeld.TalentListe.Select(z => z.Name);
+                return talentnamen;
+            }
+            set { Set(ref talentnamen, value); }
+        }
+
+        string selectedTalentname = null;
+        /// <summary>
+        /// Zum Hinzufügen ausgewählter Talentname
+        /// </summary>
+        public string SelectedTalentname
+        {
+            get { return selectedTalentname; }
+            set { Set(ref selectedTalentname, value); }
+        }
         #endregion
 
         #region Eigenschaften des Modifikators aus der Factory
@@ -101,10 +147,71 @@ namespace MeisterGeister.ViewModel.Modifikatoren
         }
 
         //aus dem childVMs bestimmen, ob die felder benötigt werden.
+        bool? needsTalentname = null;
+        /// <summary>
+        /// Gibt an, ob ein Talentname gebraucht wird.
+        /// Wird keiner gebraucht, muss man auch keine Eingabefelder dafür anzeigen.
+        /// </summary>
+        public bool NeedsTalentname
+        {
+            private set { Set(ref needsTalentname, value); }
+            get
+            {
+                if (needsTalentname == null)
+                {
+                    needsTalentname = false;
+                    foreach(var vm in modifikatorTypVMListe)
+                    {
+                        if (vm.NeedsTalentname)
+                        {
+                            needsTalentname = true;
+                            break;
+                        }
+                    }
+                }
+                return needsTalentname.Value;
+            }
+        }
+
+        bool? needsZaubername = null;
+        /// <summary>
+        /// Gibt an, ob ein Zaubername gebraucht wird.
+        /// Wird keiner gebraucht, muss man auch keine Eingabefelder dafür anzeigen.
+        /// </summary>
+        public bool NeedsZaubername
+        {
+            private set { Set(ref needsZaubername, value); }
+            get
+            {
+                if (needsZaubername == null)
+                {
+                    needsZaubername = false;
+                    foreach (var vm in modifikatorTypVMListe)
+                    {
+                        if (vm.NeedsZaubername)
+                        {
+                            needsZaubername = true;
+                            break;
+                        }
+                    }
+                }
+                return needsZaubername.Value;
+            }
+        }
         //0-n Zaubername
-        SortedSet<string> zaubername;
+        ISet<string> zaubername = new SortedSet<string>();
+        public ISet<string> Zaubername
+        {
+            get { return zaubername; }
+            private set { Set(ref zaubername, value); }
+        }
         //0-n Talentname
-        SortedSet<string> talentname;
+        ISet<string> talentname = new SortedSet<string>();
+        public ISet<string> Talentname
+        {
+            get { return talentname; }
+            private set { Set(ref talentname, value); }
+        }
         #endregion
 
         #region Je ModifikatorTyp
@@ -116,11 +223,15 @@ namespace MeisterGeister.ViewModel.Modifikatoren
             /// </summary>
             IDictionary<string, object> factoryProperties;
             
-            public ModifikatorTypViewModel(ModifikatorTyp typ, CustomModifikatorFactory factory)
+            public ModifikatorTypViewModel(ModifikatorTyp typ, CustomModifikatorFactory factory, ISet<string> talentname = null, ISet<string> zaubername = null)
             { 
                 this.factory = factory;
                 this.factoryProperties = factory[typ.Typ];
                 Typ = typ;
+                if (NeedsTalentname)
+                    Talentname = talentname;
+                if (NeedsZaubername)
+                    Zaubername = zaubername;
                 ApplyExpression();
             }
 
@@ -159,6 +270,7 @@ namespace MeisterGeister.ViewModel.Modifikatoren
             /// </summary>
             public bool NeedsZaubername
             {
+                private set { Set(ref needsZaubername, value); }
                 get
                 {
                     if (needsZaubername == null)
@@ -187,6 +299,7 @@ namespace MeisterGeister.ViewModel.Modifikatoren
             /// </summary>
             public bool NeedsTalentname
             {
+                private set { Set(ref needsTalentname, value); }
                 get
                 {
                     if (needsTalentname == null)
@@ -273,27 +386,113 @@ namespace MeisterGeister.ViewModel.Modifikatoren
         {
             if (factory.AddModifikator(typ.Typ))
             {
-                ModifikatorTypViewModel vm = new ModifikatorTypViewModel(typ, factory);
+                ModifikatorTypViewModel vm = new ModifikatorTypViewModel(typ, factory, talentname, zaubername);
+                vm.PropertyChanged += ModVM_PropertyChanged;
                 ModifikatorTypVMListe.Add(vm);
+                if (vm.NeedsTalentname)
+                    NeedsTalentname = true;
+                if (vm.NeedsZaubername)
+                    NeedsZaubername = true;
             }
         }
 
-        // Modifikator löschen
-        // Könnte man auch leicht mit dem ModifikatorTypViewModel als Parameter programmieren.
-        void RemoveModifikatorTyp(ModifikatorTyp typ)
+        /// <summary>
+        /// Modifikator löschen
+        /// </summary>
+        /// <param name="vm"></param>
+        void RemoveModifikatorTyp(ModifikatorTypViewModel vm)
         {
-            if (factory.RemoveModifikator(typ.Typ))
+            if (factory.RemoveModifikator(vm.Typ.Typ))
             {
-                ModifikatorTypVMListe.RemoveAll(vm => vm.Typ == typ, false);
+                ModifikatorTypVMListe.Remove(vm);
+                vm.PropertyChanged -= ModVM_PropertyChanged;
+                InvalidateCache();
             }
         }
 
-        // Talentname hinzufügen
-        // Talentname löschen
-        // Zaubername hinzufügen
-        // Zaubername löschen
-        // Modifikator löschen
-        // Anwenden (ist danach nicht mehr editierbar)
+        /// <summary>
+        /// Talentname hinzufügen
+        /// </summary>
+        void AddTalentname()
+        {
+            if (SelectedTalentname != null && Talentname != null)
+            {
+                if (Talentname.Add(SelectedTalentname))
+                    OnChanged("Auswirkungen");
+            }
+        }
+
+        /// <summary>
+        /// Talentname löschen
+        /// </summary>
+        /// <param name="name"></param>
+        void RemoveTalentname(string name)
+        {
+            if (name != null && Talentname != null)
+            {
+                if (Talentname.Remove(name))
+                    OnChanged("Auswirkungen");
+            }
+        }
+
+        /// <summary>
+        /// Zaubername hinzufügen
+        /// </summary>
+        void AddZaubername()
+        {
+            if (SelectedZaubername != null && Zaubername != null)
+            {
+                if (Zaubername.Add(SelectedZaubername))
+                    OnChanged("Auswirkungen");
+            }
+        }
+        
+        /// <summary>
+        /// Zaubername löschen
+        /// </summary>
+        /// <param name="name"></param>
+        void RemoveZaubername(string name)
+        {
+            if (name != null && Zaubername != null)
+            {
+                if (Zaubername.Remove(name))
+                    OnChanged("Auswirkungen");
+            }
+        }
+
+        /// <summary>
+        /// Anwenden der eingegebenen Daten.
+        /// Es wird ein ICustomModifikator kompiliert und in die Datenbank abgespeichert.
+        /// </summary>
+        /// <returns>Erfolgreich oder nicht</returns>
+        bool Anwenden()
+        {
+            OnChanged("Errors");
+            if (factory.Errors.Count > 0)
+                return false;
+            ICustomModifikator mod = factory.Finish();
+            string json = CustomModifikatorFactory.Serialize(mod);
+            //TODO save in DB
+            //Mit Überschreiben-Frage
+            return true;
+        }
+        #endregion
+
+        #region Hilfsmethoden
+        void InvalidateCache()
+        {
+            needsZaubername = null;
+            needsTalentname = null;
+            OnChanged("NeedsTalentname");
+            OnChanged("NeedsZaubername");
+        }
+
+        void ModVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Auswirkungen")
+                OnChanged(e.PropertyName);
+        }
+
         #endregion
     }
 }
