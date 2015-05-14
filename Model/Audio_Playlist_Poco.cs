@@ -295,7 +295,19 @@ namespace MeisterGeister.Model
             }
         }
         private long _warteZeitMax;
-        
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual int Reihenfolge
+        {
+            get { return _reihenfolge; }
+            set
+            {
+                Set(ref _reihenfolge, value);
+            }
+
+        }
+        private int _reihenfolge;
+
         #endregion
 
         #region Navigation Properties

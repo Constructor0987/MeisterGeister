@@ -35,7 +35,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         private bool _cancelEnabled = false;
 
         //private BitmapImage _listBoxItemIcon;
-        private lbThemeItem _item = null;
+        private lbThemeItemVM _item = null;
         private string _suchtext = string.Empty;
 
         private bool _changed = false;
@@ -225,7 +225,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         //}
         
 
-        public lbThemeItem Item
+        public lbThemeItemVM Item
         {
             get { return _item; }
             set

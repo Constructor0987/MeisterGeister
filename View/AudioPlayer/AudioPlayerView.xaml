@@ -18,10 +18,13 @@
         <vmAudioPlayer:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <vmAudioPlayer:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter1"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1"/>
+        <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter1" />
         <vmAudioPlayer:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>
         <vmAudioPlayer:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
+        <vmAudioPlayer:BooleanAndNotReihenfolgeConverter x:Key="BooleanAndNotReihenfolgeConverter1" />
         <vmAudioPlayer:DoubleToTimespanHHMMSSConverter x:Key="DoubleToTimespanHHMMSSConverter1" />
         <vmAudioPlayer:SliderRangeMarginConverter x:Key="SliderRangeMarginConverter1" />
+        <vmAudioPlayer:BooleanInverseToVisibilityHiddenConverter x:Key="BooleanInverseToVisibilityHiddenConverter1"/>
 
         <ControlTemplate x:Key="simpleSliderMin" TargetType="{x:Type Slider}">
             <Border SnapsToDevicePixels="true" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Name="brdSliderMin">
@@ -88,18 +91,15 @@
             </Border>
         </ControlTemplate>
          
-        <DataTemplate x:Key="lbEditorListBoxItemIcon" >
+
+        <!--<DataTemplate x:Key="lbEditorListBoxItemIcon" >
             <StackPanel Name="spnllbiIcon" Orientation="Horizontal"
-                        Tag="{Binding Path=APlaylist}"
-                        PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"
-                        PreviewMouseMove="lbiEditorPlaylist_MouseMove"
-                        Drop="lbitemEditor_Drop"   
-                        Width="{Binding Path=ActualWidth, ElementName=lbEditor}">
-                        <!--GiveFeedback="lbiPlaylist_GiveFeedback"-->
+                Tag="{Binding Path=APlaylist}"                        
+                PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"
+                PreviewMouseMove="lbiEditorPlaylist_MouseMove"
+                Drop="lbitemEditor_Drop"   
+                Width="{Binding Path=ActualWidth, ElementName=lbEditor}">
                 
-                <!--<StackPanel.InputBindings>
-                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OnLbiEditorPlaylist_DoubleClick}" />
-                </StackPanel.InputBindings>-->
                 <Grid Width="{Binding ElementName=spnllbiIcon, Path=Width}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -146,9 +146,27 @@
                             <Image Source="/Images/Icons/General/entf_01.png" />
                         </Button>
                     </StackPanel>
+                    <StackPanel ToolTip="Reihenfolge ändern" HorizontalAlignment="Right" Width="15" Margin="0,0,70,0"
+                        Visibility="{Binding ElementName=spnllbiIcon, Path=IsMouseOver, 
+                            Converter={StaticResource BooleanAndNotReihenfolgeConverter1}}">
+                        --><!--<StackPanel.Visibility>
+                            <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                                <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
+                                <Binding ElementName="spnllbiIcon" Path="IsMouseOver"  />
+                            </MultiBinding>
+                        </StackPanel.Visibility>--><!--
+                        <Button Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
+                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" Margin="-2,-1" />
+                        </Button>
+                        <Button Height="11" Command="{Binding OnReihenfolgePListMoveDown, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
+                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" Margin="-2,-1" />
+                        </Button>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
-        </DataTemplate>
+        </DataTemplate>-->
 
         <DataTemplate x:Key="lbEditorThemeListboxIcon" >
             <StackPanel Name="spnllbiIcon" Orientation="Horizontal" >
@@ -405,7 +423,7 @@
                 <!--GotFocus="tiEditor_GotFocus"-->                
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="178" MinWidth="178" />
+                        <ColumnDefinition Width="188" MinWidth="188" />
                         <ColumnDefinition Width="323*" MinWidth="300" />
                         <ColumnDefinition Width="340*" MaxWidth="340" />
                         <ColumnDefinition Width="180*" MinWidth="180" />
@@ -418,11 +436,12 @@
                     <GroupBox IsEnabled="True" Margin="0,1,0,0">
                         <StackPanel Margin="10,2,0,-2">
                             <RadioButton Content="Einzelne Playlist editieren" Height="16" GroupName="KlangEdit" Name="rbEditorEditPList"
-                                IsChecked="{Binding rbEditorEditPlaylist, FallbackValue='True'}" />
+                                IsChecked="{Binding rbEditorEditPlaylist}" />
+                            <!--, FallbackValue='True'-->
                             <RadioButton Content="Komplettes Theme" Height="18" Name="rbEditorEditTheme" GroupName="KlangEdit" />
                         </StackPanel>
                     </GroupBox>
-                    <Border Grid.Row="1" Margin="0,0,0,10" MinWidth="100">
+                    <Border Grid.Row="1" Margin="0,0,0,10" MinWidth="110">
                         <Grid Name="grdEditorList">
                             <Grid.RowDefinitions>
                                 <RowDefinition>
@@ -537,15 +556,19 @@
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="92" />
                                         </Grid.ColumnDefinitions>
 
-                                        <StackPanel Margin="10,0,0,0">
+                                        <StackPanel Margin="5,0,0,0">
                                             <CheckBox Name="rbEditorKlang" IsChecked="{Binding LbEditorMitGeräusche}" Content="Geräusche" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Geräusch-Playlists anzeigen" />
                                             <CheckBox Name="rbEditorMusik" IsChecked="{Binding LbEditorMitMusik}" Content="Musik" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Musik-Playlists anzeigen" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <ToggleButton Name="tbtnPlaylistAZ" ToolTip="Musik-Playlistensortierung (nur Musik-Playlisten auswählen zum Ändern)" Height="28" Width="22" Grid.Column="1" Focusable="False" 
+                                                IsChecked="{Binding PlaylistAZ}" >                                               
+                                                <Image Source="/Images/Icons/General/sort.png" Margin="-1" Style="{StaticResource ImageEnabled}" />
+                                            </ToggleButton>
                                             <Button Name="btnNeuePlaylist" ToolTip="Neue Playlist"  Height="28" Width="22" Grid.Column="1" 
                                                 Command="{Binding OnNeuePlaylist}">
                                                 <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
@@ -582,13 +605,18 @@
                                                 </Button>
                                             </Grid>
                                         </Border>
-
+                                        
                                         <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}"  >
                                             <ListBox Background="Transparent" Name="lbEditor" VerticalAlignment="Stretch"  
-                                                ItemsSource="{Binding FilteredEditorListBoxItemListe, UpdateSourceTrigger=PropertyChanged}" 
-                                                ItemTemplate="{StaticResource lbEditorListBoxItemIcon}" 
-                                                SelectedItem="{Binding SelectedEditorItem}"    
-                                                SelectionChanged="lb_SelectionChanged" >                                                
+                                                ItemsSource="{Binding FilteredEditorListBoxItemListe, UpdateSourceTrigger=PropertyChanged}"                                                 
+                                                SelectedItem="{Binding SelectedEditorItem, UpdateSourceTrigger=PropertyChanged}" 
+                                                SelectionChanged="lb_SelectionChanged" >
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <local:lbEditorItem/>
+                                                    </DataTemplate>                                                    
+                                                </ListBox.ItemTemplate>
+                                                
                                                 <ListBox.Style>
                                                     <Style TargetType="ListBox">
                                                         <Style.Triggers>
@@ -646,6 +674,7 @@
 
                         </Grid>
                     </Border>
+                    
                     <Border Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" 
                             Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditTheme, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                         <Grid>
@@ -1016,18 +1045,6 @@
 
                                         <StackPanel Name="spnlTopHotkey1" Orientation="Horizontal" Grid.Column="5" Grid.ColumnSpan="3" Margin="0,1,20,1"
                                                     Visibility="{Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" >                                                                                       
-                                            <!--<StackPanel.Style>
-                                                <Style TargetType="StackPanel">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding AktKlangPlaylist.Hintergrundmusik}" Value="True" >
-                                                            <Setter Property="Visibility" Value="Hidden" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding AktKlangPlaylist.Hintergrundmusik}" Value="False" >
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </StackPanel.Style>-->
                                             
                                             <Label Content="Hotkey" />
                                             <Button Width="80" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySet1" 
@@ -1222,11 +1239,12 @@
                                     <ListBox Background="Transparent" Name="lbEditorListe" Grid.Row="1" AllowDrop="True"  Drop="lbEditor_Drop" 
                                             ToolTip="Musikdateien über Drag&amp;Drop einfügen &#10;MusikZeilen mit gedrückter Strg-Taste kopieren" 
                                             ItemsSource="{Binding FilteredLbEditorAudioZeilenListe}"
+                                            SelectedItem="{Binding LbEditorAudioZeilenSelected}"
                                             SelectionChanged="lb_SelectionChanged">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Border Margin="2,-1">
-                                                    <Grid> 
+                                                    <Grid>
                                                         <local:AudioZeile Tag="{Binding}" 
                                                             MouseMove="AudioZeile_MouseMove"
                                                             GiveFeedback="AudioZeile_GiveFeedback"
@@ -1243,7 +1261,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Musik - Player" Name="tiMusik" >
+            <TabItem Header="Musik - Player" Name="tiMusik" GotFocus="tiMusik_GotFocus" >
                 <!-- GotFocus="tiMusik_GotFocus" Loaded="tiMusik_Loaded" -->
                 <Grid Background="{StaticResource Background1}">
                     <Grid.RowDefinitions>
@@ -1312,7 +1330,8 @@
                             <Button Width="30" Height="30" Name="btnBGStoppen" Margin="-150,0,0,0" Style="{StaticResource GlasButton}" Background="Black" ToolTip="Stopp"                                     
                                     Command="{Binding OnbtnBGStoppen}" >
                                 <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" FallbackValue="False">
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" >
+                                        <!--FallbackValue="False"-->
                                         <Binding Path="BGPlayerAktPlaylistTitel" />
                                         <Binding Path="HintergrundMusikListe.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter="1" />
                                     </MultiBinding>
@@ -1370,8 +1389,9 @@
                             </Button>
 
                             <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10" 
-                                    Value="{Binding BGPlayerVolume, FallbackValue=50}" 
+                                    Value="{Binding BGPlayerVolume}"                                     
                                     MouseWheel="slBGVolume_MouseWheel" >
+                                <!--, FallbackValue=50-->
                                 <Slider.ToolTip>
                                     <ToolTip>
                                         <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
@@ -1404,15 +1424,28 @@
                         <Border  Margin="2,1,8,0" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Musik Filter">
                             <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="24" />
+                                    <ColumnDefinition Width="24" />
                                     <ColumnDefinition Width="26" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="20" />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                <TextBox Margin="2,1" Name="tbBGFilter" Grid.Column="1" 
+                                <ToggleButton Name="tbtnMusikAZ" ToolTip="Playlistensortierung" Height="23" Width="22" Focusable="False"
+                                    IsChecked="{Binding MusikAZ}">
+                                    <Image Source="/Images/Icons/General/sort.png" Margin="-1" Style="{StaticResource ImageEnabled}" />
+                                </ToggleButton>
+                                <ToggleButton Name="tbtnMusikNacheinander" ToolTip="Playlisten nacheinander abspielen" Height="23" Width="22" Focusable="False" Grid.Column="1" 
+                                    IsChecked="{Binding MusikNacheinander}">
+                                    <Grid>
+                                        <Image Source="/Images/Icons/General/zeile.png" Margin="-4,0,0,0" Style="{StaticResource ImageEnabled}" />
+                                        <Image Source="/Images/Icons/General/refresh.png" Margin="4,0,-4,0" Style="{StaticResource ImageEnabled}" />
+                                    </Grid>
+                                </ToggleButton>
+                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill" Grid.Column="2" />
+                                <TextBox Margin="2,1" Name="tbBGFilter" Grid.Column="3" 
                                         Text="{Binding Path=SuchTextMusik, UpdateSourceTrigger=PropertyChanged}"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"  />
-                                <Button Grid.Column="2" ToolTip="Filter löschen"
+                                <Button Grid.Column="4" ToolTip="Filter löschen"
                                         Command="{Binding OnSuchTextMusikLöschen}" >
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                 </Button>
@@ -1429,18 +1462,13 @@
                                 ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" 
                                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                                 ItemsSource="{Binding FilteredMusikListItemListe, UpdateSourceTrigger=PropertyChanged}" 
-                                         SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}" >                                    
-                                <!--SelectionChanged="lb_SelectionChanged1" >
-                                MouseDoubleClick="lbMusik_MouseDoubleClick"-->
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <local:MusikZeile />                                            
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-
+                                SelectedItem="{Binding lbiMusikSelect, UpdateSourceTrigger=PropertyChanged }"
+                                    SelectionChanged="lbMusik_SelectionChanged">
                             </ListBox>
                         </Border>
 
+                        <!--SelectedMusikItem     SelectionChanged="lb_SelectionChanged1" >
+                                MouseDoubleClick="lbMusik_MouseDoubleClick"-->
                         <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" />
                         <Expander Margin="8,0,30,10" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" IsExpanded="True" MinWidth="200" ForceCursor="False">
                             <Expander.Header>
@@ -1489,16 +1517,19 @@
                                 <Label Grid.Row="5" Content="Genre:" Margin="3,0,0,0" Name="lblCapGenre" Grid.ColumnSpan="2" />
 
                                 <Label Grid.Row="6" VerticalAlignment="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right"
-                                       Content="{Binding BGPosition, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}"  />
+                                       Content="{Binding BGPosition, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}}"  />
+                                <!--, FallbackValue=-:- -->
                                 <Label Grid.Row="6" VerticalAlignment="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Grid.Column="3" 
-                                       Content="{Binding BGPlayerAktPlaylistTitelLänge, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, StringFormat={}{0:mm\\:ss}, FallbackValue=--:--}" />
-                                <!-- Content="{Binding BGPlayer.GetTotalTime .BG[value.aktiv].mPlayer.NaturalDuration.TimeSpan.TotalMilliseconds, StringFormat={}{0:mm}:{0:ss}, FallbackValue=-:-}" -->
+                                       Content="{Binding BGPlayerAktPlaylistTitelLänge, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, StringFormat={}{0:mm\\:ss}}" />
+                                <!--, FallbackValue=-:- -->
                                 <ProgressBar Grid.Row="6" Height="25"  Name="pbarBGSong" VerticalAlignment="Top" Margin="7,0,0,4"
                                              UseLayoutRounding="False" Grid.ColumnSpan="2" Grid.Column="1" 
-                                             Value="{Binding BGPosition, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" 
-                                             Maximum="{Binding BGPlayerAktPlaylistTitelLänge, UpdateSourceTrigger=PropertyChanged, FallbackValue=100000}"
+                                             Value="{Binding BGPosition, UpdateSourceTrigger=PropertyChanged}" 
+                                             Maximum="{Binding BGPlayerAktPlaylistTitelLänge, UpdateSourceTrigger=PropertyChanged}"
                                              MouseLeftButtonDown="pbarBGSong_MouseLeftButtonDown" 
                                              ToolTip="Klicken um von der Liedstelle abzuspielen" Cursor="Hand" />
+                                <!--, FallbackValue=0-->
+                                <!--, FallbackValue=100000-->
                                 <!--BGMaxPosition-->
 
                                 <CheckBox Name="chkbxPlayRange" Grid.Row="7" Content="Nur ein Teil des Songs" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" 
@@ -1666,8 +1697,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Name="tiMain" Header="Erweiterter - Player" >
-                <!--GotFocus="tiPList_GotFocus" >-->
+            <TabItem Name="tiMain" Header="Erweiterter - Player" GotFocus="tiMusik_GotFocus" >
                 <Grid Name="grdtiPList"  Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
@@ -1683,7 +1713,7 @@
                                     <Style.Triggers>
                                         <DataTrigger>
                                             <DataTrigger.Binding>
-                                                <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" FallbackValue="False">
+                                                <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
                                                     <Binding ElementName="exPListPlaylists.IsExpanded" Path="True"  Converter="{StaticResource InverseBooleanConverter1}" />
                                                     <Binding ElementName="exPListMusik.IsExpanded" Path="True"  Converter="{StaticResource InverseBooleanConverter1}"  />
                                                 </MultiBinding>
@@ -1816,16 +1846,17 @@
                     <Border Grid.Row="2" Style="{DynamicResource ControlContentBorder}" Margin="10,2">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="285" />
+                                <ColumnDefinition Width="325" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="187*" MinWidth="100" MaxWidth="280" />
                             </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Top">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="2,0,0,0" VerticalAlignment="Top">
                                 <Button Width="30" Height="30" Margin="0,0,5,0" 
                                         Style="{StaticResource GlasButton}" Background="Black" ToolTip="Stopp"                                     
                                     Command="{Binding OnbtnBGStoppen}" >
                                     <Button.IsEnabled>
-                                        <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" FallbackValue="False">
+                                        <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" >
+                                            <!--FallbackValue="False"-->
                                             <Binding Path="BGPlayerAktPlaylistTitel" />
                                             <Binding Path="HintergrundMusikListe.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter="1" />
                                         </MultiBinding>
@@ -1884,25 +1915,39 @@
                                 </Button>
 
                                 <Slider Height="22" Maximum="100" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10"  Margin="10,0,0,0" 
-                                        Value="{Binding BGPlayerVolume, FallbackValue=50}" 
+                                        Value="{Binding BGPlayerVolume}" 
                                         MouseWheel="slBGVolume_MouseWheel" >
+                                    <!--, FallbackValue=50-->
                                         <Slider.ToolTip>
                                             <ToolTip>
                                                 <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
                                             </ToolTip>
                                         </Slider.ToolTip>
                                 </Slider>
+                                <ToggleButton Name="tbtnErwPlayerMusikAZ" Margin="3,0,0,0" ToolTip="Playlistensortierung" Height="28" Width="25" Focusable="False"
+                                        IsChecked="{Binding MusikAZ}">
+                                    <Image Source="/Images/Icons/General/sort.png" Margin="-2,0" Style="{StaticResource ImageEnabled}" />
+                                </ToggleButton>
+                                <ToggleButton Name="tbtnErwPlayerMusikNacheinander" Margin="3,0,0,0" ToolTip="Playlisten nacheinander abspielen" Height="28" Width="25" Focusable="False" Grid.Column="1" 
+                                    IsChecked="{Binding MusikNacheinander}">
+                                    <Grid>
+                                        <Image Source="/Images/Icons/General/zeile.png" Margin="-4,0,0,0" Style="{StaticResource ImageEnabled}" />
+                                        <Image Source="/Images/Icons/General/refresh.png" Margin="4,0,-4,0" Style="{StaticResource ImageEnabled}" />
+                                    </Grid>
+                                </ToggleButton>
                             </StackPanel>
-                            <Border Grid.Column="2" HorizontalAlignment="Stretch" Height="28" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Filter aller Musik-Playlisten auf Namen und/oder Kategorie" Margin="5,0,15,0">
+                            <Border Grid.Column="2" HorizontalAlignment="Stretch" Height="28" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Filter aller Musik-Playlisten auf Namen und/oder Kategorie" Margin="6,0,10,0">
+                                
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="26" />
                                         <ColumnDefinition Width="*" MinWidth="50" />
                                         <ColumnDefinition Width="20" />
                                     </Grid.ColumnDefinitions>
-                                    <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                    
+                                    <Image Source="/Images/Icons/General/filter.png" Stretch="Fill" />
                                     <TextBox Name="tbPListMusikName" Margin="2,1" Grid.Column="1"  
-                                        Text="{Binding Path=SuchTextErwPlayerMusik, UpdateSourceTrigger=PropertyChanged}"
+                                        Text="{Binding Path=SuchTextMusik, UpdateSourceTrigger=PropertyChanged}"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"  />
                                     <Button Grid.Column="2" ToolTip="Filter löschen"
                                             Command="{Binding OnSuchTextErwPlayerMusikLöschen}" >
@@ -2036,18 +2081,18 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ListBox Name="lbPListMusik"  Background="Transparent" VerticalAlignment="Stretch" 
-                                       ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" 
-                                         ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
-                                         ItemsSource="{Binding FilteredErwPlayerMusikListItemListe, UpdateSourceTrigger=PropertyChanged}"  
-                                         SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged}"  />
-                                  <!--       SelectionChanged="lb_SelectionChanged2"
-
-                                SelectionChanged="lbPListMusik_SelectionChanged" ItemContainerStyle="{StaticResource SimpleListBoxItem}" />-->
-                                <!--ItemsSource="{Binding FilteredMusikListItemListe}" SelectedItem="{Binding SelectedMusikItem}"-->
+                                <ListBox Name="lbErwPlayerMusik"  Background="Transparent" VerticalAlignment="Stretch" 
+                                    ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" 
+                                    ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
+                                    ItemsSource="{Binding FilteredErwPlayerMusikListItemListe, UpdateSourceTrigger=PropertyChanged}" 
+                                    SelectedItem="{Binding lbiMusikSelect, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectionChanged="lbErwPlayerMusik_SelectionChanged"/>                             
                             </Border>
                         </Expander>
-                    </Border>
+                    </Border><!-- SelectedMusikItem     FilteredErwPlayerMusikListItemListe
+                                SelectionChanged="lb_SelectionChanged2"
+                                SelectionChanged="lbPListMusik_SelectionChanged" ItemContainerStyle="{StaticResource SimpleListBoxItem}" />-->
+                                <!--ItemsSource="{Binding FilteredMusikListItemListe}" SelectedItem="{Binding SelectedMusikItem}"-->
 
                     <Border Grid.Row="3" Grid.Column="1" >
                         <Expander Name="exPListPlaylists" Margin="30,5,30,10" IsExpanded="True" MinWidth="200" ForceCursor="False" >

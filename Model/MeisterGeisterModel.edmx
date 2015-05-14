@@ -405,6 +405,7 @@
     <Property Name="WarteZeitChange" Type="bit" Nullable="false" />
     <Property Name="WarteZeitMin" Type="bigint" Nullable="false" />
     <Property Name="WarteZeitMax" Type="bigint" Nullable="false" />
+    <Property Name="Reihenfolge" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Audio_Playlist_Titel">
     <Key>
@@ -2504,6 +2505,7 @@
     <Property Name="WarteZeitChange" Type="Boolean" Nullable="false" />
     <Property Name="WarteZeitMin" Type="Int64" Nullable="false" />
     <Property Name="WarteZeitMax" Type="Int64" Nullable="false" />
+    <Property Name="Reihenfolge" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
     <NavigationProperty Name="Audio_Theme" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Theme" />
   </EntityType>
@@ -4271,6 +4273,7 @@
           <ScalarProperty Name="WarteZeitChange" ColumnName="WarteZeitChange" />
           <ScalarProperty Name="WarteZeitMin" ColumnName="WarteZeitMin" />
           <ScalarProperty Name="WarteZeitMax" ColumnName="WarteZeitMax" />
+          <ScalarProperty Name="Reihenfolge" ColumnName="Reihenfolge" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

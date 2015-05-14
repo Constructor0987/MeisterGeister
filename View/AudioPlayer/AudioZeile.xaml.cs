@@ -30,13 +30,13 @@ namespace MeisterGeister.View.AudioPlayer
         public bool HintergrundMusik = false;
 
 
-        public VM.AudioZeileViewModel VM
+        public VM.AudioZeileVM VM
         {
             get
             {
-                if (DataContext == null || !(DataContext is VM.AudioZeileViewModel))
+                if (DataContext == null || !(DataContext is VM.AudioZeileVM))
                     return null;
-                return DataContext as VM.AudioZeileViewModel;
+                return DataContext as VM.AudioZeileVM;
             }
             set { DataContext = value; }
         }

@@ -467,11 +467,13 @@
     <Compile Include="ViewModel\Almanach\Logic\AlmanachItem.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayerViewModel.cs" />
-    <Compile Include="ViewModel\AudioPlayer\Logic\AudioZeileViewModel.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\AudioZeileVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\btnHotkeyVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\grdThemeBtnVM.cs" />
-    <Compile Include="ViewModel\AudioPlayer\Logic\lbEditorItem.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\lbEditorItemVM.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\lbiPlaylistIconVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItem.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItemVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\MusikZeileVM.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
@@ -594,11 +596,17 @@
     <Compile Include="View\AudioPlayer\HotKeyZeile.xaml.cs">
       <DependentUpon>HotKeyZeile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\lbEditorItem.xaml.cs">
+      <DependentUpon>lbEditorItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AudioPlayer\ListboxItemBtn.xaml.cs">
       <DependentUpon>ListboxItemBtn.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\ListboxItemIcon.xaml.cs">
       <DependentUpon>ListboxItemIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\ListboxItemPlaylistIcon.xaml.cs">
+      <DependentUpon>ListboxItemPlaylistIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\MusikZeile.xaml.cs">
       <DependentUpon>MusikZeile.xaml</DependentUpon>
@@ -1017,11 +1025,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\AudioPlayer\lbEditorItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\AudioPlayer\ListboxItemBtn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioPlayer\ListboxItemIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\ListboxItemPlaylistIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1786,6 +1802,7 @@
     <Resource Include="Images\Logos\Heldenblatt_Logo.png" />
     <Resource Include="Images\Icons\General\gestrichen.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0097.sql" />
+    <Content Include="Daten\Updateskripte\UpdateTo_V0098.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

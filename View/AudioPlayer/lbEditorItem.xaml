@@ -1,0 +1,90 @@
+﻿<ListBoxItem x:Class="MeisterGeister.View.AudioPlayer.lbEditorItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vmAudioPlayer="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
+             mc:Ignorable="d" 
+             d:DesignHeight="27" d:DesignWidth="200" >
+    <ListBoxItem.Resources>
+        <vmAudioPlayer:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
+        <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
+        <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter1" />
+        <vmAudioPlayer:BooleanInverseToVisibilityHiddenConverter x:Key="BooleanInverseToVisibilityHiddenConverter1"/>
+    </ListBoxItem.Resources>
+
+    <StackPanel Name="spnllbiIcon" Orientation="Horizontal"
+                Tag="{Binding Path=APlaylist}"                        
+                PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"
+                PreviewMouseMove="lbiEditorPlaylist_MouseMove"
+                Drop="lbitemEditor_Drop"   
+                Width="{Binding Path=ActualWidth, ElementName=lbEditor}">
+
+        <Grid Width="{Binding ElementName=spnllbiIcon, Path=Width}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="40*" MinWidth="40" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+
+                <Image Name="imgIcon" Stretch="Fill" Tag="0" >
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding APlaylist.Hintergrundmusik, UpdateSourceTrigger=PropertyChanged}" Value="True" >
+                                    <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                <Label Content="{Binding Path=APlaylist.Name}" Grid.Column="1" FontSize="14" Padding="5,2,5,5" />
+            </Grid>
+            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,25,0">
+                <Button Width="22" Cursor="Hand" ToolTip="Exportieren der Playlist" 
+                                Command="{Binding OnBtnExportLbEditor}" >
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                            <Binding Path="IsMouseOver" ElementName="spnllbiIcon"   />
+                            <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
+                        </MultiBinding>
+                    </Button.Visibility>
+                    <Image Source="/Images/Icons/General/export.png"/>
+                </Button>
+                <Button Width="22" Cursor="Hand" ToolTip="Löschen der Playlist" 
+                                Command="{Binding OnBtnLöschenLbEditor}" >
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                            <Binding Path="IsMouseOver" ElementName="spnllbiIcon" />
+                            <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
+                        </MultiBinding>
+                    </Button.Visibility>
+                    <Image Source="/Images/Icons/General/entf_01.png" />
+                </Button>
+            </StackPanel>
+            <StackPanel ToolTip="Reihenfolge ändern" HorizontalAlignment="Right" Width="15" Margin="0,0,70,0" >
+                <StackPanel.Visibility>
+                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                        <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
+                        <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
+                        <Binding ElementName="tbtnPlaylistAZ" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
+                        <Binding ElementName="rbEditorMusik" Path="IsChecked" />
+                        <Binding ElementName="rbEditorKlang" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
+                    </MultiBinding>
+                </StackPanel.Visibility>
+                <Button Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" Margin="-2,-1" />
+                </Button>
+                <Button Height="11" Command="{Binding OnReihenfolgePListMoveDown, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" Margin="-2,-1" />
+                </Button>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</ListBoxItem>
