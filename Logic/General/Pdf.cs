@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.Logic.General
 {
@@ -16,11 +17,13 @@ namespace MeisterGeister.Logic.General
                 {
                     Pdf.openCommand = Einstellung.Einstellungen.PdfReaderCommand;
                     if (String.IsNullOrWhiteSpace(Pdf.openCommand))
+                        GetDefaultReader();
+                    if (String.IsNullOrWhiteSpace(Pdf.openCommand))
                         SetReader("Adobe Reader");
                 }
                 return Pdf.openCommand; 
             }
-            set { Pdf.openCommand = value; }
+            set { Einstellung.Einstellungen.PdfReaderCommand = Pdf.openCommand = value; }
         }
 
         private static string openArguments = null;
@@ -32,11 +35,13 @@ namespace MeisterGeister.Logic.General
                 {
                     Pdf.openArguments = Einstellung.Einstellungen.PdfReaderArguments;
                     if (String.IsNullOrWhiteSpace(Pdf.openArguments))
+                        GetDefaultReader();
+                    if (String.IsNullOrWhiteSpace(Pdf.openArguments))
                         SetReader("Adobe Reader");
                 } 
                 return Pdf.openArguments;
             }
-            set { Pdf.openArguments = value; }
+            set { Einstellung.Einstellungen.PdfReaderArguments = Pdf.openArguments = value; }
         }
 
         public static Dictionary<string, string[]> readers = new Dictionary<string, string[]>();
@@ -54,11 +59,14 @@ namespace MeisterGeister.Logic.General
             // weitere PDF-Reader: http://de.wikipedia.org/wiki/Liste_von_PDF-Software
         }
 
-        public static bool SetReader(string readerName)
+        public static bool SetReader(string readerName, string readerPath = null)
         {
             if(readers.ContainsKey(readerName))
             {
-                Pdf.OpenCommand = readers[readerName][0];
+                if(readerPath != null)
+                    Pdf.OpenCommand = readerPath;
+                else
+                    Pdf.OpenCommand = readers[readerName][0];
                 Pdf.OpenArguments = readers[readerName][1];
                 return true;
             }
@@ -112,6 +120,26 @@ namespace MeisterGeister.Logic.General
             return p;
         }
 
-        
+        /// <summary>
+        /// Holt den mit .pdf assozierten Reader von Windows.
+        /// Und legt diesen auch gleich fest.
+        /// </summary>
+        /// <returns>Name des Readers oder null</returns>
+        public static string GetDefaultReader()
+        {
+            string path = FileExtensions.FileExtentionInfo(FileExtensions.AssocStr.Executable, ".pdf");
+            if(String.IsNullOrWhiteSpace(path))
+                return null;
+            string readerExe = System.IO.Path.GetFileName(path);
+            foreach(var readerName in readers.Keys)
+            {
+                if(readers[readerName][0] == readerExe)
+                {
+                    SetReader(readerName, path);
+                    return readerName;
+                }
+            }
+            return null;
+        }
     }
 }
