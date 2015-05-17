@@ -1438,7 +1438,8 @@
                                     IsChecked="{Binding MusikNacheinander}">
                                     <Grid>
                                         <Image Source="/Images/Icons/General/zeile.png" Margin="-4,0,0,0" Style="{StaticResource ImageEnabled}" />
-                                        <Image Source="/Images/Icons/General/refresh.png" Margin="4,0,-4,0" Style="{StaticResource ImageEnabled}" />
+                                        <Image Source="/Images/Icons/General/refresh.png" Margin="4,0,-4,0" Style="{StaticResource ImageEnabled}"
+                                               Visibility="{Binding MusikNacheinander, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                                     </Grid>
                                 </ToggleButton>
                                 <Image Source="/Images/Icons/General/filter.png" Stretch="Fill" Grid.Column="2" />
@@ -1932,7 +1933,8 @@
                                     IsChecked="{Binding MusikNacheinander}">
                                     <Grid>
                                         <Image Source="/Images/Icons/General/zeile.png" Margin="-4,0,0,0" Style="{StaticResource ImageEnabled}" />
-                                        <Image Source="/Images/Icons/General/refresh.png" Margin="4,0,-4,0" Style="{StaticResource ImageEnabled}" />
+                                        <Image Source="/Images/Icons/General/refresh.png" Margin="4,0,-4,0" Style="{StaticResource ImageEnabled}" 
+                                               Visibility="{Binding MusikNacheinander, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                     </Grid>
                                 </ToggleButton>
                             </StackPanel>

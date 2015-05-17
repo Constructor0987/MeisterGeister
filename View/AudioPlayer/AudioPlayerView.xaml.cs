@@ -414,7 +414,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     }
 
                     for (int i = 0; i < VM._GrpObjecte.Count; i++)
-                        VM.AlleKlangSongsAus(VM._GrpObjecte[i], true, false, true);
+                        VM.AlleKlangSongsAus(VM._GrpObjecte[i], true, true, false, true);
 
                     VM.KlangProgBarTimer.Stop();
                     VM.MusikProgBarTimer.Stop();
@@ -458,7 +458,7 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {                
-                MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);// .tbtnKlangPause == ((ToggleButton)sender));
+                MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);
                 if (grpobj == null)
                     return;
                 if (tiEditor.IsSelected)
@@ -497,7 +497,7 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {
-                MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);// .tbtnKlangPause == ((ToggleButton)sender));
+                MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);
                 if (grpobj == null)
                     return;
                 if (tiEditor.IsSelected && grpobj.sollBtnGedrueckt > 0)
@@ -821,6 +821,11 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             if (e.AddedItems.Count > 0)
                 ((ListBox)sender).ScrollIntoView(e.AddedItems[0]);
+            if (tbtnKlangPause1.IsChecked.Value)
+            {
+                tbtnKlangPause1.IsChecked = false;
+                tbtnKlangPause1.RaiseEvent(new RoutedEventArgs(ToggleButton.UncheckedEvent));
+            }
         }
 
         private void lbErwPlayerMusik_SelectionChanged(object sender, SelectionChangedEventArgs e)

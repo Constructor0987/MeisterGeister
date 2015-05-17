@@ -170,6 +170,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 aPlayTitel.PauseMin = value;
                 if (aPlayTitelPauseMax < value)
                     aPlayTitelPauseMax = value;
+                Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
                 OnChanged();
                 OnChanged("PauseMinIncValue");
             }
@@ -185,6 +186,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 aPlayTitel.PauseMax = value;
                 if (aPlayTitelPauseMin > value)
                     aPlayTitelPauseMin = value;
+                Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
                 OnChanged();
                 OnChanged("PauseMaxIncValue");
             }
