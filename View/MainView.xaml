@@ -185,7 +185,7 @@
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem />
                         </MenuItem>
                         <MenuItem Header="Wege der Magie" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem Height="28" x:Name="_menuItemAlchimie" Click="ButtonTool_Click" Header="Alchimie-Tool (INTERN)" Tag="Alchimie" ToolTip="Alchimie-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}" >
+                            <MenuItem Height="28" x:Name="_menuItemAlchimie" Click="ButtonTool_Click" Header="Alchimie-Tool" Tag="Alchimie" ToolTip="Alchimie-Tool">
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/alchimie.png" Margin="2" />
                                 </MenuItem.Icon>

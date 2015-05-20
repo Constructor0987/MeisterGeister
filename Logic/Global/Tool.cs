@@ -151,15 +151,15 @@ namespace MeisterGeister
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Almanach.AlmanachView)
             });
+            ToolListe.Add("Alchimie", new Tool()
+            {
+                Name = "Alchimie",
+                Icon = "Icons/alchimie.png",
+                MenuGruppe = "Wege der Magie",
+                ViewType = typeof(View.Alchimie.AlchimieView)
+            });
             if (Global.INTERN) // im Release-Modus ausblenden
             {
-                ToolListe.Add("Alchimie", new Tool()
-                {
-                    Name = "Alchimie",
-                    Icon = "Icons/alchimie.png",
-                    MenuGruppe = "Wege der Magie",
-                    ViewType = typeof(View.Alchimie.AlchimieView)
-                });
                 ToolListe.Add("Beschwörung", new Tool()
                 {
                     Name = "Beschwörung",
