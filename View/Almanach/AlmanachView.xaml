@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" Background="{StaticResource Background1}"
-             d:DesignHeight="389" d:DesignWidth="685">
+             d:DesignHeight="389" d:DesignWidth="695">
     <UserControl.Resources>
         <DataTemplate x:Key="AlmanachItemTemplate" >
             <Border Margin="5" Padding="4" CornerRadius="5">
@@ -41,6 +41,7 @@
                         <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
                         <TextBox Margin="5,10" Width="250" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
                         <TextBlock Text="Hier kann eine Stichwortsuche über alle Literaturangaben durchgeführt werden." ToolTip="Es sind noch nicht sämliche Daten im Suchindex verfügbar. Dies wird in kommenden Versionen erweitert." TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Margin="5" FontSize="10" />
+                        <ViewGeneral:WikiLinkControl Width="24" Height="24" Tag="{Binding SuchText}" />
                     </StackPanel>
                 </Grid>
             </Border>
