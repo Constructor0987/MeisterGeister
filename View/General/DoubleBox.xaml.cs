@@ -223,7 +223,7 @@ namespace MeisterGeister.View.General
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (!NoMouseWheel && !IsReadOnly)
+            if (!NoMouseWheel && !IsReadOnly && _textBoxDouble.IsFocused)
             {
                 if (e.Delta < 0)
                     DecreaseValueFloor();
