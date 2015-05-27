@@ -1804,6 +1804,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0097.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0098.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0099.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0100.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
