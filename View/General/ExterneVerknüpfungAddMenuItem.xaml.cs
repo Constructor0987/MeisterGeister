@@ -34,7 +34,7 @@ namespace MeisterGeister.View.General
             {
                 if (Parent != null && Parent is MenuItem)
                 {
-                    return ((MenuItem)Parent).Header.ToString();
+                    return (((MenuItem)Parent).Header as TextBlock).Text.ToString();
                 }
                 return string.Empty;
             }
@@ -49,9 +49,11 @@ namespace MeisterGeister.View.General
                 string name = string.Empty;
                 string bild = null;
 
+                string menu = (((MenuItem)sender).Header as TextBlock).Text.ToString();
+
                 if (sender is MenuItem)
                 {
-                    if (((MenuItem)sender).Header.ToString() == "Programm oder Datei")
+                    if (menu == "Programm oder Datei")
                     {
                         pfad = ViewHelper.ChooseFile("Programm oder Datei auswählen", "", false, true);
                         if (!String.IsNullOrEmpty(pfad))
@@ -87,7 +89,7 @@ namespace MeisterGeister.View.General
                             }
                         }
                     }
-                    else if (((MenuItem)sender).Header.ToString() == "Ordner")
+                    else if (menu == "Ordner")
                     {
                         System.Windows.Forms.FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
                         if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -104,7 +106,7 @@ namespace MeisterGeister.View.General
                             bild = "Icons/General/oeffnen.png";
                         }
                     }
-                    else if (((MenuItem)sender).Header.ToString() == "Webseite")
+                    else if (menu == "Webseite")
                     {
                         InputWindow inBox = new InputWindow();
                         inBox.Title = "Webadresse eingeben";

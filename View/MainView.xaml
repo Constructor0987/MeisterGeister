@@ -63,369 +63,519 @@
                 <TextBlock Name="_statusInfoTextBox" />
             </StatusBarItem>
         </StatusBar>
-    <Grid>
-        <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" SelectionChanged="_tabControlMain_SelectionChanged" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" d:IsHidden="True" />
-        <Border x:Name="Menue" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Top"   Height="40" CornerRadius="0,0,30,30" RenderTransformOrigin="0.5,0.5" Margin="0" Background="{DynamicResource Background1}">
-            <Border.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Border.RenderTransform>
-            <Grid>
-                <StackPanel x:Name="MenuControls"  Orientation="Horizontal" VerticalAlignment="Top">
-                    <Menu x:Name="_menuTools"  FontSize="15" VerticalAlignment="Top" Height="30" Background="Transparent">
-                        <MenuItem Header="Wege des Meisters" Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Helden-Verwaltung" Tag="Helden" ToolTip="Helden-Verwaltung"  >
-                                <MenuItem.Icon>                                                                           
-                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/helden.png" Margin="2" Stretch="UniformToFill"/>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Proben-Tool" Tag="Proben" ToolTip="Proben-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/Wuerfel/w20.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Notizen-Tool" Tag="Notizen" ToolTip="Notizen-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/notiz.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="NSC-Tool" Tag="NSCs" ToolTip="NSC-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem x:Name="_menuItemGenerator" Height="28" Click="ButtonTool_Click" Header="Generator-Tool (INTERN)" Tag="Generator" ToolTip="Generator-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}" >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Tag="Würfel" ToolTip="Würfel-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/wuerfelbecher.png" Margin="2" />
-                                </MenuItem.Icon>
+        <Grid>
+            <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" SelectionChanged="_tabControlMain_SelectionChanged" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" d:IsHidden="True" />
+            <Border x:Name="Menue" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Top"   Height="40" CornerRadius="0,0,30,30" RenderTransformOrigin="0.5,0.5" Margin="0" Background="{DynamicResource Background1}">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Grid>
+                    <StackPanel x:Name="MenuControls"  Orientation="Horizontal" VerticalAlignment="Top">
+                        <Menu x:Name="_menuTools"  FontSize="15" VerticalAlignment="Top" Height="30" Background="Transparent">
+                            <MenuItem Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                                 <MenuItem.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="80" />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="Würfel-Tool" />
-                                        <Button Grid.Column="2" ToolTip="Beliebiger Würfel..." Margin="2,0" Click="ButtonWürfel_Wx_Click">
-                                            <Image Source="/Images/Icons/Wuerfel/wuerfel.png"/>
-                                        </Button>
-                                        <Button Grid.Column="3" ToolTip="1W6..." Margin="2,0" Click="ButtonWürfel_W6_Click">
-                                            <Image Source="/Images/Icons/Wuerfel/w6.png"/>
-                                        </Button>
-                                        <Button Grid.Column="4" ToolTip="1W20..." Margin="2,0" Click="ButtonWürfel_W20_Click">
-                                            <Image Source="/Images/Icons/Wuerfel/w20.png" />
-                                        </Button>
-                                    </Grid>
+                                    <TextBlock Text="Wege des Meisters" VerticalAlignment="Center" />
+                                </MenuItem.Header>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Helden" ToolTip="Helden-Verwaltung">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Helden-Verwaltung" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/helden.png" Margin="2" Stretch="UniformToFill"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Proben" ToolTip="Proben-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Proben-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/Wuerfel/w20.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Notizen" ToolTip="Notizen-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Notizen-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/notiz.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="NSCs" ToolTip="NSC-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="NSCs" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="_menuItemGenerator" Height="28" Click="ButtonTool_Click" Tag="Generator" ToolTip="Generator-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Generator-Tool (INTERN)" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Würfel" ToolTip="Würfel-Tool">
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/wuerfelbecher.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.Header>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="80" />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="Würfel-Tool" VerticalAlignment="Center" />
+                                            <Button Grid.Column="2" ToolTip="Beliebiger Würfel..." Margin="2,0" Click="ButtonWürfel_Wx_Click">
+                                                <Image Source="/Images/Icons/Wuerfel/wuerfel.png"/>
+                                            </Button>
+                                            <Button Grid.Column="3" ToolTip="1W6..." Margin="2,0" Click="ButtonWürfel_W6_Click">
+                                                <Image Source="/Images/Icons/Wuerfel/w6.png"/>
+                                            </Button>
+                                            <Button Grid.Column="4" ToolTip="1W20..." Margin="2,0" Click="ButtonWürfel_W20_Click">
+                                                <Image Source="/Images/Icons/Wuerfel/w20.png" />
+                                            </Button>
+                                        </Grid>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="MenuItemSpielerInfoControl_Click" Tag="SpielerInfo" >
+                                    <MenuItem.Header>
+                                        <TextBlock Text="SpielerInfo-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/General/screen.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Ein Fenster starten/schließen, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können."/></TextBlock>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <MenuItem x:Name="_menuItemAbenteuer" Height="28" Click="ButtonTool_Click" Tag="Abenteuer" ToolTip="Abenteuer-Verwaltung" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Abenteuer-Tool (INTERN)" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/meistertools_02.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="_menuItemAudioPlayer" Height="28" Click="ButtonTool_Click" Tag="Audio" ToolTip="Audio-Player"  >
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Audio-Player" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/General/audio.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="_menuItemAlmanach" Height="28" Click="ButtonTool_Click" Tag="Almanach" ToolTip="Almanach-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Almanach-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/hesinde.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Ares">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="PlugIn: Ares-Controller" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Logos/Ares_Logo.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold"><Run Text="PlugIn: Ares-Controller"/></TextBlock>
+                                                <TextBlock FontSize="9"><Run Text="© Jörg Rüdenauer"/></TextBlock>
+                                                <TextBlock><Run Text="Steuerung des Ares-Player."/></TextBlock>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <Separator  />
+                                <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
+                            </MenuItem>
+                            <MenuItem Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
+                                <MenuItem.Header>
+                                    <TextBlock Text="Wege des Kampfes" VerticalAlignment="Center" />
+                                </MenuItem.Header>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Kampf" ToolTip="Kampf-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Kampf-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/nahkampf_01.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Gegner" ToolTip="Gegner-Verwaltung">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Gegner-Verwaltung" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/gegner.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator   />
+                                <ViewGeneral:ExterneVerknüpfungAddMenuItem />
+                            </MenuItem>
+                            <MenuItem Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
+                                <MenuItem.Header>
+                                    <TextBlock Text="Wege der Magie" VerticalAlignment="Center" />
+                                </MenuItem.Header>
+                                <MenuItem Height="28" x:Name="_menuItemAlchimie" Click="ButtonTool_Click" Tag="Alchimie" ToolTip="Alchimie-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Alchimie-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/alchimie.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" x:Name="_menuItemBeschwörung" Click="ButtonTool_Click" Tag="Beschwörung" ToolTip="Beschwörung-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}" >
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Beschwörung-Tool (INTERN)" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/magie.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" x:Name="_menuItemZauberzeichen" Click="ButtonTool_Click" Tag="Zauberzeichen" ToolTip="Zauberzeichen-Tool"  >
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Zauberzeichen-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/zauberzeichen.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator   />
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Artefakte">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="PlugIn: ArtefaktGenerator" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/artefakt.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold"><Run Text="PlugIn: ArtefaktGenerator"/></TextBlock>
+                                                <TextBlock FontSize="9"><Run Text="© Mario Rauschenberg"/></TextBlock>
+                                                <TextBlock><Run Text="Erschaffung von Artefakten."/></TextBlock>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <Separator   />
+                                <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
+                            </MenuItem>
+                            <MenuItem Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
+                                <MenuItem.Header>
+                                    <TextBlock Text="Wege des Handels" VerticalAlignment="Center" />
+                                </MenuItem.Header>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Basar" ToolTip="Basar-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Basar-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/muenzen.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Umrechner" ToolTip="Umrechner-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Umrechner-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/masse.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Schmiede" ToolTip="Schmiede-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Schmiede-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/schmiede.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator   />
+                                <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
+                            </MenuItem>
+                            <MenuItem Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
+                                <MenuItem.Header>
+                                    <TextBlock Text="Wege des Wanderers" VerticalAlignment="Center" />
+                                </MenuItem.Header>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Kalender" ToolTip="Kalender-Tool">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Kalender-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/kalender.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem x:Name="_menuItemReise" Height="28" Click="ButtonTool_Click" Tag="Reise" ToolTip="Reise-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Reise-Tool (INTERN)" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/kartenzeichnen.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="ZooBot">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="ZooBot-Tool" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/kraeutersuche.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold"><Run Text="ZooBot-Tool"/></TextBlock>
+                                                <TextBlock><Run Text="Pflanzensuche, Jagen, Fischen und Fallenstellen."/></TextBlock>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <Separator   />
+                                <MenuItem Height="28" Click="ButtonTool_Click" Tag="Globus">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="PlugIn: DereGlobus-Suche" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Logos/DereGlobus_Icon2.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold"><Run Text="PlugIn: DereGlobus-Suche"/></TextBlock>
+                                                <TextBlock FontSize="9"><Run Text="© Markus Traut und DereGlobus-Team"/></TextBlock>
+                                                <TextBlock><Run Text="Siedlungssuche im DereGlobus-Projekt."/></TextBlock>
+                                                <TextBlock><Run Text="Internet-Verbindung erforderlich!"/></TextBlock>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <Separator   />
+                                <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
+                            </MenuItem>
+                            <MenuItem Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
+                                <MenuItem.Header>
+                                    <TextBlock Text="Eigene Wege" VerticalAlignment="Center" />
+                                </MenuItem.Header>
+                                <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
+                            </MenuItem>
+                            <MenuItem Click="MenuItemEinstellungen_Click" ToolTip="Einstellungen." Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
+                                <MenuItem.Header>
+                                    <Image Source="/Images/Icons/mechanik.png" Height="20"  />
                                 </MenuItem.Header>
                             </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemSpielerInfoControl_Click" Header="SpielerInfo-Tool" Tag="SpielerInfo" >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/General/screen.png" Margin="2" />
-                                </MenuItem.Icon>
-                                <MenuItem.ToolTip>
-                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Ein Fenster starten/schließen, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können."/></TextBlock>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <MenuItem x:Name="_menuItemAbenteuer" Height="28" Click="ButtonTool_Click" Header="Abenteuer-Tool (INTERN)" Tag="Abenteuer" ToolTip="Abenteuer-Verwaltung" Visibility="{x:Static mg:Global.INTERN_Visibility}">
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/meistertools_02.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem x:Name="_menuItemAudioPlayer" Height="28" Click="ButtonTool_Click" Header="Audio-Player" Tag="Audio" ToolTip="Audio-Player"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/General/audio.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem x:Name="_menuItemAlmanach" Height="28" Click="ButtonTool_Click" Header="Almanach-Tool" Tag="Almanach" ToolTip="Almanach-Tool">
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/hesinde.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="PlugIn: Ares-Controller" Tag="Ares"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Logos/Ares_Logo.png" Margin="2" />
-                                </MenuItem.Icon>
-                                <MenuItem.ToolTip>
-                                    <ToolTip>
-                                        <StackPanel>
-                                            <TextBlock FontWeight="Bold"><Run Text="PlugIn: Ares-Controller"/></TextBlock>
-                                            <TextBlock FontSize="9"><Run Text="© Jörg Rüdenauer"/></TextBlock>
-                                            <TextBlock><Run Text="Steuerung des Ares-Player."/></TextBlock>
-                                        </StackPanel>
-                                    </ToolTip>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <Separator  />
-                            <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
-                        </MenuItem>
-                        <MenuItem Header="Wege des Kampfes" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Kampf-Tool" Tag="Kampf" ToolTip="Kampf-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/nahkampf_01.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Gegner-Verwaltung" Tag="Gegner" ToolTip="Gegner-Verwaltung"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/gegner.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator   />
-                            <ViewGeneral:ExterneVerknüpfungAddMenuItem />
-                        </MenuItem>
-                        <MenuItem Header="Wege der Magie" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem Height="28" x:Name="_menuItemAlchimie" Click="ButtonTool_Click" Header="Alchimie-Tool" Tag="Alchimie" ToolTip="Alchimie-Tool">
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/alchimie.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" x:Name="_menuItemBeschwörung" Click="ButtonTool_Click" Header="Beschwörung-Tool (INTERN)" Tag="Beschwörung" ToolTip="Beschwörung-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}" >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/magie.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" x:Name="_menuItemZauberzeichen" Click="ButtonTool_Click" Header="Zauberzeichen-Tool" Tag="Zauberzeichen" ToolTip="Zauberzeichen-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/zauberzeichen.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator   />
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="PlugIn: ArtefaktGenerator" Tag="Artefakte"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/artefakt.png" Margin="2" />
-                                </MenuItem.Icon>
-                                <MenuItem.ToolTip>
-                                    <ToolTip>
-                                        <StackPanel>
-                                            <TextBlock FontWeight="Bold"><Run Text="PlugIn: ArtefaktGenerator"/></TextBlock>
-                                            <TextBlock FontSize="9"><Run Text="© Mario Rauschenberg"/></TextBlock>
-                                            <TextBlock><Run Text="Erschaffung von Artefakten."/></TextBlock>
-                                        </StackPanel>
-                                    </ToolTip>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <Separator   />
-                            <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
-                        </MenuItem>
-                        <MenuItem Header="Wege des Handels" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Basar-Tool" Tag="Basar" ToolTip="Basar-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/muenzen.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Umrechner-Tool" Tag="Umrechner" ToolTip="Umrechner-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/masse.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Schmiede-Tool" Tag="Schmiede" ToolTip="Schmiede-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/schmiede.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator   />
-                            <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
-                        </MenuItem>
-                        <MenuItem Header="Wege des Wanderers" Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Kalender-Tool" Tag="Kalender" ToolTip="Kalender-Tool"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/kalender.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem x:Name="_menuItemReise" Height="28" Click="ButtonTool_Click" Header="Reise-Tool (INTERN)" Tag="Reise" ToolTip="Reise-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}" >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/kartenzeichnen.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="ZooBot-Tool" Tag="ZooBot"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/kraeutersuche.png" Margin="2" />
-                                </MenuItem.Icon>
-                                <MenuItem.ToolTip>
-                                    <ToolTip>
-                                        <StackPanel>
-                                            <TextBlock FontWeight="Bold"><Run Text="ZooBot-Tool"/></TextBlock>
-                                            <TextBlock><Run Text="Pflanzensuche, Jagen, Fischen und Fallenstellen."/></TextBlock>
-                                        </StackPanel>
-                                    </ToolTip>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <Separator   />
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="PlugIn: DereGlobus-Suche" Tag="Globus"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Logos/DereGlobus_Icon2.png" Margin="2" />
-                                </MenuItem.Icon>
-                                <MenuItem.ToolTip>
-                                    <ToolTip>
-                                        <StackPanel>
-                                            <TextBlock FontWeight="Bold"><Run Text="PlugIn: DereGlobus-Suche"/></TextBlock>
-                                            <TextBlock FontSize="9"><Run Text="© Markus Traut und DereGlobus-Team"/></TextBlock>
-                                            <TextBlock><Run Text="Siedlungssuche im DereGlobus-Projekt."/></TextBlock>
-                                            <TextBlock><Run Text="Internet-Verbindung erforderlich!"/></TextBlock>
-                                        </StackPanel>
-                                    </ToolTip>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <Separator   />
-                            <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
-                        </MenuItem>
-                        <MenuItem Header="Eigene Wege" Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
-                        </MenuItem>
-                        <MenuItem Click="MenuItemEinstellungen_Click" ToolTip="Einstellungen." Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem.Header>
-                                <Image Source="/Images/Icons/mechanik.png" Height="20"  />
-                            </MenuItem.Header>
-                        </MenuItem>
-                        <MenuItem Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem.Header>
-                                <Image Source="/Images/Icons/General/question.png" Height="20"  />
-                            </MenuItem.Header>
-                            <MenuItem Height="28" Click="MenuItemUpdateCheck_Click" Header="Auf Updates prüfen..."  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/General/update.png" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator   />
-                            <MenuItem Height="28" Click="MenuItemHilfeHomepage_Click" Header="MeisterGeister Homepage"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemHilfeForum_Click" Header="MeisterGeister Forum"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemHilfeFacebook_Click" Header="MeisterGeister bei Facebook"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Logos/facebook.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemHilfeTwitter_Click" Header="MeisterGeister bei Twitter"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Logos/twitter.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Wiki-Aventurica" Tag="http://www.wiki-aventurica.de/wiki/DSA_MeisterGeister"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemHilfeEMail_Click" Header="E-Mail an Support"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Icons/General/email.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Header="MeisterGeister in Foren..."  >
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im DSA4-Forum" Tag="http://www.dsa4forum.de/viewtopic.php?f=9&amp;t=22246"  >
+                            <MenuItem Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
+                                <MenuItem.Header>
+                                    <Image Source="/Images/Icons/General/question.png" Height="20"  />
+                                </MenuItem.Header>
+                                <MenuItem Height="28" Click="MenuItemUpdateCheck_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Auf Updates prüfen..." VerticalAlignment="Center" />
+                                    </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
+                                        <Image Source="/Images/Icons/General/update.png" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Ulisses-Forum" Tag="http://www.ulisses-spiele.de/forum/viewtopic.php?f=144&amp;t=612"  >
+                                <Separator   />
+                                <MenuItem Height="28" Click="MenuItemHilfeHomepage_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="MeisterGeister Homepage" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Ulisses_Icon.png" Stretch="Fill" />
+                                        <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Orkenspalter-Forum" Tag="http://www.orkenspalter.de/viewtopic.php?f=1&amp;t=10204"  >
+                                <MenuItem Height="28" Click="MenuItemHilfeForum_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="MeisterGeister Forum" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
+                                        <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Vinsalt-Forum" Tag="http://vinsalt.regioconnect.net/wbb2/thread.php?postid=299664"  >
+                                <MenuItem Height="28" Click="MenuItemHilfeFacebook_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="MeisterGeister bei Facebook" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Vinsalt_Favicon.png" Stretch="Fill" />
+                                        <Image Margin="2" Source="/Images/Logos/facebook.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Tanelorn-Forum" Tag="http://tanelorn.net/index.php/topic,67418.0.html"  >
+                                <MenuItem Height="28" Click="MenuItemHilfeTwitter_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="MeisterGeister bei Twitter" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Tanelorn_Favicon.png" Stretch="Fill" />
+                                        <Image Margin="2" Source="/Images/Logos/twitter.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Uhrwerk (Myranor)-Forum" Tag="http://community.uhrwerk-verlag.de/index.php?topic=470.0"  >
+                                <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.wiki-aventurica.de/wiki/DSA_MeisterGeister">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="MeisterGeister im Wiki-Aventurica" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Uhrwerk_Icon.png" Stretch="Fill" />
+                                        <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="MenuItemHilfeEMail_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="E-Mail an Support" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/Images/Icons/General/email.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="MeisterGeister in Foren..." VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.dsa4forum.de/viewtopic.php?f=9&amp;t=22246">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="MeisterGeister im DSA4-Forum" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.ulisses-spiele.de/forum/viewtopic.php?f=144&amp;t=612">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="MeisterGeister im Ulisses-Forum" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Ulisses_Icon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.orkenspalter.de/viewtopic.php?f=1&amp;t=10204">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="MeisterGeister im Orkenspalter-Forum" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://vinsalt.regioconnect.net/wbb2/thread.php?postid=299664">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="MeisterGeister im Vinsalt-Forum" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Vinsalt_Favicon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://tanelorn.net/index.php/topic,67418.0.html">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="MeisterGeister im Tanelorn-Forum" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Tanelorn_Favicon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://community.uhrwerk-verlag.de/index.php?topic=470.0">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="MeisterGeister im Uhrwerk (Myranor)-Forum" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Uhrwerk_Icon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuItem>
+                                <MenuItem Height="28">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="MeisterGeister in Archiven..." VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="​http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Download bei Orkenspalter" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.dsa4forum.de/downloads.php?view=detail&amp;df_id=116">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Download DSA4-Forum" VerticalAlignment="Center" />
+                                        </MenuItem.Header>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuItem>
+                                <Separator   />
+                                <MenuItem Height="28" Click="MenuItemHerokonOnline_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Herokon Online" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/Images/Logos/HerokonOnline_Icon.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="MenuItemDereGlobus_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="DereGlobus Projekt" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/Images/Logos/DereGlobus_Icon.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator   />
+                                <MenuItem Height="28" Click="MenuItemSysInfo_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Systeminformationen..." VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Click="MenuItemHilfeÜber_Click">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Über MeisterGeister..." VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </MenuItem>
-                            <MenuItem Height="28" Header="MeisterGeister in Archiven..."  >
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="Download bei Orkenspalter" Tag="​http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/"  >
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="Download im DSA4-Forum" Tag="http://www.dsa4forum.de/downloads.php?view=detail&amp;df_id=116"  >
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </MenuItem>
-                            <Separator   />
-                            <MenuItem Height="28" Click="MenuItemHerokonOnline_Click" Header="Herokon Online"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Logos/HerokonOnline_Icon.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemDereGlobus_Click" Header="DereGlobus Projekt"  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Logos/DereGlobus_Icon.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator   />
-                            <MenuItem Height="28" Click="MenuItemSysInfo_Click" Header="Systeminformationen..."  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Click="MenuItemHilfeÜber_Click" Header="Über MeisterGeister..."  >
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </MenuItem>
-                    </Menu>
-                    <Label Margin="5,0,0,0" Content="V 0.X.X" x:Name="_labelVersion" ToolTip="Installierte Version" VerticalAlignment="Center" Cursor="Hand" MouseDown="LabelVersion_MouseDown" FontSize="10"  />
-                </StackPanel>
-                <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="12" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#7FAC854C" Offset="0.745"/>
-                            <GradientStop/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <TextBlock Text="Hier klicken, um das Menü zu öffnen/schließen!" ToolTip="Hier klicken, um das Menü zu öffnen/schließen!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" />
-                </Border>
-            </Grid>
-        </Border>
+                        </Menu>
+                        <Label Margin="5,0,0,0" Content="V 0.X.X" x:Name="_labelVersion" ToolTip="Installierte Version" VerticalAlignment="Center" Cursor="Hand" MouseDown="LabelVersion_MouseDown" FontSize="10"  />
+                    </StackPanel>
+                    <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="12" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#7FAC854C" Offset="0.745"/>
+                                <GradientStop/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <TextBlock Text="Hier klicken, um das Menü zu öffnen/schließen!" ToolTip="Hier klicken, um das Menü zu öffnen/schließen!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" />
+                    </Border>
+                </Grid>
+            </Border>
 
-        <Border Name="_busyBorder" BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="Hidden">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Button Name="_buttonCloseIsBusy" Margin="50,50,50,0" HorizontalAlignment="Right" ToolTip="Beschäftigt-Anzeige schließen." Click="ButtonCloseIsBusy_Click">
-                    <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
-                </Button>
-                <StackPanel Grid.Row="1" Margin="0,0,120,0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical">
-                    <TextBlock Name="_textBlockIsBusyInfo" TextWrapping="Wrap" MaxWidth="600" HorizontalAlignment="Right" Text="Beschäftigt..." FontSize="24" FontWeight="Bold" Foreground="#7EFFFFFF"/>
-                    <TextBlock TextWrapping="Wrap" Text="Bitte warten..." FontSize="26.667" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#7EFFFFFF"/>
-                </StackPanel>
-            </Grid>
-        </Border>
-    </Grid>
-        
+            <Border Name="_busyBorder" BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="Hidden">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Button Name="_buttonCloseIsBusy" Margin="50,50,50,0" HorizontalAlignment="Right" ToolTip="Beschäftigt-Anzeige schließen." Click="ButtonCloseIsBusy_Click">
+                        <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
+                    </Button>
+                    <StackPanel Grid.Row="1" Margin="0,0,120,0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical">
+                        <TextBlock Name="_textBlockIsBusyInfo" TextWrapping="Wrap" MaxWidth="600" HorizontalAlignment="Right" Text="Beschäftigt..." FontSize="24" FontWeight="Bold" Foreground="#7EFFFFFF"/>
+                        <TextBlock TextWrapping="Wrap" Text="Bitte warten..." FontSize="26.667" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#7EFFFFFF"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
     </DockPanel>
 </Window>

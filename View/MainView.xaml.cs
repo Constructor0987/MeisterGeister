@@ -145,8 +145,8 @@ namespace MeisterGeister.View
                 if (item is MenuItem)
                 {
                     MenuItem menuItem = (MenuItem)item;
-                    if (!(menuItem.Header is Image))
-                        MenuPunkte.Add(menuItem.Header.ToString(), menuItem);
+                    if (!(menuItem.Header is Image) && menuItem.Header is TextBlock)
+                        MenuPunkte.Add((menuItem.Header as TextBlock).Text.ToString(), menuItem);
                 }
             }
         }
