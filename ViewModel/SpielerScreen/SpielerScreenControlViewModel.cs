@@ -592,6 +592,16 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         {
             try
             {
+                if (string.IsNullOrEmpty(DirectoryPath))
+                {
+                    PopUp("Es ist kein Ordner ausgewählt, deshalb kann auch keiner im Explorer geöffnet werden.");
+                    return;
+                }
+                if (!System.IO.Directory.Exists(DirectoryPath))
+                {
+                    PopUp(string.Format("Der Ordner '{0}' existiert nicht, deshalb kann er nicht im Explorer geöffnet werden.", DirectoryPath));
+                    return;
+                }
                 System.Diagnostics.Process.Start(DirectoryPath);
             }
             catch (Exception ex)
