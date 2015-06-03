@@ -9,18 +9,22 @@
              xmlns:vmAudioPlayer="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              d:DesignWidth="900" 
-             Tag="{Binding aPlayTitel}">
-    
+             Tag="{Binding aPlayTitel}" >
+
     <UserControl.Resources>
+        <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter1" />
+        <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
+        <vmAudioPlayer:MultiBooleanODERToVisibilityConverter x:Key="MultiBooleanODERToVisibilityConverter1" />
+        <vmAudioPlayer:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
         <vmAudioPlayer:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <vmAudioPlayer:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>
         <vmAudioPlayer:BooleanInverseToVisibilityHiddenConverter x:Key="BooleanInverseToVisibilityHiddenConverter1"/>
         <vmAudioPlayer:DoubleToTimespanHHMMSSConverter x:Key="DoubleToTimespanHHMMSSConverter1" />
     </UserControl.Resources>
-    
-    <ListBoxItem Name="lbiEditorRow" Height="55" >
+
+    <ListBoxItem Name="lbiEditorRow" >
         <ListBoxItem.Style>
-                <Style TargetType="ListBoxItem">
+            <Style TargetType="ListBoxItem">
                 <Setter Property="Background" Value="{x:Null}" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding FileNotExist}" Value="True">
@@ -31,7 +35,7 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-            </ListBoxItem.Style>
+        </ListBoxItem.Style>
         <ListBoxItem.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Datei duplizieren"
@@ -40,8 +44,8 @@
                     <ItemsControl ItemsSource="{Binding DisplayPath}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding DisplayPath}" />                                
-                            </DataTemplate>                             
+                                <TextBlock Text="{Binding DisplayPath}" />
+                            </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>
                             <Style TargetType="MenuItem">
@@ -50,7 +54,7 @@
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
-                </MenuItem>   
+                </MenuItem>
                 <MenuItem Header="Datei entfernen" Command="{Binding OnAudioZeileRemove}" />
                 <Separator />
                 <MenuItem Header="Nur einen Teil abspielenww" IsCheckable="True" 
@@ -62,20 +66,21 @@
             </ContextMenu>
         </ListBoxItem.ContextMenu>
 
-        <Grid VerticalAlignment="Center" Height="50">
+        <Grid VerticalAlignment="Center" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="15" />
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="350"/>
-                <ColumnDefinition Width="50" />
-
+                <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
             <Label Grid.ColumnSpan="3" Grid.RowSpan="2" Cursor="Hand" />
+            <Label Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" />
             <Button Grid.RowSpan="2"  Height="25" 
                 Command="{Binding OnAudioZeileRemove}"
                 Visibility="{Binding ElementName=_audioZeile, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
@@ -85,7 +90,7 @@
                     Visibility="{Binding ElementName=_audioZeile, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                 <Button Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveUp, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
-                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" />                    
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" />
                 </Button>
                 <Button Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveDown, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
@@ -93,12 +98,12 @@
                 </Button>
             </StackPanel>
 
-            <Grid Name="grdDnD" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Height="20" MinWidth="200" >
+            <Grid Name="grdDnD" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Stretch" Height="20" MinWidth="200" >
                 <ProgressBar Name="pbarTitel" Height="18" Margin="15,1,0,1"  ToolTip="Rechte Maustaste für mehr Einstellungen" 
                                 Value="{Binding Progress, UpdateSourceTrigger=PropertyChanged}"
                                 Minimum="{Binding TitelMinimum}"
-                                Maximum="{Binding TitelMaximum}" />                
-            
+                                Maximum="{Binding TitelMaximum}" />
+
                 <CheckBox Name="chkTitel" HorizontalAlignment="Left" VerticalAlignment="Center" IsTabStop="False" Margin="0,2" 
                         Content="{Binding aPlayTitel.Audio_Titel.Name}" 
                         Command="{Binding OnBtnAktiv}"
@@ -114,48 +119,56 @@
                         </TextBlock>
                     </CheckBox.ToolTip>
                 </CheckBox>
-            
-                <local:SliderRange x:Name="rsldTeilSong"  VerticalAlignment="Center" Margin="17,1,0,0" 
-                Minimum="0" 
-                Maximum="{Binding aPlayTitelLänge, UpdateSourceTrigger=PropertyChanged}" 
-                UpperValue="{Binding aPlayTitelTeilEnde, UpdateSourceTrigger=PropertyChanged}"    
-                LowerValue="{Binding aPlayTitelTeilStart, UpdateSourceTrigger=PropertyChanged}"               
-                Visibility="{Binding aPlayTitelTeilAbspielen, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" 
-                PlayTitel="{Binding aPlayTitel, UpdateSourceTrigger=PropertyChanged}" >
-                
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeave" >
-                        <i:InvokeCommandAction Command="{Binding OnMouseUpCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </local:SliderRange>
 
+                <local:SliderRange x:Name="rsldTeilSong"  VerticalAlignment="Center" Margin="17,1,0,0" 
+                    Minimum="0" 
+                    Maximum="{Binding aPlayTitelLänge, UpdateSourceTrigger=PropertyChanged}" 
+                    UpperValue="{Binding aPlayTitelTeilEnde, UpdateSourceTrigger=PropertyChanged}"    
+                    LowerValue="{Binding aPlayTitelTeilStart, UpdateSourceTrigger=PropertyChanged}"               
+                    Visibility="{Binding aPlayTitelTeilAbspielen, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" 
+                    PlayTitel="{Binding aPlayTitel, UpdateSourceTrigger=PropertyChanged}" >
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeave" >
+                            <i:InvokeCommandAction Command="{Binding OnMouseUpCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </local:SliderRange>
             </Grid>
-            
-            <TextBlock Grid.Column="3" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,5" 
-                   Text="{Binding aPlayTitel.Audio_Titel.Länge, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}" />
-            
-            <Button Grid.Column="3" Grid.Row="1" Height="23" Command="{Binding OnBtnGewichtung, UpdateSourceTrigger=PropertyChanged}" Margin="2,-1,2,0" >
-                <Button.ToolTip>
-                <TextBlock Text="{Binding aPlayTitel.Rating, StringFormat='Gewichtung \{0\}'}" />
-                </Button.ToolTip>
-                <Grid>
-                    <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=5}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="-3" />
-                    <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=3}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="3,-3,-3,-3" />
-                    <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=1}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="9,-3,-3,-3" />
-                    <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=2}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="15,-3,-3,-3" />
-                    <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=4}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="21,-3,-3,-3" />
-                </Grid>
-            </Button>
-            <StackPanel Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="2" VerticalAlignment="Bottom"
-                        Visibility="{Binding aPlayTitel.Audio_Playlist.Hintergrundmusik, Converter={StaticResource BooleanInverseToVisibilityConverter1}}">                
+
+            <StackPanel Grid.Column="3" Grid.RowSpan="2" 
+                Visibility="{Binding ElementName=lbiEditorRow, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                <TextBlock Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,5" 
+                        Text="{Binding aPlayTitel.Audio_Titel.Länge, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}" />
+
+                <Button Grid.Row="1" Height="23" Command="{Binding OnBtnGewichtung, UpdateSourceTrigger=PropertyChanged}" Margin="2,-1,2,0" >
+                    <Button.ToolTip>
+                        <TextBlock Text="{Binding aPlayTitel.Rating, StringFormat='Gewichtung \{0\}'}" />
+                    </Button.ToolTip>
+                    <Grid>
+                        <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=5}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="-3" />
+                        <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=3}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="3,-3,-3,-3" />
+                        <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=1}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="9,-3,-3,-3" />
+                        <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=2}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="15,-3,-3,-3" />
+                        <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=4}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="21,-3,-3,-3" />
+                    </Grid>
+                </Button>
+            </StackPanel>                        
+            <StackPanel Grid.Column="4" Grid.RowSpan="2" VerticalAlignment="Bottom" >
+                <StackPanel.Visibility>
+                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                        <Binding ElementName="lbiEditorRow" Path="IsMouseOver" />
+                        <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
+                    </MultiBinding>
+                </StackPanel.Visibility>
+                
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
                         <RowDefinition Height="26" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="23" />
+                        <ColumnDefinition Width="19"/>
                         <ColumnDefinition Width="92" />
                         <ColumnDefinition Width="56" />
                         <ColumnDefinition Width="80" />
@@ -163,8 +176,8 @@
                         <ColumnDefinition Width="110" />
                     </Grid.ColumnDefinitions>
 
-                    <Image Margin="5,0,-5,0" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" />
-                    <Image Margin="5,0,-5,0" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" />
+                    <Image Margin="1,0,87,0" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Grid.ColumnSpan="2" />
+                    <Image Margin="1,0,87,0" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" Grid.ColumnSpan="2" />
 
                     <Slider Grid.Column="1" Margin="6,2,4,1" LargeChange="10" SmallChange="1" Minimum="0" Maximum="100" VerticalAlignment="Center" ToolTipService.ShowDuration="10000"
                         Value="{Binding aPlayTitel.Volume, UpdateSourceTrigger=PropertyChanged}"
@@ -173,18 +186,29 @@
                             <TextBlock Text="{Binding aPlayTitel.Volume , StringFormat='\{0\} %'}" />
                         </Slider.ToolTip>
                     </Slider>
+                    
+                    <Image Grid.Column="2" Grid.Row="1" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Margin="0,3,15,3" HorizontalAlignment="Right" Stretch="Fill" Width="11" Height="20"  />
+                    <Image Grid.Column="2" Grid.Row="1" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="0,9,18,3" HorizontalAlignment="Right" Width="14" />
 
-                    <CheckBox Grid.Column="2" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,4,1,4" ToolTip="Lautstärke der Klangzeile automatisch variieren" 
+                    <Image Grid.Column="2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Margin="0,7,16,3" HorizontalAlignment="Right" />
+                    <Image Grid.Column="2" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Margin="0,5,16,5" HorizontalAlignment="Right" />
+
+
+                    <CheckBox Grid.Column="2" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,1,6" ToolTip="Lautstärke der Klangzeile automatisch variieren" 
                               IsChecked="{Binding aPlayTitelVolumeChange, UpdateSourceTrigger=PropertyChanged}" 
                               Command="{Binding OnVolumeChange}"/>
 
-                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMin}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" />
-                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" />
+                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMin}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
+                        Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" 
+                        vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"/>
+                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
+                        Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" 
+                        vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"/>
 
-                    <Border VerticalAlignment="Bottom" Grid.ColumnSpan="6" BorderBrush="Gray" Margin="0,-2,105,24" Height="1" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
+                    <Border VerticalAlignment="Bottom" Grid.ColumnSpan="7" BorderBrush="Gray" Margin="0,0,105,24" Height="1" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
 
                     <Slider Grid.Column="1" Grid.Row="1" Maximum="900000" IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
-                        Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,1,4,-1" 
+                        Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,3,4,1" 
                         Value="{Binding aPlayTitelPause, UpdateSourceTrigger=PropertyChanged}" 
                         MouseWheel="PauseWert_MouseWheel"
                         Ticks="{Binding SliderTicks, UpdateSourceTrigger=PropertyChanged}" >
@@ -193,18 +217,20 @@
                         </Slider.ToolTip>
                     </Slider>
 
-                    <CheckBox Grid.Column="2" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,4,1,4" ToolTip="Pausezeiten der Klangzeile automatisch variieren" 
+                    <CheckBox Grid.Column="2" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,7,1,7" ToolTip="Pausezeiten der Klangzeile automatisch variieren" 
                               IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}"
                               Command="{Binding OnPauseChange}"/>
 
-                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" 
-                            Value="{Binding aPlayTitelPauseMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PauseMinIncValue}" DecValue="{Binding PauseMinIncValue}" MinValue="0" MaxValue="900000" />
-                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,0" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" 
-                            Value="{Binding aPlayTitelPauseMax}" IncValue="{Binding PauseMaxIncValue}" DecValue="{Binding PauseMaxIncValue}" MinValue="0" MaxValue="900000" />
+                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" 
+                            Value="{Binding aPlayTitelPauseMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PauseMinIncValue}" DecValue="{Binding PauseMinIncValue}" MinValue="0" MaxValue="900000" 
+                            vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
+                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" 
+                            Value="{Binding aPlayTitelPauseMax}" IncValue="{Binding PauseMaxIncValue}" DecValue="{Binding PauseMaxIncValue}" MinValue="0" MaxValue="900000" 
+                            vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
 
-                        <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="6,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
-                    <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitel.Speed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
-                            IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" Foreground="DarkSlateGray" Margin="32,14" >
+                    <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="6,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
+                    <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitel.Speed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="6" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
+                            IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" Foreground="DarkSlateGray" Margin="32,14,32,15" >
                         <Slider.ToolTip>
                             <TextBlock Text="{Binding ToolTipPlaySpeed}" />
                         </Slider.ToolTip>
@@ -212,7 +238,117 @@
                     <Image Source="/Images/Icons/General/hase.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Right" Margin="0,5,5,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp_1" />
                 </Grid>
             </StackPanel>
+
+            <!-- Nicht aktive Zeile -->
+            <StackPanel Grid.Column="3" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center"
+                Visibility="{Binding ElementName=lbiEditorRow, Path=IsMouseOver, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" >
+                <TextBlock Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0"
+                        Text="{Binding aPlayTitel.Audio_Titel.Länge, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}" />
+                <Button Height="23" Margin="2,1,2,2" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding aPlayTitel.Rating}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Content>
+                        <Grid >
+                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="-3" />
+                            <Label Content="{Binding aPlayTitel.Rating}" HorizontalAlignment="Center" Margin="0,-4,0,-2" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="4" Grid.RowSpan="2" VerticalAlignment="Center">
+                <StackPanel.Visibility>
+                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >                        
+                        <Binding ElementName="lbiEditorRow" Path="IsMouseOver" Converter="{StaticResource InvertedBoolenConverter1}" />
+                        <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
+                    </MultiBinding>
+                </StackPanel.Visibility>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="26" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="65" />
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="115" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Margin="5,-1,-1,0"/>
+                    <Label Grid.Column="1">
+                        <Label.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding aPlayTitel.Volume}" />
+                                <TextBlock Text="%" />
+                            </StackPanel>
+                        </Label.Content>
+                    </Label>
+
+                    <Image Grid.Column="2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Margin="3,7,3,3" HorizontalAlignment="Left" />
+                    <Image Grid.Column="2" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Margin="3,5,15,5" HorizontalAlignment="Left" />
+                    <CheckBox Grid.Column="2" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" 
+                              IsChecked="{Binding aPlayTitelVolumeChange, UpdateSourceTrigger=PropertyChanged}" >
+                        <CheckBox.Style>
+                            <Style TargetType="CheckBox">
+                                <Setter Property="Content" Value="{x:Null}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding aPlayTitelVolumeChange}" Value="True" >
+                                        <Setter Property="Content" >
+                                            <Setter.Value>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding aPlayTitel.VolumeMin}" />
+                                                    <TextBlock Text="-" />
+                                                    <TextBlock Text="{Binding aPlayTitel.VolumeMax}" />
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
+                    
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Column="3" Margin="5,-1,-1,0" />
+                    
+                    <Label Grid.Column="4" Content="{Binding ZeigeAPlayTitelPause}" />
+
+                    <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Margin="-3,3,106,3" HorizontalAlignment="Left" Stretch="Fill"  />
+                    <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="-7,9,15,3" HorizontalAlignment="Left" />
+                    
+                    <CheckBox Grid.Column="5" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"
+                              IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}" >
+                        <CheckBox.Style>
+                            <Style TargetType="CheckBox">
+                                <Setter Property="Content" Value="{x:Null}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding aPlayTitelPauseChange}" Value="True" >
+                                        <Setter Property="Content" >
+                                            <Setter.Value>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding aPlayTitelPauseMin}" />
+                                                    <TextBlock Text="-" />
+                                                    <TextBlock Text="{Binding aPlayTitelPauseMax}" />
+                                                </StackPanel>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
+                    <Label Grid.Column="6" Content="{Binding ToolTipPlaySpeed}" />
+                </Grid>
+            </StackPanel>
         </Grid>
     </ListBoxItem>
-    
+
 </UserControl>

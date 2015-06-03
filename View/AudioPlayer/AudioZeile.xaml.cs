@@ -111,6 +111,6 @@ namespace MeisterGeister.View.AudioPlayer
                 VM.aPlayTitel.Volume = VM.aPlayTitel.Volume - 3 < 0 ? 0 : VM.aPlayTitel.Volume - 3;
             else
                 VM.aPlayTitel.Volume = VM.aPlayTitel.Volume + 3 > 100 ? 100 : VM.aPlayTitel.Volume + 3;
-        }    
+        }        
     }
 }

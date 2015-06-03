@@ -50,6 +50,20 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }            
         }
 
+        private bool _showHotkeyPanel = false;
+        public bool ShowHotkeyPanel
+        {
+            get { return _showHotkeyPanel; }
+            set
+            {
+                _showHotkeyPanel = PlayerVM.ShowHotkeyPanel;
+                //_showHotkeyPanel = !value && PlayerVM.hotkeyListUsed.Count > 0;
+                PlayerVM.ShowHotkeyPanel = _showHotkeyPanel;
+                OnChanged();
+                OnChanged("ShowHotkeyPanel");
+            }
+        }
+
         private void audiozeileLbi_MouseMove(object sender, MouseEventArgs e)
         {
             AudioZeile aZeile = ((sender as ListBoxItem).Parent as Grid).Parent as AudioZeile;
@@ -89,12 +103,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         [DependentProperty("PlayerVM"), DependentProperty("Reihenfolge")]
         public bool IstLetzteZeile
         {
-            get { return PlayerVM == null || PlayerVM.AktKlangPlaylist == null? 
-                false : (PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count == aPlayTitel.Reihenfolge + 1); }
+            get
+            {
+                return PlayerVM == null || PlayerVM.AktKlangPlaylist == null ?
+                    false : (PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count == aPlayTitel.Reihenfolge + 1);
+            }
             set { OnChanged(); }
         }
-
-
+               
         public bool aPlayTitelVolumeChange
         {
             get { return _aPlayTitel.VolumeChange; }
@@ -281,15 +297,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             get
             {
-                return ( "Abspielgeschwindigkeit: " +
-                  (aPlayTitel.Speed == .1 ? "sehr langsam" :
-                   aPlayTitel.Speed == .5 ? "langsam" :
-                   aPlayTitel.Speed == .75 ? "gedrosselt" :
-                   aPlayTitel.Speed == 1 ? "normal" :
-                   aPlayTitel.Speed == 2 ? "erhöht" :
-                   aPlayTitel.Speed == 3 ? "schnell" :
-                   aPlayTitel.Speed == 4 ? "sehr schnell" :
-                   aPlayTitel.Speed == 5 ? "ultra schnell" : "nicht definiert"));
+                return (   (aPlayTitel.Speed == .1 ? "Sehr langsame" :
+                            aPlayTitel.Speed == .5 ? "Langsame" :
+                            aPlayTitel.Speed == .75 ? "Gedrosselte" :
+                            aPlayTitel.Speed == 1 ? "Normale" :
+                            aPlayTitel.Speed == 2 ? "Erhöhte" :
+                            aPlayTitel.Speed == 3 ? "Schnelle" :
+                            aPlayTitel.Speed == 4 ? "Sehr schnelle" :
+                            aPlayTitel.Speed == 5 ? "Ultra schnelle" : "Nicht definierte") + 
+                            " Abspielgeschwindigkeit");
             }
         }
         
@@ -661,6 +677,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
          //   _onAudioZeileAdd = new Base.CommandBase(AudioZeileAdd, null); 
            // sliderVM.aPlaylistTitel = aPlayTitel;
+            AZeile = this;
         }
 
 

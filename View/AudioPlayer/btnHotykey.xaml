@@ -5,8 +5,27 @@
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.AudioPlayer.Logic"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
-    <Button Background="LightGray" Margin="5,0" Height="25" Width="25" 
+    <Button Margin="5,0" Height="25" Width="25" Focusable="False"
             Content="{Binding tasteChar}"
-            Command="{Binding OnBtn}"
-            ToolTip="{Binding aPlaylist.Name}" />
+            Command="{Binding OnBtn}">
+        <Button.Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="LightGray" />
+                <Setter Property="ToolTip" Value="{Binding aPlaylist.Name}" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding PlayableTitelList.Count}" Value="0" >
+                        <Setter Property="Background" Value="#64FF0000" />
+                        <Setter Property="ToolTip">
+                            <Setter.Value>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding aPlaylist.Name}" />
+                                    <TextBlock Text="Playlist-Dateien nicht abspielbar" />
+                                </StackPanel>
+                            </Setter.Value>
+                        </Setter> 
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Button.Style>
+    </Button>
 </StackPanel>

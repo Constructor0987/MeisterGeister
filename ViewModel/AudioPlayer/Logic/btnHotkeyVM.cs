@@ -96,10 +96,25 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-
-        //Commands
-        //private Base.CommandBase _onlbEditorItemAdd;
-
+        private List<Audio_Playlist_Titel> _playableTitelList = null;
+        public List<Audio_Playlist_Titel> PlayableTitelList
+        {
+            get 
+            {
+                if (_playableTitelList == null && aPlaylist != null)
+                {
+                    _playableTitelList = new List<Audio_Playlist_Titel>();
+                    _playableTitelList.AddRange(aPlaylist.Audio_Playlist_Titel);
+                }
+                return _playableTitelList; 
+            }
+            set
+            {
+                _playableTitelList = value;
+                OnChanged();
+            }
+        }
+        
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
@@ -121,7 +136,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             mp.MediaFailed += mp_failed_ended;
             //_onlbEditorItemAdd = new Base.CommandBase(lbEditorItemAdd, null);
             _timerTeilAbspielen.Interval = TimeSpan.FromMilliseconds(20);
-            _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);
+            _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);                        
         }
         #endregion
 
@@ -160,14 +175,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             if (aPlaylistGuid != null)
             {
+                PlayableTitelList.AddRange(aPlaylist.Audio_Playlist_Titel);
+                if (PlayableTitelList.Count == 0) return;
 
-                int zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count );
-                Audio_Playlist_Titel aPlayTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen);
+                int zuspielen = (new Random()).Next(0, PlayableTitelList.Count);// aPlaylist.Audio_Playlist_Titel.Count );
+                Audio_Playlist_Titel aPlayTitel = PlayableTitelList.ToList().ElementAt(zuspielen);
 
                 while (!checkTitel(aPlayTitel.Audio_Titel))
-                {                
-                    zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count);
-                    aPlayTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen);
+                {
+                    PlayableTitelList.Remove(aPlayTitel);
+                    if (PlayableTitelList.Count == 0) return;
+
+                    zuspielen = (new Random()).Next(0, PlayableTitelList.Count);
+                    aPlayTitel = PlayableTitelList.ToList().ElementAt(zuspielen);
                 }
                 
                 if (mp.Source != null)
