@@ -18,6 +18,7 @@ using MeisterGeister.ViewModel.AudioPlayer;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.View.General;
 using MeisterGeister.Logic.Einstellung;
+using System.Threading;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -715,6 +716,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }
                 if (worker.WorkerReportsProgress)
                 {
+                    SpinWait.SpinUntil(() => { return model.APlaylistTitel.Audio_Titel != null; }, 1000);
                     if (model.APlaylistTitel.Audio_Titel != null)
                     {
                         if (!File.Exists(model.APlaylistTitel.Audio_Titel.Pfad + "\\" + model.APlaylistTitel.Audio_Titel.Datei))
@@ -723,12 +725,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                             if (File.Exists(titel.Pfad + "\\" + titel.Datei))
                             {
                                 Global.ContextAudio.Update<Audio_Titel>(titel);
+                                model.APlaylistTitel.Audio_Titel = titel;
                                 result++;
                             }
                         }
                         else
                             result++;
                     }
+                    else
+                    { }
                     int percentComplete = (int)((float)val / (float)model.Iterations * 100);
                     string updateMessage =
                         string.Format("Titel {0} von {1} überprüft", val, model.Iterations);

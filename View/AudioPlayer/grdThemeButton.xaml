@@ -60,35 +60,11 @@
                     </Border>
                 </StackPanel>
             </ToggleButton.Content>
-
-            <!--<i:Interaction.Triggers>
-                <i:EventTrigger EventName="Checked">
-                    <i:InvokeCommandAction Command="{Binding Path=tbtnThemeChecked}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="Unchecked">
-                    <i:InvokeCommandAction Command="{Binding Path=tbtnThemeUnChecked}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>-->
-
         </ToggleButton>
         <CheckBox Name="chkbxPlus" ToolTip="Nur Geräusche des Themes hinzufügen" HorizontalAlignment="Right" 
                   VerticalAlignment="Top" Margin="3,5,3,3" FlowDirection="RightToLeft" 
                   IsChecked="{Binding Theme.NurGeräusche}" Padding="4,1,0,0"
                   Visibility="{Binding ForceVolumeVis, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
-            <!--<CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    --><!--<Setter Property="Visibility" Value="{Binding NormalSize, Converter={StaticResource BooleanToVisibilityConverter1}}" />--><!--
-                    <Style.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding ElementName=chkbxPlus,Path=IsMouseOver}" Value="True" />
-                                <Condition Binding="{Binding ElementName=NormalSize}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Visibility" Value="Visible" />
-                        </MultiDataTrigger>                       
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>-->
             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="20" Width="20" Margin="-5,-2,0,-5"/>
         </CheckBox>
     </Grid>

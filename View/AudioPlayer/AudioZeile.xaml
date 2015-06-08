@@ -225,11 +225,11 @@
                             Value="{Binding aPlayTitelPauseMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PauseMinIncValue}" DecValue="{Binding PauseMinIncValue}" MinValue="0" MaxValue="900000" 
                             vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                     <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" 
-                            Value="{Binding aPlayTitelPauseMax}" IncValue="{Binding PauseMaxIncValue}" DecValue="{Binding PauseMaxIncValue}" MinValue="0" MaxValue="900000" 
+                            Value="{Binding aPlayTitelPauseMax, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PauseMaxIncValue}" DecValue="{Binding PauseMaxIncValue}" MinValue="0" MaxValue="900000" 
                             vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
 
                     <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="6,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
-                    <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitel.Speed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="6" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
+                    <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitelSpeed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="6" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
                             IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" Foreground="DarkSlateGray" Margin="32,14,32,15" >
                         <Slider.ToolTip>
                             <TextBlock Text="{Binding ToolTipPlaySpeed}" />

@@ -1380,6 +1380,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         private ListBoxItem GetNextMusikTitel()
         {
+            if (BGPlayer == null)
+                return null;
             Guid old_GUID = BGPlayer.AktPlaylistTitel != null ? BGPlayer.AktPlaylistTitel.Audio_TitelGUID : Guid.Empty;
             if (BGPlayer.AktPlaylist.Repeat == null &&
                 BGPlayer.AktPlaylistTitel != null)
@@ -1415,7 +1417,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                             if (BGPlayer.NochZuSpielen.Count == 0)
                                 return null;
-                            BGPlayer.NochZuSpielen.RemoveAt(0);
+                            Guid zuLöschen = BGPlayer.NochZuSpielen[0];
+                            while (BGPlayer.NochZuSpielen[0] == zuLöschen)
+                                BGPlayer.NochZuSpielen.RemoveAt(0);
                         }
                         next = BGPlayer.NochZuSpielen[0];
                     }
@@ -2120,7 +2124,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     if (!SliderTicks.Contains(aZeileVM.aPlayTitelPause))
                     {
                         int i = 0;
-                        while (SliderTicks[i] != SliderTicks.Max() && SliderTicks[i] < aZeileVM.aPlayTitelPause) i++;
+                        while (SliderTicks[i] != SliderTicks.Max() && SliderTicks[i] < aZeileVM.aPlayTitelPause &&
+                            i < SliderTicks.Count - 1) i++;
                         aZeileVM.aPlayTitelPause = (long)SliderTicks[i];
                     }
                     else
@@ -2151,7 +2156,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     if (!SliderTicks.Contains(aZeileVM.aPlayTitelPause))
                     {
                         int i = SliderTicks.Count - 1;
-                        while (SliderTicks[i] != SliderTicks.Min() && SliderTicks[i] > aZeileVM.aPlayTitelPause) i++;
+                        while (SliderTicks[i] != SliderTicks.Min() && SliderTicks[i] > aZeileVM.aPlayTitelPause &&
+                            i < SliderTicks.Count - 1) i++;
                         aZeileVM.aPlayTitelPause = (long)SliderTicks[i];
                     }
                     else                        
@@ -3948,6 +3954,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     //Auswählen der Geräusche-Playlisst der untergeorgenten Themes
                     CheckUnterThemes(aTheme);
                     FilterGeräuscheAktiv();
+
+                    OnThemeGeräuscheFilterAktivClick(null);
                 }
 
                 //  ----------- UNCHECKED ----------------
@@ -5944,12 +5952,16 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         _GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer.Stop();
                         KlangPlayEndetimer = new DispatcherTimer();
 
-                        //Neue Wartezeit fest oder per RANDOM bestimmen                        
-                        KlangPlayEndetimer.Interval = (_GrpObjecte[posObjGruppe]._listZeile[zeile].aPlaylistTitel.PauseChange) ?
-                            TimeSpan.FromMilliseconds(
-                                (new Random()).Next(_GrpObjecte[posObjGruppe]._listZeile[zeile].pauseMin_wert,
-                                _GrpObjecte[posObjGruppe]._listZeile[zeile].pauseMax_wert)) :
-                            TimeSpan.FromMilliseconds(_GrpObjecte[posObjGruppe]._listZeile[zeile].aPlaylistTitel.Pause);
+                        if (_GrpObjecte[posObjGruppe].visuell)
+                            //Im Editor keine Wartezeit abwarten
+                            KlangPlayEndetimer.Interval = TimeSpan.FromMilliseconds(0);
+                        else
+                            //Neue Wartezeit fest oder per RANDOM bestimmen                        
+                            KlangPlayEndetimer.Interval = (_GrpObjecte[posObjGruppe]._listZeile[zeile].aPlaylistTitel.PauseChange) ?
+                                TimeSpan.FromMilliseconds(
+                                    (new Random()).Next(_GrpObjecte[posObjGruppe]._listZeile[zeile].pauseMin_wert,
+                                    _GrpObjecte[posObjGruppe]._listZeile[zeile].pauseMax_wert)) :
+                                TimeSpan.FromMilliseconds(_GrpObjecte[posObjGruppe]._listZeile[zeile].aPlaylistTitel.Pause);
 
                         _GrpObjecte[posObjGruppe]._listZeile[zeile].istWartezeit = true;
                         KlangPlayEndetimer.Tag = _GrpObjecte[posObjGruppe]._listZeile[zeile].ID_Zeile;
@@ -6035,8 +6047,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 (sender as MediaPlayer).Close();
                 (sender as MediaPlayer).MediaFailed -= Player_KlangMediaFailed;
                 MusikProgBarTimer.Stop();
-                SelectedMusikTitelItem.Background = new SolidColorBrush(Color.FromArgb(100, 255, 255, 0));      // Yellow
-                SelectedMusikTitelItem.ToolTip = "Datei kann nicht abgespielt werden. Ungültiger Name? Vermeiden Sie Sonderzeichen( #&'! ) im Zusammenhang mit Netzlaufwerken.";
+                if (SelectedMusikTitelItem != null)
+                {
+                    SelectedMusikTitelItem.Background = new SolidColorBrush(Color.FromArgb(100, 255, 255, 0));      // Yellow
+                    SelectedMusikTitelItem.ToolTip = "Datei kann nicht abgespielt werden. Ungültiger Name? Vermeiden Sie Sonderzeichen( #&'! ) im Zusammenhang mit Netzlaufwerken.";
+                }
                 SpieleNeuenMusikTitel(Guid.Empty);
             }
             catch (Exception ex)
@@ -6429,9 +6444,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                                     if (grpobj.NochZuSpielen.Count > 1)
                                     {
+                                        int loops = 0;
                                         while (!grpobj._listZeile.First(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]).istStandby &&
-                                               (grpobj._listZeile.FindAll(t => t.istStandby).Count != 0))
+                                               (grpobj._listZeile.FindAll(t => t.istStandby).Count != 0) && 
+                                               loops < 5 * grpobj.NochZuSpielen.Count)                         // sicher gehen, dass kein unendlich-Loop entsteht
+                                        {
                                             neuPos = (new Random()).Next(0, grpobj.NochZuSpielen.Count);
+                                            loops++;
+                                        }
                                     }
 
                                     Guid zuspielendeGuid = grpobj.NochZuSpielen[neuPos];
@@ -6494,6 +6514,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         grpobj._listZeile[zeile].audioZeileVM.Progress = 0; // .pbarTitel.Value = 0;
                         if (grpobj._listZeile[zeile].aPlaylistTitel.PauseChange)
                         {
+                            if (Convert.ToUInt16(grpobj._listZeile[zeile].aPlaylistTitel.PauseMin) > Convert.ToUInt16(grpobj._listZeile[zeile].aPlaylistTitel.PauseMax))
+                                grpobj._listZeile[zeile].aPlaylistTitel.PauseMin = grpobj._listZeile[zeile].aPlaylistTitel.PauseMax;
                             neu = (new Random()).Next(Convert.ToUInt16(grpobj._listZeile[zeile].aPlaylistTitel.PauseMin),
                                                       Convert.ToUInt16(grpobj._listZeile[zeile].aPlaylistTitel.PauseMax));
                             grpobj._listZeile[zeile].aPlaylistTitel.Pause = neu;

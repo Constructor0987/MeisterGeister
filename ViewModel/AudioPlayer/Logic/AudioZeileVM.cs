@@ -176,7 +176,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private int _aPlayTitelPauseMin = 100;
+        private int _aPlayTitelPauseMin = 0;
         public int aPlayTitelPauseMin
         {
             get { return _aPlayTitelPauseMin; }
@@ -191,7 +191,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged("PauseMinIncValue");
             }
         }
-
+        
         private int _aPlayTitelPauseMax = 100;
         public int aPlayTitelPauseMax
         {
@@ -205,6 +205,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
                 OnChanged();
                 OnChanged("PauseMaxIncValue");
+            }
+        }
+
+
+        private double _aPlayTitelSpeed = 1;
+        public double aPlayTitelSpeed
+        {
+            get { return _aPlayTitelSpeed; }
+            set
+            {
+                _aPlayTitelSpeed = value;
+                aPlayTitel.Speed = value;
+                Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
+                OnChanged();
+                OnChanged("ToolTipPlaySpeed");
             }
         }
 
@@ -390,6 +405,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set
             {
                 _aPlayTitel = value;
+
+                _aPlayTitelPauseMin = (int)aPlayTitel.PauseMin;
+                _aPlayTitelPauseMax = (int)aPlayTitel.PauseMax;
+                _aPlayTitelSpeed = aPlayTitel.Speed;
                 OnChanged();
             }
         }
@@ -680,10 +699,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             AZeile = this;
         }
 
-
         
-
-
         //private Base.CommandBase _onAudioZeileAdd;
         //public Base.CommandBase OnAudioZeileAdd
         //{
