@@ -34,8 +34,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set
             {
                 _volume = value;
-                if (mp != null)
-                    mp.Volume = value/100;
+                TitelPlayList.ForEach(delegate(TitelPlay titelPlay)
+                {
+                    if (titelPlay.mp != null)
+                        titelPlay.mp.Volume = value / 100;
+                });
                 OnChanged();
             }
         }
@@ -74,13 +77,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private MediaPlayer _mp = new MediaPlayer();
-        public MediaPlayer mp
+
+
+        private List<MediaPlayer> _mpList = new List<MediaPlayer>();
+        public List<MediaPlayer> mpList
         {
-            get { return _mp; }
+            get { return _mpList; }
             set
             {
-                _mp = value;
+                _mpList = value;
                 OnChanged();
             }
         }
@@ -132,17 +137,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             // Event-Handler zur DependentProperty-Notification
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
 
-            mp.MediaEnded += mp_failed_ended;
-            mp.MediaFailed += mp_failed_ended;
-            //_onlbEditorItemAdd = new Base.CommandBase(lbEditorItemAdd, null);
-            _timerTeilAbspielen.Interval = TimeSpan.FromMilliseconds(20);
-            _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);                        
+            //_onlbEditorItemAdd = new Base.CommandBase(lbEditorItemAdd, null);                 
         }
         #endregion
 
         #region //---- INSTANZMETHODEN ----
         public AudioPlayerViewModel AudioVM;
-        public DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
+        public List<DispatcherTimer> _timerTeilAbspielenList = new  List<DispatcherTimer>();
 
         private bool checkTitel(Audio_Titel titel)
         {
@@ -159,6 +160,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 return false;
             else
                 return true;
+        }
+
+        public List<TitelPlay> TitelPlayList = new List<TitelPlay>();
+        public class TitelPlay
+        {
+            public MediaPlayer mp;
+            public DispatcherTimer dis;
         }
 
         private Base.CommandBase _onBtn = null;
@@ -190,17 +198,20 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     aPlayTitel = PlayableTitelList.ToList().ElementAt(zuspielen);
                 }
                 
-                if (mp.Source != null)
-                {
-                    _timerTeilAbspielen.Stop();
-                    mp.Stop();
-                }
+                MediaPlayer mp = new MediaPlayer();
+                mp.MediaEnded += mp_failed_ended;
+                mp.MediaFailed += mp_failed_ended;
+
+                TitelPlay titelPlay = new TitelPlay();
+                TitelPlayList.Add(titelPlay);
+                titelPlay.mp = mp;
+
+                mpList.Add(mp);
+
                 mp.Open(new Uri(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei));
                 mp.Volume = (double)(volume / 100);
                 if (aPlayTitel.TeilAbspielen)
                 {
-                    if (_timerTeilAbspielen.IsEnabled)
-                        _timerTeilAbspielen.Stop();
                     mp.Position = TimeSpan.FromMilliseconds(0);
                     // Bis zu 1000ms warten um die Musikdatei auszulesen und die Laufzeit zu ermitteln
                     if (SpinWait.SpinUntil(() => { return mp.NaturalDuration.HasTimeSpan; }, 1000))
@@ -210,22 +221,35 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 mp.Play();
                 if (aPlayTitel.TeilAbspielen)
                 {
-                    _timerTeilAbspielen.Tag = aPlayTitel.TeilEnde.Value;     
+                    DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
+                    _timerTeilAbspielen.Interval = TimeSpan.FromMilliseconds(20);
+                    _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);       
+
+                    _timerTeilAbspielenList.Add(_timerTeilAbspielen);
+                    _timerTeilAbspielen.Tag = aPlayTitel.TeilEnde.Value;
+
+                    titelPlay.dis = _timerTeilAbspielen;
                     _timerTeilAbspielen.Start();
                 }
             }
         }
         public void _timerTeilAbspielen_Tick(object sender, EventArgs e)
         {
-            double Ende = (double)_timerTeilAbspielen.Tag;
+            double Ende = (double)(sender as DispatcherTimer).Tag;
 
-            if (mp.Source == null ||
-                mp.Position.TotalMilliseconds >= Ende)
-               // mp.Position.TotalMilliseconds == 0)
+            TitelPlay titelPlay = TitelPlayList.FirstOrDefault(t => t.dis == (sender as DispatcherTimer));
+            if (titelPlay == null)
             {
-                if (mp.Source != null) 
-                    mp.Stop();
-                _timerTeilAbspielen.Stop();
+                (sender as DispatcherTimer).Stop();
+                return;
+            }
+
+            if (titelPlay.mp.Source == null ||
+                titelPlay.mp.Position.TotalMilliseconds >= Ende)
+            {
+                if (titelPlay.mp.Source != null)
+                    titelPlay.mp.Stop();
+                (sender as DispatcherTimer).Stop();
             }
         }
 
@@ -233,6 +257,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             try
             {
+                TitelPlay titelPlay = TitelPlayList.FirstOrDefault(t => t.mp == (sender as MediaPlayer));
+                if (titelPlay != null)
+                    TitelPlayList.Remove(titelPlay);
+
                 ((MediaPlayer)sender).Stop();
                 ((MediaPlayer)sender).Close();
             }
@@ -241,21 +269,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Stoppen und Schließen des Media-Player nach einem Fehler ist ein Fehler aufgetreten.", ex);
             }
         }
-
-        
-        //private Base.CommandBase _onBtnLöschenLbEditor = null;
-        //public Base.CommandBase OnBtnLöschenLbEditor
-        //{
-        //    get
-        //    {
-        //        if (_onBtnLöschenLbEditor == null)
-        //            _onBtnLöschenLbEditor = new Base.CommandBase(BtnLöschenLbEditor, null);
-        //        return _onBtnLöschenLbEditor;
-        //    }
-        //}
-        //void BtnLöschenLbEditor(object obj)
-        //{
-        //}
 
 
         #endregion

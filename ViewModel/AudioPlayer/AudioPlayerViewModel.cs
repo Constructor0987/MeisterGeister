@@ -119,6 +119,27 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
     }
 
+    public class MillisecondToMinuteSecondsTextConverter : IValueConverter
+    {
+        public static readonly IValueConverter Instance = new MillisecondToMinuteSecondsTextConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int i = (int)value >= 60000 ? (int)value - ((int)value / 60000) * 60000 : 0; 
+            string s = ((int)value < 1000 ? value + "ms" : (int)value < 60000 ?
+                    Math.Round((double)( System.Convert.ToDecimal((int)value) / 1000), 2).ToString() + "sek" :
+                    (int)value / 60000 + "min" +
+                        (i < 1000 ? i + "ms" : i < 60000 ?
+                        Math.Round((double)( System.Convert.ToDecimal(i) / 1000), 2).ToString() + "sek":""));
+            return s;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class DoubleToTimespanHHMMSSConverter : IValueConverter
     {
         public static readonly IValueConverter Instance = new DoubleToTimespanHHMMSSConverter();
@@ -134,7 +155,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             throw new NotImplementedException();
         }
     }
-    
+
     public class MultiBooleanAndConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -147,6 +168,25 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }
             }
             return true;
+        }
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException("BooleanAndConverter is a OneWay converter.");
+        }
+    }
+
+    public class MultiBooleanORConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            foreach (object value in values)
+            {
+                if ((value is bool) && (bool)value)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
@@ -181,7 +221,49 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
     }
 
+    public class MultiBooleanToVisibilityConverter2 : IMultiValueConverter
+    {
+        public object Convert(object[] values,
+                                Type targetType,
+                                object parameter,
+                                System.Globalization.CultureInfo culture)
+        {
+            bool visible = true;
+            foreach (object value in values)
+                if (value is bool)
+                    visible = visible && (bool)value;
 
+            if (visible)
+                return System.Windows.Visibility.Visible;
+            else
+                return System.Windows.Visibility.Collapsed;
+        }
+
+        public object[] ConvertBack(object value,
+                                    Type[] targetTypes,
+                                    object parameter,
+                                    System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    public class IsVisibleToBooleanConverter : IValueConverter
+    {
+        public static readonly IValueConverter Instance = new IsVisibleToBooleanConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((Visibility)value == Visibility.Visible) ? true: false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
     public class MultiBooleanODERToVisibilityConverter : IMultiValueConverter
     {
         public object Convert(object[] values,
@@ -932,16 +1014,22 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-        private double _hotkeyVolume = Einstellungen.GeneralHotkeyVolume;
-        public double HotkeyVolume
+        private int _hotkeyVolume = Einstellungen.GeneralHotkeyVolume;
+        public int HotkeyVolume
         {
             get { return _hotkeyVolume; }
             set
             {
+                
                 _hotkeyVolume = value;
-                hotkeyListe.FindAll(t => t.VM.mp != null).ForEach(ti => ti.VM.volume = HotkeyVolume);
-                hotkeyListUsed.FindAll(t => t.VM.mp != null).ForEach(ti => ti.VM.volume = HotkeyVolume);
-                Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", (int)Math.Round(_hotkeyVolume));
+                hotkeyListe.ForEach(t => t.VM.volume = HotkeyVolume);
+                hotkeyListUsed.ForEach(t => t.VM.volume = HotkeyVolume);
+                //hotkeyListe.FindAll(t => t.VM.TitelPlayList.ForEach(delegate() t2 => t2.mp){}
+                //    delegate(t.VM.TitelPlay titelPlay)
+                //{ titelPlay.mp != null).ForEach(ti => ti.VM.volume = HotkeyVolume);
+                //hotkeyListUsed.FindAll(t => t.VM.mp != null).ForEach(ti => ti.VM.volume = HotkeyVolume);
+
+                Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", _hotkeyVolume); //(int)Math.Round(
                 OnChanged();
             }
         }
@@ -1735,8 +1823,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 hotkeyListUsed.ForEach(delegate(btnHotkey hkey)            
                 {
                     Audio_Playlist aplylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == hkey.VM.aPlaylistGuid);                    
-                    hkey.VM.aPlaylist = aplylist;                            
-                    hkey.VM.mp.Stop(); 
+                    hkey.VM.aPlaylist = aplylist;
+
+                    hkey.VM.TitelPlayList.ForEach(t => t.mp.Stop());
+                    //hkey.VM.mp.Stop(); 
                 });
                 OnChanged();
             } 
@@ -1925,8 +2015,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void AllVolumeChange(object obj)
         {
             bool ziel = !IsVolumeChangeChecked;
-            FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM) 
-            { aZeileVM.aPlayTitelVolumeChange = ziel; });
+            FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
+            { aZeileVM.aPlayTitel.VolumeChange = ziel; aZeileVM.aPlayTitelVolumeChange = ziel; });
             OnChanged("IsVolumeChangeChecked");
         }
 
@@ -3050,8 +3140,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
         void AllHotkeysStop(object obj)
         {
-            hotkeyListUsed.FindAll(t => t.VM.mp != null).FindAll(t => t.VM.mp.HasAudio).ForEach(delegate(btnHotkey hkey)
-            { hkey.VM.mp.Stop(); });
+            //.FindAll(t => t.VM.mp != null).FindAll(t => t.VM.mp.HasAudio)
+            hotkeyListUsed.ForEach(delegate(btnHotkey hkey)
+            {
+                hkey.VM.TitelPlayList.FindAll(t => t.mp != null && t.mp.HasAudio).ForEach(delegate(btnHotkeyVM.TitelPlay titelPlay)
+                { titelPlay.mp.Stop(); });
+            });
+                //hkey.VM.mp.Stop(); });
         }
 
 
@@ -3810,34 +3905,34 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
 
 
-        public void ClickHotkeyButton(object sender, ExecutedRoutedEventArgs e)
-        {
-            btnHotkey hkey = (btnHotkey)((Button)sender).Tag;
-            if (hkey.VM.aPlaylistGuid != null)
-            {
-                Audio_Playlist aPlaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == hkey.VM.aPlaylistGuid);
-                int zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count - 1);
-                Audio_Titel aTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen).Audio_Titel;
-                hkey.VM.mp.MediaEnded += mp_failed_ended;
-                hkey.VM.mp.MediaFailed += mp_failed_ended;
-                hkey.VM.mp.Open(new Uri(aTitel.Pfad + "\\" + aTitel.Datei));
-                hkey.VM.mp.Volume = (double)(HotkeyVolume / 100);
-                hkey.VM.mp.Play();
-            }
-        }
+        //public void ClickHotkeyButton(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    btnHotkey hkey = (btnHotkey)((Button)sender).Tag;
+        //    if (hkey.VM.aPlaylistGuid != null)
+        //    {
+        //        Audio_Playlist aPlaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == hkey.VM.aPlaylistGuid);
+        //        int zuspielen = (new Random()).Next(0, aPlaylist.Audio_Playlist_Titel.Count - 1);
+        //        Audio_Titel aTitel = aPlaylist.Audio_Playlist_Titel.ToList().ElementAt(zuspielen).Audio_Titel;
+        //        hkey.VM.mp.MediaEnded += mp_failed_ended;
+        //        hkey.VM.mp.MediaFailed += mp_failed_ended;
+        //        hkey.VM.mp.Open(new Uri(aTitel.Pfad + "\\" + aTitel.Datei));
+        //        hkey.VM.mp.Volume = (double)(HotkeyVolume / 100);
+        //        hkey.VM.mp.Play();
+        //    }
+        //}
 
-        private void mp_failed_ended(object sender, EventArgs e)
-        {
-            try
-            {
-                ((MediaPlayer)sender).Stop();
-                ((MediaPlayer)sender).Close();
-            }
-            catch (Exception ex)
-            {
-                ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Stoppen und Schließen des Media-Player nach einem Fehler ist ein Fehler aufgetreten.", ex);
-            }
-        }
+        //private void mp_failed_ended(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        ((MediaPlayer)sender).Stop();
+        //        ((MediaPlayer)sender).Close();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Stoppen und Schließen des Media-Player nach einem Fehler ist ein Fehler aufgetreten.", ex);
+        //    }
+        //}
 
         private void RatingUpdate(int rating, Audio_Playlist_Titel aPlaylistTitel)
         {

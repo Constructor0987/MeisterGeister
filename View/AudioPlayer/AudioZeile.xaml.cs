@@ -44,6 +44,7 @@ namespace MeisterGeister.View.AudioPlayer
         public AudioZeile()
         {
             InitializeComponent();
+            //contextAudioZeile.Visibility = Visibility.Visible;
         }
 
         

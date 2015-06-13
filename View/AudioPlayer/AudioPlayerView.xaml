@@ -1320,8 +1320,7 @@
                             </Button>
 
                             <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10" 
-                                    Value="{Binding BGPlayerVolume}"                                     
-                                    MouseWheel="slBGVolume_MouseWheel" >
+                                    Value="{Binding BGPlayerVolume}" MouseWheel="slVolume_MouseWheel" >
                                 <Slider.ToolTip>
                                     <ToolTip>
                                         <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
@@ -1855,7 +1854,7 @@
 
                                 <Slider Height="22" Maximum="100" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10"  Margin="10,0,0,0" 
                                         Value="{Binding BGPlayerVolume}" 
-                                        MouseWheel="slBGVolume_MouseWheel" >
+                                        MouseWheel="slVolume_MouseWheel" >
                                         <Slider.ToolTip>
                                             <ToolTip>
                                                 <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
@@ -2134,7 +2133,16 @@
                             Command="{Binding OnAllHotkeysStop}" >
                         <Image Source="/Images/Icons/General/stop.png" Margin="5,6,4,4" />
                     </Button>
-                    <Slider Width="22" Maximum="100" Name="slHotkey" UseLayoutRounding="True" Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}" SmallChange="1" LargeChange="10" Orientation="Vertical" Margin="2" ToolTip="{Binding HotkeyVolume, StringFormat={}{0:C}%}" />
+                    <Slider Width="22" Maximum="100" Minimum="0" Name="slHotkey" UseLayoutRounding="True" SmallChange="1" LargeChange="10" Orientation="Vertical" Margin="2" 
+                            Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"                             
+                            MouseWheel="slVolume_MouseWheel" >
+                        <!-- ToolTip="{Binding HotkeyVolume, StringFormat={}{0:C}%}" -->
+                        <Slider.ToolTip>
+                            <ToolTip>
+                                <TextBlock Text="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
+                            </ToolTip>
+                        </Slider.ToolTip>
+                    </Slider>
                 </StackPanel>
 
                 <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">

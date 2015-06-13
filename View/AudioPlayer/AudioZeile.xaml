@@ -12,10 +12,14 @@
              Tag="{Binding aPlayTitel}" >
 
     <UserControl.Resources>
+        <vmAudioPlayer:MillisecondToMinuteSecondsTextConverter x:Key="MillisecondToMinuteSecondsTextConverter1" />
         <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter1" />
+        <vmAudioPlayer:IsVisibleToBooleanConverter x:Key="IsVisibleToBooleanConverter1" />
         <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
+        <vmAudioPlayer:MultiBooleanORConverter x:Key="MultiBooleanORConverter1" />
         <vmAudioPlayer:MultiBooleanODERToVisibilityConverter x:Key="MultiBooleanODERToVisibilityConverter1" />
         <vmAudioPlayer:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
+        <vmAudioPlayer:MultiBooleanToVisibilityConverter2 x:Key="MultiBooleanToVisibilityConverter2" />
         <vmAudioPlayer:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <vmAudioPlayer:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>
         <vmAudioPlayer:BooleanInverseToVisibilityHiddenConverter x:Key="BooleanInverseToVisibilityHiddenConverter1"/>
@@ -37,7 +41,7 @@
             </Style>
         </ListBoxItem.Style>
         <ListBoxItem.ContextMenu>
-            <ContextMenu>
+            <ContextMenu Name="contextAudioZeile">
                 <MenuItem Header="Datei duplizieren"
                           Command="{Binding OnTitelDuplizieren}"/>
                 <MenuItem Header="Datei kopieren nach..." >
@@ -136,8 +140,28 @@
                 </local:SliderRange>
             </Grid>
 
-            <StackPanel Grid.Column="3" Grid.RowSpan="2" 
-                Visibility="{Binding ElementName=lbiEditorRow, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+            <!-- Länge und 5-Sterne 2 Zeilig -->
+            <StackPanel Grid.Column="3" Grid.RowSpan="2" >
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <Binding ElementName="contextAudioZeile" Path="IsOpen" />
+                                </DataTrigger.Binding>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <Binding ElementName="lbiEditorRow" Path="IsMouseOver" />
+                                </DataTrigger.Binding>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
                 <TextBlock Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,5" 
                         Text="{Binding aPlayTitel.Audio_Titel.Länge, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}" />
 
@@ -153,15 +177,36 @@
                         <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=4}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="21,-3,-3,-3" />
                     </Grid>
                 </Button>
-            </StackPanel>                        
+            </StackPanel>   
+            
+            <!-- Geräusche-Spalten 2 Zeilig -->
             <StackPanel Grid.Column="4" Grid.RowSpan="2" VerticalAlignment="Bottom" >
-                <StackPanel.Visibility>
-                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                        <Binding ElementName="lbiEditorRow" Path="IsMouseOver" />
-                        <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
-                    </MultiBinding>
-                </StackPanel.Visibility>
-                
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">                                        
+                                        <Binding ElementName="lbiEditorRow" Path="IsMouseOver" />
+                                        <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
+                                        <Binding ElementName="contextAudioZeile" Path="IsOpen" />
+                                        <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -240,8 +285,24 @@
             </StackPanel>
 
             <!-- Nicht aktive Zeile -->
-            <StackPanel Grid.Column="3" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center"
-                Visibility="{Binding ElementName=lbiEditorRow, Path=IsMouseOver, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" >
+            <!-- Länge und 5-Sterne 1 Zeilig -->
+            <StackPanel Grid.Column="3" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
+                                        <Binding ElementName="lbiEditorRow" Path="IsMouseOver" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                        <Binding ElementName="contextAudioZeile" Path="IsOpen" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
                 <TextBlock Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0"
                         Text="{Binding aPlayTitel.Audio_Titel.Länge, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}" />
                 <Button Height="23" Margin="2,1,2,2" >
@@ -262,13 +323,27 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
+
+            <!-- Geräusche-Spalten 1 Zeilig -->
             <StackPanel Grid.Column="4" Grid.RowSpan="2" VerticalAlignment="Center">
-                <StackPanel.Visibility>
-                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >                        
-                        <Binding ElementName="lbiEditorRow" Path="IsMouseOver" Converter="{StaticResource InvertedBoolenConverter1}" />
-                        <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
-                    </MultiBinding>
-                </StackPanel.Visibility>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
+                                        <Binding ElementName="contextAudioZeile" Path="IsOpen" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                        <Binding ElementName="lbiEditorRow" Path="IsMouseOver" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                        <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26" />
@@ -279,7 +354,7 @@
                         <ColumnDefinition Width="65" />
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="115" />
+                        <ColumnDefinition Width="*" MinWidth="115" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
@@ -318,10 +393,10 @@
                     </CheckBox>
                     
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Column="3" Margin="5,-1,-1,0" />
-                    
-                    <Label Grid.Column="4" Content="{Binding ZeigeAPlayTitelPause}" />
 
-                    <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Margin="-3,3,106,3" HorizontalAlignment="Left" Stretch="Fill"  />
+                    <Label Grid.Column="4" Content="{Binding APlayTitelPause, Converter={StaticResource MillisecondToMinuteSecondsTextConverter1}}" />
+
+                    <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Width="12" Margin="-3,3,0,3" HorizontalAlignment="Left" Stretch="Fill"  />
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="-7,9,15,3" HorizontalAlignment="Left" />
                     
                     <CheckBox Grid.Column="5" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"
@@ -334,9 +409,9 @@
                                         <Setter Property="Content" >
                                             <Setter.Value>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding aPlayTitelPauseMin}" />
+                                                    <TextBlock Text="{Binding aPlayTitelPauseMin, Converter={StaticResource MillisecondToMinuteSecondsTextConverter1}}" />
                                                     <TextBlock Text="-" />
-                                                    <TextBlock Text="{Binding aPlayTitelPauseMax}" />
+                                                    <TextBlock Text="{Binding aPlayTitelPauseMax, Converter={StaticResource MillisecondToMinuteSecondsTextConverter1}}" />
                                                 </StackPanel>
                                             </Setter.Value>
                                         </Setter>

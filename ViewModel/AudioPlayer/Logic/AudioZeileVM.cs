@@ -113,7 +113,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                
         public bool aPlayTitelVolumeChange
         {
-            get { return _aPlayTitel.VolumeChange; }
+            get { return aPlayTitel.VolumeChange; }
             set { OnChanged(); }            
         }
 
@@ -298,16 +298,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set { OnChanged(); }
         }
         
-        public string ZeigeAPlayTitelPause
-        {
-            get
-            {
-                return (aPlayTitel.Pause < 1000 ? aPlayTitel.Pause + " ms" : aPlayTitel.Pause < 60000 ?
-                    Math.Round((double)aPlayTitel.Pause / 1000, 2).ToString() + " sek." :
-                    aPlayTitel.Pause / 60000 + " min.");
-            }
-        }
-
         public string ToolTipPlaySpeed
         {
             get

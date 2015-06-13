@@ -544,13 +544,18 @@ namespace MeisterGeister.View.AudioPlayer {
 
         public void slVolume_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            ((Slider)sender).Value += (e.Delta > 1) ? 3 : -3;
+            if (e.Delta > 1) 
+            { 
+                ((Slider)sender).Value += ((((Slider)sender).Value < 98)? 3 : ((100-((Slider)sender).Value)));
+            }
+            else
+            { ((Slider)sender).Value += ((((Slider)sender).Value > 2)? -3: 0);}
         }
 
-        public void slBGVolume_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            slBGVolume.Value += (e.Delta > 1) ? 3 : -3;
-        }        
+        //public void slBGVolume_MouseWheel(object sender, MouseWheelEventArgs e)
+        //{
+        //    slBGVolume.Value += (e.Delta > 1) ? 3 : -3;
+        //}        
         
         
         private void cmbxThemeTheme_DropDownClosed(object sender, EventArgs e)
