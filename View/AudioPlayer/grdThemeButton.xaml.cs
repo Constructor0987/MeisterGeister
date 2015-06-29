@@ -87,7 +87,7 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void grd_MouseLeave(object sender, MouseEventArgs e)
         {
-            VM.ForceVolumeVis = VM.NormalSize;
+            VM.ForceVolumeVis = VM.GroßeAnsicht;
         }
     }
 }

@@ -46,15 +46,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private bool _normalSize = true;
-        public bool NormalSize
+        private bool _großeAnsicht = true;
+        public bool GroßeAnsicht
         {
-            get { return _normalSize; }
+            get { return _großeAnsicht; }
             set
             {
-                _normalSize = value;
+                _großeAnsicht = value;
                 OnChanged();
-                ForceVolumeVis = NormalSize;
+                ForceVolumeVis = GroßeAnsicht;
             }
         }
 

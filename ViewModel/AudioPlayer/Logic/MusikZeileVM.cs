@@ -109,19 +109,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 _asGeräuscheMusikZeile = value;
                 OnChanged();
-                ShowLänge = !asGeräuscheMusikZeile || asGeräuscheMusikZeile && NormalSize;
+                ShowLänge = !asGeräuscheMusikZeile || asGeräuscheMusikZeile && GroßeAnsicht;
             }
         }
-        
-        private bool _normalSize = true;
-        public bool NormalSize
+
+        private bool _großeAnsicht = true;
+        public bool GroßeAnsicht
         {
-            get { return _normalSize; }
+            get { return _großeAnsicht; }
             set
             {
-                _normalSize = value;
+                _großeAnsicht = value;
                 OnChanged();
-                ShowLänge = !asGeräuscheMusikZeile || asGeräuscheMusikZeile && NormalSize;
+                ShowLänge = !asGeräuscheMusikZeile || asGeräuscheMusikZeile && GroßeAnsicht;
             }
         }
 
@@ -732,8 +732,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                         else
                             result++;
                     }
-                    else
-                    { }
                     int percentComplete = (int)((float)val / (float)model.Iterations * 100);
                     string updateMessage =
                         string.Format("Titel {0} von {1} überprüft", val, model.Iterations);

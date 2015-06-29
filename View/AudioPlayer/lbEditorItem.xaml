@@ -15,10 +15,10 @@
 
     <StackPanel Name="spnllbiIcon" Orientation="Horizontal"
                 Tag="{Binding Path=APlaylist}"                        
-                PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"
-                PreviewMouseMove="lbiEditorPlaylist_MouseMove"
+                PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"                
                 Drop="lbitemEditor_Drop"   
                 Width="{Binding Path=ActualWidth, ElementName=lbEditor}">
+        <!--PreviewMouseMove="lbiEditorPlaylist_MouseMove"-->
 
         <Grid Width="{Binding ElementName=spnllbiIcon, Path=Width}">
             <Grid>
@@ -44,7 +44,8 @@
                 </Image>
                 <Label Content="{Binding Path=APlaylist.Name}" Grid.Column="1" FontSize="14" Padding="5,2,5,5" />
             </Grid>
-            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,25,0">
+            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,25,0"
+                        MouseEnter="spnlSubObject_MouseEnter" MouseLeave="spnlSubObject_MouseLeave" >
                 <Button Width="22" Cursor="Hand" ToolTip="Exportieren der Playlist" 
                                 Command="{Binding OnBtnExportLbEditor}" >
                     <Button.Visibility>
@@ -66,14 +67,16 @@
                     <Image Source="/Images/Icons/General/entf_01.png" />
                 </Button>
             </StackPanel>
-            <StackPanel ToolTip="Reihenfolge ändern" HorizontalAlignment="Right" Width="15" Margin="0,0,70,0" >
+            <StackPanel ToolTip="Reihenfolge ändern" HorizontalAlignment="Right" Width="15" Margin="0,0,70,0" 
+                        MouseEnter="spnlSubObject_MouseEnter" MouseLeave="spnlSubObject_MouseLeave" > 
                 <StackPanel.Visibility>
                     <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                        <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
                         <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
                         <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
                         <Binding ElementName="tbtnPlaylistAZ" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
-                        <Binding ElementName="rbEditorMusik" Path="IsChecked" />
-                        <Binding ElementName="rbEditorKlang" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
+                        <!--<Binding ElementName="rbEditorMusik" Path="IsChecked" />
+                        <Binding ElementName="rbEditorKlang" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />-->
                     </MultiBinding>
                 </StackPanel.Visibility>
                 <Button Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"

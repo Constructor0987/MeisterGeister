@@ -14,9 +14,10 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using MeisterGeister.Model.Extensions;
 //eigene
-using VM = MeisterGeister.ViewModel.AudioPlayer.Logic;
+using VM = MeisterGeister.ViewModel.AudioPlayer;
 using MeisterGeister.Model;
 using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.AudioPlayer.Logic;
 //using MeisterGeister.Model;
 
 namespace MeisterGeister.View.AudioPlayer
@@ -30,13 +31,13 @@ namespace MeisterGeister.View.AudioPlayer
         public bool HintergrundMusik = false;
 
 
-        public VM.AudioZeileVM VM
+        public VM.Logic.AudioZeileVM VM
         {
             get
             {
-                if (DataContext == null || !(DataContext is VM.AudioZeileVM))
+                if (DataContext == null || !(DataContext is VM.Logic.AudioZeileVM))
                     return null;
-                return DataContext as VM.AudioZeileVM;
+                return DataContext as VM.Logic.AudioZeileVM;
             }
             set { DataContext = value; }
         }
@@ -112,6 +113,11 @@ namespace MeisterGeister.View.AudioPlayer
                 VM.aPlayTitel.Volume = VM.aPlayTitel.Volume - 3 < 0 ? 0 : VM.aPlayTitel.Volume - 3;
             else
                 VM.aPlayTitel.Volume = VM.aPlayTitel.Volume + 3 > 100 ? 100 : VM.aPlayTitel.Volume + 3;
-        }        
+        }
+
+        private void AudioZeile_DragOver(object sender, DragEventArgs e)
+        {
+            VM.PlayerVM.audioZeileMouseOverDropped = VM.PlayerVM.FilteredLbEditorAudioZeilenListe.IndexOf(this.VM);
+        }
     }
 }

@@ -12,11 +12,6 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using System.Windows.Media;
 //Eigene usings
-using MeisterGeister.ViewModel.Basar.Logic;
-using Base = MeisterGeister.ViewModel.Base;
-using Model = MeisterGeister.Model;
-using Service = MeisterGeister.Model.Service;
-using MeisterGeister.Logic.Umrechner;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.View.AudioPlayer;
@@ -29,13 +24,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
     public class AudioZeileVM  : Base.ViewModelBase
     {
+        public event EventHandler AudioZeileAddEvent;
 
         #region //---- FELDER ----
-        public AudioPlayerViewModel PlayerVM;
         private string _suchtext = string.Empty;
 
-        bool _checked = true;
         Audio_Playlist_Titel _aPlayTitel = new Audio_Playlist_Titel();
+
+        public AudioPlayerViewModel PlayerVM;                
         public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = null;
 
         #endregion
@@ -64,39 +60,58 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private void audiozeileLbi_MouseMove(object sender, MouseEventArgs e)
-        {
-            AudioZeile aZeile = ((sender as ListBoxItem).Parent as Grid).Parent as AudioZeile;
-            PlayerVM.audioZeileMouseOverDropped =  PlayerVM.LbEditorAudioZeilenListe.IndexOf(this);//aZeile);
-            if (PlayerVM.pointerZeileDragDrop == null)
-                return;
+        //private void audiozeileLbi_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    AudioZeile aZeile = ((sender as ListBoxItem).Parent as Grid).Parent as AudioZeile;
+        //    PlayerVM.audioZeileMouseOverDropped =  PlayerVM.LbEditorAudioZeilenListe.IndexOf(this);//aZeile);
+        //    if (PlayerVM.pointerZeileDragDrop == null)
+        //        return;
 
-            Point mousePos = e.GetPosition(null);
-            Vector diff = ((Point)PlayerVM.pointerZeileDragDrop) - mousePos;
+        //    Point mousePos = e.GetPosition(null);
+        //    Vector diff = ((Point)PlayerVM.pointerZeileDragDrop) - mousePos;
 
-            Point mp = Mouse.GetPosition(aZeile);
-            PlayerVM.audioZeileMouseOverDropped = PlayerVM.LbEditorAudioZeilenListe.IndexOf(this);//aZeile);
-            //Abfrage bei gedrückter Maustaste, wenn im Vorderen Bereich und nicht auf der ProgressBar (um Teilabspielen zu editieren)
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                (mp.X < 35 + 10 + aZeile.pbarTitel.ActualWidth) && mp.X > 0 &&
-                ((mp.Y > 0 && mp.Y < aZeile.lbiEditorRow.ActualHeight / 2 - aZeile.pbarTitel.ActualHeight / 2) ||
-                 (mp.Y > aZeile.lbiEditorRow.ActualHeight / 2 + aZeile.pbarTitel.ActualHeight / 2)))
-            {
-                // Initialisiere drag & drop Operation
-                DataObject dragData = new DataObject("meineAudioZeile", aZeile);
-                DragDrop.DoDragDrop(aZeile, dragData, DragDropEffects.Copy);
-                PlayerVM.pointerZeileDragDrop = null;
-            }
-        }
+        //    Point mp = Mouse.GetPosition(aZeile);
+        //    PlayerVM.audioZeileMouseOverDropped = PlayerVM.LbEditorAudioZeilenListe.IndexOf(this);//aZeile);
+        //    //Abfrage bei gedrückter Maustaste, wenn im Vorderen Bereich und nicht auf der ProgressBar (um Teilabspielen zu editieren)
+        //    if (e.LeftButton == MouseButtonState.Pressed &&
+        //        (mp.X < 35 + 10 + aZeile.pbarTitel.ActualWidth) &&
+
+        //            (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+        //            Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+        //        //&& mp.X > 0 &&
+        //        //((mp.Y > 0 && mp.Y < aZeile.lbiEditorRow.ActualHeight / 2 - aZeile.pbarTitel.ActualHeight / 2) ||
+        //        // (mp.Y > aZeile.lbiEditorRow.ActualHeight / 2 + aZeile.pbarTitel.ActualHeight / 2)))
+        //    {
+        //        // Initialisiere drag & drop Operation
+        //        DataObject dragData = new DataObject("meineAudioZeile", aZeile);
+        //        DragDrop.DoDragDrop(aZeile, dragData, DragDropEffects.Copy);
+        //        PlayerVM.pointerZeileDragDrop = null;
+        //    }
+        //}
 
 
 
         #region //---- EIGENSCHAFTEN ----
+        
+        [DependentProperty("PlayerVM"), DependentProperty("EditorGroßeAnsicht")]
+        public bool EditorGroßeAnsicht
+        {
+            get { return PlayerVM.EditorGroßeAnsicht;}
+            set { OnChanged(); }
+        }
+
+        [DependentProperty("PlayerVM"), DependentProperty("TitellistAZ")]
+        public bool TitelListeAZ
+        {
+            get { return PlayerVM.TitellistAZ; }
+        }
 
         [DependentProperty("PlayerVM"), DependentProperty("Reihenfolge"), DependentProperty("AktPlaylistTitel")]
         public bool IstErsteZeile
         {
-            get { return aPlayTitel.Reihenfolge == 0; }
+            get { return PlayerVM.FilteredLbEditorAudioZeilenListe.Count > 0?
+                PlayerVM.FilteredLbEditorAudioZeilenListe.OrderBy(t => t.aPlayTitel.Reihenfolge).First().aPlayTitel == aPlayTitel: 
+                true; }
             set { OnChanged(); }
         }
 
@@ -105,8 +120,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             get
             {
-                return PlayerVM == null || PlayerVM.AktKlangPlaylist == null ?
-                    false : (PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count == aPlayTitel.Reihenfolge + 1);
+                return (aPlayTitel == null || PlayerVM.FilteredLbEditorAudioZeilenListe.Count < 1) ?
+                    true :
+                    PlayerVM.FilteredLbEditorAudioZeilenListe.OrderBy(t => t.aPlayTitel.Reihenfolge).Last().aPlayTitel == aPlayTitel;
             }
             set { OnChanged(); }
         }
@@ -133,6 +149,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             PlayerVM.IsVolumeChangeChecked = !(PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.VolumeChange) != PlayerVM.AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.Aktiv));
             OnChanged("aPlayTitelVolumeChange");
         }
+        
 
         public bool aPlayTitelPauseChange
         {
@@ -252,8 +269,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set
             {
                 _aZeile = value;
-                if (value.aPlayTitel.Länge != 0 && value.TitelMaximum != value.aPlayTitel.Länge)
-                    value.TitelMaximum = value.aPlayTitel.Länge;
+                if (value.aPlayTitel.Audio_Titel != null &&
+                    value.aPlayTitel.Audio_Titel.Länge != 0 &&
+                    value.aPlayTitel.Audio_Titel.Länge != null &&
+                    value.TitelMaximum != value.aPlayTitel.Audio_Titel.Länge)
+                    value.TitelMaximum = value.aPlayTitel.Audio_Titel.Länge.Value;
                 OnChanged();
             }
         }
@@ -313,7 +333,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                             " Abspielgeschwindigkeit");
             }
         }
-        
+
+        bool _checked = true;
         public bool Checked
         {
             get { return _checked; }
@@ -331,13 +352,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private double _titelMaximum = 100000;
+        private double _titelMaximum = 10000000;
         public double TitelMaximum
         {
             get { return _titelMaximum; }
             set 
             {
-                _titelMaximum = (value == 0)? 100000: value;
+                _titelMaximum = (value == 0)? 10000000: value;
                 OnChanged();
             }
         }
@@ -359,7 +380,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get
             {
                 return (_aPlayTitel.Audio_Titel != null && (_aPlayTitel.Audio_Titel.Länge != null && _aPlayTitel.Audio_Titel.Länge.Value != 0) ? 
-                _aPlayTitel.Audio_Titel.Länge.Value : 100000); }
+                _aPlayTitel.Audio_Titel.Länge.Value : 10000000); }
             set { OnChanged(); }
         }
 
@@ -384,7 +405,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         [DependentProperty("aPlayTitel")]
         public double aPlayTitelTeilEnde
         {
-            get { return (_aPlayTitel.TeilEnde != null ? _aPlayTitel.TeilEnde.Value : 100000); }
+            get { return (_aPlayTitel.TeilEnde != null ? _aPlayTitel.TeilEnde.Value : 10000000); }
             set { OnChanged(); }
         }
 
@@ -641,7 +662,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 UpdateReihenfolge();
                 if (this.aPlayTitel.Reihenfolge > 0)
-                    MoveItem(this.aPlayTitel, -1);
+                    PlayerVM.MoveAudioZeileItem(this.aPlayTitel, -1);
                 PlayerVM.FilteredLbEditorAudioZeilenListe = PlayerVM.FilteredLbEditorAudioZeilenListe.OrderBy(t => t.aPlayTitel.Reihenfolge).ToList();
             }
             catch (Exception ex)
@@ -665,8 +686,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             try
             {
                 UpdateReihenfolge();
-                if (this.aPlayTitel.Reihenfolge < AktKlangPlaylist.Audio_Playlist_Titel.Count - 1)
-                    MoveItem(this.aPlayTitel, +1);
+
+                if (this.PlayerVM.FilteredLbEditorAudioZeilenListe.IndexOf(this) < PlayerVM.FilteredLbEditorAudioZeilenListe.Count- 1)
+                    PlayerVM.MoveAudioZeileItem(this.aPlayTitel, +1);
                 PlayerVM.FilteredLbEditorAudioZeilenListe = PlayerVM.FilteredLbEditorAudioZeilenListe.OrderBy(t => t.aPlayTitel.Reihenfolge).ToList();
             }
             catch (Exception ex)
@@ -681,21 +703,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         public AudioZeileVM()
         {
-            //Event-Handler zur DependentProperty-Notification
-       //     PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-
-         //   _onAudioZeileAdd = new Base.CommandBase(AudioZeileAdd, null); 
-           // sliderVM.aPlaylistTitel = aPlayTitel;
             AZeile = this;
         }
 
         
-        //private Base.CommandBase _onAudioZeileAdd;
-        //public Base.CommandBase OnAudioZeileAdd
-        //{
-        //    get { return _onAudioZeileAdd; }
-        //}
-
         #endregion
 
         #region //---- INSTANZMETHODEN ----
@@ -707,7 +718,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         /// <returns></returns>
         public bool Contains(string suchWort)
         {
-            return _aPlayTitel.Audio_Titel.Name.Contains(suchWort);
+            return _aPlayTitel.Audio_Titel.Name.ToLower().Contains(suchWort);
         }
 
         /// <summary>
@@ -739,23 +750,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 AudioZeileAddEvent(this, new EventArgs());
         }
 
-        public event EventHandler AudioZeileAddEvent;
-
-
-        private void MoveItem(Audio_Playlist_Titel aPlaylistTitel, int dif)
-        {
-            Audio_Playlist_Titel aPlaylistTitel_alt = AktKlangPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Reihenfolge == aPlaylistTitel.Reihenfolge + dif);
-            aPlaylistTitel_alt.Reihenfolge = aPlaylistTitel_alt.Reihenfolge - dif;
-
-            Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlaylistTitel_alt);
-
-            aPlaylistTitel.Reihenfolge = aPlaylistTitel.Reihenfolge + dif;
-            Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlaylistTitel);
-
-            OnChanged("AktKlangPlaylist");
-        }
-
-
+        
+        
         #endregion
         
         public object DataContext { get; set; }

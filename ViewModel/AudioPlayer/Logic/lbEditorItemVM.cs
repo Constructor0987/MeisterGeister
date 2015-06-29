@@ -82,7 +82,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged();
             }
         }
-        
+
+        public bool PlaylistAZ
+        {
+            get { return PlayerVM.PlaylistAZ; }            
+        }
+
+        private bool _mouseOnSubObject = false;
+        public bool MouseOnSubObject
+        {
+            get { return _mouseOnSubObject; }
+            set { _mouseOnSubObject = value; }
+        }
+
         public bool Changed
         {
             get { return _changed; }
@@ -317,8 +329,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public bool IstErsteZeile
         {
             get
-            { return PlayerVM.MusikListItemListe.Count > 0?
-                PlayerVM.MusikListItemListe.OrderBy(t => t.VM.aPlaylist.Reihenfolge).First().VM.aPlaylist == APlaylist: 
+            { return PlayerVM.FilteredEditorListBoxItemListe.Count > 0?  
+                PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).First().APlaylist == APlaylist : 
                 true; }
             set { OnChanged(); }
         }
@@ -328,10 +340,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             get
             {
-                return (APlaylist == null || PlayerVM.MusikListItemListe.Count < 1) ?
+                return (APlaylist == null || PlayerVM.FilteredEditorListBoxItemListe.Count < 1) ?
                     true :
-                    PlayerVM.MusikListItemListe.OrderBy(t => t.VM.aPlaylist.Reihenfolge).Last().VM.aPlaylist == APlaylist;
-                    //(PlayerVM.FilteredEditorListBoxItemListe.Count == APlaylist.Reihenfolge + 1);
+                    PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).Last().APlaylist == APlaylist;
             }
             set { OnChanged(); }
         }
@@ -355,7 +366,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     PlayerVM.sortPlaylist(PlayerVM.EditorListBoxItemListe, -1);
 
                 if (APlaylist.Reihenfolge > 0)
-                    MoveItem(APlaylist, -1);
+                    PlayerVM.MoveLbEditorItem(APlaylist, -1);
                 PlayerVM.FilteredEditorListBoxItemListe = PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).ToList();
             }
             catch (Exception ex)
@@ -382,44 +393,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     PlayerVM.EditorListBoxItemListe.Count(t => t.APlaylist.Reihenfolge == 0) > 1)
                     PlayerVM.sortPlaylist(PlayerVM.EditorListBoxItemListe, -1);
 
-                if (APlaylist.Reihenfolge < PlayerVM.FilteredEditorListBoxItemListe.Count - 1)
-                    MoveItem(APlaylist, +1);
+                if (PlayerVM.FilteredEditorListBoxItemListe.IndexOf(this) < PlayerVM.FilteredEditorListBoxItemListe.Count - 1) 
+                    PlayerVM.MoveLbEditorItem(APlaylist, +1);
                 PlayerVM.FilteredEditorListBoxItemListe = PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).ToList();
             }
             catch (Exception ex)
             {
                 ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Anklicken des Buttons 'btnMoveDown' ist ein Fehler aufgetreten", ex);
             }
-        }
-
-        private void MoveItem(Audio_Playlist aPlaylist, int dif)
-        {
-            lbEditorItemVM lbiVM = null;
-            
-            //while (lbiVM == null)
-            //{
-                List<MusikZeile> mZeileList = PlayerVM.MusikListItemListe.OrderBy(t => t.VM.aPlaylist.Reihenfolge).ToList();
-                int i = mZeileList.FindIndex(t => t.VM.aPlaylist == APlaylist);
-                if (dif < 0 && i == 0 ||
-                    dif > 0 && i == mZeileList.Count - 1)
-                    return;
-
-                lbiVM = PlayerVM.EditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == mZeileList.ElementAt(i + dif).VM.aPlaylist);
-
-                if (lbiVM != null)
-                    dif = lbiVM.APlaylist.Reihenfolge - aPlaylist.Reihenfolge;                
-            //}
-
-            if (lbiVM != null)
-            {
-                Audio_Playlist aPlaylist_alt = lbiVM.APlaylist;
-                aPlaylist_alt.Reihenfolge = aPlaylist_alt.Reihenfolge - dif;
-                Global.ContextAudio.Update<Audio_Playlist>(aPlaylist_alt);
-
-                aPlaylist.Reihenfolge = aPlaylist.Reihenfolge + dif;
-                Global.ContextAudio.Update<Audio_Playlist>(aPlaylist);
-            }
-            OnChanged("EditorListBoxItemListe");
         }
 
         private Base.CommandBase _onBtnLöschenLbEditor = null;
@@ -460,7 +441,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     Global.SetIsBusy(false);
 
                     PlayerVM.EditorListBoxItemListe = PlayerVM.lbiPlaylistListNeuErstellen();// lbPlaylist;
-                    PlayerVM.FilterEditorPlaylistTitelListe();
+                    PlayerVM.FilterEditorPlaylistListe();
                     PlayerVM.MusikListItemListe = PlayerVM.mZeileEditorMusikNeuErstellen();
                     //PlayerVM.FilteredEditorListBoxItemListe = lbFilteredPlaylist;
                     if (PlayerVM.AktKlangPlaylist == null && PlayerVM.FilteredEditorListBoxItemListe.Count > 0)

@@ -14,6 +14,7 @@
 
     <UserControl.Resources>
         <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
+        <vmAudioPlayer:MultiBooleanORConverter x:Key="MultiBooleanORConverter1" />
         <vmAudioPlayer:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <vmAudioPlayer:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <vmAudioPlayer:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter1"/>
@@ -408,7 +409,24 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="56" />
+            <RowDefinition >
+                <RowDefinition.Style>
+                    <Style TargetType="RowDefinition">
+                        <Setter Property="Height" Value="0"/>
+                        <Style.Triggers>
+                            <DataTrigger Value="True">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanORConverter1}" >
+                                        <Binding Path="hotkeyListUsed.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter='1' />
+                                        <Binding Path="StdPadAufC" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Height" Value="56" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition> 
             <RowDefinition Height="207*" />
             <RowDefinition Height="334*" />
         </Grid.RowDefinitions>
@@ -417,8 +435,62 @@
             <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
 
-        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer"  Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+        <GroupBox Header="Hotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3" 
+            Visibility="{Binding ShowHotkeyPanel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">       
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="55" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="35" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Button Height="30" Style="{StaticResource GlasButton}" Background="Black" Width="30" ToolTip="Stoppen aller laufenden Hotkeys" 
+                            Command="{Binding OnAllHotkeysStop}" >
+                        <Image Source="/Images/Icons/General/stop.png" Margin="5,6,4,4" />
+                    </Button>
+                    <Slider Width="22" Maximum="100" Minimum="0" Name="slHotkey" UseLayoutRounding="True" SmallChange="1" LargeChange="10" Orientation="Vertical" Margin="2" 
+                            Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"                             
+                            MouseWheel="slVolume_MouseWheel" >
+                        <Slider.ToolTip>
+                            <ToolTip>
+                                <TextBlock Text="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
+                            </ToolTip>
+                        </Slider.ToolTip>
+                    </Slider>
+                </StackPanel>
 
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
+                    <StackPanel Margin="0,5,0,0" >
+                        <ItemsControl ItemsSource="{Binding hotkeyListUsed}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="35" Margin="5,0,0,0" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+                <Button Name="btnHotkeysLöschen" Grid.Column="2" VerticalAlignment="Center" Height="25" Width="25" ToolTip="Alle Hotkeys löschen" Margin="5,0" 
+                        Command="{Binding OnAlleHotkeysEntfenrnen}" >
+                    <Image Source="/Images/Icons/General/entf_all.png" Style="{StaticResource ImageEnabled}" />
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        <Image Grid.Column="1" Height=" 30" Margin="10" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png"
+               Visibility="{Binding StdPadAufC, Converter={StaticResource BooleanToVisibilityConverter1}}">
+            <Image.ToolTip>
+                <TextBlock>
+                    Es ist ein Standard-Verzeichnis auf den Hauptpfad C gefunden worden ('C:\').<LineBreak />
+                    <LineBreak /> 
+                    Dies verlängert evtl. die Ladezeiten!<LineBreak />
+                    <LineBreak />
+                    Bitte wähle ein spezifischeres Verzeichnis.<LineBreak />
+                    (z.B. 'C:\DSA-Musik')
+                </TextBlock>
+            </Image.ToolTip>
+        </Image>
+        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer"  Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
             <TabItem Header="Editor" Name="tiEditor" >        
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
@@ -434,7 +506,7 @@
 
                     <GroupBox IsEnabled="True" Margin="0,1,0,0">
                         <StackPanel Margin="10,2,0,-2">
-                            <RadioButton Content="Einzelne Playlist editieren" Height="16" GroupName="KlangEdit" Name="rbEditorEditPList"
+                            <RadioButton Content="Einzelne Playliste editieren" Height="16" GroupName="KlangEdit" Name="rbEditorEditPList"
                                 IsChecked="{Binding rbEditorEditPlaylist}" />
                             <RadioButton Content="Komplettes Theme" Height="18" Name="rbEditorEditTheme" GroupName="KlangEdit" />
                         </StackPanel>
@@ -539,7 +611,7 @@
 
                             <Expander Name="exKlangPList" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" > 
                                 <Expander.Header>
-                                    <TextBlock Text="Playlists" Style="{DynamicResource TextTitel}" />
+                                    <TextBlock Text="Playlisten" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
                                 <Border Style="{DynamicResource ControlContentBorder}" >
                                     <Grid>
@@ -555,16 +627,39 @@
                                         </Grid.ColumnDefinitions>
 
                                         <StackPanel Margin="5,0,0,0">
-                                            <CheckBox Name="rbEditorKlang" IsChecked="{Binding LbEditorMitGeräusche}" Content="Geräusche" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Geräusch-Playlists anzeigen" />
-                                            <CheckBox Name="rbEditorMusik" IsChecked="{Binding LbEditorMitMusik}" Content="Musik" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Musik-Playlists anzeigen" />
+                                            <CheckBox Name="rbEditorKlang" IsChecked="{Binding LbEditorMitGeräusche}" Content="Geräusche" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Geräusch-Playlisten anzeigen" />
+                                            <CheckBox Name="rbEditorMusik" IsChecked="{Binding LbEditorMitMusik}" Content="Musik" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Musik-Playlisten anzeigen" />
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <ToggleButton Name="tbtnPlaylistAZ" ToolTip="Musik-Playlistensortierung (nur Musik-Playlisten auswählen zum Ändern)" Height="28" Width="22" Grid.Column="1" Focusable="False" 
-                                                IsChecked="{Binding PlaylistAZ}" >                                               
-                                                <Image Source="/Images/Icons/General/sort.png" Margin="-1" Style="{StaticResource ImageEnabled}" />
+                                            <ToggleButton Name="tbtnPlaylistAZ" Height="28" Width="22" Grid.Column="1" Focusable="False" 
+                                                IsChecked="{Binding PlaylistAZ}" >
+                                                <Image Margin="-1" >
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding PlaylistAZ}" Value="True">
+                                                                    <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding PlaylistAZ}" Value="False">                                                                    
+                                                                    <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding PlaylistAZ}" Value="True">
+                                                                <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>  
                                             </ToggleButton>
-                                            <Button Name="btnNeuePlaylist" ToolTip="Neue Playlist"  Height="28" Width="22" Grid.Column="1" 
+                                            <Button Name="btnNeuePlaylist" ToolTip="Neue Playliste"  Height="28" Width="22" Grid.Column="1" 
                                                 Command="{Binding OnNeuePlaylist}">
                                                 <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
@@ -581,7 +676,7 @@
                                             </Button>
                                         </StackPanel>
 
-                                        <Border Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlist Filter">
+                                        <Border Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlisten-Filter">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="26" />
@@ -600,10 +695,14 @@
                                         </Border>
                                         
                                         <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}"  >
-                                            <ListBox Background="Transparent" Name="lbEditor" VerticalAlignment="Stretch"  
-                                                ItemsSource="{Binding FilteredEditorListBoxItemListe, UpdateSourceTrigger=PropertyChanged}"                                                 
+                                            <local:ItemDragAndDropListBox Background="Transparent" x:Name="lbEditor" VerticalAlignment="Stretch"  
+                                                ItemsSource="{Binding FilteredEditorListBoxItemListe, UpdateSourceTrigger=PropertyChanged}"
+                                                AllowDrop="True"
+                                                PreviewMouseMove="lbEditorPlaylist_PreviewMouseMove"
+                                                PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"
+                                                Drop="lbEditor_Drop"     
                                                 SelectedItem="{Binding SelectedEditorItem, UpdateSourceTrigger=PropertyChanged}" 
-                                                SelectionChanged="lb_SelectionChanged" >
+                                                SelectionChanged="lb_SelectionChanged"  >
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <local:lbEditorItem/>
@@ -612,17 +711,25 @@
                                                 
                                                 <ListBox.Style>
                                                     <Style TargetType="ListBox">
+                                                        <Setter Property="ToolTip" Value="{x:Null}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding ElementName=rbEditorEditTheme,Path=IsChecked}" Value="True">
-                                                            <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding ElementName=rbEditorEditTheme,Path=IsChecked}" Value="False">
-                                                            <Setter Property="ToolTip" Value="{x:Null}" />
-                                                        </DataTrigger>
+                                                                <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />
+                                                            </DataTrigger>
+                                                            
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
+                                                                        <Binding ElementName="rbEditorEditTheme,Path=IsChecked}" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                                                        <Binding Path="PlaylistAZ" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
+                                                                <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Position innerhalb der Liste verändern" />   
+                                                            </DataTrigger>      
                                                         </Style.Triggers>                                                        
                                                     </Style>                                                    
                                                 </ListBox.Style>
-                                            </ListBox>                                                     
+                                            </local:ItemDragAndDropListBox>                                                     
                                         </Border>
                                     </Grid>
                                 </Border>
@@ -631,21 +738,22 @@
                     </Border>
                     <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" />
 
-                    <Border Name="brdKlang" Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
-                        <Border.Visibility>
+                    <Border Name="brdKlang" Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}"
+                            Visibility="{Binding EditorListeVisible, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                        <!--<Border.Visibility>
                             <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
                                 <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
                                 <Binding ElementName="AktKlangPlaylist" Path="{x:Null}" Converter="{StaticResource BooleanInverseToVisibilityConverter1}" />
                             </MultiBinding>
-                        </Border.Visibility>
+                        </Border.Visibility>-->
                         <Grid Name="grdEditorPlaylistInfo">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="85" />
-                                <ColumnDefinition Width="200*" MinWidth="200" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="190*" MinWidth="190" />
                                 <ColumnDefinition Width="25" />
                             </Grid.ColumnDefinitions>
 
-                            <Label Name="lblEditorListName" Content="Playlist-Name" VerticalContentAlignment="Center" />
+                            <Label Name="lblEditorListName" Content="Playlisten-Name" VerticalContentAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Name="tboxEditorName" Background="{x:Null}" ForceCursor="True" FontWeight="Bold" ToolTip="Name der Playliste" Height="25" Grid.Column="1" 
                                      Text="{Binding AktKlangPlaylist.Name}" 
                                      vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
@@ -833,7 +941,7 @@
                                     <Expander.Header>
                                         <TextBlock Text="Untergeordnete Themes    " Style="{DynamicResource TextTitel}" />
                                     </Expander.Header>
-                                    <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Von untergeordeten Themes werden nur die noch nicht ausgewählten Geräusch-Playlists wiedergegeben" >
+                                    <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Von untergeordeten Themes werden nur die noch nicht ausgewählten Geräusch-Playlisten wiedergegeben" >
                                         <StackPanel Orientation="Horizontal">
                                             <Grid Name="grdEditorThemeWPnlUTheme" Height="30">
                                                 <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" ToolTip="Untergeordnetes Theme hinzufügen" Width="30" HorizontalAlignment="Left" >
@@ -863,13 +971,8 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Name="brdEditorListe" Margin="3,8,6,9" Grid.Row="2" Style="{DynamicResource ControlContentBorder}" >
-                            <Border.Visibility>
-                                <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                                    <Binding ElementName="rbEditorEditPList" Path="IsChecked" UpdateSourceTrigger="PropertyChanged" />
-                                    <Binding ElementName="AktKlangPlaylist" TargetNullValue="False" UpdateSourceTrigger="PropertyChanged"  />
-                                </MultiBinding>
-                            </Border.Visibility>
+                        <Border Name="brdEditorListe" Margin="3,8,6,9" Grid.Row="2" Style="{DynamicResource ControlContentBorder}"
+                                Visibility="{Binding EditorListeVisible, Converter={StaticResource BooleanToVisibilityConverter1}}">                            
                             <Grid Name="grdEditorListe" >
                                 <Grid Name="grdEditor1" >
                                     <Grid.RowDefinitions>
@@ -905,7 +1008,7 @@
                                                     <GradientStop Color="#FFFFFFC7" Offset="1" />
                                                 </LinearGradientBrush>
                                             </Border.Background>
-                                            <TextBox Name="tboxTopKlangKategorie1" Padding="2,0" Cursor="Pen" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" VerticalContentAlignment="Center" 
+                                            <TextBox Name="tboxTopKlangKategorie1" Padding="2,0" Cursor="Pen" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playliste" VerticalContentAlignment="Center" 
                                                 Text="{Binding AktKlangPlaylist.Kategorie}"
                                                 vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                                         </Border>
@@ -1008,12 +1111,12 @@
                                             </Button>
                                         </StackPanel>
 
-                                        <GroupBox Name="gboxTopTyp1" Header="Playlist-Typ" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="58" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Width="100" >
+                                        <GroupBox Name="gboxTopTyp1" Header="Playlisten-Typ" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="58" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Width="100" >
                                             <StackPanel>
-                                                <RadioButton Name="rbIstTopMusikPlaylist1" Content="Musik" GroupName="TypListe" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="80" Grid.Column="4" Padding="4,0,0,0" Margin="1,1,1,0" ToolTip="Auswahl als Musik-Playlist" 
+                                                <RadioButton Name="rbIstTopMusikPlaylist1" Content="Musik" GroupName="TypListe" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="80" Grid.Column="4" Padding="4,0,0,0" Margin="1,1,1,0" ToolTip="Auswahl als Musik-Playliste" 
                                                     Command="{Binding OnRbtnPlaylistAlsHintergrundmusik}"
                                                     IsChecked="{Binding AktKlangPlaylist.Hintergrundmusik}" />
-                                                <RadioButton Name="rbIstTopKlangPlaylist1" Content="Geräusche" GroupName="TypListe" VerticalAlignment="Top" Grid.Column="4" Width="80" HorizontalAlignment="Left" Margin="1,4,1,1" ToolTip="Auswahl als Geräusche-Playlist" 
+                                                <RadioButton Name="rbIstTopKlangPlaylist1" Content="Geräusche" GroupName="TypListe" VerticalAlignment="Top" Grid.Column="4" Width="80" HorizontalAlignment="Left" Margin="1,4,1,1" ToolTip="Auswahl als Geräusche-Playliste" 
                                                     Command="{Binding OnRbtnPlaylistAlsHintergrundmusik}"
                                                     IsChecked="{ Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource InverseBooleanConverter1}, UpdateSourceTrigger=PropertyChanged}" >                                                    
                                                 </RadioButton>
@@ -1040,16 +1143,40 @@
                                         </Border>
 
                                         <ToggleButton Name="tbtnKlangPause1" Tag="{Binding objGruppe}" Grid.Column="3" Margin="252,5,0,0" Grid.Row="1"
-                                                      Width="30" Height="30" HorizontalAlignment="Left" Grid.RowSpan="2" ToolTip="Playlist abspielen/pausieren" VerticalAlignment="Top" Background="#00000000" 
+                                                      Width="30" Height="30" HorizontalAlignment="Left" Grid.RowSpan="2" ToolTip="Playliste abspielen/pausieren" VerticalAlignment="Top" Background="#00000000" 
                                                       Focusable="False"
                                                       Checked="tbtnKlangPauseX_Checked" 
                                                       Unchecked="tbtnKlangPauseX_Unchecked" 
                                                       >
                                             <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
                                         </ToggleButton>
-                                        <ToggleButton Grid.Column="2" Grid.Row="2" ToolTip="Musik-Playlistensortierung (nur Musik-Playlisten auswählen zum Ändern)" Height="16" Width="17" Focusable="False" VerticalAlignment="Bottom" Margin="1"
+                                        <ToggleButton Grid.Column="2" Grid.Row="2" Height="16" Width="17" Focusable="False" VerticalAlignment="Bottom" Margin="1"
                                                 IsChecked="{Binding TitellistAZ}" >
-                                            <Image Source="/Images/Icons/General/sort.png" Margin="-1,-1,-1,-2" Style="{StaticResource ImageEnabled}" />
+                                            <Image Margin="-1,-1,-1,-2" >
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding TitellistAZ}" Value="True">
+                                                                <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding TitellistAZ}" Value="False">
+                                                                <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                            <ToggleButton.Style>
+                                                <Style TargetType="ToggleButton">
+                                                    <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TitellistAZ}" Value="True">
+                                                            <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ToggleButton.Style>
+                                            <!--<Image Source="/Images/Icons/General/sort.png" Margin="-1,-1,-1,-2" Style="{StaticResource ImageEnabled}" />-->
                                         </ToggleButton>
                                         <CheckBox Name="chkbxTopAktiv1" Grid.Column="3" Grid.Row="2" Height="16" HorizontalAlignment="Left" 
                                                   VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Tag="0" IsTabStop="False" Content="Alle Titel an/aus" 
@@ -1143,6 +1270,16 @@
                                                 </Button>
                                             </Grid>
                                         </StackPanel>
+
+                                        <ToggleButton Width="30" Height="30" Grid.Column="8" HorizontalAlignment="Right" Focusable="False" ClickMode="Press" 
+                                                IsChecked="{Binding EditorGroßeAnsicht, Converter={StaticResource InverseBooleanConverter1}}" >
+                                            <StackPanel>
+                                                <Image Source="/Images/Icons/General/zeile.png" Height="20" Width="24" Stretch="Fill" Margin="-2,2,0,3" 
+                                                       Visibility="{Binding EditorGroßeAnsicht, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
+                                                <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="24" Stretch="Fill" Margin="-2,0,0,-1" />
+                                                <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="24" Stretch="Fill" Margin="-2,0,0,-1" />
+                                            </StackPanel>
+                                        </ToggleButton>
                                         
                                         <Button Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpen1"  Width="30" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="9" VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" 
                                                 Command="{Binding OnTopKlangOpen}" >
@@ -1158,6 +1295,13 @@
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding ChkAnzDateienResult}" Value="{x:Null}">
                                                             <Setter Property="Visibility" Value="Hidden" />
+                                                        </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding ChkAnzDateienVerfügbar}" Value="True">
+                                                            <Setter Property="IsEnabled" Value="True" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ChkAnzDateienVerfügbar}" Value="False">
+                                                            <Setter Property="IsEnabled" Value="False" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -1195,7 +1339,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Musik - Player" Name="tiMusik" GotFocus="tiMusik_GotFocus" >
+            <TabItem Header="Musik - Player" >
                 <Grid Background="{StaticResource Background1}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60" />
@@ -1351,7 +1495,30 @@
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton Name="tbtnMusikAZ" ToolTip="Playlistensortierung" Height="23" Width="22" Focusable="False"
                                     IsChecked="{Binding MusikAZ}">
-                                    <Image Source="/Images/Icons/General/sort.png" Margin="-1" Style="{StaticResource ImageEnabled}" />
+                                    <Image Margin="-1" >
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding MusikAZ}" Value="True">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding MusikAZ}" Value="False">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding MusikAZ}" Value="True">
+                                                    <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
                                 </ToggleButton>
                                 <ToggleButton Name="tbtnMusikNacheinander" ToolTip="Playlisten nacheinander abspielen" Height="23" Width="22" Focusable="False" Grid.Column="1" 
                                     IsChecked="{Binding MusikNacheinander}">
@@ -1398,9 +1565,32 @@
                                     <ColumnDefinition Width="*" MaxWidth="200" MinWidth="30" />
                                     <ColumnDefinition Width="20" />
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton Name="tbtnMusikTitelAZ" ToolTip="Musik-Titelsortierung (Alphabetisch oder nach Reihenfolge)" Height="23" Width="22" Focusable="False" HorizontalAlignment="Left" Margin="5,0,0,0"
+                                <ToggleButton Name="tbtnMusikTitelAZ" Height="23" Width="22" Focusable="False" HorizontalAlignment="Left" Margin="5,0,0,0"
                                     IsChecked="{Binding MusikTitelAZ}" >
-                                    <Image Source="/Images/Icons/General/sort.png" Margin="-1" Style="{StaticResource ImageEnabled}" />
+                                    <Image Margin="-1" >
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding MusikTitelAZ}" Value="True">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding MusikTitelAZ}" Value="False">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding MusikTitelAZ}" Value="True">
+                                                    <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
                                 </ToggleButton>
                                 
                                 <Image Source="/Images/Icons/General/filter.png" Stretch="Fill" Grid.Column="2" />
@@ -1420,9 +1610,15 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <ListBox Background="Transparent" Name="lbMusiktitellist" VerticalAlignment="Stretch" 
-                                         ItemsSource="{Binding HintergrundMusikListe}" 
+                                         ItemsSource="{Binding FilteredHintergrundMusikListe}" 
                                          SelectedItem="{Binding SelectedMusikTitelItem, UpdateSourceTrigger=PropertyChanged}" 
-                                         ToolTip="Anklicken um den Titel abzuspielen" Focusable="True" >                                    
+                                         ToolTip="Anklicken um den Titel abzuspielen" Focusable="True" >
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <ListBoxItem Tag="{Binding}" />                                            
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
                                 </ListBox>
                             </Border>
                         </Expander>
@@ -1634,8 +1830,8 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Name="tiMain" Header="Erweiterter - Player" GotFocus="tiMusik_GotFocus" >
-                <Grid Name="grdtiPList"  Background="{StaticResource Background1}">
+            <TabItem Header="Erweiterter - Player" >
+                <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
@@ -1698,11 +1894,11 @@
                                 <Border HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0" Width="60" Height="27" Style="{DynamicResource ControlContentBorder}" >
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/Images/Icons/General/copy.png" Width="24" Height="24" />
-                                        <ToggleButton Name="tbThemeThemeNormSize" Width="24" Height="24" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,1,1,0" Focusable="False" ClickMode="Press" 
-                                                      IsChecked="{Binding ThemeNormalSize, Converter={StaticResource InverseBooleanConverter1}}" >
+                                        <ToggleButton Width="24" Height="24" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,1,1,0" Focusable="False" ClickMode="Press" 
+                                                      IsChecked="{Binding ThemeGroßeAnsicht, Converter={StaticResource InverseBooleanConverter1}}" >
                                             <StackPanel>
-                                                <Image Name="imgThemeThemeNorm" Source="/Images/Icons/General/kachel.png" 
-                                                       Visibility="{Binding ThemeNormalSize, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
+                                                <Image Source="/Images/Icons/General/kachel.png" 
+                                                       Visibility="{Binding ThemeGroßeAnsicht, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                                                 <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="24" Stretch="Fill" Margin="-2,0,0,-1" />
                                                 <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="24" Stretch="Fill" Margin="-2,0,0,0" />
                                             </StackPanel>
@@ -1715,12 +1911,12 @@
                                             <Image Source="/Images/Icons/General/speaker.png" Style="{StaticResource ImageEnabled}" Margin="0,2,0,-2"  />
                                             <Image Source="/Images/Icons/General/audio.png" Style="{StaticResource ImageEnabled}" Margin="3,0,-3,0" />
                                         </Grid>
-                                        <ToggleButton Name="tbThemePListNormSize" Width="24" Height="24" HorizontalAlignment="Right" 
+                                        <ToggleButton Width="24" Height="24" HorizontalAlignment="Right" 
                                                       VerticalAlignment="Center" Margin="5,1,1,0" Focusable="False" ClickMode="Press"
-                                                      IsChecked="{Binding PListNormalSize, Converter={StaticResource InverseBooleanConverter1}}" >
+                                                      IsChecked="{Binding PListGroßeAnsicht, Converter={StaticResource InverseBooleanConverter1}}" >
                                             <StackPanel>
-                                                <Image Name="imgThemePListNorm" Source="/Images/Icons/General/kachel.png"
-                                                    Visibility="{Binding PListNormalSize, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                                <Image Source="/Images/Icons/General/kachel.png"
+                                                    Visibility="{Binding PListGroßeAnsicht, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                                 <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="24" Stretch="Fill" Margin="-2,0,0,-1" />
                                                 <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="24" Stretch="Fill" Margin="-2,0,0,0" />
                                             </StackPanel>
@@ -1750,7 +1946,7 @@
                                                             <Style TargetType="WrapPanel">
                                                                 <Setter Property="ItemHeight" Value="50" />
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ThemeNormalSize}" Value="False" >
+                                                                    <DataTrigger Binding="{Binding ThemeGroßeAnsicht}" Value="False" >
                                                                         <Setter Property="ItemHeight" Value="25" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -1778,9 +1974,32 @@
                                 <ColumnDefinition Width="187*" MinWidth="100" MaxWidth="280" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="2,0,0,0" VerticalAlignment="Top">
-                                <ToggleButton Name="tbtnErwPlayerMusikAZ" Margin="3,0,0,0" ToolTip="Playlistensortierung" Height="28" Width="25" Focusable="False"
+                                <ToggleButton Name="tbtnErwPlayerMusikAZ" Margin="3,0,0,0" Height="28" Width="25" Focusable="False"
                                         IsChecked="{Binding MusikAZ}">
-                                    <Image Source="/Images/Icons/General/sort.png" Margin="-2,0" Style="{StaticResource ImageEnabled}" />
+                                    <Image Margin="-2,0" >
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding MusikAZ}" Value="True">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding MusikAZ}" Value="False">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding MusikAZ}" Value="True">
+                                                    <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
                                 </ToggleButton>
                                 <ToggleButton Name="tbtnErwPlayerMusikNacheinander" Margin="3,0,0,0" ToolTip="Playlisten nacheinander abspielen" Height="28" Width="25" Focusable="False" Grid.Column="1" 
                                     IsChecked="{Binding MusikNacheinander}">
@@ -1790,7 +2009,7 @@
                                                Visibility="{Binding MusikNacheinander, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                     </Grid>
                                 </ToggleButton>
-                                <Button Width="30" Height="30" Margin="5,0,5,0" 
+                                <Button Width="30" Height="30" Margin="8,0,5,0" 
                                         Style="{StaticResource GlasButton}" Background="Black" ToolTip="Stopp"                                     
                                     Command="{Binding OnbtnBGStoppen}" >
                                     <Button.IsEnabled>
@@ -1852,7 +2071,7 @@
                                     </Image>
                                 </Button>
 
-                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10"  Margin="10,0,0,0" 
+                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Width="60" SmallChange="1" LargeChange="10"  Margin="10,0,0,0" 
                                         Value="{Binding BGPlayerVolume}" 
                                         MouseWheel="slVolume_MouseWheel" >
                                         <Slider.ToolTip>
@@ -1901,7 +2120,7 @@
                                         <Image Source="/Images/Icons/General/gestrichen.png" />
                                     </Grid>
                                 </Button>
-                                <Button Name="btnThemeGeräuscheFilterAktiv" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,10,0" ToolTip="Nur aktive Playlists zeigen" 
+                                <Button Name="btnThemeGeräuscheFilterAktiv" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,10,0" ToolTip="Nur aktive Playlisten zeigen" 
                                         Command="{Binding OnThemeGeräuscheFilterAktiv}" >
                                     <Grid>
                                         <Image Source="/Images/Icons/General/OK.png" VerticalAlignment="Center" />
@@ -1918,6 +2137,34 @@
                                     </Grid>
                                 </Button>
                                 <TextBlock Padding="4,2,4,0" />
+                                <ToggleButton Name="tbtnErwPlayerGeräuscheAZ" Margin="3,0" Height="28" Width="25" Focusable="False"
+                                        IsChecked="{Binding GeräuscheAZ}">
+                                    <Image Margin="-2,0" >
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding GeräuscheAZ}" Value="True">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding GeräuscheAZ}" Value="False">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding GeräuscheAZ}" Value="True">
+                                                    <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                                
                                 <Button Name="btnPListPListAbspielen" ClickMode="Press" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black"                                         
                                         Command="{Binding OnBtnErwPlayerPListAbspielen}"
                                         IsEnabled="{Binding ErwPlayerGeräuscheAktiv}" >
@@ -1957,7 +2204,7 @@
                                     </Image>
                                 </Button>
                                 
-                                <Slider Height="22" Maximum="200" UseLayoutRounding="False"  Width="80" SmallChange="1" LargeChange="10" Name="slPlaylistVolume" Margin="10,0,0,0" Interval="1" 
+                                <Slider Height="22" Maximum="200" UseLayoutRounding="False" Width="60" SmallChange="1" LargeChange="10" Name="slPlaylistVolume" Margin="10,0,0,0" Interval="1" 
                                     MouseWheel="slVolume_MouseWheel" 
                                     Value="{Binding FadingGeräuscheVolProzent }" >
                                     <Slider.ToolTip>
@@ -1973,7 +2220,7 @@
                                         </LinearGradientBrush>
                                     </Slider.Background>
                                 </Slider>
-                                <TextBlock Padding="4,2,4,0" />
+
                             </StackPanel>
                             <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" Height="28" VerticalAlignment="Center" ToolTip="Filter aller Geräusche-Playlisten auf Namen und/oder Kategorie" Margin="3,0,20,0">
                                 <Grid>
@@ -2000,7 +2247,7 @@
                             <Expander.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                     <Image Source="/Images/Icons/General/audio.png" />
-                                    <TextBlock Text="Musik-Playlists" Style="{DynamicResource TextTitel}" />
+                                    <TextBlock Text="Musik-Playlisten" Style="{DynamicResource TextTitel}" />
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
@@ -2018,7 +2265,7 @@
                             <Expander.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                     <Image Source="/Images/Icons/General/speaker.png" Margin="0,2,0,-2" />
-                                    <TextBlock Text="Geräusche-Playlists" Style="{DynamicResource TextTitel}" />
+                                    <TextBlock Text="Geräusche-Playlisten" Style="{DynamicResource TextTitel}" />
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
@@ -2120,47 +2367,5 @@
             </TabItem>-->
         </TabControl>
 
-        <GroupBox Header="Hotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3" 
-            Visibility="{Binding ShowHotkeyPanel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">       
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="55" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="35" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
-                    <Button Height="30" Style="{StaticResource GlasButton}" Background="Black" Width="30" ToolTip="Stoppen aller laufenden Hotkeys" 
-                            Command="{Binding OnAllHotkeysStop}" >
-                        <Image Source="/Images/Icons/General/stop.png" Margin="5,6,4,4" />
-                    </Button>
-                    <Slider Width="22" Maximum="100" Minimum="0" Name="slHotkey" UseLayoutRounding="True" SmallChange="1" LargeChange="10" Orientation="Vertical" Margin="2" 
-                            Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"                             
-                            MouseWheel="slVolume_MouseWheel" >
-                        <!-- ToolTip="{Binding HotkeyVolume, StringFormat={}{0:C}%}" -->
-                        <Slider.ToolTip>
-                            <ToolTip>
-                                <TextBlock Text="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
-                            </ToolTip>
-                        </Slider.ToolTip>
-                    </Slider>
-                </StackPanel>
-
-                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
-                    <StackPanel>
-                        <ItemsControl ItemsSource="{Binding hotkeyListUsed}" >
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="35" Margin="5,0,0,0" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </StackPanel>
-                </ScrollViewer>
-                <Button Name="btnHotkeysLöschen" Grid.Column="2" VerticalAlignment="Center" Height="25" Width="25" ToolTip="Alle Hotkeys löschen" Margin="5,0" 
-                        Command="{Binding OnAlleHotkeysEntfenrnen}" >
-                    <Image Source="/Images/Icons/General/entf_all.png" Style="{StaticResource ImageEnabled}" />
-                </Button>
-            </Grid>
-        </GroupBox>        
     </Grid>
 </UserControl>

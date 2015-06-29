@@ -15,7 +15,7 @@
                 <Style TargetType="ToggleButton">
                     <Setter Property="Height" Value="42" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding NormalSize}" Value="False">
+                        <DataTrigger Binding="{Binding GroßeAnsicht}" Value="False">
                             <Setter Property="Height" Value="22" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -47,7 +47,7 @@
                             <Style TargetType="Border">
                                 <Setter Property="Visibility" Value="Visible" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NormalSize}" Value="False" >
+                                    <DataTrigger Binding="{Binding GroßeAnsicht}" Value="False" >
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Theme.Kategorie}" Value="{x:Null}" >

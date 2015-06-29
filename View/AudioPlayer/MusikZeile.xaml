@@ -38,7 +38,7 @@
                         <Style TargetType="ColumnDefinition">
                             <Setter Property="Width" Value="100" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding NormalSize}" Value="True">
+                                <DataTrigger Binding="{Binding GroßeAnsicht}" Value="True">
                                     <Setter Property="Width" Value="70" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -52,10 +52,10 @@
                     <RowDefinition.Style>
                         <Style TargetType="RowDefinition">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding NormalSize, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <DataTrigger Binding="{Binding GroßeAnsicht, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Height" Value="*" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding NormalSize, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                                <DataTrigger Binding="{Binding GroßeAnsicht, UpdateSourceTrigger=PropertyChanged}" Value="False">
                                     <Setter Property="Height" Value="0" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -94,7 +94,7 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" >
                 <StackPanel.Visibility>
                     <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                        <Binding Path="NormalSize" Converter="{StaticResource InvertedBoolenConverter}" />
+                        <Binding Path="GroßeAnsicht" Converter="{StaticResource InvertedBoolenConverter}" />
                         <Binding Path="aPlaylist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter}" />
                     </MultiBinding>
                 </StackPanel.Visibility>
@@ -160,7 +160,7 @@
                             <Setter Property="Visibility" Value="Visible" />
                             <Setter Property="Margin" Value="15,1,0,0" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding NormalSize}" Value="True">
+                                <DataTrigger Binding="{Binding GroßeAnsicht}" Value="True">
                                     <Setter Property="Margin" Value="0,1,0,0" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding aPlaylist.Hintergrundmusik}" Value="True">
@@ -176,7 +176,7 @@
                     Width="{Binding ReadPercentage}">
                     <Rectangle.Visibility>
                         <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                            <Binding Path="NormalSize" />
+                            <Binding Path="GroßeAnsicht" />
                             <Binding Path="aPlaylist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter}" />
                         </MultiBinding>
                     </Rectangle.Visibility>
@@ -185,7 +185,7 @@
                     Width="{Binding FadingPercentage}">
                     <Rectangle.Visibility>
                         <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                            <Binding Path="NormalSize" />
+                            <Binding Path="GroßeAnsicht" />
                             <Binding Path="aPlaylist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter}" />
                         </MultiBinding>
                     </Rectangle.Visibility>
@@ -201,7 +201,7 @@
                     </Slider.ToolTip>
                 </Slider>
                 <Border Name="brdKategorie" Grid.Column="2" Margin="10,1,0,0" Height="Auto" CornerRadius="5" ToolTip="Kategorie"
-                        Visibility="{Binding NormalSize, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                        Visibility="{Binding GroßeAnsicht, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
                             <GradientStop Color="Beige" Offset="0" />
@@ -210,7 +210,7 @@
                     </Border.Background>
                     <TextBox Name="tboxKategorie" IsReadOnly="True" Padding="4,0,4,4" FontSize="11" FontStyle="Italic" TextWrapping="WrapWithOverflow" 
                              Text="{Binding aPlaylist.Kategorie}"                             
-                             Visibility="{Binding NormalSize, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"
+                             Visibility="{Binding GroßeAnsicht, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"
                              Background="{x:Null}" ToolTip="Kategorie der Playlist" />
                 </Border>
             </Grid>            
