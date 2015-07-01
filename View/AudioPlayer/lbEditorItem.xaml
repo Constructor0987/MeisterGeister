@@ -75,8 +75,6 @@
                         <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
                         <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
                         <Binding ElementName="tbtnPlaylistAZ" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
-                        <!--<Binding ElementName="rbEditorMusik" Path="IsChecked" />
-                        <Binding ElementName="rbEditorKlang" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />-->
                     </MultiBinding>
                 </StackPanel.Visibility>
                 <Button Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"

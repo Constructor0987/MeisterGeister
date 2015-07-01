@@ -288,6 +288,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged("ZeigeAPlayTitelPause");
             }
         }
+        public string ZeigeAPlayTitelPause
+        {
+            get
+            {
+                return (aPlayTitelPause < 1000 ? aPlayTitelPause + " ms" : aPlayTitelPause < 60000 ?
+                    Math.Round((double)aPlayTitelPause / 1000, 2).ToString() + " sek." :
+                    aPlayTitelPause / 60000 + " min.");
+            }
+        }
                       
 
         private Audio_Playlist _aktKlangPlaylist = null;

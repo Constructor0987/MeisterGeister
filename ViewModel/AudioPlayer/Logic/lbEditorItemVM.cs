@@ -367,7 +367,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
                 if (APlaylist.Reihenfolge > 0)
                     PlayerVM.MoveLbEditorItem(APlaylist, -1);
+
                 PlayerVM.FilteredEditorListBoxItemListe = PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).ToList();
+                MouseOnSubObject = false;
             }
             catch (Exception ex)
             {
@@ -395,7 +397,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
                 if (PlayerVM.FilteredEditorListBoxItemListe.IndexOf(this) < PlayerVM.FilteredEditorListBoxItemListe.Count - 1) 
                     PlayerVM.MoveLbEditorItem(APlaylist, +1);
+
                 PlayerVM.FilteredEditorListBoxItemListe = PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).ToList();
+                MouseOnSubObject = false;
             }
             catch (Exception ex)
             {
@@ -419,6 +423,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 if (ViewHelper.ConfirmYesNoCancel("Löschen der Playlist", "Wollen Sie wirklich die ausgewählte Playlist  '" + APlaylist.Name + "'  löschen.") == 2)
                 {
+                    bool aPlaylistWarHintergrund = APlaylist.Hintergrundmusik;
                     Global.SetIsBusy(true, string.Format("Playlist '" + APlaylist.Name + "' wird gelöscht..."));
                     List<lbEditorItemVM> lbPlaylist = PlayerVM.EditorListBoxItemListe;
                     List<lbEditorItemVM> lbFilteredPlaylist = PlayerVM.FilteredEditorListBoxItemListe;
@@ -440,13 +445,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     Global.ContextAudio.Delete<Audio_Playlist>(APlaylist);
                     Global.SetIsBusy(false);
 
-                    PlayerVM.EditorListBoxItemListe = PlayerVM.lbiPlaylistListNeuErstellen();// lbPlaylist;
-                    PlayerVM.FilterEditorPlaylistListe();
-                    PlayerVM.MusikListItemListe = PlayerVM.mZeileEditorMusikNeuErstellen();
-                    //PlayerVM.FilteredEditorListBoxItemListe = lbFilteredPlaylist;
+                    PlayerVM.EditorListBoxItemListe = PlayerVM.lbiPlaylistListNeuErstellen();
+
+                    if (aPlaylistWarHintergrund)
+                        PlayerVM.MusikListItemListe = PlayerVM.mZeileErwPlayerMusikNeuErstellen();
+                    else
+                        PlayerVM.ErwPlayerGeräuscheListItemListe = PlayerVM.mZeileErwPlayerGeräuscheNeuErstellen();
+                    
                     if (PlayerVM.AktKlangPlaylist == null && PlayerVM.FilteredEditorListBoxItemListe.Count > 0)
                         PlayerVM.SelectedEditorItem = PlayerVM.FilteredEditorListBoxItemListe[0];
-                    ViewHelper.Popup("Die Playlist wurde erfolgreich gelöscht.");
                 }
             }
             catch (Exception ex)

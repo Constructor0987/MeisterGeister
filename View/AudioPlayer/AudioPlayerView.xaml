@@ -22,6 +22,7 @@
         <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter1" />
         <vmAudioPlayer:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>
         <vmAudioPlayer:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
+        <vmAudioPlayer:IsNullOrEmptyToBoolConverter x:Key="IsNullOrEmptyToBoolConverter1" />
         <vmAudioPlayer:BooleanAndNotReihenfolgeConverter x:Key="BooleanAndNotReihenfolgeConverter1" />
         <vmAudioPlayer:DoubleToTimespanHHMMSSConverter x:Key="DoubleToTimespanHHMMSSConverter1" />
         <vmAudioPlayer:SliderRangeMarginConverter x:Key="SliderRangeMarginConverter1" />
@@ -740,12 +741,6 @@
 
                     <Border Name="brdKlang" Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}"
                             Visibility="{Binding EditorListeVisible, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                        <!--<Border.Visibility>
-                            <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                                <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
-                                <Binding ElementName="AktKlangPlaylist" Path="{x:Null}" Converter="{StaticResource BooleanInverseToVisibilityConverter1}" />
-                            </MultiBinding>
-                        </Border.Visibility>-->
                         <Grid Name="grdEditorPlaylistInfo">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100" />
@@ -765,8 +760,13 @@
                         </Grid>
                     </Border>
                     
-                    <Border Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" 
-                            Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditTheme, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                    <Border Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
+                        <Border.Visibility>
+                            <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                                <Binding ElementName="rbEditorEditTheme" Path="IsChecked" />
+                                <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
+                            </MultiBinding>
+                        </Border.Visibility>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="85" />
@@ -845,8 +845,13 @@
                         </Grid>
                     </Border>
 
-                    <Border Name="brgEditorThemeKategorieBackground" Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,0,60,0" Style="{DynamicResource ControlContentBorder}" 
-                            Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditTheme, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                    <Border Name="brgEditorThemeKategorieBackground" Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,0,60,0" Style="{DynamicResource ControlContentBorder}" >
+                        <Border.Visibility>
+                            <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                                <Binding ElementName="rbEditorEditTheme" Path="IsChecked" />
+                                <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
+                            </MultiBinding>
+                        </Border.Visibility>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="60" />
@@ -902,7 +907,13 @@
                         </Grid.RowDefinitions>
                         <Border Margin="0,10,0,0" Drop="brdEditorTheme_Drop" >
 
-                            <StackPanel Orientation="Vertical" Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditTheme, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                            <StackPanel Orientation="Vertical" >
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                                        <Binding ElementName="rbEditorEditTheme" Path="IsChecked" />
+                                        <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
                                 <Expander Name="expEditorThemesMusik" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" >
                                     <Expander.Header>
                                         <TextBlock Text="Musik Playliste        " Style="{DynamicResource TextTitel}" />
@@ -1009,7 +1020,7 @@
                                                 </LinearGradientBrush>
                                             </Border.Background>
                                             <TextBox Name="tboxTopKlangKategorie1" Padding="2,0" Cursor="Pen" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playliste" VerticalContentAlignment="Center" 
-                                                Text="{Binding AktKlangPlaylist.Kategorie}"
+                                                Text="{Binding AktKlangPlaylist.Kategorie, UpdateSourceTrigger=PropertyChanged}"
                                                 vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                                         </Border>
 
@@ -1624,6 +1635,7 @@
                         </Expander>
 
                         <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="5" Height="240" Margin="0,46,2,72" />
+                        <Border Grid.Column="2" Height="100" Width="200" Margin="10" />
                         <Border Grid.Column="2" Grid.Row="1" Height="240" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" Margin="6,46,2,72" HorizontalAlignment="Left">
                             <Grid Name="grdSongInfo" Visibility="{Binding BGPlayerAktPlaylistTitel, UpdateSourceTrigger=PropertyChanged, TargetNullValue=Collapsed}" >
                                 <Grid.ColumnDefinitions>

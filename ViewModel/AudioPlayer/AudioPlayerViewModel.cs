@@ -364,6 +364,22 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             return this;
         }
     }
+
+    public class IsNullOrEmptyToBoolConverter : System.Windows.Markup.MarkupExtension, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value == null? false : true;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
+    }
     
     public class IsEqualOrGreaterThanVisibleConverter : IValueConverter
     {
@@ -900,7 +916,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         private List<KlangZeile> _klangzeilen;
 
-
         private bool _playlistListeNichtUpdaten = false;
         public bool PlaylistListeNichtUpdaten
         {
@@ -1165,9 +1180,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     (_bgPlayerAktPlaylistTitel.Audio_Titel.Länge == 0 || _bgPlayerAktPlaylistTitel.Audio_Titel.Länge == null) &&
                     _bgPlayerAktPlaylistTitel.Länge != 0)
                     _bgPlayerAktPlaylistTitel.Audio_Titel.Länge = _bgPlayerAktPlaylistTitel.Länge;
-                return ((_bgPlayerAktPlaylistTitel != null &&
+                return ((
+                    _bgPlayerAktPlaylistTitel != null &&  
+                    _bgPlayerAktPlaylistTitel.Audio_Titel.Länge != null &&
                     _bgPlayerAktPlaylistTitel.Audio_Titel.Länge != 0) ? _bgPlayerAktPlaylistTitel.Audio_Titel.Länge.Value :
-                    BGPlayer.AktPlaylistTitel != null? BGPlayer.AktPlaylistTitel.Audio_Titel.Länge.Value: 10000000);
+                    BGPlayer != null && 
+                    BGPlayer.AktPlaylistTitel != null && 
+                    BGPlayer.AktPlaylistTitel.Audio_Titel.Länge != null? 
+                    BGPlayer.AktPlaylistTitel.Audio_Titel.Länge.Value: 10000000);
             }  
             set { OnChanged(); }
         }
@@ -1340,7 +1360,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 else
                 {
                     AktKlangPlaylist = value.APlaylist;
-
+                    
                     //Check Reihenfolge okay
                     bool neuaufbau = false;
                     foreach (Audio_Playlist_Titel aPlayTitel in AktKlangPlaylist.Audio_Playlist_Titel) 
@@ -1736,6 +1756,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 _musikListItemListe = value;
+
+                FilterMusikPlaylistListe();
+
+                ErwPlayerMusikListItemListe = mZeileErwPlayerMusikNeuErstellen();
+                FilterErwPlayerMusikPlaylistListe();
                 OnChanged();
             }
         }
@@ -1769,6 +1794,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 _erwPlayerGeräuscheListItemListe = value;
+
+                FilterErwPlayerGeräuschePlaylistListe();
                 OnChanged();
             }
         }
@@ -1859,6 +1886,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 _editorListBoxItemListe = value;
+
+                FilterEditorPlaylistListe();
                 OnChanged();
             }
         }
@@ -1870,6 +1899,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 _filteredEditorListBoxItemListe = value;
+
+                FilterMusikPlaylistListe();
+                FilterErwPlayerMusikPlaylistListe();
+                FilterErwPlayerGeräuschePlaylistListe();
+
                 OnChanged();
             }
         }
@@ -1940,9 +1974,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 {
                     Audio_Playlist aplylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == hkey.VM.aPlaylistGuid);                    
                     hkey.VM.aPlaylist = aplylist;
-
                     hkey.VM.TitelPlayList.ForEach(t => t.mp.Stop());
-                    //hkey.VM.mp.Stop(); 
                 });
                 OnChanged();
             } 
@@ -2766,7 +2798,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         AktualisiereHotKeys();
                         UpdateAlleListen();
 
-                        SelectedEditorThemeItem = EditorThemeListBoxItemListe.First(t => t.ATheme == AktKlangTheme);
+                        SelectedEditorThemeItem = EditorThemeListBoxItemListe.FirstOrDefault(t => t.ATheme == AktKlangTheme);
                         Global.SetIsBusy(false);
                     }
                     catch (Exception ex)
@@ -3868,15 +3900,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 AktKlangPlaylist = _GrpObjecte.FirstOrDefault(t => t.visuell).aPlaylist;
             }
             SelectedEditorItem = EditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == AktKlangPlaylist);
-            if (AktKlangTheme == null)
-            {
-                NeuesKlangThemeInDB("");
-                //UpdateAlleListen();
-                FilterThemeEditorPlaylistListe();
-                FilterErwPlayerThemeListe();
+            //if (AktKlangTheme == null)
+            //{
+            //    NeuesKlangThemeInDB("");
+            //    //UpdateAlleListen();
+            //    FilterThemeEditorPlaylistListe();
+            //    FilterErwPlayerThemeListe();
 
-                SelectedEditorThemeItem = FilteredEditorThemeListBoxItemListe.FirstOrDefault(t => t.ATheme == AktKlangTheme);
-            }
+            //    SelectedEditorThemeItem = FilteredEditorThemeListBoxItemListe.FirstOrDefault(t => t.ATheme == AktKlangTheme);
+            //}
             firstshot = false;        
         }
 
@@ -3913,7 +3945,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
 
 
-        private List<MusikZeile> mZeileErwPlayerGeräuscheNeuErstellen()
+        public List<MusikZeile> mZeileErwPlayerGeräuscheNeuErstellen()
         {
             List<MusikZeile> mZeileList = new List<MusikZeile>();
             foreach (Audio_Playlist aplylist in Global.ContextAudio.PlaylistListe.FindAll(t => !t.Hintergrundmusik))
@@ -3940,9 +3972,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
             return mZeileList;
         }
-
-
-        
+                
         public List<MusikZeile> mZeileEditorMusikNeuErstellen()
         {
             List<MusikZeile> mZeileList = new List<MusikZeile>();
@@ -3964,7 +3994,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             return mZeileList;
         }
 
-        private List<MusikZeile> mZeileErwPlayerMusikNeuErstellen()
+        public List<MusikZeile> mZeileErwPlayerMusikNeuErstellen()
         {
             List<MusikZeile> mZeileList = new List<MusikZeile>();
             foreach (Audio_Playlist aplylist in Global.ContextAudio.PlaylistListe.FindAll(t => t.Hintergrundmusik))
@@ -4642,8 +4672,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         /// <summary>
         /// Filtert die MusikListBoxItem-Liste auf Basis des SuchTextes.
         /// </summary>
-        private void FilterMusikPlaylistListe()
+        public void FilterMusikPlaylistListe()
         {
+            if (MusikListItemListe == null)
+                return;
             string[] suchWorte = _suchTextMusik.Split(' ');
             if (MusikAZ)
             {
@@ -4703,8 +4735,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         /// <summary>
         /// Filtert die Geräusche im Erw.Player ListBoxItem-Liste auf Basis des SuchTextes und der Theme-SuchTextes
         /// </summary>
-        private void FilterErwPlayerGeräuschePlaylistListe()
+        public void FilterErwPlayerGeräuschePlaylistListe()
         {
+            if (ErwPlayerGeräuscheListItemListe == null)
+                return;
             string st = (_suchTextErwPlayerGeräusche + _suchTextErwPlayerTheme != "") ? _suchTextErwPlayerGeräusche + ' ' + _suchTextErwPlayerTheme : string.Empty;
             string[] suchWorte = st.Split(' ');
             if (GeräuscheAZ)
@@ -4732,8 +4766,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         /// <summary>
         /// Filtert die Musik im Erw.Player ListBoxItem-Liste auf Basis des SuchTextes und der Theme-SuchTextes.
         /// </summary>
-        private void FilterErwPlayerMusikPlaylistListe()
+        public void FilterErwPlayerMusikPlaylistListe()
         {
+            if (ErwPlayerMusikListItemListe == null)
+                return;
             string st = (_suchTextMusik + _suchTextErwPlayerTheme != "")? _suchTextMusik + ' ' + _suchTextErwPlayerTheme : string.Empty;
             string[] suchWorte = st.Split(' ');
 
@@ -7377,6 +7413,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }
                 else
                 {
+                    // Winamp-Datei
                     if (dateihinzu.ToLower().EndsWith(".m3u8"))
                     {
                         _DateienAufnehmen(getWinampFilesFromPlaylist(dateihinzu), null, null, aPlaylist, 0, true);
@@ -7396,7 +7433,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             {
                 if (aPlaylist == AktKlangPlaylist)
                 {
-                    if (SelectedEditorItem == null)
+                    if (SelectedEditorItem == null || SelectedEditorItem.APlaylist != aPlaylist)
                         SelectedEditorItem = EditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == aPlaylist);
                     else
                         AktKlangPlaylist = AktKlangPlaylist;
@@ -7420,6 +7457,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         String line = sr.ReadLine();
                         if (line.Substring(1, 2) == ":\\")
                             lstFiles.Add(line);
+                        else
+                            if (!line.StartsWith("#"))
+                            {
+                                string s = System.IO.Path.GetDirectoryName(filename);
+                                lstFiles.Add(s.EndsWith("\\") ? s + line : s + "\\" + line);
+                            }
                     }
                 }
             }
@@ -8020,9 +8063,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     for (int x = anf + 1; x <= end; x++)
                     {
                         lbi = EditorListBoxItemListe.FirstOrDefault(t => t.APlaylist.Reihenfolge == x);
-                        lbi.APlaylist.Reihenfolge--;
+                        if (lbi != null)
+                        {
+                            lbi.APlaylist.Reihenfolge--;
 
-                        Global.ContextAudio.Update<Audio_Playlist>(lbi.APlaylist);
+                            Global.ContextAudio.Update<Audio_Playlist>(lbi.APlaylist);
+                        }
                     }
                     lbiAnfangVM.APlaylist.Reihenfolge = end;
                 }

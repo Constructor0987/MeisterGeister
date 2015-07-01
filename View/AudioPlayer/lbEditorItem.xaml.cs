@@ -92,7 +92,6 @@ namespace MeisterGeister.View.AudioPlayer
                     VM.PlayerVM.MoveLbEditorItem(source.APlaylist, targetIndex - sourceIndex);
                     VM.PlayerVM.FilteredEditorListBoxItemListe = VM.PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).ToList();
                 }
-             //   }
             }
         }
 
