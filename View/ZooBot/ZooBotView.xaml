@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ZooBot="clr-namespace:MeisterGeister.View.ZooBot"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.ZooBot"
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
-             d:DesignHeight="377" d:DesignWidth="765" Loaded="UserControl_Loaded">
+             d:DesignHeight="450" d:DesignWidth="765" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -19,12 +22,493 @@
             <Border Style="{DynamicResource ControlContentBorder}">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="8,0,0,0" />
-                    <ComboBox Name="_comboBoxHeld" Width="300" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
+                    <ComboBox Name="_comboBoxHeld" Width="250" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" SelectedItem="{Binding Zoo_HeldSelected}" SelectedIndex="-1"/>
                     <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" />
-                    <ComboBox Name="_comboBoxFernkampfwaffe" Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" SelectedIndex="0" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
+                    <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" />
+                    <CheckBox Content="Manuelle Probe" IsChecked="{Binding ManuelleProbe}" VerticalAlignment="Center" />
                 </StackPanel>
             </Border>
         </Expander>
-        <WindowsFormsHost Grid.Row="1" Name="windowsFormsHost1" Background="{x:Null}" />
+        <TabControl Margin="12,0,3,0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+            <TabItem Header="Kräutersuche" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Expander Grid.Row="0" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="33" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="97" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="0" Value="{Binding Zoo_MU}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="0" Grid.Row="1" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Value="{Binding Zoo_IN}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="0" Grid.Row="2" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Value="{Binding Zoo_FF}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+
+                                <Label Grid.Column="2" Grid.Row="0" Content="Sinnesschärfe:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWSinnesS}" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="0" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="2" Grid.Row="1" Content="Wildnisleben:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWWildnis}" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="1" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="2" Grid.Row="2" Content="Pflanzenkunde:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWPflanzen}" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="2" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="5" Grid.Row="0" Content="Kräuter suchen:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TaWKräuter}" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="7" Grid.Row="0" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="5" Grid.Row="1" Content="Suchmonat:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ComboBox Grid.Column="6" Grid.Row="1" Grid.ColumnSpan="2" Name="_comboBoxMonat" ItemsSource="{Binding monate}" SelectedItem="{Binding MonatAuswahl}" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Suchmonat" VerticalAlignment="Center" Height="24" />
+
+                                <Label Grid.Column="5" Grid.Row="2" Content="Speziell:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ComboBox Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding ListSpeziell}" Name="_comboBoxSpeziell" SelectedItem="{Binding SpeziellSelected}" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Suchmonat" VerticalAlignment="Center" Height="24" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="1" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Such-Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="71" />
+                                    <ColumnDefinition Width="140" />
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Content="Region" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+
+                                <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding LandschaftSelected}" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+
+                                <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding PflanzenNamen}" SelectedItem="{Binding PflanzeSelected}" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+
+                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+
+                                <Label Grid.Column="4" Grid.Row="2" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <TextBox Grid.Column="5" Grid.Row="2" IsReadOnly="True" Margin="5" Text="{Binding Kraeuter_Zuschlag}" />
+
+                                <CheckBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Verdopplung der Suchdauer" IsChecked="{Binding Kräuter_HatSuchdauerVerdoppelt}" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Button Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" Content=" Suche ausgewählte Pflanze " Command="{Binding OnBtnGezielteSuche}" Width="165" HorizontalAlignment="Left" Margin="5,3" FontWeight="Bold" />
+
+                                <Button Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3" Content=" Allgemeine Pflanzensuche " Command="{Binding OnBtnAllgemeineSuche}" HorizontalAlignment="Left" Width="160" Margin="35,3,0,3" FontWeight="Bold" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="2" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid>
+                                <TextBox Text="{Binding Kräuter_Ausgabe}" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Nahrungsuche" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Expander Grid.Row="0" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="33" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="97" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="118" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="0" Value="{Binding Zoo_MU}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="0" Grid.Row="1" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Value="{Binding Zoo_IN}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="0" Grid.Row="2" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Value="{Binding Zoo_FF}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+
+                                <Label Grid.Column="2" Grid.Row="0" Content="Sinnesschärfe:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWSinnesS}" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="0" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="2" Grid.Row="1" Content="Wildnisleben:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWWildnis}" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="1" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="2" Grid.Row="2" Content="Pflanzenkunde:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWPflanzen}" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="2" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="5" Grid.Row="0" Content="Nahrung sammeln:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TAWNahrung}" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="7" Grid.Row="0" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="5" Grid.Row="1" Content="Ackerbau:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TaWAckerbau}" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="7" Grid.Row="1" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <CheckBox Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="4" Content="Ackerbau statt Wildnisleben" IsChecked="{Binding Nahrung_NutzeAckerbau}" FontWeight="Bold"  />
+
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="1" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Such-Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="71" />
+                                    <ColumnDefinition Width="140" />
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="Region" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="2" />
+
+                                <CheckBox Grid.Column="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="1" />
+                                <CheckBox Grid.Column="1" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+
+                                <Label Grid.Column="3" Grid.Row="0" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <TextBox Grid.Column="4" Grid.Row="0" IsReadOnly="True" Margin="5" Text="{Binding Nahrung_Zuschlag}" />
+
+                                <CheckBox Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="3" Content="Verdopplung der Suchdauer" IsChecked="{Binding Nahrung_HatSuchdauerVerdoppelt}" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" HorizontalAlignment="Center" Content=" Suche nach essbaren Pflanzen " Command="{Binding OnBtnNahrungssuche}" Width="185" Margin="5,3" FontWeight="Bold" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="2" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid>
+                                <TextBox Text="{Binding Nahrung_Ausgabe}" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Pirsch- und Ansitzjagd" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Expander Grid.Row="0" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="33" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="97" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="0" Value="{Binding Zoo_MU}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="0" Grid.Row="1" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Value="{Binding Zoo_IN}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="0" Grid.Row="2" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Value="{Binding Zoo_FF}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+
+                                <Label Grid.Column="2" Grid.Row="0" Content="Fährtensuchen:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWFährtensuchen}" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="0" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="2" Grid.Row="1" Content="Wildnisleben:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWWildnis}" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="1" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="2" Grid.Row="2" Content="Tierkunde:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWTierkunde}" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="4" Grid.Row="2" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="5" Grid.Row="0" Content="Schleichen:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TaWSchleichen}" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="7" Grid.Row="0" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="5" Grid.Row="1" Content="Sich verstecken:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TaWSichVerstecken}" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="7" Grid.Row="1" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Label Grid.Column="5" Grid.Row="2" Content="Fernkampfwaffe:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TaWFernkampfwaffe}" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" />
+                                <Label Grid.Column="7" Grid.Row="2" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+
+
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="1" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Such-Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="71" />
+                                    <ColumnDefinition Width="65" />
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="65"/>
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="Region" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" Width="50" />
+                                <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="4" />
+
+                                <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding Jagd_LandschaftenNamen}" SelectedItem="{Binding Jagd_LandschaftSelected}" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="4" />
+
+                                <Label Grid.Column="0" Grid.Row="2" Content="Tier" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding Jagd_TierNamen}" SelectedItem="{Binding Jagd_TierSelected}" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="4" />
+
+                                <CheckBox Grid.Column="6" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <CheckBox Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+
+                                <Label Grid.Column="6" Grid.Row="2" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <TextBox Grid.Column="7" Grid.Row="2" IsReadOnly="True" Margin="5" Text="{Binding Jagd_Zuschlag}" />
+
+                                <StackPanel Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                                    <CheckBox Content="Scharfschütze" IsChecked="{Binding IstScharfschütze}" Margin="5,8,5,0" FontWeight="Bold" />
+                                    <CheckBox Content="Meisterschütze" IsChecked="{Binding IstMeisterschütze}" Margin="5,3" FontWeight="Bold" />
+                                </StackPanel>
+
+                                <Label Grid.Column="2" Grid.Row="3" Content="Pirschjagd:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" Height="26" Width="72" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWPirschjagd}" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" Width="65" />
+                                <Label Grid.Column="4" Grid.Row="3" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" Height="26" Width="36" />
+
+                                <Label Grid.Column="2" Grid.Row="4" Content="Ansitzjagd:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" Height="26" Width="73" />
+                                <ViewGeneral:IntBox Grid.Column="3" Value="{Binding Zoo_TaWAnsitzjagd}" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" Width="65" />
+                                <Label Grid.Column="4" Grid.Row="4" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" Height="26" Width="36" />
+
+                                <Button Grid.Column="6" Grid.Row="3" Grid.ColumnSpan="2" Content=" Pirschjagd " Command="{Binding OnBtnPirschjagd}" Margin="5,3,0,3" FontWeight="Bold" />
+                                <Button Grid.Column="6" Grid.Row="4" Grid.ColumnSpan="2" Content=" Ansitzjagd " Command="{Binding OnBtnAnsitzjagd}" Margin="5,3,0,3" FontWeight="Bold" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="2" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid>
+                                <TextBox Text="{Binding Jagd_Ausgabe}" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Fischen und Fallenstellen" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" MinHeight="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Expander Grid.Row="0" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="33" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="37" />
+                                    <ColumnDefinition Width="130" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="118" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="0" Value="{Binding Zoo_IN}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" VerticalAlignment="Center" Height="24" Width="65" />
+                                <Label Grid.Column="0" Grid.Row="1" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Value="{Binding Zoo_KL}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" VerticalAlignment="Center" Height="24" Width="65" />
+
+                                <Label Grid.Column="2" Grid.Row="0" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ViewGeneral:IntBox Grid.Column="3" Grid.Row="0" Value="{Binding Zoo_FF}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" Width="65" />
+                                <Label Grid.Column="2" Grid.Row="1" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ViewGeneral:IntBox Grid.Column="3" Grid.Row="1" Value="{Binding Zoo_KK}" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" Width="65" />
+
+
+                                <Label Grid.Column="5" Grid.Row="0" Content="Fischen/Angeln:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" Width="117" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TaWFischenAngeln}" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" Width="65" />
+                                <Label Grid.Column="7" Grid.Row="0" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Height="26" Margin="0,3" />
+
+                                <Label Grid.Column="5" Grid.Row="1" Content="Fallenstellen:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ViewGeneral:IntBox Grid.Column="6" Value="{Binding Zoo_TaWFallenstellen}" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" VerticalAlignment="Center" Height="24" Width="65" />
+                                <Label Grid.Column="7" Grid.Row="1" Content="TaW" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Height="26" Margin="0,3" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="1" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Such-Eigenschaften" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid Margin="5,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="71" />
+                                    <ColumnDefinition Width="140" />
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Content="Region" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="2" />
+
+                                <CheckBox Grid.Column="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="1" />
+                                <CheckBox Grid.Column="1" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+
+                                <Label Grid.Column="4" Grid.Row="0" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                                <TextBox Grid.Column="5" Grid.Row="0" IsReadOnly="True" Margin="5" Text="{Binding Fischen_Zuschlag}" />
+
+                                <CheckBox Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="3" Content="Fallen in Ruhe aufstellen" IsChecked="{Binding Fischen_FallenInRuheAufstellen}" Margin="-5,0,5,0" VerticalAlignment="Center" FontWeight="Bold" />
+
+                                <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content=" Gewässer einschätzen " Command="{Binding OnBtnGewässerEinschätzen}" Width="150" Margin="5,3" FontWeight="Bold" />
+                                <Button Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Content=" Angel/Netz auswerfen " Command="{Binding OnBtnAngelAuswerfen}" Width="150" Margin="-20,3,5,3" FontWeight="Bold" />
+                                <Button Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Content=" Fallen aufstellen " Command="{Binding OnBtnFallenAufstellen}" Width="150" Margin="-5,3,5,3" FontWeight="Bold" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                    <Expander Grid.Row="2" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid>
+                                <TextBox Text="{Binding Fischen_Ausgabe}" />
+                            </Grid>
+                        </Border>
+                    </Expander>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </UserControl>

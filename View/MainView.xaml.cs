@@ -210,7 +210,7 @@ namespace MeisterGeister.View
                 if (tab is TabItem)
                 {
                     if (((TabItem)tab).Content is ZooBot.ZooBotView)
-                        ((ZooBot.ZooBotView)((TabItem)tab).Content).SetHeldWerte();
+                        ((ZooBot.ZooBotView)((TabItem)tab).Content).VM.SetHeldWerte();
                 }
             }
         }
@@ -226,7 +226,7 @@ namespace MeisterGeister.View
                     {
                         probenTab = true;
                         _tabControlMain.SelectedItem = tab;
-                        ((ZooBot.ZooBotView)((TabItem)tab).Content).SetHeldWerte(talentname);
+                        ((ZooBot.ZooBotView)((TabItem)tab).Content).VM.SetHeldWerte(talentname);
                     }
                 }
             }

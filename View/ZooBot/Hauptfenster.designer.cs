@@ -110,6 +110,7 @@
             this.Kraeuter_TextfeldAusgabe = new System.Windows.Forms.TextBox();
             this.Kraeuter_Zuschlag = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
+            this.Kraeuter_Verbreitung = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.Kraeuter_BoxBesonderheiten = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -129,6 +130,7 @@
             this.Kraeuter_TAWWildnis = new System.Windows.Forms.NumericUpDown();
             this.Kraeuter_ButtonSuchePflanzeGezielt = new System.Windows.Forms.Button();
             this.Kraeuter_TAWSinnes = new System.Windows.Forms.NumericUpDown();
+            this.label72 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.Kraeuter_FF = new System.Windows.Forms.NumericUpDown();
             this.Kraeuter_BoxLandschaft = new System.Windows.Forms.ComboBox();
@@ -1068,6 +1070,7 @@
             this.Kraeutersuche.Controls.Add(this.Kraeuter_TextfeldAusgabe);
             this.Kraeutersuche.Controls.Add(this.Kraeuter_Zuschlag);
             this.Kraeutersuche.Controls.Add(this.label21);
+            this.Kraeutersuche.Controls.Add(this.Kraeuter_Verbreitung);
             this.Kraeutersuche.Controls.Add(this.label20);
             this.Kraeutersuche.Controls.Add(this.Kraeuter_BoxBesonderheiten);
             this.Kraeutersuche.Controls.Add(this.label19);
@@ -1087,6 +1090,7 @@
             this.Kraeutersuche.Controls.Add(this.Kraeuter_TAWWildnis);
             this.Kraeutersuche.Controls.Add(this.Kraeuter_ButtonSuchePflanzeGezielt);
             this.Kraeutersuche.Controls.Add(this.Kraeuter_TAWSinnes);
+            this.Kraeutersuche.Controls.Add(this.label72);
             this.Kraeutersuche.Controls.Add(this.label10);
             this.Kraeutersuche.Controls.Add(this.Kraeuter_FF);
             this.Kraeutersuche.Controls.Add(this.Kraeuter_BoxLandschaft);
@@ -1119,7 +1123,7 @@
             // 
             // Kraeuter_Zuschlag
             // 
-            this.Kraeuter_Zuschlag.Location = new System.Drawing.Point(442, 169);
+            this.Kraeuter_Zuschlag.Location = new System.Drawing.Point(442, 161);
             this.Kraeuter_Zuschlag.Name = "Kraeuter_Zuschlag";
             this.Kraeuter_Zuschlag.Size = new System.Drawing.Size(30, 20);
             this.Kraeuter_Zuschlag.TabIndex = 68;
@@ -1128,11 +1132,19 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(386, 172);
+            this.label21.Location = new System.Drawing.Point(386, 164);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(51, 13);
             this.label21.TabIndex = 69;
             this.label21.Text = "Zuschlag";
+            // 
+            // Kraeuter_Verbreitung
+            // 
+            this.Kraeuter_Verbreitung.AutoSize = true;
+            this.Kraeuter_Verbreitung.Location = new System.Drawing.Point(443, 185);
+            this.Kraeuter_Verbreitung.Name = "Kraeuter_Verbreitung";
+            this.Kraeuter_Verbreitung.Size = new System.Drawing.Size(0, 13);
+            this.Kraeuter_Verbreitung.TabIndex = 67;
             // 
             // label20
             // 
@@ -1347,10 +1359,19 @@
             this.Kraeuter_TAWSinnes.Click += new System.EventHandler(this.Kraeuter_TAWSinnes_Click);
             this.Kraeuter_TAWSinnes.GotFocus += new System.EventHandler(this.Kraeuter_TAWSinnes_GotFocus);
             // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Location = new System.Drawing.Point(376, 185);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(61, 13);
+            this.label72.TabIndex = 63;
+            this.label72.Text = "Verbreitung";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 171);
+            this.label10.Location = new System.Drawing.Point(7, 163);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(42, 13);
             this.label10.TabIndex = 63;
@@ -1450,7 +1471,7 @@
             this.Kraeuter_BoxPflanze.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.Kraeuter_BoxPflanze.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Kraeuter_BoxPflanze.FormattingEnabled = true;
-            this.Kraeuter_BoxPflanze.Location = new System.Drawing.Point(88, 168);
+            this.Kraeuter_BoxPflanze.Location = new System.Drawing.Point(88, 160);
             this.Kraeuter_BoxPflanze.Name = "Kraeuter_BoxPflanze";
             this.Kraeuter_BoxPflanze.Size = new System.Drawing.Size(282, 21);
             this.Kraeuter_BoxPflanze.TabIndex = 13;
@@ -2698,6 +2719,8 @@
         private System.Windows.Forms.CheckBox Jagd_IstScharfschuetze;
         private System.Windows.Forms.Button Fischen_ButtonGewaesserEinschaetzen;
         private System.Windows.Forms.Label label71;
+        private System.Windows.Forms.Label Kraeuter_Verbreitung;
+        private System.Windows.Forms.Label label72;
 
     }
 }

@@ -566,6 +566,7 @@
     <Compile Include="ViewModel\SpielerScreen\SpielerScreenControlViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="ViewModel\Zauber\Logic\ZauberProbe.cs" />
+    <Compile Include="ViewModel\ZooBot\ZooBotViewModel.cs" />
     <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">
       <DependentUpon>AbenteuerView.xaml</DependentUpon>
     </Compile>

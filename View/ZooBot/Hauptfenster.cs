@@ -967,6 +967,7 @@ namespace MeisterGeister.View.ZooBot
 
                 //Ermittelung der Suchschwierigkeit
                 int suchschwierigkeit = 0;
+                string verbreitung = "unbekannt";
                 foreach (BasisPflanze p in this.Pflanzen)
                 {
                     if (this.Kraeuter_BoxPflanze.SelectedItem.ToString().Equals(p.Name))
@@ -977,6 +978,15 @@ namespace MeisterGeister.View.ZooBot
                             if (this.Kraeuter_BoxLandschaft.SelectedItem.ToString().Equals(v.Landschaft))
                             {
                                 suchschwierigkeit += v.Vorkommen;
+                                
+                                switch (v.Vorkommen)
+                                {
+                                    case 1: verbreitung = "SEHR HÄUFIG"; break;
+                                    case 2: verbreitung = "HÄUFIG"; break;
+                                    case 4: verbreitung = "GELEGENTLICH"; break;
+                                    case 8: verbreitung = "SELTEN"; break;
+                                    case 16: verbreitung = "SEHR SELTEN"; break;
+                                }
                             }
                         }
                         break;
@@ -1001,6 +1011,7 @@ namespace MeisterGeister.View.ZooBot
                     zuschlag = "+" + erschw.ToString();
 
                 this.Kraeuter_Zuschlag.Text = zuschlag;
+                this.Kraeuter_Verbreitung.Text = verbreitung;
             }
         }
 
@@ -1088,24 +1099,24 @@ namespace MeisterGeister.View.ZooBot
 
                 //Talentprobe
                 int tapstern = 0;
+                string verbreitung = "unbekannt";
+                
                 bool result = this.Talentprobe((int)this.Kraeuter_MU.Value, (int)this.Kraeuter_IN.Value, (int)this.Kraeuter_FF.Value, taw, erschw, out tapstern, this.Kraeuter_TextfeldAusgabe);
-
-                //this.Kraeuter_TextfeldAusgabe.Text = this.Kraeuter_TextfeldAusgabe.Text + "Suchschwierigkeit vor Einrechnung von Ortskenntnis und Geländekunde betrug: " + suchschwierigkeit + " \r\n";
-                //this.Kraeuter_TextfeldAusgabe.Text = this.Kraeuter_TextfeldAusgabe.Text + "Probenerschwernis nach Einrechnung von Ortskenntnis und Geländekunde betrug: " + erschw + " \r\n";
-
+                   
                 //Ausgabe Ergebnis
                 if (result)
-                {
+                {             
                     string grundmenge = "";
                     string referenz = "";
                     string gefahr = "";
+                    
                     foreach (BasisPflanze p in this.Pflanzen)
                     {
                         if (p.Name.Equals(this.Kraeuter_BoxPflanze.SelectedItem.ToString()))
                         {
                             gefahr = p.GetGefahr();
                             grundmenge = p.GetGrundmenge(this.Kraeuter_BoxSuchmonat.SelectedItem.ToString(), tapstern);
-                            referenz = p.SeiteZBA.ToString();
+                            referenz = p.SeiteZBA.ToString();                            
                             break;
                         }
                     }
@@ -1141,7 +1152,7 @@ namespace MeisterGeister.View.ZooBot
                 else
                 {
                     this.Kraeuter_TextfeldAusgabe.Text += "Die Probe ist leider misslungen.";
-                }
+                }                 
             }
             else
             {
@@ -2329,5 +2340,6 @@ namespace MeisterGeister.View.ZooBot
             }
         }
         #endregion
+                                
     }
 }
