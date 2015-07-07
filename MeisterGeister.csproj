@@ -949,22 +949,10 @@
     <Compile Include="View\Helden\Controls\InventarView.xaml.cs">
       <DependentUpon>InventarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ZooBot\Hauptfenster.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="View\ZooBot\Hauptfenster.designer.cs">
-      <DependentUpon>Hauptfenster.cs</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\ZooBot\Logic\Landschaften.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\Pflanzen.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\Regionen.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\Tiere.cs" />
-    <Compile Include="View\ZooBot\Wuerfeleingabe.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\ZooBot\Wuerfeleingabe.designer.cs">
-      <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
-    </Compile>
     <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1380,12 +1368,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\ZooBot\Hauptfenster.resx">
-      <DependentUpon>Hauptfenster.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\ZooBot\Wuerfeleingabe.resx">
-      <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Model\Model1.Context.tt">

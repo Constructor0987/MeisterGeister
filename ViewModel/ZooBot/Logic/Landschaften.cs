@@ -7,11 +7,17 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
     public abstract class BasisLandschaft
     {
         private string m_Name;
+        private string m_Geländekundig;
 
         public string Name
         {
             get { return this.m_Name; }
             set { this.m_Name = value; }
+        }
+        public string Geländekundig
+        {
+            get { return this.m_Geländekundig; }
+            set {  this.m_Geländekundig = value;}
         }
     }
 
@@ -20,6 +26,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftEis()
         {
             this.Name = "Eis";
+            this.Geländekundig = "Eiskundig";
         }
     }
 
@@ -28,6 +35,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftWuesteUndWuestenrand()
         {
             this.Name = "Wüste und Wüstenrand";
+            this.Geländekundig = "Wüstenkundig";
         }
     }
 
@@ -36,6 +44,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftGebirge()
         {
             this.Name = "Gebirge";
+            this.Geländekundig = "Gebirgskundig";
         }
     }
 
@@ -44,6 +53,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftHochland()
         {
             this.Name = "Hochland";
+            this.Geländekundig = "";
         }
     }
 
@@ -52,6 +62,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftSteppe()
         {
             this.Name = "Steppe";
+            this.Geländekundig = "Steppenkundig";
         }
     }
 
@@ -60,6 +71,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftGraslandWiesen()
         {
             this.Name = "Grasland, Wiesen";
+            this.Geländekundig = "";
         }
     }
 
@@ -68,6 +80,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftFlussSeeuferTeiche()
         {
             this.Name = "Fluss- und Seeufer, Teiche";
+            this.Geländekundig = "";
         }
     }
 
@@ -76,6 +89,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftKuesteStrand()
         {
             this.Name = "Küste, Strand";
+            this.Geländekundig = "";
         }
     }
 
@@ -84,6 +98,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftFlussauen()
         {
             this.Name = "Flussauen";
+            this.Geländekundig = "";
         }
     }
 
@@ -92,6 +107,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftSumpfMoor()
         {
             this.Name = "Sumpf und Moor";
+            this.Geländekundig = "Sumpfkundig";
         }
     }
 
@@ -100,6 +116,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftRegenwald()
         {
             this.Name = "Regenwald";
+            this.Geländekundig = "Dschungelkundig";
         }
     }
 
@@ -108,6 +125,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftWald()
         {
             this.Name = "Wald";
+            this.Geländekundig = "Waldkundig";
         }
     }
 
@@ -116,6 +134,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftWaldrand()
         {
             this.Name = "Waldrand";
+            this.Geländekundig = "Waldkundig";
         }
     }
 
@@ -124,6 +143,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftMeer()
         {
             this.Name = "Meer";
+            this.Geländekundig = "Meereskundig";
         }
     }
 
@@ -131,7 +151,8 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
     {
         public LandschaftHoehleFeucht()
         {
-            this.Name = "Höhle (feucht)";
+            this.Name = "Höhle (feucht)"; 
+            this.Geländekundig = "Höhlenkundig";
         }
     }
 
@@ -140,6 +161,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Landschaften
         public LandschaftHoehleTrocken()
         {
             this.Name = "Höhle (trocken)";
+            this.Geländekundig = "Höhlenkundig";
         }
     }
 }

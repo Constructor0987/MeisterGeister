@@ -36,7 +36,7 @@ namespace MeisterGeister.ViewModel.ZooBot.Logic.Regionen
         {
             get { return this.m_Landschaften; }
         }
-
+        
         public int EssbarePflanzen
         {
             get { return this.m_EssbarePflanzen; }

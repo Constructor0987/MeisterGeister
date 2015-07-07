@@ -22,10 +22,13 @@
             <Border Style="{DynamicResource ControlContentBorder}">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="8,0,0,0" />
-                    <ComboBox Name="_comboBoxHeld" Width="250" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" SelectedItem="{Binding Zoo_HeldSelected}" SelectedIndex="-1"/>
+                    <ComboBox Name="_comboBoxHeld" Width="220" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" SelectedItem="{Binding Zoo_HeldSelected}" SelectedIndex="-1"/>
+                    <Button Width="25" Height="25" Margin="0,0,10,0" 
+                            Command="{Binding OnBtnHeldAustragen}">
+                        <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                    </Button>
                     <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" />
-                    <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" />
-                    <CheckBox Content="Manuelle Probe" IsChecked="{Binding ManuelleProbe}" VerticalAlignment="Center" />
+                    <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" />                    
                 </StackPanel>
             </Border>
         </Expander>
@@ -121,13 +124,13 @@
                                 <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
 
                                 <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding LandschaftSelected}" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
 
                                 <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
                                 <ComboBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding PflanzenNamen}" SelectedItem="{Binding PflanzeSelected}" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
 
-                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
-                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding Kräuter_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding Kräuter_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
 
                                 <Label Grid.Column="4" Grid.Row="2" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                                 <TextBox Grid.Column="5" Grid.Row="2" IsReadOnly="True" Margin="5" Text="{Binding Kraeuter_Zuschlag}" />
@@ -233,6 +236,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="35" />
@@ -241,15 +245,18 @@
                                 <Label Grid.Column="0" Grid.Row="0" Content="Region" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
                                 <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="2" />
 
-                                <CheckBox Grid.Column="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="1" />
-                                <CheckBox Grid.Column="1" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Nahrung_LandschaftSelected}" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+
+                                <CheckBox Grid.Column="2" Content="Ortskenntnis" IsChecked="{Binding Nahrung_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="2" Margin="0,8" />
+                                <CheckBox Grid.Column="1" Grid.Row="2" Content="Geländekunde" IsChecked="{Binding Nahrung_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
 
                                 <Label Grid.Column="3" Grid.Row="0" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                                 <TextBox Grid.Column="4" Grid.Row="0" IsReadOnly="True" Margin="5" Text="{Binding Nahrung_Zuschlag}" />
 
-                                <CheckBox Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="3" Content="Verdopplung der Suchdauer" IsChecked="{Binding Nahrung_HatSuchdauerVerdoppelt}" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                                <CheckBox Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="3" Content="Verdopplung der Suchdauer" IsChecked="{Binding Nahrung_HatSuchdauerVerdoppelt}" Margin="5,8" VerticalAlignment="Center" FontWeight="Bold" />
 
-                                <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" HorizontalAlignment="Center" Content=" Suche nach essbaren Pflanzen " Command="{Binding OnBtnNahrungssuche}" Width="185" Margin="5,3" FontWeight="Bold" />
+                                <Button Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content=" Suche nach essbaren Pflanzen " Command="{Binding OnBtnNahrungssuche}" Width="185" Margin="87,3,8,3" FontWeight="Bold" Grid.RowSpan="2" />
                             </Grid>
                         </Border>
                     </Expander>
@@ -367,8 +374,8 @@
                                 <Label Grid.Column="0" Grid.Row="2" Content="Tier" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
                                 <ComboBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding Jagd_TierNamen}" SelectedItem="{Binding Jagd_TierSelected}" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="4" />
 
-                                <CheckBox Grid.Column="6" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
-                                <CheckBox Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <CheckBox Grid.Column="6" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding Jagd_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <CheckBox Grid.Column="6" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding Jagd_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
 
                                 <Label Grid.Column="6" Grid.Row="2" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                                 <TextBox Grid.Column="7" Grid.Row="2" IsReadOnly="True" Margin="5" Text="{Binding Jagd_Zuschlag}" />
@@ -476,23 +483,27 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="35" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0" Content="Region" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
                                 <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" Grid.ColumnSpan="2" />
 
-                                <CheckBox Grid.Column="2" Content="Ortskenntnis" IsChecked="{Binding HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="1" />
-                                <CheckBox Grid.Column="1" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
+                                <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
+                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Nahrung_LandschaftSelected}" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+
+                                <CheckBox Grid.Column="2" Content="Ortskenntnis" IsChecked="{Binding Fischen_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="2" Margin="0,8" />
+                                <CheckBox Grid.Column="1" Grid.Row="2" Content="Geländekunde" IsChecked="{Binding Fischen_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
 
                                 <Label Grid.Column="4" Grid.Row="0" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                                 <TextBox Grid.Column="5" Grid.Row="0" IsReadOnly="True" Margin="5" Text="{Binding Fischen_Zuschlag}" />
 
-                                <CheckBox Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="3" Content="Fallen in Ruhe aufstellen" IsChecked="{Binding Fischen_FallenInRuheAufstellen}" Margin="-5,0,5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                                <CheckBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" Content="Fallen in Ruhe aufstellen" IsChecked="{Binding Fischen_FallenInRuheAufstellen}" Margin="135,8,5,8" VerticalAlignment="Center" FontWeight="Bold" />
 
-                                <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content=" Gewässer einschätzen " Command="{Binding OnBtnGewässerEinschätzen}" Width="150" Margin="5,3" FontWeight="Bold" />
-                                <Button Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Content=" Angel/Netz auswerfen " Command="{Binding OnBtnAngelAuswerfen}" Width="150" Margin="-20,3,5,3" FontWeight="Bold" />
-                                <Button Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Content=" Fallen aufstellen " Command="{Binding OnBtnFallenAufstellen}" Width="150" Margin="-5,3,5,3" FontWeight="Bold" />
+                                <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Content=" Gewässer einschätzen " Command="{Binding OnBtnGewässerEinschätzen}" Width="150" Margin="30,3,31,3" FontWeight="Bold" Grid.RowSpan="2" />
+                                <Button Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Content=" Angel/Netz auswerfen " Command="{Binding OnBtnAngelAuswerfen}" Width="150" Margin="120,3,0,3" FontWeight="Bold" Grid.RowSpan="2" />
+                                <Button Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Left" Content=" Fallen aufstellen " Command="{Binding OnBtnFallenAufstellen}" Width="150" Margin="0,3" FontWeight="Bold" Grid.RowSpan="2" />
                             </Grid>
                         </Border>
                     </Expander>

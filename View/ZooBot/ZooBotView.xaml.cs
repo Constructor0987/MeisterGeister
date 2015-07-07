@@ -59,5 +59,6 @@ namespace MeisterGeister.View.ZooBot
             _comboBoxHeld.ItemsSource = Global.ContextHeld.HeldenGruppeListe;
 
         }
+
     }
 }
