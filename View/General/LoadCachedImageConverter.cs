@@ -22,9 +22,10 @@ namespace MeisterGeister.View.General
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
-            image.UriSource = new Uri(value.ToString());
+            
             try
             {
+                image.UriSource = new Uri(value.ToString(), UriKind.RelativeOrAbsolute);
                 image.EndInit();
             }
             catch (Exception)
