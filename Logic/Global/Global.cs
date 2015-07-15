@@ -241,7 +241,15 @@ namespace MeisterGeister
             Logger.PerformanceLogEnd(log);
 
             //webserver
-            Net.Web.RequestProcessor.Start();
+            try
+            {
+                Net.Web.RequestProcessor.Start();
+            }
+            catch (Exception)
+            {
+                // System.AccessViolationException unterdrücken
+                // http://moonvega.pmhost.de/trac/ticket/550
+            }
         }
 
         public static void CleanUp()
