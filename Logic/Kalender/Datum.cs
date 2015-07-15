@@ -750,7 +750,7 @@ namespace MeisterGeister.Logic.Kalender
                         {
                             Feiertag f = new Feiertag("Praios- und Greifenfest", "religiöser Feiertag (Praios)",
                                 "Fest zu Ehren Praios', Erhebungen in den höheren Adelsstand", "Mittelreich");
-                            f.WikiLink = "Praiostag";
+                            f.WikiLink = "Praiosfest";
                             feiertageListe.Add(f);
                         }
                         if (Tag <= 7 && Wochentag() == WochentagEnum.Erdstag)
