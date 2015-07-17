@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="MeisterGeister.View.Reise.WetterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:view="clr-namespace:MeisterGeister.View.Reise"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:WetterViewModel/>
+    </UserControl.DataContext>
+    
+    <UserControl.Resources>
+        <General:EnumItemsSource x:Key="klimazonen" Type="{x:Type vm:Klimazone}"/>
+    </UserControl.Resources>
+    
+    <Expander IsExpanded="True">
+        <Expander.Header>
+            <TextBlock Text="Wettervorhersage" Style="{DynamicResource TextTitel}" />
+        </Expander.Header>
+        <Border Style="{DynamicResource ControlContentBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                    <TextBlock FontWeight="Bold" Text="Klimazone:" VerticalAlignment="Center"/>
+                    <ComboBox Margin="8,0,0,0" VerticalAlignment="Center" ItemsSource="{StaticResource klimazonen}" SelectedItem="{Binding Klimazone,Converter={StaticResource klimazonen}}"/>
+                    <ListBox Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource RadioListBoxStyle}" SelectedValuePath="DataContext" SelectedValue="{Binding Windreich}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBoxItem DataContext="0" Content="Normale Windverhältnisse"/>
+                        <ListBoxItem DataContext="1" Content="Flachland / Meer"/>
+                        <ListBoxItem DataContext="2" Content="Küste / Berggipfel"/>
+                    </ListBox>
+                    <CheckBox Margin="8,0,0,0" VerticalAlignment="Center" IsChecked="{Binding Wüste}" Content="Wüste"/>
+                    <Button Margin="8,0,0,0" Content="Nächster Tag" Command="{Binding NächsterTagCmd}"/>
+                </StackPanel>
+                <TabControl Grid.Row="1" DataContext="{Binding Heute}" SelectedIndex="1">
+                    <TabItem Header="Gestern" DataContext="{Binding Gestern}">
+                        <view:TagesWetterView/>
+                    </TabItem>
+                    <TabItem Header="Heute">
+                        <view:TagesWetterView/>
+                    </TabItem>
+                    <TabItem Header="Morgen" DataContext="{Binding Morgen}">
+                        <view:TagesWetterView/>
+                    </TabItem>
+                </TabControl>
+                
+                <view:WetterGraph DataContext="{Binding Heute}" Grid.Row="1" Grid.Column="1" />
+            </Grid>
+        </Border>
+    </Expander>
+
+</UserControl>

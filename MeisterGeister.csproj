@@ -505,7 +505,8 @@
     </Compile>
     <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
     <Compile Include="ViewModel\Kalender\KalenderViewModel.cs" />
-    <Compile Include="ViewModel\Kalender\Wetter\Wetter.cs" />
+    <Compile Include="ViewModel\Reise\WetterToPathConverter.cs" />
+    <Compile Include="ViewModel\Reise\Wetter.cs" />
     <Compile Include="ViewModel\Kampf\GegnerViewModel.cs" />
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Distanzklasse.cs" />
@@ -564,6 +565,7 @@
     <Compile Include="ViewModel\Schmiede\SchmiedeNahkampfwaffeViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeSchildViewModel.cs" />
     <Compile Include="ViewModel\SpielerScreen\SpielerScreenControlViewModel.cs" />
+    <Compile Include="ViewModel\Reise\WetterViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="ViewModel\Zauber\Logic\ZauberProbe.cs" />
     <Compile Include="ViewModel\ZooBot\ZooBotViewModel.cs" />
@@ -639,6 +641,7 @@
     </Compile>
     <Compile Include="View\General\EnumItemsSource.cs" />
     <Compile Include="View\General\EnumMatchToBooleanConverter.cs" />
+    <Compile Include="View\General\EnumToStringConverter.cs" />
     <Compile Include="View\General\ExterneVerknüpfungMenuItem.xaml.cs">
       <DependentUpon>ExterneVerknüpfungMenuItem.xaml</DependentUpon>
     </Compile>
@@ -773,6 +776,9 @@
     <Compile Include="View\Reise\ReiseView.xaml.cs">
       <DependentUpon>ReiseView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Reise\WetterGraph.xaml.cs">
+      <DependentUpon>WetterGraph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Schmiede\SchmiedeGeschossView.xaml.cs">
       <DependentUpon>SchmiedeGeschossView.xaml</DependentUpon>
     </Compile>
@@ -796,6 +802,12 @@
     </Compile>
     <Compile Include="View\Web\WebBrowserWindow.xaml.cs">
       <DependentUpon>WebBrowserWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Reise\TagesWetterView.xaml.cs">
+      <DependentUpon>TagesWetterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Reise\WetterView.xaml.cs">
+      <DependentUpon>WetterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Würfeln\WürfelDialog.xaml.cs">
       <DependentUpon>WürfelDialog.xaml</DependentUpon>
@@ -1190,6 +1202,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Reise\WetterGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Schmiede\SchmiedeGeschossView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1219,6 +1235,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Web\WebBrowserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Reise\TagesWetterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Reise\WetterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

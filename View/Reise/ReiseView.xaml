@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-             mc:Ignorable="d" 
+             xmlns:Reise="clr-namespace:MeisterGeister.View.Reise"
+             mc:Ignorable="d"
              d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300*" />
-            <ColumnDefinition Width="450*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1"/>
+        <Reise:WetterView/>
     </Grid>
 </UserControl>

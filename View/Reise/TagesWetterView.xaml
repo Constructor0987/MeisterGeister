@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="MeisterGeister.View.Reise.TagesWetterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="500">
+    <UserControl.Resources>
+        <General:EnumToStringConverter x:Key="converter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Text="Bewölkung: "/>
+        <TextBlock Text="Windstärke: " Grid.Row="1"/>
+        <TextBlock Text="Temperatur (Mittags): " Grid.Row="2"/>
+        <TextBlock Text="Temperatur (Nachts): " Grid.Row="3"/>
+        <TextBlock Text="Niederschlag: " Grid.Row="4"/>
+
+        <TextBlock Text="{Binding Bewölkung, Converter={StaticResource converter}}" Grid.Column="1"/>
+        <TextBlock Text="{Binding Windstärke, Converter={StaticResource converter}}" Grid.Column="1" Grid.Row="1"/>
+        <TextBlock Text="{Binding Tagestemperatur}" Grid.Column="1" Grid.Row="2"/>
+        <TextBlock Text="{Binding Nachttemperatur}" Grid.Column="1" Grid.Row="3"/>
+        <TextBlock Text="{Binding Niederschlag, Converter={StaticResource converter}}" Grid.Column="1" Grid.Row="4"/>
+        <TextBlock Text="{Binding Unwetter, Converter={StaticResource converter}}" Grid.ColumnSpan="2" Grid.Row="5"/>
+        
+    </Grid>
+    <!--<StackPanel>
+        
+    </StackPanel>-->
+
+
+</UserControl>
