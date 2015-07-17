@@ -31,7 +31,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * Creates a view following this calendar to the given date.
          * @see DSADateCalendar#DSADateCalendar(DSADate) 
          */
-        public DSADateCalendarOrcs(DSADate date)
+        public DSADateCalendarOrcs(DSADateTime date)
             : base(date)
         {
             init();
@@ -40,7 +40,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         protected void init()
         {
             setName("Orkisch");
-            int daysPerYear = DSADate.DAYS_BETWEEN_LUNAR_ECLIPSES;
+            int daysPerYear = DSADateTime.DAYS_BETWEEN_LUNAR_ECLIPSES;
             int offset = REFERENCE_DAY_YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_YEAR_BF + REFERENCE_DAY_YEAR_OFFSET_IN_DAYS - daysPerYear * REFERENCE_YEAR;
             //logger.debug("Orc calendar offset is " + offset);
             setDaysFromYear0ToBF(offset);
@@ -65,9 +65,9 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public const int REFERENCE_YEAR = 2001;
 
-        public const int MONTHS_PER_YEAR = DSADate.MOON_MONTHS_BETWEEN_LUNAR_ECLIPSES;
+        public const int MONTHS_PER_YEAR = DSADateTime.MOON_MONTHS_BETWEEN_LUNAR_ECLIPSES;
 
-        public const int DAYS_PER_MONTH = DSADate.MOON_MONTH_DAYS;
+        public const int DAYS_PER_MONTH = DSADateTime.MOON_MONTH_DAYS;
 
         public String getYearString()
         {

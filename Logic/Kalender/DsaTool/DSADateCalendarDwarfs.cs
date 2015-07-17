@@ -30,7 +30,7 @@ public class DSADateCalendarDwarfs : DSADateCalendar {
      * Creates a view following this calendar to the given date.
      * @see DSADateCalendar#DSADateCalendar(DSADate) 
      */
-    public DSADateCalendarDwarfs(DSADate date) :base(date) {
+    public DSADateCalendarDwarfs(DSADateTime date) :base(date) {
         init();
     }
 

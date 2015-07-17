@@ -147,6 +147,10 @@ namespace MeisterGeister.View.Kalender
 
         private void Berechnen()
         {
+            if (!this.Dispatcher.CheckAccess ()) { // Wenn Invoke nötig ist, ...
+                this.Dispatcher.BeginInvoke((Action)Berechnen);
+                return;
+            }
             if (_comboBoxMonat.SelectedItem != null && _comboBoxTag.SelectedItem != null)
             {
                 Logic.Kalender.Kalender von = (Logic.Kalender.Kalender)(((ComboBoxItem)_comboBoxZeitrechnung.SelectedItem).Tag);
@@ -285,7 +289,7 @@ namespace MeisterGeister.View.Kalender
 
         internal void SetzeStandort(DgSuche.Ortsmarke ort)
         {
-            if (Standort != null)
+            if (ort != null)
             {
                 Standort = ort;
                 Global.Standort = ort;

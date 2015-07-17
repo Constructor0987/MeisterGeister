@@ -32,7 +32,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public const bool HAS_YEAR_ZERO_BF = true;
 
         /** The date this calendar knows as current. */
-        private DSADate date;
+        private DSADateTime date;
 
         private int daysFromYear0ToBF = 0;
 
@@ -48,13 +48,13 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public DSADateCalendar()
         {
-            date = new DSADate();
+            date = new DSADateTime();
         }
 
         /** 
          * Creates a view following this calendar to the given date.
          */
-        public DSADateCalendar(DSADate date)
+        public DSADateCalendar(DSADateTime date)
         {
             this.date = date;
         }
@@ -62,7 +62,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /**
          * @return the {@link DSADate} that is represented using this calendar.
          */
-        public DSADate getDSADate()
+        public DSADateTime getDSADate()
         {
             return date;
         }
@@ -70,7 +70,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /**
          * Sets another {@link DSADate} to be represented using this calendar.
          */
-        public void setDSADate(DSADate date)
+        public void setDSADate(DSADateTime date)
         {
             this.date = date;
         }

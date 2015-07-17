@@ -187,6 +187,7 @@ namespace MeisterGeister.Net.Web
             //gespeicherte dg-location auf die heldengruppe anwenden.
             Global.HeldenLat = dglat;
             Global.HeldenLon = dglon;
+            Global.Standort = new DgSuche.Ortsmarke("Helden") { Latitude = String.Format("{0:0.00000000000000}", dglat), Longitude = String.Format("{0:0.00000000000000}", dglon) };
             
             //müsste anhand der koordinaten aus einer datenbank bestimmt werden.
             Global.HeldenRegion = "";

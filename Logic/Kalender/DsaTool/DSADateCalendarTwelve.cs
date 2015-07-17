@@ -29,7 +29,7 @@ public class DSADateCalendarTwelve : DSADateCalendar {
      * Creates a view following Bosparans fall calendar to the given date.
      * @see DSADateCalendar#DSADateCalendar(DSADate) 
      */
-    public DSADateCalendarTwelve(DSADate date) : base(date) {
+    public DSADateCalendarTwelve(DSADateTime date) : base(date) {
         init(MeisterGeister.Logic.Kalender.Kalender.BosparansFall);
     }
 
@@ -45,7 +45,7 @@ public class DSADateCalendarTwelve : DSADateCalendar {
      * Creates a view following the given calendar to the given date.
      * @see DSADateCalendar#DSADateCalendar(DSADate) 
      */
-    public DSADateCalendarTwelve(DSADate date, MeisterGeister.Logic.Kalender.Kalender kal)
+    public DSADateCalendarTwelve(DSADateTime date, MeisterGeister.Logic.Kalender.Kalender kal)
         : base(date)
     {
         init(kal);

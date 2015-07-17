@@ -14,10 +14,16 @@ namespace MeisterGeister.Model.Service {
 
         protected static volatile DatabaseDSAEntities _context = null;
         public static string ConnectionString = "metadata=res://*/Model.MeisterGeisterModel.csdl|res://*/Model.MeisterGeisterModel.ssdl|res://*/Model.MeisterGeisterModel.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=\"Data Source=|DataDirectory|" + "\\" + "Daten\\DatabaseDSA.sdf;Password=m3ist3rg3ist3r;Persist Security Info=False\"";
+        protected System.Windows.Threading.Dispatcher _dispatcher;
 
         static ServiceBase() {
             syncRoot = new Object();
             Context.SavingChanges += savingChanges;
+        }
+
+        public ServiceBase()
+        {
+            _dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
         }
 
         protected static event EventHandler savingChanges;

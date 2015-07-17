@@ -27,7 +27,7 @@ public class DSADateCalendarNorbards : DSADateCalendar {
      * Creates a view following this calendar to the given date.
      * @see DSADateCalendar#DSADateCalendar(DSADate) 
      */
-    public DSADateCalendarNorbards(DSADate date) : base(date){
+    public DSADateCalendarNorbards(DSADateTime date) : base(date){
         init();
     }
 

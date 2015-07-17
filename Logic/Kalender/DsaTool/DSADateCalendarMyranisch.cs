@@ -32,7 +32,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * Creates a view following this calendar to the given date.
          * @see DSADateCalendar#DSADateCalendar(DSADate) 
          */
-        public DSADateCalendarMyranisch(DSADate date)
+        public DSADateCalendarMyranisch(DSADateTime date)
             : base(date)
         {
             init();

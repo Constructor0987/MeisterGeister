@@ -31,7 +31,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * Creates a view following this calendar to the given date.
          * @see DSADateCalendar#DSADateCalendar(DSADate) 
          */
-        public DSADateCalendarGjalskerland(DSADate date)
+        public DSADateCalendarGjalskerland(DSADateTime date)
             : base(date)
         {
             init();
@@ -66,7 +66,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public const int YEAR_OFFSET_IN_DAYS = 10 * 30 + 19;
 
-        public const int DAYS_PER_MONTH = DSADate.MOON_MONTH_DAYS;
+        public const int DAYS_PER_MONTH = DSADateTime.MOON_MONTH_DAYS;
 
         public const int MONTHS_PER_YEAR = 13;
 

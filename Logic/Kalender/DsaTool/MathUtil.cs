@@ -155,11 +155,12 @@ public class MathUtil {
 		return (val % mod) + offset;
 	}
 
-	/**
-	 *	A shortcut for modulo(<em>val</em>, <em>mod</em>, 0).
-	 *
-	 * @see #modulo
-	 */
+	 /// <summary>
+     /// A shortcut for modulo(<em>val</em>, <em>mod</em>, 0).
+	 /// </summary>
+	 /// <param name="val"></param>
+	 /// <param name="mod"></param>
+	 /// <returns></returns>
 	public static long modulo(long val, long mod) {
 		return modulo(val, mod, 0);
 	}

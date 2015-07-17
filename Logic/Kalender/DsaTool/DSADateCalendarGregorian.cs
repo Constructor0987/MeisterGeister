@@ -35,7 +35,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /** 
          * Creates a view following this calendar to the given date.
          */
-        public DSADateCalendarGregorian(DSADate date)
+        public DSADateCalendarGregorian(DSADateTime date)
             : base(date)
         {
         }

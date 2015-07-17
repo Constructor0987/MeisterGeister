@@ -29,7 +29,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * Creates a view following the calendar based on Jurgas landing to the given date.
          * @see DSADateCalendar#DSADateCalendar(DSADate) 
          */
-        public DSADateCalendarThorwal(DSADate date)
+        public DSADateCalendarThorwal(DSADateTime date)
             : base(date)
         {
             init();

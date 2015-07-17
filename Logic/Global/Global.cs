@@ -131,7 +131,7 @@ namespace MeisterGeister
             {
                 Global._heldenLon = value;
                 Standort.Longitude = String.Format("{0:0.00000000000000}", _heldenLon);
-                OnStandortChanged();
+                //OnStandortChanged();
             }
         }
 
@@ -141,7 +141,7 @@ namespace MeisterGeister
             set { 
                 Global._heldenLat = value;
                 Standort.Latitude = String.Format("{0:0.00000000000000}", _heldenLat);
-                OnStandortChanged();
+                //OnStandortChanged();
             }
         }
 

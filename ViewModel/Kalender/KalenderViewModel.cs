@@ -38,8 +38,8 @@ namespace MeisterGeister.ViewModel.Kalender
             }
         }
 
-        private DSADate datum = new DSADate(DateTime.Now);
-        public DSADate Datum
+        private DSADateTime datum = new DSADateTime(DateTime.Now);
+        public DSADateTime Datum
         {
             get { return datum; }
             set { 
@@ -71,7 +71,7 @@ namespace MeisterGeister.ViewModel.Kalender
 
         private void DatumAufHeute()
         {
-            Datum = new DSADate(DateTime.Now);
+            Datum = new DSADateTime(DateTime.Now);
         }
 
         private void TagVor()

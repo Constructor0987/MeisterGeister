@@ -14,50 +14,68 @@ using System.Text;
 namespace MeisterGeister.Logic.Kalender.DsaTool
 {
 
-    public class DSADate
+    public class DSADateTime
     {
 
-        private long daysSinceBF = 0;
+        private long ticksSinceBF = 0;
 
-        /** Creates a date representing Praios 1st, 0 BF. */
-        public DSADate()
+        /// <summary>
+        /// Creates a date representing Praios 1st, 0 BF, 00:00. 
+        /// </summary>
+        public DSADateTime()
         {
-            daysSinceBF = 0;
+            ticksSinceBF = 0;
         }
 
-        /**
-         * Creates a date with the given number of days distance to Praios 1st, 0 BF. 
-         */
-        public DSADate(long daysSinceBF)
+        /// <summary>
+        /// Creates a date with the given number of ticks distance to Praios 1st, 0 BF, 00:00. 
+        /// </summary>
+        public DSADateTime(long ticksSinceBF)
         {
-            this.daysSinceBF = daysSinceBF;
+            this.ticksSinceBF = ticksSinceBF;
         }
 
         /**
          * Creates an Aventurian date based on the date on earth.
          * @see #setFromEarthDate(Date)
          */
-        public DSADate(DateTime earthDate)
+        public DSADateTime(DateTime earthDate)
         {
             setFromEarthDate(earthDate);
         }
 
-        /**
-         * @return the days since Praios 1st, 0 BF
-         */
-        public long getDaysSinceBF()
+        /// <returns>the ticks since Praios 1st, 0 BF</returns>
+        public long getTicksSinceBF()
         {
-            return daysSinceBF;
+            return ticksSinceBF;
         }
 
-        /**
-         * @param daysSinceBF the days since Praios 1st, 0 BF
-         */
-        public void setDaysSinceBF(int daysSinceBF)
+        /// <returns>the days since Praios 1st, 0 BF</returns>
+        public long getDaysSinceBF()
         {
-            this.daysSinceBF = daysSinceBF;
+            return ticksSinceBF / TICKS_PER_DAY;
+        }
+
+        /// <param name="ticksSinceBF">the ticks since Praios 1st, 0 BF</param>
+        public void setTicksSinceBF(long ticksSinceBF)
+        {
+            this.ticksSinceBF = ticksSinceBF;
             //setChanged();
         }
+
+        /// <param name="daysSinceBF">the ticks since Praios 1st, 0 BF</param>
+        public void setDaysSinceBF(long daysSinceBF)
+        {
+            this.ticksSinceBF = daysSinceBF * TICKS_PER_DAY + this.ticksSinceBF % TICKS_PER_DAY;
+            //setChanged();
+        }
+
+        /// <returns>The time part in a TimeSpan</returns>
+        public TimeSpan getTime()
+        {
+            return new TimeSpan(ticksSinceBF % TICKS_PER_DAY);
+        }
+
 
         /** The duration between two new moons in days. */
         public const int MOON_MONTH_DAYS = 28;
@@ -68,13 +86,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /** The duration between two new lunar eclipses in days. */
         public const int DAYS_BETWEEN_LUNAR_ECLIPSES = MOON_MONTH_DAYS * MOON_MONTHS_BETWEEN_LUNAR_ECLIPSES;
 
-        /**
-         * @return the day of the moon phase. 0 represents new moon.
-         */
+        /// <returns>the day of the moon phase. 0 represents new moon.</returns>
         public int getMoonday()
         {
             const int moonDayAtPraios1st0BF = 16;
-            return (int)MathUtil.modulo(daysSinceBF + moonDayAtPraios1st0BF, MOON_MONTH_DAYS);
+            return (int)MathUtil.modulo(getDaysSinceBF() + moonDayAtPraios1st0BF, MOON_MONTH_DAYS);
         }
 
         /**
@@ -85,8 +101,10 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public int getDaysSinceLastLunarEclipse()
         {
             const int daysSinceLastLunarEclipseAtPraios1st0BF = (15 - 1) + (24 - 1) * MOON_MONTH_DAYS;
-            return (int)MathUtil.modulo(daysSinceBF + daysSinceLastLunarEclipseAtPraios1st0BF, DAYS_BETWEEN_LUNAR_ECLIPSES);
+            return (int)MathUtil.modulo(getDaysSinceBF() + daysSinceLastLunarEclipseAtPraios1st0BF, DAYS_BETWEEN_LUNAR_ECLIPSES);
         }
+
+        public const long TICKS_PER_DAY = TimeSpan.TicksPerDay;
 
         /** The duration in days of a standard earth year. */
         public const int DAYS_PER_EARTH_YEAR = 365;
@@ -145,7 +163,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
                 earthJday++;
             }
 
-            DateTime earthDate = new DateTime((int)earthYear, 1, 1, 12, 0, 0);
+            DateTime earthDate = new DateTime((int)earthYear, 1, 1, 0, 0, 0) + getTime();
             earthDate = earthDate.AddDays(earthJday);
             // We choose noon to avoid problems at night when switching summer and winter time
             //logger.debug("Aventurian date " + daysSinceBF + " (Year " + avYear + " JDay " + avJday + ") --> " + earthDate);
@@ -198,8 +216,9 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
                 }
             }
             int daysSinceBF = avYear * DAYS_PER_EARTH_YEAR + avJday;
+            long ticksSinceBF = daysSinceBF + earthDate.TimeOfDay.Ticks;
             //logger.debug("Earth date " + earthDate.toString() + " --> " + daysSinceBF + " (Year " + avYear + " JDay " + avJday + ")");
-            setDaysSinceBF(daysSinceBF);
+            setTicksSinceBF(ticksSinceBF);
         }
 
         /**
@@ -207,7 +226,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public Season season()
         {
-            int jday = (int)MathUtil.modulo(daysSinceBF, DAYS_PER_EARTH_YEAR);
+            int jday = (int)MathUtil.modulo(getDaysSinceBF(), DAYS_PER_EARTH_YEAR);
             Season s = Season.Summer;
             if (jday < 60)
             {
@@ -237,9 +256,9 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * (The result may get negative if this date is before the other.)
          * @param other the date with which is compared
          */
-        public long daysAfter(DSADate other)
+        public long daysAfter(DSADateTime other)
         {
-            return (daysSinceBF - other.daysSinceBF);
+            return (ticksSinceBF - other.ticksSinceBF);
         }
 
         /**
@@ -248,7 +267,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public void addDays(int days)
         {
-            daysSinceBF += days;
+            ticksSinceBF += days * TICKS_PER_DAY;
             //setChanged();
         }
 
@@ -256,18 +275,18 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * Is this date after the other in the calendar?
          * @param other The date with which is compared.
          */
-        public bool isAfter(DSADate other)
+        public bool isAfter(DSADateTime other)
         {
-            return (daysSinceBF > other.daysSinceBF);
+            return (ticksSinceBF > other.ticksSinceBF);
         }
 
         /**
          * Is this date before the other in the calendar?
          * @param other The date with which is compared.
          */
-        public bool isBefore(DSADate other)
+        public bool isBefore(DSADateTime other)
         {
-            return (daysSinceBF < other.daysSinceBF);
+            return (ticksSinceBF < other.ticksSinceBF);
         }
 
         /**
@@ -276,11 +295,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public override bool Equals(object other)
         {
-            if (other is DSADate)
+            if (other is DSADateTime)
             {
-                DSADate o = (DSADate)other;
+                DSADateTime o = (DSADateTime)other;
                 //            logger.debug("Comparing days since BF " + daysSinceBF + " with " + o.daysSinceBF);
-                return (daysSinceBF == o.daysSinceBF);
+                return (ticksSinceBF == o.ticksSinceBF);
             }
             else
             {
@@ -290,12 +309,12 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public override int GetHashCode()
         {
-            return (int)daysSinceBF;
+            return ((Int64)ticksSinceBF).GetHashCode();
         }
 
         public override string ToString()
         {
-            return "DSADate(" + daysSinceBF + ")";
+            return "DSADate(" + ticksSinceBF + ")";
         }
     }
 }

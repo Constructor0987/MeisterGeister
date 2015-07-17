@@ -201,6 +201,11 @@ namespace MeisterGeister.Model.Service
         #region Einstellungen/Settings
         public Einstellung LoadEinstellungByName(string name)
         {
+            //Dies sorgt dafür dass die Datenbankzugriffe für Einstellungen aus dem richtigen Thread geschehen. Es ist eine Lösung, die man generalisieren könnte um den Datenbankzugriff generell threadsicher zu machen.
+            if(System.Windows.Threading.Dispatcher.CurrentDispatcher != _dispatcher)
+            {
+                return (Einstellung)_dispatcher.Invoke((Func<string, Einstellung>)LoadEinstellungByName, name);
+            }
             return Context.Einstellung.Where(e => e.Name == name).FirstOrDefault();
         }
 

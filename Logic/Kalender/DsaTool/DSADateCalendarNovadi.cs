@@ -30,7 +30,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * Creates a view following this calendar to the given date.
          * @see DSADateCalendar#DSADateCalendar(DSADate) 
          */
-        public DSADateCalendarNovadi(DSADate date)
+        public DSADateCalendarNovadi(DSADateTime date)
             : base(date)
         {
             init();
