@@ -7,6 +7,7 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:view="clr-namespace:MeisterGeister.View.Reise"
              xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:Kalender="clr-namespace:MeisterGeister.Logic.Kalender.DsaTool"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -15,6 +16,8 @@
     
     <UserControl.Resources>
         <General:EnumItemsSource x:Key="klimazonen" Type="{x:Type vm:Klimazone}"/>
+        <General:EnumItemsSource x:Key="jahreszeiten" Type="{x:Type Kalender:Season}"/>
+        <General:EnumToStringConverter x:Key="converter"/>
     </UserControl.Resources>
     
     <Expander IsExpanded="True">
@@ -34,6 +37,7 @@
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBlock FontWeight="Bold" Text="Klimazone:" VerticalAlignment="Center"/>
                     <ComboBox Margin="8,0,0,0" VerticalAlignment="Center" ItemsSource="{StaticResource klimazonen}" SelectedItem="{Binding Klimazone,Converter={StaticResource klimazonen}}"/>
+                    <ComboBox Margin="8,0,0,0" VerticalAlignment="Center" ItemsSource="{StaticResource jahreszeiten}" SelectedItem="{Binding Jahreszeit,Converter={StaticResource jahreszeiten}}"/>
                     <ListBox Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource RadioListBoxStyle}" SelectedValuePath="DataContext" SelectedValue="{Binding Windreich}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -58,10 +62,11 @@
                         <view:TagesWetterView/>
                     </TabItem>
                 </TabControl>
-                
-                <view:WetterGraph DataContext="{Binding Heute}" Grid.Row="1" Grid.Column="1" />
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,20,0,0">
+                    <view:WetterGraph />
+                    <TextBlock Margin="0,15,0,0" FontWeight="Black" Text="{Binding Heute.Unwetter, Converter={StaticResource converter}}" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
         </Border>
     </Expander>
-
 </UserControl>

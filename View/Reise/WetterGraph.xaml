@@ -4,11 +4,67 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
-             mc:Ignorable="d" 
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="300">
     <UserControl.Resources>
-        <vm:WetterToPathConverter x:Key="converter"/>
+        <General:EnumToStringConverter x:Key="converter"/>
+        <PathGeometry x:Key="line">
+            <PathGeometry.Transform>
+                <ScaleTransform ScaleX="{Binding Graph.Width}"/>
+            </PathGeometry.Transform>
+            <PathFigure StartPoint="0,0">
+                <LineSegment Point="1,0"/>
+            </PathFigure>
+        </PathGeometry>
     </UserControl.Resources>
-    <Path Stroke="Black" StrokeThickness="1" Data="{Binding Converter={StaticResource converter}}">
-    </Path>
+    <Canvas Background="Transparent" x:Name="canvas"
+            Width="{Binding Graph.Width}"
+            Height="{Binding Graph.Height}">
+
+        <!--Temperaturzonen-->
+        <ItemsControl ItemsSource="{Binding TemperaturZonen}" Width="{Binding Graph.Width}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <DataTemplate.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter Property="FontStyle" Value="Italic"/>
+                            <Setter Property="TextAlignment" Value="Right"/>
+                        </Style>
+                    </DataTemplate.Resources>
+
+                    <Grid x:Name="grid" Height="{Binding Height}" Background="Transparent" Canvas.Top="{Binding Offset}">
+                        <TextBlock Name="topText" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-36,-8,0,0" Text="{Binding MaxTemp}"/>
+                        <Path Name="topLine" Stroke="Gray" StrokeThickness="1" StrokeDashArray="5,5" VerticalAlignment="Top" Data="{StaticResource line}"/>
+
+                        <TextBlock Text="{Binding Klasse,Converter={StaticResource converter}}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <TextBlock Name="bottomText" Width="30" HorizontalAlignment="Left" Visibility="Hidden" VerticalAlignment="Bottom" Margin="-36,0,0,-8" Text="{Binding MinTemp}"/>
+                        <Path Name="bottomLine" Visibility="Hidden" Stroke="Gray" StrokeThickness="1" StrokeDashArray="5,5" VerticalAlignment="Bottom" Data="{StaticResource line}"/>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsColdest}" Value="true">
+                            <Setter TargetName="bottomText" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="bottomLine" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding MaxTemp}" Value="1">
+                            <Setter TargetName="bottomLine" Property="StrokeDashArray" Value="{x:Null}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding MaxTemp}" Value="0">
+                            <Setter TargetName="topLine" Property="StrokeDashArray" Value="{x:Null}"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--Kurve des Graphs-->
+        <Path Stroke="Black" StrokeThickness="1" Data="{Binding Graph.Geometry}"/>
+
+        <!--Achsen-->
+        <!--<Path Stroke="Black" StrokeThickness="1" Data="M0,0V100M-5,5L0,0L5,5"/>-->
+        <!--<Path Stroke="Black" StrokeThickness="1" Data="M0,100H300M295,95L300,100L295,105"/>-->
+
+    </Canvas>
 </UserControl>

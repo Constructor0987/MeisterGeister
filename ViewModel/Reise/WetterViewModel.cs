@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.Logic.Kalender.DsaTool;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,6 @@ namespace MeisterGeister.ViewModel.Reise
 {
     public class WetterViewModel : Base.ViewModelBase
     {
-        public WetterViewModel()
-        {
-
-        }
-
         private Wetter heute;
         public Wetter Heute
         {
@@ -27,6 +23,10 @@ namespace MeisterGeister.ViewModel.Reise
             {
                 heute = value;
                 OnChanged();
+                temperaturZonen = null;
+                OnChanged("TemperaturZonen");
+                if (graph != null)
+                    graph.Wetter = this;
             }
         }
 
@@ -36,10 +36,10 @@ namespace MeisterGeister.ViewModel.Reise
             heute.Klimazone = Klimazone;
             heute.Windreich = Windreich;
             heute.Wüste = Wüste;
-            //TODO: Jahreszeit setzten
+            heute.Jahreszeit = Jahreszeit;
             heute.Generiere();
-            
-            OnChanged("Heute");
+
+            Heute = heute;
         }
 
         private Klimazone klimazone = Klimazone.ZentralesMittelreich;
@@ -81,6 +81,63 @@ namespace MeisterGeister.ViewModel.Reise
             }
         }
 
+        private Season jahreszeit;
+
+        public Season Jahreszeit
+        {
+            get { return jahreszeit; }
+            set
+            {
+                jahreszeit = value;
+                generiere();
+                OnChanged();
+            }
+        }
+
+        private List<TemperaturZoneViewModel> temperaturZonen;
+
+        public List<TemperaturZoneViewModel> TemperaturZonen
+        {
+            get
+            {
+                if (temperaturZonen == null)
+                {
+                    List<TemperaturZoneViewModel> zonen = new List<TemperaturZoneViewModel>();
+                    int[] temps = new int[] { heute.Gestern.Nachttemperatur, heute.Tagestemperatur, heute.Nachttemperatur };
+                    int min = temps.Min();
+                    int max = temps.Max();
+                    TemperaturZoneViewModel zone = new TemperaturZoneViewModel(max);
+                    zonen.Add(zone);
+                    while (zone.MinTemp > min)
+                    {
+                        zone = zone.Kälter();
+                        zonen.Add(zone);
+                    }
+                    double heightPerDegree = Graph.Height / (double)(zonen.First().MaxTemp - zonen.Last().MinTemp);
+                    zonen.ForEach((z) =>
+                    {
+                        z.HeightPerDegree = heightPerDegree;
+                        z.UpdateHeight();
+                    });
+                    zonen.First().IsHottest = zonen.Last().IsColdest = true;
+                    temperaturZonen = zonen;
+                }
+                return temperaturZonen;
+            }
+        }
+
+        public int TemperaturDifferenz
+        {
+            get
+            {
+                int[] temps = new int[] { heute.Gestern.Nachttemperatur, heute.Tagestemperatur, heute.Nachttemperatur };
+                int min = temps.Min();
+                int max = temps.Max();
+                return max - min;
+            }
+        }
+
+
         private Base.CommandBase nächsterTagCmd = null;
         public Base.CommandBase NächsterTagCmd
         {
@@ -99,5 +156,22 @@ namespace MeisterGeister.ViewModel.Reise
         {
             Heute = Heute.Morgen;
         }
+
+        private WetterGraphViewModel graph;
+
+        public WetterGraphViewModel Graph
+        {
+            get
+            {
+                if (graph == null)
+                {
+                    graph = new WetterGraphViewModel();
+                    graph.Wetter = this;
+                }
+
+                return graph;
+            }
+        }
+
     }
 }

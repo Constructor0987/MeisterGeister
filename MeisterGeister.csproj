@@ -505,7 +505,8 @@
     </Compile>
     <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
     <Compile Include="ViewModel\Kalender\KalenderViewModel.cs" />
-    <Compile Include="ViewModel\Reise\WetterToPathConverter.cs" />
+    <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
+    <Compile Include="ViewModel\Reise\WetterGraphViewModel.cs" />
     <Compile Include="ViewModel\Reise\Wetter.cs" />
     <Compile Include="ViewModel\Kampf\GegnerViewModel.cs" />
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />

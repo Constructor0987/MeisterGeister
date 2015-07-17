@@ -202,6 +202,8 @@ namespace MeisterGeister.ViewModel.Reise
             jahreszeit = gestern.jahreszeit;
         }
 
+        #region Generierung
+        
         public void Generiere()
         {
             NeueWindstärke(); //2 Wind
@@ -209,8 +211,6 @@ namespace MeisterGeister.ViewModel.Reise
             NeueTemperatur(); //3 Temperatur
             NeuesUnwetter(); //5 Interpretation
         }
-
-        #region Generierung (Basis)
 
         /// <summary>
         /// Neue Bewölkung auswürfeln.
@@ -727,70 +727,6 @@ namespace MeisterGeister.ViewModel.Reise
             }
         }
 
-        /// <summary>
-        /// Anhand der generierten Werte wird bestimmt ob ein Unwetter auftritt
-        /// </summary>
-        private void NeuesUnwetter()
-        {
-            //Hier ermitteln wir zu welcher Temperatur das Unwetter auftritt.
-            //Das ist relevant um z.B. zu entscheiden ob es sich um Regen oder Schnee handelt
-            //Laut Regelwerk ist es bei geschlossener Wolkendecke möglich dass es nachts wärmer als Tagsüber ist
-            //Diesen Fall müssen wir prüfen sonst crasht der RandomNumberGenerator
-            double minTemp = Math.Min(Nachttemperatur, Tagestemperatur);
-            double maxTemp = Math.Max(Nachttemperatur, Tagestemperatur);
-            double unwetterTemp = Logic.General.RandomNumberGenerator.RandomNormalDistributionMinMax(minTemp, maxTemp);
-
-            if (Windstärke == Wind.Sturm && Wüste)
-            {
-                Unwetter = Unwetter.Sandsturm;
-                return;
-            }
-
-            if (Niederschlag == Niederschlag.Wolkenbruch && unwetterTemp < 0)
-            {
-                Unwetter = Unwetter.Hagelschlag;
-                return;
-            }
-
-            if (Windstärke == Wind.Sturm && Niederschlag == Niederschlag.Keiner)
-            {
-                Unwetter = Unwetter.Windhose;
-                return;
-            }
-
-            if (Windstärke == Wind.Sturm && Niederschlag >= Niederschlag.Nieselregen)
-            {
-                Unwetter = Unwetter.Gewitter;
-                return;
-            }
-
-            if (Windstärke >= Wind.StarkerWind && Niederschlag >= Niederschlag.Regen && unwetterTemp < 0)
-            {
-                Unwetter = Unwetter.Schneesturm;
-                return;
-            }
-
-            if (Niederschlag == Niederschlag.Wolkenbruch && unwetterTemp >= 0)
-            {
-                Unwetter = Unwetter.Starkregen;
-                return;
-            }
-
-            if (Windstärke >= Wind.StarkerWind)
-            {
-                Unwetter = Unwetter.HeftigerWind;
-                return;
-            }
-
-            if (Niederschlag == Niederschlag.Nieselregen && Bewölkung <= Wolken.EinzelneWolken)
-            {
-                Unwetter = Unwetter.Nebel;
-                return;
-            }
-
-            Unwetter = Unwetter.Keines;
-        }
-
         private void Veränderung()
         {
             int w = Logic.General.RandomNumberGenerator.W20;
@@ -969,6 +905,77 @@ namespace MeisterGeister.ViewModel.Reise
                     return;
             }
         }
+
+        #endregion
+
+        #region Auswertung
+
+        /// <summary>
+        /// Anhand der generierten Werte wird bestimmt ob ein Unwetter auftritt
+        /// </summary>
+        private void NeuesUnwetter()
+        {
+            //Hier ermitteln wir zu welcher Temperatur das Unwetter auftritt.
+            //Das ist relevant um z.B. zu entscheiden ob es sich um Regen oder Schnee handelt
+            //Laut Regelwerk ist es bei geschlossener Wolkendecke möglich dass es nachts wärmer als Tagsüber ist
+            //Diesen Fall müssen wir prüfen sonst crasht der RandomNumberGenerator
+            double minTemp = Math.Min(Nachttemperatur, Tagestemperatur);
+            double maxTemp = Math.Max(Nachttemperatur, Tagestemperatur);
+            double unwetterTemp = Logic.General.RandomNumberGenerator.RandomNormalDistributionMinMax(minTemp, maxTemp);
+
+            if (Windstärke == Wind.Sturm && Wüste)
+            {
+                Unwetter = Unwetter.Sandsturm;
+                return;
+            }
+
+            if (Niederschlag == Niederschlag.Wolkenbruch && unwetterTemp < 0)
+            {
+                Unwetter = Unwetter.Hagelschlag;
+                return;
+            }
+
+            if (Windstärke == Wind.Sturm && Niederschlag == Niederschlag.Keiner)
+            {
+                Unwetter = Unwetter.Windhose;
+                return;
+            }
+
+            if (Windstärke == Wind.Sturm && Niederschlag >= Niederschlag.Nieselregen)
+            {
+                Unwetter = Unwetter.Gewitter;
+                return;
+            }
+
+            if (Windstärke >= Wind.StarkerWind && Niederschlag >= Niederschlag.Regen && unwetterTemp < 0)
+            {
+                Unwetter = Unwetter.Schneesturm;
+                return;
+            }
+
+            if (Niederschlag == Niederschlag.Wolkenbruch && unwetterTemp >= 0)
+            {
+                Unwetter = Unwetter.Starkregen;
+                return;
+            }
+
+            if (Windstärke >= Wind.StarkerWind)
+            {
+                Unwetter = Unwetter.HeftigerWind;
+                return;
+            }
+
+            if (Niederschlag == Niederschlag.Nieselregen && Bewölkung <= Wolken.EinzelneWolken)
+            {
+                Unwetter = Unwetter.Nebel;
+                return;
+            }
+
+            Unwetter = Unwetter.Keines;
+        }
+
+        
+
 
         #endregion
 

@@ -17,7 +17,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -35,7 +34,6 @@
         <TextBlock Text="{Binding Tagestemperatur}" Grid.Column="1" Grid.Row="2"/>
         <TextBlock Text="{Binding Nachttemperatur}" Grid.Column="1" Grid.Row="3"/>
         <TextBlock Text="{Binding Niederschlag, Converter={StaticResource converter}}" Grid.Column="1" Grid.Row="4"/>
-        <TextBlock Text="{Binding Unwetter, Converter={StaticResource converter}}" Grid.ColumnSpan="2" Grid.Row="5"/>
         
     </Grid>
     <!--<StackPanel>
