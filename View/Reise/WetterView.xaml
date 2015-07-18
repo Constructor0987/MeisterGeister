@@ -31,7 +31,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="300"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
@@ -64,7 +64,7 @@
                 </TabControl>
                 <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,20,0,0">
                     <view:WetterGraph />
-                    <TextBlock Margin="0,15,0,0" FontWeight="Black" Text="{Binding Heute.Unwetter, Converter={StaticResource converter}}" HorizontalAlignment="Center"/>
+                    <TextBlock Margin="0,40,0,0" FontWeight="Black" Text="{Binding Heute.Unwetter, Converter={StaticResource converter}}" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Border>

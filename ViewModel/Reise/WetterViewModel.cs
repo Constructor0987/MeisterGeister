@@ -10,6 +10,8 @@ namespace MeisterGeister.ViewModel.Reise
 {
     public class WetterViewModel : Base.ViewModelBase
     {
+        #region Properties
+
         private Wetter heute;
         public Wetter Heute
         {
@@ -30,20 +32,7 @@ namespace MeisterGeister.ViewModel.Reise
             }
         }
 
-        private void generiere()
-        {
-            heute = new Wetter();
-            heute.Klimazone = Klimazone;
-            heute.Windreich = Windreich;
-            heute.Wüste = Wüste;
-            heute.Jahreszeit = Jahreszeit;
-            heute.Generiere();
-
-            Heute = heute;
-        }
-
         private Klimazone klimazone = Klimazone.ZentralesMittelreich;
-
         public Klimazone Klimazone
         {
             get { return klimazone; }
@@ -56,7 +45,6 @@ namespace MeisterGeister.ViewModel.Reise
         }
 
         private int windreich;
-
         public int Windreich
         {
             get { return windreich; }
@@ -69,7 +57,6 @@ namespace MeisterGeister.ViewModel.Reise
         }
 
         private bool wüste;
-
         public bool Wüste
         {
             get { return wüste; }
@@ -82,7 +69,6 @@ namespace MeisterGeister.ViewModel.Reise
         }
 
         private Season jahreszeit;
-
         public Season Jahreszeit
         {
             get { return jahreszeit; }
@@ -91,38 +77,6 @@ namespace MeisterGeister.ViewModel.Reise
                 jahreszeit = value;
                 generiere();
                 OnChanged();
-            }
-        }
-
-        private List<TemperaturZoneViewModel> temperaturZonen;
-
-        public List<TemperaturZoneViewModel> TemperaturZonen
-        {
-            get
-            {
-                if (temperaturZonen == null)
-                {
-                    List<TemperaturZoneViewModel> zonen = new List<TemperaturZoneViewModel>();
-                    int[] temps = new int[] { heute.Gestern.Nachttemperatur, heute.Tagestemperatur, heute.Nachttemperatur };
-                    int min = temps.Min();
-                    int max = temps.Max();
-                    TemperaturZoneViewModel zone = new TemperaturZoneViewModel(max);
-                    zonen.Add(zone);
-                    while (zone.MinTemp > min)
-                    {
-                        zone = zone.Kälter();
-                        zonen.Add(zone);
-                    }
-                    double heightPerDegree = Graph.Height / (double)(zonen.First().MaxTemp - zonen.Last().MinTemp);
-                    zonen.ForEach((z) =>
-                    {
-                        z.HeightPerDegree = heightPerDegree;
-                        z.UpdateHeight();
-                    });
-                    zonen.First().IsHottest = zonen.Last().IsColdest = true;
-                    temperaturZonen = zonen;
-                }
-                return temperaturZonen;
             }
         }
 
@@ -137,6 +91,51 @@ namespace MeisterGeister.ViewModel.Reise
             }
         }
 
+        private List<TemperaturZoneViewModel> temperaturZonen;
+        public List<TemperaturZoneViewModel> TemperaturZonen
+        {
+            get
+            {
+                if (temperaturZonen == null)
+                {
+                    int[] temps = new int[] { heute.Gestern.Nachttemperatur, heute.Tagestemperatur, heute.Nachttemperatur };
+                    int min = temps.Min();
+                    int max = temps.Max();
+                    temperaturZonen = TemperaturZoneViewModel.GetZonesInRange(min, max, Graph.Height);
+                }
+                return temperaturZonen;
+            }
+        }
+
+        private WetterGraphViewModel graph;
+        public WetterGraphViewModel Graph
+        {
+            get
+            {
+                if (graph == null)
+                {
+                    graph = new WetterGraphViewModel();
+                    graph.Wetter = this;
+                }
+
+                return graph;
+            }
+        }
+
+        #endregion
+
+        private void generiere()
+        {
+            Wetter wetter = new Wetter();
+            wetter.Klimazone = Klimazone;
+            wetter.Windreich = Windreich;
+            wetter.Wüste = Wüste;
+            wetter.Jahreszeit = Jahreszeit;
+            wetter.Generiere();
+            Heute = wetter;
+        }
+
+        #region Commands
 
         private Base.CommandBase nächsterTagCmd = null;
         public Base.CommandBase NächsterTagCmd
@@ -157,21 +156,6 @@ namespace MeisterGeister.ViewModel.Reise
             Heute = Heute.Morgen;
         }
 
-        private WetterGraphViewModel graph;
-
-        public WetterGraphViewModel Graph
-        {
-            get
-            {
-                if (graph == null)
-                {
-                    graph = new WetterGraphViewModel();
-                    graph.Wetter = this;
-                }
-
-                return graph;
-            }
-        }
-
+        #endregion
     }
 }

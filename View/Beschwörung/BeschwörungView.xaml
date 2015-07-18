@@ -7,7 +7,7 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
              mc:Ignorable="d" 
-             d:DesignHeight="571" d:DesignWidth="946" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+             d:DesignHeight="700" d:DesignWidth="946" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
     <UserControl.DataContext>
         <vm:BeschwörungViewModel />
     </UserControl.DataContext>

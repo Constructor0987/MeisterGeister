@@ -7,8 +7,37 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Reise
 {
+    /// <summary>
+    /// Stellt eine TemperaturZone für den WetterGraph dar
+    /// </summary>
     public class TemperaturZoneViewModel
     {
+        private static readonly int[] temperaturGrenzen = new int[]
+        {
+            -150, -100, -50, -35, -20, -10, 0, 10, 20, 30, 40, 55, 70, 100, 150, 250, 500, 1500
+        };
+
+        public static List<TemperaturZoneViewModel> GetZonesInRange(int min, int max, int height)
+        {
+            List<TemperaturZoneViewModel> zonen = new List<TemperaturZoneViewModel>();
+            TemperaturZoneViewModel zone = new TemperaturZoneViewModel(max);
+            zonen.Add(zone);
+            while (zone.MinTemp > min)
+            {
+                zone = zone.Kälter();
+                zonen.Add(zone);
+            }
+            double heightPerDegree = height / (double)(zonen.First().MaxTemp - zonen.Last().MinTemp);
+            zonen.ForEach((z) =>
+            {
+                z.HeightPerDegree = heightPerDegree;
+                z.Height = z.TempDiff * heightPerDegree;
+            });
+            zonen.First().IsHottest = zonen.Last().IsColdest = true;
+            return zonen;
+        }
+
+        #region Properties
         public int MinTemp { get; private set; }
         public int MaxTemp { get; private set; }
         public int TempDiff
@@ -16,47 +45,48 @@ namespace MeisterGeister.ViewModel.Reise
             get { return MaxTemp - MinTemp; }
         }
         public Temperaturklasse Klasse { get; private set; }
+        /// <summary>
+        /// Höhe der Zone im Graph
+        /// </summary>
         public double Height { get; set; }
+        /// <summary>
+        /// Höhe eines Grads im Graph
+        /// </summary>
         public double HeightPerDegree { get; set; }
+        /// <summary>
+        /// Gibt an ob es die Kälteste Temperaturzone im Graphen ist
+        /// </summary>
         public bool IsColdest { get; set; }
+        /// <summary>
+        /// Gibt an ob es die heisseste Temperaturzone im Graphen ist
+        /// </summary>
         public bool IsHottest { get; set; }
+        #endregion
 
-        public TemperaturZoneViewModel(int temp, double heightPerDegree=0)
+        public TemperaturZoneViewModel(int temp)
         {
             Klasse = getTemperaturKlasse(temp);
             int[] bounds = getTemperaturGrenzen(Klasse);
             MinTemp = bounds[0];
             MaxTemp = bounds[1];
-            Height = TempDiff * heightPerDegree;
-            HeightPerDegree = heightPerDegree;
             IsColdest = IsHottest = false;
-        }
-
-        public void UpdateHeight()
-        {
-            Height = TempDiff * HeightPerDegree;
         }
 
         public TemperaturZoneViewModel Wärmer()
         {
             if (Klasse == Temperaturklasse.Eisenschmelze)
                 return this;
-            else return new TemperaturZoneViewModel(MaxTemp + 1, HeightPerDegree);
+            else return new TemperaturZoneViewModel(MaxTemp + 1);
         }
 
         public TemperaturZoneViewModel Kälter()
         {
             if (Klasse == Temperaturklasse.NiederhöllischKalt)
                 return this;
-            else return new TemperaturZoneViewModel(MinTemp - 1, HeightPerDegree);
+            else return new TemperaturZoneViewModel(MinTemp - 1);
         }
 
-        private static readonly int[] temperaturGrenzen = new int[]
-        {
-            -150, -100, -50, -35, -20, -10, 0, 10, 20, 30, 40, 55, 70, 100, 150, 250, 500, 1500
-        };
-
-        public Temperaturklasse getTemperaturKlasse(int temp)
+        private Temperaturklasse getTemperaturKlasse(int temp)
         {
             Temperaturklasse klasse = Temperaturklasse.NiederhöllischKalt;
             for (int i = 0; i < temperaturGrenzen.Length; i++)
@@ -70,7 +100,7 @@ namespace MeisterGeister.ViewModel.Reise
             return klasse;
         }
 
-        public int[] getTemperaturGrenzen(Temperaturklasse klasse)
+        private int[] getTemperaturGrenzen(Temperaturklasse klasse)
         {
             int indexOfUpperBound = (int)klasse + 8;
             return new int[]
