@@ -116,7 +116,6 @@ namespace MeisterGeister.View.Bodenplan
             switch (e.Key)
             {
                 case Key.Escape:
-                case Key.Enter:
                     FinishInput();
                     break;
             }
