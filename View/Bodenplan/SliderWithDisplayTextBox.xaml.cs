@@ -113,11 +113,9 @@ namespace MeisterGeister.View.Bodenplan
 
         private void UIStrokeThicknessTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            if (e.Key == Key.Escape)
             {
-                case Key.Escape:
-                    FinishInput();
-                    break;
+                FinishInput();
             }
         }
 
