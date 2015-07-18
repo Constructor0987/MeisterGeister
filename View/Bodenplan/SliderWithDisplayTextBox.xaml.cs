@@ -20,6 +20,8 @@ namespace MeisterGeister.View.Bodenplan
     /// </summary>
     public partial class SliderWithDisplayTextBox : UserControl
     {
+        private double? _savedSliderValue;
+
         public SliderWithDisplayTextBox()
         {
             InitializeComponent();
@@ -106,23 +108,47 @@ namespace MeisterGeister.View.Bodenplan
 
         private void UIStrokeThicknessTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (UIStrokeThicknessTextBox.Text.Length == 0) return;
-            if (SliderValue != Convert.ToDouble(UIStrokeThicknessTextBox.Text)) UpdateSliderAndValue(); //, CultureInfo.InvariantCulture
+            FinishInput();
         }
 
         private void UIStrokeThicknessTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.Key==Key.Escape) UpdateSliderAndValue();
-        }
-
-        private void UpdateSliderAndValue()
-        {
-            if(UIStrokeThicknessTextBox.Text!="") SliderValue = Convert.ToDouble(UIStrokeThicknessTextBox.Text);
+            switch (e.Key)
+            {
+                case Key.Escape:
+                case Key.Enter:
+                    FinishInput();
+                    break;
+            }
         }
 
         private void UIStrokeThicknessTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            UpdateSliderAndValue();
+            double newSliderValue;
+            if (double.TryParse(UIStrokeThicknessTextBox.Text, out newSliderValue)) SliderValue = newSliderValue;
+        }
+
+        private void UIStrokeThicknessTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            _savedSliderValue = SliderValue;
+        }
+
+        private void FinishInput()
+        {
+            double newSliderValue;
+            if (double.TryParse(UIStrokeThicknessTextBox.Text, out newSliderValue))
+            {
+                SliderValue = newSliderValue;
+                _savedSliderValue = newSliderValue;
+            }
+            else CancelInput();
+
+        }
+
+        private void CancelInput()
+        {
+            SliderValue = _savedSliderValue;
+            UIStrokeThicknessTextBox.Text = _savedSliderValue.ToString();
         }
     }
 }
