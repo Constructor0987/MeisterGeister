@@ -94,10 +94,10 @@
                                 <Setter TargetName="bottomLine" Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding MaxTemp}" Value="1">
-                                <Setter TargetName="bottomLine" Property="StrokeDashArray" Value="{x:Null}"/>
+                                <Setter TargetName="bottomLine" Property="Stroke" Value="Gray"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding MaxTemp}" Value="0">
-                                <Setter TargetName="topLine" Property="StrokeDashArray" Value="{x:Null}"/>
+                                <Setter TargetName="topLine" Property="Stroke" Value="Gray"/>
                             </DataTrigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>

@@ -477,6 +477,7 @@
     <Compile Include="ViewModel\AudioPlayer\Logic\MusikZeileVM.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
+    <Compile Include="ViewModel\Beschwörung\OldBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
@@ -620,6 +621,9 @@
     </Compile>
     <Compile Include="View\Beschwörung\BeschwörungView.xaml.cs">
       <DependentUpon>BeschwörungView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\OldBeschwörungView.xaml.cs">
+      <DependentUpon>OldBeschwörungView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Bodenplan\BattlegroundView.xaml.cs">
       <DependentUpon>BattlegroundView.xaml</DependentUpon>
@@ -1052,6 +1056,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Beschwörung\BeschwörungView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\OldBeschwörungView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
