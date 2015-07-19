@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Helden.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,6 +11,58 @@ namespace MeisterGeister.ViewModel.Beschwörung
 {
     public class BeschwörungViewModel : Base.ViewModelBase
     {
+        public BeschwörungViewModel() : base(View.General.ViewHelper.ShowProbeDialog)
+        {
+            DatenHolen();
+            
+        }
+
+        private void DatenHolen()
+        {
+            DämonenListe = Global.ContextHeld.LoadDämonen();
+            OnProbeWürfeln = new Base.CommandBase(ProbeWürfeln, null);
+        }
+
+        List<GegnerBase> dämonenListe;
+
+        private Base.CommandBase onProbeWürfeln;
+        public Base.CommandBase OnProbeWürfeln
+        {
+            get { return onProbeWürfeln; }
+            set { onProbeWürfeln = value; }
+        }
+
+        private void ProbeWürfeln(object obj)
+        {
+            int zfw = 0;
+            Held_Zauber hz = Global.SelectedHeld.GetHeldZauber("Invocatio minor", false, out zfw, false);
+            if (hz == null)
+                return;
+            Held h = hz.Held;
+            Model.Zauber z = hz.Zauber;
+            z.Fertigkeitswert = zfw;
+            var ergebnis = ShowProbeDialog(z, hz.Held);
+            if (ergebnis != null && ergebnis.Gelungen)
+            {
+                int hörner = View.General.ViewHelper.ShowWürfelDialog("2W6", "Würfele die Anzahl der Hörner");
+                //MeisterGeister.Logic.General.Würfel.Parse("2W6", true);
+            }
+            Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
+            kontrollwert.Abkürzung = "KW";
+            kontrollwert.Fertigkeitswert = 0;
+            kontrollwert.Wert = (int)Math.Round(h.Mut + zfw / 5.0, MidpointRounding.AwayFromZero);
+            kontrollwert.WerteNamen = "Kontrollwert";
+            kontrollwert.Modifikator = +8;
+            var kwergebnis = ShowProbeDialog(kontrollwert, h);
+        }
+
+        private List<GegnerBase> DämonenListe
+        {
+            get { return dämonenListe; }
+            set { Set(ref dämonenListe, value); }
+        }
+
+
         private void OnInputChanged([CallerMemberName]string propertyName = null)
         {
             base.OnChanged(propertyName);

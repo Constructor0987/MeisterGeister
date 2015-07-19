@@ -156,7 +156,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         /// <summary>
         /// Die Restdauer der Aktion in Aktionen.
         /// </summary>
-        public double VerbleibendeDauer
+        public virtual double VerbleibendeDauer
         {
             get { return verbleibendeDauer; }
             set

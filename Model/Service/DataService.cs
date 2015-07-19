@@ -382,5 +382,11 @@ namespace MeisterGeister.Model.Service
         }
         #endregion
 
+        #region Beschwörung
+        public List<GegnerBase> LoadDämonen()
+        {
+            return Context.GegnerBase.Where(g => g.Typ == "Dämon").ToList();
+        }
+        #endregion
     }
 }

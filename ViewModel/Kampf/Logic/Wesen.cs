@@ -150,10 +150,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             return li;
         }
 
-        Mod.ModifikatorenListe _modifikatoren = new Mod.ModifikatorenListe();
+        Mod.ModifikatorenListe _modifikatoren = null;
         public Mod.ModifikatorenListe Modifikatoren
         {
-            get { return _modifikatoren; }
+            get {
+                if(_modifikatoren == null)
+                    _modifikatoren = new Mod.ModifikatorenListe();
+                return _modifikatoren; 
+            }
         }
 
         public int GetModifikatorCount<T>()

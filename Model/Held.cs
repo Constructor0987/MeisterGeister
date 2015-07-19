@@ -1129,6 +1129,38 @@ namespace MeisterGeister.Model {
         }
 
         /// <summary>
+        /// Held_Zauber nach zauberName.
+        /// exactMatch==false ermöglicht suche nach dem Muster zauberName*.
+        /// Bei Mehrfachtreffern wird der Eintrag mit dem höchsten Modifizierten ZfW zurückgegeben.
+        /// </summary>
+        public Held_Zauber GetHeldZauber(string zauberName, bool nurPositiv, out int zfw, bool exactMatch = true)
+        {
+            Held_Zauber ret = null;
+            int maxzfw = Int32.MinValue;
+            foreach (Model.Held_Zauber ht in Held_Zauber.Where(h => (exactMatch && h.Zauber.Name == zauberName) || (!exactMatch && h.Zauber.Name.StartsWith(zauberName))))
+            {
+                int _zfw = ht.ZfW ?? 0;
+                if (Modifikatoren != null)
+                {
+                    List<Mod.IModZauberwert> l = Modifikatoren.Where(m => m is Mod.IModZauberwert && (((Mod.IModZauberwert)m).Zaubername == null || ((Mod.IModZauberwert)m).Zaubername.Count == 0 || ((Mod.IModZauberwert)m).Zaubername.Contains(ht.Zauber.Name))).Select(m => (Mod.IModZauberwert)m).OrderBy(m => m.Erstellt).ToList();
+                    foreach (Mod.IModZauberwert m in l)
+                    {
+                        int zfneu = m.ApplyZauberwertMod(_zfw);
+                        if (!nurPositiv || zfneu > _zfw)
+                            _zfw = zfneu;
+                    }
+                }
+                if (maxzfw < _zfw)
+                {
+                    maxzfw = _zfw;
+                    ret = ht;
+                }
+            }
+            zfw = maxzfw;
+            return ret;
+        }
+
+        /// <summary>
         /// Der ZfW eines Zaubers.
         /// </summary>
         public int Zauberfertigkeitswert(string zauberName, bool nurPositiv = false, bool exactMatch = true) {

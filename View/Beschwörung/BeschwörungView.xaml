@@ -285,7 +285,7 @@
         <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="16" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="16" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <Button Content="Beschwören" Grid.Row="17" Grid.Column="2"/>
+        <Button Content="Beschwören" Grid.Row="17" Grid.Column="2" Command="{Binding OnProbeWürfeln}"/>
         <Button Content="Beherrschen" Grid.Row="17" Grid.Column="3"/>
 
     </Grid>
