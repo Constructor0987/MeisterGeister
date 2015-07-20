@@ -25,6 +25,8 @@ namespace MeisterGeister.Net.Web
             _listenerThread = new Thread(HandleRequests);
         }
 
+        [System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptions]
+        [System.Security.SecurityCritical]
         public void Start(int port, string url = "")
         {
             _listener.Prefixes.Add(String.Format(@"http://localhost:{0}/{1}", port, url));
