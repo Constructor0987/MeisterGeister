@@ -318,6 +318,14 @@
                                         <Image Source="/Images/Icons/kalender.png" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem x:Name="_menuItemKarte" Height="28" Click="ButtonTool_Click" Tag="Karte" ToolTip="Karte" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Karte (INTERN)" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/kartenzeichnen.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem x:Name="_menuItemReise" Height="28" Click="ButtonTool_Click" Tag="Reise" ToolTip="Reise-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}">
                                     <MenuItem.Header>
                                         <TextBlock Text="Reise-Tool (INTERN)" VerticalAlignment="Center" />

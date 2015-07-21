@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="MeisterGeister.View.Karte.KarteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+             xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
+    </UserControl.Resources>
+    <Border BorderThickness="1" BorderBrush="Gray" Background="White">
+        <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
+                           MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
+                           Mode="Fill" TranslateX="0" TranslateY="0"
+                           LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
+                           ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"
+                           VerticalAlignment="Bottom" >
+            <Canvas x:Name="mapCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}">
+                <Canvas.ContextMenu>
+                    <ContextMenu Name="contextMenu" General:TrackBehavior.TrackOpenLocation="True">
+                        <MenuItem Header="Position setzen" Command="{Binding Path=PlacementTarget.DataContext.OnHeldenPositionSetzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                            <MenuItem.Icon>
+                                <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="25"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </Canvas.ContextMenu>
+                <Image Source="pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
+                <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="{Binding Zoom,ElementName=MapScrollViewer,Converter={StaticResource MGIconZoomConverter} }" Canvas.Left="{Binding HeldenX}" Canvas.Top="{Binding HeldenY}"  />
+            </Canvas>
+        </wpfxc:ZoomControl>
+    </Border>
+</UserControl>

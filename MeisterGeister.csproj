@@ -218,6 +218,7 @@
     <Compile Include="Logic\General\Würfel.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
     <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
+    <Compile Include="Logic\Karte\DereGlobusToMapConverter.cs" />
     <Compile Include="Logic\Literatur\ILiteratur.cs" />
     <Compile Include="Logic\Literatur\Literaturangabe.cs" />
     <Compile Include="Logic\Literatur\LiteraturPfadMissingException.cs" />
@@ -506,6 +507,8 @@
     </Compile>
     <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
     <Compile Include="ViewModel\Kalender\KalenderViewModel.cs" />
+    <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
+    <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
     <Compile Include="ViewModel\Reise\WetterGraphViewModel.cs" />
     <Compile Include="ViewModel\Reise\Wetter.cs" />
@@ -711,6 +714,7 @@
     <Compile Include="View\General\TextBoxModInfo.xaml.cs">
       <DependentUpon>TextBoxModInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\TrackBehavior.cs" />
     <Compile Include="View\General\ValueConverterGroup.cs" />
     <Compile Include="View\General\ViewHelper.cs" />
     <Compile Include="View\General\WürfelValidationRule.cs" />
@@ -778,8 +782,12 @@
     <Compile Include="View\Proben\ProbenView.xaml.cs">
       <DependentUpon>ProbenView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Karte\MGIconZoomConverter.cs" />
     <Compile Include="View\Reise\ReiseView.xaml.cs">
       <DependentUpon>ReiseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Karte\KarteView.xaml.cs">
+      <DependentUpon>KarteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Reise\WetterGraph.xaml.cs">
       <DependentUpon>WetterGraph.xaml</DependentUpon>
@@ -1210,6 +1218,10 @@
     <Page Include="View\Reise\ReiseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Karte\KarteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Reise\WetterGraph.xaml">
       <SubType>Designer</SubType>
@@ -1822,6 +1834,10 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0099.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0100.sql" />
     <Resource Include="Images\Icons\General\sort1.png" />
+    <Resource Include="Images\Logos\MG_Icon_mit_Zeiger_oben_links.png" />
+    <None Include="Images\Karten\Aventurien.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

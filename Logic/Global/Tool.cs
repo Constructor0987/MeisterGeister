@@ -188,6 +188,13 @@ namespace MeisterGeister
                     MenuGruppe = "Wege des Wanderers",
                     ViewType = typeof(View.Reise.ReiseView)
                 });
+                ToolListe.Add("Karte", new Tool()
+                {
+                    Name = "Karte",
+                    Icon = "Icons/kartenzeichnen.png",
+                    MenuGruppe = "Wege des Wanderers",
+                    ViewType = typeof(View.Karte.KarteView)
+                });
             }
         }
 
