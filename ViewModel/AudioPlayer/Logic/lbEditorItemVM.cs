@@ -505,7 +505,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                             PlayerVM.SelectedEditorThemeItem = PlayerVM.FilteredEditorThemeListBoxItemListe[0];
                         
                         Global.SetIsBusy(false);
-                        ViewHelper.Popup("Das Theme wurde erfolgreich gelöscht.");
                     }
                 }
                 else

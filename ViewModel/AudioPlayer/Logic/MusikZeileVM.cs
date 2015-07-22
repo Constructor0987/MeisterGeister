@@ -556,7 +556,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                         if (!grpobj._listZeile[i].FadingOutStarted && grpobj._listZeile[i].istLaufend)
                         {
                             grpobj._listZeile[i].FadingOutStarted = true;
-                            aPlayerVM.FadingOut(grpobj._listZeile[i], true, true);
+                            aPlayerVM.FadingOut(grpobj._listZeile[i], grpobj, true, true);
 
                             grpobj._listZeile[i].istLaufend = false;
                             grpobj._listZeile[i].audioZeileVM.Progress = 0;// .pbarTitel.Value = 0;
@@ -564,10 +564,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                         }
                     }
                 }
-                //aPlayerVM.BGPlayer.AktPlaylist = null;
-                //aPlayerVM.BGPlayerAktPlaylist = null;
                 aPlayerVM.CheckPlayStandbySongs(grpobj);
                 grpobj.totalTimePlylist = -1;
+
+                // Gruppenobject des Geräuschs wieder löschen damit Speicher freigegeben werden kann
+                if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
+                    aPlayerVM._GrpObjecte.Remove(grpobj);
             }
             aPlayerVM.ErwPlayerGeräuscheAktiv = aPlayerVM.ErwPlayerGeräuscheAktiv;
         }

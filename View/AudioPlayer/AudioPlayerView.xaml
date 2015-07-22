@@ -546,12 +546,12 @@
                                 </RowDefinition> 
                             </Grid.RowDefinitions>
 
-                            <Expander Name="exEditorTheme" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Margin="0,-1,7,10" VerticalAlignment="Top" VerticalContentAlignment="Top" 
+                            <Expander Name="exEditorTheme" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Margin="0,-1,7,10" VerticalAlignment="Stretch" VerticalContentAlignment="Top" 
                                       Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditTheme, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                 <Expander.Header>
                                     <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
-                                <Border Style="{DynamicResource ControlContentBorder}" ToolTip="Theme zum Editieren auswählen">
+                                <Border Style="{DynamicResource ControlContentBorder}" ToolTip="Theme zum Editieren auswählen" VerticalAlignment="Stretch">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -1899,7 +1899,6 @@
                                         Text="{Binding Path=SuchTextErwPlayerTheme, UpdateSourceTrigger=PropertyChanged}"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"  />
                                 </Grid>
-
                             </Border>
 
                             <StackPanel Orientation="Horizontal" Grid.Column="1" Width="140" HorizontalAlignment="Right" >
@@ -2277,7 +2276,8 @@
                             <Expander.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                     <Image Source="/Images/Icons/General/speaker.png" Margin="0,2,0,-2" />
-                                    <TextBlock Text="Geräusche-Playlisten" Style="{DynamicResource TextTitel}" />
+                                    <TextBlock Text="Geräusche-Playlisten" Style="{DynamicResource TextTitel}"
+                                              ToolTip="{Binding _GrpObjecte.Count, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">

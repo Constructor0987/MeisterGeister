@@ -539,7 +539,7 @@ namespace MeisterGeister.View.AudioPlayer
                         if (!grpobj._listZeile[i].FadingOutStarted && grpobj._listZeile[i].istLaufend)
                         {
                             grpobj._listZeile[i].FadingOutStarted = true;
-                            VM.FadingOut(grpobj._listZeile[i], true, true);
+                            VM.FadingOut(grpobj._listZeile[i], grpobj, true, true);
 
                             grpobj._listZeile[i].istLaufend = false;
                             grpobj._listZeile[i].audioZeileVM.TitelMinimum = 0;
@@ -730,9 +730,15 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void brdEditorTheme_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("meinListBoxItemIcon"))
+            //if (e.Data.GetDataPresent("meinListBoxItemIcon"))
+            //{
+            //    VM.ThemeItemIconAblegen(e.Data.GetData("meinListBoxItemIcon") as Audio_Playlist);
+            //    VM._dndZeilenCursor = null;
+            //}
+            if (e.Data.GetDataPresent("lbiPlaylistVM"))
             {
-                VM.ThemeItemIconAblegen(e.Data.GetData("meinListBoxItemIcon") as Audio_Playlist);
+                lbEditorItemVM source = e.Data.GetData("lbiPlaylistVM") as lbEditorItemVM;
+                VM.ThemeItemIconAblegen(source.APlaylist);
                 VM._dndZeilenCursor = null;
             }
         }
@@ -746,7 +752,7 @@ namespace MeisterGeister.View.AudioPlayer
                 AZeileAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, null, aplaylist, e, sender);
             }
             else
-                if (e.Data.GetDataPresent("meinListBoxItemIcon"))
+                if (e.Data.GetDataPresent("lbiPlaylistVM"))
                     VM._dndZeilenCursor = null;
         }
 
@@ -1058,27 +1064,27 @@ namespace MeisterGeister.View.AudioPlayer
 
 
 
-        private void lbiEditorPlaylist_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (VM == null || VM.rbEditorEditPlaylist) return;
-            if (VM.DnDZielObject == null ||
-                VM.DnDZielObject is AudioZeile ||
-                ((sender) as StackPanel).Tag == null)
-                return;
+        //private void lbiEditorPlaylist_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (VM == null || VM.rbEditorEditPlaylist) return;
+        //    if (VM.DnDZielObject == null ||
+        //        VM.DnDZielObject is AudioZeile ||
+        //        ((sender) as StackPanel).Tag == null)
+        //        return;
 
-            Point mousePos = e.GetPosition(null);
+        //    Point mousePos = e.GetPosition(null);
 
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                Audio_Playlist aPlaylist = (Audio_Playlist)((sender) as StackPanel).Tag;
+        //    if (e.LeftButton == MouseButtonState.Pressed)
+        //    {
+        //        Audio_Playlist aPlaylist = (Audio_Playlist)((sender) as StackPanel).Tag;
 
-                // Initialisiere drag & drop Operation
-                DataObject dragData = new DataObject("meinListBoxItemIcon", aPlaylist);
-                VM.DnDZielObject = aPlaylist;
-                DragDrop.DoDragDrop(sender as StackPanel, dragData, DragDropEffects.All);
-                VM.DnDZielObject = null;
-            }
-        }
+        //        // Initialisiere drag & drop Operation
+        //        DataObject dragData = new DataObject("meinListBoxItemIcon", aPlaylist);
+        //        VM.DnDZielObject = aPlaylist;
+        //        DragDrop.DoDragDrop(sender as StackPanel, dragData, DragDropEffects.All);
+        //        VM.DnDZielObject = null;
+        //    }
+        //}
 
         private void sldPlaylistWartezeit_MouseWheel(object sender, MouseWheelEventArgs e)
         {

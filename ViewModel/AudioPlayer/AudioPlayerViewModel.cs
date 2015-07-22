@@ -680,6 +680,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             public bool mPlayerStoppen;
             public Musik BG;
             public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.KlangZeile klZeile;
+            public GruppenObjekt grpobj = null;
         }
 
         [DependentProperty("AktKlangPlaylist")]
@@ -868,7 +869,16 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         public MediaPlayer FadingIn_Started = new MediaPlayer();
         public MediaPlayer FadingOut_Started = new MediaPlayer();
 
-        public List<GruppenObjekt> _GrpObjecte = new List<GruppenObjekt>();
+        private List<GruppenObjekt> _grpObjecte = new List<GruppenObjekt>();
+        public List<GruppenObjekt> _GrpObjecte
+        {
+            get { return _grpObjecte; }
+            set
+            {
+                _grpObjecte = value;
+                OnChanged();
+            }
+        }
 
         public double fadingIntervall = 10;
         public double fadingTime = 600;    // * fadingIntervall = Übergang in ms
@@ -5476,8 +5486,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             _timerFadingIn.Tag = fadInfo;
             _timerFadingIn.Start();
         }
-
-
+        
         public void _timerFadingIn_Tick(object sender, EventArgs e)
         {
             Fading fadInfo = (Fading)_timerFadingIn.Tag;
@@ -5508,8 +5517,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
         
-
-        public void FadingOut(MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.KlangZeile klZeile, bool playerStoppen, bool sofort)
+        public void FadingOut(MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.KlangZeile klZeile, GruppenObjekt grpobj, bool playerStoppen, bool sofort)
         {
             try
             {
@@ -5710,7 +5718,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }
 
                 for (int c = 0; c < grpToDelete.Count; c++)
+                {
                     fadInfo.gruppenOut.Remove(grpToDelete[c]);
+
+                    _GrpObjecte.Remove(grpToDelete[c].grpobj);
+                }
 
                 if (fadInfo.gruppenOut.Count == 0)
                     _timerFadingOutGeräusche.Stop();
@@ -5747,6 +5759,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         {
                             fadInfo.mp.Stop();
                             fadInfo.mp.Close();
+
                         }
                         if (!fadInfo.mPlayerStoppen && fadInfo.klZeile.FadingOutStarted)
                         {
@@ -5759,6 +5772,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         fadInfo.klZeile.FadingOutStarted = false;
                         FadingOut_Started = null;
                         _timerFadingOut.Stop();
+                        if (fadInfo.mPlayerStoppen && fadInfo.klZeile.FadingOutStarted)
+                            _GrpObjecte.Remove(fadInfo.grpobj);
                     }
                 }
             }
@@ -6046,7 +6061,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                         if (!KlangZeilenLaufend[durchlauf].FadingOutStarted)
                                         {
                                             KlangZeilenLaufend[durchlauf].FadingOutStarted = true;
-                                            FadingOut(KlangZeilenLaufend[durchlauf], true, false);
+                                            FadingOut(KlangZeilenLaufend[durchlauf], _GrpObjecte[posObjGruppe], true, false);
                                         }
 
                                         KlangZeilenLaufend[durchlauf].istLaufend = false;
@@ -6485,7 +6500,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                     if (!klZeile.FadingOutStarted)
                                     {
                                         klZeile.FadingOutStarted = true;
-                                        FadingOut(klZeile, true, true);
+                                        FadingOut(klZeile, grpObj, true, true);
                                     }
                                 }
                                 else
@@ -6848,7 +6863,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         if (!kZeile.FadingOutStarted)
                         {
                             kZeile.FadingOutStarted = true;
-                            FadingOut(kZeile, true, true);
+                            FadingOut(kZeile, grpobj, true, true);
                         }
                     }
                 }
