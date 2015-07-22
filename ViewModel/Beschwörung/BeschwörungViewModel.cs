@@ -1,7 +1,10 @@
-﻿using MeisterGeister.Model;
+﻿using MeisterGeister.Logic.General;
+using MeisterGeister.Model;
+using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -9,75 +12,159 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Beschwörung
 {
-    public class BeschwörungViewModel : Base.ViewModelBase
+    public abstract class BeschwörungViewModel : Base.ViewModelBase
     {
-        public BeschwörungViewModel() : base(View.General.ViewHelper.ShowProbeDialog)
+        public BeschwörungViewModel()
+            : base(View.General.ViewHelper.ShowProbeDialog)
         {
-            DatenHolen();
+            Wesen = Global.ContextHeld.LoadDämonen();
+            beschwören = new Base.CommandBase(beschwöre, null);
+            beherrschen = new Base.CommandBase(beherrsche, null);
+            reset();
+        }
+
+        protected virtual void reset()
+        {
             
+            Beschwörungsschwierigkeit = Kontrollschwierigkeit = 0;
+            Beschwörungspunkte = 0;
+            WahrerName = 0;
+            BefehlHerrschMod = 0;
+            DauerHerrschMod = 0;
+            AusrüstungMod = 0;
+            Bannschwert = false;
+            Affinität = false;
+            Blutmagie = Blutmagie.Keine;
+            Sterne = 0;
+            Ort = 0;
+            DonariaRuf = DonariaHerrsch = 0;
+            BezahlungHerrschMod = 0;
+            SonstigesRufMod = SonstigesHerrschMod = 0;
+            BeschworenesWesen = null;
+            held = null;
+            zauber = null;
         }
 
-        private void DatenHolen()
+        #region Proben
+
+        private Base.CommandBase beschwören;
+        public Base.CommandBase Beschwören
         {
-            DämonenListe = Global.ContextHeld.LoadDämonen();
-            OnProbeWürfeln = new Base.CommandBase(ProbeWürfeln, null);
+            get { return beschwören; }
         }
 
-        List<GegnerBase> dämonenListe;
-
-        private Base.CommandBase onProbeWürfeln;
-        public Base.CommandBase OnProbeWürfeln
+        private Base.CommandBase beherrschen;
+        public Base.CommandBase Beherrschen
         {
-            get { return onProbeWürfeln; }
-            set { onProbeWürfeln = value; }
+            get { return beherrschen; }
         }
 
-        private void ProbeWürfeln(object obj)
+        private Held held;
+        private Model.Zauber zauber;
+
+        private void beschwöre(object obj)
         {
-            int zfw = 0;
-            Held_Zauber hz = Global.SelectedHeld.GetHeldZauber("Invocatio minor", false, out zfw, false);
-            if (hz == null)
+            zauber.Fertigkeitswert = ZauberWert;
+            zauber.Modifikator = GesamtRufMod;
+            var erg = ShowProbeDialog(zauber, held);
+            if (erg == null)
                 return;
-            Held h = hz.Held;
-            Model.Zauber z = hz.Zauber;
-            z.Fertigkeitswert = zfw;
-            var ergebnis = ShowProbeDialog(z, hz.Held);
-            if (ergebnis != null && ergebnis.Gelungen)
+            if (!erg.Gelungen)
             {
-                int hörner = View.General.ViewHelper.ShowWürfelDialog("2W6", "Würfele die Anzahl der Hörner");
-                //MeisterGeister.Logic.General.Würfel.Parse("2W6", true);
+                beschwörungMisslungen(erg);
             }
+            else
+            {
+                Beschwörungspunkte = erg.Übrig;
+                Ergebnis = "Das Wesen erscheint. Versuche es zu beherrschen.";
+            }
+        }
+
+        protected abstract void beschwörungMisslungen(ProbenErgebnis erg);
+
+        private void beherrsche(object obj)
+        {
             Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
             kontrollwert.Abkürzung = "KW";
             kontrollwert.Fertigkeitswert = 0;
-            kontrollwert.Wert = (int)Math.Round(h.Mut + zfw / 5.0, MidpointRounding.AwayFromZero);
+            kontrollwert.Wert = KontrollWert;
             kontrollwert.WerteNamen = "Kontrollwert";
-            kontrollwert.Modifikator = +8;
-            var kwergebnis = ShowProbeDialog(kontrollwert, h);
+            kontrollwert.Modifikator = GesamtHerrschMod;
+            var erg = ShowProbeDialog(kontrollwert, held);
+            if (erg.Gelungen)
+            {
+                Ergebnis = "Das Wesen erfüllt den Dienst";
+            }
+            else
+            {
+                beherrschungMisslungen(erg);
+            }
         }
 
-        private List<GegnerBase> DämonenListe
+        protected abstract void beherrschungMisslungen(ProbenErgebnis erg);
+
+        #endregion
+
+        #region Properties
+
+        private GegnerBase beschworenesWesen;
+        public GegnerBase BeschworenesWesen
         {
-            get { return dämonenListe; }
-            set { Set(ref dämonenListe, value); }
+            get { return beschworenesWesen; }
+            set
+            {
+                beschworenesWesen = value;
+                OnChanged();
+                if (beschworenesWesen != null)
+                {
+                    Beschwörungsschwierigkeit = beschworenesWesen.Beschwörung.Value;
+                    Kontrollschwierigkeit = beschworenesWesen.Kontrolle.Value;
+                    //TODO: Hörner eintragen
+                }
+            }
         }
 
-
-        private void OnInputChanged([CallerMemberName]string propertyName = null)
+        private string zauberName;
+        public string Zauber
         {
-            base.OnChanged(propertyName);
-            base.OnChanged(propertyName + "RufMod");
-            base.OnChanged(propertyName + "HerrschMod");
-            OnChangedSum();
+            get { return zauberName; }
+            set
+            {
+                zauberName = value;
+                int zfw = 0;
+                Held_Zauber hz = Global.SelectedHeld.GetHeldZauber(zauberName, false, out zfw, false);
+                if (hz != null)
+                {
+                    zauber = hz.Zauber;
+                    held = hz.Held;
+                }
+                zauberBasisWert = zfw;
+                OnChanged();
+                OnChanged("ZauberWert");
+                OnChanged("KontrollWert");
+            }
         }
 
-        private void OnChangedSum()
+        private int zauberBasisWert;
+        public virtual int ZauberWert
         {
-            OnChanged("GesamtRufMod");
-            OnChanged("GesamtHerrschMod");
+            get { return zauberBasisWert; }
         }
 
-        #region Eingabe
+        public int KontrollWert
+        {
+            get
+            {
+                if (held == null) return 0;
+                return (int)Math.Round((held.Mut * 2 + held.Klugheit + held.Charisma + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
+            }
+        }
+
+        public abstract string KontrollFormel
+        {
+            get;
+        }
+
 
         private int beschwörungsschwierigkeit;
         public int Beschwörungsschwierigkeit
@@ -114,17 +201,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        private int hörner = 0;
-        public int Hörner
-        {
-            get { return hörner; }
-            set
-            {
-                hörner = value;
-                OnChanged();
-            }
-        }
-
         private bool bannschwert;
         public bool Bannschwert
         {
@@ -147,8 +223,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        private bool blutmagie;
-        public bool Blutmagie
+        private Blutmagie blutmagie = Blutmagie.Keine;
+        public virtual Blutmagie Blutmagie
         {
             get { return blutmagie; }
             set
@@ -277,11 +353,35 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        private int beschwörungspunkte;
+        public int Beschwörungspunkte
+        {
+            get { return beschwörungspunkte; }
+            set
+            {
+                beschwörungspunkte = value;
+                OnChanged();
+                OnChanged("Beschwörungsbonus");
+                OnChangedSum();
+            }
+        }
 
+        private List<GegnerBase> wesen;
+        public List<GegnerBase> Wesen
+        {
+            get { return wesen; }
+            private set
+            {
+                wesen = value;
+                OnChanged();
+            }
+        }
 
-        #endregion
+        public int Beschwörungsbonus
+        {
+            get { return -Math.Min(Beschwörungspunkte / 3, 7); }
+        }
 
-        #region Ausgabe
 
         public int WahrerNameRufMod
         {
@@ -290,7 +390,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         public int WahrerNameHerrschMod
         {
-            get { return (int)Math.Round(-WahrerName / 3.0); }
+            get { return (int)Math.Round(-WahrerName / 3.0, MidpointRounding.AwayFromZero); }
         }
 
         public int BannschwertRufMod
@@ -308,7 +408,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
         public int SterneHerrschMod
         {
-            get { return (int)Math.Round(Sterne / 3.0); }
+            get { return (int)Math.Round(Sterne / 3.0, MidpointRounding.AwayFromZero); }
         }
 
         public int OrtRufMod
@@ -317,19 +417,20 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
         public int OrtHerrschMod
         {
-            get { return (int)Math.Round(Ort / 3.0); }
+            get { return (int)Math.Round(Ort / 3.0, MidpointRounding.AwayFromZero); }
         }
 
         public int AffinitätHerrschMod
         {
             get { return Affinität ? -3 : 0; }
         }
+
         public int BlutmagieHerrschMod
         {
-            get { return Blutmagie ? 2 : 0; }
+            get { return Blutmagie == Blutmagie.Keine ? 0 : 2; }
         }
 
-        public int GesamtRufMod
+        public virtual int GesamtRufMod
         {
             get
             {
@@ -344,12 +445,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        public int GesamtHerrschMod
+        public virtual int GesamtHerrschMod
         {
             get
             {
                 return Kontrollschwierigkeit
                     + WahrerNameHerrschMod
+                    + Beschwörungsbonus
                     + BefehlHerrschMod
                     + DauerHerrschMod
                     + AusrüstungMod
@@ -364,6 +466,45 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        private string ergebnis;
+        public string Ergebnis
+        {
+            get { return ergebnis; }
+            protected set
+            {
+                ergebnis = value;
+                OnChanged();
+            }
+        }
+
+
         #endregion
+
+        #region Helfer
+
+        private void OnInputChanged([CallerMemberName]string propertyName = null)
+        {
+            base.OnChanged(propertyName);
+            base.OnChanged(propertyName + "RufMod");
+            base.OnChanged(propertyName + "HerrschMod");
+            OnChangedSum();
+        }
+
+        protected void OnChangedSum()
+        {
+            OnChanged("GesamtRufMod");
+            OnChanged("GesamtHerrschMod");
+        }
+
+        #endregion
+    }
+    public enum Blutmagie
+    {
+        [Description("Keine")]
+        Keine,
+        [Description("Tieropfer")]
+        Tieropfer,
+        [Description("Opferung eines intelligenten Wesens")]
+        IntelligentesWesen
     }
 }

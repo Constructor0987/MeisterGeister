@@ -7,11 +7,13 @@
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" Width="600"
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="500" d:DesignWidth="600">
 
     <UserControl.DataContext>
-        <vm:BeschwörungViewModel/>
+        <vm:DämonenBeschwörungViewModel x:Name="vm"/>
     </UserControl.DataContext>
+
+
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -32,6 +34,8 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
+            <RowDefinition Height="24" Name="row1" IsEnabled="{Binding InvocatioIntegraVorbereiten}"/>
+            <RowDefinition Height="24" IsEnabled="{Binding InvocatioIntegraVorbereiten}"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
@@ -39,6 +43,8 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.Resources>
@@ -61,11 +67,15 @@
             <Style TargetType="{x:Type ComboBox}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
+            <General:EnumItemsSource x:Key="blutmagie" Type="{x:Type vm:Blutmagie}"/>
         </Grid.Resources>
 
         <!--1. Anrufung-->
         <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
         <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
+
+        <TextBlock Text="Dämon" Style="{StaticResource label}"/>
+        <ComboBox Grid.Column="1" ItemsSource="{Binding Dämonen}" SelectedValue="{Binding Dämon,Mode=TwoWay}" DisplayMemberPath="Name"/>
 
         <TextBlock Text="Typ" Grid.Row="1" Style="{StaticResource label}"/>
         <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Hörner}">
@@ -93,18 +103,20 @@
             <System:Int32>7</System:Int32>
             <System:Int32>8</System:Int32>
         </ComboBox>
-        <TextBlock Text="0" Grid.Row="1" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Schwierigkeit" Grid.Row="2" Style="{StaticResource label}"/>
+        <TextBlock Text="Basis" Grid.Row="2" Style="{StaticResource label}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
             <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Beschwörungsschwierigkeit}"/>
             <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Kontrollschwierigkeit}"/>
         </StackPanel>
         <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Beschwörungsschwierigkeit}"/>
+        <TextBlock Margin="14,0,0,0" Foreground="Red" Text="2x" Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" ToolTip="Weil anderer Dämon erschienen ist"
+                   Visibility="{Binding AndererDämon,Converter={StaticResource BooleanToVisibilityConverter1}}" HorizontalAlignment="Left"/>
         <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Kontrollschwierigkeit}"/>
 
-        <TextBlock Text="Bonus aus Beschwörungs TaP*" Grid.Row="3" Style="{StaticResource label}"/>
-        <TextBlock Text="0" Grid.Row="3" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Übrige Punkte aus Beschwörung" Grid.Row="3" Style="{StaticResource label}"/>
+        <General:IntBox ShowButtons="True" MinValue="0" Value="{Binding Beschwörungspunkte}" Grid.Row="3" Grid.Column="1"/>
+        <TextBlock Text="{Binding Beschwörungsbonus}" Grid.Row="3" Grid.Column="3" Style="{StaticResource mod}"/>
 
         <TextBlock Text="Wahrer Name" Grid.Row="4" Style="{StaticResource label}"/>
         <General:IntBox ShowButtons="True" MinValue="0" MaxValue="7" Value="{Binding WahrerName}" Grid.Row="4" Grid.Column="1"/>
@@ -159,16 +171,93 @@
         <CheckBox Grid.Row="9" Content="Affinität zu Dämonen" IsChecked="{Binding Affinität}"/>
         <TextBlock Text="{Binding AffinitätHerrschMod}" Grid.Row="9" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <CheckBox Grid.Row="10" Content="Blutmagie" IsChecked="{Binding Blutmagie}"/>
-        <TextBlock Text="{Binding BlutmagieHerrschMod}" Grid.Row="10" Grid.Column="3" Style="{StaticResource mod}"/>
+        <CheckBox Grid.Row="10" Content="Invocatio Integra" IsEnabled="{Binding InvocatioIntegraMöglich}" IsChecked="{Binding InvocatioIntegra}"/>
+        <ComboBox Grid.Row="10" Grid.Column="1" SelectedIndex="0" IsEnabled="{Binding InvocatioIntegra}" SelectedValue="{Binding InvocatioIntegraVorbereiten}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Name="text" Text="ohne 1 Tag Extravorbereitung"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="true">
+                            <Setter TargetName="text" Property="Text" Value="mit Vorbereitung des Beschwörungsplatzes von 1 Tag"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <System:Boolean>false</System:Boolean>
+            <System:Boolean>true</System:Boolean>
+        </ComboBox>
 
-        <TextBlock Text="Sternenkonstellation" Grid.Row="11" Style="{StaticResource label}"/>
-        <General:IntBox MinValue="-3" MaxValue="+7" Value="{Binding Sterne}" ShowButtons="True" Grid.Row="11" Grid.Column="1"/>
-        <TextBlock Text="{Binding SterneRufMod}" Grid.Row="11" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding SterneHerrschMod}" Grid.Row="11" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Grid.Row="11" Style="{StaticResource label}" Text="Magiekunde (Dämonologie)" Margin="16,0,0,0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1">
+            <Button Content="Probe" Command="{Binding MagiekundeProbe}"/>
+            <ContentControl Content="{Binding}" Margin="4,0,0,0">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Name="panel">
+                            <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding InvocatioIntegraMagiekundePunkte}" Name="punkte"/>
+                            <TextBlock Name="text" Text="TaP*" Style="{StaticResource label}" Margin="4,0,0,0"/>
+                            <Button Name="button" Command="{Binding EditMagiekunde}" Visibility="Collapsed">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <TextBlock Text="Nicht bestanden" Style="{StaticResource label}"/>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding InvocatioIntegraMagiekundePunkte}" Value="0">
+                                <Setter TargetName="punkte" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="text" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="button" Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </StackPanel>
+        <TextBlock Grid.Row="11" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding InvocatioIntegraMagiekundeRufMod}"/>
 
-        <TextBlock Text="Ort" Grid.Row="12" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="12" Grid.Column="1" SelectedIndex="7" SelectedValue="{Binding Ort}">
+        <TextBlock Grid.Row="12" Style="{StaticResource label}" Text="Malen und Zeichnen" Margin="16,0,0,0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="1">
+            <Button Content="Probe" Command="{Binding MalenProbe}"/>
+            <ContentControl Content="{Binding}" Margin="4,0,0,0">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Name="panel">
+                            <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding InvocatioIntegraMalenPunkte}" Name="punkte"/>
+                            <TextBlock Name="text" Text="TaP*" Style="{StaticResource label}" Margin="4,0,0,0"/>
+                            <Button Name="button" Command="{Binding EditMalen}" Visibility="Collapsed">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <TextBlock Text="Nicht bestanden" Style="{StaticResource label}"/>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding InvocatioIntegraMalenPunkte}" Value="0">
+                                <Setter TargetName="punkte" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="text" Property="Visibility" Value="Collapsed"/>
+                                <Setter TargetName="button" Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </StackPanel>
+        <TextBlock Grid.Row="12" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding InvocatioIntegraMalenRufMod}"/>
+
+        <TextBlock Grid.Row="13" Text="Blutmagie" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="13" Grid.Column="1" ItemsSource="{StaticResource blutmagie}" SelectedItem="{Binding Blutmagie,Converter={StaticResource blutmagie}}"/>
+        <TextBlock Text="{Binding BlutmagieHerrschMod}" Grid.Row="13" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Sternenkonstellation" Grid.Row="14" Style="{StaticResource label}"/>
+        <General:IntBox MinValue="-3" MaxValue="+7" Value="{Binding Sterne}" ShowButtons="True" Grid.Row="14" Grid.Column="1"/>
+        <TextBlock Text="{Binding SterneRufMod}" Grid.Row="14" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding SterneHerrschMod}" Grid.Row="14" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Ort" Grid.Row="15" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="15" Grid.Column="1" SelectedIndex="7" SelectedValue="{Binding Ort}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text"/>
@@ -237,19 +326,19 @@
             <System:Int32>6</System:Int32>
             <System:Int32>7</System:Int32>
         </ComboBox>
-        <TextBlock Text="{Binding OrtRufMod}" Grid.Row="12" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding OrtHerrschMod}" Grid.Row="12" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding OrtRufMod}" Grid.Row="15" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding OrtHerrschMod}" Grid.Row="15" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Donaria" Grid.Row="13" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.Column="1">
+        <TextBlock Text="Donaria" Grid.Row="16" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="16" Grid.Column="1">
             <General:IntBox MinValue="-7" MaxValue="+7" Value="{Binding DonariaRuf}" ShowButtons="True"/>
             <General:IntBox MinValue="-2" MaxValue="0" Value="{Binding DonariaHerrsch}" ShowButtons="True"/>
         </StackPanel>
-        <TextBlock Text="{Binding DonariaRuf}" Grid.Row="13" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding DonariaHerrsch}" Grid.Row="13" Grid.Column="3" Style="{StaticResource mod}"/>
-        
-        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="14" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="14" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding BezahlungHerrschMod}">
+        <TextBlock Text="{Binding DonariaRuf}" Grid.Row="16" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding DonariaHerrsch}" Grid.Row="16" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="17" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="17" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding BezahlungHerrschMod}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text" Text="Keine"/>
@@ -271,22 +360,40 @@
             <System:Int32>-2</System:Int32>
             <System:Int32>-3</System:Int32>
         </ComboBox>
-        <TextBlock Text="{Binding BezahlungHerrschMod}" Grid.Row="14" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding BezahlungHerrschMod}" Grid.Row="17" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Sonstiges" Grid.Row="15" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="1">
+        <TextBlock Text="Sonstiges" Grid.Row="18" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="18" Grid.Column="1">
             <General:IntBox ShowButtons="True" Value="{Binding SonstigesRufMod}"/>
             <General:IntBox ShowButtons="True" Value="{Binding SonstigesHerrschMod}"/>
         </StackPanel>
-        <TextBlock Text="{Binding SonstigesRufMod}" Grid.Row="15" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding SonstigesHerrschMod}" Grid.Row="15" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding SonstigesRufMod}" Grid.Row="18" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding SonstigesHerrschMod}" Grid.Row="18" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Gesamt" Grid.Row="16" Style="{StaticResource label}"/>
-        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="16" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="16" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Gesamt" Grid.Row="19" Style="{StaticResource label}"/>
+        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="19" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="19" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <Button Content="Beschwören" Grid.Row="17" Grid.Column="2" Command="{Binding OnProbeWürfeln}"/>
-        <Button Content="Beherrschen" Grid.Row="17" Grid.Column="3"/>
+        <Button Grid.Row="20" Grid.Column="2" Command="{Binding Beschwören}" ToolTip="{Binding Zauber}">
+            <Button.Content>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Beschwören" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding ZauberWert}" FontWeight="Bold" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Button Grid.Row="20" Grid.Column="3" Command="{Binding Beherrschen}" ToolTip="{Binding KontrollFormel}">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Beherrschen" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding KontrollWert}" FontWeight="Bold" Margin="4,0,0,0"/>
+                </StackPanel>
+            </Button.Content>
+        </Button>
 
+        <TextBox Name="tt" Text="{Binding Ergebnis,Mode=OneWay}" IsReadOnly="True" Grid.Row="21" Grid.ColumnSpan="4" TextWrapping="WrapWithOverflow"/>
     </Grid>
+
 </UserControl>
