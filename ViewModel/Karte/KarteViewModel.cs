@@ -49,6 +49,7 @@ namespace MeisterGeister.ViewModel.Karte
             get { return heldenPosition; }
             set { 
                 Set(ref heldenPosition, value);
+                SetGlobusPositionFromHeldenPosition();
                 OnChanged("HeldenX");
                 OnChanged("HeldenY");
             }
@@ -57,13 +58,67 @@ namespace MeisterGeister.ViewModel.Karte
         public int HeldenX
         {
             get { return (int)Math.Round(HeldenPosition.X, MidpointRounding.AwayFromZero); }
-            set { heldenPosition.X = value; OnChanged("HeldenX"); }
+            set {
+                heldenPosition.X = value;
+                HeldenPosition = heldenPosition;
+            }
         }
 
         public int HeldenY
         {
             get { return (int)Math.Round(HeldenPosition.Y, MidpointRounding.AwayFromZero); }
-            set { heldenPosition.Y = value; OnChanged("HeldenY"); }
+            set { 
+                heldenPosition.Y = value;
+                HeldenPosition = heldenPosition;
+                }
+        }
+
+        private MeisterGeister.Logic.Karte.DereGlobusToMapConverter dgConverter = new MeisterGeister.Logic.Karte.DereGlobusToMapConverter();
+
+        private Point heldenGlobusPosition = new Point();
+        public Point HeldenGlobusPosition
+        {
+            get { return heldenGlobusPosition; }
+            set { 
+                Set(ref heldenGlobusPosition, value);
+                SetHeldenPositionFromGlobusPosition();
+                OnChanged("HeldenLängengrad");
+                OnChanged("HeldenBreitengrad");
+            }
+        }
+
+        private void SetHeldenPositionFromGlobusPosition()
+        {
+            heldenPosition = (Point)dgConverter.Convert(heldenGlobusPosition, typeof(Point), null, null);
+            OnChanged("HeldenPosition");
+            OnChanged("HeldenX");
+            OnChanged("HeldenY");
+        }
+
+        private void SetGlobusPositionFromHeldenPosition()
+        {
+            heldenGlobusPosition = (Point)dgConverter.ConvertBack(heldenPosition, typeof(Point), null, null);
+            OnChanged("HeldenGlobusPosition");
+            OnChanged("HeldenLängengrad");
+            OnChanged("HeldenBreitengrad");
+        }
+
+        public double HeldenLängengrad
+        {
+            get { return (double)Math.Round(HeldenGlobusPosition.X, 6, MidpointRounding.AwayFromZero); }
+            set {
+                heldenGlobusPosition.X = value;
+                HeldenGlobusPosition = heldenGlobusPosition;
+            }
+        }
+
+        public double HeldenBreitengrad
+        {
+            get { return (double)Math.Round(HeldenGlobusPosition.Y, 6, MidpointRounding.AwayFromZero); }
+            set {
+                heldenGlobusPosition.Y = value;
+                HeldenGlobusPosition = heldenGlobusPosition;
+            }
         }
 
         private CommandBase onHeldenPositionSetzen;
