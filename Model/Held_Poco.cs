@@ -641,6 +641,39 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
+        public virtual ICollection<Held_Modifikator> Held_Modifikator
+        {
+            get
+            {
+                if (_held_Modifikator == null)
+                {
+                    var newCollection = new FixupCollection<Held_Modifikator>();
+                    newCollection.CollectionChanged += FixupHeld_Modifikator;
+                    _held_Modifikator = newCollection;
+                }
+                return _held_Modifikator;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Modifikator, value))
+                {
+                    var previousValue = _held_Modifikator as FixupCollection<Held_Modifikator>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Modifikator;
+                    }
+                    _held_Modifikator = value;
+                    var newValue = value as FixupCollection<Held_Modifikator>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Modifikator;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Modifikator> _held_Modifikator;
+    
+    	[DataMember]
         public virtual ICollection<Held_Ausrüstung> Held_Ausrüstung
         {
             get
@@ -874,6 +907,29 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private void FixupHeld_Modifikator(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Modifikator");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Modifikator item in e.NewItems)
+                {
+                    item.Held = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Modifikator item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Held, this))
+                    {
+                        item.Held = null;
+                    }
+                }
+            }
+        }
     
         private void FixupHeld_Ausrüstung(object sender, NotifyCollectionChangedEventArgs e)
         {

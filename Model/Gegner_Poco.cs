@@ -540,6 +540,39 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
+        public virtual ICollection<Gegner_Modifikator> Gegner_Modifikator
+        {
+            get
+            {
+                if (_gegner_Modifikator == null)
+                {
+                    var newCollection = new FixupCollection<Gegner_Modifikator>();
+                    newCollection.CollectionChanged += FixupGegner_Modifikator;
+                    _gegner_Modifikator = newCollection;
+                }
+                return _gegner_Modifikator;
+            }
+            set
+            {
+                if (!ReferenceEquals(_gegner_Modifikator, value))
+                {
+                    var previousValue = _gegner_Modifikator as FixupCollection<Gegner_Modifikator>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupGegner_Modifikator;
+                    }
+                    _gegner_Modifikator = value;
+                    var newValue = value as FixupCollection<Gegner_Modifikator>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupGegner_Modifikator;
+                    }
+                }
+            }
+        }
+        private ICollection<Gegner_Modifikator> _gegner_Modifikator;
+    
+    	[DataMember]
         public virtual GegnerBase GegnerBase
         {
             get { return _gegnerBase; }
@@ -576,6 +609,29 @@ namespace MeisterGeister.Model
                 if (GegnerBaseGUID != GegnerBase.GegnerBaseGUID)
                 {
                     GegnerBaseGUID = GegnerBase.GegnerBaseGUID;
+                }
+            }
+        }
+    
+        private void FixupGegner_Modifikator(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Gegner_Modifikator");
+            if (e.NewItems != null)
+            {
+                foreach (Gegner_Modifikator item in e.NewItems)
+                {
+                    item.Gegner = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Gegner_Modifikator item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Gegner, this))
+                    {
+                        item.Gegner = null;
+                    }
                 }
             }
         }

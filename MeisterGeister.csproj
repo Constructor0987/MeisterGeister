@@ -294,6 +294,9 @@
     <Compile Include="Model\GegnerBase_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Gegner_Modifikator_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Gegner_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -309,6 +312,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Inventar_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Modifikator_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Munition_Poco.cs">
@@ -368,6 +374,9 @@
     <Compile Include="Model\Extensions\DependentPropertyAttribute.cs" />
     <Compile Include="Model\Extensions\IInitializable.cs" />
     <Compile Include="Model\Audio_Theme_Playlist.cs" />
+    <Compile Include="Model\Modifikator_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Munition.cs" />
     <Compile Include="Model\Munition_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -1839,6 +1848,7 @@
     <None Include="Images\Karten\Aventurien.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0101.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

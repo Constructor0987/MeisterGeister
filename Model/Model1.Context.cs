@@ -163,6 +163,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Gegner> _gegner;
     
+        public ObjectSet<Gegner_Modifikator> Gegner_Modifikator
+        {
+            get { return _gegner_Modifikator  ?? (_gegner_Modifikator = CreateObjectSet<Gegner_Modifikator>("Gegner_Modifikator")); }
+        }
+        private ObjectSet<Gegner_Modifikator> _gegner_Modifikator;
+    
         public ObjectSet<GegnerBase> GegnerBase
         {
             get { return _gegnerBase  ?? (_gegnerBase = CreateObjectSet<GegnerBase>("GegnerBase")); }
@@ -210,6 +216,12 @@ namespace MeisterGeister.Model
             get { return _held_Inventar  ?? (_held_Inventar = CreateObjectSet<Held_Inventar>("Held_Inventar")); }
         }
         private ObjectSet<Held_Inventar> _held_Inventar;
+    
+        public ObjectSet<Held_Modifikator> Held_Modifikator
+        {
+            get { return _held_Modifikator  ?? (_held_Modifikator = CreateObjectSet<Held_Modifikator>("Held_Modifikator")); }
+        }
+        private ObjectSet<Held_Modifikator> _held_Modifikator;
     
         public ObjectSet<Held_Munition> Held_Munition
         {
@@ -276,6 +288,12 @@ namespace MeisterGeister.Model
             get { return _menuLink  ?? (_menuLink = CreateObjectSet<MenuLink>("MenuLink")); }
         }
         private ObjectSet<MenuLink> _menuLink;
+    
+        public ObjectSet<Modifikator> Modifikator
+        {
+            get { return _modifikator  ?? (_modifikator = CreateObjectSet<Modifikator>("Modifikator")); }
+        }
+        private ObjectSet<Modifikator> _modifikator;
     
         public ObjectSet<Munition> Munition
         {
@@ -452,6 +470,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Fernkampfwaffe;
     		if(typeof(T) == typeof(Gegner))
     				return (ObjectSet<T>)(Object)Gegner;
+    		if(typeof(T) == typeof(Gegner_Modifikator))
+    				return (ObjectSet<T>)(Object)Gegner_Modifikator;
     		if(typeof(T) == typeof(GegnerBase))
     				return (ObjectSet<T>)(Object)GegnerBase;
     		if(typeof(T) == typeof(GegnerBase_Angriff))
@@ -468,6 +488,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Held_Ausrüstung;
     		if(typeof(T) == typeof(Held_Inventar))
     				return (ObjectSet<T>)(Object)Held_Inventar;
+    		if(typeof(T) == typeof(Held_Modifikator))
+    				return (ObjectSet<T>)(Object)Held_Modifikator;
     		if(typeof(T) == typeof(Held_Munition))
     				return (ObjectSet<T>)(Object)Held_Munition;
     		if(typeof(T) == typeof(Held_Sonderfertigkeit))
@@ -490,6 +512,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Literatur;
     		if(typeof(T) == typeof(MenuLink))
     				return (ObjectSet<T>)(Object)MenuLink;
+    		if(typeof(T) == typeof(Modifikator))
+    				return (ObjectSet<T>)(Object)Modifikator;
     		if(typeof(T) == typeof(Munition))
     				return (ObjectSet<T>)(Object)Munition;
     		if(typeof(T) == typeof(Name))
@@ -573,6 +597,8 @@ namespace MeisterGeister.Model
     				return Fernkampfwaffe;
     		if(t == typeof(Gegner))
     				return Gegner;
+    		if(t == typeof(Gegner_Modifikator))
+    				return Gegner_Modifikator;
     		if(t == typeof(GegnerBase))
     				return GegnerBase;
     		if(t == typeof(GegnerBase_Angriff))
@@ -589,6 +615,8 @@ namespace MeisterGeister.Model
     				return Held_Ausrüstung;
     		if(t == typeof(Held_Inventar))
     				return Held_Inventar;
+    		if(t == typeof(Held_Modifikator))
+    				return Held_Modifikator;
     		if(t == typeof(Held_Munition))
     				return Held_Munition;
     		if(t == typeof(Held_Sonderfertigkeit))
@@ -611,6 +639,8 @@ namespace MeisterGeister.Model
     				return Literatur;
     		if(t == typeof(MenuLink))
     				return MenuLink;
+    		if(t == typeof(Modifikator))
+    				return Modifikator;
     		if(t == typeof(Munition))
     				return Munition;
     		if(t == typeof(Name))

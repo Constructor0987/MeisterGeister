@@ -188,6 +188,78 @@ namespace MeisterGeister.Model
     
         }
         private string _urlPrint;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Regelsystem
+        {
+            get { return _regelsystem; }
+            set
+    		{ 
+    			Set(ref _regelsystem, value);
+    		}
+    
+        }
+        private int _regelsystem;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Nummer
+        {
+            get { return _nummer; }
+            set
+    		{ 
+    			Set(ref _nummer, value);
+    		}
+    
+        }
+        private string _nummer;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Art
+        {
+            get { return _art; }
+            set
+    		{ 
+    			Set(ref _art, value);
+    		}
+    
+        }
+        private string _art;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Reihe
+        {
+            get { return _reihe; }
+            set
+    		{ 
+    			Set(ref _reihe, value);
+    		}
+    
+        }
+        private string _reihe;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Setting
+        {
+            get { return _setting; }
+            set
+    		{ 
+    			Set(ref _setting, value);
+    		}
+    
+        }
+        private string _setting;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Box
+        {
+            get { return _box; }
+            set
+    		{ 
+    			Set(ref _box, value);
+    		}
+    
+        }
+        private string _box;
 
         #endregion
 

@@ -1,4 +1,4 @@
-<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+﻿<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
 <edmx:Runtime>
 <edmx:StorageModels>
 <Schema Namespace="DatabaseDSAModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
@@ -22,6 +22,7 @@
     <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe" store:Type="Tables" />
     <EntitySet Name="Fernkampfwaffe_Talent" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe_Talent" store:Type="Tables" />
     <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Store.Gegner" store:Type="Tables" />
+    <EntitySet Name="Gegner_Modifikator" EntityType="DatabaseDSAModel.Store.Gegner_Modifikator" store:Type="Tables" />
     <EntitySet Name="GegnerBase" EntityType="DatabaseDSAModel.Store.GegnerBase" store:Type="Tables" />
     <EntitySet Name="GegnerBase_Angriff" EntityType="DatabaseDSAModel.Store.GegnerBase_Angriff" store:Type="Tables" />
     <EntitySet Name="GegnerBase_Kampfregel" EntityType="DatabaseDSAModel.Store.GegnerBase_Kampfregel" store:Type="Tables" />
@@ -30,6 +31,7 @@
     <EntitySet Name="Held" EntityType="DatabaseDSAModel.Store.Held" store:Type="Tables" />
     <EntitySet Name="Held_Ausrüstung" EntityType="DatabaseDSAModel.Store.Held_Ausrüstung" store:Type="Tables" />
     <EntitySet Name="Held_Inventar" EntityType="DatabaseDSAModel.Store.Held_Inventar" store:Type="Tables" />
+    <EntitySet Name="Held_Modifikator" EntityType="DatabaseDSAModel.Store.Held_Modifikator" store:Type="Tables" />
     <EntitySet Name="Held_Munition" EntityType="DatabaseDSAModel.Store.Held_Munition" store:Type="Tables" />
     <EntitySet Name="Held_Sonderfertigkeit" EntityType="DatabaseDSAModel.Store.Held_Sonderfertigkeit" store:Type="Tables" />
     <EntitySet Name="Held_Talent" EntityType="DatabaseDSAModel.Store.Held_Talent" store:Type="Tables" />
@@ -41,6 +43,7 @@
     <EntitySet Name="Kultur_Name" EntityType="DatabaseDSAModel.Store.Kultur_Name" store:Type="Tables" />
     <EntitySet Name="Literatur" EntityType="DatabaseDSAModel.Store.Literatur" store:Type="Tables" />
     <EntitySet Name="MenuLink" EntityType="DatabaseDSAModel.Store.MenuLink" store:Type="Tables" />
+    <EntitySet Name="Modifikator" EntityType="DatabaseDSAModel.Store.Modifikator" store:Type="Tables" />
     <EntitySet Name="Munition" EntityType="DatabaseDSAModel.Store.Munition" store:Type="Tables" />
     <EntitySet Name="Name" EntityType="DatabaseDSAModel.Store.Name" store:Type="Tables" />
     <EntitySet Name="Notizen" EntityType="DatabaseDSAModel.Store.Notizen" store:Type="Tables" />
@@ -65,6 +68,22 @@
     <EntitySet Name="Zauber_Variante" EntityType="DatabaseDSAModel.Store.Zauber_Variante" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen" EntityType="DatabaseDSAModel.Store.Zauberzeichen" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen_Setting" EntityType="DatabaseDSAModel.Store.Zauberzeichen_Setting" store:Type="Tables" />
+    <AssociationSet Name="FK__Gegner_Modifikator__0000000000000ACC" Association="DatabaseDSAModel.Store.FK__Gegner_Modifikator__0000000000000ACC">
+      <End Role="Gegner" EntitySet="Gegner" />
+      <End Role="Gegner_Modifikator" EntitySet="Gegner_Modifikator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Gegner_Modifikator__0000000000000AD0" Association="DatabaseDSAModel.Store.FK__Gegner_Modifikator__0000000000000AD0">
+      <End Role="Modifikator" EntitySet="Modifikator" />
+      <End Role="Gegner_Modifikator" EntitySet="Gegner_Modifikator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Held_Modifikator__0000000000000AA7" Association="DatabaseDSAModel.Store.FK__Held_Modifikator__0000000000000AA7">
+      <End Role="Held" EntitySet="Held" />
+      <End Role="Held_Modifikator" EntitySet="Held_Modifikator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Held_Modifikator__0000000000000AAB" Association="DatabaseDSAModel.Store.FK__Held_Modifikator__0000000000000AAB">
+      <End Role="Modifikator" EntitySet="Modifikator" />
+      <End Role="Held_Modifikator" EntitySet="Held_Modifikator" />
+    </AssociationSet>
     <AssociationSet Name="FK__Zauber_Variante__0000000000000A6D" Association="DatabaseDSAModel.Store.FK__Zauber_Variante__0000000000000A6D">
       <End Role="Zauber" EntitySet="Zauber" />
       <End Role="Zauber_Variante" EntitySet="Zauber_Variante" />
@@ -591,6 +610,18 @@
     <Property Name="AT" Type="int" Nullable="false" />
     <Property Name="FK" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Gegner_Modifikator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GegnerGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ModifikatorGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Wert1" Type="int" />
+    <Property Name="Wert2" Type="int" />
+    <Property Name="Wert3" Type="int" />
+    <Property Name="Erstellt" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="GegnerBase">
     <Key>
       <PropertyRef Name="GegnerBaseGUID" />
@@ -768,6 +799,18 @@
     <Property Name="InventarGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Anzahl" Type="int" />
   </EntityType>
+  <EntityType Name="Held_Modifikator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HeldGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ModifikatorGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Wert1" Type="int" />
+    <Property Name="Wert2" Type="int" />
+    <Property Name="Wert3" Type="int" />
+    <Property Name="Erstellt" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="Held_Munition">
     <Key>
       <PropertyRef Name="HeldGUID" />
@@ -896,6 +939,12 @@
     <Property Name="GrößeKomprimiert" Type="float" />
     <Property Name="UrlPdf" Type="nvarchar" MaxLength="500" />
     <Property Name="UrlPrint" Type="nvarchar" MaxLength="500" />
+    <Property Name="Regelsystem" Type="int" Nullable="false" />
+    <Property Name="Nummer" Type="nvarchar" MaxLength="50" />
+    <Property Name="Art" Type="nvarchar" MaxLength="150" />
+    <Property Name="Reihe" Type="nvarchar" MaxLength="150" />
+    <Property Name="Setting" Type="nvarchar" MaxLength="150" />
+    <Property Name="Box" Type="nvarchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="MenuLink">
     <Key>
@@ -906,6 +955,17 @@
     <Property Name="ProgrammPfad" Type="nvarchar" Nullable="false" MaxLength="500" />
     <Property Name="Name" Type="nvarchar" MaxLength="300" />
     <Property Name="Bild" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Modifikator">
+    <Key>
+      <PropertyRef Name="ModifikatorGUID" />
+    </Key>
+    <Property Name="ModifikatorGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Typ" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Beschreibung" Type="ntext" />
+    <Property Name="Json" Type="ntext" />
+    <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
   </EntityType>
   <EntityType Name="Munition">
     <Key>
@@ -1230,6 +1290,62 @@
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
     <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
+  <Association Name="FK__Gegner_Modifikator__0000000000000ACC">
+    <End Role="Gegner" Type="DatabaseDSAModel.Store.Gegner" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Gegner_Modifikator" Type="DatabaseDSAModel.Store.Gegner_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gegner">
+        <PropertyRef Name="GegnerGUID" />
+      </Principal>
+      <Dependent Role="Gegner_Modifikator">
+        <PropertyRef Name="GegnerGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Gegner_Modifikator__0000000000000AD0">
+    <End Role="Modifikator" Type="DatabaseDSAModel.Store.Modifikator" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Gegner_Modifikator" Type="DatabaseDSAModel.Store.Gegner_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
+      </Principal>
+      <Dependent Role="Gegner_Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Held_Modifikator__0000000000000AA7">
+    <End Role="Held" Type="DatabaseDSAModel.Store.Held" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Modifikator" Type="DatabaseDSAModel.Store.Held_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Held">
+        <PropertyRef Name="HeldGUID" />
+      </Principal>
+      <Dependent Role="Held_Modifikator">
+        <PropertyRef Name="HeldGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Held_Modifikator__0000000000000AAB">
+    <End Role="Modifikator" Type="DatabaseDSAModel.Store.Modifikator" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Modifikator" Type="DatabaseDSAModel.Store.Held_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
+      </Principal>
+      <Dependent Role="Held_Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Zauber_Variante__0000000000000A6D">
     <End Role="Zauber" Type="DatabaseDSAModel.Store.Zauber" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -2124,6 +2240,7 @@
     <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Farbe" />
     <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Fernkampfwaffe" />
     <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Gegner" />
+    <EntitySet Name="Gegner_Modifikator" EntityType="DatabaseDSAModel.Gegner_Modifikator" />
     <EntitySet Name="GegnerBase" EntityType="DatabaseDSAModel.GegnerBase" />
     <EntitySet Name="GegnerBase_Angriff" EntityType="DatabaseDSAModel.GegnerBase_Angriff" />
     <EntitySet Name="GegnerBase_Kampfregel" EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" />
@@ -2132,6 +2249,7 @@
     <EntitySet Name="Held" EntityType="DatabaseDSAModel.Held" />
     <EntitySet Name="Held_Ausrüstung" EntityType="DatabaseDSAModel.Held_Ausrüstung" />
     <EntitySet Name="Held_Inventar" EntityType="DatabaseDSAModel.Held_Inventar" />
+    <EntitySet Name="Held_Modifikator" EntityType="DatabaseDSAModel.Held_Modifikator" />
     <EntitySet Name="Held_Munition" EntityType="DatabaseDSAModel.Held_Munition" />
     <EntitySet Name="Held_Sonderfertigkeit" EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" />
     <EntitySet Name="Held_Talent" EntityType="DatabaseDSAModel.Held_Talent" />
@@ -2143,6 +2261,7 @@
     <EntitySet Name="Kultur_Name" EntityType="DatabaseDSAModel.Kultur_Name" />
     <EntitySet Name="Literatur" EntityType="DatabaseDSAModel.Literatur" />
     <EntitySet Name="MenuLink" EntityType="DatabaseDSAModel.MenuLink" />
+    <EntitySet Name="Modifikator" EntityType="DatabaseDSAModel.Modifikator" />
     <EntitySet Name="Munition" EntityType="DatabaseDSAModel.Munition" />
     <EntitySet Name="Name" EntityType="DatabaseDSAModel.Name" />
     <EntitySet Name="Notizen" EntityType="DatabaseDSAModel.Notizen" />
@@ -2242,9 +2361,17 @@
       <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
       <End Role="Held_Munition" EntitySet="Held_Munition" />
     </AssociationSet>
+    <AssociationSet Name="FK__Gegner_Modifikator__0000000000000ACC" Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC">
+      <End Role="Gegner" EntitySet="Gegner" />
+      <End Role="Gegner_Modifikator" EntitySet="Gegner_Modifikator" />
+    </AssociationSet>
     <AssociationSet Name="fk_Gegner_GegnerBase" Association="DatabaseDSAModel.fk_Gegner_GegnerBase">
       <End Role="GegnerBase" EntitySet="GegnerBase" />
       <End Role="Gegner" EntitySet="Gegner" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Gegner_Modifikator__0000000000000AD0" Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000AD0">
+      <End Role="Modifikator" EntitySet="Modifikator" />
+      <End Role="Gegner_Modifikator" EntitySet="Gegner_Modifikator" />
     </AssociationSet>
     <AssociationSet Name="fk_GegnerBaseAngriff_GegnerBase" Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase">
       <End Role="GegnerBase" EntitySet="GegnerBase" />
@@ -2265,6 +2392,10 @@
     <AssociationSet Name="fk_HandelsgutSetting_Setting" Association="DatabaseDSAModel.fk_HandelsgutSetting_Setting">
       <End Role="Setting" EntitySet="Setting" />
       <End Role="Handelsgut_Setting" EntitySet="Handelsgut_Setting" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Held_Modifikator__0000000000000AA7" Association="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AA7">
+      <End Role="Held" EntitySet="Held" />
+      <End Role="Held_Modifikator" EntitySet="Held_Modifikator" />
     </AssociationSet>
     <AssociationSet Name="fk_HeldAusrüstung_Held" Association="DatabaseDSAModel.fk_HeldAusrüstung_Held">
       <End Role="Held" EntitySet="Held" />
@@ -2309,6 +2440,10 @@
     <AssociationSet Name="fk_HeldInventar_TrageortGUID" Association="DatabaseDSAModel.fk_HeldInventar_TrageortGUID">
       <End Role="Trageort" EntitySet="Trageort" />
       <End Role="Held_Inventar" EntitySet="Held_Inventar" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Held_Modifikator__0000000000000AAB" Association="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AAB">
+      <End Role="Modifikator" EntitySet="Modifikator" />
+      <End Role="Held_Modifikator" EntitySet="Held_Modifikator" />
     </AssociationSet>
     <AssociationSet Name="fk_HeldMunition_Munition" Association="DatabaseDSAModel.fk_HeldMunition_Munition">
       <End Role="Munition" EntitySet="Munition" />
@@ -2686,7 +2821,22 @@
     <Property Name="GS3" Type="Double" />
     <Property Name="AT" Type="Int32" Nullable="false" />
     <Property Name="FK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Gegner_Modifikator" Relationship="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC" FromRole="Gegner" ToRole="Gegner_Modifikator" />
     <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="Gegner" ToRole="GegnerBase" />
+  </EntityType>
+  <EntityType Name="Gegner_Modifikator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GegnerGUID" Type="Guid" Nullable="false" />
+    <Property Name="ModifikatorGUID" Type="Guid" Nullable="false" />
+    <Property Name="Wert1" Type="Int32" />
+    <Property Name="Wert2" Type="Int32" />
+    <Property Name="Wert3" Type="Int32" />
+    <Property Name="Erstellt" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC" FromRole="Gegner_Modifikator" ToRole="Gegner" />
+    <NavigationProperty Name="Modifikator" Relationship="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000AD0" FromRole="Gegner_Modifikator" ToRole="Modifikator" />
   </EntityType>
   <EntityType Name="GegnerBase">
     <Key>
@@ -2847,6 +2997,7 @@
     <Property Name="Vermögen" Type="Double" />
     <Property Name="APGesamt" Type="Int32" />
     <Property Name="APEingesetzt" Type="Int32" />
+    <NavigationProperty Name="Held_Modifikator" Relationship="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AA7" FromRole="Held" ToRole="Held_Modifikator" />
     <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Held" FromRole="Held" ToRole="Held_Ausrüstung" />
     <NavigationProperty Name="Held_Inventar" Relationship="DatabaseDSAModel.fk_HeldInventar_Held" FromRole="Held" ToRole="Held_Inventar" />
     <NavigationProperty Name="Held_Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_Held" FromRole="Held" ToRole="Held_Munition" />
@@ -2887,6 +3038,20 @@
     <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.fk_HeldInventar_Held" FromRole="Held_Inventar" ToRole="Held" />
     <NavigationProperty Name="Inventar" Relationship="DatabaseDSAModel.fk_HeldInventar_Inventar" FromRole="Held_Inventar" ToRole="Inventar" />
     <NavigationProperty Name="Trageort" Relationship="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" FromRole="Held_Inventar" ToRole="Trageort" />
+  </EntityType>
+  <EntityType Name="Held_Modifikator">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="HeldGUID" Type="Guid" Nullable="false" />
+    <Property Name="ModifikatorGUID" Type="Guid" Nullable="false" />
+    <Property Name="Wert1" Type="Int32" />
+    <Property Name="Wert2" Type="Int32" />
+    <Property Name="Wert3" Type="Int32" />
+    <Property Name="Erstellt" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AA7" FromRole="Held_Modifikator" ToRole="Held" />
+    <NavigationProperty Name="Modifikator" Relationship="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AAB" FromRole="Held_Modifikator" ToRole="Modifikator" />
   </EntityType>
   <EntityType Name="Held_Munition">
     <Key>
@@ -3033,6 +3198,12 @@
     <Property Name="GrößeKomprimiert" Type="Double" />
     <Property Name="UrlPdf" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="UrlPrint" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="Regelsystem" Type="Int32" Nullable="false" />
+    <Property Name="Nummer" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Art" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="Reihe" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="Setting" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="Box" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="MenuLink">
     <Key>
@@ -3043,6 +3214,19 @@
     <Property Name="ProgrammPfad" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="Name" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Bild" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Modifikator">
+    <Key>
+      <PropertyRef Name="ModifikatorGUID" />
+    </Key>
+    <Property Name="ModifikatorGUID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Typ" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="Beschreibung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Json" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Literatur" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Gegner_Modifikator" Relationship="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000AD0" FromRole="Modifikator" ToRole="Gegner_Modifikator" />
+    <NavigationProperty Name="Held_Modifikator" Relationship="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AAB" FromRole="Modifikator" ToRole="Held_Modifikator" />
   </EntityType>
   <EntityType Name="Munition">
     <Key>
@@ -3659,6 +3843,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Gegner_Modifikator__0000000000000ACC">
+    <End Role="Gegner" Type="DatabaseDSAModel.Gegner" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Gegner_Modifikator" Type="DatabaseDSAModel.Gegner_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gegner">
+        <PropertyRef Name="GegnerGUID" />
+      </Principal>
+      <Dependent Role="Gegner_Modifikator">
+        <PropertyRef Name="GegnerGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Gegner_GegnerBase">
     <End Role="GegnerBase" Type="DatabaseDSAModel.GegnerBase" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -3670,6 +3868,20 @@
       </Principal>
       <Dependent Role="Gegner">
         <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Gegner_Modifikator__0000000000000AD0">
+    <End Role="Modifikator" Type="DatabaseDSAModel.Modifikator" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Gegner_Modifikator" Type="DatabaseDSAModel.Gegner_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
+      </Principal>
+      <Dependent Role="Gegner_Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3740,6 +3952,20 @@
       </Principal>
       <Dependent Role="Handelsgut_Setting">
         <PropertyRef Name="SettingGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Held_Modifikator__0000000000000AA7">
+    <End Role="Held" Type="DatabaseDSAModel.Held" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Modifikator" Type="DatabaseDSAModel.Held_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Held">
+        <PropertyRef Name="HeldGUID" />
+      </Principal>
+      <Dependent Role="Held_Modifikator">
+        <PropertyRef Name="HeldGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3894,6 +4120,20 @@
       </Principal>
       <Dependent Role="Held_Inventar">
         <PropertyRef Name="TrageortGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Held_Modifikator__0000000000000AAB">
+    <End Role="Modifikator" Type="DatabaseDSAModel.Modifikator" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Modifikator" Type="DatabaseDSAModel.Held_Modifikator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
+      </Principal>
+      <Dependent Role="Held_Modifikator">
+        <PropertyRef Name="ModifikatorGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -4444,6 +4684,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Gegner_Modifikator">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Gegner_Modifikator">
+        <MappingFragment StoreEntitySet="Gegner_Modifikator">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GegnerGUID" ColumnName="GegnerGUID" />
+          <ScalarProperty Name="ModifikatorGUID" ColumnName="ModifikatorGUID" />
+          <ScalarProperty Name="Wert1" ColumnName="Wert1" />
+          <ScalarProperty Name="Wert2" ColumnName="Wert2" />
+          <ScalarProperty Name="Wert3" ColumnName="Wert3" />
+          <ScalarProperty Name="Erstellt" ColumnName="Erstellt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GegnerBase">
       <EntityTypeMapping TypeName="DatabaseDSAModel.GegnerBase">
         <MappingFragment StoreEntitySet="GegnerBase">
@@ -4622,6 +4875,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Held_Modifikator">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Held_Modifikator">
+        <MappingFragment StoreEntitySet="Held_Modifikator">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="HeldGUID" ColumnName="HeldGUID" />
+          <ScalarProperty Name="ModifikatorGUID" ColumnName="ModifikatorGUID" />
+          <ScalarProperty Name="Wert1" ColumnName="Wert1" />
+          <ScalarProperty Name="Wert2" ColumnName="Wert2" />
+          <ScalarProperty Name="Wert3" ColumnName="Wert3" />
+          <ScalarProperty Name="Erstellt" ColumnName="Erstellt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Held_Munition">
       <EntityTypeMapping TypeName="DatabaseDSAModel.Held_Munition">
         <MappingFragment StoreEntitySet="Held_Munition">
@@ -4749,6 +5015,12 @@
           <ScalarProperty Name="GrößeKomprimiert" ColumnName="GrößeKomprimiert" />
           <ScalarProperty Name="UrlPdf" ColumnName="UrlPdf" />
           <ScalarProperty Name="UrlPrint" ColumnName="UrlPrint" />
+          <ScalarProperty Name="Regelsystem" ColumnName="Regelsystem" />
+          <ScalarProperty Name="Nummer" ColumnName="Nummer" />
+          <ScalarProperty Name="Art" ColumnName="Art" />
+          <ScalarProperty Name="Reihe" ColumnName="Reihe" />
+          <ScalarProperty Name="Setting" ColumnName="Setting" />
+          <ScalarProperty Name="Box" ColumnName="Box" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4759,6 +5031,18 @@
           <ScalarProperty Name="ProgrammPfad" ColumnName="ProgrammPfad" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Bild" ColumnName="Bild" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modifikator">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Modifikator">
+        <MappingFragment StoreEntitySet="Modifikator">
+          <ScalarProperty Name="ModifikatorGUID" ColumnName="ModifikatorGUID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Typ" ColumnName="Typ" />
+          <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+          <ScalarProperty Name="Json" ColumnName="Json" />
+          <ScalarProperty Name="Literatur" ColumnName="Literatur" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5132,5 +5416,132 @@
 <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
-<edmx:Diagrams />
+<edmx:Diagrams >
+      <Diagram DiagramId="5710a3aca0ab412fb6a1a1e3acfe9f96" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="23.5" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="11.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="14" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="8.75" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="11" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="11" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="8.75" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="14" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="13.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="19.75" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="0.75" PointY="36.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="19" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="21.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="16.75" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="19" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="22" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="14" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="6" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Modifikator" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="3" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="6" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="6" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="9" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="9" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="3.75" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="19.75" PointY="36.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="19.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="22" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="13.75" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="0.75" PointY="43" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="15.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="15.75" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="17.75" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="19.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="22" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="22" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="3" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="11.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="3.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="17" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="0.75" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="10.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="6.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="9" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="6.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="17" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="9" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="14.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="17" PointY="12.25" IsExpanded="true" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerEreignis_Szene" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachEreignis" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonEreignis" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachSzene" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonSzene" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Alchimierezept" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Rüstung_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Schild_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Waffe_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Setting" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000AD0" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Handelsgut" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Setting" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AA7" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Held" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Held" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Held" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_HeldFK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_HeldFK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_Zauber_HeldFK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Talent" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_TrageortGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Inventar" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AAB" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Munition" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_TrageortGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Talent_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Zauber_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_KulturName_Kultur" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Kultur" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Rasse" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Rasse" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_SonderfertigkeitSetting_Setting" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberSetting_Setting" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Setting" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_SonderfertigkeitSetting_Sonderfertigkeit" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK_Zauberzeichen_Sonderfertigkeit" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Gruppe" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Zauber_Variante__0000000000000A6D" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberSetting_Zauber" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Zauberzeichen" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Playlist" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
 </edmx:Designer></edmx:Edmx>

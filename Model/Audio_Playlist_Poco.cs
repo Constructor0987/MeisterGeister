@@ -88,7 +88,8 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _audio_PlaylistGUID, value);
-    		}    
+    		}
+    
         }
         private System.Guid _audio_PlaylistGUID;
     	///<summary>Database persistent property</summary>
@@ -99,7 +100,8 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _name, value);
-    		}    
+    		}
+    
         }
         private string _name;
     	///<summary>Database persistent property</summary>
@@ -110,10 +112,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _hintergrundmusik, value);
-    		}    
+    		}
+    
         }
         private bool _hintergrundmusik;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int MaxSongsParallel
@@ -122,47 +124,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _maxSongsParallel, value);
-    		}    
+    		}
+    
         }
         private int _maxSongsParallel;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual bool Fading
-        {
-            get { return _fading; }
-            set
-            {
-                Set(ref _fading, value);
-            }
-        }
-        private bool _fading;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual bool DoForce
-        {
-            get { return _doForce; }
-            set
-            {
-                Set(ref _doForce, value);
-            }
-
-        }
-        private bool _doForce;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual int ForceVolume
-        {
-            get { return _forceVol; }
-            set
-            {
-                Set(ref _forceVol, value);
-            }
-        }
-        private int _forceVol;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual double Länge
@@ -171,10 +136,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _länge, value);
-    		}    
+    		}
+    
         }
         private double _länge;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Kategorie
@@ -183,10 +148,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _kategorie, value);
-    		}    
+    		}
+    
         }
         private string _kategorie;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Key
@@ -195,10 +160,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _key, value);
-    		}    
+    		}
+    
         }
         private string _key;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Modifiers
@@ -207,10 +172,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _modifiers, value);
-    		}    
+    		}
+    
         }
         private string _modifiers;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual bool Shuffle
@@ -219,10 +184,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _shuffle, value);
-    		}    
+    		}
+    
         }
         private bool _shuffle;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<bool> Repeat
@@ -231,80 +196,116 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _repeat, value);
-    		}    
+    		}
+    
         }
         private Nullable<bool> _repeat;
-
-        
-        ///<summary>Database persistent property</summary>
-        [DataMember]
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool Fading
+        {
+            get { return _fading; }
+            set
+    		{ 
+    			Set(ref _fading, value);
+    		}
+    
+        }
+        private bool _fading;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool DoForce
+        {
+            get { return _doForce; }
+            set
+    		{ 
+    			Set(ref _doForce, value);
+    		}
+    
+        }
+        private bool _doForce;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int ForceVolume
+        {
+            get { return _forceVolume; }
+            set
+    		{ 
+    			Set(ref _forceVolume, value);
+    		}
+    
+        }
+        private int _forceVolume;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual bool WarteZeitAktiv
         {
             get { return _warteZeitAktiv; }
             set
-            {
-                Set(ref _warteZeitAktiv, value);
-            }
+    		{ 
+    			Set(ref _warteZeitAktiv, value);
+    		}
+    
         }
         private bool _warteZeitAktiv;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual long WarteZeit
         {
             get { return _warteZeit; }
             set
-            {
-                Set(ref _warteZeit, value);
-            }
+    		{ 
+    			Set(ref _warteZeit, value);
+    		}
+    
         }
         private long _warteZeit;
-        
-        ///<summary>Database persistent property</summary>
-        [DataMember]
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual bool WarteZeitChange
         {
             get { return _warteZeitChange; }
             set
-            {
-                Set(ref _warteZeitChange, value);
-            }
+    		{ 
+    			Set(ref _warteZeitChange, value);
+    		}
+    
         }
         private bool _warteZeitChange;
-        
-        ///<summary>Database persistent property</summary>
-        [DataMember]
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual long WarteZeitMin
         {
             get { return _warteZeitMin; }
             set
-            {
-                Set(ref _warteZeitMin, value);
-            }
+    		{ 
+    			Set(ref _warteZeitMin, value);
+    		}
+    
         }
         private long _warteZeitMin;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual long WarteZeitMax
         {
             get { return _warteZeitMax; }
             set
-            {
-                Set(ref _warteZeitMax, value);
-            }
+    		{ 
+    			Set(ref _warteZeitMax, value);
+    		}
+    
         }
         private long _warteZeitMax;
-        ///<summary>Database persistent property</summary>
-        [DataMember]
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual int Reihenfolge
         {
             get { return _reihenfolge; }
             set
-            {
-                Set(ref _reihenfolge, value);
-            }
-
+    		{ 
+    			Set(ref _reihenfolge, value);
+    		}
+    
         }
         private int _reihenfolge;
 
