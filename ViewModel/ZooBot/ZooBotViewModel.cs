@@ -324,17 +324,13 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     probenTalent.Ergebnis.Würfe[1] + " / " +
                     probenTalent.Ergebnis.Würfe[2] + " gewürfelt.\r\n";
 
-                if ((probenTalent.Ergebnis.Würfe[0] == 1 && probenTalent.Ergebnis.Würfe[1] == 1) ||
-                    (probenTalent.Ergebnis.Würfe[1] == 1 && probenTalent.Ergebnis.Würfe[2] == 1) ||
-                    (probenTalent.Ergebnis.Würfe[0] == 1 && probenTalent.Ergebnis.Würfe[2] == 1))
+                if (probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.GLÜCKLICH || probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.MEISTERHAFT)
                 {
                     ausgabe += "Spektakulärer Erfolg! (Spezielle Erfahrung)\r\n";
                 }
-                if ((probenTalent.Ergebnis.Würfe[0] == 20 && probenTalent.Ergebnis.Würfe[1] == 20) ||
-                    (probenTalent.Ergebnis.Würfe[1] == 20 && probenTalent.Ergebnis.Würfe[2] == 20) ||
-                    (probenTalent.Ergebnis.Würfe[0] == 20 && probenTalent.Ergebnis.Würfe[2] == 20))
+                if (probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.PATZER || probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.FATALER_PATZER)
                 {
-                    ausgabe += "Katastrophaler Misserfolg! (Spezielle Erfahrung)\r\n";
+                    ausgabe += "Katastrophaler Misserfolg!\r\n";
                 }
                 taPStern = ergebnis.Übrig;
                 return ergebnis.Gelungen;
