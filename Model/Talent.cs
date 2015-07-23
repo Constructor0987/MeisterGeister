@@ -53,8 +53,12 @@ namespace MeisterGeister.Model
         public void WerteSetzen(Held h, string spezialisierung = null)
         {
             Fertigkeitswert = h.Talentwert(this);
-            if (spezialisierung != null && Talentspezialisierungen(h).Contains(spezialisierung))
+            if (spezialisierung != null)
+            {
+                List<string> spezLi = Talentspezialisierungen(h);
+                if (spezLi != null && spezLi.Contains(spezialisierung))
                 Fertigkeitswert += 2;
+            }
             Werte = new int[] { h.EigenschaftWert(Eigenschaft1), h.EigenschaftWert(Eigenschaft2), h.EigenschaftWert(Eigenschaft3) };
         }
 
@@ -71,7 +75,10 @@ namespace MeisterGeister.Model
             if (h.Held_Sonderfertigkeit != null)
             {
                 List<string> r = h.Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit.Name == "Talentspezialisierung" && hs.Wert != null && hs.Wert.StartsWith(Talentname)).OrderBy(hs => hs.Wert).Select(hs => hs.Wert).ToList();
-                r.ForEach(w => w = Talent.GetSpezialisierungName(Talentname, w));
+                //r.ForEach(w => w = Talent.GetSpezialisierungName(Talentname, w));
+                for (int i = 0; i < r.Count; i++)
+                    r[i] = Talent.GetSpezialisierungName(Talentname, r[i]);
+                return r;
             }
             return null;
         }

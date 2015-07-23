@@ -1049,7 +1049,7 @@ namespace MeisterGeister.Model {
         }
 
         /// <summary>
-        /// TODO UNFERTIG
+        /// Würfelt eine Probe auf das angegebene Talent.
         /// </summary>
         /// <returns></returns>
         public ProbenErgebnis TalentProbe(Talent t, int mod, string spezialisierung = null) {
