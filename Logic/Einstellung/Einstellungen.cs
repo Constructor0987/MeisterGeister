@@ -714,12 +714,15 @@ namespace MeisterGeister.Logic.Einstellung
         {
             get
             {
-                if (_meisterGeisterID == null)
-                    _meisterGeisterID = Guid.Parse(GetEinstellung<string>("MeisterGeisterID"));
-                if (_meisterGeisterID == Guid.Empty)
-                { // MeisterGeisterID ist 00000000-0000-0000-0000-000000000000, also die Standard-Datenbank -> Neue ID erzeugen
-                    _meisterGeisterID = Guid.NewGuid();
-                    MeisterGeisterID = _meisterGeisterID.GetValueOrDefault();
+                if (Global.IsInitialized)
+                {
+                    if (_meisterGeisterID == null)
+                        _meisterGeisterID = Guid.Parse(GetEinstellung<string>("MeisterGeisterID"));
+                    if (_meisterGeisterID == Guid.Empty)
+                    { // MeisterGeisterID ist 00000000-0000-0000-0000-000000000000, also die Standard-Datenbank -> Neue ID erzeugen
+                        _meisterGeisterID = Guid.NewGuid();
+                        MeisterGeisterID = _meisterGeisterID.GetValueOrDefault();
+                    }
                 }
                 return _meisterGeisterID.GetValueOrDefault();
             }
