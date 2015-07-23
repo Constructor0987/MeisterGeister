@@ -387,6 +387,11 @@ namespace MeisterGeister.Model.Service
         {
             return Context.GegnerBase.Where(g => g.Typ == "Dämon").ToList();
         }
+
+        public List<GegnerBase> LoadElementare()
+        {
+            return Context.GegnerBase.Where(g => g.Typ == "Elementar").ToList();
+        }
         #endregion
     }
 }

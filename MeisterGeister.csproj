@@ -488,6 +488,7 @@
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\DämonenBeschwörungViewModel.cs" />
+    <Compile Include="ViewModel\Beschwörung\ElementarBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\OldBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
@@ -634,6 +635,12 @@
     </Compile>
     <Compile Include="View\Beschwörung\BeschwörungView.xaml.cs">
       <DependentUpon>BeschwörungView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\DämonenBeschwörungView.xaml.cs">
+      <DependentUpon>DämonenBeschwörungView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\ElementarBeschwörungView.xaml.cs">
+      <DependentUpon>ElementarBeschwörungView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Beschwörung\OldBeschwörungView.xaml.cs">
       <DependentUpon>OldBeschwörungView.xaml</DependentUpon>
@@ -1074,6 +1081,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Beschwörung\BeschwörungView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\DämonenBeschwörungView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\ElementarBeschwörungView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

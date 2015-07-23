@@ -20,6 +20,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
             PropertyChanged += propertyChanged;
         }
 
+        protected override List<GegnerBase> loadWesen()
+        {
+            return Global.ContextHeld.LoadDämonen();
+        }
+
         private void propertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Hörner" || e.PropertyName == "WahrerName")
@@ -35,6 +40,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             InvocatioIntegra = false;
             Hörner = 0;
             AndererDämon = false;
+            Affinität = false;
+            Bannschwert = false;
         }
 
         #region Beschwören
@@ -86,11 +93,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
             else if (wurf <= 5)
             {
-                Ergebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen. Der Beschwörer erhält 1 Punkt Verfall.";
+                Ergebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen.";
             }
             else if (wurf <= 9)
             {
-                Ergebnis = "wie zuvor, jedoch ist die Beschwörung dieses speziellen Dämonen für den Beschwörer in Zukunft um 3 Punkte erschwert. (Dies lässt sich durch 20 AP wieder aufheben; Paktierer können stattdessen 20 Pakt-GP einsetzen; entstammen Dämon und Pakt nicht derselben Domäne, betragen die Kosten 50 Pakt-GP.) 2 Punkte Verfall.";
+                Ergebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen. " +
+                           "Die Beschwörung dieses speziellen Dämonen ist für den Beschwörer in Zukunft um 3 Punkte erschwert. " +
+                           "(Dies lässt sich durch 20 AP wieder aufheben; Paktierer können stattdessen 20 Pakt-GP einsetzen; entstammen Dämon und Pakt nicht derselben Domäne, betragen die Kosten 50 Pakt-GP.) 2 Punkte Verfall.";
             }
             else if (wurf <= 13)
             {
@@ -98,15 +107,15 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
             else if (wurf <= 17)
             {
-                Ergebnis = "wie vor, jedoch attackiert der Dämon W6+3 Kampfrunden lang; W6+3 Punkte Verfall";
+                Ergebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an; W6+3 Punkte Verfall";
             }
             else if (wurf <= 21)
             {
-                Ergebnis = "wie vor, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP.";
+                Ergebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP.";
             }
             else
             {
-                Ergebnis = "wie vor, jedoch können nach Meisterentscheid und bösartiger Kreativität weitere Nebeneffekte eintreten. Als Beispiele seien hier genannt: Der Dämon lässt nicht eher vom Beschwörer ab, bis er ausgetrieben wird. Der Dämon wird freigesetzt und macht auf eigene Faust Aventurien unsicher. Der Dämon reißt den Beschwörer in die Niederhöllen. Der Dämon zieht sich in den näheren Limbus zurück und wartet dort auf die nächste Beschwörung, um dann zusätzlich zur gerufenen Entität zu erscheinen. Ein mächtiger Gehörnter zwingt dem Beschwörer einen minderen Pakt auf.";
+                Ergebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP. Jedoch können nach Meisterentscheid und bösartiger Kreativität weitere Nebeneffekte eintreten. Als Beispiele seien hier genannt: Der Dämon lässt nicht eher vom Beschwörer ab, bis er ausgetrieben wird. Der Dämon wird freigesetzt und macht auf eigene Faust Aventurien unsicher. Der Dämon reißt den Beschwörer in die Niederhöllen. Der Dämon zieht sich in den näheren Limbus zurück und wartet dort auf die nächste Beschwörung, um dann zusätzlich zur gerufenen Entität zu erscheinen. Ein mächtiger Gehörnter zwingt dem Beschwörer einen minderen Pakt auf.";
             }
         }
 
@@ -178,8 +187,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return invocatioIntegra; }
             set
             {
-                invocatioIntegra = value;
-                OnChanged();
+                Set(ref invocatioIntegra, value);
                 OnChanged("ZauberWert");
                 OnChanged("KontrollWert");
                 OnChanged("InvocatioIntegraMagiekundeRufMod");
@@ -194,8 +202,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return invocatioIntegraVorbereiten; }
             set
             {
-                invocatioIntegraVorbereiten = value;
-                OnChanged();
+                Set(ref invocatioIntegraVorbereiten, value);
                 OnChanged("InvocatioIntegraMagiekundeRufMod");
                 OnChanged("InvocatioIntegraMalenRufMod");
                 OnChangedSum();
@@ -208,8 +215,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return invocatioIntegraMagiekundePunkte; }
             set
             {
-                invocatioIntegraMagiekundePunkte = value;
-                OnChanged();
+                Set(ref invocatioIntegraMagiekundePunkte, value);
                 OnChanged("InvocatioIntegraMagiekundeRufMod");
                 OnChangedSum();
             }
@@ -221,8 +227,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return invocatioIntegraMalenPunkte; }
             set
             {
-                invocatioIntegraMalenPunkte = value;
-                OnChanged();
+                Set(ref invocatioIntegraMalenPunkte, value);
                 OnChanged("InvocatioIntegraMalenRufMod");
                 OnChangedSum();
             }
@@ -255,6 +260,43 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         #endregion
 
+        #region Properties
+
+        private bool bannschwert;
+        public bool Bannschwert
+        {
+            get { return bannschwert; }
+            set
+            {
+                bannschwert = value;
+                OnInputChanged();
+            }
+        }
+
+        public int BannschwertRufMod
+        {
+            get { return Bannschwert ? -1 : 0; }
+        }
+        public int BannschwertHerrschMod
+        {
+            get { return Bannschwert ? -1 : 0; }
+        }
+
+        private bool affinität;
+        public bool Affinität
+        {
+            get { return affinität; }
+            set
+            {
+                affinität = value;
+                OnInputChanged();
+            }
+        }
+
+        public int AffinitätHerrschMod
+        {
+            get { return Affinität ? -3 : 0; }
+        }
 
         private bool andererDämon = false;
         public bool AndererDämon
@@ -262,8 +304,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return andererDämon; }
             set
             {
-                andererDämon = value;
-                OnChanged();
+                Set(ref andererDämon, value);
                 OnChangedSum();
             }
         }
@@ -274,8 +315,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return hörner; }
             set
             {
-                hörner = value;
-                OnChanged();
+                Set(ref hörner, value);
                 OnChanged("InvocatioIntegraMöglich");
                 Zauber = Hörner == 0 ? "Invocatio minor" : "Invocatio maior";
             }
@@ -313,11 +353,22 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        public override int WahrerNameRufMod
+        {
+            get
+            {
+                return WahrerName == 0 ? 7 : -WahrerName;
+            }
+        }
+
+        #endregion
+
         public override int GesamtRufMod
         {
             get
             {
                 return base.GesamtRufMod
+                    +BannschwertRufMod
                     + InvocatioIntegraMagiekundeRufMod
                     + InvocatioIntegraMalenRufMod;
             }
@@ -327,7 +378,10 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             get
             {
-                return base.GesamtHerrschMod + (AndererDämon ? Kontrollschwierigkeit : 0);
+                return base.GesamtHerrschMod
+                    + (AndererDämon ? Kontrollschwierigkeit : 0)
+                    + AffinitätHerrschMod
+                    +BannschwertHerrschMod;
             }
         }
 
@@ -342,6 +396,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public override string KontrollFormel
         {
             get { return "(MU + MU + KL + CH + ZfW) / 5"; }
+        }
+
+        protected override int calcKontrollWert()
+        {
+            return (int)Math.Round((held.Mut * 2 + held.Klugheit + held.Charisma + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
         }
     }
 }

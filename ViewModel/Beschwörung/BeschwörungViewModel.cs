@@ -17,23 +17,30 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public BeschwörungViewModel()
             : base(View.General.ViewHelper.ShowProbeDialog)
         {
-            Wesen = Global.ContextHeld.LoadDämonen();
+            Wesen = loadWesen();
             beschwören = new Base.CommandBase(beschwöre, null);
             beherrschen = new Base.CommandBase(beherrsche, null);
+            resetCmd = new Base.CommandBase((o) => reset(), null);
             reset();
+        }
+
+        protected abstract List<GegnerBase> loadWesen();
+
+        private Base.CommandBase resetCmd;
+        public Base.CommandBase Reset
+        {
+            get { return resetCmd; }
         }
 
         protected virtual void reset()
         {
-            
+
             Beschwörungsschwierigkeit = Kontrollschwierigkeit = 0;
             Beschwörungspunkte = 0;
             WahrerName = 0;
             BefehlHerrschMod = 0;
             DauerHerrschMod = 0;
             AusrüstungMod = 0;
-            Bannschwert = false;
-            Affinität = false;
             Blutmagie = Blutmagie.Keine;
             Sterne = 0;
             Ort = 0;
@@ -59,7 +66,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return beherrschen; }
         }
 
-        private Held held;
+        protected Held held;
         private Model.Zauber zauber;
 
         private void beschwöre(object obj)
@@ -113,13 +120,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return beschworenesWesen; }
             set
             {
-                beschworenesWesen = value;
-                OnChanged();
+                Set(ref beschworenesWesen, value);
                 if (beschworenesWesen != null)
                 {
                     Beschwörungsschwierigkeit = beschworenesWesen.Beschwörung.Value;
                     Kontrollschwierigkeit = beschworenesWesen.Kontrolle.Value;
-                    //TODO: Hörner eintragen
                 }
             }
         }
@@ -156,9 +161,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get
             {
                 if (held == null) return 0;
-                return (int)Math.Round((held.Mut * 2 + held.Klugheit + held.Charisma + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
+                else return calcKontrollWert();
             }
         }
+
+        protected abstract int calcKontrollWert();
 
         public abstract string KontrollFormel
         {
@@ -172,8 +179,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return beschwörungsschwierigkeit; }
             set
             {
-                beschwörungsschwierigkeit = value;
-                OnChanged();
+                Set(ref beschwörungsschwierigkeit, value);
                 OnChangedSum();
             }
         }
@@ -184,8 +190,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return kontrollschwierigkeit; }
             set
             {
-                kontrollschwierigkeit = value;
-                OnChanged();
+                Set(ref kontrollschwierigkeit, value);
                 OnChangedSum();
             }
         }
@@ -197,28 +202,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             set
             {
                 wahrerName = value;
-                OnInputChanged();
-            }
-        }
-
-        private bool bannschwert;
-        public bool Bannschwert
-        {
-            get { return bannschwert; }
-            set
-            {
-                bannschwert = value;
-                OnInputChanged();
-            }
-        }
-
-        private bool affinität;
-        public bool Affinität
-        {
-            get { return affinität; }
-            set
-            {
-                affinität = value;
                 OnInputChanged();
             }
         }
@@ -263,8 +246,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return donariaRuf; }
             set
             {
-                donariaRuf = value;
-                OnChanged();
+                Set(ref donariaRuf, value);
                 OnChangedSum();
             }
         }
@@ -275,8 +257,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return donariaHerrsch; }
             set
             {
-                donariaHerrsch = value;
-                OnChanged();
+                Set(ref donariaHerrsch, value);
                 OnChangedSum();
             }
         }
@@ -287,8 +268,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return befehlHerrschMod; }
             set
             {
-                befehlHerrschMod = value;
-                OnChanged();
+                Set(ref befehlHerrschMod, value);
                 OnChangedSum();
             }
         }
@@ -299,8 +279,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return dauerHerrschMod; }
             set
             {
-                dauerHerrschMod = value;
-                OnChanged();
+                Set(ref dauerHerrschMod, value);
                 OnChangedSum();
             }
         }
@@ -311,8 +290,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return sonstigesRufMod; }
             set
             {
-                sonstigesRufMod = value;
-                OnChanged();
+                Set(ref sonstigesRufMod, value);
                 OnChangedSum();
             }
         }
@@ -323,8 +301,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return sonstigesHerrschMod; }
             set
             {
-                sonstigesHerrschMod = value;
-                OnChanged();
+                Set(ref sonstigesHerrschMod, value);
                 OnChangedSum();
             }
         }
@@ -335,8 +312,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return bezahlungHerrschMod; }
             set
             {
-                bezahlungHerrschMod = value;
-                OnChanged();
+                Set(ref bezahlungHerrschMod, value);
                 OnChangedSum();
             }
         }
@@ -347,8 +323,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return ausrüstungMod; }
             set
             {
-                ausrüstungMod = value;
-                OnChanged();
+                Set(ref ausrüstungMod, value);
                 OnChangedSum();
             }
         }
@@ -359,8 +334,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return beschwörungspunkte; }
             set
             {
-                beschwörungspunkte = value;
-                OnChanged();
+                Set(ref beschwörungspunkte, value);
                 OnChanged("Beschwörungsbonus");
                 OnChangedSum();
             }
@@ -370,11 +344,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public List<GegnerBase> Wesen
         {
             get { return wesen; }
-            private set
-            {
-                wesen = value;
-                OnChanged();
-            }
+            private set { Set(ref wesen, value); }
         }
 
         public int Beschwörungsbonus
@@ -383,23 +353,14 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
 
 
-        public int WahrerNameRufMod
+        public virtual int WahrerNameRufMod
         {
-            get { return WahrerName == 0 ? 7 : -WahrerName; }
+            get { return -WahrerName; }
         }
 
         public int WahrerNameHerrschMod
         {
             get { return (int)Math.Round(-WahrerName / 3.0, MidpointRounding.AwayFromZero); }
-        }
-
-        public int BannschwertRufMod
-        {
-            get { return Bannschwert ? -1 : 0; }
-        }
-        public int BannschwertHerrschMod
-        {
-            get { return Bannschwert ? -1 : 0; }
         }
 
         public int SterneRufMod
@@ -420,12 +381,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return (int)Math.Round(Ort / 3.0, MidpointRounding.AwayFromZero); }
         }
 
-        public int AffinitätHerrschMod
-        {
-            get { return Affinität ? -3 : 0; }
-        }
-
-        public int BlutmagieHerrschMod
+        public virtual int BlutmagieHerrschMod
         {
             get { return Blutmagie == Blutmagie.Keine ? 0 : 2; }
         }
@@ -437,7 +393,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 return Beschwörungsschwierigkeit
                     + WahrerNameRufMod
                     + AusrüstungMod
-                    + BannschwertRufMod
                     + SterneRufMod
                     + OrtRufMod
                     + DonariaRuf
@@ -455,8 +410,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
                     + BefehlHerrschMod
                     + DauerHerrschMod
                     + AusrüstungMod
-                    + BannschwertHerrschMod
-                    + AffinitätHerrschMod
                     + BlutmagieHerrschMod
                     + SterneHerrschMod
                     + OrtHerrschMod
@@ -470,11 +423,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public string Ergebnis
         {
             get { return ergebnis; }
-            protected set
-            {
-                ergebnis = value;
-                OnChanged();
-            }
+            protected set { Set(ref ergebnis, value); }
         }
 
 
@@ -482,7 +431,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         #region Helfer
 
-        private void OnInputChanged([CallerMemberName]string propertyName = null)
+        protected void OnInputChanged([CallerMemberName]string propertyName = null)
         {
             base.OnChanged(propertyName);
             base.OnChanged(propertyName + "RufMod");
