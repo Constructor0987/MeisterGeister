@@ -781,6 +781,9 @@
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Karte\KoordinatenControl.xaml.cs">
+      <DependentUpon>KoordinatenControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
       <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
     </Compile>
@@ -1215,6 +1218,10 @@
     <Page Include="View\Kampf\KampfInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Karte\KoordinatenControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml">
       <Generator>MSBuild:Compile</Generator>

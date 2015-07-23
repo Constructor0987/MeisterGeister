@@ -14,6 +14,7 @@
              d:DesignHeight="500" d:DesignWidth="600">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
+        <LogicKarte:DereGlobusToMapConverter x:Key="DereGlobusToMapConverter" />
     </UserControl.Resources>
     <Border BorderThickness="1" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent">
@@ -26,6 +27,8 @@
                 <Canvas x:Name="mapCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}">
                     <Canvas.ContextMenu>
                         <ContextMenu Name="contextMenu" General:TrackBehavior.TrackOpenLocation="True">
+                            <MenuItem>
+                            </MenuItem> 
                             <MenuItem Header="Position setzen" Command="{Binding Path=PlacementTarget.DataContext.OnHeldenPositionSetzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="25"/>
@@ -42,9 +45,7 @@
                                     Background="#88C0C0C0"
                     Margin="95,20,0,0" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding HeldenLängengrad}" />
-                    <TextBlock>/</TextBlock>
-                    <TextBlock Text="{Binding HeldenBreitengrad}" />
+                    <Karte:KoordinatenControl Value="{Binding HeldenGlobusPosition}" />
                 </StackPanel>
             </Border>
         </Grid>

@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MeisterGeister.View.Karte.KoordinatenControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
+             xmlns:LogicKarte="clr-namespace:MeisterGeister.Logic.Karte"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="400">
+    <UserControl.Resources>
+        <LogicKarte:DereGlobusToMapConverter x:Key="DereGlobusToMapConverter" />
+    </UserControl.Resources>
+        <Grid Background="Transparent">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Name="textX" Text="0" />
+                    <TextBlock>/</TextBlock>
+                    <TextBlock Name="textY" Text="0" />
+                </StackPanel>
+        </Grid>
+</UserControl>
