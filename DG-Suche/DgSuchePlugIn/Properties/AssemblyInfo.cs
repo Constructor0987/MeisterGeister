@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DereGlobus-Projekt")]
 [assembly: AssemblyProduct("DG-SuchePlugIn")]
-[assembly: AssemblyCopyright("Copyright © DereGlobus-Projekt 2011-2014")]
+[assembly: AssemblyCopyright("Copyright © DereGlobus-Projekt 2011-2015")]
 [assembly: AssemblyTrademark("DG-SuchePlugIn")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.0")]

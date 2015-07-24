@@ -5,6 +5,7 @@ using MeisterGeister.Logic.General;
 //Eigene Usings
 using MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
+using System.Globalization;
 
 namespace MeisterGeister
 {
@@ -106,7 +107,7 @@ namespace MeisterGeister
         {
             get {
                 if (standort == null)
-                    standort = new DgSuche.Ortsmarke(Logic.Einstellung.Einstellungen.Standort, true);
+                    standort = new DgSuche.Ortsmarke(Logic.Einstellung.Einstellungen.Standort);
                 return standort; 
             }
             set { 
@@ -130,7 +131,7 @@ namespace MeisterGeister
             set
             {
                 Global._heldenLon = value;
-                Standort.Longitude = String.Format("{0:0.00000000000000}", _heldenLon);
+                Standort.Longitude = _heldenLon;
                 //OnStandortChanged();
             }
         }
@@ -140,7 +141,7 @@ namespace MeisterGeister
             get { return Global._heldenLat; }
             set { 
                 Global._heldenLat = value;
-                Standort.Latitude = String.Format("{0:0.00000000000000}", _heldenLat);
+                Standort.Latitude = _heldenLat;
                 //OnStandortChanged();
             }
         }
@@ -301,9 +302,9 @@ namespace MeisterGeister
 
         static void OnStandortChanged()
         {
-            Logic.Einstellung.Einstellungen.Standort = string.Format("{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
-            Double.TryParse(Standort.Longitude.Replace(',','.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLon);
-            Double.TryParse(Standort.Latitude.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLat);
+            Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+            _heldenLon = Standort.Longitude;
+            _heldenLat = Standort.Latitude;
 
             if (StandortChanged != null)
                 StandortChanged(null, new EventArgs());

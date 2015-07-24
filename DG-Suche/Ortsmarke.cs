@@ -4,25 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.IO;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using System.Globalization;
+using System.Windows;
 
 namespace DgSuche
 {
-    public class Ortsmarke
+    public class Ortsmarke : NotifyChangedBase
     {
+        /// <summary>
+        /// Erstellt eine neue Ortsmarke ohne Werte.
+        /// </summary>
         public Ortsmarke()
         {
             Name = string.Empty;
-            Latitude = string.Empty;
-            Longitude = string.Empty;
+            Latitude = 0;
+            Longitude = 0;
             Link = string.Empty;
         }
 
+        /// <summary>
+        /// Setzt die Werte der Ortsmarke anhand der Informationen aus der statischen Liste ListOrtsmarken.
+        /// Ist der Wert nicht enthalten, wird nichts gesetzt.
+        /// 
+        /// Ist keine Liste vorhanden, wird versucht die Koordinaten dem Namen zu entnehmen.
+        /// Dieser muss dafür das Format Name#Latitude#Longitude aufweisen.
+        /// </summary>
+        /// <param name="name">Name der Ortsmarke aus der ListOrtsmarken</param>
         public Ortsmarke(string name)
-        {
-            SetFromList(name);
-        }
-
-        public Ortsmarke(string name, bool point)
         {
             if (_listOrtsmarken != null && _listOrtsmarken.Count > 0)
             {
@@ -32,10 +43,82 @@ namespace DgSuche
             {
                 string[] s = name.Split('#');
                 Name = s[0];
-                Latitude = s[1];
-                Longitude = s[2];
+                double lat = 0, lon = 0;
+                if (TryParseDouble(s[1], out lat))
+                    Latitude = lat;
+                if (TryParseDouble(s[2], out lon))
+                    Longitude = lon;
             }
         }
+
+        /// <summary>
+        /// Erstelle eine neue Ortsmarke.
+        /// </summary>
+        /// <param name="name">Name der Ortsmarke</param>
+        /// <param name="latitude">Breite</param>
+        /// <param name="longitude">Länge</param>
+        public Ortsmarke(string name, double latitude, double longitude)
+        {
+            Name = name;
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+
+        /// <summary>
+        /// Erstelle eine neue Ortsmarke.
+        /// </summary>
+        /// <param name="name">Name der Ortsmarke</param>
+        /// <param name="latitude">Breite</param>
+        /// <param name="longitude">Länge</param>
+        public Ortsmarke(string name, string latitude, string longitude)
+        {
+            Name = name;
+            SetKoordinatenFromString(latitude, longitude);
+        }
+
+        /// <summary>
+        /// Setzt die Koordinaten anhand einer Stringrepräsentation einer Gleitkommazahl.
+        /// Kann ein Wert nicht geparsed werden, dann wird dieser nicht gesetzt und es wird false zurückgegeben.
+        /// </summary>
+        /// <param name="latitude">Breite</param>
+        /// <param name="longitude">Länge</param>
+        public bool SetKoordinatenFromString(string latitude, string longitude)
+        {
+            double d = 0;
+            bool ret = true;
+            if (latitude != null)
+                if (TryParseDouble(latitude, out d))
+                    Latitude = d;
+                else
+                    ret = false;
+            if (longitude != null)
+                if (TryParseDouble(longitude, out d))
+                    Longitude = d;
+                else
+                    ret = false;
+            return ret;
+        }
+
+        /// <summary>
+        /// Erstellt eine neue Ortsmarke.
+        /// </summary>
+        /// <param name="name">Name des Ortes</param>
+        /// <param name="point">Koordinaten</param>
+        public Ortsmarke(string name, Point point)
+        {
+            Name = name;
+            Latitude = point.X;
+            Longitude = point.Y;
+        }
+
+        private static bool TryParseDouble(string s, out double d)
+        {
+            d = 0;
+            if(s == null)
+                return false;
+            return Double.TryParse(s.Trim().Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d);
+        }
+
 
         private void SetFromList(string name)
         {
@@ -75,12 +158,88 @@ namespace DgSuche
             }
         }
 
-        public string Name { get; set; }
-        public string Longitude { get; set; } // Länge
-        public string Latitude { get; set; } // Breite
-        public string Art { get; set; }
-        public string KmlLink { get; set; }
-        public string Link { get; set; }
+        string name;
+        public string Name
+        {
+            get { return name; }
+            set { 
+                Set(ref name,value);
+                OnChanged("LinkText");
+            }
+        }
+        
+        double longitude;
+        /// <summary>
+        /// Länge
+        /// </summary>
+        public double Longitude
+        {
+            get { return longitude; }
+            set { 
+                Set(ref longitude, value);
+                OnChanged("Koordinaten");
+            }
+        }
+
+        
+        double latitude;
+        /// <summary>
+        /// Breite
+        /// </summary>
+        public double Latitude
+        {
+            get { return latitude; }
+            set { 
+                Set(ref latitude, value);
+                OnChanged("Koordinaten");
+            }
+        }
+
+        /// <summary>
+        /// Die Korrdinaten als Point(Latitude/Breite, Longitude/Länge)
+        /// </summary>
+        public Point Koordinaten
+        {
+            get { return new Point(Latitude, Longitude); }
+        }
+
+        static List<string> artList = new List<string>() { "Alle", "Metropole", "Großstadt", "Stadt", "Kleinstadt", "Dorf", 
+                "Festung", "Sakralbauwerk", "Ruine", "Handelsstätte", "Werkstätte", "Privathaus", "Rakshazar" };
+
+        /// <summary>
+        /// Liste der Arten
+        /// </summary>
+        public static List<string> ArtListe
+        {
+            get { return artList; }
+        }
+
+        string art;
+        /// <summary>
+        /// Art aus der ArtListe
+        /// </summary>
+        public string Art
+        {
+            get { return art; }
+            set { Set(ref art, value); }
+        }
+
+        string kmlLink;
+        public string KmlLink
+        {
+            get { return kmlLink; }
+            set { Set(ref kmlLink, value); }
+        }
+
+        string link;
+        public string Link
+        {
+            get { return link; }
+            set {
+                Set(ref link, value);
+                OnChanged("LinkText");
+            }
+        }
 
         public string LinkText
         {
@@ -97,7 +256,7 @@ namespace DgSuche
         {
             get
             {
-                return string.Format("{0}\n\nLänge (Longitude): {1}\nBreite (Latitude): {2}", Name, Longitude, Latitude);
+                return string.Format("{0}\n\nLänge (Longitude): {1:0.0#####}\nBreite (Latitude): {2:0.0#####}", Name, Longitude, Latitude);
             }
         }
 
@@ -115,15 +274,13 @@ namespace DgSuche
         {
             get
             {
-                System.Reflection.Assembly assem = System.Reflection.Assembly.GetExecutingAssembly();
-                System.Reflection.AssemblyName assemName = assem.GetName();
-                return string.Format("/{0};component/Grafik/Globus/{1}.png", assemName.Name, ArtKurz);
+                return string.Format("pack://application:,,,/Grafik/Globus/{0}.png", ArtKurz);
             }
         }
 
         public override string ToString()
         {
-            return string.Format("{0}", Name);
+            return Name??"";
         }
 
         public string ToCSV(bool mitLink = false)
@@ -148,7 +305,20 @@ namespace DgSuche
             StarteDereGlobus(Name, Longitude, Latitude);
         }
 
-        public static void StarteDereGlobus(string name, string lon, string lat)
+        public static void StarteDereGlobus(string name, string lon, string lat, double altitude = 300000)
+        {
+            double dlon = 0, dlat = 0;
+            TryParseDouble(lat, out dlat);
+            TryParseDouble(lon, out dlon);
+            StarteDereGlobus(name, dlon, dlat, altitude);
+        }
+
+        public static void StarteDereGlobus(string name, Point point, double altitude = 300000)
+        {
+            StarteDereGlobus(name, point.Y, point.X, altitude);
+        }
+
+        public static void StarteDereGlobus(string name, double lon, double lat, double altitude = 300000)
         {
             try
             {
@@ -159,9 +329,9 @@ namespace DgSuche
                 kmlDatei += "<gx:TimeStamp>";
                 kmlDatei += "<when></when>";
                 kmlDatei += "</gx:TimeStamp>";
-                kmlDatei += string.Format("<longitude>{0}</longitude> <!-- kml:angle180 -->", lon);
-                kmlDatei += string.Format("<latitude>{0}</latitude> <!-- kml:angle90 -->", lat);
-                kmlDatei += "<altitude>300000</altitude> <!-- double -->";
+                kmlDatei += String.Format(CultureInfo.InvariantCulture, "<longitude>{0}</longitude> <!-- kml:angle180 -->", lon);
+                kmlDatei += String.Format(CultureInfo.InvariantCulture, "<latitude>{0}</latitude> <!-- kml:angle90 -->", lat);
+                kmlDatei += String.Format(CultureInfo.InvariantCulture, "<altitude>{0}</altitude> <!-- double -->", altitude);
                 kmlDatei += "<heading></heading> <!-- kml:angle360 -->";
                 kmlDatei += "<tilt></tilt> <!-- kml:anglepos180 -->";
                 kmlDatei += "<range></range> <!-- double -->";
@@ -192,27 +362,14 @@ namespace DgSuche
 
         public string KoordinatenShort()
         {
-            string lat = "-";
-            string lon = "-";
-            if (Latitude != null && Longitude != null)
-            {
-                int dotIndex = Latitude.IndexOf('.');
-                if (dotIndex + 4 < Latitude.Length)
-                    lat = Latitude.Remove(dotIndex + 5);
-                else
-                    lat = Latitude;
-                dotIndex = Longitude.IndexOf('.');
-                if (dotIndex + 4 < Longitude.Length)
-                    lon = Longitude.Remove(dotIndex + 5);
-                else
-                    lat = Latitude;
-            }
-            return lat + " | " + lon;
+            return String.Format("{0:0.0###} | {1:0.0###}", Latitude, Longitude);
         }
 
         public object ToStringKoordinaten()
         {
             return string.Format("{0} ({1})", Name, KoordinatenShort());
         }
+
+        
     }
 }

@@ -61,8 +61,7 @@ namespace DgSuche
             _buttonParseDG.Visibility = System.Windows.Visibility.Collapsed;
 #endif
 
-            List<string> artList = new List<string>() { "Alle", "Metropole", "Großstadt", "Stadt", "Kleinstadt", "Dorf", 
-                "Festung", "Sakralbauwerk", "Ruine", "Handelsstätte", "Werkstätte", "Privathaus", "Rakshazar" };
+            List<string> artList = Ortsmarke.ArtListe;
             _comboBoxArt.ItemsSource = artList;
             _comboBoxArt.SelectedIndex = 0;
 
@@ -163,10 +162,17 @@ namespace DgSuche
                         lm.Name = attributes[0];
                     if (attributes != null && attributes.Length >= 2)
                         lm.Art = attributes[1];
+                    double d = 0;
                     if (attributes != null && attributes.Length >= 3)
-                        lm.Longitude = attributes[2];
+                    {
+                        if (Double.TryParse(attributes[2].Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d))
+                            lm.Longitude = d;
+                    }
                     if (attributes != null && attributes.Length >= 4)
-                        lm.Latitude = attributes[3];
+                    {
+                        if(Double.TryParse(attributes[3].Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d))
+                            lm.Latitude = d;
+                    }
                     if (attributes != null && attributes.Length >= 5)
                         lm.Link = attributes[4];
                     if (attributes != null && attributes.Length >= 6)
@@ -294,11 +300,12 @@ namespace DgSuche
                             }
                         }
 
-                        Ortsmarke lm = new Ortsmarke()
+                        Ortsmarke lm = new Ortsmarke(
+                            node["name"].InnerText.Trim(),
+                            (coordinates.Length >= 2 ? coordinates[1].Trim() : null),
+                            (coordinates.Length >= 1 ? coordinates[0].Trim() : null)
+                            )
                         {
-                            Name = node["name"].InnerText.Trim(),
-                            Longitude = (coordinates.Length >= 1 ? coordinates[0].Trim() : string.Empty),
-                            Latitude = (coordinates.Length >= 2 ? coordinates[1].Trim() : string.Empty),
                             KmlLink = linkSiedlungen,
                             Art = node["styleUrl"].InnerText.Split('#')[1].Trim(),
                             Link = link
