@@ -388,6 +388,12 @@ namespace MeisterGeister.ViewModel.Helden
                 importHeld = HeldenblattImporter.ImportHeldenblattFile(pfad);
             else
                 importHeld = Held.Import(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
+
+            if (existing != null && overwrite && (isHeldenblatt || isHeldenSoftware))
+            { // MeisterGeister spezifische Daten beim Reimport übernehmen
+                importHeld.Spieler = existing.Spieler;
+            }
+
             LoadDaten();
             return importHeld;
         }
