@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="DgSuche.DereGlobusLinkControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="35" Cursor="Hand" Padding="2">
+    <Grid>
+        <Image Source="/DG-Suche;component/Grafik/DgFavicon.png" Stretch="Uniform" Cursor="Hand" MouseDown="ImageDereGlobus_MouseDown" ToolTip="In DereGlobus betrachten..." />
+    </Grid>
+</UserControl>

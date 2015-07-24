@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="DgSuche.GlobusControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:DgSuche"
+             mc:Ignorable="d" 
+             d:DesignHeight="397" d:DesignWidth="690">
+    <UserControl.Resources>
+        <DataTemplate x:Key="OrtsmarkeListBoxItemTemplate">
+            <StackPanel Orientation="Horizontal" Height="23">
+                <Image Source="{Binding Bild, IsAsync=True}" ToolTip="{Binding ArtKurz}" Margin="3,-5,0,0"  Height="20" Stretch="Uniform" />
+                <TextBlock Margin="6,0,0,0" Text="{Binding Path=Name}" ToolTip="{Binding ToolTipText}" VerticalAlignment="Center" Width="200" />
+                <my:DereGlobusLinkControl Tag="{Binding}" Height="18" Width="18" Margin="3,0,0,0"/>
+                <my:WikiLinkControl Tag="{Binding Path=LinkText}" Height="18" Width="18" Margin="5,0,0,0"/>
+                <my:DerischeSphaerenLinkControl Tag="{Binding Path=Name}" Visibility="{Binding Path=DerischeSphaeren_Visibility}" Height="18" Width="18" Margin="5,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+        <ImageBrush x:Key="BackgroundPergamentQuer" ImageSource="/DG-Suche;component/Grafik/pergament.png" Opacity="0.9" />
+    </UserControl.Resources>
+    <Grid>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,11,0,0" Text="Filter:" VerticalAlignment="Top" />
+        <TextBox Height="23" Margin="47,9,271,0" Name="_textBoxFilter" VerticalAlignment="Top" TextChanged="_textBoxFilter_TextChanged" />
+        <TextBlock Height="23" Margin="0,11,246,0" Text="Art:" VerticalAlignment="Top" HorizontalAlignment="Right" Width="19" />
+        <ComboBox Height="23" Margin="0,9,102,0" Name="_comboBoxArt" VerticalAlignment="Top" HorizontalAlignment="Right" Width="138" SelectionChanged="_comboBoxArt_SelectionChanged" />
+        <CheckBox Name="_checkBoxOff" Margin="0,4,12,0" Content="Offiziell" ToolTip="Offizielles Material in die Suche einbeziehen." Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="83" VerticalContentAlignment="Top" Checked="CheckBoxOff_UnChecked" Unchecked="CheckBoxOff_UnChecked" IsChecked="True" />
+        <CheckBox Name="_checkBoxInOff" Margin="0,20,12,0" Content="Inoffiziell" ToolTip="Inoffizielles Material in die Suche einbeziehen." Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="83" VerticalContentAlignment="Top" Checked="CheckBoxInOff_UnChecked" Unchecked="CheckBoxInOff_UnChecked" IsChecked="True" />
+        <ListBox Margin="12,40,12,69" Name="_listBoxOrtsmarken" ItemTemplate="{StaticResource OrtsmarkeListBoxItemTemplate}" Padding="4"></ListBox>
+        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,31" Name="textBlock3" Text="0 Ortsmarken" Height="23" VerticalAlignment="Bottom" />
+        <StackPanel Margin="122,0,0,0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom"></StackPanel>
+        <StackPanel Margin="0,0,12,21" Orientation="Horizontal" HorizontalAlignment="Right" Width="Auto" Height="43" VerticalAlignment="Bottom">
+            <CheckBox Name="_checkBoxKmlLinks" Margin="0,0,10,0" Content="KML-Links" VerticalContentAlignment="Center" VerticalAlignment="Center" Visibility="Visible" />
+            <TextBlock Name="_textBlockDauer" Text="Ladedauer: 00:00.000" TextWrapping="Wrap" Height="26" Width="78" TextAlignment="Center" FontSize="9" />
+            <Button Content="Laden" Name="_buttonLadenDG" Click="_buttonadenDG_Click" Width="63" Height="23" ToolTip="Daten vom DereGlobus neu laden." />
+            <Button Content="Parsen" Name="_buttonParseDG" Margin="10,0,00,0" Click="_buttonParseDG_Click" Width="63" Height="23" ToolTip="Daten vom DereGlobus parsen. ACHTUNG: Kann mehrere Minuten dauern!" Visibility="Visible" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="12,0,0,5" HorizontalAlignment="Left" Width="354" Height="25" VerticalAlignment="Bottom">
+            <TextBlock Margin="0,5,0,0" FontSize="11">
+                        <Hyperlink NavigateUri="http://www.dereglobus.org/download/suche" RequestNavigate="Hyperlink_RequestNavigate">DG-Suche</Hyperlink></TextBlock>
+            <Label Content="ist Teil des" FontSize="11" />
+            <TextBlock Margin="0,5,-3,0" FontSize="11">
+                        <Hyperlink NavigateUri="http://www.dereglobus.org/" RequestNavigate="Hyperlink_RequestNavigate">DereGlobus-Projekts</Hyperlink></TextBlock>
+            <Label Content="und unterliegt der" FontSize="11" />
+            <TextBlock Margin="0,5,-3,0" FontSize="11">
+                        <Hyperlink NavigateUri="http://www.dereglobus.org/lizenz" RequestNavigate="Hyperlink_RequestNavigate">DG-Lizenz.</Hyperlink></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="375,0,0,5" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="291">
+            <StackPanel.ToolTip>
+                <TextBlock Text="Verwendung der Marke und Inhalte von DAS SCHWARZE AUGE mit freundlicher Genehmigung der Ulisses Medien &amp; Spiel Distribution GmbH. Copyright © 2007 by Significant GbR für die Marke DAS SCHWARZE AUGE in Wort und Bild, by Alpers, Fuchs, Kramer, Neigel für die Inhalte. Die DG-Suche und DereGlobus, enthalten nichtoffizielle Informationen zum Rollenspiel 'Das Schwarze Auge' und zur Welt 'Aventurien'. Diese Informationen können im Widerspruch zu offiziell publizierten stehen." TextWrapping="Wrap" FontSize="11" Width="250" />
+            </StackPanel.ToolTip>
+            <Label Margin="-4,0,0,0" Content="Inhalte mit freundlicher Genehmigung von" FontSize="11" />
+            <TextBlock Margin="0,5,-3,0" FontSize="11">
+                        <Hyperlink NavigateUri="http://www.ulisses-spiele.de/" RequestNavigate="Hyperlink_RequestNavigate">Ulisses Spiele.</Hyperlink></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

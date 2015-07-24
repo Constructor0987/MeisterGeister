@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DgSuche.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DG_IndexPfad_CSV" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://dereglobus.orkenspalter.de/public/DereGlobus/Software/bin/DG-Suche/Index.csv</Value>
+    </Setting>
+    <Setting Name="DG_IndexPfad_CSV_Fallback" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://dereglobus.orkenspalter.de/public/DereGlobus/Software/bin/DG-Suche/Index.csv</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

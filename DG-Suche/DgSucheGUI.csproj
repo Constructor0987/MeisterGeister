@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{50353DDB-16A0-4AB9-8EC4-5556C6A4B7FD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DgSuche</RootNamespace>
+    <AssemblyName>DG-Suche</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;INTERN</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Grafik\DgIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="DereGlobusLinkControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="DerischeSphaerenLinkControl.xaml.cs">
+      <DependentUpon>DerischeSphaerenLinkControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MsgWindow.xaml.cs">
+      <DependentUpon>MsgWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WikiLinkControl.xaml.cs">
+      <DependentUpon>WikiLinkControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="GlobusControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DerischeSphaerenLinkControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DereGlobusLinkControl.xaml.cs">
+      <DependentUpon>DereGlobusLinkControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobusControl.xaml.cs">
+      <DependentUpon>GlobusControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ortsmarke.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MsgWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WikiLinkControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Dorf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Dorf_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Dorf_Rakshazar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Festung.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Festung_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Grossstadt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Grossstadt_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Grossstadt_Rakshazar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Kleinstadt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Kleinstadt_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Kleinstadt_Rakshazar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Metropole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Metropole_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Metropole_Rakshazar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Gaststaette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Gaststaette_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Handelsstaette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Handelsstaette_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Privathaus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Privathaus_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Ruine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Sakralbauwerk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Sakralbauwerk_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Staatliches_Bauwerk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Staatliches_Bauwerk_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Werkstaette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Werkstaette_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Stadt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Stadt_Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Stadt_Rakshazar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Wa-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Grafik\LogoSplashScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Rakshazar-Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\DgIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\DgFavicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\pergament.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Grafik\Globus\Sonstige_Ruine_Karte.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

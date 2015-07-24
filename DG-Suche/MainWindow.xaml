@@ -1,0 +1,9 @@
+﻿<Window x:Class="DgSuche.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:DgSuche"
+        Title="DG-Suche 1.3" Height="447" Width="694" Closing="Window_Closing" Icon="/DG-Suche;component/Grafik/DgIcon.ico">
+    <Grid>
+        <my:GlobusControl />
+    </Grid>
+</Window>
