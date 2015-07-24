@@ -1,6 +1,8 @@
-﻿using MeisterGeister.ViewModel.Base;
+﻿using DgSuche;
+using MeisterGeister.ViewModel.Base;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -12,6 +14,7 @@ namespace MeisterGeister.ViewModel.Karte
         public KarteViewModel()
         {
             onHeldenPositionSetzen = new CommandBase(HeldenPositionSetzen, null);
+            onDereGlobusÖffnen = new CommandBase(DereGlobusÖffnen, null);
 
             karten = new List<Logic.Karte>();
             var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
@@ -134,5 +137,22 @@ namespace MeisterGeister.ViewModel.Karte
                 HeldenPosition = (Point)args;
             }
         }
+
+        private CommandBase onDereGlobusÖffnen;
+        public CommandBase OnDereGlobusÖffnen
+        {
+            get { return onDereGlobusÖffnen; }
+        }
+
+        private void DereGlobusÖffnen(object args)
+        {
+            if(args is Point)
+            {
+                Point p = (Point)dgConverter.ConvertBack(args, typeof(Point), null, null);
+                Ortsmarke.StarteDereGlobus("Aus MeisterGeister", String.Format(CultureInfo.InvariantCulture, "{0:0.0#####}", p.X), String.Format(CultureInfo.InvariantCulture, "{0:0.0#####}", p.Y));
+            }
+        }
+
+        
     }
 }

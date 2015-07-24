@@ -15,9 +15,7 @@
     </UserControl.Resources>
         <Grid Background="Transparent">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Name="textX" Text="0" />
-                    <TextBlock>/</TextBlock>
-                    <TextBlock Name="textY" Text="0" />
-                </StackPanel>
+            <TextBlock Name="text" Text="N 0° 0.0 E 0° 0.0" />
+        </StackPanel>
         </Grid>
 </UserControl>

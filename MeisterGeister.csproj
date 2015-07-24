@@ -218,6 +218,7 @@
     <Compile Include="Logic\General\Würfel.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
     <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
+    <Compile Include="Logic\Karte\MapToDereGlobusConverter.cs" />
     <Compile Include="Logic\Karte\DereGlobusToMapConverter.cs" />
     <Compile Include="Logic\Literatur\ILiteratur.cs" />
     <Compile Include="Logic\Literatur\Literaturangabe.cs" />
