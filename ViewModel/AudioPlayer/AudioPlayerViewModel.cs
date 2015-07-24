@@ -1453,7 +1453,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 if (value != null && _lbiMusikSelect != null &&
                     _lbiMusikSelect.VM.aPlaylist.Audio_PlaylistGUID == value.VM.aPlaylist.Audio_PlaylistGUID)
                     return;
-                SelectedMusikItem = value;// MusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist.Audio_PlaylistGUID == value.VM.aPlaylist.Audio_PlaylistGUID);
+                SelectedMusikItem = value;
                 OnChanged("SelectedMusikItem");          
                 OnChanged("FilteredMusikListItemListe");
                 OnChanged("FilteredErwPlayerMusikListItemListe");
@@ -1951,24 +1951,24 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-        private List<Audio_Playlist> _playlistListe;
-        public List<Audio_Playlist> PlaylistListe
-        {
-            get { return _playlistListe; }
-            set
-            {
-                _playlistListe = value;
-                OnChanged();
-            }
-        }
+        //private List<Audio_Playlist> _playlistListe;
+        //public List<Audio_Playlist> PlaylistListe
+        //{
+        //    get { return _playlistListe; }
+        //    set
+        //    {
+        //        _playlistListe = value;
+        //        OnChanged();
+        //    }
+        //}
 
         private List<string> _hotkeysAvailable = new List<string>();
         public List<string> HotkeysAvailable
         {
             get { return _hotkeysAvailable; }
             set
-            {                
-                PlaylistListe.FindAll(t => t.Key != null).ForEach(ti => _hotkeysAvailable.Add(ti.Key)); 
+            {
+                Global.ContextAudio.PlaylistListe.FindAll(t => t.Key != null).ForEach(ti => _hotkeysAvailable.Add(ti.Key)); 
                 OnChanged();
             }
         }
@@ -2681,24 +2681,39 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
         void RbtnPlaylistAlsHintergrundmusik(object obj)
-        {            
-            //UpdateAlleListen();
-            AktKlangPlaylist = _GrpObjecte.First(t => t.visuell).aPlaylist;
+        {
+            AktKlangPlaylist = _GrpObjecte.FirstOrDefault(t => t.visuell).aPlaylist;
+
+            if (AktKlangPlaylist != null)
+            {
+                if (AktKlangPlaylist.Hintergrundmusik)
+                {
+                    MusikZeile mZeile = ErwPlayerGeräuscheListItemListe.FirstOrDefault(t => t.VM.aPlaylist.Audio_PlaylistGUID == AktKlangPlaylist.Audio_PlaylistGUID);
+                    if (mZeile != null && mZeile.tbtnCheck.IsChecked.Value)
+                        mZeile.tbtnCheck.IsChecked = false;
+                }
+                else
+                {
+                    if (AktKlangPlaylist == BGPlayerAktPlaylist)
+                        btnBGStoppen(null);
+                }
+            }
 
             SelectedEditorItem = EditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == AktKlangPlaylist);
             Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
+
+
+            MusikListItemListe = mZeileEditorMusikNeuErstellen();
+            ErwPlayerMusikListItemListe = mZeileErwPlayerMusikNeuErstellen();
+            ErwPlayerGeräuscheListItemListe = mZeileErwPlayerGeräuscheNeuErstellen();
             
-            //MusikListItemListe = mZeileEditorMusikNeuErstellen();
-            //ErwPlayerMusikListItemListe = mZeileErwPlayerMusikNeuErstellen();
-            //ErwPlayerGeräuscheListItemListe = mZeileErwPlayerGeräuscheNeuErstellen();
-            //FilterMusikPlaylistListe();
+            FilterMusikPlaylistListe();
             //FilterThemeEditorPlaylistListe();
-            //FilterErwPlayerMusikPlaylistListe();
-            //FilterErwPlayerGeräuschePlaylistListe();
+            FilterErwPlayerMusikPlaylistListe();
+            FilterErwPlayerGeräuschePlaylistListe();
             //FilterErwPlayerThemeListe();
-
         }
-
+        
 
         private Base.CommandBase _onBtnDeleteAll = null;
         public Base.CommandBase OnBtnDeleteAll
@@ -3957,34 +3972,47 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         public List<MusikZeile> mZeileErwPlayerGeräuscheNeuErstellen()
         {
+            bool vorhanden = false;
             List<MusikZeile> mZeileList = new List<MusikZeile>();
             foreach (Audio_Playlist aplylist in Global.ContextAudio.PlaylistListe.FindAll(t => !t.Hintergrundmusik))
             {
                 //Gruppenobjekte ertsellen
-                GruppenObjekt grpobj = new GruppenObjekt();
-                grpobj.aPlaylist = aplylist;
+                GruppenObjekt grpobj = _GrpObjecte.Where(t => !t.visuell).FirstOrDefault(t => t.aPlaylist.Audio_PlaylistGUID == aplylist.Audio_PlaylistGUID);
+                vorhanden = grpobj != null;
+
+                if (!vorhanden)
+                {
+                    grpobj = new GruppenObjekt();
+                }
+                    grpobj.aPlaylist = aplylist;
 
                 // Geräusche-Playlisten
                 //Erweiterter-Player GeräuscheMusikZeilen - Items erstellen
-                MusikZeile mZeileErw = new MusikZeile();
-                mZeileErw.VM.aPlayerVM = this;
-                mZeileErw.VM.grpobj = grpobj;
-                mZeileErw.VM.aPlaylist = aplylist;
-                mZeileErw.VM.grpobj.wartezeitTimer.Tick += new EventHandler(mZeileErw.VM.wartezeitTimer_Tick);
+                MusikZeile mZeileErw = ErwPlayerGeräuscheListItemListe != null ? ErwPlayerGeräuscheListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aplylist) : null;
+                if (mZeileErw == null)
+                {
+                    mZeileErw = new MusikZeile();
+                    mZeileErw.VM.grpobj = grpobj;
+                    mZeileErw.VM.grpobj.wartezeitTimer.Tick += new EventHandler(mZeileErw.VM.wartezeitTimer_Tick);
+                }
+                    mZeileErw.VM.aPlayerVM = this;
+                    if (mZeileErw.VM.aPlaylist != aplylist) mZeileErw.VM.aPlaylist = aplylist;
+                
 
                 Grid.SetRow(mZeileErw.grdForceVol, !PListGroßeAnsicht ? 0 : 1);
                 Grid.SetColumn(mZeileErw.grdForceVol, !PListGroßeAnsicht ? 2 : 0);
                 mZeileErw.Tag = aplylist.Audio_PlaylistGUID;
-                mZeileErw.chkbxForceVol.Tag = aplylist;
+          //      mZeileErw.chkbxForceVol.Tag = aplylist;
                 mZeileErw.sldForceVolume.Tag = aplylist;
                 mZeileErw.tboxKategorie.Tag = aplylist.Audio_PlaylistGUID;
+
                 mZeileList.Add(mZeileErw);
             }
             return mZeileList;
         }
                 
         public List<MusikZeile> mZeileEditorMusikNeuErstellen()
-        {
+        {           
             List<MusikZeile> mZeileList = new List<MusikZeile>();
             foreach (Audio_Playlist aplylist in Global.ContextAudio.PlaylistListe.FindAll(t => t.Hintergrundmusik))
             {
@@ -4302,7 +4330,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }
             }
 
-            grpobj.DoForceVolume = (mZeile.chkbxForceVol.IsChecked.Value);
+           // grpobj.DoForceVolume = (mZeile.chkbxForceVol.IsChecked.Value);
             
             if ((FilteredErwPlayerGeräuscheListItemListe.Count == 0) || 
                 (1==1) && 
@@ -5973,7 +6001,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                         
                                     }
                                     double sollWert = (KlangZeilenLaufend[durchlauf].Aktuell_Volume / 100) *
-                                        (!_GrpObjecte[posObjGruppe].aPlaylist.Fading ? 1 : (!_GrpObjecte[posObjGruppe].aPlaylist.Hintergrundmusik ? _GrpObjecte[posObjGruppe].Vol_PlaylistMod / 100 : 1));
+                                        (!_GrpObjecte[posObjGruppe].aPlaylist.Fading ? 1 * (FadingGeräuscheVolProzent / 100): 
+                                        (!_GrpObjecte[posObjGruppe].aPlaylist.Hintergrundmusik ? _GrpObjecte[posObjGruppe].Vol_PlaylistMod / 100 : 
+                                        1));
+
+                                    //_player.Volume =
+                                
+                                    //    (grpobj.aPlaylist.DoForce) ?
+                                    //    (double)grpobj.aPlaylist.ForceVolume / 100 :
+                                    //    (vol / 100) * (FadingGeräuscheVolProzent / 100));
 
                                     //Forcing des VOLUME
                                     if ((FadingIn_Started == null || FadingIn_Started.Source == null) &&

@@ -437,7 +437,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             if (!TeilAbspielbarGecheckt)
                 StartProcess();   
-            if (grpobj.aPlaylist != null && posObjGruppe == null)
+
+            MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt inGrpObject = 
+                aPlayerVM._GrpObjecte.Where(t => !t.visuell).FirstOrDefault(t => t.aPlaylist == aPlaylist);
+
+            if (grpobj.aPlaylist != null &&
+                (inGrpObject == null || 
+                posObjGruppe == null))
             {
                 aPlayerVM.tiErstellt++;
                 grpobj.objGruppe = Convert.ToInt16(aPlayerVM.tiErstellt);
@@ -559,7 +565,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                             aPlayerVM.FadingOut(grpobj._listZeile[i], grpobj, true, true);
 
                             grpobj._listZeile[i].istLaufend = false;
-                            grpobj._listZeile[i].audioZeileVM.Progress = 0;// .pbarTitel.Value = 0;
+                            if (grpobj._listZeile[i].audioZeileVM != null) grpobj._listZeile[i].audioZeileVM.Progress = 0;
                             grpobj._listZeile[i].istStandby = true;
                         }
                     }
