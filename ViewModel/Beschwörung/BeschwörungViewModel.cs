@@ -38,6 +38,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             Beschwörungsschwierigkeit = Kontrollschwierigkeit = 0;
             Beschwörungspunkte = 0;
             WahrerName = 0;
+            Material = 0;
             BefehlHerrschMod = 0;
             DauerHerrschMod = 0;
             AusrüstungMod = 0;
@@ -50,6 +51,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             BeschworenesWesen = null;
             held = null;
             zauber = null;
+            Status = BeschwörungsStatus.Beschwören;
         }
 
         #region Proben
@@ -66,24 +68,38 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return beherrschen; }
         }
 
-        protected Held held;
+        private Held held;
+        public virtual Held Held
+        {
+            get { return held; }
+            set
+            {
+                Set(ref held, value);
+                getZauber();
+            }
+        }
+
         private Model.Zauber zauber;
 
         private void beschwöre(object obj)
         {
-            zauber.Fertigkeitswert = ZauberWert;
-            zauber.Modifikator = GesamtRufMod;
-            var erg = ShowProbeDialog(zauber, held);
-            if (erg == null)
-                return;
-            if (!erg.Gelungen)
+            if (zauber != null)
             {
-                beschwörungMisslungen(erg);
-            }
-            else
-            {
-                Beschwörungspunkte = erg.Übrig;
-                Ergebnis = "Das Wesen erscheint. Versuche es zu beherrschen.";
+                zauber.Fertigkeitswert = ZauberWert;
+                zauber.Modifikator = GesamtRufMod;
+                var erg = ShowProbeDialog(zauber, held);
+                if (erg == null)
+                    return;
+                if (!erg.Gelungen)
+                {
+                    beschwörungMisslungen(erg);
+                }
+                else
+                {
+                    Beschwörungspunkte = erg.Übrig;
+                    Status = BeschwörungsStatus.Beherrschen;
+                    Ergebnis = "Das Wesen erscheint. Versuche es zu beherrschen.";
+                }
             }
         }
 
@@ -91,20 +107,24 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void beherrsche(object obj)
         {
-            Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
-            kontrollwert.Abkürzung = "KW";
-            kontrollwert.Fertigkeitswert = 0;
-            kontrollwert.Wert = KontrollWert;
-            kontrollwert.WerteNamen = "Kontrollwert";
-            kontrollwert.Modifikator = GesamtHerrschMod;
-            var erg = ShowProbeDialog(kontrollwert, held);
-            if (erg.Gelungen)
+            if (zauber != null)
             {
-                Ergebnis = "Das Wesen erfüllt den Dienst";
-            }
-            else
-            {
-                beherrschungMisslungen(erg);
+                Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
+                kontrollwert.Abkürzung = "KW";
+                kontrollwert.Fertigkeitswert = 0;
+                kontrollwert.Wert = KontrollWert;
+                kontrollwert.WerteNamen = "Kontrollwert";
+                kontrollwert.Modifikator = GesamtHerrschMod;
+                var erg = ShowProbeDialog(kontrollwert, held);
+                if (erg.Gelungen)
+                {
+                    Ergebnis = "Das Wesen erfüllt den Dienst";
+                }
+                else
+                {
+                    beherrschungMisslungen(erg);
+                }
+                Status = BeschwörungsStatus.Beschwören;
             }
         }
 
@@ -123,11 +143,19 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 Set(ref beschworenesWesen, value);
                 if (beschworenesWesen != null)
                 {
-                    Beschwörungsschwierigkeit = beschworenesWesen.Beschwörung.Value;
-                    Kontrollschwierigkeit = beschworenesWesen.Kontrolle.Value;
+                    Beschwörungsschwierigkeit = beschworenesWesen.Beschwörung ?? 0;
+                    Kontrollschwierigkeit = beschworenesWesen.Kontrolle ?? 0;
                 }
             }
         }
+
+        private BeschwörungsStatus status;
+        public BeschwörungsStatus Status
+        {
+            get { return status; }
+            protected set { Set(ref status, value); }
+        }
+
 
         private string zauberName;
         public string Zauber
@@ -135,19 +163,35 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return zauberName; }
             set
             {
-                zauberName = value;
+                Set(ref zauberName, value);
+                getZauber();
+            }
+        }
+
+        private void getZauber()
+        {
+            if (Held != null && !String.IsNullOrEmpty(Zauber))
+            {
                 int zfw = 0;
-                Held_Zauber hz = Global.SelectedHeld.GetHeldZauber(zauberName, false, out zfw, false);
+                Held_Zauber hz = Held.GetHeldZauber(zauberName, false, out zfw, false);
                 if (hz != null)
                 {
                     zauber = hz.Zauber;
-                    held = hz.Held;
+                    zauberBasisWert = zfw;
                 }
-                zauberBasisWert = zfw;
-                OnChanged();
-                OnChanged("ZauberWert");
-                OnChanged("KontrollWert");
+                else
+                {
+                    zauberBasisWert = 0;
+                    zauber = null;
+                }
             }
+            else
+            {
+                zauberBasisWert = 0;
+                zauber = null;
+            }
+            OnChanged("ZauberWert");
+            OnChanged("KontrollWert");
         }
 
         private int zauberBasisWert;
@@ -160,7 +204,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             get
             {
-                if (held == null) return 0;
+                if (zauber == null) return 0;
                 else return calcKontrollWert();
             }
         }
@@ -204,6 +248,22 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 wahrerName = value;
                 OnInputChanged();
             }
+        }
+
+        private int material;
+        public int Material
+        {
+            get { return material; }
+            set
+            {
+                material = value;
+                OnInputChanged();
+            }
+        }
+
+        public int MaterialRufMod
+        {
+            get { return -Material; }
         }
 
         private Blutmagie blutmagie = Blutmagie.Keine;
@@ -392,6 +452,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             {
                 return Beschwörungsschwierigkeit
                     + WahrerNameRufMod
+                    + MaterialRufMod
                     + AusrüstungMod
                     + SterneRufMod
                     + OrtRufMod
@@ -447,6 +508,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         #endregion
     }
+
+    public enum BeschwörungsStatus
+    {
+        Beschwören,
+        Beherrschen
+    }
+
     public enum Blutmagie
     {
         [Description("Keine")]

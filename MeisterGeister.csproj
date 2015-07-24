@@ -490,7 +490,6 @@
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\DämonenBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\ElementarBeschwörungViewModel.cs" />
-    <Compile Include="ViewModel\Beschwörung\OldBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
@@ -643,9 +642,6 @@
     <Compile Include="View\Beschwörung\ElementarBeschwörungView.xaml.cs">
       <DependentUpon>ElementarBeschwörungView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Beschwörung\OldBeschwörungView.xaml.cs">
-      <DependentUpon>OldBeschwörungView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Bodenplan\BattlegroundView.xaml.cs">
       <DependentUpon>BattlegroundView.xaml</DependentUpon>
     </Compile>
@@ -662,6 +658,7 @@
     <Compile Include="View\General\DereGlobusLinkControl.xaml.cs">
       <DependentUpon>DereGlobusLinkControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\DynamicTemplateSelector.cs" />
     <Compile Include="View\General\EnergieControl.xaml.cs">
       <DependentUpon>EnergieControl.xaml</DependentUpon>
     </Compile>
@@ -1095,10 +1092,6 @@
     <Page Include="View\Beschwörung\ElementarBeschwörungView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Beschwörung\OldBeschwörungView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Bodenplan\BattlegroundView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1873,6 +1866,12 @@
     </None>
     <Resource Include="Daten\Updateskripte\UpdateTo_V0101.sql" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0102.sql" />
+    <Resource Include="Images\Icons\Elemente\Eis.png" />
+    <Resource Include="Images\Icons\Elemente\Erz.png" />
+    <Resource Include="Images\Icons\Elemente\Feuer.png" />
+    <Resource Include="Images\Icons\Elemente\Humus.png" />
+    <Resource Include="Images\Icons\Elemente\Luft.png" />
+    <Resource Include="Images\Icons\Elemente\Wasser.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

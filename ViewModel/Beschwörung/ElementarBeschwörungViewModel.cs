@@ -10,7 +10,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
 {
     public class ElementarBeschwörungViewModel : BeschwörungViewModel
     {
-
         protected override List<Model.GegnerBase> loadWesen()
         {
             return Global.ContextHeld.LoadElementare();
@@ -41,7 +40,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             {
                 typ = value;
                 OnChanged();
-                switch(value)
+                switch (value)
                 {
                     case ElementarWesen.Elementargeist:
                         Zauber = "Elementarer Diener";
@@ -61,6 +60,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             base.reset();
             BegabungElement = MerkmalElement = BegabungGegenElement = BegabungGegenElement = DämonGerufen = Paktierer = Affinität = VerhüllteAura = false;
             Dämonisch = SchwacheAusstrahlung = Stigma = 0;
+            Element = Element.Feuer;
+            Typ = ElementarWesen.Elementargeist;
         }
 
         #region Properties
@@ -71,8 +72,10 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return begabungElement; }
             set
             {
-                begabungElement = value;
-                OnChanged();
+                Set(ref begabungElement, value);
+                OnChanged("ElementRufMod");
+                OnChanged("ElementHerrschMod");
+                OnChangedSum();
             }
         }
 
@@ -82,8 +85,10 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return merkmalElement; }
             set
             {
-                merkmalElement = value;
-                OnChanged();
+                Set(ref merkmalElement, value);
+                OnChanged("ElementRufMod");
+                OnChanged("ElementHerrschMod");
+                OnChangedSum();
             }
         }
 
@@ -103,8 +108,10 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return begabungGegenElement; }
             set
             {
-                begabungGegenElement = value;
-                OnChanged();
+                Set(ref begabungGegenElement, value);
+                OnChanged("GegenElementRufMod");
+                OnChanged("GegenElementHerrschMod");
+                OnChangedSum();
             }
         }
 
@@ -114,8 +121,10 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return merkmalGegenElement; }
             set
             {
-                merkmalGegenElement = value;
-                OnChanged();
+                Set(ref merkmalGegenElement, value);
+                OnChanged("GegenElementRufMod");
+                OnChanged("GegenElementHerrschMod");
+                OnChangedSum();
             }
         }
 
@@ -181,7 +190,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return Paktierer ? 6 : 0; }
         }
 
-        public int PaktererHerrschMod
+        public int PaktiererHerrschMod
         {
             get { return Paktierer ? 9 : 0; }
         }
@@ -281,7 +290,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
                     + GegenElementHerrschMod
                     + DämonischHerrschMod
                     + DämonGerufenHerrschMod
-                    + PaktererHerrschMod
+                    + PaktiererHerrschMod
                     + AffinitätHerrschMod
                     + VerhüllteAuraHerrschMod
                     + SchwacheAusstrahlungHerrschMod
@@ -307,16 +316,22 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override int calcKontrollWert()
         {
-            return (int)Math.Round((held.Mut + held.Intuition + held.Charisma * 2 + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
+            return (int)Math.Round((Held.Mut + Held.Intuition + Held.Charisma * 2 + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
         }
     }
     public enum Element
     {
+        [Description("Feuer")]
         Feuer = 0,
+        [Description("Wasser")]
         Wasser = ~Feuer,
+        [Description("Humus")]
         Humus = 1,
+        [Description("Eis")]
         Eis = ~Humus,
+        [Description("Luft")]
         Luft = 2,
+        [Description("Erz")]
         Erz = ~Luft
     }
     public enum ElementarWesen

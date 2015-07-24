@@ -4,16 +4,64 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Beschwörung="clr-namespace:MeisterGeister.View.Beschwörung"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Beschwörung"
+             xmlns:mg="clr-namespace:MeisterGeister"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TabControl>
-            <TabItem Header="Dämonen">
-                <Beschwörung:DämonenBeschwörungView/>
-            </TabItem>
-            <TabItem Header="Elementare">
-                <Beschwörung:ElementarBeschwörungView/>
-            </TabItem>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+            <ComboBox Margin="5,10" Width="250" ItemsSource="{Binding Source={x:Static mg:Global.ContextHeld}, Path=HeldenGruppeListe}"
+                      SelectedValue="{Binding ElementName=tab,Path=SelectedValue.Held}" DisplayMemberPath="Name" FontWeight="Bold"/>
+        </StackPanel>
+        <TabControl Grid.Row="1" x:Name="tab">
+            <TabControl.ItemTemplateSelector>
+                <General:DynamicTemplateSelector>
+                    <General:TemplateCollection>
+                        <General:Template Value="{x:Type vm:DämonenBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Dämonen"/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
+                        <General:Template Value="{x:Type vm:ElementarBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Elementare"/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
+                    </General:TemplateCollection>
+                </General:DynamicTemplateSelector>
+            </TabControl.ItemTemplateSelector>
+            <TabControl.ContentTemplateSelector>
+                <General:DynamicTemplateSelector>
+                    <General:TemplateCollection>
+                        <General:Template Value="{x:Type vm:DämonenBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <Beschwörung:DämonenBeschwörungView/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
+                        <General:Template Value="{x:Type vm:ElementarBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <Beschwörung:ElementarBeschwörungView/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
+                    </General:TemplateCollection>
+                </General:DynamicTemplateSelector>
+            </TabControl.ContentTemplateSelector>
+            <vm:DämonenBeschwörungViewModel/>
+            <vm:ElementarBeschwörungViewModel/>
         </TabControl>
     </Grid>
 </UserControl>

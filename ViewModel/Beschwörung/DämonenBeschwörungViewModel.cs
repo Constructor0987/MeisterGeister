@@ -42,6 +42,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             AndererDämon = false;
             Affinität = false;
             Bannschwert = false;
+            Ergebnis = "Wähle einen Dämon und versuche ihn zu beschwören";
         }
 
         #region Beschwören
@@ -57,21 +58,25 @@ namespace MeisterGeister.ViewModel.Beschwörung
             else if (wurf <= 11)
             {
                 Ergebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von niedrigerer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 15)
             {
                 Ergebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 19)
             {
                 Ergebnis = "Es erscheint ein Dämon aus derselben Domäne, jedoch auf jeden Fall ein Gehörnter Dämon von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1 Punkt Verfall. Die Beschwörungskosten betragen 19 AsP.";
+                Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else
             {
                 Ergebnis = "Es erscheint ein Gehörnter Dämon von höherer Beschwörungs-Schwierigkeit, unabhängig von der Domäne des Gerufenen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1W6 Punkte Verfall. Die Beschwörungskosten betragen 19 AsP.";
+                Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
         }
@@ -160,7 +165,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             Held_Talent ht = Global.SelectedHeld.GetHeldTalent("Magiekunde", false, out taW);
             ht.Talent.Fertigkeitswert = taW;
             ht.Talent.Modifikator = (int)Math.Round(Beschwörungsschwierigkeit / 2.0, MidpointRounding.AwayFromZero);
-            ProbenErgebnis erg = ShowProbeDialog(ht.Talent, ht.Held);
+            ProbenErgebnis erg = ht.Held.TalentProbe(ht.Talent, ht.Talent.Modifikator, "Dämonologie");
             InvocatioIntegraMagiekundePunkte = erg.Gelungen ? erg.Übrig : 0;
 
         }
@@ -400,7 +405,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override int calcKontrollWert()
         {
-            return (int)Math.Round((held.Mut * 2 + held.Klugheit + held.Charisma + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
+            return (int)Math.Round((Held.Mut * 2 + Held.Klugheit + Held.Charisma + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
         }
     }
 }

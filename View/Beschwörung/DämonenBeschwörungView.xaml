@@ -8,9 +8,6 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" Width="600"
              d:DesignHeight="500" d:DesignWidth="600">
-    <UserControl.DataContext>
-        <vm:DämonenBeschwörungViewModel x:Name="vm"/>
-    </UserControl.DataContext>
 
     <ContentControl Content="{Binding}">
         <ContentControl.ContentTemplate>
@@ -20,19 +17,19 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" Name="colHerrsch"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
+                        <RowDefinition Height="24" Name="rowÜbrig"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24" Name="rowGesinnung"/>
+                        <RowDefinition Height="24" Name="rowDauer"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24" Name="rowAffinität"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24" Name="rowMagiekunde"/>
                         <RowDefinition Height="24" Name="rowMalen"/>
@@ -40,7 +37,7 @@
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24" Name="rowBezahlung"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="Auto"/>
@@ -70,7 +67,6 @@
                         <General:EnumItemsSource x:Key="blutmagie" Type="{x:Type vm:Blutmagie}"/>
                     </Grid.Resources>
 
-                    <!--1. Anrufung-->
                     <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
                     <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
 
@@ -171,8 +167,9 @@
                     <CheckBox Grid.Row="9" Content="Affinität zu Dämonen" IsChecked="{Binding Affinität}"/>
                     <TextBlock Text="{Binding AffinitätHerrschMod}" Grid.Row="9" Grid.Column="3" Style="{StaticResource mod}"/>
 
-                    <CheckBox Grid.Row="10" Content="Invocatio Integra" IsEnabled="{Binding InvocatioIntegraMöglich}" IsChecked="{Binding InvocatioIntegra}"/>
-                    <ComboBox Grid.Row="10" Grid.Column="1" SelectedIndex="0" IsEnabled="{Binding InvocatioIntegra}" SelectedValue="{Binding InvocatioIntegraVorbereiten}">
+                    <Rectangle Grid.Row="10" Grid.ColumnSpan="4" Fill="Transparent" Name="invocatioIntegraToolTipArea"/>
+                    <CheckBox Grid.Row="10" Content="Invocatio Integra" Name="chkInvocatioIntegra" IsEnabled="{Binding InvocatioIntegraMöglich}" IsHitTestVisible="{Binding InvocatioIntegraMöglich}" IsChecked="{Binding InvocatioIntegra}"/>
+                    <ComboBox Grid.Row="10" Grid.Column="1" SelectedIndex="0" IsEnabled="{Binding InvocatioIntegra}" IsHitTestVisible="{Binding InvocatioIntegraMöglich}" SelectedValue="{Binding InvocatioIntegraVorbereiten}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Name="text" Text="ohne 1 Tag Extravorbereitung"/>
@@ -189,7 +186,9 @@
 
                     <TextBlock Grid.Row="11" Style="{StaticResource label}" Text="Magiekunde (Dämonologie)" Margin="16,0,0,0"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1">
-                        <Button Content="Probe" Command="{Binding MagiekundeProbe}"/>
+                        <Button Command="{Binding MagiekundeProbe}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
+                        </Button>
                         <StackPanel Margin="4,0,0,0" Orientation="Horizontal">
                             <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding InvocatioIntegraMagiekundePunkte}" Name="magiekundePunkte"/>
                             <TextBlock Name="magiekundeText" Text="TaP*" Style="{StaticResource label}" Margin="4,0,0,0"/>
@@ -207,9 +206,11 @@
 
                     <TextBlock Grid.Row="12" Style="{StaticResource label}" Text="Malen und Zeichnen" Margin="16,0,0,0"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="1">
-                        <Button Content="Probe" Command="{Binding MalenProbe}"/>
+                        <Button Command="{Binding MalenProbe}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
+                        </Button>
 
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="4,0,0,0" Orientation="Horizontal">
                             <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding InvocatioIntegraMalenPunkte}" Name="malenPunkte"/>
                             <TextBlock Name="malenText" Text="TaP*" Style="{StaticResource label}" Margin="4,0,0,0"/>
                             <Button Name="malenButton" Command="{Binding EditMalen}" Visibility="Collapsed">
@@ -228,7 +229,7 @@
                     <TextBlock Text="{Binding BlutmagieHerrschMod}" Grid.Row="13" Grid.Column="3" Style="{StaticResource mod}"/>
 
                     <TextBlock Text="Sternenkonstellation" Grid.Row="14" Style="{StaticResource label}"/>
-                    <General:IntBox MinValue="-3" MaxValue="+7" Value="{Binding Sterne}" ShowButtons="True" Grid.Row="14" Grid.Column="1"/>
+                    <General:IntBox MinValue="-3" MaxValue="7" Value="{Binding Sterne}" ShowButtons="True" Grid.Row="14" Grid.Column="1"/>
                     <TextBlock Text="{Binding SterneRufMod}" Grid.Row="14" Grid.Column="2" Style="{StaticResource mod}"/>
                     <TextBlock Text="{Binding SterneHerrschMod}" Grid.Row="14" Grid.Column="3" Style="{StaticResource mod}"/>
 
@@ -390,6 +391,17 @@
                         <Setter TargetName="malenPunkte" Property="Visibility" Value="Collapsed"/>
                         <Setter TargetName="malenText" Property="Visibility" Value="Collapsed"/>
                         <Setter TargetName="malenButton" Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Status}" Value="Beschwören">
+                        <Setter TargetName="rowÜbrig" Property="Height" Value="0"/>
+                        <Setter TargetName="rowGesinnung" Property="Height" Value="0"/>
+                        <Setter TargetName="rowDauer" Property="Height" Value="0"/>
+                        <Setter TargetName="rowAffinität" Property="Height" Value="0"/>
+                        <Setter TargetName="rowBezahlung" Property="Height" Value="0"/>
+                        <Setter TargetName="colHerrsch" Property="Width" Value="0"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding InvocatioIntegraMöglich}" Value="False">
+                        <Setter TargetName="invocatioIntegraToolTipArea" Property="ToolTip" Value="Invocatio Integra ist nur bei Gehörnten Dämonen möglich, deren Wahrer Name bekannt ist"/>
                     </DataTrigger>
                 </DataTemplate.Triggers>
             </DataTemplate>
