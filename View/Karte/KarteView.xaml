@@ -11,7 +11,8 @@
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="600">
+             d:DesignHeight="500" d:DesignWidth="600"
+             SizeChanged="UserControl_SizeChanged">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
         <LogicKarte:DereGlobusToMapConverter x:Key="DereGlobusToMapConverter" />
@@ -21,10 +22,11 @@
         <Grid Background="Transparent">
             <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
                                MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
-                               Mode="Fill" TranslateX="0" TranslateY="0"
+                               Mode="Custom" TranslateX="{Binding TranslateX, Mode=TwoWay}" TranslateY="{Binding TranslateY, Mode=TwoWay}"
+                               Zoom="{Binding Zoom, Mode=TwoWay}"
                                LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
                                ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"
-                               VerticalAlignment="Bottom" >
+                               VerticalAlignment="Bottom" Loaded="UserControl_Loaded">
                 <Canvas x:Name="mapCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}">
                     <Canvas.ContextMenu>
                         <ContextMenu Name="contextMenu" General:TrackBehavior.TrackOpenLocation="True">
@@ -53,6 +55,7 @@
                     Margin="95,20,0,0" Width="150" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <Karte:KoordinatenControl Value="{Binding HeldenGlobusPosition}" Format="Dezimalminuten" />
+                    <!-- <Button Command="{Binding OnCenterOnHelden}">X</Button> -->
                 </StackPanel>
             </Border>
         </Grid>

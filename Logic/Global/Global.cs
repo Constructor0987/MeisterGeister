@@ -237,6 +237,8 @@ namespace MeisterGeister
                 if (Guid.TryParse(Logic.Einstellung.Einstellungen.SelectedHeld, out heldguid))
                     SelectedHeldGUID = heldguid;
             }
+            OnStandortChanged();
+
 
             Logger.PerformanceLogEnd(log);
 

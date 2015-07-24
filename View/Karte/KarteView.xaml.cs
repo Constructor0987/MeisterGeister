@@ -44,7 +44,15 @@ namespace MeisterGeister.View.Karte
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (VM != null)
+            {
+                VM.ZoomControlSize = MapScrollViewer.RenderSize;
                 VM.Refresh();
+            }
+        }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UserControl_Loaded(sender, null);
         }
     }
 }

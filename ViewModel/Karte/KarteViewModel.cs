@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace MeisterGeister.ViewModel.Karte
 {
@@ -15,6 +16,7 @@ namespace MeisterGeister.ViewModel.Karte
         {
             onHeldenPositionSetzen = new CommandBase(HeldenPositionSetzen, null);
             onDereGlobusÖffnen = new CommandBase(DereGlobusÖffnen, null);
+            onCenterOnHelden = new CommandBase(CenterOnHelden, null);
 
             karten = new List<Logic.Karte>();
             var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
@@ -22,9 +24,18 @@ namespace MeisterGeister.ViewModel.Karte
             SelectedKarte = aventurien;
         }
 
-        public void Refresh()
+        bool firstLoad = true;
+        public void Refresh(bool noCenter = false)
         {
-            // derzeit nichts beim erneuten anzeigen erforderlich
+            var p = (Point)dgConverter.Convert(new Point(Global.HeldenLon, Global.HeldenLat), typeof(Point), null, null);
+            if (p != HeldenPosition && !noCenter)
+                firstLoad = true;
+            HeldenPosition = p;
+            if (firstLoad)
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action<object>(CenterOnHelden), null); 
+                firstLoad = false;
+            }
         }
 
         public void LoadDaten()
@@ -135,6 +146,11 @@ namespace MeisterGeister.ViewModel.Karte
             if(args is Point)
             {
                 HeldenPosition = (Point)args;
+                Global.Standort.Name = "Heldenposition";
+                Global.HeldenLat = HeldenBreitengrad;
+                Global.HeldenLon = HeldenLängengrad;
+                //Zum Abgleich der Position wegen der Rundungsfehler
+                Refresh(true);
             }
         }
 
@@ -153,6 +169,46 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        
+        private double zoom = 1;
+        public double Zoom
+        {
+            get { return zoom; }
+            set { Set(ref zoom, value); }
+        }
+
+        private double translateX = 0;
+        public double TranslateX
+        {
+            get { return translateX; }
+            set { Set(ref translateX, value); }
+        }
+
+        private double translateY = 0;
+        public double TranslateY
+        {
+            get { return translateY; }
+            set { Set(ref translateY, value); }
+        }
+
+        private Size zoomControlSize;
+        public Size ZoomControlSize
+        {
+            get { return zoomControlSize; }
+            set { Set(ref zoomControlSize, value); }
+        }
+
+
+        private void CenterOnHelden(object obj)
+        {
+            Zoom = 1;
+            TranslateX = -1 * (HeldenPosition.X - ZoomControlSize.Width / 2);
+            TranslateY = -1 * (HeldenPosition.Y - ZoomControlSize.Height / 2);
+        }
+
+        private CommandBase onCenterOnHelden;
+        public CommandBase OnCenterOnHelden
+        {
+            get { return onCenterOnHelden; }
+        }
     }
 }
