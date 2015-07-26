@@ -11,6 +11,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
 {
     public class DämonenBeschwörungViewModel : BeschwörungViewModel
     {
+        private const string AFFINITÄT = "Affinität zu Dämonen";
+
         public DämonenBeschwörungViewModel()
         {
             magiekundeProbe = new Base.CommandBase(magiekunde, null);
@@ -18,6 +20,19 @@ namespace MeisterGeister.ViewModel.Beschwörung
             editMagiekunde = new Base.CommandBase((o) => InvocatioIntegraMagiekundePunkte = 1, null);
             editMalen = new Base.CommandBase((o) => InvocatioIntegraMalenPunkte = 1, null);
             PropertyChanged += propertyChanged;
+        }
+
+        protected override void checkHeld()
+        {
+            base.checkHeld();
+            if(Held != null)
+            {
+                Affinität = Held.HatVorNachteil(AFFINITÄT);
+            }
+            else
+            {
+                Affinität = false;
+            }
         }
 
         protected override List<GegnerBase> loadWesen()
@@ -358,6 +373,31 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        private int kreisDerVerdammnis;
+        public int KreisDerVerdammnis
+        {
+            get { return kreisDerVerdammnis; }
+            set
+            {
+                kreisDerVerdammnis = value;
+                OnInputChanged();
+            }
+        }
+
+        public int KreisDerVerdammnisRufMod
+        {
+            get { return -KreisDerVerdammnis; }
+        }
+
+        public int KreisDerVerdammnisHerrschMod
+        {
+            get
+            {
+                if (KreisDerVerdammnis == 0) return 0;
+                return -KreisDerVerdammnis - 3;
+            }
+        }
+
         public override int WahrerNameRufMod
         {
             get
@@ -373,7 +413,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get
             {
                 return base.GesamtRufMod
-                    +BannschwertRufMod
+                    + BannschwertRufMod
+                    + KreisDerVerdammnisRufMod
                     + InvocatioIntegraMagiekundeRufMod
                     + InvocatioIntegraMalenRufMod;
             }
@@ -386,7 +427,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 return base.GesamtHerrschMod
                     + (AndererDämon ? Kontrollschwierigkeit : 0)
                     + AffinitätHerrschMod
-                    +BannschwertHerrschMod;
+                    + BannschwertHerrschMod
+                    + KreisDerVerdammnisHerrschMod;
             }
         }
 

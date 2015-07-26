@@ -34,7 +34,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected virtual void reset()
         {
-
             Beschwörungsschwierigkeit = Kontrollschwierigkeit = 0;
             Beschwörungspunkte = 0;
             WahrerName = 0;
@@ -76,7 +75,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
             {
                 Set(ref held, value);
                 getZauber();
+                checkHeld();
             }
+        }
+
+        protected virtual void checkHeld()
+        {
+
         }
 
         private Model.Zauber zauber;
@@ -434,11 +439,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         public int OrtRufMod
         {
-            get { return Ort; }
+            get { return -Ort; }
         }
         public int OrtHerrschMod
         {
-            get { return (int)Math.Round(Ort / 3.0, MidpointRounding.AwayFromZero); }
+            get { return (int)Math.Round(-Ort / 3.0, MidpointRounding.AwayFromZero); }
         }
 
         public virtual int BlutmagieHerrschMod

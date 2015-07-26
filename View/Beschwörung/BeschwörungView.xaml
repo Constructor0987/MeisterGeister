@@ -20,6 +20,8 @@
                       SelectedValue="{Binding ElementName=tab,Path=SelectedValue.Held}" DisplayMemberPath="Name" FontWeight="Bold"/>
         </StackPanel>
         <TabControl Grid.Row="1" x:Name="tab">
+            
+            <!--Tab-Header-->
             <TabControl.ItemTemplateSelector>
                 <General:DynamicTemplateSelector>
                     <General:TemplateCollection>
@@ -40,28 +42,36 @@
                     </General:TemplateCollection>
                 </General:DynamicTemplateSelector>
             </TabControl.ItemTemplateSelector>
+            
+            <!--Tab-Content-->
             <TabControl.ContentTemplateSelector>
                 <General:DynamicTemplateSelector>
                     <General:TemplateCollection>
                         <General:Template Value="{x:Type vm:DämonenBeschwörungViewModel}">
                             <General:Template.DataTemplate>
                                 <DataTemplate>
-                                    <Beschwörung:DämonenBeschwörungView/>
+                                    <ScrollViewer>
+                                        <Beschwörung:DämonenBeschwörungView/>
+                                    </ScrollViewer>
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
                         <General:Template Value="{x:Type vm:ElementarBeschwörungViewModel}">
                             <General:Template.DataTemplate>
                                 <DataTemplate>
-                                    <Beschwörung:ElementarBeschwörungView/>
+                                    <ScrollViewer>
+                                        <Beschwörung:ElementarBeschwörungView/>
+                                    </ScrollViewer>
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
                     </General:TemplateCollection>
                 </General:DynamicTemplateSelector>
             </TabControl.ContentTemplateSelector>
+            
             <vm:DämonenBeschwörungViewModel/>
             <vm:ElementarBeschwörungViewModel/>
+            
         </TabControl>
     </Grid>
 </UserControl>

@@ -10,6 +10,52 @@ namespace MeisterGeister.ViewModel.Beschwörung
 {
     public class ElementarBeschwörungViewModel : BeschwörungViewModel
     {
+        private const string MERKMAL = "Merkmalskenntnis (Elementar ({0}))";
+        private const string BEGABUNG = "Begabung für Merkmal (Elementar ({0}))";
+        private const string ELEMENT_AURA = "Elementarharmonisierte Aura ({0} / {1})";
+        private const string VERHÜLLTE_AURA = "Verhüllte Aura";
+        private const string AFFINITÄT = "Affinität zu Elementaren";
+        private const string MERKMAL_DÄMONISCH = "Merkmalskenntnis (Dämonisch";
+        private const string BEGABUNG_DÄMONISCH = "Begabung für Merkmal (Dämonisch";
+
+        protected override void checkHeld()
+        {
+            base.checkHeld();
+            checkHeldElement();
+            if (Held != null)
+            {
+                Affinität = Held.HatVorNachteil(AFFINITÄT);
+                VerhüllteAura = Held.HatSonderfertigkeitUndVoraussetzungen(VERHÜLLTE_AURA);
+            }
+            else
+            {
+                Affinität = false;
+                VerhüllteAura = false;
+            }
+        }
+
+        private void checkHeldElement()
+        {
+            if (Held != null)
+            {
+                MerkmalElement = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, Element));
+                MerkmalGegenElement = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, GegenElement));
+
+                BegabungElement = Held.HatVorNachteil(String.Format(BEGABUNG, Element));
+                BegabungGegenElement = Held.HatVorNachteil(String.Format(BEGABUNG, GegenElement));
+
+                ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, Element, GegenElement));
+
+                Dämonisch = Held.Sonderfertigkeiten.Keys.Where((sf) => sf.Name.StartsWith(MERKMAL_DÄMONISCH)).Count()
+                          + Held.Vorteile.Keys.Where((vorteil) => vorteil.Name.StartsWith(BEGABUNG_DÄMONISCH)).Count();
+            }
+            else
+            {
+                MerkmalElement = MerkmalGegenElement = BegabungElement = BegabungGegenElement = false;
+                ElementarharmonisierteAura = false;
+            }
+        }
+
         protected override List<Model.GegnerBase> loadWesen()
         {
             return Global.ContextHeld.LoadElementare();
@@ -24,6 +70,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 element = value;
                 OnChanged();
                 OnChanged("GegenElement");
+                checkHeldElement();
             }
         }
 
@@ -101,6 +148,36 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return (BegabungElement ? -2 : 0) + (MerkmalElement ? -2 : 0); }
         }
 
+        private bool hoheMenge;
+        public bool HoheMenge
+        {
+            get { return hoheMenge; }
+            set
+            {
+                hoheMenge = value;
+                OnInputChanged();
+            }
+        }
+
+        public int HoheMengeRufMod
+        {
+            get { return HoheMenge ? -2 : 0; }
+        }
+
+        private bool elementarharmonisierteAura;
+        public bool ElementarharmonisierteAura
+        {
+            get { return elementarharmonisierteAura; }
+            set
+            {
+                Set(ref elementarharmonisierteAura, value);
+                OnChanged("GegenElementRufMod");
+                OnChanged("GegenElementHerrschMod");
+                OnChangedSum();
+            }
+        }
+
+
 
         private bool begabungGegenElement;
         public bool BegabungGegenElement
@@ -130,11 +207,19 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         public int GegenElementRufMod
         {
-            get { return (BegabungGegenElement ? 4 : 0) + (MerkmalGegenElement ? 4 : 0); }
+            get
+            {
+                if (ElementarharmonisierteAura) return 0;
+                return (BegabungGegenElement ? 4 : 0) + (MerkmalGegenElement ? 4 : 0);
+            }
         }
         public int GegenElementHerrschMod
         {
-            get { return (BegabungGegenElement ? 2 : 0) + (MerkmalGegenElement ? 2 : 0); }
+            get
+            {
+                if (ElementarharmonisierteAura) return 0;
+                return (BegabungGegenElement ? 2 : 0) + (MerkmalGegenElement ? 2 : 0);
+            }
         }
 
         private int dämonisch;
@@ -276,6 +361,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 return base.GesamtRufMod
                     + ElementRufMod
                     + GegenElementRufMod
+                    + HoheMengeRufMod
                     + DämonischRufMod
                     + PaktiererRufMod;
             }
