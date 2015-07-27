@@ -459,8 +459,10 @@ namespace MeisterGeister.ViewModel.Generator
         {
             if (liste == null) return;
             if (liste.Count() == 0) return;
+            StringBuilder ausgabe = new StringBuilder();
             foreach (Object o in liste)
-                Global.ContextNotizen.NotizAllgemein.AppendText("\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n" + o.ToString());
+                ausgabe.Append("\n\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n" + o.ToString());
+            Global.ContextNotizen.NotizAllgemein.AppendText(ausgabe.ToString());
             InfoText = string.Format("{0} Objekte gespeichert.", liste.Count());
         }
 
