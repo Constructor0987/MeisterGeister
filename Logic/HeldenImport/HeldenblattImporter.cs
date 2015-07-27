@@ -73,25 +73,27 @@ namespace MeisterGeister.Logic.HeldenImport
 
         private static void SetGegenstandMapping()
         {
+            _gegenstandMapping.Add("bart", "bart/halsberge");
+            _gegenstandMapping.Add("beintaschen", "beintaschen/schürze");
+            _gegenstandMapping.Add("fellumhang", "fellumhang/fuhrmannsmantel");
+            _gegenstandMapping.Add("fuhrmannsmantel", "fellumhang/fuhrmannsmantel");
+            _gegenstandMapping.Add("gambeson", "gambeson/wattierter waffenrock");
+            _gegenstandMapping.Add("gürteltasche, hartleder", "gürteltasche, verstärkt");
+            _gegenstandMapping.Add("halsberge", "bart/halsberge");
+            _gegenstandMapping.Add("hartholzharnisch", "maraskanischer hartholzharnisch");
+            _gegenstandMapping.Add("lederweste", "lederweste/pelzweste");
             _gegenstandMapping.Add("linkhand (kling.br.)", "linkhand mit klingenbrecher");
             _gegenstandMapping.Add("linkhand und klingenbrecher", "linkhand mit klingenbrecher");
-            _gegenstandMapping.Add("hartholzharnisch", "maraskanischer hartholzharnisch");
-            _gegenstandMapping.Add("gambeson", "gambeson/wattierter waffenrock");
-            _gegenstandMapping.Add("wattierter waffenrock", "gambeson/wattierter waffenrock");
-            _gegenstandMapping.Add("fuhrmannsmantel", "fellumhang/fuhrmannsmantel");
-            _gegenstandMapping.Add("fellumhang", "fellumhang/fuhrmannsmantel");
-            _gegenstandMapping.Add("bart", "bart/halsberge");
-            _gegenstandMapping.Add("halsberge", "bart/halsberge");
-            _gegenstandMapping.Add("beintaschen", "beintaschen/schürze");
-            _gegenstandMapping.Add("schürze", "beintaschen/schürze");
-            _gegenstandMapping.Add("lederweste", "lederweste/pelzweste");
             _gegenstandMapping.Add("magierstab", "magierstab als stab");
             _gegenstandMapping.Add("magierstab (kristallkugel)", "magierstab m. kristallk.");
             _gegenstandMapping.Add("pelzweste", "lederweste/pelzweste");
+            _gegenstandMapping.Add("satteltaschen", "satteltaschen (2 x 6 stein)");
+            _gegenstandMapping.Add("schürze", "beintaschen/schürze");
             _gegenstandMapping.Add("stechhelm", "stechhelm/visierhelm");
             _gegenstandMapping.Add("visierhelm", "stechhelm/visierhelm");
             _gegenstandMapping.Add("wattiertes unterzeug", "wattiertes unterzeug/wattierte unterkleidung");
             _gegenstandMapping.Add("wattierte unterkleidung", "wattiertes unterzeug/wattierte unterkleidung");
+            _gegenstandMapping.Add("wattierter waffenrock", "gambeson/wattierter waffenrock");
         }
 
         private static void SetSonderfertigkeitenMapping()
