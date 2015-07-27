@@ -72,6 +72,9 @@ namespace MeisterGeister.Logic.HeldenImport
             _sonderfertigkeitMapping.Add("traumgänger", "traumgänger i");
             _sonderfertigkeitMapping.Add("apport", "objektritual: apport");
             _sonderfertigkeitMapping.Add("bannschwert", "objektritual: bannschwert");
+            _sonderfertigkeitMapping.Add("elementarharmonisierte aura (humus/eis)", "elementarharmonisierte aura (eis/humus)");
+            _sonderfertigkeitMapping.Add("elementarharmonisierte aura (luft/fels)", "elementarharmonisierte aura (fels/luft)");
+            _sonderfertigkeitMapping.Add("elementarharmonisierte aura (wasser/feuer)", "elementarharmonisierte aura (feuer/wasser)");
             _sonderfertigkeitMapping.Add("kulturkunde (andergast/nostria)", "kulturkunde (andergast und nostria)");
             _sonderfertigkeitMapping.Add("kulturkunde (stammesachaz)", "kulturkunde (stammes-achaz)");
             _sonderfertigkeitMapping.Add("merkmalskenntnis: dämonisch", "merkmalskenntnis (dämonisch (gesamt))");
@@ -736,14 +739,14 @@ namespace MeisterGeister.Logic.HeldenImport
 
                 bool added = false;
 
-                // Kulturkunde,  Scharfschütze, Meisterschütze, Schnellladen
+                // Kulturkunde,  Scharfschütze, Meisterschütze, Schnellladen, Elementarharmonisierte Aura
                 if (!added && (sfName == "Kulturkunde" || sfName == "Scharfschütze"
-                    || sfName == "Meisterschütze" || sfName == "Schnellladen"))
+                    || sfName == "Meisterschütze" || sfName == "Schnellladen" || sfName == "Elementarharmonisierte Aura"))
                 {
                     string sub = null;
                     if (sfName == "Kulturkunde")
                         sub = "kultur";
-                    else if (sfName == "Ortskenntnis")
+                    else if (sfName == "Ortskenntnis" || sfName == "Elementarharmonisierte Aura")
                         sub = "auswahl";
                     else if (sfName == "Scharfschütze" || sfName == "Meisterschütze" || sfName == "Schnellladen")
                         sub = "talent";
