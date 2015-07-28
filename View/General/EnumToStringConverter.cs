@@ -11,7 +11,7 @@ namespace MeisterGeister.View.General
 {
     public class EnumToStringConverter : IValueConverter
     {
-        private static String GetDescription(FieldInfo fieldInfo)
+        private static string GetDescription(FieldInfo fieldInfo)
         {
             var descriptionAttribute =
               (DescriptionAttribute)Attribute.GetCustomAttribute(fieldInfo, typeof(DescriptionAttribute));
@@ -20,14 +20,17 @@ namespace MeisterGeister.View.General
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (value == null || !value.GetType().IsEnum) return String.Empty;
             return GetDescription(value.GetType().GetField(value.ToString()));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            foreach(FieldInfo info in targetType.GetFields(BindingFlags.Static | BindingFlags.Public))
+            if (!(value is String) || String.IsNullOrEmpty((String)value))
+                return null;
+            foreach (FieldInfo info in targetType.GetFields(BindingFlags.Static | BindingFlags.Public))
             {
-                if (GetDescription(info) == value)
+                if (GetDescription(info) == (String)value)
                     return info.GetValue(value.GetType());
             }
             return null;

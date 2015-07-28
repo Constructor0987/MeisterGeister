@@ -490,6 +490,8 @@
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\DämonenBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\ElementarBeschwörungViewModel.cs" />
+    <Compile Include="ViewModel\Beschwörung\Element.cs" />
+    <Compile Include="ViewModel\Beschwörung\ElementarWesen.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />

@@ -25,7 +25,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected override void checkHeld()
         {
             base.checkHeld();
-            if(Held != null)
+            if (Held != null)
             {
                 Affinität = Held.HatVorNachteil(AFFINITÄT);
             }
@@ -57,6 +57,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             AndererDämon = false;
             Affinität = false;
             Bannschwert = false;
+            Opfer = Opfer.Tieropfer;
             Ergebnis = "Wähle einen Dämon und versuche ihn zu beschwören";
         }
 
@@ -64,7 +65,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override void beschwörungMisslungen(ProbenErgebnis erg)
         {
-            int wurf = View.General.ViewHelper.ShowWürfelDialog(Blutmagie == Blutmagie.Keine ? "2W6" : "3W6", "Beschwörung Misslungen");
+            int wurf = View.General.ViewHelper.ShowWürfelDialog(Blutmagie ? "3W6" : "2W6", "Beschwörung Misslungen");
             if (WahrerName == 0) wurf += 7;
             if (wurf <= 6)
             {
@@ -175,7 +176,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void magiekunde(object obj)
         {
-            //TODO: Talentspezialisierung Magiekunde: Dämonologie beachten
             int taW;
             Held_Talent ht = Global.SelectedHeld.GetHeldTalent("Magiekunde", false, out taW);
             ht.Talent.Fertigkeitswert = taW;
@@ -196,7 +196,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         public bool InvocatioIntegraMöglich
         {
-            //TODO: Prüfen ob SF vorhanden
             get { return Hörner > 0 && WahrerName > 0; }
         }
 
@@ -345,13 +344,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             get
             {
-                if (InvocatioIntegra)
+                if (InvocatioIntegra && Blutmagie)
                 {
-                    switch (Blutmagie)
+                    switch (Opfer)
                     {
-                        case Beschwörung.Blutmagie.Tieropfer:
+                        case Opfer.Tieropfer:
                             return 3;
-                        case Beschwörung.Blutmagie.IntelligentesWesen:
+                        case Opfer.IntelligentesWesen:
                             return 7;
                     }
                 }
@@ -359,7 +358,21 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        public override Blutmagie Blutmagie
+        private Opfer opfer;
+
+        public Opfer Opfer
+        {
+            get { return opfer; }
+            set
+            {
+                Set(ref opfer, value);
+                OnChanged("ZauberWert");
+                OnChanged("KontrollWert");
+            }
+        }
+
+
+        public override bool Blutmagie
         {
             get
             {
@@ -406,8 +419,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        #endregion
-
         public override int GesamtRufMod
         {
             get
@@ -449,5 +460,14 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             return (int)Math.Round((Held.Mut * 2 + Held.Klugheit + Held.Charisma + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
         }
+
+        #endregion
+    }
+    public enum Opfer
+    {
+        [Description("Tieropfer")]
+        Tieropfer,
+        [Description("Opferung eines intelligenten Wesens")]
+        IntelligentesWesen
     }
 }

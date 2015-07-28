@@ -12,7 +12,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
     {
         private const string MERKMAL = "Merkmalskenntnis (Elementar ({0}))";
         private const string BEGABUNG = "Begabung für Merkmal (Elementar ({0}))";
-        private const string ELEMENT_AURA = "Elementarharmonisierte Aura ({0} / {1})";
+        private const string ELEMENT_AURA = "Elementarharmonisierte Aura ({0}/{1})";
         private const string VERHÜLLTE_AURA = "Verhüllte Aura";
         private const string AFFINITÄT = "Affinität zu Elementaren";
         private const string MERKMAL_DÄMONISCH = "Merkmalskenntnis (Dämonisch";
@@ -44,7 +44,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 BegabungElement = Held.HatVorNachteil(String.Format(BEGABUNG, Element));
                 BegabungGegenElement = Held.HatVorNachteil(String.Format(BEGABUNG, GegenElement));
 
-                ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, Element, GegenElement));
+                ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, Element, GegenElement))
+                                          || Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, GegenElement, Element));
 
                 Dämonisch = Held.Sonderfertigkeiten.Keys.Where((sf) => sf.Name.StartsWith(MERKMAL_DÄMONISCH)).Count()
                           + Held.Vorteile.Keys.Where((vorteil) => vorteil.Name.StartsWith(BEGABUNG_DÄMONISCH)).Count();
@@ -60,6 +61,17 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             return Global.ContextHeld.LoadElementare();
         }
+
+        protected override void reset()
+        {
+            base.reset();
+            BegabungElement = MerkmalElement = BegabungGegenElement = BegabungGegenElement = DämonGerufen = Paktierer = Affinität = VerhüllteAura = false;
+            Dämonisch = SchwacheAusstrahlung = Stigma = 0;
+            Element = Element.Feuer;
+            Typ = ElementarWesen.Elementargeist;
+        }
+
+        #region Properties
 
         private Element element;
         public Element Element
@@ -101,17 +113,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 }
             }
         }
-
-        protected override void reset()
-        {
-            base.reset();
-            BegabungElement = MerkmalElement = BegabungGegenElement = BegabungGegenElement = DämonGerufen = Paktierer = Affinität = VerhüllteAura = false;
-            Dämonisch = SchwacheAusstrahlung = Stigma = 0;
-            Element = Element.Feuer;
-            Typ = ElementarWesen.Elementargeist;
-        }
-
-        #region Properties
 
         private bool begabungElement;
         public bool BegabungElement
@@ -341,6 +342,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         public int StigmaHerrschMod
         {
+            //TODO: Wert anpassen
             get { return (int)Math.Round(Stigma / 12.0, MidpointRounding.AwayFromZero); }
         }
 
@@ -348,11 +350,19 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             get
             {
-                return (Blutmagie == Blutmagie.Keine) ? 0 : 12;
+                return Blutmagie ? 12 : 0;
             }
         }
 
-        #endregion
+        public override string KontrollFormel
+        {
+            get { return "(MU + IN + CH + CH + ZfW) / 5"; }
+        }
+
+        protected override int calcKontrollWert()
+        {
+            return (int)Math.Round((Held.Mut + Held.Intuition + Held.Charisma * 2 + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
+        }
 
         public override int GesamtRufMod
         {
@@ -384,6 +394,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        #endregion
+
 
         protected override void beschwörungMisslungen(ProbenErgebnis erg)
         {
@@ -395,38 +407,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             Ergebnis = "Das Elementarwesen erfüllt den Dienst nicht. Die AsP werden trotzdem abgezogen. Wenn noch AsP übrig sind steht das Wesen weiterhin zur Verfügung.";
         }
 
-        public override string KontrollFormel
-        {
-            get { return "(MU + IN + CH + CH + ZfW) / 5"; }
-        }
 
-        protected override int calcKontrollWert()
-        {
-            return (int)Math.Round((Held.Mut + Held.Intuition + Held.Charisma * 2 + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
-        }
-    }
-    public enum Element
-    {
-        [Description("Feuer")]
-        Feuer = 0,
-        [Description("Wasser")]
-        Wasser = ~Feuer,
-        [Description("Humus")]
-        Humus = 1,
-        [Description("Eis")]
-        Eis = ~Humus,
-        [Description("Luft")]
-        Luft = 2,
-        [Description("Erz")]
-        Erz = ~Luft
-    }
-    public enum ElementarWesen
-    {
-        [Description("Elementargeist")]
-        Elementargeist,
-        [Description("Dschinn")]
-        Dschinn,
-        [Description("Elementarer Meister")]
-        ElementarerMeister
     }
 }

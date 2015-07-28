@@ -41,15 +41,15 @@ namespace MeisterGeister.ViewModel.Beschwörung
             BefehlHerrschMod = 0;
             DauerHerrschMod = 0;
             AusrüstungMod = 0;
-            Blutmagie = Blutmagie.Keine;
+            Blutmagie = false;
             Sterne = 0;
             Ort = 0;
             DonariaRuf = DonariaHerrsch = 0;
             BezahlungHerrschMod = 0;
             SonstigesRufMod = SonstigesHerrschMod = 0;
             BeschworenesWesen = null;
-            held = null;
-            zauber = null;
+            Held = null;
+            Zauber = null;
             Status = BeschwörungsStatus.Beschwören;
         }
 
@@ -66,25 +66,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             get { return beherrschen; }
         }
-
-        private Held held;
-        public virtual Held Held
-        {
-            get { return held; }
-            set
-            {
-                Set(ref held, value);
-                getZauber();
-                checkHeld();
-            }
-        }
-
-        protected virtual void checkHeld()
-        {
-
-        }
-
-        private Model.Zauber zauber;
 
         private void beschwöre(object obj)
         {
@@ -154,6 +135,23 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        private Held held;
+        public virtual Held Held
+        {
+            get { return held; }
+            set
+            {
+                Set(ref held, value);
+                getZauber();
+                checkHeld();
+            }
+        }
+
+        protected virtual void checkHeld()
+        {
+
+        }
+
         private BeschwörungsStatus status;
         public BeschwörungsStatus Status
         {
@@ -161,7 +159,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             protected set { Set(ref status, value); }
         }
 
-
+        private Model.Zauber zauber;
         private string zauberName;
         public string Zauber
         {
@@ -271,8 +269,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return -Material; }
         }
 
-        private Blutmagie blutmagie = Blutmagie.Keine;
-        public virtual Blutmagie Blutmagie
+        private bool blutmagie = false;
+        public virtual bool Blutmagie
         {
             get { return blutmagie; }
             set
@@ -448,9 +446,12 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         public virtual int BlutmagieHerrschMod
         {
-            get { return Blutmagie == Blutmagie.Keine ? 0 : 2; }
+            get { return Blutmagie ? 2 : 0; }
         }
 
+        /// <summary>
+        /// Probenerschwernis uaf die Beschwörungsprobe
+        /// </summary>
         public virtual int GesamtRufMod
         {
             get
@@ -466,6 +467,9 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        /// <summary>
+        /// Probenerschwernis auf die Beherrschungsprobe
+        /// </summary>
         public virtual int GesamtHerrschMod
         {
             get
@@ -486,6 +490,9 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
 
         private string ergebnis;
+        /// <summary>
+        /// Ergebnis, welches an der GUI angezeigt wird
+        /// </summary>
         public string Ergebnis
         {
             get { return ergebnis; }
@@ -518,15 +525,5 @@ namespace MeisterGeister.ViewModel.Beschwörung
     {
         Beschwören,
         Beherrschen
-    }
-
-    public enum Blutmagie
-    {
-        [Description("Keine")]
-        Keine,
-        [Description("Tieropfer")]
-        Tieropfer,
-        [Description("Opferung eines intelligenten Wesens")]
-        IntelligentesWesen
     }
 }
