@@ -50,14 +50,18 @@ namespace MeisterGeister.Logic.HeldenImport
             _gegenstandMapping.Add("fellumhang", "fellumhang/fuhrmannsmantel");
             _gegenstandMapping.Add("fuhrmannsmantel", "fellumhang/fuhrmannsmantel");
             _gegenstandMapping.Add("gambeson", "gambeson/wattierter waffenrock");
+            _gegenstandMapping.Add("gänsekiel", "gänsekiel/griffel");
+            _gegenstandMapping.Add("griffel", "gänsekiel/griffel");
             _gegenstandMapping.Add("gürteltasche, hartleder", "gürteltasche, verstärkt");
             _gegenstandMapping.Add("halsberge", "bart/halsberge");
             _gegenstandMapping.Add("hartholzharnisch", "maraskanischer hartholzharnisch");
+            _gegenstandMapping.Add("jonglierbälle", "jonglierball");
             _gegenstandMapping.Add("lederweste", "lederweste/pelzweste");
             _gegenstandMapping.Add("linkhand (kling.br.)", "linkhand mit klingenbrecher");
             _gegenstandMapping.Add("linkhand und klingenbrecher", "linkhand mit klingenbrecher");
             _gegenstandMapping.Add("magierstab", "magierstab als stab");
             _gegenstandMapping.Add("magierstab (kristallkugel)", "magierstab m. kristallk.");
+            _gegenstandMapping.Add("nägel, 50 stück", "50 nägel, sort.");
             _gegenstandMapping.Add("pelzweste", "lederweste/pelzweste");
             _gegenstandMapping.Add("satteltaschen", "satteltaschen (2 x 6 stein)");
             _gegenstandMapping.Add("schürze", "beintaschen/schürze");
@@ -66,6 +70,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _gegenstandMapping.Add("wattiertes unterzeug", "wattiertes unterzeug/wattierte unterkleidung");
             _gegenstandMapping.Add("wattierte unterkleidung", "wattiertes unterzeug/wattierte unterkleidung");
             _gegenstandMapping.Add("wattierter waffenrock", "gambeson/wattierter waffenrock");
+            _gegenstandMapping.Add("würfel, mammuton", "würfel, bein");
         }
 
         private static void SetSonderfertigkeitenMapping()
