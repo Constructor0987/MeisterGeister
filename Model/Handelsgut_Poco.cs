@@ -176,6 +176,18 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Verpackungseinheit
+        {
+            get { return _verpackungseinheit; }
+            set
+    		{ 
+    			Set(ref _verpackungseinheit, value);
+    		}
+    
+        }
+        private Nullable<double> _verpackungseinheit;
 
         #endregion
 

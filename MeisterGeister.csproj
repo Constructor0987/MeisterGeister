@@ -1867,6 +1867,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Resource Include="Daten\Updateskripte\UpdateTo_V0101.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0103.sql" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0102.sql" />
     <Resource Include="Images\Icons\Elemente\Eis.png" />
     <Resource Include="Images\Icons\Elemente\Erz.png" />

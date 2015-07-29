@@ -707,6 +707,7 @@
     <Property Name="Tags" Type="nvarchar" MaxLength="1000" />
     <Property Name="Bemerkung" Type="ntext" />
     <Property Name="Literatur" Type="nvarchar" MaxLength="500" />
+    <Property Name="Verpackungseinheit" Type="float" />
   </EntityType>
   <EntityType Name="Handelsgut_Setting">
     <Key>
@@ -2929,6 +2930,7 @@
     <Property Name="Tags" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
     <Property Name="Bemerkung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Literatur" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="Verpackungseinheit" Type="Double" />
     <NavigationProperty Name="Handelsgut_Setting" Relationship="DatabaseDSAModel.fk_HandelsgutSetting_Handelsgut" FromRole="Handelsgut" ToRole="Handelsgut_Setting" />
   </EntityType>
   <EntityType Name="Handelsgut_Setting">
@@ -4782,6 +4784,7 @@
           <ScalarProperty Name="Tags" ColumnName="Tags" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
           <ScalarProperty Name="Literatur" ColumnName="Literatur" />
+          <ScalarProperty Name="Verpackungseinheit" ColumnName="Verpackungseinheit" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5417,7 +5420,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="5710a3aca0ab412fb6a1a1e3acfe9f96" Name="Diagram1">
+      <Diagram DiagramId="f028077bb777419ca825f087832d6f75" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="16.375" IsExpanded="true" />
@@ -5438,7 +5441,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="16.75" PointY="24.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="19" PointY="32.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="22" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.75" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="14" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
