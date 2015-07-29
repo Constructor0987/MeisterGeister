@@ -36,7 +36,7 @@ namespace MeisterGeister.Logic.Extensions
         {
             if (Path.IsPathRooted(path))
                 return path;
-            return Path.Combine(GetHomeDirectory(), path);
+            return Path.GetFullPath(Path.Combine(GetHomeDirectory(), path));
         }
 
         /// <summary>
