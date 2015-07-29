@@ -239,7 +239,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public String getYearString(int year, String positiveUnitName, String negativeUnitName)
         {
-            string s = String.Format("{0:5} {1}", (year < 0)? -year: year, (year < 0) ? negativeUnitName : positiveUnitName);
+            string s = String.Format("{0} {1}", (year < 0)? -year: year, (year < 0) ? negativeUnitName : positiveUnitName);
             return s;
         }
 

@@ -44,6 +44,21 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             setDaysPerYear(DSADateCalendar.DAYS_PER_YEAR_BF);
         }
 
+        public void setDayWeekMonthYear(int day, int week, int month, int year)
+        {
+            month = (int)MathUtil.modulo(month, 5);
+            day = (int)MathUtil.modulo(day, 10);
+            week = (int)MathUtil.modulo(week, 9);
+            int days = month * DAYS_PER_MONTH;
+            if (day != 0 && week != 0) //not {month}. Rastullahellah
+                days += day + (week - 1) * DAYS_PER_WEEK;
+            int daysSince0BF = (year + YEAR_ZERO_BF_IS) * getDaysPerYear();
+            daysSince0BF += YEAR_OFFSET_IN_DAYS - 1;
+            daysSince0BF += days;
+            setDaysSinceBF((int)daysSince0BF);
+        }
+
+            
         public override String getHeadingText()
         {
             int jday = getJDay() - 1;
@@ -57,8 +72,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             else
             {
                 int weekday = (int)MathUtil.modulo(rastmod, DAYS_PER_WEEK);
-                int week = (int)MathUtil.divisio(rastmod, DAYS_PER_WEEK) + rastdiv * WEEKS_PER_MONTH;
-                s = String.Format("{0}. Tag ({1}) im {2}. Gottesnamen {3}", weekday + 1, weekdayNames[weekday], week + 1, getYearString());
+                int week = (int)MathUtil.divisio(rastmod, DAYS_PER_WEEK); //+ rastdiv * WEEKS_PER_MONTH;
+                s = String.Format("{0}. Tag ({1}) des {2}. Gottesnamens nach dem {3}. Rastullahellah des Jahres {4}", weekday + 1, weekdayNames[weekday], week + 1, MathUtil.modulo(rastdiv + 4, 5) + 1, getYearString());
             }
             return s;
         }

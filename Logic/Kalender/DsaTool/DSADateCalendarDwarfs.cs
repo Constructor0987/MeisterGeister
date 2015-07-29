@@ -46,7 +46,7 @@ public class DSADateCalendarDwarfs : DSADateCalendar {
         int monthdiv = (int)MathUtil.divisio(jday, DAYS_PER_MONTH);
         int monthmod = (int)MathUtil.modulo(jday, DAYS_PER_MONTH);
 
-        string s = String.Format("{0:2}. {1:13} ({2}.) {3}", monthmod + 1, monthNames[monthdiv], monthdiv + 1, getYearString());
+        string s = String.Format("{0}. {1} ({2}.) {3}", monthmod + 1, monthNames[monthdiv], monthdiv + 1, getYearString());
         return s;
     }
 
@@ -62,7 +62,7 @@ public class DSADateCalendarDwarfs : DSADateCalendar {
         else if (year < 0)
             unitName = "Jahre vor der zweiten Dämonenschlacht";
         
-        string s = String.Format("{0:5} {1}", (year < 0) ? -year : year, unitName);
+        string s = String.Format("{0} {1}", (year < 0) ? -year : year, unitName);
 
         return s;
     }

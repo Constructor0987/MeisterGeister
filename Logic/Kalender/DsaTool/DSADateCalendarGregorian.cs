@@ -66,7 +66,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             if (null == df)
             {
-                df = "{0:D}";
+                df = "{0}";
             }
             return df;
         }

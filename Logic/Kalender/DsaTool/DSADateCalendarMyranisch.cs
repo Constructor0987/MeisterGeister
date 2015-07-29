@@ -75,10 +75,17 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return getPart(jday, DAYS_PER_NONE * NONES_PER_OCTADE, getDaysPerYear());
         }
 
+        public void setDayNoneOctadeYear(int day, int none, int octade, int year)
+        {
+            int days = (day - 1) + (none - 1) * DAYS_PER_NONE + (octade - 1) * DAYS_PER_NONE * NONES_PER_OCTADE + year * getDaysPerYear();
+            days += getDaysFromYear0ToBF();
+            setDaysSinceBF(days);
+        }
+
         public String getYearString()
         {
             int year = getYear();
-            string s = String.Format("{0:5} IZ", year);
+            string s = String.Format("{0} IZ", year);
             return s;
         }
 
@@ -99,8 +106,6 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public const int DAYS_PER_NONE = 9;
 
         public const int NONES_PER_OCTADE = 5;
-
-        public const int DAYS_PER_MONTH = DAYS_PER_NONE * NONES_PER_OCTADE;
 
     }
 
