@@ -75,7 +75,7 @@
 
         <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
         <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
-
+        
         <TextBlock Text="Dämon" Style="{StaticResource label}"/>
         <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
 

@@ -238,9 +238,9 @@
                                         <Image Source="/Images/Icons/alchimie.png" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" x:Name="_menuItemBeschwörung" Click="ButtonTool_Click" Tag="Beschwörung" ToolTip="Beschwörung-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}" >
+                                <MenuItem Height="28" x:Name="_menuItemBeschwörung" Click="ButtonTool_Click" Tag="Beschwörung" ToolTip="Beschwörung-Tool">
                                     <MenuItem.Header>
-                                        <TextBlock Text="Beschwörung-Tool (INTERN)" VerticalAlignment="Center" />
+                                        <TextBlock Text="Beschwörung-Tool" VerticalAlignment="Center" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/magie.png" Margin="2" />
@@ -318,17 +318,17 @@
                                         <Image Source="/Images/Icons/kalender.png" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem x:Name="_menuItemKarte" Height="28" Click="ButtonTool_Click" Tag="Karte" ToolTip="Karte" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                <MenuItem x:Name="_menuItemKarte" Height="28" Click="ButtonTool_Click" Tag="Karte" ToolTip="Karte">
                                     <MenuItem.Header>
-                                        <TextBlock Text="Karte (INTERN)" VerticalAlignment="Center" />
+                                        <TextBlock Text="Karte" VerticalAlignment="Center" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/kartenzeichnen.png" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem x:Name="_menuItemReise" Height="28" Click="ButtonTool_Click" Tag="Reise" ToolTip="Reise-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                <MenuItem x:Name="_menuItemReise" Height="28" Click="ButtonTool_Click" Tag="Reise" ToolTip="Reise-Tool">
                                     <MenuItem.Header>
-                                        <TextBlock Text="Reise-Tool (INTERN)" VerticalAlignment="Center" />
+                                        <TextBlock Text="Reise-Tool" VerticalAlignment="Center" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/kartenzeichnen.png" Margin="2" />

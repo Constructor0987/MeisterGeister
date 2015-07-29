@@ -158,15 +158,29 @@ namespace MeisterGeister
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Alchimie.AlchimieView)
             });
+            ToolListe.Add("Beschwörung", new Tool()
+            {
+                Name = "Beschwörung",
+                Icon = "Icons/magie.png",
+                MenuGruppe = "Wege der Magie",
+                ViewType = typeof(View.Beschwörung.BeschwörungView)
+            });
+            ToolListe.Add("Reise", new Tool()
+            {
+                Name = "Reise",
+                Icon = "Icons/kartenzeichnen.png",
+                MenuGruppe = "Wege des Wanderers",
+                ViewType = typeof(View.Reise.ReiseView)
+            });
+            ToolListe.Add("Karte", new Tool()
+            {
+                Name = "Karte",
+                Icon = "Icons/kartenzeichnen.png",
+                MenuGruppe = "Wege des Wanderers",
+                ViewType = typeof(View.Karte.KarteView)
+            });
             if (Global.INTERN) // im Release-Modus ausblenden
             {
-                ToolListe.Add("Beschwörung", new Tool()
-                {
-                    Name = "Beschwörung",
-                    Icon = "Icons/magie.png",
-                    MenuGruppe = "Wege der Magie",
-                    ViewType = typeof(View.Beschwörung.BeschwörungView)
-                });
                 ToolListe.Add("Abenteuer", new Tool()
                 {
                     Name = "Abenteuer",
@@ -180,20 +194,6 @@ namespace MeisterGeister
                     Icon = "Icons/meisterperson.png",
                     MenuGruppe = "Wege des Meisters",
                     ViewType = typeof(View.Generator.GeneratorView)
-                });
-                ToolListe.Add("Reise", new Tool()
-                {
-                    Name = "Reise",
-                    Icon = "Icons/kartenzeichnen.png",
-                    MenuGruppe = "Wege des Wanderers",
-                    ViewType = typeof(View.Reise.ReiseView)
-                });
-                ToolListe.Add("Karte", new Tool()
-                {
-                    Name = "Karte",
-                    Icon = "Icons/kartenzeichnen.png",
-                    MenuGruppe = "Wege des Wanderers",
-                    ViewType = typeof(View.Karte.KarteView)
                 });
             }
         }
