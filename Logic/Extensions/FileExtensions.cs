@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -23,6 +24,19 @@ namespace MeisterGeister.Logic.Extensions
             Uri homePath = new Uri(GetHomeDirectory());
             Uri relativePath = homePath.MakeRelativeUri(file);
             return Uri.UnescapeDataString(relativePath.ToString()).Replace("/", "\\");
+        }
+
+        /// <summary>
+        /// Wandelt 'path' in Relation zum MeisterGeister-Verzeichnis in eine absolute Pfadangabe um.
+        /// Ist der Pfad bereits absolut wird dieser einfach zurückgegeben.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string ConvertRelativeToAbsolutePath(string path)
+        {
+            if (Path.IsPathRooted(path))
+                return path;
+            return Path.Combine(GetHomeDirectory(), path);
         }
 
         /// <summary>

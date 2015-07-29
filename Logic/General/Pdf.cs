@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using MeisterGeister.Logic.Extensions;
+using System.IO;
 
 namespace MeisterGeister.Logic.General
 {
@@ -104,8 +105,8 @@ namespace MeisterGeister.Logic.General
             if(String.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentNullException("fileName", "Dateiname (fileName) wurde nicht angegeben.");
             Process p = new Process();
-            if (fileName.StartsWith("\\")) // bei relativem Pfad das HomeDir hinzufügen
-                fileName = fileName.Remove(0, 1).Insert(0, Logic.Extensions.FileExtensions.GetHomeDirectory());
+            // relativen Pfad in absoluten umwandeln
+            fileName = Logic.Extensions.FileExtensions.ConvertRelativeToAbsolutePath(fileName);
             ProcessStartInfo pi = new ProcessStartInfo(OpenCommand, String.Format(OpenArguments, fileName, page));
             p.StartInfo = pi;
             pi.UseShellExecute = true;

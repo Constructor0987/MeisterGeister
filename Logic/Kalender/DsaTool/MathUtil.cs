@@ -213,47 +213,50 @@ public class MathUtil {
 		}
 	}
 
-	/**
-	 *	A shortcut for divisio(<em>val</em>, <em>div</em>, 0).
-	 *
-	 * @see #divisio
-	 */
+    /// <summary>
+    /// A shortcut for divisio(val, div, 0).
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="div"></param>
+    /// <returns></returns>
     public static long divisio(long val, long div)
     {
 		return divisio(val, div, 0);
 	}
 
-	/**
-	 * An adequate division method fitting for modulo.
-	 * The intention is that for every non-zero x and every y the following equation is true:
-	 * <pre>
-	 *     val = x * divisio(val, x, y) + modulo(val, x, y)
-	 * </pre>
-	 * To understand that concept, start out with y=0 and x>0.
-	 * <br></br>To give some more hints for the concepts: The following equations are always true.
-	 * <pre>
-	 *     divisio(val, x, y) = divisio(-val, -x, -y)
-	 *     divisio(val, x, y) = divisio(val - y, x, 0)
-	 * </pre>
-	 *  Examples:<br></br>
-	 *  If offset is 0, the behavior is nearly like normal the division operator (/)
-	 *  Otherwise it tells the lower bound of the destination range. Even more examples:<br></br>
-	 *  <table border>
-	 *  <tr><th> call                      </th><th>             result </th><th> comment </th></tr>
-	 *  <tr><td><tt>divisio(  0, 5, 0)</tt></td><td align=\"right\">  0 </td><td> this behaves like the normal division operation (0 / 5)</td></tr>
-	 *  <tr><td><tt>divisio( 12, 5, 0)</tt></td><td align=\"right\">  2 </td><td> this behaves like the normal division operation (12 / 5)</td></tr>
-	 *  <tr><td><tt>divisio( -1, 5, 0)</tt></td><td align=\"right\"> -1 </td><td> -1 is the last number of the smallest "negative" circle</td></tr>
-	 *  <tr><td><tt>divisio( -5, 5, 0)</tt></td><td align=\"right\"> -1 </td><td> -5 is the first number of the smallest "negative" circle</td></tr>
-	 *  <tr><td><tt>divisio( -6, 5, 0)</tt></td><td align=\"right\"> -2 </td><td> -6 is the last number of the second smallest "negative" circle</td></tr>
-	 *  <tr><td><tt>divisio(  1,-5, 0)</tt></td><td align=\"right\"> -1 </td><td> With negative bounds, the results are reverted (whoever that needs...) </td></tr>
-	 *  <tr><td><tt>divisio(  0,-5, 0)</tt></td><td align=\"right\">  0 </td><td> With negative bounds, the results are reverted (whoever that needs...) </td></tr>
-	 *  </table>
-	 *  @param val The value to be divided.
-	 *  @param div The upper bound (if offset is 0), or the length of the destination range (if offset is not 0).
-	 *	@param offset The lower bound of the destination range.
-	 *  @throws ArithmeticException thrown if <em>div</em> is 0.
-	 *  @see #modulo(double, double, double)
-	 */
+	/// <summary>
+    /// An adequate division method fitting for modulo.
+    /// The intention is that for every non-zero x and every y the following equation is true:
+    ///     val = x * divisio(val, x, y) + modulo(val, x, y)
+    /// 
+    /// To understand that concept, start out with y=0 and x>0.
+    /// 
+    /// To give some more hints for the concepts: The following equations are always true.
+    ///     divisio(val, x, y) = divisio(-val, -x, -y)
+    ///     divisio(val, x, y) = divisio(val - y, x, 0)
+    ///     
+    ///  Examples:
+    ///  If offset is 0, the behavior is nearly like normal the division operator (/)
+    ///  Otherwise it tells the lower bound of the destination range. Even more examples:<br></br>
+    ///  <list type="table">
+    ///  <listheader>
+    ///  <term>call</term>
+    ///  <term>result</term>
+    ///  <term>comment</term>
+    ///  </listheader>
+    ///  <item><term>divisio(  0, 5, 0)</term><term>  0 </term><term> this behaves like the normal division operation (0 / 5)</term></item>
+    ///  <item><term>divisio( 12, 5, 0)</term><term>  2 </term><term> this behaves like the normal division operation (12 / 5)</term></item>
+    ///  <item><term>divisio( -1, 5, 0)</term><term> -1 </term><term> -1 is the last number of the smallest "negative" circle</term></item>
+    ///  <item><term>divisio( -5, 5, 0)</term><term> -1 </term><term> -5 is the first number of the smallest "negative" circle</term></item>
+    ///  <item><term>divisio( -6, 5, 0)</term><term> -2 </term><term> -6 is the last number of the second smallest "negative" circle</term></item>
+    ///  <item><term>divisio(  1,-5, 0)</term><term> -1 </term><term> With negative bounds, the results are reverted (whoever that needs...) </term></item>
+    ///  <item><term>divisio(  0,-5, 0)</term><term>  0 </term><term> With negative bounds, the results are reverted (whoever that needs...) </term></item>
+    ///  </list>
+	/// </summary>
+    /// <param name="val">The value to be divided.</param>
+    /// <param name="div">The upper bound (if offset is 0), or the length of the destination range (if offset is not 0).</param>
+    /// <param name="offset">The lower bound of the destination range.</param>
+	/// <returns></returns>
 	public static int divisio(double val, double div, double offset) {
 		// First do a normation and get rid of the offset
 		val = val - offset;
