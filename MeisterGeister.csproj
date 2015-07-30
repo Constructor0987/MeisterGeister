@@ -1917,6 +1917,7 @@
     <Resource Include="Images\Icons\Elemente\Humus.png" />
     <Resource Include="Images\Icons\Elemente\Luft.png" />
     <Resource Include="Images\Icons\Elemente\Wasser.png" />
+    <Resource Include="Images\Icons\pflanzenschriftrolle.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
