@@ -197,7 +197,16 @@ namespace MeisterGeister.View
                     _tabControlMain.Items.Insert(position + 1, tab);
                     _tabControlMain.SelectedIndex = position + 1;
                 }
+
+                // Add-Tab ans Ende setzen
+                int addTabIndex = _tabControlMain.Items.IndexOf(_tabAdd);
+                if (addTabIndex != _tabControlMain.Items.Count - 1)
+                {
+                    _tabControlMain.Items.Remove(_tabAdd);
+                    _tabControlMain.Items.Add(_tabAdd);
+                }
             }
+
             Global.SetIsBusy(false);
 
             Logger.PerformanceLogEnd(log);
@@ -246,11 +255,13 @@ namespace MeisterGeister.View
         private string OpenedTabs()
         {
             string tabs = string.Empty;
-            foreach (TabItemControl tab in _tabControlMain.Items)
+            foreach (object tab in _tabControlMain.Items)
             {
                 if (tabs != string.Empty)
                     tabs += "#";
-                tabs += tab.Titel;
+                
+                if (tab is TabItemControl)
+                    tabs += (tab as TabItemControl).Titel;
             }
             return tabs;
         }
@@ -258,12 +269,16 @@ namespace MeisterGeister.View
         private TabItemControl IsTabOpend(string tabName)
         {
             TabItemControl tab = null;
-            foreach (TabItemControl tabItem in _tabControlMain.Items)
+            foreach (object tabItem in _tabControlMain.Items)
             {
-                if (tabItem.Titel == tabName)
+                if (tabItem != null && tabItem is TabItemControl)
                 {
-                    tab = tabItem;
-                    break;
+
+                    if ((tabItem as TabItemControl).Titel == tabName)
+                    {
+                        tab = (tabItem as TabItemControl);
+                        break;
+                    }
                 }
             }
             return tab;
@@ -440,7 +455,19 @@ namespace MeisterGeister.View
         private void _tabControlMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IsInitialized && IsLoaded)
-                 App.SaveAll();
+            {
+                if (_tabControlMain.SelectedItem == _tabAdd)
+                {
+                    // Menü aufklappen
+                    if (isPopOut)
+                    {
+                        Storyboard animation = (Storyboard)FindResource("MenuPopIn");
+                        animation.Begin(this);
+                        isPopOut = false;
+                    }
+                }
+                App.SaveAll();
+            }
         }
 
         private void MenuItemWeb_Click(object sender, RoutedEventArgs e)

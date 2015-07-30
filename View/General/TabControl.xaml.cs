@@ -84,7 +84,12 @@ namespace MeisterGeister.View.General
         {
             if (Parent != null && Parent is TabControl)
             {
-                ((TabControl)Parent).Items.Clear();
+                TabControl tabControl = (TabControl)Parent;
+                object addTab = tabControl.Items[tabControl.Items.Count - 1];
+                tabControl.Items.Clear();
+                // Add-Tab ans Ende setzen
+                tabControl.Items.Add(addTab);
+
                 App.SaveAll();
             }
         }
@@ -94,9 +99,13 @@ namespace MeisterGeister.View.General
             if (Parent != null && Parent is TabControl)
             {
                 TabControl tabControl = (TabControl)Parent;
-                ((TabControl)Parent).Items.Clear();
+                object addTab = tabControl.Items[tabControl.Items.Count - 1];
+                tabControl.Items.Clear();
                 tabControl.Items.Add(this);
                 tabControl.SelectedItem = this;
+                // Add-Tab ans Ende setzen
+                tabControl.Items.Add(addTab);
+                
                 App.SaveAll();
             }
         }
