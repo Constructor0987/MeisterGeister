@@ -157,6 +157,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Fernkampfwaffe> _fernkampfwaffe;
     
+        public ObjectSet<Gebiet> Gebiet
+        {
+            get { return _gebiet  ?? (_gebiet = CreateObjectSet<Gebiet>("Gebiet")); }
+        }
+        private ObjectSet<Gebiet> _gebiet;
+    
         public ObjectSet<Gegner> Gegner
         {
             get { return _gegner  ?? (_gegner = CreateObjectSet<Gegner>("Gegner")); }
@@ -229,6 +235,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Held_Munition> _held_Munition;
     
+        public ObjectSet<Held_Pflanze> Held_Pflanze
+        {
+            get { return _held_Pflanze  ?? (_held_Pflanze = CreateObjectSet<Held_Pflanze>("Held_Pflanze")); }
+        }
+        private ObjectSet<Held_Pflanze> _held_Pflanze;
+    
         public ObjectSet<Held_Sonderfertigkeit> Held_Sonderfertigkeit
         {
             get { return _held_Sonderfertigkeit  ?? (_held_Sonderfertigkeit = CreateObjectSet<Held_Sonderfertigkeit>("Held_Sonderfertigkeit")); }
@@ -277,6 +289,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Kultur_Name> _kultur_Name;
     
+        public ObjectSet<Landschaft> Landschaft
+        {
+            get { return _landschaft  ?? (_landschaft = CreateObjectSet<Landschaft>("Landschaft")); }
+        }
+        private ObjectSet<Landschaft> _landschaft;
+    
         public ObjectSet<Literatur> Literatur
         {
             get { return _literatur  ?? (_literatur = CreateObjectSet<Literatur>("Literatur")); }
@@ -318,6 +336,30 @@ namespace MeisterGeister.Model
             get { return _nscMerkmal  ?? (_nscMerkmal = CreateObjectSet<NscMerkmal>("NscMerkmal")); }
         }
         private ObjectSet<NscMerkmal> _nscMerkmal;
+    
+        public ObjectSet<Pflanze> Pflanze
+        {
+            get { return _pflanze  ?? (_pflanze = CreateObjectSet<Pflanze>("Pflanze")); }
+        }
+        private ObjectSet<Pflanze> _pflanze;
+    
+        public ObjectSet<Pflanze_Ernte> Pflanze_Ernte
+        {
+            get { return _pflanze_Ernte  ?? (_pflanze_Ernte = CreateObjectSet<Pflanze_Ernte>("Pflanze_Ernte")); }
+        }
+        private ObjectSet<Pflanze_Ernte> _pflanze_Ernte;
+    
+        public ObjectSet<Pflanze_Gebiet> Pflanze_Gebiet
+        {
+            get { return _pflanze_Gebiet  ?? (_pflanze_Gebiet = CreateObjectSet<Pflanze_Gebiet>("Pflanze_Gebiet")); }
+        }
+        private ObjectSet<Pflanze_Gebiet> _pflanze_Gebiet;
+    
+        public ObjectSet<Pflanze_Verbreitung> Pflanze_Verbreitung
+        {
+            get { return _pflanze_Verbreitung  ?? (_pflanze_Verbreitung = CreateObjectSet<Pflanze_Verbreitung>("Pflanze_Verbreitung")); }
+        }
+        private ObjectSet<Pflanze_Verbreitung> _pflanze_Verbreitung;
     
         public ObjectSet<Rasse> Rasse
         {
@@ -468,6 +510,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Farbe;
     		if(typeof(T) == typeof(Fernkampfwaffe))
     				return (ObjectSet<T>)(Object)Fernkampfwaffe;
+    		if(typeof(T) == typeof(Gebiet))
+    				return (ObjectSet<T>)(Object)Gebiet;
     		if(typeof(T) == typeof(Gegner))
     				return (ObjectSet<T>)(Object)Gegner;
     		if(typeof(T) == typeof(Gegner_Modifikator))
@@ -492,6 +536,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Held_Modifikator;
     		if(typeof(T) == typeof(Held_Munition))
     				return (ObjectSet<T>)(Object)Held_Munition;
+    		if(typeof(T) == typeof(Held_Pflanze))
+    				return (ObjectSet<T>)(Object)Held_Pflanze;
     		if(typeof(T) == typeof(Held_Sonderfertigkeit))
     				return (ObjectSet<T>)(Object)Held_Sonderfertigkeit;
     		if(typeof(T) == typeof(Held_Talent))
@@ -508,6 +554,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Kultur;
     		if(typeof(T) == typeof(Kultur_Name))
     				return (ObjectSet<T>)(Object)Kultur_Name;
+    		if(typeof(T) == typeof(Landschaft))
+    				return (ObjectSet<T>)(Object)Landschaft;
     		if(typeof(T) == typeof(Literatur))
     				return (ObjectSet<T>)(Object)Literatur;
     		if(typeof(T) == typeof(MenuLink))
@@ -522,6 +570,14 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Notizen;
     		if(typeof(T) == typeof(NscMerkmal))
     				return (ObjectSet<T>)(Object)NscMerkmal;
+    		if(typeof(T) == typeof(Pflanze))
+    				return (ObjectSet<T>)(Object)Pflanze;
+    		if(typeof(T) == typeof(Pflanze_Ernte))
+    				return (ObjectSet<T>)(Object)Pflanze_Ernte;
+    		if(typeof(T) == typeof(Pflanze_Gebiet))
+    				return (ObjectSet<T>)(Object)Pflanze_Gebiet;
+    		if(typeof(T) == typeof(Pflanze_Verbreitung))
+    				return (ObjectSet<T>)(Object)Pflanze_Verbreitung;
     		if(typeof(T) == typeof(Rasse))
     				return (ObjectSet<T>)(Object)Rasse;
     		if(typeof(T) == typeof(Rasse_Farbe))
@@ -595,6 +651,8 @@ namespace MeisterGeister.Model
     				return Farbe;
     		if(t == typeof(Fernkampfwaffe))
     				return Fernkampfwaffe;
+    		if(t == typeof(Gebiet))
+    				return Gebiet;
     		if(t == typeof(Gegner))
     				return Gegner;
     		if(t == typeof(Gegner_Modifikator))
@@ -619,6 +677,8 @@ namespace MeisterGeister.Model
     				return Held_Modifikator;
     		if(t == typeof(Held_Munition))
     				return Held_Munition;
+    		if(t == typeof(Held_Pflanze))
+    				return Held_Pflanze;
     		if(t == typeof(Held_Sonderfertigkeit))
     				return Held_Sonderfertigkeit;
     		if(t == typeof(Held_Talent))
@@ -635,6 +695,8 @@ namespace MeisterGeister.Model
     				return Kultur;
     		if(t == typeof(Kultur_Name))
     				return Kultur_Name;
+    		if(t == typeof(Landschaft))
+    				return Landschaft;
     		if(t == typeof(Literatur))
     				return Literatur;
     		if(t == typeof(MenuLink))
@@ -649,6 +711,14 @@ namespace MeisterGeister.Model
     				return Notizen;
     		if(t == typeof(NscMerkmal))
     				return NscMerkmal;
+    		if(t == typeof(Pflanze))
+    				return Pflanze;
+    		if(t == typeof(Pflanze_Ernte))
+    				return Pflanze_Ernte;
+    		if(t == typeof(Pflanze_Gebiet))
+    				return Pflanze_Gebiet;
+    		if(t == typeof(Pflanze_Verbreitung))
+    				return Pflanze_Verbreitung;
     		if(t == typeof(Rasse))
     				return Rasse;
     		if(t == typeof(Rasse_Farbe))

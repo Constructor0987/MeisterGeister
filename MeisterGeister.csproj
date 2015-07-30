@@ -283,6 +283,9 @@
     <Compile Include="Model\Fernkampfwaffe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Gebiet_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Gegner.cs" />
     <Compile Include="Model\GegnerBase.cs" />
     <Compile Include="Model\GegnerBase_Angriff.cs" />
@@ -321,6 +324,9 @@
     <Compile Include="Model\Held_Munition_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Held_Pflanze_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Held_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -353,6 +359,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Kultur_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Landschaft_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Literatur.cs" />
@@ -393,6 +402,19 @@
     <Compile Include="Model\NscMerkmal_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Pflanze.cs" />
+    <Compile Include="Model\Pflanze_Ernte_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pflanze_Gebiet_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pflanze_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pflanze_Verbreitung_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Rasse.cs" />
     <Compile Include="Model\Rasse_Farbe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -411,6 +433,8 @@
     <Compile Include="Model\Schild_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\PflanzeService.cs" />
+    <Compile Include="Model\Service\ZooBotService.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -586,6 +610,10 @@
     <Compile Include="ViewModel\Reise\WetterViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="ViewModel\Zauber\Logic\ZauberProbe.cs" />
+    <Compile Include="ViewModel\ZooBot\BekanntePflanzenVM.cs" />
+    <Compile Include="ViewModel\ZooBot\GebietAuswahlVM.cs" />
+    <Compile Include="ViewModel\ZooBot\Logic\Ernte.cs" />
+    <Compile Include="ViewModel\ZooBot\Logic\Preis.cs" />
     <Compile Include="ViewModel\ZooBot\ZooBotViewModel.cs" />
     <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">
       <DependentUpon>AbenteuerView.xaml</DependentUpon>
@@ -848,6 +876,12 @@
     <Compile Include="ViewModel\Würfeln\WürfelDialogViewModel.cs" />
     <Compile Include="View\Zauberzeichen\ZauberzeichenView.xaml.cs">
       <DependentUpon>ZauberzeichenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ZooBot\BekanntePflanzenView.xaml.cs">
+      <DependentUpon>BekanntePflanzenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ZooBot\GebietAuswahlView.xaml.cs">
+      <DependentUpon>GebietAuswahlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ZooBot\ZooBotView.xaml.cs">
       <DependentUpon>ZooBotView.xaml</DependentUpon>
@@ -1300,6 +1334,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Zauberzeichen\ZauberzeichenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ZooBot\BekanntePflanzenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ZooBot\GebietAuswahlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

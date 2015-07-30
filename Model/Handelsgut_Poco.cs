@@ -225,6 +225,39 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Handelsgut_Setting> _handelsgut_Setting;
+    
+    	[DataMember]
+        public virtual ICollection<Pflanze> Pflanze
+        {
+            get
+            {
+                if (_pflanze == null)
+                {
+                    var newCollection = new FixupCollection<Pflanze>();
+                    newCollection.CollectionChanged += FixupPflanze;
+                    _pflanze = newCollection;
+                }
+                return _pflanze;
+            }
+            set
+            {
+                if (!ReferenceEquals(_pflanze, value))
+                {
+                    var previousValue = _pflanze as FixupCollection<Pflanze>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupPflanze;
+                    }
+                    _pflanze = value;
+                    var newValue = value as FixupCollection<Pflanze>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupPflanze;
+                    }
+                }
+            }
+        }
+        private ICollection<Pflanze> _pflanze;
 
         #endregion
 
@@ -244,6 +277,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Handelsgut_Setting item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Handelsgut, this))
+                    {
+                        item.Handelsgut = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupPflanze(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Pflanze");
+            if (e.NewItems != null)
+            {
+                foreach (Pflanze item in e.NewItems)
+                {
+                    item.Handelsgut = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Pflanze item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Handelsgut, this))
                     {

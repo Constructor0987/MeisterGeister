@@ -674,6 +674,39 @@ namespace MeisterGeister.Model
         private ICollection<Held_Modifikator> _held_Modifikator;
     
     	[DataMember]
+        public virtual ICollection<Held_Pflanze> Held_Pflanze
+        {
+            get
+            {
+                if (_held_Pflanze == null)
+                {
+                    var newCollection = new FixupCollection<Held_Pflanze>();
+                    newCollection.CollectionChanged += FixupHeld_Pflanze;
+                    _held_Pflanze = newCollection;
+                }
+                return _held_Pflanze;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Pflanze, value))
+                {
+                    var previousValue = _held_Pflanze as FixupCollection<Held_Pflanze>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Pflanze;
+                    }
+                    _held_Pflanze = value;
+                    var newValue = value as FixupCollection<Held_Pflanze>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Pflanze;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Pflanze> _held_Pflanze;
+    
+    	[DataMember]
         public virtual ICollection<Held_Ausrüstung> Held_Ausrüstung
         {
             get
@@ -922,6 +955,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Held_Modifikator item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Held, this))
+                    {
+                        item.Held = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupHeld_Pflanze(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Pflanze");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Pflanze item in e.NewItems)
+                {
+                    item.Held = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Pflanze item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Held, this))
                     {

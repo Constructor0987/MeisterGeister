@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 // Eigene Usings
-using VM = MeisterGeister.ViewModel.Zauberzeichen;
+using VM = MeisterGeister.ViewModel.ZooBot;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Daten;
 using MeisterGeister.View.Windows;
@@ -60,5 +60,20 @@ namespace MeisterGeister.View.ZooBot
 
         }
 
+        private void BtnBekanntePflanzenForm_Click(object sender, RoutedEventArgs e)
+        {
+            BekanntePflanzenView wndBekanntePflanzen = new BekanntePflanzenView();
+            wndBekanntePflanzen.VM.ZooBotVM = VM;
+            //wndBekanntePflanzen.VM.SelectedHeld = VM.SelectedHeld;
+            wndBekanntePflanzen.ShowDialog();
+        }
+
+        private void BtnGebieteAuswahlView_Click(object sender, RoutedEventArgs e)
+        {
+            GebietAuswahlView wndGebietAuswahlView = new GebietAuswahlView();
+            wndGebietAuswahlView.VM.ZooBotVM = VM;
+            wndGebietAuswahlView.ShowDialog();
+        }
+        
     }
 }

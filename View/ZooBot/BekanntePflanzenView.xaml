@@ -1,0 +1,223 @@
+﻿<Window x:Class="MeisterGeister.View.ZooBot.BekanntePflanzenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:zb="clr-namespace:MeisterGeister.View.ZooBot"
+             xmlns:ZooBotLogic="clr-namespace:MeisterGeister.ViewModel.ZooBot.Logic"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.ZooBot"             
+             mc:Ignorable="d" 
+             d:DesignHeight="306" d:DesignWidth="669"
+             Background="{StaticResource Background1}" >
+    <Window.Resources>
+        <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
+        <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
+        <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Opacity" Value="1.0" />
+            <Setter Property="TextElement.FontStyle" Value="Normal" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=KämpferInfo.Kämpfer.Kampfunfähig}" Value="true">
+                    <Setter Property="Opacity" Value="0.5" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Ausgeführt}" Value="true">
+                    <Setter Property="TextElement.FontStyle" Value="Italic" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsAktuell}" Value="true">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#CC239E1D" Offset="0"/>
+                                <GradientStop Color="Transparent" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="KämpferListItemNameStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="Black" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=KämpferInfo.Team}" Value="2">
+                    <Setter Property="Foreground" Value="Sienna" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="InitiativeListTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="3" Height="65" Width="65" VerticalAlignment="Top">
+                    <Image.Source>
+                        <Binding Path="KämpferInfo.Kämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                            <Binding.FallbackValue>
+                                <ImageSource>
+                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                </ImageSource>
+                            </Binding.FallbackValue>
+                            <Binding.TargetNullValue>
+                                <ImageSource>
+                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                </ImageSource>
+                            </Binding.TargetNullValue>
+                        </Binding>
+                    </Image.Source>
+                </Image>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}" Margin="0,2">
+                        <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung, Converter={StaticResource ColorToBrushConverter}}" />
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image Width="28" Margin="0,6,0,0" Height="28" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
+                                    <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" TextAlignment="Center" Foreground="DarkGray">
+                                        <TextBlock.Effect>
+                                            <BlurEffect Radius="8.0" KernelType="Gaussian" />
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" TextAlignment="Center" />
+                                </Grid>
+                                <TextBlock Margin="0,6,2,0" Text="{Binding KämpferInfo.Kämpfer.InitiativeWurf, StringFormat='(\{0\})'}" FontSize="16" Visibility="{Binding KämpferInfo.Kämpfer.IsHeld, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
+                                   Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
+                                <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding KämpferInfo.Kämpfer.HinweisText}" FontSize="14" VerticalAlignment="Center" Margin="4,0,0,2">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding KämpferInfo.Kämpfer.HinweisText.Length}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Style>
+                                    <Style>
+                                        <Setter Property="StackPanel.Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding InitiativeMod}" Value="0">
+                                                <Setter Property="StackPanel.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <ComboBox Width="45" Height="22" DisplayMemberPath="Name" SelectedValuePath="Stil" SelectedValue="{Binding KämpferInfo.Kampfstil}"
+                                      BorderThickness="0">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="{Binding Bild}" Width="24" />
+                                                <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding KämpferInfo.Angriffsaktionen}" />
+                                            <TextBlock Text="Angriffsaktion(en)" Margin="2,0" />
+                                        </StackPanel>
+                                    </StackPanel.ToolTip>
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.VerbrauchteAngriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.AngriffsaktionenÜbrig}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding KämpferInfo.Abwehraktionen}" />
+                                            <TextBlock Text="Abwehraktion(en)" Margin="2,0" />
+                                        </StackPanel>
+                                    </StackPanel.ToolTip>
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.VerbrauchteAbwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.AbwehraktionenÜbrig}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}">
+                        <Rectangle Margin="4,0" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                        <TextBlock Text="{Binding Manöver.Name}" FontSize="16" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <Expander Grid.Row="0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Pflanzenauswahl der nicht bekannten Pflanzen" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Grid x:Name="Hinzufuegen">
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid Margin="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="0" Height="23" VerticalAlignment="Top" 
+                                      ItemsSource="{Binding UnbekanntePflanzenListe, UpdateSourceTrigger=PropertyChanged}" 
+                                      SelectedItem="{Binding PflanzeAuswahl}"
+                                      DisplayMemberPath="Name">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <Button Grid.Column="1" Command="{Binding OnAddBekanntePflanzeClick}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Expander>
+
+        <Expander Grid.Row="1" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Bekannte Pflanzen" />
+                </StackPanel>
+            </Expander.Header>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
+                    <ListView Margin="5" Background="{x:Null}"                      
+                              ItemsSource="{Binding BekannteHeldenPflanzen, UpdateSourceTrigger=PropertyChanged}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Name="spnlBtnEntfernen" Orientation="Horizontal">
+                                    <CheckBox Content="{Binding Pflanze.Name}" IsChecked="{Binding Bekannt}" Margin="3,0" VerticalAlignment="Center" />
+                                    <Button Name="btnBekanntePflanzeEntfernen" ToolTip="Bekannte Pflanze entfernen" Command="{Binding OnBtnBekanntePflanzeEntfernenClick}" Tag="{Binding}" Click="btnBekanntePflanzeEntfernen_Click" >
+                                            <!--Visibility="{Binding Path=IsMouseOver, ElementName=spnlBtnEntfernen, Converter={StaticResource BooleanToVisibilityConverter1}}" >-->
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Height="15" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+            </ScrollViewer>
+        </Expander>
+    </Grid>
+</Window>

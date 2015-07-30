@@ -25,6 +25,7 @@ namespace MeisterGeister
         public static Service.NotizService ContextNotizen;
         public static Service.VorNachteilService ContextVorNachteil;
         public static Service.ZauberService ContextZauber;
+        public static Service.ZooBotService ContextZooBot;
 
         // MenuLink
         public static Service.MenuLinkService _contextMenuLink;
@@ -229,6 +230,7 @@ namespace MeisterGeister
             ContextNamen = new Service.NamenService();
             ContextNotizen = new Service.NotizService();
             ContextZauber = new Service.ZauberService();
+            ContextZooBot = new Service.ZooBotService();
 
             IsInitialized = true;
             Logic.Einstellung.Einstellungen.UpdateEinstellungen();

@@ -17,8 +17,10 @@ using System.Collections;
 using MeisterGeister.View.ZooBot;
 using System.Windows.Forms;
 using MeisterGeister.Logic.Kalender;
+using MeisterGeister.Logic.General;
+using System.Windows;
 
-namespace MeisterGeister.ViewModel.Zauberzeichen
+namespace MeisterGeister.ViewModel.ZooBot
 {
     public class ZooBotViewModel : Base.ViewModelBase
     {
@@ -33,7 +35,101 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public ArrayList Pflanzen{get { return m_pflanzen; }}
         public ArrayList Tiere{get { return m_tiere; }}
         public List<string> Geländekundig{get {return m_geländekundig;}}
-        
+
+        private List<Gebiet> _gebietListe = new List<Gebiet>();
+        public List<Gebiet> GebietListe
+        {
+            get { return _gebietListe; }
+            set
+            {
+                _gebietListe = value;
+                OnChanged();
+            }
+        }
+
+        private List<Pflanze> _filterPflanzenListeNachGebietsauswahl = new List<Pflanze>();
+        public List<Pflanze> FilterPflanzenListeNachGebietsauswahl
+        {
+            get { return _filterPflanzenListeNachGebietsauswahl; }
+            set
+            {
+                _filterPflanzenListeNachGebietsauswahl = value;
+                OnChanged();
+            }
+        }
+
+        private List<Pflanze> _filterPflanzenListe = new List<Pflanze>();
+        public List<Pflanze> FilterPflanzenListe
+        {
+            get { return _filterPflanzenListe; }
+            set
+            {
+                _filterPflanzenListe = value;
+                OnChanged();
+            }
+        }
+        private List<Pflanze> _pflanzenListe = new List<Pflanze>();
+        public List<Pflanze> PflanzenListe
+        {
+            get { return _pflanzenListe; }
+            set
+            {
+                _pflanzenListe = value;
+                OnChanged();
+            }
+        }
+
+        private List<Landschaft> _landschaftenListe = new List<Landschaft>();
+        public List<Landschaft> LandschaftenListe
+        {
+            get { return _landschaftenListe; }
+            set
+            {
+                _landschaftenListe = value;
+                OnChanged();
+            }
+        }
+
+
+        private List<Pflanze_Gebiet> _pflanzenGebietListe = new List<Pflanze_Gebiet>();
+        public List<Pflanze_Gebiet> PflanzenGebietListe
+        {
+            get { return _pflanzenGebietListe; }
+            set
+            {
+                _pflanzenGebietListe = value;
+                OnChanged();
+            }
+        }
+
+        private List<Landschaft> _landschaftenGebietListe = new List<Landschaft>();
+        public List<Landschaft> LandschaftGebietListe
+        {
+            get { return _landschaftenGebietListe; }
+            set
+            {
+                _landschaftenGebietListe = value;
+                OnChanged();
+            }
+        }
+
+        private List<Pflanze> _landschaftGebietPflanzenListe = new List<Pflanze>();
+        public List<Pflanze> LandschaftGebietPflanzenListe
+        {
+            get { return _landschaftGebietPflanzenListe; }
+            set
+            {
+                _landschaftGebietPflanzenListe = value;
+                OnChanged();
+            }
+        }
+
+        public Point HeldenPos
+        {
+            get { return new Point(Global.HeldenLon, Global.HeldenLat); }
+            set { }            
+        }
+
         #region Initialisierung der implementierten Regionen, Landschaften, Pflanzen
         private void InitializeRegionen()
         {
@@ -294,6 +390,26 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             Tiere.Add(new TierVielfrassBaumschleimer());
             Tiere.Add(new TierZiegeGebirgsbock());
         }
+
+        private void InitializeGebiete()
+        {
+            GebietListe = Global.ContextZooBot == null ? new List<Model.Gebiet>() : Global.ContextZooBot.ZooBotGebieteListe;
+        }
+
+        private void InitializePflanzen2()
+        {
+            PflanzenListe = Global.ContextZooBot == null ? new List<Model.Pflanze>() : Global.ContextZooBot.ZooBotPflanzenListe;
+        }
+
+        private void InitializeLandschaften2()
+        {
+            LandschaftenListe = Global.ContextZooBot == null ? new List<Model.Landschaft>() : Global.ContextZooBot.ZooBotLandschaftenListe;
+        }
+
+        private void InitializePflanzenGebiete()
+        {
+            PflanzenGebietListe = Global.ContextZooBot == null ? new List<Model.Pflanze_Gebiet>() : Global.ContextZooBot.ZooBotPflanze_GebietListe;
+        }
         #endregion
          
        
@@ -324,11 +440,11 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     probenTalent.Ergebnis.Würfe[1] + " / " +
                     probenTalent.Ergebnis.Würfe[2] + " gewürfelt.\r\n";
 
-                if (probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.GLÜCKLICH || probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.MEISTERHAFT)
+                if (probenTalent.Ergebnis.Ergebnis == ErgebnisTyp.GLÜCKLICH || probenTalent.Ergebnis.Ergebnis == ErgebnisTyp.MEISTERHAFT)
                 {
                     ausgabe += "Spektakulärer Erfolg! (Spezielle Erfahrung)\r\n";
                 }
-                if (probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.PATZER || probenTalent.Ergebnis.Ergebnis == Logic.General.ErgebnisTyp.FATALER_PATZER)
+                if (probenTalent.Ergebnis.Ergebnis == ErgebnisTyp.PATZER || probenTalent.Ergebnis.Ergebnis == ErgebnisTyp.FATALER_PATZER)
                 {
                     ausgabe += "Katastrophaler Misserfolg!\r\n";
                 }
@@ -664,6 +780,11 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 _speziellSelected = value;
                 OnChanged();
 
+                if (GebieteSelected != null)
+                    GebieteSelected = GebieteSelected;
+                if (Kräuter_LandschaftGebietSelected != null)
+                    Kräuter_LandschaftGebietSelected = Kräuter_LandschaftGebietSelected;
+
                 //Falls Landschaft bereits gewählt wurde, wird in Abhängigkeit davon die Pflanzenliste neu berechnet, andernfalls 
                 //in Abhängigkeit der Region, so diese bereits gewählt wurde.
                 if (Kräuter_LandschaftSelected != null)
@@ -678,6 +799,17 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             }
         }
 
+        private int _monatAuswahlWert = 0;
+        public int MonatAuswahlWert
+        {
+            get { return _monatAuswahlWert; }
+            set
+            {
+                _monatAuswahlWert = value;
+                OnChanged();
+            }
+        }
+
         private object _monatAuswahl = null;
         public object MonatAuswahl
         {
@@ -687,6 +819,10 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 _monatAuswahl = value;
                 if (SuchMonatSelected != value.ToString())
                     SuchMonatSelected = value.ToString();
+
+                if (GebieteSelected != null)
+                    GebieteSelected = GebieteSelected;
+                
                 OnChanged();
             }
         }
@@ -705,6 +841,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     if (monate[i].ToString() == value)
                     {
                         MonatAuswahl = monate[i];
+                        MonatAuswahlWert = i;
                         break;
                     }
                 }
@@ -1203,7 +1340,9 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             {
                 SelectedHeld = null;
                
-            //    Refresh();
+                InitializeGebiete();
+                InitializePflanzen2();
+                InitializeLandschaften2();
 
                 InitializeRegionen();
                 InitializeLandschaften();
@@ -1255,6 +1394,103 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             }
         }
 
+
+        private List<Gebiet> _gebieteSelected = null;
+        public List<Gebiet> GebieteSelected
+        {
+            get { return _gebieteSelected; }
+            set
+            {
+                _gebieteSelected = value;
+
+                PflanzeSelected = null;
+                Kräuter_LandschaftGebietSelected = null;
+
+                List<Pflanze> pList = new List<Pflanze>();
+                List<Landschaft> pLandschaft = new List<Landschaft>();
+
+                if (value == null) return;
+
+                foreach (Gebiet g in value)
+                {
+                    if (g.Name == "ganz Aventurien")
+                    {
+                        pLandschaft = LandschaftenListe.OrderBy(t => t.Name).ToList();
+                        pList = PflanzenListe.OrderBy(t => t.Name).ToList();
+                        break;
+                    }
+                    else
+                    {
+                        foreach (Pflanze_Gebiet pGebiet in g.Pflanze_Gebiet)
+                        {
+                            if (!pList.Contains(pGebiet.Pflanze))
+                            {
+                                foreach (Pflanze_Ernte pErnte in pGebiet.Pflanze.Pflanze_Ernte)
+                                {
+                                    if ((pErnte.Von <= pErnte.Bis &&
+                                          MonatAuswahlWert >= pErnte.Von &&
+                                          MonatAuswahlWert <= pErnte.Bis)
+                                          ||
+                                          (pErnte.Von > pErnte.Bis &&
+                                          MonatAuswahlWert >= pErnte.Bis &&
+                                          MonatAuswahlWert <= pErnte.Von)
+                                          ||
+                                          MonatAuswahlWert == 0
+                                         && 
+                                         !pList.Contains(pGebiet.Pflanze))
+                                        pList.Add(pGebiet.Pflanze);
+                                }
+                            }
+                            pGebiet.Pflanze.Landschaften.ForEach(delegate(Landschaft l)
+                            {
+                                if (!pLandschaft.Contains(l))
+                                    pLandschaft.Add(l);
+                            });
+                        }
+                    }
+                }
+
+                //Ausklammern von Blutblatt und Karain, falls kein astraler Ort gewählt
+                //Ausklammern von Schwarzer Mohn, falls nicht Palakar gewählt
+                if (!SpeziellSelected.Equals("Astral durchzogener Ort"))
+                {
+                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Kairan")));
+                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Blutblatt")));
+                }
+                if (!SpeziellSelected.Equals("Palakar (Schwarze Stadt)"))
+                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Schwarzer Mohn")));
+
+                FilterPflanzenListe = pList;
+                FilterPflanzenListeNachGebietsauswahl = pList;
+                LandschaftGebietListe = pLandschaft.OrderBy(t => t.Name).ToList();
+                OnChanged();
+            }
+        }
+                
+        private Landschaft _kräuter_LandschaftGebietSelected = null;
+        public Landschaft Kräuter_LandschaftGebietSelected
+        {
+            get { return _kräuter_LandschaftGebietSelected; }
+            set
+            {                
+                _kräuter_LandschaftGebietSelected = value;
+                List<Pflanze> pList = FilterPflanzenListeNachGebietsauswahl.ToList();
+                FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
+
+                if (value == null || !value.Name.Equals("überall"))
+                {
+                    FilterPflanzenListe.ForEach(delegate(Pflanze p)
+                    {
+                        if (!p.Landschaften.Contains(value))
+                            pList.Remove(p);
+                    });
+                }
+
+                FilterPflanzenListe = pList.OrderBy(t => t.Name).ToList();
+                OnChanged();
+            }
+        }
+        
 
         private string _regionSelected = "";
         public string RegionSelected
@@ -1326,6 +1562,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 OnChanged();
             }
         }
+        
 
         private string _kräuter_landschaftSelected = "";
         public string Kräuter_LandschaftSelected
@@ -1383,8 +1620,20 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 Jagd_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
             }
         }
-        private string _pflanzeSelected = "";
-        public string PflanzeSelected
+        //private string _pflanzeSelected = "";
+        //public string PflanzeSelected
+        //{
+        //    get { return _pflanzeSelected; }
+        //    set
+        //    {
+        //        _pflanzeSelected = value;
+        //        OnChanged();
+        //        Pflanze_SelectedIndexChanged();
+        //    }
+        //}
+
+        private Pflanze _pflanzeSelected = null;
+        public Pflanze PflanzeSelected
         {
             get { return _pflanzeSelected; }
             set
@@ -1414,7 +1663,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             Nahrung_LandschaftSelected = "";
             Fischen_LandschaftSelected = "";
             LandschaftenNamen.Clear();
-            PflanzeSelected = "";
+            PflanzeSelected = null;
             PflanzenNamen.Clear();
             
             //Sucht alle in der Region vorkommenden Landschaften und Pflanzen
@@ -1559,7 +1808,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
 
         private void Kräuter_Landschaft_SelectedIndexChanged()
         {
-            PflanzeSelected = "";
+            PflanzeSelected = null;
             PflanzenNamen.Clear();
 
             //Sucht die in der Region vorkommenden Pflanzen
@@ -1658,7 +1907,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             bool doProbe = true;
 
             //Prüfung ob Bedingungen für Berechnung des Zuschlag gegeben sind und alle Felder die dazu nötig ausgefüllt sind
-            if (PflanzeSelected == null || Kräuter_LandschaftSelected == null)
+            if (PflanzeSelected == null || Kräuter_LandschaftGebietSelected == null) //Kräuter_LandschaftSelected == null)
                 doProbe = false;
 
             if (doProbe)
@@ -1671,33 +1920,14 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     bonus += 7;
 
                 //Ermittelung der Suchschwierigkeit
-                int suchschwierigkeit = 0;
                 string verbreitung = "unbekannt";
-                foreach (BasisPflanze p in this.Pflanzen)
-                {
-                    if (PflanzeSelected.Equals(p.Name))
-                    {
-                        suchschwierigkeit += p.GetBestimmung(SuchMonatSelected, SpeziellSelected, Kräuter_LandschaftSelected);
-                        foreach (VerbreitungsElementPflanzen v in p.GetVerbreitung(SuchMonatSelected))
-                        {
-                            if (Kräuter_LandschaftSelected.Equals(v.Landschaft))
-                            {
-                                suchschwierigkeit += v.Vorkommen;
 
-                                switch (v.Vorkommen)
-                                {
-                                    case 1: verbreitung = "SEHR HÄUFIG"; break;
-                                    case 2: verbreitung = "HÄUFIG"; break;
-                                    case 4: verbreitung = "GELEGENTLICH"; break;
-                                    case 8: verbreitung = "SELTEN"; break;
-                                    case 16: verbreitung = "SEHR SELTEN"; break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
-
+                int suchschwierigkeit = 
+                    PflanzeSelected.Bestimmung +
+                    (!Kräuter_LandschaftGebietSelected.Name.Equals("überall")?
+                    PflanzeSelected.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung:
+                    0);
+                
                 //Einrechnung von Boni
                 int erschw = 0;
                 if (suchschwierigkeit < 0)
@@ -1845,6 +2075,25 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
 
         #endregion
 
+        private Base.CommandBase _onBtnBekanntePflanzenForm = null;
+        public Base.CommandBase OnBtnBekanntePflanzenForm
+        {
+            get
+            {
+                if (_onBtnBekanntePflanzenForm == null)
+                    _onBtnBekanntePflanzenForm = new Base.CommandBase(BtnBekanntePflanzenForm, null);
+                return _onBtnBekanntePflanzenForm;
+            }
+        }
+        /// <summary>
+        /// Button für gezielte Suche nach einer Pflanze
+        /// </summary>
+        void BtnBekanntePflanzenForm(object obj)
+        {
+
+            Zoo_HeldSelected = null;
+        }
+
         #region Kräutersuche - Buttons: Gezielte Suche, Allgemeine Suche
 
         private Base.CommandBase _onBtnHeldAustragen = null;
@@ -1864,6 +2113,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         {
             Zoo_HeldSelected = null;
         }
+
         private Base.CommandBase _onBtnGezielteSuche = null;
         public Base.CommandBase OnBtnGezielteSuche
         {
@@ -1874,6 +2124,36 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 return _onBtnGezielteSuche;
             }
         }
+
+        private int GetModBestimmung(Pflanze pflanze)
+        {
+            int mod = pflanze.Bestimmung;
+
+            if (pflanze.Name.Equals("Efeuer") &&
+                SpeziellSelected.Equals("Ruine"))
+                return 0;
+            else
+            if (pflanze.Name.Equals("Feuerschlick") &&
+                (MonatAuswahlWert == 2 ||       //Rondra
+                 MonatAuswahlWert == 3) &&      //Efferd
+                SpeziellSelected.Equals("Vollmondnacht (+/- 1 Tag)"))
+                return -5;
+            else
+            if (pflanze.Name.Equals("Madablüte") &&
+                SpeziellSelected.Equals("Vollmondnacht (+/- 1 Tag)"))
+                return 5;
+            else
+            if (pflanze.Name.Equals("Rattenpilz") &&
+                SpeziellSelected.Equals("Stätte Namenloser Macht"))
+                return -7;
+            else
+            if (pflanze.Name.Equals("Winselgras") &&
+                SpeziellSelected.Equals("Nacht") || SpeziellSelected.Equals("Vollmondnacht (+/- 1 Tag)"))
+                return -2;
+            else
+            return mod;
+        }
+
         /// <summary>
         /// Button für gezielte Suche nach einer Pflanze
         /// </summary>
@@ -1883,7 +2163,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             string ausgabe = "";
 
             //Prüfung ob Bedingungen für Suche gegeben sind und alle Felder die dazu nötig ausgefüllt sind
-            if (PflanzeSelected == null || Kräuter_LandschaftSelected == null)
+            if (PflanzeSelected == null || Kräuter_LandschaftGebietSelected == null) 
                 doProbe = false;
 
             if (doProbe)
@@ -1899,21 +2179,16 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 if (Kräuter_HatOrtskenntnis)
                     bonus += 7;
 
+                // Modifikation bei speziellen Situationen
+                int modBestimmung = GetModBestimmung(PflanzeSelected);
+
                 //Ermittelung der Suchschwierigkeit
-                int suchschwierigkeit = 0;
-                foreach (BasisPflanze p in this.Pflanzen)
-                {
-                    if (PflanzeSelected.Equals(p.Name))
-                    {
-                        suchschwierigkeit += p.GetBestimmung(SuchMonatSelected, SpeziellSelected, Kräuter_LandschaftSelected);
-                        foreach (VerbreitungsElementPflanzen v in p.GetVerbreitung(SuchMonatSelected))
-                        {
-                            if (Kräuter_LandschaftSelected.Equals(v.Landschaft))
-                                suchschwierigkeit += v.Vorkommen;
-                        }
-                        break;
-                    }
-                }
+
+                int suchschwierigkeit = 
+                    modBestimmung +
+                    (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
+                    PflanzeSelected.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
+                    0);
 
                 //Einrechnung von Boni
                 int erschw = 0;
@@ -1938,18 +2213,13 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     string grundmenge = "";
                     string referenz = "";
                     string gefahr = "";
+                                        
+                    Pflanze_Ernte pErnte = new Pflanze_Ernte();
+                    pErnte = PflanzeSelected.Pflanze_Ernte.FirstOrDefault(t => t.PflanzeGUID == PflanzeSelected.PflanzeGUID);
 
-                    foreach (BasisPflanze p in this.Pflanzen)
-                    {
-                        if (p.Name.Equals(PflanzeSelected))
-                        {
-                            gefahr = p.GetGefahr();
-                            grundmenge = p.GetGrundmenge(SuchMonatSelected, tapstern);
-                            referenz = p.SeiteZBA.ToString();
-                            break;
-                        }
-                    }
-
+                    grundmenge = pErnte.Grundmenge + " " + pErnte.Pflanzenteil;
+                    referenz = PflanzeSelected.Handelsgut.Literatur;
+                    
                     ausgabe += (Kräuter_HatSuchdauerVerdoppelt) ?
                         "Die Probe ist mit " + tapstern + " TaP* gelungen und hat 2 Stunden gedauert. \r\n\r\n":
                         "Die Probe ist mit " + tapstern + " TaP* gelungen und hat 1 Stunde gedauert. \r\n\r\n";
@@ -1965,8 +2235,8 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     }
                                         
                     ausgabe += !grundmenge.Equals("")?
-                        "Von der Pflanze " + PflanzeSelected + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") gefunden. ":
-                        "Die Pflanze " + PflanzeSelected + " hat keine bekannten verwertbaren Pflanzenteile. ";
+                        "Von der Pflanze " + PflanzeSelected.Name + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") gefunden. ":
+                        "Die Pflanze " + PflanzeSelected.Name + " hat keine bekannten verwertbaren Pflanzenteile. ";
 
                     ausgabe += "\r\n\r\nFür detailliertere Informationen siehe \"Zoo-Botanica Aventurica\" Seite " + referenz + ".";
 
@@ -1979,7 +2249,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 else
                 {
                     ausgabe += "Die Probe ist leider misslungen.";
-                }
+                }                
             }
             else
             {
@@ -2007,7 +2277,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             string ausgabe = "";
 
             //Prüfung ob Bedingungen für Suche gegeben sind und alle Felder die dazu nötig ausgefüllt sind
-            if (Kräuter_LandschaftSelected == null)
+            if (Kräuter_LandschaftGebietSelected == null) // Kräuter_LandschaftSelected == null)
                 doProbe = false;
 
             if (doProbe)
@@ -2025,6 +2295,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 int tapstern = 0;
                 bool result = Talentprobe(ErstelleMetaTalent("Kräuter Suchen", taw), 0, out tapstern, out ausgabe);
 
+                    
                 if (result)
                 {
                     ausgabe += (Kräuter_HatSuchdauerVerdoppelt) ?
@@ -2032,33 +2303,22 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                         "Die Probe ist mit " + tapstern + " TaP* gelungen und hat 1 Stunde gedauert. \r\n\r\n";
 
                     //Bestimmung Suchschwierigkeit für jede grundsätzlich findbare Pflanze und Vergleich mit TaP* ob Fund möglich
-                    ArrayList optionen = new ArrayList();
-                    ArrayList moeglich = new ArrayList();
-                    foreach (object o in PflanzenNamen)
-                    {
-                        int suchschwierigkeit = 0;
-                        foreach (BasisPflanze p in this.Pflanzen)
-                        {
-                            if (o.ToString().Equals(p.Name))
-                            {
-                                suchschwierigkeit += p.GetBestimmung(SuchMonatSelected, SpeziellSelected, Kräuter_LandschaftSelected);
-                                foreach (VerbreitungsElementPflanzen v in p.GetVerbreitung(SuchMonatSelected))
-                                {
-                                    if (Kräuter_LandschaftSelected.Equals(v.Landschaft))
-                                        suchschwierigkeit += v.Vorkommen;
-                                }
-                                break;
-                            }
-                        }
+                    
+                    ArrayList optionen = new ArrayList();  
+                    foreach (Pflanze pflanze in FilterPflanzenListe) 
+                    {                        
+                        // Modifikation bei speziellen Situationen
+                        int modBestimmung = GetModBestimmung(pflanze);
 
+                        //Ermittelung der Suchschwierigkeit
+                        int suchschwierigkeit = 
+                            modBestimmung + 
+                            (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
+                            pflanze.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
+                            0);
+                        
                         if (Math.Round(tapstern / 2.0, MidpointRounding.AwayFromZero) >= suchschwierigkeit)
-                        {
-                            optionen.Add(o);
-                        }
-
-                        if (Math.Round((double)taw / 2.0, MidpointRounding.AwayFromZero) >= suchschwierigkeit)
-                            moeglich.Add(o);
-
+                            optionen.Add(pflanze);
                     }
 
                     //Falls mögliche Pflanzenfunde existieren, zufällige Auswahl und Ausgabe Ergebnis
@@ -2066,21 +2326,16 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     {
                         Random rand = new Random();
                         int fund = rand.Next(0, optionen.Count);
+                                                
+                        // Modifikation bei speziellen Situationen
+                        int modBestimmung = GetModBestimmung(optionen[fund] as Pflanze);
 
-                        int suchschwierigkeit = 0;
-                        foreach (BasisPflanze p in this.Pflanzen)
-                        {
-                            if (optionen[fund].ToString().Equals(p.Name))
-                            {
-                                suchschwierigkeit += p.GetBestimmung(SuchMonatSelected, SpeziellSelected, Kräuter_LandschaftSelected);
-                                foreach (VerbreitungsElementPflanzen v in p.GetVerbreitung(SuchMonatSelected))
-                                {
-                                    if (Kräuter_LandschaftSelected.Equals(v.Landschaft))
-                                        suchschwierigkeit += v.Vorkommen;
-                                }
-                                break;
-                            }
-                        }
+                        //Ermittelung der Suchschwierigkeit
+                        int suchschwierigkeit = 
+                            modBestimmung + 
+                            (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
+                            (optionen[fund] as Pflanze).Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
+                            0);                        
 
                         if (suchschwierigkeit <= 0)
                             suchschwierigkeit = 2;
@@ -2088,17 +2343,13 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                         string grundmenge = "";
                         string referenz = "";
                         string gefahr = "";
-                        foreach (BasisPflanze p in Pflanzen)
-                        {
-                            if (p.Name.Equals(optionen[fund].ToString()))
-                            {
-                                gefahr = p.GetGefahr();
-                                grundmenge = p.GetGrundmenge(SuchMonatSelected, tapstern);
-                                referenz = p.SeiteZBA.ToString();
-                                break;
-                            }
-                        }
 
+                        Pflanze_Ernte pErnte = new Pflanze_Ernte();
+                        pErnte = (optionen[fund] as Pflanze).Pflanze_Ernte.FirstOrDefault(t => t.PflanzeGUID == (optionen[fund] as Pflanze).PflanzeGUID);
+
+                        grundmenge = pErnte.Grundmenge + " " + pErnte.Pflanzenteil;
+                        referenz = (optionen[fund] as Pflanze).Handelsgut.Literatur;
+                    
                         int menge = 1;
                         tapstern -= suchschwierigkeit;
                         while (tapstern >= suchschwierigkeit)
@@ -2108,9 +2359,9 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                         }
 
                         if (!grundmenge.Equals(""))
-                            ausgabe += "Von der Pflanze " + optionen[fund].ToString() + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") gefunden. ";
+                            ausgabe += "Von der Pflanze " + (optionen[fund] as Pflanze).Name + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") gefunden. ";
                         else
-                            ausgabe += "Die Pflanze " + optionen[fund].ToString() + " hat keine bekannten verwertbaren Pflanzenteile. ";
+                            ausgabe += "Die Pflanze " + (optionen[fund] as Pflanze).Name + " hat keine bekannten verwertbaren Pflanzenteile. ";
                         ausgabe += "\r\n\r\nFür detailliertere Informationen siehe \"Zoo-Botanica Aventurica\" Seite " + referenz + ".";
 
                         if (!gefahr.Equals(""))
@@ -2118,19 +2369,40 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                             ausgabe += "\r\n\r\nHinweis: ";
                             ausgabe += gefahr;
                         }
-                        ausgabe += "\r\n\r\nMit dem TaW von " + taw + " konnten maximal folgende Pflanzen gefunden werden: \r\n";
-                        foreach (string s in moeglich)
-                            ausgabe += s + ", ";
-                        ausgabe = ausgabe.Substring(0, ausgabe.Length - 2);
                     }
                     else
                     {
-                        ausgabe += "Obwohl die Probe gelungen ist, reicht es leider nicht aus um etwas brauchbares zu finden.";
+                        ausgabe += "Obwohl die Probe gelungen ist, reicht es leider nicht aus um etwas brauchbares zu finden."; 
                     }
                 }
                 else
                 {
-                    ausgabe += "Die Probe ist leider misslungen.";
+                    ausgabe += "Die Probe ist leider misslungen.";                    
+                }
+
+                //Mögliche mit TaW angezeigen
+                List<Pflanze> moeglich = new List<Pflanze>(); 
+                foreach (Pflanze pflanze in FilterPflanzenListe)
+                {
+                    int modBestimmung = GetModBestimmung(pflanze);
+
+                    int suchschwierigkeit =
+                        modBestimmung +
+                        (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
+                        pflanze.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
+                        0);
+
+                    if (Math.Round((double)taw / 2.0, MidpointRounding.AwayFromZero) >= suchschwierigkeit)
+                        moeglich.Add(pflanze);
+                }
+                if (moeglich.Count > 0)
+                {
+                    ausgabe += "\r\n\r\nMit dem TaW von " + taw + " und somit einen max Zuschlag der Pflanze von max. " + 
+                        Math.Round((double)taw / 2.0, MidpointRounding.AwayFromZero) + 
+                        ", können folgende Pflanzen gefunden werden: \r\n";
+                    foreach (Pflanze p in moeglich.OrderBy(t => t.Name))
+                        ausgabe += p.Name + " (" + p.Bestimmung + "), ";
+                    ausgabe = ausgabe.Substring(0, ausgabe.Length - 2);
                 }
             }
             else

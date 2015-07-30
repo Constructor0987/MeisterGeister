@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ZooBot="clr-namespace:MeisterGeister.View.ZooBot"
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.ZooBot"
-             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:Karte="clr-namespace:MeisterGeister.View.Karte" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="765" Loaded="UserControl_Loaded">
     <Grid>
@@ -21,14 +22,19 @@
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="8,0,0,0" />
-                    <ComboBox Name="_comboBoxHeld" Width="220" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" SelectedItem="{Binding Zoo_HeldSelected}" SelectedIndex="-1"/>
+                    <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="2,0,0,0" />
+                    <ComboBox Name="_comboBoxHeld" Width="220" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" VerticalContentAlignment="Center" SelectedIndex="-1"
+                              DisplayMemberPath="Name" SelectedItem="{Binding Zoo_HeldSelected}"/>
                     <Button Width="25" Height="25" Margin="0,0,10,0" 
                             Command="{Binding OnBtnHeldAustragen}">
                         <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                     </Button>
                     <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" />
-                    <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" />                    
+                    <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" />
+                    <Button Width="28" Height="28" Margin="5,0,10,0" ToolTip="Bekannte Pflanzen"
+                            Visibility="{Binding Zoo_HeldSelected, TargetNullValue=Collapsed}" Click="BtnBekanntePflanzenForm_Click">
+                        <Image Source="/Images/Icons/pflanzenschriftrolle.png" HorizontalAlignment="Stretch" Width="28" Height="28" />
+                    </Button>
                 </StackPanel>
             </Border>
         </Expander>
@@ -120,14 +126,25 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <Label Grid.Column="0" Grid.Row="0" Content="Region" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-                                <ComboBox Grid.Column="1" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" ToolTip="Region" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+                                <Label Grid.Column="0" Grid.Row="0" Content="Gebiet" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
 
+                                <StackPanel Orientation="Horizontal" Grid.Column="6" HorizontalAlignment="Left" >
+                                    <Karte:KoordinatenControl Value="{Binding HeldenPos, UpdateSourceTrigger=PropertyChanged}" Format="Dezimalminuten" Grid.Column="6" Grid.Row="0" VerticalAlignment="Center" />
+                                    <Button Content="Ändern" Margin="10,3,83,5" />
+                                </StackPanel>
+
+                                <Button Grid.Column="1" Grid.Row="0" Content="Gebiete Auswählen" Margin="10,3" Click="BtnGebieteAuswahlView_Click" />
+                                <ComboBox Grid.Column="2" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Gebiet" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
+                                          ItemsSource="{Binding GebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding GebietSelected}" DisplayMemberPath="Name" />
+                                <!-- ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
-
+                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
+                                          ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" DisplayMemberPath="Name" />
+                                <!--ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-                                <ComboBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ItemsSource="{Binding PflanzenNamen}" SelectedItem="{Binding PflanzeSelected}" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" />
+                                <ComboBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
+                                          ItemsSource="{Binding FilterPflanzenListe, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding PflanzeSelected}" />
+                                <!-- PflanzenNamen-->
 
                                 <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding Kräuter_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
                                 <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding Kräuter_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
@@ -149,7 +166,7 @@
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <Grid>
-                                <TextBox Text="{Binding Kräuter_Ausgabe}" />
+                                <TextBox Text="{Binding Kräuter_Ausgabe}" TextWrapping="Wrap"/>
                             </Grid>
                         </Border>
                     </Expander>
