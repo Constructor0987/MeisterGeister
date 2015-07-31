@@ -20,6 +20,7 @@ namespace MeisterGeister.ViewModel.Karte
 
             karten = new List<Logic.Karte>();
             var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
+            // TODO: Prüfen ob Karte vorhanden ist, ansonsten automatischen Download anbieten
             karten.Add(aventurien);
             SelectedKarte = aventurien;
         }
