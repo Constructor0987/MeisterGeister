@@ -113,30 +113,6 @@ namespace MeisterGeister.Model
         private System.Guid _handelsgutGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Name
-        {
-            get { return _name; }
-            set
-    		{ 
-    			Set(ref _name, value);
-    		}
-    
-        }
-        private string _name;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Kategorie
-        {
-            get { return _kategorie; }
-            set
-    		{ 
-    			Set(ref _kategorie, value);
-    		}
-    
-        }
-        private string _kategorie;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual short Bestimmung
         {
             get { return _bestimmung; }

@@ -122,8 +122,6 @@ GO
 CREATE TABLE [Pflanze] (
 	[PflanzeGUID] uniqueidentifier NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000', 
 	[HandelsgutGUID] uniqueidentifier NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000', 
-	[Name] nvarchar(500) NOT NULL, 
-	[Kategorie] nvarchar(254), 
 	[Bestimmung] smallint NOT NULL, 
 	[Bestimmung2] smallint, 
 	[Bestimmungsausnahme] nvarchar(100), 
@@ -609,365 +607,363 @@ GO
 INSERT INTO [Landschaft] ([LandschaftGUID],[Name]) VALUES (N'00000000-0000-0000-00fe-000000000072',N'Domänen');
 GO
 
---Pflanze
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000001',N'00000000-0000-0000-002a-000000000946',N'Alraune',N'Pflanzen/Kräuter',9);
+-- Pflanzen
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000001',N'00000000-0000-0000-002a-000000000946',9);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000002',N'00000000-0000-0000-002a-000000000947',N'Alveranie',N'Pflanzen/Kräuter',-5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000002',N'00000000-0000-0000-002a-000000000947',-5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000003',N'00000000-0000-0000-002a-000000000948',N'Arganstrauch',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000003',N'00000000-0000-0000-002a-000000000948',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000004',N'00000000-0000-0000-002a-000000000949',N'Atan-Kiefer',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000004',N'00000000-0000-0000-002a-000000000949',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000005',N'00000000-0000-0000-002a-000000000950',N'Atmon',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000005',N'00000000-0000-0000-002a-000000000950',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000006',N'00000000-0000-0000-002a-000000000951',N'Axorda-Baum',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000006',N'00000000-0000-0000-002a-000000000951',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000007',N'00000000-0000-0000-002a-000000000952',N'Basilamine',N'Pflanzen/Kräuter',15,5,N'Blütezeit im Ingerimm',11,11);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000007',N'00000000-0000-0000-002a-000000000952',15,5,N'Blütezeit im Ingerimm',11,11);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000008',N'00000000-0000-0000-002a-000000000953',N'Belmart',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000008',N'00000000-0000-0000-002a-000000000953',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000009',N'00000000-0000-0000-002a-000000000954',N'Blutblatt',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000009',N'00000000-0000-0000-002a-000000000954',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000010',N'00000000-0000-0000-002a-000000000955',N'Boronie',N'Pflanzen/Kräuter',-2,N'im Süden jederzeit, in Mittelaventurien zwischen Tsa und Boron',8);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000010',N'00000000-0000-0000-002a-000000000955',-2,N'im Süden jederzeit, in Mittelaventurien zwischen Tsa und Boron',8);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000011',N'00000000-0000-0000-002a-000000000956',N'Boronschlinge',N'Pflanzen/Kräuter',15);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000011',N'00000000-0000-0000-002a-000000000956',15);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000013',N'00000000-0000-0000-002a-000000000958',N'Bunter Mohn',N'Pflanzen/Kräuter',-5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000013',N'00000000-0000-0000-002a-000000000958',-5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000014',N'00000000-0000-0000-002a-000000000959',N'Carlog',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000014',N'00000000-0000-0000-002a-000000000959',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000015',N'00000000-0000-0000-002a-000000000960',N'Cheria-Kaktus',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000015',N'00000000-0000-0000-002a-000000000960',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000016',N'00000000-0000-0000-002a-000000000961',N'Chonchinis',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000016',N'00000000-0000-0000-002a-000000000961',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000017',N'00000000-0000-0000-002a-000000000962',N'Dergolasch',N'Pflanzen/Kräuter',8,4,N'bei Kulturkunde (Zwerge)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000017',N'00000000-0000-0000-002a-000000000962',8,4,N'bei Kulturkunde (Zwerge)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000018',N'00000000-0000-0000-002a-000000000963',N'Disdychonda',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000018',N'00000000-0000-0000-002a-000000000963',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000019',N'00000000-0000-0000-002a-000000000964',N'Donf',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000019',N'00000000-0000-0000-002a-000000000964',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000020',N'00000000-0000-0000-002a-000000000965',N'Dornrose',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000020',N'00000000-0000-0000-002a-000000000965',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000021',N'00000000-0000-0000-002a-000000000966',N'Efeuer',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000021',N'00000000-0000-0000-002a-000000000966',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000022',N'00000000-0000-0000-002a-000000000967',N'Egelschreck',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000022',N'00000000-0000-0000-002a-000000000967',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000023',N'00000000-0000-0000-002a-000000000968',N'Eitriger Krötenschemel',N'Pflanzen/Kräuter',2,N'Efferd bis Boron, in südlicheren Gebieten auch ganzjährig');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000023',N'00000000-0000-0000-002a-000000000968',2,N'Efferd bis Boron, in südlicheren Gebieten auch ganzjährig');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000025',N'00000000-0000-0000-002a-000000000969',N'Felsenmilch',N'Pflanzen/Kräuter',4);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000025',N'00000000-0000-0000-002a-000000000969',4);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000026',N'00000000-0000-0000-002a-000000000970',N'Feuermoos und Efferdmoos',N'Pflanzen/Kräuter',15);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000026',N'00000000-0000-0000-002a-000000000970',15);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000027',N'00000000-0000-0000-002a-000000000971',N'Feuerschlick',N'Pflanzen/Kräuter',6,-5,N'wenn leuchtend',2,3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000027',N'00000000-0000-0000-002a-000000000971',6,-5,N'wenn leuchtend',2,3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000028',N'00000000-0000-0000-002a-000000000972',N'Finage',N'Pflanzen/Kräuter',5,N'NOK');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000028',N'00000000-0000-0000-002a-000000000972',5,N'NOK');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000029',N'00000000-0000-0000-002a-000000000973',N'Grauer Lotus',N'Pflanzen/Kräuter',8);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000029',N'00000000-0000-0000-002a-000000000973',8);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000030',N'00000000-0000-0000-002a-000000000974',N'Grauer Mohn (Samenkapsel)',N'Pflanzen/Kräuter',1,N'NOK?');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000030',N'00000000-0000-0000-002a-000000000974',1,N'NOK?');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000032',N'00000000-0000-0000-002a-000000000976',N'grüne Schleimschlange',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000032',N'00000000-0000-0000-002a-000000000976',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000033',N'00000000-0000-0000-002a-000000000977',N'Gulmond',N'Pflanzen/Kräuter',6,N'NOK');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000033',N'00000000-0000-0000-002a-000000000977',6,N'NOK');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000034',N'00000000-0000-0000-002a-000000000978',N'grüner Schleimpilz',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000034',N'00000000-0000-0000-002a-000000000978',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000035',N'00000000-0000-0000-002a-000000000979',N'Hiradwurz',N'Pflanzen/Kräuter',8,5,N'+8 (Trockenzeit), +5 (Regenzeit)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000035',N'00000000-0000-0000-002a-000000000979',8,5,N'+8 (Trockenzeit), +5 (Regenzeit)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000036',N'00000000-0000-0000-002a-000000000980',N'Hollbeere',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000036',N'00000000-0000-0000-002a-000000000980',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000037',N'00000000-0000-0000-002a-000000000981',N'Höllenkraut',N'Pflanzen/Kräuter',8);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000037',N'00000000-0000-0000-002a-000000000981',8);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000038',N'00000000-0000-0000-002a-000000000982',N'Horusche',N'Pflanzen/Kräuter',7);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000038',N'00000000-0000-0000-002a-000000000982',7);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000039',N'00000000-0000-0000-002a-000000000983',N'Iribaarslilie',N'Pflanzen/Kräuter',12);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000039',N'00000000-0000-0000-002a-000000000983',12);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000040',N'00000000-0000-0000-002a-000000000984',N'Jagdgras',N'Pflanzen/Kräuter',15);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000040',N'00000000-0000-0000-002a-000000000984',15);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000041',N'00000000-0000-0000-002a-000000000985',N'Joruga',N'Pflanzen/Kräuter',7);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000041',N'00000000-0000-0000-002a-000000000985',7);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000042',N'00000000-0000-0000-002a-000000000986',N'Kairan',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000042',N'00000000-0000-0000-002a-000000000986',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000043',N'00000000-0000-0000-002a-000000000987',N'Kajubo',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000043',N'00000000-0000-0000-002a-000000000987',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000044',N'00000000-0000-0000-002a-000000000988',N'Khôm- oder Mhanadiknolle',N'Pflanzen/Kräuter',5,12,N'+5 (mit Blättern), +12 (ohne Blätter)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000044',N'00000000-0000-0000-002a-000000000988',5,12,N'+5 (mit Blättern), +12 (ohne Blätter)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000045',N'00000000-0000-0000-002a-000000000989',N'Klippenzahn',N'Pflanzen/Kräuter',8);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000045',N'00000000-0000-0000-002a-000000000989',8);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000046',N'00000000-0000-0000-002a-000000000990',N'Kukuka',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000046',N'00000000-0000-0000-002a-000000000990',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000047',N'00000000-0000-0000-002a-000000000991',N'Libellengras',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000047',N'00000000-0000-0000-002a-000000000991',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000049',N'00000000-0000-0000-002a-000000000992',N'Lichtnebler',N'Pflanzen/Kräuter',10,4,N'+10 (+4 nach Freisetzung der Sporen)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000049',N'00000000-0000-0000-002a-000000000992',10,4,N'+10 (+4 nach Freisetzung der Sporen)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000050',N'00000000-0000-0000-002a-000000000992',N'Lichtnebler',N'Pflanzen/Kräuter',10,4,N'+10 (+4 nach Freisetzung der Sporen)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000050',N'00000000-0000-0000-002a-000000000992',10,4,N'+10 (+4 nach Freisetzung der Sporen)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000051',N'00000000-0000-0000-002a-000000000993',N'Lotos',N'Pflanzen/Kräuter',5,9,N'+5 (Lotos allgemein) bzw. +9 (einzelne Arten)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000051',N'00000000-0000-0000-002a-000000000993',5,9,N'+5 (Lotos allgemein) bzw. +9 (einzelne Arten)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000052',N'00000000-0000-0000-002a-000000000994',N'Lulanie',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000052',N'00000000-0000-0000-002a-000000000994',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000053',N'00000000-0000-0000-002a-000000000995',N'Madablüte',N'Pflanzen/Kräuter',5,15,N'+5 (+15, wenn nicht blühend)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000053',N'00000000-0000-0000-002a-000000000995',5,15,N'+5 (+15, wenn nicht blühend)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000054',N'00000000-0000-0000-002a-000000000996',N'Malmomis',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000054',N'00000000-0000-0000-002a-000000000996',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000055',N'00000000-0000-0000-002a-000000000997',N'Menchal - Kaktus',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000055',N'00000000-0000-0000-002a-000000000997',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000056',N'00000000-0000-0000-002a-000000000998',N'Merach-Strauch',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000056',N'00000000-0000-0000-002a-000000000998',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000057',N'00000000-0000-0000-002a-000000000999',N'Messergras',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000057',N'00000000-0000-0000-002a-000000000999',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000058',N'00000000-0000-0000-002a-000000001000',N'Mibelrohr',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000058',N'00000000-0000-0000-002a-000000001000',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000059',N'00000000-0000-0000-002a-000000001000',N'Mibelrohr',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000059',N'00000000-0000-0000-002a-000000001000',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000060',N'00000000-0000-0000-002a-000000001001',N'Mirbelstein',N'Pflanzen/Kräuter',8);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000060',N'00000000-0000-0000-002a-000000001001',8);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000061',N'00000000-0000-0000-002a-000000001002',N'Mirhamer Seidenliane',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000061',N'00000000-0000-0000-002a-000000001002',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000062',N'00000000-0000-0000-002a-000000001003',N'Mohn',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000062',N'00000000-0000-0000-002a-000000001003',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000063',N'00000000-0000-0000-002a-000000001004',N'Morgendornstrauch',N'Pflanzen/Kräuter',13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000063',N'00000000-0000-0000-002a-000000001004',13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000064',N'00000000-0000-0000-002a-000000001005',N'Naftanstaude',N'Pflanzen/Kräuter',1);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000064',N'00000000-0000-0000-002a-000000001005',1);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000066',N'00000000-0000-0000-002a-000000001006',N'Neckerkraut',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000066',N'00000000-0000-0000-002a-000000001006',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000067',N'00000000-0000-0000-002a-000000001007',N'Olginwurz',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000067',N'00000000-0000-0000-002a-000000001007',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000068',N'00000000-0000-0000-002a-000000001008',N'Orazal',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000068',N'00000000-0000-0000-002a-000000001008',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000069',N'00000000-0000-0000-002a-000000001009',N'Orkland',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000069',N'00000000-0000-0000-002a-000000001009',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000070',N'00000000-0000-0000-002a-000000001010',N'Pestsporenpilz',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000070',N'00000000-0000-0000-002a-000000001010',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000072',N'00000000-0000-0000-002a-000000001011',N'Phosphorpilz',N'Pflanzen/Kräuter',-3,10,N'-3 wenn er leuchtet, +10 für nicht leuchtendes Geflecht',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000072',N'00000000-0000-0000-002a-000000001011',-3,10,N'-3 wenn er leuchtet, +10 für nicht leuchtendes Geflecht',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000073',N'00000000-0000-0000-002a-000000001012',N'Purpurner Lotos',N'Pflanzen/Kräuter',9,N'(einzelne Arten)');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000073',N'00000000-0000-0000-002a-000000001012',9,N'(einzelne Arten)');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000074',N'00000000-0000-0000-002a-000000001013',N'Purpur Mohn',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000074',N'00000000-0000-0000-002a-000000001013',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000075',N'00000000-0000-0000-002a-000000001014',N'Quasselwurz',N'Pflanzen/Kräuter',12);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000075',N'00000000-0000-0000-002a-000000001014',12);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000076',N'00000000-0000-0000-002a-000000001015',N'Quinya',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000076',N'00000000-0000-0000-002a-000000001015',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000077',N'00000000-0000-0000-002a-000000001016',N'Rahjalieb',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000077',N'00000000-0000-0000-002a-000000001016',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000078',N'00000000-0000-0000-002a-000000001017',N'Rattenpilz',N'Pflanzen/Kräuter',7);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000078',N'00000000-0000-0000-002a-000000001017',7);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000079',N'00000000-0000-0000-002a-000000001018',N'Rauschgurke',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000079',N'00000000-0000-0000-002a-000000001018',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000080',N'00000000-0000-0000-002a-000000001019',N'Rote Pfeilblüte',N'Pflanzen/Kräuter',7);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000080',N'00000000-0000-0000-002a-000000001019',7);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000081',N'00000000-0000-0000-002a-000000001020',N'Roter Drachenschlund',N'Pflanzen/Kräuter',10,3,N'zur Blütezeit',11,12);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000081',N'00000000-0000-0000-002a-000000001020',10,3,N'zur Blütezeit',11,12);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000082',N'00000000-0000-0000-002a-000000001021',N'Schwarmschwamm',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000082',N'00000000-0000-0000-002a-000000001021',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000083',N'00000000-0000-0000-002a-000000001022',N'Schwarzer Lotos',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000083',N'00000000-0000-0000-002a-000000001022',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000084',N'00000000-0000-0000-002a-000000001023',N'Schwarzer Mohn',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000084',N'00000000-0000-0000-002a-000000001023',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000085',N'00000000-0000-0000-002a-000000001024',N'Seelenhauch',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000085',N'00000000-0000-0000-002a-000000001024',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000086',N'00000000-0000-0000-002a-000000001025',N'Shurinstrauch',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000086',N'00000000-0000-0000-002a-000000001025',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000087',N'00000000-0000-0000-002a-000000001026',N'Steinrinde',N'Pflanzen/Kräuter',12);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000087',N'00000000-0000-0000-002a-000000001026',12);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000088',N'00000000-0000-0000-002a-000000001027',N'Talaschin',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000088',N'00000000-0000-0000-002a-000000001027',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000089',N'00000000-0000-0000-002a-000000001028',N'Tarnblatt',N'Pflanzen/Kräuter',8);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000089',N'00000000-0000-0000-002a-000000001028',8);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000090',N'00000000-0000-0000-002a-000000001029',N'Tarnele',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000090',N'00000000-0000-0000-002a-000000001029',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000091',N'00000000-0000-0000-002a-000000001030',N'Thonnys',N'Pflanzen/Kräuter',12,5,N'+12, während der Blüte +5');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000091',N'00000000-0000-0000-002a-000000001030',12,5,N'+12, während der Blüte +5');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000092',N'00000000-0000-0000-002a-000000001031',N'Tiger Mohn',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000092',N'00000000-0000-0000-002a-000000001031',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000093',N'00000000-0000-0000-002a-000000001032',N'Traschbart',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000093',N'00000000-0000-0000-002a-000000001032',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000094',N'00000000-0000-0000-002a-000000001033',N'Trichterwurzel',N'Pflanzen/Kräuter',11);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000094',N'00000000-0000-0000-002a-000000001033',11);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000095',N'00000000-0000-0000-002a-000000001034',N'Tuur-Amash-Kelch',N'Pflanzen/Kräuter',1);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000095',N'00000000-0000-0000-002a-000000001034',1);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000096',N'00000000-0000-0000-002a-000000001035',N'Ulmenwürger',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000096',N'00000000-0000-0000-002a-000000001035',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000097',N'00000000-0000-0000-002a-000000001036',N'Vierblättrige Einbeere',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000097',N'00000000-0000-0000-002a-000000001036',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000098',N'00000000-0000-0000-002a-000000001037',N'Vragieswurzel',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000098',N'00000000-0000-0000-002a-000000001037',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000100',N'00000000-0000-0000-002a-000000001038',N'Waldwebe',N'Pflanzen/Kräuter',9);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000100',N'00000000-0000-0000-002a-000000001038',9);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000101',N'00000000-0000-0000-002a-000000001039',N'Wandermoos',N'Pflanzen/Kräuter',14,5,N'+14 (+5 im mobilen Zustand)',1,13);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000101',N'00000000-0000-0000-002a-000000001039',14,5,N'+14 (+5 im mobilen Zustand)',1,13);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000102',N'00000000-0000-0000-002a-000000001040',N'Wasserrausch (Blüten)',N'Pflanzen/Kräuter',1);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000102',N'00000000-0000-0000-002a-000000001040',1);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000103',N'00000000-0000-0000-002a-000000001041',N'Wasserrausch (Frucht)',N'Pflanzen/Kräuter',1);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000103',N'00000000-0000-0000-002a-000000001041',1);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000104',N'00000000-0000-0000-002a-000000001042',N'Weißer Lotos',N'Pflanzen/Kräuter',10,11,1);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000104',N'00000000-0000-0000-002a-000000001042',10,11,1);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000105',N'00000000-0000-0000-002a-000000001043',N'Weißgelber Lotos',N'Pflanzen/Kräuter',5,10,N'+5 (Lotos allgemein) bzw. +10, jedoch nicht von Weißem Lotos zu unterscheiden.',11,1);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme],[AusnahmeVon],[AusnahmeBis]) VALUES (N'00000000-0000-0000-00ff-000000000105',N'00000000-0000-0000-002a-000000001043',5,10,N'+5 (Lotos allgemein) bzw. +10, jedoch nicht von Weißem Lotos zu unterscheiden.',11,1);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000106',N'00000000-0000-0000-002a-000000001044',N'Winselgras',N'Pflanzen/Kräuter',12,-2,N'+12 (tagsüber), -2 (nachts)');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmung2],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000106',N'00000000-0000-0000-002a-000000001044',12,-2,N'+12 (tagsüber), -2 (nachts)');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000107',N'00000000-0000-0000-002a-000000001045',N'Wirselkraut',N'Pflanzen/Kräuter',5,N'NOK?');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000107',N'00000000-0000-0000-002a-000000001045',5,N'NOK?');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000108',N'00000000-0000-0000-002a-000000001046',N'Würgedattel',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000108',N'00000000-0000-0000-002a-000000001046',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000109',N'00000000-0000-0000-002a-000000001047',N'Zithabar',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000109',N'00000000-0000-0000-002a-000000001047',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000110',N'00000000-0000-0000-002a-000000001048',N'Zunderschwamm',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000110',N'00000000-0000-0000-002a-000000001048',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000111',N'00000000-0000-0000-002a-000000001049',N'Zwölfblatt',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000111',N'00000000-0000-0000-002a-000000001049',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000112',N'00000000-0000-0000-002a-000000003355',N'Yaganstrauch',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000112',N'00000000-0000-0000-002a-000000003355',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000113',N'00000000-0000-0000-002a-000000003356',N'Nothilf',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000113',N'00000000-0000-0000-002a-000000003356',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000115',N'00000000-0000-0000-002a-000000003357',N'Satuariensbusch',N'Pflanzen/Kräuter',-2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000115',N'00000000-0000-0000-002a-000000003357',-2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000116',N'00000000-0000-0000-002a-000000003358',N'Tigermohn',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000116',N'00000000-0000-0000-002a-000000003358',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000117',N'00000000-0000-0000-002a-000000003359',N'Schlangenzünglein',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000117',N'00000000-0000-0000-002a-000000003359',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000118',N'00000000-0000-0000-002a-000000003481',N'Bleichmohn',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000118',N'00000000-0000-0000-002a-000000003481',5);
 GO
 
 --Pflanzen Myranor
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000119',N'00000000-0000-0000-002a-000000003482',N'Aschenbusch',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000119',N'00000000-0000-0000-002a-000000003482',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000120',N'00000000-0000-0000-002a-000000003483',N'Atermatea Funginus/Baramuns Liebling',N'Pflanzen/Kräuter',4,N'(nur Ende Raia und Anfang Chrysir, sonst unmöglich)');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000120',N'00000000-0000-0000-002a-000000003483',4,N'(nur Ende Raia und Anfang Chrysir, sonst unmöglich)');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000121',N'00000000-0000-0000-002a-000000003484',N'Batuunuur/Blutgewürz',N'Pflanzen/Kräuter',4);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000121',N'00000000-0000-0000-002a-000000003484',4);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000124',N'00000000-0000-0000-002a-000000003485',N'Blutpilz',N'Pflanzen/Kräuter',3,N'Fruchtkörper');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000124',N'00000000-0000-0000-002a-000000003485',3,N'Fruchtkörper');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000126',N'00000000-0000-0000-002a-000000003486',N'Brajankelch (Nektar oder Fruchtsaft)',N'Pflanzen/Kräuter',0,N'während Blüte im Brajan');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000126',N'00000000-0000-0000-002a-000000003486',0,N'während Blüte im Brajan');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000128',N'00000000-0000-0000-002a-000000003487',N'Brajankelch  (Frucht)',N'Pflanzen/Kräuter',0,N'während Blüte im Brajan');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000128',N'00000000-0000-0000-002a-000000003487',0,N'während Blüte im Brajan');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000129',N'00000000-0000-0000-002a-000000003488',N'Brajanlieb/Kompasskraut ',N'Pflanzen/Kräuter',10);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000129',N'00000000-0000-0000-002a-000000003488',10);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000130',N'00000000-0000-0000-002a-000000003489',N'Chrysirhaube',N'Pflanzen/Kräuter',7);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000130',N'00000000-0000-0000-002a-000000003489',7);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000131',N'00000000-0000-0000-002a-000000003490',N'Echobaum (Leuchtstoff)',N'Pflanzen/Kräuter',4);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000131',N'00000000-0000-0000-002a-000000003490',4);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000132',N'00000000-0000-0000-002a-000000003491',N'Echobaum (Pulver)',N'Pflanzen/Kräuter',4);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000132',N'00000000-0000-0000-002a-000000003491',4);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000134',N'00000000-0000-0000-002a-000000003492',N'Goldhaut ',N'Pflanzen/Kräuter',2,N'während Blüte (spätes Zatura-Oktal bis Mitte Shinxir)');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000134',N'00000000-0000-0000-002a-000000003492',2,N'während Blüte (spätes Zatura-Oktal bis Mitte Shinxir)');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000135',N'00000000-0000-0000-002a-000000003493',N'Incendium Herba (Samen)',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000135',N'00000000-0000-0000-002a-000000003493',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000136',N'00000000-0000-0000-002a-000000003494',N'Incendium Herba (Pulver)',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000136',N'00000000-0000-0000-002a-000000003494',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000138',N'00000000-0000-0000-002a-000000003495',N'Laufkraut ',N'Pflanzen/Kräuter',2,N'während Blütezeit im Shinxir');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000138',N'00000000-0000-0000-002a-000000003495',2,N'während Blütezeit im Shinxir');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000139',N'00000000-0000-0000-002a-000000003496',N'Lebensmoos ',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000139',N'00000000-0000-0000-002a-000000003496',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000140',N'00000000-0000-0000-002a-000000003497',N'Loruoor/Lebenskoralle ',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000140',N'00000000-0000-0000-002a-000000003497',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000142',N'00000000-0000-0000-002a-000000003498',N'Nachtaugen ',N'Pflanzen/Kräuter',0,N'während Blüte nachts');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000142',N'00000000-0000-0000-002a-000000003498',0,N'während Blüte nachts');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000143',N'00000000-0000-0000-002a-000000003499',N'Sandklaue',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000143',N'00000000-0000-0000-002a-000000003499',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000145',N'00000000-0000-0000-002a-000000003500',N'Satyarenbaum ',N'Pflanzen/Kräuter',3,N'während Blüte und Ernte');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000145',N'00000000-0000-0000-002a-000000003500',3,N'während Blüte und Ernte');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000146',N'00000000-0000-0000-002a-000000003501',N'Schneemoos ',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000146',N'00000000-0000-0000-002a-000000003501',6);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000148',N'00000000-0000-0000-002a-000000003502',N'Tanzbusch',N'Pflanzen/Kräuter',6,N'ausserhalb der Ernte und Blüte');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000148',N'00000000-0000-0000-002a-000000003502',6,N'ausserhalb der Ernte und Blüte');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000150',N'00000000-0000-0000-002a-000000003503',N'Tyrannenbaum',N'Pflanzen/Kräuter',2,N'während Blüte');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000150',N'00000000-0000-0000-002a-000000003503',2,N'während Blüte');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000152',N'00000000-0000-0000-002a-000000003504',N'Waldkönig',N'Pflanzen/Kräuter',2,N'während Blüte');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000152',N'00000000-0000-0000-002a-000000003504',2,N'während Blüte');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000154',N'00000000-0000-0000-002a-000000003505',N'Witwenmacher',N'Pflanzen/Kräuter',2,N'während Blüte');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000154',N'00000000-0000-0000-002a-000000003505',2,N'während Blüte');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000156',N'00000000-0000-0000-002a-000000003506',N'Wolfsblatt',N'Pflanzen/Kräuter',4,N'während der Blüte im Brajan');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000156',N'00000000-0000-0000-002a-000000003506',4,N'während der Blüte im Brajan');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000157',N'00000000-0000-0000-002a-000000003507',N'Atholisbaum',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000157',N'00000000-0000-0000-002a-000000003507',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000158',N'00000000-0000-0000-002a-000000003508',N'Auijaja-Baum',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000158',N'00000000-0000-0000-002a-000000003508',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000159',N'00000000-0000-0000-002a-000000003509',N'Azulie /Neristu-Rose',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000159',N'00000000-0000-0000-002a-000000003509',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000160',N'00000000-0000-0000-002a-000000003510',N'Belyabels Schleier',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000160',N'00000000-0000-0000-002a-000000003510',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000161',N'00000000-0000-0000-002a-000000003511',N'Boinurre',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000161',N'00000000-0000-0000-002a-000000003511',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000162',N'00000000-0000-0000-002a-000000003512',N'Cassava',N'Pflanzen/Kräuter',-5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000162',N'00000000-0000-0000-002a-000000003512',-5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000163',N'00000000-0000-0000-002a-000000003513',N'Claqua-Rose',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000163',N'00000000-0000-0000-002a-000000003513',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000164',N'00000000-0000-0000-002a-000000003514',N'Geistblüten',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000164',N'00000000-0000-0000-002a-000000003514',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000165',N'00000000-0000-0000-002a-000000003515',N'Ghorlenklaue ',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000165',N'00000000-0000-0000-002a-000000003515',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000166',N'00000000-0000-0000-002a-000000003516',N'Gyldaraswacht ',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000166',N'00000000-0000-0000-002a-000000003516',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000167',N'00000000-0000-0000-002a-000000003517',N'Himmelszeder',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000167',N'00000000-0000-0000-002a-000000003517',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000168',N'00000000-0000-0000-002a-000000003518',N'Isnea',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000168',N'00000000-0000-0000-002a-000000003518',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000169',N'00000000-0000-0000-002a-000000003519',N'Jungfernhüter',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000169',N'00000000-0000-0000-002a-000000003519',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000170',N'00000000-0000-0000-002a-000000003520',N'Maulbaum',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000170',N'00000000-0000-0000-002a-000000003520',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000171',N'00000000-0000-0000-002a-000000003521',N'Neretonie',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000171',N'00000000-0000-0000-002a-000000003521',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000172',N'00000000-0000-0000-002a-000000003522',N'Pardiriske',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000172',N'00000000-0000-0000-002a-000000003522',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000173',N'00000000-0000-0000-002a-000000003523',N'Pfeilsamenbaum ',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000173',N'00000000-0000-0000-002a-000000003523',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000174',N'00000000-0000-0000-002a-000000003524',N'Phrenophoren-Katkus ',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000174',N'00000000-0000-0000-002a-000000003524',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000175',N'00000000-0000-0000-002a-000000003525',N'Ramara-Diestel ',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000175',N'00000000-0000-0000-002a-000000003525',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000176',N'00000000-0000-0000-002a-000000003526',N'Spährentod',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000176',N'00000000-0000-0000-002a-000000003526',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000177',N'00000000-0000-0000-002a-000000003527',N'Sternapfelbaum',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000177',N'00000000-0000-0000-002a-000000003527',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000178',N'00000000-0000-0000-002a-000000003528',N'Tarnaille (-n) /Taschenblüte',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000178',N'00000000-0000-0000-002a-000000003528',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000179',N'00000000-0000-0000-002a-000000003529',N'Therkalbaum /Krüppelzeder',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000179',N'00000000-0000-0000-002a-000000003529',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000180',N'00000000-0000-0000-002a-000000003530',N'Tilians-Gruß',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000180',N'00000000-0000-0000-002a-000000003530',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000181',N'00000000-0000-0000-002a-000000003531',N'Wächter-Efeu',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000181',N'00000000-0000-0000-002a-000000003531',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000182',N'00000000-0000-0000-002a-000000003532',N'Wächterhecke',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000182',N'00000000-0000-0000-002a-000000003532',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000183',N'00000000-0000-0000-002a-000000003533',N'Alzazeerenbaum',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000183',N'00000000-0000-0000-002a-000000003646',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000184',N'00000000-0000-0000-002a-000000003534',N'Alzazeerenbaum (Blattsud/ Stärkungselixier)',N'Pflanzen/Kräuter',0);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000184',N'00000000-0000-0000-002a-000000003647',0);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000185',N'00000000-0000-0000-002a-000000003535',N'Aurinde (auch Sonnenkraut)',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000185',N'00000000-0000-0000-002a-000000003648',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000186',N'00000000-0000-0000-002a-000000003536',N'Blaburri-Perlen',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000186',N'00000000-0000-0000-002a-000000003649',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000187',N'00000000-0000-0000-002a-000000003537',N'Caranuss-Strauch',N'Pflanzen/Kräuter',2);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000187',N'00000000-0000-0000-002a-000000003650',2);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000188',N'00000000-0000-0000-002a-000000003538',N'Cuina-Blüte (wild)',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000188',N'00000000-0000-0000-002a-000000003651',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000189',N'00000000-0000-0000-002a-000000003539',N'Cuina-Blüte (kultiviert)',N'Pflanzen/Kräuter',-3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000189',N'00000000-0000-0000-002a-000000003652',-3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000190',N'00000000-0000-0000-002a-000000003540',N'Feuerposaune',N'Pflanzen/Kräuter',4);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000190',N'00000000-0000-0000-002a-000000003653',4);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000191',N'00000000-0000-0000-002a-000000003541',N'Mantigora',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000191',N'00000000-0000-0000-002a-000000003654',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000192',N'00000000-0000-0000-002a-000000003542',N'Remembalia',N'Pflanzen/Kräuter',3);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000192',N'00000000-0000-0000-002a-000000003655',3);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000194',N'00000000-0000-0000-002a-000000003543',N'Roter Bambus',N'Pflanzen/Kräuter',2,N'während der Blüte');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000194',N'00000000-0000-0000-002a-000000003656',2,N'während der Blüte');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000195',N'00000000-0000-0000-002a-000000003544',N'Schwesterlein',N'Pflanzen/Kräuter',8);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000195',N'00000000-0000-0000-002a-000000003657',8);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000196',N'00000000-0000-0000-002a-000000003545',N'Szatate',N'Pflanzen/Kräuter',4);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000196',N'00000000-0000-0000-002a-000000003658',4);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000197',N'00000000-0000-0000-002a-000000003546',N'Tarnblatt',N'Pflanzen/Kräuter',5);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000197',N'00000000-0000-0000-002a-000000003659',5);
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000199',N'00000000-0000-0000-002a-000000003547',N'Traumpilz',N'Pflanzen/Kräuter',3,N'zum Erkennen eines entsprechenden Pilzwaldes');
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung],[Bestimmungsausnahme]) VALUES (N'00000000-0000-0000-00ff-000000000199',N'00000000-0000-0000-002a-000000003660',3,N'zum Erkennen eines entsprechenden Pilzwaldes');
 GO
-INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Name],[Kategorie],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000200',N'00000000-0000-0000-002a-000000003548',N'Warakwurz',N'Pflanzen/Kräuter',6);
+INSERT INTO [Pflanze] ([PflanzeGUID],[HandelsgutGUID],[Bestimmung]) VALUES (N'00000000-0000-0000-00ff-000000000200',N'00000000-0000-0000-002a-000000003661',6);
 GO
-
-
 
 --Pflanze_Ernte
 INSERT INTO [Pflanze_Ernte] ([PflanzeGUID],[Von],[Bis],[Grundmenge],[Pflanzenteil],[Haltbarkeit],[HaltbarkeitEinheit]) VALUES (N'00000000-0000-0000-00ff-000000000001',1,13,N'1',N'Pflanze',N'W3+2',N'Tage');

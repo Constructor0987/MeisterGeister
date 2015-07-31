@@ -47,6 +47,11 @@ namespace MeisterGeister.Model
             get { return this.Pflanze_Ernte.ElementAt(0).Pflanzenteil; }
         }
 
+        public string Name
+        {
+            get { return this.Handelsgut.Name; }
+        }
+
         public string Haltbarkeit
         {
             get { return this.Pflanze_Ernte.ElementAt(0).Haltbarkeit == null? "":
@@ -68,12 +73,13 @@ namespace MeisterGeister.Model
 
         public List<Gebiet> Gebiete
         {
-            get {
+            get
+            {
                 List<Gebiet> gebieteListe = new List<Gebiet>();
 
                 foreach (Pflanze_Gebiet pGebiet in this.Pflanze_Gebiet)
                     gebieteListe.Add(pGebiet.Gebiet);
-                return gebieteListe; 
+                return gebieteListe;
             }
         }
         

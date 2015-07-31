@@ -1082,8 +1082,6 @@
     </Key>
     <Property Name="PflanzeGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="HandelsgutGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="500" />
-    <Property Name="Kategorie" Type="nvarchar" MaxLength="254" />
     <Property Name="Bestimmung" Type="smallint" Nullable="false" />
     <Property Name="Bestimmung2" Type="smallint" />
     <Property Name="Bestimmungsausnahme" Type="nvarchar" MaxLength="100" />
@@ -3572,8 +3570,6 @@
     </Key>
     <Property Name="PflanzeGUID" Type="Guid" Nullable="false" />
     <Property Name="HandelsgutGUID" Type="Guid" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
-    <Property Name="Kategorie" Type="String" MaxLength="254" Unicode="true" FixedLength="false" />
     <Property Name="Bestimmung" Type="Int16" Nullable="false" />
     <Property Name="Bestimmung2" Type="Int16" />
     <Property Name="Bestimmungsausnahme" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
@@ -5588,8 +5584,6 @@
         <MappingFragment StoreEntitySet="Pflanze">
           <ScalarProperty Name="PflanzeGUID" ColumnName="PflanzeGUID" />
           <ScalarProperty Name="HandelsgutGUID" ColumnName="HandelsgutGUID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
           <ScalarProperty Name="Bestimmung" ColumnName="Bestimmung" />
           <ScalarProperty Name="Bestimmung2" ColumnName="Bestimmung2" />
           <ScalarProperty Name="Bestimmungsausnahme" ColumnName="Bestimmungsausnahme" />
@@ -5955,7 +5949,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="6bea6b66a15b4db685e03c4d66fb3bec" Name="Diagram1">
+      <Diagram DiagramId="c37343397b8d4febbf304084800968c8" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="2.75" IsExpanded="true" />
@@ -6001,7 +5995,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="13.75" PointY="25.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="21.75" PointY="19.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="16.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Gebiet" Width="1.5" PointX="9" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Verbreitung" Width="1.5" PointX="9" PointY="1.125" IsExpanded="true" />
