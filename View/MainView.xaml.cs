@@ -19,6 +19,7 @@ using MeisterGeister.Daten;
 using System.Windows.Media.Animation;
 using MeisterGeister.View.Settings;
 using MeisterGeister.Logic.General;
+using MeisterGeister.ViewModel;
 
 namespace MeisterGeister.View
 {
@@ -77,6 +78,9 @@ namespace MeisterGeister.View
         public MainView()
         {
             InitializeComponent();
+
+            VM = new MainViewModel();
+
             Opacity = 0.5;
 
             // MeisterGeisterID abrufen
@@ -95,21 +99,32 @@ namespace MeisterGeister.View
 
             _tabControlMain.SelectionChanged += _tabControlMain_SelectionChanged;
 
-            _labelVersion.Content = string.Format("V {0} / {1}", App.GetVersionString(App.GetVersionProgramm()),
-                DatabaseUpdate.DatenbankVersionAktuell);
             _labelVersion.ToolTip = string.Format("MeisterGeisterID: {0}", mgID.ToString());
 
 #if TEST
             _labelVersion.Foreground = Brushes.Red;
             _labelVersion.Background = Brushes.LightYellow;
-            _labelVersion.Content += " Test";
 #endif
             if (Global.INTERN)
             {
                 _labelVersion.Foreground = Brushes.Red;
                 _labelVersion.Background = Brushes.LightYellow;
-                _labelVersion.Content += " Intern";
             }
+        }
+
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public MainViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is MainViewModel))
+                    return null;
+                return DataContext as MainViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private static Dictionary<string, MenuItem> MenuPunkte = new Dictionary<string, MenuItem>(5);

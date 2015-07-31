@@ -546,6 +546,7 @@
     <Compile Include="ViewModel\Kalender\KalenderViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
     <Compile Include="ViewModel\Reise\WetterGraphViewModel.cs" />
     <Compile Include="ViewModel\Reise\Wetter.cs" />
