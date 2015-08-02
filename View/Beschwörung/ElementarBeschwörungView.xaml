@@ -152,9 +152,12 @@
         <TextBlock Text="{Binding WahrerNameRufMod}" Grid.Row="4" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding WahrerNameHerrschMod}" Grid.Row="4" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Qualität der Materialien" Grid.Row="5" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="5">
+            <TextBlock Text="Qualität der Materialien" Style="{StaticResource label}"/>
+            <General:LiteraturControl Literaturangabe="WdZ 382" LiteraturAnzeigeArt="NurIcon" Margin="4,0,0,0"/>
+        </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
-            <Slider Minimum="-3" Maximum="3" Value="{Binding Material}" Width="100" TickFrequency="1" TickPlacement="BottomRight"/>
+            <Slider Minimum="-3" Maximum="3" Value="{Binding Material}" Width="80" TickFrequency="1" TickPlacement="BottomRight"/>
             <TextBlock Margin="4,0,0,0">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
@@ -189,8 +192,6 @@
 
         <CheckBox Content="10-fache Menge Material" Grid.Row="6" IsChecked="{Binding HoheMenge}"/>
         <TextBlock Style="{StaticResource mod}" Text="{Binding HoheMengeRufMod}" Grid.Column="2" Grid.Row="6"/>
-
-
 
         <TextBlock Text="Gesinnung des Befehls" Grid.Row="7" Style="{StaticResource label}"/>
         <General:IntBox Value="{Binding BefehlHerrschMod}" MinValue="-3" MaxValue="+7" ShowButtons="True" Grid.Row="7" Grid.Column="1"/>

@@ -1,4 +1,5 @@
 ﻿using MeisterGeister.Logic.General;
+using MeisterGeister.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,7 +60,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override List<Model.GegnerBase> loadWesen()
         {
-            return Global.ContextHeld.LoadElementare();
+            List<GegnerBase> elementare = Global.ContextHeld.LoadElementare();
+            return elementare;
         }
 
         protected override void reset()
@@ -397,15 +399,15 @@ namespace MeisterGeister.ViewModel.Beschwörung
         #endregion
 
 
-        protected override void beschwörungMisslungen(ProbenErgebnis erg)
-        {
-            Ergebnis = "Es erscheint kein Elementarwesen";
-        }
+        //protected override void beschwörungMisslungen(ProbenErgebnis erg)
+        //{
+        //    BeschwörungsErgebnis = "Es erscheint kein Elementarwesen";
+        //}
 
-        protected override void beherrschungMisslungen(ProbenErgebnis erg)
-        {
-            Ergebnis = "Das Elementarwesen erfüllt den Dienst nicht. Die AsP werden trotzdem abgezogen. Wenn noch AsP übrig sind steht das Wesen weiterhin zur Verfügung.";
-        }
+        //protected override void beherrschungMisslungen(ProbenErgebnis erg)
+        //{
+        //    BeherrschungsErgebnis = "Das Elementarwesen erfüllt den Dienst nicht. Die AsP werden trotzdem abgezogen. Wenn noch AsP übrig sind steht das Wesen weiterhin zur Verfügung.";
+        //}
 
 
     }

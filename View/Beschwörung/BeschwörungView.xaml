@@ -8,19 +8,36 @@
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Beschwörung"
              xmlns:mg="clr-namespace:MeisterGeister"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="304" d:DesignWidth="550.4">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-            <ComboBox Margin="5,10" Width="250" ItemsSource="{Binding Source={x:Static mg:Global.ContextHeld}, Path=HeldenGruppeListe}"
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+            <Image Margin="5,0,5,0" Source="/Images/Icons/helden.png" Width="24" />
+            <ComboBox Margin="5,0,0,0" Width="250" ItemsSource="{Binding Source={x:Static mg:Global.ContextHeld}, Path=HeldenGruppeListe}"
                       SelectedValue="{Binding ElementName=tab,Path=SelectedValue.Held}" DisplayMemberPath="Name" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="4,0,0,0">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=tab,Path=SelectedValue.Held}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <General:EnergieControl Energie="Astralenergie" SelectedKämpfer="{Binding ElementName=tab,Path=SelectedValue.Held}"/>
+                <TextBlock Text="{Binding ElementName=tab,Path=SelectedValue.Held.AstralenergieAktuell}" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock Text=" / " VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding ElementName=tab,Path=SelectedValue.Held.AstralenergieMax}" VerticalAlignment="Center"/>
+                <TextBlock Text="Astralpunkten" Margin="4,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <Button Margin="4,0,0,0" Content="Neue Beschwörung" Command="{Binding ElementName=tab,Path=SelectedValue.Reset}"/>
         </StackPanel>
         <TabControl Grid.Row="1" x:Name="tab">
-            
+
             <!--Tab-Header-->
             <TabControl.ItemTemplateSelector>
                 <General:DynamicTemplateSelector>
@@ -42,7 +59,7 @@
                     </General:TemplateCollection>
                 </General:DynamicTemplateSelector>
             </TabControl.ItemTemplateSelector>
-            
+
             <!--Tab-Content-->
             <TabControl.ContentTemplateSelector>
                 <General:DynamicTemplateSelector>
@@ -50,9 +67,7 @@
                         <General:Template Value="{x:Type vm:DämonenBeschwörungViewModel}">
                             <General:Template.DataTemplate>
                                 <DataTemplate>
-                                    <ScrollViewer>
-                                        <Beschwörung:DämonenBeschwörungView/>
-                                    </ScrollViewer>
+                                    <Beschwörung:DämonenBeschwörungView/>
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
@@ -68,10 +83,10 @@
                     </General:TemplateCollection>
                 </General:DynamicTemplateSelector>
             </TabControl.ContentTemplateSelector>
-            
+
             <vm:DämonenBeschwörungViewModel/>
-            <vm:ElementarBeschwörungViewModel/>
-            
+            <!--<vm:ElementarBeschwörungViewModel/>-->
+
         </TabControl>
     </Grid>
 </UserControl>

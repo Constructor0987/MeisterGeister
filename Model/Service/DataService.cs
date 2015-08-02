@@ -390,7 +390,7 @@ namespace MeisterGeister.Model.Service
 
         public List<GegnerBase> LoadElementare()
         {
-            return Context.GegnerBase.Where(g => g.Typ == "Elementar" && g.Beschwörung.HasValue && g.Kontrolle.HasValue).ToList();
+            return Context.GegnerBase.Where(g => g.Typ == "Elementar").ToList();
         }
         #endregion
     }

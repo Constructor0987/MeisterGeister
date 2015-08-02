@@ -15,8 +15,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         public DämonenBeschwörungViewModel()
         {
-            magiekundeProbe = new Base.CommandBase(magiekunde, null);
-            malenProbe = new Base.CommandBase(malen, null);
+            magiekundeProbe = new Base.CommandBase((o) => magiekunde(), null);
+            malenProbe = new Base.CommandBase((o) => malen(), null);
             editMagiekunde = new Base.CommandBase((o) => InvocatioIntegraMagiekundePunkte = 1, null);
             editMalen = new Base.CommandBase((o) => InvocatioIntegraMalenPunkte = 1, null);
             PropertyChanged += propertyChanged;
@@ -58,46 +58,71 @@ namespace MeisterGeister.ViewModel.Beschwörung
             Affinität = false;
             Bannschwert = false;
             Opfer = Opfer.Tieropfer;
-            Ergebnis = "Wähle einen Dämon und versuche ihn zu beschwören";
+            BeschwörungMisslungenErgebnis = BeherrschungMisslungenErgebnis = String.Empty;
+            würfleBeschwörungMisslungen = new Base.CommandBase((o) => würfleBeschwörungMisslungenEffekt(), (o) => Status == BeschwörungsStatus.BeschwörungMisslungen);
+            WürfleBeherrschungMisslungen = null;
         }
 
         #region Beschwören
 
-        protected override void beschwörungMisslungen(ProbenErgebnis erg)
+        private Base.CommandBase würfleBeschwörungMisslungen;
+        public Base.CommandBase WürfleBeschwörungMisslungen
+        {
+            get { return würfleBeschwörungMisslungen; }
+            private set { Set(ref würfleBeschwörungMisslungen, value); }
+        }
+
+
+        private void würfleBeschwörungMisslungenEffekt()
         {
             int wurf = View.General.ViewHelper.ShowWürfelDialog(Blutmagie ? "3W6" : "2W6", "Beschwörung Misslungen");
             if (WahrerName == 0) wurf += 7;
             if (wurf <= 6)
             {
-                Ergebnis = "Außer einem kalten, übel riechenden Hauch erscheint ... nichts. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Außer einem kalten, übel riechenden Hauch erscheint ... nichts. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                //Button deaktivieren
+                WürfleBeschwörungMisslungen = new Base.CommandBase((o) => { }, (o) => false);
             }
             else if (wurf <= 11)
             {
-                Ergebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von niedrigerer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von niedrigerer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 15)
             {
-                Ergebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 19)
             {
-                Ergebnis = "Es erscheint ein Dämon aus derselben Domäne, jedoch auf jeden Fall ein Gehörnter Dämon von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1 Punkt Verfall. Die Beschwörungskosten betragen 19 AsP.";
+                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne, jedoch auf jeden Fall ein Gehörnter Dämon von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1 Punkt Verfall. Die Beschwörungskosten betragen 19 AsP.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else
             {
-                Ergebnis = "Es erscheint ein Gehörnter Dämon von höherer Beschwörungs-Schwierigkeit, unabhängig von der Domäne des Gerufenen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1W6 Punkte Verfall. Die Beschwörungskosten betragen 19 AsP.";
+                BeschwörungMisslungenErgebnis = "Es erscheint ein Gehörnter Dämon von höherer Beschwörungs-Schwierigkeit, unabhängig von der Domäne des Gerufenen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1W6 Punkte Verfall. Die Beschwörungskosten betragen 19 AsP.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
         }
 
         protected override void beherrschungMisslungen(ProbenErgebnis erg)
+        {
+            base.beherrschungMisslungen(erg);
+            WürfleBeherrschungMisslungen = new Base.CommandBase((o) => würfleBeherrschungMisslungenEffekt(erg), (o) => Status == BeschwörungsStatus.BeherrschungMisslungen);
+        }
+
+        private Base.CommandBase würfleBeherrschungMisslungen = null;
+        public Base.CommandBase WürfleBeherrschungMisslungen
+        {
+            get { return würfleBeherrschungMisslungen; }
+            private set { Set(ref würfleBeherrschungMisslungen, value); }
+        }
+
+        private void würfleBeherrschungMisslungenEffekt(ProbenErgebnis erg)
         {
             int wurf = View.General.ViewHelper.ShowWürfelDialog("2W6", "Kontrolle Misslungen");
             if (erg.Ergebnis == Logic.General.ErgebnisTyp.PATZER)
@@ -110,33 +135,52 @@ namespace MeisterGeister.ViewModel.Beschwörung
             if (Hörner > 0) wurf += 5;
             if (wurf <= 1)
             {
-                Ergebnis = "Der Beschwörer zwingt den Dämon binnen 2 Aktionen doch noch unter seine Kontrolle und presst ihm die Erfüllung eines Dienstes ab, eventuelle weitere Dienste verfallen. Dämon und Beschwörer sind während dieser Zeit in einem Duell der Willenskraft verstrickt und können keine anderen Handlungen unternehmen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 2 Punkte Verfall.";
+                BeherrschungMisslungenErgebnis = "Der Beschwörer zwingt den Dämon binnen 2 Aktionen doch noch unter seine Kontrolle und presst ihm die Erfüllung eines Dienstes ab, eventuelle weitere Dienste verfallen. Dämon und Beschwörer sind während dieser Zeit in einem Duell der Willenskraft verstrickt und können keine anderen Handlungen unternehmen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 2 Punkte Verfall.";
             }
             else if (wurf <= 5)
             {
-                Ergebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen.";
+                BeherrschungMisslungenErgebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen.";
             }
             else if (wurf <= 9)
             {
-                Ergebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen. " +
+                BeherrschungMisslungenErgebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen. " +
                            "Die Beschwörung dieses speziellen Dämonen ist für den Beschwörer in Zukunft um 3 Punkte erschwert. " +
                            "(Dies lässt sich durch 20 AP wieder aufheben; Paktierer können stattdessen 20 Pakt-GP einsetzen; entstammen Dämon und Pakt nicht derselben Domäne, betragen die Kosten 50 Pakt-GP.) 2 Punkte Verfall.";
             }
             else if (wurf <= 13)
             {
-                Ergebnis = "Der Dämon greift den Beschwörer eine Kampfrunde lang mit allen ihm zur Verfügung stehenden Mitteln an – auch mit Angriffen von längerfristiger Auswirkung wie z. B. Besessenheit – und verschwindet dann. Alle weiteren Dienste verfallen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 3 Punkte Verfall.";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer eine Kampfrunde lang mit allen ihm zur Verfügung stehenden Mitteln an – auch mit Angriffen von längerfristiger Auswirkung wie z. B. Besessenheit – und verschwindet dann. Alle weiteren Dienste verfallen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 3 Punkte Verfall.";
             }
             else if (wurf <= 17)
             {
-                Ergebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an; W6+3 Punkte Verfall";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an; W6+3 Punkte Verfall";
             }
             else if (wurf <= 21)
             {
-                Ergebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP.";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP.";
             }
             else
             {
-                Ergebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP. Jedoch können nach Meisterentscheid und bösartiger Kreativität weitere Nebeneffekte eintreten. Als Beispiele seien hier genannt: Der Dämon lässt nicht eher vom Beschwörer ab, bis er ausgetrieben wird. Der Dämon wird freigesetzt und macht auf eigene Faust Aventurien unsicher. Der Dämon reißt den Beschwörer in die Niederhöllen. Der Dämon zieht sich in den näheren Limbus zurück und wartet dort auf die nächste Beschwörung, um dann zusätzlich zur gerufenen Entität zu erscheinen. Ein mächtiger Gehörnter zwingt dem Beschwörer einen minderen Pakt auf.";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP. Jedoch können nach Meisterentscheid und bösartiger Kreativität weitere Nebeneffekte eintreten. Als Beispiele seien hier genannt: Der Dämon lässt nicht eher vom Beschwörer ab, bis er ausgetrieben wird. Der Dämon wird freigesetzt und macht auf eigene Faust Aventurien unsicher. Der Dämon reißt den Beschwörer in die Niederhöllen. Der Dämon zieht sich in den näheren Limbus zurück und wartet dort auf die nächste Beschwörung, um dann zusätzlich zur gerufenen Entität zu erscheinen. Ein mächtiger Gehörnter zwingt dem Beschwörer einen minderen Pakt auf.";
+            }
+            //Command wird deaktiviert
+            WürfleBeherrschungMisslungen = new Base.CommandBase((o) => { }, (o) => false);
+        }
+
+        public override BeschwörungsStatus Status
+        {
+            get
+            {
+                return base.Status;
+            }
+            protected set
+            {
+                base.Status = value;
+                //Hier updaten wir die CanExecute-Eigenschaft der Commands
+                if (WürfleBeschwörungMisslungen != null)
+                    WürfleBeschwörungMisslungen.Invalidate();
+                if (WürfleBeherrschungMisslungen != null)
+                    WürfleBeherrschungMisslungen.Invalidate();
             }
         }
 
@@ -172,9 +216,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
 
 
-
-
-        private void magiekunde(object obj)
+        private void magiekunde()
         {
             int taW;
             Held_Talent ht = Global.SelectedHeld.GetHeldTalent("Magiekunde", false, out taW);
@@ -184,7 +226,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             InvocatioIntegraMagiekundePunkte = erg.Gelungen ? erg.Übrig : 0;
 
         }
-        private void malen(object obj)
+        private void malen()
         {
             int taW;
             Held_Talent ht = Global.SelectedHeld.GetHeldTalent("Malen/Zeichnen", false, out taW);
@@ -359,7 +401,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
 
         private Opfer opfer;
-
         public Opfer Opfer
         {
             get { return opfer; }
@@ -441,6 +482,20 @@ namespace MeisterGeister.ViewModel.Beschwörung
                     + BannschwertHerrschMod
                     + KreisDerVerdammnisHerrschMod;
             }
+        }
+
+        private string beschwörungMisslungenErgebnis;
+        public string BeschwörungMisslungenErgebnis
+        {
+            get { return beschwörungMisslungenErgebnis; }
+            set { Set(ref beschwörungMisslungenErgebnis, value); }
+        }
+
+        private string beherrschungMisslungenErgebnis;
+        public string BeherrschungMisslungenErgebnis
+        {
+            get { return beherrschungMisslungenErgebnis; }
+            set { Set(ref beherrschungMisslungenErgebnis, value); }
         }
 
         public override int ZauberWert

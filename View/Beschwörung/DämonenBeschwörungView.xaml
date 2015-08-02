@@ -7,7 +7,7 @@
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-             d:DesignHeight="594.328" d:DesignWidth="664.478">
+             d:DesignHeight="599.728" d:DesignWidth="1301.478">
 
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="mod">
@@ -18,6 +18,7 @@
         </Style>
         <Style TargetType="{x:Type TextBlock}" x:Key="label">
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="6,0,0,0"/>
         </Style>
         <Style TargetType="{x:Type General:IntBox}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -25,6 +26,7 @@
         </Style>
         <Style TargetType="{x:Type CheckBox}">
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="6,0,0,0"/>
         </Style>
         <General:EnumToStringConverter x:Key="enumConverter"/>
         <Style x:Key="invocatioProbeStyle" TargetType="RowDefinition">
@@ -38,49 +40,84 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        
+        <Style TargetType="RowDefinition" x:Key="beherrschungsRow">
+            <Setter Property="Height" Value="24"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="Beschwören">
+                    <Setter Property="Height" Value="0"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="BeschwörungMisslungen">
+                    <Setter Property="Height" Value="0"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid DockPanel.Dock="Left">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" Name="colAblauf"/>
+            <ColumnDefinition Width="Auto" Name="colSperator"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto" Name="colHerrsch"/>
+            <ColumnDefinition Width="Auto" Name="colKosten"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24" Name="rowÜbrig"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24" Name="rowGesinnung"/>
-            <RowDefinition Height="24" Name="rowDauer"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24" Name="rowAffinität"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
+            <RowDefinition Height="24" Name="rowHeader"/>
+            <RowDefinition Height="24" Name="rowTyp"/>
+            <RowDefinition Height="24" Name="rowBasis"/>
+            <RowDefinition Height="24" Name="rowName"/>
+            <RowDefinition Height="24" Name="rowAusrüstung"/>
+            <RowDefinition Height="24" Name="rowBannschwert"/>
+            <RowDefinition Height="24" Name="rowPaktierer"/>
+            <RowDefinition Height="24" Name="rowInvocatio"/>
             <RowDefinition Name="rowMagiekunde" Style="{StaticResource invocatioProbeStyle}"/>
             <RowDefinition Name="rowMalen" Style="{StaticResource invocatioProbeStyle}"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24" Name="rowBezahlung"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="24" Name="rowBlutmagie"/>
+            <RowDefinition Height="24" Name="rowSterne"/>
+            <RowDefinition Height="24" Name="rowOrt"/>
+            <RowDefinition Height="24" Name="rowDonaria"/>
+            <RowDefinition Name="rowÜbrig" Style="{StaticResource beherrschungsRow}"/>
+            <RowDefinition Name="rowGesinnung" Style="{StaticResource beherrschungsRow}"/>
+            <RowDefinition Name="rowDauer" Style="{StaticResource beherrschungsRow}"/>
+            <RowDefinition Name="rowAffinität" Style="{StaticResource beherrschungsRow}"/>
+            <RowDefinition Name="rowBezahlung" Style="{StaticResource beherrschungsRow}"/>
+            <RowDefinition Height="24" Name="rowSonstiges"/>
+            <RowDefinition Height="24" Name="rowGesamt"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
-        <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
-        
-        <TextBlock Text="Dämon" Style="{StaticResource label}"/>
-        <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
+        <!--<Rectangle>
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="LightGray" Offset="0"/>
+                    <GradientStop Color="Gray" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="Beschwören">
+                            <Setter Property="Grid.Column" Value="0"/>
+                            <Setter Property="Grid.Row" Value="0"/>
+                            <Setter Property="Grid.ColumnSpan" Value="4"/>
+                            <Setter Property="Grid.RowSpan" Value="14"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>-->
 
-        <TextBlock Text="Typ" Grid.Row="1" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Hörner}">
+        <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="4" Margin="4"/>
+        <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="5" Margin="4"/>
+
+        <TextBlock Text="Dämon" Style="{StaticResource label}" Grid.Column="2"/>
+        <ComboBox Grid.Column="3" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
+
+        <TextBlock Text="Typ" Grid.Row="1" Style="{StaticResource label}" Grid.Column="2"/>
+        <ComboBox Grid.Row="1" Grid.Column="3" SelectedIndex="0" SelectedValue="{Binding Hörner}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -106,75 +143,32 @@
             <System:Int32>8</System:Int32>
         </ComboBox>
 
-        <TextBlock Text="Basis" Grid.Row="2" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+        <TextBlock Text="Basis" Grid.Row="2" Style="{StaticResource label}" Grid.Column="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3">
             <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Beschwörungsschwierigkeit}"/>
             <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Kontrollschwierigkeit}"/>
         </StackPanel>
-        <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Beschwörungsschwierigkeit}"/>
-        <TextBlock Margin="14,0,0,0" Foreground="Red" Text="2x" Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" ToolTip="Weil anderer Dämon erschienen ist"
+        <TextBlock Grid.Row="2" Grid.Column="4" Style="{StaticResource mod}" Text="{Binding Beschwörungsschwierigkeit}"/>
+        <TextBlock Margin="14,0,0,0" Foreground="Red" Text="2x" Grid.Row="2" Grid.Column="5" Style="{StaticResource mod}" ToolTip="Weil anderer Dämon erschienen ist"
                                Visibility="{Binding AndererDämon,Converter={StaticResource BooleanToVisibilityConverter1}}" HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Kontrollschwierigkeit}"/>
+        <TextBlock Grid.Row="2" Grid.Column="5" Style="{StaticResource mod}" Text="{Binding Kontrollschwierigkeit}"/>
 
-        <TextBlock Text="Übrige Punkte aus Beschwörung" Grid.Row="3" Style="{StaticResource label}"/>
-        <General:IntBox ShowButtons="True" MinValue="0" Value="{Binding Beschwörungspunkte}" Grid.Row="3" Grid.Column="1"/>
-        <TextBlock Text="{Binding Beschwörungsbonus}" Grid.Row="3" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Wahrer Name" Grid.Row="3" Style="{StaticResource label}" Grid.Column="2"/>
+        <General:IntBox ShowButtons="True" MinValue="0" MaxValue="7" Value="{Binding WahrerName}" Grid.Row="3" Grid.Column="3"/>
+        <TextBlock Text="{Binding WahrerNameRufMod}" Grid.Row="3" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding WahrerNameHerrschMod}" Grid.Row="3" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Wahrer Name" Grid.Row="4" Style="{StaticResource label}"/>
-        <General:IntBox ShowButtons="True" MinValue="0" MaxValue="7" Value="{Binding WahrerName}" Grid.Row="4" Grid.Column="1"/>
-        <TextBlock Text="{Binding WahrerNameRufMod}" Grid.Row="4" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding WahrerNameHerrschMod}" Grid.Row="4" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Ausrüstung" Grid.Row="4" Style="{StaticResource label}" Grid.Column="2"/>
+        <General:IntBox MaxValue="0" Value="{Binding AusrüstungMod}" ShowButtons="True" Grid.Row="4" Grid.Column="3"/>
+        <TextBlock Text="{Binding AusrüstungMod}" Grid.Row="4" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding AusrüstungMod}" Grid.Row="4" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Gesinnung des Befehls" Grid.Row="5" Style="{StaticResource label}"/>
-        <General:IntBox Value="{Binding BefehlHerrschMod}" MinValue="-3" MaxValue="+7" ShowButtons="True" Grid.Row="5" Grid.Column="1"/>
-        <TextBlock Text="{Binding BefehlHerrschMod}" Grid.Row="5" Grid.Column="3" Style="{StaticResource mod}"/>
+        <CheckBox Grid.Row="5" Content="Bannschwert" IsChecked="{Binding Bannschwert}" Grid.Column="2"/>
+        <TextBlock Text="{Binding BannschwertRufMod}" Grid.Row="5" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding BannschwertHerrschMod}" Grid.Row="5" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Dauer der Ausführung" Grid.Row="6" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding DauerHerrschMod}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Name="text"/>
-                    <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding}" Value="0">
-                            <Setter TargetName="text" Property="Text" Value="bis ein Kampf (ca. 50 KR)"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding}" Value="1">
-                            <Setter TargetName="text" Property="Text" Value="bis eine SR"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding}" Value="2">
-                            <Setter TargetName="text" Property="Text" Value="bis eine Stunde"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding}" Value="3">
-                            <Setter TargetName="text" Property="Text" Value="bis 8 Stunden"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding}" Value="4">
-                            <Setter TargetName="text" Property="Text" Value="bis zum nächsten Sonnenauf- oder -untergang&#x0a;(je nachdem was später eintritt)"/>
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-            <System:Int32>0</System:Int32>
-            <System:Int32>1</System:Int32>
-            <System:Int32>2</System:Int32>
-            <System:Int32>3</System:Int32>
-            <System:Int32>4</System:Int32>
-        </ComboBox>
-        <TextBlock Text="{Binding DauerHerrschMod}" Grid.Row="6" Grid.Column="3" Style="{StaticResource mod}"/>
-
-        <TextBlock Text="Ausrüstung" Grid.Row="7" Style="{StaticResource label}"/>
-        <General:IntBox MaxValue="0" Value="{Binding AusrüstungMod}" ShowButtons="True" Grid.Row="7" Grid.Column="1"/>
-        <TextBlock Text="{Binding AusrüstungMod}" Grid.Row="7" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding AusrüstungMod}" Grid.Row="7" Grid.Column="3" Style="{StaticResource mod}"/>
-
-        <CheckBox Grid.Row="8" Content="Bannschwert" IsChecked="{Binding Bannschwert}"/>
-        <TextBlock Text="{Binding BannschwertRufMod}" Grid.Row="8" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding BannschwertHerrschMod}" Grid.Row="8" Grid.Column="3" Style="{StaticResource mod}"/>
-
-        <CheckBox Grid.Row="9" Content="Affinität zu Dämonen" IsChecked="{Binding Affinität}"/>
-        <TextBlock Text="{Binding AffinitätHerrschMod}" Grid.Row="9" Grid.Column="3" Style="{StaticResource mod}"/>
-
-        <TextBlock Text="Paktierer" Grid.Row="10" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="10" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding KreisDerVerdammnis}">
+        <TextBlock Text="Paktierer" Grid.Row="6" Style="{StaticResource label}" Grid.Column="2"/>
+        <ComboBox Grid.Row="6" Grid.Column="3" SelectedIndex="0" SelectedValue="{Binding KreisDerVerdammnis}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -200,22 +194,24 @@
             <System:Int32>6</System:Int32>
             <System:Int32>7</System:Int32>
         </ComboBox>
-        <TextBlock Grid.Row="10" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding KreisDerVerdammnisRufMod}"/>
-        <TextBlock Grid.Row="10" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding KreisDerVerdammnisHerrschMod}"/>
+        <TextBlock Grid.Row="6" Grid.Column="4" Style="{StaticResource mod}" Text="{Binding KreisDerVerdammnisRufMod}"/>
+        <TextBlock Grid.Row="6" Grid.Column="5" Style="{StaticResource mod}" Text="{Binding KreisDerVerdammnisHerrschMod}"/>
 
-        <Rectangle Grid.Row="11" Grid.ColumnSpan="4" Fill="Transparent" Name="invocatioIntegraToolTipArea"/>
-        <CheckBox Grid.Row="11" Content="Invocatio Integra" Name="chkInvocatioIntegra" IsEnabled="{Binding InvocatioIntegraMöglich}" IsHitTestVisible="{Binding InvocatioIntegraMöglich}" IsChecked="{Binding InvocatioIntegra}">
-            <CheckBox.Style>
-                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding InvocatioIntegraMöglich}" Value="False">
-                            <Setter Property="ToolTip" Value="Invocatio Integra ist nur bei Gehörnten Dämonen möglich, deren Wahrer Name bekannt ist"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-        <ComboBox Grid.Row="11" Grid.Column="1" SelectedIndex="0" IsEnabled="{Binding InvocatioIntegra}" IsHitTestVisible="{Binding InvocatioIntegraMöglich}" SelectedValue="{Binding InvocatioIntegraVorbereiten}">
+        <StackPanel Orientation="Horizontal" Grid.Row="7"  Grid.Column="2">
+            <CheckBox Content="Invocatio Integra" IsEnabled="{Binding InvocatioIntegraMöglich}" IsChecked="{Binding InvocatioIntegra}">
+                <CheckBox.Style>
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding InvocatioIntegraMöglich}" Value="False">
+                                <Setter Property="ToolTip" Value="Invocatio Integra ist nur bei Gehörnten Dämonen möglich, deren Wahrer Name bekannt ist"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CheckBox.Style>
+            </CheckBox>
+            <General:LiteraturControl LiteraturAnzeigeArt="NurIcon" Literaturangabe="WdZ 189"/>
+        </StackPanel>
+        <ComboBox Grid.Row="7" Grid.Column="3" SelectedIndex="0" IsEnabled="{Binding InvocatioIntegra}" IsHitTestVisible="{Binding InvocatioIntegraMöglich}" SelectedValue="{Binding InvocatioIntegraVorbereiten}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text" Text="ohne 1 Tag Extravorbereitung"/>
@@ -230,8 +226,8 @@
             <System:Boolean>true</System:Boolean>
         </ComboBox>
 
-        <TextBlock Grid.Row="12" Style="{StaticResource label}" Text="Magiekunde (Dämonologie)" Margin="16,0,0,0"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="1">
+        <TextBlock Grid.Row="8" Style="{StaticResource label}" Text="Magiekunde (Dämonologie)" Margin="16,0,0,0" Grid.Column="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="3">
             <Button Command="{Binding MagiekundeProbe}">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
             </Button>
@@ -269,10 +265,10 @@
                 </ContentControl.Style>
             </ContentControl>
         </StackPanel>
-        <TextBlock Grid.Row="12" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding InvocatioIntegraMagiekundeRufMod}"/>
+        <TextBlock Grid.Row="8" Grid.Column="4" Style="{StaticResource mod}" Text="{Binding InvocatioIntegraMagiekundeRufMod}"/>
 
-        <TextBlock Grid.Row="13" Style="{StaticResource label}" Text="Malen und Zeichnen" Margin="16,0,0,0"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.Column="1">
+        <TextBlock Grid.Row="9" Style="{StaticResource label}" Text="Malen und Zeichnen" Margin="16,0,0,0" Grid.Column="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="3">
             <Button Command="{Binding MalenProbe}">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
             </Button>
@@ -310,10 +306,23 @@
                 </ContentControl.Style>
             </ContentControl>
         </StackPanel>
-        <TextBlock Grid.Row="13" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding InvocatioIntegraMalenRufMod}"/>
+        <TextBlock Grid.Row="9" Grid.Column="4" Style="{StaticResource mod}" Text="{Binding InvocatioIntegraMalenRufMod}"/>
 
-        <CheckBox Grid.Row="14" Content="Blutmagie" IsChecked="{Binding Blutmagie}"/>
-        <ComboBox Grid.Row="14" Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding Opfer}" IsEnabled="{Binding Blutmagie}" Visibility="{Binding Blutmagie}">
+        <CheckBox Grid.Row="10" Content="Blutmagie" IsChecked="{Binding Blutmagie}" Grid.Column="2"/>
+        <ComboBox Grid.Row="10" Grid.Column="3" SelectedIndex="0" SelectedItem="{Binding Opfer}"
+                  Visibility="{Binding RelativeSource={RelativeSource Self},Path=IsEnabled,Converter={StaticResource BooleanToVisibilityConverter1}}">
+            <ComboBox.Style>
+                <Style TargetType="ComboBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Blutmagie}" Value="False">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding InvocatioIntegra}" Value="False">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Style>
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
@@ -322,15 +331,15 @@
             <x:StaticExtension Member="vm:Opfer.Tieropfer"/>
             <x:StaticExtension Member="vm:Opfer.IntelligentesWesen"/>
         </ComboBox>
-        <TextBlock Text="{Binding BlutmagieHerrschMod}" Grid.Row="14" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding BlutmagieHerrschMod}" Grid.Row="10" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Sternenkonstellation" Grid.Row="15" Style="{StaticResource label}"/>
-        <General:IntBox MinValue="-3" MaxValue="7" Value="{Binding Sterne}" ShowButtons="True" Grid.Row="15" Grid.Column="1"/>
-        <TextBlock Text="{Binding SterneRufMod}" Grid.Row="15" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding SterneHerrschMod}" Grid.Row="15" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Sternenkonstellation" Grid.Row="11" Style="{StaticResource label}" Grid.Column="2"/>
+        <General:IntBox MinValue="-3" MaxValue="7" Value="{Binding Sterne}" ShowButtons="True" Grid.Row="11" Grid.Column="3"/>
+        <TextBlock Text="{Binding SterneRufMod}" Grid.Row="11" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding SterneHerrschMod}" Grid.Row="11" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Ort" Grid.Row="16" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="16" Grid.Column="1" SelectedIndex="7" SelectedValue="{Binding Ort}">
+        <TextBlock Text="Ort" Grid.Row="12" Style="{StaticResource label}" Grid.Column="2"/>
+        <ComboBox Grid.Row="12" Grid.Column="3" SelectedIndex="7" SelectedValue="{Binding Ort}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text"/>
@@ -399,19 +408,62 @@
             <System:Int32>-6</System:Int32>
             <System:Int32>-7</System:Int32>
         </ComboBox>
-        <TextBlock Text="{Binding OrtRufMod}" Grid.Row="16" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding OrtHerrschMod}" Grid.Row="16" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding OrtRufMod}" Grid.Row="12" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding OrtHerrschMod}" Grid.Row="12" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Donaria" Grid.Row="17" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="17" Grid.Column="1">
+        <TextBlock Text="Donaria" Grid.Row="13" Style="{StaticResource label}" Grid.Column="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.Column="3">
             <General:IntBox MinValue="-7" MaxValue="+7" Value="{Binding DonariaRuf}" ShowButtons="True"/>
             <General:IntBox MinValue="-2" MaxValue="0" Value="{Binding DonariaHerrsch}" ShowButtons="True"/>
         </StackPanel>
-        <TextBlock Text="{Binding DonariaRuf}" Grid.Row="17" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding DonariaHerrsch}" Grid.Row="17" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding DonariaRuf}" Grid.Row="13" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding DonariaHerrsch}" Grid.Row="13" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="18" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="18" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding BezahlungHerrschMod}">
+        <TextBlock Text="Übrige Punkte aus Beschwörung" Grid.Row="14" Style="{StaticResource label}" Grid.Column="2"/>
+        <General:IntBox ShowButtons="True" MinValue="0" Value="{Binding Beschwörungspunkte}" Grid.Row="14" Grid.Column="3"/>
+        <TextBlock Text="{Binding Beschwörungsbonus}" Grid.Row="14" Grid.Column="5" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Gesinnung des Befehls" Grid.Row="15" Style="{StaticResource label}" Grid.Column="2"/>
+        <General:IntBox Value="{Binding BefehlHerrschMod}" MinValue="-3" MaxValue="+7" ShowButtons="True" Grid.Row="15" Grid.Column="3"/>
+        <TextBlock Text="{Binding BefehlHerrschMod}" Grid.Row="15" Grid.Column="5" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Dauer der Ausführung" Grid.Row="16" Style="{StaticResource label}" Grid.Column="2"/>
+        <ComboBox Grid.Row="16" Grid.Column="3" SelectedIndex="0" SelectedValue="{Binding DauerHerrschMod}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Name="text"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="0">
+                            <Setter TargetName="text" Property="Text" Value="bis ein Kampf (ca. 50 KR)"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="1">
+                            <Setter TargetName="text" Property="Text" Value="bis eine SR"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="2">
+                            <Setter TargetName="text" Property="Text" Value="bis eine Stunde"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="3">
+                            <Setter TargetName="text" Property="Text" Value="bis 8 Stunden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="4">
+                            <Setter TargetName="text" Property="Text" Value="bis zum nächsten Sonnenauf- oder -untergang&#x0a;(je nachdem was später eintritt)"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <System:Int32>0</System:Int32>
+            <System:Int32>1</System:Int32>
+            <System:Int32>2</System:Int32>
+            <System:Int32>3</System:Int32>
+            <System:Int32>4</System:Int32>
+        </ComboBox>
+        <TextBlock Text="{Binding DauerHerrschMod}" Grid.Row="16" Grid.Column="5" Style="{StaticResource mod}"/>
+
+        <CheckBox Grid.Row="17" Content="Affinität zu Dämonen" IsChecked="{Binding Affinität}" Grid.Column="2"/>
+        <TextBlock Text="{Binding AffinitätHerrschMod}" Grid.Row="17" Grid.Column="5" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="18" Style="{StaticResource label}" Grid.Column="2"/>
+        <ComboBox Grid.Row="18" Grid.Column="3" SelectedIndex="0" SelectedValue="{Binding BezahlungHerrschMod}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text" Text="Keine"/>
@@ -433,39 +485,190 @@
             <System:Int32>-2</System:Int32>
             <System:Int32>-3</System:Int32>
         </ComboBox>
-        <TextBlock Text="{Binding BezahlungHerrschMod}" Grid.Row="18" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding BezahlungHerrschMod}" Grid.Row="18" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Sonstiges" Grid.Row="19" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="19" Grid.Column="1">
+        <TextBlock Text="Sonstiges" Grid.Row="19" Style="{StaticResource label}" Grid.Column="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="19" Grid.Column="3">
             <General:IntBox ShowButtons="True" Value="{Binding SonstigesRufMod}"/>
             <General:IntBox ShowButtons="True" Value="{Binding SonstigesHerrschMod}"/>
         </StackPanel>
-        <TextBlock Text="{Binding SonstigesRufMod}" Grid.Row="19" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding SonstigesHerrschMod}" Grid.Row="19" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding SonstigesRufMod}" Grid.Row="19" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding SonstigesHerrschMod}" Grid.Row="19" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Gesamt" Grid.Row="20" Style="{StaticResource label}"/>
-        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="20" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="20" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Gesamt" Grid.Row="20" Style="{StaticResource label}" Grid.Column="2"/>
+        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="20" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="20" Grid.Column="5" Style="{StaticResource mod}"/>
 
-        <Button Grid.Row="21" Grid.Column="2" Command="{Binding Beschwören}" ToolTip="{Binding Zauber}">
-            <Button.Content>
-                <DockPanel Margin="6">
-                    <TextBlock Text="Beschwören" HorizontalAlignment="Center" FontWeight="Bold" DockPanel.Dock="Top"/>
-                    <TextBlock Text="{Binding Zauber}" DockPanel.Dock="Left"/>
-                    <TextBlock Text="{Binding ZauberWert}" DockPanel.Dock="Right" Margin="4,0,0,0"/>
-                </DockPanel>
-            </Button.Content>
-        </Button>
-        <Button Grid.Row="21" Grid.Column="3" Command="{Binding Beherrschen}" ToolTip="{Binding KontrollFormel}">
-            <Button.Content>
-                <DockPanel Margin="6">
-                    <TextBlock Text="Beherrschen" HorizontalAlignment="Center" FontWeight="Bold" DockPanel.Dock="Top"/>
-                    <TextBlock Text="Kontrollwert" DockPanel.Dock="Left"/>
-                    <TextBlock Text="{Binding KontrollWert}" DockPanel.Dock="Right" Margin="4,0,0,0"/>
-                </DockPanel>
-            </Button.Content>
-        </Button>
+        <Rectangle Grid.Column="1" Grid.RowSpan="22" Width="2" Margin="4,0,4,0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#00000000"/>
+                    <GradientStop Offset="0.5" Color="Black"/>
+                    <GradientStop Offset="1" Color="#00000000"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
 
-        <TextBox Text="{Binding Ergebnis,Mode=OneWay}" IsReadOnly="True" Grid.Row="22" Grid.ColumnSpan="4" TextWrapping="WrapWithOverflow"/>
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.RowSpan="22">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style x:Key="headline" TargetType="Rectangle">
+                    <Setter Property="Height" Value="2"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="Fill">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Offset="0" Color="Black"/>
+                                <GradientStop Offset="1" Color="#00000000"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.3"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </StackPanel.Resources>
+
+            <TextBlock Text="Schritt 1: Beschwören" FontSize="20" HorizontalAlignment="Left" x:Name="header"/>
+            <Rectangle Margin="0,4,0,0" Width="{Binding ElementName=header,Path=ActualWidth}" Style="{StaticResource headline}"/>
+
+            <!--Nichts ausgewählt-->
+            <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow"
+                       Text="Wähle einen Beschwörer, und einen Dämon aus. Trage anschließend die Beschwörungsumstände ein.">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Held}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding BeschworenesWesen}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <!--Beschwören-->
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Style>
+                    <Style TargetType="FrameworkElement">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Held}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding BeschworenesWesen}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow" x:Name="beschwörungsVorschau">
+                    <Run Text="{Binding Held.Name}"/> möchte also einen <Run Text="{Binding BeschworenesWesen.Name}"/> rufen?
+                    <LineBreak/>
+                    Zum Beschwören wird eine Zauberprobe auf
+                    <Bold><Run Text="{Binding Zauber}"/> (<Run Text="{Binding ZauberWert,Mode=OneWay}"/>)+<Run Text="{Binding GesamtRufMod,Mode=OneWay}"/></Bold>
+                    gewürfelt. Stelle vorher sicher dass alle relevanten Einstellungen gemacht wurden.
+                </TextBlock>
+                <Button Command="{Binding Beschwören}" Content="Beschwören" Margin="0,4,0,0" HorizontalAlignment="Center"/>
+                <TextBlock Margin="0,4,0,0" TextDecorations="Underline">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BeschwörungGelungen}" Value="True">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="Text" Value="Das gewünschte Wesen erscheint"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding BeschwörungGelungen}" Value="False">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="Text" Value="Die Beschwörung ist leider misslungen"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+
+            <!--Beschwörung misslungen-->
+            <StackPanel Orientation="Vertical" Margin="0,4,0,0">
+                <StackPanel.Style>
+                    <Style TargetType="FrameworkElement">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BeschwörungGelungen}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Button HorizontalAlignment="Center" Content="Würfle um zu bestimmen was nun geschieht" Command="{Binding WürfleBeschwörungMisslungen}"/>
+                <TextBlock Text="{Binding BeschwörungMisslungenErgebnis}" Foreground="Red" TextWrapping="WrapWithOverflow"/>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Style>
+                    <Style TargetType="FrameworkElement">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BeschwörungGelungen}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="BeschwörungMisslungen">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <TextBlock Text="Schritt 2: Beherrschen" FontSize="20" HorizontalAlignment="Left" x:Name="header2"/>
+                <Rectangle Margin="0,4,0,0" Width="{Binding ElementName=header2,Path=ActualWidth}" Style="{StaticResource headline}"/>
+
+                <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow">
+                    Bei der Beherrschung wird eine Probe auf den <Bold ToolTip="{Binding KontrollFormel,Mode=OneWay}">Kontrollwert (<Run Text="{Binding KontrollWert,Mode=OneWay}"/>) + <Run Text="{Binding GesamtHerrschMod,Mode=OneWay}"/></Bold> abgelegt.<LineBreak/>
+                    Trage in die entsprechenden Felder die relevanten Informationen für die Beherrschung ein bevor du fortfährst.
+                </TextBlock>
+                <Button Content="Beherrschen" HorizontalAlignment="Center" Command="{Binding Beherrschen}" Margin="0,4,0,0"/>
+                <TextBlock Margin="0,4,0,0" TextDecorations="Underline">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BeherrschungGelungen}" Value="True">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="Text" Value="Das Wesen erfüllt den Dienst"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding BeherrschungGelungen}" Value="False">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="Text" Value="Die Beherrschung ist leider fehlgeschlagen"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0,4,0,0">
+                <StackPanel.Style>
+                    <Style TargetType="FrameworkElement">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BeherrschungGelungen}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Button HorizontalAlignment="Center" Content="Würfle um zu bestimmen was nun geschieht" Command="{Binding WürfleBeherrschungMisslungen}"/>
+                <TextBlock Text="{Binding BeherrschungMisslungenErgebnis}" Foreground="Red" TextWrapping="WrapWithOverflow"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
+
 </UserControl>

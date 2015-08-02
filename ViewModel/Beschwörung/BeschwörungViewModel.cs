@@ -17,16 +17,26 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public BeschwörungViewModel()
             : base(View.General.ViewHelper.ShowProbeDialog)
         {
+            //Verfügbare Wesen laden
             Wesen = loadWesen();
-            beschwören = new Base.CommandBase(beschwöre, null);
-            beherrschen = new Base.CommandBase(beherrsche, null);
+            //Commands initialisieren
+            beschwören = new Base.CommandBase((o) => beschwöre(), (o) => beschwörungMöglich());
+            beherrschen = new Base.CommandBase((o) => beherrsche(), (o)=> beherrschungMöglich());
             resetCmd = new Base.CommandBase((o) => reset(), null);
+            //Standardwerte setzen
             reset();
         }
 
+        /// <summary>
+        /// Lädt die Verfügbaren Wesen, welche beschworen werden können
+        /// </summary>
+        /// <returns></returns>
         protected abstract List<GegnerBase> loadWesen();
 
         private Base.CommandBase resetCmd;
+        /// <summary>
+        /// Setzt alle Eigenschaften zurück
+        /// </summary>
         public Base.CommandBase Reset
         {
             get { return resetCmd; }
@@ -34,6 +44,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected virtual void reset()
         {
+            //Hier wird alle auf Standard gesetzt
             Beschwörungsschwierigkeit = Kontrollschwierigkeit = 0;
             Beschwörungspunkte = 0;
             WahrerName = 0;
@@ -47,30 +58,46 @@ namespace MeisterGeister.ViewModel.Beschwörung
             DonariaRuf = DonariaHerrsch = 0;
             BezahlungHerrschMod = 0;
             SonstigesRufMod = SonstigesHerrschMod = 0;
-            BeschworenesWesen = null;
-            Held = null;
-            Zauber = null;
+            //Held = null;
+            //Zauber = null;
             Status = BeschwörungsStatus.Beschwören;
+
+            //Hier werden Held und Wesen nochmal gesetzt um die Standardwerte zu laden
+            Held = Held;
+            BeschworenesWesen = BeschworenesWesen;
         }
 
         #region Proben
 
         private Base.CommandBase beschwören;
+        /// <summary>
+        /// Führt mit den aktuellen Einstellungen eine Beschwörungsprobe durch
+        /// </summary>
         public Base.CommandBase Beschwören
         {
             get { return beschwören; }
         }
 
         private Base.CommandBase beherrschen;
+        /// <summary>
+        /// Führt mit den aktuellen Einstellungen eine Beherrschungsprobe durch
+        /// </summary>
         public Base.CommandBase Beherrschen
         {
             get { return beherrschen; }
         }
 
-        private void beschwöre(object obj)
+        protected virtual bool beschwörungMöglich()
+        {
+            return Status == BeschwörungsStatus.Beschwören;
+        }
+
+        private void beschwöre()
         {
             if (zauber != null)
             {
+                //Der entsprechende Zauber wird auf den richtigen Wert gesetzt und für die Probe modifiziert
+                //Der Fertigkeitswert ist wichtig weil er sich z.B. durch InvocatioIntegra erhöhen kann
                 zauber.Fertigkeitswert = ZauberWert;
                 zauber.Modifikator = GesamtRufMod;
                 var erg = ShowProbeDialog(zauber, held);
@@ -78,43 +105,67 @@ namespace MeisterGeister.ViewModel.Beschwörung
                     return;
                 if (!erg.Gelungen)
                 {
+                    //Falls es nicht geklappt hat regelt u.U. die konkrete Klasse wie es weitergeht
                     beschwörungMisslungen(erg);
                 }
                 else
                 {
+                    //Falls es klappt freuen wir und über evtl. übrige Punkte und machen mit der Beherrschung weiter
                     Beschwörungspunkte = erg.Übrig;
                     Status = BeschwörungsStatus.Beherrschen;
-                    Ergebnis = "Das Wesen erscheint. Versuche es zu beherrschen.";
                 }
             }
         }
 
-        protected abstract void beschwörungMisslungen(ProbenErgebnis erg);
+        /// <summary>
+        /// Wird aufgerufen wenn die Beschwörung misslingt
+        /// </summary>
+        /// <param name="erg"></param>
+        protected virtual void beschwörungMisslungen(ProbenErgebnis erg)
+        {
+            Status = BeschwörungsStatus.BeschwörungMisslungen;
+        }
 
-        private void beherrsche(object obj)
+        protected virtual bool beherrschungMöglich()
+        {
+            return Status == BeschwörungsStatus.Beherrschen;
+        }
+
+        private void beherrsche()
         {
             if (zauber != null)
             {
+                //Hier wird eine Eigenschaftsprobe auf den Kontrollwert abgelegt
                 Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
                 kontrollwert.Abkürzung = "KW";
                 kontrollwert.Fertigkeitswert = 0;
+                //Der Kontrollwert berechnet sich je nach beschworener Wesenheit anders
                 kontrollwert.Wert = KontrollWert;
                 kontrollwert.WerteNamen = "Kontrollwert";
                 kontrollwert.Modifikator = GesamtHerrschMod;
                 var erg = ShowProbeDialog(kontrollwert, held);
                 if (erg.Gelungen)
                 {
-                    Ergebnis = "Das Wesen erfüllt den Dienst";
+                    //Wenn klappt freuen wird uns und sind fertig
+                    Status = BeschwörungsStatus.BeherrschungGelungen;
                 }
                 else
                 {
+                    //Falls es nicht klappt regelt die konkrete Implementierung was nun passieren soll
+                    //Im einfachsten Fall passiert gar nichts
                     beherrschungMisslungen(erg);
                 }
-                Status = BeschwörungsStatus.Beschwören;
             }
         }
 
-        protected abstract void beherrschungMisslungen(ProbenErgebnis erg);
+        /// <summary>
+        /// Wird aufgerufen wenn die Beherrschungsprobe nicht geklappt hat
+        /// </summary>
+        /// <param name="erg"></param>
+        protected virtual void beherrschungMisslungen(ProbenErgebnis erg)
+        {
+            Status = BeschwörungsStatus.BeherrschungMisslungen;
+        }
 
         #endregion
 
@@ -149,14 +200,53 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected virtual void checkHeld()
         {
-
         }
 
+        private bool? beschwörungGelungen = null;
+        public bool? BeschwörungGelungen
+        {
+            get { return beschwörungGelungen; }
+            set { Set(ref beschwörungGelungen, value); }
+        }
+
+        private bool? beherrschungGelungen = null;
+        public bool? BeherrschungGelungen
+        {
+            get { return beherrschungGelungen; }
+            set { Set(ref beherrschungGelungen, value); }
+        }
+
+
+
         private BeschwörungsStatus status;
-        public BeschwörungsStatus Status
+        public virtual BeschwörungsStatus Status
         {
             get { return status; }
-            protected set { Set(ref status, value); }
+            protected set
+            {
+                switch (value)
+                {
+                    case BeschwörungsStatus.Beschwören:
+                        BeschwörungGelungen = BeherrschungGelungen = null;
+                        break;
+                    case BeschwörungsStatus.BeschwörungMisslungen:
+                        BeschwörungGelungen = false;
+                        break;
+                    case BeschwörungsStatus.Beherrschen:
+                        if (status == BeschwörungsStatus.Beschwören)
+                            BeschwörungGelungen = true;
+                        break;
+                    case BeschwörungsStatus.BeherrschungMisslungen:
+                        BeherrschungGelungen = false;
+                        break;
+                    case BeschwörungsStatus.BeherrschungGelungen:
+                        BeherrschungGelungen = true;
+                        break;
+                }
+                Set(ref status, value);
+                Beschwören.Invalidate();
+                Beherrschen.Invalidate();
+            }
         }
 
         private Model.Zauber zauber;
@@ -489,16 +579,16 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        private string ergebnis;
         /// <summary>
-        /// Ergebnis, welches an der GUI angezeigt wird
+        /// Gesamtkosten der Beschwörung
         /// </summary>
-        public string Ergebnis
+        public virtual int GesamtAstralKosten
         {
-            get { return ergebnis; }
-            protected set { Set(ref ergebnis, value); }
+            get
+            {
+                return 0;
+            }
         }
-
 
         #endregion
 
@@ -524,6 +614,9 @@ namespace MeisterGeister.ViewModel.Beschwörung
     public enum BeschwörungsStatus
     {
         Beschwören,
-        Beherrschen
+        BeschwörungMisslungen,
+        Beherrschen,
+        BeherrschungMisslungen,
+        BeherrschungGelungen
     }
 }
