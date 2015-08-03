@@ -6,6 +6,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
 using System.Globalization;
+using MeisterGeister.Net;
 
 namespace MeisterGeister
 {
@@ -60,7 +61,7 @@ namespace MeisterGeister
         /// </summary>
         public static bool INTERN
         {
-            get 
+            get
             {
                 if (_INTERN == null)
                     _INTERN = Logic.Einstellung.Einstellungen.GetEinstellung<bool>("INTERN");
@@ -103,15 +104,23 @@ namespace MeisterGeister
             private set;
         }
 
+        public static Server WebServer
+        {
+            get;
+            private set;
+        }
+
         private static DgSuche.Ortsmarke standort = null;
         public static DgSuche.Ortsmarke Standort
         {
-            get {
+            get
+            {
                 if (standort == null)
                     standort = new DgSuche.Ortsmarke(Logic.Einstellung.Einstellungen.Standort);
-                return standort; 
+                return standort;
             }
-            set { 
+            set
+            {
                 standort = value;
                 OnStandortChanged();
             }
@@ -120,7 +129,8 @@ namespace MeisterGeister
         public static string HeldenRegion
         {
             get { return standort.Name; }
-            set { 
+            set
+            {
                 standort.Name = value;
                 OnStandortChanged();
             }
@@ -140,7 +150,8 @@ namespace MeisterGeister
         public static double HeldenLat
         {
             get { return Global._heldenLat; }
-            set { 
+            set
+            {
                 Global._heldenLat = value;
                 Standort.Latitude = _heldenLat;
                 //OnStandortChanged();
@@ -154,12 +165,12 @@ namespace MeisterGeister
         {
             get { return _selectedHeld; }
             set
-            {                                    
+            {
                 // Falls der gleiche Held erneut gesetzt werden soll
                 // -> abbrechen, da keine Änderung erfolgt
                 if (_selectedHeld == value)
                     return;
-                
+
                 // Event vor der Held-Änderung werfen
                 if (HeldSelectionChanging != null)
                     HeldSelectionChanging(null, new EventArgs());
@@ -246,20 +257,13 @@ namespace MeisterGeister
             Logger.PerformanceLogEnd(log);
 
             //webserver
-            try
-            {
-                Net.Web.RequestProcessor.Start();
-            }
-            catch (Exception)
-            {
-                // System.AccessViolationException unterdrücken
-                // http://moonvega.pmhost.de/trac/ticket/550
-            }
+            WebServer = new Server();
+            WebServer.Start();
         }
 
         public static void CleanUp()
         {
-            Net.Web.RequestProcessor.Stop();
+            WebServer.Stop();
         }
 
         /// <summary>
