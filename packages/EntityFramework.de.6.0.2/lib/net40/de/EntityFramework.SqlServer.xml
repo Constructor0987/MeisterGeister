@@ -1,0 +1,988 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>EntityFramework.SqlServer</name>
+  </assembly>
+  <members>
+    <member name="T:System.Data.Entity.SqlServer.SqlAzureExecutionStrategy">
+      <summary>Eine <see cref="T:System.Data.Entity.Infrastructure.IDbExecutionStrategy" />, die Wiederholungsversuche für Aktionen ausführt, bei denen durch vorübergehende SQL Azure-Fehler Ausnahmen ausgelöst wurden.</summary>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlAzureExecutionStrategy.#ctor">
+      <summary>Erstellt eine neue Instanz von <see cref="T:System.Data.Entity.SqlServer.SqlAzureExecutionStrategy" />.</summary>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlAzureExecutionStrategy.#ctor(System.Int32,System.TimeSpan)">
+      <summary>Erstellt eine neue Instanz von <see cref="T:System.Data.Entity.SqlServer.SqlAzureExecutionStrategy" /> mit den angegebenen Einschränkungen für die Anzahl von Wiederholungen und die Verzögerung zwischen Wiederholungen.</summary>
+      <param name="maxRetryCount">Die maximale Anzahl von Wiederholungsversuchen.</param>
+      <param name="maxDelay">Die maximale Verzögerung in Millisekunden zwischen Wiederholungen.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlAzureExecutionStrategy.ShouldRetryOn(System.Exception)">
+      <summary>Ermittelt, ob für die angegebene Ausnahme eine Wiederholung versucht werden sollte.</summary>
+      <returns>TRUE, wenn für die angegebene Ausnahme eine Wiederholung versucht werden sollte; andernfalls FALSE.</returns>
+      <param name="exception">Die Ausnahme, bei der die Aktion wiederholt wird.</param>
+    </member>
+    <member name="T:System.Data.Entity.SqlServer.SqlFunctions">
+      <summary>Enthält Funktionsstubs, die SqlServer-Methoden in Linq to Entities verfügbar macht.</summary>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Acos(System.Nullable{System.Decimal})">
+      <summary>Eine mathematische Funktion, die für den im numerischen Wert angegebenen Kosinus den Winkel im Bogenmaß zurückgibt.Dieser Winkel wird als Arkuskosinus bezeichnet.</summary>
+      <returns>Ein im Bogenmaß angegebener Winkel.</returns>
+      <param name="arg1">Der Kosinus eines Winkels.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Acos(System.Nullable{System.Double})">
+      <summary>Eine mathematische Funktion, die für den im numerischen Wert angegebenen Kosinus den Winkel im Bogenmaß zurückgibt.Dieser Winkel wird als Arkuskosinus bezeichnet.</summary>
+      <returns>Der Winkel im Bogenmaß, definiert durch den Kosinus im Eingabewert.</returns>
+      <param name="arg1">Der Kosinus eines Winkels.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Ascii(System.String)">
+      <summary>Gibt den ASCII-Codewert für das äußerste linke Zeichen eines Zeichenausdrucks zurück.</summary>
+      <returns>Der ASCII-Code des ersten Zeichens in der Eingabezeichenfolge.</returns>
+      <param name="arg">Eine gültige Zeichenfolge.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Asin(System.Nullable{System.Decimal})">
+      <summary>Eine mathematische Funktion, die für den im numerischen Wert angegebenen Sinus den Winkel im Bogenmaß zurückgibt.Dieser Winkel wird als Arkussinus bezeichnet.</summary>
+      <returns>Ein im Bogenmaß angegebener Winkel.</returns>
+      <param name="arg">Der Sinus eines Winkels.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Asin(System.Nullable{System.Double})">
+      <summary>Eine mathematische Funktion, die für den im numerischen Wert angegebenen Sinus den Winkel im Bogenmaß zurückgibt.Dieser Winkel wird als Arkussinus bezeichnet.</summary>
+      <returns>Ein im Bogenmaß angegebener Winkel.</returns>
+      <param name="arg">Der Sinus eines Winkels.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Atan(System.Nullable{System.Decimal})">
+      <summary>Eine mathematische Funktion, die für den im numerischen Wert angegebenen Tangens den Winkel im Bogenmaß zurückgibt.Dieser Winkel wird als Arkustangens bezeichnet.</summary>
+      <returns>Ein im Bogenmaß angegebener Winkel.</returns>
+      <param name="arg">Der Tangens eines Winkels.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Atan(System.Nullable{System.Double})">
+      <summary>Eine mathematische Funktion, die für den im numerischen Wert angegebenen Tangens den Winkel im Bogenmaß zurückgibt.Dieser Winkel wird als Arkustangens bezeichnet.</summary>
+      <returns>Ein im Bogenmaß angegebener Winkel.</returns>
+      <param name="arg">Der Tangens eines Winkels.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Atan2(System.Nullable{System.Decimal},System.Nullable{System.Decimal})">
+      <summary>Gibt den positiven Winkel im Bogenmaß zwischen der positiven x-Achse und dem Strahl vom Ursprung durch den Punkt (x, y) zurück, wobei x und y die beiden angegebenen numerischen Werte sind.Der erste an die Funktion übergebene Parameter ist der y-Wert, und der zweite Parameter ist der x-Wert.</summary>
+      <returns>Ein im Bogenmaß angegebener Winkel.</returns>
+      <param name="arg1">Die y-Koordinate eines Punkts.</param>
+      <param name="arg2">Die x-Koordinate eines Punkts.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Atan2(System.Nullable{System.Double},System.Nullable{System.Double})">
+      <summary>Gibt den positiven Winkel im Bogenmaß zwischen der positiven x-Achse und dem Strahl vom Ursprung durch den Punkt (x, y) zurück, wobei x und y die beiden angegebenen numerischen Werte sind.Der erste an die Funktion übergebene Parameter ist der y-Wert, und der zweite Parameter ist der x-Wert.</summary>
+      <returns>Ein im Bogenmaß angegebener Winkel.</returns>
+      <param name="arg1">Die y-Koordinate eines Punkts.</param>
+      <param name="arg2">Die x-Koordinate eines Punkts.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Char(System.Nullable{System.Int32})">
+      <summary>Gibt das Zeichen zurück, das dem angegebenen ganzzahligen ASCII-Wert entspricht.</summary>
+      <returns>Das dem angegebenen ASCII-Wert entsprechende Zeichen.</returns>
+      <param name="arg">Ein ASCII-Code.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CharIndex(System.Byte[],System.Byte[])">
+      <summary>Gibt die Anfangsposition eines Ausdrucks zurück, der in einem anderen Ausdruck gefunden wurde.</summary>
+      <returns>Die Anfangsposition des Ziels, wenn dieses in toSearch gefunden wurde.</returns>
+      <param name="toSearch">Der zu durchsuchende Zeichenfolgenausdruck.</param>
+      <param name="target">Der zu suchende Zeichenfolgenausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CharIndex(System.Byte[],System.Byte[],System.Nullable{System.Int32})">
+      <summary>Gibt die Anfangsposition eines Ausdrucks zurück, der in einem anderen Ausdruck gefunden wurde.</summary>
+      <returns>Die Anfangsposition des Ziels, wenn dieses in toSearch gefunden wurde.</returns>
+      <param name="toSearch">Der zu durchsuchende Zeichenfolgenausdruck.</param>
+      <param name="target">Der zu suchende Zeichenfolgenausdruck.</param>
+      <param name="startLocation">Die Zeichenposition in toSearch, an der die Suche beginnt.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CharIndex(System.Byte[],System.Byte[],System.Nullable{System.Int64})">
+      <summary>Gibt die Anfangsposition eines Ausdrucks zurück, der in einem anderen Ausdruck gefunden wurde.</summary>
+      <returns>Die Anfangsposition des Ziels, wenn dieses in toSearch gefunden wurde.</returns>
+      <param name="toSearch">Der zu durchsuchende Zeichenfolgenausdruck.</param>
+      <param name="target">Der zu suchende Zeichenfolgenausdruck.</param>
+      <param name="startLocation">Die Zeichenposition in toSearch, an der die Suche beginnt.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CharIndex(System.String,System.String)">
+      <summary>Gibt die Anfangsposition eines Ausdrucks zurück, der in einem anderen Ausdruck gefunden wurde.</summary>
+      <returns>Die Anfangsposition des Ziels, wenn dieses in toSearch gefunden wurde.</returns>
+      <param name="toSearch">Der zu durchsuchende Zeichenfolgenausdruck.</param>
+      <param name="target">Der zu suchende Zeichenfolgenausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CharIndex(System.String,System.String,System.Nullable{System.Int32})">
+      <summary>Gibt die Anfangsposition eines Ausdrucks zurück, der in einem anderen Ausdruck gefunden wurde.</summary>
+      <returns>Die Anfangsposition des Ziels, wenn dieses in toSearch gefunden wurde.</returns>
+      <param name="toSearch">Der zu durchsuchende Zeichenfolgenausdruck.</param>
+      <param name="target">Der zu suchende Zeichenfolgenausdruck.</param>
+      <param name="startLocation">Die Zeichenposition in toSearch, an der die Suche beginnt.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CharIndex(System.String,System.String,System.Nullable{System.Int64})">
+      <summary>Gibt die Anfangsposition eines Ausdrucks zurück, der in einem anderen Ausdruck gefunden wurde.</summary>
+      <returns>Ein <see cref="T:System.Nullable`1" /><see cref="T:System.Int64" />-Wert, der die Anfangsposition des Ziels angibt, wenn dieses in toSearch gefunden wurde.</returns>
+      <param name="toSearch">Der zu durchsuchende Zeichenfolgenausdruck.</param>
+      <param name="target">Der zu suchende Zeichenfolgenausdruck.</param>
+      <param name="startLocation">Die Zeichenposition in toSearch, an der die Suche beginnt.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Byte[])">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Das Zeichenarray, für das die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Byte[],System.Byte[])">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Das Zeichenarray, für das die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Das Zeichenarray, für das die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Byte[],System.Byte[],System.Byte[])">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Das Zeichenarray, für das die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Das Zeichenarray, für das die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Das Zeichenarray, für das die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Boolean})">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.DateTime})">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Decimal})">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Decimal},System.Nullable{System.Decimal})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.Nullable{System.Decimal})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Double})">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Double},System.Nullable{System.Double})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Double})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Guid})">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Guid},System.Nullable{System.Guid})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.Guid},System.Nullable{System.Guid},System.Nullable{System.Guid})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.TimeSpan})">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.String)">
+      <summary>Gibt den Prüfsummenwert zurück, der über das Eingabeargument berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über den Eingabewert berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.String,System.String)">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Checksum(System.String,System.String,System.String)">
+      <summary>Gibt den Prüfsummenwert zurück, der über die Eingabeargumente berechnet wurde.</summary>
+      <returns>Die Prüfsumme, die über die Eingabewerte berechnet wird.</returns>
+      <param name="arg1">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg2">Der Wert, für den die Prüfsumme berechnet wird.</param>
+      <param name="arg3">Der Wert, für den die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.ChecksumAggregate(System.Collections.Generic.IEnumerable{System.Int32})">
+      <summary>Gibt die Prüfsumme der Werte in einer Auflistung zurück.NULL-Werte werden ignoriert.</summary>
+      <returns>Die aus der Eingabeauflistung berechnete Prüfsumme.</returns>
+      <param name="arg">Die Auflistung von Werten, über der die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.ChecksumAggregate(System.Collections.Generic.IEnumerable{System.Nullable{System.Int32}})">
+      <summary>Gibt die Prüfsumme der Werte in einer Auflistung zurück.NULL-Werte werden ignoriert.</summary>
+      <returns>Die aus der Eingabeauflistung berechnete Prüfsumme.</returns>
+      <param name="arg">Die Auflistung von Werten, über der die Prüfsumme berechnet wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Cos(System.Nullable{System.Decimal})">
+      <summary>Gibt den trigonometrischen Kosinus des angegebenen Winkels im Bogenmaß im angegebenen Ausdruck zurück.</summary>
+      <returns>Der trigonometrische Kosinus des angegebenen Winkels.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Cos(System.Nullable{System.Double})">
+      <summary>Gibt den trigonometrischen Kosinus des angegebenen Winkels im Bogenmaß im angegebenen Ausdruck zurück.</summary>
+      <returns>Der trigonometrische Kosinus des angegebenen Winkels.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Cot(System.Nullable{System.Decimal})">
+      <summary>Eine mathematische Funktion, die den trigonometrischen Kotangens des angegebenen Winkels im Bogenmaß zurückgibt.</summary>
+      <returns>Der trigonometrische Kotangens des angegebenen Winkels.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Cot(System.Nullable{System.Double})">
+      <summary>Eine mathematische Funktion, die den trigonometrischen Kotangens des angegebenen Winkels im Bogenmaß zurückgibt.</summary>
+      <returns>Der trigonometrische Kotangens des angegebenen Winkels.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CurrentTimestamp">
+      <summary>Gibt das aktuelle Datum und die aktuelle Uhrzeit zurück.</summary>
+      <returns>Das aktuelle Datum und die aktuelle Uhrzeit.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.CurrentUser">
+      <summary>Gibt den Namen des aktuellen Benutzers zurück.</summary>
+      <returns>Der Name des aktuellen Benutzers.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Byte[])">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Länge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Nullable{System.Boolean})">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Nullable{System.DateTime})">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Nullable{System.Decimal})">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Nullable{System.Double})">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Nullable{System.Guid})">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.Nullable{System.TimeSpan})">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DataLength(System.String)">
+      <summary>Gibt die Anzahl von Bytes zurück, die für die Darstellung eines Ausdrucks verwendet werden.</summary>
+      <returns>Die Anzahl der Bytes im Eingabewert.</returns>
+      <param name="arg">Der Wert, dessen Datenlänge untersucht werden soll.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateAdd(System.String,System.Nullable{System.Double},System.Nullable{System.DateTime})">
+      <summary>Gibt einen neuen datetime-Wert zurück, der durch Addieren eines Intervalls zum angegebenen Datum berechnet wird.</summary>
+      <returns>Das neue Datum.</returns>
+      <param name="datePartArg">Der zu inkrementierende Teil des Datums.</param>
+      <param name="number">Der Wert, mit dem ein Datum um einen angegebenen Betrag inkrementiert wird.</param>
+      <param name="date">Das zu inkrementierende Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateAdd(System.String,System.Nullable{System.Double},System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt einen neuen Datumswert zurück, der durch Addieren eines Intervalls zum angegebenen Datum berechnet wird.</summary>
+      <returns>Der neue Zeitpunkt relativ zur Coordinated Universal Time (UTC), der durch Datum und Uhrzeit dargestellt wird.</returns>
+      <param name="datePartArg">Der zu inkrementierende Teil des Datums.</param>
+      <param name="number">Der Wert, mit dem ein Datum um einen angegebenen Betrag inkrementiert wird.</param>
+      <param name="dateTimeOffsetArg">Das zu inkrementierende Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateAdd(System.String,System.Nullable{System.Double},System.Nullable{System.TimeSpan})">
+      <summary>Gibt einen neuen Zeitspannenwert zurück, der auf der Addition eines Intervalls zur angegebenen Zeitspanne basiert.</summary>
+      <returns>Die neue Zeitspanne.</returns>
+      <param name="datePartArg">Der zu inkrementierende Teil des Datums.</param>
+      <param name="number">Der Wert, mit dem ein Datum um einen angegebenen Betrag inkrementiert wird.</param>
+      <param name="time">Die zu inkrementierende Zeitspanne.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateAdd(System.String,System.Nullable{System.Double},System.String)">
+      <summary>Gibt einen neuen datetime-Wert zurück, der durch Addieren eines Intervalls zum angegebenen Datum berechnet wird.</summary>
+      <returns>Ein <see cref="T:System.Nullable`1" /><see cref="T:System.DateTime" />-Wert, der das neue Datum darstellt.</returns>
+      <param name="datePartArg">Der zu inkrementierende Teil des Datums.</param>
+      <param name="number">Der Wert, mit dem ein Datum um einen angegebenen Betrag inkrementiert wird.</param>
+      <param name="date">Das zu inkrementierende Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTime},System.Nullable{System.TimeSpan})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTime},System.String)">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTime})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.TimeSpan})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.DateTimeOffset},System.String)">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.TimeSpan},System.Nullable{System.DateTime})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.TimeSpan},System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.Nullable{System.TimeSpan},System.String)">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.String,System.Nullable{System.DateTime})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.String,System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.String,System.Nullable{System.TimeSpan})">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Der Wert, der die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben angibt.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateDiff(System.String,System.String,System.String)">
+      <summary>Gibt die Anzahl der angegebenen DatePart-Begrenzungen zurück, die zwischen dem angegebenen Anfangs- und Enddatum überschritten wurden.</summary>
+      <returns>Die Anzahl von Zeitintervallen zwischen den beiden Datumsangaben.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="startDate">Das erste Datum.</param>
+      <param name="endDate">Das zweite Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateName(System.String,System.Nullable{System.DateTime})">
+      <summary>Gibt eine Zeichenfolge zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene Teil des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateName(System.String,System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt eine Zeichenfolge zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene Teil des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateName(System.String,System.Nullable{System.TimeSpan})">
+      <summary>Gibt eine Zeichenfolge zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene Teil des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DateName(System.String,System.String)">
+      <summary>Gibt eine Zeichenfolge zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene Teil des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der zum Berechnen der abweichenden Anzahl von Zeitintervallen verwendet wird.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DatePart(System.String,System.Nullable{System.DateTime})">
+      <summary>Gibt eine ganze Zahl zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene DatePart-Wert des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der den Wert zurückgibt.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DatePart(System.String,System.Nullable{System.DateTimeOffset})">
+      <summary>Gibt eine ganze Zahl zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene DatePart-Wert des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der den Wert zurückgibt.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DatePart(System.String,System.Nullable{System.TimeSpan})">
+      <summary>Gibt eine ganze Zahl zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene DatePart-Wert des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der den Wert zurückgibt.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.DatePart(System.String,System.String)">
+      <summary>Gibt eine ganze Zahl zurück, die den angegebenen DatePart-Wert des angegebenen Datums darstellt.</summary>
+      <returns>Der angegebene DatePart-Wert des angegebenen Datums.</returns>
+      <param name="datePartArg">Der Teil des Datums, der den Wert zurückgibt.</param>
+      <param name="date">Das Datum.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Degrees(System.Nullable{System.Decimal})">
+      <summary>Gibt für einen im Bogenmaß angegebenen Winkel den entsprechenden Winkel in Grad zurück.</summary>
+      <returns>Der in Grad konvertierte angegebene Winkel.</returns>
+      <param name="arg1">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Degrees(System.Nullable{System.Double})">
+      <summary>Gibt für einen im Bogenmaß angegebenen Winkel den entsprechenden Winkel in Grad zurück.</summary>
+      <returns>Der in Grad konvertierte angegebene Winkel.</returns>
+      <param name="arg1">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Degrees(System.Nullable{System.Int32})">
+      <summary>Gibt für einen im Bogenmaß angegebenen Winkel den entsprechenden Winkel in Grad zurück.</summary>
+      <returns>Der in Grad konvertierte angegebene Winkel.</returns>
+      <param name="arg1">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Degrees(System.Nullable{System.Int64})">
+      <summary>Gibt für einen im Bogenmaß angegebenen Winkel den entsprechenden Winkel in Grad zurück.</summary>
+      <returns>Der in Grad konvertierte angegebene Winkel.</returns>
+      <param name="arg1">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Difference(System.String,System.String)">
+      <summary>Gibt einen ganzzahligen Wert zurück, der die Differenz zwischen den SOUNDEX-Werten von zwei Zeichenausdrücken angibt.</summary>
+      <returns>Die SOUNDEX-Differenz zwischen den beiden Zeichenfolgen.</returns>
+      <param name="string1">Die erste Zeichenfolge.</param>
+      <param name="string2">Die zweite Zeichenfolge.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Exp(System.Nullable{System.Decimal})">
+      <summary>Gibt den Exponentialwert des angegebenen Gleitkommaausdrucks zurück.</summary>
+      <returns>Die mit dem Eingabewert potenzierte Konstante e.</returns>
+      <param name="arg">Der Eingabewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Exp(System.Nullable{System.Double})">
+      <summary>Gibt den Exponentialwert des angegebenen Gleitkommaausdrucks zurück.</summary>
+      <returns>Die mit dem Eingabewert potenzierte Konstante e.</returns>
+      <param name="arg">Der Eingabewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.GetDate">
+      <summary>Gibt den aktuellen Timestamp des Datenbanksystems als DateTime-Wert ohne den Zeitzonenoffset der Datenbank zurück.Dieser Wert wird vom Betriebssystem des Computers abgeleitet, auf dem die Instanz von SQL Server ausgeführt wird.</summary>
+      <returns>Der aktuelle Datenbanktimestamp.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.GetUtcDate">
+      <summary>Gibt den aktuellen Timestamp des Datenbanksystems als DateTime-Wert zurück.Der Zeitzonenoffset der Datenbank ist nicht eingeschlossen.Dieser Wert stellt die aktuelle UTC (Coordinated Universal Time)-Zeit dar.Dieser Wert wird vom Betriebssystem des Computers abgeleitet, auf dem die Instanz von SQL Server ausgeführt wird.</summary>
+      <returns>Der aktuelle Datenbank-UTC-Timestamp.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.HostName">
+      <summary>Gibt den Namen der Arbeitsstation zurück.</summary>
+      <returns>Der Name der Arbeitsstation.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.IsDate(System.String)">
+      <summary>Gibt an, ob der Eingabewert ein gültiges Datum oder eine gültige Uhrzeit ist.</summary>
+      <returns>1, wenn der Eingabeausdruck ein gültiger Datums- oder Uhrzeitwert vom Datentyp DateTime oder SmallDateTime ist, andernfalls 0.</returns>
+      <param name="arg">Der überprüfte Wert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.IsNumeric(System.String)">
+      <summary>Gibt an, ob der Eingabewert ein gültiger numerischer Typ ist.</summary>
+      <returns>1, wenn der Eingabeausdruck ein gültiger numerischer Datentyp ist, andernfalls 0.</returns>
+      <param name="arg">Ein Zeichenfolgenausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Log(System.Nullable{System.Decimal})">
+      <summary>Gibt den natürlichen Logarithmus des angegebenen Eingabewerts zurück.</summary>
+      <returns>Der natürliche Logarithmus des Eingabewerts.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Log(System.Nullable{System.Double})">
+      <summary>Gibt den natürlichen Logarithmus des angegebenen Eingabewerts zurück.</summary>
+      <returns>Der natürliche Logarithmus des Eingabewerts.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Log10(System.Nullable{System.Decimal})">
+      <summary>Gibt den Logarithmus des angegebenen Eingabewerts zur Basis 10 zurück.</summary>
+      <returns>Der Logarithmus des Eingabewerts zur Basis 10.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Log10(System.Nullable{System.Double})">
+      <summary>Gibt den Logarithmus des angegebenen Eingabewerts zur Basis 10 zurück.</summary>
+      <returns>Der Logarithmus des Eingabewerts zur Basis 10.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.NChar(System.Nullable{System.Int32})">
+      <summary>Gibt das Unicode-Zeichen mit dem angegebenen ganzzahligen Code gemäß der Definition durch den Unicode-Standard zurück.</summary>
+      <returns>Das Zeichen, das dem Eingabezeichencode entspricht.</returns>
+      <param name="arg">Ein Zeichencode.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.PatIndex(System.String,System.String)">
+      <summary>Gibt für alle gültigen Text- und Zeichenfolgendatentypen die Anfangsposition des ersten Vorkommens eines Musters in einem angegebenen Ausdruck zurück, oder Nullen, wenn das Muster nicht gefunden wird.</summary>
+      <returns>Die Position des ersten Zeichens in der Zeichenfolge, in der das Zeichenfolgenmuster gefunden wurde.</returns>
+      <param name="stringPattern">Ein zu suchendes Zeichenfolgenmuster.</param>
+      <param name="target">Die zu durchsuchende Zeichenfolge.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Pi">
+      <summary>Gibt den konstanten Wert von Pi zurück.</summary>
+      <returns>Der numerische Wert von Pi.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.QuoteName(System.String)">
+      <summary>Gibt eine Unicode-Zeichenfolge mit hinzugefügten Trennzeichen zurück, um die Eingabezeichenfolge als gültigen Bezeichner mit Trennzeichen für Microsoft SQL Server festzulegen.</summary>
+      <returns>Die ursprüngliche Zeichenfolge mit hinzugefügten Klammern.</returns>
+      <param name="stringArg">Der Ausdruck, dem Anführungszeichen hinzugefügt werden.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.QuoteName(System.String,System.String)">
+      <summary>Gibt eine Unicode-Zeichenfolge mit hinzugefügten Trennzeichen zurück, um die Eingabezeichenfolge als gültigen Bezeichner mit Trennzeichen für Microsoft SQL Server festzulegen.</summary>
+      <returns>Die ursprüngliche Zeichenfolge, der die angegebenen Anführungszeichen hinzugefügt sind.</returns>
+      <param name="stringArg">Der Ausdruck, dem Anführungszeichen hinzugefügt werden.</param>
+      <param name="quoteCharacter">Die aus einem Zeichen bestehende Zeichenfolge, die als Trennzeichen verwendet werden soll.Hierbei kann es sich um ein einfaches Anführungszeichen ('), eine linke oder rechte eckige Klammer ([ ]) oder ein doppeltes Anführungszeichen (") handeln.Wenn kein Anführungszeichen angegeben wird, werden eckige Klammern verwendet.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Radians(System.Nullable{System.Decimal})">
+      <summary>Gibt den Bogenmaßwert zurück, der dem angegebenen Winkel in Grad entspricht.</summary>
+      <returns>Der Bogenmaßwert des angegebenen Winkels.</returns>
+      <param name="arg">Der Winkel in Grad.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Radians(System.Nullable{System.Double})">
+      <summary>Gibt den Bogenmaßwert zurück, der dem angegebenen Winkel in Grad entspricht.</summary>
+      <returns>Der Bogenmaßwert des angegebenen Winkels.</returns>
+      <param name="arg">Der Winkel in Grad.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Radians(System.Nullable{System.Int32})">
+      <summary>Gibt den Bogenmaßwert zurück, der dem angegebenen Winkel in Grad entspricht.</summary>
+      <returns>Der Bogenmaßwert des angegebenen Winkels.</returns>
+      <param name="arg">Der Winkel in Grad</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Radians(System.Nullable{System.Int64})">
+      <summary>Gibt den Bogenmaßwert zurück, der dem angegebenen Winkel in Grad entspricht.</summary>
+      <returns>Der Bogenmaßwert des angegebenen Winkels.</returns>
+      <param name="arg">Der Winkel in Grad</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Rand">
+      <summary>Gibt einen pseudozufälligen Gleitkommawert von 0 bis 1, exklusive, zurück.</summary>
+      <returns>Der pseudozufällige Wert.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Rand(System.Nullable{System.Int32})">
+      <summary>Gibt einen pseudozufälligen Gleitkommawert von 0 bis 1, exklusive, zurück.</summary>
+      <returns>Der pseudozufällige Wert.</returns>
+      <param name="seed">Der Startwert.Ist der seed-Wert nicht angegeben, fügt das Datenbankmodul von SQL Server einen Zufallsstartwert hinzu.Für einen angegebenen Startwert wird immer dasselbe Ergebnis zurückgegeben.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Replicate(System.String,System.Nullable{System.Int32})">
+      <summary>Führt eine angegebene Anzahl von Wiederholungen eines Zeichenfolgenwerts aus.</summary>
+      <returns>Die Zielzeichenfolge mit der in count angegebenen Anzahl an Wiederholungen.</returns>
+      <param name="target">Eine gültige Zeichenfolge.</param>
+      <param name="count">Der Wert, der die Anzahl der Wiederholungen des Ziels angibt.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Sign(System.Nullable{System.Decimal})">
+      <summary>Gibt das positive (+1) oder negative Vorzeichen (-1) oder das Vorzeichen 0 (null) des angegebenen Ausdrucks zurück.</summary>
+      <returns>Das Vorzeichen des Eingabeausdrucks.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Sign(System.Nullable{System.Double})">
+      <summary>Gibt das positive (+1) oder negative Vorzeichen (-1) oder das Vorzeichen 0 (null) des angegebenen Ausdrucks zurück.</summary>
+      <returns>Das Vorzeichen des Eingabeausdrucks.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Sign(System.Nullable{System.Int32})">
+      <summary>Gibt das positive (+1) oder negative Vorzeichen (-1) oder das Vorzeichen 0 (null) des angegebenen Ausdrucks zurück.</summary>
+      <returns>Das Vorzeichen des Eingabeausdrucks.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Sign(System.Nullable{System.Int64})">
+      <summary>Gibt das positive (+1) oder negative Vorzeichen (-1) oder das Vorzeichen 0 (null) des angegebenen Ausdrucks zurück.</summary>
+      <returns>Das Vorzeichen des Eingabeausdrucks.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Sin(System.Nullable{System.Decimal})">
+      <summary>Gibt den trigonometrischen Sinus des angegebenen Winkels zurück.</summary>
+      <returns>Der trigonometrische Sinus des Eingabeausdrucks.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Sin(System.Nullable{System.Double})">
+      <summary>Gibt den trigonometrischen Sinus des angegebenen Winkels zurück.</summary>
+      <returns>Der trigonometrische Sinus des Eingabeausdrucks.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.SoundCode(System.String)">
+      <summary>Konvertiert eine alphanumerische Zeichenfolge in einen aus vier Zeichen bestehenden Code (SOUNDEX), um ähnlich klingende Wörter oder Namen zu suchen.</summary>
+      <returns>Der SOUNDEX-Code der Eingabezeichenfolge.</returns>
+      <param name="arg">Eine gültige Zeichenfolge.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Space(System.Nullable{System.Int32})">
+      <summary>Gibt eine Zeichenfolge aus mehreren Leerzeichen zurück.</summary>
+      <returns>Eine Zeichenfolge, die aus der angegebenen Anzahl von Leerzeichen besteht.</returns>
+      <param name="arg1">Die Anzahl der Leerzeichen.Bei einem negativen Wert wird eine NULL-Zeichenfolge zurückgegeben.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Square(System.Nullable{System.Decimal})">
+      <summary>Gibt das Quadrat der angegebenen Zahl zurück.</summary>
+      <returns>Das Quadrat des Eingabewerts.</returns>
+      <param name="arg1">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Square(System.Nullable{System.Double})">
+      <summary>Gibt das Quadrat der angegebenen Zahl zurück.</summary>
+      <returns>Das Quadrat des Eingabewerts.</returns>
+      <param name="arg1">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.SquareRoot(System.Nullable{System.Decimal})">
+      <summary>Gibt die Quadratwurzel der angegebenen Zahl zurück.</summary>
+      <returns>Die Quadratwurzel des Eingabewerts.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.SquareRoot(System.Nullable{System.Double})">
+      <summary>Gibt die Quadratwurzel der angegebenen Zahl zurück.</summary>
+      <returns>Die Quadratwurzel des Eingabewerts.</returns>
+      <param name="arg">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.StringConvert(System.Nullable{System.Decimal})">
+      <summary>Gibt Zeichendaten zurück, die aus numerischen Daten konvertiert wurden.</summary>
+      <returns>Der in eine Zeichenfolge konvertierte Eingabeausdruck.</returns>
+      <param name="number">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.StringConvert(System.Nullable{System.Decimal},System.Nullable{System.Int32})">
+      <summary>Gibt Zeichendaten zurück, die aus numerischen Daten konvertiert wurden.</summary>
+      <returns>Der in eine Zeichenfolge konvertierte Eingabeausdruck.</returns>
+      <param name="number">Ein numerischer Ausdruck.</param>
+      <param name="length">Die Gesamtlänge der Zeichenfolge.Diese schließt Dezimaltrennzeichen, Vorzeichen, Ziffern und Leerzeichen ein.Der Standardwert ist 10.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.StringConvert(System.Nullable{System.Decimal},System.Nullable{System.Int32},System.Nullable{System.Int32})">
+      <summary>Gibt Zeichendaten zurück, die aus numerischen Daten konvertiert wurden.</summary>
+      <returns>Der in eine Zeichenfolge konvertierte Eingabeausdruck.</returns>
+      <param name="number">Ein numerischer Ausdruck.</param>
+      <param name="length">Die Gesamtlänge der Zeichenfolge.Diese schließt Dezimaltrennzeichen, Vorzeichen, Ziffern und Leerzeichen ein.Der Standardwert ist 10.</param>
+      <param name="decimalArg">Die Anzahl der Stellen rechts vom Dezimaltrennzeichen.Der Wert für "decimal" muss kleiner oder gleich 16 sein.Wenn der Wert für "decimal" größer als 16 ist, wird das Ergebnis auf 16 Stellen nach dem Dezimaltrennzeichen gekürzt.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.StringConvert(System.Nullable{System.Double})">
+      <summary>Gibt Zeichendaten zurück, die aus numerischen Daten konvertiert wurden.</summary>
+      <returns>Der in eine Zeichenfolge konvertierte numerische Eingabeausdruck.</returns>
+      <param name="number">Ein numerischer Ausdruck.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.StringConvert(System.Nullable{System.Double},System.Nullable{System.Int32})">
+      <summary>Gibt Zeichendaten zurück, die aus numerischen Daten konvertiert wurden.</summary>
+      <returns>Der in eine Zeichenfolge konvertierte numerische Eingabeausdruck.</returns>
+      <param name="number">Ein numerischer Ausdruck.</param>
+      <param name="length">Die Gesamtlänge der Zeichenfolge.Diese schließt Dezimaltrennzeichen, Vorzeichen, Ziffern und Leerzeichen ein.Der Standardwert ist 10.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.StringConvert(System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Int32})">
+      <summary>Gibt Zeichendaten zurück, die aus numerischen Daten konvertiert wurden.</summary>
+      <returns>Der in eine Zeichenfolge konvertierte numerische Eingabeausdruck.</returns>
+      <param name="number">Ein numerischer Ausdruck.</param>
+      <param name="length">Die Gesamtlänge der Zeichenfolge.Diese schließt Dezimaltrennzeichen, Vorzeichen, Ziffern und Leerzeichen ein.Der Standardwert ist 10.</param>
+      <param name="decimalArg">Die Anzahl der Stellen rechts vom Dezimaltrennzeichen.Der Wert für "decimal" muss kleiner oder gleich 16 sein.Wenn der Wert für "decimal" größer als 16 ist, wird das Ergebnis auf 16 Stellen nach dem Dezimaltrennzeichen gekürzt.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Stuff(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.String)">
+      <summary>Fügt eine Zeichenfolge in eine andere Zeichenfolge ein.Löscht in der Zielzeichenfolge an der Anfangsposition eine angegebene Länge von Zeichen und fügt dann die zweite Zeichenfolge an der Anfangsposition in die Zielzeichenfolge ein.</summary>
+      <returns>Eine Zeichenfolge, die aus den beiden Zeichenfolgen besteht.</returns>
+      <param name="stringInput">Die Zielzeichenfolge.</param>
+      <param name="start">Die Zeichenposition in stringInput, an der die Ersetzungszeichenfolge eingefügt werden soll.</param>
+      <param name="length">Die Anzahl der aus stringInput einzufügenden Zeichen.Wenn die Länge größer als stringInput ist, wird bis zum letzten Zeichen in stringReplacement gelöscht.</param>
+      <param name="stringReplacement">Die in stringInput einzufügende Teilzeichenfolge.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Tan(System.Nullable{System.Decimal})">
+      <summary>Gibt den trigonometrischen Tangens des Eingabeausdrucks zurück.</summary>
+      <returns>Die Tangente des Eingabewinkels.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Tan(System.Nullable{System.Double})">
+      <summary>Gibt den trigonometrischen Tangens des Eingabeausdrucks zurück.</summary>
+      <returns>Die Tangente des Eingabewinkels.</returns>
+      <param name="arg">Ein im Bogenmaß angegebener Winkel.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.Unicode(System.String)">
+      <summary>Gibt den durch den Unicode-Standard definierten ganzzahligen Wert für das erste Zeichen des Eingabeausdrucks zurück.</summary>
+      <returns>Der Zeichencode für das erste Zeichen in der Eingabezeichenfolge.</returns>
+      <param name="arg">Eine gültige Zeichenfolge.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.UserName">
+      <summary>Gibt einen Datenbank-Benutzernamen zurück, der einer angegebenen ID entspricht.</summary>
+      <returns>Der Benutzername.</returns>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlFunctions.UserName(System.Nullable{System.Int32})">
+      <summary>Gibt einen Datenbank-Benutzernamen zurück, der einer angegebenen ID entspricht.</summary>
+      <returns>Der Benutzername.</returns>
+      <param name="arg">Eine Benutzer-ID.</param>
+    </member>
+    <member name="T:System.Data.Entity.SqlServer.SqlProviderServices">
+      <summary>Die DbProviderServices-Implementierung für den SqlClient-Anbieter für SQL Server.</summary>
+    </member>
+    <member name="P:System.Data.Entity.SqlServer.SqlProviderServices.Instance">
+      <summary>Die Singletoninstanz des SqlProviderServices-Typs.</summary>
+    </member>
+    <member name="F:System.Data.Entity.SqlServer.SqlProviderServices.ProviderInvariantName">
+      <summary>Hierbei handelt es sich um die bekannte Zeichenfolge, die in Konfigurationsdateien und codebasierter Konfiguration als "invarianter Anbietername" zum Angeben der Anbieterdienste Microsoft SQL Server für ADO.NET und Entity Framework verwendet wird.</summary>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlProviderServices.RegisterInfoMessageHandler(System.Data.Common.DbConnection,System.Action{System.String})">
+      <summary>Registriert einen Handler zur Verarbeitung von vom Datenbankanbieter stammenden Fehlermeldungen ohne Fehler.</summary>
+      <param name="connection">Die Verbindung, für die Informationen empfangen werden sollen.</param>
+      <param name="handler">Der Handler zur Verarbeitung von Meldungen.</param>
+    </member>
+    <member name="P:System.Data.Entity.SqlServer.SqlProviderServices.TruncateDecimalsToScale">
+      <summary>Legen Sie dieses Flag auf false fest, um ein Abschneiden der <see cref="T:System.Decimal" />-Werte auf die für die Spalte definierten Dezimalstellen zu verhindern.Der Standardwert ist true, wodurch angegeben wird, dass die Dezimalwerte abgeschnitten werden, um Fehler in vorhandenen Anwendungen zu vermeiden, die dieses Verhalten erwarten.</summary>
+    </member>
+    <member name="T:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.#ctor"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.BuildColumnType(System.Data.Entity.Migrations.Model.ColumnModel)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.CreateConnection"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Boolean)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Byte[])"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Collections.Generic.IEnumerable{System.Data.Entity.Migrations.Model.MigrationOperation},System.String)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.AddColumnOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.AddForeignKeyOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.AddPrimaryKeyOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.AlterColumnOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.AlterProcedureOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.CreateIndexOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.CreateProcedureOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.CreateTableOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.DropColumnOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.DropForeignKeyOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.DropIndexOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.DropPrimaryKeyOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.DropProcedureOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.DropTableOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.HistoryOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.MigrationOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.MoveProcedureOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.MoveTableOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.RenameColumnOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.RenameProcedureOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.RenameTableOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.SqlOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Migrations.Model.UpdateDatabaseOperation)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Spatial.DbGeography)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Data.Entity.Spatial.DbGeometry)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.DateTime)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.DateTimeOffset)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Guid)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.Object)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.String)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Generate(System.TimeSpan)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.GenerateCreateSchema(System.String)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.GenerateMakeSystemTable(System.Data.Entity.Migrations.Model.CreateTableOperation,System.Data.Entity.Migrations.Utilities.IndentedTextWriter)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.GenerateProcedureBody(System.Collections.Generic.ICollection{System.Data.Entity.Core.Common.CommandTrees.DbModificationCommandTree},System.String,System.String)"></member>
+    <member name="P:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.GuidColumnDefault"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Name(System.String)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Quote(System.String)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Statement(System.Data.Entity.Migrations.Utilities.IndentedTextWriter,System.String)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Statement(System.String,System.Boolean,System.String)"></member>
+    <member name="M:System.Data.Entity.SqlServer.SqlServerMigrationSqlGenerator.Writer"></member>
+    <member name="T:System.Data.Entity.SqlServer.SqlSpatialFunctions">
+      <summary>Enthält Funktionsstubs, die SqlServer-Methoden in Linq to Entities verfügbar macht.</summary>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.AsTextZM(System.Data.Entity.Spatial.DbGeography)">
+      <summary>Gibt die Open Geospatial Consortium (OGC) Well-Known Text (WKT)-Darstellung einer Geografieinstanz zurück, die mit allen Werten Z (Erhebung) und M (Maßeinheit), die von der Instanz übertragen werden, erweitert wird.</summary>
+      <returns>Die OGC-WKT-Darstellung (Open Geospatial Consortium Well-Known Text) einer Geografieinstanz.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.AsTextZM(System.Data.Entity.Spatial.DbGeometry)">
+      <summary>Gibt die Open Geospatial Consortium (OGC) Well-Known Text (WKT)-Darstellung einer Geografieinstanz zurück, die mit allen Werten Z (Erhebung) und M (Maßeinheit), die von der Instanz übertragen werden, erweitert wird.</summary>
+      <returns>Die OGC-WKT-Darstellung (Open Geospatial Consortium Well-Known Text) einer Geometrieinstanz.</returns>
+      <param name="geometryValue">Der Geometriewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.BufferWithTolerance(System.Data.Entity.Spatial.DbGeography,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean})">
+      <summary>Gibt ein geometrisches Objekt zurück, das die Vereinigung aller Punktwerte darstellt, deren Abstand von einer Geografieinstanz kleiner oder gleich einem angegebenen Wert ist, wodurch eine angegebene Toleranz ermöglicht wird.</summary>
+      <returns>Die Vereinigung aller Punktwerte, deren Abstand zu einer Geografieinstanz kleiner oder gleich einem angegebenen Wert ist.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+      <param name="distance">Der Abstand.</param>
+      <param name="tolerance">Die angegebene Toleranz.</param>
+      <param name="relative">Gibt an, ob der Toleranzwert relativ oder absolut ist.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.BufferWithTolerance(System.Data.Entity.Spatial.DbGeometry,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean})">
+      <summary>Gibt ein geometrisches Objekt zurück, das die Vereinigung aller Punktwerte darstellt, deren Abstand von einer Geometrieinstanz kleiner oder gleich einem angegebenen Wert ist, wodurch eine angegebene Toleranz ermöglicht wird.</summary>
+      <returns>Die Vereinigung aller Punktwerte, deren Abstand zu einer Geometrieinstanz kleiner oder gleich einem angegebenen Wert ist.</returns>
+      <param name="geometryValue">Der Geometriewert.</param>
+      <param name="distance">Der Abstand.</param>
+      <param name="tolerance">Die angegebene Toleranz.</param>
+      <param name="relative">Gibt an, ob der Toleranzwert relativ oder absolut ist.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.EnvelopeAngle(System.Data.Entity.Spatial.DbGeography)">
+      <summary>Gibt den maximalen Winkel zwischen dem Punkt, der von EnvelopeCenter() zurückgegeben wurde, und einem Punkt in der Geografieinstanz in Grad zurück.</summary>
+      <returns>Der maximale Winkel zwischen dem durch EnvelopeCenter() zurückgegeben Punkt.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.EnvelopeCenter(System.Data.Entity.Spatial.DbGeography)">
+      <summary>Gibt einen Punkt zurück, der als Mittelpunkt eines umschließenden Kreises für die Geografieinstanz verwendet werden kann.</summary>
+      <returns>Ein SqlGeography-Wert, der die Position des Mittelpunkts eines umschließenden Kreises angibt.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.Filter(System.Data.Entity.Spatial.DbGeography,System.Data.Entity.Spatial.DbGeography)">
+      <summary>Bietet eine schnelle, ausschließlich indexgestützte Schnittmengenmethode an, um zu bestimmen, ob eine Geografieinstanz eine andere SqlGeography-Instanz überschneidet. Es wird vorausgesetzt, dass ein Index verfügbar ist.</summary>
+      <returns>True, wenn eine Geografieinstanz möglicherweise eine Überschneidung mit einer anderen SqlGeography-Instanz aufweist, andernfalls false.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+      <param name="geographyOther">Eine weitere Geografieinstanz, die mit der Instanz verglichen werden soll, für die ein Filter aufgerufen wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.Filter(System.Data.Entity.Spatial.DbGeometry,System.Data.Entity.Spatial.DbGeometry)">
+      <summary>Bietet eine schnelle, ausschließlich indexgestützte Schnittmengenmethode an, um zu bestimmen, ob eine Geografieinstanz eine andere SqlGeometry-Instanz überschneidet. Es wird vorausgesetzt, dass ein Index verfügbar ist.</summary>
+      <returns>True, wenn eine Geografieinstanz möglicherweise eine Überschneidung mit einer anderen SqlGeography-Instanz aufweist, andernfalls false.</returns>
+      <param name="geometryValue">Der Geometriewert.</param>
+      <param name="geometryOther">Eine weitere Geografieinstanz, die mit der Instanz verglichen werden soll, für die ein Filter aufgerufen wird.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.InstanceOf(System.Data.Entity.Spatial.DbGeography,System.String)">
+      <summary>Überprüft, ob die SqlGeography-Instanz die gleiche wie der angegebene Typ ist.</summary>
+      <returns>Eine Zeichenfolge, die einen der 12 Typen angibt, die in der Geografietyp-Hierarchie verfügbar gemacht werden.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+      <param name="geometryTypeName">Eine Zeichenfolge, die einen der 12 Typen angibt, die in der Geografietyp-Hierarchie verfügbar gemacht werden.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.InstanceOf(System.Data.Entity.Spatial.DbGeometry,System.String)">
+      <summary>Überprüft, ob die SqlGeometry-Instanz die gleiche wie der angegebene Typ ist.</summary>
+      <returns>Eine Zeichenfolge, die einen der 12 Typen angibt, die in der Geografietyp-Hierarchie verfügbar gemacht werden.</returns>
+      <param name="geometryValue">Der Geometriewert.</param>
+      <param name="geometryTypeName">Eine Zeichenfolge, die einen der 12 Typen angibt, die in der Geografietyp-Hierarchie verfügbar gemacht werden.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.MakeValid(System.Data.Entity.Spatial.DbGeometry)">
+      <summary>Konvertiert eine ungültige Geometrieinstanz in eine Geometrieinstanz mit einem gültigen Open Geospatial Consortium (OGC)-Typ.</summary>
+      <returns>Die konvertierte Geometrieinstanz.</returns>
+      <param name="geometryValue">Der Geometriewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.NumRings(System.Data.Entity.Spatial.DbGeography)">
+      <summary>Gibt die Gesamtanzahl der Ringe in einer Polygoninstanz zurück.</summary>
+      <returns>Die Gesamtzahl von Ringen.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.PointGeography(System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32})">
+      <summary>Erstellt aus den x- und y-Werten und einer räumlichen Bezugs-ID (SRID) eine Geografieinstanz, die eine Punktinstanz darstellt.</summary>
+      <returns>Die erstellte Geografieinstanz.</returns>
+      <param name="latitude">Die x-Koordinate des zu generierenden Punkts.</param>
+      <param name="longitude">Die y-Koordinate des zu generierenden Punkts.</param>
+      <param name="spatialReferenceId">Die SRID der Geografieinstanz.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.PointGeometry(System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32})">
+      <summary>Erstellt aus den x- und y-Werten und einer räumlichen Bezugs-ID (SRID) eine Geometrieinstanz, die eine Punktinstanz darstellt.</summary>
+      <returns>Die erstellte Geometrieinstanz.</returns>
+      <param name="xCoordinate">Die x-Koordinate des zu generierenden Punkts.</param>
+      <param name="yCoordinate">Die y-Koordinate des zu generierenden Punkts.</param>
+      <param name="spatialReferenceId">Die SRID der Geografieinstanz.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.Reduce(System.Data.Entity.Spatial.DbGeography,System.Nullable{System.Double})">
+      <summary>Gibt einen Näherungswert der angegebenen Geografieinstanz zurück, die durch Ausführen des Douglas-Peucker-Algorithmus für die Instanz mit der angegebenen Toleranz erzeugt wird.</summary>
+      <returns>Gibt <see cref="T:System.Data.Entity.Spatial.DbGeography" /> zurück.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+      <param name="tolerance">Die Toleranz, die in den Douglas-Peucker-Algorithmus eingegeben werden soll.Die Toleranz muss eine positive Zahl sein.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.Reduce(System.Data.Entity.Spatial.DbGeometry,System.Nullable{System.Double})">
+      <summary>Gibt einen Näherungswert der angegebenen Geografieinstanz zurück, die durch Ausführen des Douglas-Peucker-Algorithmus für die Instanz mit der angegebenen Toleranz erzeugt wird.</summary>
+      <returns>Gibt <see cref="T:System.Data.Entity.Spatial.DbGeometry" /> zurück.</returns>
+      <param name="geometryValue">Der Geometriewert.</param>
+      <param name="tolerance">Die Toleranz, die in den Douglas-Peucker-Algorithmus eingegeben werden soll.Die Toleranz muss eine positive Zahl sein.</param>
+    </member>
+    <member name="M:System.Data.Entity.SqlServer.SqlSpatialFunctions.RingN(System.Data.Entity.Spatial.DbGeography,System.Nullable{System.Int32})">
+      <summary>Gibt den angegebenen Ring der SqlGeography-Instanz zurück: 1 ≤ n ≤ NumRings().</summary>
+      <returns>Ein SqlGeography-Objekt, das den Ring darstellt, der durch "n" angegeben wird.</returns>
+      <param name="geographyValue">Der Geografiewert.</param>
+      <param name="index">Ein int-Ausdruck zwischen 1 und der Anzahl der Ringe in einer Polygonobjektinstanz.</param>
+    </member>
+  </members>
+</doc>
