@@ -166,9 +166,8 @@
     <Reference Include="NVorbis">
       <HintPath>packages\NVorbis.0.8.4.0\lib\NVorbis.dll</HintPath>
     </Reference>
-    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+    <Reference Include="Owin">
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
@@ -180,9 +179,21 @@
       <HintPath>packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -536,12 +547,14 @@
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItemVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\MusikZeileVM.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
+    <Compile Include="ViewModel\Beschwörung\BeschwörungsModifikator.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\DämonenBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\ElementarBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\Element.cs" />
     <Compile Include="ViewModel\Beschwörung\ElementarWesen.cs" />
     <Compile Include="ViewModel\Beschwörung\GeisterBeschwörungViewModel.cs" />
+    <Compile Include="ViewModel\Beschwörung\UntotenBeschwörungsViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
@@ -690,14 +703,38 @@
     <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
       <DependentUpon>SliderRange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Beschwörung\BeschwörungsAnrufung.xaml.cs">
+      <DependentUpon>BeschwörungsAnrufung.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\BeschwörungsKontrolle.xaml.cs">
+      <DependentUpon>BeschwörungsKontrolle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\DämonenBeschwörungsMods.xaml.cs">
+      <DependentUpon>DämonenBeschwörungsMods.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Beschwörung\BeschwörungView.xaml.cs">
       <DependentUpon>BeschwörungView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Beschwörung\DämonenBeschwörungView.xaml.cs">
       <DependentUpon>DämonenBeschwörungView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Beschwörung\ElementarBeschwörungsMods.xaml.cs">
+      <DependentUpon>ElementarBeschwörungsMods.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Beschwörung\ElementarBeschwörungView.xaml.cs">
       <DependentUpon>ElementarBeschwörungView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\GeisterBeschwörungsMods.xaml.cs">
+      <DependentUpon>GeisterBeschwörungsMods.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\GeisterBeschwörungView.xaml.cs">
+      <DependentUpon>GeisterBeschwörungView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\UntotenBeschwörungsMods.xaml.cs">
+      <DependentUpon>UntotenBeschwörungsMods.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\UntotenBeschwörungsView.xaml.cs">
+      <DependentUpon>UntotenBeschwörungsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Bodenplan\BattlegroundView.xaml.cs">
       <DependentUpon>BattlegroundView.xaml</DependentUpon>
@@ -774,6 +811,7 @@
     <Compile Include="View\General\LiteraturControl.xaml.cs">
       <DependentUpon>LiteraturControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\ShowSignConverter.cs" />
     <Compile Include="View\General\SolidBrushToColorConverter.cs" />
     <Compile Include="View\General\LoadCachedImageConverter.cs" />
     <Compile Include="View\General\ModInfoBox.xaml.cs">
@@ -1144,6 +1182,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Beschwörung\BeschwörungsResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\BeschwörungsAnrufung.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\BeschwörungsKontrolle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\DämonenBeschwörungsMods.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Beschwörung\BeschwörungView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1152,7 +1206,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Beschwörung\ElementarBeschwörungsMods.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Beschwörung\ElementarBeschwörungView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\GeisterBeschwörungsMods.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\GeisterBeschwörungView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\UntotenBeschwörungsMods.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Beschwörung\UntotenBeschwörungsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

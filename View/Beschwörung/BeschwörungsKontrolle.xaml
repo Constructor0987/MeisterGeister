@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="MeisterGeister.View.Beschwörung.BeschwörungsKontrolle"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="./BeschwörungsResources.xaml"/>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+        <StackPanel.Style>
+            <Style TargetType="FrameworkElement">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding BeschwörungGelungen}" Value="{x:Null}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Status}" Value="BeschwörungMisslungen">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Style>
+        <TextBlock Text="Schritt 2: Beherrschen" FontSize="20" HorizontalAlignment="Left" x:Name="header2"/>
+        <Rectangle Margin="0,4,0,0" Width="{Binding ElementName=header2,Path=ActualWidth}" Style="{StaticResource headline}"/>
+
+        <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow">
+                    Bei der Beherrschung wird eine Probe auf den <Bold ToolTip="{Binding KontrollFormel,Mode=OneWay}">Kontrollwert (<Run Text="{Binding KontrollWert,Mode=OneWay}"/>)<Run Text="{Binding GesamtHerrschMod,Mode=OneWay,Converter={StaticResource signConverter}}"/></Bold> abgelegt.<LineBreak/>
+                    Trage in die entsprechenden Felder die relevanten Informationen für die Beherrschung ein bevor du fortfährst.
+        </TextBlock>
+        <Button Content="Beherrschen" HorizontalAlignment="Center" Command="{Binding Beherrschen}" Margin="0,4,0,0"/>
+        <TextBlock Margin="0,4,0,0" TextDecorations="Underline">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding BeherrschungGelungen}" Value="True">
+                            <Setter Property="Foreground" Value="Green"/>
+                            <Setter Property="Text" Value="Das Wesen erfüllt den Dienst"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding BeherrschungGelungen}" Value="False">
+                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="Text" Value="Die Beherrschung ist leider fehlgeschlagen"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </StackPanel>
+</UserControl>

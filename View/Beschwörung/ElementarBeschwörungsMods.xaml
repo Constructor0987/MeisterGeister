@@ -1,0 +1,337 @@
+﻿<UserControl x:Class="MeisterGeister.View.Beschwörung.ElementarBeschwörungsMods"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Beschwörung"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="764.6" d:DesignWidth="732.8">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="BeschwörungsResources.xaml"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="160" Name="colBeschwörung"/>
+            <ColumnDefinition Width="Auto" Name="colBeherrschung"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24" Name="rowÜbrig"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="Auto" Name="rowMaterial"/>
+            <RowDefinition Height="24" Name="rowMenge"/>
+            <RowDefinition Height="24" Name="rowGesinnung"/>
+            <RowDefinition Height="24" Name="rowDauer"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24" Name="rowAffinität"/>
+            <RowDefinition Height="Auto" Name="rowElement"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Name="rowGegenElement">
+                <RowDefinition.Style>
+                    <Style TargetType="RowDefinition">
+                        <Setter Property="Height" Value="Auto"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementarharmonisierteAura}" Value="True">
+                                <Setter Property="Height" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="24" Name="rowDämonGerufen"/>
+            <RowDefinition Height="24" Name="rowPaktierer"/>
+            <RowDefinition Height="24" Name="rowBlutmagie"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24" Name="rowVerhüllteAura"/>
+            <RowDefinition Height="24" Name="rowSchwacheAusstrahlung"/>
+            <RowDefinition Height="24" Name="rowStigma"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24" Name="rowBezahlung"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Style TargetType="Image" x:Key="elementImage">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="Feuer">
+                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Elemente/Feuer.png"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Wasser">
+                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Elemente/Wasser.png"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Humus">
+                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Elemente/Humus.png"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Eis">
+                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Elemente/Eis.png"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Luft">
+                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Elemente/Luft.png"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="Erz">
+                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Elemente/Erz.png"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+
+        <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
+        <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
+
+        <TextBlock Text="Elementar" Style="{StaticResource label}"/>
+        <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
+
+        <TextBlock Text="Typ" Grid.Row="1" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Element}" SelectedIndex="0" Width="50" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+            <ComboBox.ToolTip>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Element, Converter={StaticResource enumConverter}}"/>
+                    <TextBlock Text="elementar"/>
+                </StackPanel>
+            </ComboBox.ToolTip>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Name="image" ToolTip="{Binding Converter={StaticResource enumConverter}}" Style="{StaticResource elementImage}" Height="16" Width="16"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <x:StaticExtension Member="vm:Element.Feuer"/>
+            <x:StaticExtension Member="vm:Element.Wasser"/>
+            <x:StaticExtension Member="vm:Element.Humus"/>
+            <x:StaticExtension Member="vm:Element.Eis"/>
+            <x:StaticExtension Member="vm:Element.Luft"/>
+            <x:StaticExtension Member="vm:Element.Erz"/>
+        </ComboBox>
+        <ComboBox Margin="50,0,0,0" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Typ}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <x:StaticExtension Member="vm:ElementarWesen.Elementargeist"/>
+            <x:StaticExtension Member="vm:ElementarWesen.Dschinn"/>
+            <x:StaticExtension Member="vm:ElementarWesen.ElementarerMeister"/>
+        </ComboBox>
+
+        <TextBlock Text="Basis" Grid.Row="2" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+            <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Mods[Schwierigkeit].Value1}"/>
+            <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Mods[Schwierigkeit].Value2}"/>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Schwierigkeit].AnrufungsMod}"/>
+        <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Schwierigkeit].KontrollMod}"/>
+
+        <TextBlock Text="Übrige Punkte aus Beschwörung" Grid.Row="3" Style="{StaticResource label}"/>
+        <General:IntBox ShowButtons="True" MinValue="0" Value="{Binding Mods[Beschwörungspunkte].Value}" Grid.Row="3" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Beschwörungspunkte].KontrollMod}" Grid.Row="3" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Wahrer Name" Grid.Row="4" Style="{StaticResource label}"/>
+        <General:IntBox ShowButtons="True" MinValue="0" MaxValue="7" Value="{Binding Mods[WahrerName].Value}" Grid.Row="4" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[WahrerName].AnrufungsMod}" Grid.Row="4" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[WahrerName].KontrollMod}" Grid.Row="4" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="5">
+            <TextBlock Text="Qualität der Materialien" Style="{StaticResource label}"/>
+            <General:LiteraturControl Literaturangabe="WdZ 382" LiteraturAnzeigeArt="NurIcon" Margin="4,0,0,0" MaxHeight="30"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="5" Grid.Column="1">
+            <Slider Minimum="-3" Maximum="3" Value="{Binding Mods[Material].Value}" TickFrequency="1" TickPlacement="BottomRight"/>
+            <TextBlock Margin="0,4,0,0" HorizontalAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="-3">
+                                <Setter Property="Text" Value="Besonders unedel"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="-2">
+                                <Setter Property="Text" Value="Unedel"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="-1">
+                                <Setter Property="Text" Value="Gemindert"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="0">
+                                <Setter Property="Text" Value="Rein"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="1">
+                                <Setter Property="Text" Value="Konzentriert"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="2">
+                                <Setter Property="Text" Value="Edel"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="3">
+                                <Setter Property="Text" Value="Besonders edel"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+        <TextBlock Text="{Binding Mods[Material].AnrufungsMod}" Style="{StaticResource mod}" Grid.Row="5" Grid.Column="2"/>
+
+        <CheckBox Content="10-fache Menge Material" Grid.Row="6" IsChecked="{Binding Mods[Menge].Value}"/>
+        <TextBlock Style="{StaticResource mod}" Text="{Binding Mods[Menge].AnrufungsMod}" Grid.Column="2" Grid.Row="6"/>
+
+        <TextBlock Text="Gesinnung des Befehls" Grid.Row="7" Style="{StaticResource label}"/>
+        <General:IntBox Value="{Binding Mods[Befehl].Value}" MinValue="-3" MaxValue="+7" ShowButtons="True" Grid.Row="7" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Befehl].KontrollMod}" Grid.Row="7" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Dauer der Ausführung" Grid.Row="8" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Dauer].Value}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Name="text"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="0">
+                            <Setter TargetName="text" Property="Text" Value="bis ein Kampf (ca. 50 KR)"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="1">
+                            <Setter TargetName="text" Property="Text" Value="bis eine SR"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="2">
+                            <Setter TargetName="text" Property="Text" Value="bis eine Stunde"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="3">
+                            <Setter TargetName="text" Property="Text" Value="bis 8 Stunden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="4">
+                            <Setter TargetName="text" Property="Text" Value="bis zum nächsten Sonnenauf- oder -untergang&#x0a;(je nachdem was später eintritt)"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <System:Int32>0</System:Int32>
+            <System:Int32>1</System:Int32>
+            <System:Int32>2</System:Int32>
+            <System:Int32>3</System:Int32>
+            <System:Int32>4</System:Int32>
+        </ComboBox>
+        <TextBlock Text="{Binding Mods[Dauer].KontrollMod}" Grid.Row="8" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Ausrüstung" Grid.Row="9" Style="{StaticResource label}"/>
+        <General:IntBox MaxValue="0" Value="{Binding Mods[Ausrüstung].Value}" ShowButtons="True" Grid.Row="9" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Ausrüstung].AnrufungsMod}" Grid.Row="9" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Ausrüstung].KontrollMod}" Grid.Row="9" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <CheckBox Grid.Row="10" Content="Affinität zu Elementaren" IsChecked="{Binding Mods[Affinität].Value}"/>
+        <TextBlock Text="{Binding Mods[Affinität].KontrollMod}" Grid.Row="10" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <DockPanel Grid.Row="11">
+            <Image DockPanel.Dock="Left" Name="imgElement" MaxWidth="30" MaxHeight="30" Margin="0,0,8,0" ToolTip="{Binding Converter={StaticResource enumConverter}}" DataContext="{Binding Element}" Style="{StaticResource elementImage}"/>
+            <CheckBox Content="Begabung" IsChecked="{Binding Mods[Element].Value2}" DockPanel.Dock="Top"/>
+            <CheckBox Content="Merkmalskenntnis" IsChecked="{Binding Mods[Element].Value1}" DockPanel.Dock="Bottom"/>
+        </DockPanel>
+        <TextBlock Grid.Row="11" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Element].AnrufungsMod}"/>
+        <TextBlock Grid.Row="11" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Element].KontrollMod}"/>
+
+        <CheckBox IsChecked="{Binding ElementarharmonisierteAura}" Grid.Row="12" Margin="6,12,0,0">
+            <TextBlock Margin="0,-12,0,0">
+                Elementarharmonisierte Aura<LineBreak/>
+                (<Run Text="{Binding Element,Mode=OneWay}"/> / <Run Text="{Binding GegenElement,Mode=OneWay}"/>)
+            </TextBlock>
+        </CheckBox>
+
+        <DockPanel Grid.Row="13">
+            <Image DockPanel.Dock="Left" Name="imgGegenElement" MaxWidth="30" MaxHeight="30" Margin="0,0,8,0" ToolTip="{Binding Converter={StaticResource enumConverter}}" DataContext="{Binding GegenElement}" Style="{StaticResource elementImage}"/>
+            <CheckBox Content="Begabung" IsChecked="{Binding Mods[Gegenelement].Value2}" DockPanel.Dock="Top"/>
+            <CheckBox Content="Merkmalskenntnis" IsChecked="{Binding Mods[Gegenelement].Value1}" DockPanel.Dock="Bottom"/>
+        </DockPanel>
+        <TextBlock Grid.Row="13" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Gegenelement].AnrufungsMod}"/>
+        <TextBlock Grid.Row="13" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Gegenelement].KontrollMod}"/>
+
+        <TextBlock Style="{StaticResource label}" Grid.Row="14">
+            Begabung / Merkmalskenntnis<LineBreak/>(Dämonisch)
+        </TextBlock>
+        <General:IntBox ShowButtons="True" MinValue="0" Grid.Row="14" Grid.Column="1" Value="{Binding Mods[Dämonisch].Value}"/>
+        <TextBlock Grid.Row="14" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Dämonisch].AnrufungsMod}"/>
+        <TextBlock Grid.Row="14" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Dämonisch].KontrollMod}"/>
+
+        <CheckBox Grid.Row="15" Content="Dämon gerufen" IsChecked="{Binding Mods[DämonGerufen].Value}" ToolTip="Hat der Beschwörer in den letzten 7 Stunden einen niederen, oder in den letzten 24 Stunden einen gehörnten Dämon gerufen?"/>
+        <TextBlock Grid.Row="15" Grid.Column="3" Text="{Binding Mods[DämonGerufen].KontrollMod}" Style="{StaticResource mod}"/>
+
+        <CheckBox Grid.Row="16" Content="Paktierer" IsChecked="{Binding Mods[Paktierer].Value}"/>
+        <TextBlock Grid.Row="16" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Paktierer].AnrufungsMod}"/>
+        <TextBlock Grid.Row="16" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Paktierer].KontrollMod}"/>
+
+        <CheckBox Grid.Row="17" Content="Blutmagie" IsChecked="{Binding Mods[Blutmagie].Value}"/>
+        <TextBlock Text="{Binding Mods[Blutmagie].KontrollMod}" Grid.Row="17" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Sternenkonstellation" Grid.Row="18" Style="{StaticResource label}"/>
+        <General:IntBox MinValue="-3" MaxValue="7" Value="{Binding Mods[Sterne].Value}" ShowButtons="True" Grid.Row="18" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Sterne].AnrufungsMod}" Grid.Row="18" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Sterne].KontrollMod}" Grid.Row="18" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <!--Texte anpassen-->
+        <TextBlock Text="Elementare Affinität des Ortes" Grid.Row="19" Style="{StaticResource label}"/>
+        <Slider Minimum="-7" Maximum="7" TickFrequency="1" TickPlacement="BottomRight" Grid.Row="19" Grid.Column="1" Value="{Binding Mods[Ort].Value}"/>
+        <TextBlock Text="{Binding Mods[Ort].AnrufungsMod}" Grid.Row="19" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Ort].KontrollMod}" Grid.Row="19" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <CheckBox Grid.Row="20" IsChecked="{Binding Mods[VerhüllteAura].Value}" Content="Verhüllte Aura"/>
+        <TextBlock Grid.Row="20" Style="{StaticResource mod}" Grid.Column="3" Text="{Binding Mods[VerhüllteAura].KontrollMod}"/>
+
+        <TextBlock Grid.Row="21" Style="{StaticResource label}" Text="Schwache Ausstrahlung"/>
+        <General:IntBox ShowButtons="True" Grid.Row="21" Grid.Column="1" MinValue="0" MaxValue="5" Value="{Binding Mods[SchwacheAusstrahlung].Value}"/>
+        <TextBlock Grid.Row="21" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[SchwacheAusstrahlung].KontrollMod}"/>
+
+        <TextBlock Grid.Row="22" Style="{StaticResource label}" Text="Stigma"/>
+        <General:IntBox ShowButtons="True" Grid.Row="22" Grid.Column="1" MinValue="0" MaxValue="12" Value="{Binding Mods[Stigma].Value}"/>
+        <TextBlock Grid.Row="22" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Stigma].KontrollMod}"/>
+
+        <TextBlock Text="Donaria" Grid.Row="23" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="23" Grid.Column="1">
+            <General:IntBox MinValue="-7" MaxValue="7" Value="{Binding Mods[Donaria].Value1}" ShowButtons="True"/>
+            <General:IntBox MinValue="-2" MaxValue="0" Value="{Binding Mods[Donaria].Value2}" ShowButtons="True"/>
+        </StackPanel>
+        <TextBlock Text="{Binding Mods[Donaria].AnrufungsMod}" Grid.Row="23" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Donaria].KontrollMod}" Grid.Row="23" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="24" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="24" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Bezahlung].Value}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Name="text" Text="Keine"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="-1">
+                            <Setter TargetName="text" Property="Text" Value="+20%"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="-2">
+                            <Setter TargetName="text" Property="Text" Value="+40%"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding}" Value="-3">
+                            <Setter TargetName="text" Property="Text" Value="+60%"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <System:Int32>0</System:Int32>
+            <System:Int32>-1</System:Int32>
+            <System:Int32>-2</System:Int32>
+            <System:Int32>-3</System:Int32>
+        </ComboBox>
+        <TextBlock Text="{Binding Mods[Bezahlung].KontrollMod}" Grid.Row="24" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Sonstiges" Grid.Row="25" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="25" Grid.Column="1">
+            <General:IntBox ShowButtons="True" Value="{Binding Mods[Sonstiges].Value1}"/>
+            <General:IntBox ShowButtons="True" Value="{Binding Mods[Sonstiges].Value2}"/>
+        </StackPanel>
+        <TextBlock Text="{Binding Mods[Sonstiges].AnrufungsMod}" Grid.Row="25" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Sonstiges].KontrollMod}" Grid.Row="25" Grid.Column="3" Style="{StaticResource mod}"/>
+
+        <TextBlock Text="Gesamt" Grid.Row="26" Style="{StaticResource label}"/>
+        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="26" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="26" Grid.Column="3" Style="{StaticResource mod}"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="MeisterGeister.View.Beschwörung.BeschwörungsAnrufung"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="./BeschwörungsResources.xaml"/>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Schritt 1: Beschwören" FontSize="20" HorizontalAlignment="Left" x:Name="header"/>
+        <Rectangle Margin="0,4,0,0" Width="{Binding ElementName=header,Path=ActualWidth}" Style="{StaticResource headline}"/>
+
+        <!--Nichts ausgewählt-->
+        <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow"
+                       Text="Wähle einen Beschwörer, und ein Wesen aus. Trage anschließend die Beschwörungsumstände ein.">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Held}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding BeschworenesWesen}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!--Beschwören-->
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Style>
+                <Style TargetType="FrameworkElement">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Held}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding BeschworenesWesen}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow" x:Name="beschwörungsVorschau">
+                    <Run Text="{Binding Held.Name}"/> möchte also einen <Run Text="{Binding BeschworenesWesen.Name}"/> rufen?
+                    <LineBreak/>
+                    Zum Beschwören wird eine Zauberprobe auf
+                    <Bold><Run Text="{Binding Zauber}"/> (<Run Text="{Binding ZauberWert,Mode=OneWay}"/>)<Run Text="{Binding GesamtRufMod,Mode=OneWay,Converter={StaticResource signConverter}}"/></Bold>
+                    gewürfelt. Stelle vorher sicher dass alle relevanten Einstellungen gemacht wurden.
+            </TextBlock>
+            <Button Command="{Binding Beschwören}" Content="Beschwören" Margin="0,4,0,0" HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,4,0,0" TextDecorations="Underline">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BeschwörungGelungen}" Value="True">
+                                <Setter Property="Foreground" Value="Green"/>
+                                <Setter Property="Text" Value="Das gewünschte Wesen erscheint"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding BeschwörungGelungen}" Value="False">
+                                <Setter Property="Foreground" Value="Red"/>
+                                <Setter Property="Text" Value="Die Beschwörung ist leider misslungen"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

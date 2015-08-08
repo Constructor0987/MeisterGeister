@@ -17,22 +17,17 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             magiekundeProbe = new Base.CommandBase((o) => magiekunde(), null);
             malenProbe = new Base.CommandBase((o) => malen(), null);
-            editMagiekunde = new Base.CommandBase((o) => InvocatioIntegraMagiekundePunkte = 1, null);
-            editMalen = new Base.CommandBase((o) => InvocatioIntegraMalenPunkte = 1, null);
-            PropertyChanged += propertyChanged;
+            editMagiekunde = new Base.CommandBase((o) => invocatioMagiekunde.Value = 1, null);
+            editMalen = new Base.CommandBase((o) => invocatioMalen.Value = 1, null);
         }
 
         protected override void checkHeld()
         {
             base.checkHeld();
             if (Held != null)
-            {
-                Affinität = Held.HatVorNachteil(AFFINITÄT);
-            }
+                affinität.Value = Held.HatVorNachteil(AFFINITÄT);
             else
-            {
-                Affinität = false;
-            }
+                affinität.Value = false;
         }
 
         protected override List<GegnerBase> loadWesen()
@@ -40,24 +35,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
             return Global.ContextHeld.LoadDämonen();
         }
 
-        private void propertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Hörner" || e.PropertyName == "WahrerName")
-            {
-                InvocatioIntegra = false;
-                OnChanged("InvocatioIntegraMöglich");
-            }
-        }
-
         protected override void reset()
         {
             base.reset();
-            InvocatioIntegra = false;
             Hörner = 0;
             AndererDämon = false;
-            Affinität = false;
-            Bannschwert = false;
-            Opfer = Opfer.Tieropfer;
             BeschwörungMisslungenErgebnis = BeherrschungMisslungenErgebnis = String.Empty;
             würfleBeschwörungMisslungen = new Base.CommandBase((o) => würfleBeschwörungMisslungenEffekt(), (o) => Status == BeschwörungsStatus.BeschwörungMisslungen);
             WürfleBeherrschungMisslungen = null;
@@ -75,8 +57,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void würfleBeschwörungMisslungenEffekt()
         {
-            int wurf = View.General.ViewHelper.ShowWürfelDialog(Blutmagie ? "3W6" : "2W6", "Beschwörung Misslungen");
-            if (WahrerName == 0) wurf += 7;
+            int wurf = View.General.ViewHelper.ShowWürfelDialog(blutmagie.Value1 ? "3W6" : "2W6", "Beschwörung Misslungen");
+            if (name.Value == 0) wurf += 7;
             if (wurf <= 6)
             {
                 BeschwörungMisslungenErgebnis = "Außer einem kalten, übel riechenden Hauch erscheint ... nichts. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
@@ -127,11 +109,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
             int wurf = View.General.ViewHelper.ShowWürfelDialog("2W6", "Kontrolle Misslungen");
             if (erg.Ergebnis == Logic.General.ErgebnisTyp.PATZER)
             {
-                wurf += Kontrollschwierigkeit;
+                wurf += schwierigkeit.Value2;
                 if (erg.Qualität > 0)
                     wurf -= erg.Qualität;
             }
-            else wurf += (int)Math.Round(Kontrollschwierigkeit / 2.0, MidpointRounding.AwayFromZero);
+            else wurf += (int)Math.Round(schwierigkeit.Value2 / 2.0, MidpointRounding.AwayFromZero);
             if (Hörner > 0) wurf += 5;
             if (wurf <= 1)
             {
@@ -186,8 +168,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         #endregion
 
-        #region InvocatioIntegra
-
+        #region Proben
 
         private Base.CommandBase magiekundeProbe;
         public Base.CommandBase MagiekundeProbe
@@ -221,142 +202,109 @@ namespace MeisterGeister.ViewModel.Beschwörung
             int taW;
             Held_Talent ht = Global.SelectedHeld.GetHeldTalent("Magiekunde", false, out taW);
             ht.Talent.Fertigkeitswert = taW;
-            ht.Talent.Modifikator = (int)Math.Round(Beschwörungsschwierigkeit / 2.0, MidpointRounding.AwayFromZero);
+            ht.Talent.Modifikator = div(schwierigkeit.Value1, 2);
             ProbenErgebnis erg = ht.Held.TalentProbe(ht.Talent, ht.Talent.Modifikator, "Dämonologie");
-            InvocatioIntegraMagiekundePunkte = erg.Gelungen ? erg.Übrig : 0;
-
+            invocatioMagiekunde.Value = erg.Gelungen ? erg.Übrig : 0;
         }
         private void malen()
         {
             int taW;
             Held_Talent ht = Global.SelectedHeld.GetHeldTalent("Malen/Zeichnen", false, out taW);
             ht.Talent.Fertigkeitswert = taW;
-            ht.Talent.Modifikator = (int)Math.Round(Beschwörungsschwierigkeit / 2.0, MidpointRounding.AwayFromZero);
+            ht.Talent.Modifikator = div(schwierigkeit.Value1, 2);
             ProbenErgebnis erg = ShowProbeDialog(ht.Talent, ht.Held);
-            InvocatioIntegraMalenPunkte = erg.Gelungen ? erg.Übrig : 0;
+            invocatioMalen.Value = erg.Gelungen ? erg.Übrig : 0;
         }
-
-        public bool InvocatioIntegraMöglich
-        {
-            get { return Hörner > 0 && WahrerName > 0; }
-        }
-
-
-        private bool invocatioIntegra;
-        public bool InvocatioIntegra
-        {
-            get { return invocatioIntegra; }
-            set
-            {
-                Set(ref invocatioIntegra, value);
-                OnChanged("ZauberWert");
-                OnChanged("KontrollWert");
-                OnChanged("InvocatioIntegraMagiekundeRufMod");
-                OnChanged("InvocatioIntegraMalenRufMod");
-                OnChangedSum();
-            }
-        }
-
-        private bool invocatioIntegraVorbereiten;
-        public bool InvocatioIntegraVorbereiten
-        {
-            get { return invocatioIntegraVorbereiten; }
-            set
-            {
-                Set(ref invocatioIntegraVorbereiten, value);
-                OnChanged("InvocatioIntegraMagiekundeRufMod");
-                OnChanged("InvocatioIntegraMalenRufMod");
-                OnChangedSum();
-            }
-        }
-
-        private int invocatioIntegraMagiekundePunkte;
-        public int InvocatioIntegraMagiekundePunkte
-        {
-            get { return invocatioIntegraMagiekundePunkte; }
-            set
-            {
-                Set(ref invocatioIntegraMagiekundePunkte, value);
-                OnChanged("InvocatioIntegraMagiekundeRufMod");
-                OnChangedSum();
-            }
-        }
-
-        private int invocatioIntegraMalenPunkte;
-        public int InvocatioIntegraMalenPunkte
-        {
-            get { return invocatioIntegraMalenPunkte; }
-            set
-            {
-                Set(ref invocatioIntegraMalenPunkte, value);
-                OnChanged("InvocatioIntegraMalenRufMod");
-                OnChangedSum();
-            }
-        }
-
-        public int InvocatioIntegraMagiekundeRufMod
-        {
-            get
-            {
-                if (!InvocatioIntegra || !InvocatioIntegraVorbereiten)
-                    return 0;
-                else if (InvocatioIntegraMagiekundePunkte > 0)
-                    return (int)Math.Round(-InvocatioIntegraMagiekundePunkte / 2.0, MidpointRounding.AwayFromZero);
-                return 3;
-            }
-        }
-
-        public int InvocatioIntegraMalenRufMod
-        {
-            get
-            {
-                if (!InvocatioIntegra || !InvocatioIntegraVorbereiten)
-                    return 0;
-                else if (InvocatioIntegraMalenPunkte > 0)
-                    return (int)Math.Round(-InvocatioIntegraMalenPunkte / 2.0, MidpointRounding.AwayFromZero);
-                else return 3;
-            }
-        }
-
 
         #endregion
 
         #region Properties
 
-        private bool bannschwert;
-        public bool Bannschwert
+        private const string MOD_BANNSCHWERT = "Bannschwert";
+        private const string MOD_AFFINITÄT = "Affinität";
+        private const string MOD_PAKTIERER = "Paktierer";
+        private const string MOD_INVOCATIO_INTEGRA = "InvocatioIntegra";
+        private const string MOD_INVOCATIO_INTEGRA_MALEN = "InvocatioIntegraMalen";
+        private const string MOD_INVOCATIO_INTEGRA_MAGIEKUNDE = "InvocatioIntegraMagiekunde";
+
+        private BeschwörungsModifikator<bool> bannschwert;
+        private BeschwörungsModifikator<bool> affinität;
+        private BeschwörungsModifikator<int> paktierer;
+        private BeschwörungsModifikator<bool, bool> invocatioIntegra;
+        private new BeschwörungsModifikator<bool, Opfer> blutmagie;
+        private BeschwörungsModifikator<int> invocatioMalen;
+        private BeschwörungsModifikator<int> invocatioMagiekunde;
+
+        protected override void addMods()
         {
-            get { return bannschwert; }
-            set
+            //Bei der Dämonenbeschwörung entfällt die materielle Komponente
+            Mods.Remove(MOD_MATERIAL);
+
+            //Wenn ein anderer Dämon erscheint als der gerufene wird die Kontrollschwierigkeit verdoppelt
+            schwierigkeit.GetKontrollMod = () => schwierigkeit.Value2 * (AndererDämon ? 2 : 1);
+
+            //Ein Bannschwert erleichtert Anrufung und Kontrolle um 1 Punkt
+            bannschwert = new BeschwörungsModifikator<bool>();
+            bannschwert.GetAnrufungsMod = bannschwert.GetKontrollMod = () => bannschwert.Value ? -1 : 0;
+            Mods.Add(MOD_BANNSCHWERT, bannschwert);
+
+            //Affinität zu Dämonen erleichtert die Kontrolle um 3
+            affinität = new BeschwörungsModifikator<bool>();
+            affinität.GetKontrollMod = () => affinität.Value ? -3 : 0;
+            Mods.Add(MOD_AFFINITÄT, affinität);
+
+            //Ein Paktierer der passenden Domäne ist Anrufung und Kontrolle um seinen Kreis der Verdammnis erleichtert
+            //Die Kontrolle ist zusätzlich um 3 erleichtert
+            paktierer = new BeschwörungsModifikator<int>();
+            paktierer.GetAnrufungsMod = () => -paktierer.Value;
+            paktierer.GetKontrollMod = () => (paktierer.Value > 0) ? -paktierer.Value - 3 : 0;
+            Mods.Add(MOD_PAKTIERER, paktierer);
+
+            //Ohne Wahrer Name ist die Anrufung von Dämonen um 7 Punkte erschwert
+            Func<int> defaultMod = name.GetAnrufungsMod;
+            name.GetAnrufungsMod = () => (name.Value == 0) ? 7 : defaultMod();
+
+            invocatioIntegra = new BeschwörungsModifikator<bool, bool>();
+            //Invocatio Integra erhöht den effektiven ZfW um 7
+            invocatioIntegra.GetZauberMod = () => invocatioIntegra.Value1 ? 7 : 0;
+            Mods.Add(MOD_INVOCATIO_INTEGRA, invocatioIntegra);
+
+            //Blutmagie erschwert die Kontrolle, und erhöht den ZfW wenn InvocatioIntegra aktiv ist
+            blutmagie = new BeschwörungsModifikator<bool, Opfer>();
+            blutmagie.GetKontrollMod = () => blutmagie.Value1 ? 2 : 0;
+            blutmagie.GetZauberMod = () =>
             {
-                bannschwert = value;
-                OnInputChanged();
-            }
+                if (!invocatioIntegra.Value1 || !blutmagie.Value1) return 0;
+                else if (blutmagie.Value2 == Opfer.Tieropfer) return 3;
+                else return 7;
+            };
+            Mods[MOD_BLUTMAGIE] = blutmagie;
+
+            //Malen bringt Bonuspunkte auf die Anrufung wenn InvocatioIntegra mit vorbereitung aktiviert ist
+            invocatioMalen = new BeschwörungsModifikator<int>();
+            invocatioMalen.GetAnrufungsMod = () => invocatioProbeMod(invocatioMalen.Value);
+            Mods.Add(MOD_INVOCATIO_INTEGRA_MALEN, invocatioMalen);
+
+            //Magiekunde bringt Bonuspunkte auf die Anrufung wenn InvocatioIntegra mit vorbereitung aktiviert ist
+            invocatioMagiekunde = new BeschwörungsModifikator<int>();
+            invocatioMagiekunde.GetAnrufungsMod = () => invocatioProbeMod(invocatioMagiekunde.Value);
+            Mods.Add(MOD_INVOCATIO_INTEGRA_MAGIEKUNDE, invocatioMagiekunde);
+
+            //InvocatioIntegra beeinflusst sowohl Blutmagie, als auch die Malen-/Magiekundeprobe
+            invocatioIntegra.PropertyChanged += (s, e) => { blutmagie.Invalidate(); invocatioMalen.Invalidate(); invocatioMagiekunde.Invalidate(); };
+
+            //Wenn sich der Wahre Name auf 0 ändert kann Invocatio Integra nicht durchgeführt werden
+            name.PropertyChanged += (s, e) => { if (name.Value == 0) invocatioIntegra.Value1 = false; };
         }
 
-        public int BannschwertRufMod
+        private int invocatioProbeMod(int value)
         {
-            get { return Bannschwert ? -1 : 0; }
-        }
-        public int BannschwertHerrschMod
-        {
-            get { return Bannschwert ? -1 : 0; }
-        }
-
-        private bool affinität;
-        public bool Affinität
-        {
-            get { return affinität; }
-            set
+            if (invocatioIntegra.Value1 && invocatioIntegra.Value2)
             {
-                affinität = value;
-                OnInputChanged();
+                if (value == 0) return 3;
+                else return -div(value, 2);
             }
-        }
-
-        public int AffinitätHerrschMod
-        {
-            get { return Affinität ? -3 : 0; }
+            else return 0;
         }
 
         private bool andererDämon = false;
@@ -366,7 +314,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             set
             {
                 Set(ref andererDämon, value);
-                OnChangedSum();
+                schwierigkeit.Invalidate();
             }
         }
 
@@ -377,110 +325,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
             set
             {
                 Set(ref hörner, value);
-                OnChanged("InvocatioIntegraMöglich");
+                //Invocatio Integra ist nur bei gehörnten Dämonen möglich
+                if (hörner == 0)
+                    invocatioIntegra.Value1 = false;
+                //Der Zauber für die Beschwörung ist bei gehörnten Dämonen ein anderer
                 Zauber = Hörner == 0 ? "Invocatio minor" : "Invocatio maior";
-            }
-        }
-
-        public int BlutmagieBonus
-        {
-            get
-            {
-                if (InvocatioIntegra && Blutmagie)
-                {
-                    switch (Opfer)
-                    {
-                        case Opfer.Tieropfer:
-                            return 3;
-                        case Opfer.IntelligentesWesen:
-                            return 7;
-                    }
-                }
-                return 0;
-            }
-        }
-
-        private Opfer opfer;
-        public Opfer Opfer
-        {
-            get { return opfer; }
-            set
-            {
-                Set(ref opfer, value);
-                OnChanged("ZauberWert");
-                OnChanged("KontrollWert");
-            }
-        }
-
-
-        public override bool Blutmagie
-        {
-            get
-            {
-                return base.Blutmagie;
-            }
-            set
-            {
-                base.Blutmagie = value;
-                OnChanged("ZauberWert");
-                OnChanged("KontrollWert");
-            }
-        }
-
-        private int kreisDerVerdammnis;
-        public int KreisDerVerdammnis
-        {
-            get { return kreisDerVerdammnis; }
-            set
-            {
-                kreisDerVerdammnis = value;
-                OnInputChanged();
-            }
-        }
-
-        public int KreisDerVerdammnisRufMod
-        {
-            get { return -KreisDerVerdammnis; }
-        }
-
-        public int KreisDerVerdammnisHerrschMod
-        {
-            get
-            {
-                if (KreisDerVerdammnis == 0) return 0;
-                return -KreisDerVerdammnis - 3;
-            }
-        }
-
-        public override int WahrerNameRufMod
-        {
-            get
-            {
-                return WahrerName == 0 ? 7 : -WahrerName;
-            }
-        }
-
-        public override int GesamtRufMod
-        {
-            get
-            {
-                return base.GesamtRufMod
-                    + BannschwertRufMod
-                    + KreisDerVerdammnisRufMod
-                    + InvocatioIntegraMagiekundeRufMod
-                    + InvocatioIntegraMalenRufMod;
-            }
-        }
-
-        public override int GesamtHerrschMod
-        {
-            get
-            {
-                return base.GesamtHerrschMod
-                    + (AndererDämon ? Kontrollschwierigkeit : 0)
-                    + AffinitätHerrschMod
-                    + BannschwertHerrschMod
-                    + KreisDerVerdammnisHerrschMod;
             }
         }
 
@@ -498,14 +347,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             set { Set(ref beherrschungMisslungenErgebnis, value); }
         }
 
-        public override int ZauberWert
-        {
-            get
-            {
-                return base.ZauberWert + (InvocatioIntegra ? 7 + BlutmagieBonus : 0);
-            }
-        }
-
         public override string KontrollFormel
         {
             get { return "(MU + MU + KL + CH + ZfW) / 5"; }
@@ -513,7 +354,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override int calcKontrollWert()
         {
-            return (int)Math.Round((Held.Mut * 2 + Held.Klugheit + Held.Charisma + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
+            return div(Held.Mut * 2 + Held.Klugheit + Held.Charisma + ZauberWert, 5);
         }
 
         #endregion
@@ -521,7 +362,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
     public enum Opfer
     {
         [Description("Tieropfer")]
-        Tieropfer,
+        Tieropfer = 0,
         [Description("Opferung eines intelligenten Wesens")]
         IntelligentesWesen
     }

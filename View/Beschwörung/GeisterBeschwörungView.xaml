@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="MeisterGeister.View.Beschwörung.ElementarBeschwörungView"
+﻿<UserControl x:Class="MeisterGeister.View.Beschwörung.GeisterBeschwörungView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Beschwörung="clr-namespace:MeisterGeister.View.Beschwörung"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="1000">
+             d:DesignHeight="1000.6" d:DesignWidth="800.75">
 
     <UserControl.Resources>
         <ResourceDictionary Source="BeschwörungsResources.xaml"/>
@@ -15,9 +15,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="250"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="700"/>
+            <ColumnDefinition Width="500"/>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Orientation="Vertical">
             <Beschwörung:BeschwörungsAnrufung/>
             <Beschwörung:BeschwörungsKontrolle/>
@@ -25,6 +25,6 @@
 
         <Rectangle Grid.Column="1" Margin="4,0,4,0" Style="{StaticResource seperator}"/>
 
-        <Beschwörung:ElementarBeschwörungsMods Grid.Column="2"/>
+        <Beschwörung:GeisterBeschwörungsMods Grid.Column="2"/>
     </Grid>
 </UserControl>

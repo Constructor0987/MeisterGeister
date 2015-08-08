@@ -4,6 +4,7 @@ using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,17 +15,153 @@ namespace MeisterGeister.ViewModel.Beschwörung
 {
     public abstract class BeschwörungViewModel : Base.ViewModelBase
     {
+        public const string MOD_SCHWIERIGKEIT = "Schwierigkeit";
+        public const string MOD_NAME = "WahrerName";
+        public const string MOD_MATERIAL = "Material";
+        public const string MOD_AUSRÜSTUNG = "Ausrüstung";
+        public const string MOD_BLUTMAGIE = "Blutmagie";
+        public const string MOD_STERNE = "Sterne";
+        public const string MOD_ORT = "Ort";
+        public const string MOD_BEFEHL = "Befehl";
+        public const string MOD_DAUER = "Dauer";
+        public const string MOD_BEZAHLUNG = "Bezahlung";
+        public const string MOD_DONARIA = "Donaria";
+        public const string MOD_SONSTIGES = "Sonstiges";
+        public const string MOD_BESCHWÖRUNGS_PUNKTE = "Beschwörungspunkte";
+
+        private Dictionary<string, BeschwörungsModifikator> mods;
+        public Dictionary<string, BeschwörungsModifikator> Mods
+        {
+            get { return mods; }
+        }
+
         public BeschwörungViewModel()
             : base(View.General.ViewHelper.ShowProbeDialog)
         {
+            initMods();
+
             //Verfügbare Wesen laden
             Wesen = loadWesen();
             //Commands initialisieren
             beschwören = new Base.CommandBase((o) => beschwöre(), (o) => beschwörungMöglich());
-            beherrschen = new Base.CommandBase((o) => beherrsche(), (o)=> beherrschungMöglich());
+            beherrschen = new Base.CommandBase((o) => beherrsche(), (o) => beherrschungMöglich());
             resetCmd = new Base.CommandBase((o) => reset(), null);
             //Standardwerte setzen
             reset();
+        }
+
+        protected BeschwörungsModifikator<int, int> schwierigkeit;
+        protected BeschwörungsModifikator<int> name;
+        protected BeschwörungsModifikator<int> material;
+        protected BeschwörungsModifikator<int> ausrüstung;
+        protected BeschwörungsModifikator<bool> blutmagie;
+        protected BeschwörungsModifikator<int> sterne;
+        protected BeschwörungsModifikator<int> ort;
+        protected BeschwörungsModifikator<int> punkte;
+        protected BeschwörungsModifikator<int> befehl;
+        protected BeschwörungsModifikator<int> dauer;
+        protected BeschwörungsModifikator<int> bezahlung;
+
+        private void initMods()
+        {
+            mods = new Dictionary<string, BeschwörungsModifikator>();
+
+            //Schwierigkeit wird einfach als Mod übernommen
+            schwierigkeit = new BeschwörungsModifikator<int, int>();
+            mods.Add(MOD_SCHWIERIGKEIT, schwierigkeit);
+
+            //Wahrer Name wird komplett auf die Anrufung und zu 1/3 auf die Kontrolle angerechnet
+            name = new BeschwörungsModifikator<int>();
+            name.GetAnrufungsMod = () => -name.Value;
+            name.GetKontrollMod = () => -div(name.Value, 3);
+            mods.Add(MOD_NAME, name);
+
+            //Materialqualität wirkt sich positiv auf die Anrufung aus
+            material = new BeschwörungsModifikator<int>();
+            material.GetAnrufungsMod = () => -material.Value;
+            mods.Add(MOD_MATERIAL, material);
+
+            //Ausrüstung wird für beide Proben einfach übernommen
+            ausrüstung = new BeschwörungsModifikator<int>();
+            ausrüstung.GetAnrufungsMod = ausrüstung.GetKontrollMod = () => ausrüstung.Value;
+            mods.Add(MOD_AUSRÜSTUNG, ausrüstung);
+
+            //Blutmagie erschwert die Kontrolle um 2
+            blutmagie = new BeschwörungsModifikator<bool>();
+            blutmagie.GetKontrollMod = () => blutmagie.Value ? 2 : 0;
+            mods.Add(MOD_BLUTMAGIE, blutmagie);
+
+            //Sternenkonstellation wirkt sich voll auf die Anrufung und zu 1/3 auf die Kontrolle aus
+            sterne = new BeschwörungsModifikator<int>();
+            sterne.GetAnrufungsMod = () => sterne.Value;
+            sterne.GetKontrollMod = () => div(sterne.Value, 3);
+            mods.Add(MOD_STERNE, sterne);
+
+            //Umstände des Ortes wirken sich voll auf die Anrufung und zu 1/3 auf die Kontrolle aus
+            ort = new BeschwörungsModifikator<int>();
+            ort.GetAnrufungsMod = () => -ort.Value;
+            ort.GetKontrollMod = () => -div(ort.Value, 3);
+            mods.Add(MOD_ORT, ort);
+
+            //Übrige Punkte aus der Anrufungsprobe wirken sich zu 1/3 günstig auf die Kontrolle aus.
+            //Mehr als 7 Punkte gibt es trotzdem nicht
+            punkte = new BeschwörungsModifikator<int>();
+            punkte.GetKontrollMod = () => -Math.Min(div(punkte.Value, 3), 7);
+            mods.Add(MOD_BESCHWÖRUNGS_PUNKTE, punkte);
+
+            //Der Befehl wirkt sich auf die Kontrolle aus
+            befehl = new BeschwörungsModifikator<int>();
+            befehl.GetKontrollMod = () => befehl.Value;
+            mods.Add(MOD_BEFEHL, befehl);
+
+            //Die Befehlsdauer wirkt sich auf die Kontrolle aus
+            dauer = new BeschwörungsModifikator<int>();
+            dauer.GetKontrollMod = () => dauer.Value;
+            mods.Add(MOD_DAUER, dauer);
+
+            //Zusätzlich bezahlte AsP wirken sich auf die Kontrolle aus
+            bezahlung = new BeschwörungsModifikator<int>();
+            bezahlung.GetKontrollMod = () => bezahlung.Value;
+            mods.Add(MOD_BEZAHLUNG, bezahlung);
+
+            //Donaria werden einfach als Mod übernommen
+            mods.Add(MOD_DONARIA, new BeschwörungsModifikator<int, int>());
+
+            //Sonstiges wird auch einfach übernommen
+            mods.Add(MOD_SONSTIGES, new BeschwörungsModifikator<int, int>());
+
+            //Danach wird am Standardset, je nach Implementierung, noch irgendwas geändert
+            addMods();
+
+            //Wenn sich ein Modifikator ändert müssen wir die Summe updaten
+            foreach (BeschwörungsModifikator m in mods.Values)
+            {
+                m.PropertyChanged += mod_PropertyChanged;
+            }
+        }
+
+        protected abstract void addMods();
+
+        protected int div(int a, int b)
+        {
+            return (int)Math.Round(a / (double)b, MidpointRounding.AwayFromZero);
+        }
+
+        private void mod_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "AnrufungsMod")
+            {
+                OnChanged("GesamtRufMod");
+            }
+            else if (e.PropertyName == "KontrollMod")
+            {
+                OnChanged("GesamtHerrschMod");
+            }
+            else if(e.PropertyName == "ZauberMod")
+            {
+                OnChanged("ZauberWert");
+                OnChanged("KontrollWert");
+            }
         }
 
         /// <summary>
@@ -45,19 +182,10 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected virtual void reset()
         {
             //Hier wird alle auf Standard gesetzt
-            Beschwörungsschwierigkeit = Kontrollschwierigkeit = 0;
-            Beschwörungspunkte = 0;
-            WahrerName = 0;
-            Material = 0;
-            BefehlHerrschMod = 0;
-            DauerHerrschMod = 0;
-            AusrüstungMod = 0;
-            Blutmagie = false;
-            Sterne = 0;
-            Ort = 0;
-            DonariaRuf = DonariaHerrsch = 0;
-            BezahlungHerrschMod = 0;
-            SonstigesRufMod = SonstigesHerrschMod = 0;
+            foreach (BeschwörungsModifikator mod in mods.Values)
+            {
+                mod.Reset();
+            }
             //Held = null;
             //Zauber = null;
             Status = BeschwörungsStatus.Beschwören;
@@ -111,7 +239,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 else
                 {
                     //Falls es klappt freuen wir und über evtl. übrige Punkte und machen mit der Beherrschung weiter
-                    Beschwörungspunkte = erg.Übrig;
+                    punkte.Value = erg.Übrig;
                     Status = BeschwörungsStatus.Beherrschen;
                 }
             }
@@ -180,8 +308,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 Set(ref beschworenesWesen, value);
                 if (beschworenesWesen != null)
                 {
-                    Beschwörungsschwierigkeit = beschworenesWesen.Beschwörung ?? 0;
-                    Kontrollschwierigkeit = beschworenesWesen.Kontrolle ?? 0;
+                    ((BeschwörungsModifikator<int, int>)mods[MOD_SCHWIERIGKEIT]).Value1 = beschworenesWesen.Beschwörung ?? 0;
+                    ((BeschwörungsModifikator<int, int>)mods[MOD_SCHWIERIGKEIT]).Value2 = beschworenesWesen.Kontrolle ?? 0;
                 }
             }
         }
@@ -215,8 +343,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return beherrschungGelungen; }
             set { Set(ref beherrschungGelungen, value); }
         }
-
-
 
         private BeschwörungsStatus status;
         public virtual BeschwörungsStatus Status
@@ -288,9 +414,9 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
 
         private int zauberBasisWert;
-        public virtual int ZauberWert
+        public int ZauberWert
         {
-            get { return zauberBasisWert; }
+            get { return zauberBasisWert + Mods.Values.Sum((mod) => mod.ZauberMod); }
         }
 
         public int KontrollWert
@@ -309,190 +435,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get;
         }
 
-
-        private int beschwörungsschwierigkeit;
-        public int Beschwörungsschwierigkeit
-        {
-            get { return beschwörungsschwierigkeit; }
-            set
-            {
-                Set(ref beschwörungsschwierigkeit, value);
-                OnChangedSum();
-            }
-        }
-
-        private int kontrollschwierigkeit;
-        public int Kontrollschwierigkeit
-        {
-            get { return kontrollschwierigkeit; }
-            set
-            {
-                Set(ref kontrollschwierigkeit, value);
-                OnChangedSum();
-            }
-        }
-
-        private int wahrerName;
-        public int WahrerName
-        {
-            get { return wahrerName; }
-            set
-            {
-                wahrerName = value;
-                OnInputChanged();
-            }
-        }
-
-        private int material;
-        public int Material
-        {
-            get { return material; }
-            set
-            {
-                material = value;
-                OnInputChanged();
-            }
-        }
-
-        public int MaterialRufMod
-        {
-            get { return -Material; }
-        }
-
-        private bool blutmagie = false;
-        public virtual bool Blutmagie
-        {
-            get { return blutmagie; }
-            set
-            {
-                blutmagie = value;
-                OnInputChanged();
-            }
-        }
-
-
-        private int sterne;
-        public int Sterne
-        {
-            get { return sterne; }
-            set
-            {
-                sterne = value;
-                OnInputChanged();
-            }
-        }
-
-        private int ort;
-        public int Ort
-        {
-            get { return ort; }
-            set
-            {
-                ort = value;
-                OnInputChanged();
-            }
-        }
-
-        private int donariaRuf;
-        public int DonariaRuf
-        {
-            get { return donariaRuf; }
-            set
-            {
-                Set(ref donariaRuf, value);
-                OnChangedSum();
-            }
-        }
-
-        private int donariaHerrsch;
-        public int DonariaHerrsch
-        {
-            get { return donariaHerrsch; }
-            set
-            {
-                Set(ref donariaHerrsch, value);
-                OnChangedSum();
-            }
-        }
-
-        private int befehlHerrschMod;
-        public int BefehlHerrschMod
-        {
-            get { return befehlHerrschMod; }
-            set
-            {
-                Set(ref befehlHerrschMod, value);
-                OnChangedSum();
-            }
-        }
-
-        private int dauerHerrschMod;
-        public int DauerHerrschMod
-        {
-            get { return dauerHerrschMod; }
-            set
-            {
-                Set(ref dauerHerrschMod, value);
-                OnChangedSum();
-            }
-        }
-
-        private int sonstigesRufMod;
-        public int SonstigesRufMod
-        {
-            get { return sonstigesRufMod; }
-            set
-            {
-                Set(ref sonstigesRufMod, value);
-                OnChangedSum();
-            }
-        }
-
-        private int sonstigesHerrschMod;
-        public int SonstigesHerrschMod
-        {
-            get { return sonstigesHerrschMod; }
-            set
-            {
-                Set(ref sonstigesHerrschMod, value);
-                OnChangedSum();
-            }
-        }
-
-        private int bezahlungHerrschMod;
-        public int BezahlungHerrschMod
-        {
-            get { return bezahlungHerrschMod; }
-            set
-            {
-                Set(ref bezahlungHerrschMod, value);
-                OnChangedSum();
-            }
-        }
-
-        private int ausrüstungMod;
-        public int AusrüstungMod
-        {
-            get { return ausrüstungMod; }
-            set
-            {
-                Set(ref ausrüstungMod, value);
-                OnChangedSum();
-            }
-        }
-
-        private int beschwörungspunkte;
-        public int Beschwörungspunkte
-        {
-            get { return beschwörungspunkte; }
-            set
-            {
-                Set(ref beschwörungspunkte, value);
-                OnChanged("Beschwörungsbonus");
-                OnChangedSum();
-            }
-        }
-
         private List<GegnerBase> wesen;
         public List<GegnerBase> Wesen
         {
@@ -500,82 +442,25 @@ namespace MeisterGeister.ViewModel.Beschwörung
             private set { Set(ref wesen, value); }
         }
 
-        public int Beschwörungsbonus
-        {
-            get { return -Math.Min(Beschwörungspunkte / 3, 7); }
-        }
-
-
-        public virtual int WahrerNameRufMod
-        {
-            get { return -WahrerName; }
-        }
-
-        public int WahrerNameHerrschMod
-        {
-            get { return (int)Math.Round(-WahrerName / 3.0, MidpointRounding.AwayFromZero); }
-        }
-
-        public int SterneRufMod
-        {
-            get { return Sterne; }
-        }
-        public int SterneHerrschMod
-        {
-            get { return (int)Math.Round(Sterne / 3.0, MidpointRounding.AwayFromZero); }
-        }
-
-        public int OrtRufMod
-        {
-            get { return -Ort; }
-        }
-        public int OrtHerrschMod
-        {
-            get { return (int)Math.Round(-Ort / 3.0, MidpointRounding.AwayFromZero); }
-        }
-
-        public virtual int BlutmagieHerrschMod
-        {
-            get { return Blutmagie ? 2 : 0; }
-        }
-
         /// <summary>
         /// Probenerschwernis uaf die Beschwörungsprobe
         /// </summary>
-        public virtual int GesamtRufMod
+        public int GesamtRufMod
         {
             get
             {
-                return Beschwörungsschwierigkeit
-                    + WahrerNameRufMod
-                    + MaterialRufMod
-                    + AusrüstungMod
-                    + SterneRufMod
-                    + OrtRufMod
-                    + DonariaRuf
-                    + SonstigesRufMod;
+                return mods.Values.Sum((mod) => mod.AnrufungsMod);
             }
         }
 
         /// <summary>
         /// Probenerschwernis auf die Beherrschungsprobe
         /// </summary>
-        public virtual int GesamtHerrschMod
+        public int GesamtHerrschMod
         {
             get
             {
-                return Kontrollschwierigkeit
-                    + WahrerNameHerrschMod
-                    + Beschwörungsbonus
-                    + BefehlHerrschMod
-                    + DauerHerrschMod
-                    + AusrüstungMod
-                    + BlutmagieHerrschMod
-                    + SterneHerrschMod
-                    + OrtHerrschMod
-                    + DonariaHerrsch
-                    + BezahlungHerrschMod
-                    + SonstigesHerrschMod;
+                return mods.Values.Sum((mod) => mod.KontrollMod);
             }
         }
 
@@ -586,26 +471,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             get
             {
-                return 0;
+                return mods.Values.Sum((mod) => mod.KostenMod);
             }
-        }
-
-        #endregion
-
-        #region Helfer
-
-        protected void OnInputChanged([CallerMemberName]string propertyName = null)
-        {
-            base.OnChanged(propertyName);
-            base.OnChanged(propertyName + "RufMod");
-            base.OnChanged(propertyName + "HerrschMod");
-            OnChangedSum();
-        }
-
-        protected void OnChangedSum()
-        {
-            OnChanged("GesamtRufMod");
-            OnChanged("GesamtHerrschMod");
         }
 
         #endregion

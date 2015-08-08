@@ -9,6 +9,7 @@
              xmlns:mg="clr-namespace:MeisterGeister"
              mc:Ignorable="d" 
              d:DesignHeight="304" d:DesignWidth="550.4">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -56,6 +57,13 @@
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
+                        <General:Template Value="{x:Type vm:GeisterBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Geister"/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
                     </General:TemplateCollection>
                 </General:DynamicTemplateSelector>
             </TabControl.ItemTemplateSelector>
@@ -74,9 +82,14 @@
                         <General:Template Value="{x:Type vm:ElementarBeschwörungViewModel}">
                             <General:Template.DataTemplate>
                                 <DataTemplate>
-                                    <ScrollViewer>
-                                        <Beschwörung:ElementarBeschwörungView/>
-                                    </ScrollViewer>
+                                    <Beschwörung:ElementarBeschwörungView/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
+                        <General:Template Value="{x:Type vm:GeisterBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <Beschwörung:GeisterBeschwörungView/>
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
@@ -85,7 +98,8 @@
             </TabControl.ContentTemplateSelector>
 
             <vm:DämonenBeschwörungViewModel/>
-            <!--<vm:ElementarBeschwörungViewModel/>-->
+            <vm:ElementarBeschwörungViewModel/>
+            <vm:GeisterBeschwörungViewModel/>
 
         </TabControl>
     </Grid>

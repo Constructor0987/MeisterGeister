@@ -392,6 +392,16 @@ namespace MeisterGeister.Model.Service
         {
             return Context.GegnerBase.Where(g => g.Typ == "Elementar").ToList();
         }
+
+        public List<GegnerBase> LoadGeister()
+        {
+            return Context.GegnerBase.Where(g => g.Typ == "Geist").ToList();
+        }
+
+        public List<GegnerBase> LoadUntote()
+        {
+            return Context.GegnerBase.Where(g => g.Typ == "Untot").ToList();
+        }
         #endregion
     }
 }

@@ -25,13 +25,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
             checkHeldElement();
             if (Held != null)
             {
-                Affinität = Held.HatVorNachteil(AFFINITÄT);
-                VerhüllteAura = Held.HatSonderfertigkeitUndVoraussetzungen(VERHÜLLTE_AURA);
+                affinität.Value = Held.HatVorNachteil(AFFINITÄT);
+                verhüllteAura.Value = Held.HatSonderfertigkeitUndVoraussetzungen(VERHÜLLTE_AURA);
             }
             else
             {
-                Affinität = false;
-                VerhüllteAura = false;
+                affinität.Value = false;
+                verhüllteAura.Value = false;
             }
         }
 
@@ -39,21 +39,21 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             if (Held != null)
             {
-                MerkmalElement = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, Element));
-                MerkmalGegenElement = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, GegenElement));
+                elementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, Element));
+                gegenelementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, GegenElement));
 
-                BegabungElement = Held.HatVorNachteil(String.Format(BEGABUNG, Element));
-                BegabungGegenElement = Held.HatVorNachteil(String.Format(BEGABUNG, GegenElement));
+                elementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, Element));
+                gegenelementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, GegenElement));
 
                 ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, Element, GegenElement))
                                           || Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, GegenElement, Element));
 
-                Dämonisch = Held.Sonderfertigkeiten.Keys.Where((sf) => sf.Name.StartsWith(MERKMAL_DÄMONISCH)).Count()
+                dämonisch.Value = Held.Sonderfertigkeiten.Keys.Where((sf) => sf.Name.StartsWith(MERKMAL_DÄMONISCH)).Count()
                           + Held.Vorteile.Keys.Where((vorteil) => vorteil.Name.StartsWith(BEGABUNG_DÄMONISCH)).Count();
             }
             else
             {
-                MerkmalElement = MerkmalGegenElement = BegabungElement = BegabungGegenElement = false;
+                elementMod.Value1 = elementMod.Value2 = gegenelementMod.Value1 = gegenelementMod.Value2 = false;
                 ElementarharmonisierteAura = false;
             }
         }
@@ -67,8 +67,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected override void reset()
         {
             base.reset();
-            BegabungElement = MerkmalElement = BegabungGegenElement = BegabungGegenElement = DämonGerufen = Paktierer = Affinität = VerhüllteAura = false;
-            Dämonisch = SchwacheAusstrahlung = Stigma = 0;
             Element = Element.Feuer;
             Typ = ElementarWesen.Elementargeist;
         }
@@ -99,8 +97,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return typ; }
             set
             {
-                typ = value;
-                OnChanged();
+                Set(ref typ, value);
                 switch (value)
                 {
                     case ElementarWesen.Elementargeist:
@@ -116,55 +113,84 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        private bool begabungElement;
-        public bool BegabungElement
-        {
-            get { return begabungElement; }
-            set
-            {
-                Set(ref begabungElement, value);
-                OnChanged("ElementRufMod");
-                OnChanged("ElementHerrschMod");
-                OnChangedSum();
-            }
-        }
+        private const string MOD_MENGE = "Menge";
+        private const string MOD_ELEMENT = "Element";
+        private const string MOD_GEGENELEMENT = "Gegenelement";
+        private const string MOD_DÄMONISCH = "Dämonisch";
+        private const string MOD_DÄMON_GERUFEN = "DämonGerufen";
+        private const string MOD_PAKTIERER = "Paktierer";
+        private const string MOD_AFFINITÄT = "Affinität";
+        private const string MOD_VERHÜLLTE_AURA = "VerhüllteAura";
+        private const string MOD_SCHWACHE_AUSSTRAHLUNG = "SchwacheAusstrahlung";
+        private const string MOD_STIGMA = "Stigma";
 
-        private bool merkmalElement;
-        public bool MerkmalElement
-        {
-            get { return merkmalElement; }
-            set
-            {
-                Set(ref merkmalElement, value);
-                OnChanged("ElementRufMod");
-                OnChanged("ElementHerrschMod");
-                OnChangedSum();
-            }
-        }
+        private BeschwörungsModifikator<bool> menge;
+        private BeschwörungsModifikator<bool, bool> elementMod, gegenelementMod;
+        private BeschwörungsModifikator<int> dämonisch;
+        private BeschwörungsModifikator<bool> dämonGerufen, paktierer;
+        private BeschwörungsModifikator<bool> affinität;
+        private BeschwörungsModifikator<bool> verhüllteAura;
+        private BeschwörungsModifikator<int> schwacheAusstrahlung;
+        private BeschwörungsModifikator<int> stigma;
 
-        public int ElementRufMod
+        protected override void addMods()
         {
-            get { return (BegabungElement ? -2 : 0) + (MerkmalElement ? -2 : 0); }
-        }
-        public int ElementHerrschMod
-        {
-            get { return (BegabungElement ? -2 : 0) + (MerkmalElement ? -2 : 0); }
-        }
+            //Mit Blutmagie ist die Kontrolle von Elementaren um 12 erschwert
+            blutmagie.GetKontrollMod = () => blutmagie.Value ? 12 : 0;
 
-        private bool hoheMenge;
-        public bool HoheMenge
-        {
-            get { return hoheMenge; }
-            set
-            {
-                hoheMenge = value;
-                OnInputChanged();
-            }
-        }
+            //10-fache Menge gibt Erleichterung von 2 auf die Anrufung
+            menge = new BeschwörungsModifikator<bool>();
+            menge.GetAnrufungsMod = () => menge.Value ? -2 : 0;
+            Mods.Add(MOD_MENGE, menge);
 
-        public int HoheMengeRufMod
-        {
-            get { return HoheMenge ? -2 : 0; }
+            //Begabung und Merkmalskenntnis des entsprechenden Elements erleichtert alles
+            elementMod = new BeschwörungsModifikator<bool, bool>();
+            elementMod.GetAnrufungsMod = () => (elementMod.Value1 ? -2 : 0) + (elementMod.Value2 ? -2 : 0);
+            elementMod.GetKontrollMod = () => (elementMod.Value1 ? -2 : 0) + (elementMod.Value2 ? -2 : 0);
+            Mods.Add(MOD_ELEMENT, elementMod);
+
+            //Begabung und Merkmalskenntnis des Gegenelements erschwert alles
+            gegenelementMod = new BeschwörungsModifikator<bool, bool>();
+            gegenelementMod.GetAnrufungsMod = () => ElementarharmonisierteAura ? 0 : (gegenelementMod.Value1 ? 4 : 0) + (gegenelementMod.Value2 ? 4 : 0);
+            gegenelementMod.GetKontrollMod = () => ElementarharmonisierteAura ? 0 : (gegenelementMod.Value1 ? 2 : 0) + (gegenelementMod.Value2 ? 2 : 0);
+            Mods.Add(MOD_GEGENELEMENT, gegenelementMod);
+
+            //Dämonische Begabungen und Merkmale erschwerden die Probe
+            dämonisch = new BeschwörungsModifikator<int>();
+            dämonisch.GetAnrufungsMod = () => dämonisch.Value * 2;
+            dämonisch.GetKontrollMod = () => dämonisch.Value * 4;
+            Mods.Add(MOD_DÄMONISCH, dämonisch);
+
+            //Wer kürzlich einen Dämon gerufen hat dessen Kontrollprobe ist erschwert
+            dämonGerufen = new BeschwörungsModifikator<bool>();
+            dämonGerufen.GetKontrollMod = () => dämonGerufen.Value ? 4 : 0;
+            Mods.Add(MOD_DÄMON_GERUFEN, dämonGerufen);
+
+            //Ein Paktierer
+            paktierer = new BeschwörungsModifikator<bool>();
+            paktierer.GetAnrufungsMod = () => paktierer.Value ? 6 : 0;
+            paktierer.GetKontrollMod = () => paktierer.Value ? 9 : 0;
+            Mods.Add(MOD_PAKTIERER, paktierer);
+
+            //Affinität zu Elementaren erleichtert die Kontrolle um 3
+            affinität = new BeschwörungsModifikator<bool>();
+            affinität.GetKontrollMod = () => affinität.Value ? -3 : 0;
+            Mods.Add(MOD_AFFINITÄT, affinität);
+
+            //Verhüllte Aura erschwert Kontrolle um 1
+            verhüllteAura = new BeschwörungsModifikator<bool>();
+            verhüllteAura.GetKontrollMod = ()=>verhüllteAura.Value?1:0;
+            Mods.Add(MOD_VERHÜLLTE_AURA, verhüllteAura);
+
+            //Schwache Ausstrahlung erschwert die Kontrolle
+            schwacheAusstrahlung = new BeschwörungsModifikator<int>();
+            schwacheAusstrahlung.GetKontrollMod = () => schwacheAusstrahlung.Value;
+            Mods.Add(MOD_SCHWACHE_AUSSTRAHLUNG, schwacheAusstrahlung);
+
+            //Stigmas erschwerden die Kontrolle
+            stigma = new BeschwörungsModifikator<int>();
+            stigma.GetKontrollMod = () => div(stigma.Value, 4);
+            Mods.Add(MOD_STIGMA, stigma);
         }
 
         private bool elementarharmonisierteAura;
@@ -174,185 +200,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             set
             {
                 Set(ref elementarharmonisierteAura, value);
-                OnChanged("GegenElementRufMod");
-                OnChanged("GegenElementHerrschMod");
-                OnChangedSum();
-            }
-        }
-
-
-
-        private bool begabungGegenElement;
-        public bool BegabungGegenElement
-        {
-            get { return begabungGegenElement; }
-            set
-            {
-                Set(ref begabungGegenElement, value);
-                OnChanged("GegenElementRufMod");
-                OnChanged("GegenElementHerrschMod");
-                OnChangedSum();
-            }
-        }
-
-        private bool merkmalGegenElement;
-        public bool MerkmalGegenElement
-        {
-            get { return merkmalGegenElement; }
-            set
-            {
-                Set(ref merkmalGegenElement, value);
-                OnChanged("GegenElementRufMod");
-                OnChanged("GegenElementHerrschMod");
-                OnChangedSum();
-            }
-        }
-
-        public int GegenElementRufMod
-        {
-            get
-            {
-                if (ElementarharmonisierteAura) return 0;
-                return (BegabungGegenElement ? 4 : 0) + (MerkmalGegenElement ? 4 : 0);
-            }
-        }
-        public int GegenElementHerrschMod
-        {
-            get
-            {
-                if (ElementarharmonisierteAura) return 0;
-                return (BegabungGegenElement ? 2 : 0) + (MerkmalGegenElement ? 2 : 0);
-            }
-        }
-
-        private int dämonisch;
-        public int Dämonisch
-        {
-            get { return dämonisch; }
-            set
-            {
-                dämonisch = value;
-                OnInputChanged();
-            }
-        }
-
-        public int DämonischRufMod
-        {
-            get { return Dämonisch * 2; }
-        }
-
-        public int DämonischHerrschMod
-        {
-            get { return Dämonisch * 4; }
-        }
-
-        private bool dämonGerufen;
-        public bool DämonGerufen
-        {
-            get { return dämonGerufen; }
-            set
-            {
-                dämonGerufen = value;
-                OnInputChanged();
-            }
-        }
-
-        public int DämonGerufenHerrschMod
-        {
-            get { return DämonGerufen ? 4 : 0; }
-        }
-
-        private bool paktierer;
-        public bool Paktierer
-        {
-            get { return paktierer; }
-            set
-            {
-                paktierer = value;
-                OnInputChanged();
-            }
-        }
-
-        public int PaktiererRufMod
-        {
-            get { return Paktierer ? 6 : 0; }
-        }
-
-        public int PaktiererHerrschMod
-        {
-            get { return Paktierer ? 9 : 0; }
-        }
-
-        private bool affinität;
-        public bool Affinität
-        {
-            get { return affinität; }
-            set
-            {
-                affinität = value;
-                OnInputChanged();
-            }
-        }
-
-        public int AffinitätHerrschMod
-        {
-            get { return Affinität ? -3 : 0; }
-        }
-
-        private bool verhüllteAura;
-        public bool VerhüllteAura
-        {
-            get { return verhüllteAura; }
-            set
-            {
-                verhüllteAura = value;
-                OnInputChanged();
-            }
-        }
-
-        public int VerhüllteAuraHerrschMod
-        {
-            get { return VerhüllteAura ? 1 : 0; }
-        }
-
-        private int schwacheAusstrahlung;
-        public int SchwacheAusstrahlung
-        {
-            get { return schwacheAusstrahlung; }
-            set
-            {
-                schwacheAusstrahlung = value;
-                OnInputChanged();
-            }
-        }
-
-        public int SchwacheAusstrahlungHerrschMod
-        {
-            get { return SchwacheAusstrahlung; }
-        }
-
-        private int stigma;
-        public int Stigma
-        {
-            get { return stigma; }
-            set
-            {
-                stigma = value;
-                OnInputChanged();
-            }
-        }
-
-        public int StigmaHerrschMod
-        {
-            //TODO: Wert anpassen
-            get { return (int)Math.Round(Stigma / 12.0, MidpointRounding.AwayFromZero); }
-        }
-
-        public override int BlutmagieHerrschMod
-        {
-            get
-            {
-                return Blutmagie ? 12 : 0;
+                gegenelementMod.Invalidate();
             }
         }
 
@@ -364,36 +212,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected override int calcKontrollWert()
         {
             return (int)Math.Round((Held.Mut + Held.Intuition + Held.Charisma * 2 + ZauberWert) / 5.0, MidpointRounding.AwayFromZero);
-        }
-
-        public override int GesamtRufMod
-        {
-            get
-            {
-                return base.GesamtRufMod
-                    + ElementRufMod
-                    + GegenElementRufMod
-                    + HoheMengeRufMod
-                    + DämonischRufMod
-                    + PaktiererRufMod;
-            }
-        }
-
-        public override int GesamtHerrschMod
-        {
-            get
-            {
-                return base.GesamtHerrschMod
-                    + ElementHerrschMod
-                    + GegenElementHerrschMod
-                    + DämonischHerrschMod
-                    + DämonGerufenHerrschMod
-                    + PaktiererHerrschMod
-                    + AffinitätHerrschMod
-                    + VerhüllteAuraHerrschMod
-                    + SchwacheAusstrahlungHerrschMod
-                    + StigmaHerrschMod;
-            }
         }
 
         #endregion
@@ -408,7 +226,5 @@ namespace MeisterGeister.ViewModel.Beschwörung
         //{
         //    BeherrschungsErgebnis = "Das Elementarwesen erfüllt den Dienst nicht. Die AsP werden trotzdem abgezogen. Wenn noch AsP übrig sind steht das Wesen weiterhin zur Verfügung.";
         //}
-
-
     }
 }
