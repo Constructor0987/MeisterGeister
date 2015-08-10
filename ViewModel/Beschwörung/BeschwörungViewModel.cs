@@ -48,6 +48,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             resetCmd = new Base.CommandBase((o) => reset(), null);
             //Standardwerte setzen
             reset();
+            PropertyChanged += onPropertyChanged;
         }
 
         protected BeschwörungsModifikator<int, int> schwierigkeit;
@@ -228,7 +229,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 //Der Fertigkeitswert ist wichtig weil er sich z.B. durch InvocatioIntegra erhöhen kann
                 zauber.Fertigkeitswert = ZauberWert;
                 zauber.Modifikator = GesamtRufMod;
-                var erg = ShowProbeDialog(zauber, held);
+                var erg = ShowProbeDialog(zauber, Held);
                 if (erg == null)
                     return;
                 if (!erg.Gelungen)
@@ -271,7 +272,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 kontrollwert.Wert = KontrollWert;
                 kontrollwert.WerteNamen = "Kontrollwert";
                 kontrollwert.Modifikator = GesamtHerrschMod;
-                var erg = ShowProbeDialog(kontrollwert, held);
+                var erg = ShowProbeDialog(kontrollwert, Held);
                 if (erg.Gelungen)
                 {
                     //Wenn klappt freuen wird uns und sind fertig
@@ -314,15 +315,39 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
-        private Held held;
-        public virtual Held Held
+        public override void RegisterEvents()
         {
-            get { return held; }
-            set
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += Global_HeldSelectionChanged;
+            OnChanged("Held");
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= Global_HeldSelectionChanged;
+        }
+
+        private void Global_HeldSelectionChanged(object sender, EventArgs e)
+        {
+            OnChanged("Held");
+        }
+
+        private void onPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Held")
             {
-                Set(ref held, value);
                 getZauber();
                 checkHeld();
+            }
+        }
+
+        public virtual Held Held
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
             }
         }
 

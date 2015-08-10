@@ -204,6 +204,22 @@ namespace MeisterGeister.ViewModel.Base {
             }
         }
 
+        /// <summary>
+        /// Dies ist die richtige Stelle um Events anzumelden
+        /// </summary>
+        public virtual void RegisterEvents()
+        {
+
+        }
+
+        /// <summary>
+        /// Dies ist die richtige Stelle um Events abzumelden
+        /// </summary>
+        public virtual void UnregisterEvents()
+        {
+
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN -----

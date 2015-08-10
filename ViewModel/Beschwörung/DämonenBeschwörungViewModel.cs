@@ -253,7 +253,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             affinität.GetKontrollMod = () => affinität.Value ? -3 : 0;
             Mods.Add(MOD_AFFINITÄT, affinität);
 
-            //Ein Paktierer der passenden Domäne ist Anrufung und Kontrolle um seinen Kreis der Verdammnis erleichtert
+            //Für einen Paktierer der passenden Domäne ist Anrufung und Kontrolle um seinen Kreis der Verdammnis erleichtert
             //Die Kontrolle ist zusätzlich um 3 erleichtert
             paktierer = new BeschwörungsModifikator<int>();
             paktierer.GetAnrufungsMod = () => -paktierer.Value;

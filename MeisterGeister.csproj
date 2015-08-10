@@ -554,7 +554,8 @@
     <Compile Include="ViewModel\Beschwörung\Element.cs" />
     <Compile Include="ViewModel\Beschwörung\ElementarWesen.cs" />
     <Compile Include="ViewModel\Beschwörung\GeisterBeschwörungViewModel.cs" />
-    <Compile Include="ViewModel\Beschwörung\UntotenBeschwörungsViewModel.cs" />
+    <Compile Include="ViewModel\Beschwörung\GolemBeschwörungViewModel.cs" />
+    <Compile Include="ViewModel\Beschwörung\UntotenBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
@@ -825,6 +826,7 @@
       <DependentUpon>TextBoxModInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\TrackBehavior.cs" />
+    <Compile Include="View\General\UIElementBehavior.cs" />
     <Compile Include="View\General\ValueConverterGroup.cs" />
     <Compile Include="View\General\ViewHelper.cs" />
     <Compile Include="View\General\WürfelValidationRule.cs" />

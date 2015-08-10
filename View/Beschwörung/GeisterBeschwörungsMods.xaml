@@ -39,19 +39,19 @@
             <RowDefinition Height="24" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
-        <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
+        <TextBlock Text="Anrufung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
+        <TextBlock Text="Kontrolle" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
 
         <TextBlock Text="Geist" Style="{StaticResource label}"/>
         <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
 
         <TextBlock Text="Basis" Grid.Row="1" Style="{StaticResource label}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-            <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Mods[Schwierigkeit].Value1}"/>
-            <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Mods[Schwierigkeit].Value2}"/>
+            <General:IntBox ShowButtons="True" Value="{Binding Mods[Schwierigkeit].Value1}"/>
+            <General:IntBox ShowButtons="True" Value="{Binding Mods[Schwierigkeit].Value2}"/>
         </StackPanel>
         <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Schwierigkeit].AnrufungsMod}"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Schwierigkeit].Value2}"/>
+        <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Schwierigkeit].KontrollMod}"/>
 
         <TextBlock Text="Wahrer Name" Grid.Row="2" Style="{StaticResource label}"/>
         <General:IntBox ShowButtons="True" MinValue="0" MaxValue="7" Value="{Binding Mods[WahrerName].Value}" Grid.Row="2" Grid.Column="1"/>

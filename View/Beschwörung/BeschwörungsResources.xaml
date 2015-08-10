@@ -62,4 +62,19 @@
         </Setter>
     </Style>
 
+    <DataTemplate x:Key="verdammnisTemplate">
+        <StackPanel>
+            <TextBlock x:Name="text">
+                Im <Run Text="{Binding Mode=OneWay}"/>. Kreis der Verdammnis
+            </TextBlock>
+            <TextBlock Text="Nein" x:Name="no" Visibility="Collapsed"/>
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding}" Value="0">
+                <Setter TargetName="text" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="no" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
 </ResourceDictionary>

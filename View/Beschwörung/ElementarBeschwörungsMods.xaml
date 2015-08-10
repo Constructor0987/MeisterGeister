@@ -16,8 +16,8 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="160" Name="colBeschwörung"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" Name="colBeschwörung"/>
             <ColumnDefinition Width="Auto" Name="colBeherrschung"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -88,33 +88,43 @@
             </ResourceDictionary>
         </Grid.Resources>
 
-        <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
-        <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
+        <TextBlock Text="Anrufung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
+        <TextBlock Text="Kontrolle" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
 
         <TextBlock Text="Elementar" Style="{StaticResource label}"/>
         <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
 
         <TextBlock Text="Typ" Grid.Row="1" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Element}" SelectedIndex="0" Width="50" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Element}" SelectedIndex="0" Width="42" HorizontalAlignment="Left" VerticalAlignment="Stretch">
             <ComboBox.ToolTip>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Element, Converter={StaticResource enumConverter}}"/>
                     <TextBlock Text="elementar"/>
                 </StackPanel>
             </ComboBox.ToolTip>
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Padding" Value="4"/>
+                </Style>
+            </ComboBox.ItemContainerStyle>
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <Image Name="image" ToolTip="{Binding Converter={StaticResource enumConverter}}" Style="{StaticResource elementImage}" Height="16" Width="16"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"/>
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
             <x:StaticExtension Member="vm:Element.Feuer"/>
-            <x:StaticExtension Member="vm:Element.Wasser"/>
             <x:StaticExtension Member="vm:Element.Humus"/>
-            <x:StaticExtension Member="vm:Element.Eis"/>
             <x:StaticExtension Member="vm:Element.Luft"/>
+            <x:StaticExtension Member="vm:Element.Wasser"/>
+            <x:StaticExtension Member="vm:Element.Eis"/>
             <x:StaticExtension Member="vm:Element.Erz"/>
         </ComboBox>
-        <ComboBox Margin="50,0,0,0" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Typ}">
+        <ComboBox Margin="42,0,0,0" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Typ}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>

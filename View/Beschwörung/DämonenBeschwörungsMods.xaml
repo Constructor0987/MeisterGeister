@@ -72,8 +72,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Beschwörung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
-        <TextBlock Text="Beherrschung" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
+        <TextBlock Text="Anrufung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
+        <TextBlock Text="Kontrolle" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
 
         <TextBlock Text="Dämon" Style="{StaticResource label}"/>
         <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
@@ -111,7 +111,7 @@
             <General:IntBox MinValue="0" ShowButtons="True" Value="{Binding Mods[Schwierigkeit].Value2}"/>
         </StackPanel>
         <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Schwierigkeit].AnrufungsMod}"/>
-        <TextBlock Margin="14,0,0,0" Foreground="Red" Text="2x" Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" ToolTip="Weil anderer Dämon erschienen ist"
+        <TextBlock Margin="10,0,0,0" Foreground="Red" Text="2x" Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" ToolTip="Weil anderer Dämon erschienen ist"
                    Visibility="{Binding AndererDämon,Converter={StaticResource BooleanToVisibilityConverter1}}" HorizontalAlignment="Left"/>
         <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Schwierigkeit].Value2}"/>
 
@@ -130,23 +130,7 @@
         <TextBlock Text="{Binding Mods[Bannschwert].KontrollMod}" Grid.Row="5" Grid.Column="3" Style="{StaticResource mod}"/>
 
         <TextBlock Text="Paktierer" Grid.Row="6" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Paktierer].Value}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Name="im" Text="Im "/>
-                        <TextBlock Name="num" Text="{Binding}"/>
-                        <TextBlock Name="kreis" Text=". Kreis der Verdammnis"/>
-                    </StackPanel>
-                    <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding}" Value="0">
-                            <Setter TargetName="num" Property="Text" Value="Nein"/>
-                            <Setter TargetName="kreis" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="im" Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
+        <ComboBox Grid.Row="6" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Paktierer].Value}" ItemTemplate="{StaticResource verdammnisTemplate}">
             <System:Int32>0</System:Int32>
             <System:Int32>1</System:Int32>
             <System:Int32>2</System:Int32>

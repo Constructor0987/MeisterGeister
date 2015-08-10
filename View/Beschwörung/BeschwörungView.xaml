@@ -64,6 +64,13 @@
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
+                        <General:Template Value="{x:Type vm:UntotenBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Untote"/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
                     </General:TemplateCollection>
                 </General:DynamicTemplateSelector>
             </TabControl.ItemTemplateSelector>
@@ -75,21 +82,28 @@
                         <General:Template Value="{x:Type vm:DämonenBeschwörungViewModel}">
                             <General:Template.DataTemplate>
                                 <DataTemplate>
-                                    <Beschwörung:DämonenBeschwörungView/>
+                                    <Beschwörung:DämonenBeschwörungView General:UIElementBehavior.ViewModel="{Binding}"/>
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
                         <General:Template Value="{x:Type vm:ElementarBeschwörungViewModel}">
                             <General:Template.DataTemplate>
                                 <DataTemplate>
-                                    <Beschwörung:ElementarBeschwörungView/>
+                                    <Beschwörung:ElementarBeschwörungView General:UIElementBehavior.ViewModel="{Binding}"/>
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
                         <General:Template Value="{x:Type vm:GeisterBeschwörungViewModel}">
                             <General:Template.DataTemplate>
                                 <DataTemplate>
-                                    <Beschwörung:GeisterBeschwörungView/>
+                                    <Beschwörung:GeisterBeschwörungView General:UIElementBehavior.ViewModel="{Binding}"/>
+                                </DataTemplate>
+                            </General:Template.DataTemplate>
+                        </General:Template>
+                        <General:Template Value="{x:Type vm:UntotenBeschwörungViewModel}">
+                            <General:Template.DataTemplate>
+                                <DataTemplate>
+                                    <Beschwörung:UntotenBeschwörungsView General:UIElementBehavior.ViewModel="{Binding}"/>
                                 </DataTemplate>
                             </General:Template.DataTemplate>
                         </General:Template>
@@ -100,6 +114,7 @@
             <vm:DämonenBeschwörungViewModel/>
             <vm:ElementarBeschwörungViewModel/>
             <vm:GeisterBeschwörungViewModel/>
+            <vm:UntotenBeschwörungViewModel/>
 
         </TabControl>
     </Grid>
