@@ -1,4 +1,5 @@
-﻿using MeisterGeister.Model.Extensions;
+﻿using MeisterGeister.Logic.Kalender.DsaTool;
+using MeisterGeister.Model.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,8 @@ namespace MeisterGeister.Model
             get
             {
                 List<string> namen = new List<string>();
-                for (int i = 0; i < this.Pflanze_Gebiet.Count; i++)
-                    namen.Add(this.Pflanze_Gebiet.ElementAt(i).Gebiet.Name);
+                for (int i = 0; i < this.Gebiet.Count; i++)
+                    namen.Add(this.Gebiet.ElementAt(i).Name);
                 return namen;
             }
         }
@@ -47,11 +48,6 @@ namespace MeisterGeister.Model
             get { return this.Pflanze_Ernte.ElementAt(0).Pflanzenteil; }
         }
 
-        public string Name
-        {
-            get { return this.Handelsgut.Name; }
-        }
-
         public string Haltbarkeit
         {
             get { return this.Pflanze_Ernte.ElementAt(0).Haltbarkeit == null? "":
@@ -59,12 +55,12 @@ namespace MeisterGeister.Model
             }
         }
 
-        public int? Gewicht
+        public float? Gewicht
         {
             get { return this.Pflanze_Ernte.ElementAt(0).Gewicht; }
         }
 
-        public string Bemerkung
+        public string BemerkungErnte
         {
             get { return this.Pflanze_Ernte.ElementAt(0).Bemerkung == null? "":
                 this.Pflanze_Ernte.ElementAt(0).Bemerkung;
@@ -75,11 +71,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                List<Gebiet> gebieteListe = new List<Gebiet>();
-
-                foreach (Pflanze_Gebiet pGebiet in this.Pflanze_Gebiet)
-                    gebieteListe.Add(pGebiet.Gebiet);
-                return gebieteListe;
+                return Gebiet.ToList();
             }
         }
         
@@ -136,9 +128,62 @@ namespace MeisterGeister.Model
             return (pVerbreitung != null) ? pVerbreitung.Verbreitung : 100;
         }
 
+        /// <summary>
+        /// Überprüfung der Erntezeit.
+        /// </summary>
+        /// <param name="month">1.0 bis 14.0</param>
+        /// <param name="tagesgenau"></param>
+        /// <returns></returns>
+        public List<Pflanze_Ernte> GetErnte(double month, bool tagesgenau = true)
+        {
+            List<Pflanze_Ernte> l;
+            l = new List<Pflanze_Ernte>();
+            foreach (var ernte in Pflanze_Ernte)
+            {
+                double von = ernte.Von;
+                double bis = ernte.Bis;
+                if (bis % 1 == 0)
+                    bis++;
+                if (von <= bis)
+                {
+                    if (von <= month && month <= bis)
+                        l.Add(ernte);
+                }
+                else
+                {
+                    if (!(bis < month && month < von))
+                        l.Add(ernte);
+                }
+            }
+            return l;
+        }
+
+        /// <summary>
+        /// Tagesgenaue Überprüfung der Erntezeit.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public List<Pflanze_Ernte> GetErnte(DSADateTime date)
+        {
+            if (date != null)
+            {
+                DSADateCalendarTwelve cal = new DSADateCalendarTwelve(date);
+                double month = cal.getMonthAsNumber();
+                double daysInMonth = 30;
+                if (month == 13)
+                    daysInMonth = 5;
+                double day = cal.getDay();
+                month += day / daysInMonth;
+                return GetErnte(month);
+            }
+            return Pflanze_Ernte.ToList();
+        }
+
         public bool GetInErnte(string monat)
         {
-            int monatNr = 
+            if (monat.ToLower() == "komplettes jahr")
+                return GetErnte(null).Count>0;
+            double monatNr = 
                 monat.ToLower() == "komplettes jahr" ? this.Pflanze_Ernte.ElementAt(0).Von :
                 monat.ToLower() == "praios" ? 1 :
                 monat.ToLower() == "rondra" ? 2 :
@@ -153,7 +198,17 @@ namespace MeisterGeister.Model
                 monat.ToLower() == "ingerimm" ? 11 :
                 monat.ToLower() == "rahja" ? 12 :
                 monat.ToLower() == "namenlosetage" ? 13 : 0;
-            return this.Pflanze_Ernte.Where(t => t.Von >= monatNr).Where(t2 => t2.Bis <= monatNr) != null;
+            return GetErnte(monatNr).Count>0;
+        }
+
+        /// <summary>
+        /// Prüfung nur anhand des ganzen Monats. Nicht tagesgenau.
+        /// </summary>
+        /// <param name="monat">1 bis 13</param>
+        /// <returns></returns>
+        public bool GetInErnte(double monatNr)
+        {
+            return GetErnte(monatNr, false).Count>0;
         }
                 
         #region Import Export

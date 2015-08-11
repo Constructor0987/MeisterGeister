@@ -36,14 +36,6 @@ namespace MeisterGeister.Model.Service
             }
         }
 
-        public List<Model.Pflanze_Gebiet> ZooBotPflanze_GebietListe
-        {
-            get
-            {
-                return Liste<Pflanze_Gebiet>();
-            }
-        }
-
         #endregion
 
         #region //----- KONSTRUKTOR ----

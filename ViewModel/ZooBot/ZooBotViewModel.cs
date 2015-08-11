@@ -90,18 +90,6 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
         }
 
-
-        private List<Pflanze_Gebiet> _pflanzenGebietListe = new List<Pflanze_Gebiet>();
-        public List<Pflanze_Gebiet> PflanzenGebietListe
-        {
-            get { return _pflanzenGebietListe; }
-            set
-            {
-                _pflanzenGebietListe = value;
-                OnChanged();
-            }
-        }
-
         private List<Landschaft> _landschaftenGebietListe = new List<Landschaft>();
         public List<Landschaft> LandschaftGebietListe
         {
@@ -406,10 +394,6 @@ namespace MeisterGeister.ViewModel.ZooBot
             LandschaftenListe = Global.ContextZooBot == null ? new List<Model.Landschaft>() : Global.ContextZooBot.ZooBotLandschaftenListe;
         }
 
-        private void InitializePflanzenGebiete()
-        {
-            PflanzenGebietListe = Global.ContextZooBot == null ? new List<Model.Pflanze_Gebiet>() : Global.ContextZooBot.ZooBotPflanze_GebietListe;
-        }
         #endregion
          
        
@@ -1421,27 +1405,22 @@ namespace MeisterGeister.ViewModel.ZooBot
                     }
                     else
                     {
-                        foreach (Pflanze_Gebiet pGebiet in g.Pflanze_Gebiet)
+                        foreach (var pGebiet in g.Pflanze)
                         {
-                            if (!pList.Contains(pGebiet.Pflanze))
+                            if (!pList.Contains(pGebiet))
                             {
-                                foreach (Pflanze_Ernte pErnte in pGebiet.Pflanze.Pflanze_Ernte)
+                                foreach (Pflanze_Ernte pErnte in pGebiet.Pflanze_Ernte)
                                 {
-                                    if ((pErnte.Von <= pErnte.Bis &&
-                                          MonatAuswahlWert >= pErnte.Von &&
-                                          MonatAuswahlWert <= pErnte.Bis)
-                                          ||
-                                          (pErnte.Von > pErnte.Bis &&
-                                          MonatAuswahlWert >= pErnte.Bis &&
-                                          MonatAuswahlWert <= pErnte.Von)
+                                    if (pGebiet.GetInErnte(MonatAuswahlWert)
+                                    
                                           ||
                                           MonatAuswahlWert == 0
                                          && 
-                                         !pList.Contains(pGebiet.Pflanze))
-                                        pList.Add(pGebiet.Pflanze);
+                                         !pList.Contains(pGebiet))
+                                        pList.Add(pGebiet);
                                 }
                             }
-                            pGebiet.Pflanze.Landschaften.ForEach(delegate(Landschaft l)
+                            pGebiet.Landschaften.ForEach(delegate(Landschaft l)
                             {
                                 if (!pLandschaft.Contains(l))
                                     pLandschaft.Add(l);
@@ -2218,7 +2197,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                     pErnte = PflanzeSelected.Pflanze_Ernte.FirstOrDefault(t => t.PflanzeGUID == PflanzeSelected.PflanzeGUID);
 
                     grundmenge = pErnte.Grundmenge + " " + pErnte.Pflanzenteil;
-                    referenz = PflanzeSelected.Handelsgut.Literatur;
+                    referenz = PflanzeSelected.Literatur;
                     
                     ausgabe += (Kräuter_HatSuchdauerVerdoppelt) ?
                         "Die Probe ist mit " + tapstern + " TaP* gelungen und hat 2 Stunden gedauert. \r\n\r\n":
@@ -2348,7 +2327,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                         pErnte = (optionen[fund] as Pflanze).Pflanze_Ernte.FirstOrDefault(t => t.PflanzeGUID == (optionen[fund] as Pflanze).PflanzeGUID);
 
                         grundmenge = pErnte.Grundmenge + " " + pErnte.Pflanzenteil;
-                        referenz = (optionen[fund] as Pflanze).Handelsgut.Literatur;
+                        referenz = (optionen[fund] as Pflanze).Literatur;
                     
                         int menge = 1;
                         tapstern -= suchschwierigkeit;

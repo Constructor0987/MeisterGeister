@@ -94,25 +94,6 @@ namespace MeisterGeister.Model
         private System.Guid _pflanzeGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid HandelsgutGUID
-        {
-            get { return _handelsgutGUID; }
-            set
-            {
-                if (_handelsgutGUID != value)
-                {
-                    if (Handelsgut != null && Handelsgut.HandelsgutGUID != value)
-                    {
-                        Handelsgut = null;
-                    }
-                    _handelsgutGUID = value;
-                }
-            }
-    
-        }
-        private System.Guid _handelsgutGUID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual short Bestimmung
         {
             get { return _bestimmung; }
@@ -125,31 +106,7 @@ namespace MeisterGeister.Model
         private short _bestimmung;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<short> Bestimmung2
-        {
-            get { return _bestimmung2; }
-            set
-    		{ 
-    			Set(ref _bestimmung2, value);
-    		}
-    
-        }
-        private Nullable<short> _bestimmung2;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Bestimmungsausnahme
-        {
-            get { return _bestimmungsausnahme; }
-            set
-    		{ 
-    			Set(ref _bestimmungsausnahme, value);
-    		}
-    
-        }
-        private string _bestimmungsausnahme;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<short> AusnahmeVon
+        public virtual Nullable<double> AusnahmeVon
         {
             get { return _ausnahmeVon; }
             set
@@ -158,10 +115,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<short> _ausnahmeVon;
+        private Nullable<double> _ausnahmeVon;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<short> AusnahmeBis
+        public virtual Nullable<double> AusnahmeBis
         {
             get { return _ausnahmeBis; }
             set
@@ -170,27 +127,131 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<short> _ausnahmeBis;
+        private Nullable<double> _ausnahmeBis;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Name
+        {
+            get { return _name; }
+            set
+    		{ 
+    			Set(ref _name, value);
+    		}
+    
+        }
+        private string _name;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Kategorie
+        {
+            get { return _kategorie; }
+            set
+    		{ 
+    			Set(ref _kategorie, value);
+    		}
+    
+        }
+        private string _kategorie;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Bemerkung
+        {
+            get { return _bemerkung; }
+            set
+    		{ 
+    			Set(ref _bemerkung, value);
+    		}
+    
+        }
+        private string _bemerkung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Literatur
+        {
+            get { return _literatur; }
+            set
+    		{ 
+    			Set(ref _literatur, value);
+    		}
+    
+        }
+        private string _literatur;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<short> BestimmungAusname2
+        {
+            get { return _bestimmungAusname2; }
+            set
+    		{ 
+    			Set(ref _bestimmungAusname2, value);
+    		}
+    
+        }
+        private Nullable<short> _bestimmungAusname2;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Ausnahme2Grund
+        {
+            get { return _ausnahme2Grund; }
+            set
+    		{ 
+    			Set(ref _ausnahme2Grund, value);
+    		}
+    
+        }
+        private string _ausnahme2Grund;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Ausnahme2Von
+        {
+            get { return _ausnahme2Von; }
+            set
+    		{ 
+    			Set(ref _ausnahme2Von, value);
+    		}
+    
+        }
+        private Nullable<double> _ausnahme2Von;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Ausnahme2Bis
+        {
+            get { return _ausnahme2Bis; }
+            set
+    		{ 
+    			Set(ref _ausnahme2Bis, value);
+    		}
+    
+        }
+        private Nullable<double> _ausnahme2Bis;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string AusnameGrund
+        {
+            get { return _ausnameGrund; }
+            set
+    		{ 
+    			Set(ref _ausnameGrund, value);
+    		}
+    
+        }
+        private string _ausnameGrund;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<short> BestimmungAusnahme
+        {
+            get { return _bestimmungAusnahme; }
+            set
+    		{ 
+    			Set(ref _bestimmungAusnahme, value);
+    		}
+    
+        }
+        private Nullable<short> _bestimmungAusnahme;
 
         #endregion
 
         #region Navigation Properties
-    
-    	[DataMember]
-        public virtual Handelsgut Handelsgut
-        {
-            get { return _handelsgut; }
-            set
-            {
-                if (!ReferenceEquals(_handelsgut, value))
-                {
-                    var previousValue = _handelsgut;
-                    _handelsgut = value;
-                    FixupHandelsgut(previousValue);
-                }
-            }
-        }
-        private Handelsgut _handelsgut;
     
     	[DataMember]
         public virtual ICollection<Held_Pflanze> Held_Pflanze
@@ -259,39 +320,6 @@ namespace MeisterGeister.Model
         private ICollection<Pflanze_Ernte> _pflanze_Ernte;
     
     	[DataMember]
-        public virtual ICollection<Pflanze_Gebiet> Pflanze_Gebiet
-        {
-            get
-            {
-                if (_pflanze_Gebiet == null)
-                {
-                    var newCollection = new FixupCollection<Pflanze_Gebiet>();
-                    newCollection.CollectionChanged += FixupPflanze_Gebiet;
-                    _pflanze_Gebiet = newCollection;
-                }
-                return _pflanze_Gebiet;
-            }
-            set
-            {
-                if (!ReferenceEquals(_pflanze_Gebiet, value))
-                {
-                    var previousValue = _pflanze_Gebiet as FixupCollection<Pflanze_Gebiet>;
-                    if (previousValue != null)
-                    {
-                        previousValue.CollectionChanged -= FixupPflanze_Gebiet;
-                    }
-                    _pflanze_Gebiet = value;
-                    var newValue = value as FixupCollection<Pflanze_Gebiet>;
-                    if (newValue != null)
-                    {
-                        newValue.CollectionChanged += FixupPflanze_Gebiet;
-                    }
-                }
-            }
-        }
-        private ICollection<Pflanze_Gebiet> _pflanze_Gebiet;
-    
-    	[DataMember]
         public virtual ICollection<Pflanze_Verbreitung> Pflanze_Verbreitung
         {
             get
@@ -323,31 +351,43 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Pflanze_Verbreitung> _pflanze_Verbreitung;
+    
+    	[DataMember]
+        public virtual ICollection<Gebiet> Gebiet
+        {
+            get
+            {
+                if (_gebiet == null)
+                {
+                    var newCollection = new FixupCollection<Gebiet>();
+                    newCollection.CollectionChanged += FixupGebiet;
+                    _gebiet = newCollection;
+                }
+                return _gebiet;
+            }
+            set
+            {
+                if (!ReferenceEquals(_gebiet, value))
+                {
+                    var previousValue = _gebiet as FixupCollection<Gebiet>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupGebiet;
+                    }
+                    _gebiet = value;
+                    var newValue = value as FixupCollection<Gebiet>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupGebiet;
+                    }
+                }
+            }
+        }
+        private ICollection<Gebiet> _gebiet;
 
         #endregion
 
         #region Association Fixup
-    
-        private void FixupHandelsgut(Handelsgut previousValue)
-        {
-    		OnChanged("Handelsgut");
-            if (previousValue != null && previousValue.Pflanze.Contains(this))
-            {
-                previousValue.Pflanze.Remove(this);
-            }
-    
-            if (Handelsgut != null)
-            {
-                if (!Handelsgut.Pflanze.Contains(this))
-                {
-                    Handelsgut.Pflanze.Add(this);
-                }
-                if (HandelsgutGUID != Handelsgut.HandelsgutGUID)
-                {
-                    HandelsgutGUID = Handelsgut.HandelsgutGUID;
-                }
-            }
-        }
     
         private void FixupHeld_Pflanze(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -395,29 +435,6 @@ namespace MeisterGeister.Model
             }
         }
     
-        private void FixupPflanze_Gebiet(object sender, NotifyCollectionChangedEventArgs e)
-        {
-    		OnChanged("Pflanze_Gebiet");
-            if (e.NewItems != null)
-            {
-                foreach (Pflanze_Gebiet item in e.NewItems)
-                {
-                    item.Pflanze = this;
-                }
-            }
-    
-            if (e.OldItems != null)
-            {
-                foreach (Pflanze_Gebiet item in e.OldItems)
-                {
-                    if (ReferenceEquals(item.Pflanze, this))
-                    {
-                        item.Pflanze = null;
-                    }
-                }
-            }
-        }
-    
         private void FixupPflanze_Verbreitung(object sender, NotifyCollectionChangedEventArgs e)
         {
     		OnChanged("Pflanze_Verbreitung");
@@ -436,6 +453,32 @@ namespace MeisterGeister.Model
                     if (ReferenceEquals(item.Pflanze, this))
                     {
                         item.Pflanze = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupGebiet(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Gebiet");
+            if (e.NewItems != null)
+            {
+                foreach (Gebiet item in e.NewItems)
+                {
+                    if (!item.Pflanze.Contains(this))
+                    {
+                        item.Pflanze.Add(this);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Gebiet item in e.OldItems)
+                {
+                    if (item.Pflanze.Contains(this))
+                    {
+                        item.Pflanze.Remove(this);
                     }
                 }
             }

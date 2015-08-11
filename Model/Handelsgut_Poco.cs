@@ -227,37 +227,37 @@ namespace MeisterGeister.Model
         private ICollection<Handelsgut_Setting> _handelsgut_Setting;
     
     	[DataMember]
-        public virtual ICollection<Pflanze> Pflanze
+        public virtual ICollection<Pflanze_Ernte> Pflanze_Ernte
         {
             get
             {
-                if (_pflanze == null)
+                if (_pflanze_Ernte == null)
                 {
-                    var newCollection = new FixupCollection<Pflanze>();
-                    newCollection.CollectionChanged += FixupPflanze;
-                    _pflanze = newCollection;
+                    var newCollection = new FixupCollection<Pflanze_Ernte>();
+                    newCollection.CollectionChanged += FixupPflanze_Ernte;
+                    _pflanze_Ernte = newCollection;
                 }
-                return _pflanze;
+                return _pflanze_Ernte;
             }
             set
             {
-                if (!ReferenceEquals(_pflanze, value))
+                if (!ReferenceEquals(_pflanze_Ernte, value))
                 {
-                    var previousValue = _pflanze as FixupCollection<Pflanze>;
+                    var previousValue = _pflanze_Ernte as FixupCollection<Pflanze_Ernte>;
                     if (previousValue != null)
                     {
-                        previousValue.CollectionChanged -= FixupPflanze;
+                        previousValue.CollectionChanged -= FixupPflanze_Ernte;
                     }
-                    _pflanze = value;
-                    var newValue = value as FixupCollection<Pflanze>;
+                    _pflanze_Ernte = value;
+                    var newValue = value as FixupCollection<Pflanze_Ernte>;
                     if (newValue != null)
                     {
-                        newValue.CollectionChanged += FixupPflanze;
+                        newValue.CollectionChanged += FixupPflanze_Ernte;
                     }
                 }
             }
         }
-        private ICollection<Pflanze> _pflanze;
+        private ICollection<Pflanze_Ernte> _pflanze_Ernte;
 
         #endregion
 
@@ -286,12 +286,12 @@ namespace MeisterGeister.Model
             }
         }
     
-        private void FixupPflanze(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupPflanze_Ernte(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		OnChanged("Pflanze");
+    		OnChanged("Pflanze_Ernte");
             if (e.NewItems != null)
             {
-                foreach (Pflanze item in e.NewItems)
+                foreach (Pflanze_Ernte item in e.NewItems)
                 {
                     item.Handelsgut = this;
                 }
@@ -299,7 +299,7 @@ namespace MeisterGeister.Model
     
             if (e.OldItems != null)
             {
-                foreach (Pflanze item in e.OldItems)
+                foreach (Pflanze_Ernte item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Handelsgut, this))
                     {

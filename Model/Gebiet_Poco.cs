@@ -110,60 +110,63 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
-        public virtual ICollection<Pflanze_Gebiet> Pflanze_Gebiet
+        public virtual ICollection<Pflanze> Pflanze
         {
             get
             {
-                if (_pflanze_Gebiet == null)
+                if (_pflanze == null)
                 {
-                    var newCollection = new FixupCollection<Pflanze_Gebiet>();
-                    newCollection.CollectionChanged += FixupPflanze_Gebiet;
-                    _pflanze_Gebiet = newCollection;
+                    var newCollection = new FixupCollection<Pflanze>();
+                    newCollection.CollectionChanged += FixupPflanze;
+                    _pflanze = newCollection;
                 }
-                return _pflanze_Gebiet;
+                return _pflanze;
             }
             set
             {
-                if (!ReferenceEquals(_pflanze_Gebiet, value))
+                if (!ReferenceEquals(_pflanze, value))
                 {
-                    var previousValue = _pflanze_Gebiet as FixupCollection<Pflanze_Gebiet>;
+                    var previousValue = _pflanze as FixupCollection<Pflanze>;
                     if (previousValue != null)
                     {
-                        previousValue.CollectionChanged -= FixupPflanze_Gebiet;
+                        previousValue.CollectionChanged -= FixupPflanze;
                     }
-                    _pflanze_Gebiet = value;
-                    var newValue = value as FixupCollection<Pflanze_Gebiet>;
+                    _pflanze = value;
+                    var newValue = value as FixupCollection<Pflanze>;
                     if (newValue != null)
                     {
-                        newValue.CollectionChanged += FixupPflanze_Gebiet;
+                        newValue.CollectionChanged += FixupPflanze;
                     }
                 }
             }
         }
-        private ICollection<Pflanze_Gebiet> _pflanze_Gebiet;
+        private ICollection<Pflanze> _pflanze;
 
         #endregion
 
         #region Association Fixup
     
-        private void FixupPflanze_Gebiet(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupPflanze(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		OnChanged("Pflanze_Gebiet");
+    		OnChanged("Pflanze");
             if (e.NewItems != null)
             {
-                foreach (Pflanze_Gebiet item in e.NewItems)
+                foreach (Pflanze item in e.NewItems)
                 {
-                    item.Gebiet = this;
+                    if (!item.Gebiet.Contains(this))
+                    {
+                        item.Gebiet.Add(this);
+                    }
                 }
             }
     
             if (e.OldItems != null)
             {
-                foreach (Pflanze_Gebiet item in e.OldItems)
+                foreach (Pflanze item in e.OldItems)
                 {
-                    if (ReferenceEquals(item.Gebiet, this))
+                    if (item.Gebiet.Contains(this))
                     {
-                        item.Gebiet = null;
+                        item.Gebiet.Remove(this);
                     }
                 }
             }

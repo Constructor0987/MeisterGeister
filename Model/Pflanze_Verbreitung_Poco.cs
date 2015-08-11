@@ -82,18 +82,6 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid ID
-        {
-            get { return _iD; }
-            set
-    		{ 
-    			Set(ref _iD, value);
-    		}
-    
-        }
-        private System.Guid _iD;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual System.Guid PflanzeGUID
         {
             get { return _pflanzeGUID; }

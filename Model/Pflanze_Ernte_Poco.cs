@@ -99,13 +99,21 @@ namespace MeisterGeister.Model
             get { return _pflanzeGUID; }
             set
             {
-                if (_pflanzeGUID != value)
+                try
                 {
-                    if (Pflanze != null && Pflanze.PflanzeGUID != value)
+                    _settingFK = true;
+                    if (_pflanzeGUID != value)
                     {
-                        Pflanze = null;
+                        if (Pflanze != null && Pflanze.PflanzeGUID != value)
+                        {
+                            Pflanze = null;
+                        }
+                        _pflanzeGUID = value;
                     }
-                    _pflanzeGUID = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
     
@@ -113,7 +121,7 @@ namespace MeisterGeister.Model
         private System.Guid _pflanzeGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual short Von
+        public virtual double Von
         {
             get { return _von; }
             set
@@ -122,10 +130,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private short _von;
+        private double _von;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual short Bis
+        public virtual double Bis
         {
             get { return _bis; }
             set
@@ -134,7 +142,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private short _bis;
+        private double _bis;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Grundmenge
@@ -185,7 +193,7 @@ namespace MeisterGeister.Model
         private string _haltbarkeitEinheit;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> Gewicht
+        public virtual Nullable<float> Gewicht
         {
             get { return _gewicht; }
             set
@@ -194,7 +202,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _gewicht;
+        private Nullable<float> _gewicht;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Bemerkung
@@ -207,10 +215,53 @@ namespace MeisterGeister.Model
     
         }
         private string _bemerkung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<System.Guid> HandelsgutGUID
+        {
+            get { return _handelsgutGUID; }
+            set
+            {
+                try
+                {
+                    _settingFK = true;
+                    if (_handelsgutGUID != value)
+                    {
+                        if (Handelsgut != null && Handelsgut.HandelsgutGUID != value)
+                        {
+                            Handelsgut = null;
+                        }
+                        _handelsgutGUID = value;
+                    }
+                }
+                finally
+                {
+                    _settingFK = false;
+                }
+            }
+    
+        }
+        private Nullable<System.Guid> _handelsgutGUID;
 
         #endregion
 
         #region Navigation Properties
+    
+    	[DataMember]
+        public virtual Handelsgut Handelsgut
+        {
+            get { return _handelsgut; }
+            set
+            {
+                if (!ReferenceEquals(_handelsgut, value))
+                {
+                    var previousValue = _handelsgut;
+                    _handelsgut = value;
+                    FixupHandelsgut(previousValue);
+                }
+            }
+        }
+        private Handelsgut _handelsgut;
     
     	[DataMember]
         public virtual Pflanze Pflanze
@@ -231,6 +282,33 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private bool _settingFK = false;
+    
+        private void FixupHandelsgut(Handelsgut previousValue)
+        {
+    		OnChanged("Handelsgut");
+            if (previousValue != null && previousValue.Pflanze_Ernte.Contains(this))
+            {
+                previousValue.Pflanze_Ernte.Remove(this);
+            }
+    
+            if (Handelsgut != null)
+            {
+                if (!Handelsgut.Pflanze_Ernte.Contains(this))
+                {
+                    Handelsgut.Pflanze_Ernte.Add(this);
+                }
+                if (HandelsgutGUID != Handelsgut.HandelsgutGUID)
+                {
+                    HandelsgutGUID = Handelsgut.HandelsgutGUID;
+                }
+            }
+            else if (!_settingFK)
+            {
+                HandelsgutGUID = null;
+            }
+        }
     
         private void FixupPflanze(Pflanze previousValue)
         {

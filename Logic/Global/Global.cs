@@ -263,7 +263,8 @@ namespace MeisterGeister
 
         public static void CleanUp()
         {
-            WebServer.Stop();
+            if(WebServer != null)
+                WebServer.Stop();
         }
 
         /// <summary>

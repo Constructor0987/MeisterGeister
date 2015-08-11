@@ -349,12 +349,6 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Pflanze_Ernte> _pflanze_Ernte;
     
-        public ObjectSet<Pflanze_Gebiet> Pflanze_Gebiet
-        {
-            get { return _pflanze_Gebiet  ?? (_pflanze_Gebiet = CreateObjectSet<Pflanze_Gebiet>("Pflanze_Gebiet")); }
-        }
-        private ObjectSet<Pflanze_Gebiet> _pflanze_Gebiet;
-    
         public ObjectSet<Pflanze_Verbreitung> Pflanze_Verbreitung
         {
             get { return _pflanze_Verbreitung  ?? (_pflanze_Verbreitung = CreateObjectSet<Pflanze_Verbreitung>("Pflanze_Verbreitung")); }
@@ -574,8 +568,6 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Pflanze;
     		if(typeof(T) == typeof(Pflanze_Ernte))
     				return (ObjectSet<T>)(Object)Pflanze_Ernte;
-    		if(typeof(T) == typeof(Pflanze_Gebiet))
-    				return (ObjectSet<T>)(Object)Pflanze_Gebiet;
     		if(typeof(T) == typeof(Pflanze_Verbreitung))
     				return (ObjectSet<T>)(Object)Pflanze_Verbreitung;
     		if(typeof(T) == typeof(Rasse))
@@ -715,8 +707,6 @@ namespace MeisterGeister.Model
     				return Pflanze;
     		if(t == typeof(Pflanze_Ernte))
     				return Pflanze_Ernte;
-    		if(t == typeof(Pflanze_Gebiet))
-    				return Pflanze_Gebiet;
     		if(t == typeof(Pflanze_Verbreitung))
     				return Pflanze_Verbreitung;
     		if(t == typeof(Rasse))

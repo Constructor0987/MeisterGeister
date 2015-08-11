@@ -52,12 +52,14 @@ namespace MeisterGeister_Tests
             int i2 = cnov.getDaysSinceBF();
             Assert.AreEqual(i1, i2);
 
+            c12.setDayMonthYear(17, 11, 1023);
+            Assert.AreEqual("17.11. (Ingerimm) 1023 BF", c12.getHeadingText());
+            i1 = c12.getDaysSinceBF();
             DSADateCalendarMyranisch cmyr = new DSADateCalendarMyranisch();
-            cmyr.setDayNoneOctadeYear(5, 5, 8, 4785);
-            Assert.AreEqual("5. Tag der 5. None der 8. Oktade 4785 IZ", cmyr.getHeadingText());
+            cmyr.setDayNoneOctadeYear(6, 5, 3, 4770);
+            Assert.AreEqual("Rechtstag (6) der 5. None im Zatura (3) 4770 IZ", cmyr.getHeadingText());
             i2 = cmyr.getDaysSinceBF();
             Assert.AreEqual(i1, i2);
-
         }
     }
 }
