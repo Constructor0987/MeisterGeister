@@ -15,41 +15,25 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
      */
     public class DSADateCalendarSaurians : DSADateCalendar
     {
-
-        /** 
-         * Creates a calendar showing a date representing Praios 1st, 0 BF.
-         * @see DSADateCalendar#DSADateCalendar() 
-         */
-        public DSADateCalendarSaurians()
-            : base()
-        {
-            init();
-        }
-
-        /** 
-         * Creates a view following this calendar to the given date.
-         * @see DSADateCalendar#DSADateCalendar(DSADate) 
-         */
-        public DSADateCalendarSaurians(DSADateTime date)
-            : base(date)
-        {
-            init();
-        }
+        public const int DAYS_PER_MONTH = 33;
+        public const int MONTHS_PER_SECTION = 553;
+        public const int SECTIONS_PER_EHHN = 10;
+        public const int EHHNS_PER_TSIINA = 33;
 
         protected void init()
         {
-            setName("Echsisch");
+            Name = "Echsisch";
             // Der 1. Praios 1000 BF entspricht dem 
             // 18. Tag des 219. Monats im Abschnitt des Drachen (also 5. Abschnitt), 
             // im 4. Ehhn des 4. Tsiina und ist ein Gzht'G. 
-            setDaysFromYear0ToBF(1000 * DSADateCalendar.DAYS_PER_YEAR_BF -
+            DaysFromYear0ToBF = 1000 * DSADateCalendar.DAYS_PER_SUN_YEAR -
                     ((18 - 1) + DAYS_PER_MONTH *
                         ((219 - 1) + MONTHS_PER_SECTION *
                             ((5 - 1) + SECTIONS_PER_EHHN *
                                 ((4 - 1) + EHHNS_PER_TSIINA *
-                                    ((4 - 1)))))));
-            setHasYear0(true);
-            setDaysPerYear(DAYS_PER_MONTH * MONTHS_PER_SECTION);
+                                    ((4 - 1))))));
+            HasYear0 = true;
+            DaysPerYear = DAYS_PER_MONTH * MONTHS_PER_SECTION;
         }
 
         public override String getHeadingText()
@@ -79,14 +63,6 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             return getYearString(getYear(), "gS", "v.gS");
         }
-
-        public const int DAYS_PER_MONTH = 33;
-
-        public const int MONTHS_PER_SECTION = 553;
-
-        public const int SECTIONS_PER_EHHN = 10;
-
-        public const int EHHNS_PER_TSIINA = 33;
 
         public int getWeekday()
         {

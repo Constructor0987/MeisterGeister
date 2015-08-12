@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Text;
 
 /**
@@ -14,13 +15,28 @@ using System.Text;
 namespace MeisterGeister.Logic.Kalender.DsaTool
 {
 
-    public class DSADateTime
+    public class DSADateTime : IComparable<DSADateTime>, IEquatable<DSADateTime>, ISerializable, IFormattable
     {
+        public const long TICKS_PER_DAY = TimeSpan.TicksPerDay;
+        public const int DayMaxValue = (int)(Int64.MaxValue / TICKS_PER_DAY);
+        public const int DayMinValue = (int)(Int64.MinValue / TICKS_PER_DAY);
+        /// <summary>
+        /// Die Dauer zwischen zwei Neumonden in Tagen.
+        /// </summary>
+        public const int MOON_MONTH_DAYS = 28;
+        /// <summary>
+        /// Die Dauer zwischen zwei two Neumondfinsternissen in Mondzyklen.
+        /// </summary>
+        public const int MOON_MONTHS_BETWEEN_LUNAR_ECLIPSES = 240;
+        /// <summary>
+        /// Die Dauer zwischen zwei two Neumondfinsternissen in Tagen.
+        /// </summary>
+        public const int DAYS_BETWEEN_LUNAR_ECLIPSES = MOON_MONTH_DAYS * MOON_MONTHS_BETWEEN_LUNAR_ECLIPSES;
 
         private long ticksSinceBF = 0;
 
         /// <summary>
-        /// Creates a date representing Praios 1st, 0 BF, 00:00. 
+        /// Erstellt ein Datum, welches 1. Praios, 0 BF, 00:00 repräsentiert. 
         /// </summary>
         public DSADateTime()
         {
@@ -28,17 +44,17 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         }
 
         /// <summary>
-        /// Creates a date with the given number of ticks distance to Praios 1st, 0 BF, 00:00. 
+        /// Erstellt ein Datum, welches 1. Praios, 0 BF, 00:00 plus die Anzahl an Ticks repräsentiert.
         /// </summary>
         public DSADateTime(long ticksSinceBF)
         {
             this.ticksSinceBF = ticksSinceBF;
         }
 
-        /**
-         * Creates an Aventurian date based on the date on earth.
-         * @see #setFromEarthDate(Date)
-         */
+        /// <summary>
+        /// Erstellt ein Datum anhand eines Erdendatums.
+        /// </summary>
+        /// <param name="earthDate"></param>
         public DSADateTime(DateTime earthDate)
         {
             setFromEarthDate(earthDate);
@@ -59,6 +75,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public long DaysSinceBF
         {
             get { return getDaysSinceBF(); }
+            set { setDaysSinceBF(value); }
         }
 
         /// <param name="ticksSinceBF">the ticks since Praios 1st, 0 BF</param>
@@ -81,16 +98,6 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return new TimeSpan(ticksSinceBF % TICKS_PER_DAY);
         }
 
-
-        /** The duration between two new moons in days. */
-        public const int MOON_MONTH_DAYS = 28;
-
-        /** The duration between two new lunar eclipses in moon cycles. */
-        public const int MOON_MONTHS_BETWEEN_LUNAR_ECLIPSES = 240;
-
-        /** The duration between two new lunar eclipses in days. */
-        public const int DAYS_BETWEEN_LUNAR_ECLIPSES = MOON_MONTH_DAYS * MOON_MONTHS_BETWEEN_LUNAR_ECLIPSES;
-
         /// <returns>the day of the moon phase. 0 represents new moon.</returns>
         public int getMoonday()
         {
@@ -109,20 +116,46 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return (int)MathUtil.modulo(getDaysSinceBF() + daysSinceLastLunarEclipseAtPraios1st0BF, DAYS_BETWEEN_LUNAR_ECLIPSES);
         }
 
-        public const long TICKS_PER_DAY = TimeSpan.TicksPerDay;
+        /// <summary>
+        /// Die Jahreszeit auf der Nordhalbkugel.
+        /// </summary>
+        /// <returns></returns>
+        public Season season()
+        {
+            int jday = (int)MathUtil.modulo(getDaysSinceBF(), DAYS_PER_EARTH_YEAR);
+            Season s = Season.Summer;
+            if (jday < 60)
+            {
+                s = Season.Summer;
+            }
+            else if (jday < 60 + 90)
+            {
+                s = Season.Autumn;
+            }
+            else if (jday < 60 + 90 + 90)
+            {
+                s = Season.Winter;
+            }
+            else if (jday < 60 + 90 + 90 + 90)
+            {
+                s = Season.Spring;
+            }
+            else
+            {
+                s = Season.Summer;
+            }
+            return s;
+        }
 
+        #region Earth Date
         /** The duration in days of a standard earth year. */
         public const int DAYS_PER_EARTH_YEAR = 365;
-
         /** The duration in days of half a standard earth year (rounded up). */
         private const int DAYS_PER_EARTH_HALF_YEAR = (DAYS_PER_EARTH_YEAR + 1) / 2;
-
         /** The julian earth day of February 29 (if it's a leap year). */
         private const int JDAY_FEB29 = 60;
-
         /** The year Pope Gregor added 10 days to correct the errors piled up by the Julian calendar. */
         private const int GREGORIAN_CORRECTION_YEAR = 1582;
-
         /** The julian earth day of October 25 (if it's not a leap year). */
         private const int JDAY_OCT25 = 288;
 
@@ -225,36 +258,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             //logger.debug("Earth date " + earthDate.toString() + " --> " + daysSinceBF + " (Year " + avYear + " JDay " + avJday + ")");
             setTicksSinceBF(ticksSinceBF);
         }
-
-        /**
-         * @return The actual season, as defined for the calendars based on the twelve gods.
-         */
-        public Season season()
-        {
-            int jday = (int)MathUtil.modulo(getDaysSinceBF(), DAYS_PER_EARTH_YEAR);
-            Season s = Season.Summer;
-            if (jday < 60)
-            {
-                s = Season.Summer;
-            }
-            else if (jday < 60 + 90)
-            {
-                s = Season.Autumn;
-            }
-            else if (jday < 60 + 90 + 90)
-            {
-                s = Season.Winter;
-            }
-            else if (jday < 60 + 90 + 90 + 90)
-            {
-                s = Season.Spring;
-            }
-            else
-            {
-                s = Season.Summer;
-            }
-            return s;
-        }
+        #endregion
 
         /**
          * How many days is this date after the other in the calendar?
@@ -282,6 +286,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public bool isAfter(DSADateTime other)
         {
+            if (other == null)
+                return true;
             return (ticksSinceBF > other.ticksSinceBF);
         }
 
@@ -291,35 +297,78 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public bool isBefore(DSADateTime other)
         {
+            if (other == null)
+                return false;
             return (ticksSinceBF < other.ticksSinceBF);
         }
 
-        /**
-         * Is this date the same as the other?
-         * @param other The date with which is compared.
-         */
-        public override bool Equals(object other)
-        {
-            if (other is DSADateTime)
-            {
-                DSADateTime o = (DSADateTime)other;
-                //            logger.debug("Comparing days since BF " + daysSinceBF + " with " + o.daysSinceBF);
-                return (ticksSinceBF == o.ticksSinceBF);
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+        #region Interfaces
         public override int GetHashCode()
         {
             return ((Int64)ticksSinceBF).GetHashCode();
         }
 
+        public int CompareTo(DSADateTime other)
+        {
+            if (isAfter(other))
+                return -1;
+            if (Equals(other))
+                return 0;
+            return 1;
+        }
+
+        public bool Equals(DSADateTime other)
+        {
+            if (other == null)
+                return false;
+            return (ticksSinceBF == other.ticksSinceBF);
+        }
+
         public override string ToString()
         {
-            return "DSADate(" + ticksSinceBF + ")";
+            return this.ToString(null, System.Globalization.CultureInfo.CurrentCulture);
         }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if(String.IsNullOrEmpty(format) || format == "G")
+            {
+                return "DSADate(" + ticksSinceBF + ")";
+            }
+            return ticksSinceBF.ToString(format, formatProvider);
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+                throw new ArgumentNullException("info");
+            info.AddValue("DaysSinceBF", DaysSinceBF);
+        }
+
+        protected DSADateTime(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+                throw new ArgumentNullException("info");
+            DaysSinceBF = info.GetInt64("DaysSinceBF");
+        }
+
+        public static bool operator ==(DSADateTime emp1, DSADateTime emp2)
+        {
+            if (object.ReferenceEquals(emp1, emp2)) return true;
+            if (object.ReferenceEquals(emp1, null)) return false;
+            if (object.ReferenceEquals(emp2, null)) return false;
+
+            return emp1.Equals(emp2);
+        }
+
+        public static bool operator !=(DSADateTime emp1, DSADateTime emp2)
+        {
+            if (object.ReferenceEquals(emp1, emp2)) return false;
+            if (object.ReferenceEquals(emp1, null)) return true;
+            if (object.ReferenceEquals(emp2, null)) return true;
+
+            return !emp1.Equals(emp2);
+        }
+        #endregion
     }
 }

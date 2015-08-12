@@ -17,50 +17,38 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 public class DSADateCalendarTwelve : DSADateCalendar {
     //private static Logger logger = Logger.getRootLogger();
 
-    /** 
-     * Creates a calendar based on Bosparans fall, showing a date representing Praios 1st, 0 BF.
-     * @see DSADateCalendar#DSADateCalendar() 
-     */
     public DSADateCalendarTwelve() : base() {
         init(MeisterGeister.Logic.Kalender.Kalender.BosparansFall);
     }
     
-    /** 
-     * Creates a view following Bosparans fall calendar to the given date.
-     * @see DSADateCalendar#DSADateCalendar(DSADate) 
-     */
     public DSADateCalendarTwelve(DSADateTime date) : base(date) {
         init(MeisterGeister.Logic.Kalender.Kalender.BosparansFall);
     }
 
-    /** 
-     * Creates a calendar based on the given calendarID, showing a date representing Praios 1st, 0 BF.
-     * @see DSADateCalendar#DSADateCalendar() 
-     */
     public DSADateCalendarTwelve(MeisterGeister.Logic.Kalender.Kalender kal) : base() {
         init(kal);
     }
     
-    /** 
-     * Creates a view following the given calendar to the given date.
-     * @see DSADateCalendar#DSADateCalendar(DSADate) 
-     */
     public DSADateCalendarTwelve(DSADateTime date, MeisterGeister.Logic.Kalender.Kalender kal)
         : base(date)
     {
         init(kal);
     }
 
+    protected override void init()
+    {
+        //alle Konstruktoren sind überschrieben
+    }
+
     protected void init(MeisterGeister.Logic.Kalender.Kalender kal)
     {
         this.calendar = Zeitrechnung.ZeitrechnungenDictionary[kal];
 
-        setName(calendar.Name);
+        Name = calendar.Name;
         //-calendar.getYearZeroBFis() * DSADateCalendar.DAYS_PER_YEAR_BF
-
-        setDaysFromYear0ToBF((calendar.BeginnJahreszählung - (calendar.HatNullJahr ? 0 : 1)) * DSADateCalendar.DAYS_PER_YEAR_BF);
-        setHasYear0(calendar.HatNullJahr);
-        setDaysPerYear(DSADateCalendar.DAYS_PER_YEAR_BF);
+        DaysFromYear0ToBF = (calendar.BeginnJahreszählung - (calendar.HatNullJahr ? 0 : 1)) * DSADateCalendar.DAYS_PER_SUN_YEAR;
+        HasYear0 = calendar.HatNullJahr;
+        DaysPerYear = DSADateCalendar.DAYS_PER_SUN_YEAR;
     }
     
     /**

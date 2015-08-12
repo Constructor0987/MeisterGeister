@@ -23,31 +23,14 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
     {
         //private static Logger logger = Logger.getRootLogger();
 
-        /** 
-         * Creates a date representing Praios 1st, 0 BF.
-         * @see DSADate#DSADate() 
-         */
-        public DSADateCalendarGregorian()
-            : base()
+        protected override void init()
         {
-        }
-
-        /** 
-         * Creates a view following this calendar to the given date.
-         */
-        public DSADateCalendarGregorian(DSADateTime date)
-            : base(date)
-        {
-        }
-
-        public override String getName()
-        {
-            return "Erde (Gregorianisch)";
+            Name = "Erde (Gregorianisch)";
         }
 
         public override String getHeadingText()
         {
-            return String.Format(getDateFormat(), getDSADate().toEarthDate());
+            return String.Format(getDateFormat(), Date.toEarthDate());
         }
 
         public override String getContentText()
@@ -57,7 +40,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public override string ToString()
         {
-            return getDSADate().toEarthDate().ToString();
+            return Date.toEarthDate().ToString();
         }
 
         private string df;

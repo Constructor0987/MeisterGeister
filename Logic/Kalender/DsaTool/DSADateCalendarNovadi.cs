@@ -15,33 +15,19 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
     public class DSADateCalendarNovadi : DSADateCalendar
     {
         //private static Logger logger = Logger.getRootLogger();
+        /** Am 23. Boron 760 BF offenbarte sich Rastullah, das ist Jahr 1 Rastullah. */
+        public const int YEAR_ZERO_BF_IS = 760 - 1;
+        public const int YEAR_OFFSET_IN_DAYS = 4 * 30 + 23 - 1;
+        public const int DAYS_PER_WEEK = 9;
+        public const int WEEKS_PER_MONTH = 8;
+        public const int DAYS_PER_MONTH = DAYS_PER_WEEK * WEEKS_PER_MONTH + 1;
 
-        /** 
-         * Creates a calendar showing a date representing Praios 1st, 0 BF.
-         * @see DSADateCalendar#DSADateCalendar() 
-         */
-        public DSADateCalendarNovadi()
-            : base()
+        protected override void init()
         {
-            init();
-        }
-
-        /** 
-         * Creates a view following this calendar to the given date.
-         * @see DSADateCalendar#DSADateCalendar(DSADate) 
-         */
-        public DSADateCalendarNovadi(DSADateTime date)
-            : base(date)
-        {
-            init();
-        }
-
-        protected void init()
-        {
-            setName("Novadisch");
-            setDaysFromYear0ToBF(YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_YEAR_BF + YEAR_OFFSET_IN_DAYS);
-            setHasYear0(false);
-            setDaysPerYear(DSADateCalendar.DAYS_PER_YEAR_BF);
+            Name = "Novadisch";
+            DaysFromYear0ToBF = YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_SUN_YEAR + YEAR_OFFSET_IN_DAYS;
+            HasYear0 = false;
+            DaysPerYear = DSADateCalendar.DAYS_PER_SUN_YEAR;
         }
 
         public void setDayWeekMonthYear(int day, int week, int month, int year)
@@ -52,7 +38,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             int days = month * DAYS_PER_MONTH;
             if (day != 0 && week != 0) //not {month}. Rastullahellah
                 days += day + (week - 1) * DAYS_PER_WEEK;
-            int daysSince0BF = (year + YEAR_ZERO_BF_IS) * getDaysPerYear();
+            int daysSince0BF = (year + YEAR_ZERO_BF_IS) * DaysPerYear;
             daysSince0BF += YEAR_OFFSET_IN_DAYS - 1;
             daysSince0BF += days;
             setDaysSinceBF((int)daysSince0BF);
@@ -77,17 +63,6 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             }
             return s;
         }
-
-        /** Am 23. Boron 760 BF offenbarte sich Rastullah, das ist Jahr 1 Rastullah. */
-        public const int YEAR_ZERO_BF_IS = 760 - 1;
-
-        public const int YEAR_OFFSET_IN_DAYS = 4 * 30 + 23 - 1;
-
-        public const int DAYS_PER_WEEK = 9;
-
-        public const int WEEKS_PER_MONTH = 8;
-
-        public const int DAYS_PER_MONTH = DAYS_PER_WEEK * WEEKS_PER_MONTH + 1;
 
         public static readonly String[] weekdayNames = new String[] {
             "Hellah",

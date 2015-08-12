@@ -17,28 +17,14 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 public class DSADateCalendarDwarfs : DSADateCalendar {
 
     //private static Logger logger = Logger.getRootLogger();
+    public const int YEAR_ZERO_BF_IS = 0;
+    public const int DAYS_PER_MONTH = 30;
 
-    /** 
-     * Creates a calendar showing a date representing Praios 1st, 0 BF.
-     * @see DSADateCalendar#DSADateCalendar() 
-     */
-    public DSADateCalendarDwarfs() : base() {
-        init();
-    }
-
-    /** 
-     * Creates a view following this calendar to the given date.
-     * @see DSADateCalendar#DSADateCalendar(DSADate) 
-     */
-    public DSADateCalendarDwarfs(DSADateTime date) :base(date) {
-        init();
-    }
-
-    protected void init() {
-        setName("Zwergisch");
-        setDaysFromYear0ToBF(-YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_YEAR_BF);
-        setHasYear0(true);
-        setDaysPerYear(DSADateCalendar.DAYS_PER_YEAR_BF);
+    protected override void init() {
+        Name = "Zwergisch";
+        DaysFromYear0ToBF = -YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_SUN_YEAR;
+        HasYear0 = true;
+        DaysPerYear = DSADateCalendar.DAYS_PER_SUN_YEAR;
     }
     
     public override String getHeadingText() {
@@ -66,10 +52,6 @@ public class DSADateCalendarDwarfs : DSADateCalendar {
 
         return s;
     }
-    
-    public const int YEAR_ZERO_BF_IS = 0;
-    
-    public const int DAYS_PER_MONTH = 30;
 
     public static readonly String[] monthNames = new String[] {
         "Sommermond", 

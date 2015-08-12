@@ -16,33 +16,20 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
      */
     public class DSADateCalendarGjalskerland : DSADateCalendar
     {
+        /** Die Jahreszählung erfolgt nach dem ersten Tag der Geburt im Mond des Blutes im Jahr 1 nach der großen Schlacht (gS). 
+         * Das Datum entspricht dem 19. Ingerimm 1370 v. BF. */
+        public const int YEAR_ZERO_BF_IS = -1370 - 1;
+        public const int YEAR_OFFSET_IN_DAYS = 10 * 30 + 19;
+        public const int DAYS_PER_MONTH = DSADateTime.MOON_MONTH_DAYS;
+        public const int MONTHS_PER_YEAR = 13;
+        public const int YEARS_PER_ERA = 364;
 
-        /** 
-         * Creates a calendar showing a date representing Praios 1st, 0 BF.
-         * @see DSADateCalendar#DSADateCalendar() 
-         */
-        public DSADateCalendarGjalskerland()
-            : base()
+        protected override void init()
         {
-            init();
-        }
-
-        /** 
-         * Creates a view following this calendar to the given date.
-         * @see DSADateCalendar#DSADateCalendar(DSADate) 
-         */
-        public DSADateCalendarGjalskerland(DSADateTime date)
-            : base(date)
-        {
-            init();
-        }
-
-        protected void init()
-        {
-            setName("Gjalskerland");
-            setDaysFromYear0ToBF(YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_YEAR_BF + YEAR_OFFSET_IN_DAYS);
-            setHasYear0(false);
-            setDaysPerYear(DAYS_PER_MONTH * MONTHS_PER_YEAR);
+            Name = "Gjalskerland";
+            DaysFromYear0ToBF = YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_SUN_YEAR + YEAR_OFFSET_IN_DAYS;
+            HasYear0 = false;
+            DaysPerYear = DAYS_PER_MONTH * MONTHS_PER_YEAR;
         }
 
         public override string getHeadingText()
@@ -59,18 +46,6 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             return getYearString(getYear(), "gS", "v.gS");
         }
-
-        /** Die Jahreszählung erfolgt nach dem ersten Tag der Geburt im Mond des Blutes im Jahr 1 nach der großen Schlacht (gS). 
-         * Das Datum entspricht dem 19. Ingerimm 1370 v. BF. */
-        public const int YEAR_ZERO_BF_IS = -1370 - 1;
-
-        public const int YEAR_OFFSET_IN_DAYS = 10 * 30 + 19;
-
-        public const int DAYS_PER_MONTH = DSADateTime.MOON_MONTH_DAYS;
-
-        public const int MONTHS_PER_YEAR = 13;
-
-        public const int YEARS_PER_ERA = 364;
 
         public static readonly String[] monthNames = new String[] {
             "Mond des Blutes", 

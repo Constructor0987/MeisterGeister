@@ -20,107 +20,92 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
      *
      * @author Copyright (c) 2009 Peter Diefenbach (peter@pdiefenbach.de)
      */
-    public class DSADateCalendar
+    public class DSADateCalendar : IComparable<DSADateTime>, IComparable<DSADateCalendar>, IEquatable<DSADateTime>, IFormattable
     {
 
         //private static Logger logger = Logger.getRootLogger();
 
         /** The number of days the year has for the calendar Bosparans fall. */
-        public const int DAYS_PER_YEAR_BF = 365;
+        public const int DAYS_PER_SUN_YEAR = 365;
 
         /** The calendar Bosparans fall has a year zero. */
         public const bool HAS_YEAR_ZERO_BF = true;
 
-        /** The date this calendar knows as current. */
         private DSADateTime date;
+        /// <summary>
+        /// Aktuelles Datum
+        /// </summary>
+        public DSADateTime Date
+        {
+            get { return date; }
+            set { date = value; }
+        }
 
         private int daysFromYear0ToBF = 0;
+        /// <summary>
+        /// Die Tage vom ersten Tags des Jahr 0 des Kalenders bis zum 1. Praios 0 BF.
+        /// </summary>
+        public int DaysFromYear0ToBF
+        {
+            get { return daysFromYear0ToBF; }
+            set { daysFromYear0ToBF = value; }
+        }
 
-        private int daysPerYear = DAYS_PER_YEAR_BF;
+        private int daysPerYear = DAYS_PER_SUN_YEAR;
+        /// <summary>
+        /// Tage pro Jahr
+        /// </summary>
+        public int DaysPerYear
+        {
+            get { return daysPerYear; }
+            protected set { daysPerYear = value; }
+        }
 
         private bool _hasYear0 = HAS_YEAR_ZERO_BF;
+        /// <summary>
+        /// Der Kalender hat ein Jahr 0.
+        /// </summary>
+        public bool HasYear0
+        {
+            get { return _hasYear0; }
+            protected set { _hasYear0 = value; }
+        }
 
         private String name = "Basiskalender";
+        /// <summary>
+        /// Name des Kalenders
+        /// </summary>
+        public String Name
+        {
+            get { return name; }
+            protected set { name = value; }
+        }
 
-        /** 
-         * Creates a date representing Praios 1st, 0 BF.
-         * @see DSADate#DSADate() 
-         */
+
+        /// <summary>
+        /// Erstellt einen neuen Kalender mit dem Datum 1. Praios, 0 BF 0:00 Uhr.
+        /// </summary>
         public DSADateCalendar()
         {
+            init();
             date = new DSADateTime();
         }
 
-        /** 
-         * Creates a view following this calendar to the given date.
-         */
+        /// <summary>
+        /// Erstellt einen neuen Kalender mit dem angegebenen Datum.
+        /// </summary>
+        /// <param name="date"></param>
         public DSADateCalendar(DSADateTime date)
         {
+            init();
             this.date = date;
         }
 
-        /**
-         * @return the {@link DSADate} that is represented using this calendar.
-         */
-        public DSADateTime getDSADate()
+        /// <summary>
+        /// Initialisierung der kalenderspezifischen Werte
+        /// </summary>
+        protected virtual void init()
         {
-            return date;
-        }
-
-        /**
-         * Sets another {@link DSADate} to be represented using this calendar.
-         */
-        public void setDSADate(DSADateTime date)
-        {
-            this.date = date;
-        }
-
-        /** @return the name of this calendar. */
-        public virtual String getName()
-        {
-            return name;
-        }
-
-        /** Sets the name of this calendar. */
-        public void setName(String name)
-        {
-            this.name = name;
-        }
-
-        /** @return the number of days a year in this calendar has. */
-        public int getDaysPerYear()
-        {
-            return daysPerYear;
-        }
-
-        /** Sets the number of days a year in this calendar has. */
-        public void setDaysPerYear(int daysPerYear)
-        {
-            this.daysPerYear = daysPerYear;
-        }
-
-        /** @return <code>true</code> if this calender knows a year 0 (or <code>false</code> if year -1 follows year +1). */
-        public bool hasYear0()
-        {
-            return _hasYear0;
-        }
-
-        /** Sets if this calender knows a year 0 (or if otherwise to year -1 follows year +1). */
-        public void setHasYear0(bool hasYear0)
-        {
-            _hasYear0 = hasYear0;
-        }
-
-        /** @return the offset in days between BF calendar and this calendar. */
-        public int getDaysFromYear0ToBF()
-        {
-            return daysFromYear0ToBF;
-        }
-
-        /** Sets the offset in days between BF calendar and this calendar. */
-        public void setDaysFromYear0ToBF(int daysFromYear0ToBF)
-        {
-            this.daysFromYear0ToBF = daysFromYear0ToBF;
         }
 
         /**
@@ -146,7 +131,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getJDayBF()
         {
-            return (int)MathUtil.modulo(getDaysSinceBF(), DAYS_PER_YEAR_BF) + 1;
+            return (int)MathUtil.modulo(getDaysSinceBF(), DAYS_PER_SUN_YEAR) + 1;
         }
 
         /**
@@ -154,7 +139,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getYearBF()
         {
-            return (int)MathUtil.divisio(getDaysSinceBF(), DAYS_PER_YEAR_BF);
+            return (int)MathUtil.divisio(getDaysSinceBF(), DAYS_PER_SUN_YEAR);
         }
 
         /**
@@ -168,7 +153,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             //        if ((jday < 1) || (jday > daysPerYear())) {
             //             throw new DSAException("jday out of range");
             //        }
-            setDaysSinceBF((year * DAYS_PER_YEAR_BF) + (jday - 1));
+            setDaysSinceBF((year * DAYS_PER_SUN_YEAR) + (jday - 1));
         }
 
         /**
@@ -192,16 +177,18 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getJDay()
         {
-            return (int)MathUtil.modulo(getDaysSinceYear0(), getDaysPerYear()) + 1;
+            return (int)MathUtil.modulo(getDaysSinceYear0(), DaysPerYear) + 1;
         }
+
+
 
         /**
          * @return The year of this calendar.
          */
         public int getYear()
         {
-            int year = (int)MathUtil.divisio(getDaysSinceYear0(), getDaysPerYear());
-            if (!hasYear0())
+            int year = (int)MathUtil.divisio(getDaysSinceYear0(), DaysPerYear);
+            if (!HasYear0)
             {
                 if (0 >= year)
                 { // If there is no year zero, we start counting at year 1.
@@ -222,18 +209,18 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             //        if ((jday < 1) || (jday > daysPerYear())) {
             //             throw new DSAException("jday out of range");
             //        }
-            if (!hasYear0())
+            if (!HasYear0)
             {
                 if (0 == year)
                 {
-                    throw new ArgumentException(String.Format("There is no year zero in this calendar: {0}", getName()));
+                    throw new ArgumentException(String.Format("Der Kalender hat kein Jahr 0: {0}", Name));
                 }
                 else if (0 > year)
                 { // If there is no year zero, we start counting at year 1.
                     year++;
                 }
             }
-            int daysSinceYear0 = (year * getDaysPerYear()) + (jday - 1);
+            int daysSinceYear0 = (year * DaysPerYear) + (jday - 1);
             setDaysSinceYear0(daysSinceYear0);
         }
 
@@ -272,17 +259,53 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return s;
         }
 
-        public class FieldInfo
+        public string ToString(string format, IFormatProvider formatProvider)
         {
-            public String name;
-            public int minimumValue;
-            public int maximumValue;
-        }
-
-        public override string ToString()
-        {
+            if (String.IsNullOrEmpty(format) || format == "G")
+            {
+                return "DSADateCalendar " + getDaysSinceBF() + " (Year " + getYearBF() + " JDay " + getJDayBF() + " BF)";
+            }
             return "DSADateCalendar " + getDaysSinceBF() + " (Year " + getYearBF() + " JDay " + getJDayBF() + " BF)";
         }
+
+        #region Interfaces
+        public override string ToString()
+        {
+            return this.ToString(null, System.Globalization.CultureInfo.CurrentCulture);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public int CompareTo(DSADateTime other)
+        {
+            return Date.CompareTo(other);
+        }
+
+        public int CompareTo(DSADateCalendar other)
+        {
+            return Date.CompareTo(other.Date);
+        }
+
+        public bool Equals(DSADateTime other)
+        {
+            return Date.Equals(other);
+        }
+
+        public static bool operator ==(DSADateCalendar emp1, DSADateTime emp2)
+        {
+            if (object.ReferenceEquals(emp1, null)) return false;
+            return emp1.Equals(emp2);
+        }
+
+        public static bool operator !=(DSADateCalendar emp1, DSADateTime emp2)
+        {
+            if (object.ReferenceEquals(emp1, null)) return true;
+            return !emp1.Equals(emp2);
+        }
+        #endregion
     }
 
 }

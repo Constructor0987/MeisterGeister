@@ -15,35 +15,18 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
      */
     public class DSADateCalendarMyranisch : DSADateCalendar
     {
-
         //    private static Logger logger = Logger.getRootLogger();
+        public const int YEAR_ZERO_BF_IS = 3747;
+        public const int DAYS_PER_NONE = 9;
+        public const int NONES_PER_OCTADE = 5;
+        public const int YEAR_OFFSET_IN_DAYS = 183; // 365 / 2 + 1
 
-        /** 
-         * Creates a calendar showing a date representing Praios 1st, 0 BF.
-         * @see DSADateCalendar#DSADateCalendar() 
-         */
-        public DSADateCalendarMyranisch()
-            : base()
+        protected override void init()
         {
-            init();
-        }
-
-        /** 
-         * Creates a view following this calendar to the given date.
-         * @see DSADateCalendar#DSADateCalendar(DSADate) 
-         */
-        public DSADateCalendarMyranisch(DSADateTime date)
-            : base(date)
-        {
-            init();
-        }
-
-        protected void init()
-        {
-            setName("Myranisch");
-            setDaysFromYear0ToBF(-YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_YEAR_BF + YEAR_OFFSET_IN_DAYS);
-            setHasYear0(true);
-            setDaysPerYear(DSADateCalendar.DAYS_PER_YEAR_BF);
+            Name = "Myranisch";
+            DaysFromYear0ToBF = -YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_SUN_YEAR + YEAR_OFFSET_IN_DAYS;
+            HasYear0 = true;
+            DaysPerYear = DSADateCalendar.DAYS_PER_SUN_YEAR;
         }
 
         public override String getHeadingText()
@@ -90,7 +73,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             int jday = getJDay() - 1;
             jday -= getSondertage(jday);
-            return getPart(jday, DAYS_PER_NONE * NONES_PER_OCTADE, getDaysPerYear());
+            return getPart(jday, DAYS_PER_NONE * NONES_PER_OCTADE, DaysPerYear);
         }
 
         public string getOctadeString()
@@ -101,13 +84,13 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public void setDayNoneOctadeYear(int day, int none, int octade, int year)
         {
-            int days = (octade - 1) * DAYS_PER_NONE * NONES_PER_OCTADE + year * getDaysPerYear();
+            int days = (octade - 1) * DAYS_PER_NONE * NONES_PER_OCTADE + year * DaysPerYear;
             if (day > 0 && none > 0)
                 days += (day - 1) + (none - 1) * DAYS_PER_NONE;
             else
                 days -= 1; //es ist ein sondertag der der angegebenen oktade vorangeht.
             days += (octade + 1) / 2; //Sondertage
-            days += getDaysFromYear0ToBF();
+            days += DaysFromYear0ToBF;
             setDaysSinceBF(days);
         }
 
@@ -129,14 +112,6 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
                 return (int)MathUtil.divisio(MathUtil.modulo(value, divisor * modulo), divisor);
             }
         }
-
-        public const int YEAR_ZERO_BF_IS = 3747;
-
-        public const int DAYS_PER_NONE = 9;
-
-        public const int NONES_PER_OCTADE = 5;
-
-        public const int YEAR_OFFSET_IN_DAYS = 183; // 365 / 2 + 1
 
         public enum Oktade
         {

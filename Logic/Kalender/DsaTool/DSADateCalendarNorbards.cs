@@ -15,27 +15,18 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 public class DSADateCalendarNorbards : DSADateCalendar {
     //private static Logger logger = Logger.getRootLogger();
 
-    /** 
-     * Creates a calendar showing a date representing Praios 1st, 0 BF.
-     * @see DSADateCalendar#DSADateCalendar() 
-     */
-    public DSADateCalendarNorbards() : base() {
-        init();
-    }
-    
-    /** 
-     * Creates a view following this calendar to the given date.
-     * @see DSADateCalendar#DSADateCalendar(DSADate) 
-     */
-    public DSADateCalendarNorbards(DSADateTime date) : base(date){
-        init();
-    }
+    // This is just guessing.
+    public const int YEAR_ZERO_BF_IS = 0;
+    // This is just guessing.
+    public const int YEAR_OFFSET_IN_DAYS = 0;
+    public const int DAYS_PER_MONTH = DSADateTime.MOON_MONTH_DAYS;
+    public const int MONTHS_PER_YEAR = 100;
 
-    protected void init() {
-        setName("Norbardisch");
-        setDaysFromYear0ToBF(YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_YEAR_BF + YEAR_OFFSET_IN_DAYS);
-        setHasYear0(false);
-        setDaysPerYear(DAYS_PER_MONTH * MONTHS_PER_YEAR);
+    protected override void init() {
+        Name = "Norbardisch";
+        DaysFromYear0ToBF = YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_SUN_YEAR + YEAR_OFFSET_IN_DAYS;
+        HasYear0 = false;
+        DaysPerYear = DAYS_PER_MONTH * MONTHS_PER_YEAR;
     }
 
     public override String getHeadingText()
@@ -48,15 +39,6 @@ public class DSADateCalendarNorbards : DSADateCalendar {
         return s;
     }
 
-    /** This is just guessing. */
-    public const int YEAR_ZERO_BF_IS = 0;
-    
-    /** This is just guessing. */
-    public const int YEAR_OFFSET_IN_DAYS = 0;
-    
-    public const int DAYS_PER_MONTH = 28;
-
-    public const int MONTHS_PER_YEAR = 100;
 }
 
 }
