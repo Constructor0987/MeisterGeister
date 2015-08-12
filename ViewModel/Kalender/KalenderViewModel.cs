@@ -58,14 +58,14 @@ namespace MeisterGeister.ViewModel.Kalender
             }
         }
 
-        private Logic.Kalender.Kalender kalenderTyp = Logic.Kalender.Kalender.BosparansFall;
-        public Logic.Kalender.Kalender KalenderTyp
+        private MeisterGeister.Logic.Kalender.Kalender kalenderTyp = MeisterGeister.Logic.Kalender.Kalender.BosparansFall;
+        public MeisterGeister.Logic.Kalender.Kalender KalenderTyp
         {
             get { return kalenderTyp; }
             set { 
                 kalenderTyp = value;
                 OnChanged("KalenderTyp");
-                Kalender = Logic.Kalender.Zeitrechnung.KalenderDictionary[kalenderTyp];
+                Kalender = MeisterGeister.Logic.Kalender.Zeitrechnung.KalenderDictionary[kalenderTyp];
             }
         }
 

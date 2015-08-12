@@ -237,6 +237,11 @@
     <Compile Include="Logic\Extensions\ObservableDictionary.cs" />
     <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
+    <Compile Include="Logic\General\DataVirtualization\AsyncVirtualizingCollection.cs" />
+    <Compile Include="Logic\General\DataVirtualization\DataPage.cs" />
+    <Compile Include="Logic\General\DataVirtualization\DataWrapper.cs" />
+    <Compile Include="Logic\General\DataVirtualization\IItemsProvider.cs" />
+    <Compile Include="Logic\General\DataVirtualization\VirtualizingCollection.cs" />
     <Compile Include="Logic\General\Domänen.cs" />
     <Compile Include="Logic\General\WeakEvent.cs" />
     <Compile Include="Logic\General\KeyEqualityComparer.cs" />
@@ -580,7 +585,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
+    <Compile Include="ViewModel\Kalender\DatumViewModel.cs" />
     <Compile Include="ViewModel\Kalender\KalenderViewModel.cs" />
+    <Compile Include="ViewModel\Kalender\Logic\DateList.cs" />
+    <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -2160,6 +2168,8 @@
 copy "$(ProjectDir)Daten\DatabaseDSA.sdf" "$(TargetDir)Daten\DatabaseDSA_Standard.sdf"
 mkdir "$(TargetDir)Daten\Helden"
 mkdir "$(TargetDir)Daten\Bodenplan"
+mkdir "$(TargetDir)Images"
+mkdir "$(TargetDir)Images\Karten"
 mkdir "$(TargetDir)Daten\Helden\Demohelden"
 copy "$(ProjectDir)Daten\Helden\Demohelden\*.xml" "$(TargetDir)Daten\Helden\Demohelden\"
 
@@ -2226,6 +2236,10 @@ if not $(ConfigurationName) == Debug (
    
    call "C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetName).zip" "$(ProjectDir)publish\$(TargetName)" -mx
    move  "$(TargetDir)$(TargetName).zip" "$(ProjectDir)publish"
+   
+   copy "$(TargetDir)Images\Karten\*.*" "$(ProjectDir)publish\$(TargetName)\Images\Karten\"
+   call "C:\Program Files\7-Zip\7z.exe" a -tzip "Kartenpaket.zip" "$(ProjectDir)publish\$(TargetName)\Images" -mx
+   move  "$(TargetDir)Kartenpaket.zip" "$(ProjectDir)publish"
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -250,6 +250,24 @@ namespace MeisterGeister.ViewModel.Base {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Führt ein Event in dem bei Konstruktion gespeicherten Thread (meist UI-Thread) aus.
+        /// Funktioniert nicht mit PropertyChanged. WPF macht das bei PropertyChanged automatisch.
+        /// </summary>
+        /// <param name="eventhandler"></param>
+        /// <param name="args"></param>
+        protected void MarshallEvent(EventHandler eventhandler, EventArgs args)
+        {
+            if(Dispatcher.Thread == System.Threading.Thread.CurrentThread)
+            {
+                if (eventhandler != null)
+                    eventhandler(this, args);
+            }
+            else
+            {
+                Dispatcher.BeginInvoke((Action<EventHandler, EventArgs>)MarshallEvent, DispatcherPriority.Normal, eventhandler, args);
+            }
+        }
 
         virtual public void Destroy() { }
 

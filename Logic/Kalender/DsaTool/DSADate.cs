@@ -56,6 +56,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return ticksSinceBF / TICKS_PER_DAY;
         }
 
+        public long DaysSinceBF
+        {
+            get { return getDaysSinceBF(); }
+        }
+
         /// <param name="ticksSinceBF">the ticks since Praios 1st, 0 BF</param>
         public void setTicksSinceBF(long ticksSinceBF)
         {
