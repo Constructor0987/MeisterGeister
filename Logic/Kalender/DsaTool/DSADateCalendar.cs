@@ -6,20 +6,17 @@ using MeisterGeister.Logic.Kalender;
 
 namespace MeisterGeister.Logic.Kalender.DsaTool
 {
-
-
-    /**
-     * A base class for all calendars or other days counting practices in Aventuria.
-     * We assume that all days counting practices have the concept of a year -
-     * that is, the counting repeats after roughly the same timeframe each time.
-     * This basic implementation sets the duration of a year to 365 days 
-     * and starts counting at 1st of Praios 0 BF - 
-     * so it really is a calendar for Bosparans fall, but without the knowledge of months,
-     * as we can't assume this concept to be valid for all subclasses.
-     * <p><b>See:</b> "Das Handbuch für den Reisenden", Section "Der Aventurische Kalender" (p. 60..63)</p>
-     *
-     * @author Copyright (c) 2009 Peter Diefenbach (peter@pdiefenbach.de)
-     */
+    // based on work from Peter Diefenbach (peter@pdiefenbach.de)
+    /// <summary>
+    /// Ein Basiskalender für aventurische Tageszählpraktiken.
+    /// Er bietet die Möglichkeit der Unterteilung der Zeit in Äon, Ära, Jahr, Monat, Woche und Tag.
+    /// Jahr, Monat und Tag werden als grundlegend vorausgesetzt.
+    /// Für Kalender ohne diese Konzepte empfieht es sich andere Unterteilungen darauf zuzuweisen.
+    /// Unterklassen müssen die Werte für DaysPerYear, DaysPerMonth, DaysPerWeek, DaysFromYear0ToBF sowie HasYear0 in der init()-Methode initialisieren.
+    /// DaysPerEra, DaysPerEon und DaysPerWeek können auf 0 gesetzt werden, dann werden diese Unterteilungen übersprungen.
+    /// Falls es Sondertage in einem Jahr gibt, dann müssen auch die Eigenschaft SpecialDayName und die Methode SpecialDayCount überschrieben werden.
+    /// Die Standarimplementierung von Week geht von einer kontiuierlichen Zählweise aus. Die Eigenschaft kann für andere Zählweisen überschrieben werden.
+    /// </summary>
     public class DSADateCalendar : IComparable<DSADateTime>, IComparable<DSADateCalendar>, IEquatable<DSADateTime>, IFormattable
     {
 
@@ -51,6 +48,26 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             set { daysFromYear0ToBF = value; }
         }
 
+        private int daysPerEon = 0;
+        /// <summary>
+        /// Tage pro Äon
+        /// </summary>
+        public int DaysPerEon
+        {
+            get { return daysPerEon; }
+            protected set { daysPerEon = value; }
+        }
+
+        private int daysPerEra = 0;
+        /// <summary>
+        /// Tage pro Ära
+        /// </summary>
+        public int DaysPerEra
+        {
+            get { return daysPerEra; }
+            protected set { daysPerEra = value; }
+        }
+
         private int daysPerYear = DAYS_PER_SUN_YEAR;
         /// <summary>
         /// Tage pro Jahr
@@ -59,6 +76,26 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             get { return daysPerYear; }
             protected set { daysPerYear = value; }
+        }
+
+        private int daysPerMonth = 30;
+        /// <summary>
+        /// Tage pro Monat
+        /// </summary>
+        public int DaysPerMonth
+        {
+            get { return daysPerMonth; }
+            protected set { daysPerMonth = value; }
+        }
+
+        private int daysPerWeek = 7;
+        /// <summary>
+        /// Tage pro Woche
+        /// </summary>
+        public int DaysPerWeek
+        {
+            get { return daysPerWeek; }
+            set { daysPerWeek = value; }
         }
 
         private bool _hasYear0 = HAS_YEAR_ZERO_BF;
@@ -81,7 +118,264 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             protected set { name = value; }
         }
 
+        /// <summary>
+        /// Das Äon. Es besteht aus mehreren Ären.
+        /// </summary>
+        public virtual int Eon
+        {
+            get
+            {
+                if (DaysPerEon == 0)
+                    return 0;
+                return (int)MathUtil.divisio(DaysSinceYear0, DaysPerEon) + (!HasYear0?1:0);
+            }
+            set { }
+        }
 
+        /// <summary>
+        /// Die Ära. Sie besteht aus mehreren Jahren.
+        /// </summary>
+        public virtual int Era
+        {
+            get
+            {
+                if (DaysPerEra == 0)
+                    return 0;
+                int era = DaysSinceYear0;
+                if (DaysPerEon != 0)
+                    era = (int)MathUtil.modulo(DaysSinceYear0, DaysPerEon);
+                return (int)MathUtil.divisio(era, DaysPerEra) +  ((!HasYear0 || DaysPerEon != 0)?1:0);
+            }
+            set { }
+        }
+
+        /// <summary>
+        /// Das Jahr
+        /// </summary>
+        public virtual int Year
+        {
+            get
+            {
+                int year = DaysSinceYear0;
+                if (DaysPerEra != 0)
+                    year = (int)MathUtil.modulo(DaysSinceYear0, DaysPerEra);
+                year = (int)MathUtil.divisio(year, DaysPerYear);
+                if (!HasYear0 && DaysPerEra == 0 && DaysPerEon == 0)
+                {
+                    if (0 >= year)
+                    { // If there is no year zero, we start counting at year 1.
+                        year++;
+                    }
+                }
+                if (DaysPerEra != 0 || DaysPerEon != 0)
+                    year++;
+                return year;
+            }
+            set
+            {
+                if (!HasYear0 && value == 0)
+                    value = 1;
+                int yearDiff = Year;
+                if (!HasYear0 && Math.Sign(yearDiff) != Math.Sign(value))
+                    yearDiff--;
+                if (yearDiff != 0)
+                    DaysSinceYear0 += yearDiff * DaysPerYear;
+            }
+        }
+
+        /// <summary>
+        /// Der Name des Jahres
+        /// </summary>
+        public string YearName
+        {
+            get
+            {
+                int year = Year;
+                if ((!HasYear0 || DaysPerEon != 0 || DaysPerEra != 0) && year > 0)
+                    year--;
+                if (year < 0 || YearNames == null || year >= YearNames.Count)
+                    return null;
+                return YearNames[year];
+            }
+        }
+
+        /// <summary>
+        /// Die Namen aller Jahre
+        /// </summary>
+        public virtual IList<string> YearNames
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// Der Tag im Jahr
+        /// </summary>
+        public int YearDay
+        {
+            get
+            {
+                return (int)MathUtil.modulo(DaysSinceYear0, DaysPerYear) + 1;
+            }
+            set
+            {
+                int year = Year;
+                if (!HasYear0 && year > 0)
+                    year--;
+                DaysSinceYear0 = year * DaysPerYear + value;
+            }
+        }
+
+        /// <summary>
+        /// Monat im Jahr. Von 1 bis ?.
+        /// </summary>
+        public virtual int Month
+        {
+            get
+            {
+                if (DaysPerMonth == 0)
+                    return 0; return (int)MathUtil.divisio(YearDay, DaysPerMonth) + 1;
+            }
+            set { }
+        }
+
+        /// <summary>
+        /// Der Name des Monats
+        /// </summary>
+        public string MonthName
+        {
+            get
+            {
+                int monat = Month;
+                if (monat <= 0 || MonthNames == null || monat > MonthNames.Count)
+                    return null;
+                return MonthNames[--monat];
+            }
+        }
+
+        /// <summary>
+        /// Die Namen aller Monate
+        /// </summary>
+        public virtual IList<string> MonthNames
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// Tag im Monat. Von 1 bis DaysPerMonth
+        /// </summary>
+        public virtual int Day
+        {
+            get
+            {
+                if (DaysPerMonth == 0)
+                    return YearDay;
+                return (int)MathUtil.modulo(YearDay, DaysPerMonth, 1);
+            }
+            set { }
+        }
+
+        /// <summary>
+        /// Woche im Monat. Von 1 bis ?.
+        /// </summary>
+        public virtual int Week
+        {
+            get { return 0; }
+            set { }
+        }
+
+        /// <summary>
+        /// Der Name der Woche
+        /// </summary>
+        public string WeekName
+        {
+            get
+            {
+                int week = Week;
+                if (week <= 0 || WeekNames == null || week > WeekNames.Count)
+                    return null;
+                return WeekNames[--week];
+            }
+        }
+
+        /// <summary>
+        /// Die Namen aller Wochen
+        /// </summary>
+        public virtual IList<string> WeekNames
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// Tag in der Woche. Von 1 bis DaysPerWeek.
+        /// </summary>
+        public virtual int WeekDay
+        {
+            get { return (int)MathUtil.modulo(DaysSinceYear0, DaysPerWeek, 1); }
+            set { }
+        }
+
+        /// <summary>
+        /// Der Name des Wochentages
+        /// </summary>
+        public string WeekDayName
+        {
+            get
+            {
+                int weekday = WeekDay;
+                if (weekday <= 0 || WeekDayNames == null || weekday > WeekDayNames.Count)
+                    return null;
+                return WeekDayNames[--weekday];
+            }
+        }
+
+        /// <summary>
+        /// Die Namen aller Wochentage
+        /// </summary>
+        public virtual IList<string> WeekDayNames
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// Die Uhrzeit
+        /// </summary>
+        public TimeSpan Time
+        {
+            get { return date.getTime(); }
+            set { date.setTime(value); }
+        }
+
+        /// <summary>
+        /// Name des Sondertages
+        /// </summary>
+        public virtual string SpecialDayName
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// Ist der Tag ein Sondertag?
+        /// Ein Sondertag steht außerhalb der normalen Abschnittszählung.
+        /// </summary>
+        public bool IsSpecialDay
+        {
+            get { return !String.IsNullOrEmpty(SpecialDayName); }
+        }
+
+        /// <summary>
+        /// Die Anzahl der vergangenen Sondertage
+        /// </summary>
+        /// <param name="day">Tage</param>
+        /// <param name="week">Wochen</param>
+        /// <param name="month">Monate</param>
+        /// <param name="year">Jahre</param>
+        public virtual int SpecialDaysCount(int day, int week = 0, int month = 0, int year = 0)
+        {
+            return 0;
+        }
+
+
+        #region Konstruktoren und init
         /// <summary>
         /// Erstellt einen neuen Kalender mit dem Datum 1. Praios, 0 BF 0:00 Uhr.
         /// </summary>
@@ -107,165 +401,125 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         protected virtual void init()
         {
         }
+        #endregion
 
-        /**
-         * @return the days since Praios 1st, 0 BF.
-         * @see DSADate#getDaysSinceBF()
-         */
-        public int getDaysSinceBF()
+        /// <summary>
+        /// Tage seit Bosparans Fall
+        /// </summary>
+        public int DaysSinceBF
         {
-            return (int)date.getDaysSinceBF();
+            get { return (int)date.getDaysSinceBF(); }
+            set { date.setDaysSinceBF(value); }
         }
 
-        /**
-         * Sets the days since Praios 1st, 0 BF.
-         * @see DSADate#getDaysSinceBF()
-         */
-        public void setDaysSinceBF(int daysSinceBF)
+        /// <summary>
+        /// Tag des Jahres im Bosparans Fall Kalender
+        /// </summary>
+        public int YearDayBF
         {
-            date.setDaysSinceBF(daysSinceBF);
+            get { return (int)MathUtil.modulo(DaysSinceBF, DAYS_PER_SUN_YEAR, 1); }
         }
 
-        /**
-         * @return the day of the year (julian day) for Bosparans fall calendar, ranges from 1 to {@link #DAYS_PER_YEAR_BF}.
-         */
-        public int getJDayBF()
+        /// <summary>
+        /// Jahr im Bosparans Fall Kalender
+        /// </summary>
+        public int YearBF
         {
-            return (int)MathUtil.modulo(getDaysSinceBF(), DAYS_PER_SUN_YEAR) + 1;
+            get { return (int)MathUtil.divisio(DaysSinceBF, DAYS_PER_SUN_YEAR); }
         }
 
-        /**
-         * @return the year of the Bosparans fall calendar.
-         */
-        public int getYearBF()
+        /// <summary>
+        /// Tage seit dem Anfang des Jahres 0 dieses Kalenders
+        /// </summary>
+        public int DaysSinceYear0
         {
-            return (int)MathUtil.divisio(getDaysSinceBF(), DAYS_PER_SUN_YEAR);
+            get { return DaysSinceBF - daysFromYear0ToBF; }
+            set { DaysSinceBF = value + daysFromYear0ToBF; }
         }
 
-        /**
-         * Sets the date according to Bosparans fall.
-         * @param jday The day of the year (julian day), ranges from 1 to {@link #getDaysPerYear()}.
-         * @param year The year (according to BF).
-         * @exception DSAException may be thrown, depending on implementation of subclass. The default implementation does not throw anything.
-         */
-        public void setJDayYearBF(int jday, int year)
+        /// <summary>
+        /// Setzt das Datum anhand der Unterteilungen wie Tag, Woche, Monat und Jahr.
+        /// setDate(13, 0, 12, 1013) entspricht dem 13. Tag im 12. Monat des 1013. Jahres
+        /// setDate(8, 3, 7, 4073) entspricht dem 8. Tag der 3. Woche im 7. Monat des 4073. Jahres
+        /// </summary>
+        /// <param name="day">Tag</param>
+        /// <param name="week">Woche</param>
+        /// <param name="month">Monat</param>
+        /// <param name="year">Jahr</param>
+        /// <param name="era">Ära</param>
+        /// <param name="eon">Äon</param>
+        public virtual void setDate(int day, int week, int month, int year, int era = 0, int eon = 0)
         {
-            //        if ((jday < 1) || (jday > daysPerYear())) {
-            //             throw new DSAException("jday out of range");
-            //        }
-            setDaysSinceBF((year * DAYS_PER_SUN_YEAR) + (jday - 1));
-        }
-
-        /**
-         * @return the days since the beginning of year 0 of this calendar.
-         */
-        public int getDaysSinceYear0()
-        {
-            return getDaysSinceBF() - daysFromYear0ToBF;
-        }
-
-        /**
-         * Sets the days since the beginning of year 0 of this calendar.
-         */
-        public void setDaysSinceYear0(int daysSinceYear0)
-        {
-            setDaysSinceBF(daysSinceYear0 + daysFromYear0ToBF);
-        }
-
-        /**
-         * @return The day of the year (julian day) for this calendar, ranges from 1 to {@link #getDaysPerYear()}.
-         */
-        public int getJDay()
-        {
-            return (int)MathUtil.modulo(getDaysSinceYear0(), DaysPerYear) + 1;
-        }
-
-
-
-        /**
-         * @return The year of this calendar.
-         */
-        public int getYear()
-        {
-            int year = (int)MathUtil.divisio(getDaysSinceYear0(), DaysPerYear);
-            if (!HasYear0)
+            int daysSinceYear0 = 0;
+            if (day != 0)
+                daysSinceYear0 += day - 1;
+            // Addieren der Sondertage
+            daysSinceYear0 += SpecialDaysCount(day, week, month, year);
+            if (week != 0)
+                daysSinceYear0 += --week * DaysPerWeek;
+            if (month != 0)
+                daysSinceYear0 += --month * DaysPerMonth;
+            if (year != 0)
             {
-                if (0 >= year)
-                { // If there is no year zero, we start counting at year 1.
-                    year--;
-                }
-            }
-            return year;
-        }
-
-        /**
-         * Sets the date.
-         * @param jday The day of the year (julian day), ranges from 1 to {@link #getDaysPerYear()}.
-         * @param year The year (according to BF).
-         * @exception DSAException may be thrown, depending on implementation of subclass. The default implementation does not throw anything.
-         */
-        public void setJDayYear(int jday, int year)
-        {
-            //        if ((jday < 1) || (jday > daysPerYear())) {
-            //             throw new DSAException("jday out of range");
-            //        }
-            if (!HasYear0)
-            {
-                if (0 == year)
-                {
-                    throw new ArgumentException(String.Format("Der Kalender hat kein Jahr 0: {0}", Name));
-                }
-                else if (0 > year)
-                { // If there is no year zero, we start counting at year 1.
+                if (!HasYear0 && era == 0 && eon == 0 && year < 0)
                     year++;
-                }
+                daysSinceYear0 += ((era != 0 || eon != 0) ? --year : year) * DaysPerYear;
             }
-            int daysSinceYear0 = (year * DaysPerYear) + (jday - 1);
-            setDaysSinceYear0(daysSinceYear0);
+            if (era != 0)
+            {
+                if (!HasYear0 && eon == 0 && era < 0)
+                    era++;
+                daysSinceYear0 += ((eon != 0) ? --era : era) * DaysPerEra;
+            }
+            if (eon != 0)
+            {
+                if (!HasYear0 && eon < 0)
+                    eon++;
+                daysSinceYear0 += --eon * DaysPerEon;
+            }
+            DaysSinceYear0 = daysSinceYear0;
         }
 
-        public String getYearString(int year, String positiveUnitName, String negativeUnitName)
+        public static String getYearString(int year, String positiveUnitName, String negativeUnitName)
         {
-            string s = String.Format("{0} {1}", (year < 0)? -year: year, (year < 0) ? negativeUnitName : positiveUnitName);
+            string s = String.Format("{0} {1}", (year < 0) ? -year : year, (year < 0) ? negativeUnitName : positiveUnitName);
             return s;
         }
 
-        /**
-         * @return the day of the moon.
-         * @see DSADate#getMoonday()
-         */
-        public int getMoonday()
+        /// <summary>
+        /// Tag des Mondes. 0 entspricht Neumond.
+        /// </summary>
+        public int Moonday
         {
-            return date.getMoonday();
+            get { return date.getMoonday(); }
         }
 
-        /**
-         * @return the current season.
-         * @see DSADate#season()
-         */
-        public Season season()
+        /// <summary>
+        /// Die Jahreszeit
+        /// </summary>
+        public Season Season
         {
-            return date.season();
+            get { return date.season(); }
         }
 
         public virtual String getHeadingText()
         {
-            return "Year " + getYear() + " JDay " + getJDay() + " BF";
+            return "Year " + Year + " YearDay " + YearDay + " BF";
         }
 
         public virtual String getContentText()
         {
-            string s = String.Format("{0}: {1}: {2}", getHeadingText(), "Mondphase", Datum.MondphaseString(getMoonday() + 1));
+            string s = String.Format("{0}: {1}: {2}", getHeadingText(), "Mondphase", Datum.MondphaseString(Moonday + 1));
             return s;
         }
 
-        public string ToString(string format, IFormatProvider formatProvider)
+        public virtual string ToString(string format, IFormatProvider formatProvider)
         {
             if (String.IsNullOrEmpty(format) || format == "G")
             {
-                return "DSADateCalendar " + getDaysSinceBF() + " (Year " + getYearBF() + " JDay " + getJDayBF() + " BF)";
+                return "DSADateCalendar " + DaysSinceBF + " (Year " + YearBF + " YearDay " + YearDayBF + " BF)";
             }
-            return "DSADateCalendar " + getDaysSinceBF() + " (Year " + getYearBF() + " JDay " + getJDayBF() + " BF)";
+            return "DSADateCalendar " + DaysSinceBF + " (Year " + YearBF + " YearDay " + YearDayBF + " BF)";
         }
 
         #region Interfaces
@@ -292,6 +546,13 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public bool Equals(DSADateTime other)
         {
             return Date.Equals(other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is DSADateTime)
+                return Date.Equals(obj);
+            return base.Equals(obj);
         }
 
         public static bool operator ==(DSADateCalendar emp1, DSADateTime emp2)

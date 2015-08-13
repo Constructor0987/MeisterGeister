@@ -56,7 +56,7 @@ namespace MeisterGeister.ViewModel.Base
 
         void OnRequestClose()
         {
-            if (RequestClose != null) RequestClose(this, EventArgs.Empty);
+            MarshallEvent(RequestClose, EventArgs.Empty);
         }
 
         #endregion

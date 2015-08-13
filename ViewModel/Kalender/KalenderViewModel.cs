@@ -18,44 +18,28 @@ namespace MeisterGeister.ViewModel.Kalender
         {
             Icon = "";
             Name = "Kalender";
-            Global.StandortChanged += Global_StandortChanged;
-            //
-            
         }
 
-        void Global_StandortChanged(object sender, EventArgs e)
+        public override void RegisterEvents()
         {
-            Standort = Global.Standort;
         }
 
-        private DgSuche.Ortsmarke standort = null;
-        public DgSuche.Ortsmarke Standort
+        public override void UnregisterEvents()
         {
-            get { return standort; }
-            set { 
-                standort = value;
-                OnChanged("Standort");
-            }
         }
 
         private DSADateTime datum = new DSADateTime(DateTime.Now);
         public DSADateTime Datum
         {
             get { return datum; }
-            set { 
-                datum = value;
-                OnChanged("Datum");
-            }
+            set { Set(ref datum, value); }
         }
 
         private DSADateCalendar kalender = new DSADateCalendarTwelve();
         public DSADateCalendar Kalender
         {
             get { return kalender; }
-            set { 
-                kalender = value;
-                OnChanged("Kalender");
-            }
+            set { Set(ref kalender, value); }
         }
 
         private MeisterGeister.Logic.Kalender.Kalender kalenderTyp = MeisterGeister.Logic.Kalender.Kalender.BosparansFall;
@@ -63,8 +47,7 @@ namespace MeisterGeister.ViewModel.Kalender
         {
             get { return kalenderTyp; }
             set { 
-                kalenderTyp = value;
-                OnChanged("KalenderTyp");
+                Set(ref kalenderTyp, value);
                 Kalender = MeisterGeister.Logic.Kalender.Zeitrechnung.KalenderDictionary[kalenderTyp];
             }
         }

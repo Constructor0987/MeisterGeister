@@ -98,6 +98,12 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return new TimeSpan(ticksSinceBF % TICKS_PER_DAY);
         }
 
+        /// <returns>The time part in a TimeSpan</returns>
+        public void setTime(TimeSpan time)
+        {
+            ticksSinceBF = ticksSinceBF / TICKS_PER_DAY + time.Ticks;
+        }
+
         /// <returns>the day of the moon phase. 0 represents new moon.</returns>
         public int getMoonday()
         {

@@ -5,14 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.Logic.Kalender.DsaTool
 {
-
-    /**
-     * A class representing the calendar or days counting practice in Aventuria
-     *  as used on the continent Myranor.
-     * <p><b>See:</b> Jenseits des Horizonts 261</p>
-     *
-     * @author Based on work by Peter Diefenbach (peter@pdiefenbach.de), rewritten by TheyWor
-     */
+    // based on work from Peter Diefenbach (peter@pdiefenbach.de)
     public class DSADateCalendarMyranisch : DSADateCalendar
     {
         //    private static Logger logger = Logger.getRootLogger();
@@ -27,6 +20,71 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             DaysFromYear0ToBF = -YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_SUN_YEAR + YEAR_OFFSET_IN_DAYS;
             HasYear0 = true;
             DaysPerYear = DSADateCalendar.DAYS_PER_SUN_YEAR;
+            DaysPerWeek = DAYS_PER_NONE;
+            DaysPerMonth = DAYS_PER_NONE * NONES_PER_OCTADE;
+        }
+
+        public override int Day
+        {
+            get
+            {
+                int jday = YearDay;
+                jday -= getSondertage(jday);
+                return (int)MathUtil.modulo(jday, DaysPerMonth, 1);
+            }
+            set
+            {}
+        }
+
+        public override int Week
+        {
+            get { return (int)MathUtil.divisio(Day, DaysPerWeek) + 1; }
+            set {}
+        }
+
+        public override int WeekDay
+        {
+            get
+            {
+                return (int)MathUtil.modulo(Day, DaysPerWeek, 1);
+            }
+            set {}
+        }
+
+        public override IList<string> WeekDayNames
+        {
+            get { return wochenTage; }
+        }
+
+        public override IList<string> MonthNames
+        {
+            get { return oktaden; }
+        }
+
+        /// <summary>
+        /// Setzt man day=0 und week=0 bekommt man den Sondertag vor der Oktade.
+        /// </summary>
+        /// <param name="day">Tag der None</param>
+        /// <param name="week">Woche der Oktade</param>
+        /// <param name="month">Oktade 1-9, 9 nur wenn day und week 0 sind</param>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public override int SpecialDaysCount(int day, int week = 0, int month = 0, int year = 0)
+        {
+            if (day == 1 && week == 0 && month == 0)
+                return 1;
+            return (month + 1) / 2;
+        }
+
+        public override string SpecialDayName
+        {
+            get
+            {
+                int jday = YearDay - 1;
+                if (jday % 91 == 1)
+                    return sondertage[getSondertage(jday)];
+                return null;
+            }
         }
 
         public override String getHeadingText()
@@ -34,118 +92,54 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             //Feiertag, 2 Oktale, Feiertag, 2 Oktale, ...
             // 1, 92, 183, 274, 365 // Mod 91 == 1
             // "Thearchentag", "Nebeltag", "Sonnentag", "Sturmtag", "Frosttag"
-
-            int jday = getJDay() - 1;
-            string s = "";
-            if (jday % 91 == 1)
-                s = String.Format("{0} {1}", ((Sondertag)getSondertage(jday)).ToString(), getYearString());
-            else
-                s = String.Format("{5} ({0}) der {1}. None im {4} ({2}) {3}", getDay() + 1, getNone() + 1, getOctade() + 1, getYearString(), getOctadeString(), getDayString());
-            return s;
+            if(IsSpecialDay)
+                return String.Format("{0} {1}", SpecialDayName, getYearString());
+            return String.Format("{5} ({0}) der {1}. None im {4} ({2}) {3}", WeekDay, Week, Month, getYearString(), MonthName, WeekDayName);
         }
 
-        public int getSondertage(int jday)
+        private int getSondertage(int jday)
         {
-            return jday / 91 + ((jday>1)?1:0);
-        }
-
-        public int getDay()
-        {
-            int jday = getJDay() - 1;
-            jday -= getSondertage(jday);
-            return getPart(jday, 1, DAYS_PER_NONE);
-        }
-
-        public string getDayString()
-        {
-            int o = getDay();
-            return ((Wochentag)o).ToString();
-        }
-
-        public int getNone()
-        {
-            int jday = getJDay() - 1;
-            jday -= getSondertage(jday);
-            return getPart(jday, DAYS_PER_NONE, NONES_PER_OCTADE);
-        }
-
-        public int getOctade()
-        {
-            int jday = getJDay() - 1;
-            jday -= getSondertage(jday);
-            return getPart(jday, DAYS_PER_NONE * NONES_PER_OCTADE, DaysPerYear);
-        }
-
-        public string getOctadeString()
-        {
-            int o = getOctade();
-            return ((Oktade)o).ToString();
-        }
-
-        public void setDayNoneOctadeYear(int day, int none, int octade, int year)
-        {
-            int days = (octade - 1) * DAYS_PER_NONE * NONES_PER_OCTADE + year * DaysPerYear;
-            if (day > 0 && none > 0)
-                days += (day - 1) + (none - 1) * DAYS_PER_NONE;
-            else
-                days -= 1; //es ist ein sondertag der der angegebenen oktade vorangeht.
-            days += (octade + 1) / 2; //Sondertage
-            days += DaysFromYear0ToBF;
-            setDaysSinceBF(days);
+            return jday / 91 + ((jday > 1) ? 1 : 0);
         }
 
         public String getYearString()
         {
-            int year = getYear();
+            int year = Year;
             string s = String.Format("{0} IZ", year);
             return s;
         }
 
-        public int getPart(int value, int divisor, int modulo)
-        {
-            if (0 == modulo)
-            {
-                return (int)MathUtil.divisio(value, divisor);
-            }
-            else
-            {
-                return (int)MathUtil.divisio(MathUtil.modulo(value, divisor * modulo), divisor);
-            }
-        }
+        public static readonly String[] oktaden = new String[] {
+            "Nereton",
+            "Siminia",
+            "Zatura",
+            "Shinxir",
+            "Brajan",
+            "Raia",
+            "Chrysir",
+            "Gyldara"
+        };
 
-        public enum Oktade
-        {
-            Nereton,
-            Siminia,
-            Zatura,
-            Shinxir,
-            Brajan,
-            Raia,
-            Chrysir,
-            Gyldara
-        }
 
-        public enum Sondertag
-        {
-            Thearchentag,
-            Nebeltag,
-            Sonnentag,
-            Sturmtag,
-            Frosttag
-        }
+        public static readonly String[] sondertage = new String[] {
+            "Thearchentag",
+            "Nebeltag",
+            "Sonnentag",
+            "Sturmtag",
+            "Frosttag"
+        };
 
-        public enum Wochentag
-        {
-            Schaffenstag,
-            Ahnentag,
-            Ackertag,
-            Markttag,
-            Opfertag,
-            Rechtstag,
-            Fuhrtag,
-            Streittag,
-            Ruhetag
-        }
+        public static readonly String[] wochenTage = new String[] {
+            "Schaffenstag",
+            "Ahnentag",
+            "Ackertag",
+            "Markttag",
+            "Opfertag",
+            "Rechtstag",
+            "Fuhrtag",
+            "Streittag",
+            "Ruhetag"
+        };
 
     }
 

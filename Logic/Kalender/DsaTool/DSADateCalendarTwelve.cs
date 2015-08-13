@@ -6,149 +6,132 @@ using MeisterGeister.Logic.Kalender;
 
 namespace MeisterGeister.Logic.Kalender.DsaTool
 {
-    
-/**
- * A class representing all calendars or days counting practices in Aventuria 
- *  which are based on the twelve gods.
- * <p><b>See:</b> "Das Handbuch für den Reisenden", Section "Der Aventurische Kalender" (p. 60..63)</p>
- *
- * @author Copyright (c) 2009 Peter Diefenbach (peter@pdiefenbach.de)
- */
-public class DSADateCalendarTwelve : DSADateCalendar {
-    //private static Logger logger = Logger.getRootLogger();
 
-    public DSADateCalendarTwelve() : base() {
-        init(MeisterGeister.Logic.Kalender.Kalender.BosparansFall);
-    }
-    
-    public DSADateCalendarTwelve(DSADateTime date) : base(date) {
-        init(MeisterGeister.Logic.Kalender.Kalender.BosparansFall);
-    }
-
-    public DSADateCalendarTwelve(MeisterGeister.Logic.Kalender.Kalender kal) : base() {
-        init(kal);
-    }
-    
-    public DSADateCalendarTwelve(DSADateTime date, MeisterGeister.Logic.Kalender.Kalender kal)
-        : base(date)
+    // based on work from Peter Diefenbach (peter@pdiefenbach.de)
+    public class DSADateCalendarTwelve : DSADateCalendar
     {
-        init(kal);
-    }
+        //private static Logger logger = Logger.getRootLogger();
 
-    protected override void init()
-    {
-        //alle Konstruktoren sind überschrieben
-    }
+        public DSADateCalendarTwelve()
+            : base()
+        {
+            init(MeisterGeister.Logic.Kalender.Kalender.BosparansFall);
+        }
 
-    protected void init(MeisterGeister.Logic.Kalender.Kalender kal)
-    {
-        this.calendar = Zeitrechnung.ZeitrechnungenDictionary[kal];
+        public DSADateCalendarTwelve(DSADateTime date)
+            : base(date)
+        {
+            init(MeisterGeister.Logic.Kalender.Kalender.BosparansFall);
+        }
 
-        Name = calendar.Name;
-        //-calendar.getYearZeroBFis() * DSADateCalendar.DAYS_PER_YEAR_BF
-        DaysFromYear0ToBF = (calendar.BeginnJahreszählung - (calendar.HatNullJahr ? 0 : 1)) * DSADateCalendar.DAYS_PER_SUN_YEAR;
-        HasYear0 = calendar.HatNullJahr;
-        DaysPerYear = DSADateCalendar.DAYS_PER_SUN_YEAR;
-    }
-    
-    /**
-     * Gets the calendar for the output of the date.
-     */
-    public Zeitrechnung getCalendar() {
-        return calendar;
-    }
+        public DSADateCalendarTwelve(MeisterGeister.Logic.Kalender.Kalender kal)
+            : base()
+        {
+            init(kal);
+        }
 
-    /**
-     * Gets the calendar for the output of the date.
-     */
-    public void setCalendar(MeisterGeister.Logic.Kalender.Kalender calendar)
-    {
-        init(calendar);
-    }
+        public DSADateCalendarTwelve(DSADateTime date, MeisterGeister.Logic.Kalender.Kalender kal)
+            : base(date)
+        {
+            init(kal);
+        }
 
-    /**
-     * Gets the calendar for the output of the date.
-     */
-    /*
-    public int getCalendarIDnum() {
-        return calendar.getIDnum();
-    }
-    */
+        protected override void init()
+        {
+            //alle Konstruktoren sind überschrieben
+        }
 
-    public override String getHeadingText() {
-        string s = String.Format("{0}.{1}. ({2}) {3}", getDay(), getMonthAsNumber(), getMonthString(getMonth()), getYearString());
-        return s;
-    }
+        protected void init(MeisterGeister.Logic.Kalender.Kalender kal)
+        {
+            this.calendar = Zeitrechnung.ZeitrechnungenDictionary[kal];
 
-    /**
-     * Calculates the julian day from day and month (in DSA months)
-     * @param day The day of the month, ranges from 1 to 30.
-     * @param month The month of the year, ranges from 1 to 13.
-     * @return The day of the year (julian day), ranges from 1 to 365.
-     */
-    public int jday(int day, int month) {
-//        if ((month < 1) || (month > 13) || (day < 1) || (day > 30)) {
-//            throw new DSAException("day or month out of range");
-//        }
-        return ((month - 1) * 30 + day);
-    }
+            Name = calendar.Name;
+            //-calendar.getYearZeroBFis() * DSADateCalendar.DAYS_PER_YEAR_BF
+            DaysFromYear0ToBF = (calendar.BeginnJahreszählung - (calendar.HatNullJahr ? 0 : 1)) * DSADateCalendar.DAYS_PER_SUN_YEAR;
+            HasYear0 = calendar.HatNullJahr;
+            DaysPerYear = DSADateCalendar.DAYS_PER_SUN_YEAR;
+            DaysPerWeek = 7;
+            DaysPerMonth = 30;
+        }
 
-    /**
-     * Sets the date.
-     * @param day The day of the month, ranges from 1 to 30.
-     * @param month The month of the year, ranges from 1 to 13.
-     * @param year The year (according to BF).
-     * @exception DSADateYearZeroException year==0, but calendar does not support a year 0.
-     */
-    public void setDayMonthYear(int day, int month, int year)  {
-        setJDayYear(jday(day, month), year);
-    }
+        public override int WeekDay
+        {
+            get
+            {
+                return (int)MathUtil.modulo((DaysSinceBF + 3), 7) + 1;
+            }
+            set
+            {
+                //base.WeekDay = value;
+            }
+        }
 
-    /**
-     * @return The day of the month, ranges from 1 to 30.
-     */
-    public int getDay() {
-        return (int)(MathUtil.modulo(getJDay() - 1, 30) + 1);
-    }
+        public override IList<string> WeekDayNames
+        {
+            get { return weekdayNames; }
+        }
 
-    /**
-     * @return The month of the year.
-     */
-    public Monat getMonth() {
-        return (Monat)(getMonthAsNumber() - 1);
-    }
+        public override IList<string> MonthNames
+        {
+            get { return monthNames; }
+        }
 
-    public static string getMonthString(Monat m)
-    {
-        if (m == Monat.NamenloseTage)
-            return "Tag des Namenlosen";
-        else
-            return m.ToString();
-    }
+        /**
+         * Gets the calendar for the output of the date.
+         */
+        public Zeitrechnung getCalendar()
+        {
+            return calendar;
+        }
 
-    /**
-     * @return The month of the year, ranges from 1 to 13.
-     */
-    public int getMonthAsNumber() {
-        return (((getJDay() - 1) / 30) + 1);
-    }
+        /**
+         * Gets the calendar for the output of the date.
+         */
+        public void setCalendar(MeisterGeister.Logic.Kalender.Kalender calendar)
+        {
+            init(calendar);
+        }
 
-    public String getYearString() {
-        return getYearString(getYear(), calendar.KürzelPlus, calendar.KürzelMinus);
-    }
+        public override String getHeadingText()
+        {
+            string s = String.Format("{0}.{1}. ({2}) {3}", Day, Month, MonthName, getYearString());
+            return s;
+        }
 
-    /** The calendar the date is displayed in. */
-    private Zeitrechnung calendar;
-    
-    /**
-     * @return The day of the week.
-     */
-    public WochentagEnum getDayOfWeek()
-    {
-        // The 1st of Praios 0 BF was a Praiostag.
-        return (WochentagEnum)MathUtil.modulo((getDaysSinceBF() + 2), 7);
+        public String getYearString()
+        {
+            return getYearString(Year, calendar.KürzelPlus, calendar.KürzelMinus);
+        }
+
+        /** The calendar the date is displayed in. */
+        private Zeitrechnung calendar;
+
+        public static readonly String[] weekdayNames = new String[] {
+            "Windstag",   // Donnerstag
+            "Erdstag",    // Freitag
+            "Markttag",   // Samstag
+            "Praiostag",  // Sonntag
+            "Rohalstag",  // Montag
+            "Feuertag",   // Dienstag
+            "Wassertag"   // Mittwoch
+        };
+
+        public static readonly String[] monthNames = new String[] {
+            "Praios",     // Juli
+            "Rondra",     // August
+            "Efferd",     // September
+            "Travia",     // Oktober
+            "Boron",      // November
+            "Hesinde",    // Dezember
+            "Firun",      // Januar
+            "Tsa",        // Februar
+            "Phex",       // März
+            "Peraine",    // April
+            "Ingerimm",  // Mai
+            "Rahja",     // Juni
+            "Tag des Namenlosen"
+        };
+
     }
-    
-}
 
 }

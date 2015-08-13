@@ -62,7 +62,7 @@ namespace MeisterGeister.ViewModel.Kalender
                     return text;
                 if(Datum == null || Kalender == null)
                     return text = null;
-                Kalender.setDSADate(Datum);
+                Kalender.Date = Datum;
                 return text = Kalender.getHeadingText();
             }
         }

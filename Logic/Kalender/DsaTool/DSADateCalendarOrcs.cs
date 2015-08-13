@@ -5,14 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.Logic.Kalender.DsaTool
 {
-
-    /**
-     * A class representing the calendar or days counting practice in Aventuria
-     *  as used by Orcs.
-     * <p><b>See:</b> "Das Handbuch für den Reisenden", Section "Der Aventurische Kalender" (p. 60..63)</p>
-     *
-     * @author Copyright (c) 2009 Peter Diefenbach (peter@pdiefenbach.de)
-     */
+    // based on work from Peter Diefenbach (peter@pdiefenbach.de)
     public class DSADateCalendarOrcs : DSADateCalendar
     {
         //private static Logger logger = Logger.getRootLogger();
@@ -29,27 +22,27 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             Name = "Orkisch";
             int daysPerYear = DAYS_PER_YEAR;
             int offset = REFERENCE_DAY_YEAR_ZERO_BF_IS * DSADateCalendar.DAYS_PER_SUN_YEAR + REFERENCE_DAY_YEAR_OFFSET_IN_DAYS - daysPerYear * REFERENCE_YEAR;
-            //logger.debug("Orc calendar offset is " + offset);
             DaysFromYear0ToBF = offset;
             HasYear0 = true;
             DaysPerYear = daysPerYear;
+            DaysPerMonth = DAYS_PER_MONTH;
+            DaysPerWeek = 0;
+            //TODO Week? auf Mondphasen setzen?
         }
 
         public override String getHeadingText()
         {
-            int jday = getJDay() - 1;
+            int jday = YearDay - 1;
             int monthdiv = (int)MathUtil.divisio(jday, DAYS_PER_MONTH);
             int monthmod = (int)MathUtil.modulo(jday, DAYS_PER_MONTH);
 
-            string s = String.Format("{0}. Tag im {1}. Mond ({2}. Tag) im {3}", monthmod + 1, monthdiv + 1, Date.getDaysSinceLastLunarEclipse() + 1, getYearString());
+            string s = String.Format("{0}. Tag im {1}. Mond ({2}. Tag) im {3}", Day, Month, Date.getDaysSinceLastLunarEclipse() + 1, getYearString());
             return s;
         }
 
-
-
         public String getYearString()
         {
-            string s = String.Format("{0}. Jahr des Tairach", getYear());
+            string s = String.Format("{0}. Jahr des Tairach", Year);
             return s;
         }
     }

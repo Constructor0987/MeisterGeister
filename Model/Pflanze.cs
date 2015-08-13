@@ -168,11 +168,11 @@ namespace MeisterGeister.Model
             if (date != null)
             {
                 DSADateCalendarTwelve cal = new DSADateCalendarTwelve(date);
-                double month = cal.getMonthAsNumber();
+                double month = cal.Month;
                 double daysInMonth = 30;
                 if (month == 13)
                     daysInMonth = 5;
-                double day = cal.getDay();
+                double day = cal.Day;
                 month += day / daysInMonth;
                 return GetErnte(month);
             }
