@@ -557,12 +557,16 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public static bool operator ==(DSADateCalendar emp1, DSADateTime emp2)
         {
+            if (object.ReferenceEquals(emp1, null) && object.ReferenceEquals(emp2, null))
+                return true;
             if (object.ReferenceEquals(emp1, null)) return false;
             return emp1.Equals(emp2);
         }
 
         public static bool operator !=(DSADateCalendar emp1, DSADateTime emp2)
         {
+            if (object.ReferenceEquals(emp1, null) && object.ReferenceEquals(emp2, null))
+                return false;
             if (object.ReferenceEquals(emp1, null)) return true;
             return !emp1.Equals(emp2);
         }
