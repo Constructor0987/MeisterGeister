@@ -23,7 +23,6 @@ namespace MeisterGeister.ViewModel.Basar
         private string _währungsText = "Silbertaler";
 
         private double _währungsFaktor = 1.0;
-        private Model.Held _selectedHeld;
         
         // Listen
         private List<Model.Handelsgut> _handelsgutListe;
@@ -122,11 +121,11 @@ namespace MeisterGeister.ViewModel.Basar
 
         public Model.Held SelectedHeld
         {
-            get { return _selectedHeld; }
+            get { return Global.SelectedHeld; }
             set
             {
-                _selectedHeld = value;
-                OnChanged("SelectedHeld");
+                Global.SelectedHeld = value;
+                OnChanged();
                 OnChanged("HeldTalentwerte");
             }
         }
@@ -266,6 +265,7 @@ namespace MeisterGeister.ViewModel.Basar
         {
             base.RegisterEvents();
             Global.HeldSelectionChanged += SelectedHeldChanged;
+            OnChanged("SelectedHeld");
         }
         public override void UnregisterEvents()
         {

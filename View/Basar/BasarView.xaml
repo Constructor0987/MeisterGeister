@@ -7,7 +7,8 @@
              xmlns:vmBasar="clr-namespace:MeisterGeister.ViewModel.Basar" 
              Background="{StaticResource Background1}" 
              Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignHeight="422" d:DesignWidth="805" 
-             d:DataContext="{d:DesignData /SampleData/BasarViewModelSampleData.xaml}">
+             d:DataContext="{d:DesignData /SampleData/BasarViewModelSampleData.xaml}"
+             ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
 
     <UserControl.Resources>
         <Style x:Key="BemerkungStyle" TargetType="Border">
