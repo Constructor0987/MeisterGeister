@@ -20,6 +20,7 @@ using System.Windows.Media.Animation;
 using MeisterGeister.View.Settings;
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel;
+using System.ComponentModel;
 
 namespace MeisterGeister.View
 {
@@ -87,8 +88,6 @@ namespace MeisterGeister.View
             Guid mgID = Einstellungen.MeisterGeisterID;
 
             InitializeMenuPunkte();
-
-            _tabControlMain.SelectionChanged -= _tabControlMain_SelectionChanged;
 
             string[] tabs = Einstellungen.StartTabs.Split('#');
             foreach (string tab in tabs)
@@ -467,6 +466,11 @@ namespace MeisterGeister.View
                 Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), Environment.CurrentDirectory));
         }
 
+        /// <summary>
+        /// Speichert den letzten ToolTab-Index.
+        /// </summary>
+        private int _TabItemIndex = -1;
+
         private void _tabControlMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IsInitialized && IsLoaded)
@@ -480,9 +484,12 @@ namespace MeisterGeister.View
                         animation.Begin(this);
                         isPopOut = false;
                     }
+                    e.Handled = true;
+                    _tabControlMain.SelectedIndex = _TabItemIndex;
                 }
                 App.SaveAll();
             }
+            _TabItemIndex = _tabControlMain.SelectedIndex;
         }
 
         private void MenuItemWeb_Click(object sender, RoutedEventArgs e)

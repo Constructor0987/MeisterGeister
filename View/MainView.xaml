@@ -64,7 +64,7 @@
             </StatusBarItem>
         </StatusBar>
         <Grid>
-            <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" SelectionChanged="_tabControlMain_SelectionChanged" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" d:IsHidden="True">
+            <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" d:IsHidden="True">
                 <TabItem Name="_tabAdd" ToolTip="Tool öffnen...">
                     <TabItem.Header>
                         <Image Source="/Images/Icons/General/add.png" Stretch="Fill" Height="18" Width="18" />
