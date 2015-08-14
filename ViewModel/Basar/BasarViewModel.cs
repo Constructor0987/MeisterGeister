@@ -255,14 +255,23 @@ namespace MeisterGeister.ViewModel.Basar
         {
             _onGoToBugForum = new Base.CommandBase(GoToBugForum, null);
 
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-
             Init();
         }
 
         #endregion
 
         #region //---- INSTANZMETHODEN ----
+
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+        }
 
         public void Refresh()
         {
@@ -355,7 +364,7 @@ namespace MeisterGeister.ViewModel.Basar
 
         #region //---- EVENTS ----
 
-        void SelectedHeldChanged()
+        void SelectedHeldChanged(object sender, EventArgs e)
         {
             SelectedHeld = Global.SelectedHeld;
         }
