@@ -7,7 +7,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
-    public class ZauberViewModel : Base.ViewModelBase, Logic.IChangeListener
+    public class ZauberViewModel : Base.ViewModelBase
     {
         #region //---- COMMANDS ----
 
@@ -105,10 +105,6 @@ namespace MeisterGeister.ViewModel.Helden
         public ZauberViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
             : base(popup, confirm, showProbeDialog, showError)
         {
-            // EventHandler für SelectedHeld registrieren
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
-
             onDeleteZauber = new Base.CommandBase(DeleteZauber, null);
             onAddZauber = new Base.CommandBase(AddZauber, null);
             onOpenWiki = new Base.CommandBase(OpenWiki, null);
@@ -120,9 +116,18 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- INSTANZMETHODEN ----
 
-        public void Init()
+        public override void RegisterEvents()
         {
-
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            SelectedHeldChanged(this, new EventArgs());
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
         }
 
         public void NotifyRefresh()
@@ -190,23 +195,12 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("IsReadOnly");
         }
 
-        private void SelectedHeldChanged()
+        private void SelectedHeldChanged(object sender, EventArgs e)
         {
-            if (!ListenToChangeEvents)
-                return;
             NotifyRefresh();
         }
 
         #endregion
-
-        private bool listenToChangeEvents = true;
-
-        public bool ListenToChangeEvents
-        {
-            get { return listenToChangeEvents; }
-            set { listenToChangeEvents = value; SelectedHeldChanged(); }
-        }
-        
     }
 
 }

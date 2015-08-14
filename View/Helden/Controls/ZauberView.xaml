@@ -6,8 +6,8 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              x:Name="userControl"
              mc:Ignorable="d" DataContext="{x:Null}"
-             Loaded="ZauberLoaded" Unloaded="UserControl_Unloaded"
-             d:DesignHeight="299" d:DesignWidth="677">
+             d:DesignHeight="299" d:DesignWidth="677"
+             ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
     	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">

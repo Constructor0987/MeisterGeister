@@ -42,7 +42,8 @@ namespace MeisterGeister.View.Helden.Controls {
         /// Konstruktor
         /// </summary>
         public InventarView() {
-            InitializeComponent();            
+            InitializeComponent();
+            VM = new VM.InventarViewModel();
         }
 
         #endregion
@@ -80,27 +81,6 @@ namespace MeisterGeister.View.Helden.Controls {
                 default:
                     break;
             }
-        }
-
-        /// <summary>
-        /// Loaded-Event: init VM
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void InventarLoaded(object sender, System.Windows.RoutedEventArgs e) {
-            if (VM == null) {
-                VM = new VM.InventarViewModel();
-                VM.ListenToChangeEvents = IsVisible;
-            } else {
-                VM.ListenToChangeEvents = IsVisible;
-            }
-
-            VM.LoadDaten();           
-        }
-
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e) {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
         }
 
         #endregion

@@ -26,6 +26,7 @@ namespace MeisterGeister.View.Helden.Controls
         public AllgemeinView()
         {
             this.InitializeComponent();
+            VM = new VM.AllgemeinViewModel(ViewHelper.SelectImage);
         }
         #endregion
 
@@ -45,11 +46,6 @@ namespace MeisterGeister.View.Helden.Controls
 
         #region //EVENTS
         
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
         private void ImageWikiHeldenbrief_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (VM.SelectedHeld != null)
@@ -58,7 +54,7 @@ namespace MeisterGeister.View.Helden.Controls
 
         }
 
-        private void RefreshNotizentool(bool refreshRepräsentationen = true)
+        private void RefreshNotizen(object sender, EventArgs args)
         {
             if (VM.SelectedHeld == null || String.IsNullOrEmpty(VM.SelectedHeld.Notizen))
                 RTBNotiz.ParseTextToFlowDoument(string.Empty);
@@ -83,15 +79,21 @@ namespace MeisterGeister.View.Helden.Controls
             }
         }
 
-		//LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
+        //LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
         private void AllgemeinLoaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            VM = new VM.AllgemeinViewModel(ViewHelper.SelectImage);
-            VM.RefreshNotiz += (s, ev) => { RefreshNotizentool(); };
-			
-			            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
+            if (VM != null)
+            {
+                VM.RefreshNotiz += RefreshNotizen;
+                RefreshNotizen(null, null);
+            }
         }
         #endregion
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (VM != null)
+                VM.RefreshNotiz -= RefreshNotizen;
+        }
     }
 }

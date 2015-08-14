@@ -11,8 +11,6 @@ namespace MeisterGeister.ViewModel.Helden
 {
     public class ListeViewModel : Base.ViewModelBase
     {
-        private Held selectedHeld = new Held();
-        private bool hasChanges = false;
         private List<Model.Held> _heldListe;
 
         public ListeViewModel()
@@ -30,23 +28,30 @@ namespace MeisterGeister.ViewModel.Helden
         public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) :
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
-            if (Global.SelectedHeld != null)
-                selectedHeld = Global.SelectedHeld;
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             LoadDaten();
+        }
+
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
         }
 
         public Held SelectedHeld
         {
-            get { return selectedHeld; }
+            get { return Global.SelectedHeld; }
             set
             {
-                if (selectedHeld != null)
-                    selectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
-                selectedHeld = value;
+                if (Global.SelectedHeld != null)
+                    Global.SelectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
                 Global.SelectedHeld = value;
-                if (selectedHeld != null)
-                    selectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
+                if (Global.SelectedHeld != null)
+                    Global.SelectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
 
                 OnChanged("SelectedHeld");
             }
@@ -63,25 +68,6 @@ namespace MeisterGeister.ViewModel.Helden
             _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
-
-        // TODO: Werden diese Methoden noch gebrauch?
-        //private void SelectedHeldChanged()
-        //{
-        //    SelectedHeld = Global.SelectedHeld;
-        //    if (SelectedHeld != null)
-        //        SelectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
-        //}
-
-        //private void SelectedHeldChanging()
-        //{
-        //    if (Global.SelectedHeld != null)
-        //    {
-        //        if (hasChanges)
-        //            Global.ContextHeld.Update<Model.Held>(SelectedHeld);
-        //        hasChanges = false;
-        //        Global.SelectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
-        //    }
-        //}
 
         private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args)
         {

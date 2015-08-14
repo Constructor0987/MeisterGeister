@@ -7,7 +7,7 @@ using System.ComponentModel;
 using M = MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Helden {
-    public class AllgemeinViewModel : Base.ViewModelBase, Logic.IChangeListener {
+    public class AllgemeinViewModel : Base.ViewModelBase {
         #region //FELDER
         //EasyTypes
         private bool hasChanges = false;
@@ -35,39 +35,37 @@ namespace MeisterGeister.ViewModel.Helden {
 
         public AllgemeinViewModel()
         {
-            AttachEvents();
+            
         }
 
         public AllgemeinViewModel(Func<string> selectImage)
         {
             this.selectImage = selectImage;
-
-            AttachEvents();
         }
 
         #endregion
 
         #region //METHODEN
 
-        private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args) {
-            if (new string[] { "Name", "BildLink", "Rasse", "Kultur", "Profession", "AktiveHeldengruppe" }.Contains(args.PropertyName))
-                hasChanges = true;
-        }
-
-        private void AttachEvents()
+        public override void RegisterEvents()
         {
+            base.RegisterEvents();
             Global.HeldSelectionChanged += SelectedHeldChanged;
             Global.HeldSelectionChanging += SelectedHeldChanging;
             MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
-            SelectedHeldChanged(null, null);
+            SelectedHeldChanged(this, new EventArgs());
         }
-
-        private void DetachEvents()
+        public override void UnregisterEvents()
         {
-            SelectedHeldChanging(null, null);
+            base.UnregisterEvents();
             Global.HeldSelectionChanged -= SelectedHeldChanged;
             Global.HeldSelectionChanging -= SelectedHeldChanging;
             MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
+        }
+
+        private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args) {
+            if (new string[] { "Name", "BildLink", "Rasse", "Kultur", "Profession", "AktiveHeldengruppe" }.Contains(args.PropertyName))
+                hasChanges = true;
         }
 
         #endregion
@@ -127,20 +125,6 @@ namespace MeisterGeister.ViewModel.Helden {
             }
         }
         #endregion
-
-        private bool listenToChangeEvents = true;
-
-        public bool ListenToChangeEvents
-        {
-            get { return listenToChangeEvents; }
-            set { 
-                listenToChangeEvents = value;
-                if (listenToChangeEvents)
-                    AttachEvents();
-                else
-                    DetachEvents();
-            }
-        }
         
     }
 }

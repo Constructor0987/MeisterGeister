@@ -6,8 +6,10 @@
 	mc:Ignorable="d"
 	x:Class="MeisterGeister.View.Helden.Controls.ListeView"
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Helden"
+    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
 	x:Name="UserControl" DataContext="{x:Null}"
-	d:DesignWidth="190" d:DesignHeight="561" Loaded="HeldelLiseLoaded">
+	d:DesignWidth="190" d:DesignHeight="561"
+    ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
 
         <Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">

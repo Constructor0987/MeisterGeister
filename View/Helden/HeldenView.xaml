@@ -11,7 +11,8 @@
             x:Name="_heldenControl1" 
             mc:Ignorable="d"
             d:DesignHeight="571"
-            d:DesignWidth="1027">
+            d:DesignWidth="1027"
+            ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
         <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
             <Style.Triggers>

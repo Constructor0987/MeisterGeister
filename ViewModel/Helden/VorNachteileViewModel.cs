@@ -7,7 +7,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
-    public class VorNachteileViewModel : Base.ViewModelBase, Logic.IChangeListener
+    public class VorNachteileViewModel : Base.ViewModelBase
     {
         #region //---- COMMANDS ----
 
@@ -99,10 +99,6 @@ namespace MeisterGeister.ViewModel.Helden
 
         public VorNachteileViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError) : base(confirm, showError)
         {
-            // EventHandler für SelectedHeld registrieren
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
-
             onDeleteVorNachteil = new Base.CommandBase(DeleteVorNachteil, null);
             onAddVorteil = new Base.CommandBase(AddVorteil, null);
             onAddNachteil = new Base.CommandBase(AddNachteil, null);
@@ -113,9 +109,18 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- INSTANZMETHODEN ----
 
-        public void Init()
+        public override void RegisterEvents()
         {
-            
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            SelectedHeldChanged(this, new EventArgs());
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
         }
 
         public void NotifyRefresh()
@@ -176,23 +181,12 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("IsReadOnly");
         }
 
-        private void SelectedHeldChanged()
+        private void SelectedHeldChanged(object sender, EventArgs e)
         {
-            if (!ListenToChangeEvents)
-                return;
             NotifyRefresh();
         }
 
         #endregion
-
-        private bool listenToChangeEvents = true;
-
-        public bool ListenToChangeEvents
-        {
-            get { return listenToChangeEvents; }
-            set { listenToChangeEvents = value; SelectedHeldChanged(); }
-        }
-        
     }
     
 }

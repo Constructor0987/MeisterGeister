@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Helden {
-    public class TalentViewModel : Base.ViewModelBase, Logic.IChangeListener {
+    public class TalentViewModel : Base.ViewModelBase {
         #region //FELDER
         private bool listenToChangeEvents = true;
         public Base.CommandBase onAddTalent;
@@ -34,10 +34,6 @@ namespace MeisterGeister.ViewModel.Helden {
         #endregion
         #region //EIGENSCHAFTEN
         //Logic
-        public bool ListenToChangeEvents {
-            get { return listenToChangeEvents; }
-            set { listenToChangeEvents = value; SelectedHeldChanged(); }
-        }
         private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
@@ -133,18 +129,24 @@ namespace MeisterGeister.ViewModel.Helden {
             onOpenWiki = new Base.CommandBase(OpenWiki, null);
             onWürfelProbe = new Base.CommandBase(WürfelProbe, null);
             onWürfelGruppenProbe = new Base.CommandBase(WürfelGruppenProbe, null);
-
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
-            SelectedHeld = Global.SelectedHeld;
         }
         #endregion
         #region //METHODEN
-        public void Init() {
-            if (Global.SelectedHeld != null) {
-                SelectedHeldChanged();
-            }
+
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            SelectedHeldChanged(this, new EventArgs());
         }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
+        }
+        
         private void ReInit() {
             _kampfTalentListe.Clear();
             _koerperTalentListe.Clear();
@@ -166,10 +168,7 @@ namespace MeisterGeister.ViewModel.Helden {
             OnChanged("IsReadOnly");
         }
 
-        void SelectedHeldChanged() {
-            if (!ListenToChangeEvents)
-                return;
-
+        void SelectedHeldChanged(object sender, EventArgs args) {
             SelectedHeld = Global.SelectedHeld;
             ReInit();
             if (SelectedHeld != null) 
@@ -288,7 +287,7 @@ namespace MeisterGeister.ViewModel.Helden {
             if (TalentAuswahl != null && SelectedHeld != null && !IsReadOnly)
             {
                 SelectedHeld.AddTalent(TalentAuswahl, 0);
-                SelectedHeldChanged();
+                SelectedHeldChanged(this, new EventArgs());
                 TalentauswahlListe.Remove(TalentAuswahl);
                 TalentAuswahl = null;
             }
@@ -304,7 +303,7 @@ namespace MeisterGeister.ViewModel.Helden {
                 && Confirm("Talent löschen", String.Format("Soll das Talent '{0}' wirklich vom Helden entfernt werden?", h.Talent.Talentname)))
             {
                 SelectedHeld.DeleteTalent(h);
-                SelectedHeldChanged();
+                SelectedHeldChanged(this, new EventArgs());
                 TalentauswahlListe.Add(h.Talent);
                 TalentAuswahl = null;
             }

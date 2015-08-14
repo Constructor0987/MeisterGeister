@@ -69,14 +69,23 @@ namespace MeisterGeister.ViewModel.Helden
         public HeldenViewModel()
         {
             SelectedTabIndex = MeisterGeister.Logic.Einstellung.Einstellungen.HeldenSelectedTab;
-
-            // EventHandler für SelectedHeld registrieren
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
         }
 
         #endregion
 
         #region //---- INSTANZMETHODEN ----
+
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+            SelectedHeldChanged(this, new EventArgs());
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+        }
 
         public void Init()
         {
@@ -98,7 +107,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- EVENTS ----
 
-        private void SelectedHeldChanged()
+        private void SelectedHeldChanged(object sender, EventArgs e)
         {
             NotifyRefresh();
         }

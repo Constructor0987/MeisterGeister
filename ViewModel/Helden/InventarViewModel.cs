@@ -13,7 +13,8 @@ using Service = MeisterGeister.Model.Service;
 using E = MeisterGeister.Logic.Einstellung.Einstellungen;
 
 namespace MeisterGeister.ViewModel.Inventar {
-    public class InventarViewModel : Base.ViewModelBase, MeisterGeister.ViewModel.Helden.Logic.IChangeListener {
+    public class InventarViewModel : Base.ViewModelBase
+    {
 
         #region //FELDER
 
@@ -24,7 +25,6 @@ namespace MeisterGeister.ViewModel.Inventar {
         const string FILTERDEAKTIVIEREN = " Alle ";
         bool IsLoaded = false;
         private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
-        private bool listenToChangeEvents = true;
 
         //UI
         private Visibility isNahkampfwaffevorhanden = Visibility.Hidden;
@@ -83,11 +83,6 @@ namespace MeisterGeister.ViewModel.Inventar {
         #endregion
 
         #region //EIGENSCHAFTEN
-        //Intern
-        public bool ListenToChangeEvents {
-            get { return listenToChangeEvents; }
-            set { listenToChangeEvents = value; SelectedHeldChanged(); }
-        }
 
         //UI      
         public bool IsReadOnly {
@@ -500,11 +495,6 @@ namespace MeisterGeister.ViewModel.Inventar {
             onAddSchild = new Base.CommandBase(AddSchild, null);
             onAddRuestung = new Base.CommandBase(AddRuestung, null);
 
-            //EventListener
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
-            E.EinstellungChanged += EinstellungenChangedHandler;
-
             SelectedFilterIndex = 0;
 
             if (IsLoaded == false) {
@@ -514,6 +504,23 @@ namespace MeisterGeister.ViewModel.Inventar {
         #endregion
 
         #region //Public Methoden
+
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            E.EinstellungChanged += EinstellungenChangedHandler;
+            SelectedHeldChanged(this, new EventArgs());
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
+            E.EinstellungChanged -= EinstellungenChangedHandler;
+        }
+
         public void LoadDaten() {
             if (IsLoaded == false) {
                 //Nahkampf
@@ -702,10 +709,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                     break;
             }
         }
-        void SelectedHeldChanged() {
-            //FIXME Hack
-            if (!ListenToChangeEvents)
-                return;
+        void SelectedHeldChanged(object sender, EventArgs e) {
 
             SelectedHeld = Global.SelectedHeld;
             if (IsLoaded == false) {
@@ -717,7 +721,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             if (SelectedHeld != null) {
                 foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Waffe != null).OrderBy(i => i.Ausrüstung.Name)) {
                     NahkampfItem value = new NahkampfItem(item, item.Ausrüstung.Waffe);
-                    value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
+                    value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
                     HeldNahkampfWaffeImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
@@ -739,7 +743,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Schild != null).OrderBy(i => i.Ausrüstung.Name))
                 {
                     SchildItem value = new SchildItem(item, item.Ausrüstung.Schild);
-                    value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
+                    value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
                     HeldSchildImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
@@ -761,7 +765,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Fernkampfwaffe != null).OrderBy(i => i.Ausrüstung.Name))
                 {
                     FernkampfItem value = new FernkampfItem(item, item.Ausrüstung.Fernkampfwaffe);
-                    value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
+                    value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
                     HeldFernkampfwaffeImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
@@ -782,7 +786,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Rüstung != null).OrderBy(i => i.Ausrüstung.Name))
                 {
                     RuestungItem value = new RuestungItem(item, item.Ausrüstung.Rüstung);
-                    value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
+                    value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
                     HeldRuestungImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
@@ -809,7 +813,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Inventar != null).OrderBy(i => i.Inventar.Name))
                 {
                     InventarItem value = new InventarItem(item, item.Inventar);
-                    value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
+                    value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
                     HeldSonstigesImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||

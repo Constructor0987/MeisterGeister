@@ -7,7 +7,8 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              x:Name="userControl"
              mc:Ignorable="d" DataContext="{x:Null}"
-             d:DesignHeight="299" d:DesignWidth="677" Loaded="VorUndNachteileLoaded">
+             d:DesignHeight="299" d:DesignWidth="677"
+             ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
     	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <!-- Vor-/Nachteile -->

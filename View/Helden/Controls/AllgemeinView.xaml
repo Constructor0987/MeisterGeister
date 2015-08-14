@@ -10,8 +10,10 @@
     mc:Ignorable="d"
 	d:DesignWidth="807" 
     d:DesignHeight="529.04" DataContext="{x:Null}"
-    Loaded="AllgemeinLoaded" Unloaded="UserControl_Unloaded">    
-	<UserControl.Resources>        
+    Loaded="AllgemeinLoaded" 
+    Unloaded="UserControl_Unloaded"
+    MeisterGeister_View_General:UIElementBehavior.ViewModel="{Binding}">
+    <UserControl.Resources>        
 		<General:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <General:ImagePathConverter x:Key="ImagePathConverter" />
 	</UserControl.Resources>

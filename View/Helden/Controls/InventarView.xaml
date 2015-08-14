@@ -11,10 +11,9 @@
     x:Name="userControl"
     d:DesignHeight="500" 
     d:DesignWidth="790" 
-    Loaded="InventarLoaded" 
-    Unloaded="UserControl_Unloaded"
     Background="Transparent" DataContext="{x:Null}"
-	d:DataContext="{d:DesignData /SampleData/InventarViewModelSampleData1.xaml}">
+	d:DataContext="{d:DesignData /SampleData/InventarViewModelSampleData1.xaml}"
+    ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <!--NahkampfTemplate-->

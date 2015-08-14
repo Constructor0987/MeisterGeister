@@ -24,7 +24,8 @@ namespace MeisterGeister.View.Helden.Controls
     {
         public VorNachteileView()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            VM = new VM.VorNachteileViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
         }
 
         /// <summary>
@@ -41,12 +42,6 @@ namespace MeisterGeister.View.Helden.Controls
             set { DataContext = value; }
         }
         
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
-
         private void ContextMenuVorNachteile_Opened(object sender, RoutedEventArgs e)
         {
             if (_listBoxHeldVorNachteile.SelectedItem == null)
@@ -60,18 +55,5 @@ namespace MeisterGeister.View.Helden.Controls
                 _menuItemVorNachteilWiki.IsEnabled = true;
             }
         }
-
-		//LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
-        private void VorUndNachteileLoaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            VM = new VM.VorNachteileViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
-            try {
-                VM.Init();
-            } catch (Exception) {
-            }
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
-
     }
 }

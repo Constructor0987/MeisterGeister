@@ -22,6 +22,12 @@ namespace MeisterGeister.View.Helden.Controls {
     public partial class ListeView : System.Windows.Controls.UserControl {
         public ListeView() {
             this.InitializeComponent();
+
+#if !(DEBUG)
+            _buttonExportDemo.Visibility = System.Windows.Visibility.Collapsed;
+#endif
+
+            VM = new VM.ListeViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
         }
 
         /// <summary>
@@ -86,15 +92,6 @@ namespace MeisterGeister.View.Helden.Controls {
         private void ListBoxHelden_MouseDown(object sender, MouseButtonEventArgs e) {
             MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             _listBoxHelden.SelectedItem = null;
-        }
-
-        //LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
-        private void HeldelLiseLoaded(object sender, System.Windows.RoutedEventArgs e) {
-#if !(DEBUG)
-            _buttonExportDemo.Visibility = System.Windows.Visibility.Collapsed;
-#endif
-            //VM an View Registrieren			
-            VM = new VM.ListeViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
         }
 
     }

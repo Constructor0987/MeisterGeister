@@ -4,13 +4,12 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"	
-    xmlns:MGControl="clr-namespace:MeisterGeister.View.General" 		
-    Loaded="TalentLoaded" 
-	Unloaded="UserControl_Unloaded"
+    xmlns:MGControl="clr-namespace:MeisterGeister.View.General"
     x:Name="userControl"
 	mc:Ignorable="d" DataContext="{x:Null}"
 	d:DesignWidth="810"
-    d:DesignHeight="700">
+    d:DesignHeight="700"
+    MGControl:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
     	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">

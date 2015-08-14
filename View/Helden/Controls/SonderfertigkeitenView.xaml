@@ -7,8 +7,8 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              x:Name="userControl"
              mc:Ignorable="d"  DataContext="{x:Null}"
-             Loaded="SonderfertigkeitLoaded" Unloaded="UserControl_Unloaded"
-             d:DesignHeight="299" d:DesignWidth="677">
+             d:DesignHeight="299" d:DesignWidth="677"
+             ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
     	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <CollectionViewSource x:Key="SonderfertigkeitListeView" Source="{Binding SonderfertigkeitListe}">

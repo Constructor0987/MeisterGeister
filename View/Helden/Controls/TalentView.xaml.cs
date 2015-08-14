@@ -25,7 +25,9 @@ namespace MeisterGeister.View.Helden.Controls {
         #region // ---- KONSTRUKTOR ----
 
         public TalentView() {
-            this.InitializeComponent();            
+            this.InitializeComponent();
+
+            VM = new VM.TalentViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowProbeDialog, View.General.ViewHelper.ShowError);
         }
 
         #endregion
@@ -49,11 +51,6 @@ namespace MeisterGeister.View.Helden.Controls {
         #endregion
 
         #region // ---- EVENTS ----
-        
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e) {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
         
         private void ContextMenuTalent_Opened(object sender, RoutedEventArgs e)
         {
@@ -122,17 +119,6 @@ namespace MeisterGeister.View.Helden.Controls {
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
-        }
-
-        //LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
-        private void TalentLoaded(object sender, System.Windows.RoutedEventArgs e) {
-            VM = new VM.TalentViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowProbeDialog, View.General.ViewHelper.ShowError);
-            try {
-                VM.Init();
-            } catch (Exception) {
-            }
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
         }
 
         #endregion // ---- EVENTS ----

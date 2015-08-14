@@ -6,7 +6,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
-    public class EigenschaftenViewModel : Base.ViewModelBase, Logic.IChangeListener
+    public class EigenschaftenViewModel : Base.ViewModelBase
     {
         #region //---- COMMANDS ----
 
@@ -53,10 +53,6 @@ namespace MeisterGeister.ViewModel.Helden
 
         public EigenschaftenViewModel()
         {
-            // EventHandler für SelectedHeld registrieren
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
-
             onMaxEnergie = new Base.CommandBase(SetEnergieMax, null);
         }
 
@@ -64,9 +60,18 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- INSTANZMETHODEN ----
 
-        public void Init()
+        public override void RegisterEvents()
         {
-            
+            base.RegisterEvents();
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            SelectedHeldChanged(this, new EventArgs());
+        }
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
         }
 
         public void NotifyRefresh()
@@ -109,23 +114,12 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("IsReadOnly");
         }
 
-        private void SelectedHeldChanged()
+        private void SelectedHeldChanged(object sender, EventArgs args)
         {
-            if (!ListenToChangeEvents)
-                return;
             NotifyRefresh();
         }
 
         #endregion
-
-        private bool listenToChangeEvents = true;
-
-        public bool ListenToChangeEvents
-        {
-            get { return listenToChangeEvents; }
-            set { listenToChangeEvents = value; SelectedHeldChanged(); }
-        }
-        
     }
     
 }
