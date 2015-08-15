@@ -245,6 +245,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             get
             {
+                if (IsSpecialDay)
+                    return null;
                 int monat = Month;
                 if (monat <= 0 || MonthNames == null || monat > MonthNames.Count)
                     return null;
@@ -269,6 +271,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             {
                 if (DaysPerMonth == 0)
                     return YearDay;
+                if (IsSpecialDay)
+                    return 0;
                 return (int)MathUtil.modulo(YearDay, DaysPerMonth, 1);
             }
             set { }
@@ -279,7 +283,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /// </summary>
         public virtual int Week
         {
-            get { return 0; }
+            get {
+                if (DaysPerWeek == 0)
+                    return 0;
+                return (int)MathUtil.divisio(Day, DaysPerWeek) + 1; 
+            }
             set { }
         }
 
@@ -290,6 +298,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             get
             {
+                if (IsSpecialDay)
+                    return null;
                 int week = Week;
                 if (week <= 0 || WeekNames == null || week > WeekNames.Count)
                     return null;
@@ -310,7 +320,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /// </summary>
         public virtual int WeekDay
         {
-            get { return (int)MathUtil.modulo(DaysSinceYear0, DaysPerWeek, 1); }
+            get {
+                if (IsSpecialDay)
+                    return 0;
+                return (int)MathUtil.modulo(DaysSinceYear0, DaysPerWeek, 1); 
+            }
             set { }
         }
 
@@ -321,6 +335,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             get
             {
+                if (IsSpecialDay)
+                    return null;
                 int weekday = WeekDay;
                 if (weekday <= 0 || WeekDayNames == null || weekday > WeekDayNames.Count)
                     return null;

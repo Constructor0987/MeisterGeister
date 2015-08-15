@@ -47,6 +47,16 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         //    return year - 1;
         //}
 
+        public override string SpecialDayName
+        {
+            get
+            {
+                if (YearDay == DaysPerYear)
+                    return "Zhhszr'G";
+                return null;
+            }
+        }
+
         public override IList<string> WeekDayNames
         {
             get { return weekdayNames; }
@@ -54,8 +64,23 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public override int WeekDay
         {
-            get { return (int)MathUtil.modulo(Day, DaysPerWeek, 1); }
+            get {
+                if(IsSpecialDay)
+                    return 0;
+                return (int)MathUtil.modulo(Day, DaysPerWeek, 1); 
+            }
             set { }
+        }
+
+        public override int Month
+        {
+            get
+            {
+                if (IsSpecialDay)
+                    return 0;
+                return base.Month;
+            }
+            set { base.Month = value; }
         }
 
         public override IList<string> YearNames

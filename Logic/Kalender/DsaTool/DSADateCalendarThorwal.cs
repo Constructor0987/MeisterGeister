@@ -41,6 +41,12 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return getYearString(Year, "JL", "v.JL");
         }
 
+        public override int Week
+        {
+            get { return 0; }
+            set { }
+        }
+
         public static readonly String[] monthNames = new String[] {
             "Midsonnmond", 
             "Kornmond", 

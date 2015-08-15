@@ -11,7 +11,8 @@ namespace MeisterGeister.ViewModel.Kalender
     {
         public DatumViewModel(DSADateTime datum, DSADateCalendar kalender = null)
         {
-            Kalender = kalender;
+            if(kalender != null)
+                Kalender = kalender;
             Datum = datum;
         }
 
@@ -33,10 +34,14 @@ namespace MeisterGeister.ViewModel.Kalender
         private DSADateCalendar kalender = new DSADateCalendarTwelve();
         public DSADateCalendar Kalender
         {
-            get { return kalender; }
+            get {
+                if (kalender == null)
+                    kalender = new DSADateCalendarTwelve();
+                return kalender; 
+            }
             set
             {
-                if(value == null)
+                if (value == null)
                     value = new DSADateCalendarTwelve();
                 Set(ref kalender, value);
                 Invalidate();
@@ -60,7 +65,7 @@ namespace MeisterGeister.ViewModel.Kalender
             get {
                 if(text != null)
                     return text;
-                if(Datum == null || Kalender == null)
+                if (Datum == null || Kalender == null)
                     return text = null;
                 Kalender.Date = Datum;
                 return text = Kalender.getHeadingText();

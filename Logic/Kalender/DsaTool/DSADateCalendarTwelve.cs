@@ -76,6 +76,17 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             get { return monthNames; }
         }
 
+        /// <summary>
+        /// Week in Year
+        /// </summary>
+        public override int Week
+        {
+            get {
+                return (YearDay - WeekDay + 10) / DaysPerWeek;
+            }
+            set { }
+        }
+
         /**
          * Gets the calendar for the output of the date.
          */

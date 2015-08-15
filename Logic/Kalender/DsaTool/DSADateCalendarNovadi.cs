@@ -38,19 +38,18 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public override int Day
         {
-            get { return (int)MathUtil.modulo(YearDay, DaysPerMonth + 1, 1); }
+            get
+            {
+                if (IsSpecialDay)
+                    return 0;
+                return (int)MathUtil.modulo(YearDay, DaysPerMonth + 1, 1); 
+            }
             set { }
         }
 
         public override int WeekDay
         {
             get { return (int)MathUtil.modulo(Day, DaysPerWeek, 1); }
-            set { }
-        }
-
-        public override int Week
-        {
-            get { return (int)MathUtil.divisio(Day, DaysPerWeek) + 1; }
             set { }
         }
 

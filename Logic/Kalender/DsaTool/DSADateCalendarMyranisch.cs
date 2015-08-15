@@ -28,6 +28,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             get
             {
+                if (IsSpecialDay)
+                    return 0;
                 int jday = YearDay;
                 jday -= getSondertage(jday);
                 return (int)MathUtil.modulo(jday, DaysPerMonth, 1);
@@ -36,16 +38,12 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             {}
         }
 
-        public override int Week
-        {
-            get { return (int)MathUtil.divisio(Day, DaysPerWeek) + 1; }
-            set {}
-        }
-
         public override int WeekDay
         {
             get
             {
+                if (IsSpecialDay)
+                    return 0;
                 return (int)MathUtil.modulo(Day, DaysPerWeek, 1);
             }
             set {}

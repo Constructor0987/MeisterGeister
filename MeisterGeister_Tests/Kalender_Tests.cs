@@ -38,7 +38,7 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
-        public void DatumKonvertierenTest()
+        public void SetDateTest()
         {
             int i1, i2;
             DSADateCalendarTwelve c12 = new DSADateCalendarTwelve();
