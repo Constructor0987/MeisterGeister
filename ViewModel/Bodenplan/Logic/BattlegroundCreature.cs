@@ -244,8 +244,12 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             if (SightAreaGeometryData.Figures.Count == 0) return;
 
-            double b = Math.Cos(34*Math.PI/180) * _sightAreaLength;
-            double a = Math.Sin(34*Math.PI/180) * _sightAreaLength;
+
+            double d = Math.Cos(45 * Math.PI / 180) * _sightAreaLength;
+            double c = Math.Sin(45 * Math.PI / 180) * _sightAreaLength;
+
+            double b = Math.Cos(34 * Math.PI / 180) * _sightAreaLength;
+            double a = Math.Sin(34 * Math.PI / 180) * _sightAreaLength;
 
             if (SightLineSektor == 0)
             {
@@ -283,35 +287,99 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 + b),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
-            
-
-            
+            else if (SightLineSektor == 6)
+            {
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 - _sightAreaLength);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 + _sightAreaLength),
+                    new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
+            }
+            else if (SightLineSektor == 7)
+            {
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 - _sightAreaLength);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 + _sightAreaLength),
+                    new Size(80, 80), 0, true, SweepDirection.Counterclockwise, true);
+            }
+            else if (SightLineSektor == 8)
+            {
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 - d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 + d),
+                    new Size(80, 80), 0, true, SweepDirection.Counterclockwise, true);
+            }
+            else if (SightLineSektor == 9)
+            {
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 + d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 - d),
+                    new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
+            }
+            else if (SightLineSektor == 10)
+            {
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 - d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 + d),
+                    new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
+            }
+            if (SightLineSektor == 11)
+            {
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 + d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 - d),
+                    new Size(80, 80), 0, true, SweepDirection.Counterclockwise, true);
+            }
         }
 
-        public void CalculateNewSightLineSektor(Point currentMousePos)
+        public void CalculateNewSightLineSektor(Point currentMousePos, bool rectGrid = false)
         {
             // How the calculations and Sektores are designed...
-
-            /*    -146°   146°
-             *        \ 4 /
-             *       3 \ / 5
-             * -90° ---------  90°
-             *       2 / \ 0
-             *        / 1 \
-             *    -34°    34°
-             */ 
-
             double _a = currentMousePos.X - (CreatureX + CreatureWidth / 2);
             double _b = currentMousePos.Y - (CreatureY + CreatureHeight / 2);
             double _alpha = Math.Atan2(_a, _b) * (180 / Math.PI);
 
-            if (_alpha <= 146 && _alpha > 90) SightLineSektor = 5;
-            else if (_alpha <= 90 && _alpha > 34) SightLineSektor = 0;
-            else if (_alpha <= 34 && _alpha > -34) SightLineSektor = 1;
-            else if (_alpha <= -34 && _alpha > -90) SightLineSektor = 2;
-            else if (_alpha <= -90 && _alpha > -146) SightLineSektor = 3;
-            else SightLineSektor = 4;
-            
+            if (!rectGrid)
+            {
+                /*    -146°   146°
+                 *        \ 4 /
+                 *       3 \ / 5
+                 * -90° ---------  90°
+                 *       2 / \ 0
+                 *        / 1 \
+                 *    -34°    34°
+                 */
+
+                if (_alpha <= 146 && _alpha > 90) SightLineSektor = 5;
+                else if (_alpha <= 90 && _alpha > 34) SightLineSektor = 0;
+                else if (_alpha <= 34 && _alpha > -34) SightLineSektor = 1;
+                else if (_alpha <= -34 && _alpha > -90) SightLineSektor = 2;
+                else if (_alpha <= -90 && _alpha > -146) SightLineSektor = 3;
+                else SightLineSektor = 4;
+            }
+            else
+            {
+
+                /*         -157.5   157.5
+                 *       ------|-----|------
+                 *       |     |     |     |
+                 *       |  9  |  4  |  10 |
+                 *       |     |     |     |
+                 *-112.5 ------------------- 112.5
+                 *       |     |     |     |
+                 *       |  7  |  X  |  6  |
+                 *       |     |     |     |
+                 * -67.5 ------------------- 67.5
+                 *       |     |     |     |
+                 *       |  8  |  1  |  11 |
+                 *       |     |     |     |
+                 *       ------|-----|------
+                 *          -22.5   22.5 
+                 */
+
+                if (_alpha <= 157.5 && _alpha > 112.5) SightLineSektor = 10;
+                else if (_alpha <= 112.5 && _alpha > 67.5) SightLineSektor = 6;
+                else if (_alpha <= 67.5 && _alpha > 22.5) SightLineSektor = 11;
+                else if (_alpha <= 22.5 && _alpha > -22.5) SightLineSektor = 1;
+                else if (_alpha <= -22.5 && _alpha > -67.5) SightLineSektor = 8;
+                else if (_alpha <= -67.5 && _alpha > -112.5) SightLineSektor = 7;
+                else if (_alpha <= -112.5 && _alpha > -157.5) SightLineSektor = 9;
+                else SightLineSektor = 4;
+
+            }
             CalculateSightArea(); //update sightarea
         }
 

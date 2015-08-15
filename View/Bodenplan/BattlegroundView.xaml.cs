@@ -129,7 +129,7 @@ namespace MeisterGeister.View.Bodenplan
 
                 if (vm.SelectedObject is ViewModel.Kampf.Logic.Wesen)
                 {
-                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
+                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y), checkBox5_Grid.IsChecked.Value);
                 }
                 else if (vm.SelectedObject is ImageObject)
                 {
@@ -414,6 +414,14 @@ namespace MeisterGeister.View.Bodenplan
             }
             AddPictureButtons(); //reload new pictures
             
+        }
+
+        private void checkBox5_Grid_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBox5_Grid.IsChecked.Value)
+                VM.TilePathData = BattlegroundUtilities.RechteckCellTile(100); //evtl in den setter rein?
+            else
+                VM.TilePathData = BattlegroundUtilities.HexCellTile(100); //evtl in den setter rein?
         }
 
         private void Button_Reset_Click(object sender, RoutedEventArgs e)

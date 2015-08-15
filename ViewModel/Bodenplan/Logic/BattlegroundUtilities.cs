@@ -101,6 +101,88 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             return hexPathGeometry;
         }
 
+        public static PathGeometry RechteckCellTile(double hexSideLength)
+        {
+            double s = hexSideLength;
+
+            double hx = s + 2 * s + s;
+            double hy = s + 2 * s + s;
+
+            var p1 = new Point(s, s);
+            var p2 = new Point(3 * s, s);
+            var p3 = new Point(3 * s, 3 * s);
+            var p4 = new Point(s, 3 * s);
+            var p5 = new Point(s, 0);
+            var p6 = new Point(0, s);
+            var p7 = new Point(3 * s, 0);
+            var p8 = new Point(4 * s, s);
+            var p9 = new Point(0, 3 * s);
+            var p10 = new Point(s, 4 * s);
+            var p11 = new Point(4 * s, 3 * s);
+            var p12 = new Point(3 * s, 4 * s);
+
+            PathFigure hexPathFigure1 = new PathFigure();
+            hexPathFigure1.StartPoint = p1;
+            PathSegmentCollection hexPathSegementCollection1 = new PathSegmentCollection();
+            hexPathSegementCollection1.Add(new LineSegment(p2, true));
+            hexPathSegementCollection1.Add(new LineSegment(p3, true));
+            hexPathSegementCollection1.Add(new LineSegment(p4, true));
+            hexPathSegementCollection1.Add(new LineSegment(p1, true));
+
+            PathFigure hexPathFigure2 = new PathFigure();
+            hexPathFigure2.StartPoint = p6;
+            PathSegmentCollection hexPathSegementCollection2 = new PathSegmentCollection();
+            hexPathSegementCollection2.Add(new LineSegment(p1, true));
+            hexPathSegementCollection2.Add(new LineSegment(p5, true));
+
+            PathFigure hexPathFigure3 = new PathFigure();
+            hexPathFigure3.StartPoint = p7;
+            PathSegmentCollection hexPathSegementCollection3 = new PathSegmentCollection();
+            hexPathSegementCollection3.Add(new LineSegment(p2, true));
+            hexPathSegementCollection3.Add(new LineSegment(p8, true));
+
+            PathFigure hexPathFigure4 = new PathFigure();
+            hexPathFigure4.StartPoint = p9;
+            PathSegmentCollection hexPathSegementCollection4 = new PathSegmentCollection();
+            hexPathSegementCollection4.Add(new LineSegment(p4, true));
+            hexPathSegementCollection4.Add(new LineSegment(p10, true));
+
+            PathFigure hexPathFigure5 = new PathFigure();
+            hexPathFigure5.StartPoint = p12;
+            PathSegmentCollection hexPathSegementCollection5 = new PathSegmentCollection();
+            hexPathSegementCollection5.Add(new LineSegment(p3, true));
+            hexPathSegementCollection5.Add(new LineSegment(p11, true));
+
+            hexPathFigure1.Segments = hexPathSegementCollection1;
+            hexPathFigure2.Segments = hexPathSegementCollection2;
+            hexPathFigure3.Segments = hexPathSegementCollection3;
+            hexPathFigure4.Segments = hexPathSegementCollection4;
+            hexPathFigure5.Segments = hexPathSegementCollection5;
+
+            PathFigureCollection hexFigureCollection = new PathFigureCollection();
+            hexFigureCollection.Add(hexPathFigure1);
+            hexFigureCollection.Add(hexPathFigure2);
+            hexFigureCollection.Add(hexPathFigure3);
+            hexFigureCollection.Add(hexPathFigure4);
+            hexFigureCollection.Add(hexPathFigure5);
+
+            PathGeometry hexPathGeometry = new PathGeometry();
+            hexPathGeometry.Figures = hexFigureCollection;
+
+            Path hexPath = new Path();
+            hexPath.Stroke = Brushes.DarkGray;
+            hexPath.StrokeThickness = 1;
+
+            var doublecollection = new DoubleCollection();
+            doublecollection.Add(5);
+            doublecollection.Add(3);
+
+            hexPath.StrokeDashArray = doublecollection;
+            hexPath.Data = hexPathGeometry;
+
+            return hexPathGeometry;
+        }
+
         private static double DegreeToRadian(double angle)
         {
             return Math.PI * angle / 180.0;

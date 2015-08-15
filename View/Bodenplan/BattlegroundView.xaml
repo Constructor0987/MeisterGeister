@@ -39,7 +39,8 @@
                             </Grid>
                         </Border>
                         <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,17,0,0" Name="checkBox4" VerticalAlignment="Top" Width="108" />
-                        <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="703,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
+                        <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="683,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
+                        <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="RechteckRaster" Height="16" HorizontalAlignment="Left" Margin="683,27,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" Click="checkBox5_Grid_Click" />
                         <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="1048,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
                             <Grid Margin="0,0,9,0">
                                 <Button Content="Speichern" Width="75" Margin="10,35,0,0" Height="25" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
@@ -307,6 +308,7 @@
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>
+                
                 <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
         </local:DragScrollViewer> -->
             </wpfxc:ZoomControl>
