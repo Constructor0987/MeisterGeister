@@ -1979,7 +1979,7 @@
     <Resource Include="Images\Icons\schild_gestrichen.png" />
     <Resource Include="Images\Icons\nahkampf_03_gestrichen.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0082.sql" />
-    <Resource Include="Daten\Updateskripte\InsertGegner.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateGegner.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0083.sql" />
     <Resource Include="Images\Logos\Uhrwerk_Icon.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0084.sql" />
@@ -2029,6 +2029,7 @@
     <Resource Include="Images\Icons\Elemente\Luft.png" />
     <Resource Include="Images\Icons\Elemente\Wasser.png" />
     <Resource Include="Images\Icons\pflanzenschriftrolle.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0104.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

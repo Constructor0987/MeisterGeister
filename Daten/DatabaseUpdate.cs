@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 102;
+        public const int DatenbankVersionAktuell = 103;
 
         private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
@@ -171,9 +171,9 @@ namespace MeisterGeister.Daten
                 transaction = connection.BeginTransaction();
 
                 // lies die Insert-Befehle aus der Resourcen-Datei
-                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/InsertGegner.sql", UriKind.Relative)).Stream, Encoding.UTF8);
+                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/UpdateGegner.sql", UriKind.Relative)).Stream, Encoding.UTF8);
                 string inserts = reader.ReadToEnd();
-                ExecuteSqlCommands(inserts, "InsertGegner", connection, transaction, false);
+                ExecuteSqlCommands(inserts, "UpdateGegner", connection, transaction, false);
                 if (transaction != null)
                     transaction.Commit();
             }
