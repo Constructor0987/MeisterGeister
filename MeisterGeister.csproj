@@ -570,6 +570,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\Ressources.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\VisualTreeExtensions.cs" />
     <Compile Include="ViewModel\Einstellungen\EinstellungenViewModel.cs" />
+    <Compile Include="ViewModel\Einstellungen\NetzwerkeinstellungenViewModel.cs" />
     <Compile Include="ViewModel\Helden\AusrüstungViewModel.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
@@ -750,6 +751,9 @@
     <Compile Include="View\Bodenplan\DragScrollViewer.cs" />
     <Compile Include="View\Bodenplan\SliderWithDisplayTextBox.xaml.cs">
       <DependentUpon>SliderWithDisplayTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Einstellungen\NetzwerkeinstellungenView.xaml.cs">
+      <DependentUpon>NetzwerkeinstellungenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\BindableSelectedItemBehavior.cs" />
     <Compile Include="View\General\BooleanToVisibilityConverter.cs" />
@@ -1247,6 +1251,10 @@
     <Page Include="View\Bodenplan\SliderWithDisplayTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Einstellungen\NetzwerkeinstellungenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\General\DereGlobusLinkControl.xaml">
       <SubType>Designer</SubType>

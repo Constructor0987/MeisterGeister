@@ -258,13 +258,14 @@ namespace MeisterGeister
 
             //webserver
             WebServer = new Server();
-            WebServer.Start();
         }
 
         public static void CleanUp()
         {
-            if(WebServer != null)
+            if (WebServer.Status != Server.States.Stopped && WebServer.Status != Server.States.Stopping)
+            {
                 WebServer.Stop();
+            }
         }
 
         /// <summary>

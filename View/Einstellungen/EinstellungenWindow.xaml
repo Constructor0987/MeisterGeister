@@ -7,6 +7,7 @@
         xmlns:Model="clr-namespace:MeisterGeister.Model"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
         xmlns:mg="clr-namespace:MeisterGeister"
+        xmlns:local="clr-namespace:MeisterGeister.View.Settings"
         mc:Ignorable="d"
         Title="Einstellungen"        
         Width="820"        
@@ -525,6 +526,15 @@
                             </ListBox>
                         </Grid>
                     </Border>
+                </TabItem>
+                <TabItem Visibility="{Binding Source={x:Static mg:Global.INTERN_Visibility}}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Left" Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" />
+                            <TextBlock Text="Netzwerk" Style="{DynamicResource TextTitel}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <local:NetzwerkeinstellungenView/>
                 </TabItem>
             </TabControl>
         </Grid>

@@ -3,34 +3,65 @@ using Microsoft.Owin.Hosting;
 using System;
 using System.Reflection;
 using System.Threading;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.Net
 {
+    public delegate void ServerStateChangeEventHandler(Server.States state);
+
     public class Server
     {
+        public enum States { Stopped, Starting, Started, Stopping }
+
+        #region Events
+
+        public event ServerStateChangeEventHandler ServerStateChanged;
+
+        private void OnServerStateChanged(States state)
+        {
+            ServerStateChanged?.Invoke(state);
+        }
+
+        #endregion
+
+        #region Serverstatus
+
         private static AutoResetEvent _shutdownEvent = new AutoResetEvent(false);
         private static AutoResetEvent _startupEvent = new AutoResetEvent(false);
 
-        private Thread _workerThread = null;
-        private Object _lock = new Object();
 
-        public bool IsStarted
+        private Thread _workerThread;
+        private readonly Object _lock = new Object();
+        private States _status = States.Stopped;
+
+        public States Status
         {
-            get {
-                return _workerThread != null && _workerThread.IsAlive;
+            get { return _status; }
+            private set
+            {
+                if (value != _status)
+                {
+                    _status = value;
+                    OnServerStateChanged(value);
+                }
             }
         }
 
-        public void Start()
+        public int? Port { get; private set; }
+
+        public void Start(int port)
         {
             lock (_lock)
             {
-                if (IsStarted)
+                if (Status != States.Stopped)
                 {
                     return;
                 }
-                _workerThread = new Thread(new ThreadStart(ServerWorker));
-                _workerThread.Start();
+                Logger.LogMsgToFile(String.Format("Starte Webserver an Port {0}", port));
+                Port = port;
+                Status = States.Starting;
+                _workerThread = new Thread(ServerWorker);
+                _workerThread.Start(port);
                 _startupEvent.WaitOne();
             }
         }
@@ -39,30 +70,39 @@ namespace MeisterGeister.Net
         {
             lock (_lock)
             {
-                if (!IsStarted)
+                if (Status != States.Started)
                 {
                     return;
                 }
                 _shutdownEvent.Set();
                 _workerThread.Join();
+                Logger.LogMsgToFile("Webserver beendet");
+                Port = null;
+                Status = States.Stopped;
             }
         }
 
-        private void ServerWorker()
+        private void ServerWorker(object port)
         {
             _startupEvent.Set();
-            try {
-                using (WebApp.Start<Starter>("http://+:50132"))
+            String serverUrl = String.Format("http://+:{0}", port);
+            try
+            {
+                using (WebApp.Start<Starter>(serverUrl))
                 {
-                    Console.Out.WriteLine("Server gestartet");
+                    Logger.LogMsgToFile(String.Format("Webserver gestartet an Port {0}", port));
+                    Status = States.Started;
                     _shutdownEvent.WaitOne();
-                    Console.Out.WriteLine("Server beendet");
+                    Logger.LogMsgToFile(String.Format("Beende Webserver an Port {0}", port));
+                    Status = States.Stopping;
                 }
             }
             catch (TargetInvocationException)
             {
-                Console.Out.WriteLine("Server konnte nicht gestartet werden. Wahrscheinlich ist die URL durch die Windows UAC gesperrt.");
+                Logger.LogMsgToFile("Server konnte nicht gestartet werden. Wahrscheinlich ist die URL " + serverUrl +  " durch die Windows UAC gesperrt.");
             }
         }
+
+        #endregion
     }
 }
