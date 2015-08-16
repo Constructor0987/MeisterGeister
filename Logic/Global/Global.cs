@@ -262,7 +262,7 @@ namespace MeisterGeister
 
         public static void CleanUp()
         {
-            if (WebServer.Status != Server.States.Stopped && WebServer.Status != Server.States.Stopping)
+            if (WebServer != null && WebServer.Status != Server.States.Stopped && WebServer.Status != Server.States.Stopping)
             {
                 WebServer.Stop();
             }
