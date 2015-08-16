@@ -14,7 +14,7 @@
     <UserControl.DataContext>
         <vm:AlchimieViewModel />
     </UserControl.DataContext>
-    
+
     <UserControl.Resources>
         <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
         <DataTemplate x:Key="SubstitutionItemTemplate">
@@ -25,19 +25,23 @@
                         <GradientStop Color="#FFFFFFC7" Offset="1" />
                     </LinearGradientBrush>
                 </Border.Background>
-                <StackPanel Orientation="Horizontal" >
-                    <TextBlock Text="{Binding Path=Anzahl}" Margin="5,0,0,0"  FontSize="11"/>
-                    <TextBlock Text="{Binding Path=Einheit}" Margin="5,0,0,0"  FontSize="11"/>
-                    <TextBlock Text="{Binding Path=Name}"  Margin="5,0,0,0" FontSize="11"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="15,0,0,0" ToolTip="optimierende Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=optimierend}"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="gleichwertige Substitution" IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=gleichwertig}"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="sinnvolle Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=sinnvoll}"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="mögliche Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=möglich}"/>
-                </StackPanel>
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                        <TextBlock Text="{Binding Path=Anzahl}" Margin="5,0,0,0"  FontSize="11"/>
+                        <TextBlock Text="{Binding Path=Einheit}" Margin="5,0,0,0"  FontSize="11"/>
+                        <TextBlock Text="{Binding Path=Name}"  Margin="5,0,0,0" FontSize="11"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                        <RadioButton GroupName="{Binding Path=Name}" Margin="19,0,0,0" ToolTip="optimierende Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=optimierend}"/>
+                        <RadioButton GroupName="{Binding Path=Name}" Margin="18,0,0,0" ToolTip="gleichwertige Substitution" IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=gleichwertig}"/>
+                        <RadioButton GroupName="{Binding Path=Name}" Margin="19,0,0,0" ToolTip="sinnvolle Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=sinnvoll}"/>
+                        <RadioButton GroupName="{Binding Path=Name}" Margin="18,0,0,0" ToolTip="mögliche Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=möglich}"/>
+                    </StackPanel>
+                </DockPanel>
             </Border>
         </DataTemplate>
     </UserControl.Resources>
-    
+
     <TabControl Background="Transparent">
         <TabItem Header="Herstellung">
             <Grid OpacityMask="Black">
@@ -49,19 +53,19 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="474*" />
-                </Grid.ColumnDefinitions>               
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held" >
-                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" >
-                            <ComboBox.ToolTip>
-                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
-                            </ComboBox.ToolTip>
-                        </ComboBox>
-                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
-                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                        </Button>
-                    </StackPanel>
-                
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held" >
+                    <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                    <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" >
+                        <ComboBox.ToolTip>
+                            <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                    </Button>
+                </StackPanel>
+
                 <Border Grid.Row="1">
                     <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
                         <StackPanel>
@@ -161,16 +165,21 @@
                                             <TextBlock Text="Modifikator für Substitutionen: "/>
                                             <TextBlock Text="{Binding ModifikatorSubstitutionenHerstellung}"  />
                                         </StackPanel>
-                                        <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                            <TextBlock Text="Anzahl"  Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Einheit" Margin="5,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
-                                            <TextBlock Text="Name" Margin="5,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
-                                            <Image Margin="15,0,0,0" Source="/Images/Icons/substitution_01.png" ToolTip="optimierende Substitution" Width="25"  VerticalAlignment="Center" />
-                                            <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_02.png" ToolTip="gleichwertige Substitution" Width="25" VerticalAlignment="Center" />
-                                            <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_04.png" ToolTip="sinnvolle Substitution" Width="25" VerticalAlignment="Center" />
-                                            <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_05.png" ToolTip="mögliche Substitution" Width="25" VerticalAlignment="Center" />
-                                            <!--<Image Margin="5,0,0,0" Source="/Images/Icons/substitution_06.png" ToolTip="unsinnige Substitution" Width="25" VerticalAlignment="Center"/>-->
-                                        </StackPanel>
+
+                                        <DockPanel Margin="10,0,10,0">
+                                            <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Left">
+                                                <TextBlock Text="Anzahl"  Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Einheit" Margin="5,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Name" Margin="5,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                                <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_01.png" ToolTip="optimierende Substitution" Width="25"  VerticalAlignment="Center" />
+                                                <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_02.png" ToolTip="gleichwertige Substitution" Width="25" VerticalAlignment="Center" />
+                                                <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_04.png" ToolTip="sinnvolle Substitution" Width="25" VerticalAlignment="Center" />
+                                                <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_05.png" ToolTip="mögliche Substitution" Width="25" VerticalAlignment="Center" />
+                                                <!--<Image Margin="5,0,0,0" Source="/Images/Icons/substitution_06.png" ToolTip="unsinnige Substitution" Width="25" VerticalAlignment="Center"/>-->
+                                            </StackPanel>
+                                        </DockPanel>
                                         <ListBox Margin="5,0,5,5" SelectionMode="Extended" Background="Transparent" ItemsSource="{Binding SubstitutionListeHerstellung}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ItemTemplate="{StaticResource SubstitutionItemTemplate}"/>
                                     </StackPanel>
                                 </Border>
@@ -232,15 +241,15 @@
                                     <TextBlock Text="{Binding Path = TaPHerstellung}" Grid.Row="5" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="Qualität:"  Grid.Row="6" ToolTip="Wda 19" />
                                     <TextBlock Text="{Binding BonusQualitätHerstellung}" Grid.Row="6" Grid.Column="2" ToolTip="Wda 19" TextWrapping="Wrap" >
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding HerstellungUnmöglich}" Value="True">
-                                                    <Setter Property="Foreground" Value="Red" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HerstellungUnmöglich}" Value="True">
+                                                        <Setter Property="Foreground" Value="Red" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
                                     </TextBlock>
                                     <TextBlock Text="Brauschwierigkeit"  Grid.Row="7" />
                                     <TextBlock Text="{Binding Path = SelectedRezept.Brauschwierigkeit}" Grid.Row="7" Grid.Column="2" TextWrapping="Wrap" />
@@ -297,18 +306,18 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="474*" />
                 </Grid.ColumnDefinitions>
-                
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.ToolTip>
-                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
-                            </ComboBox.ToolTip>
-                        </ComboBox>
-                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
-                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                        </Button>
-                    </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                    <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
+                        <ComboBox.ToolTip>
+                            <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                    </Button>
+                </StackPanel>
                 <ScrollViewer Margin="0,0,0,6" Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
@@ -513,106 +522,106 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="474*" />
                 </Grid.ColumnDefinitions>
-                
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.ToolTip>
-                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
-                            </ComboBox.ToolTip>
-                        </ComboBox>
-                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
-                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                        </Button>
-                    </StackPanel>
-                    <ScrollViewer Margin="0,0,0,6" Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <StackPanel>
-                            <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
-                        <Expander.Header>
-                            <TextBlock Text="Rezept" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
-                                </StackPanel>
-                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
-                    </Expander>
-                            <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
-                        <Expander.Header>
-                            <TextBlock Text="Ausstattung" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                <TextBlock Text="Labor:" FontWeight="Bold"/>
-                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                        <TextBlock Text="Art"/>
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborArtListe}" SelectedItem="{Binding SelectedLaborArtListe}" IsEnabled="{Binding IsEnabledLaborArtListe}" ToolTip="WdA 16"/>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                        <TextBlock Text="Qualität des Labors"/>
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListe}" SelectedItem="{Binding SelectedLaborQualitätListe}" IsEnabled="{Binding IsEnabledLaborQualitätListe}" ToolTip="WdA 16"/>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                        <TextBlock Text="Proben-Mod: "/>
-                                        <TextBlock Text="{Binding ModifikatorLabor}"  />
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Text="Schale der Alchimie:" FontWeight="Bold"/>
-                                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                    <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
+                        <ComboBox.ToolTip>
+                            <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                    </Button>
+                </StackPanel>
+                <ScrollViewer Margin="0,0,0,6" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                            <Expander.Header>
+                                <TextBlock Text="Rezept" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
                                 <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                    <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyse}" ToolTip="zur Analyse | WdA 18"/>
-                                    <StackPanel Margin="0,0,5,0"  Orientation="Horizontal">
-                                        <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeit}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen | WdA 18"/>
-                                        <!--<TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
+                                    <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
+                                    </StackPanel>
+                                    <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </Expander>
+                        <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                            <Expander.Header>
+                                <TextBlock Text="Ausstattung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                    <TextBlock Text="Labor:" FontWeight="Bold"/>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                            <TextBlock Text="Art"/>
+                                            <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborArtListe}" SelectedItem="{Binding SelectedLaborArtListe}" IsEnabled="{Binding IsEnabledLaborArtListe}" ToolTip="WdA 16"/>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                            <TextBlock Text="Qualität des Labors"/>
+                                            <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListe}" SelectedItem="{Binding SelectedLaborQualitätListe}" IsEnabled="{Binding IsEnabledLaborQualitätListe}" ToolTip="WdA 16"/>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                            <TextBlock Text="Proben-Mod: "/>
+                                            <TextBlock Text="{Binding ModifikatorLabor}"  />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <TextBlock Text="Schale der Alchimie:" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyse}" ToolTip="zur Analyse | WdA 18"/>
+                                        <StackPanel Margin="0,0,5,0"  Orientation="Horizontal">
+                                            <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeit}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen | WdA 18"/>
+                                            <!--<TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding ModifikatorCHHerstellung}" VerticalAlignment="Center" />
                                         <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
+                                        </StackPanel>
+                                        <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                        <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
+                                        <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
                                     </StackPanel>
-                                    <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
-                    </Expander>
-                            <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
-                        <Expander.Header>
-                            <TextBlock Text="Verdünnung" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                        <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                            <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                <TextBlock Margin="0,3,5,0" Text="Qualität:" FontWeight="Bold" />
-                                <ComboBox Margin="0,0,5,0" Width="50" ItemsSource="{Binding QualitätListeVerdünnung}" SelectedItem="{Binding SelectedQualitätVerdünnung}" />
-                                <TextBlock Margin="0,3,5,0" Text="TaP*:" FontWeight="Bold" />
-                                <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaPVerdünnung}" />
-                                <TextBlock Margin="0,3,5,0" Text="ZfP*:" FontWeight="Bold" />
-                                <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertZfPVerdünnung}" />
-                            </StackPanel>
-                            <TextBlock Margin="5,5,5,5" Text="Modifizierung:" FontWeight="Bold" FontSize="14"/>
-                            <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
-                                <TextBlock Text="Qualität Verdünnung" VerticalAlignment="Center" />
-                                <ComboBox Margin="0,0,5,0" Width="50" ItemsSource="{Binding VerdünnungQualitätListeVerdünnung}" SelectedItem="{Binding SelectedVerdünnungQualitätVerdünnung}" />
-                            </StackPanel>
-                            <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
-                                    <TextBlock Margin="0,3,5,0" Text="{Binding VerdünnungProbe}" FontWeight="Bold" />
-                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertProbeVerdünnung}" />
-                                    <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeVerdünnung}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-                    </Expander>
-                        </StackPanel>                    
+                            </Border>
+                        </Expander>
+                        <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                            <Expander.Header>
+                                <TextBlock Text="Verdünnung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                    <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <TextBlock Margin="0,3,5,0" Text="Qualität:" FontWeight="Bold" />
+                                        <ComboBox Margin="0,0,5,0" Width="50" ItemsSource="{Binding QualitätListeVerdünnung}" SelectedItem="{Binding SelectedQualitätVerdünnung}" />
+                                        <TextBlock Margin="0,3,5,0" Text="TaP*:" FontWeight="Bold" />
+                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaPVerdünnung}" />
+                                        <TextBlock Margin="0,3,5,0" Text="ZfP*:" FontWeight="Bold" />
+                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertZfPVerdünnung}" />
+                                    </StackPanel>
+                                    <TextBlock Margin="5,5,5,5" Text="Modifizierung:" FontWeight="Bold" FontSize="14"/>
+                                    <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
+                                        <TextBlock Text="Qualität Verdünnung" VerticalAlignment="Center" />
+                                        <ComboBox Margin="0,0,5,0" Width="50" ItemsSource="{Binding VerdünnungQualitätListeVerdünnung}" SelectedItem="{Binding SelectedVerdünnungQualitätVerdünnung}" />
+                                    </StackPanel>
+                                    <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
+                                        <TextBlock Margin="0,3,5,0" Text="{Binding VerdünnungProbe}" FontWeight="Bold" />
+                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertProbeVerdünnung}" />
+                                        <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeVerdünnung}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </Expander>
+                    </StackPanel>
                 </ScrollViewer>
 
                 <Expander Grid.Column="2" Margin="4" IsExpanded="True" Grid.Row="1">
@@ -704,17 +713,17 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="474*" />
                 </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.ToolTip>
-                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
-                            </ComboBox.ToolTip>
-                        </ComboBox>
-                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
-                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                        </Button>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                    <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
+                        <ComboBox.ToolTip>
+                            <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                    </Button>
+                </StackPanel>
 
                 <ScrollViewer Margin="0,0,0,6" Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <StackPanel>

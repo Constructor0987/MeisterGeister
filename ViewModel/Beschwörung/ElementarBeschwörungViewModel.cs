@@ -11,6 +11,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 {
     public class ElementarBeschwörungViewModel : BeschwörungViewModel
     {
+        #region Mods
         private const string MERKMAL = "Merkmalskenntnis (Elementar ({0}))";
         private const string BEGABUNG = "Begabung für Merkmal (Elementar ({0}))";
         private const string ELEMENT_AURA = "Elementarharmonisierte Aura ({0}/{1})";
@@ -18,100 +19,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
         private const string AFFINITÄT = "Affinität zu Elementaren";
         private const string MERKMAL_DÄMONISCH = "Merkmalskenntnis (Dämonisch";
         private const string BEGABUNG_DÄMONISCH = "Begabung für Merkmal (Dämonisch";
-
-        protected override void checkHeld()
-        {
-            base.checkHeld();
-            checkHeldElement();
-            if (Held != null)
-            {
-                affinität.Value = Held.HatVorNachteil(AFFINITÄT);
-                verhüllteAura.Value = Held.HatSonderfertigkeitUndVoraussetzungen(VERHÜLLTE_AURA);
-            }
-            else
-            {
-                affinität.Value = false;
-                verhüllteAura.Value = false;
-            }
-        }
-
-        private void checkHeldElement()
-        {
-            if (Held != null)
-            {
-                elementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, Element));
-                gegenelementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, GegenElement));
-
-                elementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, Element));
-                gegenelementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, GegenElement));
-
-                ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, Element, GegenElement))
-                                          || Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, GegenElement, Element));
-
-                dämonisch.Value = Held.Sonderfertigkeiten.Keys.Where((sf) => sf.Name.StartsWith(MERKMAL_DÄMONISCH)).Count()
-                          + Held.Vorteile.Keys.Where((vorteil) => vorteil.Name.StartsWith(BEGABUNG_DÄMONISCH)).Count();
-            }
-            else
-            {
-                elementMod.Value1 = elementMod.Value2 = gegenelementMod.Value1 = gegenelementMod.Value2 = false;
-                ElementarharmonisierteAura = false;
-            }
-        }
-
-        protected override List<Model.GegnerBase> loadWesen()
-        {
-            List<GegnerBase> elementare = Global.ContextHeld.LoadElementare();
-            return elementare;
-        }
-
-        protected override void reset()
-        {
-            base.reset();
-            Element = Element.Feuer;
-            Typ = ElementarWesen.Elementargeist;
-        }
-
-        #region Properties
-
-        private Element element;
-        public Element Element
-        {
-            get { return element; }
-            set
-            {
-                element = value;
-                OnChanged();
-                OnChanged("GegenElement");
-                checkHeldElement();
-            }
-        }
-
-        public Element GegenElement
-        {
-            get { return ~Element; }
-        }
-
-        private ElementarWesen typ;
-        public ElementarWesen Typ
-        {
-            get { return typ; }
-            set
-            {
-                Set(ref typ, value);
-                switch (value)
-                {
-                    case ElementarWesen.Elementargeist:
-                        Zauber = "Elementarer Diener";
-                        break;
-                    case ElementarWesen.Dschinn:
-                        Zauber = "Dschinnenruf";
-                        break;
-                    case ElementarWesen.ElementarerMeister:
-                        Zauber = "Meister der Elemente";
-                        break;
-                }
-            }
-        }
 
         private const string MOD_MENGE = "Menge";
         private const string MOD_ELEMENT = "Element";
@@ -135,6 +42,9 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override void addMods()
         {
+            //Da sich die Bezahlung auf die Dienstkosten bezieht, entfällt diese bei Wesen, die ihre Dienstkosten selbst tragen
+            Mods.Remove(MOD_BEZAHLUNG);
+
             //Mit Blutmagie ist die Kontrolle von Elementaren um 12 erschwert
             blutmagie.GetKontrollMod = () => blutmagie.Value ? 12 : 0;
 
@@ -179,7 +89,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
             //Verhüllte Aura erschwert Kontrolle um 1
             verhüllteAura = new BeschwörungsModifikator<bool>();
-            verhüllteAura.GetKontrollMod = ()=>verhüllteAura.Value?1:0;
+            verhüllteAura.GetKontrollMod = () => verhüllteAura.Value ? 1 : 0;
             Mods.Add(MOD_VERHÜLLTE_AURA, verhüllteAura);
 
             //Schwache Ausstrahlung erschwert die Kontrolle
@@ -191,6 +101,111 @@ namespace MeisterGeister.ViewModel.Beschwörung
             stigma = new BeschwörungsModifikator<int>();
             stigma.GetKontrollMod = () => div(stigma.Value, 4);
             Mods.Add(MOD_STIGMA, stigma);
+        }
+        #endregion
+
+        protected override void checkHeld()
+        {
+            base.checkHeld();
+            checkHeldElement();
+            if (Held != null)
+            {
+                affinität.Value = Held.HatVorNachteil(AFFINITÄT);
+                verhüllteAura.Value = Held.HatSonderfertigkeitUndVoraussetzungen(VERHÜLLTE_AURA);
+            }
+            else
+            {
+                affinität.Value = false;
+                verhüllteAura.Value = false;
+            }
+        }
+
+        private void checkHeldElement()
+        {
+            if (Held != null)
+            {
+                elementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, Element));
+                gegenelementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, GegenElement));
+
+                elementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, Element));
+                gegenelementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, GegenElement));
+
+                ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, Element, GegenElement))
+                                          || Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, GegenElement, Element));
+
+                dämonisch.Value = Held.Sonderfertigkeiten.Keys.Where((sf) => sf.Name.StartsWith(MERKMAL_DÄMONISCH)).Count()
+                          + Held.Vorteile.Keys.Where((vorteil) => vorteil.Name.StartsWith(BEGABUNG_DÄMONISCH)).Count();
+            }
+            else
+            {
+                elementMod.Value1 = elementMod.Value2 = gegenelementMod.Value1 = gegenelementMod.Value2 = false;
+                ElementarharmonisierteAura = false;
+            }
+        }
+
+        protected override void checkBeschworenesWesen()
+        {
+            base.checkBeschworenesWesen();
+            if (BeschworenesWesen != null)
+            {
+                Element = (Element)Enum.Parse(typeof(Element), BeschworenesWesen.Beschwörbares.Elementarwesen.Element);
+                Typ = (ElementarWesen)Enum.Parse(typeof(ElementarWesen), BeschworenesWesen.Beschwörbares.Elementarwesen.Wesen);
+            }
+        }
+
+        protected override List<Model.GegnerBase> loadWesen()
+        {
+            List<GegnerBase> elementare = Global.ContextHeld.LoadElementare();
+            return elementare;
+        }
+
+        protected override void reset()
+        {
+            base.reset();
+            Element = Element.Feuer;
+            Typ = ElementarWesen.Geist;
+        }
+
+        #region Properties
+
+        private Element element;
+        public Element Element
+        {
+            get { return element; }
+            set
+            {
+                element = value;
+                OnChanged();
+                OnChanged("GegenElement");
+                checkHeldElement();
+            }
+        }
+
+        public Element GegenElement
+        {
+            get { return ~Element; }
+        }
+
+        private ElementarWesen typ;
+        public ElementarWesen Typ
+        {
+            get { return typ; }
+            set
+            {
+                Set(ref typ, value);
+                switch (value)
+                {
+                    case ElementarWesen.Geist:
+                        Zauber = "Elementarer Diener";
+                        break;
+                    case ElementarWesen.Dschinn:
+                        Zauber = "Dschinnenruf";
+                        break;
+                    case ElementarWesen.Meister:
+                        Zauber = "Meister der Elemente";
+                        break;
+                }
+            }
         }
 
         private bool elementarharmonisierteAura;
@@ -226,5 +241,15 @@ namespace MeisterGeister.ViewModel.Beschwörung
         //{
         //    BeherrschungsErgebnis = "Das Elementarwesen erfüllt den Dienst nicht. Die AsP werden trotzdem abgezogen. Wenn noch AsP übrig sind steht das Wesen weiterhin zur Verfügung.";
         //}
+    }
+
+    public enum ElementarWesen
+    {
+        [Description("Elementargeist")]
+        Geist,
+        [Description("Dschinn")]
+        Dschinn,
+        [Description("Elementarer Meister")]
+        Meister
     }
 }

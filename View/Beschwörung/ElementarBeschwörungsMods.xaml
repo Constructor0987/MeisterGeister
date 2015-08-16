@@ -56,7 +56,6 @@
             <RowDefinition Height="24" Name="rowSchwacheAusstrahlung"/>
             <RowDefinition Height="24" Name="rowStigma"/>
             <RowDefinition Height="24"/>
-            <RowDefinition Height="24" Name="rowBezahlung"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
@@ -130,9 +129,9 @@
                     <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
-            <x:StaticExtension Member="vm:ElementarWesen.Elementargeist"/>
+            <x:StaticExtension Member="vm:ElementarWesen.Geist"/>
             <x:StaticExtension Member="vm:ElementarWesen.Dschinn"/>
-            <x:StaticExtension Member="vm:ElementarWesen.ElementarerMeister"/>
+            <x:StaticExtension Member="vm:ElementarWesen.Meister"/>
         </ComboBox>
 
         <TextBlock Text="Basis" Grid.Row="2" Style="{StaticResource label}"/>
@@ -307,41 +306,16 @@
         <TextBlock Text="{Binding Mods[Donaria].AnrufungsMod}" Grid.Row="23" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding Mods[Donaria].KontrollMod}" Grid.Row="23" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="24" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="24" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Bezahlung].Value}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Name="text" Text="Keine"/>
-                    <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding}" Value="-1">
-                            <Setter TargetName="text" Property="Text" Value="+20%"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding}" Value="-2">
-                            <Setter TargetName="text" Property="Text" Value="+40%"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding}" Value="-3">
-                            <Setter TargetName="text" Property="Text" Value="+60%"/>
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-            <System:Int32>0</System:Int32>
-            <System:Int32>-1</System:Int32>
-            <System:Int32>-2</System:Int32>
-            <System:Int32>-3</System:Int32>
-        </ComboBox>
-        <TextBlock Text="{Binding Mods[Bezahlung].KontrollMod}" Grid.Row="24" Grid.Column="3" Style="{StaticResource mod}"/>
-
-        <TextBlock Text="Sonstiges" Grid.Row="25" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="25" Grid.Column="1">
+        <TextBlock Text="Sonstiges" Grid.Row="24" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="24" Grid.Column="1">
             <General:IntBox ShowButtons="True" Value="{Binding Mods[Sonstiges].Value1}"/>
             <General:IntBox ShowButtons="True" Value="{Binding Mods[Sonstiges].Value2}"/>
         </StackPanel>
-        <TextBlock Text="{Binding Mods[Sonstiges].AnrufungsMod}" Grid.Row="25" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Sonstiges].KontrollMod}" Grid.Row="25" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Sonstiges].AnrufungsMod}" Grid.Row="24" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Sonstiges].KontrollMod}" Grid.Row="24" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Gesamt" Grid.Row="26" Style="{StaticResource label}"/>
-        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="26" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="26" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Gesamt" Grid.Row="25" Style="{StaticResource label}"/>
+        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="25" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="25" Grid.Column="3" Style="{StaticResource mod}"/>
     </Grid>
 </UserControl>

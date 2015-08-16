@@ -17,7 +17,11 @@
     <EntitySet Name="Audio_Titel" EntityType="DatabaseDSAModel.Store.Audio_Titel" store:Type="Tables" />
     <EntitySet Name="Ausrüstung" EntityType="DatabaseDSAModel.Store.Ausrüstung" store:Type="Tables" />
     <EntitySet Name="Ausrüstung_Setting" EntityType="DatabaseDSAModel.Store.Ausrüstung_Setting" store:Type="Tables" />
+    <EntitySet Name="Beschwörbares" EntityType="DatabaseDSAModel.Store.Beschwörbares" store:Type="Tables" />
+    <EntitySet Name="Dämon" EntityType="DatabaseDSAModel.Store.Dämon" store:Type="Tables" />
+    <EntitySet Name="Dämon_Domäne" EntityType="DatabaseDSAModel.Store.Dämon_Domäne" store:Type="Tables" />
     <EntitySet Name="Einstellung" EntityType="DatabaseDSAModel.Store.Einstellung" store:Type="Tables" />
+    <EntitySet Name="Elementarwesen" EntityType="DatabaseDSAModel.Store.Elementarwesen" store:Type="Tables" />
     <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Store.Farbe" store:Type="Tables" />
     <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe" store:Type="Tables" />
     <EntitySet Name="Fernkampfwaffe_Talent" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe_Talent" store:Type="Tables" />
@@ -75,6 +79,22 @@
     <EntitySet Name="Zauber_Variante" EntityType="DatabaseDSAModel.Store.Zauber_Variante" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen" EntityType="DatabaseDSAModel.Store.Zauberzeichen" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen_Setting" EntityType="DatabaseDSAModel.Store.Zauberzeichen_Setting" store:Type="Tables" />
+    <AssociationSet Name="FK__Beschwörbares__0000000000000B97" Association="DatabaseDSAModel.Store.FK__Beschwörbares__0000000000000B97">
+      <End Role="GegnerBase" EntitySet="GegnerBase" />
+      <End Role="Beschwörbares" EntitySet="Beschwörbares" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Dämon__0000000000000BA7" Association="DatabaseDSAModel.Store.FK__Dämon__0000000000000BA7">
+      <End Role="Beschwörbares" EntitySet="Beschwörbares" />
+      <End Role="Dämon" EntitySet="Dämon" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Dämon_Domäne__0000000000000BB6" Association="DatabaseDSAModel.Store.FK__Dämon_Domäne__0000000000000BB6">
+      <End Role="Dämon" EntitySet="Dämon" />
+      <End Role="Dämon_Domäne" EntitySet="Dämon_Domäne" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Elementarwesen__0000000000000BC6" Association="DatabaseDSAModel.Store.FK__Elementarwesen__0000000000000BC6">
+      <End Role="Beschwörbares" EntitySet="Beschwörbares" />
+      <End Role="Elementarwesen" EntitySet="Elementarwesen" />
+    </AssociationSet>
     <AssociationSet Name="FK__Gegner_Modifikator__0000000000000ACC" Association="DatabaseDSAModel.Store.FK__Gegner_Modifikator__0000000000000ACC">
       <End Role="Gegner" EntitySet="Gegner" />
       <End Role="Gegner_Modifikator" EntitySet="Gegner_Modifikator" />
@@ -549,6 +569,30 @@
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
     <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
+  <EntityType Name="Beschwörbares">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Beschwörung" Type="int" Nullable="false" />
+    <Property Name="Kontrolle" Type="int" />
+    <Property Name="Beschwörungskosten" Type="int" />
+  </EntityType>
+  <EntityType Name="Dämon">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Hörner" Type="int" />
+  </EntityType>
+  <EntityType Name="Dämon_Domäne">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+      <PropertyRef Name="Domäne" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Domäne" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
   <EntityType Name="Einstellung">
     <Key>
       <PropertyRef Name="Name" />
@@ -559,6 +603,14 @@
     <Property Name="Typ" Type="nvarchar" Nullable="false" MaxLength="100" />
     <Property Name="Wert" Type="ntext" />
     <Property Name="Beschreibung" Type="ntext" />
+  </EntityType>
+  <EntityType Name="Elementarwesen">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Element" Type="nvarchar" MaxLength="100" />
+    <Property Name="Wesen" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Farbe">
     <Key>
@@ -700,9 +752,6 @@
     <Property Name="RSBeinR" Type="int" Nullable="false" />
     <Property Name="GW" Type="int" />
     <Property Name="Jagd" Type="int" />
-    <Property Name="Beschwörung" Type="int" />
-    <Property Name="Kontrolle" Type="int" />
-    <Property Name="Beschwörungskosten" Type="int" />
     <Property Name="Tags" Type="nvarchar" MaxLength="1000" />
     <Property Name="Bemerkung" Type="ntext" />
     <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
@@ -1406,6 +1455,62 @@
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
     <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
+  <Association Name="FK__Beschwörbares__0000000000000B97">
+    <End Role="GegnerBase" Type="DatabaseDSAModel.Store.GegnerBase" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Beschwörbares" Type="DatabaseDSAModel.Store.Beschwörbares" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="GegnerBase">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Beschwörbares">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Dämon__0000000000000BA7">
+    <End Role="Beschwörbares" Type="DatabaseDSAModel.Store.Beschwörbares" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Dämon" Type="DatabaseDSAModel.Store.Dämon" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Beschwörbares">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Dämon">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Dämon_Domäne__0000000000000BB6">
+    <End Role="Dämon" Type="DatabaseDSAModel.Store.Dämon" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Dämon_Domäne" Type="DatabaseDSAModel.Store.Dämon_Domäne" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dämon">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Dämon_Domäne">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Elementarwesen__0000000000000BC6">
+    <End Role="Beschwörbares" Type="DatabaseDSAModel.Store.Beschwörbares" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Elementarwesen" Type="DatabaseDSAModel.Store.Elementarwesen" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Beschwörbares">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Elementarwesen">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Gegner_Modifikator__0000000000000ACC">
     <End Role="Gegner" Type="DatabaseDSAModel.Store.Gegner" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -2464,7 +2569,11 @@
     <EntitySet Name="Audio_Titel" EntityType="DatabaseDSAModel.Audio_Titel" />
     <EntitySet Name="Ausrüstung" EntityType="DatabaseDSAModel.Ausrüstung" />
     <EntitySet Name="Ausrüstung_Setting" EntityType="DatabaseDSAModel.Ausrüstung_Setting" />
+    <EntitySet Name="Beschwörbares" EntityType="DatabaseDSAModel.Beschwörbares" />
+    <EntitySet Name="Dämon" EntityType="DatabaseDSAModel.Dämon" />
+    <EntitySet Name="Dämon_Domäne" EntityType="DatabaseDSAModel.Dämon_Domäne" />
     <EntitySet Name="Einstellung" EntityType="DatabaseDSAModel.Einstellung" />
+    <EntitySet Name="Elementarwesen" EntityType="DatabaseDSAModel.Elementarwesen" />
     <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Farbe" />
     <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Fernkampfwaffe" />
     <EntitySet Name="Gebiet" EntityType="DatabaseDSAModel.Gebiet" />
@@ -2586,6 +2695,22 @@
     <AssociationSet Name="fk_AusrüstungSetting_Setting" Association="DatabaseDSAModel.fk_AusrüstungSetting_Setting">
       <End Role="Setting" EntitySet="Setting" />
       <End Role="Ausrüstung_Setting" EntitySet="Ausrüstung_Setting" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Beschwörbares__0000000000000B97" Association="DatabaseDSAModel.FK__Beschwörbares__0000000000000B97">
+      <End Role="GegnerBase" EntitySet="GegnerBase" />
+      <End Role="Beschwörbares" EntitySet="Beschwörbares" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Dämon__0000000000000BA7" Association="DatabaseDSAModel.FK__Dämon__0000000000000BA7">
+      <End Role="Beschwörbares" EntitySet="Beschwörbares" />
+      <End Role="Dämon" EntitySet="Dämon" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Elementarwesen__0000000000000BC6" Association="DatabaseDSAModel.FK__Elementarwesen__0000000000000BC6">
+      <End Role="Beschwörbares" EntitySet="Beschwörbares" />
+      <End Role="Elementarwesen" EntitySet="Elementarwesen" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Dämon_Domäne__0000000000000BB6" Association="DatabaseDSAModel.FK__Dämon_Domäne__0000000000000BB6">
+      <End Role="Dämon" EntitySet="Dämon" />
+      <End Role="Dämon_Domäne" EntitySet="Dämon_Domäne" />
     </AssociationSet>
     <AssociationSet Name="fk_RasseFarbe_Farbe" Association="DatabaseDSAModel.fk_RasseFarbe_Farbe">
       <End Role="Farbe" EntitySet="Farbe" />
@@ -2988,6 +3113,36 @@
     <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" FromRole="Ausrüstung_Setting" ToRole="Ausrüstung" />
     <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Setting" FromRole="Ausrüstung_Setting" ToRole="Setting" />
   </EntityType>
+  <EntityType Name="Beschwörbares">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="Guid" Nullable="false" />
+    <Property Name="Beschwörung" Type="Int32" Nullable="false" />
+    <Property Name="Kontrolle" Type="Int32" />
+    <Property Name="Beschwörungskosten" Type="Int32" />
+    <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.FK__Beschwörbares__0000000000000B97" FromRole="Beschwörbares" ToRole="GegnerBase" />
+    <NavigationProperty Name="Dämon" Relationship="DatabaseDSAModel.FK__Dämon__0000000000000BA7" FromRole="Beschwörbares" ToRole="Dämon" />
+    <NavigationProperty Name="Elementarwesen" Relationship="DatabaseDSAModel.FK__Elementarwesen__0000000000000BC6" FromRole="Beschwörbares" ToRole="Elementarwesen" />
+  </EntityType>
+  <EntityType Name="Dämon">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="Guid" Nullable="false" />
+    <Property Name="Hörner" Type="Int32" />
+    <NavigationProperty Name="Beschwörbares" Relationship="DatabaseDSAModel.FK__Dämon__0000000000000BA7" FromRole="Dämon" ToRole="Beschwörbares" />
+    <NavigationProperty Name="Dämon_Domäne" Relationship="DatabaseDSAModel.FK__Dämon_Domäne__0000000000000BB6" FromRole="Dämon" ToRole="Dämon_Domäne" />
+  </EntityType>
+  <EntityType Name="Dämon_Domäne">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+      <PropertyRef Name="Domäne" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="Guid" Nullable="false" />
+    <Property Name="Domäne" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Dämon" Relationship="DatabaseDSAModel.FK__Dämon_Domäne__0000000000000BB6" FromRole="Dämon_Domäne" ToRole="Dämon" />
+  </EntityType>
   <EntityType Name="Einstellung">
     <Key>
       <PropertyRef Name="Name" />
@@ -2998,6 +3153,15 @@
     <Property Name="Typ" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Wert" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Beschreibung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Elementarwesen">
+    <Key>
+      <PropertyRef Name="GegnerBaseGUID" />
+    </Key>
+    <Property Name="GegnerBaseGUID" Type="Guid" Nullable="false" />
+    <Property Name="Element" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Wesen" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Beschwörbares" Relationship="DatabaseDSAModel.FK__Elementarwesen__0000000000000BC6" FromRole="Elementarwesen" ToRole="Beschwörbares" />
   </EntityType>
   <EntityType Name="Farbe">
     <Key>
@@ -3140,9 +3304,6 @@
     <Property Name="RSBeinR" Type="Int32" Nullable="false" />
     <Property Name="GW" Type="Int32" />
     <Property Name="Jagd" Type="Int32" />
-    <Property Name="Beschwörung" Type="Int32" />
-    <Property Name="Kontrolle" Type="Int32" />
-    <Property Name="Beschwörungskosten" Type="Int32" />
     <Property Name="Tags" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
     <Property Name="Bemerkung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Literatur" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
@@ -3153,6 +3314,7 @@
     <Property Name="Auftreten" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
     <Property Name="AT" Type="Int32" Nullable="false" />
     <Property Name="FK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Beschwörbares" Relationship="DatabaseDSAModel.FK__Beschwörbares__0000000000000B97" FromRole="GegnerBase" ToRole="Beschwörbares" />
     <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="GegnerBase" ToRole="Gegner" />
     <NavigationProperty Name="GegnerBase_Angriff" Relationship="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Angriff" />
     <NavigationProperty Name="GegnerBase_Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Kampfregel" />
@@ -4160,6 +4322,62 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Beschwörbares__0000000000000B97">
+    <End Role="GegnerBase" Type="DatabaseDSAModel.GegnerBase" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Beschwörbares" Type="DatabaseDSAModel.Beschwörbares" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="GegnerBase">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Beschwörbares">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Dämon__0000000000000BA7">
+    <End Role="Beschwörbares" Type="DatabaseDSAModel.Beschwörbares" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Dämon" Type="DatabaseDSAModel.Dämon" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Beschwörbares">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Dämon">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Elementarwesen__0000000000000BC6">
+    <End Role="Beschwörbares" Type="DatabaseDSAModel.Beschwörbares" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Elementarwesen" Type="DatabaseDSAModel.Elementarwesen" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Beschwörbares">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Elementarwesen">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Dämon_Domäne__0000000000000BB6">
+    <End Role="Dämon" Type="DatabaseDSAModel.Dämon" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Dämon_Domäne" Type="DatabaseDSAModel.Dämon_Domäne" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dämon">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Principal>
+      <Dependent Role="Dämon_Domäne">
+        <PropertyRef Name="GegnerBaseGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_RasseFarbe_Farbe">
     <End Role="Farbe" Type="DatabaseDSAModel.Farbe" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -5021,6 +5239,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Beschwörbares">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Beschwörbares">
+        <MappingFragment StoreEntitySet="Beschwörbares">
+          <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
+          <ScalarProperty Name="Beschwörung" ColumnName="Beschwörung" />
+          <ScalarProperty Name="Kontrolle" ColumnName="Kontrolle" />
+          <ScalarProperty Name="Beschwörungskosten" ColumnName="Beschwörungskosten" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dämon">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Dämon">
+        <MappingFragment StoreEntitySet="Dämon">
+          <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
+          <ScalarProperty Name="Hörner" ColumnName="Hörner" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dämon_Domäne">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Dämon_Domäne">
+        <MappingFragment StoreEntitySet="Dämon_Domäne">
+          <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
+          <ScalarProperty Name="Domäne" ColumnName="Domäne" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Einstellung">
       <EntityTypeMapping TypeName="DatabaseDSAModel.Einstellung">
         <MappingFragment StoreEntitySet="Einstellung">
@@ -5030,6 +5274,15 @@
           <ScalarProperty Name="Typ" ColumnName="Typ" />
           <ScalarProperty Name="Wert" ColumnName="Wert" />
           <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Elementarwesen">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Elementarwesen">
+        <MappingFragment StoreEntitySet="Elementarwesen">
+          <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
+          <ScalarProperty Name="Element" ColumnName="Element" />
+          <ScalarProperty Name="Wesen" ColumnName="Wesen" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5169,9 +5422,6 @@
           <ScalarProperty Name="RSBeinR" ColumnName="RSBeinR" />
           <ScalarProperty Name="GW" ColumnName="GW" />
           <ScalarProperty Name="Jagd" ColumnName="Jagd" />
-          <ScalarProperty Name="Beschwörung" ColumnName="Beschwörung" />
-          <ScalarProperty Name="Kontrolle" ColumnName="Kontrolle" />
-          <ScalarProperty Name="Beschwörungskosten" ColumnName="Beschwörungskosten" />
           <ScalarProperty Name="Tags" ColumnName="Tags" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
           <ScalarProperty Name="Literatur" ColumnName="Literatur" />
@@ -5932,28 +6182,32 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="9d4b1d3958a044fd8582e455aa23d839" Name="Diagram1">
+      <Diagram DiagramId="318ca6c3f0ca472c8c9c32d57eaf29f4" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="23.5" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="11.75" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="14" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="23.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="26" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="26" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="23.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="21.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="24" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="24" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="21.75" PointY="27.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="0.75" PointY="25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="14" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Beschwörbares" Width="1.5" PointX="19" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon" Width="1.5" PointX="21.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="23.5" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="8.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="21.25" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="8.75" PointY="38.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="0.75" PointY="42" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="19" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="21.25" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="16.75" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="19" PointY="25.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="22" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="19" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="24.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="16.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="19" PointY="31" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="22" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="14" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
@@ -5967,16 +6221,16 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="9" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="9" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="3.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="19.75" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="19.75" PointY="12.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="8.75" PointY="24.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="11" PointY="26.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="33.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="19.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="13.75" PointY="24.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="10.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="0.75" PointY="48.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="19.75" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="21.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="16.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="24.75" PointY="23.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="17" PointY="4.75" IsExpanded="true" />
@@ -6017,6 +6271,10 @@
         <AssociationConnector Association="DatabaseDSAModel.fk_Schild_Ausrüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Waffe_Ausrüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Setting" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Beschwörbares__0000000000000B97" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Dämon__0000000000000BA7" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Elementarwesen__0000000000000BC6" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.FK__Dämon_Domäne__0000000000000BB6" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC" ManuallyRouted="false" />

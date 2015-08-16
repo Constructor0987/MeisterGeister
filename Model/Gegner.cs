@@ -534,7 +534,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return GegnerBase.Beschwörung;
+                return GegnerBase.Beschwörbares == null ? null : (int?)GegnerBase.Beschwörbares.Beschwörung;
             }
         }
 
@@ -542,7 +542,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return GegnerBase.Kontrolle;
+                return GegnerBase.Beschwörbares == null ? null : GegnerBase.Beschwörbares.Kontrolle;
             }
         }
 
@@ -550,7 +550,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return GegnerBase.Beschwörungskosten;
+                return GegnerBase.Beschwörbares == null ? null : GegnerBase.Beschwörbares.Beschwörungskosten;
             }
         }
 

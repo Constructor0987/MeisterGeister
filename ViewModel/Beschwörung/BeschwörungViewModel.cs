@@ -15,26 +15,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
 {
     public abstract class BeschwörungViewModel : Base.ViewModelBase
     {
-        public const string MOD_SCHWIERIGKEIT = "Schwierigkeit";
-        public const string MOD_NAME = "WahrerName";
-        public const string MOD_MATERIAL = "Material";
-        public const string MOD_AUSRÜSTUNG = "Ausrüstung";
-        public const string MOD_BLUTMAGIE = "Blutmagie";
-        public const string MOD_STERNE = "Sterne";
-        public const string MOD_ORT = "Ort";
-        public const string MOD_BEFEHL = "Befehl";
-        public const string MOD_DAUER = "Dauer";
-        public const string MOD_BEZAHLUNG = "Bezahlung";
-        public const string MOD_DONARIA = "Donaria";
-        public const string MOD_SONSTIGES = "Sonstiges";
-        public const string MOD_BESCHWÖRUNGS_PUNKTE = "Beschwörungspunkte";
-
-        private Dictionary<string, BeschwörungsModifikator> mods;
-        public Dictionary<string, BeschwörungsModifikator> Mods
-        {
-            get { return mods; }
-        }
-
         public BeschwörungViewModel()
             : base(View.General.ViewHelper.ShowProbeDialog)
         {
@@ -51,6 +31,21 @@ namespace MeisterGeister.ViewModel.Beschwörung
             PropertyChanged += onPropertyChanged;
         }
 
+        #region Mods
+        public const string MOD_SCHWIERIGKEIT = "Schwierigkeit";
+        public const string MOD_NAME = "WahrerName";
+        public const string MOD_MATERIAL = "Material";
+        public const string MOD_AUSRÜSTUNG = "Ausrüstung";
+        public const string MOD_BLUTMAGIE = "Blutmagie";
+        public const string MOD_STERNE = "Sterne";
+        public const string MOD_ORT = "Ort";
+        public const string MOD_BEFEHL = "Befehl";
+        public const string MOD_DAUER = "Dauer";
+        public const string MOD_BEZAHLUNG = "Bezahlung";
+        public const string MOD_DONARIA = "Donaria";
+        public const string MOD_SONSTIGES = "Sonstiges";
+        public const string MOD_BESCHWÖRUNGS_PUNKTE = "Beschwörungspunkte";
+
         protected BeschwörungsModifikator<int, int> schwierigkeit;
         protected BeschwörungsModifikator<int> name;
         protected BeschwörungsModifikator<int> material;
@@ -62,6 +57,12 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected BeschwörungsModifikator<int> befehl;
         protected BeschwörungsModifikator<int> dauer;
         protected BeschwörungsModifikator<int> bezahlung;
+
+        private Dictionary<string, BeschwörungsModifikator> mods;
+        public Dictionary<string, BeschwörungsModifikator> Mods
+        {
+            get { return mods; }
+        }
 
         private void initMods()
         {
@@ -147,6 +148,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             return (int)Math.Round(a / (double)b, MidpointRounding.AwayFromZero);
         }
+        #endregion
 
         private void mod_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -158,10 +160,14 @@ namespace MeisterGeister.ViewModel.Beschwörung
             {
                 OnChanged("GesamtHerrschMod");
             }
-            else if(e.PropertyName == "ZauberMod")
+            else if (e.PropertyName == "ZauberMod")
             {
                 OnChanged("ZauberWert");
                 OnChanged("KontrollWert");
+            }
+            else if (e.PropertyName == "KostenMod")
+            {
+                OnChanged("GesamtAstralKosten");
             }
         }
 
@@ -190,6 +196,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             //Held = null;
             //Zauber = null;
             Status = BeschwörungsStatus.Beschwören;
+            ZauberKosten = 0;
 
             //Hier werden Held und Wesen nochmal gesetzt um die Standardwerte zu laden
             Held = Held;
@@ -307,11 +314,17 @@ namespace MeisterGeister.ViewModel.Beschwörung
             set
             {
                 Set(ref beschworenesWesen, value);
-                if (beschworenesWesen != null)
-                {
-                    ((BeschwörungsModifikator<int, int>)mods[MOD_SCHWIERIGKEIT]).Value1 = beschworenesWesen.Beschwörung ?? 0;
-                    ((BeschwörungsModifikator<int, int>)mods[MOD_SCHWIERIGKEIT]).Value2 = beschworenesWesen.Kontrolle ?? 0;
-                }
+                checkBeschworenesWesen();
+            }
+        }
+
+        protected virtual void checkBeschworenesWesen()
+        {
+            if (beschworenesWesen != null)
+            {
+                schwierigkeit.Value1 = beschworenesWesen.Beschwörbares.Beschwörung;
+                schwierigkeit.Value2 = beschworenesWesen.Beschwörbares.Kontrolle ?? 0;
+                schwierigkeit.GetKostenMod = () => beschworenesWesen.Beschwörbares.Beschwörungskosten ?? 0;
             }
         }
 
@@ -323,8 +336,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
         }
         public override void UnregisterEvents()
         {
-            base.UnregisterEvents();
             Global.HeldSelectionChanged -= Global_HeldSelectionChanged;
+            base.UnregisterEvents();
         }
 
         private void Global_HeldSelectionChanged(object sender, EventArgs e)
@@ -336,7 +349,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             if (e.PropertyName == "Held")
             {
-                getZauber();
                 checkHeld();
             }
         }
@@ -353,6 +365,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected virtual void checkHeld()
         {
+            getZauber();
         }
 
         private bool? beschwörungGelungen = null;
@@ -489,6 +502,18 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
         }
 
+        private int zauberKosten;
+        public int ZauberKosten
+        {
+            get { return zauberKosten; }
+            set
+            {
+                Set(ref zauberKosten, value);
+                OnChanged("GesamtAstralKosten");
+            }
+        }
+
+
         /// <summary>
         /// Gesamtkosten der Beschwörung
         /// </summary>
@@ -496,7 +521,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             get
             {
-                return mods.Values.Sum((mod) => mod.KostenMod);
+                return mods.Values.Sum((mod) => mod.KostenMod) + ZauberKosten;
             }
         }
 

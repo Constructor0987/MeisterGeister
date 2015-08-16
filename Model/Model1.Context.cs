@@ -139,11 +139,35 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Ausrüstung_Setting> _ausrüstung_Setting;
     
+        public ObjectSet<Beschwörbares> Beschwörbares
+        {
+            get { return _beschwörbares  ?? (_beschwörbares = CreateObjectSet<Beschwörbares>("Beschwörbares")); }
+        }
+        private ObjectSet<Beschwörbares> _beschwörbares;
+    
+        public ObjectSet<Dämon> Dämon
+        {
+            get { return _dämon  ?? (_dämon = CreateObjectSet<Dämon>("Dämon")); }
+        }
+        private ObjectSet<Dämon> _dämon;
+    
+        public ObjectSet<Dämon_Domäne> Dämon_Domäne
+        {
+            get { return _dämon_Domäne  ?? (_dämon_Domäne = CreateObjectSet<Dämon_Domäne>("Dämon_Domäne")); }
+        }
+        private ObjectSet<Dämon_Domäne> _dämon_Domäne;
+    
         public ObjectSet<Einstellung> Einstellung
         {
             get { return _einstellung  ?? (_einstellung = CreateObjectSet<Einstellung>("Einstellung")); }
         }
         private ObjectSet<Einstellung> _einstellung;
+    
+        public ObjectSet<Elementarwesen> Elementarwesen
+        {
+            get { return _elementarwesen  ?? (_elementarwesen = CreateObjectSet<Elementarwesen>("Elementarwesen")); }
+        }
+        private ObjectSet<Elementarwesen> _elementarwesen;
     
         public ObjectSet<Farbe> Farbe
         {
@@ -498,8 +522,16 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Ausrüstung;
     		if(typeof(T) == typeof(Ausrüstung_Setting))
     				return (ObjectSet<T>)(Object)Ausrüstung_Setting;
+    		if(typeof(T) == typeof(Beschwörbares))
+    				return (ObjectSet<T>)(Object)Beschwörbares;
+    		if(typeof(T) == typeof(Dämon))
+    				return (ObjectSet<T>)(Object)Dämon;
+    		if(typeof(T) == typeof(Dämon_Domäne))
+    				return (ObjectSet<T>)(Object)Dämon_Domäne;
     		if(typeof(T) == typeof(Einstellung))
     				return (ObjectSet<T>)(Object)Einstellung;
+    		if(typeof(T) == typeof(Elementarwesen))
+    				return (ObjectSet<T>)(Object)Elementarwesen;
     		if(typeof(T) == typeof(Farbe))
     				return (ObjectSet<T>)(Object)Farbe;
     		if(typeof(T) == typeof(Fernkampfwaffe))
@@ -637,8 +669,16 @@ namespace MeisterGeister.Model
     				return Ausrüstung;
     		if(t == typeof(Ausrüstung_Setting))
     				return Ausrüstung_Setting;
+    		if(t == typeof(Beschwörbares))
+    				return Beschwörbares;
+    		if(t == typeof(Dämon))
+    				return Dämon;
+    		if(t == typeof(Dämon_Domäne))
+    				return Dämon_Domäne;
     		if(t == typeof(Einstellung))
     				return Einstellung;
+    		if(t == typeof(Elementarwesen))
+    				return Elementarwesen;
     		if(t == typeof(Farbe))
     				return Farbe;
     		if(t == typeof(Fernkampfwaffe))

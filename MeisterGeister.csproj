@@ -116,8 +116,12 @@
       <HintPath>.\DG-Suche.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -171,6 +175,7 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -311,8 +316,20 @@
     <Compile Include="Model\Ausrüstung_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Beschwörbares_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dämon_Domäne_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Dämon_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Einstellung.cs" />
     <Compile Include="Model\Einstellung_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Elementarwesen_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Extensions\ValidatePropertyChanging.cs" />
@@ -817,6 +834,7 @@
     </Compile>
     <Compile Include="View\General\ImagePathConverter.cs" />
     <Compile Include="View\General\InverseBooleanConverter.cs" />
+    <Compile Include="View\Beschwörung\DämonenListViewConverter.cs" />
     <Compile Include="View\General\LiteraturControl.xaml.cs">
       <DependentUpon>LiteraturControl.xaml</DependentUpon>
     </Compile>
@@ -2037,7 +2055,21 @@
     <Resource Include="Images\Icons\Elemente\Luft.png" />
     <Resource Include="Images\Icons\Elemente\Wasser.png" />
     <Resource Include="Images\Icons\pflanzenschriftrolle.png" />
+    <Resource Include="Images\Icons\Domänen\Agrimoth.png" />
+    <Resource Include="Images\Icons\Domänen\Amazeroth.png" />
+    <Resource Include="Images\Icons\Domänen\Asfaloth.png" />
+    <Resource Include="Images\Icons\Domänen\Belhalhar.png" />
+    <Resource Include="Images\Icons\Domänen\Belkelel.png" />
+    <Resource Include="Images\Icons\Domänen\Belshirash.png" />
+    <Resource Include="Images\Icons\Domänen\Belzhorash.png" />
+    <Resource Include="Images\Icons\Domänen\Blakharaz.png" />
+    <Resource Include="Images\Icons\Domänen\Charyptoroth.png" />
+    <Resource Include="Images\Icons\Domänen\Lolgramoth.png" />
+    <Resource Include="Images\Icons\Domänen\Tasfarelel.png" />
+    <Resource Include="Images\Icons\Domänen\Thargunitoth.png" />
+    <Resource Include="Images\Icons\Domänen\Namenloser.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0104.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0105.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

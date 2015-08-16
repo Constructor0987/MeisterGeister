@@ -29,12 +29,26 @@ namespace MeisterGeister.View.General
             UIElement element = (UIElement)obj;
             if(e.OldValue != null)
             {
-                element.IsVisibleChanged -= element_IsVisibleChanged;
+                deactivateVM(element, (ViewModelBase)e.OldValue);
             }
             if(e.NewValue != null)
             {
-                element.IsVisibleChanged += element_IsVisibleChanged;
+                activateVM(element, (ViewModelBase)e.NewValue);
             }
+        }
+
+        private static void activateVM(UIElement element, ViewModelBase vm)
+        {
+            element.IsVisibleChanged += element_IsVisibleChanged;
+            if (element.IsVisible)
+                vm.RegisterEvents();
+        }
+
+        private static void deactivateVM(UIElement element, ViewModelBase vm)
+        {
+            if (element.IsVisible)
+                vm.UnregisterEvents();
+            element.IsVisibleChanged -= element_IsVisibleChanged;
         }
 
         private static void element_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

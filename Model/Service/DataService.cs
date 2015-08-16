@@ -23,7 +23,8 @@ namespace MeisterGeister.Model.Service
         /// </summary>
         public List<Model.Zauber> ZauberListe
         {
-            get {
+            get
+            {
                 return Context.Setting.Where(s => s.Aktiv == true).SelectMany(s => s.Zauber_Setting.Select(s_s => s_s.Zauber)).ToList().Distinct().ToList();
             }
         }
@@ -202,7 +203,7 @@ namespace MeisterGeister.Model.Service
         public Einstellung LoadEinstellungByName(string name)
         {
             //Dies sorgt dafür dass die Datenbankzugriffe für Einstellungen aus dem richtigen Thread geschehen. Es ist eine Lösung, die man generalisieren könnte um den Datenbankzugriff generell threadsicher zu machen.
-            if(System.Windows.Threading.Dispatcher.CurrentDispatcher != _dispatcher)
+            if (System.Windows.Threading.Dispatcher.CurrentDispatcher != _dispatcher)
             {
                 return (Einstellung)_dispatcher.Invoke((Func<string, Einstellung>)LoadEinstellungByName, name);
             }
@@ -292,7 +293,7 @@ namespace MeisterGeister.Model.Service
                 if (unueblicheKulturen)
                     return Liste<Model.Rasse>()
                         .Where(r => r.Name == rasse)
-                        .Join(Context.Rasse_Kultur,  r => r.RasseGUID, rk => rk.RasseGUID, (r, rk) => rk)
+                        .Join(Context.Rasse_Kultur, r => r.RasseGUID, rk => rk.RasseGUID, (r, rk) => rk)
                         .Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k)
                         .Select(k => k.Name).Distinct().OrderBy(n => n).ToList();
                 else
@@ -385,12 +386,74 @@ namespace MeisterGeister.Model.Service
         #region Beschwörung
         public List<GegnerBase> LoadDämonen()
         {
-            return Context.GegnerBase.Where(g => g.Typ == "Dämon").ToList();
+            return Context.GegnerBase.Where(g => g.Typ == "Dämon" && g.Beschwörbares != null && g.Beschwörbares.Dämon != null).ToList();
+        }
+        public List<GegnerBase> GetDämonenByKlasse(GegnerBase dämon)
+        {
+            var alle = from gegner in Context.GegnerBase where gegner.Typ == "Dämon" && gegner.Beschwörbares != null select gegner;
+            var domänen = from wesen in alle.ToList()
+                          join domäne1 in Context.Dämon_Domäne
+                            on wesen.GegnerBaseGUID equals domäne1.GegnerBaseGUID
+                          join domäne2 in dämon.Beschwörbares.Dämon.Dämon_Domäne
+                            on domäne1.Domäne equals domäne2.Domäne
+                          where (wesen.Beschwörbares.Dämon.Hörner == 0) == (dämon.Beschwörbares.Dämon.Hörner == 0)
+                          select wesen;
+            return domänen.ToList();
+        }
+        public List<GegnerBase> GetDämonenByDomäne(GegnerBase dämon)
+        {
+            var alle = from gegner in Context.GegnerBase where gegner.Typ == "Dämon" && gegner.Beschwörbares != null select gegner;
+            var domänen = from wesen in alle.ToList()
+                          join domäne1 in Context.Dämon_Domäne
+                            on wesen.GegnerBaseGUID equals domäne1.GegnerBaseGUID
+                          join domäne2 in dämon.Beschwörbares.Dämon.Dämon_Domäne
+                            on domäne1.Domäne equals domäne2.Domäne
+                          select wesen;
+            return domänen.ToList();
+        }
+        public GegnerBase GetLeichtererDämon(GegnerBase dämon)
+        {
+            var möglichkeiten = from wesen in GetDämonenByKlasse(dämon)
+                                where wesen.Beschwörbares.Beschwörung < dämon.Beschwörbares.Beschwörung
+                                orderby wesen.Beschwörbares.Beschwörung descending
+                                select wesen;
+            if (möglichkeiten.Count() == 0) return null;
+            else return möglichkeiten.First();
+        }
+
+        public GegnerBase GetSchwerererDämon(GegnerBase dämon)
+        {
+            var möglichkeiten = from wesen in GetDämonenByKlasse(dämon)
+                                where wesen.Beschwörbares.Beschwörung > dämon.Beschwörbares.Beschwörung
+                                orderby wesen.Beschwörbares.Beschwörung ascending
+                                select wesen;
+            if (möglichkeiten.Count() == 0) return null;
+            else return möglichkeiten.First();
+        }
+
+        public GegnerBase GetGehörntererDämonAusDomäne(GegnerBase dämon)
+        {
+            var möglichkeiten = from wesen in GetDämonenByDomäne(dämon)
+                                where wesen.Beschwörbares.Dämon.Hörner > 0 && wesen.Beschwörbares.Beschwörung > dämon.Beschwörbares.Beschwörung
+                                orderby wesen.Beschwörbares.Beschwörung ascending
+                                select wesen;
+            if (möglichkeiten.Count() == 0) return null;
+            else return möglichkeiten.First();
+        }
+
+        public GegnerBase GetGehörntererDämon(GegnerBase dämon)
+        {
+            var möglichkeiten = from wesen in LoadDämonen()
+                                where wesen.Beschwörbares.Dämon.Hörner > 0 && wesen.Beschwörbares.Beschwörung > dämon.Beschwörbares.Beschwörung
+                                orderby wesen.Beschwörbares.Beschwörung ascending
+                                select wesen;
+            if (möglichkeiten.Count() == 0) return null;
+            else return möglichkeiten.First();
         }
 
         public List<GegnerBase> LoadElementare()
         {
-            return Context.GegnerBase.Where(g => g.Typ == "Elementar").ToList();
+            return Context.GegnerBase.Where(g => g.Typ == "Elementar" && g.Beschwörbares != null && g.Beschwörbares.Kontrolle != null).ToList();
         }
 
         public List<GegnerBase> LoadGeister()

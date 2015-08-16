@@ -30,6 +30,15 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 affinität.Value = false;
         }
 
+        protected override void checkBeschworenesWesen()
+        {
+            base.checkBeschworenesWesen();
+            if(BeschworenesWesen != null)
+            {
+                Hörner = BeschworenesWesen.Beschwörbares.Dämon.Hörner ?? 0;
+            }
+        }
+
         protected override List<GegnerBase> loadWesen()
         {
             return Global.ContextHeld.LoadDämonen();
@@ -37,11 +46,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override void reset()
         {
-            base.reset();
             Hörner = 0;
             AndererDämon = false;
+
+            base.reset();
+
             BeschwörungMisslungenErgebnis = BeherrschungMisslungenErgebnis = String.Empty;
-            würfleBeschwörungMisslungen = new Base.CommandBase((o) => würfleBeschwörungMisslungenEffekt(), (o) => Status == BeschwörungsStatus.BeschwörungMisslungen);
+            WürfleBeschwörungMisslungen = new Base.CommandBase((o) => würfleBeschwörungMisslungenEffekt(), (o) => Status == BeschwörungsStatus.BeschwörungMisslungen);
             WürfleBeherrschungMisslungen = null;
         }
 
@@ -57,38 +68,42 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void würfleBeschwörungMisslungenEffekt()
         {
+            GegnerBase wesen;
             int wurf = View.General.ViewHelper.ShowWürfelDialog(blutmagie.Value1 ? "3W6" : "2W6", "Beschwörung Misslungen");
             if (name.Value == 0) wurf += 7;
             if (wurf <= 6)
             {
+                wesen = null;
                 BeschwörungMisslungenErgebnis = "Außer einem kalten, übel riechenden Hauch erscheint ... nichts. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
                 //Button deaktivieren
                 WürfleBeschwörungMisslungen = new Base.CommandBase((o) => { }, (o) => false);
             }
-            else if (wurf <= 11)
+            else if (wurf <= 11 && (wesen = Global.ContextHeld.GetLeichtererDämon(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von niedrigerer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von niedrigerer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
-            else if (wurf <= 15)
+            else if (wurf <= 15 && (wesen = Global.ContextHeld.GetSchwerererDämon(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von höherer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
-            else if (wurf <= 19)
+            else if (wurf <= 19 && (wesen = Global.ContextHeld.GetGehörntererDämonAusDomäne(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne, jedoch auf jeden Fall ein Gehörnter Dämon von höherer Beschwörungsschwierigkeit. Existiert kein solcher Dämon, gilt die nächst höhere Auswirkung. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1 Punkt Verfall. Die Beschwörungskosten betragen 19 AsP.";
+                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne, jedoch auf jeden Fall ein Gehörnter Dämon von höherer Beschwörungsschwierigkeit. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1 Punkt Verfall. Die Beschwörungskosten betragen 19 AsP.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else
             {
+                wesen = Global.ContextHeld.GetGehörntererDämon(BeschworenesWesen);
                 BeschwörungMisslungenErgebnis = "Es erscheint ein Gehörnter Dämon von höherer Beschwörungs-Schwierigkeit, unabhängig von der Domäne des Gerufenen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1W6 Punkte Verfall. Die Beschwörungskosten betragen 19 AsP.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
+            BeschworenesWesen = wesen;
         }
 
         protected override void beherrschungMisslungen(ProbenErgebnis erg)
@@ -232,6 +247,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         private BeschwörungsModifikator<int> paktierer;
         private BeschwörungsModifikator<bool, bool> invocatioIntegra;
         private new BeschwörungsModifikator<bool, Opfer> blutmagie;
+        private new BeschwörungsModifikator<int, int> befehl;
         private BeschwörungsModifikator<int> invocatioMalen;
         private BeschwörungsModifikator<int> invocatioMagiekunde;
 
@@ -239,6 +255,17 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             //Bei der Dämonenbeschwörung entfällt die materielle Komponente
             Mods.Remove(MOD_MATERIAL);
+
+            //Bei der Dämonenbeschwörung muss der Beschwörer die Dienstkosten selbst tragen
+            Mods.Remove(MOD_BEFEHL);
+            befehl = new BeschwörungsModifikator<int, int>();
+            befehl.GetKontrollMod = () => befehl.Value1;
+            befehl.GetKostenMod = () => befehl.Value2;
+            Mods.Add(MOD_BEFEHL, befehl);
+            befehl.PropertyChanged += (s, e) => bezahlung.Invalidate();
+
+            //Die Zusätzliche Bezahlung bezieht sich auf die Dienstkosten
+            bezahlung.GetKostenMod = () => (int)Math.Round(-bezahlung.Value * 0.2 * befehl.KostenMod, MidpointRounding.AwayFromZero);
 
             //Wenn ein anderer Dämon erscheint als der gerufene wird die Kontrollschwierigkeit verdoppelt
             schwierigkeit.GetKontrollMod = () => schwierigkeit.Value2 * (AndererDämon ? 2 : 1);
@@ -329,7 +356,16 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 if (hörner == 0)
                     invocatioIntegra.Value1 = false;
                 //Der Zauber für die Beschwörung ist bei gehörnten Dämonen ein anderer
-                Zauber = Hörner == 0 ? "Invocatio minor" : "Invocatio maior";
+                if (Hörner == 0)
+                {
+                    Zauber = "Invocatio minor";
+                    ZauberKosten = 11;
+                }
+                else
+                {
+                    Zauber = "Invocatio maior";
+                    ZauberKosten = 19;
+                }
             }
         }
 

@@ -408,11 +408,11 @@
                             </Grid.ColumnDefinitions>
                             <!-- Beschwörung, Beschwörungskosten, GW, Jagd, Kontrolle -->
                             <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Beschwörbares.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                             <Label   Grid.Row="0" Grid.Column="2" Content="Kosten:" />
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Beschwörungskosten}" Margin="2" ShowButtons="True" CanBeNull="True" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Beschwörbares.Beschwörungskosten}" Margin="2" ShowButtons="True" CanBeNull="True" />
                             <Label   Grid.Row="1" Grid.Column="0" Content="Kontrolle:" />
-                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Kontrolle}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Beschwörbares.Kontrolle}" Margin="2" ShowButtons="True" CanBeNull="True"/>
 
                             <Label   Grid.Row="1" Grid.Column="2" Content="GW:" />
                             <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.GW}" Margin="2" ShowButtons="True" CanBeNull="True" ToolTip="Gefahrenwert" />

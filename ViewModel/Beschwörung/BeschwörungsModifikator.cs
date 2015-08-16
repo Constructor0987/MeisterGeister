@@ -57,6 +57,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get { return getKostenMod(); }
         }
 
+
         public void Invalidate()
         {
             OnPropertyChanged("AnrufungsMod");

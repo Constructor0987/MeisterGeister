@@ -7,13 +7,5 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Beschwörung
 {
-    public enum ElementarWesen
-    {
-        [Description("Elementargeist")]
-        Elementargeist,
-        [Description("Dschinn")]
-        Dschinn,
-        [Description("Elementarer Meister")]
-        ElementarerMeister
-    }
+    
 }

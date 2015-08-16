@@ -418,42 +418,6 @@ namespace MeisterGeister.Model
         private Nullable<int> _jagd;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> Beschwörung
-        {
-            get { return _beschwörung; }
-            set
-    		{ 
-    			Set(ref _beschwörung, value);
-    		}
-    
-        }
-        private Nullable<int> _beschwörung;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Kontrolle
-        {
-            get { return _kontrolle; }
-            set
-    		{ 
-    			Set(ref _kontrolle, value);
-    		}
-    
-        }
-        private Nullable<int> _kontrolle;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Beschwörungskosten
-        {
-            get { return _beschwörungskosten; }
-            set
-    		{ 
-    			Set(ref _beschwörungskosten, value);
-    		}
-    
-        }
-        private Nullable<int> _beschwörungskosten;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Tags
         {
             get { return _tags; }
@@ -578,6 +542,22 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
+        public virtual Beschwörbares Beschwörbares
+        {
+            get { return _beschwörbares; }
+            set
+            {
+                if (!ReferenceEquals(_beschwörbares, value))
+                {
+                    var previousValue = _beschwörbares;
+                    _beschwörbares = value;
+                    FixupBeschwörbares(previousValue);
+                }
+            }
+        }
+        private Beschwörbares _beschwörbares;
+    
+    	[DataMember]
         public virtual ICollection<Gegner> Gegner
         {
             get
@@ -679,6 +659,20 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private void FixupBeschwörbares(Beschwörbares previousValue)
+        {
+    		OnChanged("Beschwörbares");
+            if (previousValue != null && ReferenceEquals(previousValue.GegnerBase, this))
+            {
+                previousValue.GegnerBase = null;
+            }
+    
+            if (Beschwörbares != null)
+            {
+                Beschwörbares.GegnerBase = this;
+            }
+        }
     
         private void FixupGegner(object sender, NotifyCollectionChangedEventArgs e)
         {

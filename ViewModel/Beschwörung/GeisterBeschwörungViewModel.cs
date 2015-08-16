@@ -11,6 +11,28 @@ namespace MeisterGeister.ViewModel.Beschwörung
     {
         private const string AFFINITÄT = "Affinität zu Geistern";
 
+        private const string MOD_TAG = "Tag";
+        private const string MOD_AFFINITÄT = "Affinität";
+
+        private BeschwörungsModifikator<bool> tag;
+        private BeschwörungsModifikator<bool> affinität;
+
+        protected override void addMods()
+        {
+            //Da sich die Bezahlung auf die Dienstkosten bezieht, entfällt diese bei Wesen, die ihre Dienstkosten selbst tragen
+            Mods.Remove(MOD_BEZAHLUNG);
+
+            //Geisterbeschwörung ist tagsüber um 7 erschwert
+            tag = new BeschwörungsModifikator<bool>();
+            tag.GetAnrufungsMod = () => tag.Value ? 7 : 0;
+            Mods.Add(MOD_TAG, tag);
+
+            //Affinität zu Geistern erleichtert die Probe um 3
+            affinität = new BeschwörungsModifikator<bool>();
+            affinität.GetKontrollMod = () => affinität.Value ? -3 : 0;
+            Mods.Add(MOD_AFFINITÄT, affinität);
+        }
+
         public GeisterBeschwörungViewModel()
         {
             Zauber = "Geisterruf";
@@ -38,23 +60,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public override string KontrollFormel
         {
             get { return "(MU + IN + CH + CH + ZfW) / 5"; }
-        }
-
-        private const string MOD_TAG = "Tag";
-        private const string MOD_AFFINITÄT = "Affinität";
-
-        private BeschwörungsModifikator<bool> tag;
-        private BeschwörungsModifikator<bool> affinität;
-
-        protected override void addMods()
-        {
-            tag = new BeschwörungsModifikator<bool>();
-            tag.GetAnrufungsMod = () => tag.Value ? 7 : 0;
-            Mods.Add(MOD_TAG, tag);
-
-            affinität = new BeschwörungsModifikator<bool>();
-            affinität.GetKontrollMod = () => affinität.Value ? -3 : 0;
-            Mods.Add(MOD_AFFINITÄT, affinität);
         }
     }
 }
