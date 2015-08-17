@@ -100,7 +100,10 @@ namespace MeisterGeister.ViewModel.Helden
             // Prüfen, ob ein ausgeblendeter Tab ausgewält ist
             if (SelectedTabItem == null
                 || SelectedTabItem.Visibility != System.Windows.Visibility.Visible)
-                SelectedTabIndex--;
+            {
+                if (SelectedTabIndex > 0)
+                    SelectedTabIndex--;
+            }
         }
 
         #endregion
