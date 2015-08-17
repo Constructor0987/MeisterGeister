@@ -19,7 +19,8 @@ namespace MeisterGeister.Net
 
         private void OnServerStateChanged(States state)
         {
-            ServerStateChanged?.Invoke(state);
+            if (ServerStateChanged != null)
+                ServerStateChanged.Invoke(state);
         }
 
         #endregion

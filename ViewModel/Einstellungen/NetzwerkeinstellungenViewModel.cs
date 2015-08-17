@@ -25,13 +25,13 @@ namespace MeisterGeister.ViewModel.Settings
                     case Server.States.Stopped:
                         return "Webserver inaktiv";
                     case Server.States.Starting:
-                        return $"Webserver wird auf Port {port} gestartet ...";
+                        return "Webserver wird auf Port {port} gestartet ...";
                     case Server.States.Started:
-                        return $"Webserver aktiv auf Port {port}";
+                        return "Webserver aktiv auf Port {port}";
                     case Server.States.Stopping:
                         return "Webserver wird angehalten";
                 }
-                return $"Ups! Es gibt leider keinen Text für den Status {status}";
+                return "Ups! Es gibt leider keinen Text für den Status {status}";
             }
         }
 
