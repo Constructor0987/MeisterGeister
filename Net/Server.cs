@@ -3,6 +3,8 @@ using Microsoft.Owin.Hosting;
 using System;
 using System.Reflection;
 using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.Net
@@ -27,13 +29,18 @@ namespace MeisterGeister.Net
 
         #region Serverstatus
 
-        private static AutoResetEvent _shutdownEvent = new AutoResetEvent(false);
-        private static AutoResetEvent _startupEvent = new AutoResetEvent(false);
+        private static readonly AutoResetEvent _shutdownEvent = new AutoResetEvent(false);
+        private static readonly AutoResetEvent _startupEvent = new AutoResetEvent(false);
 
 
         private Thread _workerThread;
         private readonly Object _lock = new Object();
         private States _status = States.Stopped;
+
+        private bool IsMainThread()
+        {
+            return Application.Current.Dispatcher.Thread == Thread.CurrentThread;
+        }
 
         public States Status
         {
@@ -43,7 +50,14 @@ namespace MeisterGeister.Net
                 if (value != _status)
                 {
                     _status = value;
-                    OnServerStateChanged(value);
+                    if (IsMainThread())
+                    {
+                        OnServerStateChanged(value);
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(new Action(() => OnServerStateChanged(value)));
+                    }
                 }
             }
         }

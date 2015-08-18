@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using MeisterGeister.Net;
 using MeisterGeister.ViewModel.Base;
 
@@ -39,7 +40,9 @@ namespace MeisterGeister.ViewModel.Settings
 
         private bool CanToggleWebServerStatus(object arg)
         {
-            return Global.WebServer.Status == Server.States.Started || Global.WebServer.Status == Server.States.Stopped;
+            bool canToggleWebServerStatus = Global.WebServer.Status == Server.States.Started || Global.WebServer.Status == Server.States.Stopped;
+            Console.Out.WriteLine($"State {Global.WebServer.Status}, Auswertung {canToggleWebServerStatus}");
+            return canToggleWebServerStatus;
         }
 
         private void ToggleWebServerStatus(object obj)
@@ -70,6 +73,7 @@ namespace MeisterGeister.ViewModel.Settings
         [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
         private void WebServer_ServerStateChanged(Server.States state)
         {
+            OnToggleWebServerStatus.Invalidate();
             OnChanged("WebServerStatusText");
         }
     }
