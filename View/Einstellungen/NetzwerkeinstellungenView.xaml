@@ -12,7 +12,7 @@
             <DockPanel>
                 <Button HorizontalAlignment="Left" Margin="10" DockPanel.Dock="Left"
                         Command="{Binding OnToggleWebServerStatus}">
-                    <TextBlock Text="Toggle" Margin="4" />
+                    <TextBlock Text="Server starten" Margin="4" />
                 </Button>
                 <TextBlock Text="{Binding WebServerStatusText}" Margin="14" HorizontalAlignment="Right" />
             </DockPanel>

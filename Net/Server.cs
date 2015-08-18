@@ -22,7 +22,7 @@ namespace MeisterGeister.Net
         private void OnServerStateChanged(States state)
         {
             if (ServerStateChanged != null)
-                ServerStateChanged.Invoke(state);
+                ServerStateChanged(state);
         }
 
         #endregion
@@ -37,7 +37,7 @@ namespace MeisterGeister.Net
         private readonly Object _lock = new Object();
         private States _status = States.Stopped;
 
-        private bool IsMainThread()
+        private static bool IsMainThread()
         {
             return Application.Current.Dispatcher.Thread == Thread.CurrentThread;
         }

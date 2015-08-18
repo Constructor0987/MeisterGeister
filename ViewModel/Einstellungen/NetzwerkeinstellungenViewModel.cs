@@ -1,9 +1,9 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using MeisterGeister.Net;
 using MeisterGeister.ViewModel.Base;
 
 // ReSharper disable once CheckNamespace
+
 namespace MeisterGeister.ViewModel.Settings
 {
     public class NetzwerkeinstellungenViewModel : ViewModelBase
@@ -26,23 +26,22 @@ namespace MeisterGeister.ViewModel.Settings
                     case Server.States.Stopped:
                         return "Webserver inaktiv";
                     case Server.States.Starting:
-                        return "Webserver wird auf Port {port} gestartet ...";
+                        return string.Format("Webserver wird auf Port {0} gestartet ...", port);
                     case Server.States.Started:
-                        return "Webserver aktiv auf Port {port}";
+                        return string.Format("Webserver aktiv auf Port {0}", port);
                     case Server.States.Stopping:
                         return "Webserver wird angehalten";
                 }
-                return "Ups! Es gibt leider keinen Text für den Status {status}";
+                return string.Format("Ups! Es gibt leider keinen Text für den Status {0}", status);
             }
         }
 
-        public CommandBase OnToggleWebServerStatus { get; private set; }
+        public CommandBase OnToggleWebServerStatus { get; }
 
         private bool CanToggleWebServerStatus(object arg)
         {
-            bool canToggleWebServerStatus = Global.WebServer.Status == Server.States.Started || Global.WebServer.Status == Server.States.Stopped;
-            Console.Out.WriteLine($"State {Global.WebServer.Status}, Auswertung {canToggleWebServerStatus}");
-            return canToggleWebServerStatus;
+            return Global.WebServer.Status == Server.States.Started ||
+                   Global.WebServer.Status == Server.States.Stopped;
         }
 
         private void ToggleWebServerStatus(object obj)
