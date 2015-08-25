@@ -138,13 +138,6 @@ namespace MeisterGeister.View.Windows
                         msg += "\n  " + ((item != null) ? item.ToString() : "null");
                 }
             }
-            if (ex is System.Data.UpdateException)
-            {
-                System.Data.UpdateException exDet = (System.Data.UpdateException)ex;
-                msg += "\nStateEntries: ";
-                foreach (var item in exDet.StateEntries)
-                    msg += item.State + " - " + (item.Entity ?? "null") + "\n   ";
-            }
             if (ex is System.Data.Entity.Core.UpdateException)
             {
                 System.Data.Entity.Core.UpdateException exUpd = (System.Data.Entity.Core.UpdateException)ex;

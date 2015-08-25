@@ -8,7 +8,6 @@ using System.Diagnostics;
 
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Core.EntityClient;
-using System.Data.Objects.SqlClient;
 using System.Xml;
 using System.Windows;
 
