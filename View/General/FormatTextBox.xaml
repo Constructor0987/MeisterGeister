@@ -371,7 +371,7 @@
                     </WrapPanel>
                 </Border>
                 <RichTextBox x:Name="RTBNotiz" Grid.Row="1" Padding="10" TextChanged="RTBNotiz_TextChanged" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource BackgroundPergamentQuer}" SelectionChanged="RTBNotiz_SelectionChanged" />
-                <Button Background="LightGray" Opacity="0.8" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Menüband ein-/ausblenden" Margin="5,5,5,-50" Command="{Binding OnMenuVisible}" FontWeight="Bold" Style="{StaticResource menuVisibleButtonStyle}" />
+                <Button Background="LightGray" Opacity="0.8" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Menüband ein-/ausblenden" Margin="5,5,5,-50" Command="{Binding OnMenuVisible}" FontWeight="Bold" Style="{StaticResource menuVisibleButtonStyle}" Padding="0"/>
             </Grid>
         </Grid>
     </Grid>

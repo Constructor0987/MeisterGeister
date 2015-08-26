@@ -209,7 +209,8 @@
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
     
-	<Style TargetType="{x:Type Button}">    		        				
+	<Style TargetType="{x:Type Button}">   
+        <Setter Property="Padding" Value="4"/>
 		<Setter Property="Background" Value="Transparent" />		
 		<Setter Property="BorderThickness" Value="0" />				
 		<Setter Property="Template">			
@@ -321,8 +322,8 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="border1" Background="{TemplateBinding Background}" CornerRadius="3" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
-                        <Border x:Name="border" CornerRadius="3" Background="#00000000" BorderThickness="1">                        	
-                        	<Border.BorderBrush>
+                        <Border x:Name="border" CornerRadius="3" Background="#00000000" BorderThickness="1">
+                            <Border.BorderBrush>
                         		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         			<GradientStop Color="#4C000000"/>
                         			<GradientStop Color="#4C000000" Offset="1"/>
@@ -332,7 +333,7 @@
                         		</LinearGradientBrush>
                         	</Border.BorderBrush>
                         </Border>
-                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" Content="{TemplateBinding Content}" VerticalAlignment="Center" />
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" Content="{TemplateBinding Content}" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

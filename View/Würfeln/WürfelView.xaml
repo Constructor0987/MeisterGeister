@@ -36,23 +36,23 @@
                         <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Height="55" Margin="5" Width="55" Tag="6" Click="ButtonWürfel_Click"  ToolTip="W6 (6-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                    <Button Height="55" Margin="5" Width="55" Tag="6" Click="ButtonWürfel_Click"  ToolTip="W6 (6-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige" Padding="0">
                                         <Image Source="/Images/Icons/Wuerfel/w6.png" Stretch="Uniform" />
                                     </Button>
-                                    <Button Height="55" Margin="5" Width="55" Tag="10" Click="ButtonWürfel_Click"  ToolTip="W10 (10-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                    <Button Height="55" Margin="5" Width="55" Tag="10" Click="ButtonWürfel_Click"  ToolTip="W10 (10-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige" Padding="0">
                                         <Image Source="/Images/Icons/Wuerfel/w10.png" Stretch="Uniform" />
                                     </Button>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Height="55" Margin="5" Width="55" Tag="12" Click="ButtonWürfel_Click"  ToolTip="W12 (12-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                    <Button Height="55" Margin="5" Width="55" Tag="12" Click="ButtonWürfel_Click"  ToolTip="W12 (12-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige" Padding="0">
                                         <Image Source="/Images/Icons/Wuerfel/w12.png" Stretch="Uniform" />
                                     </Button>
-                                    <Button Height="55" Margin="5" Width="55" Tag="20" Click="ButtonWürfel_Click"  ToolTip="W20 (20-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                    <Button Height="55" Margin="5" Width="55" Tag="20" Click="ButtonWürfel_Click"  ToolTip="W20 (20-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige" Padding="0">
                                         <Image Source="/Images/Icons/Wuerfel/w20.png" Stretch="Uniform" />
                                     </Button>
                                 </StackPanel>
                             </StackPanel>
-                            <Button Name="_buttonWx" Height="55" Margin="5" Width="55" Click="ButtonWürfel_Click"  ToolTip="WX (Generischer Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                            <Button Name="_buttonWx" Height="55" Margin="5" Width="55" Click="ButtonWürfel_Click"  ToolTip="WX (Generischer Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige" Padding="0">
                                 <Grid>
                                     <Image Source="/Images/Icons/Wuerfel/wuerfel.png" Stretch="Uniform" />
                                     <ViewGeneral:IntBox x:Name="_intBoxWx" Margin="10" MinWidth="25" ToolTip="Seitenzahl" Value="2" MinValue="1" NumValueChanged="IntBoxWx_NumValueChanged" />

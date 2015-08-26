@@ -74,32 +74,32 @@ namespace MeisterGeister.ViewModel.Beschwörung
             if (wurf <= 6)
             {
                 wesen = null;
-                BeschwörungMisslungenErgebnis = "Außer einem kalten, übel riechenden Hauch erscheint ... nichts. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Es erscheint kein Dämon. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 //Button deaktivieren
                 WürfleBeschwörungMisslungen = new Base.CommandBase((o) => { }, (o) => false);
             }
             else if (wurf <= 11 && (wesen = Global.ContextHeld.GetLeichtererDämon(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von niedrigerer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von niedrigerer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 15 && (wesen = Global.ContextHeld.GetSchwerererDämon(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne und von derselben Klasse (Niederer oder gehörnter Dämon) wie der angerufene, jedoch von höherer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen die Hälfte dessen, was für den Spruch üblich ist.";
+                BeschwörungMisslungenErgebnis = "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von höherer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 19 && (wesen = Global.ContextHeld.GetGehörntererDämonAusDomäne(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Es erscheint ein Dämon aus derselben Domäne, jedoch auf jeden Fall ein Gehörnter Dämon von höherer Beschwörungsschwierigkeit. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1 Punkt Verfall. Die Beschwörungskosten betragen 19 AsP.";
+                BeschwörungMisslungenErgebnis = "Ein gehörnter Dämon aus derselben Domäne, jedoch von höherer Beschwörungsschwierigkeit erscheint. 1 Punkt schleichender Verfall.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else
             {
                 wesen = Global.ContextHeld.GetGehörntererDämon(BeschworenesWesen);
-                BeschwörungMisslungenErgebnis = "Es erscheint ein Gehörnter Dämon von höherer Beschwörungs-Schwierigkeit, unabhängig von der Domäne des Gerufenen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 1W6 Punkte Verfall. Die Beschwörungskosten betragen 19 AsP.";
+                BeschwörungMisslungenErgebnis = "Ein gehörnter Dämon von höherer Beschwörungsschwierigkeit erscheint. 1W6 Punkte schleichender Verfall.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
@@ -124,7 +124,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             int wurf = View.General.ViewHelper.ShowWürfelDialog("2W6", "Kontrolle Misslungen");
             if (erg.Ergebnis == Logic.General.ErgebnisTyp.PATZER)
             {
-                wurf += schwierigkeit.Value2;
+                wurf += schwierigkeit.KontrollMod;
                 if (erg.Qualität > 0)
                     wurf -= erg.Qualität;
             }
@@ -132,33 +132,33 @@ namespace MeisterGeister.ViewModel.Beschwörung
             if (Hörner > 0) wurf += 5;
             if (wurf <= 1)
             {
-                BeherrschungMisslungenErgebnis = "Der Beschwörer zwingt den Dämon binnen 2 Aktionen doch noch unter seine Kontrolle und presst ihm die Erfüllung eines Dienstes ab, eventuelle weitere Dienste verfallen. Dämon und Beschwörer sind während dieser Zeit in einem Duell der Willenskraft verstrickt und können keine anderen Handlungen unternehmen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 2 Punkte Verfall.";
+                BeherrschungMisslungenErgebnis = "Dämon und Beschwörer sind 2 Aktionen lang in einem Duell der Willenskraft verstrickt. Dem Beschwörer gelingt es dem Dämon die Erfüllung eines Dienstes abzuringen. Evtl. weitere Dienste verfallen. 2 Punkte schleichender Verfall.";
             }
             else if (wurf <= 5)
             {
-                BeherrschungMisslungenErgebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen.";
+                BeherrschungMisslungenErgebnis = "Der Dämon zieht sich verärgert in die Niederhöllen zurück. Alle Dienste verfallen.";
             }
             else if (wurf <= 9)
             {
-                BeherrschungMisslungenErgebnis = "Der Dämon zieht sich verärgert in seine Sphäre zurück, alle noch offenen Dienste verfallen. " +
+                BeherrschungMisslungenErgebnis = "Der Dämon zieht sich verärgert in die Niederhöllen zurück. Alle Dienste verfallen. " +
                            "Die Beschwörung dieses speziellen Dämonen ist für den Beschwörer in Zukunft um 3 Punkte erschwert. " +
-                           "(Dies lässt sich durch 20 AP wieder aufheben; Paktierer können stattdessen 20 Pakt-GP einsetzen; entstammen Dämon und Pakt nicht derselben Domäne, betragen die Kosten 50 Pakt-GP.) 2 Punkte Verfall.";
+                           "(Dies lässt sich durch 20 AP wieder aufheben; Paktierer können stattdessen 20 Pakt-GP einsetzen; entstammen Dämon und Pakt nicht derselben Domäne, betragen die Kosten 50 Pakt-GP.) 2 Punkte schleichender Verfall.";
             }
             else if (wurf <= 13)
             {
-                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer eine Kampfrunde lang mit allen ihm zur Verfügung stehenden Mitteln an – auch mit Angriffen von längerfristiger Auswirkung wie z. B. Besessenheit – und verschwindet dann. Alle weiteren Dienste verfallen. Wenn Sie mit den Experten-Regeln zum Schleichenden Verfall spielen, erhält der Beschwörer 3 Punkte Verfall.";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer eine Kampfrunde lang mit allen ihm zur Verfügung stehenden Mitteln an und verschwindet dann. Alle weiteren Dienste verfallen. 3 Punkte schleichender Verfall.";
             }
             else if (wurf <= 17)
             {
-                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an; W6+3 Punkte Verfall";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an. W6+3 Punkte schleichender Verfall.";
             }
             else if (wurf <= 21)
             {
-                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP.";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP). W6+3 Punkte schleichender Verfall oder eine passende schlechte Eigenschaft im Wert von 6 GP.";
             }
             else
             {
-                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff (auch z. B. ein Furcht Einflößen zählt in diesem Sinne als Angriff) des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP); W6+3 Punkte Verfall oder eine passende Schlechte Eigenschaft im Wert von 6 GP. Jedoch können nach Meisterentscheid und bösartiger Kreativität weitere Nebeneffekte eintreten. Als Beispiele seien hier genannt: Der Dämon lässt nicht eher vom Beschwörer ab, bis er ausgetrieben wird. Der Dämon wird freigesetzt und macht auf eigene Faust Aventurien unsicher. Der Dämon reißt den Beschwörer in die Niederhöllen. Der Dämon zieht sich in den näheren Limbus zurück und wartet dort auf die nächste Beschwörung, um dann zusätzlich zur gerufenen Entität zu erscheinen. Ein mächtiger Gehörnter zwingt dem Beschwörer einen minderen Pakt auf.";
+                BeherrschungMisslungenErgebnis = "Der Dämon greift den Beschwörer W6+3 Kampfrunden lang mit allen ihm zur Verfügung stehenden Mitteln an, jedoch raubt jeder erfolgreiche Angriff des Dämons dem Beschwörer zusätzlich einen permanenten AsP (wenn keine mehr vorhanden, dann permanente LeP). W6+3 Punkte schleichender Verfall oder eine passende schlechte Eigenschaft im Wert von 6 GP. Jedoch können nach Meisterentscheid und bösartiger Kreativität weitere Nebeneffekte eintreten. Als Beispiele seien hier genannt: Der Dämon lässt nicht eher vom Beschwörer ab, bis er ausgetrieben wird. Der Dämon wird freigesetzt und macht auf eigene Faust Aventurien unsicher. Der Dämon reißt den Beschwörer in die Niederhöllen. Der Dämon zieht sich in den näheren Limbus zurück und wartet dort auf die nächste Beschwörung, um dann zusätzlich zur gerufenen Entität zu erscheinen. Ein mächtiger Gehörnter zwingt dem Beschwörer einen minderen Pakt auf.";
             }
             //Command wird deaktiviert
             WürfleBeherrschungMisslungen = new Base.CommandBase((o) => { }, (o) => false);

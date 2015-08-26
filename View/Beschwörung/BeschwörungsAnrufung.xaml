@@ -15,14 +15,11 @@
 
         <!--Nichts ausgewählt-->
         <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow"
-                       Text="Wähle einen Beschwörer, und ein Wesen aus. Trage anschließend die Beschwörungsumstände ein.">
+                   Text="Wähle ein Wesen aus, welches beschworen werden soll. Trage anschließend die Beschwörungsumstände ein.">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Collapsed"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Held}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
                         <DataTrigger Binding="{Binding BeschworenesWesen}" Value="{x:Null}">
                             <Setter Property="Visibility" Value="Visible"/>
                         </DataTrigger>
@@ -36,9 +33,6 @@
             <StackPanel.Style>
                 <Style TargetType="FrameworkElement">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Held}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
                         <DataTrigger Binding="{Binding BeschworenesWesen}" Value="{x:Null}">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
@@ -46,7 +40,7 @@
                 </Style>
             </StackPanel.Style>
             <TextBlock Margin="0,4,0,0" TextWrapping="WrapWithOverflow" x:Name="beschwörungsVorschau">
-                    <Run Text="{Binding Held.Name}"/> möchte also einen <Run Text="{Binding BeschworenesWesen.Name}"/> rufen?
+                    Es soll also ein <Bold><Run Text="{Binding BeschworenesWesen.Name}"/></Bold> gerufen werden?
                     <LineBreak/>
                     Zum Beschwören wird eine Zauberprobe auf
                     <Bold><Run Text="{Binding Zauber}"/> (<Run Text="{Binding ZauberWert,Mode=OneWay}"/>)<Run Text="{Binding GesamtRufMod,Mode=OneWay,Converter={StaticResource signConverter}}"/></Bold>

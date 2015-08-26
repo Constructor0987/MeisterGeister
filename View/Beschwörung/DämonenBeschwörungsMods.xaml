@@ -83,7 +83,8 @@
         <TextBlock Text="Kosten" Style="{StaticResource TextTitel}" Grid.Column="4" Margin="4"/>
 
         <TextBlock Text="Dämon" Style="{StaticResource label}"/>
-        <ComboBox Grid.Column="1" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay,Converter={StaticResource domäneConverter}}" ItemsSource="{Binding Wesen,Converter={StaticResource listConverter}}" Margin="0,0,30,0">
+        <ComboBox Grid.Column="1" Margin="0,0,30,0" ItemsSource="{Binding Wesen,Converter={StaticResource listConverter}}" DisplayMemberPath="Dämon.Beschwörbares.GegnerBase.Name"
+                  SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay,Converter={StaticResource domäneConverter}}">
             <ComboBox.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -137,14 +138,6 @@
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
             </ComboBox.GroupStyle>
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Dämon.Beschwörbares.GegnerBase.Name}" x:Name="name"/>
-                        <!--<TextBlock Margin="4,0,0,0" Text="{Binding Dämon.Hörner}"/>-->
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
         </ComboBox>
         <General:LiteraturControl Literaturangabe="{Binding BeschworenesWesen.Literatur}" Grid.Column="1" Width="24" HorizontalAlignment="Right"/>
 
@@ -255,7 +248,7 @@
 
         <TextBlock Grid.Row="8" Style="{StaticResource label}" Text="Magiekunde (Dämonologie)" Margin="16,0,0,0"/>
         <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1">
-            <Button Command="{Binding MagiekundeProbe}">
+            <Button Command="{Binding MagiekundeProbe}" Padding="0">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
             </Button>
             <ContentControl Content="{Binding}">
@@ -296,7 +289,7 @@
 
         <TextBlock Grid.Row="9" Style="{StaticResource label}" Text="Malen und Zeichnen" Margin="16,0,0,0"/>
         <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
-            <Button Command="{Binding MalenProbe}">
+            <Button Command="{Binding MalenProbe}" Padding="0">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
             </Button>
             <ContentControl Content="{Binding}">

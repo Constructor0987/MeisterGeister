@@ -25,13 +25,13 @@
                     <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="2,0,0,0" />
                     <ComboBox Name="_comboBoxHeld" Width="220" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" VerticalContentAlignment="Center" SelectedIndex="-1"
                               DisplayMemberPath="Name" SelectedItem="{Binding Zoo_HeldSelected}"/>
-                    <Button Width="25" Height="25" Margin="0,0,10,0" 
+                    <Button Width="25" Height="25" Margin="0,0,10,0" Padding="0"
                             Command="{Binding OnBtnHeldAustragen}">
                         <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                     </Button>
                     <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" />
                     <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" />
-                    <Button Width="28" Height="28" Margin="5,0,10,0" ToolTip="Bekannte Pflanzen"
+                    <Button Width="28" Height="28" Margin="5,0,10,0" ToolTip="Bekannte Pflanzen" Padding="0"
                             Visibility="{Binding Zoo_HeldSelected, TargetNullValue=Collapsed}" Click="BtnBekanntePflanzenForm_Click">
                         <Image Source="/Images/Icons/pflanzenschriftrolle.png" HorizontalAlignment="Stretch" Width="28" Height="28" />
                     </Button>

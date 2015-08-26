@@ -192,7 +192,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Button Height="34" Width="34" Name="_würfelButton" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}" Margin="10,0,15,0" HorizontalAlignment="Left">
+                <Button Height="34" Width="34" Name="_würfelButton" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}" Margin="10,0,15,0" HorizontalAlignment="Left" Padding="0">
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"  />
                 </Button>
             </StackPanel>

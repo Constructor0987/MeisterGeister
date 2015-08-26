@@ -19,13 +19,13 @@ namespace MeisterGeister.ViewModel.Beschwörung
             : base(View.General.ViewHelper.ShowProbeDialog)
         {
             initMods();
-
             //Verfügbare Wesen laden
             Wesen = loadWesen();
             //Commands initialisieren
             beschwören = new Base.CommandBase((o) => beschwöre(), (o) => beschwörungMöglich());
             beherrschen = new Base.CommandBase((o) => beherrsche(), (o) => beherrschungMöglich());
-            resetCmd = new Base.CommandBase((o) => reset(), null);
+            Reset = new Base.CommandBase((o) => reset(), null);
+            NSC = new Base.CommandBase((o) => Held = null, null);
             //Standardwerte setzen
             reset();
             PropertyChanged += onPropertyChanged;
@@ -177,13 +177,17 @@ namespace MeisterGeister.ViewModel.Beschwörung
         /// <returns></returns>
         protected abstract List<GegnerBase> loadWesen();
 
-        private Base.CommandBase resetCmd;
         /// <summary>
         /// Setzt alle Eigenschaften zurück
         /// </summary>
         public Base.CommandBase Reset
         {
-            get { return resetCmd; }
+            get; private set;
+        }
+
+        public Base.CommandBase NSC
+        {
+            get; private set;
         }
 
         protected virtual void reset()
@@ -230,26 +234,34 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void beschwöre()
         {
-            if (zauber != null)
+            Probe probe = zauber;
+            if (probe == null)
             {
-                //Der entsprechende Zauber wird auf den richtigen Wert gesetzt und für die Probe modifiziert
-                //Der Fertigkeitswert ist wichtig weil er sich z.B. durch InvocatioIntegra erhöhen kann
-                zauber.Fertigkeitswert = ZauberWert;
-                zauber.Modifikator = GesamtRufMod;
-                var erg = ShowProbeDialog(zauber, Held);
-                if (erg == null)
-                    return;
-                if (!erg.Gelungen)
-                {
-                    //Falls es nicht geklappt hat regelt u.U. die konkrete Klasse wie es weitergeht
-                    beschwörungMisslungen(erg);
-                }
-                else
-                {
-                    //Falls es klappt freuen wir und über evtl. übrige Punkte und machen mit der Beherrschung weiter
-                    punkte.Value = erg.Übrig;
-                    Status = BeschwörungsStatus.Beherrschen;
-                }
+                probe = new Probe();
+                probe.Probenname = zauberName;
+                probe.Fertigkeitswert = 0;
+                probe.Werte = new int[] { 10, 10, 10 };
+            }
+            else
+            {
+                probe.Fertigkeitswert = ZauberWert;
+            }
+            //Der entsprechende Zauber wird auf den richtigen Wert gesetzt und für die Probe modifiziert
+            //Der Fertigkeitswert ist wichtig weil er sich z.B. durch InvocatioIntegra erhöhen kann
+            probe.Modifikator = GesamtRufMod;
+            var erg = ShowProbeDialog(probe, Held);
+            if (erg == null)
+                return;
+            if (!erg.Gelungen)
+            {
+                //Falls es nicht geklappt hat regelt u.U. die konkrete Klasse wie es weitergeht
+                beschwörungMisslungen(erg);
+            }
+            else
+            {
+                //Falls es klappt freuen wir und über evtl. übrige Punkte und machen mit der Beherrschung weiter
+                punkte.Value = erg.Übrig;
+                Status = BeschwörungsStatus.Beherrschen;
             }
         }
 
@@ -269,28 +281,25 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void beherrsche()
         {
-            if (zauber != null)
+            //Hier wird eine Eigenschaftsprobe auf den Kontrollwert abgelegt
+            Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
+            kontrollwert.Abkürzung = "KW";
+            kontrollwert.Fertigkeitswert = 0;
+            //Der Kontrollwert berechnet sich je nach beschworener Wesenheit anders
+            kontrollwert.Wert = KontrollWert;
+            kontrollwert.WerteNamen = "Kontrollwert";
+            kontrollwert.Modifikator = GesamtHerrschMod;
+            var erg = ShowProbeDialog(kontrollwert, Held);
+            if (erg.Gelungen)
             {
-                //Hier wird eine Eigenschaftsprobe auf den Kontrollwert abgelegt
-                Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
-                kontrollwert.Abkürzung = "KW";
-                kontrollwert.Fertigkeitswert = 0;
-                //Der Kontrollwert berechnet sich je nach beschworener Wesenheit anders
-                kontrollwert.Wert = KontrollWert;
-                kontrollwert.WerteNamen = "Kontrollwert";
-                kontrollwert.Modifikator = GesamtHerrschMod;
-                var erg = ShowProbeDialog(kontrollwert, Held);
-                if (erg.Gelungen)
-                {
-                    //Wenn klappt freuen wird uns und sind fertig
-                    Status = BeschwörungsStatus.BeherrschungGelungen;
-                }
-                else
-                {
-                    //Falls es nicht klappt regelt die konkrete Implementierung was nun passieren soll
-                    //Im einfachsten Fall passiert gar nichts
-                    beherrschungMisslungen(erg);
-                }
+                //Wenn klappt freuen wird uns und sind fertig
+                Status = BeschwörungsStatus.BeherrschungGelungen;
+            }
+            else
+            {
+                //Falls es nicht klappt regelt die konkrete Implementierung was nun passieren soll
+                //Im einfachsten Fall passiert gar nichts
+                beherrschungMisslungen(erg);
             }
         }
 
@@ -471,6 +480,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public abstract string KontrollFormel
         {
             get;
+        }
+
+        public List<Held> Helden
+        {
+            get { return Global.ContextHeld.HeldenGruppeListe.Concat(new Held[] { null }).ToList(); }
         }
 
         private List<GegnerBase> wesen;

@@ -45,10 +45,10 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <Button Name="_buttonMinus" Width="18" Click="ButtonMinus_Click">
+            <Button Name="_buttonMinus" Width="18" Padding="0" Click="ButtonMinus_Click">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
             </Button>
-            <Button Name="_buttonPlus" Width="18" Click="ButtonPlus_Click">
+            <Button Name="_buttonPlus" Width="18" Padding="0" Click="ButtonPlus_Click">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
             </Button>
         </StackPanel>

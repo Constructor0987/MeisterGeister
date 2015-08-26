@@ -26,7 +26,7 @@
                                     <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die eine passende Sonderfertigkeit (z.B. Zauberzeichen) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                                 </ComboBox.ToolTip>
                         </ComboBox>
-                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen" Padding="0">
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </Button>
                     </StackPanel>

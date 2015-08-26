@@ -28,7 +28,7 @@
 
         <Border Grid.Row="1" Margin="5" Style="{DynamicResource ControlContentBorder}">
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button Height="55" Margin="15" MinWidth="85" Command="{Binding OnWürfeln}">
+                <Button Height="55" Margin="15" MinWidth="85" Command="{Binding OnWürfeln}" Padding="0">
                     <Grid>
                         <Image Source="/Images/Icons/Wuerfel/wuerfel.png" Stretch="Uniform" />
                         <TextBlock FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center">

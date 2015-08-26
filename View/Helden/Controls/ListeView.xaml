@@ -60,7 +60,7 @@
             </Grid.RowDefinitions>
             <Grid>
                 <StackPanel Orientation="Horizontal">                    
-                    <Button Width="25" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
+                    <Button Width="25" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom" Padding="0">
                         <Button.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Height="28" Command="{Binding OnNewHeld}" ToolTip="Einen neuen Helden eingeben.">

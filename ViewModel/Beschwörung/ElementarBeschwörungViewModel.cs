@@ -20,6 +20,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         private const string MERKMAL_DÄMONISCH = "Merkmalskenntnis (Dämonisch";
         private const string BEGABUNG_DÄMONISCH = "Begabung für Merkmal (Dämonisch";
 
+        private const string MOD_WESEN = "Wesen";
         private const string MOD_MENGE = "Menge";
         private const string MOD_ELEMENT = "Element";
         private const string MOD_GEGENELEMENT = "Gegenelement";
@@ -31,6 +32,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         private const string MOD_SCHWACHE_AUSSTRAHLUNG = "SchwacheAusstrahlung";
         private const string MOD_STIGMA = "Stigma";
 
+        private BeschwörungsModifikator<Element, ElementarWesen> wesen;
         private BeschwörungsModifikator<bool> menge;
         private BeschwörungsModifikator<bool, bool> elementMod, gegenelementMod;
         private BeschwörungsModifikator<int> dämonisch;
@@ -44,6 +46,25 @@ namespace MeisterGeister.ViewModel.Beschwörung
         {
             //Da sich die Bezahlung auf die Dienstkosten bezieht, entfällt diese bei Wesen, die ihre Dienstkosten selbst tragen
             Mods.Remove(MOD_BEZAHLUNG);
+
+            wesen = new BeschwörungsModifikator<Element, ElementarWesen>();
+            wesen.GetKostenMod = () =>
+            {
+                switch (wesen.Value2)
+                {
+                    case ElementarWesen.Geist:
+                        return 12;
+                    case ElementarWesen.Dschinn:
+                        return 30;
+                    case ElementarWesen.Meister:
+                        return 48;
+                    default:
+                        return 0;
+                }
+            };
+            wesen.PropertyChanged += (s, e) =>checkHeldElement();
+            Mods.Add(MOD_WESEN, wesen);
+
 
             //Mit Blutmagie ist die Kontrolle von Elementaren um 12 erschwert
             blutmagie.GetKontrollMod = () => blutmagie.Value ? 12 : 0;
@@ -122,19 +143,32 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void checkHeldElement()
         {
+            switch (wesen.Value2)
+            {
+                case ElementarWesen.Geist:
+                    Zauber = "Elementarer Diener";
+                    break;
+                case ElementarWesen.Dschinn:
+                    Zauber = "Dschinnenruf";
+                    break;
+                case ElementarWesen.Meister:
+                    Zauber = "Meister der Elemente";
+                    break;
+            }
+
             if (Held != null)
             {
-                elementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, Element));
-                gegenelementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, GegenElement));
+                elementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, wesen.Value1));
+                gegenelementMod.Value1 = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(MERKMAL, ~wesen.Value1));
 
-                elementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, Element));
-                gegenelementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, GegenElement));
+                elementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, wesen.Value1));
+                gegenelementMod.Value2 = Held.HatVorNachteil(String.Format(BEGABUNG, ~wesen.Value1));
 
-                ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, Element, GegenElement))
-                                          || Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, GegenElement, Element));
+                ElementarharmonisierteAura = Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, wesen.Value1, ~wesen.Value1))
+                                          || Held.HatSonderfertigkeitUndVoraussetzungen(String.Format(ELEMENT_AURA, ~wesen.Value1, wesen.Value1));
 
                 dämonisch.Value = Held.Sonderfertigkeiten.Keys.Where((sf) => sf.Name.StartsWith(MERKMAL_DÄMONISCH)).Count()
-                          + Held.Vorteile.Keys.Where((vorteil) => vorteil.Name.StartsWith(BEGABUNG_DÄMONISCH)).Count();
+                                + Held.Vorteile.Keys.Where((vorteil) => vorteil.Name.StartsWith(BEGABUNG_DÄMONISCH)).Count();
             }
             else
             {
@@ -148,8 +182,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             base.checkBeschworenesWesen();
             if (BeschworenesWesen != null)
             {
-                Element = (Element)Enum.Parse(typeof(Element), BeschworenesWesen.Beschwörbares.Elementarwesen.Element);
-                Typ = (ElementarWesen)Enum.Parse(typeof(ElementarWesen), BeschworenesWesen.Beschwörbares.Elementarwesen.Wesen);
+                wesen.Value1 = (Element)Enum.Parse(typeof(Element), BeschworenesWesen.Beschwörbares.Elementarwesen.Element);
+                wesen.Value2 = (ElementarWesen)Enum.Parse(typeof(ElementarWesen), BeschworenesWesen.Beschwörbares.Elementarwesen.Wesen);
             }
         }
 
@@ -162,51 +196,11 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected override void reset()
         {
             base.reset();
-            Element = Element.Feuer;
-            Typ = ElementarWesen.Geist;
+            wesen.Value1 = Element.Feuer;
+            wesen.Value2 = ElementarWesen.Geist;
         }
 
         #region Properties
-
-        private Element element;
-        public Element Element
-        {
-            get { return element; }
-            set
-            {
-                element = value;
-                OnChanged();
-                OnChanged("GegenElement");
-                checkHeldElement();
-            }
-        }
-
-        public Element GegenElement
-        {
-            get { return ~Element; }
-        }
-
-        private ElementarWesen typ;
-        public ElementarWesen Typ
-        {
-            get { return typ; }
-            set
-            {
-                Set(ref typ, value);
-                switch (value)
-                {
-                    case ElementarWesen.Geist:
-                        Zauber = "Elementarer Diener";
-                        break;
-                    case ElementarWesen.Dschinn:
-                        Zauber = "Dschinnenruf";
-                        break;
-                    case ElementarWesen.Meister:
-                        Zauber = "Meister der Elemente";
-                        break;
-                }
-            }
-        }
 
         private bool elementarharmonisierteAura;
         public bool ElementarharmonisierteAura

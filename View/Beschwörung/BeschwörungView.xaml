@@ -16,9 +16,24 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
-            <Image Margin="5,0,5,0" Source="/Images/Icons/helden.png" Width="24" />
-            <ComboBox Margin="5,0,0,0" Width="250" ItemsSource="{Binding Source={x:Static mg:Global.ContextHeld}, Path=HeldenGruppeListe}"
-                      SelectedValue="{Binding ElementName=tab,Path=SelectedValue.Held}" DisplayMemberPath="Name" FontWeight="Bold"/>
+            <Image Margin="5,0,5,0" Source="/Images/Icons/helden.png" Width="24"/>
+            <Grid Margin="5,0,0,0" Width="250">
+                <ComboBox ItemsSource="{Binding Source={x:Static mg:Global.ContextHeld}, Path=HeldenGruppeListe}" x:Name="comboBox"
+                          SelectedValue="{Binding ElementName=tab,Path=SelectedValue.Held}" DisplayMemberPath="Name" FontWeight="Bold"/>
+                <TextBlock FontWeight="Bold" Text="NSC" VerticalAlignment="Center" Margin="5,0,0,0" IsHitTestVisible="False">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=comboBox,Path=SelectedItem}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="4,0,0,0">
                 <StackPanel.Style>
                     <Style TargetType="{x:Type StackPanel}">
@@ -30,11 +45,11 @@
                     </Style>
                 </StackPanel.Style>
                 <General:EnergieControl Energie="Astralenergie" SelectedKämpfer="{Binding ElementName=tab,Path=SelectedValue.Held}"/>
-                <TextBlock Text="{Binding ElementName=tab,Path=SelectedValue.Held.AstralenergieAktuell}" Margin="4,0,0,0" VerticalAlignment="Center"/>
-                <TextBlock Text=" / " VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding ElementName=tab,Path=SelectedValue.Held.AstralenergieMax}" VerticalAlignment="Center"/>
-                <TextBlock Text="Astralpunkten" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="{Binding ElementName=tab,Path=SelectedValue.Held.AstralenergieAktuell,Mode=OneWay}"/> / <Run Text="{Binding ElementName=tab,Path=SelectedValue.Held.AstralenergieMax,Mode=OneWay}"/> AsP
+                </TextBlock>
             </StackPanel>
+            <Button Margin="4,0,0,0" Content="NSC" Command="{Binding ElementName=tab,Path=SelectedValue.NSC}"/>
             <Button Margin="4,0,0,0" Content="Neue Beschwörung" Command="{Binding ElementName=tab,Path=SelectedValue.Reset}"/>
         </StackPanel>
         <TabControl Grid.Row="1" x:Name="tab">

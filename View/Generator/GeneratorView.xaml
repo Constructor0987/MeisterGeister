@@ -104,7 +104,7 @@
                             <Image Height="23" Source="/Images/Icons/geschlecht_m.png" />
                         </StackPanel>
                         <Button Grid.Column="2" Grid.Row="2" Height="23" Command="{Binding OnResetNamenOptionen, Mode=OneWay}" ToolTip="Auswahl zurücksetzen" HorizontalAlignment="Right" Margin="5,2,5,0" >
-                            <StackPanel Orientation="Horizontal" Margin="5,2,5,5">
+                            <StackPanel Orientation="Horizontal">
                                 <Image Source="/Images/Icons/General/entf_01.png" />
                                 <TextBlock Text="Reset" Margin="3,0" VerticalAlignment="Center" />
                             </StackPanel>

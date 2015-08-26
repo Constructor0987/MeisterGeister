@@ -752,6 +752,7 @@
     <Compile Include="View\Beschwörung\GeisterBeschwörungView.xaml.cs">
       <DependentUpon>GeisterBeschwörungView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Beschwörung\InverseElementConverter.cs" />
     <Compile Include="View\Beschwörung\UntotenBeschwörungsMods.xaml.cs">
       <DependentUpon>UntotenBeschwörungsMods.xaml</DependentUpon>
     </Compile>
@@ -2192,9 +2193,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\Beschwörung\Logic\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <DesignData Include="SampleData\BasarViewModelSampleData.xaml" />
   </ItemGroup>

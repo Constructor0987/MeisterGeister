@@ -41,7 +41,7 @@
             </StackPanel.ContextMenu>
             <Image Name="_image" Height="24" Width="24" Source="/Images/Icons/meistertools_02.png" />
             <TextBlock Name="_textBlockTitel" Text="Neuer Tab" Margin="4, 0, 0, 0" VerticalAlignment="Center" FontSize="11" />
-            <Button Name="_buttonClose" Margin="7,0,0,0" Height="15" Width="15"  BorderThickness="0.5" Opacity="0.5" ToolTip="Tool schließen (auch mit mittlerer Maustaste)" Click="ButtonClose_Click" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
+            <Button Name="_buttonClose" Margin="7,0,0,0" Height="15" Width="15" Padding="0" BorderThickness="0.5" Opacity="0.5" ToolTip="Tool schließen (auch mit mittlerer Maustaste)" Click="ButtonClose_Click" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
                 <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
             </Button>
         </StackPanel>

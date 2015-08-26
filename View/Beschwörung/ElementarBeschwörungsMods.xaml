@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Beschwörung"
+             xmlns:Beschwörung="clr-namespace:MeisterGeister.View.Beschwörung"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="764.6" d:DesignWidth="732.8">
@@ -19,6 +20,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto" Name="colBeschwörung"/>
             <ColumnDefinition Width="Auto" Name="colBeherrschung"/>
+            <ColumnDefinition Width="Auto" Name="colKosten"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="24"/>
@@ -84,17 +86,19 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
+                <Beschwörung:InverseElementConverter x:Key="inverseConverter"/>
             </ResourceDictionary>
         </Grid.Resources>
 
         <TextBlock Text="Anrufung" Style="{DynamicResource TextTitel}" Grid.Column="2" Margin="4"/>
         <TextBlock Text="Kontrolle" Style="{DynamicResource TextTitel}" Grid.Column="3" Margin="4"/>
+        <TextBlock Text="Kosten" Style="{DynamicResource TextTitel}" Grid.Column="4" Margin="4"/>
 
         <TextBlock Text="Elementar" Style="{StaticResource label}"/>
         <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
 
         <TextBlock Text="Typ" Grid.Row="1" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Element}" SelectedIndex="0" Width="42" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding  Mods[Wesen].Value1}" SelectedIndex="0" Width="42" HorizontalAlignment="Left" VerticalAlignment="Stretch">
             <ComboBox.ToolTip>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Element, Converter={StaticResource enumConverter}}"/>
@@ -123,7 +127,7 @@
             <x:StaticExtension Member="vm:Element.Eis"/>
             <x:StaticExtension Member="vm:Element.Erz"/>
         </ComboBox>
-        <ComboBox Margin="42,0,0,0" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Typ}">
+        <ComboBox Margin="42,0,0,0" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Mods[Wesen].Value2}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Converter={StaticResource enumConverter}}"/>
@@ -133,6 +137,7 @@
             <x:StaticExtension Member="vm:ElementarWesen.Dschinn"/>
             <x:StaticExtension Member="vm:ElementarWesen.Meister"/>
         </ComboBox>
+        <TextBlock Style="{StaticResource mod}" Grid.Row="1" Grid.Column="4" Text="{Binding Mods[Wesen].ZauberKosten}"/>
 
         <TextBlock Text="Basis" Grid.Row="2" Style="{StaticResource label}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
@@ -237,7 +242,7 @@
         <TextBlock Text="{Binding Mods[Affinität].KontrollMod}" Grid.Row="10" Grid.Column="3" Style="{StaticResource mod}"/>
 
         <DockPanel Grid.Row="11">
-            <Image DockPanel.Dock="Left" Name="imgElement" MaxWidth="30" MaxHeight="30" Margin="0,0,8,0" ToolTip="{Binding Converter={StaticResource enumConverter}}" DataContext="{Binding Element}" Style="{StaticResource elementImage}"/>
+            <Image DockPanel.Dock="Left" Name="imgElement" MaxWidth="30" MaxHeight="30" Margin="0,0,8,0" ToolTip="{Binding Converter={StaticResource enumConverter}}" DataContext="{Binding Mods[Wesen].Value1}" Style="{StaticResource elementImage}"/>
             <CheckBox Content="Begabung" IsChecked="{Binding Mods[Element].Value2}" DockPanel.Dock="Top"/>
             <CheckBox Content="Merkmalskenntnis" IsChecked="{Binding Mods[Element].Value1}" DockPanel.Dock="Bottom"/>
         </DockPanel>
@@ -247,12 +252,12 @@
         <CheckBox IsChecked="{Binding ElementarharmonisierteAura}" Grid.Row="12" Margin="6,12,0,0">
             <TextBlock Margin="0,-12,0,0">
                 Elementarharmonisierte Aura<LineBreak/>
-                (<Run Text="{Binding Element,Mode=OneWay}"/> / <Run Text="{Binding GegenElement,Mode=OneWay}"/>)
+                (<Run Text="{Binding Mods[Wesen].Value1,Mode=OneWay}"/> / <Run Text="{Binding Mods[Wesen].Value1,Mode=OneWay,Converter={StaticResource inverseConverter}}"/>)
             </TextBlock>
         </CheckBox>
 
         <DockPanel Grid.Row="13">
-            <Image DockPanel.Dock="Left" Name="imgGegenElement" MaxWidth="30" MaxHeight="30" Margin="0,0,8,0" ToolTip="{Binding Converter={StaticResource enumConverter}}" DataContext="{Binding GegenElement}" Style="{StaticResource elementImage}"/>
+            <Image DockPanel.Dock="Left" Name="imgGegenElement" MaxWidth="30" MaxHeight="30" Margin="0,0,8,0" ToolTip="{Binding Converter={StaticResource enumConverter}}" DataContext="{Binding Mods[Wesen].Value1,Converter={StaticResource inverseConverter}}" Style="{StaticResource elementImage}"/>
             <CheckBox Content="Begabung" IsChecked="{Binding Mods[Gegenelement].Value2}" DockPanel.Dock="Top"/>
             <CheckBox Content="Merkmalskenntnis" IsChecked="{Binding Mods[Gegenelement].Value1}" DockPanel.Dock="Bottom"/>
         </DockPanel>
@@ -317,5 +322,6 @@
         <TextBlock Text="Gesamt" Grid.Row="25" Style="{StaticResource label}"/>
         <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="25" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="25" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding GesamtAstralKosten}" Grid.Row="25" Grid.Column="4" Style="{StaticResource mod}"/>
     </Grid>
 </UserControl>

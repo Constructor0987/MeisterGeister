@@ -33,10 +33,10 @@
                  Style="{StaticResource TextBoxDoubleStyle}" BorderBrush="Transparent" LostFocus="_textBoxDouble_LostFocus" GotFocus="_textBoxDouble_GotFocus" PreviewKeyDown="_textBoxDouble_PreviewKeyDown" 
                  IsReadOnly="{Binding ElementName=_doubleBox, Path=IsReadOnly}" />
         <StackPanel Grid.Column="1" Name="_stackPanelButtons" Orientation="Horizontal" Visibility="{Binding ElementName=_doubleBox, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}">
-            <Button Name="_buttonMinus" Width="18" Click="ButtonMinus_Click">
+            <Button Name="_buttonMinus" Width="18" Click="ButtonMinus_Click" Padding="0">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
             </Button>
-            <Button Name="_buttonPlus" Width="18" Click="ButtonPlus_Click">
+            <Button Name="_buttonPlus" Width="18" Click="ButtonPlus_Click" Padding="0">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
             </Button>
         </StackPanel>
