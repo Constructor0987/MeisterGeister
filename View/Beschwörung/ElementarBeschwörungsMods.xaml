@@ -137,7 +137,7 @@
             <x:StaticExtension Member="vm:ElementarWesen.Dschinn"/>
             <x:StaticExtension Member="vm:ElementarWesen.Meister"/>
         </ComboBox>
-        <TextBlock Style="{StaticResource mod}" Grid.Row="1" Grid.Column="4" Text="{Binding Mods[Wesen].ZauberKosten}"/>
+        <TextBlock Style="{StaticResource mod}" Grid.Row="1" Grid.Column="4" Text="{Binding Mods[Wesen].KostenMod}"/>
 
         <TextBlock Text="Basis" Grid.Row="2" Style="{StaticResource label}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">

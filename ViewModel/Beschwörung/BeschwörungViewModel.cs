@@ -1,6 +1,7 @@
 ﻿using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Alchimie.Logic;
 using MeisterGeister.ViewModel.Helden.Logic;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public const string MOD_DONARIA = "Donaria";
         public const string MOD_SONSTIGES = "Sonstiges";
         public const string MOD_BESCHWÖRUNGS_PUNKTE = "Beschwörungspunkte";
+        public const string MOD_KERZEN = "Kerzen";
+        public const string MOD_KREIDE = "Kreide";
 
         protected BeschwörungsModifikator<int, int> schwierigkeit;
         protected BeschwörungsModifikator<int> name;
@@ -57,6 +60,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected BeschwörungsModifikator<int> befehl;
         protected BeschwörungsModifikator<int> dauer;
         protected BeschwörungsModifikator<int> bezahlung;
+        protected BeschwörungsModifikator<bool, Qualität> kerzen;
+        protected BeschwörungsModifikator<bool, Qualität> kreide;
 
         private Dictionary<string, BeschwörungsModifikator> mods;
         public Dictionary<string, BeschwörungsModifikator> Mods
@@ -77,6 +82,16 @@ namespace MeisterGeister.ViewModel.Beschwörung
             name.GetAnrufungsMod = () => -name.Value;
             name.GetKontrollMod = () => -div(name.Value, 3);
             mods.Add(MOD_NAME, name);
+
+            //Beschwörungskreide
+            kreide = new BeschwörungsModifikator<bool, Qualität>();
+            kreide.GetAnrufungsMod = () => kreide.Value1 ? new int[] { 3, 0, -1, 0, -1, -2, -3 }[(int)kreide.Value2] : 0;
+            kreide.GetKontrollMod = () => kreide.Value1 ? new int[] { 3, 0, 0, 0, 0, -1, -2 }[(int)kreide.Value2] : 0;
+
+            //Beschwörungskerzen
+            kerzen = new BeschwörungsModifikator<bool, Qualität>();
+            kerzen.GetAnrufungsMod = () => kerzen.Value1 ? new int[] { 3, 0, -1, 0, -1, -2, -3 }[(int)kerzen.Value2] : 0;
+            kerzen.GetKontrollMod = () => kerzen.Value1 ? new int[] { 0, 0, 0, -1, -1, -2, -3 }[(int)kerzen.Value2] : 0;
 
             //Materialqualität wirkt sich positiv auf die Anrufung aus
             material = new BeschwörungsModifikator<int>();
@@ -124,7 +139,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
             //Zusätzlich bezahlte AsP wirken sich auf die Kontrolle aus
             bezahlung = new BeschwörungsModifikator<int>();
             bezahlung.GetKontrollMod = () => bezahlung.Value;
-            mods.Add(MOD_BEZAHLUNG, bezahlung);
 
             //Donaria werden einfach als Mod übernommen
             mods.Add(MOD_DONARIA, new BeschwörungsModifikator<int, int>());

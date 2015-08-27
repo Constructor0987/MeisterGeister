@@ -7,6 +7,7 @@
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:Beschwörung="clr-namespace:MeisterGeister.View.Beschwörung"
+             xmlns:Alchimie="clr-namespace:MeisterGeister.ViewModel.Alchimie.Logic"
              mc:Ignorable="d" 
              d:DesignHeight="545.4" d:DesignWidth="542.2">
 
@@ -60,6 +61,8 @@
             <RowDefinition Height="24" Name="rowName"/>
             <RowDefinition Height="24" Name="rowAusrüstung"/>
             <RowDefinition Height="24" Name="rowBannschwert"/>
+            <RowDefinition Height="24" Name="rowKerzen"/>
+            <RowDefinition Height="24" Name="rowKreide"/>
             <RowDefinition Height="24" Name="rowPaktierer"/>
             <RowDefinition Height="24" Name="rowInvocatio"/>
             <RowDefinition Name="rowMagiekunde" Style="{StaticResource invocatioProbeStyle}"/>
@@ -196,8 +199,48 @@
         <TextBlock Text="{Binding Mods[Bannschwert].AnrufungsMod}" Grid.Row="5" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding Mods[Bannschwert].KontrollMod}" Grid.Row="5" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Paktierer" Grid.Row="6" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Paktierer].Value}" ItemTemplate="{StaticResource verdammnisTemplate}">
+        <CheckBox Content="Beschwörungskerzen" IsChecked="{Binding Mods[Kerzen].Value1}" Grid.Row="6"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" IsEnabled="{Binding Mods[Kerzen].Value1}" SelectedValue="{Binding Mods[Kerzen].Value2}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        Qualität <Run Text="{Binding Mode=OneWay}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <x:StaticExtension Member="Alchimie:Qualität.M"/>
+            <x:StaticExtension Member="Alchimie:Qualität.A"/>
+            <x:StaticExtension Member="Alchimie:Qualität.B"/>
+            <x:StaticExtension Member="Alchimie:Qualität.C"/>
+            <x:StaticExtension Member="Alchimie:Qualität.D"/>
+            <x:StaticExtension Member="Alchimie:Qualität.E"/>
+            <x:StaticExtension Member="Alchimie:Qualität.F"/>
+        </ComboBox>
+        <TextBlock Grid.Row="6" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Kerzen].AnrufungsMod}"/>
+        <TextBlock Grid.Row="6" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Kerzen].KontrollMod}"/>
+
+        <CheckBox Content="Zauberkreide" IsChecked="{Binding Mods[Kreide].Value1}" Grid.Row="7"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" IsEnabled="{Binding Mods[Kreide].Value1}" SelectedValue="{Binding Mods[Kreide].Value2}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        Qualität <Run Text="{Binding Mode=OneWay}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <x:StaticExtension Member="Alchimie:Qualität.M"/>
+            <x:StaticExtension Member="Alchimie:Qualität.A"/>
+            <x:StaticExtension Member="Alchimie:Qualität.B"/>
+            <x:StaticExtension Member="Alchimie:Qualität.C"/>
+            <x:StaticExtension Member="Alchimie:Qualität.D"/>
+            <x:StaticExtension Member="Alchimie:Qualität.E"/>
+            <x:StaticExtension Member="Alchimie:Qualität.F"/>
+        </ComboBox>
+        <TextBlock Grid.Row="7" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Kreide].AnrufungsMod}"/>
+        <TextBlock Grid.Row="7" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Kreide].KontrollMod}"/>
+
+        <TextBlock Text="Paktierer" Grid.Row="8" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Paktierer].Value}" ItemTemplate="{StaticResource verdammnisTemplate}">
             <System:Int32>0</System:Int32>
             <System:Int32>1</System:Int32>
             <System:Int32>2</System:Int32>
@@ -207,10 +250,10 @@
             <System:Int32>6</System:Int32>
             <System:Int32>7</System:Int32>
         </ComboBox>
-        <TextBlock Grid.Row="6" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Paktierer].AnrufungsMod}"/>
-        <TextBlock Grid.Row="6" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Paktierer].KontrollMod}"/>
+        <TextBlock Grid.Row="8" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Paktierer].AnrufungsMod}"/>
+        <TextBlock Grid.Row="8" Grid.Column="3" Style="{StaticResource mod}" Text="{Binding Mods[Paktierer].KontrollMod}"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="7" x:Name="invocatioBackground">
+        <StackPanel Orientation="Horizontal" Grid.Row="9" x:Name="invocatioBackground">
             <CheckBox Content="Invocatio Integra" IsChecked="{Binding Mods[InvocatioIntegra].Value1}" x:Name="chkInvocatio" ToolTipService.ShowOnDisabled="True">
                 <CheckBox.Style>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
@@ -230,7 +273,7 @@
             </CheckBox>
             <General:LiteraturControl LiteraturAnzeigeArt="NurIcon" Literaturangabe="WdZ 189"/>
         </StackPanel>
-        <ComboBox Grid.Row="7" Grid.Column="1" SelectedIndex="0" IsEnabled="{Binding Mods[InvocatioIntegra].Value1}"
+        <ComboBox Grid.Row="9" Grid.Column="1" SelectedIndex="0" IsEnabled="{Binding Mods[InvocatioIntegra].Value1}"
                   IsHitTestVisible="{Binding ElementName=chkInvocatio,Path=IsEnabled}" SelectedValue="{Binding Mods[InvocatioIntegra].Value2}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -246,8 +289,8 @@
             <System:Boolean>true</System:Boolean>
         </ComboBox>
 
-        <TextBlock Grid.Row="8" Style="{StaticResource label}" Text="Magiekunde (Dämonologie)" Margin="16,0,0,0"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1">
+        <TextBlock Grid.Row="10" Style="{StaticResource label}" Text="Magiekunde (Dämonologie)" Margin="16,0,0,0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1">
             <Button Command="{Binding MagiekundeProbe}" Padding="0">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
             </Button>
@@ -285,10 +328,10 @@
                 </ContentControl.Style>
             </ContentControl>
         </StackPanel>
-        <TextBlock Grid.Row="8" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[InvocatioIntegraMagiekunde].AnrufungsMod}"/>
+        <TextBlock Grid.Row="10" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[InvocatioIntegraMagiekunde].AnrufungsMod}"/>
 
-        <TextBlock Grid.Row="9" Style="{StaticResource label}" Text="Malen und Zeichnen" Margin="16,0,0,0"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
+        <TextBlock Grid.Row="11" Style="{StaticResource label}" Text="Malen und Zeichnen" Margin="16,0,0,0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1">
             <Button Command="{Binding MalenProbe}" Padding="0">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
             </Button>
@@ -326,10 +369,10 @@
                 </ContentControl.Style>
             </ContentControl>
         </StackPanel>
-        <TextBlock Grid.Row="9" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[InvocatioIntegraMalen].AnrufungsMod}"/>
+        <TextBlock Grid.Row="11" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[InvocatioIntegraMalen].AnrufungsMod}"/>
 
-        <CheckBox Grid.Row="10" Content="Blutmagie" IsChecked="{Binding Mods[Blutmagie].Value1}"/>
-        <ComboBox Grid.Row="10" Grid.Column="1" SelectedItem="{Binding Mods[Blutmagie].Value2}"
+        <CheckBox Grid.Row="12" Content="Blutmagie" IsChecked="{Binding Mods[Blutmagie].Value1}"/>
+        <ComboBox Grid.Row="12" Grid.Column="1" SelectedItem="{Binding Mods[Blutmagie].Value2}"
                   Visibility="{Binding RelativeSource={RelativeSource Self},Path=IsEnabled,Converter={StaticResource BooleanToVisibilityConverter1}}">
             <ComboBox.Style>
                 <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
@@ -351,15 +394,15 @@
             <x:StaticExtension Member="vm:Opfer.Tieropfer"/>
             <x:StaticExtension Member="vm:Opfer.IntelligentesWesen"/>
         </ComboBox>
-        <TextBlock Text="{Binding Mods[Blutmagie].KontrollMod}" Grid.Row="10" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Blutmagie].KontrollMod}" Grid.Row="12" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Sternenkonstellation" Grid.Row="11" Style="{StaticResource label}"/>
-        <General:IntBox MinValue="-3" MaxValue="7" Value="{Binding Mods[Sterne].Value}" ShowButtons="True" Grid.Row="11" Grid.Column="1"/>
-        <TextBlock Text="{Binding Mods[Sterne].AnrufungsMod}" Grid.Row="11" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Sterne].KontrollMod}" Grid.Row="11" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Sternenkonstellation" Grid.Row="13" Style="{StaticResource label}"/>
+        <General:IntBox MinValue="-3" MaxValue="7" Value="{Binding Mods[Sterne].Value}" ShowButtons="True" Grid.Row="13" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Sterne].AnrufungsMod}" Grid.Row="13" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Sterne].KontrollMod}" Grid.Row="13" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Ort" Grid.Row="12" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="12" Grid.Column="1" SelectedIndex="7" SelectedValue="{Binding Mods[Ort].Value}">
+        <TextBlock Text="Ort" Grid.Row="14" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="14" Grid.Column="1" SelectedIndex="7" SelectedValue="{Binding Mods[Ort].Value}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text"/>
@@ -428,35 +471,34 @@
             <System:Int32>-6</System:Int32>
             <System:Int32>-7</System:Int32>
         </ComboBox>
-        <TextBlock Text="{Binding Mods[Ort].AnrufungsMod}" Grid.Row="12" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Ort].KontrollMod}" Grid.Row="12" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Ort].AnrufungsMod}" Grid.Row="14" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Ort].KontrollMod}" Grid.Row="14" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Donaria" Grid.Row="13" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="13" Grid.Column="1">
+        <TextBlock Text="Donaria" Grid.Row="15" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="1">
             <General:IntBox MinValue="-7" MaxValue="+7" Value="{Binding Mods[Donaria].Value1}" ShowButtons="True"/>
             <General:IntBox MinValue="-2" MaxValue="0" Value="{Binding Mods[Donaria].Value2}" ShowButtons="True"/>
         </StackPanel>
-        <TextBlock Text="{Binding Mods[Donaria].AnrufungsMod}" Grid.Row="13" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Donaria].KontrollMod}" Grid.Row="13" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Donaria].AnrufungsMod}" Grid.Row="15" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Donaria].KontrollMod}" Grid.Row="15" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Übrige Punkte aus Beschwörung" Grid.Row="14" Style="{StaticResource label}"/>
-        <General:IntBox ShowButtons="True" MinValue="0" Value="{Binding Mods[Beschwörungspunkte].Value}" Grid.Row="14" Grid.Column="1"/>
-        <TextBlock Text="{Binding Mods[Beschwörungspunkte].KontrollMod}" Grid.Row="14" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="Übrige Punkte aus Beschwörung" Grid.Row="16" Style="{StaticResource label}"/>
+        <General:IntBox ShowButtons="True" MinValue="0" Value="{Binding Mods[Beschwörungspunkte].Value}" Grid.Row="16" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Beschwörungspunkte].KontrollMod}" Grid.Row="16" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <StackPanel Grid.Row="15" Orientation="Horizontal">
+        <StackPanel Grid.Row="17" Orientation="Horizontal">
             <TextBlock Text="Gesinnung und Kosten des Dienstes" Style="{StaticResource label}"/>
             <General:LiteraturControl LiteraturAnzeigeArt="NurIcon" Literaturangabe="WdZ 181"/>
         </StackPanel>
-        <StackPanel Grid.Row="15" Grid.Column="1" Orientation="Horizontal">
+        <StackPanel Grid.Row="17" Grid.Column="1" Orientation="Horizontal">
             <General:IntBox Value="{Binding Mods[Befehl].Value1}" MinValue="-3" MaxValue="+7" ShowButtons="True"/>
             <General:IntBox Value="{Binding Mods[Befehl].Value2}" MinValue="0" ShowButtons="True"/>
         </StackPanel>
-        
-        <TextBlock Text="{Binding Mods[Befehl].KontrollMod}" Grid.Row="15" Grid.Column="3" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Befehl].KostenMod}" Grid.Row="15" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Befehl].KontrollMod}" Grid.Row="17" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Befehl].KostenMod}" Grid.Row="17" Grid.Column="4" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Dauer der Ausführung" Grid.Row="16" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="16" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Dauer].Value}">
+        <TextBlock Text="Dauer der Ausführung" Grid.Row="18" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="18" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Dauer].Value}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text"/>
@@ -485,13 +527,13 @@
             <System:Int32>3</System:Int32>
             <System:Int32>4</System:Int32>
         </ComboBox>
-        <TextBlock Text="{Binding Mods[Dauer].KontrollMod}" Grid.Row="16" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Dauer].KontrollMod}" Grid.Row="18" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <CheckBox Grid.Row="17" Content="Affinität zu Dämonen" IsChecked="{Binding Mods[Affinität].Value}"/>
-        <TextBlock Text="{Binding Mods[Affinität].KontrollMod}" Grid.Row="17" Grid.Column="3" Style="{StaticResource mod}"/>
+        <CheckBox Grid.Row="19" Content="Affinität zu Dämonen" IsChecked="{Binding Mods[Affinität].Value}"/>
+        <TextBlock Text="{Binding Mods[Affinität].KontrollMod}" Grid.Row="19" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="18" Style="{StaticResource label}"/>
-        <ComboBox Grid.Row="18" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Bezahlung].Value}">
+        <TextBlock Text="Zusätzliche AsP-Bezahlung" Grid.Row="20" Style="{StaticResource label}"/>
+        <ComboBox Grid.Row="20" Grid.Column="1" SelectedIndex="0" SelectedValue="{Binding Mods[Bezahlung].Value}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Name="text" Text="Keine"/>
@@ -513,21 +555,21 @@
             <System:Int32>-2</System:Int32>
             <System:Int32>-3</System:Int32>
         </ComboBox>
-        <TextBlock Text="{Binding Mods[Bezahlung].KontrollMod}" Grid.Row="18" Grid.Column="3" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Bezahlung].KostenMod}" Grid.Row="18" Grid.Column="4" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Bezahlung].KontrollMod}" Grid.Row="20" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Bezahlung].KostenMod}" Grid.Row="20" Grid.Column="4" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Sonstiges" Grid.Row="19" Style="{StaticResource label}"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="19" Grid.Column="1">
+        <TextBlock Text="Sonstiges" Grid.Row="21" Style="{StaticResource label}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="21" Grid.Column="1">
             <General:IntBox ShowButtons="True" Value="{Binding Mods[Sonstiges].Value1}"/>
             <General:IntBox ShowButtons="True" Value="{Binding Mods[Sonstiges].Value2}"/>
         </StackPanel>
-        <TextBlock Text="{Binding Mods[Sonstiges].AnrufungsMod}" Grid.Row="19" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Sonstiges].KontrollMod}" Grid.Row="19" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Sonstiges].AnrufungsMod}" Grid.Row="21" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Sonstiges].KontrollMod}" Grid.Row="21" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Gesamt" Grid.Row="20" Style="{StaticResource label}"/>
-        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="20" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="20" Grid.Column="3" Style="{StaticResource mod}"/>
-        <TextBlock Grid.Row="20" Grid.Column="4" Style="{StaticResource mod}" Text="{Binding GesamtAstralKosten}"/>
+        <TextBlock Text="Gesamt" Grid.Row="22" Style="{StaticResource label}"/>
+        <TextBlock Text="{Binding GesamtRufMod}" Grid.Row="22" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding GesamtHerrschMod}" Grid.Row="22" Grid.Column="3" Style="{StaticResource mod}"/>
+        <TextBlock Grid.Row="22" Grid.Column="4" Style="{StaticResource mod}" Text="{Binding GesamtAstralKosten}"/>
 
     </Grid>
 </UserControl>

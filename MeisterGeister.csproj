@@ -550,6 +550,7 @@
     <Compile Include="Net\Web\RestModule.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
+    <Compile Include="ViewModel\Alchimie\Logic\Qualität.cs" />
     <Compile Include="ViewModel\Alchimie\Logic\Substitution.cs" />
     <Compile Include="ViewModel\Alchimie\Logic\Zutat.cs" />
     <Compile Include="ViewModel\Almanach\AlmanachViewModel.cs" />

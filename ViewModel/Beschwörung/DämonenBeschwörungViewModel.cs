@@ -1,5 +1,6 @@
 ﻿using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Alchimie.Logic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,7 +34,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected override void checkBeschworenesWesen()
         {
             base.checkBeschworenesWesen();
-            if(BeschworenesWesen != null)
+            if (BeschworenesWesen != null)
             {
                 Hörner = BeschworenesWesen.Beschwörbares.Dämon.Hörner ?? 0;
             }
@@ -69,37 +70,61 @@ namespace MeisterGeister.ViewModel.Beschwörung
         private void würfleBeschwörungMisslungenEffekt()
         {
             GegnerBase wesen;
-            int wurf = View.General.ViewHelper.ShowWürfelDialog(blutmagie.Value1 ? "3W6" : "2W6", "Beschwörung Misslungen");
+            BeschwörungMisslungenErgebnis = String.Empty;
+            int wurf = 0;
             if (name.Value == 0) wurf += 7;
+            wurf += View.General.ViewHelper.ShowWürfelDialog(blutmagie.Value1 ? "3W6" : "2W6", "Beschwörung Misslungen");
+            //Sollte beim Einsatz von Zauberkreide oder Beschwörungskerzen der Qualität F die Beschwörung misslingen besteht eine 50%ige Wahrscheinlichkeit einen stärkeren Dämon zu rufen
+            if ((kerzen.Value1 && kerzen.Value2 == Qualität.F) || (kreide.Value1 && kreide.Value2 == Qualität.F))
+            {
+                BeschwörungMisslungenErgebnis = "Aufgrund von Zauberkreide/Beschwörungskerzen der Qualität F besteht eine 50%ige Wahrscheinlichkeit dass ein stärkerer Dämon erscheint. ";
+                //Wenn eh schon ein stärkerer Dämon kommt machen wir nix
+                if (wurf <= 11)
+                {
+                    if (Würfel.Wurf(2) == 1)
+                    {
+                        wurf = 12;
+                        BeschwörungMisslungenErgebnis += "Der Beschwörer hat Pech. Dieser Effekt tritt auch ein." + Environment.NewLine;
+                    }
+                    else
+                    {
+                        BeschwörungMisslungenErgebnis += "Der Beschwörer hat aber diesmal noch Glück gehabt." + Environment.NewLine;
+                    }
+                }
+                else
+                {
+                    BeschwörungMisslungenErgebnis += "Dies ist jedoch nicht relevant da dies laut Zufallswurf sowieso schon eintritt." + Environment.NewLine;
+                }
+            }
             if (wurf <= 6)
             {
                 wesen = null;
-                BeschwörungMisslungenErgebnis = "Es erscheint kein Dämon. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
+                BeschwörungMisslungenErgebnis += "Es erscheint kein Dämon. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 //Button deaktivieren
                 WürfleBeschwörungMisslungen = new Base.CommandBase((o) => { }, (o) => false);
             }
             else if (wurf <= 11 && (wesen = Global.ContextHeld.GetLeichtererDämon(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von niedrigerer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
+                BeschwörungMisslungenErgebnis += "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von niedrigerer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 15 && (wesen = Global.ContextHeld.GetSchwerererDämon(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von höherer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
+                BeschwörungMisslungenErgebnis += "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von höherer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else if (wurf <= 19 && (wesen = Global.ContextHeld.GetGehörntererDämonAusDomäne(BeschworenesWesen)) != null)
             {
-                BeschwörungMisslungenErgebnis = "Ein gehörnter Dämon aus derselben Domäne, jedoch von höherer Beschwörungsschwierigkeit erscheint. 1 Punkt schleichender Verfall.";
+                BeschwörungMisslungenErgebnis += "Ein gehörnter Dämon aus derselben Domäne, jedoch von höherer Beschwörungsschwierigkeit erscheint. 1 Punkt schleichender Verfall.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
             else
             {
                 wesen = Global.ContextHeld.GetGehörntererDämon(BeschworenesWesen);
-                BeschwörungMisslungenErgebnis = "Ein gehörnter Dämon von höherer Beschwörungsschwierigkeit erscheint. 1W6 Punkte schleichender Verfall.";
+                BeschwörungMisslungenErgebnis += "Ein gehörnter Dämon von höherer Beschwörungsschwierigkeit erscheint. 1W6 Punkte schleichender Verfall.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
@@ -121,7 +146,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void würfleBeherrschungMisslungenEffekt(ProbenErgebnis erg)
         {
-            int wurf = View.General.ViewHelper.ShowWürfelDialog("2W6", "Kontrolle Misslungen");
+            int wurf = 0;
             if (erg.Ergebnis == Logic.General.ErgebnisTyp.PATZER)
             {
                 wurf += schwierigkeit.KontrollMod;
@@ -130,6 +155,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             }
             else wurf += (int)Math.Round(schwierigkeit.Value2 / 2.0, MidpointRounding.AwayFromZero);
             if (Hörner > 0) wurf += 5;
+            wurf += View.General.ViewHelper.ShowWürfelDialog("2W6", "Kontrolle Misslungen");
             if (wurf <= 1)
             {
                 BeherrschungMisslungenErgebnis = "Dämon und Beschwörer sind 2 Aktionen lang in einem Duell der Willenskraft verstrickt. Dem Beschwörer gelingt es dem Dämon die Erfüllung eines Dienstes abzuringen. Evtl. weitere Dienste verfallen. 2 Punkte schleichender Verfall.";
@@ -251,10 +277,15 @@ namespace MeisterGeister.ViewModel.Beschwörung
         private BeschwörungsModifikator<int> invocatioMalen;
         private BeschwörungsModifikator<int> invocatioMagiekunde;
 
+
         protected override void addMods()
         {
             //Bei der Dämonenbeschwörung entfällt die materielle Komponente
             Mods.Remove(MOD_MATERIAL);
+
+            //Beschwörungskerzen und -kreide 
+            Mods.Add(MOD_KERZEN, kerzen);
+            Mods.Add(MOD_KREIDE, kreide);
 
             //Bei der Dämonenbeschwörung muss der Beschwörer die Dienstkosten selbst tragen
             Mods.Remove(MOD_BEFEHL);
@@ -266,6 +297,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
             //Die Zusätzliche Bezahlung bezieht sich auf die Dienstkosten
             bezahlung.GetKostenMod = () => (int)Math.Round(-bezahlung.Value * 0.2 * befehl.KostenMod, MidpointRounding.AwayFromZero);
+            Mods.Add(MOD_BEZAHLUNG, bezahlung);
 
             //Wenn ein anderer Dämon erscheint als der gerufene wird die Kontrollschwierigkeit verdoppelt
             schwierigkeit.GetKontrollMod = () => schwierigkeit.Value2 * (AndererDämon ? 2 : 1);

@@ -19,8 +19,9 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override void addMods()
         {
-            //Da sich die Bezahlung auf die Dienstkosten bezieht, entfällt diese bei Wesen, die ihre Dienstkosten selbst tragen
-            Mods.Remove(MOD_BEZAHLUNG);
+            //Beschwörungskerzen und -kreide 
+            Mods.Add(MOD_KERZEN, kerzen);
+            Mods.Add(MOD_KREIDE, kreide);
 
             //Geisterbeschwörung ist tagsüber um 7 erschwert
             tag = new BeschwörungsModifikator<bool>();

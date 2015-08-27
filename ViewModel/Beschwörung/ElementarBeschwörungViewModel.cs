@@ -44,9 +44,6 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override void addMods()
         {
-            //Da sich die Bezahlung auf die Dienstkosten bezieht, entfällt diese bei Wesen, die ihre Dienstkosten selbst tragen
-            Mods.Remove(MOD_BEZAHLUNG);
-
             wesen = new BeschwörungsModifikator<Element, ElementarWesen>();
             wesen.GetKostenMod = () =>
             {
