@@ -8567,6 +8567,7 @@ Zhirrach fallen mit erbarmungsloser Zielstrebigkeit über ihre Beute her und tra
 
 
 /* GegnerBase_Angriff */
+DELETE FROM [GegnerBase_Angriff] WHERE UPPER([GegnerBaseGUID]) like '00000000-0000-0000-006e-%';
 
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000001' ,N'Stoß ' ,6 ,1 ,2 ,6 ,N'H' ,NULL ,NULL ,4);
