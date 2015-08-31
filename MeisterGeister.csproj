@@ -183,6 +183,8 @@
       <HintPath>packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -547,6 +549,7 @@
     </Compile>
     <Compile Include="Net\Server.cs" />
     <Compile Include="Net\Starter.cs" />
+    <Compile Include="Net\Web\Downloader.cs" />
     <Compile Include="Net\Web\RestModule.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
@@ -886,6 +889,9 @@
     </Compile>
     <Compile Include="View\Helden\Controls\ZauberView.xaml.cs">
       <DependentUpon>ZauberView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kalender\KalenderControl.xaml.cs">
+      <DependentUpon>KalenderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\Controls\GegnerDetailView.xaml.cs">
       <DependentUpon>GegnerDetailView.xaml</DependentUpon>
@@ -1360,6 +1366,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Helden\Controls\ZauberView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kalender\KalenderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

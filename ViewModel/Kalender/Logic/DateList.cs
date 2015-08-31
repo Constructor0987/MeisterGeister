@@ -10,8 +10,20 @@ namespace MeisterGeister.ViewModel.Kalender.Logic
 {
     public class DateList : AsyncVirtualizingCollection<DatumViewModel>
     {
-        public DateList(int tageProMonat = 30, int tageProWoche = 7, int aktuellerTag = 0) : base(new DateProvider(aktuellerTag), tageProMonat + 2 * tageProWoche, 1000)
+        public DateList(DSADateCalendar kalender, int tageProMonat, int tageProWoche, int aktuellerTag)
+            : this(kalender, tageProMonat + 2 * tageProWoche, aktuellerTag)
         {
+        }
+
+        public DateList(DSADateCalendar kalender, int anzuzeigendeTage = 30 + 7 * 2, int aktuellerTag = 0)
+            : base(new DateProvider(kalender, aktuellerTag), anzuzeigendeTage, 3000)
+        {
+        }
+
+        public int GetIndex(DSADateTime date)
+        {
+            var prov = ItemsProvider as DateProvider;
+            return prov.GetIndex((int)date.DaysSinceBF);
         }
     }
 }

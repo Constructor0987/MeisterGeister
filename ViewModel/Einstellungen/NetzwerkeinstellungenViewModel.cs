@@ -36,7 +36,7 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
-        public CommandBase OnToggleWebServerStatus { get; }
+        public CommandBase OnToggleWebServerStatus { get; private set; }
 
         private bool CanToggleWebServerStatus(object arg)
         {

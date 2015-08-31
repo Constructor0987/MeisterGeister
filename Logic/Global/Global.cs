@@ -110,6 +110,12 @@ namespace MeisterGeister
             private set;
         }
 
+        public static MeisterGeister.Net.Web.Downloader Downloader
+        {
+            get;
+            private set;
+        }
+
         private static DgSuche.Ortsmarke standort = null;
         public static DgSuche.Ortsmarke Standort
         {
@@ -258,6 +264,8 @@ namespace MeisterGeister
 
             //webserver
             WebServer = new Server();
+
+            Downloader = new Net.Web.Downloader();
         }
 
         public static void CleanUp()

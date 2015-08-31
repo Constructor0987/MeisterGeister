@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.Compression;
 
 namespace MeisterGeister.Logic.Extensions
 {
@@ -13,6 +14,37 @@ namespace MeisterGeister.Logic.Extensions
         public static string[] EXTENSIONS_IMAGES = new string[] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff" };
         public static string[] EXTENSIONS_AUDIO = new string[] { "mp3", "wav", "ogg", "wma" };
 
+        /// <summary>
+        /// Entpackt eine Zip-Datei mit Unterverzeichnissen in ein Zielverzeichnis.
+        /// </summary>
+        /// <param name="zipFilePath"></param>
+        /// <param name="extractPath"></param>
+        /// <param name="overwrite"></param>
+        public static void UnZip(string zipFilePath, string extractPath, bool overwrite = false)
+        {
+            using (var zip = System.IO.Compression.ZipFile.OpenRead(zipFilePath))
+            {
+                foreach (var e in zip.Entries)
+                {
+                    bool isDir = false;
+                    var filePath = Path.Combine(extractPath, e.FullName);
+                    if (e.FullName.EndsWith("/") || e.FullName.EndsWith("\\"))
+                        isDir = true;
+                    if (File.Exists(filePath))
+                    {
+                        if (isDir || !overwrite)
+                            continue;
+                        else
+                            File.Delete(filePath);
+                    }
+                    else
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    if(!isDir)
+                        e.ExtractToFile(filePath);
+                }
+            }
+        }
+        
         /// <summary>
         /// Wandelt 'path' in eine relative Pfadangabe in Relation zum MeisterGeister-Verzeichnis um.
         /// </summary>

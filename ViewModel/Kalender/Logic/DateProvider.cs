@@ -11,9 +11,25 @@ namespace MeisterGeister.ViewModel.Kalender.Logic
     public class DateProvider : IItemsProvider<DatumViewModel> //TODO mit Typ ergänzen, der auch Ereignisse zu dem Datum kennt.
     {
         private long bf0 = 0;
-        public DateProvider(int dayoffset = 0)
+        public DateProvider(DSADateCalendar calendar,  int dayoffset = 0)
         {
+            Calendar = calendar;
             bf0 = FetchCount() / 2 + dayoffset;
+        }
+
+        private DSADateCalendar calendar;
+        public DSADateCalendar Calendar
+        {
+            get { return calendar; }
+            set { calendar = value; }
+        }
+
+        public int GetIndex(int day)
+        {
+            long r = bf0 + day;
+            if(r>FetchCount() || r < 0)
+                return -1;
+            return (int)r;
         }
 
         public int FetchCount()
@@ -27,7 +43,7 @@ namespace MeisterGeister.ViewModel.Kalender.Logic
             var l = new List<DatumViewModel>(count);
             for (int i = 0; i < count; i++)
             {
-                var d = new DatumViewModel(new DSADateTime( (startIndex + i -bf0) * DSADateTime.TICKS_PER_DAY));
+                var d = new DatumViewModel(new DSADateTime((startIndex + i - bf0) * DSADateTime.TICKS_PER_DAY), Calendar);
                 l.Add(d);
             }
             return l;

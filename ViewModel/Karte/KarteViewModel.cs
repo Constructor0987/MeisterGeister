@@ -6,23 +6,63 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Resources;
 using System.Windows.Threading;
+using MeisterGeister.Logic.Extensions;
+using System.Net;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Karte
 {
     public class KarteViewModel : Base.ViewModelBase
     {
-        public KarteViewModel()
+        public static void DownloadKarten()
+        {
+            var kartenUrl = "http://meistergeister.org/download/763/";
+            Global.Downloader.AddDownload(kartenUrl, FileExtensions.ConvertRelativeToAbsolutePath("Kartenpaket.zip"), Karten_DownloadFileCompleted);
+        }
+
+        static void Karten_DownloadFileCompleted(string filePath, Exception e)
+        {
+            if (e != null)
+            {
+                ViewHelper.ShowError("Fehler beim herunterladen des Kartenpaketes.", e);
+                return;
+            }
+            FileExtensions.UnZip(FileExtensions.ConvertRelativeToAbsolutePath("Kartenpaket.zip"), FileExtensions.ConvertRelativeToAbsolutePath("."));
+            ViewHelper.Popup("Das Kartenpaket wurde heruntergeladen und installiert.");
+        }
+
+        public static bool KartenVorhanden(List<Logic.Karte> karten = null)
+        {
+            if (karten == null)
+                karten = KartenListeErstellen();
+            foreach(var k in karten)
+            {
+                var uri = new Uri(k.Bildpfad, UriKind.RelativeOrAbsolute);
+                if(uri.Host.StartsWith("siteoforigin:") && !System.IO.File.Exists(FileExtensions.ConvertRelativeToAbsolutePath(uri.AbsolutePath.Substring(1))))
+                    return false;
+            }
+            return true;
+        }
+
+        public static List<Logic.Karte> KartenListeErstellen()
+        {
+            var l = new List<Logic.Karte>();
+            var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
+            l.Add(aventurien);
+            return l;
+        }
+
+        public KarteViewModel() : base(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ShowError)
         {
             onHeldenPositionSetzen = new CommandBase(HeldenPositionSetzen, null);
             onDereGlobusÖffnen = new CommandBase(DereGlobusÖffnen, null);
             onCenterOnHelden = new CommandBase(CenterOnHelden, null);
-
-            karten = new List<Logic.Karte>();
-            var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
-            // TODO: Prüfen ob Karte vorhanden ist, ansonsten automatischen Download anbieten
-            karten.Add(aventurien);
-            SelectedKarte = aventurien;
+            karten = KartenListeErstellen();
+            if (!KartenVorhanden(karten) && Confirm("Karten herunterladen", "Mindestens eine Karte ist nicht installiert.\nSollen die fehlenden Karten von der MeisterGeister-Seite heruntergeladen werden?"))
+                DownloadKarten();
+            SelectedKarte = karten[0];
         }
 
         bool firstLoad = true;

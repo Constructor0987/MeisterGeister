@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MeisterGeister.View.Kalender.KalenderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <!-- http://stackoverflow.com/questions/21728012/customcontrol-with-templateparts -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <UniformGrid Name="PART_WeekdayGrid" Grid.Row="0" Grid.Column="1" Rows="1" Columns="{Binding TageProWoche}" />
+        <UniformGrid Name="PART_WeeknumberGrid" Grid.Row="1" Grid.Column="0" Rows="{Binding AnzuzeigendeWochen}" Columns="1" />
+        <UniformGrid Name="PART_MonthGrid" Grid.Column="1" Grid.Row="1" Rows="{Binding AnzuzeigendeWochen}" Columns="{Binding TageProWoche}" />
+    </Grid>
+</UserControl>

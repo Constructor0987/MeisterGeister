@@ -45,11 +45,6 @@ namespace MeisterGeister.View.Windows
             System.Diagnostics.Process.Start("http://www.dereglobus.org/");
         }
 
-        private void ImageHerokonOnline_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://www.herokon-online.com/");
-        }
-
         private void ImageFanprojekt_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2 && e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)

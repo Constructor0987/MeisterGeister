@@ -525,14 +525,14 @@
                                     </MenuItem>
                                 </MenuItem>
                                 <Separator   />
-                                <MenuItem Height="28" Click="MenuItemHerokonOnline_Click">
+                                <!--<MenuItem Height="28" Click="MenuItemHerokonOnline_Click">
                                     <MenuItem.Header>
                                         <TextBlock Text="Herokon Online" VerticalAlignment="Center" />
                                     </MenuItem.Header>
                                     <MenuItem.Icon>
                                         <Image Margin="2" Source="/Images/Logos/HerokonOnline_Icon.png" Stretch="Fill" />
                                     </MenuItem.Icon>
-                                </MenuItem>
+                                </MenuItem>-->
                                 <MenuItem Height="28" Click="MenuItemDereGlobus_Click">
                                     <MenuItem.Header>
                                         <TextBlock Text="DereGlobus Projekt" VerticalAlignment="Center" />
