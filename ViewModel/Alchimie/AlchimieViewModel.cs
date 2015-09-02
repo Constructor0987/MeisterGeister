@@ -195,18 +195,24 @@ namespace MeisterGeister.ViewModel.Alchimie
             get { return Global.ContextHeld.LoadHeldenGruppeWithAlchimie(); }
             set { _heldListe = value; OnChanged("HeldListe"); } 
         }
-        public List<string> GruppeListe
-        {
-            get { return Global.ContextHeld.LoadAlchimieGruppe(); }
-            set
-            {
-                _gruppeListe = value;
-                OnChanged("GruppeListe");
-            }
-        }
+        //public List<string> GruppeListe
+        //{
+        //    get { return Global.ContextHeld.LoadAlchimieGruppe(); }
+        //    set
+        //    {
+        //        _gruppeListe = value;
+        //        OnChanged("GruppeListe");
+        //    }
+        //}
         public List<Alchimierezept> RezeptListe
         {
-            get { return _rezeptListe; }
+            get { 
+                if(_rezeptListe == null)
+                {
+                    _rezeptListe = Global.ContextHeld.Liste<Alchimierezept>();
+                }
+                return _rezeptListe; 
+            }
             set
             {
                 _rezeptListe = value;
@@ -250,16 +256,16 @@ namespace MeisterGeister.ViewModel.Alchimie
 
         }
         }
-        public string SelectedGruppe
-        {
-            get { return _selectedGruppe; }
-            set
-            {
-                _selectedGruppe = value;
-                OnChanged("SelectedGruppe");
-                RezeptListe = Global.ContextHeld.LoadAlchimieRezepteByGruppe(value);
-            }
-        }
+        //public string SelectedGruppe
+        //{
+        //    get { return _selectedGruppe; }
+        //    set
+        //    {
+        //        _selectedGruppe = value;
+        //        OnChanged("SelectedGruppe");
+        //        RezeptListe = Global.ContextHeld.LoadAlchimieRezepteByGruppe(value);
+        //    }
+        //}
         public Alchimierezept SelectedRezept
         {
             get { return _selectedRezept; }

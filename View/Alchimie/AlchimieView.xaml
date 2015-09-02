@@ -40,6 +40,11 @@
                 </DockPanel>
             </Border>
         </DataTemplate>
+        <CollectionViewSource x:Key="Rezepte" Source="{Binding RezeptListe}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Gruppe" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
     </UserControl.Resources>
 
     <TabControl Background="Transparent">
@@ -76,10 +81,20 @@
                                 <Border Style="{DynamicResource ControlContentBorder}">
                                     <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                         <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                            <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
-                                            <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
+                                            <!--<TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
+                                            <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />-->
                                             <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                            <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
+                                            <ComboBox Name="Rezepte" Margin="0,0,5,0" Width="200" ItemsSource="{Binding Source={StaticResource Rezepte}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}">
+                                                <ComboBox.GroupStyle>
+                                                    <GroupStyle>
+                                                        <GroupStyle.HeaderTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock FontWeight="Bold" Text="{Binding Name}"/>
+                                                            </DataTemplate>
+                                                        </GroupStyle.HeaderTemplate>
+                                                    </GroupStyle>
+                                                </ComboBox.GroupStyle>
+                                            </ComboBox>
                                             <ViewGeneral:LiteraturControl Height="25" Padding="2" Literaturangabe="{Binding SelectedRezept.Literatur}" LiteraturAnzeigeArt="TextLang" />
                                         </StackPanel>
                                     </StackPanel>
