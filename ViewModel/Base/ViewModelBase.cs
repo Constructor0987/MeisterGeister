@@ -241,14 +241,14 @@ namespace MeisterGeister.ViewModel.Base {
         protected void OnChanged([CallerMemberName] string propertyName = null)
         {
             this.VerifyPropertyName(propertyName);
-            var eventHandler = this.PropertyChanged;
-            if (eventHandler != null)
-            {
-                eventHandler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            _propertyChanged.Raise(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        WeakEvent<PropertyChangedEventHandler> _propertyChanged = new WeakEvent<PropertyChangedEventHandler>();
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add { _propertyChanged.Add(value); }
+            remove { _propertyChanged.Remove(value); }
+        }
 
         /// <summary>
         /// Führt ein Event in dem bei Konstruktion gespeicherten Thread (meist UI-Thread) aus.

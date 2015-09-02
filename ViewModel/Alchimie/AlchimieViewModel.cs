@@ -11,6 +11,8 @@ using System.Windows;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Alchimie.Logic;
 using System.ComponentModel;
+using MeisterGeister.Logic.General;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Alchimie
 {
@@ -41,12 +43,25 @@ namespace MeisterGeister.ViewModel.Alchimie
         private string _selectedLaborQualitätListe = "normal";
 
         //Rückgaben
-        private int _modifikatorLabor;
+        private Qualität _ergebnisQualität = Qualität.M;
+
+        public Qualität ErgebnisQualität
+        {
+            get { return _ergebnisQualität; }
+            set { Set(ref _ergebnisQualität, value); }
+        }
+        private string _ergebnisHaltbarkeit;
+
+        public string ErgebnisHaltbarkeit
+        {
+            get { return _ergebnisHaltbarkeit; }
+            set { Set(ref _ergebnisHaltbarkeit, value); }
+        }
         //Checkboxen
         private bool _checkedChymischeHochzeit;
-        private bool _checkedFeuerUndEis;
-        private bool _checkedMandriconsBindung;
-        private bool _checkedTransmutationDerElemente;
+        //private bool _checkedFeuerUndEis;
+        //private bool _checkedMandriconsBindung;
+        //private bool _checkedTransmutationDerElemente;
 
         #endregion
         #region//-Herstellung-
@@ -59,21 +74,16 @@ namespace MeisterGeister.ViewModel.Alchimie
         //Selections
         private Talent _selectedTalentHerstellung;
         //Rückgaben
-        private bool _herstellungUnmöglich = false;
         private int _wertTaWTalent;
         private int _wertTaPZurückhaltenHerstellung;
         private int _wertAstralesAufladenHerstellung;
         private int _modifikatorSubstitutionenHerstellung = 0;
         private int _modifikatorTaPZurückhaltenHerstellung = 0;
-        private int _modifikatorCHHerstellung =0;
         private int _bonusTaPQualitätHerstellung;
-        private int _bonusCHQualitätHerstellung=0;
         private int _bonusAAQualitätHerstellung;
-        private int _probenModGesHerstellung;
         private string _herstellungWirkungM;
         private int _aSPEinsatzHerstellung=0;
-        private string _bonusQualitätHerstellung="2W6 + TaP* ";
-        private string _wertHaltbarkeitHerstellung;
+        //private int _bonusQualitätHerstellung = 0; //"2W6 + TaP* ";
         private int _taPHerstellung;
 
         //Checkboxen
@@ -138,8 +148,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         private int _wertZfPVerdünnung;
         private string _verdünnungQualität;
         private int _verdünnungAnzahl;
-        private string _verdünnungKosten;
-        private string _verdünnungZeit;
         //Commands
         private Base.CommandBase _onProbeVerdünnung;
 
@@ -234,6 +242,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 resetVerdünnung();
                 resetHaltbarkeit();
                 TalentListeHerstellung = Global.ContextHeld.LoadAlchimieHerstellungTalenteByHeld(value);
+                //TODO Talent wählen/Wert aktualisieren
                 checkAufladen(value);
             }
             else IsEnabledAufladen = true;
@@ -258,14 +267,12 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 if (value != null)
                 {
+                    if (_selectedRezept == value)
+                        return;
                     _selectedRezept = value;
                     OnChanged("SelectedRezept");
-                    VerdünnungKosten = SelectedRezept.Brauschwierigkeit.ToString() + " D";
-                    VerdünnungZeit = SelectedRezept.Brauschwierigkeit.ToString() + " h";
-                    WertHaltbarkeitHerstellung = SelectedRezept.Haltbarkeit;
                     SubstitutionListeHerstellung = getZutatenByRezept(_selectedRezept);
                     HerstellungWirkungM = getMWirkung();
-                    calculateProbenModGes();
                 }
             }
         }
@@ -276,8 +283,6 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 _selectedLaborArtListe = value;
                 OnChanged("SelectedLaborArtListe");
-                calculateModLab();
-                calculateProbenModGes();
             }
         }
         public string SelectedLaborQualitätListe
@@ -287,21 +292,51 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 _selectedLaborQualitätListe = value;
                 OnChanged("SelectedLaborQualitätListe");
-                calculateModLab();
-                calculateProbenModGes();
             }
         }
         //Rückgaben
+        [DependentProperty("SelectedRezept"), DependentProperty("SelectedLaborArtListe"), DependentProperty("SelectedLaborQualitätListe")]
         public int ModifikatorLabor
         {
-            get { return _modifikatorLabor; }
-            set
+            get
             {
-                _modifikatorLabor = value;
-                OnChanged("ModifikatorLabor");
+
+                int mod = 0;
+                if (SelectedRezept != null)
+                {
+                    switch (SelectedLaborArtListe)
+                    {
+                        case "Archaisches Labor": switch (SelectedRezept.Labor)
+                            {
+                                case "Hexenküche": mod = 7; break;
+                                //keine Herstellung möglich
+                                case "Alchimistenlabor": return 99;
+                            }; break;
+                        case "Hexenküche": switch (SelectedRezept.Labor)
+                            {
+                                case "Alchimistenlabor": mod = 7; break;
+                            }; break;
+                        case "Alchimistenlabor": switch (SelectedRezept.Labor)
+                            {
+                                case "archaisches Labor": mod = -3; break;
+                            }; break;
+                        default: break;
+                    }
+                }
+                switch (SelectedLaborQualitätListe)
+                {
+                    case "hochwertig": mod -= 3; break;
+                    case "aussergew. hochwertig": mod -= 7; break;
+                    case "beschädigt": mod += 3; break;
+                    default: break;
+                }
+                return mod;
             }
         }
         //Checkboxen
+        /// <summary>
+        /// Chymische Hochzeit erleichter die Probe und gibt einen Qualitätsbonus. WdA
+        /// </summary>
         public bool CheckedChymischeHochzeit
         {
             get { return _checkedChymischeHochzeit; }
@@ -309,58 +344,94 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 _checkedChymischeHochzeit = value;
                 OnChanged("CheckedChymischeHochzeit");
-                if (value)
-                {
-                    ModifikatorCHHerstellung = -1;
-                    BonusCHQualitätHerstellung = 2;
-                }
-                else
-                {
-                    ModifikatorCHHerstellung = 0;
-                    BonusCHQualitätHerstellung = 0;
-                }
                 //TODO MP neccessary?!
                 WertAstralesAufladenHerstellung = WertAstralesAufladenHerstellung;
-                calculateProbenModGes();
             }
         }
-        public bool CheckedFeuerUndEis
-        {
-            get { return _checkedFeuerUndEis; }
-            set
-            {
-                _checkedFeuerUndEis = value;
-                OnChanged("CheckedFeuerUndEis");
-            }
-        }
-        public bool CheckedMandriconsBindung
-        {
-            get { return _checkedMandriconsBindung; }
-            set
-            {
-                _checkedMandriconsBindung = value;
-                OnChanged("CheckedMandriconsBindung");
-            }
-        }
-        public bool CheckedTransmutationDerElemente
-        {
-            get { return _checkedTransmutationDerElemente; }
-            set
-            {
-                _checkedTransmutationDerElemente = value;
-                OnChanged("CheckedTransmutationDerElemente");
-            }
-        }
+        
+        //Spielen bei der Herstellung gar keine direkte Rolle.
+        //public bool CheckedFeuerUndEis
+        //{
+        //    get { return _checkedFeuerUndEis; }
+        //    set
+        //    {
+        //        _checkedFeuerUndEis = value;
+        //        OnChanged("CheckedFeuerUndEis");
+        //    }
+        //}
+        //public bool CheckedMandriconsBindung
+        //{
+        //    get { return _checkedMandriconsBindung; }
+        //    set
+        //    {
+        //        _checkedMandriconsBindung = value;
+        //        OnChanged("CheckedMandriconsBindung");
+        //    }
+        //}
+        //public bool CheckedTransmutationDerElemente
+        //{
+        //    get { return _checkedTransmutationDerElemente; }
+        //    set
+        //    {
+        //        _checkedTransmutationDerElemente = value;
+        //        OnChanged("CheckedTransmutationDerElemente");
+        //    }
+        //}
 
         #endregion
         //TODO MP wrap Alchimierezept; add WirkungM, calc Haltbarkeit and others fix?!
         #region//-Herstellung-
+        //Dictionary<Qualität, double> qualitätsWahrscheinlichkeit;
+
+        ///// <summary>
+        ///// Zurücksetzen von allen gecachten Werten, die in direktem Zusammenhang mit der Herstellungsschwierigkeit stehen.
+        ///// </summary>
+        //private void Invalidate()
+        //{
+        //    qualitätsWahrscheinlichkeit = null;
+        //}
+        
+        [DependentProperty("BonusQualitätHerstellung"), DependentProperty("WertTaWTalent"), DependentProperty("ProbenModGesHerstellung")]
+        public Dictionary<Qualität, double> QualitätsWahrscheinlichkeit
+        {
+            get {
+                //if (qualitätsWahrscheinlichkeit == null)
+                //{
+                    Dictionary<Qualität, double> qualitätsWahrscheinlichkeit;
+                    string[] qualitäten = new string[] { "M", "A", "B", "C", "D", "E", "F" };
+                    qualitätsWahrscheinlichkeit = new Dictionary<Qualität, double>();
+                    foreach (Qualität q in Enum.GetValues(typeof(Qualität)))
+                        qualitätsWahrscheinlichkeit.Add(q, 0);
+
+                    var d = new Dictionary<int, double>();
+                    var qualiwurfV = Würfel.WurfVerteilung(2, 6, BonusQualitätHerstellung);
+                    Probe p = GetProbeHerstellung();
+                    var tapV = p.TaPVerteilung;
+                    foreach(var wurf in qualiwurfV.Keys)
+                    {
+                        foreach(var tap in tapV.Keys)
+                        {
+                            Qualität q = Qualität.M;
+                            if (tap > 0)
+                                q = getQualität(wurf + tap);
+                            qualitätsWahrscheinlichkeit[q] += tapV[tap] * qualiwurfV[wurf];
+                        }
+                    }
+                    foreach (var k in qualitätsWahrscheinlichkeit.Keys.ToList())
+                        qualitätsWahrscheinlichkeit[k] *= 100;
+
+                //}
+                return qualitätsWahrscheinlichkeit;
+            }
+        }
+
+        [DependentProperty("SelectedLaborArtListe"), DependentProperty("SelectedRezept")]
         public bool HerstellungUnmöglich
         {
-            get { return _herstellungUnmöglich; }
-            set { 
-                _herstellungUnmöglich = value;
-                OnChanged("HerstellungUnmöglich");
+            get {
+                if (SelectedLaborArtListe == "Archaisches Labor" && (SelectedRezept == null || SelectedRezept.Labor == "Alchimistenlabor"))
+                    return true;
+                return false; 
             }
         }
 
@@ -414,6 +485,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             }
         }
         //Rückgaben
+        //Kein abgeleiteter Wert, weil die Möglichkeit zur manuellen Anpassung gegeben sein muss.
         public int WertTaWTalent 
         { 
             get { return _wertTaWTalent; } 
@@ -468,6 +540,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 }
             }
         }
+
         public int ModifikatorSubstitutionenHerstellung
         { 
             get { return _modifikatorSubstitutionenHerstellung; } 
@@ -476,14 +549,21 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("ModifikatorSubstitutionenHerstellung");
             } 
         }
+
+        [DependentProperty("SelectedRezept"), DependentProperty("ModifikatorLabor"), DependentProperty("ModifikatorSubstitutionenHerstellung"), DependentProperty("ModifikatorTaPZurückhaltenHerstellung"), DependentProperty("ModifikatorCHHerstellung")]
         public int ProbenModGesHerstellung 
         { 
-            get { return _probenModGesHerstellung; } 
-            set { 
-                _probenModGesHerstellung = value; 
-                OnChanged("ProbenModGesHerstellung"); 
+            get {
+                if (SelectedRezept == null || HerstellungUnmöglich)
+                    return 0;
+                return SelectedRezept.Brauschwierigkeit
+                    + ModifikatorCHHerstellung
+                    + ModifikatorTaPZurückhaltenHerstellung
+                    + ModifikatorSubstitutionenHerstellung
+                    + ModifikatorLabor;
             } 
         }
+        //TODO nur bei Bedarf berechnen
         public string HerstellungWirkungM
         {
             get { return _herstellungWirkungM; } 
@@ -492,6 +572,9 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("HerstellungWirkungM");
             } 
         }
+        /// <summary>
+        /// Wie viele TaP sollen zurückgehalten werden? WdA 19
+        /// </summary>
         public int ModifikatorTaPZurückhaltenHerstellung
         { 
             get { return _modifikatorTaPZurückhaltenHerstellung; } 
@@ -503,39 +586,45 @@ namespace MeisterGeister.ViewModel.Alchimie
                 else 
                     _modifikatorTaPZurückhaltenHerstellung = 0; 
                 OnChanged("ModifikatorTaPZurückhaltenHerstellung"); 
-                calculateProbenModGes();
             } 
         }
+        /// <summary>
+        /// Bonus durch Chymische Hochzeit. WdZ 116, WdA 18
+        /// </summary>
+        [DependentProperty("CheckedChymischeHochzeit")]
         public int ModifikatorCHHerstellung 
         { 
-            get { return _modifikatorCHHerstellung; } 
-            set {
-                _modifikatorCHHerstellung = value;
-                OnChanged("ModifikatorCHHerstellung");
+            get
+            {
+                if(CheckedChymischeHochzeit)
+                    return -1;
+                return 0;
             } 
         }
-        public int BonusTaPQualitätHerstellung 
+        public int BonusTaPQualitätHerstellung
         {
-            get { return _bonusTaPQualitätHerstellung; } 
-            set { 
+            get { return _bonusTaPQualitätHerstellung; }
+            set
+            {
                 if (value >= 2)
                 {
                     _bonusTaPQualitätHerstellung = value * 2;
-                } 
+                }
                 else
-                    _bonusTaPQualitätHerstellung = 0; 
+                    _bonusTaPQualitätHerstellung = 0;
                 OnChanged("BonusTaPQualitätHerstellung");
-                calculateQualiModGes();
             }
         }
+        
+        [DependentProperty("CheckedChymischeHochzeit")]
         public int BonusCHQualitätHerstellung
         { 
-            get { return _bonusCHQualitätHerstellung; } 
-            set {
-                _bonusCHQualitätHerstellung = value; 
-                OnChanged("BonusCHQualitätHerstellung");
-                calculateQualiModGes();
-            }
+            get
+            {
+                if (CheckedChymischeHochzeit)
+                    return 2;
+                return 0;
+            } 
         }
         public int BonusAAQualitätHerstellung
         {
@@ -543,7 +632,6 @@ namespace MeisterGeister.ViewModel.Alchimie
             set { 
                 _bonusAAQualitätHerstellung = value; 
                 OnChanged("BonusAAQualitätHerstellung"); 
-                calculateQualiModGes();
             }
         }
         public int ASPEinsatzHerstellung
@@ -554,22 +642,25 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("ASPEinsatzHerstellung"); 
             } 
         }
-        public string BonusQualitätHerstellung
+        
+        [DependentProperty("BonusCHQualitätHerstellung"), DependentProperty("BonusAAQualitätHerstellung"), DependentProperty("BonusTaPQualitätHerstellung")]
+        public int BonusQualitätHerstellung
         {
-            get { return _bonusQualitätHerstellung; }
-            set
+            get
             {
-                _bonusQualitätHerstellung = value;
-                OnChanged("BonusQualitätHerstellung");
+                if (HerstellungUnmöglich)
+                    return 0;
+                return BonusCHQualitätHerstellung + BonusAAQualitätHerstellung + BonusTaPQualitätHerstellung;
             }
         }
+        [DependentProperty("SelectedRezept")]
         public string WertHaltbarkeitHerstellung
         {
-            get { return _wertHaltbarkeitHerstellung; }
-            set
+            get
             {
-                _wertHaltbarkeitHerstellung = value;
-                OnChanged("WertHaltbarkeitHerstellung");
+                if (SelectedRezept == null)
+                    return "";
+                return SelectedRezept.Haltbarkeit;
             }
         }
         public int TaPHerstellung
@@ -871,22 +962,23 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("VerdünnungAnzahl");
             }
         }
+
+        [DependentProperty("SelectedRezept")]
         public string VerdünnungKosten
         {
-            get { return _verdünnungKosten; }
-            set
-            {
-                _verdünnungKosten = value;
-                OnChanged("VerdünnungKosten");
+            get {
+                if(SelectedRezept != null)
+                    return SelectedRezept.Brauschwierigkeit.ToString() + " D";
+                return "";
             }
         }
+        [DependentProperty("SelectedRezept")]
         public string VerdünnungZeit
         {
-            get { return _verdünnungZeit; }
-            set
-            {
-                _verdünnungZeit = value;
-                OnChanged("VerdünnungZeit");
+            get {
+                if (SelectedRezept != null)
+                    return SelectedRezept.Brauschwierigkeit.ToString() + " h";
+                return "";
             }
         }
         //Commands
@@ -950,6 +1042,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             _onProbeVerdünnung = new Base.CommandBase(ProbeVerdünnung, null);
             _onProbeHaltbarkeit = new Base.CommandBase(ProbeHaltbarkeit, null);
             SelectedTalentHerstellung = null;
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
         #endregion
@@ -971,43 +1064,6 @@ namespace MeisterGeister.ViewModel.Alchimie
 
         #region //---- METHODEN ----
 
-        #region //-Allgemein- 
-        private void calculateModLab()
-        {
-            int mod = 0;
-            if (SelectedRezept != null)
-            {
-                HerstellungUnmöglich = false;
-                switch (SelectedLaborArtListe)
-                {
-                    case "Archaisches Labor": switch (SelectedRezept.Labor)
-                        {
-                            case "Hexenküche": mod = 7; break;
-                            //keine Herstellung möglich
-                            case "Alchimistenlabor": HerstellungUnmöglich = true; ModifikatorLabor = 0; return;
-                        }; break;
-                    case "Hexenküche": switch (SelectedRezept.Labor)
-                        {
-                            case "Alchimistenlabor": mod = 7; break;
-                        }; break;
-                    case "Alchimistenlabor": switch (SelectedRezept.Labor)
-                        {
-                            case "archaisches Labor": mod = -3; break;
-                        }; break;
-                    default: break;
-                }
-            }
-            switch (SelectedLaborQualitätListe)
-            {
-                case "hochwertig": mod -= 3; break;
-                case "aussergew. hochwertig": mod -= 7; break;
-                case "beschädigt": mod += 3; break;
-                default: break;
-            }
-            ModifikatorLabor = mod;
-        }
-
-        #endregion
         #region//-Herstellung-
         private void resetHerstellung()
         {
@@ -1053,62 +1109,23 @@ namespace MeisterGeister.ViewModel.Alchimie
             return new List<Zutat>();
         }
 
-        private void calculateProbenModGes()
-        {
-            if (SelectedRezept == null)
-                return;
-            if (HerstellungUnmöglich)
-            {
-                return;
-            }
-            else
-            {
-                int mod = SelectedRezept.Brauschwierigkeit;
-                if (CheckedChymischeHochzeit)
-                    mod += ModifikatorCHHerstellung;
-                mod += ModifikatorTaPZurückhaltenHerstellung;
-                mod += ModifikatorSubstitutionenHerstellung;
-                mod += ModifikatorLabor;
-                ProbenModGesHerstellung = mod;
-                return;
-            }
-        }
-
-        private void calculateQualiModGes()
-        {
-            if (HerstellungUnmöglich)
-            {
-                BonusQualitätHerstellung = "nicht möglich";
-                return;
-            }
-            else
-            {
-                int mod = 0;
-                if (CheckedChymischeHochzeit)
-                    mod += BonusCHQualitätHerstellung;
-                mod += BonusTaPQualitätHerstellung;
-                mod += BonusAAQualitätHerstellung;
-                BonusQualitätHerstellung = "2W6 + TaP* +" + mod.ToString();                
-                return;
-            }
-        }
         private string getMWirkung()
         {
             return wirkungen[MeisterGeister.Logic.General.RandomNumberGenerator.RandomInt(0, wirkungen.Count-1)];
         }
 
-        private string getQualität(int qualitätszahl){
+        private Qualität getQualität(int qualitätszahl){
             if(qualitätszahl<=6){
-                return "A";
+                return Qualität.A;
             }else if(qualitätszahl<=12){
-                return "B";
+                return Qualität.B;
             }else if(qualitätszahl<=18){
-                return "C";
+                return Qualität.C;
             }else if(qualitätszahl<=24){
-                return "D";
+                return Qualität.D;
             }else if(qualitätszahl<=30){
-                return"E";
-            }else return "F";
+                return Qualität.E;
+            }else return Qualität.F;
         }
         #endregion
         #region//-Analyse-
@@ -1221,8 +1238,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         private int getModLab(string vorraussetzung)
         {
             int mod = 0;
-
-            HerstellungUnmöglich = false;
             switch (vorraussetzung)
             {
                 case "Archaisches Labor": switch (SelectedLaborArtListe)
@@ -1353,31 +1368,53 @@ namespace MeisterGeister.ViewModel.Alchimie
         private void Zutat_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             calculateModSubstitutionen();
-            calculateProbenModGes();
         }
-        private void ProbeHerstellung(object sender)
+
+        /// <summary>
+        /// Gibt die Herstellungsprobe zurück.
+        /// </summary>
+        /// <param name="werte">optionale NPC Eigenschaftswerte - sonst 10, 10, 10</param>
+        private Probe GetProbeHerstellung(int[] werte = null)
         {
             //Probe auf Erstellung würfeln
             if (SelectedTalentHerstellung != null)
             {
                 SelectedTalentHerstellung.Modifikator = ProbenModGesHerstellung;
                 SelectedTalentHerstellung.Fertigkeitswert = WertTaWTalent;
-                if(SelectedHeld == null && SelectedTalentHerstellung.Werte[0] == 0) //Wenn kein Held, dann die eigenschaften mit 10 vorbesetzen
+                if (SelectedHeld == null && SelectedTalentHerstellung.Werte[0] == 0) //Wenn kein Held, dann die eigenschaften mit 10 vorbesetzen
                 {
+                    if (werte == null)
+                        werte = new int[] { 10, 10, 10 };
                     for (int i = 0; i < 3; i++)
-                        SelectedTalentHerstellung.Werte[i] = 10;
+                        SelectedTalentHerstellung.Werte[i] = werte[i];
+
                 }
+                return SelectedTalentHerstellung;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Würfelt die Herstellungsprobe.
+        /// </summary>
+        /// <param name="sender"></param>
+        private void ProbeHerstellung(object sender)
+        {
+            //Probe auf Erstellung würfeln
+            var probe = GetProbeHerstellung();
+            if (probe != null)
+            {
                 var ergebnis = ShowProbeDialog(SelectedTalentHerstellung, SelectedHeld);
                 if (ergebnis != null && ergebnis.Gelungen)
                 {
                     TaPHerstellung = ergebnis.Übrig;
-                    BonusQualitätHerstellung = getQualität(MeisterGeister.Logic.General.Würfel.Parse("2W6", true) + TaPHerstellung + WertAstralesAufladenHerstellung);
+                    ErgebnisQualität = getQualität(MeisterGeister.Logic.General.Würfel.Parse("2W6", true) + TaPHerstellung + WertAstralesAufladenHerstellung + WertTaPZurückhaltenHerstellung * 2);
                     if (_selectedRezept != null)
-                        WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezept.Haltbarkeit, true).ToString();
+                        ErgebnisHaltbarkeit = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezept.Haltbarkeit, true).ToString();
                 }
                 else {
                     TaPHerstellung = -1;
-                    BonusQualitätHerstellung = "M";
+                    ErgebnisQualität = Qualität.M;
                 }
             }
         }

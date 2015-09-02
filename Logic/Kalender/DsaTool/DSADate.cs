@@ -330,6 +330,16 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             return (ticksSinceBF == other.ticksSinceBF);
         }
 
+        public override bool Equals(object other)
+        {
+            if (other == null)
+                return false;
+            var o = other as DSADateTime;
+            if (o == null)
+                return false;
+            return (ticksSinceBF == o.ticksSinceBF);
+        }
+
         public override string ToString()
         {
             return this.ToString(null, System.Globalization.CultureInfo.CurrentCulture);

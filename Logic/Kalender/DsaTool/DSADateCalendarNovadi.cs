@@ -67,7 +67,6 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
                 int jday = YearDay - 1;
                 int rastdiv = (int)MathUtil.divisio(jday, DAYS_PER_MONTH);
                 int rastmod = (int)MathUtil.modulo(jday, DAYS_PER_MONTH);
-                string s = "";
                 if (DAYS_PER_MONTH - 1 == rastmod)
                 { // Rastullahellah
                     return String.Format("{0}. Rastullahellah", rastdiv + 1);

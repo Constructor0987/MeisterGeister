@@ -10,7 +10,7 @@
              xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
              mc:Ignorable="d" 
              d:DesignHeight="571" d:DesignWidth="946" Loaded="UserControl_Loaded" Background="{StaticResource Background1}"
-             d:DataContext="{d:DesignInstance vm:AlchimieViewModel,IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance vm:AlchimieViewModel,IsDesignTimeCreatable=False}">
     <UserControl.DataContext>
         <vm:AlchimieViewModel />
     </UserControl.DataContext>
@@ -118,9 +118,9 @@
                                         <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
                                             </StackPanel>
-                                            <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                            <!--<CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
                                             <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
-                                            <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
+                                            <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>-->
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
@@ -194,6 +194,37 @@
                     <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel HorizontalAlignment="Left">
+                                <Grid Width="245">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="35"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="M" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="A" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="B" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="C" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="4" Text="D" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="5" Text="E" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="6" Text="F" HorizontalAlignment="Center"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding QualitätsWahrscheinlichkeit[M], StringFormat={}{0:0.#}% }" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding QualitätsWahrscheinlichkeit[A], StringFormat={}{0:0.#}% }" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding QualitätsWahrscheinlichkeit[B], StringFormat={}{0:0.#}% }" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding QualitätsWahrscheinlichkeit[C], StringFormat={}{0:0.#}% }" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding QualitätsWahrscheinlichkeit[D], StringFormat={}{0:0.#}% }" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="5" Text="{Binding QualitätsWahrscheinlichkeit[E], StringFormat={}{0:0.#}% }" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="6" Text="{Binding QualitätsWahrscheinlichkeit[F], StringFormat={}{0:0.#}% }" HorizontalAlignment="Center"/>
+                                    
+                                </Grid>
                                 <TextBlock Margin="20,20,20,10" Text="{Binding WertRezeptnameHerstellung}" FontWeight="Bold" />
                                 <Grid Margin="20,10,20,10">
                                     <Grid.ColumnDefinitions>
@@ -240,7 +271,7 @@
                                     <TextBlock Text="TaP*: "  Grid.Row="5" />
                                     <TextBlock Text="{Binding Path = TaPHerstellung}" Grid.Row="5" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="Qualität:"  Grid.Row="6" ToolTip="Wda 19" />
-                                    <TextBlock Text="{Binding BonusQualitätHerstellung}" Grid.Row="6" Grid.Column="2" ToolTip="Wda 19" TextWrapping="Wrap" >
+                                    <TextBlock Text="{Binding ErgebnisQualität}" Grid.Row="6" Grid.Column="2" ToolTip="Wda 19" TextWrapping="Wrap" >
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Style.Triggers>
@@ -259,7 +290,7 @@
                                     <TextBlock Text="{Binding Path = SelectedRezept.Beschaffungskosten}" Grid.Row="12" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="Haltbarkeit"  Grid.Row="13" />
                                     <StackPanel Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
-                                        <TextBlock Text="{Binding WertHaltbarkeitHerstellung}"  TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding ErgebnisHaltbarkeit}"  TextWrapping="Wrap" />
                                         <TextBlock Text="{Binding Path = SelectedRezept.Haltbarkeitseinheit}" Margin="5,0,0,0" TextWrapping="Wrap" />
                                     </StackPanel>
                                     <TextBlock Text="Preis"  Grid.Row="15" />

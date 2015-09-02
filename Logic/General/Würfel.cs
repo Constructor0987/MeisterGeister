@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MeisterGeister.Logic.General
 {
@@ -163,6 +165,24 @@ namespace MeisterGeister.Logic.General
         public static double Erwartungswert(int seiten, int anzahl, int wiederholungen, int mod)
         {
             return wiederholungen * (anzahl * (seiten + 1.0) / 2.0 + mod);
+        }
+
+        public static Dictionary<int, double> WurfVerteilung(int seiten, int anzahl, int mod)
+        {
+            Dictionary<int, double> d = new Dictionary<int, double>();
+            for (int i = 1; i <= anzahl; i++)
+                for(int j = 1; j<=seiten; j++)
+                {
+                    var wurf = i + j + mod;
+                    if (d.ContainsKey(wurf))
+                        d[wurf] += 1;
+                    else
+                        d.Add(wurf, 1);
+                }
+            double würfe = seiten * anzahl;
+            foreach (var key in d.Keys.ToList())
+                d[key] /= würfe;
+            return d;
         }
 
         public static void PlaySound()
