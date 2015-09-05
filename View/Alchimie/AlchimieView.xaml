@@ -373,12 +373,19 @@
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                     <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                        <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
-                                    </StackPanel>
-                                    <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                         <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
+                                        <ComboBox Margin="0,0,5,0" Width="200" ItemsSource="{Binding Source={StaticResource Rezepte}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}">
+                                            <ComboBox.GroupStyle>
+                                                <GroupStyle>
+                                                    <GroupStyle.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock FontWeight="Bold" Text="{Binding Name}"/>
+                                                        </DataTemplate>
+                                                    </GroupStyle.HeaderTemplate>
+                                                </GroupStyle>
+                                            </ComboBox.GroupStyle>
+                                        </ComboBox>
+                                        <ViewGeneral:LiteraturControl Height="25" Padding="2" Literaturangabe="{Binding SelectedRezept.Literatur}" LiteraturAnzeigeArt="TextLang" />
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -589,12 +596,19 @@
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                     <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                        <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
-                                    </StackPanel>
-                                    <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                         <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
+                                        <ComboBox Margin="0,0,5,0" Width="200" ItemsSource="{Binding Source={StaticResource Rezepte}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}">
+                                            <ComboBox.GroupStyle>
+                                                <GroupStyle>
+                                                    <GroupStyle.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock FontWeight="Bold" Text="{Binding Name}"/>
+                                                        </DataTemplate>
+                                                    </GroupStyle.HeaderTemplate>
+                                                </GroupStyle>
+                                            </ComboBox.GroupStyle>
+                                        </ComboBox>
+                                        <ViewGeneral:LiteraturControl Height="25" Padding="2" Literaturangabe="{Binding SelectedRezept.Literatur}" LiteraturAnzeigeArt="TextLang" />
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -632,9 +646,9 @@
                                         <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
                                         </StackPanel>
-                                        <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                        <!--<CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
                                         <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
-                                        <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
+                                        <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>-->
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -806,9 +820,9 @@
                                         <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
                                         </StackPanel>
-                                        <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                        <!--<CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
                                         <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
-                                        <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
+                                        <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>-->
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
