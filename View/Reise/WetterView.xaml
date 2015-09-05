@@ -20,7 +20,7 @@
         <General:EnumToStringConverter x:Key="converter"/>
     </UserControl.Resources>
     
-    <Expander Width="866">
+    <Expander MinWidth="866">
         <Expander.Header>
             <TextBlock Text="Wettervorhersage" Style="{DynamicResource TextTitel}" />
         </Expander.Header>
