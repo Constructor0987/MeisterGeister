@@ -10,6 +10,9 @@ namespace MeisterGeister.Logic.General
     [DataContract(IsReference = true)]
     public class Probe
     {
+        //gegen multithreading-fehler
+        private readonly object mutex = new object();
+
         virtual public string Probenname { get; set; }
 
         protected int[] _werte = new int[0];
@@ -277,78 +280,91 @@ namespace MeisterGeister.Logic.General
 
         private double ErfolgsChancheBerechnen(int wertEff)
         {
-            //_chanceBerechnet = true;
-
-            _erwartungswert = Math.Max(wertEff - 10.5, 0);
-            _tapchance.Clear();
-            _tapchance.Add(0, Math.Min(Math.Max(1 - wertEff / 20d, Einstellung.Regeln.EigenschaftenProbePatzerGlück ? 0.05 : 0), Einstellung.Regeln.EigenschaftenProbePatzerGlück?0.95:1));
-            for (int i = 1; i < wertEff; i++)
+            lock (mutex)
             {
-                _tapchance.Add(i, 1 / 20d);
-            }
+                //_chanceBerechnet = true;
 
-            if (Einstellung.Regeln.EigenschaftenProbePatzerGlück)
-            {
-                if (wertEff <= 1)
+                _erwartungswert = Math.Max(wertEff - 10.5, 0);
+                _tapchance.Clear();
+                _tapchance.Add(0, Math.Min(Math.Max(1 - wertEff / 20d, Einstellung.Regeln.EigenschaftenProbePatzerGlück ? 0.05 : 0), Einstellung.Regeln.EigenschaftenProbePatzerGlück ? 0.95 : 1));
+                for (int i = 1; i < wertEff; i++)
                 {
-                    _tapchance.Add(1, 1 / 20d);
-                    return _erfolgsschance = 0.05; // Glückswurf
+                    _tapchance.Add(i, 1 / 20d);
                 }
-                if (wertEff >= 20)
-                    return _erfolgsschance = 0.95;
-                return _erfolgsschance = (wertEff / 20d);
-            }
-            else
-            {
-                if (wertEff < 0)
-                    return _erfolgsschance = 0;
-                if (wertEff > 20)
-                    return _erfolgsschance = 1;
-                return _erfolgsschance = (wertEff / 20d);
+
+                if (Einstellung.Regeln.EigenschaftenProbePatzerGlück)
+                {
+                    if (wertEff <= 1)
+                    {
+                        _tapchance.Add(1, 1 / 20d);
+                        return _erfolgsschance = 0.05; // Glückswurf
+                    }
+                    if (wertEff >= 20)
+                        return _erfolgsschance = 0.95;
+                    return _erfolgsschance = (wertEff / 20d);
+                }
+                else
+                {
+                    if (wertEff < 0)
+                        return _erfolgsschance = 0;
+                    if (wertEff > 20)
+                        return _erfolgsschance = 1;
+                    return _erfolgsschance = (wertEff / 20d);
+                }
             }
         }
 
         private double ErfolgsChanceBerechnen(int e1, int e2, int e3, int taw)
         {
-            int success, restTaP;
-            _tapchance.Clear();
-            double tapsum = 0;
-            if (taw < 0) return ErfolgsChanceBerechnen(e1 + taw, e2 + taw, e3 + taw, 0);
-
-            success = 0;
-            for (int w1 = 1; w1 <= 20; w1++)
+            lock (mutex)
             {
-                for (int w2 = 1; w2 <= 20; w2++)
+                int success, restTaP;
+                _tapchance.Clear();
+                double tapsum = 0;
+                if (taw < 0) return ErfolgsChanceBerechnen(e1 + taw, e2 + taw, e3 + taw, 0);
+
+                success = 0;
+                for (int w1 = 1; w1 <= 20; w1++)
                 {
-                    for (int w3 = 1; w3 <= 20; w3++)
+                    for (int w2 = 1; w2 <= 20; w2++)
                     {
-                        if (CheckMeisterhaft(w1, w2, w3))
+                        for (int w3 = 1; w3 <= 20; w3++)
                         {
-                            success++;
-                            if (!_tapchance.ContainsKey(taw))
-                                _tapchance.Add(taw, 1);
-                            else
-                                _tapchance[taw] += 1;
-                            tapsum += taw;
-                        }
-                        else
-                        {
-                            if (!CheckPatzer(w1, w2, w3))
+                            if (CheckMeisterhaft(w1, w2, w3))
                             {
-                                // schauen, ob die Rest-TaP nicht unter 0 fallen
-                                restTaP = taw - Math.Max(0, w1 - e1) - Math.Max(0, w2 - e2) - Math.Max(0, w3 - e3);
-                                if (restTaP >= 0)
+                                success++;
+                                if (!_tapchance.ContainsKey(taw))
+                                    _tapchance.Add(taw, 1);
+                                else
+                                    _tapchance[taw] += 1;
+                                tapsum += taw;
+                            }
+                            else
+                            {
+                                if (!CheckPatzer(w1, w2, w3))
                                 {
-                                    // hat gereicht
-                                    success++;
-                                    int tapstern = Math.Max(restTaP, 1);
-                                    tapsum += tapstern;
-                                    if (!_tapchance.ContainsKey(tapstern))
-                                        _tapchance.Add(tapstern, 1);
-                                    else
-                                        _tapchance[tapstern] += 1;
+                                    // schauen, ob die Rest-TaP nicht unter 0 fallen
+                                    restTaP = taw - Math.Max(0, w1 - e1) - Math.Max(0, w2 - e2) - Math.Max(0, w3 - e3);
+                                    if (restTaP >= 0)
+                                    {
+                                        // hat gereicht
+                                        success++;
+                                        int tapstern = Math.Max(restTaP, 1);
+                                        tapsum += tapstern;
+                                        if (!_tapchance.ContainsKey(tapstern))
+                                            _tapchance.Add(tapstern, 1);
+                                        else
+                                            _tapchance[tapstern] += 1;
+                                    }
+                                    else //Misserfolg
+                                    {
+                                        if (!_tapchance.ContainsKey(0))
+                                            _tapchance.Add(0, 1);
+                                        else
+                                            _tapchance[0] += 1;
+                                    }
                                 }
-                                else //Misserfolg
+                                else //patzer
                                 {
                                     if (!_tapchance.ContainsKey(0))
                                         _tapchance.Add(0, 1);
@@ -356,27 +372,20 @@ namespace MeisterGeister.Logic.General
                                         _tapchance[0] += 1;
                                 }
                             }
-                            else //patzer
-                            {
-                                if (!_tapchance.ContainsKey(0))
-                                    _tapchance.Add(0, 1);
-                                else
-                                    _tapchance[0] += 1;
-                            }
                         }
                     }
                 }
+                _erfolgsschance = (1d / 8000d * (success));
+                _erwartungswert = tapsum / success;
+                double x = 0;
+                foreach (var tapstern in _tapchance.Keys.ToList())
+                {
+                    x += _tapchance[tapstern];
+                    _tapchance[tapstern] /= 8000d;
+                }
+                //_chanceBerechnet = true;
+                return _erfolgsschance;
             }
-            _erfolgsschance = (1d / 8000d * (success));
-            _erwartungswert = tapsum / success;
-            double x = 0;
-            foreach(var tapstern in _tapchance.Keys.ToList())
-            {
-                x += _tapchance[tapstern];
-                _tapchance[tapstern] /= 8000d;
-            }
-            //_chanceBerechnet = true;
-            return _erfolgsschance;
         }
 
         private static bool CheckMeisterhaft(int w1, int w2, int w3)
