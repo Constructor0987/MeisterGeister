@@ -2326,15 +2326,18 @@ namespace MeisterGeister.ViewModel.ZooBot
                         Pflanze_Ernte pErnte = new Pflanze_Ernte();
                         pErnte = (optionen[fund] as Pflanze).Pflanze_Ernte.FirstOrDefault(t => t.PflanzeGUID == (optionen[fund] as Pflanze).PflanzeGUID);
 
-                        grundmenge = pErnte.Grundmenge + " " + pErnte.Pflanzenteil;
-                        referenz = (optionen[fund] as Pflanze).Literatur;
-                    
                         int menge = 1;
-                        tapstern -= suchschwierigkeit;
-                        while (tapstern >= suchschwierigkeit)
+                        if (pErnte != null)
                         {
-                            menge++;
+                            grundmenge = pErnte.Grundmenge + " " + pErnte.Pflanzenteil;
+                            referenz = (optionen[fund] as Pflanze).Literatur;
+
                             tapstern -= suchschwierigkeit;
+                            while (tapstern >= suchschwierigkeit)
+                            {
+                                menge++;
+                                tapstern -= suchschwierigkeit;
+                            }
                         }
 
                         if (!grundmenge.Equals(""))

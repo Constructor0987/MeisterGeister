@@ -977,6 +977,21 @@
     <Compile Include="View\Zauberzeichen\ZauberzeichenView.xaml.cs">
       <DependentUpon>ZauberzeichenView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ZooBotAlt\Hauptfenster.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\ZooBotAlt\Hauptfenster.designer.cs">
+      <DependentUpon>Hauptfenster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\ZooBotAlt\Wuerfeleingabe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ZooBotAlt\Wuerfeleingabe.designer.cs">
+      <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\ZooBotAlt\ZooBotView.xaml.cs">
+      <DependentUpon>ZooBotView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ZooBot\BekanntePflanzenView.xaml.cs">
       <DependentUpon>BekanntePflanzenView.xaml</DependentUpon>
     </Compile>
@@ -1481,6 +1496,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\ZooBotAlt\ZooBotView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\ZooBot\BekanntePflanzenView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1627,6 +1646,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ZooBotAlt\Hauptfenster.resx">
+      <DependentUpon>Hauptfenster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ZooBotAlt\Wuerfeleingabe.resx">
+      <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>

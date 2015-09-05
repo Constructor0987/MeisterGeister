@@ -356,6 +356,22 @@
                                         </ToolTip>
                                     </MenuItem.ToolTip>
                                 </MenuItem>
+                                <MenuItem x:Name="_menuItemZooBotNeu" Height="28" Click="ButtonTool_Click" Tag="ZooBotNeu" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="ZooBot-Tool (INTERN)" VerticalAlignment="Center" />
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/kraeutersuche.png" Margin="2" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold"><Run Text="ZooBot-Tool"/></TextBlock>
+                                                <TextBlock><Run Text="Pflanzensuche, Jagen, Fischen und Fallenstellen."/></TextBlock>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
                                 <Separator   />
                                 <MenuItem Height="28" Click="ButtonTool_Click" Tag="Globus">
                                     <MenuItem.Header>

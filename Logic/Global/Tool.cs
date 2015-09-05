@@ -128,7 +128,7 @@ namespace MeisterGeister
                 Name = "ZooBot",
                 Icon = "Icons/kraeutersuche.png",
                 MenuGruppe = "Wege des Wanderers",
-                ViewType = typeof(View.ZooBot.ZooBotView)
+                ViewType = typeof(View.ZooBotAlt.ZooBotView)
             });
             ToolListe.Add("Zauberzeichen", new Tool()
             {
@@ -181,6 +181,13 @@ namespace MeisterGeister
             });
             if (Global.INTERN) // im Release-Modus ausblenden
             {
+                ToolListe.Add("ZooBotNeu", new Tool()
+                {
+                    Name = "ZooBot (neu)",
+                    Icon = "Icons/kraeutersuche.png",
+                    MenuGruppe = "Wege des Wanderers",
+                    ViewType = typeof(View.ZooBot.ZooBotView)
+                });
                 ToolListe.Add("Abenteuer", new Tool()
                 {
                     Name = "Abenteuer",
