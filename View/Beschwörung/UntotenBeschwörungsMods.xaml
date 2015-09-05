@@ -87,9 +87,9 @@
         <TextBlock Grid.Row="4" Grid.Column="2" Style="{StaticResource mod}" Text="{Binding Mods[Material].AnrufungsMod}"/>
 
         <TextBlock Text="Kleidung" Grid.Row="5" Style="{StaticResource label}"/>
-        <General:IntBox MinValue="0" MaxValue="2" Value="{Binding Mods[Ausrüstung].Value}" ShowButtons="True" Grid.Row="5" Grid.Column="1"/>
-        <TextBlock Text="{Binding Mods[Ausrüstung].AnrufungsMod}" Grid.Row="5" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Ausrüstung].KontrollMod}" Grid.Row="5" Grid.Column="3" Style="{StaticResource mod}"/>
+        <General:IntBox MinValue="0" MaxValue="2" Value="{Binding Mods[Kleidung].Value}" ShowButtons="True" Grid.Row="5" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Kleidung].AnrufungsMod}" Grid.Row="5" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Kleidung].KontrollMod}" Grid.Row="5" Grid.Column="3" Style="{StaticResource mod}"/>
 
         <CheckBox Grid.Row="6" Content="Blutmagie" IsChecked="{Binding Mods[Blutmagie].Value}"/>
         <TextBlock Text="{Binding Mods[Blutmagie].KontrollMod}" Grid.Row="6" Grid.Column="3" Style="{StaticResource mod}"/>

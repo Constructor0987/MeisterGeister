@@ -65,9 +65,9 @@
         <TextBlock Text="{Binding Mods[Tag].AnrufungsMod}" Grid.Row="3" Grid.Column="2" Style="{StaticResource mod}"/>
 
         <TextBlock Text="Kleidung" Grid.Row="4" Style="{StaticResource label}"/>
-        <General:IntBox MinValue="0" MaxValue="2" Value="{Binding Mods[Ausrüstung].Value}" ShowButtons="True" Grid.Row="4" Grid.Column="1"/>
-        <TextBlock Text="{Binding Mods[Ausrüstung].AnrufungsMod}" Grid.Row="4" Grid.Column="2" Style="{StaticResource mod}"/>
-        <TextBlock Text="{Binding Mods[Ausrüstung].KontrollMod}" Grid.Row="4" Grid.Column="3" Style="{StaticResource mod}"/>
+        <General:IntBox MinValue="0" MaxValue="2" Value="{Binding Mods[Kleidung].Value}" ShowButtons="True" Grid.Row="4" Grid.Column="1"/>
+        <TextBlock Text="{Binding Mods[Kleidung].AnrufungsMod}" Grid.Row="4" Grid.Column="2" Style="{StaticResource mod}"/>
+        <TextBlock Text="{Binding Mods[Kleidung].KontrollMod}" Grid.Row="4" Grid.Column="3" Style="{StaticResource mod}"/>
 
         <CheckBox Content="Beschwörungskerzen" IsChecked="{Binding Mods[Kerzen].Value1}" Grid.Row="5"/>
         <ComboBox Grid.Row="5" Grid.Column="1" IsEnabled="{Binding Mods[Kerzen].Value1}" SelectedValue="{Binding Mods[Kerzen].Value2}">
