@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="MeisterGeister.View.Beschwörung.LoyalitätsSteigerung"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Beschwörung="clr-namespace:MeisterGeister.View.Beschwörung"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./BeschwörungsResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBlock" x:Key="bold">
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="showOnSkelettarius" BasedOn="{StaticResource bold}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Zauber}" Value="Totes handle!">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="showOnZufall" BasedOn="{StaticResource bold}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding BeschworenesWesen.Beschwörbares.Kreatur.LOZufall}" Value="{x:Null}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="showOnZufallOrSkelettarius" BasedOn="{StaticResource bold}">
+                <Style.Triggers>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding BeschworenesWesen.Beschwörbares.Kreatur.LOZufall}" Value="{x:Null}"/>
+                            <Condition Binding="{Binding Zauber}" Value="Totes handle!"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+
+
+        <TextBlock Text="Schritt 3: Loyalität steigern" FontSize="20" HorizontalAlignment="Left" x:Name="header"/>
+        <Rectangle Margin="0,4,0,0" Width="{Binding ElementName=header,Path=ActualWidth}" Style="{StaticResource headline}"/>
+
+        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+            <TextBlock>
+                Die Loyalität des Wesen beträgt <Run FontWeight="Bold" Text="{Binding BeschworenesWesen.Beschwörbares.Kreatur.LOBasis}"/>
+            </TextBlock>
+            <TextBlock Text=" + " Style="{StaticResource showOnZufall}"/>
+            <TextBlock Text="{Binding BeschworenesWesen.Beschwörbares.Kreatur.LOZufall}" Style="{StaticResource showOnZufall}"/>
+            <TextBlock Text=" + " Style="{StaticResource showOnSkelettarius}"/>
+            <TextBlock Text="{Binding Mods[Beschwörungspunkte].Value}" Style="{StaticResource showOnSkelettarius}"/>
+            <TextBlock Text=" = " Style="{StaticResource showOnZufallOrSkelettarius}"/>
+            <TextBlock Text="{Binding Loyalität,Mode=OneWay}" Style="{StaticResource showOnZufallOrSkelettarius}"/>
+        </StackPanel>
+        
+        <Button Command="{Binding WürfleLoyalität}" Margin="0,8,0,0" HorizontalAlignment="Center"
+                Visibility="{Binding RelativeSource={RelativeSource Self},Path=IsEnabled,Converter={StaticResource BooleanToVisibilityConverter1}}">
+            Auswürfeln
+        </Button>
+
+        <Button Content="Weitere Kontrollprobe ablegen" HorizontalAlignment="Center" Command="{Binding LoyalitätSteigern}" Margin="0,4,0,0"/>
+
+
+        <StackPanel.Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Status}" Value="BeherrschungGelungen">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Style>
+
+    </StackPanel>
+</UserControl>

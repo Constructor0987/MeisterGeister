@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
+             xmlns:Reise="clr-namespace:MeisterGeister.View.Reise"
              xmlns:LogicKarte="clr-namespace:MeisterGeister.Logic.Karte"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
@@ -37,7 +38,7 @@
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Logos/DereGlobus_Icon2.png" Width="25"/>
                                 </MenuItem.Icon>
-                            </MenuItem> 
+                            </MenuItem>
                             <MenuItem Header="Position setzen" ToolTip="Die Heldenposition festlegen" Command="{Binding Path=PlacementTarget.DataContext.OnHeldenPositionSetzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="25"/>
@@ -58,6 +59,7 @@
                     <!-- <Button Command="{Binding OnCenterOnHelden}">X</Button> -->
                 </StackPanel>
             </Border>
+            <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         </Grid>
     </Border>
 </UserControl>

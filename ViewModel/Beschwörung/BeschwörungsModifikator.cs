@@ -40,21 +40,34 @@ namespace MeisterGeister.ViewModel.Beschwörung
             GetAnrufungsMod = GetKontrollMod = GetZauberMod = GetKostenMod = () => 0;
         }
 
+        private bool isActive = true;
+        public bool IsActive
+        {
+            get { return isActive; }
+            set
+            {
+                isActive = value;
+                OnPropertyChanged("IsActive");
+                Invalidate();
+            }
+        }
+
+
         public int AnrufungsMod
         {
-            get { return getAnrufungsMod(); }
+            get { return IsActive ? getAnrufungsMod() : 0; }
         }
         public int KontrollMod
         {
-            get { return getKontrollMod(); }
+            get { return IsActive ? getKontrollMod() : 0; }
         }
         public int ZauberMod
         {
-            get { return getZauberMod(); }
+            get { return IsActive ? getZauberMod() : 0; }
         }
         public int KostenMod
         {
-            get { return getKostenMod(); }
+            get { return IsActive ? getKostenMod() : 0; }
         }
 
 

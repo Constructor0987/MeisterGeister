@@ -95,7 +95,8 @@
         <TextBlock Text="Kosten" Style="{DynamicResource TextTitel}" Grid.Column="4" Margin="4"/>
 
         <TextBlock Text="Elementar" Style="{StaticResource label}"/>
-        <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name"/>
+        <ComboBox Grid.Column="1" ItemsSource="{Binding Wesen}" SelectedValue="{Binding BeschworenesWesen,Mode=TwoWay}" DisplayMemberPath="Name" Margin="0,0,30,0"/>
+        <General:LiteraturControl Literaturangabe="{Binding BeschworenesWesen.Literatur}" Grid.Column="1" Width="24" HorizontalAlignment="Right"/>
 
         <TextBlock Text="Typ" Grid.Row="1" Style="{StaticResource label}"/>
         <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding  Mods[Wesen].Value1}" SelectedIndex="0" Width="42" HorizontalAlignment="Left" VerticalAlignment="Stretch">
@@ -233,8 +234,8 @@
         </ComboBox>
         <TextBlock Text="{Binding Mods[Dauer].KontrollMod}" Grid.Row="8" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Ausrüstung" Grid.Row="9" Style="{StaticResource label}"/>
-        <General:IntBox MaxValue="0" Value="{Binding Mods[Ausrüstung].Value}" ShowButtons="True" Grid.Row="9" Grid.Column="1"/>
+        <TextBlock Text="Kleidung" Grid.Row="9" Style="{StaticResource label}"/>
+        <General:IntBox MinValue="0" MaxValue="2" Value="{Binding Mods[Ausrüstung].Value}" ShowButtons="True" Grid.Row="9" Grid.Column="1"/>
         <TextBlock Text="{Binding Mods[Ausrüstung].AnrufungsMod}" Grid.Row="9" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding Mods[Ausrüstung].KontrollMod}" Grid.Row="9" Grid.Column="3" Style="{StaticResource mod}"/>
 

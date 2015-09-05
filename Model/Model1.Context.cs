@@ -301,6 +301,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Kampfregel> _kampfregel;
     
+        public ObjectSet<Kreatur> Kreatur
+        {
+            get { return _kreatur  ?? (_kreatur = CreateObjectSet<Kreatur>("Kreatur")); }
+        }
+        private ObjectSet<Kreatur> _kreatur;
+    
         public ObjectSet<Kultur> Kultur
         {
             get { return _kultur  ?? (_kultur = CreateObjectSet<Kultur>("Kultur")); }
@@ -576,6 +582,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Inventar;
     		if(typeof(T) == typeof(Kampfregel))
     				return (ObjectSet<T>)(Object)Kampfregel;
+    		if(typeof(T) == typeof(Kreatur))
+    				return (ObjectSet<T>)(Object)Kreatur;
     		if(typeof(T) == typeof(Kultur))
     				return (ObjectSet<T>)(Object)Kultur;
     		if(typeof(T) == typeof(Kultur_Name))
@@ -723,6 +731,8 @@ namespace MeisterGeister.Model
     				return Inventar;
     		if(t == typeof(Kampfregel))
     				return Kampfregel;
+    		if(t == typeof(Kreatur))
+    				return Kreatur;
     		if(t == typeof(Kultur))
     				return Kultur;
     		if(t == typeof(Kultur_Name))

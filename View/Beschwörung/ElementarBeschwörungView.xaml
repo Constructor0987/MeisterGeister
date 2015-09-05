@@ -19,8 +19,8 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Orientation="Vertical">
-            <Beschwörung:BeschwörungsAnrufung/>
-            <Beschwörung:BeschwörungsKontrolle/>
+            <Beschwörung:Anrufung/>
+            <Beschwörung:Kontrolle/>
         </StackPanel>
 
         <Rectangle Grid.Column="1" Margin="4,0,4,0" Style="{StaticResource seperator}"/>

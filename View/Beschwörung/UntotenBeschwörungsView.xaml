@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Beschwörung="clr-namespace:MeisterGeister.View.Beschwörung"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="872.903">
     <UserControl.Resources>
         <ResourceDictionary Source="BeschwörungsResources.xaml"/>
     </UserControl.Resources>
@@ -14,12 +14,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="250"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="550"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical">
-            <Beschwörung:BeschwörungsAnrufung/>
-            <Beschwörung:BeschwörungsKontrolle/>
+            <Beschwörung:Anrufung/>
+            <Beschwörung:Kontrolle/>
+            <Beschwörung:LoyalitätsSteigerung/>
         </StackPanel>
 
         <Rectangle Grid.Column="1" Margin="4,0,4,0" Style="{StaticResource seperator}"/>

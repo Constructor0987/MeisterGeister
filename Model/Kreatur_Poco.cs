@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 namespace MeisterGeister.Model
 {
     [DataContract(IsReference=true)]
-    public partial class Beschwörbares : INotifyPropertyChanged
+    public partial class Kreatur : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
@@ -89,9 +89,9 @@ namespace MeisterGeister.Model
             {
                 if (_gegnerBaseGUID != value)
                 {
-                    if (GegnerBase != null && GegnerBase.GegnerBaseGUID != value)
+                    if (Beschwörbares != null && Beschwörbares.GegnerBaseGUID != value)
                     {
-                        GegnerBase = null;
+                        Beschwörbares = null;
                     }
                     _gegnerBaseGUID = value;
                 }
@@ -101,170 +101,68 @@ namespace MeisterGeister.Model
         private System.Guid _gegnerBaseGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int Beschwörung
+        public virtual Nullable<int> LOBasis
         {
-            get { return _beschwörung; }
+            get { return _lOBasis; }
             set
     		{ 
-    			Set(ref _beschwörung, value);
+    			Set(ref _lOBasis, value);
     		}
     
         }
-        private int _beschwörung;
+        private Nullable<int> _lOBasis;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> Kontrolle
+        public virtual string LOZufall
         {
-            get { return _kontrolle; }
+            get { return _lOZufall; }
             set
     		{ 
-    			Set(ref _kontrolle, value);
+    			Set(ref _lOZufall, value);
     		}
     
         }
-        private Nullable<int> _kontrolle;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Beschwörungskosten
-        {
-            get { return _beschwörungskosten; }
-            set
-    		{ 
-    			Set(ref _beschwörungskosten, value);
-    		}
-    
-        }
-        private Nullable<int> _beschwörungskosten;
+        private string _lOZufall;
 
         #endregion
 
         #region Navigation Properties
     
     	[DataMember]
-        public virtual GegnerBase GegnerBase
+        public virtual Beschwörbares Beschwörbares
         {
-            get { return _gegnerBase; }
+            get { return _beschwörbares; }
             set
             {
-                if (!ReferenceEquals(_gegnerBase, value))
+                if (!ReferenceEquals(_beschwörbares, value))
                 {
-                    var previousValue = _gegnerBase;
-                    _gegnerBase = value;
-                    FixupGegnerBase(previousValue);
+                    var previousValue = _beschwörbares;
+                    _beschwörbares = value;
+                    FixupBeschwörbares(previousValue);
                 }
             }
         }
-        private GegnerBase _gegnerBase;
-    
-    	[DataMember]
-        public virtual Dämon Dämon
-        {
-            get { return _dämon; }
-            set
-            {
-                if (!ReferenceEquals(_dämon, value))
-                {
-                    var previousValue = _dämon;
-                    _dämon = value;
-                    FixupDämon(previousValue);
-                }
-            }
-        }
-        private Dämon _dämon;
-    
-    	[DataMember]
-        public virtual Elementarwesen Elementarwesen
-        {
-            get { return _elementarwesen; }
-            set
-            {
-                if (!ReferenceEquals(_elementarwesen, value))
-                {
-                    var previousValue = _elementarwesen;
-                    _elementarwesen = value;
-                    FixupElementarwesen(previousValue);
-                }
-            }
-        }
-        private Elementarwesen _elementarwesen;
-    
-    	[DataMember]
-        public virtual Kreatur Kreatur
-        {
-            get { return _kreatur; }
-            set
-            {
-                if (!ReferenceEquals(_kreatur, value))
-                {
-                    var previousValue = _kreatur;
-                    _kreatur = value;
-                    FixupKreatur(previousValue);
-                }
-            }
-        }
-        private Kreatur _kreatur;
+        private Beschwörbares _beschwörbares;
 
         #endregion
 
         #region Association Fixup
     
-        private void FixupGegnerBase(GegnerBase previousValue)
+        private void FixupBeschwörbares(Beschwörbares previousValue)
         {
-    		OnChanged("GegnerBase");
-            if (previousValue != null && ReferenceEquals(previousValue.Beschwörbares, this))
+    		OnChanged("Beschwörbares");
+            if (previousValue != null && ReferenceEquals(previousValue.Kreatur, this))
             {
-                previousValue.Beschwörbares = null;
+                previousValue.Kreatur = null;
             }
     
-            if (GegnerBase != null)
+            if (Beschwörbares != null)
             {
-                GegnerBase.Beschwörbares = this;
-                if (GegnerBaseGUID != GegnerBase.GegnerBaseGUID)
+                Beschwörbares.Kreatur = this;
+                if (GegnerBaseGUID != Beschwörbares.GegnerBaseGUID)
                 {
-                    GegnerBaseGUID = GegnerBase.GegnerBaseGUID;
+                    GegnerBaseGUID = Beschwörbares.GegnerBaseGUID;
                 }
-            }
-        }
-    
-        private void FixupDämon(Dämon previousValue)
-        {
-    		OnChanged("Dämon");
-            if (previousValue != null && ReferenceEquals(previousValue.Beschwörbares, this))
-            {
-                previousValue.Beschwörbares = null;
-            }
-    
-            if (Dämon != null)
-            {
-                Dämon.Beschwörbares = this;
-            }
-        }
-    
-        private void FixupElementarwesen(Elementarwesen previousValue)
-        {
-    		OnChanged("Elementarwesen");
-            if (previousValue != null && ReferenceEquals(previousValue.Beschwörbares, this))
-            {
-                previousValue.Beschwörbares = null;
-            }
-    
-            if (Elementarwesen != null)
-            {
-                Elementarwesen.Beschwörbares = this;
-            }
-        }
-    
-        private void FixupKreatur(Kreatur previousValue)
-        {
-    		OnChanged("Kreatur");
-            if (previousValue != null && ReferenceEquals(previousValue.Beschwörbares, this))
-            {
-                previousValue.Beschwörbares = null;
-            }
-    
-            if (Kreatur != null)
-            {
-                Kreatur.Beschwörbares = this;
             }
         }
 

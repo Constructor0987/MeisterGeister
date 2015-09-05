@@ -134,7 +134,7 @@
                                 </StackPanel>
 
                                 <Button Grid.Column="1" Grid.Row="0" Content="Gebiete Auswählen" Margin="10,3" Click="BtnGebieteAuswahlView_Click" />
-                                <ComboBox Grid.Column="2" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Gebiet" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
+                                <ComboBox Grid.Column="2" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Gebiet" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}"
                                           ItemsSource="{Binding GebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding GebietSelected}" DisplayMemberPath="Name" />
                                 <!-- ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />

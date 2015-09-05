@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Beschwörung
 {
-    public class UntotenBeschwörungViewModel : BeschwörungViewModel
+    public class UntotenBeschwörungViewModel : LoyalitätBeschwörungViewModel
     {
         protected override void reset()
         {
@@ -39,6 +39,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         protected override void addMods()
         {
+            base.addMods();
             //Beim Skelettarius ist die Kontrollprobe um 7 erleichtert
             zauber = new BeschwörungsModifikator<string>();
             zauber.PropertyChanged += (s, e) => Zauber = zauber.Value;

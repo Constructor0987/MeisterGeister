@@ -165,13 +165,13 @@ namespace MeisterGeister
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Beschwörung.BeschwörungView)
             });
-            ToolListe.Add("Reise", new Tool()
-            {
-                Name = "Reise",
-                Icon = "Icons/kartenzeichnen.png",
-                MenuGruppe = "Wege des Wanderers",
-                ViewType = typeof(View.Reise.ReiseView)
-            });
+            //ToolListe.Add("Reise", new Tool()
+            //{
+            //    Name = "Reise",
+            //    Icon = "Icons/kartenzeichnen.png",
+            //    MenuGruppe = "Wege des Wanderers",
+            //    ViewType = typeof(View.Reise.ReiseView)
+            //});
             ToolListe.Add("Karte", new Tool()
             {
                 Name = "Karte",

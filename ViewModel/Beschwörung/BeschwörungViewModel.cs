@@ -36,7 +36,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         public const string MOD_SCHWIERIGKEIT = "Schwierigkeit";
         public const string MOD_NAME = "WahrerName";
         public const string MOD_MATERIAL = "Material";
-        public const string MOD_AUSRÜSTUNG = "Ausrüstung";
+        public const string MOD_KLEIDUNG = "Kleidung";
         public const string MOD_BLUTMAGIE = "Blutmagie";
         public const string MOD_STERNE = "Sterne";
         public const string MOD_ORT = "Ort";
@@ -52,7 +52,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected BeschwörungsModifikator<int, int> schwierigkeit;
         protected BeschwörungsModifikator<int> name;
         protected BeschwörungsModifikator<int> material;
-        protected BeschwörungsModifikator<int> ausrüstung;
+        protected BeschwörungsModifikator<int> kleidung;
         protected BeschwörungsModifikator<bool> blutmagie;
         protected BeschwörungsModifikator<int> sterne;
         protected BeschwörungsModifikator<int> ort;
@@ -99,9 +99,9 @@ namespace MeisterGeister.ViewModel.Beschwörung
             mods.Add(MOD_MATERIAL, material);
 
             //Ausrüstung wird für beide Proben einfach übernommen
-            ausrüstung = new BeschwörungsModifikator<int>();
-            ausrüstung.GetAnrufungsMod = ausrüstung.GetKontrollMod = () => ausrüstung.Value;
-            mods.Add(MOD_AUSRÜSTUNG, ausrüstung);
+            kleidung = new BeschwörungsModifikator<int>();
+            kleidung.GetAnrufungsMod = kleidung.GetKontrollMod = () => -kleidung.Value;
+            mods.Add(MOD_KLEIDUNG, kleidung);
 
             //Blutmagie erschwert die Kontrolle um 2
             blutmagie = new BeschwörungsModifikator<bool>();
@@ -295,15 +295,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
         private void beherrsche()
         {
-            //Hier wird eine Eigenschaftsprobe auf den Kontrollwert abgelegt
-            Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
-            kontrollwert.Abkürzung = "KW";
-            kontrollwert.Fertigkeitswert = 0;
-            //Der Kontrollwert berechnet sich je nach beschworener Wesenheit anders
-            kontrollwert.Wert = KontrollWert;
-            kontrollwert.WerteNamen = "Kontrollwert";
-            kontrollwert.Modifikator = GesamtHerrschMod;
-            var erg = ShowProbeDialog(kontrollwert, Held);
+            ProbenErgebnis erg = beherrschungsProbe();
             if (erg.Gelungen)
             {
                 //Wenn klappt freuen wird uns und sind fertig
@@ -315,6 +307,19 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 //Im einfachsten Fall passiert gar nichts
                 beherrschungMisslungen(erg);
             }
+        }
+
+        protected ProbenErgebnis beherrschungsProbe()
+        {
+            //Hier wird eine Eigenschaftsprobe auf den Kontrollwert abgelegt
+            Eigenschaft kontrollwert = new Eigenschaft("Kontrollwert");
+            kontrollwert.Abkürzung = "KW";
+            kontrollwert.Fertigkeitswert = 0;
+            //Der Kontrollwert berechnet sich je nach beschworener Wesenheit anders
+            kontrollwert.Wert = KontrollWert;
+            kontrollwert.WerteNamen = "Kontrollwert";
+            kontrollwert.Modifikator = GesamtHerrschMod;
+            return ShowProbeDialog(kontrollwert, Held);
         }
 
         /// <summary>

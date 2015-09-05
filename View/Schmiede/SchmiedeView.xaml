@@ -28,7 +28,7 @@
             <StackPanel Orientation="Horizontal">
                 <Image Height="24" Width="24" Source="{Binding Path=Icon}" />
                 <TextBlock Text="{Binding Path=Name}" Margin="4, 0, 0, 0" VerticalAlignment="Center" FontSize="11" />
-                <Button Command="{Binding Path=CloseCommand}" Margin="7,0,0,0" Height="15" Width="15"  BorderThickness="0.5" Opacity="0.5" ToolTip="Tool schließen (auch mit mittlerer Maustaste)" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
+                <Button Padding="0" Command="{Binding Path=CloseCommand}" Margin="7,0,0,0" Height="15" Width="15"  BorderThickness="0.5" Opacity="0.5" ToolTip="Tool schließen (auch mit mittlerer Maustaste)" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
                     <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
                 </Button>
                 <StackPanel.InputBindings>

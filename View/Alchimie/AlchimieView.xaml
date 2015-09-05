@@ -360,7 +360,7 @@
                             <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                         </ComboBox.ToolTip>
                     </ComboBox>
-                    <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                    <Button Height="23" Padding="0" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                     </Button>
                 </StackPanel>
@@ -583,7 +583,7 @@
                             <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                         </ComboBox.ToolTip>
                     </ComboBox>
-                    <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                    <Button Height="23" Padding="0" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                     </Button>
                 </StackPanel>
@@ -780,7 +780,7 @@
                             <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                         </ComboBox.ToolTip>
                     </ComboBox>
-                    <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                    <Button Height="23" Padding="0" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                     </Button>
                 </StackPanel>

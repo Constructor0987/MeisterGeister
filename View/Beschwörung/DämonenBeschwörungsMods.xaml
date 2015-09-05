@@ -190,8 +190,8 @@
         <TextBlock Text="{Binding Mods[WahrerName].AnrufungsMod}" Grid.Row="3" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding Mods[WahrerName].KontrollMod}" Grid.Row="3" Grid.Column="3" Style="{StaticResource mod}"/>
 
-        <TextBlock Text="Ausrüstung" Grid.Row="4" Style="{StaticResource label}"/>
-        <General:IntBox MaxValue="0" Value="{Binding Mods[Ausrüstung].Value}" ShowButtons="True" Grid.Row="4" Grid.Column="1"/>
+        <TextBlock Text="Kleidung" Grid.Row="4" Style="{StaticResource label}"/>
+        <General:IntBox MinValue="0" MaxValue="2" Value="{Binding Mods[Ausrüstung].Value}" ShowButtons="True" Grid.Row="4" Grid.Column="1"/>
         <TextBlock Text="{Binding Mods[Ausrüstung].AnrufungsMod}" Grid.Row="4" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding Mods[Ausrüstung].KontrollMod}" Grid.Row="4" Grid.Column="3" Style="{StaticResource mod}"/>
 

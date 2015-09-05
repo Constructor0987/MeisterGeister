@@ -412,6 +412,9 @@
     <Compile Include="Model\Kampfregel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Kreatur_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Kultur.cs" />
     <Compile Include="Model\Kultur_Name_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -577,6 +580,7 @@
     <Compile Include="ViewModel\Beschwörung\ElementarWesen.cs" />
     <Compile Include="ViewModel\Beschwörung\GeisterBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\GolemBeschwörungViewModel.cs" />
+    <Compile Include="ViewModel\Beschwörung\LoyalitätBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\UntotenBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
@@ -729,11 +733,14 @@
     <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
       <DependentUpon>SliderRange.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Beschwörung\BeschwörungsAnrufung.xaml.cs">
-      <DependentUpon>BeschwörungsAnrufung.xaml</DependentUpon>
+    <Compile Include="View\Beschwörung\Anrufung.xaml.cs">
+      <DependentUpon>Anrufung.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Beschwörung\BeschwörungsKontrolle.xaml.cs">
-      <DependentUpon>BeschwörungsKontrolle.xaml</DependentUpon>
+    <Compile Include="View\Beschwörung\Kontrolle.xaml.cs">
+      <DependentUpon>Kontrolle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\LoyalitätsSteigerung.xaml.cs">
+      <DependentUpon>LoyalitätsSteigerung.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Beschwörung\DämonenBeschwörungsMods.xaml.cs">
       <DependentUpon>DämonenBeschwörungsMods.xaml</DependentUpon>
@@ -1232,15 +1239,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Beschwörung\LoyalitätsSteigerung.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Beschwörung\BeschwörungsResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Beschwörung\BeschwörungsAnrufung.xaml">
+    <Page Include="View\Beschwörung\Anrufung.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Beschwörung\BeschwörungsKontrolle.xaml">
+    <Page Include="View\Beschwörung\Kontrolle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -2106,6 +2117,7 @@
     <Resource Include="Images\Icons\Domänen\Namenloser.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0104.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0105.sql" />
+    <Content Include="Daten\Updateskripte\UpdateTo_V0106.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

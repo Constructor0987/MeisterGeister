@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical">
-            <Beschwörung:BeschwörungsAnrufung/>
+            <Beschwörung:Anrufung/>
 
             <!--Anrufung misslungen-->
             <StackPanel Orientation="Vertical" Margin="0,4,0,0">
@@ -43,7 +43,7 @@
                 <TextBlock Text="{Binding BeschwörungMisslungenErgebnis}" Foreground="Red" TextWrapping="WrapWithOverflow"/>
             </StackPanel>
 
-            <Beschwörung:BeschwörungsKontrolle/>
+            <Beschwörung:Kontrolle/>
 
             <!--Kontrolle misslungen-->
             <StackPanel Orientation="Vertical" Margin="0,4,0,0">
@@ -63,7 +63,10 @@
         </StackPanel>
         
         <Rectangle Grid.Column="1" Margin="4,0,4,0" Style="{StaticResource seperator}"/>
-        <Beschwörung:DämonenBeschwörungsMods Grid.Column="2"/>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Column="2">
+            <Beschwörung:DämonenBeschwörungsMods/>
+        </ScrollViewer>
     </Grid>
 
 </UserControl>

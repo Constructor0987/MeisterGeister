@@ -184,7 +184,7 @@
         <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
             <Expander.Header>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Command="{Binding OnOpenWiki}" VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
+                    <Button Padding="0" Command="{Binding OnOpenWiki}" VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
                         <Button.ToolTip>
                             <StackPanel>
                                 <TextBlock Text="In Wiki-Aventurica anzeigen..." />

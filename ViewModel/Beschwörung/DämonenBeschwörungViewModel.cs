@@ -74,48 +74,53 @@ namespace MeisterGeister.ViewModel.Beschwörung
             int wurf = 0;
             if (name.Value == 0) wurf += 7;
             wurf += View.General.ViewHelper.ShowWürfelDialog(blutmagie.Value1 ? "3W6" : "2W6", "Beschwörung Misslungen");
+
+            int index;
+            if (wurf <= 6)
+                index = 0;
+            else if (wurf <= 11)
+                index = 1;
+            else if (wurf <= 15)
+                index = 2;
+            else if (wurf <= 19)
+                index = 3;
+            else index = 4;
+
             //Sollte beim Einsatz von Zauberkreide oder Beschwörungskerzen der Qualität F die Beschwörung misslingen besteht eine 50%ige Wahrscheinlichkeit einen stärkeren Dämon zu rufen
             if ((kerzen.Value1 && kerzen.Value2 == Qualität.F) || (kreide.Value1 && kreide.Value2 == Qualität.F))
             {
-                BeschwörungMisslungenErgebnis = "Aufgrund von Zauberkreide/Beschwörungskerzen der Qualität F besteht eine 50%ige Wahrscheinlichkeit dass ein stärkerer Dämon erscheint. ";
+                BeschwörungMisslungenErgebnis = "Aufgrund von Zauberkreide/Beschwörungskerzen der Qualität F besteht eine 50%ige Wahrscheinlichkeit dass der negative Effekt verschlimmert wird. ";
                 //Wenn eh schon ein stärkerer Dämon kommt machen wir nix
-                if (wurf <= 11)
+                if (Würfel.Wurf(2) == 1)
                 {
-                    if (Würfel.Wurf(2) == 1)
-                    {
-                        wurf = 12;
-                        BeschwörungMisslungenErgebnis += "Der Beschwörer hat Pech. Dieser Effekt tritt auch ein." + Environment.NewLine;
-                    }
-                    else
-                    {
-                        BeschwörungMisslungenErgebnis += "Der Beschwörer hat aber diesmal noch Glück gehabt." + Environment.NewLine;
-                    }
+                    index++;
+                    BeschwörungMisslungenErgebnis += "Der Beschwörer hat Pech. Dieser Effekt tritt auch ein." + Environment.NewLine;
                 }
                 else
                 {
-                    BeschwörungMisslungenErgebnis += "Dies ist jedoch nicht relevant da dies laut Zufallswurf sowieso schon eintritt." + Environment.NewLine;
+                    BeschwörungMisslungenErgebnis += "Der Beschwörer hat aber diesmal noch Glück gehabt." + Environment.NewLine;
                 }
             }
-            if (wurf <= 6)
+            if (index <= 0)
             {
                 wesen = null;
                 BeschwörungMisslungenErgebnis += "Es erscheint kein Dämon. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 //Button deaktivieren
                 WürfleBeschwörungMisslungen = new Base.CommandBase((o) => { }, (o) => false);
             }
-            else if (wurf <= 11 && (wesen = Global.ContextHeld.GetLeichtererDämon(BeschworenesWesen)) != null)
+            else if (index <= 1 && (wesen = Global.ContextHeld.GetLeichtererDämon(BeschworenesWesen)) != null)
             {
                 BeschwörungMisslungenErgebnis += "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von niedrigerer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
-            else if (wurf <= 15 && (wesen = Global.ContextHeld.GetSchwerererDämon(BeschworenesWesen)) != null)
+            else if (index <= 2 && (wesen = Global.ContextHeld.GetSchwerererDämon(BeschworenesWesen)) != null)
             {
                 BeschwörungMisslungenErgebnis += "Ein anderer Dämon aus derselben Domäne und von derselben Klasse (niederer oder gehörnter Dämon) wie der Angerufene erscheint, jedoch von höherer Beschwörungsschwierigkeit. Die Beschwörungskosten betragen nur die Hälfte des Üblichen.";
                 Status = BeschwörungsStatus.Beherrschen;
                 AndererDämon = true;
             }
-            else if (wurf <= 19 && (wesen = Global.ContextHeld.GetGehörntererDämonAusDomäne(BeschworenesWesen)) != null)
+            else if (index <= 3 && (wesen = Global.ContextHeld.GetGehörntererDämonAusDomäne(BeschworenesWesen)) != null)
             {
                 BeschwörungMisslungenErgebnis += "Ein gehörnter Dämon aus derselben Domäne, jedoch von höherer Beschwörungsschwierigkeit erscheint. 1 Punkt schleichender Verfall.";
                 Status = BeschwörungsStatus.Beherrschen;

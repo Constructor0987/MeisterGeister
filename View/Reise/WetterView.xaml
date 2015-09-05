@@ -20,11 +20,11 @@
         <General:EnumToStringConverter x:Key="converter"/>
     </UserControl.Resources>
     
-    <Expander IsExpanded="True">
+    <Expander>
         <Expander.Header>
             <TextBlock Text="Wettervorhersage" Style="{DynamicResource TextTitel}" />
         </Expander.Header>
-        <Border Style="{DynamicResource ControlContentBorder}">
+        <Border Style="{DynamicResource ControlContentBorder}" Background="{StaticResource BackgroundPergamentQuer}" Padding="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

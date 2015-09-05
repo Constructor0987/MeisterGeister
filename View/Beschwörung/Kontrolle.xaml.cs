@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace MeisterGeister.View.Beschwörung
 {
     /// <summary>
-    /// Interaktionslogik für BeschwörungsAnrufung.xaml
+    /// Interaktionslogik für BeschwörungsKontrolle.xaml
     /// </summary>
-    public partial class BeschwörungsAnrufung : UserControl
+    public partial class Kontrolle : UserControl
     {
-        public BeschwörungsAnrufung()
+        public Kontrolle()
         {
             InitializeComponent();
         }
