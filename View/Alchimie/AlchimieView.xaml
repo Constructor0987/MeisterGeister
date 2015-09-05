@@ -416,9 +416,9 @@
                                         <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
                                         </StackPanel>
-                                        <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                        <!--<CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
                                         <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
-                                        <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
+                                        <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>-->
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
@@ -896,7 +896,7 @@
                 </Expander>
             </Grid>
         </TabItem>
-        <TabItem Header="Laborbeute">
+        <TabItem Header="Laborbeute" Visibility="Collapsed">
             <Grid OpacityMask="Black">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

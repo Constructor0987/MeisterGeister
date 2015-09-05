@@ -80,13 +80,30 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private bool _nurBenutzerdefiniert = false;
+        public bool NurBenutzerdefiniert
+        {
+            get { return _nurBenutzerdefiniert; }
+            set {
+                if (Set(ref _nurBenutzerdefiniert, value))
+                {
+                    RefreshTagListe();
+                    FilterListe();
+                    OnChanged("AktiveFilter");
+                }
+            }
+        }
+
         public string AktiveFilter
         {
             get
             {
-                if (SuchText.ToLower() == (SelectedTag == null ? string.Empty : SelectedTag.ToLower()))
-                    return SuchText.ToLower();
-                return SuchText.ToLower() + (SelectedTag == null ? string.Empty : " " + SelectedTag.ToLower());
+                string s = SuchText.ToLower();
+                if (!s.StartsWith((SelectedTag == null ? string.Empty : SelectedTag.ToLower())))
+                    s += (SelectedTag == null ? string.Empty : " " + SelectedTag.ToLower());
+                if(NurBenutzerdefiniert)
+                    s += " NurUser";
+                return s;
             }
         }
 
@@ -115,6 +132,8 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("SelectedGegnerBase");
                 OnChanged("AngriffListe");
                 OnChanged("SelectedGegnerBaseIsNotNull");
+                if (onDeleteGegnerBase != null)
+                    onDeleteGegnerBase.Invalidate();
             }
         }
 
@@ -252,7 +271,7 @@ namespace MeisterGeister.ViewModel.Kampf
         #region Filtern
 
         /// <summary>
-        /// Filtert die Gegner-Liste auf Basis des SuchTextes.
+        /// Filtert die Gegner-Liste auf Basis des SuchTextes und des NurBenutzerdefiniert-Schalters.
         /// </summary>
         private void FilterListe()
         {
@@ -262,11 +281,12 @@ namespace MeisterGeister.ViewModel.Kampf
             string[] suchWorte = suchText.Split(' ');
 
             if (suchText == string.Empty) // kein Suchwort
-                FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().OrderBy(n => n.Name).ToList();
-            else if (suchWorte.Length == 1) // nur ein Suchwort
-                FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
-            else // mehrere Suchwörter
-                FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+                if(NurBenutzerdefiniert)
+                    FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => s.Usergenerated).OrderBy(n => n.Name).ToList();
+                else
+                    FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().OrderBy(n => n.Name).ToList();
+            else // hat Suchwörter
+                FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => (!NurBenutzerdefiniert || s.Usergenerated) && s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
         }
 
         private void RefreshTagListe()
@@ -278,7 +298,7 @@ namespace MeisterGeister.ViewModel.Kampf
             List<string> tagsGegner;
 
             // Hinweis: Eine Paralellisierung der Schleife scheint sich nicht zu lohnen und ist teilweise sogar langsamer
-            foreach (var item in GegnerBaseListe)
+            foreach (var item in GegnerBaseListe.Where(s=>(!NurBenutzerdefiniert || s.Usergenerated)))
             {
                 tagsGegner = item.TagListe();
                 foreach (string tag in tagsGegner)
@@ -465,6 +485,7 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             SuchText = string.Empty;
             SelectedTag = null;
+            NurBenutzerdefiniert = false;
         }
         #endregion
 
@@ -704,17 +725,25 @@ namespace MeisterGeister.ViewModel.Kampf
             get
             {
                 if (onDeleteGegnerBase == null)
-                    onDeleteGegnerBase = new Base.CommandBase(DeleteGegnerBase, null);
+                    onDeleteGegnerBase = new Base.CommandBase(DeleteGegnerBase, CanDeleteGegnerBase);
                 return onDeleteGegnerBase;
             }
+        }
+
+        private bool CanDeleteGegnerBase(object args)
+        {
+            GegnerBase h = SelectedGegnerBase;
+            if (h == null)
+                return false;
+            return (h.Usergenerated || Global.INTERN);
         }
 
         private void DeleteGegnerBase(object args)
         {
             GegnerBase h = SelectedGegnerBase;
-            if (h != null)
+            if (h != null && CanDeleteGegnerBase(args))
             {
-                if (Confirm("Gegner löschen", string.Format("Sind Sie sicher, dass Sie den Gegner '{0}' löschen möchten?", h.Name))
+                if (Confirm("Gegner löschen", string.Format("{1}Sind Sie sicher, dass Sie den Gegner '{0}' löschen möchten?", h.Name, h.Usergenerated?"":"ACHTUNG! Dies ist ein mitausgelieferter Gegner!\n"))
                     && Global.ContextHeld.Delete<GegnerBase>(h))
                 {
                     //Liste aktualisieren

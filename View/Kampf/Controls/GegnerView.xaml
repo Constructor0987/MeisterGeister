@@ -34,7 +34,10 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Image Margin="2,2,0,2" Source="/Images/Icons/General/suchen.png" Width="18" ToolTip="Suchtext (Name, Verbreitung, Literatur und Stichwörter werden durchsucht)" />
-                            <TextBox Margin="2,2,0,2" Width="170" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                            <TextBox Margin="2,2,0,2" Width="150" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                            <ToggleButton Margin="2,2,0,2" Width="18" ToolTip="Nur benutzerdefinierte Gegner anzeigen" IsChecked="{Binding NurBenutzerdefiniert}">
+                                <Image Source="/Images/Icons/meisterperson.png" />
+                            </ToggleButton>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -83,7 +86,7 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <DockPanel ToolTip="Aktive Filter" Grid.ColumnSpan="2">
+                    <DockPanel ToolTip="Aktive Filter" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="198">
                         <Image Margin="2" Source="/Images/Icons/General/filter.png" Width="12" />
                         <TextBlock DockPanel.Dock="Left" Margin="2" FontSize="9" Text="{Binding AktiveFilter}" />
                         <Button DockPanel.Dock="Right" Height="18" Width="18" ToolTip="Alle Filter entfernen" HorizontalAlignment="Right" Command="{Binding OnClearFilter}">
