@@ -142,7 +142,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddVorteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                    <Button Padding="0" Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
@@ -158,7 +158,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddNachteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                    <Button Padding="0" Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                 </Grid>

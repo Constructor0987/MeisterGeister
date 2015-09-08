@@ -660,15 +660,15 @@
                                                     </Style>
                                                 </ToggleButton.Style>  
                                             </ToggleButton>
-                                            <Button Name="btnNeuePlaylist" ToolTip="Neue Playliste"  Height="28" Width="22" Grid.Column="1" 
+                                            <Button Padding="0" Name="btnNeuePlaylist" ToolTip="Neue Playliste"  Height="28" Width="22" Grid.Column="1" 
                                                 Command="{Binding OnNeuePlaylist}">
                                                 <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
-                                            <Button Name="btnPlaylistImport" ToolTip="Playist importieren" Height="28" Width="22" Margin="1,0,0,0" 
+                                            <Button Padding="0" Name="btnPlaylistImport" ToolTip="Playist importieren" Height="28" Width="22" Margin="1,0,0,0" 
                                                     Command="{Binding OnPlaylistImportieren}" >
                                                 <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
-                                            <Button Name="btnPlaylistExportALL" ToolTip="Alle Playisten exportieren" Height="28" Width="22" Margin="1,0,0,0" 
+                                            <Button Padding="0" Name="btnPlaylistExportALL" ToolTip="Alle Playisten exportieren" Height="28" Width="22" Margin="1,0,0,0" 
                                                     Command="{Binding OnExportAllPlaylisten}">
                                                 <Grid>
                                                     <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
@@ -688,7 +688,7 @@
                                                 <TextBox Margin="2,1" Name="tbEditorPlaylistFilter" Grid.Column="1" 
                                                     Text="{Binding Path=SuchTextEditor, UpdateSourceTrigger=PropertyChanged}"
                                                     vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                                                <Button Grid.Column="2" ToolTip="Filter löschen"
+                                                <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
                                                         Command="{Binding OnSuchTextEditorPlaylistLöschen}">
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                                 </Button>
@@ -877,14 +877,14 @@
                         <StackPanel Orientation="Horizontal"  >
                             <GroupBox Header="Import/Export" Margin="5,-2,2,2" >
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="2,2,2,1">
-                                    <Button Name="btnAudioDatenImport" ToolTip="Komplette Audio-Daten importieren (Themes und Playlisten)"  Height="25" Width="25" Margin="5,0,0,0" VerticalAlignment="Top"
+                                    <Button Padding="0" Name="btnAudioDatenImport" ToolTip="Komplette Audio-Daten importieren (Themes und Playlisten)"  Height="25" Width="25" Margin="5,0,0,0" VerticalAlignment="Top"
                                         Command="{Binding OnBtnImportAll}" >
                                         <Grid Height="25" Width="22">
                                             <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
                                             <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" Margin="3,3,-3,-3" />
                                         </Grid>
                                     </Button>
-                                    <Button Name="btnAudioDatenExport" ToolTip="Komplette Audio-Daten exportieren (Themes und Playlisten)" Height="25" Width="25" Margin="5,0,0,0" Grid.Column="1" VerticalAlignment="Top"
+                                    <Button Padding="0" Name="btnAudioDatenExport" ToolTip="Komplette Audio-Daten exportieren (Themes und Playlisten)" Height="25" Width="25" Margin="5,0,0,0" Grid.Column="1" VerticalAlignment="Top"
                                             Command="{Binding OnExportAll}" >
                                         <Grid Height="25" Width="22">
                                             <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
@@ -1146,7 +1146,7 @@
                                                 <TextBox Margin="2,1" Name="tbEditorTopFilter1" Grid.Column="1" 
                                                     Text="{Binding Path=SuchTextEditorAudioZeilen, UpdateSourceTrigger=PropertyChanged}" 
                                                     vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                                                <Button Grid.Column="2" Name="btnKlangTopFilter1" ToolTip="Filter löschen"
+                                                <Button Grid.Column="2" Padding="0"  Name="btnKlangTopFilter1" ToolTip="Filter löschen"
                                                         Command="{Binding OnSuchTextEditorAudioZeilenLöschen}" >
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Width="15" Height="24" />
                                                 </Button>
@@ -1457,8 +1457,8 @@
                                 <Image Name="imgbtnBGNext" Margin="2,4,2,2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
-                            <Button Width="26" Height="26" Name="btnBGSpeaker" Command="{Binding OnBGSpeakerMuting}" Margin="170,0,0,0" Tag="-1" ToolTip="Ton aus/an" >
-                                <Image Width="20" Height="20" Margin="0,6,0,0">
+                            <Button Padding="0" Width="26" Height="26" Name="btnBGSpeaker" Command="{Binding OnBGSpeakerMuting}" Margin="170,0,0,0" Tag="-1" ToolTip="Ton aus/an" >
+                                <Image Width="20" Height="20">
                                     <Image.Style>
                                         <Style TargetType="Image">
                                             <Style.Setters>
@@ -1543,7 +1543,7 @@
                                 <TextBox Margin="2,1" Name="tbBGFilter" Grid.Column="3" 
                                         Text="{Binding Path=SuchTextMusik, UpdateSourceTrigger=PropertyChanged}"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"  />
-                                <Button Grid.Column="4" ToolTip="Filter löschen"
+                                <Button Padding="0" Grid.Column="4" ToolTip="Filter löschen"
                                         Command="{Binding OnSuchTextMusikLöschen}" >
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                 </Button>
@@ -1608,7 +1608,7 @@
                                 <TextBox Margin="2,1" Name="tbBGTitelFilter" Grid.Column="3" 
                                         Text="{Binding Path=SuchTextMusikTitel, UpdateSourceTrigger=PropertyChanged}"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"  />
-                                <Button Grid.Column="4" ToolTip="Filter löschen"
+                                <Button Grid.Column="4" ToolTip="Filter löschen" Padding="0"
                                         Command="{Binding OnSuchTextMusikTitelLöschen}" >
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                 </Button>
@@ -2063,10 +2063,10 @@
                                     IsEnabled="{Binding HintergrundMusikListe.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='1'}" >
                                     <Image Source="{Binding Source, ElementName=imgbtnBGNext}" Margin="2,4,2,2" Style="{StaticResource ImageEnabled}" />
                                 </Button>
-                                                   
 
-                                <Button Width="26" Height="26" Command="{Binding OnBGSpeakerMuting}" ToolTip="Ton aus/an" >
-                                    <Image Width="20" Height="20" Margin="0,6,0,0">
+
+                                <Button Padding="0" Width="26" Height="26" Command="{Binding OnBGSpeakerMuting}" ToolTip="Ton aus/an" >
+                                    <Image Width="20" Height="20">
                                         <Image.Style>
                                             <Style TargetType="Image">
                                                 <Style.Setters>
@@ -2198,8 +2198,8 @@
                                     </Image>
                                 </Button>
 
-                                <Button Width="26" Height="26" Command="{Binding OnGeräuscheSpeakerMuting}" ToolTip="Ton aus/an" >
-                                    <Image Width="20" Height="20" Margin="0,6,0,0">
+                                <Button Padding="0" Width="26" Height="26" Command="{Binding OnGeräuscheSpeakerMuting}" ToolTip="Ton aus/an" >
+                                    <Image Width="20" Height="20">
                                         <Image.Style>
                                             <Style TargetType="Image">
                                                 <Style.Setters>
@@ -2244,7 +2244,7 @@
                                     <TextBox Name="tbPListGeräuscheName" Margin="2,1" Grid.Column="1" 
                                         Text="{Binding Path=SuchTextErwPlayerGeräusche, UpdateSourceTrigger=PropertyChanged}"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"  />
-                                    <Button Grid.Column="2" ToolTip="Filter löschen"
+                                    <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
                                             Command="{Binding OnSuchTextErwPlayerGeräuscheLöschen}" >
                                         <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                     </Button>

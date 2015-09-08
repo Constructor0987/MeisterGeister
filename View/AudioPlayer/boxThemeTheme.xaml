@@ -17,7 +17,7 @@
             <Image Name="imgIcon" Margin="1,5,2,0" />
             <TextBlock Name="txblkName" TextWrapping="Wrap" Text="{Binding aPlaylist.Name, NotifyOnTargetUpdated=True}" Padding="2"
                     TargetUpdated="OnPlaylistNameUpdated" VerticalAlignment="Center" Grid.Column="1" Margin="2,2,2,0" IsEnabled="False" />
-            <Button Name="btnRemove" ToolTip="Entfernen des untergeordneten Themes" Margin="5,5,2,0" Grid.Column="2" >
+            <Button Name="btnRemove" ToolTip="Entfernen des untergeordneten Themes" Margin="5,5,2,0" Padding="0" Grid.Column="2" >
                 <Image Source="/Images/Icons/General/entf_01.png" />
             </Button>
         </Grid>

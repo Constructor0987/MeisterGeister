@@ -86,10 +86,10 @@
                             <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Label Content="Weitere Trageorte" />
                                 <ComboBox ItemsSource="{Binding HeldFernkampfwaffeImInventar}" Margin="0" MinWidth="200"/>
-                                <Button  Command="{Binding OnAddRuestung}" Height="23">
+                                <Button Padding="0" Command="{Binding OnAddRuestung}" Height="23">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                 </Button>
-                                <Button  Command="{Binding OnAddRuestung}" Height="23">
+                                <Button Padding="0" Command="{Binding OnAddRuestung}" Height="23">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
                                 </Button>
                             </StackPanel>
@@ -97,10 +97,10 @@
                     </Grid>
                     <Grid Grid.Row="1" Margin="5">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button  Command="{Binding OnAddRuestung}" Height="23">
+                            <Button Padding="0" Command="{Binding OnAddRuestung}" Height="23">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/ok.png" />
                             </Button>
-                            <Button  Command="{Binding OnAddRuestung}" Height="23">
+                            <Button Padding="0" Command="{Binding OnAddRuestung}" Height="23">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
                             </Button>
                         </StackPanel>

@@ -331,7 +331,7 @@
                                         <KeyBinding Key="Enter"  Command="{Binding OnAddTalent_Click}" />
                                     </ComboBox.InputBindings>
                                 </ComboBox>
-                                <Button Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"> 
+                                <Button Padding="0" Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"> 
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                 </Button>
                             </Grid>

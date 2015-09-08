@@ -62,7 +62,7 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
 
-                    <Button Grid.Column="2" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"> 
+                    <Button Padding="0" Grid.Column="2" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"> 
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
 

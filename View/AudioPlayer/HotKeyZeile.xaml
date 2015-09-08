@@ -37,10 +37,10 @@
             <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10,3,10,0" >
                 <Label Name="lbDatei" FontSize="14" Content="" Margin="0,0,10,0" Visibility="Collapsed" />
                 
-                <Button Name="btnEditHotkey" Width="25" Height="25" HorizontalAlignment="Right" ToolTip="Datei auswählen" Click="btnEditHotkey_Click">
+                <Button Name="btnEditHotkey" Width="25" Height="25" Padding="0" HorizontalAlignment="Right" ToolTip="Datei auswählen" Click="btnEditHotkey_Click">
                     <Image Source="/Images/Icons/General/oeffnen.png" Stretch="Fill"/>
                 </Button>
-                <Button Name="btnClearHotkey" Width="25" Height="25" HorizontalAlignment="Right" ToolTip="Belegung löschen" Click="btnClearHotkey_Click" Visibility="Collapsed">
+                <Button Padding="0" Name="btnClearHotkey" Width="25" Height="25" HorizontalAlignment="Right" ToolTip="Belegung löschen" Click="btnClearHotkey_Click" Visibility="Collapsed">
                     <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" />
                 </Button>
             </StackPanel>

@@ -858,7 +858,7 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="5">
-                                        <Button  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                                        <Button Padding="0"  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                                             <Image>
                                                 <Image.Source>
                                                     <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
