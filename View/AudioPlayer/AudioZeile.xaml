@@ -85,7 +85,7 @@
 
             <Label Grid.ColumnSpan="3" Grid.RowSpan="2" Cursor="Hand" />
             <Label Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" />
-            <Button Grid.RowSpan="2"  Height="25" 
+            <Button Padding="0" Grid.RowSpan="2"  Height="25" 
                 Command="{Binding OnAudioZeileRemove}"
                 Visibility="{Binding ElementName=_audioZeile, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" AllowDrop="False" />
@@ -107,11 +107,11 @@
                         </Style.Triggers>                        
                     </Style>
                 </StackPanel.Style>
-                <Button Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveUp, UpdateSourceTrigger=PropertyChanged}"
+                <Button Padding="0" Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveUp, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" />
                 </Button>
-                <Button Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveDown, UpdateSourceTrigger=PropertyChanged}"
+                <Button Padding="0" Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveDown, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" />
                 </Button>
@@ -430,7 +430,7 @@
                     
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Column="3" Margin="5,-1,-1,0" />
 
-                    <Label Grid.Column="4" Content="{Binding APlayTitelPause, Converter={StaticResource MillisecondToMinuteSecondsTextConverter1}}" />
+                    <Label Grid.Column="4" Content="{Binding ZeigeAPlayTitelPause}" />
 
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Width="12" Margin="-3,3,0,3" HorizontalAlignment="Left" Stretch="Fill"  />
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="-7,9,15,3" HorizontalAlignment="Left" />

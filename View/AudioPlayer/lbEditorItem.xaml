@@ -46,7 +46,7 @@
             </Grid>
             <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,25,0"
                         MouseEnter="spnlSubObject_MouseEnter" MouseLeave="spnlSubObject_MouseLeave" >
-                <Button Width="22" Cursor="Hand" ToolTip="Exportieren der Playlist" 
+                <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Exportieren der Playlist" 
                                 Command="{Binding OnBtnExportLbEditor}" >
                     <Button.Visibility>
                         <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
@@ -56,7 +56,7 @@
                     </Button.Visibility>
                     <Image Source="/Images/Icons/General/export.png"/>
                 </Button>
-                <Button Width="22" Cursor="Hand" ToolTip="Löschen der Playlist" 
+                <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Löschen der Playlist" 
                                 Command="{Binding OnBtnLöschenLbEditor}" >
                     <Button.Visibility>
                         <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
@@ -77,11 +77,11 @@
                         <Binding ElementName="tbtnPlaylistAZ" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
                     </MultiBinding>
                 </StackPanel.Visibility>
-                <Button Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"
+                <Button Padding="0" Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" Margin="-2,-1" />
                 </Button>
-                <Button Height="11" Command="{Binding OnReihenfolgePListMoveDown, UpdateSourceTrigger=PropertyChanged}"
+                <Button Padding="0" Height="11" Command="{Binding OnReihenfolgePListMoveDown, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" Margin="-2,-1" />
                 </Button>
