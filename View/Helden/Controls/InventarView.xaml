@@ -368,13 +368,13 @@
                             </StackPanel>
 
                             <Grid x:Name="ZoenenRuestungOeffnen" Grid.Column="6">
-                                <ToggleButton x:Name="btnZonenOverlay" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ToolTip="Zonenrüstung setzen">
+                                <ToggleButton x:Name="btnZonenOverlay" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ShowOnDisabled="True">
                                     <ToggleButton.Effect>
                                         <DropShadowEffect RenderingBias="Quality"/>
                                     </ToggleButton.Effect>
                                     <ToggleButton.ToolTip>
                                         <StackPanel Background="#389E804D">
-                                            <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" />
+                                            <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" Visibility="{Binding IsRuestungBerechnungZonen,Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                             <Grid Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <Grid.Background>
                                                     <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />

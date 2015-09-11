@@ -21,7 +21,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="HeldenListItemStyle" TargetType="{x:Type StackPanel}">
+        <Style x:Key="HeldenListItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
             <Setter Property="Opacity" Value="1.0" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding AktiveHeldengruppe}" Value="false">
@@ -37,8 +37,9 @@
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="HeldListTemplate">
-            <StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical" VerticalAlignment="Center" Height="30">
-                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Text="{Binding Name}" VerticalAlignment="Center">
+            <DockPanel VerticalAlignment="Center" Height="40">
+                <Image MaxWidth="40" DockPanel.Dock="Left" Source="{Binding Bild}" Margin="0,0,8,0"/>
+                <TextBlock DockPanel.Dock="Top" Style="{StaticResource HeldenListTextBlockStyle}" Text="{Binding Name}" VerticalAlignment="Center">
                     <TextBlock.ToolTip>
                         <StackPanel>
                             <TextBlock Text="Eindeutige Held-ID:" FontStyle="Italic" />
@@ -46,8 +47,8 @@
                         </StackPanel>
                     </TextBlock.ToolTip>
                 </TextBlock>
-                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Text="{Binding Spieler}" VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="Gray" ToolTip="Name des Spielers des Helden" />
-            </StackPanel>
+                <TextBlock DockPanel.Dock="Bottom" Style="{StaticResource HeldenListTextBlockStyle}" Text="{Binding Spieler}" VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="Gray" ToolTip="Name des Spielers des Helden" />
+            </DockPanel>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -135,8 +136,8 @@
                     </Image.ToolTip>
                 </Image>
             </Grid>
-            <ListBox Grid.Row="1" x:Name="_listBoxHelden"  Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
-				MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000" VerticalContentAlignment="Center">
+            <ListBox Grid.Row="1" x:Name="_listBoxHelden"  Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" ItemContainerStyle="{StaticResource HeldenListItemStyle}"
+				     MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000" VerticalContentAlignment="Center">
                 <ListBox.InputBindings>
                     <KeyBinding Key="Delete" Command="{Binding OnDeleteHeld}" />
                 </ListBox.InputBindings>
