@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MeisterGeister.View.General
 {
     public static class UIElementBehavior
     {
+        #region ViewModelBehavior
         public static ViewModelBase GetViewModel(UIElement obj)
         {
             return (ViewModelBase)obj.GetValue(ViewModelProperty);
@@ -58,5 +62,45 @@ namespace MeisterGeister.View.General
             if ((bool)e.NewValue) vm.RegisterEvents();
             else vm.UnregisterEvents();
         }
+
+        #endregion
+
+        #region IgnoreScrollingBehavior
+
+        public static ScrollViewer GetScrollViewer(UIElement obj)
+        {
+            return (ScrollViewer)obj.GetValue(ScrollViewerProperty);
+        }
+
+        public static void SetScrollViewer(UIElement obj, ScrollViewer value)
+        {
+            obj.SetValue(ScrollViewerProperty, value);
+        }
+
+        public static readonly DependencyProperty ScrollViewerProperty =
+            DependencyProperty.RegisterAttached("ScrollViewer", typeof(ScrollViewer), typeof(UIElementBehavior), new PropertyMetadata(null, onScrollViewerChanged));
+
+        private static void onScrollViewerChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            UIElement element = (UIElement)obj;
+            if (e.OldValue != null)
+            {
+                element.PreviewMouseWheel -= Element_PreviewMouseWheel;
+            }
+            if (e.NewValue != null)
+            {
+                element.PreviewMouseWheel += Element_PreviewMouseWheel;
+            }
+        }
+
+        private static void Element_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            UIElement element = (UIElement)sender;
+            ScrollViewer viewer = GetScrollViewer(element);
+            viewer.ScrollToVerticalOffset(viewer.VerticalOffset - e.Delta/2.5);
+            e.Handled = true;
+        }
+
+        #endregion
     }
 }

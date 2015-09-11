@@ -589,11 +589,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="4" Margin="5">
                                         <Button x:Name="ADDNah2" Command="{Binding OnAddNahkampfwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                                            <Image>
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>
@@ -636,11 +632,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="4" Margin="5">
                                         <Button  Command="{Binding OnAddFernwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                                            <Image>
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>
@@ -669,12 +661,8 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="5">
-                                        <Button  Command="{Binding OnAddSchild}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                                            <Image>
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                                                </Image.Source>
-                                            </Image>
+                                        <Button Padding="0" Command="{Binding OnAddSchild}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>
@@ -703,11 +691,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="5">
                                         <Button Padding="0"  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                                            <Image>
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>
@@ -719,10 +703,7 @@
                                 <TabItem.Header>
                                     <Grid Height="50" Width="50">
                                         <Border Height="50" Width="50" >
-                                            <Image Height="50" Width="50">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/proviant.png" />
-                                                </Image.Source>
+                                            <Image Height="50" Width="50" Source="/DSA MeisterGeister;component/Images/Icons/proviant.png">
                                                 <Image.Effect>
                                                     <DropShadowEffect/>
                                                 </Image.Effect>
@@ -750,11 +731,7 @@
                                                 </ComboBox.InputBindings>
                                             </ComboBox>
                                             <Button Command="{Binding OnAddInventar}" VerticalAlignment="Center" Height="25" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                                                <Image >
-                                                    <Image.Source>
-                                                        <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                                                    </Image.Source>
-                                                </Image>
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                             </Button>-->
                                             <TextBlock Foreground="Red" Text="HINWEIS: Derzeit können Gegenstände nur über den Basar eingefügt werden." VerticalAlignment="Center" Margin="5" />
                                         </StackPanel>
@@ -771,7 +748,7 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ScrollViewer VerticalAlignment="Stretch" Name="scrollViewer">
+                                <ScrollViewer VerticalAlignment="Stretch" x:Name="scrollViewer">
 
                                     <StackPanel Orientation="Vertical">
 
@@ -780,12 +757,12 @@
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
                                         </Border>
 
-                                        <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" AutoGenerateColumns="False">
+                                        <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                                             <DataGrid.Columns>
                                                 <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
                                                 <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
-                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityNW.Gewicht}"/>
-                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityNW.Name}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityNW.Gewicht}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityNW.Name}" IsReadOnly="True"/>
                                                 <DataGridTextColumn Width="70" Header="TP" Binding="{Binding TP}" IsReadOnly="True"/>
                                                 <DataGridTextColumn Width="60" Header="TP/KK" Binding="{Binding TPKK}" IsReadOnly="True"/>
                                                 <DataGridTextColumn Width="30" Header="BF" Binding="{Binding EntityNW.BF}" IsReadOnly="True"/>
@@ -819,16 +796,16 @@
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/fernkampf.png"/>
                                         </Border>
 
-                                        <DataGrid ItemsSource="{Binding HeldFernkampfwaffeImInventar}" AutoGenerateColumns="False">
+                                        <DataGrid ItemsSource="{Binding HeldFernkampfwaffeImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                                             <DataGrid.Columns>
                                                 <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
                                                 <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
-                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Gewicht}"/>
-                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
-                                                <DataGridTextColumn Width="70" Header="TP" Binding="{Binding TP}"/>
-                                                <DataGridTextColumn Width="80" Header="Reichweiten" Binding="{Binding EntityFW.Reichweiten}"/>
-                                                <DataGridTextColumn Width="80" Header="TP+" Binding="{Binding EntityFW.TPReichweiten}" />
-                                                <DataGridTextColumn Width="50" Header="Laden" Binding="{Binding EntityFW.Laden}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Gewicht}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="70" Header="TP" Binding="{Binding TP}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="120" Header="Reichweiten" Binding="{Binding EntityFW.Reichweiten}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="80" Header="TP+" Binding="{Binding EntityFW.TPReichweiten}"  IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="50" Header="Laden" Binding="{Binding EntityFW.Laden}" IsReadOnly="True"/>
                                                 <DataGridTemplateColumn Width="50" Header="FK">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
@@ -856,16 +833,16 @@
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/schild.png"/>
                                         </Border>
 
-                                        <DataGrid ItemsSource="{Binding HeldSchildImInventar}" AutoGenerateColumns="False">
+                                        <DataGrid ItemsSource="{Binding HeldSchildImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                                             <DataGrid.Columns>
                                                 <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
                                                 <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
-                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityS.Gewicht}"/>
-                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityS.Name}"/>
-                                                <DataGridTextColumn Width="50" Header="Größe" Binding="{Binding EntityS.Größe}"/>
-                                                <DataGridTextColumn Width="30" Header="WM" Binding="{Binding WM}"/>
-                                                <DataGridTextColumn Width="30" Header="INI" Binding="{Binding EntityS.INI}"/>
-                                                <DataGridTextColumn Width="30" Header="BF" Binding="{Binding EntityS.BF}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityS.Gewicht}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityS.Name}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="50" Header="Größe" Binding="{Binding EntityS.Größe}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="WM" Binding="{Binding WM}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="INI" Binding="{Binding EntityS.INI}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="BF" Binding="{Binding EntityS.BF}" IsReadOnly="True"/>
                                                 <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -876,14 +853,14 @@
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
                                         </Border>
 
-                                        <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" AutoGenerateColumns="False">
+                                        <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                                             <DataGrid.Columns>
                                                 <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
                                                 <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
-                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityR.Gewicht}"/>
-                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityR.Name}"/>
-                                                <DataGridTextColumn Width="30" Header="RS" Binding="{Binding EntityR.RS}"/>
-                                                <DataGridTextColumn Width="30" Header="BE" Binding="{Binding EntityR.BE}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityR.Gewicht}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityR.Name}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="RS" Binding="{Binding EntityR.RS}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="BE" Binding="{Binding EntityR.BE}" IsReadOnly="True"/>
                                                 <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -893,11 +870,11 @@
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
                                         </Border>
 
-                                        <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" AutoGenerateColumns="False">
+                                        <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
-                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}"/>
-                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="True"/>
                                                 <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                                             </DataGrid.Columns>
                                         </DataGrid>

@@ -217,7 +217,7 @@
                                 <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
                                 <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
                                     <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" />
-                                    <Button Height="24" Click="ButtonZonenRsControl_Click">
+                                    <Button Padding="0" Height="24" Click="ButtonZonenRsControl_Click">
                                         <Image Margin="1" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
                                         <Button.ToolTip>
                                             <StackPanel Background="#389E804D">
@@ -297,10 +297,10 @@
                                     <KeyBinding Key="Enter" Command="{Binding OnNewAngriff}" />
                                 </ComboBox.InputBindings>
                             </ComboBox>
-                            <Button Grid.Row="0" Grid.Column="2"  Height="23" Width="25" ToolTip="Neuern Angriff einfügen" Command="{Binding OnNewAngriff}">
+                            <Button Padding="0" Grid.Row="0" Grid.Column="2"  Height="23" Width="25" ToolTip="Neuern Angriff einfügen" Command="{Binding OnNewAngriff}">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                             </Button>
-                            <Button Grid.Row="0" Grid.Column="3" Margin="12,0,4,0" Height="23" Width="25" ToolTip="Angriffe aus Bemerkung erstellen..." Command="{Binding OnParseBemerkung}">
+                            <Button Padding="0" Grid.Row="0" Grid.Column="3" Margin="12,0,4,0" Height="23" Width="25" ToolTip="Angriffe aus Bemerkung erstellen..." Command="{Binding OnParseBemerkung}">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/notiz.png" Stretch="Fill" />
                             </Button>
                             <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding AngriffListe}" SelectedItem="{Binding SelectedAngriff}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000">

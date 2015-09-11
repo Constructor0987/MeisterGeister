@@ -116,11 +116,6 @@ namespace MeisterGeister.View.Helden.Controls {
             }
         }
 
-        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
-        }
-
         #endregion // ---- EVENTS ----
 
         #region // ---- METHODEN ----

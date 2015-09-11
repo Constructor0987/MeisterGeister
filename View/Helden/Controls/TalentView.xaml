@@ -1,4 +1,4 @@
-﻿<UserControl	x:Class="MeisterGeister.View.Helden.Controls.TalentView"	
+﻿<UserControl x:Class="MeisterGeister.View.Helden.Controls.TalentView"	
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -443,7 +443,7 @@
                                             </Grid>
                                         </Border>
                                         <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KampfTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxKampf" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                                 ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxKampf" SelectionChanged="ListBoxTalent_SelectionChanged">
                                             <ListBox.InputBindings>
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </ListBox.InputBindings>
@@ -599,7 +599,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KoerperTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxKoerper" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxKoerper" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -685,7 +685,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GesellschaftTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxGesellschaft" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxGesellschaft" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -771,7 +771,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding NaturTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxNatur" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxNatur" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -857,7 +857,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding WissenTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxWissen" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxWissen" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -943,7 +943,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SpracheTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxSprachen" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxSprachen" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -1029,7 +1029,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding HandwerkTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxHandwerk" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxHandwerk" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -1115,7 +1115,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GabenTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxGaben" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxGaben" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -1201,7 +1201,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding RitualeTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxRituale" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxRituale" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -1287,7 +1287,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding LiturgienTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxLiturgien" SelectionChanged="ListBoxTalent_SelectionChanged">
+                                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxLiturgien" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
