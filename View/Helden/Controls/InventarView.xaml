@@ -16,195 +16,20 @@
     ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
-        <!--NahkampfTemplate-->
-        <DataTemplate x:Key="NahkampfwaffeTemplate">
-            <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
-                <Grid>
-                    <Grid Margin="0,0,25,0" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="{Binding EntityNW.Gewicht}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityNW.Name}" TextWrapping="Wrap"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="4" Text="{Binding TP}"  TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="5" Text="{Binding TPKK}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="6" Text="{Binding EntityNW.BF}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="7" Text="{Binding EntityNW.INI}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="8" Text="{Binding WM}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="9" Text="{Binding EntityNW.DK}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <ListBox Grid.Column="10" ItemsSource="{Binding KämpferWaffen}" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
-                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
-                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
-                                                                                  StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
-                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
-                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
-                                                                                  StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{DynamicResource ReadOnlyButtonStyle}">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
-                            </Image.Source>
-                        </Image>
-                    </Button>
-                </Grid>
-            </Border>
+
+        <Style x:Key="header"  TargetType="Border" BasedOn="{StaticResource ControlTitelBorder}">
+            <Setter Property="BorderBrush" Value="#B3996C"/>
+            <Setter Property="BorderThickness" Value="1,1,1,0"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+        </Style>
+
+        <DataTemplate x:Key="removeButton">
+            <Button Padding="0" Width="25" Height="25" Command="{Binding OnRemove}" Style="{DynamicResource ReadOnlyButtonStyle}">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png"/>
+            </Button>
         </DataTemplate>
-        <!--FernkampfTemplate-->
-        <DataTemplate x:Key="FernkampfwaffeTemplate">
-            <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
-                <Grid>
-                    <Grid Margin="0,0,25,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Gewicht}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="3" Text="{Binding TP}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="4" Grid.ColumnSpan="2" Text="{Binding EntityFW.Reichweiten}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="6" Grid.ColumnSpan="2" Text="{Binding EntityFW.TPReichweiten}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="8" Text="{Binding EntityFW.Laden}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <ListBox Grid.Column="9" ItemsSource="{Binding KämpferWaffen}" Background="Transparent" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
-                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
-                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="AT-Wert"
-                                                                                  StartWert="{Binding FernkampfOhneMod}" Wert="{Binding AT}" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
-                            </Image.Source>
-                        </Image>
-                    </Button>
-                </Grid>
-            </Border>
-        </DataTemplate>
-        <!--SchildTemplate-->
-        <DataTemplate x:Key="SchildTemplate">
-            <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
-                <Grid>
-                    <Grid Margin="0,0,25,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="{Binding EntityS.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityS.Name}" TextWrapping="Wrap"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="4" Text="{Binding EntityS.Größe}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="5" Text="{Binding WM}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="6" Text="{Binding EntityS.INI}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="7" Text="{Binding EntityS.BF}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveSchild}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
-                            </Image.Source>
-                        </Image>
-                    </Button>
-                </Grid>
-            </Border>
-        </DataTemplate>
-        <!--RuestungTemplate-->
-        <DataTemplate x:Key="RuestungTemplate">
-            <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
-                <Grid>
-                    <Grid Margin="0,0,25,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="{Binding EntityR.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityR.Name}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="3" Text="{Binding EntityR.RS}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="4" Text="{Binding EntityR.BE}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Grid>
-                    <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveRuestung}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
-                            </Image.Source>
-                        </Image>
-                    </Button>
-                </Grid>
-            </Border>
-        </DataTemplate>
-        <!--SonstigesTemplate-->
-        <DataTemplate x:Key="SonstigesTemplate">
-            <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
-                <Grid>
-                    <Grid Margin="0,0,25,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding EntityHI.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="{Binding EntityI.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityI.Name}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    </Grid>
-                    <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveInventar}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
-                            </Image.Source>
-                        </Image>
-                    </Button>
-                </Grid>
-            </Border>
-        </DataTemplate>
+
         <Style x:Key="ButtonBackground" TargetType="{x:Type Border}">
             <Setter Property="Background">
                 <Setter.Value>
@@ -342,6 +167,7 @@
         <Storyboard x:Key="btnGoRuestungArrowVerticalRotate" RepeatBehavior="Forever"/>
 
     </UserControl.Resources>
+
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderAll">
             <BeginStoryboard x:Name="FilterAllEnter_BeginStoryboard" Storyboard="{StaticResource FilterAllEnter}"/>
@@ -385,7 +211,10 @@
             <BeginStoryboard Storyboard="{StaticResource btnGoRuestungArrowVerticalRotate}"/>
         </EventTrigger>
     </UserControl.Triggers>
+
+
     <Grid x:Name="Content" HorizontalAlignment="Stretch">
+
         <Grid x:Name="Uebersicht" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -537,23 +366,20 @@
                                     </Grid>
                                 </Label>
                             </StackPanel>
+
                             <Grid x:Name="ZoenenRuestungOeffnen" Grid.Column="6">
-                                <Button x:Name="btnZonenOverlay" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ToolTip="Zonenrüstung setzen">
-                                    <Button.Effect>
+                                <ToggleButton x:Name="btnZonenOverlay" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ToolTip="Zonenrüstung setzen">
+                                    <ToggleButton.Effect>
                                         <DropShadowEffect RenderingBias="Quality"/>
-                                    </Button.Effect>
-                                    <Button.ToolTip>
+                                    </ToggleButton.Effect>
+                                    <ToggleButton.ToolTip>
                                         <StackPanel Background="#389E804D">
                                             <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" />
                                             <Grid Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <Grid.Background>
                                                     <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
                                                 </Grid.Background>
-                                                <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz"  >
-                                                    <Image.Source>
-                                                        <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                                                    </Image.Source>
-                                                </Image>
+                                                <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
                                                 <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedHeld.RS[Gesamt]}" />
                                                 <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
                                                 <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
@@ -565,26 +391,44 @@
                                                 <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
                                             </Grid>
                                         </StackPanel>
-                                    </Button.ToolTip>
-                                    <!-- Click="ButtonZonenRsControl_Click"-->
-                                    <Grid>
-                                        <Image Margin="1" Height="50">
-                                            <Image.Source>
-                                                <BitmapImage DecodePixelHeight="50" UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                                            </Image.Source>
-                                        </Image>
-                                    </Grid>
-                                </Button>
+                                    </ToggleButton.ToolTip>
+                                    <Image Margin="1" Height="50" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
+                                </ToggleButton>
                                 <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="(Zonen RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
                                     <Image.Source>
                                         <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
                                     </Image.Source>
                                 </Image>
+                                <Popup x:Name="_rsZonenRsControl" PlacementTarget="{Binding ElementName=btnZonenOverlay}" Placement="Left" IsOpen="{Binding ElementName=btnZonenOverlay, Path=IsChecked}">
+                                    <Border Background="#F27A7A7A">
+                                        <Grid  Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Grid.Background>
+                                                <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                                            </Grid.Background>
+                                            <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
+                                            <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
+                                            <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
+                                            <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" />
+                                            <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" />
+                                            <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" />
+                                            <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" />
+                                            <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" />
+                                            <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
+                                        </Grid>
+                                        <!--<StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" >
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                                    <Button ToolTip="Rüstung entfernen" Command="{Binding OnRemoveRüstung}"/>
+                                                    <Button ToolTip="Rüstung hinzufügen" Command="{Binding OnAddRüstung}"/>
+                                                </StackPanel>
+                                            </StackPanel>-->
+                                    </Border>
+                                </Popup>
                             </Grid>
                         </Grid>
                     </Border>
                 </Grid>
             </Expander>
+
             <Expander Grid.Row="1" Margin="4,0,4,0" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Gegenstand hinzufügen" Style="{DynamicResource TextTitel}"/>
@@ -899,7 +743,7 @@
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Orientation="Horizontal" IsEnabled="False">
-                                            <TextBlock Text="Sonstiges" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                            <!--<TextBlock Text="Sonstiges" Margin="0,0,10,0" VerticalAlignment="Center" />
                                             <ComboBox Height="23"  Width="222" ItemsSource="{Binding InventarListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}" IsEditable="True">
                                                 <ComboBox.InputBindings>
                                                     <KeyBinding Key="Enter"  Command="{Binding OnAddInventar}" />
@@ -911,7 +755,7 @@
                                                         <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                                     </Image.Source>
                                                 </Image>
-                                            </Button>
+                                            </Button>-->
                                             <TextBlock Foreground="Red" Text="HINWEIS: Derzeit können Gegenstände nur über den Basar eingefügt werden." VerticalAlignment="Center" Margin="5" />
                                         </StackPanel>
                                     </Grid>
@@ -919,6 +763,7 @@
                             </TabItem>
                         </TabControl>
                     </Border>
+
                     <Grid x:Name="Gegenstaende_Body" Margin="0" Grid.Row="1">
                         <Border Style="{DynamicResource ControlContentBorder}" Grid.Row="1" BorderThickness="1,0,1,1">
                             <Grid x:Name="InventarAnzeigen">
@@ -927,228 +772,137 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <ScrollViewer VerticalAlignment="Stretch" Name="scrollViewer">
-                                    <Grid Grid.Column="0" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Grid x:Name="NI" Grid.Row="0" Margin="5" Visibility="{Binding IsNahkampfwaffevorhanden}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Border Grid.Row="0" x:Name="NITitel" BorderBrush="#B3996C" BorderThickness="1,1,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlTitelBorder}" Height="25">
-                                                <Grid>
-                                                    <Image Height="25" Width="25">
-                                                        <Image.Source>
-                                                            <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
-                                                        </Image.Source>
-                                                    </Image>
-                                                </Grid>
-                                            </Border>
-                                            <!-- Nahkampf -->
-                                            <Border Grid.Row="1" x:Name="NIHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
-                                                <Grid Margin="0,0,25,0" >
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="45" />
-                                                        <ColumnDefinition Width="65" />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="25" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew." Grid.Column="1" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="2"  />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP" Grid.Column="4" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP/KK" Grid.Column="5" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="BF" Grid.Column="6" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="INI"  Grid.Column="7" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="WM"  Grid.Column="8" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="DK" Grid.Column="9" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT / PA" Grid.Column="10" />
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="2" x:Name="NIList" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <ListBox ItemTemplate="{DynamicResource NahkampfwaffeTemplate}" ItemsSource="{Binding HeldNahkampfWaffeImInventar}" BorderThickness="0" Background="{x:Null}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" 
-                                                         PreviewMouseWheel="DataGrid_PreviewMouseWheel" HorizontalAlignment="Stretch" ScrollViewer.IsDeferredScrollingEnabled="True"/>
-                                            </Border>
-                                        </Grid>
-                                        <Grid Margin="5" x:Name="FI" Visibility="{Binding IsFernkampfwaffevorhanden}" Grid.Row="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Border Grid.Row="0" x:Name="FITitel" BorderBrush="#B3996C" BorderThickness="1,1,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlTitelBorder}" Height="25">
-                                                <Grid>
-                                                    <Image Height="25" Width="25" >
-                                                        <Image.Source>
-                                                            <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/fernkampf.png" />
-                                                        </Image.Source>
-                                                    </Image>
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="1" x:Name="FIHead" Visibility="{Binding IsFernkampfwaffevorhanden}" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
-                                                <Grid Margin="0,0,25,0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="45" />
-                                                        <ColumnDefinition Width="65" />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="25" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew." Grid.Column="1" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP" Grid.Column="3" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Reichweiten" Grid.Column="4" Grid.ColumnSpan="2" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP+" Grid.Column="6" Grid.ColumnSpan="2" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Laden" Grid.Column="8" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="FK" Grid.Column="9" />
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="2" x:Name="FIListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <StackPanel>
-                                                    <ListBox ItemTemplate="{DynamicResource FernkampfwaffeTemplate}" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" 
-                                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ScrollViewer.IsDeferredScrollingEnabled="True"/>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="*: Wundschwelle (KO/2)-2 | **: improvisiert" FontWeight="Bold" FontStyle="Italic"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Grid>
-                                        <Grid x:Name="SI" Grid.Row="2" Margin="5" Visibility="{Binding IsSchildVorhanden}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <!-- Schild -->
-                                            <Border x:Name="SITitel" Grid.Row="0" BorderBrush="#B3996C" BorderThickness="1,1,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlTitelBorder}" Height="25" >
-                                                <Grid >
-                                                    <Image Height="25" Width="25">
-                                                        <Image.Source>
-                                                            <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/schild.png" />
-                                                        </Image.Source>
-                                                    </Image>
-                                                </Grid>
-                                            </Border>
-                                            <Border x:Name="SIHead" Grid.Row="1" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
-                                                <Grid Margin="0,0,25,0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="45" />
-                                                        <ColumnDefinition Width="65" />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="25" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew."  Grid.Column="1" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"  Grid.Column="2" Grid.ColumnSpan="2" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Größe"  Grid.Column="4" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="WM"  Grid.Column="5" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="INI"  Grid.Column="6" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="BF" Grid.Column="7" />
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="2" x:Name="SIListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <ListBox ItemTemplate="{DynamicResource SchildTemplate}" ItemsSource="{Binding HeldSchildImInventar}" BorderThickness="0" Background="Transparent" 
-                                                         PreviewMouseWheel="DataGrid_PreviewMouseWheel" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" HorizontalAlignment="Stretch" ScrollViewer.IsDeferredScrollingEnabled="True"/>
-                                            </Border>
-                                        </Grid>
-                                        <Grid x:Name="RI" Grid.Row="3" Margin="5" Visibility="{Binding IsRuestungVorhanden}" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <!-- Rüstung -->
-                                            <Border Grid.Row="0" x:Name="RITitel" BorderBrush="#B3996C" BorderThickness="1,1,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlTitelBorder}" Height="25">
-                                                <Grid >
-                                                    <Image Height="25" Width="25" >
-                                                        <Image.Source>
-                                                            <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                                                        </Image.Source>
-                                                    </Image>
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="1" x:Name="RIHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
-                                                <Grid Margin="0,0,25,0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="45" />
-                                                        <ColumnDefinition Width="65" />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="25" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew."  Grid.Column="1" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="RS"  Grid.Column="3" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="BE"  Grid.Column="4" />
 
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="2" x:Name="RIListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <ListBox ItemTemplate="{DynamicResource RuestungTemplate}" ItemsSource="{Binding HeldRuestungImInventar}" VerticalAlignment="Top" BorderThickness="0" 
-                                                         PreviewMouseWheel="DataGrid_PreviewMouseWheel" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ScrollViewer.IsDeferredScrollingEnabled="True"/>
-                                            </Border>
-                                        </Grid>
-                                        <Grid x:Name="SO" Grid.Row="4" Margin="5" Visibility="{Binding IsSonstigesVorhanden}" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <!-- Sonstiges -->
-                                            <Border Grid.Row="0" x:Name="SOTitel" BorderBrush="#B3996C" BorderThickness="1,1,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlTitelBorder}" Height="25">
-                                                <Grid >
-                                                    <Image Height="25" Width="25" >
-                                                        <Image.Source>
-                                                            <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
-                                                        </Image.Source>
-                                                    </Image>
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="1" x:Name="SOHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
-                                                <Grid Margin="0,0,25,0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="45" />
-                                                        <ColumnDefinition Width="65" />
-                                                        <ColumnDefinition />
-                                                        <ColumnDefinition Width="25" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anz." Grid.Column="0" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gew."  Grid.Column="1" />
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
-                                                </Grid>
-                                            </Border>
-                                            <Border Grid.Row="2" x:Name="SOListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <ListBox ItemTemplate="{DynamicResource SonstigesTemplate}" ItemsSource="{Binding HeldSonstigesImInventar}" VerticalAlignment="Top" BorderThickness="0" 
-                                                         PreviewMouseWheel="DataGrid_PreviewMouseWheel" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ScrollViewer.IsDeferredScrollingEnabled="True"/>
-                                            </Border>
-                                        </Grid>
-                                    </Grid>
+                                    <StackPanel Orientation="Vertical">
+
+                                        <!-- Nahkampf -->
+                                        <Border Style="{DynamicResource header}">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                                        </Border>
+
+                                        <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
+                                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityNW.Gewicht}"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityNW.Name}"/>
+                                                <DataGridTextColumn Width="70" Header="TP" Binding="{Binding TP}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="60" Header="TP/KK" Binding="{Binding TPKK}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="BF" Binding="{Binding EntityNW.BF}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="INI" Binding="{Binding EntityNW.INI}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="30" Header="WM" Binding="{Binding WM}" IsReadOnly="True"/>
+                                                <DataGridTextColumn Width="40" Header="DK" Binding="{Binding EntityNW.DK}" IsReadOnly="True"/>
+                                                <DataGridTemplateColumn Width="100" Header="AT / PA" IsReadOnly="True">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ItemsControl Grid.Column="10" ItemsSource="{Binding KämpferWaffen}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert" StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
+                                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="12,0,0,0" Height="14" Width="14"/>
+                                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert" StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <!--Fernkampf-->
+                                        <Border Style="{DynamicResource header}">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/fernkampf.png"/>
+                                        </Border>
+
+                                        <DataGrid ItemsSource="{Binding HeldFernkampfwaffeImInventar}" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
+                                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Gewicht}"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
+                                                <DataGridTextColumn Width="70" Header="TP" Binding="{Binding TP}"/>
+                                                <DataGridTextColumn Width="80" Header="Reichweiten" Binding="{Binding EntityFW.Reichweiten}"/>
+                                                <DataGridTextColumn Width="80" Header="TP+" Binding="{Binding EntityFW.TPReichweiten}" />
+                                                <DataGridTextColumn Width="50" Header="Laden" Binding="{Binding EntityFW.Laden}"/>
+                                                <DataGridTemplateColumn Width="50" Header="FK">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <ItemsControl Grid.Column="10" ItemsSource="{Binding KämpferWaffen}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
+                                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="AT-Wert" StartWert="{Binding FernkampfOhneMod}" Wert="{Binding AT}" />
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <!-- TODO: *-Hinweise anzeigen -->
+
+                                        <!-- Schild -->
+                                        <Border Style="{DynamicResource header}">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/schild.png"/>
+                                        </Border>
+
+                                        <DataGrid ItemsSource="{Binding HeldSchildImInventar}" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
+                                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityS.Gewicht}"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityS.Name}"/>
+                                                <DataGridTextColumn Width="50" Header="Größe" Binding="{Binding EntityS.Größe}"/>
+                                                <DataGridTextColumn Width="30" Header="WM" Binding="{Binding WM}"/>
+                                                <DataGridTextColumn Width="30" Header="INI" Binding="{Binding EntityS.INI}"/>
+                                                <DataGridTextColumn Width="30" Header="BF" Binding="{Binding EntityS.BF}"/>
+                                                <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <!-- Rüstung -->
+
+                                        <Border Style="{DynamicResource header}">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
+                                        </Border>
+
+                                        <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
+                                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityR.Gewicht}"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityR.Name}"/>
+                                                <DataGridTextColumn Width="30" Header="RS" Binding="{Binding EntityR.RS}"/>
+                                                <DataGridTextColumn Width="30" Header="BE" Binding="{Binding EntityR.BE}"/>
+                                                <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <!-- Sonstiges -->
+                                        <Border Style="{DynamicResource header}">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
+                                        </Border>
+
+                                        <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
+                                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}"/>
+                                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}"/>
+                                                <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                    </StackPanel>
                                 </ScrollViewer>
                                 <Grid x:Name="Filter" Grid.Column="1">
                                     <StackPanel>
@@ -1156,61 +910,37 @@
                                             <Button.Effect>
                                                 <DropShadowEffect RenderingBias="Quality"/>
                                             </Button.Effect>
-                                            <Image x:Name="imageAll">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/filter.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image x:Name="imageAll" Source="/DSA MeisterGeister;component/Images/Icons/General/filter.png"/>
                                         </Button>
                                         <Button x:Name="borderNahkampf" Width="40" Height="40" ToolTipService.ToolTip="Nahkampfwaffen" Click="brdKlicked">
                                             <Button.Effect>
                                                 <DropShadowEffect RenderingBias="Quality"/>
                                             </Button.Effect>
-                                            <Image x:Name="image" RenderTransformOrigin="0.5,0.5" >
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image x:Name="image" RenderTransformOrigin="0.5,0.5" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
                                         </Button>
                                         <Button x:Name="borderFernkampf" Width="40" Height="40" ToolTipService.ToolTip="Fernkampfwaffen" Click="brdKlicked">
                                             <Button.Effect>
                                                 <DropShadowEffect RenderingBias="Quality"/>
                                             </Button.Effect>
-                                            <Image x:Name="image1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/fernkampf.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image x:Name="image1" Source="/DSA MeisterGeister;component/Images/Icons/fernkampf.png" />
                                         </Button>
                                         <Button x:Name="borderSchild" Width="40" Height="40" ToolTipService.ToolTip="Schild" Click="brdKlicked">
                                             <Button.Effect>
                                                 <DropShadowEffect RenderingBias="Quality"/>
                                             </Button.Effect>
-                                            <Image x:Name="image2">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/schild.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image x:Name="image2" Source="/DSA MeisterGeister;component/Images/Icons/schild.png" />
                                         </Button>
                                         <Button x:Name="borderRuestung" Width="40" Height="40" ToolTipService.ToolTip="Rüstungen" Click="brdKlicked">
                                             <Button.Effect>
                                                 <DropShadowEffect RenderingBias="Quality"/>
                                             </Button.Effect>
-                                            <Image x:Name="image3" Margin="-1,1,1,-1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image x:Name="image3" Margin="-1,1,1,-1" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
                                         </Button>
                                         <Button x:Name="borderSonstiges" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" Click="brdKlicked">
                                             <Button.Effect>
                                                 <DropShadowEffect RenderingBias="Quality"/>
                                             </Button.Effect>
-                                            <Image x:Name="image4">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
-                                                </Image.Source>
-                                            </Image>
+                                            <Image x:Name="image4" Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
                                         </Button>
                                     </StackPanel>
                                 </Grid>
@@ -1220,51 +950,5 @@
                 </Grid>
             </Expander>
         </Grid>
-        <Border x:Name="_rsZonenRsControl" Background="#F27A7A7A" Visibility="Hidden">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="300"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Button x:Name="btnOverlayBack" Grid.Column="1" Margin="50,50,50,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Zonen-RS schließen." Click="btnOverlayBack_Click">
-                        <Image Height="25" >
-                            <Image.Source>
-                                <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
-                            </Image.Source>
-                        </Image>
-                    </Button>
-                    <Grid Grid.Column="1" Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Grid.Background>
-                            <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
-                        </Grid.Background>
-                        <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" >
-                            <Image.Source>
-                                <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                            </Image.Source>
-                        </Image>
-                        <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
-                        <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
-                        <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" />
-                        <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" />
-                        <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" />
-                        <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" />
-                        <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" />
-                        <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
-                    </Grid>
-                    <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" >
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                            <Button ToolTip="Rüstung entfernen" Command="{Binding OnRemoveRüstung}"/>
-                            <Button ToolTip="Rüstung hinzufügen" Command="{Binding OnAddRüstung}"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Border>
     </Grid>
 </UserControl>

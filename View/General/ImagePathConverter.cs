@@ -15,7 +15,7 @@ namespace MeisterGeister.View.General
         {
             string path = (string)value;
 
-            if (path == null)
+            if (String.IsNullOrEmpty(path))
                 return null;
 
             try
