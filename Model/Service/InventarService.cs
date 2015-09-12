@@ -22,30 +22,30 @@ namespace MeisterGeister.Model.Service
         }
         public List<Model.Waffe> WaffeListe
         {
-            get { return Context.Waffe.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).ToList(); }
+            get { return Context.Waffe.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy((w)=>w.Ausrüstung.Name).ToList(); }
         }
 
         public List<Model.Schild> SchildListe
         {
             get
             {
-                return Context.Schild.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).ToList();
+                return Context.Schild.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy((w) => w.Ausrüstung.Name).ToList();
             }
         }
 
         public List<Model.Fernkampfwaffe> FernkampfwaffeListe
         {
-            get { return Context.Fernkampfwaffe.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).ToList(); }
+            get { return Context.Fernkampfwaffe.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy((w) => w.Ausrüstung.Name).ToList(); }
         }
 
         public List<Model.Rüstung> RuestungListe
         {
-            get { return Context.Rüstung.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).ToList(); }
+            get { return Context.Rüstung.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy((w) => w.Ausrüstung.Name).ToList(); }
         }
 
         public List<Model.Munition> MunitionListe
         {
-            get { return Context.Munition.Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).ToList(); }
+            get { return Context.Munition.Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).OrderBy((w) => w.Name).ToList(); }
         }
 
         public List<Model.Trageort> TrageortListe

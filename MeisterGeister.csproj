@@ -577,7 +577,6 @@
     <Compile Include="ViewModel\Beschwörung\DämonenBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\ElementarBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\Element.cs" />
-    <Compile Include="ViewModel\Beschwörung\ElementarWesen.cs" />
     <Compile Include="ViewModel\Beschwörung\GeisterBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\GolemBeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Beschwörung\LoyalitätBeschwörungViewModel.cs" />

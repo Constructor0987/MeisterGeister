@@ -48,8 +48,6 @@ namespace MeisterGeister.View.Helden.Controls {
 
         #endregion
 
-        #region Events
-
         #region --UI
 
         /// <summary>
@@ -84,23 +82,5 @@ namespace MeisterGeister.View.Helden.Controls {
         }
 
         #endregion
-
-        private void btnZonenOverlay_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO DW: CodeBehind entfernen
-            //_rsZonenRsControl.Visibility = Visibility.Visible;
-        }
-
-        #endregion
-
-        private void btnOverlayBack_Click(object sender, RoutedEventArgs e)
-        {
-            //_rsZonenRsControl.Visibility = Visibility.Hidden;
-        }
-
-        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
-        }
     }
 }

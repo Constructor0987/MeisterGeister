@@ -305,5 +305,10 @@ namespace MeisterGeister.View.General
             // Wert zurück in TextBox schreiben, falls Value korrigiert wurde
             (sender as TextBox).Text = Value.ToString();
         }
+
+        public void FocusAndSelect()
+        {
+            _textBoxInt.Focus();
+        }
     }
 }

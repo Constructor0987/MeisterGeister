@@ -3,7 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
         Icon="/DSA MeisterGeister;component/Images/Icons/wuerfelbecher.png"
-        Background="{DynamicResource Background1}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStyle="ToolWindow">
+        Background="{DynamicResource Background1}"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="ToolWindow"
+        Loaded="Window_Loaded">
     <Window.Style>
         <Style>
             <Style.Triggers>
@@ -47,7 +52,7 @@
                         </TextBlock>
                     </Grid>
                 </Button>
-                <ViewGeneral:IntBox Margin="0,0,10,0" MinWidth="65" ToolTip="Ergebnis" Value="{Binding Ergebnis}" ShowButtons="True" Visibility="{Binding MaxiModus, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                <ViewGeneral:IntBox x:Name="input" Margin="0,0,10,0" MinWidth="65" ToolTip="Ergebnis" Value="{Binding Ergebnis}" ShowButtons="True" Visibility="{Binding MaxiModus, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
             </StackPanel>
         </Border>
         <Button Grid.Row="2" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" IsDefault="True" Visibility="{Binding MaxiModus, Converter={StaticResource BooleanToVisibilityConverter1}}" />
