@@ -1642,10 +1642,11 @@ namespace MeisterGeister.Model {
         public int InitiativeWurf {
             get { return _initiativeWurf; }
         }
+
         public int Initiative(bool dialog = false) {
             // TODO ??: Dialog MVVM-konform aufrufen
             if (dialog) {
-                int wurf = View.General.ViewHelper.ShowWürfelDialog(InitiativeZufall, "Iinitiative Würfel-Wurf");
+                int wurf = View.General.ViewHelper.ShowWürfelDialog(InitiativeZufall, "Initiative Würfel-Wurf");
                 if (wurf != 0)
                     _initiativeWurf = wurf;
             } else
@@ -1653,7 +1654,21 @@ namespace MeisterGeister.Model {
             int be = Behinderung;
             if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III")) //WdS 76
                 be = (int)Math.Round(be / 2.0, MidpointRounding.AwayFromZero);
-            return InitiativeBasis - be + InitiativeWurf;
+            
+            return InitiativeBasis - be + InitiativeWurf + InitiativeWaffen;
+        }
+
+        public int InitiativeWaffen
+        {
+            get {
+                //angelegte Waffen und Schilde verrechnen
+                var wini = 0;
+                foreach (var w in Nahkampfwaffen)
+                    wini += w.INI ?? 0;
+                foreach (var w in Schilde)
+                    wini += w.INI;
+                return wini; 
+            }
         }
 
         public int InitiativeMax() {
@@ -1783,8 +1798,8 @@ namespace MeisterGeister.Model {
                 //TODO: Cache?
                 //alle Waffen
                 List<IWaffe> waffen = new List<IWaffe>();
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
                 //TODO: Raufen, Ringen
                 return waffen;
             }
@@ -1795,7 +1810,7 @@ namespace MeisterGeister.Model {
             get
             {
                 List<KämpferNahkampfwaffe> waffen = new List<KämpferNahkampfwaffe>();
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha, true)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha, true)));
                 //TODO: Raufen, Ringen
                 return waffen;
             }
@@ -1806,8 +1821,22 @@ namespace MeisterGeister.Model {
             get
             {
                 List<KämpferFernkampfwaffe> waffen = new List<KämpferFernkampfwaffe>();
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha, true)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha, true)));
                 return waffen;
+            }
+        }
+
+        public IList<KämpferSchild> Schilde
+        {
+            get
+            {
+                List<KämpferSchild> schilde = new List<KämpferSchild>();
+                //TODO KämpferSchild muss an die aktuelle Hauptwaffe herankommen können.
+                schilde.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Schild != null).Select(ha => new KampfLogic.KämpferSchild(ha)));
+                //TODO wenn als Waffe verwendet, dann gar nicht erst als schild erstellen - siehe auch KämpferSchild
+                // wenn schild in haupthand, und kampfstil PW oder SK, dann nicht in die Liste aufnehmen.
+                // infos dafür: Kampfstil und ha.Trageort
+                return schilde;
             }
         }
 
@@ -2009,8 +2038,18 @@ namespace MeisterGeister.Model {
         /// <returns></returns>
         public int BerechneBehinderung() {
             int retVal = 0;
-            foreach (Held_Ausrüstung ruestung in Held_Ausrüstung.Where(ha => ha.Ausrüstung.Rüstung != null)) {
-                retVal += (ruestung.Ausrüstung.Rüstung.BE ?? 0) * (ruestung.Anzahl ?? 0);
+            foreach (Held_Ausrüstung ruestung in Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Rüstung != null)) {
+                var rsname = ruestung.Ausrüstung.Name;
+                if(ruestung.Ausrüstung.BasisAusrüstung != null)
+                    rsname = ruestung.Ausrüstung.BasisAusrüstung;
+                var be = (ruestung.Ausrüstung.Rüstung.BE ?? 0) * (ruestung.Anzahl ?? 0);
+                if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III"))
+                    be -= 2;
+                else if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung II"))
+                    be -= 1;
+                else if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung I", rsname, false))
+                    be -= 1;
+                retVal += Math.Max(be, 0);
             }
             if (E.IsMitUeberlastung) {
                 Behinderung = retVal + Ueberlastung;
@@ -2040,8 +2079,7 @@ namespace MeisterGeister.Model {
             double g = 0.0;
             foreach (Held_Ausrüstung ha in Held_Ausrüstung) {
                 double effGewicht = ha.Trageort.TragkraftFaktor * ha.Ausrüstung.Gewicht * (ha.Anzahl ?? 0);
-                //TODO DW: ha.Angelegt &&  einstweilen nicht relevant, alle items im Inv sind angelegt bis "Trageort" umgesetzt
-                if (ha.Ausrüstung.Rüstung != null)
+                if (ha.Ausrüstung.Rüstung != null && ha.Angelegt)
                     effGewicht /= 2.0;
                 g += effGewicht;
             }
@@ -2063,16 +2101,15 @@ namespace MeisterGeister.Model {
             IRüstungsschutz rs = new RüstungsWerte();
             int einfacherRs = 0;
             foreach (Held_Ausrüstung ha in Held_Ausrüstung.Where(h_a => h_a.Ausrüstung.Rüstung != null)) {
-                //TODO DW: Angelegt wieder aktivieren wenn die UI dies anbietet
-                //if (ha.Angelegt)
-                //{
+                if (ha.Angelegt)
+                {
                 //Hier könnte man noch Rüstungskombinationen beachten (wenn man zu viel Zeit hat)
-                if (zonenRüstung) {
-                    rs = ha.Ausrüstung.Rüstung + rs;
-                } else {
-                    einfacherRs += ha.Ausrüstung.Rüstung.RS ?? 0;
+                    if (zonenRüstung) {
+                        rs = ha.Ausrüstung.Rüstung + rs;
+                    } else {
+                        einfacherRs += ha.Ausrüstung.Rüstung.RS ?? 0;
+                    }
                 }
-                //}
             }
             if (zonenRüstung)
                 RS.SetValues(rs);

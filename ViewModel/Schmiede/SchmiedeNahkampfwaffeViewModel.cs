@@ -236,6 +236,10 @@ namespace MeisterGeister.ViewModel.Schmiede
                 _selectedNahkampfwaffe = value;
                 OnChanged("SelectedNahkampfwaffe");
                 Model.Ausrüstung ausr = _selectedNahkampfwaffe.Ausrüstung.Clone();
+                //Basisausrüstung zuweisen, damit die SF anhand des Namens greifen können.
+                ausr.BasisAusrüstung = ausr.BasisAusrüstung;
+                if (ausr.BasisAusrüstung == null)
+                    ausr.BasisAusrüstung = _selectedNahkampfwaffe.Name;
                 _erstellteNahkampfwaffe = ausr.Waffe;
                 BerechneNahkampfwaffe();
             }

@@ -848,6 +848,7 @@
     <Compile Include="View\General\LiteraturControl.xaml.cs">
       <DependentUpon>LiteraturControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\OpaqueClickableImage.cs" />
     <Compile Include="View\General\ShowSignConverter.cs" />
     <Compile Include="View\General\SolidBrushToColorConverter.cs" />
     <Compile Include="View\General\LoadCachedImageConverter.cs" />
@@ -2117,6 +2118,19 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0104.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0105.sql" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0106.sql" />
+    <Resource Include="Images\Koerperzonen\arml.png" />
+    <Resource Include="Images\Koerperzonen\armr.png" />
+    <Resource Include="Images\Koerperzonen\beinl.png" />
+    <Resource Include="Images\Koerperzonen\beinr.png" />
+    <Resource Include="Images\Koerperzonen\fußl.png" />
+    <Resource Include="Images\Koerperzonen\fußr.png" />
+    <Resource Include="Images\Koerperzonen\ganz.png" />
+    <Resource Include="Images\Koerperzonen\ganz_schwarz.png" />
+    <Resource Include="Images\Koerperzonen\gürtel.png" />
+    <Resource Include="Images\Koerperzonen\handl.png" />
+    <Resource Include="Images\Koerperzonen\handr.png" />
+    <Resource Include="Images\Koerperzonen\oberkörper.png" />
+    <Resource Include="Images\Koerperzonen\rücken.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

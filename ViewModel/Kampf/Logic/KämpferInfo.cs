@@ -357,6 +357,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
         }
 
+        //TODO Kampfstile in Kämpfer verschieben
         private Kampfstil _kampfstil;
         public Kampfstil Kampfstil
         {

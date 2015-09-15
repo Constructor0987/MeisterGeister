@@ -3,10 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
              d:DesignHeight="413" d:DesignWidth="543"
              Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style x:Key="mouseoverStyle" TargetType="Image">
+            <Setter Property="Opacity" Value="0.00001"/>
+            <Style.Triggers>
+                <Trigger Property="Image.IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-            
+        <!--<Image Source="/Images/Koerperzonen/ganz.png"/>-->
+        <ViewGeneral:OpaqueClickableImage Source="/Images/Koerperzonen/ganz_schwarz.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/kopf.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/oberkörper.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/gürtel.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/handl.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/handr.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/armr.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/arml.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/beinl.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/beinr.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/fußr.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/fußl.png"/>
+        <ViewGeneral:OpaqueClickableImage Style="{StaticResource mouseoverStyle}" Source="/Images/Koerperzonen/rücken.png"/>
     </Grid>
 </UserControl>

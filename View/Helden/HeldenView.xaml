@@ -75,6 +75,9 @@
                 <TabItem Header="Inventar / Rüstung" x:Name="_tabItemInventar">
                     <!--<Held:InventarView x:Name="_inventarControl" />-->
                 </TabItem>
+                <TabItem Header="Ausrüstung" >
+                    <Held:AusrüstungView />
+                </TabItem>
             </TabControl>
         </Grid>
         <Grid x:Name="Schreibschutz" Grid.Column="2" Margin="-150,2,5,0" HorizontalAlignment="Right">

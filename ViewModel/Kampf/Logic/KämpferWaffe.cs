@@ -586,4 +586,122 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
     }
 
+    public class KämpferSchild
+    {
+        private Held _held;
+        private Schild _schild;
+
+        public KämpferSchild(Held_Ausrüstung ha)
+        {
+            if (ha.Held == null || ha.Ausrüstung == null || ha.Ausrüstung.Schild == null)
+                throw new ArgumentNullException("Held_Ausrüstung enthält keinen Held oder keinen Schild.");
+            _held = ha.Held;
+            _schild = ha.Ausrüstung.Schild;
+        }
+
+        public KämpferSchild(Held held, Schild schild)
+        {
+            if(held == null || schild == null)
+                throw new ArgumentNullException("Held oder Schild ist null.");
+            _held = held; _schild = schild;
+        }
+
+        public int INI
+        {
+            get
+            {
+                //TODO Kampfstil finden - aber wie? - Kampfstil muss im Kämpfer liegen
+                //Wenn der Kampfstil PW oder Schild ist und der Schild eine Waffe ist und in der Haupthand geführt wird, dann sollte hier 0 zurückgegeben werden, weil er dann als waffe geführt wird.
+                // alternativ gar nicht erst als schild erstellen - finde ich noch besser
+                //return 0;
+                return _schild.INI;
+            }
+        }
+
+        public string WMString
+        {
+            get
+            {
+                return string.Format("{0}/{1}", _schild.WMAT, _schild.WMPA);
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return _schild.Name;
+            }
+        }
+
+        public string Bemerkung
+        {
+            get
+            {
+                return _schild.Bemerkung;
+            }
+        }
+
+        public int ATMod
+        {
+            get
+            {
+                return _schild.WMAT;
+            }
+        }
+
+        public int PAMod
+        {
+            get
+            {
+                var heldpa = _schild.WMPA;
+                //TODO Schildkampf-SFs / Parierwaffen-SFs
+                return heldpa;
+            }
+        }
+
+        public int PA
+        {
+            get
+            {
+                var pa = 0;
+                //TODO hauptwaffe finden - aber wie? - Kampfstil muss im Kämpfer liegen
+                var hauptwaffepa = 0;
+                //Schild
+                //TODO Kampfstil auswerten - aber wie? // && Kampstil == Schildkampf
+                if (_schild.Typ.Contains("S"))
+                {
+                    //PA-Basis + Schild-WM + LH/SK I/SK II (1/3/5) + (hauptwaffe-PA-14)
+                    pa = _held.ParadeBasis;
+                    if (_held.HatSonderfertigkeitUndVoraussetzungen("Schildkampf II"))
+                        pa += 5;
+                    else if (_held.HatSonderfertigkeitUndVoraussetzungen("Schildkampf I"))
+                        pa += 3;
+                    else if (_held.HatSonderfertigkeitUndVoraussetzungen("Linkhand"))
+                        pa += 1;
+                    if (hauptwaffepa >= 21)
+                        pa += 3;
+                    else if (hauptwaffepa >= 18)
+                        pa += 2;
+                    else if (hauptwaffepa >= 15)
+                        pa += 1;
+                }
+                //Parierwaffe
+                else if (_schild.Typ.Contains("P"))  // && Kampstil == Parierwaffe
+                {
+                    pa = hauptwaffepa;
+                    if (_held.HatSonderfertigkeitUndVoraussetzungen("Parierwaffen II"))
+                        pa += 2;
+                    else if (_held.HatSonderfertigkeitUndVoraussetzungen("Parierwaffen I"))
+                        pa += -1;
+                    else if (_held.HatSonderfertigkeitUndVoraussetzungen("Linkhand"))
+                        pa += -4;
+                }
+                pa += PAMod;
+                return pa;
+            }
+        }
+    }
+
+
 }
