@@ -77,4 +77,31 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
+    <Style TargetType="TextBlock" x:Key="material">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="-3">
+                <Setter Property="Text" Value="Besonders unedel"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="-2">
+                <Setter Property="Text" Value="Unedel"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="-1">
+                <Setter Property="Text" Value="Gemindert"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="0">
+                <Setter Property="Text" Value="Rein"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="1">
+                <Setter Property="Text" Value="Konzentriert"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="2">
+                <Setter Property="Text" Value="Edel"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Mods[Material].Value}" Value="3">
+                <Setter Property="Text" Value="Besonders edel"/>
+            </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
 </ResourceDictionary>

@@ -295,7 +295,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
             //Bei der Dämonenbeschwörung muss der Beschwörer die Dienstkosten selbst tragen
             Mods.Remove(MOD_BEFEHL);
             befehl = new BeschwörungsModifikator<int, int>();
-            befehl.GetKontrollMod = () => befehl.Value1;
+            befehl.GetKontrollMod = () => -befehl.Value1;
             befehl.GetKostenMod = () => befehl.Value2;
             Mods.Add(MOD_BEFEHL, befehl);
             befehl.PropertyChanged += (s, e) => bezahlung.Invalidate();

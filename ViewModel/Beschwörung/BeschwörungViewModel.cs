@@ -62,6 +62,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
         protected BeschwörungsModifikator<int> bezahlung;
         protected BeschwörungsModifikator<bool, Qualität> kerzen;
         protected BeschwörungsModifikator<bool, Qualität> kreide;
+        protected BeschwörungsModifikator<int, int> donaria;
+        protected BeschwörungsModifikator<int, int> sonstiges;
 
         private Dictionary<string, BeschwörungsModifikator> mods;
         public Dictionary<string, BeschwörungsModifikator> Mods
@@ -110,8 +112,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
             //Sternenkonstellation wirkt sich voll auf die Anrufung und zu 1/3 auf die Kontrolle aus
             sterne = new BeschwörungsModifikator<int>();
-            sterne.GetAnrufungsMod = () => sterne.Value;
-            sterne.GetKontrollMod = () => div(sterne.Value, 3);
+            sterne.GetAnrufungsMod = () => -sterne.Value;
+            sterne.GetKontrollMod = () => -div(sterne.Value, 3);
             mods.Add(MOD_STERNE, sterne);
 
             //Umstände des Ortes wirken sich voll auf die Anrufung und zu 1/3 auf die Kontrolle aus
@@ -128,7 +130,7 @@ namespace MeisterGeister.ViewModel.Beschwörung
 
             //Der Befehl wirkt sich auf die Kontrolle aus
             befehl = new BeschwörungsModifikator<int>();
-            befehl.GetKontrollMod = () => befehl.Value;
+            befehl.GetKontrollMod = () => -befehl.Value;
             mods.Add(MOD_BEFEHL, befehl);
 
             //Die Befehlsdauer wirkt sich auf die Kontrolle aus
@@ -141,10 +143,16 @@ namespace MeisterGeister.ViewModel.Beschwörung
             bezahlung.GetKontrollMod = () => bezahlung.Value;
 
             //Donaria werden einfach als Mod übernommen
-            mods.Add(MOD_DONARIA, new BeschwörungsModifikator<int, int>());
+            donaria = new BeschwörungsModifikator<int, int>();
+            donaria.GetAnrufungsMod = () => -donaria.Value1;
+            donaria.GetKontrollMod = () => -donaria.Value2;
+            mods.Add(MOD_DONARIA, donaria);
 
             //Sonstiges wird auch einfach übernommen
-            mods.Add(MOD_SONSTIGES, new BeschwörungsModifikator<int, int>());
+            sonstiges = new BeschwörungsModifikator<int, int>();
+            sonstiges.GetAnrufungsMod = () => -sonstiges.Value1;
+            sonstiges.GetKontrollMod = () => -sonstiges.Value2;
+            mods.Add(MOD_SONSTIGES, sonstiges);
 
             //Danach wird am Standardset, je nach Implementierung, noch irgendwas geändert
             addMods();

@@ -397,7 +397,7 @@
         <TextBlock Text="{Binding Mods[Blutmagie].KontrollMod}" Grid.Row="12" Grid.Column="3" Style="{StaticResource mod}"/>
 
         <TextBlock Text="Sternenkonstellation" Grid.Row="13" Style="{StaticResource label}"/>
-        <General:IntBox MinValue="-3" MaxValue="7" Value="{Binding Mods[Sterne].Value}" ShowButtons="True" Grid.Row="13" Grid.Column="1"/>
+        <General:IntBox MinValue="-7" MaxValue="3" Value="{Binding Mods[Sterne].Value}" ShowButtons="True" Grid.Row="13" Grid.Column="1"/>
         <TextBlock Text="{Binding Mods[Sterne].AnrufungsMod}" Grid.Row="13" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding Mods[Sterne].KontrollMod}" Grid.Row="13" Grid.Column="3" Style="{StaticResource mod}"/>
 
@@ -477,7 +477,7 @@
         <TextBlock Text="Donaria" Grid.Row="15" Style="{StaticResource label}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="1">
             <General:IntBox MinValue="-7" MaxValue="+7" Value="{Binding Mods[Donaria].Value1}" ShowButtons="True"/>
-            <General:IntBox MinValue="-2" MaxValue="0" Value="{Binding Mods[Donaria].Value2}" ShowButtons="True"/>
+            <General:IntBox MinValue="0" MaxValue="2" Value="{Binding Mods[Donaria].Value2}" ShowButtons="True"/>
         </StackPanel>
         <TextBlock Text="{Binding Mods[Donaria].AnrufungsMod}" Grid.Row="15" Grid.Column="2" Style="{StaticResource mod}"/>
         <TextBlock Text="{Binding Mods[Donaria].KontrollMod}" Grid.Row="15" Grid.Column="3" Style="{StaticResource mod}"/>
@@ -491,7 +491,7 @@
             <General:LiteraturControl LiteraturAnzeigeArt="NurIcon" Literaturangabe="WdZ 181"/>
         </StackPanel>
         <StackPanel Grid.Row="17" Grid.Column="1" Orientation="Horizontal">
-            <General:IntBox Value="{Binding Mods[Befehl].Value1}" MinValue="-3" MaxValue="+7" ShowButtons="True"/>
+            <General:IntBox Value="{Binding Mods[Befehl].Value1}" MinValue="-7" MaxValue="+3" ShowButtons="True"/>
             <General:IntBox Value="{Binding Mods[Befehl].Value2}" MinValue="0" ShowButtons="True"/>
         </StackPanel>
         <TextBlock Text="{Binding Mods[Befehl].KontrollMod}" Grid.Row="17" Grid.Column="3" Style="{StaticResource mod}"/>

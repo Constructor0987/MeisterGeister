@@ -15,7 +15,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="250"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="600"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical">
