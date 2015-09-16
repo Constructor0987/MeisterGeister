@@ -9,7 +9,7 @@
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style x:Key="mouseoverStyle" TargetType="Image">
-            <Setter Property="Opacity" Value="0.00001"/>
+            <Setter Property="Opacity" Value="0"/>
             <Style.Triggers>
                 <Trigger Property="Image.IsMouseOver" Value="True">
                     <Setter Property="Opacity" Value="1" />

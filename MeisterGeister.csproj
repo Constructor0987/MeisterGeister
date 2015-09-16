@@ -2117,6 +2117,7 @@
     <Resource Include="Images\Icons\Domänen\Namenloser.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0104.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0105.sql" />
+    <Content Include="Daten\Updateskripte\UpdateTo_V0107.sql" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0106.sql" />
     <Resource Include="Images\Koerperzonen\arml.png" />
     <Resource Include="Images\Koerperzonen\armr.png" />
