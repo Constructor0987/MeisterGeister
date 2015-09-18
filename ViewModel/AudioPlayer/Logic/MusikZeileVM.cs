@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Imaging;
+using System.Threading;
 // Eigene Usings
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
@@ -18,7 +19,6 @@ using MeisterGeister.ViewModel.AudioPlayer;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.View.General;
 using MeisterGeister.Logic.Einstellung;
-using System.Threading;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -26,11 +26,16 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     public class MusikZeileVM : Base.ViewModelBase
     {
         #region //---- FELDER ----
+
+        public DispatcherTimer _timerReadAgain = new DispatcherTimer();
+        public DispatcherTimer _timerCheckLaufend = new DispatcherTimer();
         //private bool MusikZeileIsChecked = false;
         private bool InAnderemPfadSuchen = Einstellungen.AudioInAnderemPfadSuchen;
         private MusikZeileModel _model;
         private BackgroundWorker _worker;
         private int _iterations = 50;
+        private int _anzLastScan = 0;
+        private int _anzGefunden = 0;
         private string _output;
         private bool _startEnabled = true;
         private bool _cancelEnabled = false;
@@ -58,8 +63,34 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         public DispatcherTimer wartezeitTimer = new DispatcherTimer();
         public Nullable<int> posObjGruppe;
-        public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = null;
-        public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel aPlayerVM;
+
+        private MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt _grpobj = null;
+        public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj
+        {
+            get { return _grpobj; }
+            set
+            {
+                _grpobj = value;
+                if (value != null)
+                    _timerCheckLaufend.Start();
+                else
+                    _timerCheckLaufend.Stop();
+
+                OnChanged();
+            }
+        }
+
+        private MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel _aPlayerVM = null;
+        public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel aPlayerVM
+        {
+            get { return _aPlayerVM; }
+            set
+            {
+                _aPlayerVM = value;
+                OnChanged();
+            }
+        }
+
 
         //Commands
         private Base.CommandBase _onlbThemeItemAdd;        
@@ -340,7 +371,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public bool WirdAbgespielt
         {
             get { return _wirdAbgespielt; }
-            set { _wirdAbgespielt = value; }
+            set
+            {
+                _wirdAbgespielt = value;
+                if (value)
+                    value = true;
+                OnChanged();
+            }
         }
 
         public List<Guid> NochZuSpielen
@@ -416,6 +453,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             _worker.DoWork += worker_DoWork;
             _worker.ProgressChanged += worker_ProgressChanged;
             _worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+
+            _timerReadAgain.Tick += new EventHandler(_timerReadAgain_Tick);
+            _timerReadAgain.Interval = new TimeSpan(0, 0, 0, 1, 0);
         }
         #endregion
 
@@ -435,8 +475,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
         public void tbtnCheckChecked(object obj)
         {
-            if (!TeilAbspielbarGecheckt)
-                StartProcess();   
+            _timerReadAgain.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            _anzGefunden = 0;
+            _anzLastScan = 0;
 
             MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt inGrpObject = 
                 aPlayerVM._GrpObjecte.Where(t => !t.visuell).FirstOrDefault(t => t.aPlaylist == aPlaylist);
@@ -495,6 +536,17 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     }
             }
             aPlayerVM.ErwPlayerGeräuscheAktiv = true;
+
+            // if (!TeilAbspielbarGecheckt)
+            StartProcess();   
+        }
+
+        private void _timerReadAgain_Tick(object sender, EventArgs e)
+        {
+            if (grpobj.wirdAbgespielt) 
+                StartProcess();
+            _timerReadAgain.Interval += new TimeSpan(0, 0, 0, 2, 0);
+            _timerReadAgain.Stop();
         }
         
         public void wartezeitTimer_Tick(object sender, EventArgs e)
@@ -517,6 +569,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
             if (!grpobj.aPlaylist.Hintergrundmusik && grpobj.aPlaylist.Fading)
                 aPlayerVM.FadingInGeräusch(grpobj);
+            ((DispatcherTimer)sender).Stop();
         }
 
         private Base.CommandBase _ontbtnCheckUnChecked;
@@ -574,8 +627,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 grpobj.totalTimePlylist = -1;
 
                 // Gruppenobject des Geräuschs wieder löschen damit Speicher freigegeben werden kann
-                if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
-                    aPlayerVM._GrpObjecte.Remove(grpobj);
+                // WIRD SCHON IM FADING OUT GEMACHT!
+           //     if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
+           //         aPlayerVM._GrpObjecte.Remove(grpobj);
             }
             aPlayerVM.ErwPlayerGeräuscheAktiv = aPlayerVM.ErwPlayerGeräuscheAktiv;
         }
@@ -767,6 +821,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 {
                     Output = e.Result.ToString() + " von " + Iterations + " gefunden";
                     TeilAbspielbar = true;
+
+                    //Bis 5 mal überprüfen wenn gleiches Scan-Resultat
+                    if (_anzLastScan == (int)e.Result) 
+                        _anzGefunden++;
+                    if (_anzGefunden < 5)
+                        _timerReadAgain.Start();
+                    _anzLastScan = (int)e.Result;
                 }
                 else
                 {
@@ -778,6 +839,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
             StartEnabled = !_worker.IsBusy;
             CancelEnabled = _worker.IsBusy;
+            _worker.Dispose();
         }
 
         // Note: This event fires on the UI thread.

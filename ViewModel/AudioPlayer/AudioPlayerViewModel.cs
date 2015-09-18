@@ -4005,7 +4005,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
           //      mZeileErw.chkbxForceVol.Tag = aplylist;
                 mZeileErw.sldForceVolume.Tag = aplylist;
                 mZeileErw.tboxKategorie.Tag = aplylist.Audio_PlaylistGUID;
-
+                
                 mZeileList.Add(mZeileErw);
             }
             return mZeileList;
@@ -4027,6 +4027,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 mZeile.VM.GroßeAnsicht = PListGroßeAnsicht;
                 mZeile.VM.StdPfad = stdPfad;
                 mZeile.VM.Iterations = aplylist.Audio_Playlist_Titel.Count;
+                
                 mZeileList.Add(mZeile);
             }
             return mZeileList;
@@ -4046,7 +4047,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 mZeileErw.Tag = aplylist.Audio_PlaylistGUID;
                 mZeileErw.VM.aPlaylist = aplylist;
                 mZeileErw.tboxKategorie.Tag = aplylist.Audio_PlaylistGUID;
-                
+
                 mZeileList.Add(mZeileErw);
             }
             return mZeileList;
@@ -5588,7 +5589,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         {
             group newgroup = new group();
             newgroup.grpobj = grpobj;    //force_Volume == null 
-            newgroup.zielProzent = !grpobj.DoForceVolume ? FadingGeräuscheVolProzent : (double)grpobj.force_Volume * 100;
+            newgroup.zielProzent = !grpobj.DoForceVolume ? FadingGeräuscheVolProzent : grpobj.force_Volume == null? 0: (double)grpobj.force_Volume * 100;
             newgroup.startProzent = grpobj.Vol_PlaylistMod != FadingGeräuscheVolProzent ? grpobj.Vol_PlaylistMod : 0;
             newgroup.StartZeit = DateTime.MinValue;
             newgroup.mZeile = ErwPlayerGeräuscheListItemListe.FirstOrDefault(t => (Guid)t.Tag == grpobj.aPlaylist.Audio_PlaylistGUID);
@@ -5749,11 +5750,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 {
                     fadInfo.gruppenOut.Remove(grpToDelete[c]);
 
-                    _GrpObjecte.Remove(grpToDelete[c].grpobj);
+                    if (!grpToDelete[c].grpobj.wirdAbgespielt)
+                        _GrpObjecte.Remove(grpToDelete[c].grpobj);
                 }
 
                 if (fadInfo.gruppenOut.Count == 0)
+                {
                     _timerFadingOutGeräusche.Stop();
+                }
             }
         }
 

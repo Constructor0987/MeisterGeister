@@ -63,7 +63,7 @@
                     </RowDefinition.Style>
                 </RowDefinition>
             </Grid.RowDefinitions>
-
+                        
             <StackPanel Orientation="Horizontal" Grid.RowSpan="2">
                 <ToggleButton Name="tbtnCheck" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Focusable="False" 
                               ToolTip="Geräuscheplayliste abspielen/stoppen"
@@ -84,21 +84,29 @@
                     TargetUpdated="OnTitelNameUpdated" Name="tblkTitel" Padding="4,2,4,0" /> 
             </StackPanel>
             <ProgressBar HorizontalAlignment="Right" Name="pbarSong" Width="100" Value="0" ToolTip="Klicken um von der Liedstelle abzuspielen" Cursor="Hand" Margin="2,1" Visibility="Collapsed" />
-            
-            <TextBlock Name="tblkLänge" Grid.Column="1" Padding="4,2,4,0" HorizontalAlignment="Right" 
-                       Text="{Binding aPlaylist.Länge, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--:--}"
-                       Visibility="{Binding ShowLänge, Converter={StaticResource BooleanToVisibilityConverter1}}">     
-                <!--StringFormat={}{0:hh}:{0:mm}:{0:ss}, -->
-            </TextBlock>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" >
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal"
+                        Visibility="{Binding ShowLänge, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                <Image Source="/Images/Icons/General/audio.png" Width="15" HorizontalAlignment="Left"
+                           Visibility="{Binding WirdAbgespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" />
+            
+                <TextBlock Name="tblkLänge" Grid.Column="1" Padding="4,2,4,0" HorizontalAlignment="Right" 
+                           Text="{Binding aPlaylist.Länge, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--:--}" >     
+                    <!--StringFormat={}{0:hh}:{0:mm}:{0:ss}, -->
+                </TextBlock>
+            </StackPanel>
+            
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="-5,0,5,0" HorizontalAlignment="Right" >
                 <StackPanel.Visibility>
                     <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
                         <Binding Path="GroßeAnsicht" Converter="{StaticResource InvertedBoolenConverter}" />
                         <Binding Path="aPlaylist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter}" />
                     </MultiBinding>
                 </StackPanel.Visibility>
-
+                <Image Source="/Images/Icons/General/audio.png" Width="15" HorizontalAlignment="Left" 
+                           Visibility="{Binding WirdAbgespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" />
+                
                 <CheckBox Content="" VerticalAlignment="Center" FontSize="10" FontStyle="Italic" ToolTip="Manueller Volumen-Regler aktivieren" HorizontalAlignment="Left"
                     IsChecked="{Binding PlaylistDoForce, UpdateSourceTrigger=PropertyChanged}" />
                 <Grid Width="70">
