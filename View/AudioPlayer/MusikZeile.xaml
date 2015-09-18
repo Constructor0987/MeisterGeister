@@ -97,7 +97,7 @@
             </StackPanel>
             
 
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="-5,0,5,0" HorizontalAlignment="Right" >
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="-8,0,5,0" HorizontalAlignment="Right" >
                 <StackPanel.Visibility>
                     <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
                         <Binding Path="GroßeAnsicht" Converter="{StaticResource InvertedBoolenConverter}" />

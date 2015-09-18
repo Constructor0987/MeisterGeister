@@ -434,7 +434,7 @@
 
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Width="12" Margin="-3,3,0,3" HorizontalAlignment="Left" Stretch="Fill"  />
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="-7,9,15,3" HorizontalAlignment="Left" />
-                    
+
                     <CheckBox Grid.Column="5" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"
                               IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}" >
                         <CheckBox.Style>
