@@ -50,31 +50,28 @@ namespace MeisterGeister.View.AudioPlayer
 
             _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
 
-            VM._timerCheckLaufend.Tick += new EventHandler(_timerCheckLaufend_Tick);
-            VM._timerCheckLaufend.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            //VM._timerCheckLaufend.Tick += new EventHandler(_timerCheckLaufend_Tick);
+            //VM._timerCheckLaufend.Interval = new TimeSpan(0, 0, 0, 0, 500);
         }
 
-        public void _timerCheckLaufend_Tick(object sender, EventArgs e)
-        {
-            if (!(VM.aPlayerVM != null && VM.grpobj != null && VM.aPlayerVM._GrpObjecte.Contains(VM.grpobj)))
-                VM.WirdAbgespielt  = false;
-            else
-            {
-                for (int i = 0; i < VM.grpobj._listZeile.Count; i++)
-                {
-                    if (VM.grpobj._listZeile[i]._mplayer != null && 
-                        VM.grpobj._listZeile[i]._mplayer.HasAudio)
-                    {
-                        VM.WirdAbgespielt = true;
-                        return;
-                    }
-                }
-                VM.WirdAbgespielt = false;
-            }
-               // (VM.grpobj._listZeile.Count(t => t.istLaufend) > 0)) ? true : false;
-          //  if (!VM.WirdAbgespielt)
-          //      VM._timerCheckLaufend.Stop();
-        }
+        //public void _timerCheckLaufend_Tick(object sender, EventArgs e)
+        //{
+        //    if (!(VM.aPlayerVM != null && VM.grpobj != null && VM.aPlayerVM._GrpObjecte.Contains(VM.grpobj)))
+        //        VM.Min1SongWirdGespielt = false;
+        //    else
+        //    {
+        //        for (int i = 0; i < VM.grpobj._listZeile.Count; i++)
+        //        {
+        //            if (VM.grpobj._listZeile[i]._mplayer != null && 
+        //                VM.grpobj._listZeile[i]._mplayer.HasAudio)
+        //            {
+        //                VM.Min1SongWirdGespielt = true;
+        //                return;
+        //            }
+        //        }
+        //        VM.Min1SongWirdGespielt = false;
+        //    }
+        //}
 
         #region //---- INSTANZMETHODEN ----
 

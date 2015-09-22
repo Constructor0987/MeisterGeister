@@ -206,6 +206,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
                 OnChanged();
                 OnChanged("PauseMinIncValue");
+                OnChanged("ZeigePauseMin");
             }
         }
         
@@ -222,6 +223,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
                 OnChanged();
                 OnChanged("PauseMaxIncValue");
+                OnChanged("ZeigePauseMax");
             }
         }
 
@@ -290,15 +292,18 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
         public string ZeigeAPlayTitelPause
         {
-            get
-            {
-                return (aPlayTitelPause < 1000 ? aPlayTitelPause + " ms" : aPlayTitelPause < 60000 ?
-                    Math.Round((double)aPlayTitelPause / 1000, 2).ToString() + " sek." :
-                    aPlayTitelPause / 60000 + " min.");
-            }
-        }
-                      
+            get { return PlayerVM.GetZeitText(aPlayTitelPause); }
+        }            
 
+        public string ZeigePauseMin
+        {
+            get { return PlayerVM.GetZeitText(aPlayTitelPauseMin) + Environment.NewLine + "Minimale Pause bei variabeler Pausenzeit"; }
+        }                    
+        public string ZeigePauseMax
+        {
+            get { return PlayerVM.GetZeitText(aPlayTitelPauseMax) + Environment.NewLine + "Maximale Pause bei variabeler Pausenzeit"; }
+        }   
+ 
         private Audio_Playlist _aktKlangPlaylist = null;
         public Audio_Playlist AktKlangPlaylist
         {

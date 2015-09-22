@@ -405,7 +405,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-                        
+        
     </UserControl.Resources>
 
     <Grid>
@@ -452,10 +452,8 @@
                     <Slider Width="22" Maximum="100" Minimum="0" Name="slHotkey" UseLayoutRounding="True" SmallChange="1" LargeChange="10" Orientation="Vertical" Margin="2" 
                             Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"                             
                             MouseWheel="slVolume_MouseWheel" >
-                        <Slider.ToolTip>
-                            <ToolTip>
-                                <TextBlock Text="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
-                            </ToolTip>
+                        <Slider.ToolTip>                            
+                            <TextBlock Text="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />                            
                         </Slider.ToolTip>
                     </Slider>
                 </StackPanel>
@@ -833,13 +831,21 @@
                                     <CheckBox Name="chkPlaylistWartezeitMove" Grid.Column="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,6,1,6" ToolTip="Wartezeit der Playliste automatisch variieren" Grid.RowSpan="2" 
                                         IsChecked="{Binding AktKlangPlaylist.WarteZeitChange}" />
 
-                                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" ToolTip="Minimale Pause bei variabler Pausenzeit (in ms)" 
-                                        Value="{Binding AktKlangPlaylistWarteZeitMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PlaylistWarteZeitMinIncValue}" DecValue="{Binding PlaylistWarteZeitMinIncValue}" MinValue="0" MaxValue="900000" 
-                                        vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                                    
-                                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" ToolTip="Maximale Pause bei variabler Pausenzeit (in ms)" 
-                                        Value="{Binding AktKlangPlaylistWarteZeitMax}" IncValue="{Binding PlaylistWarteZeitMaxIncValue}" DecValue="{Binding PlaylistWarteZeitMaxIncValue}" MinValue="0" MaxValue="900000" 
-                                        vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
+                                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" 
+                                        Value="{Binding AktKlangPlaylistWarteZeitMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PlaylistWarteZeitMinIncValue}" DecValue="{Binding PlaylistWarteZeitMinDecValue}" MinValue="0" MaxValue="900000" 
+                                        vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
+                                        <ViewGeneral:IntBox.ToolTip>
+                                            <TextBlock Text="{Binding TextPlaylistWarteZeitMin}" />
+                                        </ViewGeneral:IntBox.ToolTip>
+                                    </ViewGeneral:IntBox>
+
+                                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" 
+                                        Value="{Binding AktKlangPlaylistWarteZeitMax}" IncValue="{Binding PlaylistWarteZeitMaxIncValue}" DecValue="{Binding PlaylistWarteZeitMaxDecValue}" MinValue="0" MaxValue="900000" 
+                                        vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
+                                        <ViewGeneral:IntBox.ToolTip>
+                                            <TextBlock Text="{Binding TextPlaylistWarteZeitMax}" />
+                                        </ViewGeneral:IntBox.ToolTip>
+                                    </ViewGeneral:IntBox>
                                 </Grid>
                             </StackPanel>
                         </Grid>
@@ -1157,9 +1163,8 @@
                                                       Width="30" Height="30" HorizontalAlignment="Left" Grid.RowSpan="2" ToolTip="Playliste abspielen/pausieren" VerticalAlignment="Top" Background="#00000000" 
                                                       Focusable="False"
                                                       Checked="tbtnKlangPauseX_Checked" 
-                                                      Unchecked="tbtnKlangPauseX_Unchecked" 
-                                                      >
-                                            <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
+                                                      Unchecked="tbtnKlangPauseX_Unchecked" >
+                                            <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />                                                        
                                         </ToggleButton>
                                         <ToggleButton Grid.Column="2" Grid.Row="2" Height="16" Width="17" Focusable="False" VerticalAlignment="Bottom" Margin="1"
                                                 IsChecked="{Binding TitellistAZ}" >
@@ -1196,7 +1201,7 @@
                                         <Label Name="lblTopDauer1" Content="Dauer" Grid.Column="4" Margin="10,3,0,4" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
 
                                         <StackPanel Name="spnlTopGeräuschIcon1" Grid.Column="5" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom" 
-                                                Visibility="{Binding Path=IsChecked, ElementName=1rbIstTopKlangPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                                                Visibility="{Binding Path=IsChecked, ElementName=rbIstTopKlangPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="23" />
@@ -1477,9 +1482,7 @@
                             <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10" 
                                     Value="{Binding BGPlayerVolume}" MouseWheel="slVolume_MouseWheel" >
                                 <Slider.ToolTip>
-                                    <ToolTip>
-                                        <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
-                                    </ToolTip>
+                                    <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
                                 </Slider.ToolTip>
                             </Slider>
                         </Grid>
@@ -1703,9 +1706,7 @@
                                         MouseMove="Slider_MouseMove"
                                         MouseLeave="Slider_MouseLeave">
                                         <Slider.ToolTip>
-                                            <ToolTip>
-                                                <TextBlock Text="{Binding BGPlayerAktPlaylistTitelTeilStart, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}}" />
-                                            </ToolTip>
+                                            <TextBlock Text="{Binding BGPlayerAktPlaylistTitelTeilStart, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}}" />
                                         </Slider.ToolTip>                                        
                                     </Slider>
 
@@ -1716,9 +1717,7 @@
                                         MouseMove="Slider_MouseMove"
                                         MouseLeave="Slider_MouseLeave">
                                         <Slider.ToolTip>
-                                            <ToolTip >
-                                                <TextBlock Text="{Binding BGPlayerAktPlaylistTitelTeilEnde, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}}" />
-                                            </ToolTip>
+                                            <TextBlock Text="{Binding BGPlayerAktPlaylistTitelTeilEnde, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}}" />
                                         </Slider.ToolTip>
                                     </Slider>
                                 </Grid>
@@ -2086,9 +2085,7 @@
                                         Value="{Binding BGPlayerVolume}" 
                                         MouseWheel="slVolume_MouseWheel" >
                                         <Slider.ToolTip>
-                                            <ToolTip>
-                                                <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
-                                            </ToolTip>
+                                            <TextBlock Text="{Binding BGPlayerVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
                                         </Slider.ToolTip>
                                 </Slider>
                                 
@@ -2218,9 +2215,7 @@
                                     MouseWheel="slVolume_MouseWheel" 
                                     Value="{Binding FadingGeräuscheVolProzent }" >
                                     <Slider.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Text="{Binding FadingGeräuscheVolProzent, StringFormat={}{0}% der Playlisten-Lautstärke}" />
-                                        </ToolTip>
+                                        <TextBlock Text="{Binding FadingGeräuscheVolProzent, StringFormat={}{0}% der Playlisten-Lautstärke}" />
                                     </Slider.ToolTip>
                                         
                                     <Slider.Background>
@@ -2275,8 +2270,7 @@
                             <Expander.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                     <Image Source="/Images/Icons/General/speaker.png" Margin="0,2,0,-2" />
-                                    <TextBlock Text="Geräusche-Playlisten" Style="{DynamicResource TextTitel}"
-                                              ToolTip="{Binding _GrpObjecte.Count, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Text="Geräusche-Playlisten" Style="{DynamicResource TextTitel}" />
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">

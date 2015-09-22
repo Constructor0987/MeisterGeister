@@ -33,9 +33,30 @@
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding FileNotExist}" Value="True">
                         <Setter Property="Background" Value="#64FF0000" />
+                        <Setter Property="ToolTip" >
+                            <Setter.Value >
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Datei nicht gefunden. -> {0}\{1}" >
+                                            <Binding Path="aPlayTitel.Audio_Titel.Pfad" />
+                                            <Binding Path="aPlayTitel.Audio_Titel.Datei" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Setter.Value>
+                        </Setter>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding FilePlayable}" Value="false">
                         <Setter Property="Background" Value="#64FFF300" />
+                        <Setter Property="ToolTip" >
+                            <Setter.Value>
+                                <StackPanel>
+                                    <TextBlock Text="Datei kann nicht abgespielt werden." />
+                                    <TextBlock Text="Mögliche Ursache könnte ein ungültiger Name sein." />
+                                    <TextBlock Text="Vermeiden Sie Sonderzeichen( # &amp; ' ! ) im Zusammenhang mit Netzlaufwerken." />
+                                </StackPanel>
+                            </Setter.Value>
+                        </Setter> 
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -260,9 +281,9 @@
 
                     <Slider Grid.Column="1" Margin="6,2,4,1" LargeChange="10" SmallChange="1" Minimum="0" Maximum="100" VerticalAlignment="Center" ToolTipService.ShowDuration="10000"
                         Value="{Binding aPlayTitel.Volume, UpdateSourceTrigger=PropertyChanged}"
-                        MouseWheel="VolumeWert_MouseWheel">
+                        MouseWheel="VolumeWert_MouseWheel" >
                         <Slider.ToolTip>
-                            <TextBlock Text="{Binding aPlayTitel.Volume , StringFormat='\{0\} %'}" />
+                            <TextBlock Text="{Binding aPlayTitel.Volume , StringFormat='\{0\}%'}" />
                         </Slider.ToolTip>
                     </Slider>
                     
@@ -278,11 +299,26 @@
                               Command="{Binding OnVolumeChange}"/>
 
                     <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMin}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
-                        Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" 
-                        vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"/>
+                        Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,1" 
+                        vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
+                        <ViewGeneral:IntBox.ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="{Binding aPlayTitel.VolumeMin , StringFormat='\{0\}%'}" />
+                                <TextBlock Text="Minimale Lautstärke bei variabeler Lautstärke" />
+                            </StackPanel>
+                        </ViewGeneral:IntBox.ToolTip>
+                    </ViewGeneral:IntBox>
+                                        
                     <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
-                        Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" 
-                        vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"/>
+                        Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" 
+                        vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
+                        <ViewGeneral:IntBox.ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="{Binding aPlayTitel.VolumeMax , StringFormat='\{0\}%'}" />
+                                <TextBlock Text="Maximale Lautstärke bei variabeler Lautstärke" />
+                            </StackPanel>
+                        </ViewGeneral:IntBox.ToolTip>
+                    </ViewGeneral:IntBox>
 
                     <Border VerticalAlignment="Bottom" Grid.ColumnSpan="7" BorderBrush="Gray" Margin="0,0,105,24" Height="1" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
 
@@ -300,12 +336,14 @@
                               IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}"
                               Command="{Binding OnPauseChange}"/>
 
-                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" 
+                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,1" 
                             Value="{Binding aPlayTitelPauseMin, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PauseMinIncValue}" DecValue="{Binding PauseMinIncValue}" MinValue="0" MaxValue="900000" 
-                            vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" 
+                            vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"
+                            ToolTip="{Binding ZeigePauseMin, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ViewGeneral:IntBox IncWheel="10" DecWheel="10" ShowButtons="True" Grid.Row="1" Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" 
                             Value="{Binding aPlayTitelPauseMax, UpdateSourceTrigger=PropertyChanged}" IncValue="{Binding PauseMaxIncValue}" DecValue="{Binding PauseMaxIncValue}" MinValue="0" MaxValue="900000" 
-                            vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
+                            vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" 
+                            ToolTip="{Binding ZeigePauseMax, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="6,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
                     <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitelSpeed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="6" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
@@ -434,7 +472,7 @@
 
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Width="12" Margin="-3,3,0,3" HorizontalAlignment="Left" Stretch="Fill"  />
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="-7,9,15,3" HorizontalAlignment="Left" />
-
+                    
                     <CheckBox Grid.Column="5" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"
                               IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}" >
                         <CheckBox.Style>

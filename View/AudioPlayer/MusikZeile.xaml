@@ -20,7 +20,7 @@
     </ListBoxItem.Resources>
 
     <StackPanel Name="spnlMusikZeile" >
-        <StackPanel.Style>
+        <!--<StackPanel.Style>
             <Style TargetType="StackPanel">
                 <Setter Property="Background" Value="{x:Null}" />
                 <Style.Triggers>
@@ -29,7 +29,7 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-        </StackPanel.Style>
+        </StackPanel.Style>-->
         <Grid ToolTip="{Binding Output}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -85,10 +85,26 @@
             </StackPanel>
             <ProgressBar HorizontalAlignment="Right" Name="pbarSong" Width="100" Value="0" ToolTip="Klicken um von der Liedstelle abzuspielen" Cursor="Hand" Margin="2,1" Visibility="Collapsed" />
 
-            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal"
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" 
                         Visibility="{Binding ShowLänge, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                <Image Source="/Images/Icons/General/audio.png" Width="15" HorizontalAlignment="Left"
-                           Visibility="{Binding WirdAbgespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" />
+                <Image Width="16" HorizontalAlignment="Left" >
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Min1SongWirdGespielt}" Value="{x:Null}">
+                                    <Setter Property="Source" Value="{x:Null}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Min1SongWirdGespielt}" Value="False">
+                                    <Setter Property="Source" Value="/Images/Icons/General/pause.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Min1SongWirdGespielt}" Value="True">
+                                    <Setter Property="Source" Value="/Images/Icons/General/speaker.png" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                           <!--Visibility="{Binding Min1SongWirdGespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" />-->
             
                 <TextBlock Name="tblkLänge" Grid.Column="1" Padding="4,2,4,0" HorizontalAlignment="Right" 
                            Text="{Binding aPlaylist.Länge, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--:--}" >     
@@ -97,16 +113,33 @@
             </StackPanel>
             
 
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="-8,0,5,0" HorizontalAlignment="Right" >
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="-15,0,5,0" HorizontalAlignment="Right" >
                 <StackPanel.Visibility>
                     <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
                         <Binding Path="GroßeAnsicht" Converter="{StaticResource InvertedBoolenConverter}" />
                         <Binding Path="aPlaylist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter}" />
                     </MultiBinding>
                 </StackPanel.Visibility>
-                <Image Source="/Images/Icons/General/audio.png" Width="15" HorizontalAlignment="Left" 
-                           Visibility="{Binding WirdAbgespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" />
-                
+                <Image Width="16" HorizontalAlignment="Left" Margin="0,2,0,0" >
+                           <!--Visibility="{Binding Min1SongWirdGespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" >-->
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Min1SongWirdGespielt}" Value="{x:Null}">
+                                    <Setter Property="Source" Value="{x:Null}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Min1SongWirdGespielt}" Value="False">
+                                    <Setter Property="Source" Value="/Images/Icons/General/pause.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Min1SongWirdGespielt}" Value="True">
+                                    <Setter Property="Source" Value="/Images/Icons/General/speaker.png" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>                        
+                    </Image.Style>
+
+                </Image>
+
                 <CheckBox Content="" VerticalAlignment="Center" FontSize="10" FontStyle="Italic" ToolTip="Manueller Volumen-Regler aktivieren" HorizontalAlignment="Left"
                     IsChecked="{Binding PlaylistDoForce, UpdateSourceTrigger=PropertyChanged}" />
                 <Grid Width="70">
