@@ -13,6 +13,18 @@ namespace MeisterGeister.Net
 
     public class Server
     {
+        public static bool AddURLACL(int port)
+        {
+            var pi = new System.Diagnostics.ProcessStartInfo();
+            pi.Verb = "runas";
+            pi.FileName = "netsh";
+            pi.Arguments = String.Format("http add urlacl url=http://+:{0}/ sddl=D:(A;;GX;;;S-1-1-0)", port);
+            pi.UseShellExecute = true;
+            pi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            pi.CreateNoWindow = true;
+            return System.Diagnostics.Process.Start(pi).WaitForExit(10000);
+        }
+
         public enum States { Stopped, Starting, Started, Stopping }
 
         #region Events
@@ -101,20 +113,27 @@ namespace MeisterGeister.Net
         {
             _startupEvent.Set();
             String serverUrl = String.Format("http://+:{0}", port);
-            try
+            bool tryagain = true;
+            while (tryagain)
             {
-                using (WebApp.Start<Starter>(serverUrl))
+                try
                 {
-                    Logger.LogMsgToFile(String.Format("Webserver gestartet an Port {0}", port));
-                    Status = States.Started;
-                    _shutdownEvent.WaitOne();
-                    Logger.LogMsgToFile(String.Format("Beende Webserver an Port {0}", port));
-                    Status = States.Stopping;
+                    using (WebApp.Start<Starter>(serverUrl))
+                    {
+                        Logger.LogMsgToFile(String.Format("Webserver gestartet an Port {0}", port));
+                        Status = States.Started;
+                        _shutdownEvent.WaitOne();
+                        Logger.LogMsgToFile(String.Format("Beende Webserver an Port {0}", port));
+                        Status = States.Stopping;
+                    }
+                    tryagain = false;
                 }
-            }
-            catch (TargetInvocationException)
-            {
-                Logger.LogMsgToFile("Server konnte nicht gestartet werden. Wahrscheinlich ist die URL " + serverUrl +  " durch die Windows UAC gesperrt.");
+                catch (TargetInvocationException)
+                {
+                    Logger.LogMsgToFile("Server konnte nicht gestartet werden. Wahrscheinlich ist die URL " + serverUrl + " durch die Windows UAC gesperrt.");
+                    int p = (int?)port ?? 50132;
+                    tryagain = Server.AddURLACL(p);
+                }
             }
         }
 
