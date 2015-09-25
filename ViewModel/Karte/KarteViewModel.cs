@@ -210,6 +210,21 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
+        private Base.CommandBase onShowSpielerInfo = null;
+        public Base.CommandBase OnShowSpielerInfo
+        {
+            get
+            {
+                if (onShowSpielerInfo == null)
+                    onShowSpielerInfo = new Base.CommandBase(ShowSpielerInfo, null);
+                return onShowSpielerInfo;
+            }
+        }
+        private void ShowSpielerInfo(object sender)
+        {
+            View.SpielerScreen.SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)sender));
+        }
+
         private double zoom = 1;
         public double Zoom
         {

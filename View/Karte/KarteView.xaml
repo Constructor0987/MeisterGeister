@@ -59,6 +59,9 @@
                     <!-- <Button Command="{Binding OnCenterOnHelden}">X</Button> -->
                 </StackPanel>
             </Border>
+            <Button Margin="250,20,0,0" Background="#88C0C0C0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="26" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=MapScrollViewer}" ToolTip="Kartenausschnitt im Spieler-Fenster anzeigen.">
+                <Image Source="/Images/Icons/General/screen.png" />
+            </Button>
             <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         </Grid>
     </Border>
