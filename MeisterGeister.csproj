@@ -553,6 +553,7 @@
     <Compile Include="Net\Server.cs" />
     <Compile Include="Net\Starter.cs" />
     <Compile Include="Net\Web\Downloader.cs" />
+    <Compile Include="Net\Web\DereGlobusModule.cs" />
     <Compile Include="Net\Web\RestModule.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
