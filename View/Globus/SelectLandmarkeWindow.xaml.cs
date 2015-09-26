@@ -41,6 +41,12 @@ namespace MeisterGeister.View.Globus
             }
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            SelectedItemChanged = null;
+            base.OnClosed(e);
+        }
+
         private DgSuche.GlobusControl _globusControl = null;
 
         public MeisterGeister.View.Kalender.KalenderView Kalender { get; set; }
@@ -60,6 +66,16 @@ namespace MeisterGeister.View.Globus
             Close();
         }
 
+        public event EventHandler SelectedItemChanged;
+        private void OnSelectedItemChanged()
+        {
+            if (SelectedItemChanged != null)
+            {
+                var e = new EventArgs();
+                SelectedItemChanged(this, e);
+            }
+        }
+
         private void Landmarke_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IsInitialized && IsLoaded)
@@ -68,6 +84,7 @@ namespace MeisterGeister.View.Globus
                 {
                     Kalender.SetzeStandort(SelectedItem);
                 }
+                OnSelectedItemChanged();
             }
         }
     }

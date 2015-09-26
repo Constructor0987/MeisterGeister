@@ -16,6 +16,7 @@ namespace MeisterGeister.ViewModel.Karte
 {
     public class KarteViewModel : Base.ViewModelBase
     {
+        #region Kartendownload
         public static void DownloadKarten()
         {
             var kartenUrl = "http://meistergeister.org/download/763/";
@@ -45,16 +46,11 @@ namespace MeisterGeister.ViewModel.Karte
             }
             return true;
         }
+        #endregion
 
-        public static List<Logic.Karte> KartenListeErstellen()
-        {
-            var l = new List<Logic.Karte>();
-            var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
-            l.Add(aventurien);
-            return l;
-        }
-
-        public KarteViewModel() : base(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ShowError)
+        #region Konstruktor, Setup und Refresh
+        public KarteViewModel()
+            : base(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ShowError)
         {
             onHeldenPositionSetzen = new CommandBase(HeldenPositionSetzen, null);
             onDereGlobusÖffnen = new CommandBase(DereGlobusÖffnen, null);
@@ -63,6 +59,14 @@ namespace MeisterGeister.ViewModel.Karte
             if (!KartenVorhanden(karten) && Confirm("Karten herunterladen", "Mindestens eine Karte ist nicht installiert.\nSollen die fehlenden Karten von der MeisterGeister-Seite heruntergeladen werden?"))
                 DownloadKarten();
             SelectedKarte = karten[0];
+        }
+
+        public static List<Logic.Karte> KartenListeErstellen()
+        {
+            var l = new List<Logic.Karte>();
+            var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
+            l.Add(aventurien);
+            return l;
         }
 
         bool firstLoad = true;
@@ -83,7 +87,11 @@ namespace MeisterGeister.ViewModel.Karte
         {
 
         }
+        #endregion
 
+        #region Properties
+
+        #region Karten
         private List<Logic.Karte> karten = null;
         public List<Logic.Karte> Karten
         {
@@ -97,7 +105,9 @@ namespace MeisterGeister.ViewModel.Karte
             get { return selectedKarte; }
             set { Set(ref selectedKarte, value); }
         }
+        #endregion
 
+        #region Heldenposition auf der Karte und in Dereglobus-Koordinaten
         private Point heldenPosition = new Point();
         public Point HeldenPosition
         {
@@ -175,7 +185,11 @@ namespace MeisterGeister.ViewModel.Karte
                 HeldenGlobusPosition = heldenGlobusPosition;
             }
         }
+        #endregion
 
+        #endregion
+
+        #region Commands
         private CommandBase onHeldenPositionSetzen;
         public CommandBase OnHeldenPositionSetzen
         {
@@ -225,6 +239,33 @@ namespace MeisterGeister.ViewModel.Karte
             View.SpielerScreen.SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)sender));
         }
 
+        public void CenterOn(Point p)
+        {
+            Zoom = 1;
+            TranslateX = -1 * (p.X - ZoomControlSize.Width / 2);
+            TranslateY = -1 * (p.Y - ZoomControlSize.Height / 2);
+        }
+
+        public void CenterOn(DgSuche.Ortsmarke ort)
+        {
+            var dgp = new Point(ort.Longitude, ort.Latitude);
+            Point p = (Point)dgConverter.Convert(dgp, typeof(Point), null, null);
+            CenterOn(p);
+        }
+
+        private void CenterOnHelden(object obj)
+        {
+            CenterOn(HeldenPosition);
+        }
+
+        private CommandBase onCenterOnHelden;
+        public CommandBase OnCenterOnHelden
+        {
+            get { return onCenterOnHelden; }
+        }
+        #endregion
+
+        #region UI Bindings, wie Zoom und Translate
         private double zoom = 1;
         public double Zoom
         {
@@ -252,19 +293,6 @@ namespace MeisterGeister.ViewModel.Karte
             get { return zoomControlSize; }
             set { Set(ref zoomControlSize, value); }
         }
-
-
-        private void CenterOnHelden(object obj)
-        {
-            Zoom = 1;
-            TranslateX = -1 * (HeldenPosition.X - ZoomControlSize.Width / 2);
-            TranslateY = -1 * (HeldenPosition.Y - ZoomControlSize.Height / 2);
-        }
-
-        private CommandBase onCenterOnHelden;
-        public CommandBase OnCenterOnHelden
-        {
-            get { return onCenterOnHelden; }
-        }
+        #endregion
     }
 }

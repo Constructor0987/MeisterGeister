@@ -54,5 +54,21 @@ namespace MeisterGeister.View.Karte
         {
             UserControl_Loaded(sender, null);
         }
+
+        private void DGSuche_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new MeisterGeister.View.Globus.SelectLandmarkeWindow();
+            win.SelectedItemChanged += DGSuche_SelectedItemChanged;
+            win.Owner = Application.Current.MainWindow;
+            win.Show();
+        }
+
+        private void DGSuche_SelectedItemChanged(object sender, EventArgs e)
+        {
+            var win = sender as MeisterGeister.View.Globus.SelectLandmarkeWindow;
+            if (win == null)
+                return;
+            VM.CenterOn(win.SelectedItem);
+        }
     }
 }

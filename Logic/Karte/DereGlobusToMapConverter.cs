@@ -13,6 +13,10 @@ namespace MeisterGeister.Logic.Karte
     {
         private Point p1, p2, p3, l1, l2, l3;
         private double d1, d2;
+        /// <summary>
+        /// Dient der Umwandlung zwischen Karten- und DereGlobus Koordinaten.
+        /// Es wird eine Affine Transformation mit 3 Stützpunkten verwendet.
+        /// </summary>
         public DereGlobusToMapConverter()
         {
             // Dwurinsand
@@ -29,6 +33,14 @@ namespace MeisterGeister.Logic.Karte
             d2 = (l2.Y - l1.Y) / (p2.Y - p1.Y);
         }
 
+        /// <summary>
+        /// Wandelt einen DereGlobus-Point in einen Karten-Point um.
+        /// </summary>
+        /// <param name="value">Point mit DereGlobus Dezimalgrad (Longitude, Latitude)</param>
+        /// <param name="targetType">typeof(Point)</param>
+        /// <param name="parameter">null</param>
+        /// <param name="culture">null</param>
+        /// <returns></returns>
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Point map = new Point();
@@ -40,6 +52,14 @@ namespace MeisterGeister.Logic.Karte
             return map;
         }
 
+        /// <summary>
+        /// Wandelt einen Karten-Point in einen DereGlobus-Point um.
+        /// </summary>
+        /// <param name="value">Point mit Karten-X und -Y</param>
+        /// <param name="targetType">typeof(Point)</param>
+        /// <param name="parameter">null</param>
+        /// <param name="culture">null</param>
+        /// <returns></returns>
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Point dg = new Point();
