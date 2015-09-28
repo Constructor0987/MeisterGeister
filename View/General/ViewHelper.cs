@@ -388,50 +388,30 @@ namespace MeisterGeister.View.General
             return path;
         }
 
-        public static Image GetImageFromControl(FrameworkElement controlToRender)
+        public static Image GetImageFromControl(Visual controlToRender, double dpiX = 96.0, double dpiY = 96.0)
         {
-            RenderTargetBitmap rtb = new RenderTargetBitmap(
-                (int)controlToRender.ActualWidth,
-                (int)controlToRender.ActualHeight,
-                90, 90,
-                PixelFormats.Default);
-
-            Visual vis = (Visual)controlToRender;
-            rtb.Render(vis);
+            if (controlToRender == null)
+            {
+                return null;
+            }
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(controlToRender);
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)(bounds.Width * dpiX / 96.0),
+                                                            (int)(bounds.Height * dpiY / 96.0),
+                                                            dpiX,
+                                                            dpiY,
+                                                            PixelFormats.Pbgra32);
+            DrawingVisual dv = new DrawingVisual();
+            using (DrawingContext ctx = dv.RenderOpen())
+            {
+                VisualBrush vb = new VisualBrush(controlToRender);
+                ctx.DrawRectangle(vb, null, new Rect(new Point(), bounds.Size));
+            }
+            rtb.Render(dv);
 
             Image img = new Image();
             img.Source = rtb;
-            img.Stretch = Stretch.None;
-            img.Measure(new System.Windows.Size(
-                            (int)controlToRender.ActualWidth,
-                            (int)controlToRender.ActualHeight));
-            System.Windows.Size sizeImage = img.DesiredSize;
-            img.Arrange(new System.Windows.Rect(new System.Windows.Point(0, 0), sizeImage));
 
-            RenderTargetBitmap rtb2 = new RenderTargetBitmap(
-                (int)rtb.Width,
-                (int)rtb.Height,
-                90,
-                90,
-                PixelFormats.Default);
-            rtb2.Render(img);
-
-            PngBitmapEncoder png = new PngBitmapEncoder();
-            png.Frames.Add(BitmapFrame.Create(rtb2));
-
-            Stream ms = new MemoryStream();
-            png.Save(ms);
-
-            ms.Position = 0;
-
-            BitmapImage myBitmapImage = new BitmapImage();
-            myBitmapImage.BeginInit();
-            myBitmapImage.StreamSource = ms;
-            myBitmapImage.EndInit();
-
-            Image imgCon = new Image();
-            imgCon.Source = myBitmapImage;
-            return imgCon;
+            return img;
         }
 
         public static Window ShowBrowser(string url, string title = "")
