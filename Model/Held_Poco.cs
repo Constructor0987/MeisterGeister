@@ -641,6 +641,39 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
+        public virtual ICollection<Audio_HotkeyWesen> Audio_HotkeyWesen
+        {
+            get
+            {
+                if (_audio_HotkeyWesen == null)
+                {
+                    var newCollection = new FixupCollection<Audio_HotkeyWesen>();
+                    newCollection.CollectionChanged += FixupAudio_HotkeyWesen;
+                    _audio_HotkeyWesen = newCollection;
+                }
+                return _audio_HotkeyWesen;
+            }
+            set
+            {
+                if (!ReferenceEquals(_audio_HotkeyWesen, value))
+                {
+                    var previousValue = _audio_HotkeyWesen as FixupCollection<Audio_HotkeyWesen>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAudio_HotkeyWesen;
+                    }
+                    _audio_HotkeyWesen = value;
+                    var newValue = value as FixupCollection<Audio_HotkeyWesen>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAudio_HotkeyWesen;
+                    }
+                }
+            }
+        }
+        private ICollection<Audio_HotkeyWesen> _audio_HotkeyWesen;
+    
+    	[DataMember]
         public virtual ICollection<Held_Modifikator> Held_Modifikator
         {
             get
@@ -940,6 +973,29 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private void FixupAudio_HotkeyWesen(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Audio_HotkeyWesen");
+            if (e.NewItems != null)
+            {
+                foreach (Audio_HotkeyWesen item in e.NewItems)
+                {
+                    item.Held = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Audio_HotkeyWesen item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Held, this))
+                    {
+                        item.Held = null;
+                    }
+                }
+            }
+        }
     
         private void FixupHeld_Modifikator(object sender, NotifyCollectionChangedEventArgs e)
         {

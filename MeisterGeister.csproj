@@ -295,6 +295,10 @@
     <Compile Include="Model\Alchimierezept_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Audio_HotkeyWesen.cs" />
+    <Compile Include="Model\Audio_HotkeyWesen_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Audio_Playlist_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -491,6 +495,7 @@
     <Compile Include="Model\Schild_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\AudioHotkeyWesenService.cs" />
     <Compile Include="Model\Service\PflanzeService.cs" />
     <Compile Include="Model\Service\ZooBotService.cs" />
     <Compile Include="Model\Setting.cs" />
@@ -571,6 +576,7 @@
     <Compile Include="ViewModel\AudioPlayer\Logic\lbiPlaylistIconVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItem.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItemVM.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\ListWesenAuswahlVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\MusikZeileVM.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungsModifikator.cs" />
@@ -726,6 +732,9 @@
     </Compile>
     <Compile Include="View\AudioPlayer\ListboxItemPlaylistIcon.xaml.cs">
       <DependentUpon>ListboxItemPlaylistIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\ListWesenAuswahlView.xaml.cs">
+      <DependentUpon>ListWesenAuswahlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\MusikZeile.xaml.cs">
       <DependentUpon>MusikZeile.xaml</DependentUpon>
@@ -1229,6 +1238,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioPlayer\ListboxItemPlaylistIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\ListWesenAuswahlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

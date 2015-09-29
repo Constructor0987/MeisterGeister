@@ -1,13 +1,12 @@
-﻿<StackPanel  x:Name="btn" x:Class="MeisterGeister.View.AudioPlayer.btnHotkey"
+﻿<UserControl  x:Name="btn" x:Class="MeisterGeister.View.AudioPlayer.btnHotkey"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.AudioPlayer.Logic"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
-    <Button Margin="5,0" Height="25" Width="25" Focusable="False"
-            Content="{Binding tasteChar}"
-            Command="{Binding OnBtn}">
+    <Button Margin="3,0" VerticalAlignment="Stretch" Focusable="False" MinHeight="23" MinWidth="23"
+            Content="{Binding tasteChar}" Command="{Binding OnBtn}" >
         <Button.Style>
             <Style TargetType="Button">
                 <Setter Property="Background" Value="LightGray" />
@@ -28,4 +27,4 @@
             </Style>
         </Button.Style>
     </Button>
-</StackPanel>
+</UserControl>

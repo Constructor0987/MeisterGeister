@@ -1106,26 +1106,57 @@
                                             </StackPanel>
                                         </GroupBox>
 
-                                        <StackPanel Name="spnlTopHotkey1" Orientation="Horizontal" Grid.Column="5" Grid.ColumnSpan="3" Margin="0,1,20,1"
+                                        <StackPanel Name="spnlTopHotkey1" Orientation="Horizontal" Grid.Column="5" Grid.ColumnSpan="4" Margin="0,1,35,1"
                                                     Visibility="{Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" >                                                                                       
                                             
                                             <Label Content="Hotkey" />
-                                            <Button Width="80" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySet1" 
+                                            <Button Width="30" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySet1" 
                                                     Visibility="{Binding IsAuswahlHotkey, Converter={StaticResource BooleanInverseToVisibilityConverter1}}"
                                                     Command="{Binding OnHotkeyBtnDefine}"
                                                     Content="{Binding AktKlangPlaylist.Key, TargetNullValue='nicht definiert'}" />
-                                            <ComboBox Name="cmboxTopHotkey1" Grid.ColumnSpan="4" Width="80" Grid.Column="4" 
+                                            <ComboBox Name="cmboxTopHotkey1" Width="30"
                                                       Visibility="{ Binding IsAuswahlHotkey, Converter={StaticResource BooleanToVisibilityConverter1} }" 
                                                       IsDropDownOpen="{Binding IsAuswahlHotkey}"
                                                                                                           
                                                       DropDownClosed="cmboxTopHotkey_DropDownClosed"                                                       
                                                       ItemsSource="{Binding HotkeysAvailable}" 
                                                       SelectedItem="{Binding AktKlangPlaylist.Key}"/>
+                                            <Button ToolTip="Hotkey einem Wesen zuweisen"                                                
+                                                    Click="btnHotkeyWesenZuweisen_Click" 
+                                                    Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
+                                                <Button.Content>
+                                                    <Grid>
+                                                        <Image Source="/Images/Icons/gegner.png" Margin="0,3,5,0" />
+                                                        <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
+                                                    </Grid>
+                                                </Button.Content>
+                                            </Button>
                                             <Button Name="btnHotkeyEntfernen1" ToolTip="Hotkey entfernen" Margin="0,5"                                                    
                                                     Command="{Binding OnHotkeyEntfernen}" 
-                                                    Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >                                                
+                                                    Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
                                                 <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
+
+                                            
+                                            <!--<StackPanel Orientation="Horizontal" Margin="2,0,0,0" 
+                                                Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
+                                                <Grid>
+                                                    <Image Source="/Images/Icons/gegner.png" Margin="0,3,5,0" />
+                                                    <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
+                                                </Grid>
+                                                <ComboBox Text="leer"
+                                                      IsDropDownOpen="{Binding IsAuswahlHotkey}"
+                                                                                                          
+                                                      DropDownClosed="cmboxTopHotkey_DropDownClosed"                                                       
+                                                      ItemsSource="{Binding WesenListe}" 
+                                                      SelectedItem="{Binding HotkeyFürWesen}"/>
+                                                
+                                                <Button ToolTip="Hotkey entfernen" Margin="0,5"                                                    
+                                                    Command="{Binding OnHotkeyEntfernen}" 
+                                                    Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
+                                                    <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
+                                                </Button>
+                                            </StackPanel>-->
                                         </StackPanel>
 
                                         <GroupBox Name="gboxTopTyp1" Header="Playlisten-Typ" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="58" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Width="100" >
@@ -1297,12 +1328,15 @@
                                             </StackPanel>
                                         </ToggleButton>
 
-                                        <Button Padding="1" Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpen1"  Width="30" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="9" VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" 
+                                        <Button Padding="1" Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpen1"  Width="30" 
+                                                ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="9" 
+                                                VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" 
                                                 Command="{Binding OnTopKlangOpen}" >
                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" />
                                         </Button>
 
-                                        <Button Name="btnKlangUpdateFiles1" Width="30" Height="30" Grid.Column="9" HorizontalAlignment="Left" ToolTipService.ShowDuration="10000" 
+                                        <Button Name="btnKlangUpdateFiles1" Width="30" Height="30" Grid.Column="9" HorizontalAlignment="Left" 
+                                                ToolTipService.ShowDuration="10000" 
                                                 ToolTip="{Binding ChkAnzDateienResult, FallbackValue='Update der Titel im Verzeichnis'}"
                                                 Command="{Binding OnbtnKlangUpdateFiles}" >
                                             <Button.Style>
@@ -1312,7 +1346,6 @@
                                                         <DataTrigger Binding="{Binding ChkAnzDateienResult}" Value="{x:Null}">
                                                             <Setter Property="Visibility" Value="Hidden" />
                                                         </DataTrigger>
-
                                                         <DataTrigger Binding="{Binding ChkAnzDateienVerfügbar}" Value="True">
                                                             <Setter Property="IsEnabled" Value="True" />
                                                         </DataTrigger>

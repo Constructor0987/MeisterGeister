@@ -1128,13 +1128,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             {
                 
                 _hotkeyVolume = value;
-                hotkeyListe.ForEach(t => t.VM.volume = HotkeyVolume);
-                hotkeyListUsed.ForEach(t => t.VM.volume = HotkeyVolume);
-                //hotkeyListe.FindAll(t => t.VM.TitelPlayList.ForEach(delegate() t2 => t2.mp){}
-                //    delegate(t.VM.TitelPlay titelPlay)
-                //{ titelPlay.mp != null).ForEach(ti => ti.VM.volume = HotkeyVolume);
-                //hotkeyListUsed.FindAll(t => t.VM.mp != null).ForEach(ti => ti.VM.volume = HotkeyVolume);
-
+                //hotkeyListe.ForEach(t => t.VM.volume = HotkeyVolume);
+                //hotkeyListUsed.ForEach(t => t.VM.volume = HotkeyVolume);
+                
                 Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", _hotkeyVolume); //(int)Math.Round(
                 OnChanged();
             }
@@ -1702,6 +1698,16 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         #endregion
 
         #region // Listen
+
+
+
+        private bool _hotkeyKämpferLoaded = false;
+        public bool hotkeyKämpferLoaded
+        { 
+            get { return _hotkeyKämpferLoaded; }
+            set { _hotkeyKämpferLoaded = value; }
+        }
+        
         
         private List<boxThemeTheme> _boxThemeThemeHintergrundList;
         public List<boxThemeTheme> boxThemeThemeHintergrundList
@@ -5249,8 +5255,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                 aTitel.Pfad = System.IO.Path.GetDirectoryName(pfadDatei);
                 aTitel.Datei = System.IO.Path.GetFileName(pfadDatei);
-            }
-            
+            }            
             return aTitel;
         }
 
@@ -7347,7 +7352,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 hkey.VM.aPlaylistGuid = aPlaylist.Audio_PlaylistGUID;
                 hkey.VM.taste = (char)aPlaylist.Key[0];
                 hkey.VM.aPlaylist = aPlaylist;
-                hkey.VM.volume = HotkeyVolume;
+                //hkey.VM.volume = HotkeyVolume;
                 lstHotKeyUsed.Add(hkey);
             };
 

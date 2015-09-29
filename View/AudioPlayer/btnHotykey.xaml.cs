@@ -22,7 +22,9 @@ namespace MeisterGeister.View.AudioPlayer
     /// <summary>
     /// Interaktionslogik für btnHotkey.xaml
     /// </summary>
-    public partial class btnHotkey : StackPanel
+        
+
+    public partial class btnHotkey : UserControl
     {
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
@@ -37,8 +39,7 @@ namespace MeisterGeister.View.AudioPlayer
             }
             set { DataContext = value; }
         }
-
-
+                
         public btnHotkey()
         {
             InitializeComponent();

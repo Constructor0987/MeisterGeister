@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using MeisterGeister.View.General;
 using System.Windows.Media;
 using System.Threading;
+using MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -24,23 +25,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     {
         //INotifyPropertyChanged
         #region //---- FELDER ----
-
-        //public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel hkey;
-
-        private double _volume = .5;
+        
+        private double _volume = Einstellungen.GeneralHotkeyVolume;
         public double volume 
         {
-            get {return _volume;}
-            set
-            {
-                _volume = value;
-                TitelPlayList.ForEach(delegate(TitelPlay titelPlay)
-                {
-                    if (titelPlay.mp != null)
-                        titelPlay.mp.Volume = value / 100;
-                });
-                OnChanged();
-            }
+            get { return Einstellungen.GeneralHotkeyVolume; }
         }
 
         private int _taste = -1;
@@ -76,9 +65,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged();
             }
         }
-
-
-
+        
         private List<MediaPlayer> _mpList = new List<MediaPlayer>();
         public List<MediaPlayer> mpList
         {
@@ -147,8 +134,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         private bool checkTitel(Audio_Titel titel)
         {
-            if (//DriveInfo.GetDrives().FirstOrDefault(t => t.Name == titel.Pfad.Substring(0,3)) != null &&
-                !Directory.Exists(titel.Pfad) && !File.Exists(titel.Pfad + "\\" + titel.Datei))
+            if (titel == null) return false;
+            if (!Directory.Exists(titel.Pfad) && !File.Exists(titel.Pfad + "\\" + titel.Datei) && AudioVM != null)
             {
                 titel = AudioVM.setTitelStdPfad(titel);
                 if (File.Exists(titel.Pfad + "\\" + titel.Datei))
@@ -270,10 +257,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-
         #endregion
-
-
     }
-
 }

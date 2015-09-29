@@ -103,6 +103,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Alchimierezept_Setting> _alchimierezept_Setting;
     
+        public ObjectSet<Audio_HotkeyWesen> Audio_HotkeyWesen
+        {
+            get { return _audio_HotkeyWesen  ?? (_audio_HotkeyWesen = CreateObjectSet<Audio_HotkeyWesen>("Audio_HotkeyWesen")); }
+        }
+        private ObjectSet<Audio_HotkeyWesen> _audio_HotkeyWesen;
+    
         public ObjectSet<Audio_Playlist> Audio_Playlist
         {
             get { return _audio_Playlist  ?? (_audio_Playlist = CreateObjectSet<Audio_Playlist>("Audio_Playlist")); }
@@ -516,6 +522,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Alchimierezept;
     		if(typeof(T) == typeof(Alchimierezept_Setting))
     				return (ObjectSet<T>)(Object)Alchimierezept_Setting;
+    		if(typeof(T) == typeof(Audio_HotkeyWesen))
+    				return (ObjectSet<T>)(Object)Audio_HotkeyWesen;
     		if(typeof(T) == typeof(Audio_Playlist))
     				return (ObjectSet<T>)(Object)Audio_Playlist;
     		if(typeof(T) == typeof(Audio_Playlist_Titel))
@@ -665,6 +673,8 @@ namespace MeisterGeister.Model
     				return Alchimierezept;
     		if(t == typeof(Alchimierezept_Setting))
     				return Alchimierezept_Setting;
+    		if(t == typeof(Audio_HotkeyWesen))
+    				return Audio_HotkeyWesen;
     		if(t == typeof(Audio_Playlist))
     				return Audio_Playlist;
     		if(t == typeof(Audio_Playlist_Titel))
