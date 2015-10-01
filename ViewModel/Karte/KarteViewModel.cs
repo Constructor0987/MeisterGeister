@@ -55,6 +55,7 @@ namespace MeisterGeister.ViewModel.Karte
             onHeldenPositionSetzen = new CommandBase(HeldenPositionSetzen, null);
             onDereGlobusÖffnen = new CommandBase(DereGlobusÖffnen, null);
             onCenterOnHelden = new CommandBase(CenterOnHelden, null);
+            onGetGebiete = new CommandBase(GetGebiete, null);
             karten = KartenListeErstellen();
             if (!KartenVorhanden(karten) && Confirm("Karten herunterladen", "Mindestens eine Karte ist nicht installiert.\nSollen die fehlenden Karten von der MeisterGeister-Seite heruntergeladen werden?"))
                 DownloadKarten();
@@ -262,6 +263,29 @@ namespace MeisterGeister.ViewModel.Karte
         public CommandBase OnCenterOnHelden
         {
             get { return onCenterOnHelden; }
+        }
+
+        private CommandBase onGetGebiete;
+        public CommandBase OnGetGebiete
+        {
+            get { return onGetGebiete; }
+        }
+
+        private void GetGebiete(object args)
+        {
+            if (args is Point)
+            {
+                var p = (Point)dgConverter.ConvertBack(args, typeof(Point), null, null); ;
+
+                var gebiete = Global.ContextZooBot.GetGebiete(p, 0.2);
+                if (gebiete != null)
+                {
+                    var s = "Der Punkt liegt in den folgenden Gebieten:";
+                    foreach (var g in gebiete)
+                        s += "\n" + g.Name;
+                    PopUp(s);
+                }
+            }
         }
         #endregion
 

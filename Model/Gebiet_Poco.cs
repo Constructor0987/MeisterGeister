@@ -104,10 +104,91 @@ namespace MeisterGeister.Model
     
         }
         private string _name;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Left
+        {
+            get { return _left; }
+            set
+    		{ 
+    			Set(ref _left, value);
+    		}
+    
+        }
+        private Nullable<double> _left;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Top
+        {
+            get { return _top; }
+            set
+    		{ 
+    			Set(ref _top, value);
+    		}
+    
+        }
+        private Nullable<double> _top;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Right
+        {
+            get { return _right; }
+            set
+    		{ 
+    			Set(ref _right, value);
+    		}
+    
+        }
+        private Nullable<double> _right;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Bot
+        {
+            get { return _bot; }
+            set
+    		{ 
+    			Set(ref _bot, value);
+    		}
+    
+        }
+        private Nullable<double> _bot;
 
         #endregion
 
         #region Navigation Properties
+    
+    	[DataMember]
+        public virtual ICollection<Polygon> Polygon
+        {
+            get
+            {
+                if (_polygon == null)
+                {
+                    var newCollection = new FixupCollection<Polygon>();
+                    newCollection.CollectionChanged += FixupPolygon;
+                    _polygon = newCollection;
+                }
+                return _polygon;
+            }
+            set
+            {
+                if (!ReferenceEquals(_polygon, value))
+                {
+                    var previousValue = _polygon as FixupCollection<Polygon>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupPolygon;
+                    }
+                    _polygon = value;
+                    var newValue = value as FixupCollection<Polygon>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupPolygon;
+                    }
+                }
+            }
+        }
+        private ICollection<Polygon> _polygon;
     
     	[DataMember]
         public virtual ICollection<Pflanze> Pflanze
@@ -145,6 +226,32 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private void FixupPolygon(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Polygon");
+            if (e.NewItems != null)
+            {
+                foreach (Polygon item in e.NewItems)
+                {
+                    if (!item.Gebiet.Contains(this))
+                    {
+                        item.Gebiet.Add(this);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Polygon item in e.OldItems)
+                {
+                    if (item.Gebiet.Contains(this))
+                    {
+                        item.Gebiet.Remove(this);
+                    }
+                }
+            }
+        }
     
         private void FixupPflanze(object sender, NotifyCollectionChangedEventArgs e)
         {

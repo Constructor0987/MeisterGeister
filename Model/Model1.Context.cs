@@ -391,6 +391,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Pflanze_Verbreitung> _pflanze_Verbreitung;
     
+        public ObjectSet<Polygon> Polygon
+        {
+            get { return _polygon  ?? (_polygon = CreateObjectSet<Polygon>("Polygon")); }
+        }
+        private ObjectSet<Polygon> _polygon;
+    
         public ObjectSet<Rasse> Rasse
         {
             get { return _rasse  ?? (_rasse = CreateObjectSet<Rasse>("Rasse")); }
@@ -618,6 +624,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Pflanze_Ernte;
     		if(typeof(T) == typeof(Pflanze_Verbreitung))
     				return (ObjectSet<T>)(Object)Pflanze_Verbreitung;
+    		if(typeof(T) == typeof(Polygon))
+    				return (ObjectSet<T>)(Object)Polygon;
     		if(typeof(T) == typeof(Rasse))
     				return (ObjectSet<T>)(Object)Rasse;
     		if(typeof(T) == typeof(Rasse_Farbe))
@@ -769,6 +777,8 @@ namespace MeisterGeister.Model
     				return Pflanze_Ernte;
     		if(t == typeof(Pflanze_Verbreitung))
     				return Pflanze_Verbreitung;
+    		if(t == typeof(Polygon))
+    				return Polygon;
     		if(t == typeof(Rasse))
     				return Rasse;
     		if(t == typeof(Rasse_Farbe))

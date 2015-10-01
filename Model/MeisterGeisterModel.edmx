@@ -27,6 +27,7 @@
     <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe" store:Type="Tables" />
     <EntitySet Name="Fernkampfwaffe_Talent" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe_Talent" store:Type="Tables" />
     <EntitySet Name="Gebiet" EntityType="DatabaseDSAModel.Store.Gebiet" store:Type="Tables" />
+    <EntitySet Name="Gebiet_Polygon" EntityType="DatabaseDSAModel.Store.Gebiet_Polygon" store:Type="Tables" />
     <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Store.Gegner" store:Type="Tables" />
     <EntitySet Name="Gegner_Modifikator" EntityType="DatabaseDSAModel.Store.Gegner_Modifikator" store:Type="Tables" />
     <EntitySet Name="GegnerBase" EntityType="DatabaseDSAModel.Store.GegnerBase" store:Type="Tables" />
@@ -61,6 +62,7 @@
     <EntitySet Name="Pflanze_Ernte" EntityType="DatabaseDSAModel.Store.Pflanze_Ernte" store:Type="Tables" />
     <EntitySet Name="Pflanze_Gebiet" EntityType="DatabaseDSAModel.Store.Pflanze_Gebiet" store:Type="Tables" />
     <EntitySet Name="Pflanze_Verbreitung" EntityType="DatabaseDSAModel.Store.Pflanze_Verbreitung" store:Type="Tables" />
+    <EntitySet Name="Polygon" EntityType="DatabaseDSAModel.Store.Polygon" store:Type="Tables" />
     <EntitySet Name="Rasse" EntityType="DatabaseDSAModel.Store.Rasse" store:Type="Tables" />
     <EntitySet Name="Rasse_Farbe" EntityType="DatabaseDSAModel.Store.Rasse_Farbe" store:Type="Tables" />
     <EntitySet Name="Rasse_Kultur" EntityType="DatabaseDSAModel.Store.Rasse_Kultur" store:Type="Tables" />
@@ -204,6 +206,14 @@
     <AssociationSet Name="fk_FernkampfwaffeTalent_Waffe" Association="DatabaseDSAModel.Store.fk_FernkampfwaffeTalent_Waffe">
       <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
       <End Role="Fernkampfwaffe_Talent" EntitySet="Fernkampfwaffe_Talent" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Gebiet_Polygon_Gebiet" Association="DatabaseDSAModel.Store.fk_Gebiet_Polygon_Gebiet">
+      <End Role="Gebiet" EntitySet="Gebiet" />
+      <End Role="Gebiet_Polygon" EntitySet="Gebiet_Polygon" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Gebiet_Polygon_Polygon" Association="DatabaseDSAModel.Store.fk_Gebiet_Polygon_Polygon">
+      <End Role="Polygon" EntitySet="Polygon" />
+      <End Role="Gebiet_Polygon" EntitySet="Gebiet_Polygon" />
     </AssociationSet>
     <AssociationSet Name="fk_Gegner_GegnerBase" Association="DatabaseDSAModel.Store.fk_Gegner_GegnerBase">
       <End Role="GegnerBase" EntitySet="GegnerBase" />
@@ -686,6 +696,18 @@
     </Key>
     <Property Name="GebietGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="500" />
+    <Property Name="Left" Type="float" />
+    <Property Name="Top" Type="float" />
+    <Property Name="Right" Type="float" />
+    <Property Name="Bot" Type="float" />
+  </EntityType>
+  <EntityType Name="Gebiet_Polygon">
+    <Key>
+      <PropertyRef Name="GebietGUID" />
+      <PropertyRef Name="PolygonGUID" />
+    </Key>
+    <Property Name="GebietGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PolygonGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="Gegner">
     <Key>
@@ -1209,6 +1231,18 @@
     <Property Name="PflanzeGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="LandschaftGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Verbreitung" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Polygon">
+    <Key>
+      <PropertyRef Name="PolygonGUID" />
+    </Key>
+    <Property Name="PolygonGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="254" />
+    <Property Name="Left" Type="float" />
+    <Property Name="Top" Type="float" />
+    <Property Name="Right" Type="float" />
+    <Property Name="Bot" Type="float" />
+    <Property Name="Data" Type="ntext" />
   </EntityType>
   <EntityType Name="Rasse">
     <Key>
@@ -1909,6 +1943,34 @@
       </Principal>
       <Dependent Role="Fernkampfwaffe_Talent">
         <PropertyRef Name="FernkampfwaffeGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Gebiet_Polygon_Gebiet">
+    <End Role="Gebiet" Type="DatabaseDSAModel.Store.Gebiet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Gebiet_Polygon" Type="DatabaseDSAModel.Store.Gebiet_Polygon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gebiet">
+        <PropertyRef Name="GebietGUID" />
+      </Principal>
+      <Dependent Role="Gebiet_Polygon">
+        <PropertyRef Name="GebietGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Gebiet_Polygon_Polygon">
+    <End Role="Polygon" Type="DatabaseDSAModel.Store.Polygon" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Gebiet_Polygon" Type="DatabaseDSAModel.Store.Gebiet_Polygon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Polygon">
+        <PropertyRef Name="PolygonGUID" />
+      </Principal>
+      <Dependent Role="Gebiet_Polygon">
+        <PropertyRef Name="PolygonGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2686,6 +2748,7 @@
     <EntitySet Name="Pflanze" EntityType="DatabaseDSAModel.Pflanze" />
     <EntitySet Name="Pflanze_Ernte" EntityType="DatabaseDSAModel.Pflanze_Ernte" />
     <EntitySet Name="Pflanze_Verbreitung" EntityType="DatabaseDSAModel.Pflanze_Verbreitung" />
+    <EntitySet Name="Polygon" EntityType="DatabaseDSAModel.Polygon" />
     <EntitySet Name="Rasse" EntityType="DatabaseDSAModel.Rasse" />
     <EntitySet Name="Rasse_Farbe" EntityType="DatabaseDSAModel.Rasse_Farbe" />
     <EntitySet Name="Rasse_Kultur" EntityType="DatabaseDSAModel.Rasse_Kultur" />
@@ -3005,6 +3068,10 @@
       <End Role="Talent" EntitySet="Talent" />
       <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
     </AssociationSet>
+    <AssociationSet Name="Gebiet_Polygon" Association="DatabaseDSAModel.Gebiet_Polygon">
+      <End Role="Gebiet" EntitySet="Gebiet" />
+      <End Role="Polygon" EntitySet="Polygon" />
+    </AssociationSet>
     <AssociationSet Name="Pflanze_Gebiet" Association="DatabaseDSAModel.Pflanze_Gebiet">
       <End Role="Gebiet" EntitySet="Gebiet" />
       <End Role="Pflanze" EntitySet="Pflanze" />
@@ -3311,6 +3378,11 @@
     </Key>
     <Property Name="GebietGUID" Type="Guid" Nullable="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="Left" Type="Double" />
+    <Property Name="Top" Type="Double" />
+    <Property Name="Right" Type="Double" />
+    <Property Name="Bot" Type="Double" />
+    <NavigationProperty Name="Polygon" Relationship="DatabaseDSAModel.Gebiet_Polygon" FromRole="Gebiet" ToRole="Polygon" />
     <NavigationProperty Name="Pflanze" Relationship="DatabaseDSAModel.Pflanze_Gebiet" FromRole="Gebiet" ToRole="Pflanze" />
   </EntityType>
   <EntityType Name="Gegner">
@@ -3894,6 +3966,19 @@
     <Property Name="Verbreitung" Type="Int16" Nullable="false" />
     <NavigationProperty Name="Landschaft" Relationship="DatabaseDSAModel.fk_Pflanze_Verbreitung_LandschaftGUID" FromRole="Pflanze_Verbreitung" ToRole="Landschaft" />
     <NavigationProperty Name="Pflanze" Relationship="DatabaseDSAModel.fk_Pflanze_Verbreitung_PflanzeGUID" FromRole="Pflanze_Verbreitung" ToRole="Pflanze" />
+  </EntityType>
+  <EntityType Name="Polygon">
+    <Key>
+      <PropertyRef Name="PolygonGUID" />
+    </Key>
+    <Property Name="PolygonGUID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="254" Unicode="true" FixedLength="false" />
+    <Property Name="Left" Type="Double" />
+    <Property Name="Top" Type="Double" />
+    <Property Name="Right" Type="Double" />
+    <Property Name="Bot" Type="Double" />
+    <Property Name="Data" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Gebiet" Relationship="DatabaseDSAModel.Gebiet_Polygon" FromRole="Polygon" ToRole="Gebiet" />
   </EntityType>
   <EntityType Name="Rasse">
     <Key>
@@ -5216,6 +5301,10 @@
     <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="*" />
     <End Role="Fernkampfwaffe" Type="DatabaseDSAModel.Fernkampfwaffe" Multiplicity="*" />
   </Association>
+  <Association Name="Gebiet_Polygon">
+    <End Role="Gebiet" Type="DatabaseDSAModel.Gebiet" Multiplicity="*" />
+    <End Role="Polygon" Type="DatabaseDSAModel.Polygon" Multiplicity="*" />
+  </Association>
   <Association Name="Pflanze_Gebiet">
     <End Role="Gebiet" Type="DatabaseDSAModel.Gebiet" Multiplicity="*" />
     <End Role="Pflanze" Type="DatabaseDSAModel.Pflanze" Multiplicity="*" />
@@ -5496,6 +5585,10 @@
         <MappingFragment StoreEntitySet="Gebiet">
           <ScalarProperty Name="GebietGUID" ColumnName="GebietGUID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Left" ColumnName="Left" />
+          <ScalarProperty Name="Top" ColumnName="Top" />
+          <ScalarProperty Name="Right" ColumnName="Right" />
+          <ScalarProperty Name="Bot" ColumnName="Bot" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6029,6 +6122,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Polygon">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Polygon">
+        <MappingFragment StoreEntitySet="Polygon">
+          <ScalarProperty Name="PolygonGUID" ColumnName="PolygonGUID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Left" ColumnName="Left" />
+          <ScalarProperty Name="Top" ColumnName="Top" />
+          <ScalarProperty Name="Right" ColumnName="Right" />
+          <ScalarProperty Name="Bot" ColumnName="Bot" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Rasse">
       <EntityTypeMapping TypeName="DatabaseDSAModel.Rasse">
         <MappingFragment StoreEntitySet="Rasse">
@@ -6335,6 +6441,14 @@
         <ScalarProperty Name="FernkampfwaffeGUID" ColumnName="FernkampfwaffeGUID" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="Gebiet_Polygon" TypeName="DatabaseDSAModel.Gebiet_Polygon" StoreEntitySet="Gebiet_Polygon">
+      <EndProperty Name="Gebiet">
+        <ScalarProperty Name="GebietGUID" ColumnName="GebietGUID" />
+      </EndProperty>
+      <EndProperty Name="Polygon">
+        <ScalarProperty Name="PolygonGUID" ColumnName="PolygonGUID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="Pflanze_Gebiet" TypeName="DatabaseDSAModel.Pflanze_Gebiet" StoreEntitySet="Pflanze_Gebiet">
       <EndProperty Name="Gebiet">
         <ScalarProperty Name="GebietGUID" ColumnName="GebietGUID" />
@@ -6359,7 +6473,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="592de2e447214e0b820a01dadb726872" Name="Diagram1">
+      <Diagram DiagramId="54c4accf1b884fb3948d58ca653fa4da" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="3.125" IsExpanded="true" />
@@ -6380,7 +6494,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="5.25" PointY="44.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="5.75" PointY="68.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="29.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="53.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="53.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="3" PointY="57.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="5.25" PointY="37.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="0.75" PointY="41.75" IsExpanded="true" />
@@ -6403,7 +6517,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="5.25" PointY="47" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="8" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="71.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="74.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="19.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="8.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
@@ -6414,6 +6528,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="52.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="14" PointY="29.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Verbreitung" Width="1.5" PointX="6" PointY="53.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="71.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="5.75" PointY="61.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="8" PointY="63.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="8" PointY="1.625" IsExpanded="true" />
@@ -6508,6 +6623,7 @@
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Playlist" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Gebiet_Polygon" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Pflanze_Gebiet" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" ManuallyRouted="false" />
       </Diagram>

@@ -345,6 +345,7 @@
     <Compile Include="Model\Fernkampfwaffe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Polygon.cs" />
     <Compile Include="Model\Gebiet_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -452,6 +453,7 @@
     <Compile Include="Model\Modifikator_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Gebiet.cs" />
     <Compile Include="Model\Munition.cs" />
     <Compile Include="Model\Munition_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -475,6 +477,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pflanze_Verbreitung_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Polygon_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rasse.cs" />
@@ -2131,8 +2136,9 @@
     <Resource Include="Images\Icons\Domänen\Namenloser.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0104.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0105.sql" />
-    <Content Include="Daten\Updateskripte\UpdateTo_V0107.sql" />
-    <Content Include="Daten\Updateskripte\UpdateTo_V0106.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0108.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0107.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0106.sql" />
     <Resource Include="Images\Koerperzonen\arml.png" />
     <Resource Include="Images\Koerperzonen\armr.png" />
     <Resource Include="Images\Koerperzonen\beinl.png" />
