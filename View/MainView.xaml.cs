@@ -559,6 +559,17 @@ namespace MeisterGeister.View
             if (System.Diagnostics.Debugger.IsAttached == false && Einstellungen.ShowChangeLog)
                 ViewHelper.ShowBrowserChangeLog(true);
 #endif
+
+            // Regeledition prüfen und festlegen
+            if (string.IsNullOrEmpty(Global.Regeledition))
+            {
+                // noch keine Regeledition festgelegt, also abfragen...
+                View.Windows.RegeleditionWindow regWin = new RegeleditionWindow();
+                regWin.Owner = this;
+                regWin.ShowDialog();
+                regWin = null;
+                Application.Current.Shutdown();
+            }
         }
 
         private void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)

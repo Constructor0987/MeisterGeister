@@ -1,0 +1,26 @@
+﻿<Window x:Class="MeisterGeister.View.Windows.RegeleditionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MeisterGeister.View.Windows"
+        xmlns:mg="clr-namespace:MeisterGeister"
+        mc:Ignorable="d"
+        Title="Regeledition" Height="251.408" Width="352.816" ResizeMode="NoResize" Background="{StaticResource Background1}"
+        TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner" Topmost="True">
+    <Grid>
+        <TextBlock Text="Bitte wähle die Regeledition aus, mit der du spielst. Die Auswahl kann später in den Einstellungen geändert werden. Nach der Auswahl wird MeisterGeister beendet und muss neu gestartet werden." Height="64" VerticalAlignment="Top" TextWrapping="Wrap" Margin="19,10,10,0" HorizontalAlignment="Center" />
+        <Button x:Name="buttonDSA5" Margin="66,89,0,0" VerticalAlignment="Top" Height="88" HorizontalAlignment="Left" Width="91" FontSize="18.667" FontWeight="Bold" Click="buttonDSA5_Click">
+            <StackPanel>
+                <TextBlock Text="DSA 5" />
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/ok.png" Height="16" Width="16" ToolTip="derzeit ausgewählt" Visibility="{x:Static mg:Global.DSA5_Visibility}" />
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonDSA4_1" Margin="187,89,0,0" VerticalAlignment="Top" Height="88" FontSize="18.667" FontWeight="Bold" HorizontalAlignment="Left" Width="91" Click="buttonDSA4_1_Click">
+            <StackPanel>
+                <TextBlock Text="DSA 4.1" />
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/ok.png" Height="16" Width="16" ToolTip="derzeit ausgewählt" Visibility="{x:Static mg:Global.DSA4_1_Visibility}" />
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

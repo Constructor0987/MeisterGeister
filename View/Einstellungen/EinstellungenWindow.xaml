@@ -131,12 +131,19 @@
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <StackPanel>
-                            <StackPanel Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
-                                    <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
-                                </Button>
-                                <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
-                            </StackPanel>
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="Regeledition:" VerticalAlignment="Center" Margin="5" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Regeledition}" Margin="5" VerticalAlignment="Center" />
+                                    <Button Content="Regeledition ändern..." Margin="5" Command="{Binding OnSetRegeledition}" />
+                                </StackPanel>
+                                <StackPanel DockPanel.Dock="Right" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
+                                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
+                                    </Button>
+                                    <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
+                                </StackPanel>
+                            </DockPanel>
                             <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding AllgemeinListe}">
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">

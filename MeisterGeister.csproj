@@ -992,6 +992,9 @@
     <Compile Include="View\Reise\WetterView.xaml.cs">
       <DependentUpon>WetterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\RegeleditionWindow.xaml.cs">
+      <DependentUpon>RegeleditionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Würfeln\WürfelDialog.xaml.cs">
       <DependentUpon>WürfelDialog.xaml</DependentUpon>
     </Compile>
@@ -1515,6 +1518,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Reise\WetterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\RegeleditionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

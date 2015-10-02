@@ -14,6 +14,31 @@ namespace MeisterGeister.ViewModel.Settings
 
         #region Property
                 
+        public string Regeledition
+        {
+            get { return Global.Regeledition; }
+            set { Global.Regeledition = value; }
+        }
+
+        private Base.CommandBase _onSetRegeledition = null;
+        public Base.CommandBase OnSetRegeledition
+        {
+            get
+            {
+                if (_onSetRegeledition == null)
+                    _onSetRegeledition = new Base.CommandBase(SetRegeledition, null);
+                return _onSetRegeledition;
+            }
+        }
+
+        private void SetRegeledition(object obj)
+        {
+            View.Windows.RegeleditionWindow regWin = new View.Windows.RegeleditionWindow();
+            regWin.Owner = System.Windows.Application.Current.MainWindow;
+            regWin.ShowDialog();
+            regWin = null;
+            System.Windows.Application.Current.Shutdown();
+        }
 
         public Boolean IsAudioSpieldauerBerechnen
         {

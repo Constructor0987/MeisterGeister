@@ -99,6 +99,54 @@ namespace MeisterGeister
             return INTERN_PWD == pwd;
         }
 
+        public static string Regeledition
+        {
+            get
+            {
+                return Logic.Einstellung.Einstellungen.Regeledition;
+            }
+            set
+            {
+                Logic.Einstellung.Einstellungen.Regeledition = value;
+            }
+        }
+
+        private static bool _dsa5 = false;
+        public static bool DSA5
+        {
+            get
+            {
+                return _dsa5;
+            }
+        }
+
+        private static System.Windows.Visibility _dsa5_Visibility = System.Windows.Visibility.Collapsed;
+        /// <summary>
+        /// Gibt 'Visible' zurück, wenn die Regeledition DSA5 ist, sonst 'Collapsed'.
+        /// </summary>
+        public static System.Windows.Visibility DSA5_Visibility
+        {
+            get { return _dsa5_Visibility; }
+        }
+
+        private static bool _dsa4_1 = false;
+        public static bool DSA4_1
+        {
+            get
+            {
+                return _dsa4_1;
+            }
+        }
+
+        private static System.Windows.Visibility _dsa4_1_Visibility = System.Windows.Visibility.Collapsed;
+        /// <summary>
+        /// Gibt 'Visible' zurück, wenn die Regeledition DSA4.1 ist, sonst 'Collapsed'.
+        /// </summary>
+        public static System.Windows.Visibility DSA4_1_Visibility
+        {
+            get { return _dsa4_1_Visibility; }
+        }
+
         public static bool IsInitialized
         {
             get;
@@ -253,6 +301,13 @@ namespace MeisterGeister
 
             IsInitialized = true;
             Logic.Einstellung.Einstellungen.UpdateEinstellungen();
+
+            // Editionswerte aus Performance-Gründen cachen
+            _dsa5 = Regeledition == "DSA 5";
+            _dsa4_1 = Regeledition == "DSA 4.1";
+            _dsa5_Visibility = DSA5 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            _dsa4_1_Visibility = DSA4_1 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+
             if (Logic.Einstellung.Einstellungen.SelectedHeld != null)
             {
                 Guid heldguid;

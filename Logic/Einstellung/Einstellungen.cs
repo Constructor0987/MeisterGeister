@@ -30,6 +30,7 @@ namespace MeisterGeister.Logic.Einstellung
             {
                 new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Jingle beim Start deaktivieren", Wert = "False" },
                 new Model.Einstellung() { Name = "ShowChangeLog", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "ChangeLog beim Start anzeigen", Wert = "True" },
+                new Model.Einstellung() { Name = "Regeledition", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "Regeledition", Wert = "" },
 
                 new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },               
                 new Model.Einstellung() { Name = "AudioInAnderemPfadSuchen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
@@ -289,6 +290,22 @@ namespace MeisterGeister.Logic.Einstellung
             {
                 SetEinstellung<string>("LastUpdateCheck", value);
                 _lastUpdateCheck = value;
+            }
+        }
+
+        private static string _regeledition = null;
+        public static string Regeledition
+        {
+            get
+            {
+                if (_regeledition == null)
+                    _regeledition = GetEinstellung<string>("Regeledition");
+                return _regeledition;
+            }
+            set
+            {
+                SetEinstellung<string>("Regeledition", value);
+                _regeledition = value;
             }
         }
 
