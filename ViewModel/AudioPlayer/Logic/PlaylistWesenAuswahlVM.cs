@@ -122,7 +122,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             string k = SelectedKategorie;
             if (pl == null || (h == null && g == null) || k == null )
                 return;
-            
+            IWesenPlaylist iwpl = null;
             if(h != null)
             {
                 Held_Audio_Playlist wpl = Global.ContextAudio.New<Held_Audio_Playlist>();
@@ -131,7 +131,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 wpl.HeldGUID = h.HeldGUID;
                 wpl.Held = h;
                 wpl.Kategorie = k;
+                //TODO check ob schon vorhanden
                 h.Held_Audio_Playlist.Add(wpl);
+                iwpl = wpl;
             }
             else if(g !=  null)
             {
@@ -141,8 +143,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 wpl.GegnerBaseGUID = h.HeldGUID;
                 wpl.GegnerBase = g;
                 wpl.Kategorie = k;
+                //TODO check ob schon vorhanden
                 g.GegnerBase_Audio_Playlist.Add(wpl);
+                iwpl = wpl;
             }
+            WesenPlaylistListe.Add(iwpl);
             Global.ContextAudio.Save();
         }
 
