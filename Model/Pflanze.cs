@@ -1,4 +1,5 @@
 ﻿using MeisterGeister.Logic.Kalender.DsaTool;
+using MeisterGeister.Logic.Literatur;
 using MeisterGeister.Model.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using ZooBotLogic = MeisterGeister.ViewModel.ZooBot.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Pflanze 
+    public partial class Pflanze : ILiteratur
     {
         public List<string> GebietsNamen
         {
@@ -77,7 +78,7 @@ namespace MeisterGeister.Model
         
         public List<Pflanze_Verbreitung> VerbreitungsListe
         {
-            get { return this.Pflanze_Verbreitung.Where(t => t.PflanzeGUID == this.PflanzeGUID).ToList(); }
+            get { return this.Pflanze_Verbreitung.ToList(); }
         }
 
         public List<Landschaft> Landschaften

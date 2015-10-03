@@ -52,10 +52,6 @@ namespace MeisterGeister.ViewModel.Karte
         public KarteViewModel()
             : base(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ShowError)
         {
-            onHeldenPositionSetzen = new CommandBase(HeldenPositionSetzen, null);
-            onDereGlobusÖffnen = new CommandBase(DereGlobusÖffnen, null);
-            onCenterOnHelden = new CommandBase(CenterOnHelden, null);
-            onGetGebiete = new CommandBase(GetGebiete, null);
             karten = KartenListeErstellen();
             if (!KartenVorhanden(karten) && Confirm("Karten herunterladen", "Mindestens eine Karte ist nicht installiert.\nSollen die fehlenden Karten von der MeisterGeister-Seite heruntergeladen werden?"))
                 DownloadKarten();
@@ -194,7 +190,11 @@ namespace MeisterGeister.ViewModel.Karte
         private CommandBase onHeldenPositionSetzen;
         public CommandBase OnHeldenPositionSetzen
         {
-            get { return onHeldenPositionSetzen; }
+            get {
+                if(onHeldenPositionSetzen == null)
+                    onHeldenPositionSetzen = new CommandBase(HeldenPositionSetzen, null);
+                return onHeldenPositionSetzen; 
+            }
         }
 
         private void HeldenPositionSetzen(object args)
@@ -213,7 +213,11 @@ namespace MeisterGeister.ViewModel.Karte
         private CommandBase onDereGlobusÖffnen;
         public CommandBase OnDereGlobusÖffnen
         {
-            get { return onDereGlobusÖffnen; }
+            get {
+                if(onDereGlobusÖffnen == null)
+                    onDereGlobusÖffnen = new CommandBase(DereGlobusÖffnen, null);
+                return onDereGlobusÖffnen;
+            }
         }
 
         private void DereGlobusÖffnen(object args)
@@ -262,16 +266,24 @@ namespace MeisterGeister.ViewModel.Karte
         private CommandBase onCenterOnHelden;
         public CommandBase OnCenterOnHelden
         {
-            get { return onCenterOnHelden; }
+            get {
+                if(onCenterOnHelden == null)
+                    onCenterOnHelden = new CommandBase(CenterOnHelden, null);
+                return onCenterOnHelden;
+            }
         }
 
-        private CommandBase onGetGebiete;
-        public CommandBase OnGetGebiete
+        private CommandBase onShowGebiete;
+        public CommandBase OnShowGebiete
         {
-            get { return onGetGebiete; }
+            get {
+                if(onShowGebiete == null)
+                    onShowGebiete = new CommandBase(ShowGebiete, null);
+                return onShowGebiete;
+            }
         }
 
-        private void GetGebiete(object args)
+        private void ShowGebiete(object args)
         {
             if (args is Point)
             {
@@ -285,6 +297,29 @@ namespace MeisterGeister.ViewModel.Karte
                         s += "\n" + g.Name;
                     PopUp(s);
                 }
+            }
+        }
+
+        private CommandBase onShowPflanzen;
+        public CommandBase OnShowPflanzen
+        {
+            get
+            {
+                if (onShowPflanzen == null)
+                    onShowPflanzen = new CommandBase(ShowPflanzen, null);
+                return onShowPflanzen;
+            }
+        }
+
+        private void ShowPflanzen(object args)
+        {
+            if (args is Point)
+            {
+                var p = (Point)dgConverter.ConvertBack(args, typeof(Point), null, null); ;
+                var pvm = new PflanzenAnOrtViewModel(p, 0.2);
+                var pwin = new MeisterGeister.View.Karte.PflanzenAnOrtWindow();
+                pwin.VM = pvm;
+                pwin.ShowDialog();
             }
         }
         #endregion

@@ -44,9 +44,14 @@
                                     <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Was ist hier?" ToolTip="Gebiete anzeigen in denen dieser Punkt liegt" Command="{Binding Path=PlacementTarget.DataContext.OnGetGebiete, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                            <MenuItem Header="Was ist hier?" ToolTip="Gebiete anzeigen in denen dieser Punkt liegt" Command="{Binding Path=PlacementTarget.DataContext.OnShowGebiete, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Icons/General/info.png" Width="25"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Vorhandene Pflanzen" ToolTip="Pflanzen anzeigen die hier zu finden sind" Command="{Binding Path=PlacementTarget.DataContext.OnShowPflanzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                <MenuItem.Icon>
+                                    <Image Source="pack://application:,,,/Images/Icons/pflanzenschriftrolle.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
