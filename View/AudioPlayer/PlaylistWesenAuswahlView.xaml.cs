@@ -77,48 +77,48 @@ namespace MeisterGeister.View.AudioPlayer
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             return;
-            if (((System.Windows.Controls.CheckBox)sender).Tag as Held != null)
-            {
-                Audio_HotkeyWesen aHotWesen = new Audio_HotkeyWesen();
-                aHotWesen.Audio_PListGUID = VM.CurrentPlaylist.Audio_PlaylistGUID;
-                aHotWesen.Held = ((System.Windows.Controls.CheckBox)sender).Tag as Held;
-                aHotWesen.IstHeld = true;
-                aHotWesen.HatPlaylist = true;
-                Global.ContextAudioHotkeyWesen.Insert<Audio_HotkeyWesen>(aHotWesen);
-            }
-            else
-                if (((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase != null)
-                {
-                    Audio_HotkeyWesen aHotWesen = new Audio_HotkeyWesen();
-                    aHotWesen.Audio_PListGUID = VM.CurrentPlaylist.Audio_PlaylistGUID;
-                    aHotWesen.GegnerBase = ((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase;
-                    aHotWesen.IstGegner = true;
-                    aHotWesen.HatPlaylist = true;
-                    Global.ContextAudioHotkeyWesen.Insert<Audio_HotkeyWesen>(aHotWesen);
-                }      
+            //if (((System.Windows.Controls.CheckBox)sender).Tag as Held != null)
+            //{
+            //    Audio_HotkeyWesen aHotWesen = new Audio_HotkeyWesen();
+            //    aHotWesen.Audio_PListGUID = VM.CurrentPlaylist.Audio_PlaylistGUID;
+            //    aHotWesen.Held = ((System.Windows.Controls.CheckBox)sender).Tag as Held;
+            //    aHotWesen.IstHeld = true;
+            //    aHotWesen.HatPlaylist = true;
+            //    Global.ContextAudioHotkeyWesen.Insert<Audio_HotkeyWesen>(aHotWesen);
+            //}
+            //else
+            //    if (((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase != null)
+            //    {
+            //        Audio_HotkeyWesen aHotWesen = new Audio_HotkeyWesen();
+            //        aHotWesen.Audio_PListGUID = VM.CurrentPlaylist.Audio_PlaylistGUID;
+            //        aHotWesen.GegnerBase = ((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase;
+            //        aHotWesen.IstGegner = true;
+            //        aHotWesen.HatPlaylist = true;
+            //        Global.ContextAudioHotkeyWesen.Insert<Audio_HotkeyWesen>(aHotWesen);
+            //    }      
         }
 
         //besser als Command im VM
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             return;
-            if (((System.Windows.Controls.CheckBox)sender).Tag as Held != null)
-            {
-                Audio_HotkeyWesen aHotWesen = Global.ContextAudioHotkeyWesen.PlaylistHotkeyHeldListe
-                    .Where(t => t.HeldGUID == (((System.Windows.Controls.CheckBox)sender).Tag as Held).HeldGUID)
-                    .FirstOrDefault(tt => tt.Audio_PListGUID == VM.CurrentPlaylist.Audio_PlaylistGUID);
+            //if (((System.Windows.Controls.CheckBox)sender).Tag as Held != null)
+            //{
+            //    Audio_HotkeyWesen aHotWesen = Global.ContextAudioHotkeyWesen.PlaylistHotkeyHeldListe
+            //        .Where(t => t.HeldGUID == (((System.Windows.Controls.CheckBox)sender).Tag as Held).HeldGUID)
+            //        .FirstOrDefault(tt => tt.Audio_PListGUID == VM.CurrentPlaylist.Audio_PlaylistGUID);
 
-                Global.ContextAudioHotkeyWesen.Delete(aHotWesen);
-            }
-            else
-                if (((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase != null)
-                {
-                    Audio_HotkeyWesen aHotWesen = Global.ContextAudioHotkeyWesen.PlaylistHotkeyGegnerListe
-                        .Where(t => t.GegnerBaseGUID == (((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase).GegnerBaseGUID)
-                        .FirstOrDefault(tt => tt.Audio_PListGUID == VM.CurrentPlaylist.Audio_PlaylistGUID);
+            //    Global.ContextAudioHotkeyWesen.Delete(aHotWesen);
+            //}
+            //else
+            //    if (((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase != null)
+            //    {
+            //        Audio_HotkeyWesen aHotWesen = Global.ContextAudioHotkeyWesen.PlaylistHotkeyGegnerListe
+            //            .Where(t => t.GegnerBaseGUID == (((System.Windows.Controls.CheckBox)sender).Tag as GegnerBase).GegnerBaseGUID)
+            //            .FirstOrDefault(tt => tt.Audio_PListGUID == VM.CurrentPlaylist.Audio_PlaylistGUID);
 
-                    Global.ContextAudioHotkeyWesen.Delete(aHotWesen);
-                }
+            //        Global.ContextAudioHotkeyWesen.Delete(aHotWesen);
+            //    }
         }
     }
 }

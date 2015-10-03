@@ -542,39 +542,6 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
-        public virtual ICollection<Audio_HotkeyWesen> Audio_HotkeyWesen
-        {
-            get
-            {
-                if (_audio_HotkeyWesen == null)
-                {
-                    var newCollection = new FixupCollection<Audio_HotkeyWesen>();
-                    newCollection.CollectionChanged += FixupAudio_HotkeyWesen;
-                    _audio_HotkeyWesen = newCollection;
-                }
-                return _audio_HotkeyWesen;
-            }
-            set
-            {
-                if (!ReferenceEquals(_audio_HotkeyWesen, value))
-                {
-                    var previousValue = _audio_HotkeyWesen as FixupCollection<Audio_HotkeyWesen>;
-                    if (previousValue != null)
-                    {
-                        previousValue.CollectionChanged -= FixupAudio_HotkeyWesen;
-                    }
-                    _audio_HotkeyWesen = value;
-                    var newValue = value as FixupCollection<Audio_HotkeyWesen>;
-                    if (newValue != null)
-                    {
-                        newValue.CollectionChanged += FixupAudio_HotkeyWesen;
-                    }
-                }
-            }
-        }
-        private ICollection<Audio_HotkeyWesen> _audio_HotkeyWesen;
-    
-    	[DataMember]
         public virtual Beschwörbares Beschwörbares
         {
             get { return _beschwörbares; }
@@ -622,6 +589,39 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Gegner> _gegner;
+    
+    	[DataMember]
+        public virtual ICollection<GegnerBase_Audio_Playlist> GegnerBase_Audio_Playlist
+        {
+            get
+            {
+                if (_gegnerBase_Audio_Playlist == null)
+                {
+                    var newCollection = new FixupCollection<GegnerBase_Audio_Playlist>();
+                    newCollection.CollectionChanged += FixupGegnerBase_Audio_Playlist;
+                    _gegnerBase_Audio_Playlist = newCollection;
+                }
+                return _gegnerBase_Audio_Playlist;
+            }
+            set
+            {
+                if (!ReferenceEquals(_gegnerBase_Audio_Playlist, value))
+                {
+                    var previousValue = _gegnerBase_Audio_Playlist as FixupCollection<GegnerBase_Audio_Playlist>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupGegnerBase_Audio_Playlist;
+                    }
+                    _gegnerBase_Audio_Playlist = value;
+                    var newValue = value as FixupCollection<GegnerBase_Audio_Playlist>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupGegnerBase_Audio_Playlist;
+                    }
+                }
+            }
+        }
+        private ICollection<GegnerBase_Audio_Playlist> _gegnerBase_Audio_Playlist;
     
     	[DataMember]
         public virtual ICollection<GegnerBase_Angriff> GegnerBase_Angriff
@@ -707,29 +707,6 @@ namespace MeisterGeister.Model
             }
         }
     
-        private void FixupAudio_HotkeyWesen(object sender, NotifyCollectionChangedEventArgs e)
-        {
-    		OnChanged("Audio_HotkeyWesen");
-            if (e.NewItems != null)
-            {
-                foreach (Audio_HotkeyWesen item in e.NewItems)
-                {
-                    item.GegnerBase = this;
-                }
-            }
-    
-            if (e.OldItems != null)
-            {
-                foreach (Audio_HotkeyWesen item in e.OldItems)
-                {
-                    if (ReferenceEquals(item.GegnerBase, this))
-                    {
-                        item.GegnerBase = null;
-                    }
-                }
-            }
-        }
-    
         private void FixupGegner(object sender, NotifyCollectionChangedEventArgs e)
         {
     		OnChanged("Gegner");
@@ -744,6 +721,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Gegner item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.GegnerBase, this))
+                    {
+                        item.GegnerBase = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupGegnerBase_Audio_Playlist(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("GegnerBase_Audio_Playlist");
+            if (e.NewItems != null)
+            {
+                foreach (GegnerBase_Audio_Playlist item in e.NewItems)
+                {
+                    item.GegnerBase = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (GegnerBase_Audio_Playlist item in e.OldItems)
                 {
                     if (ReferenceEquals(item.GegnerBase, this))
                     {

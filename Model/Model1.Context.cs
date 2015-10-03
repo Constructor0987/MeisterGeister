@@ -103,12 +103,6 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Alchimierezept_Setting> _alchimierezept_Setting;
     
-        public ObjectSet<Audio_HotkeyWesen> Audio_HotkeyWesen
-        {
-            get { return _audio_HotkeyWesen  ?? (_audio_HotkeyWesen = CreateObjectSet<Audio_HotkeyWesen>("Audio_HotkeyWesen")); }
-        }
-        private ObjectSet<Audio_HotkeyWesen> _audio_HotkeyWesen;
-    
         public ObjectSet<Audio_Playlist> Audio_Playlist
         {
             get { return _audio_Playlist  ?? (_audio_Playlist = CreateObjectSet<Audio_Playlist>("Audio_Playlist")); }
@@ -217,6 +211,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<GegnerBase_Angriff> _gegnerBase_Angriff;
     
+        public ObjectSet<GegnerBase_Audio_Playlist> GegnerBase_Audio_Playlist
+        {
+            get { return _gegnerBase_Audio_Playlist  ?? (_gegnerBase_Audio_Playlist = CreateObjectSet<GegnerBase_Audio_Playlist>("GegnerBase_Audio_Playlist")); }
+        }
+        private ObjectSet<GegnerBase_Audio_Playlist> _gegnerBase_Audio_Playlist;
+    
         public ObjectSet<GegnerBase_Kampfregel> GegnerBase_Kampfregel
         {
             get { return _gegnerBase_Kampfregel  ?? (_gegnerBase_Kampfregel = CreateObjectSet<GegnerBase_Kampfregel>("GegnerBase_Kampfregel")); }
@@ -240,6 +240,12 @@ namespace MeisterGeister.Model
             get { return _held  ?? (_held = CreateObjectSet<Held>("Held")); }
         }
         private ObjectSet<Held> _held;
+    
+        public ObjectSet<Held_Audio_Playlist> Held_Audio_Playlist
+        {
+            get { return _held_Audio_Playlist  ?? (_held_Audio_Playlist = CreateObjectSet<Held_Audio_Playlist>("Held_Audio_Playlist")); }
+        }
+        private ObjectSet<Held_Audio_Playlist> _held_Audio_Playlist;
     
         public ObjectSet<Held_Ausrüstung> Held_Ausrüstung
         {
@@ -528,8 +534,6 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Alchimierezept;
     		if(typeof(T) == typeof(Alchimierezept_Setting))
     				return (ObjectSet<T>)(Object)Alchimierezept_Setting;
-    		if(typeof(T) == typeof(Audio_HotkeyWesen))
-    				return (ObjectSet<T>)(Object)Audio_HotkeyWesen;
     		if(typeof(T) == typeof(Audio_Playlist))
     				return (ObjectSet<T>)(Object)Audio_Playlist;
     		if(typeof(T) == typeof(Audio_Playlist_Titel))
@@ -566,6 +570,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)GegnerBase;
     		if(typeof(T) == typeof(GegnerBase_Angriff))
     				return (ObjectSet<T>)(Object)GegnerBase_Angriff;
+    		if(typeof(T) == typeof(GegnerBase_Audio_Playlist))
+    				return (ObjectSet<T>)(Object)GegnerBase_Audio_Playlist;
     		if(typeof(T) == typeof(GegnerBase_Kampfregel))
     				return (ObjectSet<T>)(Object)GegnerBase_Kampfregel;
     		if(typeof(T) == typeof(Handelsgut))
@@ -574,6 +580,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Handelsgut_Setting;
     		if(typeof(T) == typeof(Held))
     				return (ObjectSet<T>)(Object)Held;
+    		if(typeof(T) == typeof(Held_Audio_Playlist))
+    				return (ObjectSet<T>)(Object)Held_Audio_Playlist;
     		if(typeof(T) == typeof(Held_Ausrüstung))
     				return (ObjectSet<T>)(Object)Held_Ausrüstung;
     		if(typeof(T) == typeof(Held_Inventar))
@@ -681,8 +689,6 @@ namespace MeisterGeister.Model
     				return Alchimierezept;
     		if(t == typeof(Alchimierezept_Setting))
     				return Alchimierezept_Setting;
-    		if(t == typeof(Audio_HotkeyWesen))
-    				return Audio_HotkeyWesen;
     		if(t == typeof(Audio_Playlist))
     				return Audio_Playlist;
     		if(t == typeof(Audio_Playlist_Titel))
@@ -719,6 +725,8 @@ namespace MeisterGeister.Model
     				return GegnerBase;
     		if(t == typeof(GegnerBase_Angriff))
     				return GegnerBase_Angriff;
+    		if(t == typeof(GegnerBase_Audio_Playlist))
+    				return GegnerBase_Audio_Playlist;
     		if(t == typeof(GegnerBase_Kampfregel))
     				return GegnerBase_Kampfregel;
     		if(t == typeof(Handelsgut))
@@ -727,6 +735,8 @@ namespace MeisterGeister.Model
     				return Handelsgut_Setting;
     		if(t == typeof(Held))
     				return Held;
+    		if(t == typeof(Held_Audio_Playlist))
+    				return Held_Audio_Playlist;
     		if(t == typeof(Held_Ausrüstung))
     				return Held_Ausrüstung;
     		if(t == typeof(Held_Inventar))

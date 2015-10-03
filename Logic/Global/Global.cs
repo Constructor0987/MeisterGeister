@@ -16,7 +16,6 @@ namespace MeisterGeister
         #region //CONTEXTE
 
         public static Service.AudioService ContextAudio;
-        public static Service.AudioHotkeyWesenService ContextAudioHotkeyWesen;
         public static Service.DataService ContextHeld;
         public static Service.InventarService ContextInventar;
         public static Service.KampfService ContextKampf;
@@ -286,7 +285,6 @@ namespace MeisterGeister
             LogInfo log = Logger.PerformanceLogStart("Daten aus Datenbank laden");
 
             ContextAudio = new Service.AudioService();
-            ContextAudioHotkeyWesen = new Service.AudioHotkeyWesenService();
             ContextHeld = new Service.DataService();
             ContextInventar = new Service.InventarService();
             ContextKampf = new Service.KampfService();

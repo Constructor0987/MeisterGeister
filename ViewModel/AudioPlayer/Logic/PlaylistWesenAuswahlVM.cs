@@ -39,6 +39,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         /// <param name="gegner"></param>
         public PlaylistWesenAuswahlVM(Audio_Playlist playlist, Held held, GegnerBase gegner)
         {
+            //TODO braucht noch das AudioVM oder eine andere Möglichkeit zum abspielen der Playlist, damit man beim editieren der zuordnung mal kurz reinhören kann.
+
             // Event-Handler zur DependentProperty-Notification
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
 
@@ -52,34 +54,28 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         public void Init()
         {
-            //ObservableCollection<Held_Audio_Playlist> heldPlaylists
-            //ObservableCollection<GegnerBase_Audio_Playlist> gegnerPlaylists
-
             if (HatPlaylist)
             {
                 HeldenListe = new ObservableCollection<Held>(Global.ContextHeld.Liste<Held>());
                 GegnerListe = new ObservableCollection<GegnerBase>(Global.ContextHeld.Liste<GegnerBase>());
                 //daten 
-                //heldPlaylists = new ObservableCollection<Held_Audio_Playlist>(CurrentPlaylist.Held_Audio_Playlist);
-                //gegnerPlaylists = new ObservableCollection<GegnerBase_Audio_Playlist>(CurrentPlaylist.GegnerBase_Audio_Playlist);
+                WesenPlaylistListe = new ObservableCollection<IWesenPlaylist>( CurrentPlaylist.Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>().Union(CurrentPlaylist.GegnerBase_Audio_Playlist).AsEnumerable<IWesenPlaylist>() );
             }
             else
             {
                 PlaylistListe = new ObservableCollection<Audio_Playlist>(Global.ContextHeld.Liste<Audio_Playlist>());
                 //daten 
                 if(HatHeld)
-                    ;
-                    //heldPlaylists = new ObservableCollection<Held_Audio_Playlist>(CurrentHeld.Held_Audio_Playlist);
-                    
-                if (HatGegner)
-                    ;
-                    //gegnerPlaylists = new ObservableCollection<GegnerBase_Audio_Playlist>(CurrentGegner.GegnerBase_Audio_Playlist);
+                    WesenPlaylistListe = new ObservableCollection<IWesenPlaylist>(CurrentPlaylist.Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>() );
+                else if (HatGegner)
+                    WesenPlaylistListe = new ObservableCollection<IWesenPlaylist>(CurrentPlaylist.GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>());
             }
         }
 
         public void Refresh()
         {
             //der held, gegner oder die playlist könnte mittlerweile gelöscht sein?
+            //Nein, denn das Fenser wird mit ShowDialog modal aufgerufen.
         }
         #endregion
 
@@ -101,7 +97,76 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             Filter = "";
         }
 
-        //TODO Add und delete von Held_Audio_Playlist und GegnerBase_Audio_Playlist
+        //Add und delete von Held_Audio_Playlist und GegnerBase_Audio_Playlist
+        private Base.CommandBase _onAddWesenPlaylist = null;
+        public Base.CommandBase OnAddWesenPlaylist
+        {
+            get
+            {
+                if (_onAddWesenPlaylist == null)
+                    _onAddWesenPlaylist = new Base.CommandBase(AddWesenPlaylist, null);
+                return _onAddWesenPlaylist;
+            }
+        }
+        void AddWesenPlaylist(object obj)
+        {
+            Audio_Playlist pl = CurrentPlaylist;
+            if (pl == null)
+                pl = SelectedPlaylist;
+            Held h = CurrentHeld;
+            if (h == null)
+                h = SelectedHeld;
+            GegnerBase g = CurrentGegner;
+            if (g == null)
+                g = SelectedGegner;
+            string k = SelectedKategorie;
+            if (pl == null || (h == null && g == null) || k == null )
+                return;
+            
+            if(h != null)
+            {
+                Held_Audio_Playlist wpl = Global.ContextAudio.New<Held_Audio_Playlist>();
+                wpl.Audio_PlaylistGUID = pl.Audio_PlaylistGUID;
+                wpl.Audio_Playlist = pl;
+                wpl.HeldGUID = h.HeldGUID;
+                wpl.Held = h;
+                wpl.Kategorie = k;
+                h.Held_Audio_Playlist.Add(wpl);
+            }
+            else if(g !=  null)
+            {
+                GegnerBase_Audio_Playlist wpl = Global.ContextAudio.New<GegnerBase_Audio_Playlist>();
+                wpl.Audio_PlaylistGUID = pl.Audio_PlaylistGUID;
+                wpl.Audio_Playlist = pl;
+                wpl.GegnerBaseGUID = h.HeldGUID;
+                wpl.GegnerBase = g;
+                wpl.Kategorie = k;
+                g.GegnerBase_Audio_Playlist.Add(wpl);
+            }
+            Global.ContextAudio.Save();
+        }
+
+        private Base.CommandBase _onDeleteWesenPlaylist = null;
+        public Base.CommandBase OnDeleteWesenPlaylist
+        {
+            get
+            {
+                if (_onDeleteWesenPlaylist == null)
+                    _onDeleteWesenPlaylist = new Base.CommandBase(DeleteWesenPlaylist, null);
+                return _onDeleteWesenPlaylist;
+            }
+        }
+        void DeleteWesenPlaylist(object obj)
+        {
+            if (SelectedWesenPlaylist == null)
+                return;
+            if(SelectedWesenPlaylist.HatGegner)
+                Global.ContextAudio.Delete<GegnerBase_Audio_Playlist>(SelectedWesenPlaylist as GegnerBase_Audio_Playlist);
+            else if(SelectedWesenPlaylist.HatHeld)
+                Global.ContextAudio.Delete<Held>(SelectedWesenPlaylist as Held);
+            WesenPlaylistListe.Remove(SelectedWesenPlaylist);
+            SelectedWesenPlaylist = null;
+        }
         #endregion
 
         #region Properties
@@ -126,7 +191,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
 
+        //zum abspielen benötigt
         public AudioPlayerViewModel AudioVM;
+
+        private IWesenPlaylist _selectedWesenPlaylist;
+        /// <summary>
+        /// Die aktuell ausgewählte WesenPlaylist zum löschen und abspielen.
+        /// </summary>
+        public IWesenPlaylist SelectedWesenPlaylist
+        {
+            get { return _selectedWesenPlaylist; }
+            set
+            {
+                Set(ref _selectedWesenPlaylist, value);
+            }
+        }
 
         private string _selectedKategorie = "Tod";
         /// <summary>
@@ -257,6 +336,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
         #region Collections
+        private ObservableCollection<IWesenPlaylist> _wesenPlaylistListe;
+        public ObservableCollection<IWesenPlaylist> WesenPlaylistListe
+        {
+            get { return _wesenPlaylistListe; }
+            set { Set(ref _wesenPlaylistListe, value); }
+        }
+
         private ObservableCollection<Held> _heldenListe;
         /// <summary>
         /// Alle Einträge. Muss eigentlich nicht gebunden werden.

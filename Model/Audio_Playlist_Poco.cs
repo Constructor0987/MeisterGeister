@@ -347,6 +347,72 @@ namespace MeisterGeister.Model
         private ICollection<Audio_Playlist_Titel> _audio_Playlist_Titel;
     
     	[DataMember]
+        public virtual ICollection<GegnerBase_Audio_Playlist> GegnerBase_Audio_Playlist
+        {
+            get
+            {
+                if (_gegnerBase_Audio_Playlist == null)
+                {
+                    var newCollection = new FixupCollection<GegnerBase_Audio_Playlist>();
+                    newCollection.CollectionChanged += FixupGegnerBase_Audio_Playlist;
+                    _gegnerBase_Audio_Playlist = newCollection;
+                }
+                return _gegnerBase_Audio_Playlist;
+            }
+            set
+            {
+                if (!ReferenceEquals(_gegnerBase_Audio_Playlist, value))
+                {
+                    var previousValue = _gegnerBase_Audio_Playlist as FixupCollection<GegnerBase_Audio_Playlist>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupGegnerBase_Audio_Playlist;
+                    }
+                    _gegnerBase_Audio_Playlist = value;
+                    var newValue = value as FixupCollection<GegnerBase_Audio_Playlist>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupGegnerBase_Audio_Playlist;
+                    }
+                }
+            }
+        }
+        private ICollection<GegnerBase_Audio_Playlist> _gegnerBase_Audio_Playlist;
+    
+    	[DataMember]
+        public virtual ICollection<Held_Audio_Playlist> Held_Audio_Playlist
+        {
+            get
+            {
+                if (_held_Audio_Playlist == null)
+                {
+                    var newCollection = new FixupCollection<Held_Audio_Playlist>();
+                    newCollection.CollectionChanged += FixupHeld_Audio_Playlist;
+                    _held_Audio_Playlist = newCollection;
+                }
+                return _held_Audio_Playlist;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Audio_Playlist, value))
+                {
+                    var previousValue = _held_Audio_Playlist as FixupCollection<Held_Audio_Playlist>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Audio_Playlist;
+                    }
+                    _held_Audio_Playlist = value;
+                    var newValue = value as FixupCollection<Held_Audio_Playlist>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Audio_Playlist;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Audio_Playlist> _held_Audio_Playlist;
+    
+    	[DataMember]
         public virtual ICollection<Audio_Theme> Audio_Theme
         {
             get
@@ -397,6 +463,52 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Audio_Playlist_Titel item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Audio_Playlist, this))
+                    {
+                        item.Audio_Playlist = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupGegnerBase_Audio_Playlist(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("GegnerBase_Audio_Playlist");
+            if (e.NewItems != null)
+            {
+                foreach (GegnerBase_Audio_Playlist item in e.NewItems)
+                {
+                    item.Audio_Playlist = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (GegnerBase_Audio_Playlist item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Audio_Playlist, this))
+                    {
+                        item.Audio_Playlist = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupHeld_Audio_Playlist(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Audio_Playlist");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Audio_Playlist item in e.NewItems)
+                {
+                    item.Audio_Playlist = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Audio_Playlist item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Audio_Playlist, this))
                     {
