@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,6 +10,18 @@ namespace MeisterGeister.Logic.Extensions
 {
     public static class StringExtenstions
     {
+        private static CompareInfo compareInfo = CultureInfo.CurrentCulture.CompareInfo;
+        /// <summary>
+        /// Ist schneller und erstellt weniger überflüssige string Instanzen als ToLower()
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="tofind"></param>
+        /// <returns></returns>
+        public static bool ContainsIgnoreCase(this string source, string tofind)
+        {
+            return compareInfo.IndexOf(source, tofind) >= 0;
+        }
+
         public static string Left(this string str, int length)
         {
             if (str == null)

@@ -581,7 +581,7 @@
     <Compile Include="ViewModel\AudioPlayer\Logic\lbiPlaylistIconVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItem.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItemVM.cs" />
-    <Compile Include="ViewModel\AudioPlayer\Logic\ListWesenAuswahlVM.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\PlaylistWesenAuswahlVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\MusikZeileVM.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungsModifikator.cs" />
@@ -738,8 +738,8 @@
     <Compile Include="View\AudioPlayer\ListboxItemPlaylistIcon.xaml.cs">
       <DependentUpon>ListboxItemPlaylistIcon.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AudioPlayer\ListWesenAuswahlView.xaml.cs">
-      <DependentUpon>ListWesenAuswahlView.xaml</DependentUpon>
+    <Compile Include="View\AudioPlayer\PlaylistWesenAuswahlView.xaml.cs">
+      <DependentUpon>PlaylistWesenAuswahlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\MusikZeile.xaml.cs">
       <DependentUpon>MusikZeile.xaml</DependentUpon>
@@ -1249,7 +1249,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AudioPlayer\ListWesenAuswahlView.xaml">
+    <Page Include="View\AudioPlayer\PlaylistWesenAuswahlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

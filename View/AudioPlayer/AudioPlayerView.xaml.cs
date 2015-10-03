@@ -1033,8 +1033,7 @@ namespace MeisterGeister.View.AudioPlayer
         {
             if (!VM.hotkeyKämpferLoaded)
                 Global.SetIsBusy(true, string.Format("Laden der Kämpfer-Datenbank ..."));
-            ListWesenAuswahlView wesenAuswahlView = new ListWesenAuswahlView(VM);
-            wesenAuswahlView.VM.AktPlaylist = AktKlangPlaylist;
+            PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(VM.CurrentPlaylist);
             Global.SetIsBusy(false);
             wesenAuswahlView.ShowDialog();
         }
