@@ -337,6 +337,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Landschaft> _landschaft;
     
+        public ObjectSet<Landschaftsgruppe> Landschaftsgruppe
+        {
+            get { return _landschaftsgruppe  ?? (_landschaftsgruppe = CreateObjectSet<Landschaftsgruppe>("Landschaftsgruppe")); }
+        }
+        private ObjectSet<Landschaftsgruppe> _landschaftsgruppe;
+    
         public ObjectSet<Literatur> Literatur
         {
             get { return _literatur  ?? (_literatur = CreateObjectSet<Literatur>("Literatur")); }
@@ -612,6 +618,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Kultur_Name;
     		if(typeof(T) == typeof(Landschaft))
     				return (ObjectSet<T>)(Object)Landschaft;
+    		if(typeof(T) == typeof(Landschaftsgruppe))
+    				return (ObjectSet<T>)(Object)Landschaftsgruppe;
     		if(typeof(T) == typeof(Literatur))
     				return (ObjectSet<T>)(Object)Literatur;
     		if(typeof(T) == typeof(MenuLink))
@@ -767,6 +775,8 @@ namespace MeisterGeister.Model
     				return Kultur_Name;
     		if(t == typeof(Landschaft))
     				return Landschaft;
+    		if(t == typeof(Landschaftsgruppe))
+    				return Landschaftsgruppe;
     		if(t == typeof(Literatur))
     				return Literatur;
     		if(t == typeof(MenuLink))

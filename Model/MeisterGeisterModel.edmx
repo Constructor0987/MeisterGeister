@@ -52,6 +52,8 @@
     <EntitySet Name="Kultur" EntityType="DatabaseDSAModel.Store.Kultur" store:Type="Tables" />
     <EntitySet Name="Kultur_Name" EntityType="DatabaseDSAModel.Store.Kultur_Name" store:Type="Tables" />
     <EntitySet Name="Landschaft" EntityType="DatabaseDSAModel.Store.Landschaft" store:Type="Tables" />
+    <EntitySet Name="Landschaftsgruppe" EntityType="DatabaseDSAModel.Store.Landschaftsgruppe" store:Type="Tables" />
+    <EntitySet Name="Landschaftsgruppe_Landschaft" EntityType="DatabaseDSAModel.Store.Landschaftsgruppe_Landschaft" store:Type="Tables" />
     <EntitySet Name="Literatur" EntityType="DatabaseDSAModel.Store.Literatur" store:Type="Tables" />
     <EntitySet Name="MenuLink" EntityType="DatabaseDSAModel.Store.MenuLink" store:Type="Tables" />
     <EntitySet Name="Modifikator" EntityType="DatabaseDSAModel.Store.Modifikator" store:Type="Tables" />
@@ -299,6 +301,14 @@
     <AssociationSet Name="fk_KulturName_Kultur" Association="DatabaseDSAModel.Store.fk_KulturName_Kultur">
       <End Role="Kultur" EntitySet="Kultur" />
       <End Role="Kultur_Name" EntitySet="Kultur_Name" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Landschaftsgruppe_Landschaft_Landschaft" Association="DatabaseDSAModel.Store.FK_Landschaftsgruppe_Landschaft_Landschaft">
+      <End Role="Landschaft" EntitySet="Landschaft" />
+      <End Role="Landschaftsgruppe_Landschaft" EntitySet="Landschaftsgruppe_Landschaft" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Landschaftsgruppe_Landschaft_Landschaftsgruppe" Association="DatabaseDSAModel.Store.FK_Landschaftsgruppe_Landschaft_Landschaftsgruppe">
+      <End Role="Landschaftsgruppe" EntitySet="Landschaftsgruppe" />
+      <End Role="Landschaftsgruppe_Landschaft" EntitySet="Landschaftsgruppe_Landschaft" />
     </AssociationSet>
     <AssociationSet Name="fk_Pflanze_Ernte_Handelsgut" Association="DatabaseDSAModel.Store.fk_Pflanze_Ernte_Handelsgut">
       <End Role="Handelsgut" EntitySet="Handelsgut" />
@@ -1111,6 +1121,21 @@
     <Property Name="LandschaftGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="500" />
     <Property Name="Kundig" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Landschaftsgruppe">
+    <Key>
+      <PropertyRef Name="LandschaftsgruppeID" />
+    </Key>
+    <Property Name="LandschaftsgruppeID" Type="nvarchar" Nullable="false" MaxLength="1" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="254" />
+  </EntityType>
+  <EntityType Name="Landschaftsgruppe_Landschaft">
+    <Key>
+      <PropertyRef Name="LandschaftsgruppeID" />
+      <PropertyRef Name="LandschaftGUID" />
+    </Key>
+    <Property Name="LandschaftsgruppeID" Type="nvarchar" Nullable="false" MaxLength="1" />
+    <Property Name="LandschaftGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="Literatur">
     <Key>
@@ -2286,6 +2311,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Landschaftsgruppe_Landschaft_Landschaft">
+    <End Role="Landschaft" Type="DatabaseDSAModel.Store.Landschaft" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Landschaftsgruppe_Landschaft" Type="DatabaseDSAModel.Store.Landschaftsgruppe_Landschaft" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Landschaft">
+        <PropertyRef Name="LandschaftGUID" />
+      </Principal>
+      <Dependent Role="Landschaftsgruppe_Landschaft">
+        <PropertyRef Name="LandschaftGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Landschaftsgruppe_Landschaft_Landschaftsgruppe">
+    <End Role="Landschaftsgruppe" Type="DatabaseDSAModel.Store.Landschaftsgruppe" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Landschaftsgruppe_Landschaft" Type="DatabaseDSAModel.Store.Landschaftsgruppe_Landschaft" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Landschaftsgruppe">
+        <PropertyRef Name="LandschaftsgruppeID" />
+      </Principal>
+      <Dependent Role="Landschaftsgruppe_Landschaft">
+        <PropertyRef Name="LandschaftsgruppeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Pflanze_Ernte_Handelsgut">
     <End Role="Handelsgut" Type="DatabaseDSAModel.Store.Handelsgut" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -2785,6 +2838,7 @@
     <EntitySet Name="Kultur" EntityType="DatabaseDSAModel.Kultur" />
     <EntitySet Name="Kultur_Name" EntityType="DatabaseDSAModel.Kultur_Name" />
     <EntitySet Name="Landschaft" EntityType="DatabaseDSAModel.Landschaft" />
+    <EntitySet Name="Landschaftsgruppe" EntityType="DatabaseDSAModel.Landschaftsgruppe" />
     <EntitySet Name="Literatur" EntityType="DatabaseDSAModel.Literatur" />
     <EntitySet Name="MenuLink" EntityType="DatabaseDSAModel.MenuLink" />
     <EntitySet Name="Modifikator" EntityType="DatabaseDSAModel.Modifikator" />
@@ -3126,6 +3180,10 @@
     <AssociationSet Name="Gebiet_Polygon" Association="DatabaseDSAModel.Gebiet_Polygon">
       <End Role="Gebiet" EntitySet="Gebiet" />
       <End Role="Polygon" EntitySet="Polygon" />
+    </AssociationSet>
+    <AssociationSet Name="Landschaftsgruppe_Landschaft" Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft">
+      <End Role="Landschaft" EntitySet="Landschaft" />
+      <End Role="Landschaftsgruppe" EntitySet="Landschaftsgruppe" />
     </AssociationSet>
     <AssociationSet Name="Pflanze_Gebiet" Association="DatabaseDSAModel.Pflanze_Gebiet">
       <End Role="Gebiet" EntitySet="Gebiet" />
@@ -3893,6 +3951,15 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="Kundig" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Pflanze_Verbreitung" Relationship="DatabaseDSAModel.fk_Pflanze_Verbreitung_LandschaftGUID" FromRole="Landschaft" ToRole="Pflanze_Verbreitung" />
+    <NavigationProperty Name="Landschaftsgruppe" Relationship="DatabaseDSAModel.Landschaftsgruppe_Landschaft" FromRole="Landschaft" ToRole="Landschaftsgruppe" />
+  </EntityType>
+  <EntityType Name="Landschaftsgruppe">
+    <Key>
+      <PropertyRef Name="LandschaftsgruppeID" />
+    </Key>
+    <Property Name="LandschaftsgruppeID" Type="String" Nullable="false" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="254" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Landschaft" Relationship="DatabaseDSAModel.Landschaftsgruppe_Landschaft" FromRole="Landschaftsgruppe" ToRole="Landschaft" />
   </EntityType>
   <EntityType Name="Literatur">
     <Key>
@@ -5401,6 +5468,10 @@
     <End Role="Gebiet" Type="DatabaseDSAModel.Gebiet" Multiplicity="*" />
     <End Role="Polygon" Type="DatabaseDSAModel.Polygon" Multiplicity="*" />
   </Association>
+  <Association Name="Landschaftsgruppe_Landschaft">
+    <End Role="Landschaft" Type="DatabaseDSAModel.Landschaft" Multiplicity="*" />
+    <End Role="Landschaftsgruppe" Type="DatabaseDSAModel.Landschaftsgruppe" Multiplicity="*" />
+  </Association>
   <Association Name="Pflanze_Gebiet">
     <End Role="Gebiet" Type="DatabaseDSAModel.Gebiet" Multiplicity="*" />
     <End Role="Pflanze" Type="DatabaseDSAModel.Pflanze" Multiplicity="*" />
@@ -6086,6 +6157,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Landschaftsgruppe">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Landschaftsgruppe">
+        <MappingFragment StoreEntitySet="Landschaftsgruppe">
+          <ScalarProperty Name="LandschaftsgruppeID" ColumnName="LandschaftsgruppeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Literatur">
       <EntityTypeMapping TypeName="DatabaseDSAModel.Literatur">
         <MappingFragment StoreEntitySet="Literatur">
@@ -6551,6 +6630,14 @@
         <ScalarProperty Name="PolygonGUID" ColumnName="PolygonGUID" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="Landschaftsgruppe_Landschaft" TypeName="DatabaseDSAModel.Landschaftsgruppe_Landschaft" StoreEntitySet="Landschaftsgruppe_Landschaft">
+      <EndProperty Name="Landschaft">
+        <ScalarProperty Name="LandschaftGUID" ColumnName="LandschaftGUID" />
+      </EndProperty>
+      <EndProperty Name="Landschaftsgruppe">
+        <ScalarProperty Name="LandschaftsgruppeID" ColumnName="LandschaftsgruppeID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="Pflanze_Gebiet" TypeName="DatabaseDSAModel.Pflanze_Gebiet" StoreEntitySet="Pflanze_Gebiet">
       <EndProperty Name="Gebiet">
         <ScalarProperty Name="GebietGUID" ColumnName="GebietGUID" />
@@ -6575,7 +6662,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="50eedef9ede349ee8a170a252bc5b329" Name="Diagram1">
+      <Diagram DiagramId="79161ec64df643ddb884d5f3374f6ef2" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="3.375" IsExpanded="true" />
@@ -6620,7 +6707,8 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="21.25" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="5.75" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="61.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="62.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="62.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="16.75" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="8.75" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="44" IsExpanded="true" />
@@ -6729,6 +6817,7 @@
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Gebiet_Polygon" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Pflanze_Gebiet" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" ManuallyRouted="false" />
       </Diagram>

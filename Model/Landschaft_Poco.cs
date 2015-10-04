@@ -153,6 +153,39 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Pflanze_Verbreitung> _pflanze_Verbreitung;
+    
+    	[DataMember]
+        public virtual ICollection<Landschaftsgruppe> Landschaftsgruppe
+        {
+            get
+            {
+                if (_landschaftsgruppe == null)
+                {
+                    var newCollection = new FixupCollection<Landschaftsgruppe>();
+                    newCollection.CollectionChanged += FixupLandschaftsgruppe;
+                    _landschaftsgruppe = newCollection;
+                }
+                return _landschaftsgruppe;
+            }
+            set
+            {
+                if (!ReferenceEquals(_landschaftsgruppe, value))
+                {
+                    var previousValue = _landschaftsgruppe as FixupCollection<Landschaftsgruppe>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupLandschaftsgruppe;
+                    }
+                    _landschaftsgruppe = value;
+                    var newValue = value as FixupCollection<Landschaftsgruppe>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupLandschaftsgruppe;
+                    }
+                }
+            }
+        }
+        private ICollection<Landschaftsgruppe> _landschaftsgruppe;
 
         #endregion
 
@@ -176,6 +209,32 @@ namespace MeisterGeister.Model
                     if (ReferenceEquals(item.Landschaft, this))
                     {
                         item.Landschaft = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupLandschaftsgruppe(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Landschaftsgruppe");
+            if (e.NewItems != null)
+            {
+                foreach (Landschaftsgruppe item in e.NewItems)
+                {
+                    if (!item.Landschaft.Contains(this))
+                    {
+                        item.Landschaft.Add(this);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Landschaftsgruppe item in e.OldItems)
+                {
+                    if (item.Landschaft.Contains(this))
+                    {
+                        item.Landschaft.Remove(this);
                     }
                 }
             }
