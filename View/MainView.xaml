@@ -576,8 +576,8 @@
                                 </MenuItem>
                             </MenuItem>
                         </Menu>
-                        <Label Margin="5,0,0,0" Content="{Binding FallbackValue=V 0.X.X, Path=VersionInfo}" Name="_labelVersion" ToolTip="Installierte Version" VerticalAlignment="Center" Cursor="Hand" MouseDown="LabelVersion_MouseDown" FontSize="10"  />
-                        <Border Margin="4,5,4,5" Background="#FF43474B" CornerRadius="8" ToolTip="eingestellte Regeledition">
+                        <Label Margin="5,0,0,4" Content="{Binding FallbackValue=V 0.X.X, Path=VersionInfo}" Name="_labelVersion" ToolTip="Installierte Version" VerticalAlignment="Center" Cursor="Hand" MouseDown="LabelVersion_MouseDown" FontSize="10"  />
+                        <Border Margin="4,2,4,6" Background="#FF43474B" CornerRadius="8" ToolTip="eingestellte Regeledition">
                             <Label Content="{Binding RegeleditionNummer}" VerticalAlignment="Center" FontSize="10" Foreground="White" FontWeight="Bold" />
                         </Border>
                     </StackPanel>
