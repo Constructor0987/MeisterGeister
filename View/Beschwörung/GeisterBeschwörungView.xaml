@@ -19,6 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical">
+            <Beschwörung:VorZurück/>
             <Beschwörung:Anrufung/>
             <Beschwörung:Kontrolle/>
         </StackPanel>

@@ -25,6 +25,8 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical">
+            <Beschwörung:VorZurück/>
+            
             <Beschwörung:Anrufung/>
 
             <!--Anrufung misslungen-->

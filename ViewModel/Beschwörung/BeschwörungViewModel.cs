@@ -27,6 +27,12 @@ namespace MeisterGeister.ViewModel.Beschwörung
             beherrschen = new Base.CommandBase((o) => beherrsche(), (o) => beherrschungMöglich());
             Reset = new Base.CommandBase((o) => reset(), null);
             NSC = new Base.CommandBase((o) => Held = null, null);
+            PreviousStep = new Base.CommandBase(
+                (o) => previousStep(),
+                (o) => Status != BeschwörungsStatus.Beschwören);
+            NextStep = new Base.CommandBase(
+                (o) => nextStep(),
+                (o) => Status != BeschwörungsStatus.BeherrschungGelungen && Status != BeschwörungsStatus.BeherrschungMisslungen);
             //Standardwerte setzen
             reset();
             PropertyChanged += onPropertyChanged;
@@ -212,6 +218,16 @@ namespace MeisterGeister.ViewModel.Beschwörung
             get; private set;
         }
 
+        public Base.CommandBase PreviousStep
+        {
+            get; private set;
+        }
+
+        public Base.CommandBase NextStep
+        {
+            get; private set;
+        }
+
         protected virtual void reset()
         {
             //Hier wird alle auf Standard gesetzt
@@ -227,6 +243,37 @@ namespace MeisterGeister.ViewModel.Beschwörung
             //Hier werden Held und Wesen nochmal gesetzt um die Standardwerte zu laden
             Held = Held;
             BeschworenesWesen = BeschworenesWesen;
+        }
+
+        private void previousStep()
+        {
+            switch (Status)
+            {
+                case BeschwörungsStatus.BeherrschungMisslungen:
+                case BeschwörungsStatus.BeherrschungGelungen:
+                    Status = BeschwörungsStatus.Beherrschen;
+                    BeherrschungGelungen = null;
+                    break;
+                case BeschwörungsStatus.Beherrschen:
+                case BeschwörungsStatus.BeschwörungMisslungen:
+                    Status = BeschwörungsStatus.Beschwören;
+                    BeschwörungGelungen = null;
+                    punkte.Value = 0;
+                    break;
+            }
+        }
+
+        private void nextStep()
+        {
+            switch (Status)
+            {
+                case BeschwörungsStatus.Beschwören:
+                    Status = BeschwörungsStatus.Beherrschen;
+                    break;
+                case BeschwörungsStatus.Beherrschen:
+                    Status = BeschwörungsStatus.BeherrschungGelungen;
+                    break;
+            }
         }
 
         #region Proben
@@ -446,6 +493,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
                 Set(ref status, value);
                 Beschwören.Invalidate();
                 Beherrschen.Invalidate();
+                PreviousStep.Invalidate();
+                NextStep.Invalidate();
             }
         }
 

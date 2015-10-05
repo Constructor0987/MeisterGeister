@@ -792,6 +792,9 @@
     <Compile Include="View\Beschwörung\UntotenBeschwörungsView.xaml.cs">
       <DependentUpon>UntotenBeschwörungsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Beschwörung\VorZurück.xaml.cs">
+      <DependentUpon>VorZurück.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Bodenplan\BattlegroundView.xaml.cs">
       <DependentUpon>BattlegroundView.xaml</DependentUpon>
     </Compile>
@@ -1327,6 +1330,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Beschwörung\VorZurück.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Bodenplan\BattlegroundView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1715,6 +1722,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="Fonts\DSA Symbole G&amp;D v1.6.ttf" />
     <None Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>

@@ -67,6 +67,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private List<Model.Fernkampfwaffe> fernkampfwaffeListe = new List<Model.Fernkampfwaffe>();
         private List<Model.Schild> schildListe = new List<Model.Schild>();
         private List<Model.Rüstung> ruestungListe = new List<Model.Rüstung>();
+        private List<Model.Trageort> trageortListe = new List<Model.Trageort>();
 
         //Zuordnungen
         private ObservableCollection<NahkampfItem> heldNahkampfWaffeImInventar = new ObservableCollection<NahkampfItem>();
@@ -95,8 +96,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isNahkampfwaffevorhanden; }
             set
             {
-                isNahkampfwaffevorhanden = value;
-                OnChanged("IsNahkampfwaffevorhanden");
+                Set(ref isNahkampfwaffevorhanden, value);
             }
         }
         public bool IsFernkampfwaffevorhanden
@@ -104,8 +104,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isFernkampfwaffevorhanden; }
             set
             {
-                isFernkampfwaffevorhanden = value;
-                OnChanged("IsFernkampfwaffevorhanden");
+                Set(ref isFernkampfwaffevorhanden, value);
             }
         }
         public bool IsSchildVorhanden
@@ -113,8 +112,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isSchildVorhanden; }
             set
             {
-                isSchildVorhanden = value;
-                OnChanged("IsSchildVorhanden");
+                Set(ref isSchildVorhanden, value);
             }
         }
         public bool IsRuestungVorhanden
@@ -122,8 +120,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isRuestungVorhanden; }
             set
             {
-                isRuestungVorhanden = value;
-                OnChanged("IsRuestungVorhanden");
+                Set(ref isRuestungVorhanden, value);
             }
         }
         public bool IsSonstigesVorhanden
@@ -131,8 +128,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isSonstigesVorhanden; }
             set
             {
-                isSonstigesVorhanden = value;
-                OnChanged("IsSonstigesVorhanden");
+                Set(ref isSonstigesVorhanden, value);
             }
         }
         public Visibility IsRuestungEinfachEingeben
@@ -140,8 +136,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isRuestungEinfachEingeben; }
             set
             {
-                isRuestungEinfachEingeben = value;
-                OnChanged("IsRuestungEinfachEingeben");
+                Set(ref isRuestungEinfachEingeben, value);
             }
         }
         public Visibility IsBEEingebenVisibility
@@ -149,8 +144,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isBEEingebenVisibility; }
             set
             {
-                isBEEingebenVisibility = value;
-                OnChanged("IsBEEingebenVisibility");
+                Set(ref isBEEingebenVisibility, value);
             }
         }
         public Visibility IsUeberlastungEingebenVisibility
@@ -158,8 +152,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isUeberlastungEingebenVisibility; }
             set
             {
-                isUeberlastungEingebenVisibility = value;
-                OnChanged("IsUeberlastungEingebenVisibility");
+                Set(ref isUeberlastungEingebenVisibility, value);
             }
         }
 
@@ -168,8 +161,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return selectedFilterIndex; }
             set
             {
-                selectedFilterIndex = value;
-                OnChanged("");
+                Set(ref selectedFilterIndex, value);
             }
         }
 
@@ -309,8 +301,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return !(isRuestungBerechnungEinfach || E.IsReadOnly); }
             set
             {
-                isRuestungBerechnungEinfach = value;
-                OnChanged("IsRuestungBerechnungEinfach");
+                Set(ref isRuestungBerechnungEinfach, value);
             }
         }
         public bool IsRuestungBerechnungZonen
@@ -318,8 +309,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return isRuestungBerechnungZonen; }
             set
             {
-                isRuestungBerechnungZonen = value;
-                OnChanged("IsRuestungBerechnungZonen");
+                Set(ref isRuestungBerechnungZonen, value);
             }
         }
         public bool IsBehinderungEingeben
@@ -327,8 +317,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return !(isBehinderungEingeben || E.IsReadOnly); }
             set
             {
-                isBehinderungEingeben = value;
-                OnChanged("IsBehinderungEingeben");
+                Set(ref isBehinderungEingeben, value);
             }
         }
         public bool IsUeberlastungEingeben
@@ -336,8 +325,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return !(isUeberlastungEingeben || E.IsReadOnly); }
             set
             {
-                isUeberlastungEingeben = value;
-                OnChanged("IsUeberlastungEingeben");
+                Set(ref isUeberlastungEingeben, value);
             }
         }
 
@@ -346,8 +334,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return selectedHeld; }
             set
             {
-                selectedHeld = value;
-                OnChanged("SelectedHeld");
+                Set(ref selectedHeld, value);
             }
         }
         public Model.Talent SelectedNahkampfwaffeTalent
@@ -389,8 +376,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return selectedNahkampfwaffe; }
             set
             {
-                selectedNahkampfwaffe = value;
-                OnChanged("SelectedNahkampfwaffe");
+                Set(ref selectedNahkampfwaffe, value);
             }
         }
         public Model.Fernkampfwaffe SelectedFernkampfwaffe
@@ -398,8 +384,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return selectedFernkampfwaffe; }
             set
             {
-                selectedFernkampfwaffe = value;
-                OnChanged("SelectedFernkampfwaffe");
+                Set(ref selectedFernkampfwaffe, value);
             }
         }
         public Model.Schild SelectedSchild
@@ -407,8 +392,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return selectedSchild; }
             set
             {
-                selectedSchild = value;
-                OnChanged("SelectedSchild");
+                Set(ref selectedSchild, value);
             }
         }
         public Model.Rüstung SelectedRuestung
@@ -416,8 +400,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return selectedRuestung; }
             set
             {
-                selectedRuestung = value;
-                OnChanged("SelectedRuestung");
+                Set(ref selectedRuestung, value);
             }
         }
         //public double AktuelleTragkraft {
@@ -433,8 +416,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return nahkampfWaffeTalentListe; }
             set
             {
-                nahkampfWaffeTalentListe = value;
-                OnChanged("NahkampfWaffeTalentListe");
+                Set(ref nahkampfWaffeTalentListe, value);
             }
         }
         public List<Model.Talent> FernkampWaffeTalentListe
@@ -442,8 +424,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return fernkampWaffeTalentListe; }
             set
             {
-                fernkampWaffeTalentListe = value;
-                OnChanged("FernkampWaffeTalentListe ");
+                Set(ref fernkampWaffeTalentListe, value);
             }
         }
         public List<Model.Waffe> NahkampfwaffeListe
@@ -451,8 +432,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return nahkampfwaffeListe; }
             set
             {
-                nahkampfwaffeListe = value;
-                OnChanged("NahkampfwaffeListe");
+                Set(ref nahkampfwaffeListe, value);
             }
         }
         public List<Model.Fernkampfwaffe> FernkampfwaffeListe
@@ -460,8 +440,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return fernkampfwaffeListe; }
             set
             {
-                fernkampfwaffeListe = value;
-                OnChanged("FernkampfwaffeListe");
+                Set(ref fernkampfwaffeListe, value);
             }
         }
         public List<Model.Schild> SchildListe
@@ -469,8 +448,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return schildListe; }
             set
             {
-                schildListe = value;
-                OnChanged("SchildListe");
+                Set(ref schildListe, value);
             }
         }
         public List<Model.Rüstung> RuestungListe
@@ -478,8 +456,15 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return ruestungListe; }
             set
             {
-                ruestungListe = value;
-                OnChanged("RuestungListe");
+                Set(ref ruestungListe, value);
+            }
+        }
+        public List<Model.Trageort> TrageortListe
+        {
+            get { return trageortListe; }
+            set
+            {
+                Set(ref trageortListe, value);
             }
         }
         //Zuordnung
@@ -610,7 +595,6 @@ namespace MeisterGeister.ViewModel.Inventar
                 if (NahkampfwaffeListe.Count > 0)
                 {
                     IsNahkampfwaffevorhanden = true;
-                    OnChanged("IsNahkampfwaffevorhanden");
                 }
 
                 //Fernkampf
@@ -619,13 +603,10 @@ namespace MeisterGeister.ViewModel.Inventar
                     FernkampWaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && !FernkampWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
                 if (Global.ContextInventar != null)
                     FernkampfwaffeListe = Global.ContextInventar.FernkampfwaffeListe;
-                OnChanged("FernkampfwaffeListe");
                 if (FernkampfwaffeListe.Count > 0)
                 {
                     IsFernkampfwaffevorhanden = true;
-                    OnChanged("IsFernkampfwaffevorhanden");
                 }
-                OnChanged("SchildListe");
 
                 //Schild
                 if (Global.ContextInventar != null)
@@ -633,20 +614,22 @@ namespace MeisterGeister.ViewModel.Inventar
                 if (SchildListe.Count > 0)
                 {
                     IsSchildVorhanden = true;
-                    OnChanged("IsSchildVorhanden");
                 }
-                OnChanged("SchildListe");
 
                 //Rüstung
                 if (Global.ContextInventar != null)
                     RuestungListe = Global.ContextInventar.RuestungListe;
-                RuestungListe = RuestungListe;
                 if (RuestungListe.Count > 0)
                 {
                     IsRuestungVorhanden = true;
-                    OnChanged("IsRuestungVorhanden");
                 }
-                OnChanged("RuestungListe");
+
+                //Trageorte
+                if(Global.ContextInventar != null)
+                {
+                    TrageortListe = Global.ContextInventar.TrageortListe;
+                }
+
                 IsLoaded = true;
             }
         }
@@ -1107,7 +1090,6 @@ namespace MeisterGeister.ViewModel.Inventar
                         {
                             IsNahkampfwaffevorhanden = false;
                         }
-
                     }
                 }
 
@@ -1581,11 +1563,11 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             get
             {
-                return EntityHA.Trageort;
+                return EntityHI.Trageort;
             }
             set
             {
-                EntityHA.Trageort = value;
+                EntityHI.Trageort = value;
                 OnChanged("Trageort");
             }
         }

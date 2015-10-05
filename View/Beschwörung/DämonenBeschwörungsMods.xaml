@@ -93,48 +93,49 @@
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Image x:Name="image" Width="30" MaxHeight="30" Stretch="Uniform"/>
+                                <!--<Image x:Name="image" Width="30" MaxHeight="30" Stretch="Uniform"/>-->
+                                <TextBlock x:Name="text" FontSize="40" Margin="8,0,0,0" FontFamily="pack://application:,,,/Fonts/#DSA Symbole G&amp;D"/>
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource TextTitel}" VerticalAlignment="Center" Margin="4,0,0,0"/>
                             </StackPanel>
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Name}" Value="Agrimoth">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Agrimoth.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="y"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Amazeroth">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Amazeroth.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="t"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Asfaloth">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Asfaloth.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="v"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Belhalhar">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Belhalhar.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="p"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Belkelel">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Belkelel.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="z"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Belshirash">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Belshirash.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="u"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Belzhorash">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Belzhorash.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="x"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Blakharaz">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Blakharaz.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="o"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Charyptoroth">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Charyptoroth.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="q"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Lolgramoth">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Lolgramoth.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="r"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Tasfarelel">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Tasfarelel.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="w"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Thargunitoth">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Thargunitoth.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="s"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Name}" Value="Namenloser">
-                                    <Setter TargetName="image" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Domänen/Namenloser.png"/>
+                                    <Setter TargetName="text" Property="Text" Value="n"/>
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>

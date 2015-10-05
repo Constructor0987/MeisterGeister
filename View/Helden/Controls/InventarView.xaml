@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Inventar"
     xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 	    
-	xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  	
+	xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  
+    xmlns:HeldenControls="clr-namespace:MeisterGeister.View.Helden.Controls"
     mc:Ignorable="d" 
     x:Name="userControl"
     d:DesignHeight="500" 
@@ -21,6 +22,15 @@
             <Button Padding="0" Width="25" Height="25" Command="{Binding OnRemove}" Style="{DynamicResource ReadOnlyButtonStyle}">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png"/>
             </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="trageortTemplate">
+            <TextBlock Text="{Binding Trageort.Name}"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="trageortEditTemplate">
+            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid},AncestorLevel=1},Path=DataContext.TrageortListe}"
+                                                  SelectedItem="{Binding Trageort,Mode=TwoWay}" DisplayMemberPath="Name"/>
         </DataTemplate>
 
         <Style x:Key="ButtonBackground" TargetType="{x:Type Border}">
@@ -730,20 +740,22 @@
                 <!-- Nahkampf -->
                 <Expander IsExpanded="{Binding IsNahkampfwaffevorhanden,Mode=TwoWay}">
                     <Expander.Header>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="20">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
                             <TextBlock Style="{StaticResource TextTitel}" Text="Nahkampfwaffen"/>
                         </StackPanel>
                     </Expander.Header>
                     <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                        <!--Talent-->
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
-                            <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                            <DataGridCheckBoxColumn Width="30" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
+                            <DataGridTemplateColumn Width="70" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                            <!--<DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>-->
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityNW.Gewicht}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityNW.Name}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="70" Header="TP" Binding="{Binding TP}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="60" Header="TP/KK" Binding="{Binding TPKK}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="30" Header="BF" Binding="{Binding EntityNW.BF}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="30" Header="BF" Binding="{Binding EntityNW.BF}"/>
                             <DataGridTextColumn Width="30" Header="INI" Binding="{Binding EntityNW.INI}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="30" Header="WM" Binding="{Binding WM}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="40" Header="DK" Binding="{Binding EntityNW.DK}" IsReadOnly="True"/>
@@ -773,7 +785,7 @@
                 <!--Fernkampf-->
                 <Expander IsExpanded="{Binding IsFernkampfwaffevorhanden,Mode=TwoWay}">
                     <Expander.Header>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="20">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/fernkampf.png"/>
                             <TextBlock Style="{StaticResource TextTitel}" Text="Fernkampfwaffen"/>
                         </StackPanel>
@@ -782,7 +794,8 @@
                         <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
-                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                                <DataGridTemplateColumn Width="70" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                                <!--<DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>-->
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Gewicht}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="70" Header="TP" Binding="{Binding TP}" IsReadOnly="True"/>
@@ -810,15 +823,12 @@
                         </DataGrid>
                         <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Text="*: Wundschwelle (KO/2)-2 | **: improvisiert" Style="{StaticResource TextTitel}"/>
                     </DockPanel>
-
                 </Expander>
-
-                <!-- TODO: *-Hinweise anzeigen -->
 
                 <!-- Schild -->
                 <Expander IsExpanded="{Binding IsSchildVorhanden,Mode=TwoWay}">
                     <Expander.Header>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="20">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/schild.png"/>
                             <TextBlock Style="{StaticResource TextTitel}" Text="Schilde"/>
                         </StackPanel>
@@ -826,7 +836,8 @@
                     <DataGrid ItemsSource="{Binding HeldSchildImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
-                            <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                            <DataGridTemplateColumn Width="70" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                            <!--<DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>-->
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityS.Gewicht}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityS.Name}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="50" Header="Größe" Binding="{Binding EntityS.Größe}" IsReadOnly="True"/>
@@ -842,7 +853,7 @@
 
                 <Expander IsExpanded="{Binding IsRuestungVorhanden,Mode=TwoWay}">
                     <Expander.Header>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="20">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
                             <TextBlock Style="{StaticResource TextTitel}" Text="Rüstungen"/>
                         </StackPanel>
@@ -851,7 +862,8 @@
                     <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Ausgeruestet,Mode=TwoWay}"/>
-                            <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>
+                            <DataGridTemplateColumn Width="70" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                            <!--<DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHA.Anzahl}"/>-->
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityR.Gewicht}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityR.Name}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="30" Header="RS" Binding="{Binding EntityR.RS}" IsReadOnly="True"/>
@@ -864,7 +876,7 @@
                 <!-- Sonstiges -->
                 <Expander IsExpanded="{Binding IsSonstigesVorhanden,Mode=TwoWay}">
                     <Expander.Header>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="20">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
                             <TextBlock Style="{StaticResource TextTitel}" Text="Sonstiges"/>
                         </StackPanel>
@@ -872,7 +884,8 @@
 
                     <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
+                            <!--<DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>-->
+                            <DataGridTemplateColumn Width="70" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="True"/>
                             <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
