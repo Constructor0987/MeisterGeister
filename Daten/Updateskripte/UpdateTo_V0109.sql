@@ -525,7 +525,7 @@ INSERT INTO Held_BFAusrüstung SELECT [HeldAusrüstungGUID], COALESCE(W.BF, S.BF
 INSERT INTO Held_Schild SELECT [HeldAusrüstungGUID], HA.AusrüstungGUID from Held_Ausrüstung HA, Schild W where HA.AusrüstungGUID=W.SchildGUID;
 INSERT INTO Held_Waffe SELECT [HeldAusrüstungGUID], HA.AusrüstungGUID, HA.TalentGUID, W.INI, W.TPBonus, W.WMAT, W.WMPA from Held_Ausrüstung HA, Waffe W where HA.AusrüstungGUID=W.WaffeGUID;
 INSERT INTO Held_Rüstung SELECT [HeldAusrüstungGUID], HA.AusrüstungGUID, COALESCE(RS*10, (2 * (Kopf + LBein + RBein) + 4.0 * (Bauch + Brust + Rücken) + (LArm + RArm)) / 20, 0),COALESCE(RS*10, (2 * (Kopf + LBein + RBein) + 4.0 * (Bauch + Brust + Rücken) + (LArm + RArm)) / 20, 0) from Held_Ausrüstung HA, Rüstung W where HA.AusrüstungGUID=W.RüstungGUID;
-INSERT INTO Held_Fernkampfwaffe SELECT [HeldAusrüstungGUID], HA.AusrüstungGUID, HA.TalentGUID, 0, 0 from Held_Ausrüstung HA, Rüstung W where HA.AusrüstungGUID=W.RüstungGUID;
+INSERT INTO Held_Fernkampfwaffe SELECT [HeldAusrüstungGUID], HA.AusrüstungGUID, HA.TalentGUID, 0, 0 from Held_Ausrüstung HA, Fernkampfwaffe W where HA.AusrüstungGUID=W.FernkampfwaffeGUID;
 
 
 --Spalten löschen

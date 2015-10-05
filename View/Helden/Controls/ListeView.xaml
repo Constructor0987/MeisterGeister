@@ -115,7 +115,7 @@
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" Width="25" />        
                         </Button.Content>
                     </Button>
-                    <Button Grid.Column="1" Height="25" Width="48" Command="{Binding OnExportDemoHelden}" Content="Export" HorizontalAlignment="Right" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" FontWeight="Bold" />
+                    <Button Grid.Column="1" Height="25" Width="48" Command="{Binding OnExportDemoHelden}" Content="Export" HorizontalAlignment="Right" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" FontWeight="Bold" ToolTip="Demohelden Exportieren"/>
                     <ComboBox Grid.Row="0" HorizontalAlignment="Left" Height="25" Width="100" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}" ToolTip="Sortierung" BorderThickness="1" BorderBrush="#FFBEB3A3" Background="{x:Null}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>

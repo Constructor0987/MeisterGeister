@@ -251,7 +251,7 @@ namespace MeisterGeister.ViewModel.Helden
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
             foreach (Held h in HeldListe)
             {
-                string fileName = View.General.ViewHelper.GetValidFilename(System.IO.Path.Combine("Daten\\Helden\\Demohelden", System.IO.Path.ChangeExtension(h.Name, "xml")));
+                string fileName = System.IO.Path.Combine("Daten\\Helden\\Demohelden", View.General.ViewHelper.GetValidFilename(System.IO.Path.ChangeExtension(h.Name, "xml")));
                 h.Export(fileName, true);
             }
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
