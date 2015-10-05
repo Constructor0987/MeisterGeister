@@ -98,6 +98,9 @@ namespace MeisterGeister
             return INTERN_PWD == pwd;
         }
 
+        /// <summary>
+        /// Die Regeledition in voller Schreibweise: 'DSA X'.
+        /// </summary>
         public static string Regeledition
         {
             get
@@ -107,6 +110,19 @@ namespace MeisterGeister
             set
             {
                 Logic.Einstellung.Einstellungen.Regeledition = value;
+                RefreshRegeledition();
+            }
+        }
+
+        private static string _regeleditionNummer = string.Empty;
+        /// <summary>
+        /// Gibt die Nummer der Regeledition an, ohne Textzusatz.
+        /// </summary>
+        public static string RegeleditionNummer
+        {
+            get
+            {
+                return _regeleditionNummer;
             }
         }
 
@@ -300,11 +316,7 @@ namespace MeisterGeister
             IsInitialized = true;
             Logic.Einstellung.Einstellungen.UpdateEinstellungen();
 
-            // Editionswerte aus Performance-Gründen cachen
-            _dsa5 = Regeledition == "DSA 5";
-            _dsa4_1 = Regeledition == "DSA 4.1";
-            _dsa5_Visibility = DSA5 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            _dsa4_1_Visibility = DSA4_1 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            RefreshRegeledition();
 
             if (Logic.Einstellung.Einstellungen.SelectedHeld != null)
             {
@@ -321,6 +333,16 @@ namespace MeisterGeister
             WebServer = new Server();
 
             Downloader = new Net.Web.Downloader();
+        }
+
+        private static void RefreshRegeledition()
+        {
+            // Editionswerte aus Performance-Gründen cachen
+            _dsa5 = Regeledition == "DSA 5";
+            _dsa4_1 = Regeledition == "DSA 4.1";
+            _regeleditionNummer = Regeledition.Replace("DSA ", string.Empty);
+            _dsa5_Visibility = DSA5 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            _dsa4_1_Visibility = DSA4_1 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
         }
 
         public static void CleanUp()

@@ -35,9 +35,10 @@ namespace MeisterGeister.ViewModel.Settings
         {
             View.Windows.RegeleditionWindow regWin = new View.Windows.RegeleditionWindow();
             regWin.Owner = System.Windows.Application.Current.MainWindow;
-            regWin.ShowDialog();
+            bool? dlgResult = regWin.ShowDialog();
             regWin = null;
-            System.Windows.Application.Current.Shutdown();
+            if (dlgResult == true)
+                System.Windows.Application.Current.Shutdown();
         }
 
         public Boolean IsAudioSpieldauerBerechnen

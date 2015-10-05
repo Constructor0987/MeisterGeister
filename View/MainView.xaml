@@ -4,7 +4,7 @@
         xmlns:my="clr-namespace:MeisterGeister"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" xmlns:mg="clr-namespace:MeisterGeister"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MeisterGeister.View.MainView" 
-        Height="650" Width="1029" Closing="Window_Closing" 
+        Height="650" Width="1045" Closing="Window_Closing" 
         Loaded="Window_Loaded" Title="DSA MeisterGeister" Closed="Window_Closed" WindowStartupLocation="CenterScreen"
         TextOptions.TextFormattingMode="Display">
     <Window.Resources>
@@ -577,6 +577,9 @@
                             </MenuItem>
                         </Menu>
                         <Label Margin="5,0,0,0" Content="{Binding FallbackValue=V 0.X.X, Path=VersionInfo}" Name="_labelVersion" ToolTip="Installierte Version" VerticalAlignment="Center" Cursor="Hand" MouseDown="LabelVersion_MouseDown" FontSize="10"  />
+                        <Border Margin="4,5,4,5" Background="#FF43474B" CornerRadius="8" ToolTip="eingestellte Regeledition">
+                            <Label Content="{Binding RegeleditionNummer}" VerticalAlignment="Center" FontSize="10" Foreground="White" FontWeight="Bold" />
+                        </Border>
                     </StackPanel>
                     <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="12" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
                         <Border.Background>

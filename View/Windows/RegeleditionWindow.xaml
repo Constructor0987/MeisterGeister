@@ -6,20 +6,22 @@
         xmlns:local="clr-namespace:MeisterGeister.View.Windows"
         xmlns:mg="clr-namespace:MeisterGeister"
         mc:Ignorable="d"
-        Title="Regeledition" Height="251.408" Width="352.816" ResizeMode="NoResize" Background="{StaticResource Background1}"
+        Title="Regeledition" Height="282.205" Width="352.816" ResizeMode="NoResize" Background="{StaticResource Background1}"
         TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner" Topmost="True">
     <Grid>
-        <TextBlock Text="Bitte wähle die Regeledition aus, mit der du spielst. Die Auswahl kann später in den Einstellungen geändert werden. Nach der Auswahl wird MeisterGeister beendet und muss neu gestartet werden." Height="64" VerticalAlignment="Top" TextWrapping="Wrap" Margin="19,10,10,0" HorizontalAlignment="Center" />
-        <Button x:Name="buttonDSA5" Margin="66,89,0,0" VerticalAlignment="Top" Height="88" HorizontalAlignment="Left" Width="91" FontSize="18.667" FontWeight="Bold" Click="buttonDSA5_Click">
+        <TextBlock Text="Bitte wähle die Regeledition aus, mit der du spielst. Die Auswahl kann später in den Einstellungen geändert werden. Nach der Auswahl wird MeisterGeister beendet und muss neu gestartet werden." Height="117" VerticalAlignment="Top" TextWrapping="Wrap" Margin="28,10,19,0" HorizontalAlignment="Center" FontSize="16" />
+        <Button x:Name="buttonDSA5" Margin="66,138,0,0" VerticalAlignment="Top" Height="88" HorizontalAlignment="Left" Width="91" FontSize="18.667" FontWeight="Bold" Click="buttonDSA5_Click">
             <StackPanel>
                 <TextBlock Text="DSA 5" />
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/ok.png" Height="16" Width="16" ToolTip="derzeit ausgewählt" Visibility="{x:Static mg:Global.DSA5_Visibility}" />
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Height="16" Width="16" ToolTip="derzeit nicht ausgewählt" Visibility="{x:Static mg:Global.DSA4_1_Visibility}" />
             </StackPanel>
         </Button>
-        <Button x:Name="buttonDSA4_1" Margin="187,89,0,0" VerticalAlignment="Top" Height="88" FontSize="18.667" FontWeight="Bold" HorizontalAlignment="Left" Width="91" Click="buttonDSA4_1_Click">
+        <Button x:Name="buttonDSA4_1" Margin="187,138,0,0" VerticalAlignment="Top" Height="88" FontSize="18.667" FontWeight="Bold" HorizontalAlignment="Left" Width="91" Click="buttonDSA4_1_Click">
             <StackPanel>
                 <TextBlock Text="DSA 4.1" />
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/ok.png" Height="16" Width="16" ToolTip="derzeit ausgewählt" Visibility="{x:Static mg:Global.DSA4_1_Visibility}" />
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Height="16" Width="16" ToolTip="derzeit nicht ausgewählt" Visibility="{x:Static mg:Global.DSA5_Visibility}" />
             </StackPanel>
         </Button>
     </Grid>

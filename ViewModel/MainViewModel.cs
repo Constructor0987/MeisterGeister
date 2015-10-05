@@ -27,5 +27,13 @@ namespace MeisterGeister.ViewModel
                 return version;
             }
         }
+
+        public string RegeleditionNummer
+        {
+            get
+            {
+                return Global.RegeleditionNummer;
+            }
+        }
     }
 }
