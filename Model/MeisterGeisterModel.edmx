@@ -38,13 +38,18 @@
     <EntitySet Name="Held" EntityType="DatabaseDSAModel.Store.Held" store:Type="Tables" />
     <EntitySet Name="Held_Audio_Playlist" EntityType="DatabaseDSAModel.Store.Held_Audio_Playlist" store:Type="Tables" />
     <EntitySet Name="Held_Ausrüstung" EntityType="DatabaseDSAModel.Store.Held_Ausrüstung" store:Type="Tables" />
+    <EntitySet Name="Held_BFAusrüstung" EntityType="DatabaseDSAModel.Store.Held_BFAusrüstung" store:Type="Tables" />
+    <EntitySet Name="Held_Fernkampfwaffe" EntityType="DatabaseDSAModel.Store.Held_Fernkampfwaffe" store:Type="Tables" />
     <EntitySet Name="Held_Inventar" EntityType="DatabaseDSAModel.Store.Held_Inventar" store:Type="Tables" />
     <EntitySet Name="Held_Modifikator" EntityType="DatabaseDSAModel.Store.Held_Modifikator" store:Type="Tables" />
     <EntitySet Name="Held_Munition" EntityType="DatabaseDSAModel.Store.Held_Munition" store:Type="Tables" />
     <EntitySet Name="Held_Pflanze" EntityType="DatabaseDSAModel.Store.Held_Pflanze" store:Type="Tables" />
+    <EntitySet Name="Held_Rüstung" EntityType="DatabaseDSAModel.Store.Held_Rüstung" store:Type="Tables" />
+    <EntitySet Name="Held_Schild" EntityType="DatabaseDSAModel.Store.Held_Schild" store:Type="Tables" />
     <EntitySet Name="Held_Sonderfertigkeit" EntityType="DatabaseDSAModel.Store.Held_Sonderfertigkeit" store:Type="Tables" />
     <EntitySet Name="Held_Talent" EntityType="DatabaseDSAModel.Store.Held_Talent" store:Type="Tables" />
     <EntitySet Name="Held_VorNachteil" EntityType="DatabaseDSAModel.Store.Held_VorNachteil" store:Type="Tables" />
+    <EntitySet Name="Held_Waffe" EntityType="DatabaseDSAModel.Store.Held_Waffe" store:Type="Tables" />
     <EntitySet Name="Held_Zauber" EntityType="DatabaseDSAModel.Store.Held_Zauber" store:Type="Tables" />
     <EntitySet Name="Inventar" EntityType="DatabaseDSAModel.Store.Inventar" store:Type="Tables" />
     <EntitySet Name="Kampfregel" EntityType="DatabaseDSAModel.Store.Kampfregel" store:Type="Tables" />
@@ -58,12 +63,14 @@
     <EntitySet Name="MenuLink" EntityType="DatabaseDSAModel.Store.MenuLink" store:Type="Tables" />
     <EntitySet Name="Modifikator" EntityType="DatabaseDSAModel.Store.Modifikator" store:Type="Tables" />
     <EntitySet Name="Munition" EntityType="DatabaseDSAModel.Store.Munition" store:Type="Tables" />
+    <EntitySet Name="Munition_Setting" EntityType="DatabaseDSAModel.Store.Munition_Setting" store:Type="Tables" />
     <EntitySet Name="Name" EntityType="DatabaseDSAModel.Store.Name" store:Type="Tables" />
     <EntitySet Name="Notizen" EntityType="DatabaseDSAModel.Store.Notizen" store:Type="Tables" />
     <EntitySet Name="NscMerkmal" EntityType="DatabaseDSAModel.Store.NscMerkmal" store:Type="Tables" />
     <EntitySet Name="Pflanze" EntityType="DatabaseDSAModel.Store.Pflanze" store:Type="Tables" />
     <EntitySet Name="Pflanze_Ernte" EntityType="DatabaseDSAModel.Store.Pflanze_Ernte" store:Type="Tables" />
     <EntitySet Name="Pflanze_Gebiet" EntityType="DatabaseDSAModel.Store.Pflanze_Gebiet" store:Type="Tables" />
+    <EntitySet Name="Pflanze_Typ" EntityType="DatabaseDSAModel.Store.Pflanze_Typ" store:Type="Tables" />
     <EntitySet Name="Pflanze_Verbreitung" EntityType="DatabaseDSAModel.Store.Pflanze_Verbreitung" store:Type="Tables" />
     <EntitySet Name="Polygon" EntityType="DatabaseDSAModel.Store.Polygon" store:Type="Tables" />
     <EntitySet Name="Rasse" EntityType="DatabaseDSAModel.Store.Rasse" store:Type="Tables" />
@@ -250,6 +257,22 @@
       <End Role="Held" EntitySet="Held" />
       <End Role="Held_Audio_Playlist" EntitySet="Held_Audio_Playlist" />
     </AssociationSet>
+    <AssociationSet Name="fk_Held_BFAusrüstung_Held_Ausrüstung" Association="DatabaseDSAModel.Store.fk_Held_BFAusrüstung_Held_Ausrüstung">
+      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+      <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Fernkampfwaffe_Fernkampfwaffe" Association="DatabaseDSAModel.Store.fk_Held_Fernkampfwaffe_Fernkampfwaffe">
+      <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
+      <End Role="Held_Fernkampfwaffe" EntitySet="Held_Fernkampfwaffe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Fernkampfwaffe_Held_Ausrüstung" Association="DatabaseDSAModel.Store.fk_Held_Fernkampfwaffe_Held_Ausrüstung">
+      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+      <End Role="Held_Fernkampfwaffe" EntitySet="Held_Fernkampfwaffe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Fernkampfwaffe_Talent" Association="DatabaseDSAModel.Store.fk_Held_Fernkampfwaffe_Talent">
+      <End Role="Talent" EntitySet="Talent" />
+      <End Role="Held_Fernkampfwaffe" EntitySet="Held_Fernkampfwaffe" />
+    </AssociationSet>
     <AssociationSet Name="fk_Held_Pflanze_HeldGUID" Association="DatabaseDSAModel.Store.fk_Held_Pflanze_HeldGUID">
       <End Role="Held" EntitySet="Held" />
       <End Role="Held_Pflanze" EntitySet="Held_Pflanze" />
@@ -258,16 +281,36 @@
       <End Role="Pflanze" EntitySet="Pflanze" />
       <End Role="Held_Pflanze" EntitySet="Held_Pflanze" />
     </AssociationSet>
-    <AssociationSet Name="fk_HeldAusrüstung_Ausrüstung" Association="DatabaseDSAModel.Store.fk_HeldAusrüstung_Ausrüstung">
-      <End Role="Ausrüstung" EntitySet="Ausrüstung" />
+    <AssociationSet Name="fk_Held_Rüstung_Held_Ausrüstung" Association="DatabaseDSAModel.Store.fk_Held_Rüstung_Held_Ausrüstung">
       <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+      <End Role="Held_Rüstung" EntitySet="Held_Rüstung" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Rüstung_Rüstung" Association="DatabaseDSAModel.Store.fk_Held_Rüstung_Rüstung">
+      <End Role="Rüstung" EntitySet="Rüstung" />
+      <End Role="Held_Rüstung" EntitySet="Held_Rüstung" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Schild_Held_BFAusrüstung" Association="DatabaseDSAModel.Store.fk_Held_Schild_Held_BFAusrüstung">
+      <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
+      <End Role="Held_Schild" EntitySet="Held_Schild" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Schild_Schild" Association="DatabaseDSAModel.Store.fk_Held_Schild_Schild">
+      <End Role="Schild" EntitySet="Schild" />
+      <End Role="Held_Schild" EntitySet="Held_Schild" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Waffe_Held_Ausrüstung" Association="DatabaseDSAModel.Store.fk_Held_Waffe_Held_Ausrüstung">
+      <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
+      <End Role="Held_Waffe" EntitySet="Held_Waffe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Waffe_Talent" Association="DatabaseDSAModel.Store.fk_Held_Waffe_Talent">
+      <End Role="Talent" EntitySet="Talent" />
+      <End Role="Held_Waffe" EntitySet="Held_Waffe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Waffe_Waffe" Association="DatabaseDSAModel.Store.fk_Held_Waffe_Waffe">
+      <End Role="Waffe" EntitySet="Waffe" />
+      <End Role="Held_Waffe" EntitySet="Held_Waffe" />
     </AssociationSet>
     <AssociationSet Name="fk_HeldAusrüstung_Held" Association="DatabaseDSAModel.Store.fk_HeldAusrüstung_Held">
       <End Role="Held" EntitySet="Held" />
-      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
-    </AssociationSet>
-    <AssociationSet Name="fk_HeldAusrüstung_Talent" Association="DatabaseDSAModel.Store.fk_HeldAusrüstung_Talent">
-      <End Role="Talent" EntitySet="Talent" />
       <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
     </AssociationSet>
     <AssociationSet Name="fk_HeldInventar_Held" Association="DatabaseDSAModel.Store.fk_HeldInventar_Held">
@@ -310,6 +353,14 @@
       <End Role="Landschaftsgruppe" EntitySet="Landschaftsgruppe" />
       <End Role="Landschaftsgruppe_Landschaft" EntitySet="Landschaftsgruppe_Landschaft" />
     </AssociationSet>
+    <AssociationSet Name="fk_Munition_Setting_Munition" Association="DatabaseDSAModel.Store.fk_Munition_Setting_Munition">
+      <End Role="Munition" EntitySet="Munition" />
+      <End Role="Munition_Setting" EntitySet="Munition_Setting" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Munition_Setting_Setting" Association="DatabaseDSAModel.Store.fk_Munition_Setting_Setting">
+      <End Role="Setting" EntitySet="Setting" />
+      <End Role="Munition_Setting" EntitySet="Munition_Setting" />
+    </AssociationSet>
     <AssociationSet Name="fk_Pflanze_Ernte_Handelsgut" Association="DatabaseDSAModel.Store.fk_Pflanze_Ernte_Handelsgut">
       <End Role="Handelsgut" EntitySet="Handelsgut" />
       <End Role="Pflanze_Ernte" EntitySet="Pflanze_Ernte" />
@@ -325,6 +376,10 @@
     <AssociationSet Name="fk_Pflanze_Gebiet_PflanzeGUID" Association="DatabaseDSAModel.Store.fk_Pflanze_Gebiet_PflanzeGUID">
       <End Role="Pflanze" EntitySet="Pflanze" />
       <End Role="Pflanze_Gebiet" EntitySet="Pflanze_Gebiet" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Pflanze_Typ_Pflanze" Association="DatabaseDSAModel.Store.fk_Pflanze_Typ_Pflanze">
+      <End Role="Pflanze" EntitySet="Pflanze" />
+      <End Role="Pflanze_Typ" EntitySet="Pflanze_Typ" />
     </AssociationSet>
     <AssociationSet Name="fk_Pflanze_Verbreitung_LandschaftGUID" Association="DatabaseDSAModel.Store.fk_Pflanze_Verbreitung_LandschaftGUID">
       <End Role="Landschaft" EntitySet="Landschaft" />
@@ -946,17 +1001,31 @@
   </EntityType>
   <EntityType Name="Held_Ausrüstung">
     <Key>
-      <PropertyRef Name="HeldGUID" />
-      <PropertyRef Name="AusrüstungGUID" />
-      <PropertyRef Name="TrageortGUID" />
+      <PropertyRef Name="HeldAusrüstungGUID" />
     </Key>
     <Property Name="HeldGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Angelegt" Type="bit" Nullable="false" />
-    <Property Name="AusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="TalentGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Anzahl" Type="int" />
-    <Property Name="BF" Type="int" Nullable="false" />
     <Property Name="TrageortGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Eigenname" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Held_BFAusrüstung">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="BF" Type="int" Nullable="false" />
+    <Property Name="StartBF" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Held_Fernkampfwaffe">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FernkampfwaffeGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TalentGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FKErleichterung" Type="int" Nullable="false" />
+    <Property Name="KKErleichterung" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Held_Inventar">
     <Key>
@@ -1006,6 +1075,22 @@
     <Property Name="PflanzeGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Bekannt" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Held_Rüstung">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Strukturpunkte" Type="int" Nullable="false" />
+    <Property Name="StartStrukturpunkte" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Held_Schild">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SchildGUID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
   <EntityType Name="Held_Sonderfertigkeit">
     <Key>
       <PropertyRef Name="Id" />
@@ -1035,6 +1120,18 @@
     <Property Name="HeldGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="VorNachteilGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Wert" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Held_Waffe">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="WaffeGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TalentGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="INI" Type="int" Nullable="false" />
+    <Property Name="TPBonus" Type="int" Nullable="false" />
+    <Property Name="WMAT" Type="int" Nullable="false" />
+    <Property Name="WMPA" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Held_Zauber">
     <Key>
@@ -1188,10 +1285,19 @@
     <Property Name="Preismodifikator" Type="int" Nullable="false" />
     <Property Name="Bemerkungen" Type="ntext" />
     <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
-    <Property Name="Setting" Type="nvarchar" MaxLength="100" />
     <Property Name="Probe" Type="int" Nullable="false" />
     <Property Name="Spitze" Type="nvarchar" MaxLength="50" />
     <Property Name="Härtbar" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Munition_Setting">
+    <Key>
+      <PropertyRef Name="MunitionGUID" />
+      <PropertyRef Name="SettingGUID" />
+    </Key>
+    <Property Name="MunitionGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Preismodifikator" Type="int" />
   </EntityType>
   <EntityType Name="Name">
     <Key>
@@ -1232,7 +1338,6 @@
     <Property Name="AusnahmeVon" Type="float" />
     <Property Name="AusnahmeBis" Type="float" />
     <Property Name="Name" Type="nvarchar" MaxLength="500" />
-    <Property Name="Kategorie" Type="nvarchar" MaxLength="500" />
     <Property Name="Bemerkung" Type="ntext" />
     <Property Name="Literatur" Type="nvarchar" MaxLength="500" />
     <Property Name="BestimmungAusname2" Type="smallint" />
@@ -1265,6 +1370,14 @@
     </Key>
     <Property Name="PflanzeGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="GebietGUID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pflanze_Typ">
+    <Key>
+      <PropertyRef Name="PflanzeGUID" />
+      <PropertyRef Name="Typ" />
+    </Key>
+    <Property Name="PflanzeGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Typ" Type="nvarchar" Nullable="false" MaxLength="200" />
   </EntityType>
   <EntityType Name="Pflanze_Verbreitung">
     <Key>
@@ -2129,6 +2242,62 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_Held_BFAusrüstung_Held_Ausrüstung">
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Store.Held_Ausrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Store.Held_BFAusrüstung" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Held_Ausrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_BFAusrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Fernkampfwaffe_Fernkampfwaffe">
+    <End Role="Fernkampfwaffe" Type="DatabaseDSAModel.Store.Fernkampfwaffe" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Store.Held_Fernkampfwaffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fernkampfwaffe">
+        <PropertyRef Name="FernkampfwaffeGUID" />
+      </Principal>
+      <Dependent Role="Held_Fernkampfwaffe">
+        <PropertyRef Name="FernkampfwaffeGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Fernkampfwaffe_Held_Ausrüstung">
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Store.Held_Ausrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Store.Held_Fernkampfwaffe" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Held_Ausrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Fernkampfwaffe">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Fernkampfwaffe_Talent">
+    <End Role="Talent" Type="DatabaseDSAModel.Store.Talent" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Store.Held_Fernkampfwaffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Talent">
+        <PropertyRef Name="TalentGUID" />
+      </Principal>
+      <Dependent Role="Held_Fernkampfwaffe">
+        <PropertyRef Name="TalentGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Held_Pflanze_HeldGUID">
     <End Role="Held" Type="DatabaseDSAModel.Store.Held" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -2157,17 +2326,101 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_HeldAusrüstung_Ausrüstung">
-    <End Role="Ausrüstung" Type="DatabaseDSAModel.Store.Ausrüstung" Multiplicity="1">
+  <Association Name="fk_Held_Rüstung_Held_Ausrüstung">
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Store.Held_Ausrüstung" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Store.Held_Ausrüstung" Multiplicity="*" />
+    <End Role="Held_Rüstung" Type="DatabaseDSAModel.Store.Held_Rüstung" Multiplicity="0..1" />
     <ReferentialConstraint>
-      <Principal Role="Ausrüstung">
-        <PropertyRef Name="AusrüstungGUID" />
+      <Principal Role="Held_Ausrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
       </Principal>
-      <Dependent Role="Held_Ausrüstung">
-        <PropertyRef Name="AusrüstungGUID" />
+      <Dependent Role="Held_Rüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Rüstung_Rüstung">
+    <End Role="Rüstung" Type="DatabaseDSAModel.Store.Rüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Rüstung" Type="DatabaseDSAModel.Store.Held_Rüstung" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rüstung">
+        <PropertyRef Name="RüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Rüstung">
+        <PropertyRef Name="RüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Schild_Held_BFAusrüstung">
+    <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Store.Held_BFAusrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Schild" Type="DatabaseDSAModel.Store.Held_Schild" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Held_BFAusrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Schild">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Schild_Schild">
+    <End Role="Schild" Type="DatabaseDSAModel.Store.Schild" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Schild" Type="DatabaseDSAModel.Store.Held_Schild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schild">
+        <PropertyRef Name="SchildGUID" />
+      </Principal>
+      <Dependent Role="Held_Schild">
+        <PropertyRef Name="SchildGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Waffe_Held_Ausrüstung">
+    <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Store.Held_BFAusrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Waffe" Type="DatabaseDSAModel.Store.Held_Waffe" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Held_BFAusrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Waffe">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Waffe_Talent">
+    <End Role="Talent" Type="DatabaseDSAModel.Store.Talent" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Waffe" Type="DatabaseDSAModel.Store.Held_Waffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Talent">
+        <PropertyRef Name="TalentGUID" />
+      </Principal>
+      <Dependent Role="Held_Waffe">
+        <PropertyRef Name="TalentGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Waffe_Waffe">
+    <End Role="Waffe" Type="DatabaseDSAModel.Store.Waffe" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Waffe" Type="DatabaseDSAModel.Store.Held_Waffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Waffe">
+        <PropertyRef Name="WaffeGUID" />
+      </Principal>
+      <Dependent Role="Held_Waffe">
+        <PropertyRef Name="WaffeGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2182,20 +2435,6 @@
       </Principal>
       <Dependent Role="Held_Ausrüstung">
         <PropertyRef Name="HeldGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_HeldAusrüstung_Talent">
-    <End Role="Talent" Type="DatabaseDSAModel.Store.Talent" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Store.Held_Ausrüstung" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Talent">
-        <PropertyRef Name="TalentGUID" />
-      </Principal>
-      <Dependent Role="Held_Ausrüstung">
-        <PropertyRef Name="TalentGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2339,6 +2578,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_Munition_Setting_Munition">
+    <End Role="Munition" Type="DatabaseDSAModel.Store.Munition" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Munition_Setting" Type="DatabaseDSAModel.Store.Munition_Setting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Munition">
+        <PropertyRef Name="MunitionGUID" />
+      </Principal>
+      <Dependent Role="Munition_Setting">
+        <PropertyRef Name="MunitionGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Munition_Setting_Setting">
+    <End Role="Setting" Type="DatabaseDSAModel.Store.Setting" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Munition_Setting" Type="DatabaseDSAModel.Store.Munition_Setting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Setting">
+        <PropertyRef Name="SettingGUID" />
+      </Principal>
+      <Dependent Role="Munition_Setting">
+        <PropertyRef Name="SettingGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Pflanze_Ernte_Handelsgut">
     <End Role="Handelsgut" Type="DatabaseDSAModel.Store.Handelsgut" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -2391,6 +2658,20 @@
         <PropertyRef Name="PflanzeGUID" />
       </Principal>
       <Dependent Role="Pflanze_Gebiet">
+        <PropertyRef Name="PflanzeGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Pflanze_Typ_Pflanze">
+    <End Role="Pflanze" Type="DatabaseDSAModel.Store.Pflanze" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Pflanze_Typ" Type="DatabaseDSAModel.Store.Pflanze_Typ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pflanze">
+        <PropertyRef Name="PflanzeGUID" />
+      </Principal>
+      <Dependent Role="Pflanze_Typ">
         <PropertyRef Name="PflanzeGUID" />
       </Dependent>
     </ReferentialConstraint>
@@ -2824,13 +3105,17 @@
     <EntitySet Name="Held" EntityType="DatabaseDSAModel.Held" />
     <EntitySet Name="Held_Audio_Playlist" EntityType="DatabaseDSAModel.Held_Audio_Playlist" />
     <EntitySet Name="Held_Ausrüstung" EntityType="DatabaseDSAModel.Held_Ausrüstung" />
+    <EntitySet Name="Held_BFAusrüstung" EntityType="DatabaseDSAModel.Held_BFAusrüstung" />
+    <EntitySet Name="Held_Fernkampfwaffe" EntityType="DatabaseDSAModel.Held_Fernkampfwaffe" />
     <EntitySet Name="Held_Inventar" EntityType="DatabaseDSAModel.Held_Inventar" />
     <EntitySet Name="Held_Modifikator" EntityType="DatabaseDSAModel.Held_Modifikator" />
     <EntitySet Name="Held_Munition" EntityType="DatabaseDSAModel.Held_Munition" />
     <EntitySet Name="Held_Pflanze" EntityType="DatabaseDSAModel.Held_Pflanze" />
+    <EntitySet Name="Held_Rüstung" EntityType="DatabaseDSAModel.Held_Rüstung" />
     <EntitySet Name="Held_Sonderfertigkeit" EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" />
     <EntitySet Name="Held_Talent" EntityType="DatabaseDSAModel.Held_Talent" />
     <EntitySet Name="Held_VorNachteil" EntityType="DatabaseDSAModel.Held_VorNachteil" />
+    <EntitySet Name="Held_Waffe" EntityType="DatabaseDSAModel.Held_Waffe" />
     <EntitySet Name="Held_Zauber" EntityType="DatabaseDSAModel.Held_Zauber" />
     <EntitySet Name="Inventar" EntityType="DatabaseDSAModel.Inventar" />
     <EntitySet Name="Kampfregel" EntityType="DatabaseDSAModel.Kampfregel" />
@@ -2843,11 +3128,13 @@
     <EntitySet Name="MenuLink" EntityType="DatabaseDSAModel.MenuLink" />
     <EntitySet Name="Modifikator" EntityType="DatabaseDSAModel.Modifikator" />
     <EntitySet Name="Munition" EntityType="DatabaseDSAModel.Munition" />
+    <EntitySet Name="Munition_Setting" EntityType="DatabaseDSAModel.Munition_Setting" />
     <EntitySet Name="Name" EntityType="DatabaseDSAModel.Name" />
     <EntitySet Name="Notizen" EntityType="DatabaseDSAModel.Notizen" />
     <EntitySet Name="NscMerkmal" EntityType="DatabaseDSAModel.NscMerkmal" />
     <EntitySet Name="Pflanze" EntityType="DatabaseDSAModel.Pflanze" />
     <EntitySet Name="Pflanze_Ernte" EntityType="DatabaseDSAModel.Pflanze_Ernte" />
+    <EntitySet Name="Pflanze_Typ" EntityType="DatabaseDSAModel.Pflanze_Typ" />
     <EntitySet Name="Pflanze_Verbreitung" EntityType="DatabaseDSAModel.Pflanze_Verbreitung" />
     <EntitySet Name="Polygon" EntityType="DatabaseDSAModel.Polygon" />
     <EntitySet Name="Rasse" EntityType="DatabaseDSAModel.Rasse" />
@@ -2925,10 +3212,6 @@
       <End Role="Ausrüstung" EntitySet="Ausrüstung" />
       <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
     </AssociationSet>
-    <AssociationSet Name="fk_HeldAusrüstung_Ausrüstung" Association="DatabaseDSAModel.fk_HeldAusrüstung_Ausrüstung">
-      <End Role="Ausrüstung" EntitySet="Ausrüstung" />
-      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
-    </AssociationSet>
     <AssociationSet Name="fk_Rüstung_Ausrüstung" Association="DatabaseDSAModel.fk_Rüstung_Ausrüstung">
       <End Role="Ausrüstung" EntitySet="Ausrüstung" />
       <End Role="Rüstung" EntitySet="Rüstung" />
@@ -2968,6 +3251,10 @@
     <AssociationSet Name="fk_RasseFarbe_Farbe" Association="DatabaseDSAModel.fk_RasseFarbe_Farbe">
       <End Role="Farbe" EntitySet="Farbe" />
       <End Role="Rasse_Farbe" EntitySet="Rasse_Farbe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Fernkampfwaffe_Fernkampfwaffe" Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe">
+      <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
+      <End Role="Held_Fernkampfwaffe" EntitySet="Held_Fernkampfwaffe" />
     </AssociationSet>
     <AssociationSet Name="fk_HeldMunition_Fernkampfwaffe" Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe">
       <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
@@ -3053,13 +3340,29 @@
       <End Role="Held" EntitySet="Held" />
       <End Role="Held_Zauber" EntitySet="Held_Zauber" />
     </AssociationSet>
-    <AssociationSet Name="fk_HeldAusrüstung_Talent" Association="DatabaseDSAModel.fk_HeldAusrüstung_Talent">
-      <End Role="Talent" EntitySet="Talent" />
+    <AssociationSet Name="fk_Held_BFAusrüstung_Held_Ausrüstung" Association="DatabaseDSAModel.fk_Held_BFAusrüstung_Held_Ausrüstung">
       <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+      <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Fernkampfwaffe_Held_Ausrüstung" Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Held_Ausrüstung">
+      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+      <End Role="Held_Fernkampfwaffe" EntitySet="Held_Fernkampfwaffe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Rüstung_Held_Ausrüstung" Association="DatabaseDSAModel.fk_Held_Rüstung_Held_Ausrüstung">
+      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+      <End Role="Held_Rüstung" EntitySet="Held_Rüstung" />
     </AssociationSet>
     <AssociationSet Name="fk_TrageortGUID" Association="DatabaseDSAModel.fk_TrageortGUID">
       <End Role="Trageort" EntitySet="Trageort" />
       <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Waffe_Held_Ausrüstung" Association="DatabaseDSAModel.fk_Held_Waffe_Held_Ausrüstung">
+      <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
+      <End Role="Held_Waffe" EntitySet="Held_Waffe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Fernkampfwaffe_Talent" Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Talent">
+      <End Role="Talent" EntitySet="Talent" />
+      <End Role="Held_Fernkampfwaffe" EntitySet="Held_Fernkampfwaffe" />
     </AssociationSet>
     <AssociationSet Name="fk_HeldInventar_Inventar" Association="DatabaseDSAModel.fk_HeldInventar_Inventar">
       <End Role="Inventar" EntitySet="Inventar" />
@@ -3085,6 +3388,10 @@
       <End Role="Pflanze" EntitySet="Pflanze" />
       <End Role="Held_Pflanze" EntitySet="Held_Pflanze" />
     </AssociationSet>
+    <AssociationSet Name="fk_Held_Rüstung_Rüstung" Association="DatabaseDSAModel.fk_Held_Rüstung_Rüstung">
+      <End Role="Rüstung" EntitySet="Rüstung" />
+      <End Role="Held_Rüstung" EntitySet="Held_Rüstung" />
+    </AssociationSet>
     <AssociationSet Name="Held_Sonderfertigkeit_SonderfertigkeitFK" Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK">
       <End Role="Sonderfertigkeit" EntitySet="Sonderfertigkeit" />
       <End Role="Held_Sonderfertigkeit" EntitySet="Held_Sonderfertigkeit" />
@@ -3096,6 +3403,14 @@
     <AssociationSet Name="Held_VorNachteil_VorNachteilFK" Association="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK">
       <End Role="VorNachteil" EntitySet="VorNachteil" />
       <End Role="Held_VorNachteil" EntitySet="Held_VorNachteil" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Waffe_Talent" Association="DatabaseDSAModel.fk_Held_Waffe_Talent">
+      <End Role="Talent" EntitySet="Talent" />
+      <End Role="Held_Waffe" EntitySet="Held_Waffe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Held_Waffe_Waffe" Association="DatabaseDSAModel.fk_Held_Waffe_Waffe">
+      <End Role="Waffe" EntitySet="Waffe" />
+      <End Role="Held_Waffe" EntitySet="Held_Waffe" />
     </AssociationSet>
     <AssociationSet Name="Zauber_FK" Association="DatabaseDSAModel.Zauber_FK">
       <End Role="Zauber" EntitySet="Zauber" />
@@ -3113,9 +3428,21 @@
       <End Role="Landschaft" EntitySet="Landschaft" />
       <End Role="Pflanze_Verbreitung" EntitySet="Pflanze_Verbreitung" />
     </AssociationSet>
+    <AssociationSet Name="fk_Munition_Setting_Munition" Association="DatabaseDSAModel.fk_Munition_Setting_Munition">
+      <End Role="Munition" EntitySet="Munition" />
+      <End Role="Munition_Setting" EntitySet="Munition_Setting" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Munition_Setting_Setting" Association="DatabaseDSAModel.fk_Munition_Setting_Setting">
+      <End Role="Setting" EntitySet="Setting" />
+      <End Role="Munition_Setting" EntitySet="Munition_Setting" />
+    </AssociationSet>
     <AssociationSet Name="fk_Pflanze_Ernte_PflanzeGUID" Association="DatabaseDSAModel.fk_Pflanze_Ernte_PflanzeGUID">
       <End Role="Pflanze" EntitySet="Pflanze" />
       <End Role="Pflanze_Ernte" EntitySet="Pflanze_Ernte" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Pflanze_Typ_Pflanze" Association="DatabaseDSAModel.fk_Pflanze_Typ_Pflanze">
+      <End Role="Pflanze" EntitySet="Pflanze" />
+      <End Role="Pflanze_Typ" EntitySet="Pflanze_Typ" />
     </AssociationSet>
     <AssociationSet Name="fk_Pflanze_Verbreitung_PflanzeGUID" Association="DatabaseDSAModel.fk_Pflanze_Verbreitung_PflanzeGUID">
       <End Role="Pflanze" EntitySet="Pflanze" />
@@ -3180,6 +3507,10 @@
     <AssociationSet Name="Gebiet_Polygon" Association="DatabaseDSAModel.Gebiet_Polygon">
       <End Role="Gebiet" EntitySet="Gebiet" />
       <End Role="Polygon" EntitySet="Polygon" />
+    </AssociationSet>
+    <AssociationSet Name="Held_Schild" Association="DatabaseDSAModel.Held_Schild">
+      <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
+      <End Role="Schild" EntitySet="Schild" />
     </AssociationSet>
     <AssociationSet Name="Landschaftsgruppe_Landschaft" Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft">
       <End Role="Landschaft" EntitySet="Landschaft" />
@@ -3366,7 +3697,6 @@
     <Property Name="BasisAusrüstung" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Ausrüstung_Setting" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" FromRole="Ausrüstung" ToRole="Ausrüstung_Setting" />
     <NavigationProperty Name="Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" FromRole="Ausrüstung" ToRole="Fernkampfwaffe" />
-    <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Ausrüstung" FromRole="Ausrüstung" ToRole="Held_Ausrüstung" />
     <NavigationProperty Name="Rüstung" Relationship="DatabaseDSAModel.fk_Rüstung_Ausrüstung" FromRole="Ausrüstung" ToRole="Rüstung" />
     <NavigationProperty Name="Schild" Relationship="DatabaseDSAModel.fk_Schild_Ausrüstung" FromRole="Ausrüstung" ToRole="Schild" />
     <NavigationProperty Name="Waffe" Relationship="DatabaseDSAModel.fk_Waffe_Ausrüstung" FromRole="Ausrüstung" ToRole="Waffe" />
@@ -3471,6 +3801,7 @@
     <Property Name="TPSehrWeit" Type="Int32" />
     <Property Name="Laden" Type="Int32" />
     <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" FromRole="Fernkampfwaffe" ToRole="Ausrüstung" />
+    <NavigationProperty Name="Held_Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe" FromRole="Fernkampfwaffe" ToRole="Held_Fernkampfwaffe" />
     <NavigationProperty Name="Held_Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" FromRole="Fernkampfwaffe" ToRole="Held_Munition" />
     <NavigationProperty Name="Talent" Relationship="DatabaseDSAModel.Fernkampfwaffe_Talent" FromRole="Fernkampfwaffe" ToRole="Talent" />
   </EntityType>
@@ -3746,21 +4077,42 @@
   </EntityType>
   <EntityType Name="Held_Ausrüstung">
     <Key>
-      <PropertyRef Name="HeldGUID" />
-      <PropertyRef Name="AusrüstungGUID" />
-      <PropertyRef Name="TrageortGUID" />
+      <PropertyRef Name="HeldAusrüstungGUID" />
     </Key>
     <Property Name="HeldGUID" Type="Guid" Nullable="false" />
     <Property Name="Angelegt" Type="Boolean" Nullable="false" />
-    <Property Name="AusrüstungGUID" Type="Guid" Nullable="false" />
-    <Property Name="TalentGUID" Type="Guid" Nullable="false" />
-    <Property Name="Anzahl" Type="Int32" />
-    <Property Name="BF" Type="Int32" Nullable="false" />
     <Property Name="TrageortGUID" Type="Guid" Nullable="false" />
-    <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Ausrüstung" FromRole="Held_Ausrüstung" ToRole="Ausrüstung" />
+    <Property Name="HeldAusrüstungGUID" Type="Guid" Nullable="false" />
+    <Property Name="Eigenname" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Held" FromRole="Held_Ausrüstung" ToRole="Held" />
-    <NavigationProperty Name="Talent" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Talent" FromRole="Held_Ausrüstung" ToRole="Talent" />
+    <NavigationProperty Name="Held_BFAusrüstung" Relationship="DatabaseDSAModel.fk_Held_BFAusrüstung_Held_Ausrüstung" FromRole="Held_Ausrüstung" ToRole="Held_BFAusrüstung" />
+    <NavigationProperty Name="Held_Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Held_Ausrüstung" FromRole="Held_Ausrüstung" ToRole="Held_Fernkampfwaffe" />
+    <NavigationProperty Name="Held_Rüstung" Relationship="DatabaseDSAModel.fk_Held_Rüstung_Held_Ausrüstung" FromRole="Held_Ausrüstung" ToRole="Held_Rüstung" />
     <NavigationProperty Name="Trageort" Relationship="DatabaseDSAModel.fk_TrageortGUID" FromRole="Held_Ausrüstung" ToRole="Trageort" />
+  </EntityType>
+  <EntityType Name="Held_BFAusrüstung">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="Guid" Nullable="false" />
+    <Property Name="BF" Type="Int32" Nullable="false" />
+    <Property Name="StartBF" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_Held_BFAusrüstung_Held_Ausrüstung" FromRole="Held_BFAusrüstung" ToRole="Held_Ausrüstung" />
+    <NavigationProperty Name="Held_Waffe" Relationship="DatabaseDSAModel.fk_Held_Waffe_Held_Ausrüstung" FromRole="Held_BFAusrüstung" ToRole="Held_Waffe" />
+    <NavigationProperty Name="Schild" Relationship="DatabaseDSAModel.Held_Schild" FromRole="Held_BFAusrüstung" ToRole="Schild" />
+  </EntityType>
+  <EntityType Name="Held_Fernkampfwaffe">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="Guid" Nullable="false" />
+    <Property Name="FernkampfwaffeGUID" Type="Guid" Nullable="false" />
+    <Property Name="TalentGUID" Type="Guid" Nullable="false" />
+    <Property Name="FKErleichterung" Type="Int32" Nullable="false" />
+    <Property Name="KKErleichterung" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe" FromRole="Held_Fernkampfwaffe" ToRole="Fernkampfwaffe" />
+    <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Held_Ausrüstung" FromRole="Held_Fernkampfwaffe" ToRole="Held_Ausrüstung" />
+    <NavigationProperty Name="Talent" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Talent" FromRole="Held_Fernkampfwaffe" ToRole="Talent" />
   </EntityType>
   <EntityType Name="Held_Inventar">
     <Key>
@@ -3821,6 +4173,17 @@
     <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.fk_Held_Pflanze_HeldGUID" FromRole="Held_Pflanze" ToRole="Held" />
     <NavigationProperty Name="Pflanze" Relationship="DatabaseDSAModel.fk_Held_Pflanze_PflanzeGUID" FromRole="Held_Pflanze" ToRole="Pflanze" />
   </EntityType>
+  <EntityType Name="Held_Rüstung">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="Guid" Nullable="false" />
+    <Property Name="RüstungGUID" Type="Guid" Nullable="false" />
+    <Property Name="Strukturpunkte" Type="Int32" Nullable="false" />
+    <Property Name="StartStrukturpunkte" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_Held_Rüstung_Held_Ausrüstung" FromRole="Held_Rüstung" ToRole="Held_Ausrüstung" />
+    <NavigationProperty Name="Rüstung" Relationship="DatabaseDSAModel.fk_Held_Rüstung_Rüstung" FromRole="Held_Rüstung" ToRole="Rüstung" />
+  </EntityType>
   <EntityType Name="Held_Sonderfertigkeit">
     <Key>
       <PropertyRef Name="Id" />
@@ -3856,6 +4219,21 @@
     <Property Name="Wert" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.Held_VorNachteil_HeldFK" FromRole="Held_VorNachteil" ToRole="Held" />
     <NavigationProperty Name="VorNachteil" Relationship="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" FromRole="Held_VorNachteil" ToRole="VorNachteil" />
+  </EntityType>
+  <EntityType Name="Held_Waffe">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="Guid" Nullable="false" />
+    <Property Name="WaffeGUID" Type="Guid" Nullable="false" />
+    <Property Name="TalentGUID" Type="Guid" Nullable="false" />
+    <Property Name="INI" Type="Int32" Nullable="false" />
+    <Property Name="TPBonus" Type="Int32" Nullable="false" />
+    <Property Name="WMAT" Type="Int32" Nullable="false" />
+    <Property Name="WMPA" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Held_BFAusrüstung" Relationship="DatabaseDSAModel.fk_Held_Waffe_Held_Ausrüstung" FromRole="Held_Waffe" ToRole="Held_BFAusrüstung" />
+    <NavigationProperty Name="Talent" Relationship="DatabaseDSAModel.fk_Held_Waffe_Talent" FromRole="Held_Waffe" ToRole="Talent" />
+    <NavigationProperty Name="Waffe" Relationship="DatabaseDSAModel.fk_Held_Waffe_Waffe" FromRole="Held_Waffe" ToRole="Waffe" />
   </EntityType>
   <EntityType Name="Held_Zauber">
     <Key>
@@ -4014,11 +4392,23 @@
     <Property Name="Preismodifikator" Type="Int32" Nullable="false" />
     <Property Name="Bemerkungen" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Literatur" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
-    <Property Name="Setting" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Probe" Type="Int32" Nullable="false" />
     <Property Name="Spitze" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Härtbar" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Held_Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_Munition" FromRole="Munition" ToRole="Held_Munition" />
+    <NavigationProperty Name="Munition_Setting" Relationship="DatabaseDSAModel.fk_Munition_Setting_Munition" FromRole="Munition" ToRole="Munition_Setting" />
+  </EntityType>
+  <EntityType Name="Munition_Setting">
+    <Key>
+      <PropertyRef Name="MunitionGUID" />
+      <PropertyRef Name="SettingGUID" />
+    </Key>
+    <Property Name="MunitionGUID" Type="Guid" Nullable="false" />
+    <Property Name="SettingGUID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Preismodifikator" Type="Int32" />
+    <NavigationProperty Name="Munition" Relationship="DatabaseDSAModel.fk_Munition_Setting_Munition" FromRole="Munition_Setting" ToRole="Munition" />
+    <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_Munition_Setting_Setting" FromRole="Munition_Setting" ToRole="Setting" />
   </EntityType>
   <EntityType Name="Name">
     <Key>
@@ -4059,7 +4449,6 @@
     <Property Name="AusnahmeVon" Type="Double" />
     <Property Name="AusnahmeBis" Type="Double" />
     <Property Name="Name" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
-    <Property Name="Kategorie" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="Bemerkung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Literatur" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="BestimmungAusname2" Type="Int16" />
@@ -4070,6 +4459,7 @@
     <Property Name="BestimmungAusnahme" Type="Int16" />
     <NavigationProperty Name="Held_Pflanze" Relationship="DatabaseDSAModel.fk_Held_Pflanze_PflanzeGUID" FromRole="Pflanze" ToRole="Held_Pflanze" />
     <NavigationProperty Name="Pflanze_Ernte" Relationship="DatabaseDSAModel.fk_Pflanze_Ernte_PflanzeGUID" FromRole="Pflanze" ToRole="Pflanze_Ernte" />
+    <NavigationProperty Name="Pflanze_Typ" Relationship="DatabaseDSAModel.fk_Pflanze_Typ_Pflanze" FromRole="Pflanze" ToRole="Pflanze_Typ" />
     <NavigationProperty Name="Pflanze_Verbreitung" Relationship="DatabaseDSAModel.fk_Pflanze_Verbreitung_PflanzeGUID" FromRole="Pflanze" ToRole="Pflanze_Verbreitung" />
     <NavigationProperty Name="Gebiet" Relationship="DatabaseDSAModel.Pflanze_Gebiet" FromRole="Pflanze" ToRole="Gebiet" />
   </EntityType>
@@ -4090,6 +4480,15 @@
     <Property Name="HandelsgutGUID" Type="Guid" />
     <NavigationProperty Name="Handelsgut" Relationship="DatabaseDSAModel.fk_Pflanze_Ernte_Handelsgut" FromRole="Pflanze_Ernte" ToRole="Handelsgut" />
     <NavigationProperty Name="Pflanze" Relationship="DatabaseDSAModel.fk_Pflanze_Ernte_PflanzeGUID" FromRole="Pflanze_Ernte" ToRole="Pflanze" />
+  </EntityType>
+  <EntityType Name="Pflanze_Typ">
+    <Key>
+      <PropertyRef Name="PflanzeGUID" />
+      <PropertyRef Name="Typ" />
+    </Key>
+    <Property Name="PflanzeGUID" Type="Guid" Nullable="false" />
+    <Property Name="Typ" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Pflanze" Relationship="DatabaseDSAModel.fk_Pflanze_Typ_Pflanze" FromRole="Pflanze_Typ" ToRole="Pflanze" />
   </EntityType>
   <EntityType Name="Pflanze_Verbreitung">
     <Key>
@@ -4190,6 +4589,7 @@
     <Property Name="BE" Type="Int32" />
     <Property Name="Steif" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_Rüstung_Ausrüstung" FromRole="Rüstung" ToRole="Ausrüstung" />
+    <NavigationProperty Name="Held_Rüstung" Relationship="DatabaseDSAModel.fk_Held_Rüstung_Rüstung" FromRole="Rüstung" ToRole="Held_Rüstung" />
   </EntityType>
   <EntityType Name="Schild">
     <Key>
@@ -4203,6 +4603,7 @@
     <Property Name="INI" Type="Int32" Nullable="false" />
     <Property Name="BF" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_Schild_Ausrüstung" FromRole="Schild" ToRole="Ausrüstung" />
+    <NavigationProperty Name="Held_BFAusrüstung" Relationship="DatabaseDSAModel.Held_Schild" FromRole="Schild" ToRole="Held_BFAusrüstung" />
   </EntityType>
   <EntityType Name="Setting">
     <Key>
@@ -4214,6 +4615,7 @@
     <NavigationProperty Name="Alchimierezept_Setting" Relationship="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting" FromRole="Setting" ToRole="Alchimierezept_Setting" />
     <NavigationProperty Name="Ausrüstung_Setting" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Setting" FromRole="Setting" ToRole="Ausrüstung_Setting" />
     <NavigationProperty Name="Handelsgut_Setting" Relationship="DatabaseDSAModel.fk_HandelsgutSetting_Setting" FromRole="Setting" ToRole="Handelsgut_Setting" />
+    <NavigationProperty Name="Munition_Setting" Relationship="DatabaseDSAModel.fk_Munition_Setting_Setting" FromRole="Setting" ToRole="Munition_Setting" />
     <NavigationProperty Name="Sonderfertigkeit_Setting" Relationship="DatabaseDSAModel.fk_SonderfertigkeitSetting_Setting" FromRole="Setting" ToRole="Sonderfertigkeit_Setting" />
     <NavigationProperty Name="Zauber_Setting" Relationship="DatabaseDSAModel.fk_ZauberSetting_Setting" FromRole="Setting" ToRole="Zauber_Setting" />
     <NavigationProperty Name="Zauberzeichen_Setting" Relationship="DatabaseDSAModel.fk_ZauberzeichenSetting_Setting" FromRole="Setting" ToRole="Zauberzeichen_Setting" />
@@ -4263,8 +4665,9 @@
     <Property Name="Untergruppe" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <Property Name="Setting" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Literatur" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Talent" FromRole="Talent" ToRole="Held_Ausrüstung" />
+    <NavigationProperty Name="Held_Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Talent" FromRole="Talent" ToRole="Held_Fernkampfwaffe" />
     <NavigationProperty Name="Held_Talent" Relationship="DatabaseDSAModel.Talent_FK" FromRole="Talent" ToRole="Held_Talent" />
+    <NavigationProperty Name="Held_Waffe" Relationship="DatabaseDSAModel.fk_Held_Waffe_Talent" FromRole="Talent" ToRole="Held_Waffe" />
     <NavigationProperty Name="Talentgruppe" Relationship="DatabaseDSAModel.Gruppe" FromRole="Talent" ToRole="Talentgruppe" />
     <NavigationProperty Name="Fernkampfwaffe" Relationship="DatabaseDSAModel.Fernkampfwaffe_Talent" FromRole="Talent" ToRole="Fernkampfwaffe" />
     <NavigationProperty Name="Waffe" Relationship="DatabaseDSAModel.Waffe_Talent" FromRole="Talent" ToRole="Waffe" />
@@ -4330,6 +4733,7 @@
     <Property Name="DK" Type="String" MaxLength="5" Unicode="true" FixedLength="false" />
     <Property Name="Improvisiert" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_Waffe_Ausrüstung" FromRole="Waffe" ToRole="Ausrüstung" />
+    <NavigationProperty Name="Held_Waffe" Relationship="DatabaseDSAModel.fk_Held_Waffe_Waffe" FromRole="Waffe" ToRole="Held_Waffe" />
     <NavigationProperty Name="Talent" Relationship="DatabaseDSAModel.Waffe_Talent" FromRole="Waffe" ToRole="Talent" />
   </EntityType>
   <EntityType Name="Zauber">
@@ -4614,20 +5018,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_HeldAusrüstung_Ausrüstung">
-    <End Role="Ausrüstung" Type="DatabaseDSAModel.Ausrüstung" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Held_Ausrüstung" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Ausrüstung">
-        <PropertyRef Name="AusrüstungGUID" />
-      </Principal>
-      <Dependent Role="Held_Ausrüstung">
-        <PropertyRef Name="AusrüstungGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_Rüstung_Ausrüstung">
     <End Role="Ausrüstung" Type="DatabaseDSAModel.Ausrüstung" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -4765,6 +5155,20 @@
       </Principal>
       <Dependent Role="Rasse_Farbe">
         <PropertyRef Name="FarbeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Fernkampfwaffe_Fernkampfwaffe">
+    <End Role="Fernkampfwaffe" Type="DatabaseDSAModel.Fernkampfwaffe" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Held_Fernkampfwaffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fernkampfwaffe">
+        <PropertyRef Name="FernkampfwaffeGUID" />
+      </Principal>
+      <Dependent Role="Held_Fernkampfwaffe">
+        <PropertyRef Name="FernkampfwaffeGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5062,17 +5466,45 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_HeldAusrüstung_Talent">
-    <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="1">
+  <Association Name="fk_Held_BFAusrüstung_Held_Ausrüstung">
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Held_Ausrüstung" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Held_Ausrüstung" Multiplicity="*" />
+    <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Held_BFAusrüstung" Multiplicity="0..1" />
     <ReferentialConstraint>
-      <Principal Role="Talent">
-        <PropertyRef Name="TalentGUID" />
+      <Principal Role="Held_Ausrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
       </Principal>
-      <Dependent Role="Held_Ausrüstung">
-        <PropertyRef Name="TalentGUID" />
+      <Dependent Role="Held_BFAusrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Fernkampfwaffe_Held_Ausrüstung">
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Held_Ausrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Held_Fernkampfwaffe" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Held_Ausrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Fernkampfwaffe">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Rüstung_Held_Ausrüstung">
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Held_Ausrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Rüstung" Type="DatabaseDSAModel.Held_Rüstung" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Held_Ausrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Rüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5087,6 +5519,34 @@
       </Principal>
       <Dependent Role="Held_Ausrüstung">
         <PropertyRef Name="TrageortGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Waffe_Held_Ausrüstung">
+    <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Held_BFAusrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Waffe" Type="DatabaseDSAModel.Held_Waffe" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Held_BFAusrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Waffe">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Fernkampfwaffe_Talent">
+    <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Held_Fernkampfwaffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Talent">
+        <PropertyRef Name="TalentGUID" />
+      </Principal>
+      <Dependent Role="Held_Fernkampfwaffe">
+        <PropertyRef Name="TalentGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5174,6 +5634,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_Held_Rüstung_Rüstung">
+    <End Role="Rüstung" Type="DatabaseDSAModel.Rüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Rüstung" Type="DatabaseDSAModel.Held_Rüstung" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rüstung">
+        <PropertyRef Name="RüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Rüstung">
+        <PropertyRef Name="RüstungGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="Held_Sonderfertigkeit_SonderfertigkeitFK">
     <End Role="Sonderfertigkeit" Type="DatabaseDSAModel.Sonderfertigkeit" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -5213,6 +5687,34 @@
       </Principal>
       <Dependent Role="Held_VorNachteil">
         <PropertyRef Name="VorNachteilGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Waffe_Talent">
+    <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Waffe" Type="DatabaseDSAModel.Held_Waffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Talent">
+        <PropertyRef Name="TalentGUID" />
+      </Principal>
+      <Dependent Role="Held_Waffe">
+        <PropertyRef Name="TalentGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Held_Waffe_Waffe">
+    <End Role="Waffe" Type="DatabaseDSAModel.Waffe" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Waffe" Type="DatabaseDSAModel.Held_Waffe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Waffe">
+        <PropertyRef Name="WaffeGUID" />
+      </Principal>
+      <Dependent Role="Held_Waffe">
+        <PropertyRef Name="WaffeGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -5272,6 +5774,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_Munition_Setting_Munition">
+    <End Role="Munition" Type="DatabaseDSAModel.Munition" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Munition_Setting" Type="DatabaseDSAModel.Munition_Setting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Munition">
+        <PropertyRef Name="MunitionGUID" />
+      </Principal>
+      <Dependent Role="Munition_Setting">
+        <PropertyRef Name="MunitionGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Munition_Setting_Setting">
+    <End Role="Setting" Type="DatabaseDSAModel.Setting" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Munition_Setting" Type="DatabaseDSAModel.Munition_Setting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Setting">
+        <PropertyRef Name="SettingGUID" />
+      </Principal>
+      <Dependent Role="Munition_Setting">
+        <PropertyRef Name="SettingGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Pflanze_Ernte_PflanzeGUID">
     <End Role="Pflanze" Type="DatabaseDSAModel.Pflanze" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -5282,6 +5812,20 @@
         <PropertyRef Name="PflanzeGUID" />
       </Principal>
       <Dependent Role="Pflanze_Ernte">
+        <PropertyRef Name="PflanzeGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Pflanze_Typ_Pflanze">
+    <End Role="Pflanze" Type="DatabaseDSAModel.Pflanze" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Pflanze_Typ" Type="DatabaseDSAModel.Pflanze_Typ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pflanze">
+        <PropertyRef Name="PflanzeGUID" />
+      </Principal>
+      <Dependent Role="Pflanze_Typ">
         <PropertyRef Name="PflanzeGUID" />
       </Dependent>
     </ReferentialConstraint>
@@ -5467,6 +6011,10 @@
   <Association Name="Gebiet_Polygon">
     <End Role="Gebiet" Type="DatabaseDSAModel.Gebiet" Multiplicity="*" />
     <End Role="Polygon" Type="DatabaseDSAModel.Polygon" Multiplicity="*" />
+  </Association>
+  <Association Name="Held_Schild">
+    <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Held_BFAusrüstung" Multiplicity="*" />
+    <End Role="Schild" Type="DatabaseDSAModel.Schild" Multiplicity="0..1" />
   </Association>
   <Association Name="Landschaftsgruppe_Landschaft">
     <End Role="Landschaft" Type="DatabaseDSAModel.Landschaft" Multiplicity="*" />
@@ -5982,11 +6530,29 @@
         <MappingFragment StoreEntitySet="Held_Ausrüstung">
           <ScalarProperty Name="HeldGUID" ColumnName="HeldGUID" />
           <ScalarProperty Name="Angelegt" ColumnName="Angelegt" />
-          <ScalarProperty Name="AusrüstungGUID" ColumnName="AusrüstungGUID" />
-          <ScalarProperty Name="TalentGUID" ColumnName="TalentGUID" />
-          <ScalarProperty Name="Anzahl" ColumnName="Anzahl" />
-          <ScalarProperty Name="BF" ColumnName="BF" />
           <ScalarProperty Name="TrageortGUID" ColumnName="TrageortGUID" />
+          <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
+          <ScalarProperty Name="Eigenname" ColumnName="Eigenname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Held_BFAusrüstung">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Held_BFAusrüstung">
+        <MappingFragment StoreEntitySet="Held_BFAusrüstung">
+          <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
+          <ScalarProperty Name="BF" ColumnName="BF" />
+          <ScalarProperty Name="StartBF" ColumnName="StartBF" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Held_Fernkampfwaffe">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Held_Fernkampfwaffe">
+        <MappingFragment StoreEntitySet="Held_Fernkampfwaffe">
+          <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
+          <ScalarProperty Name="FernkampfwaffeGUID" ColumnName="FernkampfwaffeGUID" />
+          <ScalarProperty Name="TalentGUID" ColumnName="TalentGUID" />
+          <ScalarProperty Name="FKErleichterung" ColumnName="FKErleichterung" />
+          <ScalarProperty Name="KKErleichterung" ColumnName="KKErleichterung" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6036,6 +6602,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Held_Rüstung">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Held_Rüstung">
+        <MappingFragment StoreEntitySet="Held_Rüstung">
+          <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
+          <ScalarProperty Name="RüstungGUID" ColumnName="RüstungGUID" />
+          <ScalarProperty Name="Strukturpunkte" ColumnName="Strukturpunkte" />
+          <ScalarProperty Name="StartStrukturpunkte" ColumnName="StartStrukturpunkte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Held_Sonderfertigkeit">
       <EntityTypeMapping TypeName="DatabaseDSAModel.Held_Sonderfertigkeit">
         <MappingFragment StoreEntitySet="Held_Sonderfertigkeit">
@@ -6064,6 +6640,19 @@
           <ScalarProperty Name="HeldGUID" ColumnName="HeldGUID" />
           <ScalarProperty Name="VorNachteilGUID" ColumnName="VorNachteilGUID" />
           <ScalarProperty Name="Wert" ColumnName="Wert" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Held_Waffe">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Held_Waffe">
+        <MappingFragment StoreEntitySet="Held_Waffe">
+          <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
+          <ScalarProperty Name="WaffeGUID" ColumnName="WaffeGUID" />
+          <ScalarProperty Name="TalentGUID" ColumnName="TalentGUID" />
+          <ScalarProperty Name="INI" ColumnName="INI" />
+          <ScalarProperty Name="TPBonus" ColumnName="TPBonus" />
+          <ScalarProperty Name="WMAT" ColumnName="WMAT" />
+          <ScalarProperty Name="WMPA" ColumnName="WMPA" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6217,10 +6806,19 @@
           <ScalarProperty Name="Preismodifikator" ColumnName="Preismodifikator" />
           <ScalarProperty Name="Bemerkungen" ColumnName="Bemerkungen" />
           <ScalarProperty Name="Literatur" ColumnName="Literatur" />
-          <ScalarProperty Name="Setting" ColumnName="Setting" />
           <ScalarProperty Name="Probe" ColumnName="Probe" />
           <ScalarProperty Name="Spitze" ColumnName="Spitze" />
           <ScalarProperty Name="Härtbar" ColumnName="Härtbar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Munition_Setting">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Munition_Setting">
+        <MappingFragment StoreEntitySet="Munition_Setting">
+          <ScalarProperty Name="MunitionGUID" ColumnName="MunitionGUID" />
+          <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Preismodifikator" ColumnName="Preismodifikator" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6265,7 +6863,6 @@
           <ScalarProperty Name="AusnahmeVon" ColumnName="AusnahmeVon" />
           <ScalarProperty Name="AusnahmeBis" ColumnName="AusnahmeBis" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
           <ScalarProperty Name="Literatur" ColumnName="Literatur" />
           <ScalarProperty Name="BestimmungAusname2" ColumnName="BestimmungAusname2" />
@@ -6291,6 +6888,14 @@
           <ScalarProperty Name="Gewicht" ColumnName="Gewicht" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
           <ScalarProperty Name="HandelsgutGUID" ColumnName="HandelsgutGUID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pflanze_Typ">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Pflanze_Typ">
+        <MappingFragment StoreEntitySet="Pflanze_Typ">
+          <ScalarProperty Name="PflanzeGUID" ColumnName="PflanzeGUID" />
+          <ScalarProperty Name="Typ" ColumnName="Typ" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6630,6 +7235,14 @@
         <ScalarProperty Name="PolygonGUID" ColumnName="PolygonGUID" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="Held_Schild" TypeName="DatabaseDSAModel.Held_Schild" StoreEntitySet="Held_Schild">
+      <EndProperty Name="Held_BFAusrüstung">
+        <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
+      </EndProperty>
+      <EndProperty Name="Schild">
+        <ScalarProperty Name="SchildGUID" ColumnName="SchildGUID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="Landschaftsgruppe_Landschaft" TypeName="DatabaseDSAModel.Landschaftsgruppe_Landschaft" StoreEntitySet="Landschaftsgruppe_Landschaft">
       <EndProperty Name="Landschaft">
         <ScalarProperty Name="LandschaftGUID" ColumnName="LandschaftGUID" />
@@ -6662,83 +7275,89 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="79161ec64df643ddb884d5f3374f6ef2" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="23.5" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="11.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="14" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="37.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="37.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="3" PointY="44.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="53.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="14" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Beschwörbares" Width="1.5" PointX="19" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon" Width="1.5" PointX="21.25" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="23.5" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="7.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="21.25" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="5.75" PointY="42.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="49" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="19" PointY="26.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="21.25" PointY="35.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="16.75" PointY="25.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="19" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="22" PointY="32.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="22" PointY="28.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.75" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="14" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Audio_Playlist" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="6" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Modifikator" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="6" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Pflanze" Width="1.5" PointX="6" PointY="23.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="9" PointY="19.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="9" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="9" PointY="22.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="19.75" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="21.25" PointY="24.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="5.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="62.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="62.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="16.75" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="8.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="44" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="3.75" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="19.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="19.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="13.75" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="48.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="14" PointY="32" IsExpanded="true" />
+      <Diagram DiagramId="a4272356ddac4c72bb7527886817d9f0" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="25.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="13.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="16" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="3" PointY="46.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="55.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="16" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Beschwörbares" Width="1.5" PointX="21" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon" Width="1.5" PointX="23.25" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="25.5" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="23.25" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="5.75" PointY="62.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="51.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="21" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="23.25" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="18.75" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="21" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="24" PointY="35.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="24" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="13.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="16" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Audio_Playlist" Width="1.5" PointX="3" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_BFAusrüstung" Width="1.5" PointX="8.25" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Fernkampfwaffe" Width="1.5" PointX="11.25" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="3" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Modifikator" Width="1.5" PointX="3" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="6" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Pflanze" Width="1.5" PointX="6" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Rüstung" Width="1.5" PointX="11.25" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="9" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="9" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Waffe" Width="1.5" PointX="10.5" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="9" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="0.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="21.75" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="23.25" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="8" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="65.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="65.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="46.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="3.75" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Munition_Setting" Width="1.5" PointX="19" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="10.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="50.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="16" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Typ" Width="1.5" PointX="6" PointY="52.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Verbreitung" Width="1.5" PointX="6" PointY="49.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="58" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="5.75" PointY="35.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="8" PointY="37.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="8" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="3.75" PointY="30.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="3.75" PointY="54.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="11.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="6.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="17" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="27.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="34" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="3.75" PointY="27.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="10.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="11.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="6.75" PointY="26.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="14" PointY="20.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="9" PointY="26.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="14.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="17" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="35.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="5.75" PointY="55.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="8" PointY="57.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="8" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="9" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="13.5" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="13.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="6.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="19" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="32.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="3.75" PointY="31.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="12.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="8.25" PointY="33.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="6.75" PointY="38.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="16" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="9" PointY="38.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="16.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="19" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerEreignis_Szene" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachEreignis" ManuallyRouted="false" />
@@ -6753,7 +7372,6 @@
         <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Ausrüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Rüstung_Ausrüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Schild_Ausrüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Waffe_Ausrüstung" ManuallyRouted="false" />
@@ -6764,6 +7382,7 @@
         <AssociationConnector Association="DatabaseDSAModel.FK__Kreatur__0000000000000BCF" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK__Dämon_Domäne__0000000000000BB6" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" ManuallyRouted="false" />
@@ -6785,22 +7404,32 @@
         <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_HeldFK" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_HeldFK" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Held_Zauber_HeldFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Talent" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_BFAusrüstung_Held_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Held_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Rüstung_Held_Ausrüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_TrageortGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Waffe_Held_Ausrüstung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Talent" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Inventar" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AAB" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Munition" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_TrageortGUID" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Held_Pflanze_PflanzeGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Rüstung_Rüstung" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Talent_FK" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Waffe_Talent" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Waffe_Waffe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Zauber_FK" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_KulturName_Kultur" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Kultur" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Verbreitung_LandschaftGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Munition_Setting_Munition" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Munition_Setting_Setting" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Ernte_PflanzeGUID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Typ_Pflanze" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Verbreitung_PflanzeGUID" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Rasse" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Rasse" ManuallyRouted="false" />
@@ -6817,6 +7446,7 @@
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Gebiet_Polygon" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_Schild" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Pflanze_Gebiet" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" ManuallyRouted="false" />

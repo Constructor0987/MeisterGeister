@@ -113,68 +113,6 @@ namespace MeisterGeister.Model
         private bool _angelegt;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid AusrüstungGUID
-        {
-            get { return _ausrüstungGUID; }
-            set
-            {
-                if (_ausrüstungGUID != value)
-                {
-                    if (Ausrüstung != null && Ausrüstung.AusrüstungGUID != value)
-                    {
-                        Ausrüstung = null;
-                    }
-                    _ausrüstungGUID = value;
-                }
-            }
-    
-        }
-        private System.Guid _ausrüstungGUID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual System.Guid TalentGUID
-        {
-            get { return _talentGUID; }
-            set
-            {
-                if (_talentGUID != value)
-                {
-                    if (Talent != null && Talent.TalentGUID != value)
-                    {
-                        Talent = null;
-                    }
-                    _talentGUID = value;
-                }
-            }
-    
-        }
-        private System.Guid _talentGUID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Anzahl
-        {
-            get { return _anzahl; }
-            set
-    		{ 
-    			Set(ref _anzahl, value);
-    		}
-    
-        }
-        private Nullable<int> _anzahl;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int BF
-        {
-            get { return _bF; }
-            set
-    		{ 
-    			Set(ref _bF, value);
-    		}
-    
-        }
-        private int _bF;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual System.Guid TrageortGUID
         {
             get { return _trageortGUID; }
@@ -192,26 +130,34 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _trageortGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual System.Guid HeldAusrüstungGUID
+        {
+            get { return _heldAusrüstungGUID; }
+            set
+    		{ 
+    			Set(ref _heldAusrüstungGUID, value);
+    		}
+    
+        }
+        private System.Guid _heldAusrüstungGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Eigenname
+        {
+            get { return _eigenname; }
+            set
+    		{ 
+    			Set(ref _eigenname, value);
+    		}
+    
+        }
+        private string _eigenname;
 
         #endregion
 
         #region Navigation Properties
-    
-    	[DataMember]
-        public virtual Ausrüstung Ausrüstung
-        {
-            get { return _ausrüstung; }
-            set
-            {
-                if (!ReferenceEquals(_ausrüstung, value))
-                {
-                    var previousValue = _ausrüstung;
-                    _ausrüstung = value;
-                    FixupAusrüstung(previousValue);
-                }
-            }
-        }
-        private Ausrüstung _ausrüstung;
     
     	[DataMember]
         public virtual Held Held
@@ -230,20 +176,52 @@ namespace MeisterGeister.Model
         private Held _held;
     
     	[DataMember]
-        public virtual Talent Talent
+        public virtual Held_BFAusrüstung Held_BFAusrüstung
         {
-            get { return _talent; }
+            get { return _held_BFAusrüstung; }
             set
             {
-                if (!ReferenceEquals(_talent, value))
+                if (!ReferenceEquals(_held_BFAusrüstung, value))
                 {
-                    var previousValue = _talent;
-                    _talent = value;
-                    FixupTalent(previousValue);
+                    var previousValue = _held_BFAusrüstung;
+                    _held_BFAusrüstung = value;
+                    FixupHeld_BFAusrüstung(previousValue);
                 }
             }
         }
-        private Talent _talent;
+        private Held_BFAusrüstung _held_BFAusrüstung;
+    
+    	[DataMember]
+        public virtual Held_Fernkampfwaffe Held_Fernkampfwaffe
+        {
+            get { return _held_Fernkampfwaffe; }
+            set
+            {
+                if (!ReferenceEquals(_held_Fernkampfwaffe, value))
+                {
+                    var previousValue = _held_Fernkampfwaffe;
+                    _held_Fernkampfwaffe = value;
+                    FixupHeld_Fernkampfwaffe(previousValue);
+                }
+            }
+        }
+        private Held_Fernkampfwaffe _held_Fernkampfwaffe;
+    
+    	[DataMember]
+        public virtual Held_Rüstung Held_Rüstung
+        {
+            get { return _held_Rüstung; }
+            set
+            {
+                if (!ReferenceEquals(_held_Rüstung, value))
+                {
+                    var previousValue = _held_Rüstung;
+                    _held_Rüstung = value;
+                    FixupHeld_Rüstung(previousValue);
+                }
+            }
+        }
+        private Held_Rüstung _held_Rüstung;
     
     	[DataMember]
         public virtual Trageort Trageort
@@ -264,27 +242,6 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
-    
-        private void FixupAusrüstung(Ausrüstung previousValue)
-        {
-    		OnChanged("Ausrüstung");
-            if (previousValue != null && previousValue.Held_Ausrüstung.Contains(this))
-            {
-                previousValue.Held_Ausrüstung.Remove(this);
-            }
-    
-            if (Ausrüstung != null)
-            {
-                if (!Ausrüstung.Held_Ausrüstung.Contains(this))
-                {
-                    Ausrüstung.Held_Ausrüstung.Add(this);
-                }
-                if (AusrüstungGUID != Ausrüstung.AusrüstungGUID)
-                {
-                    AusrüstungGUID = Ausrüstung.AusrüstungGUID;
-                }
-            }
-        }
     
         private void FixupHeld(Held previousValue)
         {
@@ -307,24 +264,45 @@ namespace MeisterGeister.Model
             }
         }
     
-        private void FixupTalent(Talent previousValue)
+        private void FixupHeld_BFAusrüstung(Held_BFAusrüstung previousValue)
         {
-    		OnChanged("Talent");
-            if (previousValue != null && previousValue.Held_Ausrüstung.Contains(this))
+    		OnChanged("Held_BFAusrüstung");
+            if (previousValue != null && ReferenceEquals(previousValue.Held_Ausrüstung, this))
             {
-                previousValue.Held_Ausrüstung.Remove(this);
+                previousValue.Held_Ausrüstung = null;
             }
     
-            if (Talent != null)
+            if (Held_BFAusrüstung != null)
             {
-                if (!Talent.Held_Ausrüstung.Contains(this))
-                {
-                    Talent.Held_Ausrüstung.Add(this);
-                }
-                if (TalentGUID != Talent.TalentGUID)
-                {
-                    TalentGUID = Talent.TalentGUID;
-                }
+                Held_BFAusrüstung.Held_Ausrüstung = this;
+            }
+        }
+    
+        private void FixupHeld_Fernkampfwaffe(Held_Fernkampfwaffe previousValue)
+        {
+    		OnChanged("Held_Fernkampfwaffe");
+            if (previousValue != null && ReferenceEquals(previousValue.Held_Ausrüstung, this))
+            {
+                previousValue.Held_Ausrüstung = null;
+            }
+    
+            if (Held_Fernkampfwaffe != null)
+            {
+                Held_Fernkampfwaffe.Held_Ausrüstung = this;
+            }
+        }
+    
+        private void FixupHeld_Rüstung(Held_Rüstung previousValue)
+        {
+    		OnChanged("Held_Rüstung");
+            if (previousValue != null && ReferenceEquals(previousValue.Held_Ausrüstung, this))
+            {
+                previousValue.Held_Ausrüstung = null;
+            }
+    
+            if (Held_Rüstung != null)
+            {
+                Held_Rüstung.Held_Ausrüstung = this;
             }
         }
     

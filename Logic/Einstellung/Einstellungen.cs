@@ -177,6 +177,9 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        /// <summary>
+        /// 0 = Automatisch Zonen, 1 = Einfach, 2 = Zonen, 3 = Automatisch Zonen 
+        /// </summary>
         public static int RSBerechnung
         {
             get

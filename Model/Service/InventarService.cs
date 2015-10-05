@@ -45,7 +45,7 @@ namespace MeisterGeister.Model.Service
 
         public List<Model.Munition> MunitionListe
         {
-            get { return Context.Munition.Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).OrderBy((w) => w.Name).ToList(); }
+            get { return Context.Munition.Where(s => s.Munition_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy((w) => w.Name).ToList(); }
         }
 
         public List<Model.Trageort> TrageortListe

@@ -277,6 +277,39 @@ namespace MeisterGeister.Model
         private Ausrüstung _ausrüstung;
     
     	[DataMember]
+        public virtual ICollection<Held_Waffe> Held_Waffe
+        {
+            get
+            {
+                if (_held_Waffe == null)
+                {
+                    var newCollection = new FixupCollection<Held_Waffe>();
+                    newCollection.CollectionChanged += FixupHeld_Waffe;
+                    _held_Waffe = newCollection;
+                }
+                return _held_Waffe;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Waffe, value))
+                {
+                    var previousValue = _held_Waffe as FixupCollection<Held_Waffe>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Waffe;
+                    }
+                    _held_Waffe = value;
+                    var newValue = value as FixupCollection<Held_Waffe>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Waffe;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Waffe> _held_Waffe;
+    
+    	[DataMember]
         public virtual ICollection<Talent> Talent
         {
             get
@@ -327,6 +360,29 @@ namespace MeisterGeister.Model
                 if (WaffeGUID != Ausrüstung.AusrüstungGUID)
                 {
                     WaffeGUID = Ausrüstung.AusrüstungGUID;
+                }
+            }
+        }
+    
+        private void FixupHeld_Waffe(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Waffe");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Waffe item in e.NewItems)
+                {
+                    item.Waffe = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Waffe item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Waffe, this))
+                    {
+                        item.Waffe = null;
+                    }
                 }
             }
         }

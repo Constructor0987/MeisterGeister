@@ -219,39 +219,6 @@ namespace MeisterGeister.Model
         private Fernkampfwaffe _fernkampfwaffe;
     
     	[DataMember]
-        public virtual ICollection<Held_Ausrüstung> Held_Ausrüstung
-        {
-            get
-            {
-                if (_held_Ausrüstung == null)
-                {
-                    var newCollection = new FixupCollection<Held_Ausrüstung>();
-                    newCollection.CollectionChanged += FixupHeld_Ausrüstung;
-                    _held_Ausrüstung = newCollection;
-                }
-                return _held_Ausrüstung;
-            }
-            set
-            {
-                if (!ReferenceEquals(_held_Ausrüstung, value))
-                {
-                    var previousValue = _held_Ausrüstung as FixupCollection<Held_Ausrüstung>;
-                    if (previousValue != null)
-                    {
-                        previousValue.CollectionChanged -= FixupHeld_Ausrüstung;
-                    }
-                    _held_Ausrüstung = value;
-                    var newValue = value as FixupCollection<Held_Ausrüstung>;
-                    if (newValue != null)
-                    {
-                        newValue.CollectionChanged += FixupHeld_Ausrüstung;
-                    }
-                }
-            }
-        }
-        private ICollection<Held_Ausrüstung> _held_Ausrüstung;
-    
-    	[DataMember]
         public virtual Rüstung Rüstung
         {
             get { return _rüstung; }
@@ -373,29 +340,6 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Ausrüstung_Setting item in e.OldItems)
-                {
-                    if (ReferenceEquals(item.Ausrüstung, this))
-                    {
-                        item.Ausrüstung = null;
-                    }
-                }
-            }
-        }
-    
-        private void FixupHeld_Ausrüstung(object sender, NotifyCollectionChangedEventArgs e)
-        {
-    		OnChanged("Held_Ausrüstung");
-            if (e.NewItems != null)
-            {
-                foreach (Held_Ausrüstung item in e.NewItems)
-                {
-                    item.Ausrüstung = this;
-                }
-            }
-    
-            if (e.OldItems != null)
-            {
-                foreach (Held_Ausrüstung item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Ausrüstung, this))
                     {

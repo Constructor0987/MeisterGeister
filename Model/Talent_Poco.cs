@@ -281,37 +281,37 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
-        public virtual ICollection<Held_Ausrüstung> Held_Ausrüstung
+        public virtual ICollection<Held_Fernkampfwaffe> Held_Fernkampfwaffe
         {
             get
             {
-                if (_held_Ausrüstung == null)
+                if (_held_Fernkampfwaffe == null)
                 {
-                    var newCollection = new FixupCollection<Held_Ausrüstung>();
-                    newCollection.CollectionChanged += FixupHeld_Ausrüstung;
-                    _held_Ausrüstung = newCollection;
+                    var newCollection = new FixupCollection<Held_Fernkampfwaffe>();
+                    newCollection.CollectionChanged += FixupHeld_Fernkampfwaffe;
+                    _held_Fernkampfwaffe = newCollection;
                 }
-                return _held_Ausrüstung;
+                return _held_Fernkampfwaffe;
             }
             set
             {
-                if (!ReferenceEquals(_held_Ausrüstung, value))
+                if (!ReferenceEquals(_held_Fernkampfwaffe, value))
                 {
-                    var previousValue = _held_Ausrüstung as FixupCollection<Held_Ausrüstung>;
+                    var previousValue = _held_Fernkampfwaffe as FixupCollection<Held_Fernkampfwaffe>;
                     if (previousValue != null)
                     {
-                        previousValue.CollectionChanged -= FixupHeld_Ausrüstung;
+                        previousValue.CollectionChanged -= FixupHeld_Fernkampfwaffe;
                     }
-                    _held_Ausrüstung = value;
-                    var newValue = value as FixupCollection<Held_Ausrüstung>;
+                    _held_Fernkampfwaffe = value;
+                    var newValue = value as FixupCollection<Held_Fernkampfwaffe>;
                     if (newValue != null)
                     {
-                        newValue.CollectionChanged += FixupHeld_Ausrüstung;
+                        newValue.CollectionChanged += FixupHeld_Fernkampfwaffe;
                     }
                 }
             }
         }
-        private ICollection<Held_Ausrüstung> _held_Ausrüstung;
+        private ICollection<Held_Fernkampfwaffe> _held_Fernkampfwaffe;
     
     	[DataMember]
         public virtual ICollection<Held_Talent> Held_Talent
@@ -345,6 +345,39 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Held_Talent> _held_Talent;
+    
+    	[DataMember]
+        public virtual ICollection<Held_Waffe> Held_Waffe
+        {
+            get
+            {
+                if (_held_Waffe == null)
+                {
+                    var newCollection = new FixupCollection<Held_Waffe>();
+                    newCollection.CollectionChanged += FixupHeld_Waffe;
+                    _held_Waffe = newCollection;
+                }
+                return _held_Waffe;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Waffe, value))
+                {
+                    var previousValue = _held_Waffe as FixupCollection<Held_Waffe>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Waffe;
+                    }
+                    _held_Waffe = value;
+                    var newValue = value as FixupCollection<Held_Waffe>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Waffe;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Waffe> _held_Waffe;
     
     	[DataMember]
         public virtual Talentgruppe Talentgruppe
@@ -459,12 +492,12 @@ namespace MeisterGeister.Model
             }
         }
     
-        private void FixupHeld_Ausrüstung(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupHeld_Fernkampfwaffe(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		OnChanged("Held_Ausrüstung");
+    		OnChanged("Held_Fernkampfwaffe");
             if (e.NewItems != null)
             {
-                foreach (Held_Ausrüstung item in e.NewItems)
+                foreach (Held_Fernkampfwaffe item in e.NewItems)
                 {
                     item.Talent = this;
                 }
@@ -472,7 +505,7 @@ namespace MeisterGeister.Model
     
             if (e.OldItems != null)
             {
-                foreach (Held_Ausrüstung item in e.OldItems)
+                foreach (Held_Fernkampfwaffe item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Talent, this))
                     {
@@ -496,6 +529,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Held_Talent item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Talent, this))
+                    {
+                        item.Talent = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupHeld_Waffe(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Waffe");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Waffe item in e.NewItems)
+                {
+                    item.Talent = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Waffe item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Talent, this))
                     {

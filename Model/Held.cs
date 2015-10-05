@@ -2042,7 +2042,7 @@ namespace MeisterGeister.Model {
                 var rsname = ruestung.Ausrüstung.Name;
                 if(ruestung.Ausrüstung.BasisAusrüstung != null)
                     rsname = ruestung.Ausrüstung.BasisAusrüstung;
-                var be = (ruestung.Ausrüstung.Rüstung.BE ?? 0) * (ruestung.Anzahl ?? 0);
+                var be = (ruestung.Ausrüstung.Rüstung.BE ?? 0);
                 if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III"))
                     be -= 2;
                 else if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung II"))
@@ -2078,7 +2078,7 @@ namespace MeisterGeister.Model {
         public double BerechneAusruestungsGewicht() {
             double g = 0.0;
             foreach (Held_Ausrüstung ha in Held_Ausrüstung) {
-                double effGewicht = ha.Trageort.TragkraftFaktor * ha.Ausrüstung.Gewicht * (ha.Anzahl ?? 0);
+                double effGewicht = ha.Trageort.TragkraftFaktor * ha.Ausrüstung.Gewicht;
                 if (ha.Ausrüstung.Rüstung != null && ha.Angelegt)
                     effGewicht /= 2.0;
                 g += effGewicht;
@@ -2117,6 +2117,69 @@ namespace MeisterGeister.Model {
                 RS[Trefferzone.Gesamt] = einfacherRs;
         }
 
+        public Held_Ausrüstung AddAusrüstung(Ausrüstung a)
+        {
+            Held_Ausrüstung ha = Global.ContextHeld.New<Held_Ausrüstung>();
+            ha.HeldGUID = HeldGUID;
+            ha.Angelegt = false;
+            ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
+            ha.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == ha.TrageortGUID).FirstOrDefault();
+
+            if(a.Waffe != null || a.Schild != null)
+            {
+                var bfa = Global.ContextHeld.New<Held_BFAusrüstung>();
+                int bf = 0;
+                if(a.Waffe != null)
+                {
+                    var hw = Global.ContextHeld.New<Held_Waffe>();
+                    hw.WaffeGUID = a.Waffe.WaffeGUID;
+                    hw.Waffe = a.Waffe;
+                    hw.TPBonus = a.Waffe.TPBonus;
+                    hw.WMAT = a.Waffe.WMAT ?? 0;
+                    hw.WMPA = a.Waffe.WMPA ?? 0;
+                    hw.INI = a.Waffe.INI ?? 0;
+                    bf = a.Waffe.BF ?? 0;
+                    hw.Talent = Held_Waffe.GetBestesTalent(this, a.Waffe);
+                    bfa.Held_Waffe = hw;
+                }
+                if (a.Schild != null)
+                {
+                    bf = a.Schild.BF;
+                    bfa.Schild = a.Schild;
+                }
+                bfa.StartBF = bfa.BF = bf;
+                ha.Held_BFAusrüstung = bfa;
+            }
+            if(a.Fernkampfwaffe != null)
+            {
+                Held_Fernkampfwaffe hf = Global.ContextHeld.New<Held_Fernkampfwaffe>();
+                hf.FernkampfwaffeGUID = a.Fernkampfwaffe.FernkampfwaffeGUID;
+                hf.Fernkampfwaffe = a.Fernkampfwaffe;
+                hf.Talent = Held_Fernkampfwaffe.GetBestesTalent(this, a.Fernkampfwaffe);
+                hf.FKErleichterung = 0;
+                hf.KKErleichterung = false;
+                ha.Held_Fernkampfwaffe = hf;
+            }
+            if (a.Rüstung != null)
+            {
+                var hr = Global.ContextHeld.New<Held_Rüstung>();
+                hr.RüstungGUID = a.Rüstung.RüstungGUID;
+                hr.Rüstung = a.Rüstung;
+                var struktur = (a.Rüstung.RS ?? 0) * 10; //ohne zonen
+                if (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung >= 2)
+                    struktur = (int)Math.Ceiling((a.Rüstung.gRS ?? 0) * 10); //Trefferzonenmodell
+                hr.StartStrukturpunkte = hr.Strukturpunkte = struktur;
+                ha.Held_Rüstung = hr;
+            }
+            Held_Ausrüstung.Add(ha);
+            return ha;
+        }
+
+        public void RemoveAusrüstung(Held_Ausrüstung ha)
+        {
+            Held_Ausrüstung.Remove(ha);
+        }
+
         // TODO: Diese Add-Logik sollte mit dem Importer und dem InventarViewModel homogenisiert werden, sodass alle Stellen diese Methode verwenden
         public void AddInventar(IHandelsgut gegenstand, int anzahl = 1)
         {
@@ -2124,20 +2187,7 @@ namespace MeisterGeister.Model {
             if (gegenstand is IAusrüstung)
             {
                 IAusrüstung a = (IAusrüstung)gegenstand;
-                Held_Ausrüstung ha = Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.Ausrüstung.AusrüstungGUID).FirstOrDefault();
-                if (ha == null)
-                {
-                    ha = Global.ContextHeld.New<Held_Ausrüstung>();
-                    ha.AusrüstungGUID = a.Ausrüstung.AusrüstungGUID;
-                    ha.HeldGUID = HeldGUID;
-                    ha.Angelegt = false;
-                    ha.Anzahl = anzahl;
-                    ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
-                    ha.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == ha.TrageortGUID).FirstOrDefault();
-                    Held_Ausrüstung.Add(ha);
-                }
-                else
-                    ha.Anzahl += anzahl;
+                AddAusrüstung(a.Ausrüstung);
             }
             else if (gegenstand is Handelsgut)
             {

@@ -221,6 +221,39 @@ namespace MeisterGeister.Model
         private ICollection<Handelsgut_Setting> _handelsgut_Setting;
     
     	[DataMember]
+        public virtual ICollection<Munition_Setting> Munition_Setting
+        {
+            get
+            {
+                if (_munition_Setting == null)
+                {
+                    var newCollection = new FixupCollection<Munition_Setting>();
+                    newCollection.CollectionChanged += FixupMunition_Setting;
+                    _munition_Setting = newCollection;
+                }
+                return _munition_Setting;
+            }
+            set
+            {
+                if (!ReferenceEquals(_munition_Setting, value))
+                {
+                    var previousValue = _munition_Setting as FixupCollection<Munition_Setting>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupMunition_Setting;
+                    }
+                    _munition_Setting = value;
+                    var newValue = value as FixupCollection<Munition_Setting>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupMunition_Setting;
+                    }
+                }
+            }
+        }
+        private ICollection<Munition_Setting> _munition_Setting;
+    
+    	[DataMember]
         public virtual ICollection<Sonderfertigkeit_Setting> Sonderfertigkeit_Setting
         {
             get
@@ -383,6 +416,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Handelsgut_Setting item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Setting, this))
+                    {
+                        item.Setting = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupMunition_Setting(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Munition_Setting");
+            if (e.NewItems != null)
+            {
+                foreach (Munition_Setting item in e.NewItems)
+                {
+                    item.Setting = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Munition_Setting item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Setting, this))
                     {

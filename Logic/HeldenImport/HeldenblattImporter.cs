@@ -946,7 +946,6 @@ namespace MeisterGeister.Logic.HeldenImport
                     a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
 
                 bool neuAberSchonAmHeld = false;
-                bool neueAusrüstung = false;
 
                 if (a == null) //nichts gefunden
                 {
@@ -984,7 +983,6 @@ namespace MeisterGeister.Logic.HeldenImport
                                 {
                                     a = a.Clone();
                                     a.Name = name;
-                                    neueAusrüstung = true;
                                 }
                                 //Anpassungen anwenden
                                 if (!tRow.IsNull("TP") || !tRow.IsNull("WM-AT") || !tRow.IsNull("WM-PA") || !tRow.IsNull("INI") || !tRow.IsNull("BF") || !tRow.IsNull("Entfernungen") || !tRow.IsNull("TP_Entfernung")) //es gibt kein Name-Feld
@@ -1039,26 +1037,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 }
                 
                 if (a != null) //wenn gefunden, hinzufügen
-                {
-                    Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
-                    if (ha == null)
-                    {
-                        ha = new Held_Ausrüstung();
-                        ha.AusrüstungGUID = a.AusrüstungGUID;
-                        if (neueAusrüstung)
-                            ha.Ausrüstung = a;
-                        ha.HeldGUID = _held.HeldGUID;
-                        ha.Angelegt = false;
-                        ha.Anzahl = 1;
-                        ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
-                        _held.Held_Ausrüstung.Add(ha);
-                    }
-                    else
-                    {
-                        if(!neuAberSchonAmHeld)
-                            ha.Anzahl += 1;
-                    }
-                }
+                    _held.AddAusrüstung(a);
                 else
                     AddImportLog(ImportTypen.Gegenstand, ausrüstung, name, _importLog);
 
@@ -1080,8 +1059,6 @@ namespace MeisterGeister.Logic.HeldenImport
                 //alles durchsuchen
                 Ausrüstung a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
 
-                bool neueAusrüstung = false;
-
                 if (a == null) //angepasste rüstung?
                 {
                     if (!tRow.IsNull("RS Kopf") || !tRow.IsNull("RS Brust") || !tRow.IsNull("RS Rücken")
@@ -1091,7 +1068,6 @@ namespace MeisterGeister.Logic.HeldenImport
                     {
                         Rüstung r = new Rüstung();
                         r.Name = ausrüstung;
-                        neueAusrüstung = true;
 
                         double? d = 0;
                         //einfaches Modell:
@@ -1133,25 +1109,7 @@ namespace MeisterGeister.Logic.HeldenImport
 
 
                 if (a != null) //wenn gefunden
-                {
-                    Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
-                    if (ha == null)
-                    {
-                        ha = new Held_Ausrüstung();
-                        ha.AusrüstungGUID = a.AusrüstungGUID;
-                        if (neueAusrüstung)
-                            ha.Ausrüstung = a;
-                        ha.HeldGUID = _held.HeldGUID;
-                        ha.Angelegt = false;
-                        ha.Anzahl = 1;
-                        ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
-                        _held.Held_Ausrüstung.Add(ha);
-                    }
-                    else
-                    {
-                        ha.Anzahl += 1;
-                    }
-                }
+                    _held.AddAusrüstung(a);
                 else
                     AddImportLog(ImportTypen.Gegenstand, ausrüstung, null, _importLog);
             }

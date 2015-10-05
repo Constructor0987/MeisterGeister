@@ -253,6 +253,18 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Held_Ausrüstung> _held_Ausrüstung;
     
+        public ObjectSet<Held_BFAusrüstung> Held_BFAusrüstung
+        {
+            get { return _held_BFAusrüstung  ?? (_held_BFAusrüstung = CreateObjectSet<Held_BFAusrüstung>("Held_BFAusrüstung")); }
+        }
+        private ObjectSet<Held_BFAusrüstung> _held_BFAusrüstung;
+    
+        public ObjectSet<Held_Fernkampfwaffe> Held_Fernkampfwaffe
+        {
+            get { return _held_Fernkampfwaffe  ?? (_held_Fernkampfwaffe = CreateObjectSet<Held_Fernkampfwaffe>("Held_Fernkampfwaffe")); }
+        }
+        private ObjectSet<Held_Fernkampfwaffe> _held_Fernkampfwaffe;
+    
         public ObjectSet<Held_Inventar> Held_Inventar
         {
             get { return _held_Inventar  ?? (_held_Inventar = CreateObjectSet<Held_Inventar>("Held_Inventar")); }
@@ -277,6 +289,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Held_Pflanze> _held_Pflanze;
     
+        public ObjectSet<Held_Rüstung> Held_Rüstung
+        {
+            get { return _held_Rüstung  ?? (_held_Rüstung = CreateObjectSet<Held_Rüstung>("Held_Rüstung")); }
+        }
+        private ObjectSet<Held_Rüstung> _held_Rüstung;
+    
         public ObjectSet<Held_Sonderfertigkeit> Held_Sonderfertigkeit
         {
             get { return _held_Sonderfertigkeit  ?? (_held_Sonderfertigkeit = CreateObjectSet<Held_Sonderfertigkeit>("Held_Sonderfertigkeit")); }
@@ -294,6 +312,12 @@ namespace MeisterGeister.Model
             get { return _held_VorNachteil  ?? (_held_VorNachteil = CreateObjectSet<Held_VorNachteil>("Held_VorNachteil")); }
         }
         private ObjectSet<Held_VorNachteil> _held_VorNachteil;
+    
+        public ObjectSet<Held_Waffe> Held_Waffe
+        {
+            get { return _held_Waffe  ?? (_held_Waffe = CreateObjectSet<Held_Waffe>("Held_Waffe")); }
+        }
+        private ObjectSet<Held_Waffe> _held_Waffe;
     
         public ObjectSet<Held_Zauber> Held_Zauber
         {
@@ -367,6 +391,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Munition> _munition;
     
+        public ObjectSet<Munition_Setting> Munition_Setting
+        {
+            get { return _munition_Setting  ?? (_munition_Setting = CreateObjectSet<Munition_Setting>("Munition_Setting")); }
+        }
+        private ObjectSet<Munition_Setting> _munition_Setting;
+    
         public ObjectSet<Name> Name
         {
             get { return _name  ?? (_name = CreateObjectSet<Name>("Name")); }
@@ -396,6 +426,12 @@ namespace MeisterGeister.Model
             get { return _pflanze_Ernte  ?? (_pflanze_Ernte = CreateObjectSet<Pflanze_Ernte>("Pflanze_Ernte")); }
         }
         private ObjectSet<Pflanze_Ernte> _pflanze_Ernte;
+    
+        public ObjectSet<Pflanze_Typ> Pflanze_Typ
+        {
+            get { return _pflanze_Typ  ?? (_pflanze_Typ = CreateObjectSet<Pflanze_Typ>("Pflanze_Typ")); }
+        }
+        private ObjectSet<Pflanze_Typ> _pflanze_Typ;
     
         public ObjectSet<Pflanze_Verbreitung> Pflanze_Verbreitung
         {
@@ -590,6 +626,10 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Held_Audio_Playlist;
     		if(typeof(T) == typeof(Held_Ausrüstung))
     				return (ObjectSet<T>)(Object)Held_Ausrüstung;
+    		if(typeof(T) == typeof(Held_BFAusrüstung))
+    				return (ObjectSet<T>)(Object)Held_BFAusrüstung;
+    		if(typeof(T) == typeof(Held_Fernkampfwaffe))
+    				return (ObjectSet<T>)(Object)Held_Fernkampfwaffe;
     		if(typeof(T) == typeof(Held_Inventar))
     				return (ObjectSet<T>)(Object)Held_Inventar;
     		if(typeof(T) == typeof(Held_Modifikator))
@@ -598,12 +638,16 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Held_Munition;
     		if(typeof(T) == typeof(Held_Pflanze))
     				return (ObjectSet<T>)(Object)Held_Pflanze;
+    		if(typeof(T) == typeof(Held_Rüstung))
+    				return (ObjectSet<T>)(Object)Held_Rüstung;
     		if(typeof(T) == typeof(Held_Sonderfertigkeit))
     				return (ObjectSet<T>)(Object)Held_Sonderfertigkeit;
     		if(typeof(T) == typeof(Held_Talent))
     				return (ObjectSet<T>)(Object)Held_Talent;
     		if(typeof(T) == typeof(Held_VorNachteil))
     				return (ObjectSet<T>)(Object)Held_VorNachteil;
+    		if(typeof(T) == typeof(Held_Waffe))
+    				return (ObjectSet<T>)(Object)Held_Waffe;
     		if(typeof(T) == typeof(Held_Zauber))
     				return (ObjectSet<T>)(Object)Held_Zauber;
     		if(typeof(T) == typeof(Inventar))
@@ -628,6 +672,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Modifikator;
     		if(typeof(T) == typeof(Munition))
     				return (ObjectSet<T>)(Object)Munition;
+    		if(typeof(T) == typeof(Munition_Setting))
+    				return (ObjectSet<T>)(Object)Munition_Setting;
     		if(typeof(T) == typeof(Name))
     				return (ObjectSet<T>)(Object)Name;
     		if(typeof(T) == typeof(Notizen))
@@ -638,6 +684,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Pflanze;
     		if(typeof(T) == typeof(Pflanze_Ernte))
     				return (ObjectSet<T>)(Object)Pflanze_Ernte;
+    		if(typeof(T) == typeof(Pflanze_Typ))
+    				return (ObjectSet<T>)(Object)Pflanze_Typ;
     		if(typeof(T) == typeof(Pflanze_Verbreitung))
     				return (ObjectSet<T>)(Object)Pflanze_Verbreitung;
     		if(typeof(T) == typeof(Polygon))
@@ -747,6 +795,10 @@ namespace MeisterGeister.Model
     				return Held_Audio_Playlist;
     		if(t == typeof(Held_Ausrüstung))
     				return Held_Ausrüstung;
+    		if(t == typeof(Held_BFAusrüstung))
+    				return Held_BFAusrüstung;
+    		if(t == typeof(Held_Fernkampfwaffe))
+    				return Held_Fernkampfwaffe;
     		if(t == typeof(Held_Inventar))
     				return Held_Inventar;
     		if(t == typeof(Held_Modifikator))
@@ -755,12 +807,16 @@ namespace MeisterGeister.Model
     				return Held_Munition;
     		if(t == typeof(Held_Pflanze))
     				return Held_Pflanze;
+    		if(t == typeof(Held_Rüstung))
+    				return Held_Rüstung;
     		if(t == typeof(Held_Sonderfertigkeit))
     				return Held_Sonderfertigkeit;
     		if(t == typeof(Held_Talent))
     				return Held_Talent;
     		if(t == typeof(Held_VorNachteil))
     				return Held_VorNachteil;
+    		if(t == typeof(Held_Waffe))
+    				return Held_Waffe;
     		if(t == typeof(Held_Zauber))
     				return Held_Zauber;
     		if(t == typeof(Inventar))
@@ -785,6 +841,8 @@ namespace MeisterGeister.Model
     				return Modifikator;
     		if(t == typeof(Munition))
     				return Munition;
+    		if(t == typeof(Munition_Setting))
+    				return Munition_Setting;
     		if(t == typeof(Name))
     				return Name;
     		if(t == typeof(Notizen))
@@ -795,6 +853,8 @@ namespace MeisterGeister.Model
     				return Pflanze;
     		if(t == typeof(Pflanze_Ernte))
     				return Pflanze_Ernte;
+    		if(t == typeof(Pflanze_Typ))
+    				return Pflanze_Typ;
     		if(t == typeof(Pflanze_Verbreitung))
     				return Pflanze_Verbreitung;
     		if(t == typeof(Polygon))

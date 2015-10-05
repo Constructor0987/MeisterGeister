@@ -21,9 +21,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             _held = ha.Held;
             _waffe = ha.Ausrüstung.Waffe;
             if (bestesTalent)
-                _talent = ha.Held.Kampftalente.Where(t => ha.Ausrüstung.Waffe.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
+                _talent = ha.Held_BFAusrüstung.Held_Waffe.BestesHeldTalent;
             else
-                _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).FirstOrDefault();
+                _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.Held_BFAusrüstung.Held_Waffe.TalentGUID).FirstOrDefault();
         }
 
         public KämpferNahkampfwaffe(Held held, Waffe waffe, Held_Talent ht)
@@ -323,9 +323,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             _held = ha.Held;
             _waffe = ha.Ausrüstung.Fernkampfwaffe;
             if (bestesTalent)
-                _talent = ha.Held.Kampftalente.Where(t => ha.Ausrüstung.Fernkampfwaffe.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
+                _talent = ha.Held_Fernkampfwaffe.BestesHeldTalent;
             else
-                _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).FirstOrDefault();
+                _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.Held_Fernkampfwaffe.TalentGUID).FirstOrDefault();
         }
 
         public KämpferFernkampfwaffe(Held held, Model.Fernkampfwaffe waffe, Held_Talent ht)

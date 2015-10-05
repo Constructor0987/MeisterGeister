@@ -1274,21 +1274,8 @@ namespace MeisterGeister.Logic.HeldenImport
                 }
                 else if (a != null)
                 {
-                    Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
-                    if (ha == null)
-                    {
-                        ha = new Held_Ausrüstung();
-                        ha.AusrüstungGUID = a.AusrüstungGUID;
-                        ha.HeldGUID = _held.HeldGUID;
-                        ha.Angelegt = false;
-                        ha.Anzahl = anzahl;
-                        ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
-                        _held.Held_Ausrüstung.Add(ha);
-                    }
-                    else
-                    {
-                        ha.Anzahl += anzahl;
-                    }
+                    for (int ai = 1; ai <= anzahl; ai++)
+                        _held.AddAusrüstung(a);
                 }
             }
         }

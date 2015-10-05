@@ -287,6 +287,39 @@ namespace MeisterGeister.Model
             }
         }
         private Ausrüstung _ausrüstung;
+    
+    	[DataMember]
+        public virtual ICollection<Held_Rüstung> Held_Rüstung
+        {
+            get
+            {
+                if (_held_Rüstung == null)
+                {
+                    var newCollection = new FixupCollection<Held_Rüstung>();
+                    newCollection.CollectionChanged += FixupHeld_Rüstung;
+                    _held_Rüstung = newCollection;
+                }
+                return _held_Rüstung;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Rüstung, value))
+                {
+                    var previousValue = _held_Rüstung as FixupCollection<Held_Rüstung>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Rüstung;
+                    }
+                    _held_Rüstung = value;
+                    var newValue = value as FixupCollection<Held_Rüstung>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Rüstung;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Rüstung> _held_Rüstung;
 
         #endregion
 
@@ -306,6 +339,29 @@ namespace MeisterGeister.Model
                 if (RüstungGUID != Ausrüstung.AusrüstungGUID)
                 {
                     RüstungGUID = Ausrüstung.AusrüstungGUID;
+                }
+            }
+        }
+    
+        private void FixupHeld_Rüstung(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Rüstung");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Rüstung item in e.NewItems)
+                {
+                    item.Rüstung = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Rüstung item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Rüstung, this))
+                    {
+                        item.Rüstung = null;
+                    }
                 }
             }
         }

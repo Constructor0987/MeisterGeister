@@ -385,6 +385,39 @@ namespace MeisterGeister.Model
         private Ausrüstung _ausrüstung;
     
     	[DataMember]
+        public virtual ICollection<Held_Fernkampfwaffe> Held_Fernkampfwaffe
+        {
+            get
+            {
+                if (_held_Fernkampfwaffe == null)
+                {
+                    var newCollection = new FixupCollection<Held_Fernkampfwaffe>();
+                    newCollection.CollectionChanged += FixupHeld_Fernkampfwaffe;
+                    _held_Fernkampfwaffe = newCollection;
+                }
+                return _held_Fernkampfwaffe;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Fernkampfwaffe, value))
+                {
+                    var previousValue = _held_Fernkampfwaffe as FixupCollection<Held_Fernkampfwaffe>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Fernkampfwaffe;
+                    }
+                    _held_Fernkampfwaffe = value;
+                    var newValue = value as FixupCollection<Held_Fernkampfwaffe>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Fernkampfwaffe;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Fernkampfwaffe> _held_Fernkampfwaffe;
+    
+    	[DataMember]
         public virtual ICollection<Held_Munition> Held_Munition
         {
             get
@@ -468,6 +501,29 @@ namespace MeisterGeister.Model
                 if (FernkampfwaffeGUID != Ausrüstung.AusrüstungGUID)
                 {
                     FernkampfwaffeGUID = Ausrüstung.AusrüstungGUID;
+                }
+            }
+        }
+    
+        private void FixupHeld_Fernkampfwaffe(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Fernkampfwaffe");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Fernkampfwaffe item in e.NewItems)
+                {
+                    item.Fernkampfwaffe = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Fernkampfwaffe item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Fernkampfwaffe, this))
+                    {
+                        item.Fernkampfwaffe = null;
+                    }
                 }
             }
         }

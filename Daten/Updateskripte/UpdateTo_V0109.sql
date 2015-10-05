@@ -425,7 +425,7 @@ ALTER TABLE Pflanze DROP COLUMN Kategorie;
 
 
 -- Spalten hinzufügen
-ALTER TABLE Held_Ausrüstung ADD [Name] nvarchar(200) NULL;
+ALTER TABLE Held_Ausrüstung ADD [Eigenname] nvarchar(200) NULL;
 
 --Held_Ausrüstung nur noch einmal JE ausrüstung.
 ALTER TABLE Held_Ausrüstung DROP CONSTRAINT PK_Held_Ausrüstung;

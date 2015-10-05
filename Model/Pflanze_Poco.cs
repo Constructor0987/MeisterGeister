@@ -142,18 +142,6 @@ namespace MeisterGeister.Model
         private string _name;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Kategorie
-        {
-            get { return _kategorie; }
-            set
-    		{ 
-    			Set(ref _kategorie, value);
-    		}
-    
-        }
-        private string _kategorie;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Bemerkung
         {
             get { return _bemerkung; }
@@ -320,6 +308,39 @@ namespace MeisterGeister.Model
         private ICollection<Pflanze_Ernte> _pflanze_Ernte;
     
     	[DataMember]
+        public virtual ICollection<Pflanze_Typ> Pflanze_Typ
+        {
+            get
+            {
+                if (_pflanze_Typ == null)
+                {
+                    var newCollection = new FixupCollection<Pflanze_Typ>();
+                    newCollection.CollectionChanged += FixupPflanze_Typ;
+                    _pflanze_Typ = newCollection;
+                }
+                return _pflanze_Typ;
+            }
+            set
+            {
+                if (!ReferenceEquals(_pflanze_Typ, value))
+                {
+                    var previousValue = _pflanze_Typ as FixupCollection<Pflanze_Typ>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupPflanze_Typ;
+                    }
+                    _pflanze_Typ = value;
+                    var newValue = value as FixupCollection<Pflanze_Typ>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupPflanze_Typ;
+                    }
+                }
+            }
+        }
+        private ICollection<Pflanze_Typ> _pflanze_Typ;
+    
+    	[DataMember]
         public virtual ICollection<Pflanze_Verbreitung> Pflanze_Verbreitung
         {
             get
@@ -426,6 +447,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Pflanze_Ernte item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Pflanze, this))
+                    {
+                        item.Pflanze = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupPflanze_Typ(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Pflanze_Typ");
+            if (e.NewItems != null)
+            {
+                foreach (Pflanze_Typ item in e.NewItems)
+                {
+                    item.Pflanze = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Pflanze_Typ item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Pflanze, this))
                     {

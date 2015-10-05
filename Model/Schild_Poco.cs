@@ -191,6 +191,39 @@ namespace MeisterGeister.Model
             }
         }
         private Ausrüstung _ausrüstung;
+    
+    	[DataMember]
+        public virtual ICollection<Held_BFAusrüstung> Held_BFAusrüstung
+        {
+            get
+            {
+                if (_held_BFAusrüstung == null)
+                {
+                    var newCollection = new FixupCollection<Held_BFAusrüstung>();
+                    newCollection.CollectionChanged += FixupHeld_BFAusrüstung;
+                    _held_BFAusrüstung = newCollection;
+                }
+                return _held_BFAusrüstung;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_BFAusrüstung, value))
+                {
+                    var previousValue = _held_BFAusrüstung as FixupCollection<Held_BFAusrüstung>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_BFAusrüstung;
+                    }
+                    _held_BFAusrüstung = value;
+                    var newValue = value as FixupCollection<Held_BFAusrüstung>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_BFAusrüstung;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_BFAusrüstung> _held_BFAusrüstung;
 
         #endregion
 
@@ -210,6 +243,29 @@ namespace MeisterGeister.Model
                 if (SchildGUID != Ausrüstung.AusrüstungGUID)
                 {
                     SchildGUID = Ausrüstung.AusrüstungGUID;
+                }
+            }
+        }
+    
+        private void FixupHeld_BFAusrüstung(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_BFAusrüstung");
+            if (e.NewItems != null)
+            {
+                foreach (Held_BFAusrüstung item in e.NewItems)
+                {
+                    item.Schild = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_BFAusrüstung item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Schild, this))
+                    {
+                        item.Schild = null;
+                    }
                 }
             }
         }
