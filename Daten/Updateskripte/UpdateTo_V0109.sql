@@ -1,4 +1,4 @@
-﻿-- Neue Struktur für Held_Ausrüstung-Beziehung, neue Tabelle Muntion_Setting
+﻿-- Neue Struktur für Held_Ausrüstung-Beziehung, neue Tabelle Muntion_Setting, und Pflanzentyp-Auslagerung
 
 --PflanzenTyp in eigene Tabelle auslagern
 
@@ -7,11 +7,10 @@ CREATE TABLE [Pflanze_Typ] (
 	[PflanzeGUID] uniqueidentifier NOT NULL, 
 	[Typ] nvarchar(200) NOT NULL,
 	CONSTRAINT [PK_Pflanze_Typ] PRIMARY KEY ([PflanzeGUID], [Typ]), 
-	FOREIGN KEY ([PflanzeGUID])
+	CONSTRAINT [fk_Pflanze_Typ_Pflanze] FOREIGN KEY ([PflanzeGUID])
 		REFERENCES [Pflanze] ([PflanzeGUID])
 		ON UPDATE CASCADE ON DELETE CASCADE
-)
-GO
+);
 
 --Anschließend die Typen eintragen
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000001',N'Nutzpflanze');
@@ -546,7 +545,7 @@ CREATE TABLE [Munition_Setting] (
 		REFERENCES [Munition] ([MunitionGUID])
 		ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT [fk_Munition_Setting_Setting] FOREIGN KEY ([SettingGUID])
-		REFERENCES [Setting] ([MunitionGUID])
+		REFERENCES [Setting] ([SettingGUID])
 		ON UPDATE CASCADE ON DELETE CASCADE
 );
 
