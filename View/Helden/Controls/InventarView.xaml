@@ -754,7 +754,7 @@
                             <TextBlock Style="{StaticResource TextTitel}" Text="Nahkampfwaffen"/>
                         </StackPanel>
                     </Expander.Header>
-                    <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                    <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                         <!--Talent-->
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}"/>
@@ -808,7 +808,7 @@
                         </StackPanel>
                     </Expander.Header>
                     <DockPanel>
-                        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Angelegt,Mode=TwoWay}"/>
                                 <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
@@ -857,7 +857,7 @@
                             <TextBlock Style="{StaticResource TextTitel}" Text="Schilde"/>
                         </StackPanel>
                     </Expander.Header>
-                    <DataGrid ItemsSource="{Binding HeldSchildImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                    <DataGrid ItemsSource="{Binding HeldSchildImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Angelegt,Mode=TwoWay}"/>
                             <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
@@ -891,7 +891,7 @@
                         </StackPanel>
                     </Expander.Header>
 
-                    <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                    <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Angelegt,Mode=TwoWay}"/>
                             <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
@@ -912,7 +912,7 @@
                         </StackPanel>
                     </Expander.Header>
 
-                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
                             <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>

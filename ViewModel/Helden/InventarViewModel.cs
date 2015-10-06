@@ -405,16 +405,16 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //KONSTRUKTOR
         public InventarViewModel()
         {
-            heldNahkampfWaffeImInventar = CollectionViewSource.GetDefaultView(heldAusrüstungen);
+            heldNahkampfWaffeImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
             heldNahkampfWaffeImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Waffe != null;
 
-            heldFernkampfwaffeImInventar = CollectionViewSource.GetDefaultView(heldAusrüstungen);
+            heldFernkampfwaffeImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
             heldFernkampfwaffeImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Fernkampfwaffe != null;
 
-            heldSchildImInventar = CollectionViewSource.GetDefaultView(heldAusrüstungen);
+            heldSchildImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
             heldSchildImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Schild != null;
 
-            heldRuestungImInventar = CollectionViewSource.GetDefaultView(heldAusrüstungen);
+            heldRuestungImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
             heldRuestungImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Rüstung != null;
 
             EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("BEBerechnung", ""));
