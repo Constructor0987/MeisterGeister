@@ -28,7 +28,13 @@ namespace MeisterGeister.Model
                 return null;
             if (h == null)
                 return w.Talent.FirstOrDefault();
-            return h.Kampftalente.Where(t => w.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault().Talent;
+            else
+            {
+                Held_Talent ht = h.Kampftalente.Where(t => w.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
+                if (ht == null)
+                    return null;
+                else return ht.Talent;
+            }
         }
 
         public Held_Talent BestesHeldTalent

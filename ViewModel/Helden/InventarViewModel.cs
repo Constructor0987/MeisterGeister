@@ -14,6 +14,7 @@ using E = MeisterGeister.Logic.Einstellung.Einstellungen;
 using System.Windows.Data;
 using System.ComponentModel;
 using MeisterGeister.Logic.Extensions;
+using System.Collections.Specialized;
 
 namespace MeisterGeister.ViewModel.Inventar
 {
@@ -75,10 +76,10 @@ namespace MeisterGeister.ViewModel.Inventar
         //Zuordnungen
         private ExtendedObservableCollection<Model.Held_Ausrüstung> heldAusrüstungen = new ExtendedObservableCollection<Model.Held_Ausrüstung>();
 
-        private ICollectionView heldNahkampfWaffeImInventar;
-        private ICollectionView heldFernkampfwaffeImInventar;
-        private ICollectionView heldSchildImInventar;
-        private ICollectionView heldRuestungImInventar;
+        private CollectionViewSource heldNahkampfWaffeImInventar;
+        private CollectionViewSource heldFernkampfwaffeImInventar;
+        private CollectionViewSource heldSchildImInventar;
+        private CollectionViewSource heldRuestungImInventar;
 
         private ExtendedObservableCollection<InventarItem> heldSonstigesImInventar = new ExtendedObservableCollection<InventarItem>();
 
@@ -358,21 +359,25 @@ namespace MeisterGeister.ViewModel.Inventar
             }
         }
         //Zuordnung
+        public ExtendedObservableCollection<Model.Held_Ausrüstung> HeldAusrüstungen
+        {
+            get { return heldAusrüstungen; }
+        }
         public ICollectionView HeldNahkampfWaffeImInventar
         {
-            get { return heldNahkampfWaffeImInventar; }
+            get { return heldNahkampfWaffeImInventar.View; }
         }
         public ICollectionView HeldFernkampfwaffeImInventar
         {
-            get { return heldFernkampfwaffeImInventar; }
+            get { return heldFernkampfwaffeImInventar.View; }
         }
         public ICollectionView HeldSchildImInventar
         {
-            get { return heldSchildImInventar; }
+            get { return heldSchildImInventar.View; }
         }
         public ICollectionView HeldRuestungImInventar
         {
-            get { return heldRuestungImInventar; }
+            get { return heldRuestungImInventar.View; }
         }
         public ExtendedObservableCollection<InventarItem> HeldSonstigesImInventar
         {
@@ -405,17 +410,19 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //KONSTRUKTOR
         public InventarViewModel()
         {
-            heldNahkampfWaffeImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
-            heldNahkampfWaffeImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Waffe != null;
+            heldAusrüstungen.CollectionChanged += HeldAusrüstungen_CollectionChanged;
 
-            heldFernkampfwaffeImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
-            heldFernkampfwaffeImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Fernkampfwaffe != null;
+            heldNahkampfWaffeImInventar = new CollectionViewSource() { Source = heldAusrüstungen };
+            heldNahkampfWaffeImInventar.Filter += filterNahkampfwaffe;
 
-            heldSchildImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
-            heldSchildImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Schild != null;
+            heldFernkampfwaffeImInventar = new CollectionViewSource() { Source = heldAusrüstungen };
+            heldFernkampfwaffeImInventar.Filter += filterFernkampfwaffe;
 
-            heldRuestungImInventar = new CollectionViewSource { Source = heldAusrüstungen }.View;
-            heldRuestungImInventar.Filter = (a) => ((Model.Held_Ausrüstung)a).Rüstung != null;
+            heldSchildImInventar = new CollectionViewSource() { Source = heldAusrüstungen };
+            heldSchildImInventar.Filter += filterSchild;
+
+            heldRuestungImInventar = new CollectionViewSource() { Source = heldAusrüstungen };
+            heldRuestungImInventar.Filter += filterRüstung;
 
             EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("BEBerechnung", ""));
             EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("RSBerechnung", ""));
@@ -431,6 +438,41 @@ namespace MeisterGeister.ViewModel.Inventar
 
             LoadDaten();
         }
+        #endregion
+
+        #region // Private Methoden
+
+        private void HeldAusrüstungen_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //Beim Delete dafür sorgen dass die Ausrüstung auch aus der Datenbank verschwindet
+            switch(e.Action)
+            {
+                case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Replace:
+                    foreach (Model.Held_Ausrüstung ha in e.OldItems)
+                        SelectedHeld.RemoveAusrüstung(ha);
+                    break;
+            }
+        }
+        
+
+        private void filterNahkampfwaffe(object sender, FilterEventArgs f)
+        {
+            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Waffe != null;
+        }
+        private void filterFernkampfwaffe(object sender, FilterEventArgs f)
+        {
+            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Fernkampfwaffe != null;
+        }
+        private void filterSchild(object sender, FilterEventArgs f)
+        {
+            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Schild != null;
+        }
+        private void filterRüstung(object sender, FilterEventArgs f)
+        {
+            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Rüstung != null;
+        }
+
         #endregion
 
         #region //Public Methoden

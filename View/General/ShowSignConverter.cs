@@ -24,7 +24,15 @@ namespace MeisterGeister.View.General
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is String)
-                return ((string)value).Substring(1);
+            {
+                String s = (String)value;
+                if (targetType == typeof(int))
+                    return Int32.Parse(s);
+                else if (targetType == typeof(double))
+                    return Double.Parse(s);
+            }
+            else if (value.GetType() == targetType)
+                return value;
             return null;
         }
     }

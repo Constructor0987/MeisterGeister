@@ -13,10 +13,10 @@
     d:DesignHeight="500" 
     d:DesignWidth="790" 
     Background="Transparent" DataContext="{x:Null}"
-	d:DataContext="{d:DesignData /SampleData/InventarViewModelSampleData1.xaml}"
     ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <ViewGeneral:ShowSignConverter x:Key="signConverter"/>
 
         <DataTemplate x:Key="removeButton">
             <Button Padding="0" Width="25" Height="25" Command="{Binding OnRemove}" Style="{DynamicResource ReadOnlyButtonStyle}">
@@ -24,13 +24,85 @@
             </Button>
         </DataTemplate>
 
+        <DataTemplate x:Key="angelegtTemplate">
+            <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_02.png" ToolTip="Angelegt" Margin="2"/>
+        </DataTemplate>
+
         <DataTemplate x:Key="trageortTemplate">
             <TextBlock Text="{Binding Trageort.Name}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="trageortEditTemplate">
             <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid},AncestorLevel=1},Path=DataContext.TrageortListe}"
-                      SelectedItem="{Binding Trageort,Mode=TwoWay}" DisplayMemberPath="Name"/>
+                      SelectedItem="{Binding Trageort,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="tpFernkampfTemplate">
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}W{1}{2}">
+                        <Binding Path="Fernkampfwaffe.TPWürfelAnzahl"/>
+                        <Binding Path="Fernkampfwaffe.TPWürfel"/>
+                        <Binding Path="Fernkampfwaffe.TPBonus" Converter="{StaticResource signConverter}"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </DataTemplate>
+
+        <DataTemplate x:Key="tpTemplate">
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}W{1}{2}">
+                        <Binding Path="Waffe.TPWürfelAnzahl"/>
+                        <Binding Path="Waffe.TPWürfel"/>
+                        <Binding Path="Held_BFAusrüstung.Held_Waffe.TPBonus" Converter="{StaticResource signConverter}"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </DataTemplate>
+
+        <DataTemplate x:Key="tpEditTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}W{1}">
+                            <Binding Path="Waffe.TPWürfelAnzahl"/>
+                            <Binding Path="Waffe.TPWürfel"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBox Margin="4,0,0,0" Text="{Binding Held_BFAusrüstung.Held_Waffe.TPBonus,Converter={StaticResource signConverter},UpdateSourceTrigger=LostFocus}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="wmSchildTemplate">
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}/{1}">
+                        <Binding Path="Schild.WMAT"/>
+                        <Binding Path="Schild.WMPA"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </DataTemplate>
+
+        <DataTemplate x:Key="wmTemplate">
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0}/{1}">
+                        <Binding Path="Held_BFAusrüstung.Held_Waffe.WMAT"/>
+                        <Binding Path="Held_BFAusrüstung.Held_Waffe.WMPA"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </DataTemplate>
+
+        <DataTemplate x:Key="wmEditTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Held_BFAusrüstung.Held_Waffe.WMAT}"/>
+                <TextBlock Text=" / " VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Held_BFAusrüstung.Held_Waffe.WMPA}"/>
+            </StackPanel>
         </DataTemplate>
 
         <Style x:Key="ButtonBackground" TargetType="{x:Type Border}">
@@ -736,7 +808,6 @@
                         <Setter Property="Margin" Value="0,4,0,0"/>
                     </Style>
                 </StackPanel.Resources>
-
                 <!-- Nahkampf -->
                 <Expander>
                     <Expander.Style>
@@ -754,19 +825,27 @@
                             <TextBlock Style="{StaticResource TextTitel}" Text="Nahkampfwaffen"/>
                         </StackPanel>
                     </Expander.Header>
-                    <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
+                    <DataGrid ItemsSource="{Binding HeldNahkampfWaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}"
+                              ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                         <!--Talent-->
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}"/>
-                            <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                            <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}" HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                            <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Width="70" Header="TP" Binding="{Binding Held_BFAusrüstung.Held_Waffe.TP}"/>
-                            <DataGridTextColumn Width="60" Header="TP/KK" Binding="{Binding Waffe.TPKK}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Width="70" Header="TP" CellTemplate="{StaticResource tpTemplate}" CellEditingTemplate="{StaticResource tpEditTemplate}"/>
+                            <DataGridTextColumn Width="50" Header="TP/KK" IsReadOnly="True">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0}/{1}">
+                                        <Binding Path="Waffe.TPKKSchwelle"/>
+                                        <Binding Path="Waffe.TPKKSchritt"/>
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Width="30" Header="BF" Binding="{Binding Held_BFAusrüstung.BF}"/>
                             <!-- Held_BFAusrüstung.StartBF -->
                             <DataGridTextColumn Width="30" Header="INI" Binding="{Binding Held_BFAusrüstung.Held_Waffe.INI}"/>
-                            <DataGridTextColumn Width="30" Header="WM" Binding="{Binding WM}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Width="60" Header="WM" CellTemplate="{StaticResource wmTemplate}" CellEditingTemplate="{StaticResource wmEditTemplate}"/>
                             <DataGridTextColumn Width="40" Header="DK" Binding="{Binding Waffe.DK}" IsReadOnly="True"/>
                             <DataGridTemplateColumn Width="100" Header="AT / PA" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -808,20 +887,21 @@
                         </StackPanel>
                     </Expander.Header>
                     <DockPanel>
-                        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
+                        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}"
+                                  ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Angelegt,Mode=TwoWay}"/>
-                                <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                                <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Width="70" Header="TP" Binding="{Binding Held_Fernkampfwaffe.TP}" IsReadOnly="True"/>
+                                <DataGridTemplateColumn Width="70" Header="TP" CellTemplate="{StaticResource tpFernkampfTemplate}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="120" Header="Reichweiten" Binding="{Binding Fernkampfwaffe.Reichweiten}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="80" Header="TP+" Binding="{Binding Fernkampfwaffe.TPReichweiten}"  IsReadOnly="True"/>
                                 <DataGridTextColumn Width="50" Header="Laden" Binding="{Binding Fernkampfwaffe.Laden}" IsReadOnly="True"/>
-                                <DataGridTemplateColumn Width="50" Header="FK">
+                                <DataGridTemplateColumn Width="90" Header="FK">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ItemsControl Grid.Column="10" ItemsSource="{Binding Held_Fernkampfwaffe.KämpferWaffen}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <ItemsControl ItemsSource="{Binding Held_Fernkampfwaffe.KämpferWaffen}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -833,7 +913,33 @@
                                             </ItemsControl>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <Grid ToolTip="Fernkampferleichterung">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Opacity="0.5"/>
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Margin="4"/>
+                                                <ViewGeneral:IntBox Grid.Column="1" Margin="4,0,0,0" ShowButtons="True" MinValue="0" MaxValue="2"
+                                                                    Value="{Binding Held_Fernkampfwaffe.FKErleichterung,Mode=TwoWay}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
+                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Held_Fernkampfwaffe.KKErleichterung}">
+                                    <DataGridCheckBoxColumn.Header>
+                                        <Grid ToolTip="Körperkraft-Vorraussetzung um 1 verringert">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Opacity="0.5" RenderTransformOrigin="0.5,0.5">
+                                                <Image.RenderTransform>
+                                                    <ScaleTransform ScaleY="-1"/>
+                                                </Image.RenderTransform>
+                                            </Image>
+                                            <TextBlock Text="KK" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </DataGridCheckBoxColumn.Header>
+                                </DataGridCheckBoxColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                         <!--<TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Text="*: Wundschwelle (KO/2)-2 | **: improvisiert" Style="{StaticResource TextTitel}"/>-->
@@ -857,16 +963,17 @@
                             <TextBlock Style="{StaticResource TextTitel}" Text="Schilde"/>
                         </StackPanel>
                     </Expander.Header>
-                    <DataGrid ItemsSource="{Binding HeldSchildImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
+                    <DataGrid ItemsSource="{Binding HeldSchildImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}"
+                              ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Angelegt,Mode=TwoWay}"/>
-                            <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                            <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                            <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Width="50" Header="Größe" Binding="{Binding Schild.Größe}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="30" Header="WM" Binding="{Binding Schild.WM}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="30" Header="INI" Binding="{Binding Schild.INI}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="30" Header="BF" Binding="{Binding Held_BFAusrüstung.BF}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Width="30" Header="WM" CellTemplate="{StaticResource wmSchildTemplate}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="30" Header="INI" Binding="{Binding Schild.INI}"/>
+                            <DataGridTextColumn Width="30" Header="BF" Binding="{Binding Held_BFAusrüstung.BF}"/>
                             <!-- StartBF -->
                         </DataGrid.Columns>
                     </DataGrid>
@@ -891,12 +998,13 @@
                         </StackPanel>
                     </Expander.Header>
 
-                    <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
+                    <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}"
+                              ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Width="90" Header="Ausgerüstet" Binding="{Binding Angelegt,Mode=TwoWay}"/>
-                            <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                            <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                            <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
-                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Width="30" Header="RS" Binding="{Binding Rüstung.RS}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="30" Header="BE" Binding="{Binding Rüstung.BE}" IsReadOnly="True"/>
                         </DataGrid.Columns>
@@ -912,10 +1020,10 @@
                         </StackPanel>
                     </Expander.Header>
 
-                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False">
+                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
-                            <DataGridTemplateColumn Width="80" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                            <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="True"/>
                             <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="True"/>
                             <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
