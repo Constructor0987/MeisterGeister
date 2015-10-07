@@ -110,6 +110,32 @@ namespace MeisterGeister.Logic.General
 
         virtual public string WerteNamen { set; get; }
 
+        private ProbeKritischVerhalten _kritischVerhaltePatzer = ProbeKritischVerhalten.STANDARD;
+        public ProbeKritischVerhalten KritischVerhaltenPatzer
+        {
+            get
+            {
+                return _kritischVerhaltePatzer;
+            }
+            set
+            {
+                _kritischVerhaltePatzer = value;
+            }
+        }
+
+        private ProbeKritischVerhalten _kritischVerhalteGlücklich = ProbeKritischVerhalten.STANDARD;
+        public ProbeKritischVerhalten KritischVerhaltenGlücklich
+        {
+            get
+            {
+                return _kritischVerhalteGlücklich;
+            }
+            set
+            {
+                _kritischVerhalteGlücklich = value;
+            }
+        }
+
         public double Erfolgschance {
             get
             {
@@ -191,10 +217,44 @@ namespace MeisterGeister.Logic.General
             for (int i = 0; i < Werte.Length; i++)
             {
                 wurfQualität[i] = Werte[i] + Math.Min(fertigkeitswertEff, 0) - pe.Würfe[i];
+
+                // kritische Ergebnisse zählen
                 if (pe.Würfe[i] == 1)
-                    einsen++;
+                {
+                    switch (KritischVerhaltenGlücklich)
+                    {
+                        case ProbeKritischVerhalten.STANDARD:
+                            einsen++;
+                            break;
+                        case ProbeKritischVerhalten.BESTÄTIGUNG:
+                            if (KontrollProbeErgebnis == null)
+                                KontrollProbeErgebnis = KontrollProbe(this).Würfeln();
+                            if (KontrollProbeErgebnis.Ergebnis == ErgebnisTyp.GELUNGEN)
+                                einsen++;
+                            break;
+                        case ProbeKritischVerhalten.DEAKTIVIERT:
+                        default:
+                            break;
+                    }
+                }
                 else if (pe.Würfe[i] == 20)
-                    zwanzigen++;
+                {
+                    switch (KritischVerhaltenPatzer)
+                    {
+                        case ProbeKritischVerhalten.STANDARD:
+                            zwanzigen++;
+                            break;
+                        case ProbeKritischVerhalten.BESTÄTIGUNG:
+                            if (KontrollProbeErgebnis == null)
+                                KontrollProbeErgebnis = KontrollProbe(this).Würfeln();
+                            if (KontrollProbeErgebnis.Ergebnis == ErgebnisTyp.MISSLUNGEN)
+                                zwanzigen++;
+                            break;
+                        case ProbeKritischVerhalten.DEAKTIVIERT:
+                        default:
+                            break;
+                    }
+                }
             }
             int tmpÜbrig = fertigkeitswertEff;
             wurfQualität.Where(q => q < 0).ToList().ForEach(q => tmpÜbrig += q);
@@ -243,6 +303,26 @@ namespace MeisterGeister.Logic.General
 
             return pe;
         }
+
+        /// <summary>
+        /// Erzeugt eine Kontrollprobe auf Basis von Probe 'p'.
+        /// </summary>
+        /// <param name="p">Probe auf Basis derer die neue Kontrolprobe erzeugt werden soll.</param>
+        public Probe KontrollProbe(Probe p)
+        {
+            Probe k = new Probe();
+            k.Fertigkeitswert = p.Fertigkeitswert;
+            k.IsBehinderung = p.IsBehinderung;
+            k.KritischVerhaltenGlücklich = ProbeKritischVerhalten.DEAKTIVIERT;
+            k.KritischVerhaltenPatzer = ProbeKritischVerhalten.DEAKTIVIERT;
+            k.Modifikator = p.Modifikator;
+            k.Probenname = p.Probenname + " (Kontrollwurf)";
+            k.Werte = p.Werte;
+            k.WerteNamen = p.WerteNamen;
+            return k;
+        }
+
+        public ProbenErgebnis KontrollProbeErgebnis { get; set; }
 
         private void SpezielleErfahrungSpeichern(int einsen)
         {
@@ -429,5 +509,21 @@ namespace MeisterGeister.Logic.General
         GELUNGEN = 0x8,
         GLÜCKLICH = 0x18,
         MEISTERHAFT = 0x38
+    }
+
+    public enum ProbeKritischVerhalten
+    {
+        /// <summary>
+        /// 1 und 20 werden als Patzer/Glücklich gewertet.
+        /// </summary>
+        STANDARD,
+        /// <summary>
+        /// Eine 1/20 zählt nur als kritisch wenn ein Folgewurf ebenfalls gelingt/misslingt (z.B. bei AT/PA).
+        /// </summary>
+        BESTÄTIGUNG,
+        /// <summary>
+        /// Eine 1 und 20 wird wie jedes andere Ergebnis bewertet.
+        /// </summary>
+        DEAKTIVIERT
     }
 }

@@ -21,6 +21,12 @@ namespace MeisterGeister.ViewModel.Proben
             get { return onWürfeln; }
         }
 
+        private Base.CommandBase onKontrollProbeWürfeln;
+        public Base.CommandBase OnKontrollProbeWürfeln
+        {
+            get { return onKontrollProbeWürfeln; }
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
@@ -82,6 +88,8 @@ namespace MeisterGeister.ViewModel.Proben
                 _ergebnis = value;
                 OnChanged("Ergebnis");
                 OnChanged("ErgebnisImagePath");
+                OnChanged("KontrollProbeVisibility");
+                OnChanged("KontrollProbeErgebnisImagePath");
                 OnChanged("Erfolgschance");
                 NotifyErgebnisChanged();
             }
@@ -231,6 +239,46 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        public System.Windows.Visibility KontrollProbeVisibility
+        {
+            get
+            {
+                if (Probe.KontrollProbeErgebnis == null)
+                    return System.Windows.Visibility.Collapsed;
+                return System.Windows.Visibility.Visible;
+            }
+        }
+
+        public string KontrollProbeErgebnisImagePath
+        {
+            get
+            {
+                if (Probe.KontrollProbeErgebnis != null)
+                {
+                    switch (Probe.KontrollProbeErgebnis.Ergebnis)
+                    {
+                        case ErgebnisTyp.KEIN_ERGEBNIS:
+                            break;
+                        case ErgebnisTyp.MISSLUNGEN:
+                            return "/DSA MeisterGeister;component/Images/Icons/General/entf_01.png";
+                        case ErgebnisTyp.PATZER:
+                            return "/DSA MeisterGeister;component/Images/Icons/Wetter/gewitter.png";
+                        case ErgebnisTyp.FATALER_PATZER:
+                            return "/DSA MeisterGeister;component/Images/Icons/tot.png";
+                        case ErgebnisTyp.GELUNGEN:
+                            return "/DSA MeisterGeister;component/Images/Icons/General/ok.png";
+                        case ErgebnisTyp.GLÜCKLICH:
+                            return "/DSA MeisterGeister;component/Images/Icons/General/neu.png";
+                        case ErgebnisTyp.MEISTERHAFT:
+                            return "/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png";
+                        default:
+                            break;
+                    }
+                }
+                return "/DSA MeisterGeister;component/Images/Icons/General/question.png";
+            }
+        }
+
         public int WertCount
         {
             get { return EigenschaftWurfItemListe.Count; }
@@ -340,11 +388,12 @@ namespace MeisterGeister.ViewModel.Proben
 
         #region //---- KONSTRUKTOR ----
 
-        public ProbeControlViewModel()
+        public ProbeControlViewModel() : base(View.General.ViewHelper.ShowProbeDialog)
         {
             WertCount = Probe.Werte.Length;
 
             onWürfeln = new Base.CommandBase(Würfeln, null);
+            onKontrollProbeWürfeln = new Base.CommandBase(KontrollProbeWürfeln, null);
         }
 
         #endregion
@@ -387,6 +436,12 @@ namespace MeisterGeister.ViewModel.Proben
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             NotifyErgebnisChanged();
+        }
+
+        private void KontrollProbeWürfeln(object obj)
+        {
+            Probe.KontrollProbeErgebnis = ShowProbeDialog(Probe.KontrollProbe(Probe), Held);
+            Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
         }
 
         private void NotifyErgebnisChanged()
