@@ -338,9 +338,9 @@ namespace MeisterGeister
         private static void RefreshRegeledition()
         {
             // Editionswerte aus Performance-Gründen cachen
-            _dsa5 = Regeledition == "DSA 5";
-            _dsa4_1 = Regeledition == "DSA 4.1";
-            _regeleditionNummer = Regeledition.Replace("DSA ", string.Empty);
+            _dsa5 = Regeledition == "DSA 5" || Regeledition == "DSA5" || Regeledition == "5";
+            _dsa4_1 = Regeledition == "DSA 4.1" || Regeledition == "DSA4.1" || Regeledition == "4.1";
+            _regeleditionNummer = Regeledition.Replace(" ", "").Replace("DSA", string.Empty);
             _dsa5_Visibility = DSA5 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             _dsa4_1_Visibility = DSA4_1 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
         }
