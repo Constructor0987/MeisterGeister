@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="MeisterGeister.View.ZooBot.LandschaftenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:zb="clr-namespace:MeisterGeister.View.ZooBot"
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.ZooBot.Logic"             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="300">
+    <ItemsControl ItemsSource="{Binding Landschaftsgruppen}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type vm:LandschaftsgruppeItem}">
+                <Expander ExpandDirection="Down">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsSelected}"/>
+                            <TextBlock Text="{Binding Landschaftsgruppe.Name}"/>
+                        </StackPanel>
+                    </Expander.Header>
+                    <ItemsControl ItemsSource="{Binding Landschaften}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:LandschaftItem}">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsSelected}"/>
+                                    <TextBlock Text="{Binding Landschaft.Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Expander>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

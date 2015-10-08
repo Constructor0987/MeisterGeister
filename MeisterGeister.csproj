@@ -722,6 +722,7 @@
     <Compile Include="ViewModel\ZooBot\BekanntePflanzenVM.cs" />
     <Compile Include="ViewModel\ZooBot\GebietAuswahlVM.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\Ernte.cs" />
+    <Compile Include="ViewModel\ZooBot\Logic\LandschaftenVM.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\Preis.cs" />
     <Compile Include="ViewModel\ZooBot\ZooBotViewModel.cs" />
     <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">
@@ -1057,6 +1058,9 @@
     </Compile>
     <Compile Include="View\ZooBot\BekanntePflanzenView.xaml.cs">
       <DependentUpon>BekanntePflanzenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ZooBot\LandschaftenView.xaml.cs">
+      <DependentUpon>LandschaftenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ZooBot\GebietAuswahlView.xaml.cs">
       <DependentUpon>GebietAuswahlView.xaml</DependentUpon>
@@ -1588,6 +1592,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ZooBot\BekanntePflanzenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ZooBot\LandschaftenView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
