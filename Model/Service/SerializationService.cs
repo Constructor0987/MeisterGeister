@@ -80,6 +80,7 @@ namespace MeisterGeister.Model.Service
                 from a in Context.Held_Pflanze select a,
                 from a in Context.Held_Ausrüstung select a,
                 from a in Context.Held_BFAusrüstung select a,
+                from a in Context.Held_BFAusrüstung select a.Schild,
                 from a in Context.Held_Waffe select a,
                 from a in Context.Held_Fernkampfwaffe select a,
                 from a in Context.Held_Rüstung select a,
@@ -87,7 +88,7 @@ namespace MeisterGeister.Model.Service
                 from a in Context.Ausrüstung_Setting where !a.AusrüstungGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Waffe where !a.WaffeGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Fernkampfwaffe where !a.FernkampfwaffeGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
-                from a in Context.Schild where !a.SchildGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.Schild where !a.SchildGUID.StringConvert().StartsWith("00000000-0000-0000-") select a, //|| a.Held_BFAusrüstung.Count > 0
                 from a in Context.Rüstung where !a.RüstungGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Held_Munition select a,
                 from a in Context.Munition where !a.MunitionGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
@@ -402,6 +403,18 @@ namespace MeisterGeister.Model.Service
                     
                 );
                 Save(); //TODO ??: Besser wäre ein check, ob was überschrieben wird und ein Aufruf, des Save aus dem UI
+                //Manuelle Reperatur der Schilde
+                foreach (var bfha in held.Held_Ausrüstung.Where(a => a.Held_BFAusrüstung != null).Select(a => a.Held_BFAusrüstung).Where(a => a.Schild != null))
+                {
+                    var ha = output.Held_Ausrüstung.Where(a => a.HeldAusrüstungGUID == bfha.HeldAusrüstungGUID).FirstOrDefault();
+                    Context.LoadProperty(ha, "Held_BFAusrüstung");
+                    if (ha != null && ha.Held_BFAusrüstung != null)
+                    {
+                        var schild = Context.Schild.Where(a => a.SchildGUID == bfha.Schild.SchildGUID).FirstOrDefault();
+                        ha.Held_BFAusrüstung.Schild = schild;
+                    }
+                }
+                Save();
                 return output!=null;
 #if !DEBUG
         }
@@ -500,6 +513,7 @@ namespace MeisterGeister.Model.Service
             List<object> toDelete = new List<object>();
 
             toDelete.AddRange(Context.Held_Ausrüstung.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Pflanze.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
             toDelete.AddRange(Context.Held_Inventar.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
             toDelete.AddRange(Context.Held_Munition.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
             toDelete.AddRange(Context.Held_Sonderfertigkeit.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());

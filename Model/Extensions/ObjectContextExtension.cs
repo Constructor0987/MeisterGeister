@@ -328,7 +328,7 @@ namespace MeisterGeister.Model.Extensions
                 }
                 else if (property.ReferenceOnly)
                 {
-                    //no action needed?
+                    //not possible with Pocos/dynamic proxies?
                     //// Apply reference update on ReferenceOnly:
                     //EntityReference reference = (EntityReference)attachedowner.PublicGetProperty(property.PropertyInfo.Name + "Reference");
                     //reference.EntityKey = ((EntityReference)owner.PublicGetProperty(property.PropertyInfo.Name + "Reference")).EntityKey;

@@ -458,7 +458,7 @@ namespace MeisterGeister.ViewModel.Inventar
 
         private void filterNahkampfwaffe(object sender, FilterEventArgs f)
         {
-            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Waffe != null;
+            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Held_BFAusrüstung != null && ((Model.Held_Ausrüstung)f.Item).Held_BFAusrüstung.Waffe != null;
         }
         private void filterFernkampfwaffe(object sender, FilterEventArgs f)
         {
@@ -466,7 +466,7 @@ namespace MeisterGeister.ViewModel.Inventar
         }
         private void filterSchild(object sender, FilterEventArgs f)
         {
-            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Schild != null;
+            f.Accepted = ((Model.Held_Ausrüstung)f.Item).Held_BFAusrüstung != null && ((Model.Held_Ausrüstung)f.Item).Held_BFAusrüstung.Schild != null;
         }
         private void filterRüstung(object sender, FilterEventArgs f)
         {

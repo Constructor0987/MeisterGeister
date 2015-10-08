@@ -14,411 +14,208 @@ CREATE TABLE [Pflanze_Typ] (
 
 --Anschließend die Typen eintragen
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000001',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000002',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000003',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000004',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000005',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000006',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000007',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000008',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000009',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000010',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000011',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000013',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000014',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000015',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000016',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000017',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000018',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000019',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000020',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000021',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000022',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000023',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000025',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000026',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000027',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000028',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000029',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000030',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000032',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000033',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000034',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000035',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000036',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000037',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000038',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000039',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000040',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000041',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000042',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000043',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000044',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000045',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000046',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000047',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000049',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000051',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000052',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000053',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000054',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000055',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000056',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000057',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000058',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000060',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000061',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000063',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000064',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000066',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000067',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000068',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000069',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000070',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000072',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000073',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000074',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000075',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000076',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000077',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000078',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000079',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000080',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000081',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000082',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000109',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000145',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000083',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000084',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000085',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000086',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000087',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000088',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000089',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000090',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000091',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000092',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000093',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000094',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000046',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000037',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000027',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000095',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000096',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000097',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000098',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000100',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000101',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000102',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000104',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000105',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000106',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000107',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000110',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000111',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000112',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000113',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000115',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000117',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000118',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000119',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000120',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000121',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000124',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000126',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000129',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000130',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000131',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000134',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000135',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000138',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000139',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000140',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000142',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000143',N'Wildpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000108',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000146',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000148',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000150',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000152',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000154',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000156',N'Wildpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000157',N'Wildpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000158',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000159',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000160',N'Parasit');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000161',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000162',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000163',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000164',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000165',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000166',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000167',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000168',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000169',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000170',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000171',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000172',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000173',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000174',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000175',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000176',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000177',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000178',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000179',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000180',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000181',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000182',N'Nutzpflanze ');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000183',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000185',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000186',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000187',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000188',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000190',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000191',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000192',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000194',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000195',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000196',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000197',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000199',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000200',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000201',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000202',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000203',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000204',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000205',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000206',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000207',N'Übernatürliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000208',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000199',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000156',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000124',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000115',N'Heilpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000209',N'Gefährliche Pflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000204',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000201',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000191',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000162',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000143',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000140',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000121',N'Parasit');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000120',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000118',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000092',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000085',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000084',N'Droge');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000070',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000057',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000056',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000038',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000036',N'Giftpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000035',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000034',N'Nutzpflanze');
-GO
 INSERT INTO [Pflanze_Typ] ([PflanzeGUID],[Typ]) VALUES (N'00000000-0000-0000-00ff-000000000030',N'Nutzpflanze');
-GO
 
 --Und die alten Spalte löschen
 ALTER TABLE Pflanze DROP COLUMN Kategorie;

@@ -2178,6 +2178,7 @@ namespace MeisterGeister.Model {
         public void RemoveAusrüstung(Held_Ausrüstung ha)
         {
             Held_Ausrüstung.Remove(ha);
+            Global.ContextHeld.Delete<Held_Ausrüstung>(ha);
         }
 
         // TODO: Diese Add-Logik sollte mit dem Importer und dem InventarViewModel homogenisiert werden, sodass alle Stellen diese Methode verwenden
