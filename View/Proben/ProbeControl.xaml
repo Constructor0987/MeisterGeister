@@ -192,6 +192,54 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
+                <!--Kontrollprobe-->
+                <ListBox BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemsSource="{Binding KontrollProbeWurfItemListe}" HorizontalAlignment="Left" Visibility="{Binding KontrollProbeVisibility, Mode=OneWay}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="16" />
+                                    <RowDefinition Height="23" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="2" Width="24" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border.ToolTip>
+                                        <StackPanel Width="225">
+                                            <TextBlock TextWrapping="Wrap" Text="Ergebnis des Kontrollproben-Wurfs" FontWeight="Bold" />
+                                            <TextBlock FontStyle="Italic" Text="Der Wert kann folgendermaßen geändert werden:" Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Rechtsklick -> Auswahl über Context-Menü" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Pfeil-Hoch/Runter Tasten auf der Tastatur" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Mausrad Hoch/Runter" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Tastatureingabe: Bestätigen mit ENTER oder Klick in anderes Feld" TextWrapping="WrapWithOverflow" />
+                                        </StackPanel>
+                                    </Border.ToolTip>
+                                    <Border.Background>
+                                        <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank_gelb.png" />
+                                    </Border.Background>
+                                    <Border.ContextMenu>
+                                        <ContextMenu Style="{DynamicResource ContextMenu}" IsOpen="{Binding ContextMenuIsOpen}">
+                                            <MenuItem Style="{DynamicResource ContextMenuItemWürfel}" />
+                                        </ContextMenu>
+                                    </Border.ContextMenu>
+                                    <ViewGeneral:IntBox ContextMenu="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxValue="20" MinValue="0" Foreground="Black" NoBackground="True" FontWeight="Bold" 
+                                                        Value="{Binding Wurf}" IsReadOnly="{Binding ElementName=userControl, Path=IsReadOnly}" />
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
                 <Button Height="34" Width="34" Name="_würfelButton" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}" Margin="10,0,15,0" HorizontalAlignment="Left" Padding="0">
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"  />
                 </Button>
@@ -294,13 +342,6 @@
                 </Grid>
 
                 <Image Source="{Binding ErgebnisImagePath}" Margin="5,0,5,0" Width="22" Height="22" ToolTip="{Binding Ergebnis.Ergebnis}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-
-                <Button Margin="5,0,5,0" Width="22" Height="22" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="Ergebnis der Kontrollprobe. Zum Wiederholen der Kontrollprobe klicken." Visibility="{Binding KontrollProbeVisibility, Mode=OneWay}" Command="{Binding OnKontrollProbeWürfeln}">
-                    <Grid>
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank_gelb.png" Width="22" Height="22" />
-                        <Image Source="{Binding KontrollProbeErgebnisImagePath}" Width="16" Height="16" />
-                    </Grid>
-                </Button>
             </StackPanel>
 
         </StackPanel>

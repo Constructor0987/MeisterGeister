@@ -214,6 +214,7 @@ namespace MeisterGeister.Logic.General
 
             int einsen = 0, zwanzigen = 0;
             int[] wurfQualität = new int[Werte.Length];
+            bool kontrollProbe = false;
             for (int i = 0; i < Werte.Length; i++)
             {
                 wurfQualität[i] = Werte[i] + Math.Min(fertigkeitswertEff, 0) - pe.Würfe[i];
@@ -227,10 +228,11 @@ namespace MeisterGeister.Logic.General
                             einsen++;
                             break;
                         case ProbeKritischVerhalten.BESTÄTIGUNG:
-                            if (KontrollProbeErgebnis == null)
-                                KontrollProbeErgebnis = KontrollProbe(this).Würfeln();
-                            if (KontrollProbeErgebnis.Ergebnis == ErgebnisTyp.GELUNGEN)
+                            if (KontrollProbe == null)
+                                CreateKontrollProbe(this).Würfeln();
+                            if (KontrollProbe.Ergebnis.Ergebnis == ErgebnisTyp.GELUNGEN)
                                 einsen++;
+                            kontrollProbe = true;
                             break;
                         case ProbeKritischVerhalten.DEAKTIVIERT:
                         default:
@@ -245,10 +247,11 @@ namespace MeisterGeister.Logic.General
                             zwanzigen++;
                             break;
                         case ProbeKritischVerhalten.BESTÄTIGUNG:
-                            if (KontrollProbeErgebnis == null)
-                                KontrollProbeErgebnis = KontrollProbe(this).Würfeln();
-                            if (KontrollProbeErgebnis.Ergebnis == ErgebnisTyp.MISSLUNGEN)
+                            if (KontrollProbe == null)
+                                CreateKontrollProbe(this).Würfeln();
+                            if (KontrollProbe.Ergebnis.Ergebnis == ErgebnisTyp.MISSLUNGEN)
                                 zwanzigen++;
+                            kontrollProbe = true;
                             break;
                         case ProbeKritischVerhalten.DEAKTIVIERT:
                         default:
@@ -256,6 +259,9 @@ namespace MeisterGeister.Logic.General
                     }
                 }
             }
+            if (!kontrollProbe)
+                KontrollProbe = null;
+
             int tmpÜbrig = fertigkeitswertEff;
             wurfQualität.Where(q => q < 0).ToList().ForEach(q => tmpÜbrig += q);
             int minQ = wurfQualität.Count() == 0 ? 0 : wurfQualität.Min();
@@ -308,7 +314,7 @@ namespace MeisterGeister.Logic.General
         /// Erzeugt eine Kontrollprobe auf Basis von Probe 'p'.
         /// </summary>
         /// <param name="p">Probe auf Basis derer die neue Kontrolprobe erzeugt werden soll.</param>
-        public Probe KontrollProbe(Probe p)
+        public Probe CreateKontrollProbe(Probe p)
         {
             Probe k = new Probe();
             k.Fertigkeitswert = p.Fertigkeitswert;
@@ -319,10 +325,11 @@ namespace MeisterGeister.Logic.General
             k.Probenname = p.Probenname + " (Kontrollwurf)";
             k.Werte = p.Werte;
             k.WerteNamen = p.WerteNamen;
+            KontrollProbe = k;
             return k;
         }
 
-        public ProbenErgebnis KontrollProbeErgebnis { get; set; }
+        public Probe KontrollProbe { get; set; }
 
         private void SpezielleErfahrungSpeichern(int einsen)
         {

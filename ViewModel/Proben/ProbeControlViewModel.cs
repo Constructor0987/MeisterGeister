@@ -21,12 +21,6 @@ namespace MeisterGeister.ViewModel.Proben
             get { return onWürfeln; }
         }
 
-        private Base.CommandBase onKontrollProbeWürfeln;
-        public Base.CommandBase OnKontrollProbeWürfeln
-        {
-            get { return onKontrollProbeWürfeln; }
-        }
-
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
@@ -44,6 +38,15 @@ namespace MeisterGeister.ViewModel.Proben
                     item.PropertyChanged -= EigenschaftWurfItem_PropertyChanged;
                     item.Wurf = 0;
                     item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
+                }
+                if (Probe.KontrollProbe != null)
+                {
+                    foreach (var item in KontrollProbeWurfItemListe)
+                    {
+                        item.PropertyChanged -= KontrollProbeWurfItem_PropertyChanged;
+                        item.Wurf = 0;
+                        item.PropertyChanged += KontrollProbeWurfItem_PropertyChanged;
+                    }
                 }
                 Opacity = value ? 0.5 : 1.0;
                 OnChanged("NichtProben");
@@ -89,7 +92,7 @@ namespace MeisterGeister.ViewModel.Proben
                 OnChanged("Ergebnis");
                 OnChanged("ErgebnisImagePath");
                 OnChanged("KontrollProbeVisibility");
-                OnChanged("KontrollProbeErgebnisImagePath");
+                OnChanged("EigenschaftWurfItemListe");
                 OnChanged("Erfolgschance");
                 NotifyErgebnisChanged();
             }
@@ -243,39 +246,9 @@ namespace MeisterGeister.ViewModel.Proben
         {
             get
             {
-                if (Probe.KontrollProbeErgebnis == null)
+                if (Probe.KontrollProbe == null)
                     return System.Windows.Visibility.Collapsed;
                 return System.Windows.Visibility.Visible;
-            }
-        }
-
-        public string KontrollProbeErgebnisImagePath
-        {
-            get
-            {
-                if (Probe.KontrollProbeErgebnis != null)
-                {
-                    switch (Probe.KontrollProbeErgebnis.Ergebnis)
-                    {
-                        case ErgebnisTyp.KEIN_ERGEBNIS:
-                            break;
-                        case ErgebnisTyp.MISSLUNGEN:
-                            return "/DSA MeisterGeister;component/Images/Icons/General/entf_01.png";
-                        case ErgebnisTyp.PATZER:
-                            return "/DSA MeisterGeister;component/Images/Icons/Wetter/gewitter.png";
-                        case ErgebnisTyp.FATALER_PATZER:
-                            return "/DSA MeisterGeister;component/Images/Icons/tot.png";
-                        case ErgebnisTyp.GELUNGEN:
-                            return "/DSA MeisterGeister;component/Images/Icons/General/ok.png";
-                        case ErgebnisTyp.GLÜCKLICH:
-                            return "/DSA MeisterGeister;component/Images/Icons/General/neu.png";
-                        case ErgebnisTyp.MEISTERHAFT:
-                            return "/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png";
-                        default:
-                            break;
-                    }
-                }
-                return "/DSA MeisterGeister;component/Images/Icons/General/question.png";
             }
         }
 
@@ -308,6 +281,22 @@ namespace MeisterGeister.ViewModel.Proben
                 list.Add(item);
             }
             EigenschaftWurfItemListe = list;
+
+            SetupKontrollProbeWurfItemListe(length);
+        }
+
+        private void SetupKontrollProbeWurfItemListe(int length)
+        {
+            var list = new List<EigenschaftWurfItem>(length);
+            for (int i = 0; i < length; i++)
+            {
+                var item = new EigenschaftWurfItem();
+                if (Probe.KontrollProbe != null)
+                    item.Wert = Probe.KontrollProbe.Werte[i];
+                item.PropertyChanged += KontrollProbeWurfItem_PropertyChanged;
+                list.Add(item);
+            }
+            KontrollProbeWurfItemListe = list;
         }
 
         private void UpdateEigenschaftWurfItemListe()
@@ -316,6 +305,14 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 item.PropertyChanged -= EigenschaftWurfItem_PropertyChanged;
                 item.Held = Held;
+            }
+            if (Probe.KontrollProbe != null)
+            {
+                foreach (var item in _kontrollProbetWurfItemListe)
+                {
+                    item.PropertyChanged -= KontrollProbeWurfItem_PropertyChanged;
+                    item.Held = Held;
+                }
             }
 
             Model.Talent talent = null;
@@ -349,6 +346,13 @@ namespace MeisterGeister.ViewModel.Proben
                 _eigenschaftWurfItemListe[1].Name = e2;
                 _eigenschaftWurfItemListe[2].Name = e3;
 
+                if (Probe.KontrollProbe != null)
+                {
+                    _kontrollProbetWurfItemListe[0].Name = e1;
+                    _kontrollProbetWurfItemListe[1].Name = e2;
+                    _kontrollProbetWurfItemListe[2].Name = e3;
+                }
+
                 if (Held != null)
                 {
                     // Eigenschaftswerte setzen
@@ -356,17 +360,38 @@ namespace MeisterGeister.ViewModel.Proben
                     {
                         _eigenschaftWurfItemListe[i].Wert = Held.EigenschaftWert(e[i]);
                     }
+                    if (Probe.KontrollProbe != null)
+                    {
+                        for (int i = 0; i < _kontrollProbetWurfItemListe.Count; i++)
+                        {
+                            _kontrollProbetWurfItemListe[i].Wert = Held.EigenschaftWert(e[i]);
+                        }
+                    }
                 }
             }
             else if (eigenschaft != null)
             {
                 _eigenschaftWurfItemListe[0].Name = eigenschaft.Abkürzung;
                 _eigenschaftWurfItemListe[0].Wert = eigenschaft.Wert;
+
+                if (Probe.KontrollProbe != null)
+                {
+                    _kontrollProbetWurfItemListe[0].Name = eigenschaft.Abkürzung;
+                    _kontrollProbetWurfItemListe[0].Wert = eigenschaft.Wert;
+                }
             }
 
             foreach (var item in _eigenschaftWurfItemListe)
             {
                 item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
+            }
+
+            if (Probe.KontrollProbe != null)
+            {
+                foreach (var item in _kontrollProbetWurfItemListe)
+                {
+                    item.PropertyChanged += KontrollProbeWurfItem_PropertyChanged;
+                }
             }
         }
 
@@ -384,16 +409,29 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        private List<EigenschaftWurfItem> _kontrollProbetWurfItemListe = new List<EigenschaftWurfItem>();
+        public List<EigenschaftWurfItem> KontrollProbeWurfItemListe
+        {
+            get
+            {
+                return _kontrollProbetWurfItemListe;
+            }
+            set
+            {
+                _kontrollProbetWurfItemListe = value;
+                OnChanged("KontrollProbeWurfItemListe");
+            }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
 
-        public ProbeControlViewModel() : base(View.General.ViewHelper.ShowProbeDialog)
+        public ProbeControlViewModel()
         {
             WertCount = Probe.Werte.Length;
 
             onWürfeln = new Base.CommandBase(Würfeln, null);
-            onKontrollProbeWürfeln = new Base.CommandBase(KontrollProbeWürfeln, null);
         }
 
         #endregion
@@ -423,6 +461,15 @@ namespace MeisterGeister.ViewModel.Proben
                     EigenschaftWurfItemListe[i].Wurf = Ergebnis.Würfe[i];
                     EigenschaftWurfItemListe[i].PropertyChanged += EigenschaftWurfItem_PropertyChanged;
                 }
+                if (Probe.KontrollProbe != null)
+                {
+                    for (int i = 0; i < Probe.KontrollProbe.Ergebnis.Würfe.Length; i++)
+                    {
+                        KontrollProbeWurfItemListe[i].PropertyChanged -= KontrollProbeWurfItem_PropertyChanged;
+                        KontrollProbeWurfItemListe[i].Wurf = Probe.KontrollProbe.Ergebnis.Würfe[i];
+                        KontrollProbeWurfItemListe[i].PropertyChanged += KontrollProbeWurfItem_PropertyChanged;
+                    }
+                }
             }
 
             // Refresh, damit die UI aktulisiert wird
@@ -436,12 +483,6 @@ namespace MeisterGeister.ViewModel.Proben
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             NotifyErgebnisChanged();
-        }
-
-        private void KontrollProbeWürfeln(object obj)
-        {
-            Probe.KontrollProbeErgebnis = ShowProbeDialog(Probe.KontrollProbe(Probe), Held);
-            Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
         }
 
         private void NotifyErgebnisChanged()
@@ -501,6 +542,60 @@ namespace MeisterGeister.ViewModel.Proben
 
                         if (changed)
                             Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
+                    }
+                }
+            }
+        }
+
+        private void KontrollProbeWurfItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Wurf" || e.PropertyName == "Wert")
+            {
+                if (sender is EigenschaftWurfItem)
+                {
+                    if (NichtProben)
+                    {
+                        foreach (var item in KontrollProbeWurfItemListe)
+                        {
+                            item.PropertyChanged -= KontrollProbeWurfItem_PropertyChanged;
+                            item.Wurf = 0;
+                            item.PropertyChanged += KontrollProbeWurfItem_PropertyChanged;
+                        }
+                        return;
+                    }
+                    if (Probe.KontrollProbe != null)
+                    {
+                        bool changed = false;
+                        if (e.PropertyName == "Wurf")
+                        {
+                            if (Probe.KontrollProbe.Ergebnis.Würfe == null)
+                                Probe.KontrollProbe.Ergebnis.Würfe = new int[this.WertCount];
+                            for (int i = 0; i < Probe.KontrollProbe.Ergebnis.Würfe.Length; i++)
+                            {
+                                if (Probe.KontrollProbe.Ergebnis.Würfe[i] != KontrollProbeWurfItemListe[i].Wurf)
+                                {
+                                    Probe.KontrollProbe.Ergebnis.Würfe[i] = KontrollProbeWurfItemListe[i].Wurf;
+                                    changed = true;
+                                }
+                            }
+                        }
+                        else if (e.PropertyName == "Wert")
+                        {
+                            for (int i = 0; i < Probe.KontrollProbe.Werte.Length; i++)
+                            {
+                                if (Probe.KontrollProbe.Werte[i] != KontrollProbeWurfItemListe[i].Wert)
+                                {
+                                    Probe.KontrollProbe.Werte[i] = KontrollProbeWurfItemListe[i].Wert;
+                                    changed = true;
+                                }
+                            }
+                        }
+
+                        if (changed)
+                        {
+                            Probe.KontrollProbe.Ergebnis = Probe.KontrollProbe.ProbenErgebnisBerechnen(Probe.KontrollProbe.Ergebnis);
+                            Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
+                        }
                     }
                 }
             }
