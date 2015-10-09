@@ -26,15 +26,6 @@ namespace MeisterGeister.View.General
         public IntBox()
         {
             InitializeComponent();
-
-            MinValue = int.MinValue;
-            MaxValue = int.MaxValue;
-        }
-
-        public int MinValue
-        {
-            get;
-            set;
         }
 
         public int IncWheel
@@ -69,13 +60,21 @@ namespace MeisterGeister.View.General
         public static DependencyProperty IncValueProperty = DependencyProperty.Register("IncValue", typeof(int), typeof(IntBox),
                 new PropertyMetadata(1));
 
+        public int MinValue
+        {
+            get { return (int)GetValue(MinValueProperty); }
+            set { SetValue(MinValueProperty, value); }
+        }
+        public static DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(int), typeof(IntBox),
+                new PropertyMetadata(int.MinValue));
+
         public int MaxValue
         {
             get { return (int)GetValue(MaxValueProperty); }
             set { SetValue(MaxValueProperty, value); }
         }
         public static DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(int), typeof(IntBox),
-                new PropertyMetadata(1));
+                new PropertyMetadata(int.MaxValue));
 
         public Visibility ButtonHiddenMode
         {
