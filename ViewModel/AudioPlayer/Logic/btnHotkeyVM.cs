@@ -119,7 +119,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         #region //---- KONSTRUKTOR ----
 
-        public btnHotkeyVM()
+        public btnHotkeyVM() 
         {
             // Event-Handler zur DependentProperty-Notification
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;

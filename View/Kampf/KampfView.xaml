@@ -12,6 +12,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
+        <VM:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
         <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
         <!--<ViewGeneral:EnumItemsSource x:Key="KampfstilValueConverter" Type="{x:Type KampfLogic:Kampfstil}" />-->
@@ -467,7 +468,7 @@
                                 <ColumnDefinition Width="419*"/>
                                 <ColumnDefinition Width="130" />
                             </Grid.ColumnDefinitions>
-                            <TextBox Margin="6,6,2,0" Text="{Binding SelectedKämpfer.Name}" FontWeight="Bold" VerticalAlignment="Top" Grid.ColumnSpan="3" >
+                            <TextBox Margin="6,6,140,0" Text="{Binding SelectedKämpfer.Name}" FontWeight="Bold" VerticalAlignment="Top" Grid.ColumnSpan="3" >
                                 <TextBox.ToolTip>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -491,6 +492,42 @@
                                     <SolidColorBrush />
                                 </TextBox.Background>
                             </TextBox>
+                            <ScrollViewer Grid.Column="3" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="-130,0,0,0" >
+                                <!--<ScrollViewer.Style>
+                                    <Style TargetType="ScrollViewer">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding WesenPlaylist,UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ScrollViewer.Style>-->
+                                <Border Style="{DynamicResource ControlContentBorder}" Height="28" Margin="-2">                                    
+                                    <StackPanel Orientation="Horizontal">
+                                    
+                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="22" Margin="0,1,0,0" />
+                                        <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel ItemWidth="30" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>                                    
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Width="30" Tag="{Binding}" Focusable="False"
+                                                    Command="{Binding VM.OnWesenPlaylistClick, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
+                                                    ToolTip="{Binding Audio_Playlist.Name}" >
+                                                    <Button.Content>
+                                                        <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
+                                                    </Button.Content>                                                       
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    </StackPanel>
+                                </Border>
+                            </ScrollViewer>
+                            
                             <Image Grid.Row="1" Grid.Column="3" Grid.RowSpan="1" Margin="5,5,5,0" Height="120" Width="120" VerticalAlignment="Top">
                                 <Image.Source>
                                     <Binding Path="SelectedKämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">

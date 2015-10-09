@@ -52,14 +52,72 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             Init();
         }
 
+        private List<string> GetKategorien()
+        {
+            List<string> s = new List<string>();
+            s.Add("Allgemein");
+            s.Add("Zauberformel");
+            s.Add("Tod");
+            s.Add("Nahkampf");
+            s.Add("Fernkampf");
+            s.Add("Wunde");
+            return s;
+        }
+        private List<Image> GetIcons()
+        {
+            List<Image> iconlist = new List<Image>();
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png", UriKind.Relative)) });            
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/alchimie.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/alchimie.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/angeln.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/artefakt.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/audio2.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/beidhändig.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/foliant.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/halbschwert.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/jagd.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/kartenzeichnen.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/magie.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/mechanik.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/muenze.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/munition.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/nahkampf_02.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/notiz.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/parierwaffe.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/ruestung.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/schaden.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/schild.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/schmiede.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/sprache.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/tot.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/wuerfelbecher.png", UriKind.Relative)) });
+            iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/zauberzeichen.png", UriKind.Relative)) });
+
+            return iconlist;
+        }
+
         public void Init()
         {
+            if (IconListe == null || IconListe.Count == 0)
+            {
+                IconListe = new ObservableCollection<Image>(GetIcons());
+            }
+            if (KategorieListe == null || KategorieListe.Count == 0)
+            {
+                KategorieListe = new ObservableCollection<string>(GetKategorien());
+            }
             if (HatPlaylist)
             {
+                PlaylistListe = new ObservableCollection<Audio_Playlist>(Global.ContextAudio.PlaylistListe.Where(t => !t.Hintergrundmusik));
                 HeldenListe = new ObservableCollection<Held>(Global.ContextHeld.Liste<Held>());
                 GegnerListe = new ObservableCollection<GegnerBase>(Global.ContextHeld.Liste<GegnerBase>());
+
                 //daten 
-                WesenPlaylistListe = new ObservableCollection<IWesenPlaylist>( CurrentPlaylist.Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>().Union(CurrentPlaylist.GegnerBase_Audio_Playlist).AsEnumerable<IWesenPlaylist>() );
+                WesenPlaylistListe = new ObservableCollection<IWesenPlaylist>(CurrentPlaylist.Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>().Union(CurrentPlaylist.GegnerBase_Audio_Playlist).AsEnumerable<IWesenPlaylist>() );
             }
             else
             {
@@ -82,23 +140,71 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         #region Commands
         //Commands
 
-        private Base.CommandBase _onFilterLöschen = null;
-        public Base.CommandBase OnFilterLöschen
+        private Base.CommandBase _onPlaylistAnspielenClick = null;
+        public Base.CommandBase OnPlaylistAnspielenClick
         {
             get
             {
-                if (_onFilterLöschen == null)
-                    _onFilterLöschen = new Base.CommandBase(FilterLöschen, null);
-                return _onFilterLöschen;
+                if (_onPlaylistAnspielenClick == null)
+                    _onPlaylistAnspielenClick = new Base.CommandBase(PlaylistAnspielen, null);
+                return _onPlaylistAnspielenClick;
             }
         }
-        void FilterLöschen(object obj)
+        private void PlaylistAnspielen(object obj)
         {
-            Filter = "";
+            btnHotkeyVM hotkey = new btnHotkeyVM();
+            hotkey.aPlaylist = CurrentPlaylist;
+            hotkey.OnBtnClick(hotkey);
         }
 
+        private Base.CommandBase _onWesenFilterLöschen = null;
+        public Base.CommandBase OnWesenFilterLöschen
+        {
+            get
+            {
+                if (_onWesenFilterLöschen == null)
+                    _onWesenFilterLöschen = new Base.CommandBase(WesenFilterLöschen, null);
+                return _onWesenFilterLöschen;
+            }
+        }
+        void WesenFilterLöschen(object obj)
+        {
+            WesenFilter = "";
+        }
+
+        private Base.CommandBase _onGegnerFilterLöschen = null;
+        public Base.CommandBase OnGegnerFilterLöschen
+        {
+            get
+            {
+                if (_onGegnerFilterLöschen == null)
+                    _onGegnerFilterLöschen = new Base.CommandBase(GegnerFilterLöschen, null);
+                return _onGegnerFilterLöschen;
+            }
+        }
+        void GegnerFilterLöschen(object obj)
+        {
+            GegnerFilter = "";
+        }
+
+        private Base.CommandBase _onHeldenFilterLöschen = null;
+        public Base.CommandBase OnHeldenFilterLöschen
+        {
+            get
+            {
+                if (_onHeldenFilterLöschen == null)
+                    _onHeldenFilterLöschen = new Base.CommandBase(HeldenFilterLöschen, null);
+                return _onHeldenFilterLöschen;
+            }
+        }
+        void HeldenFilterLöschen(object obj)
+        {
+            HeldenFilter = "";
+        }
+
+
         //Add und delete von Held_Audio_Playlist und GegnerBase_Audio_Playlist
-        private Base.CommandBase _onAddWesenPlaylist = null;
+        private Base.CommandBase _onAddWesenPlaylist;
         public Base.CommandBase OnAddWesenPlaylist
         {
             get
@@ -108,7 +214,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 return _onAddWesenPlaylist;
             }
         }
-        void AddWesenPlaylist(object obj)
+        public void AddWesenPlaylist(object obj)
         {
             Audio_Playlist pl = CurrentPlaylist;
             if (pl == null)
@@ -119,7 +225,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             GegnerBase g = CurrentGegner;
             if (g == null)
                 g = SelectedGegner;
-            string k = SelectedKategorie;
+            string k = SelectedKategorie != null? SelectedKategorie: CurrentKategorie;
             if (pl == null || (h == null && g == null) || k == null )
                 return;
             IWesenPlaylist iwpl = null;
@@ -131,6 +237,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 wpl.HeldGUID = h.HeldGUID;
                 wpl.Held = h;
                 wpl.Kategorie = k;
+                wpl.Icon = CurrentIcon.Source.ToString();
                 //TODO check ob schon vorhanden
                 h.Held_Audio_Playlist.Add(wpl);
                 iwpl = wpl;
@@ -140,18 +247,22 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 GegnerBase_Audio_Playlist wpl = Global.ContextAudio.New<GegnerBase_Audio_Playlist>();
                 wpl.Audio_PlaylistGUID = pl.Audio_PlaylistGUID;
                 wpl.Audio_Playlist = pl;
-                wpl.GegnerBaseGUID = h.HeldGUID;
+                wpl.GegnerBaseGUID = g.GegnerBaseGUID;
                 wpl.GegnerBase = g;
                 wpl.Kategorie = k;
+                wpl.Icon = CurrentIcon.Source.ToString();
                 //TODO check ob schon vorhanden
                 g.GegnerBase_Audio_Playlist.Add(wpl);
                 iwpl = wpl;
             }
             WesenPlaylistListe.Add(iwpl);
             Global.ContextAudio.Save();
+            SelectedHeld = null;
+            SelectedGegner = null;
+            Init();
         }
 
-        private Base.CommandBase _onDeleteWesenPlaylist = null;
+        private Base.CommandBase _onDeleteWesenPlaylist;
         public Base.CommandBase OnDeleteWesenPlaylist
         {
             get
@@ -163,36 +274,89 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
         void DeleteWesenPlaylist(object obj)
         {
+            var value = obj;
+            if (obj == null)
+                return;
+            SelectedWesenPlaylist = (obj as IWesenPlaylist);
+
+            //SelectedWesenPlaylist =
+            //    CurrentHeld != null ? WesenPlaylistListe.FirstOrDefault(t => t.Held == CurrentHeld) :
+            //    CurrentGegner != null ? WesenPlaylistListe.FirstOrDefault(t => t.GegnerBase == CurrentGegner) : null;
+            
             if (SelectedWesenPlaylist == null)
                 return;
             if(SelectedWesenPlaylist.HatGegner)
                 Global.ContextAudio.Delete<GegnerBase_Audio_Playlist>(SelectedWesenPlaylist as GegnerBase_Audio_Playlist);
             else if(SelectedWesenPlaylist.HatHeld)
-                Global.ContextAudio.Delete<Held>(SelectedWesenPlaylist as Held);
+                Global.ContextAudio.Delete<Held_Audio_Playlist>(SelectedWesenPlaylist as Held_Audio_Playlist);
             WesenPlaylistListe.Remove(SelectedWesenPlaylist);
             SelectedWesenPlaylist = null;
+            Init();
         }
         #endregion
 
         #region Properties
-        private string _filter = "";
-        public string Filter
+        private string _wesenFilter = "";
+        public string WesenFilter
         {
-            get { return _filter; }
+            get { return _wesenFilter; }
             set
             {
-                if (Set(ref _filter, value))
+                if (Set(ref _wesenFilter, value))
                 {
-                    ApplyFilter();
+                    ApplyWesenFilter();
+                }
+            }
+        }
+        
+        private string _heldenFilter = "";
+        public string HeldenFilter
+        {
+            get { return _heldenFilter; }
+            set
+            {
+                if (Set(ref _heldenFilter, value))
+                {
+                    ApplyHeldenFilter();
+                }
+            }
+        }
+
+        private string _gegnerFilter = "";
+        public string GegnerFilter
+        {
+            get { return _gegnerFilter; }
+            set
+            {
+                if (Set(ref _gegnerFilter, value))
+                {
+                    ApplyGegnerFilter();
                 }
             }
         }
 
         void ApplyFilter()
         {
-            FilteredGegnerListe.Filter = (g => (g is GegnerBase) && (g as GegnerBase).Name.ContainsIgnoreCase(_filter));
-            FilteredHeldenListe.Filter = (g => (g is Held) && (g as Held).Name.ContainsIgnoreCase(_filter));
-            FilteredPlaylistListe.Filter = (g => (g is Audio_Playlist) && (g as Audio_Playlist).Name.ContainsIgnoreCase(_filter));
+            FilteredGegnerListe.Filter = (g => (g is GegnerBase) && (g as GegnerBase).Name.ContainsIgnoreCase(_gegnerFilter));
+            FilteredHeldenListe.Filter = (g => (g is Held) && (g as Held).Name.ContainsIgnoreCase(_heldenFilter));
+            
+            FilteredWesenListe.Filter = (g => (g is IKämpfer) && (g as IKämpfer).Name.ContainsIgnoreCase(_gegnerFilter));
+          //  FilteredPlaylistListe.Filter = (g => (g is Audio_Playlist) && (g as Audio_Playlist).Name.ContainsIgnoreCase(_filter));
+        }
+
+        void ApplyWesenFilter()
+        {
+            FilteredWesenListe.Filter = (g => (g is Held) && (g as Held).Name.ContainsIgnoreCase(_heldenFilter));
+        }
+        
+        void ApplyHeldenFilter()
+        {
+            FilteredHeldenListe.Filter = (g => (g is Held) && (g as Held).Name.ContainsIgnoreCase(_heldenFilter));
+        }
+
+        void ApplyGegnerFilter()
+        {
+            FilteredGegnerListe.Filter = (g => (g is GegnerBase) && (g as GegnerBase).Name.ContainsIgnoreCase(_gegnerFilter));            
         }
 
 
@@ -212,9 +376,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private string _selectedKategorie = "Tod";
+        private string _selectedKategorie;
         /// <summary>
-        /// Die Kategorie für die neu angelegte Wesen-Playlist-Verknüpfung
+        /// Die Kategorie für die Zuordnung zu den Icons
         /// </summary>
         public string SelectedKategorie
         {
@@ -222,6 +386,47 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set
             {
                 Set(ref _selectedKategorie, value);
+
+                if (value == "Allgemein")
+                    CurrentIcon = IconListe.FirstOrDefault(t => t.Source.ToString().Contains("/speaker.png"));
+                else
+                    if (value == "Zauberformel")
+                        CurrentIcon = IconListe.FirstOrDefault(t => t.Source.ToString().Contains("/magie.png"));
+                    else
+                        if (value == "Nahkampf")
+                            CurrentIcon = IconListe.FirstOrDefault(t => t.Source.ToString().Contains("/nahkampf_02.png"));
+                        else
+                            if (value == "Fernkampf")
+                                CurrentIcon = IconListe.FirstOrDefault(t => t.Source.ToString().Contains("/fernkampf.png"));
+                            else
+                                if (value == "Tod")
+                                    CurrentIcon = IconListe.FirstOrDefault(t => t.Source.ToString().Contains("/tot.png"));
+                                else
+                                    if (value == "Wunde")
+                                        CurrentIcon = IconListe.FirstOrDefault(t => t.Source.ToString().Contains("/schaden.png"));                                    
+            }
+        }
+
+        private string _currentKategorie = "Allgemein";
+        /// <summary>
+        /// Die Kategorie für die neu angelegte Wesen-Playlist-Verknüpfung
+        /// </summary>
+        public string CurrentKategorie
+        {
+            get { return _currentKategorie; }
+            set
+            {
+                Set(ref _currentKategorie, value);
+                //if (CurrentHeldenPlaylist != null && CurrentHeldenPlaylist.Kategorie != value)
+                //{
+                //    CurrentHeldenPlaylist.Kategorie = CurrentKategorie.ToString();
+                //    Global.ContextAudio.Update<Held_Audio_Playlist>(CurrentHeldenPlaylist);
+                //} else
+                //    if (CurrentGegnerPlaylist != null && CurrentGegnerPlaylist.Kategorie != value)
+                //    {
+                //        CurrentGegnerPlaylist.Kategorie = CurrentKategorie.ToString();
+                //        Global.ContextAudio.Update<GegnerBase_Audio_Playlist>(CurrentGegnerPlaylist);
+                //    }
             }
         }
 
@@ -264,6 +469,64 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
+        private GegnerBase_Audio_Playlist _currentGegnerPlaylist;
+        /// <summary>
+        /// Wenn gesetzt, werden diesem Objekt neue Einträge zugeordnet.
+        /// </summary>
+        [DependentProperty("CurrentGegner")]
+        public GegnerBase_Audio_Playlist CurrentGegnerPlaylist
+        {
+            get { return _currentGegnerPlaylist; }
+            set { 
+                if (value != null && Set(ref _currentGegnerPlaylist, value))
+                    CurrentHeldenPlaylist = null; }
+        }
+
+        private Held_Audio_Playlist _currentHeldenPlaylist;
+        /// <summary>
+        /// Wenn gesetzt, werden diesem Objekt neue Einträge zugeordnet.
+        /// </summary>
+        [DependentProperty("CurrentHeld")]
+        public Held_Audio_Playlist CurrentHeldenPlaylist
+        {
+            get { return _currentHeldenPlaylist; }
+            set {
+                if (value != null && Set(ref _currentHeldenPlaylist, value))
+                {
+                    CurrentGegnerPlaylist = null;
+                    CurrentIcon = IconListe.FirstOrDefault(t => t.Source.ToString() == value.Icon.ToString().Right(t.Source.ToString().Length));                   
+                }
+            }
+        }
+
+        private Image _currentIcon;
+        /// <summary>
+        /// Wenn gesetzt, werden diesem Objekt neue Einträge zugeordnet.
+        /// </summary>
+        [DependentProperty("CurrentHeldenPlaylist"), DependentProperty("CurrentGegnerPlaylist")]
+        public Image CurrentIcon
+        {
+            get { return _currentIcon; }
+            set
+            {
+                if (value != null && Set(ref _currentIcon, value))
+                {
+                    if (CurrentHeldenPlaylist != null &&
+                        CurrentHeldenPlaylist.Icon != CurrentIcon.Source.ToString())
+                    {                        
+                        CurrentHeldenPlaylist.Icon = CurrentIcon.Source.ToString();
+                        Global.ContextAudio.Update<Held_Audio_Playlist>(CurrentHeldenPlaylist);
+                    } else
+                        if (CurrentGegnerPlaylist != null &&
+                        CurrentGegnerPlaylist.Icon != CurrentIcon.Source.ToString())
+                        {
+                            CurrentGegnerPlaylist.Icon = CurrentIcon.Source.ToString();
+                            Global.ContextAudio.Update<GegnerBase_Audio_Playlist>(CurrentGegnerPlaylist);
+                        }
+                }
+            }
+        }
+
         private Audio_Playlist _currentPlaylist;
         /// <summary>
         /// Wenn gesetzt, werden diesem Objekt neue Einträge zugeordnet.
@@ -278,6 +541,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     CurrentHeld = null;
                     CurrentGegner = null;
                 }
+                Init();
             }
         }
 
@@ -331,27 +595,77 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             get { return CurrentGegner != null; }
         }
-        [DependentProperty("CurrentPlaylist")]
         /// <summary>
         /// Für UI Anpassungen anhand des gesetzten Objektes
         /// </summary>
+        /// 
+        [DependentProperty("CurrentPlaylist")]
         public bool HatPlaylist
         {
-            get { return CurrentPlaylist != null; }
+            get {return CurrentPlaylist != null; }
         }
 
+
         #region Collections
+
+        private ObservableCollection<string> _kategorieListe;
+        public ObservableCollection<string> KategorieListe
+        {
+            get { return _kategorieListe; }
+            set { Set(ref _kategorieListe, value); }
+        }
+
+
+        private ObservableCollection<Image> _iconListe;
+        public ObservableCollection<Image> IconListe
+        {
+            get { return _iconListe; }
+            set { Set(ref _iconListe, value); }
+        }
+
         private ObservableCollection<IWesenPlaylist> _wesenPlaylistListe;
         public ObservableCollection<IWesenPlaylist> WesenPlaylistListe
         {
             get { return _wesenPlaylistListe; }
-            set { Set(ref _wesenPlaylistListe, value); }
+            set {
+                Set(ref _wesenPlaylistListe, value);
+                HeldenPlaylistListe = new ObservableCollection<IWesenPlaylist>(value.Where(t => t.Held != null));
+                GegnerPlaylistListe = new ObservableCollection<IWesenPlaylist>(value.Where(t => t.GegnerBase != null));
+            }
         }
 
-        private ObservableCollection<Held> _heldenListe;
+        private ObservableCollection<IWesenPlaylist> _heldenPlaylistListe;
+        public ObservableCollection<IWesenPlaylist> HeldenPlaylistListe
+        {
+            get { return _heldenPlaylistListe; }
+            set { Set(ref _heldenPlaylistListe, value); }
+        }
+
+        private ObservableCollection<IWesenPlaylist> _gegnerPlaylistListe;
+        public ObservableCollection<IWesenPlaylist> GegnerPlaylistListe
+        {
+            get { return _gegnerPlaylistListe; }
+            set { Set(ref _gegnerPlaylistListe, value);  }
+        }
+        
+
         /// <summary>
         /// Alle Einträge. Muss eigentlich nicht gebunden werden.
         /// </summary>
+        private ObservableCollection<IWesenPlaylist> _wesenListe;
+        public ObservableCollection<IWesenPlaylist> WesenListe
+        {
+            get { return _wesenListe; }
+            set
+            {
+                Set(ref _wesenListe, value);
+            }
+        }
+
+        /// <summary>
+        /// Alle Einträge. Muss eigentlich nicht gebunden werden.
+        /// </summary>
+        private ObservableCollection<Held> _heldenListe;
         public ObservableCollection<Held> HeldenListe
         {
             get { return _heldenListe; }
@@ -387,6 +701,27 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
+        private ICollectionView _filteredWesenListe = null;
+        /// <summary>
+        /// Gefilterte und sortierte Darstellung für Auswahllisten.
+        /// </summary>
+        public ICollectionView FilteredWesenListe
+        {
+            get
+            {
+                if (_filteredWesenListe == null)
+                {
+                    _filteredWesenListe = CollectionViewSource.GetDefaultView(WesenListe);
+                    _filteredWesenListe.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                }
+                return _filteredWesenListe;
+            }
+            set
+            {
+                Set(ref _filteredWesenListe, value);
+            }
+        }
+
         private ICollectionView _filteredHeldenListe = null;
         /// <summary>
         /// Gefilterte und sortierte Darstellung für Auswahllisten.
@@ -397,6 +732,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 if (_filteredHeldenListe == null)
                 {
                     _filteredHeldenListe = CollectionViewSource.GetDefaultView(HeldenListe);
+                    //HeldenPlaylistListe.ToList().ForEach(delegate (IWesenPlaylist iw)
+                    //{
+                    //    _filteredHeldenListe.
+                    //    if (_filteredHeldenListe.Contains(iw)) _filteredHeldenListe -= iw;
+                    //});
+
                     _filteredHeldenListe.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                 }
                 return _filteredHeldenListe; 

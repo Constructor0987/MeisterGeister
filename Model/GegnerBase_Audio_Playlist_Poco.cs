@@ -130,6 +130,18 @@ namespace MeisterGeister.Model
     
         }
         private string _kategorie;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Icon
+        {
+            get { return _icon; }
+            set
+    		{ 
+    			Set(ref _icon, value);
+    		}
+    
+        }
+        private string _icon;
 
         #endregion
 

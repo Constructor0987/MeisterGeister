@@ -467,14 +467,27 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
+                        
                     </StackPanel>
                 </ScrollViewer>
                 <Button Name="btnHotkeysLöschen" Grid.Column="2" VerticalAlignment="Center" Height="25" Width="25" ToolTip="Alle Hotkeys löschen" Margin="5,0" 
                         Command="{Binding OnAlleHotkeysEntfenrnen}" >
                     <Image Source="/Images/Icons/General/entf_all.png" Style="{StaticResource ImageEnabled}" />
                 </Button>
+                
             </Grid>
         </GroupBox>
+
+        <Button Grid.Column="2" Height="42" Margin="0,10,60,0" ToolTip="Hot-Buttons verwalten" HorizontalAlignment="Right"
+                        Click="btnHotbuttonWesenZuweisen_Click" >
+            <!--Visibility="{Binding AktKlangPlaylist, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"-->
+            <Button.Content>
+                <Grid>
+                    <Image Source="/Images/Icons/gegner.png" Margin="0,3,5,0" />
+                    <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
+                </Grid>
+            </Button.Content>
+        </Button>
 
         <Image Grid.Column="1" Height=" 30" Margin="10" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png"
                Visibility="{Binding StdPadAufC, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -748,13 +761,12 @@
 
                             <Label Name="lblEditorListName" Content="Playlisten-Name" VerticalContentAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Name="tboxEditorName" Background="{x:Null}" ForceCursor="True" FontWeight="Bold" ToolTip="Name der Playliste" Height="25" Grid.Column="1" 
-                                     Text="{Binding AktKlangPlaylist.Name}" 
+                                     Text="{Binding AktKlangPlaylist.Name, UpdateSourceTrigger=PropertyChanged}" 
                                      vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
 
                             <Image Name="imgPlaylistLängeCheck" Width="22" Grid.Column="2" Source="/Images/Icons/General/refresh.png" 
                                    ToolTip="Playlistelänge wird berechnet..."
                                    Visibility="{Binding BerechneSpieldauer, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-
                         </Grid>
                     </Border>
                     
@@ -1121,16 +1133,7 @@
                                                       DropDownClosed="cmboxTopHotkey_DropDownClosed"                                                       
                                                       ItemsSource="{Binding HotkeysAvailable}" 
                                                       SelectedItem="{Binding AktKlangPlaylist.Key}"/>
-                                            <Button ToolTip="Hotkey einem Wesen zuweisen"                                                
-                                                    Click="btnHotkeyWesenZuweisen_Click" 
-                                                    Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
-                                                <Button.Content>
-                                                    <Grid>
-                                                        <Image Source="/Images/Icons/gegner.png" Margin="0,3,5,0" />
-                                                        <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
-                                                    </Grid>
-                                                </Button.Content>
-                                            </Button>
+                                            
                                             <Button Name="btnHotkeyEntfernen1" ToolTip="Hotkey entfernen" Margin="0,5"                                                    
                                                     Command="{Binding OnHotkeyEntfernen}" 
                                                     Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >

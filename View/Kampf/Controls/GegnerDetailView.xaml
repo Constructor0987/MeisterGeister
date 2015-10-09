@@ -6,6 +6,7 @@
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kampf"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:AudioLogic="clr-namespace:MeisterGeister.ViewModel.AudioPlayer.Logic"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              x:Name="UserControl" Background="{DynamicResource Background1}" d:DesignHeight="543.038" Width="675.291"
              Loaded="UserControl_Loaded">
@@ -453,6 +454,110 @@
 
                     </Border>
                 </Expander>
+
+
+                <!--<Expander IsExpanded="True" Margin="0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Expander.Header>
+                        <TextBlock Text="Audio-Buttons" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="129*" />
+                            <ColumnDefinition Width="242*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Row="0" Grid.Column="0" Text="{Binding FilteredPlaylistListe}" SelectedItem="{Binding SelectedPlaylist}" SelectedValuePath="Name" DisplayMemberPath="Name" ItemsSource="{Binding FilteredPlaylistListe}" Grid.ColumnSpan="2" ToolTip="Playliste auswählen..." IsEditable="True">
+                                <ComboBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding OnAddWesenPlaylist}" />
+                                </ComboBox.InputBindings>
+                            </ComboBox>
+                            <Button Padding="0" Grid.Row="0" Grid.Column="2"  Height="23" Width="25" ToolTip="Neuern Angriff einfügen" Command="{Binding OnAddWesenPlaylist}">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
+                            </Button>
+
+                            <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding GegnerPlaylistListe}" SelectedItem="{Binding SelectedGegnerPlaylistListe}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000">
+                                <DataGrid.InputBindings>
+                                    <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerPlaylistListe}" />
+                                </DataGrid.InputBindings>
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Height="28" Command="{Binding OnDeleteGegnerPlaylistListe}" Header="Löschen">
+                                            <MenuItem.Icon>
+                                                <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="Auto" MinWidth="250" Binding="{Binding Playlist.Name}" IsReadOnly="True" CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
+                                        <DataGridTextColumn.Header >
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Playist"/>
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" MinWidth="150" Binding="{Binding Kategorie, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
+                                        <DataGridTextColumn.Header >
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kategorie"/>
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" MinWidth="50" Binding="{Binding Icon, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
+                                        <DataGridTextColumn.Header >
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Icon"/>
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>                                    
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            
+                            <ScrollViewer Grid.Column="3" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Grid.Row="1" >
+                                <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel ItemWidth="30" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Width="30" Tag="{Binding}" Focusable="False"
+                                                    Command="{Binding VM.OnWesenPlaylistClick, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
+                                                    ToolTip="{Binding Audio_Playlist.Name}">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Content">
+                                                            <Setter.Value>
+                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding GegnerBaseGUID}" Value="{x:Null}" />
+                                                                    <Condition Binding="{Binding Kategorie}" Value="Tod" />
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/tot.png" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        
+                        </Grid>
+                    </Border>
+                </Expander>-->
+
             </Grid>
         </ScrollViewer>
 

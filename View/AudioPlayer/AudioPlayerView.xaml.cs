@@ -1029,10 +1029,13 @@ namespace MeisterGeister.View.AudioPlayer
             }
         }
 
-        private void btnHotkeyWesenZuweisen_Click(object sender, RoutedEventArgs e)
+        private void btnHotbuttonWesenZuweisen_Click(object sender, RoutedEventArgs e)
         {
             if (!VM.hotkeyKämpferLoaded)
                 Global.SetIsBusy(true, string.Format("Laden der Kämpfer-Datenbank ..."));
+
+            VM.CurrentPlaylist = VM.AktKlangPlaylist != null && !VM.AktKlangPlaylist.Hintergrundmusik ? VM.AktKlangPlaylist :
+                (VM.AktKlangPlaylist == null || VM.AktKlangPlaylist.Hintergrundmusik) ? Global.ContextAudio.PlaylistListe.FirstOrDefault(t => !t.Hintergrundmusik): null;
             PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(VM.CurrentPlaylist);
             Global.SetIsBusy(false);
             wesenAuswahlView.ShowDialog();

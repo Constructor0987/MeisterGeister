@@ -1,4 +1,10 @@
-﻿-- Datenverbesserungen bei Pflanzen
+﻿-- Icon Verwaltung bei Audio Hot-Buttons
+ALTER TABLE [GegnerBase_Audio_Playlist] ADD [Icon] nvarchar(254) NULL DEFAULT '/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png'
+GO
+ALTER TABLE [Held_Audio_Playlist] ADD [Icon] nvarchar(254) NULL DEFAULT '/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png'
+GO
+
+-- Datenverbesserungen bei Pflanzen
 
 /* Landschaft */
 

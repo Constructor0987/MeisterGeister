@@ -6,6 +6,7 @@ using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Kampf.Logic;
 
 using System.ComponentModel;
+using MeisterGeister.ViewModel.AudioPlayer.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
@@ -235,6 +236,7 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return angriffAddName; }
             set { angriffAddName = value; }
         }
+
 
         public List<Ausrüstung> WaffenListe
         {

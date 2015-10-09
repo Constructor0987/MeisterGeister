@@ -8,6 +8,7 @@ using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
+using MeisterGeister.ViewModel.AudioPlayer.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
@@ -96,28 +97,57 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             get { return Kampf != null ? Kampf.Kämpfer : null; }
         }
-
-        public IKämpfer SelectedKämpfer
+        
+        private ICollection<IWesenPlaylist> _wesenPlaylist = null;
+        public ICollection<IWesenPlaylist> WesenPlaylist
         {
-            get { return (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null; }
+            get {
+                return ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is Held)) ?
+                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()):
+                    ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is GegnerBase)) ?
+                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()):                    
+                    null;
+                }
             set
             {
-                foreach (var mi in InitiativListe)
-                {
-                    if (mi.KämpferInfo.Kämpfer == value)
-                    {
-                        SelectedManöverInfo = mi;
-                        KämpferSelected = true;
-                        break;
-                    }
-                }
-                OnChanged("SelectedKämpfer");
+                Set(ref _wesenPlaylist, value);
             }
+        }
+
+        private IKämpfer _selectedKämpfer;
+        public IKämpfer SelectedKämpfer
+        {
+            get {
+                
+                return (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null; 
+            }
+            set
+            {
+                _selectedKämpfer = (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null;
+                OnChanged();
+            }
+                
+            //set
+            //{
+            //    foreach (var mi in InitiativListe)
+            //    {
+            //        if (mi.KämpferInfo.Kämpfer == value)
+            //        {
+            //            SelectedManöverInfo = mi;
+            //            KämpferSelected = true;                       
+            //            break;
+            //        }
+            //    }
+            //    OnChanged("SelectedKämpfer");
+
+               
+            //}
         }
 
         public KämpferInfo SelectedKämpferInfo
         {
-            get { return (SelectedManöverInfo != null) ? SelectedManöverInfo.KämpferInfo : null; }
+            get { return (SelectedManöverInfo != null) ? SelectedManöverInfo.KämpferInfo : null;
+            }
             //set { SelectedTreeItem = value; }
         }
 
@@ -128,7 +158,7 @@ namespace MeisterGeister.ViewModel.Kampf
             set 
             { 
                 _selectedManöverInfo = value;
-                OnChanged("SelectedManöverInfo"); OnChanged("SelectedKämpferInfo"); OnChanged("SelectedKämpfer");
+                OnChanged("SelectedManöverInfo"); OnChanged("SelectedKämpferInfo"); OnChanged("SelectedKämpfer"); OnChanged("WesenPlaylist");
             }
         }
         
@@ -139,7 +169,8 @@ namespace MeisterGeister.ViewModel.Kampf
         public bool KämpferSelected
         {
             get { return kämpferSelected; }
-            set { kämpferSelected = value; OnChanged("KämpferSelected"); }
+            set { kämpferSelected = value;
+                OnChanged("KämpferSelected"); }
         }
 
         private int schaden = 5;
@@ -171,6 +202,24 @@ namespace MeisterGeister.ViewModel.Kampf
         }
 
         #region // ---- COMMANDS ----
+
+        private Base.CommandBase _onWesenPlaylistClick = null;
+        public Base.CommandBase OnWesenPlaylistClick
+        {
+            get
+            {
+                if (_onWesenPlaylistClick == null)
+                    _onWesenPlaylistClick = new Base.CommandBase(WesenPlaylistClick, null);
+                return _onWesenPlaylistClick;
+            }
+        }
+
+        private void WesenPlaylistClick(object obj)
+        {
+            btnHotkeyVM hotkey = new btnHotkeyVM();
+            hotkey.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
+            hotkey.OnBtnClick(hotkey);
+        }
 
         private Base.CommandBase onAddHelden = null;
         public Base.CommandBase OnAddHelden
@@ -503,6 +552,25 @@ namespace MeisterGeister.ViewModel.Kampf
         #endregion // ---- COMMANDS ----
 
         //Command NeueKampfrunde
+    }
+
+    public class MultiBooleanAndConverter : System.Windows.Data.IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            foreach (object value in values)
+            {
+                if (((value is bool) && (bool)value == false) || value == null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException("BooleanAndConverter is a OneWay converter.");
+        }
     }
 
     public class TrefferpunkteOptionsConverter : System.Windows.Data.IMultiValueConverter

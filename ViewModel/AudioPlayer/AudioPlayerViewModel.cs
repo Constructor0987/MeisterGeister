@@ -1929,6 +1929,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 FilterErwPlayerMusikPlaylistListe();
                 FilterErwPlayerGeräuschePlaylistListe();
 
+               // Set(ref _filteredEditorListBoxItemListe, value);
                 OnChanged();
             }
         }
@@ -5785,7 +5786,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                 kZeile._mplayer.Pause();
                                 kZeile.istStandby = true;
                                 kZeile.istLaufend = false;
-                                gruppe.grpobj.mZeileVM.Min1SongWirdGespielt = null;
+                                if (gruppe.grpobj.mZeileVM != null) gruppe.grpobj.mZeileVM.Min1SongWirdGespielt = null;
                             }
                             //if (gruppe.mZeile != null)
                             //    gruppe.mZeile.recProzent.Visibility = Visibility.Collapsed;
@@ -7555,9 +7556,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             string[] extension = new String[4] { ".mp3", ".wav", ".wma", ".ogg" };
             bool hinzugefuegt = false;
 
+            // AktKlangPlaylist == null also neue Playliste anlegen
             if (aPlaylist == null)
-                aPlaylist = NeueKlangPlaylistInDB(AktKlangPlaylist.Name);
+                aPlaylist = NeueKlangPlaylistInDB(NeuerPlaylistName); //NeueKlangPlaylistInDB(AktKlangPlaylist.Name);
 
+            if (files != null && files.Count >= 0)
             foreach (string dateihinzu in files)
             {
                 if (Array.IndexOf(extension, dateihinzu.ToLower().Substring(dateihinzu.Length - 4)) != -1)
