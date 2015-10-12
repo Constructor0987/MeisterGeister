@@ -26,22 +26,23 @@ namespace MeisterGeister.View.General
         public DoubleBox()
         {
             InitializeComponent();
-
-            MinValue = Double.MinValue;
-            MaxValue = Double.MaxValue;
         }
 
-        public Double MinValue
+        public double MinValue
         {
-            get;
-            set;
+            get { return (double)GetValue(MinValueProperty); }
+            set { SetValue(MinValueProperty, value); }
         }
+        public static DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(IntBox),
+                new PropertyMetadata(double.MinValue));
 
-        public Double MaxValue
+        public double MaxValue
         {
-            get;
-            set;
+            get { return (double)GetValue(MaxValueProperty); }
+            set { SetValue(MaxValueProperty, value); }
         }
+        public static DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(double), typeof(IntBox),
+                new PropertyMetadata(double.MaxValue));
 
         public bool IsReadOnly
         {
