@@ -33,7 +33,7 @@ namespace MeisterGeister.View.General
             get { return (double)GetValue(MinValueProperty); }
             set { SetValue(MinValueProperty, value); }
         }
-        public static DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(IntBox),
+        public static DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(DoubleBox),
                 new PropertyMetadata(double.MinValue));
 
         public double MaxValue
@@ -41,7 +41,7 @@ namespace MeisterGeister.View.General
             get { return (double)GetValue(MaxValueProperty); }
             set { SetValue(MaxValueProperty, value); }
         }
-        public static DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(double), typeof(IntBox),
+        public static DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(double), typeof(DoubleBox),
                 new PropertyMetadata(double.MaxValue));
 
         public bool IsReadOnly
