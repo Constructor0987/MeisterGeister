@@ -78,4 +78,4 @@ ALTER TABLE [Held] ADD [Regelsystem] nvarchar(50) NULL;
 UPDATE [Held] SET [Regelsystem] = 'DSA 4.1';
 
 ALTER TABLE [Talent] ADD [Regelsystem] nvarchar(50) NULL;
-UPDATE [Talent] SET [Regelsystem] = 'DSA 4.1';
+UPDATE [Talent] SET [Regelsystem] = 'DSA 4.1' WHERE [TalentGUID] <> '00000000-0000-0000-0000-000000000000';
