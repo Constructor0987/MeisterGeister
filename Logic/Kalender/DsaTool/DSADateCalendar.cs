@@ -233,7 +233,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             get
             {
                 if (DaysPerMonth == 0)
-                    return 0; return (int)MathUtil.divisio(YearDay, DaysPerMonth) + 1;
+                    return 0; return (int)MathUtil.divisio(YearDay, DaysPerMonth, 1) + 1;
             }
             set { }
         }
