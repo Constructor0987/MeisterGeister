@@ -948,6 +948,7 @@
     <Compile Include="View\Kalender\KalenderControl.xaml.cs">
       <DependentUpon>KalenderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Kalender\KalenderGrid.cs" />
     <Compile Include="View\Kampf\Controls\GegnerDetailView.xaml.cs">
       <DependentUpon>GegnerDetailView.xaml</DependentUpon>
     </Compile>
@@ -1464,8 +1465,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kalender\KalenderControl.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Kampf\Controls\GegnerDetailView.xaml">
       <SubType>Designer</SubType>

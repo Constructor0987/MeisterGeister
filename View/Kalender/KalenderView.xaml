@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:c="clr-namespace:MeisterGeister.View.Kalender"
              mc:Ignorable="d" d:DesignHeight="481.088" d:DesignWidth="844" Loaded="UserControl_Loaded" Unloaded="Expander_ExpandedCollapsed" Background="{StaticResource Background1}">
     <UserControl.Resources>
         <DataTemplate x:Key="FeiertagListTemplate">
@@ -162,6 +163,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Expander Name="_expanderIrdisch" Grid.Row="0" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                         <Expander.Header>
@@ -236,6 +238,14 @@
                                 <TextBlock Text="Nächster Tag:" Margin="20,0,0,0" FontStyle="Italic" Opacity="0.5" />
                                 <ListBox Name="_listBoxFeiertageVorschau" ItemTemplate="{StaticResource FeiertagListTemplate}" Background="Transparent" BorderThickness="0" Opacity="0.5" />
                             </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Name="_expanderKalenderTest" Grid.Row="3" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                        <Expander.Header>
+                            <TextBlock Text="KalenderTest" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <c:KalenderControl />
                         </Border>
                     </Expander>
                 </Grid>

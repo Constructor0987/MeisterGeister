@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:c="clr-namespace:MeisterGeister.View.Kalender"
+             xmlns:logic="clr-namespace:MeisterGeister.ViewModel.Kalender.Logic"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kalender"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <!-- http://stackoverflow.com/questions/21728012/customcontrol-with-templateparts -->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -16,8 +18,22 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <UniformGrid Name="PART_WeekdayGrid" Grid.Row="0" Grid.Column="1" Rows="1" Columns="{Binding TageProWoche}" />
-        <UniformGrid Name="PART_WeeknumberGrid" Grid.Row="1" Grid.Column="0" Rows="{Binding AnzuzeigendeWochen}" Columns="1" />
-        <UniformGrid Name="PART_MonthGrid" Grid.Column="1" Grid.Row="1" Rows="{Binding AnzuzeigendeWochen}" Columns="{Binding TageProWoche}" />
+        <UniformGrid Name="PART_WeekdayGrid" Grid.Row="0" Grid.Column="1" Rows="1" Columns="{Binding TageProWoche, Mode=OneWay}" />
+        <UniformGrid Name="PART_WeeknumberGrid" Grid.Row="1" Grid.Column="0" Rows="{Binding AnzuzeigendeWochen, Mode=OneWay}" Columns="1" />
+        <c:KalenderGrid x:Name="PART_MonthGrid" Grid.Column="1" Grid.Row="1" Rows="{Binding AnzuzeigendeWochen, Mode=OneWay}" Columns="{Binding TageProWoche, Mode=OneWay}">
+            <c:KalenderGrid.Resources>
+                <Style x:Key="DayButton" TargetType="Button">
+                    <Setter Property="Content" Value="{Binding Data}" />
+                    <Setter Property="c:KalenderGrid.Column" Value="{Binding Data.WeekDay}" />
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate DataType="{x:Type vm:DatumViewModel}">
+                                <TextBlock Text="{Binding Text, FallbackValue='...'}"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>                   
+                </Style>
+            </c:KalenderGrid.Resources>
+        </c:KalenderGrid>
     </Grid>
 </UserControl>

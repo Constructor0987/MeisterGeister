@@ -27,6 +27,11 @@ namespace MeisterGeister.View.Kalender
         public KalenderView()
         {
             InitializeComponent();
+#if DEBUG
+            _expanderKalenderTest.Visibility = System.Windows.Visibility.Visible;
+#else
+            _expanderKalenderTest.Visibility = System.Windows.Visibility.Collapsed;
+#endif
 
             Standort = Global.Standort;
 

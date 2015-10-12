@@ -15,13 +15,25 @@ using System.Windows.Shapes;
 using MeisterGeister.Logic.Kalender.DsaTool;
 using MeisterGeister.ViewModel.Kalender;
 using MeisterGeister.ViewModel.Kalender.Logic;
+using System.Windows.Controls.Primitives;
+using MeisterGeister.ViewModel.Base;
+using MeisterGeister.Logic.General.DataVirtualization;
 
 namespace MeisterGeister.View.Kalender
 {
-    [TemplatePart(Name="PART_Day", Type=typeof(Button))]
-    [TemplatePart(Name = "PART_MonthGrid", Type = typeof(Button))]
     public partial class KalenderControl : UserControl
     {
+
+        public KalenderControl()
+        {
+            DataContext = this;
+            InitializeComponent();
+            DateList = new DateList(Kalender, AnzuzeigendeTage);
+            var c = DateList.Count;
+            DSADateTime date = new DSADateTime();
+            ErstesAngezeigtesDatumIndex = DateList.GetIndex(date);
+        }
+
         DateList dateList = null;
         protected DateList DateList
         {
@@ -39,13 +51,6 @@ namespace MeisterGeister.View.Kalender
             if (dateList.IsLoading)
                 return;
             DrawUI();
-        }
-
-        public KalenderControl()
-        {
-            InitializeComponent();
-            DateList = new DateList(Kalender, AnzuzeigendeTage);
-            var c = DateList.Count;
         }
 
         void DrawUI()
@@ -94,12 +99,23 @@ namespace MeisterGeister.View.Kalender
         }
         #endregion
 
-        private int AnzuzeigendeTage
+        public int AnzuzeigendeTage
         {
             get { return Kalender.DaysPerMonth + Kalender.DaysPerWeek * 2; }
         }
 
-        private int ErstesAngezeigtesDatumIndex = 0;
+        public int TageProWoche
+        {
+            get { return Kalender.DaysPerWeek; }
+        }
+
+        private int erstesAngezeigtesDatumIndex = 0;
+        //TODO automatisch aus SelectedDatum und anderen Informationen berechnen.
+        public int ErstesAngezeigtesDatumIndex
+        {
+            get { return erstesAngezeigtesDatumIndex; }
+            set { erstesAngezeigtesDatumIndex = value; }
+        }
 
 
         /// <summary>
@@ -110,25 +126,38 @@ namespace MeisterGeister.View.Kalender
             var grid = PART_MonthGrid;
             for (int i = 0; i < AnzuzeigendeTage; i++)
             {
-                //TODO am besten nicht immer neue Buttons erstellen sondern die buttons wiederverwenden.
-                //TODO Button mit events und style
-                var element = new Button();
                 // DateList[i + ErstesAngezeigtesDatumIndex].IsLoading und dann anderes Template anzeigen, welches den Text darstellt.
                 var d = DateList[i + ErstesAngezeigtesDatumIndex];
-                d.PropertyChanged += d_PropertyChanged;
-                //TODO BINDING machen mit condtition ob initialisiert
-                //element.Content = string.Format("{0}", DateList[i + ErstesAngezeigtesDatumIndex].Data.Text);
-                //element.Click += new RoutedEventHandler(monthModeButton_Click);
-                //element.PreviewMouseDown += new MouseButtonEventHandler(element_PreviewMouseDown);
-                //element.PreviewMouseMove += new MouseEventHandler(element_PreviewMouseMove);
+                //TODO am besten nicht immer neue Buttons erstellen sondern die buttons wiederverwenden.
+                //Button Style ist in den Grid-Resourcen
+                var element = new Button();
+                element.Command = OnSetDatum;
+                element.CommandParameter = d;
+                element.DataContext = d;
+                element.Style = (Style)grid.FindResource("DayButton");
                 grid.Children.Add(element);
                 //this._btnMonthMode[i, j] = element;
             }
         }
 
-        void d_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private CommandBase onSetDatum = null;
+        CommandBase OnSetDatum
         {
-            //throw new NotImplementedException();
+            get
+            {
+                if (onSetDatum == null)
+                    onSetDatum = new CommandBase(SetDatum, null);
+                return onSetDatum;
+            }
+        }
+
+        void SetDatum(object args)
+        {
+            var d = args as DataWrapper<DatumViewModel>;
+            if(d != null && !d.IsLoading)
+            {
+                this.SelectedDatum = d.Data;
+            }
         }
 
         /// <summary>
@@ -136,7 +165,13 @@ namespace MeisterGeister.View.Kalender
         /// </summary>
         void InitializeWochen()
         {
-
+            //keine Ahnung wie ich bei den Wochen an die richtigen Daten kommen soll.
+            //var grid = PART_WeeknumberGrid;
+            //foreach (var wd in Kalender.WeekDayNames)
+            //{
+            //    var tb = new TextBlock();
+            //    tb.DataContext = ...
+            //}
         }
 
         /// <summary>
@@ -144,7 +179,13 @@ namespace MeisterGeister.View.Kalender
         /// </summary>
         void InitializeWochentage()
         {
-
+            var grid = PART_WeekdayGrid;
+            foreach(var wd in Kalender.WeekDayNames)
+            {
+                var tb = new TextBlock();
+                tb.Text = wd;
+                grid.Children.Add(tb);
+            }
         }
     }
 }

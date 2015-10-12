@@ -180,6 +180,17 @@ namespace MeisterGeister
             private set;
         }
 
+        private static MeisterGeister.Logic.Kalender.DsaTool.DSADateTime zeitpunkt;
+        public static MeisterGeister.Logic.Kalender.DsaTool.DSADateTime Zeitpunkt
+        {
+            get { return Global.zeitpunkt; }
+            set
+            {
+                Global.zeitpunkt = value;
+                OnZeitpunktChanged();
+            }
+        }
+
         private static DgSuche.Ortsmarke standort = null;
         public static DgSuche.Ortsmarke Standort
         {
@@ -389,6 +400,8 @@ namespace MeisterGeister
 
         #region //EVENTS
 
+
+        public static event EventHandler ZeitpunktChanged;
         public static event EventHandler HeldSelectionChanged;
         public static event EventHandler HeldSelectionChanging;
         public static event EventHandler StandortChanged;
@@ -401,6 +414,14 @@ namespace MeisterGeister
 
             if (StandortChanged != null)
                 StandortChanged(null, new EventArgs());
+        }
+
+        static void OnZeitpunktChanged()
+        {
+            //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+
+            if (ZeitpunktChanged != null)
+                ZeitpunktChanged(null, new EventArgs());
         }
 
         public static event GruppenProbeWürfelnEventHandler GruppenProbeWürfeln;
