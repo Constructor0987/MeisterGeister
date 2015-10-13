@@ -546,6 +546,9 @@ namespace MeisterGeister.Logic.HeldenImport
             // Inventar
             ImportInventar(_xmlDoc, _held, _importLog);
 
+            if (string.IsNullOrEmpty(_held.Regelsystem)) // falls keine Regeledition gesetzt, DSA 4.1 annehmen
+                _held.Regelsystem = "DSA 4.1";
+
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
             if (!serializer.InsertOrUpdateHeld(_held))
             {
