@@ -393,6 +393,10 @@ namespace MeisterGeister.Logic.HeldenImport
             _held.HeldGUID = heldGuid;
             _held.Name = name;
 
+            // TODO: Regelsystem evtl. aus der XML-Datei ermitteln
+            if (string.IsNullOrEmpty(_held.Regelsystem)) // falls keine Regeledition gesetzt, DSA 4.1 annehmen
+                _held.Regelsystem = "DSA 4.1";
+
             // Rasse
             XmlNodeList rassen = _xmlDoc.SelectNodes("helden/held/basis/rasse");
             if (rassen.Count == 0)
@@ -546,9 +550,6 @@ namespace MeisterGeister.Logic.HeldenImport
             // Inventar
             ImportInventar(_xmlDoc, _held, _importLog);
 
-            if (string.IsNullOrEmpty(_held.Regelsystem)) // falls keine Regeledition gesetzt, DSA 4.1 annehmen
-                _held.Regelsystem = "DSA 4.1";
-
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
             if (!serializer.InsertOrUpdateHeld(_held))
             {
@@ -692,10 +693,10 @@ namespace MeisterGeister.Logic.HeldenImport
                 else
                     wert = 0;
 
-                Talent t = Global.ContextHeld.LoadTalentByName(talentName);
+                Talent t = Global.ContextHeld.LoadTalentByName(talentName, _held.Regelsystem);
                 if (t == null)
                     if (_talentMapping.ContainsKey(talentName.ToLowerInvariant())) // Talent wurde nicht gefunden, evtl. Konvertierung möglich
-                        t = Global.ContextHeld.LoadTalentByName(_talentMapping[talentName.ToLowerInvariant()]);
+                        t = Global.ContextHeld.LoadTalentByName(_talentMapping[talentName.ToLowerInvariant()], _held.Regelsystem);
                 if (t != null)
                 {
                     Held_Talent ht = new Held_Talent();
@@ -1000,7 +1001,7 @@ namespace MeisterGeister.Logic.HeldenImport
 
         private static bool AddVorNachteil(string vorNachteilName, string wertString, Held _held)
         {
-            VorNachteil vn = Global.ContextHeld.LoadVorNachteilByName(vorNachteilName);
+            VorNachteil vn = Global.ContextHeld.LoadVorNachteilByName(vorNachteilName, _held.Regelsystem);
             if (vn != null)
             {
                 Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilGUID == vn.VorNachteilGUID).FirstOrDefault();

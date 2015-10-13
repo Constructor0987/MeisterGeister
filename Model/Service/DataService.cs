@@ -98,7 +98,15 @@ namespace MeisterGeister.Model.Service
         /// </summary>
         public Talent LoadTalentByName(string aName)
         {
-            var tmp = Context.Talent.Where(s => s.Talentname.ToLower() == aName.ToLower()).FirstOrDefault();
+            return LoadTalentByName(aName, Global.Regeledition);
+        }
+
+        /// <summary>
+        /// Case-insensitiv.
+        /// </summary>
+        public Talent LoadTalentByName(string aName, string regelsystem)
+        {
+            var tmp = Context.Talent.Where(s => s.Talentname.ToLower() == aName.ToLower() && s.Regelsystem == regelsystem).FirstOrDefault();
             return tmp;
         }
 
@@ -109,7 +117,17 @@ namespace MeisterGeister.Model.Service
         /// <returns></returns>
         public VorNachteil LoadVorNachteilByName(string aName)
         {
-            var tmp = Context.VorNachteil.Where(s => s.Name.ToLower() == aName.ToLower()).FirstOrDefault();
+            return LoadVorNachteilByName(aName, Global.Regeledition);
+        }
+
+        /// <summary>
+        /// Case-insensitiv.
+        /// </summary>
+        /// <param name="aName"></param>
+        /// <returns></returns>
+        public VorNachteil LoadVorNachteilByName(string aName, string regelsystem)
+        {
+            var tmp = Context.VorNachteil.Where(s => s.Name.ToLower() == aName.ToLower() && s.Regelsystem == regelsystem).FirstOrDefault();
             return tmp;
         }
 
