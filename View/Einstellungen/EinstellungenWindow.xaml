@@ -526,7 +526,7 @@
                                             </TextBlock>
                                             <Button Content="..." Height="21" Width="20" Command="{Binding OnOpenFileDialog}" DockPanel.Dock="Right" ToolTip="PDF auswählen..." />
                                             <TextBox Height="23" Text="{Binding Pfad}" Width="360" ToolTip="Pfad zur PDF-Datei" DockPanel.Dock="Right" />
-                                            <ViewGeneral:IntBox Margin="5,0" Value="{Binding Seitenoffset}" ToolTip="Seitenoffset" DockPanel.Dock="Right" Width="25" Visibility="{x:Static mg:Global.INTERN_Visibility}" />
+                                            <ViewGeneral:IntBox Margin="5,0" Value="{Binding Seitenoffset}" ToolTip="Seitenoffset" DockPanel.Dock="Right" Width="25" />
                                         </DockPanel>
                                     </DataTemplate>
                                 </ListBox.Resources>
