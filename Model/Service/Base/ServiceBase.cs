@@ -136,6 +136,18 @@ namespace MeisterGeister.Model.Service {
             return ret;
         }
 
+        protected virtual IList<System.Data.Entity.Core.EntityKey> GetChangedEntityKeys()
+        {
+            List<System.Data.Entity.Core.EntityKey> ret = new List<System.Data.Entity.Core.EntityKey>();
+            IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.Entity.EntityState.Added | System.Data.Entity.EntityState.Deleted | System.Data.Entity.EntityState.Modified);
+            foreach (ObjectStateEntry os in objectStates)
+            {
+                if (os.Entity != null)
+                    ret.Add(Context.GetEntityKeyFromPrimaryKey(os.Entity));
+            }
+            return ret;
+        }
+
         protected static Dictionary<Type, Object> _lists = new Dictionary<Type, object>();
 
         public List<T> Liste<T>() where T :  class {

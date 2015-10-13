@@ -1003,7 +1003,7 @@ namespace MeisterGeister.Logic.HeldenImport
             VorNachteil vn = Global.ContextHeld.LoadVorNachteilByName(vorNachteilName);
             if (vn != null)
             {
-                Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilGUID == vn.VorNachteilGUID && hvn1.Wert == wertString).FirstOrDefault();
+                Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilGUID == vn.VorNachteilGUID).FirstOrDefault();
                 if (hvn == null)
                 {
                     hvn = new Held_VorNachteil();
@@ -1013,7 +1013,16 @@ namespace MeisterGeister.Logic.HeldenImport
                     _held.Held_VorNachteil.Add(hvn);
                     return true;
                 }
-                // Vor-Nachteil mit diesem Wert bereits vorhanden
+                else // Vor-Nachteil bereits vorhanden
+                {
+                    if (String.IsNullOrWhiteSpace(hvn.Wert))
+                        hvn.Wert = wertString;
+                    else if (hvn.Wert.Contains(wertString)) //wert ist schon eingetragen
+                        return true;
+                    else
+                        hvn.Wert += ", " + wertString;
+                }
+                
             }
             return false;
         }

@@ -240,7 +240,7 @@ namespace MeisterGeister.Model.Service
 
         public int Save()
         {
-            return Context.SaveChanges();
+            return Context.SaveChanges(SaveOptions.AcceptAllChangesAfterSave | SaveOptions.DetectChangesBeforeSave);
         }
 
         public virtual void DiscardChanges()
@@ -374,7 +374,6 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_Ausrüstung,
                     h => h.Held_Ausrüstung.First().Held_Fernkampfwaffe,
                     h => h.Held_Ausrüstung.First().Held_Fernkampfwaffe.Fernkampfwaffe.WithoutUpdate(),
-                    h => h.Held_Ausrüstung.First().Held_Fernkampfwaffe.Fernkampfwaffe.Talent.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Held_Fernkampfwaffe.Fernkampfwaffe.Ausrüstung.WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Held_Fernkampfwaffe.Fernkampfwaffe.Ausrüstung.Ausrüstung_Setting.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Held_Rüstung,
@@ -384,7 +383,6 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_Ausrüstung.First().Held_BFAusrüstung,
                     h => h.Held_Ausrüstung.First().Held_BFAusrüstung.Held_Waffe,
                     h => h.Held_Ausrüstung.First().Held_BFAusrüstung.Held_Waffe.Waffe.WithoutUpdate(),
-                    h => h.Held_Ausrüstung.First().Held_BFAusrüstung.Held_Waffe.Waffe.Talent.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Held_BFAusrüstung.Held_Waffe.Waffe.Ausrüstung.WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Held_BFAusrüstung.Held_Waffe.Waffe.Ausrüstung.Ausrüstung_Setting.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Held_BFAusrüstung.Schild.WithoutUpdate(),
@@ -403,10 +401,11 @@ namespace MeisterGeister.Model.Service
                     
                 );
                 Save(); //TODO ??: Besser wäre ein check, ob was überschrieben wird und ein Aufruf, des Save aus dem UI
+                var newheld = Context.Held.Where(h => h.HeldGUID == output.HeldGUID).FirstOrDefault();
                 //Manuelle Reperatur der Schilde
                 foreach (var bfha in held.Held_Ausrüstung.Where(a => a.Held_BFAusrüstung != null).Select(a => a.Held_BFAusrüstung).Where(a => a.Schild != null))
                 {
-                    var ha = output.Held_Ausrüstung.Where(a => a.HeldAusrüstungGUID == bfha.HeldAusrüstungGUID).FirstOrDefault();
+                    var ha = newheld.Held_Ausrüstung.Where(a => a.HeldAusrüstungGUID == bfha.HeldAusrüstungGUID).FirstOrDefault();
                     Context.LoadProperty(ha, "Held_BFAusrüstung");
                     if (ha != null && ha.Held_BFAusrüstung != null)
                     {

@@ -2128,6 +2128,7 @@ namespace MeisterGeister.Model {
             if(a.Waffe != null || a.Schild != null)
             {
                 var bfa = Global.ContextHeld.New<Held_BFAusrüstung>();
+                bfa.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
                 int bf = 0;
                 if(a.Waffe != null)
                 {
@@ -2140,6 +2141,7 @@ namespace MeisterGeister.Model {
                     hw.INI = a.Waffe.INI ?? 0;
                     bf = a.Waffe.BF ?? 0;
                     hw.Talent = Held_Waffe.GetBestesTalent(this, a.Waffe);
+                    hw.HeldAusrüstungGUID = bfa.HeldAusrüstungGUID;
                     bfa.Held_Waffe = hw;
                 }
                 if (a.Schild != null)
@@ -2158,6 +2160,7 @@ namespace MeisterGeister.Model {
                 hf.Talent = Held_Fernkampfwaffe.GetBestesTalent(this, a.Fernkampfwaffe);
                 hf.FKErleichterung = 0;
                 hf.KKErleichterung = false;
+                hf.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
                 ha.Held_Fernkampfwaffe = hf;
             }
             if (a.Rüstung != null)
@@ -2169,6 +2172,7 @@ namespace MeisterGeister.Model {
                 if (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung >= 2)
                     struktur = (int)Math.Ceiling((a.Rüstung.gRS ?? 0) * 10); //Trefferzonenmodell
                 hr.StartStrukturpunkte = hr.Strukturpunkte = struktur;
+                hr.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
                 ha.Held_Rüstung = hr;
             }
             Held_Ausrüstung.Add(ha);
