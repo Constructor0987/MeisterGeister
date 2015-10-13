@@ -82,7 +82,16 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 _heldListe = value;
                 OnChanged("HeldListe");
+                OnChanged("HeldenAnzahlAnderesRegelsystem");
             }
+        }
+
+        /// <summary>
+        /// Gibt die Anzahl an Helden zurück, die in einer anderen Regeledition vorliegen.
+        /// </summary>
+        public int HeldenAnzahlAnderesRegelsystem
+        {
+            get { return Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem != Global.Regeledition).Count(); }
         }
 
         List<string> _sortierungListe = new List<string>() { "Held", "Spieler" };
