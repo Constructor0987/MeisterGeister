@@ -492,6 +492,8 @@ namespace MeisterGeister.Model.Service
                     held = ReplaceGuid(held, newGuid);
                 if (held != null)
                 {
+                    if (string.IsNullOrEmpty(held.Regelsystem)) // falls keine Regeledition gesetzt, DSA 4.1 annehmen
+                        held.Regelsystem = "DSA 4.1";
                     if (InsertOrUpdateHeld(held))
                         return held.HeldGUID;
                 }

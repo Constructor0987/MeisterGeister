@@ -132,18 +132,6 @@ namespace MeisterGeister.Model
         private System.Guid _trageortGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid HeldAusrüstungGUID
-        {
-            get { return _heldAusrüstungGUID; }
-            set
-    		{ 
-    			Set(ref _heldAusrüstungGUID, value);
-    		}
-    
-        }
-        private System.Guid _heldAusrüstungGUID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Eigenname
         {
             get { return _eigenname; }
@@ -154,6 +142,18 @@ namespace MeisterGeister.Model
     
         }
         private string _eigenname;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual System.Guid HeldAusrüstungGUID
+        {
+            get { return _heldAusrüstungGUID; }
+            set
+    		{ 
+    			Set(ref _heldAusrüstungGUID, value);
+    		}
+    
+        }
+        private System.Guid _heldAusrüstungGUID;
 
         #endregion
 

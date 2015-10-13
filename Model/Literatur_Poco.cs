@@ -190,18 +190,6 @@ namespace MeisterGeister.Model
         private string _urlPrint;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int Regelsystem
-        {
-            get { return _regelsystem; }
-            set
-    		{ 
-    			Set(ref _regelsystem, value);
-    		}
-    
-        }
-        private int _regelsystem;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Nummer
         {
             get { return _nummer; }
@@ -260,6 +248,18 @@ namespace MeisterGeister.Model
     
         }
         private string _box;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Regelsystem
+        {
+            get { return _regelsystem; }
+            set
+    		{ 
+    			Set(ref _regelsystem, value);
+    		}
+    
+        }
+        private string _regelsystem;
 
         #endregion
 

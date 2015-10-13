@@ -275,6 +275,18 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Regelsystem
+        {
+            get { return _regelsystem; }
+            set
+    		{ 
+    			Set(ref _regelsystem, value);
+    		}
+    
+        }
+        private string _regelsystem;
 
         #endregion
 

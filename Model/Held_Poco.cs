@@ -635,6 +635,18 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<int> _aPEingesetzt;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Regelsystem
+        {
+            get { return _regelsystem; }
+            set
+    		{ 
+    			Set(ref _regelsystem, value);
+    		}
+    
+        }
+        private string _regelsystem;
 
         #endregion
 

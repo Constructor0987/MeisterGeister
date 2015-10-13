@@ -120,9 +120,9 @@ namespace MeisterGeister.ViewModel.Helden
         private void SortList()
         {
             if (SelectedSortierung == "Spieler")
-                HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
+                HeldListe = Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
             else
-                HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
+                HeldListe = Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
         }
 
         private Base.CommandBase onNewHeld = null;
@@ -139,6 +139,7 @@ namespace MeisterGeister.ViewModel.Helden
         private void NewHeld(object sender)
         {
             Held h = Global.ContextHeld.New<Held>();
+            h.Regelsystem = Global.Regeledition;
             h.AddBasisTalente();
             if (Global.ContextHeld.Insert<Held>(h))
             {

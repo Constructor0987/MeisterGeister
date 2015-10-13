@@ -1040,7 +1040,7 @@ namespace MeisterGeister.Model {
         }
 
         public void AddBasisTalente() {
-            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis" && t.TalentgruppeID != 0).ToList()) {
+            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis" && t.TalentgruppeID != 0 && t.Regelsystem == Global.Regeledition).ToList()) {
                 if (t.TalentgruppeID != 1)
                     AddTalent(t, 0);
                 else

@@ -15,7 +15,7 @@ namespace MeisterGeister.Model.Service
 
         public List<Model.Held> HeldenGruppeListe
         {
-            get { return Liste<Held>().Where(h => h.AktiveHeldengruppe == true).OrderBy(h => h.Name).ToList(); }
+            get { return Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).Where(h => h.AktiveHeldengruppe == true).OrderBy(h => h.Name).ToList(); }
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace MeisterGeister.Model.Service
         {
             get
             {
-                return Liste<Talent>().Where(t => t.TalentgruppeID != 0)
+                return Liste<Talent>().Where(t => t.Regelsystem == Global.Regeledition).Where(t => t.TalentgruppeID != 0)
                     .Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).ToList();
             }
         }

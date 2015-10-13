@@ -12,7 +12,7 @@ namespace MeisterGeister.Model.Service {
 
         public List<Model.Talent> TalentListe
         {
-            get { return Liste<Talent>().Where(t => t.TalentgruppeID != 0)
+            get { return Liste<Talent>().Where(t => t.Regelsystem == Global.Regeledition).Where(t => t.TalentgruppeID != 0)
                 .Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).ToList();
             }
         }
