@@ -1044,7 +1044,7 @@ namespace MeisterGeister.Model {
                 if (t.TalentgruppeID != 1)
                     AddTalent(t, 0);
                 else
-                    AddTalent(t, 0, 0, 0);
+                    AddTalent(t, Global.DSA5 ? 6 : 0, 0, 0);
             }
         }
 

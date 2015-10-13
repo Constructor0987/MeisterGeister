@@ -286,7 +286,10 @@ namespace MeisterGeister.ViewModel.Helden {
         private void AddTalent(object obj) {
             if (TalentAuswahl != null && SelectedHeld != null && !IsReadOnly)
             {
-                SelectedHeld.AddTalent(TalentAuswahl, 0);
+                int taw = 0;
+                if (Global.DSA5 && TalentAuswahl.TalentgruppeID == 1)
+                    taw = 6; // Kampftechniken starten auf Wert 6
+                SelectedHeld.AddTalent(TalentAuswahl, taw);
                 SelectedHeldChanged(this, new EventArgs());
                 TalentauswahlListe.Remove(TalentAuswahl);
                 TalentAuswahl = null;
