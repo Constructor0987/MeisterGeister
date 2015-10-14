@@ -34,5 +34,29 @@ namespace MeisterGeister.Logic.Extensions
             }
             return result.ToString();
         }
+
+        public static int ParseRoman(this string romanNumber)
+        {
+            if (String.IsNullOrWhiteSpace(romanNumber))
+                return 0;
+            int result = 0;
+            romanNumber = romanNumber.ToUpperInvariant();
+            romanNumber = romanNumber.Replace("CM", "DCCCC");
+            romanNumber = romanNumber.Replace("CD", "CCCC");
+            romanNumber = romanNumber.Replace("XC", "LXXXX");
+            romanNumber = romanNumber.Replace("XL", "XXXX");
+            romanNumber = romanNumber.Replace("IX", "VIIII");
+            romanNumber = romanNumber.Replace("IV", "IIII");
+            int i = 0;
+            char nextChar = romanNumber.ElementAtOrDefault(i);
+            while (nextChar == 'I') { result += 1; nextChar = romanNumber.ElementAtOrDefault(++i); }
+            while (nextChar == 'V') { result += 5; nextChar = romanNumber.ElementAtOrDefault(++i); }
+            while (nextChar == 'X') { result += 10; nextChar = romanNumber.ElementAtOrDefault(++i); }
+            while (nextChar == 'L') { result += 50; nextChar = romanNumber.ElementAtOrDefault(++i); }
+            while (nextChar == 'C') { result += 100; nextChar = romanNumber.ElementAtOrDefault(++i); }
+            while (nextChar == 'D') { result += 500; nextChar = romanNumber.ElementAtOrDefault(++i); }
+            while (nextChar == 'M') { result += 1000; nextChar = romanNumber.ElementAtOrDefault(++i); }
+            return result;
+        }
     }
 }
