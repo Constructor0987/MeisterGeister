@@ -720,7 +720,6 @@
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="ViewModel\Zauber\Logic\ZauberProbe.cs" />
     <Compile Include="ViewModel\ZooBot\BekanntePflanzenVM.cs" />
-    <Compile Include="ViewModel\ZooBot\GebietAuswahlVM.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\Ernte.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\LandschaftenVM.cs" />
     <Compile Include="ViewModel\ZooBot\Logic\Preis.cs" />
@@ -1062,9 +1061,6 @@
     </Compile>
     <Compile Include="View\ZooBot\LandschaftenView.xaml.cs">
       <DependentUpon>LandschaftenView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ZooBot\GebietAuswahlView.xaml.cs">
-      <DependentUpon>GebietAuswahlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ZooBot\ZooBotView.xaml.cs">
       <DependentUpon>ZooBotView.xaml</DependentUpon>
@@ -1597,10 +1593,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ZooBot\LandschaftenView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\ZooBot\GebietAuswahlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

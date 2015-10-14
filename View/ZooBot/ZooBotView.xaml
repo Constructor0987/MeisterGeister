@@ -125,17 +125,29 @@
                                     <RowDefinition Height="35" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-
+  
                                 <Label Grid.Column="0" Grid.Row="0" Content="Gebiet" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
 
-                                <StackPanel Orientation="Horizontal" Grid.Column="6" HorizontalAlignment="Left" >
-                                    <Karte:KoordinatenControl Value="{Binding HeldenPos, UpdateSourceTrigger=PropertyChanged}" Format="Dezimalminuten" Grid.Column="6" Grid.Row="0" VerticalAlignment="Center" />
-                                    <Button Content="Ändern" Margin="10,3,83,5" />
-                                </StackPanel>
+                                <Button Grid.Column="1" Command="{Binding OnGebieteVonPos}" ToolTip="Klicken zum Aktualisieren" Margin="3" >
+                                    <Button.Content>
+                                        <Karte:KoordinatenControl x:Name="koordPosition" Grid.Column="1" Format="Dezimalminuten" VerticalAlignment="Center"
+                                        Value="{Binding HeldenPos, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Button.Content>
+                                </Button>
+                                <!--<StackPanel Grid.Column="1" Orientation="Horizontal" Cursor="Hand" Command="{Binding OnGebieteVonPos}"  >
+                                    <Image Visibility="{Binding ElementName=koordPosition, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" 
+                                        Source="/Images/Icons/General/Refresh.png" Margin="0,0,2,0" Height="20" />
+                                </StackPanel>-->
+                                
+                                <Button Grid.Column="2" HorizontalAlignment="Right" Margin="0,5" Tag="Karte" Click="KarteAusrufen_Click" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Images/Icons/kartenzeichnen.png" Margin="-2" Height="20" />
+                                        <TextBlock Margin="2,0,0,0" Text="Karte öffnen" />
+                                    </StackPanel>
+                                </Button>
 
-                                <Button Grid.Column="1" Grid.Row="0" Content="Gebiete Auswählen" Margin="10,3" Click="BtnGebieteAuswahlView_Click" />
-                                <ComboBox Grid.Column="2" Grid.Row="0" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Gebiet" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}"
-                                          ItemsSource="{Binding GebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding GebietSelected}" DisplayMemberPath="Name" />
+                                <!--<ComboBox Grid.Column="2" Grid.Row="0" Margin="90,4,0,4" HorizontalAlignment="Stretch" ToolTip="Gebiet" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}"
+                                          ItemsSource="{Binding GebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding GebietSelected}" DisplayMemberPath="Name" />-->
                                 <!-- ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
                                 <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 

@@ -14,6 +14,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 using VM = MeisterGeister.ViewModel.Kampf;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using MeisterGeister.View.AudioPlayer;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -144,9 +145,27 @@ namespace MeisterGeister.View.Kampf
             battlegroundWindow = null;
             VM.BodenplanWindow = null;
         }
-         
 
-
+        private void btnAudioSpeedButtonWesenZuweisen_Click(object sender, RoutedEventArgs e)
+        {
+            MeisterGeister.Model.Held h = (VM.SelectedKämpferInfo.Kämpfer is MeisterGeister.Model.Held)? 
+                (VM.SelectedKämpferInfo.Kämpfer as MeisterGeister.Model.Held): null;
+            MeisterGeister.Model.GegnerBase g = (VM.SelectedKämpferInfo.Kämpfer is MeisterGeister.Model.GegnerBase)? 
+                (VM.SelectedKämpferInfo.Kämpfer as MeisterGeister.Model.GegnerBase):
+                (VM.SelectedKämpferInfo.Kämpfer is MeisterGeister.Model.Gegner) ?
+                (VM.SelectedKämpferInfo.Kämpfer as MeisterGeister.Model.Gegner).GegnerBase: null;
+            if (h != null)
+            { 
+                PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(h);
+                wesenAuswahlView.ShowDialog();
+            } else
+                if (g != null)
+                { 
+                    PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(g);
+                    wesenAuswahlView.ShowDialog();
+                }
+        }
+        
         private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)
         {
             ShowSpielerInfo();

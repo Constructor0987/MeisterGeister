@@ -1126,7 +1126,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _hotkeyVolume; }
             set
             {
-                
                 _hotkeyVolume = value;
                 //hotkeyListe.ForEach(t => t.VM.volume = HotkeyVolume);
                 //hotkeyListUsed.ForEach(t => t.VM.volume = HotkeyVolume);
@@ -1701,12 +1700,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
 
 
-        private bool _hotkeyKämpferLoaded = false;
-        public bool hotkeyKämpferLoaded
-        { 
-            get { return _hotkeyKämpferLoaded; }
-            set { _hotkeyKämpferLoaded = value; }
-        }
+        //private bool _hotkeyKämpferLoaded = false;
+        //public bool hotkeyKämpferLoaded
+        //{ 
+        //    get { return _hotkeyKämpferLoaded; }
+        //    set { _hotkeyKämpferLoaded = value; }
+        //}
         
         
         private List<boxThemeTheme> _boxThemeThemeHintergrundList;
@@ -3355,13 +3354,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
         void AllHotkeysStop(object obj)
         {
-            //.FindAll(t => t.VM.mp != null).FindAll(t => t.VM.mp.HasAudio)
             hotkeyListUsed.ForEach(delegate(btnHotkey hkey)
             {
                 hkey.VM.TitelPlayList.FindAll(t => t.mp != null && t.mp.HasAudio).ForEach(delegate(btnHotkeyVM.TitelPlay titelPlay)
                 { titelPlay.mp.Stop(); });
-            });
-                //hkey.VM.mp.Stop(); });
+            });        
         }
 
 
@@ -7353,7 +7350,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 hkey.VM.aPlaylistGuid = aPlaylist.Audio_PlaylistGUID;
                 hkey.VM.taste = (char)aPlaylist.Key[0];
                 hkey.VM.aPlaylist = aPlaylist;
-                //hkey.VM.volume = HotkeyVolume;
                 lstHotKeyUsed.Add(hkey);
             };
 

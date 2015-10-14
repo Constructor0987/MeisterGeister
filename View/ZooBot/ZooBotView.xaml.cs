@@ -70,10 +70,25 @@ namespace MeisterGeister.View.ZooBot
 
         private void BtnGebieteAuswahlView_Click(object sender, RoutedEventArgs e)
         {
-            GebietAuswahlView wndGebietAuswahlView = new GebietAuswahlView();
-            wndGebietAuswahlView.VM.ZooBotVM = VM;
-            wndGebietAuswahlView.ShowDialog();
+            BekanntePflanzenView wndBekanntePflanzen = new BekanntePflanzenView();
+            wndBekanntePflanzen.VM.ZooBotVM = VM;
+            //wndBekanntePflanzen.VM.SelectedHeld = VM.SelectedHeld;
+            wndBekanntePflanzen.ShowDialog();
         }
-        
+
+        private void KarteAusrufen_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender != null && (sender is Button || sender is MenuItem))
+            {
+                object tag = null;
+                if (sender is Button)
+                    tag = ((Button)sender).Tag;
+                else if (sender is MenuItem)
+                    tag = ((MenuItem)sender).Tag;
+                if (tag != null && tag is string)
+                    (App.Current.MainWindow as View.MainView).StarteTab(tag.ToString());
+            }
+
+        }
     }
 }

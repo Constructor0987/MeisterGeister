@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using MeisterGeister.Logic.Kalender;
 using MeisterGeister.Logic.General;
 using System.Windows;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.ZooBot
 {
@@ -112,10 +113,15 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
         }
 
+        private Point _heldenPos = new Point();        
         public Point HeldenPos
         {
-            get { return new Point(Global.HeldenLon, Global.HeldenLat); }
-            set { }            
+            get { return _heldenPos;}            
+            set
+            {
+                _heldenPos = value;
+                OnChanged();
+            }
         }
 
         #region Initialisierung der implementierten Regionen, Landschaften, Pflanzen
@@ -1347,6 +1353,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                 string suchmonat = (Datum.Aktuell.Monat == Monat.NamenloseTage ? "Namenlose Tage" : Datum.Aktuell.MonatString());
                 SuchMonatSelected = suchmonat;
 
+                HeldenPos = new Point(Global.HeldenLon, Global.HeldenLat); 
                 IsLoaded = true;
             }
         }
@@ -1453,16 +1460,19 @@ namespace MeisterGeister.ViewModel.ZooBot
             set
             {                
                 _kräuter_LandschaftGebietSelected = value;
-                List<Pflanze> pList = FilterPflanzenListeNachGebietsauswahl.ToList();
+                List<Pflanze> pList = new List<Pflanze>();// FilterPflanzenListeNachGebietsauswahl.ToList();
                 FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
 
                 if (value == null || !value.Name.Equals("überall"))
                 {
                     FilterPflanzenListe.ForEach(delegate(Pflanze p)
                     {
-                        if (!p.Landschaften.Contains(value))
-                            pList.Remove(p);
+                        if (p.Landschaften.Contains(value) && !pList.Contains(p))
+                            pList.Add(p);
+                        //if (!p.Landschaften.Contains(value))
+                        //    pList.Remove(p);
                     });
+                    
                 }
 
                 FilterPflanzenListe = pList.OrderBy(t => t.Name).ToList();
@@ -2053,6 +2063,34 @@ namespace MeisterGeister.ViewModel.ZooBot
         }
 
         #endregion
+
+        private Base.CommandBase _onGebieteVonPos = null;
+        public Base.CommandBase OnGebieteVonPos
+        {
+            get
+            {
+                if (_onGebieteVonPos == null)
+                    _onGebieteVonPos = new Base.CommandBase(GebieteVonPos, null);
+                return _onGebieteVonPos;
+            }
+        }
+        
+        /// <summary>
+        /// Button zum Bestimmen der Gebiete in der aktuellen Position
+        /// </summary>
+        void GebieteVonPos(object obj)
+        {
+            HeldenPos = new Point(Global.HeldenLon, Global.HeldenLat);
+
+            List<Gebiet> gList = new List<Gebiet>();
+            var gebiete = Global.ContextZooBot.GetGebiete(HeldenPos, 0.2);
+            if (gebiete != null)
+            {
+                foreach (var g in gebiete)
+                    gList.Add(g);
+                GebieteSelected = gList;
+            }
+        }
 
         private Base.CommandBase _onBtnBekanntePflanzenForm = null;
         public Base.CommandBase OnBtnBekanntePflanzenForm

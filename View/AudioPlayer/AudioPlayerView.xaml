@@ -478,8 +478,8 @@
             </Grid>
         </GroupBox>
 
-        <Button Grid.Column="2" Height="42" Margin="0,10,60,0" ToolTip="Hot-Buttons verwalten" HorizontalAlignment="Right"
-                        Click="btnHotbuttonWesenZuweisen_Click" >
+        <Button Grid.Column="2" Height="42" Margin="0,10,60,0" ToolTip="Audio Speed-Buttons verwalten" HorizontalAlignment="Right"
+                        Click="btnAudioSpeedButtonWesenZuweisen_Click" >
             <!--Visibility="{Binding AktKlangPlaylist, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"-->
             <Button.Content>
                 <Grid>

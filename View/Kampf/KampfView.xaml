@@ -492,42 +492,62 @@
                                     <SolidColorBrush />
                                 </TextBox.Background>
                             </TextBox>
-                            <ScrollViewer Grid.Column="3" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="-130,0,0,0" >
-                                <!--<ScrollViewer.Style>
-                                    <Style TargetType="ScrollViewer">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding WesenPlaylist,UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ScrollViewer.Style>-->
-                                <Border Style="{DynamicResource ControlContentBorder}" Height="28" Margin="-2">                                    
-                                    <StackPanel Orientation="Horizontal">
-                                    
-                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="22" Margin="0,1,0,0" />
-                                        <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <WrapPanel ItemWidth="30" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>                                    
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Button Width="30" Tag="{Binding}" Focusable="False"
-                                                    Command="{Binding VM.OnWesenPlaylistClick, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
-                                                    ToolTip="{Binding Audio_Playlist.Name}" >
-                                                    <Button.Content>
-                                                        <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
-                                                    </Button.Content>                                                       
-                                                </Button>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    </StackPanel>
+
+                            <Grid Grid.Column="3" Margin="-130,0,0,0" >
+                                <Border Margin="-2" ToolTip="Audio Speed-Buttons" Style="{DynamicResource ControlContentBorder}">
+                                    <Grid>
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedManöverInfo,UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" HorizontalAlignment="Left" Height="22" Margin="0,1,0,0" />
+
+                                        <!--<Border Height="28" Margin="-2" ToolTip="Audio Speed-Buttons" Style="{DynamicResource ControlContentBorder}">-->
+
+                                        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="25,0,35,0" >
+                                            <Border ToolTip="Audio Speed-Buttons" Style="{DynamicResource ControlContentBorder}">
+                                                <Grid>
+                                                    <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel ItemWidth="30" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Button Width="24" Tag="{Binding}" Focusable="False"
+                                                        Command="{Binding VM.OnWesenPlaylistClick, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
+                                                        ToolTip="{Binding Audio_Playlist.Name}" >
+                                                                    <Button.Content>
+                                                                        <!--<Grid>-->
+                                                                            <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
+                                                                            <!--<Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" Height="22" Opacity="0.5" Margin="-3" />
+                                                                        </Grid>-->
+                                                                    </Button.Content>
+                                                                </Button>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </Grid>
+                                            </Border>
+                                        </ScrollViewer>
+                                        <Button Height="25" ToolTip="Audio Speed-Buttons verwalten" HorizontalAlignment="Right"
+                                                            Click="btnAudioSpeedButtonWesenZuweisen_Click" >
+                                            <Button.Content>
+                                                <Grid>
+                                                    <Image Source="/Images/Icons/gegner.png" Margin="-1,2,4,-1" />
+                                                    <Image Source="/Images/Icons/helden.png" Margin="4,-3,-6,5" />
+                                                </Grid>
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
                                 </Border>
-                            </ScrollViewer>
-                            
+                            </Grid>
                             <Image Grid.Row="1" Grid.Column="3" Grid.RowSpan="1" Margin="5,5,5,0" Height="120" Width="120" VerticalAlignment="Top">
                                 <Image.Source>
                                     <Binding Path="SelectedKämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">

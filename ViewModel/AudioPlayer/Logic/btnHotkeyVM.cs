@@ -25,7 +25,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     {
         //INotifyPropertyChanged
         #region //---- FELDER ----
-        
+
+        private bool _aktiv = false;
+        public bool Aktiv
+        {
+            get { return _aktiv; }
+            set { Set(ref _aktiv, value); }
+    }
+
         private double _volume = Einstellungen.GeneralHotkeyVolume;
         public double volume 
         {
@@ -83,6 +90,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _aPlaylist; }
             set
             {
+                if (PlayableTitelList != null) PlayableTitelList.RemoveRange(0, PlayableTitelList.Count);
                 _aPlaylist = value;
                 OnChanged();
             }
@@ -156,6 +164,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             public DispatcherTimer dis;
         }
 
+        public double lastPos = 0;
+
         private Base.CommandBase _onBtn = null;
         public Base.CommandBase OnBtn
         {
@@ -173,7 +183,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 PlayableTitelList.AddRange(aPlaylist.Audio_Playlist_Titel);
                 if (PlayableTitelList.Count == 0) return;
 
-                int zuspielen = (new Random()).Next(0, PlayableTitelList.Count);// aPlaylist.Audio_Playlist_Titel.Count );
+                int zuspielen = (new Random()).Next(0, PlayableTitelList.Count);
                 Audio_Playlist_Titel aPlayTitel = PlayableTitelList.ToList().ElementAt(zuspielen);
 
                 while (!checkTitel(aPlayTitel.Audio_Titel))
@@ -206,6 +216,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }
 
                 mp.Play();
+                Aktiv = true;
                 if (aPlayTitel.TeilAbspielen)
                 {
                     DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
@@ -213,11 +224,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);       
 
                     _timerTeilAbspielenList.Add(_timerTeilAbspielen);
-                    _timerTeilAbspielen.Tag = aPlayTitel.TeilEnde.Value;
+                    _timerTeilAbspielen.Tag = (aPlayTitel.TeilAbspielen)? aPlayTitel.TeilEnde.Value: aPlayTitel.Länge != 0? aPlayTitel.Länge: 100000;
 
                     titelPlay.dis = _timerTeilAbspielen;
                     _timerTeilAbspielen.Start();
-                }
+                }                
             }
         }
         public void _timerTeilAbspielen_Tick(object sender, EventArgs e)
@@ -237,6 +248,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 if (titelPlay.mp.Source != null)
                     titelPlay.mp.Stop();
                 (sender as DispatcherTimer).Stop();
+                Aktiv = false;
             }
         }
 
@@ -250,6 +262,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
                 ((MediaPlayer)sender).Stop();
                 ((MediaPlayer)sender).Close();
+                Aktiv = false;
             }
             catch (Exception ex)
             {

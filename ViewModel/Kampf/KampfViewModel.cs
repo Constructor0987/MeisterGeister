@@ -9,6 +9,7 @@ using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
+using MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
@@ -104,8 +105,13 @@ namespace MeisterGeister.ViewModel.Kampf
             get {
                 return ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is Held)) ?
                     new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()):
+                    
                     ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is GegnerBase)) ?
-                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()):                    
+                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()):
+
+                    ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) && (SelectedKämpferInfo.Kämpfer is Gegner)) ?
+                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as Gegner).GegnerBase.GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
+
                     null;
                 }
             set
@@ -200,6 +206,13 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return selectedTrefferzone; }
             set { selectedTrefferzone = value; OnChanged("SelectedTrefferzone"); }
         }
+        
+        private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
+        private btnHotkeyVM SpeedbtnAudio
+        {
+            get { return _speedbtnAudio; }
+            set { Set(ref  _speedbtnAudio, value); }
+        }
 
         #region // ---- COMMANDS ----
 
@@ -216,9 +229,9 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void WesenPlaylistClick(object obj)
         {
-            btnHotkeyVM hotkey = new btnHotkeyVM();
-            hotkey.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
-            hotkey.OnBtnClick(hotkey);
+            SpeedbtnAudio.aPlaylistGuid = (obj as IWesenPlaylist).Audio_Playlist.Audio_PlaylistGUID;
+            SpeedbtnAudio.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
+            SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
         }
 
         private Base.CommandBase onAddHelden = null;

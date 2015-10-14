@@ -146,7 +146,7 @@ namespace MeisterGeister.View.AudioPlayer
                     ListBoxItem.PreviewMouseLeftButtonDownEvent,
                     new MouseButtonEventHandler(ListBoxItem_PreviewMouseLeftButtonDown)));
             this.ItemContainerStyle = style;
-        }        
+        }
         private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
         }
@@ -193,7 +193,7 @@ namespace MeisterGeister.View.AudioPlayer
 
         private Point _dragStartPoint;
         TabItemControl AudioTIC = null;
-  
+
         public int BGPlayeraktiv
         {
             get { return VM.BGPlayeraktiv; }
@@ -232,7 +232,7 @@ namespace MeisterGeister.View.AudioPlayer
         public AudioPlayerView()
         {
             InitializeComponent();
-            
+
             VM = new VM.AudioPlayerViewModel();
 
             BGPlayer = new ViewModel.AudioPlayer.AudioPlayerViewModel.MusikView();
@@ -244,7 +244,7 @@ namespace MeisterGeister.View.AudioPlayer
             slPlaylistVolume.Value = Einstellungen.GeneralGeräuscheVolume;
             slBGVolume.Value = Einstellungen.GeneralMusikVolume;
             slHotkey.Value = Einstellungen.GeneralHotkeyVolume;
-            
+
             VM.AktualisiereHotKeys();
         }
 
@@ -334,7 +334,7 @@ namespace MeisterGeister.View.AudioPlayer
                 e.UseDefaultCursors = true;
             }
         }
-        
+
         private void AudioZeile_MouseMove(object sender, MouseEventArgs e)
         {
             AudioZeile aZeile = sender as AudioZeile;
@@ -566,7 +566,7 @@ namespace MeisterGeister.View.AudioPlayer
             else
             { ((Slider)sender).Value += ((((Slider)sender).Value > 2) ? -3 : 0); }
         }
-        
+
         private void cmbxThemeTheme_DropDownClosed(object sender, EventArgs e)
         {
             grdEditorThemeWPnlUTheme.Children.Remove((ComboBox)sender);
@@ -574,7 +574,7 @@ namespace MeisterGeister.View.AudioPlayer
 
         private P FindVisualParent<P>(DependencyObject child)
             where P : DependencyObject
-        {            
+        {
             try
             {
                 var parentObject = VisualTreeHelper.GetParent(child);
@@ -592,12 +592,12 @@ namespace MeisterGeister.View.AudioPlayer
                 //    child.GetValue(System.Windows.Documents.Run.TextProperty) + "' ist ein Fehler aufgetreten.", ex);
                 return null;
             }
-            
+
         }
 
         private void lbEditorPlaylist_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            var lbi = (e.OriginalSource is Visual)? FindVisualParent<lbEditorItem>((DependencyObject)e.OriginalSource) : null;
+            var lbi = (e.OriginalSource is Visual) ? FindVisualParent<lbEditorItem>((DependencyObject)e.OriginalSource) : null;
             if (lbi != null)
             {
                 if (VM.pointerPlaylistDragDrop == null ||
@@ -645,7 +645,7 @@ namespace MeisterGeister.View.AudioPlayer
 
                 VM.MoveLbEditorItem(source.APlaylist, targetIndex - sourceIndex);
                 VM.FilteredEditorListBoxItemListe = VM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).ToList();
-                
+
                 //Listen im Musik-Player & Erw.Player aktualisieren
                 if (source.APlaylist.Hintergrundmusik || target.APlaylist.Hintergrundmusik)
                     VM.FilteredErwPlayerMusikListItemListe = VM.FilteredErwPlayerMusikListItemListe.OrderBy(t => t.VM.aPlaylist.Reihenfolge).ToList();
@@ -657,17 +657,17 @@ namespace MeisterGeister.View.AudioPlayer
                 if (e.Data.GetDataPresent("meineAudioZeile"))
                 {
                     //Prozess beenden wenn unglütige Ablage oder ViewModel bereits entfernt
-                    Audio_Playlist zielPlaylist = VM.DropZielPlaylist != null?
-                        VM.DropZielPlaylist:
+                    Audio_Playlist zielPlaylist = VM.DropZielPlaylist != null ?
+                        VM.DropZielPlaylist :
                         (e.Data.GetData("meineAudioZeile") as AudioZeile).VM.aPlayTitel.Audio_Playlist;
 
-                    if (VM.audioZeileMouseOverDropped == -1 ||                        
+                    if (VM.audioZeileMouseOverDropped == -1 ||
                         (e.Data.GetData("meineAudioZeile") as AudioZeile).VM == null)
                         return;
-                    AZeileAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, 
+                    AZeileAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile,
                         (e.Data.GetData("meineAudioZeile") as AudioZeile).VM,
-                        zielPlaylist, 
-                        e, 
+                        zielPlaylist,
+                        e,
                         sender);
                     VM.DropZielPlaylist = null;
                 }
@@ -682,10 +682,10 @@ namespace MeisterGeister.View.AudioPlayer
                             foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
                             {
                                 if (Directory.Exists(s))
-                                    gedroppteDateien.AddRange(Directory.GetFiles(s,"*",SearchOption.AllDirectories));
+                                    gedroppteDateien.AddRange(Directory.GetFiles(s, "*", SearchOption.AllDirectories));
                                 else
                                     gedroppteDateien.Add(s);
-                            }                            
+                            }
                             VM._DateienAufnehmen(gedroppteDateien, null, null, AktKlangPlaylist, 0, false);
                         }
                         Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
@@ -764,8 +764,8 @@ namespace MeisterGeister.View.AudioPlayer
                 //Audio_Playlist aplaylist = (Audio_Playlist)((StackPanel)sender).Tag;
                 Mouse.OverrideCursor = Cursors.Wait;
                 bool kopieren = Keyboard.Modifiers == ModifierKeys.Control ? true : false;
-                
-                List<string> gedroppteDateien = new List<string>();                                
+
+                List<string> gedroppteDateien = new List<string>();
                 if (aZeile != null)
                     gedroppteDateien.Add(aZeile.VM.aPlayTitel.Audio_Titel.Pfad + '\\' + aZeile.VM.aPlayTitel.Audio_Titel.Datei);
                 else
@@ -1013,7 +1013,7 @@ namespace MeisterGeister.View.AudioPlayer
                 ViewHelper.ShowError("Allgemeiner Fehler" + Environment.NewLine + "Beim Drag-Mode über den Editor ist ein Fehler aufgetreten.", ex);
             }
         }
-        
+
         private void sldPlaylistWartezeit_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             double aktWert = ((Slider)sender).Value;
@@ -1029,15 +1029,12 @@ namespace MeisterGeister.View.AudioPlayer
             }
         }
 
-        private void btnHotbuttonWesenZuweisen_Click(object sender, RoutedEventArgs e)
+        private void btnAudioSpeedButtonWesenZuweisen_Click(object sender, RoutedEventArgs e)
         {
-            if (!VM.hotkeyKämpferLoaded)
-                Global.SetIsBusy(true, string.Format("Laden der Kämpfer-Datenbank ..."));
-
-            VM.CurrentPlaylist = VM.AktKlangPlaylist != null && !VM.AktKlangPlaylist.Hintergrundmusik ? VM.AktKlangPlaylist :
-                (VM.AktKlangPlaylist == null || VM.AktKlangPlaylist.Hintergrundmusik) ? Global.ContextAudio.PlaylistListe.FirstOrDefault(t => !t.Hintergrundmusik): null;
+            VM.CurrentPlaylist =
+                (VM.AktKlangPlaylist != null && !VM.AktKlangPlaylist.Hintergrundmusik) ? VM.AktKlangPlaylist :
+                (VM.AktKlangPlaylist == null || VM.AktKlangPlaylist.Hintergrundmusik) ? Global.ContextAudio.PlaylistListe.FirstOrDefault(t => !t.Hintergrundmusik) : null;
             PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(VM.CurrentPlaylist);
-            Global.SetIsBusy(false);
             wesenAuswahlView.ShowDialog();
         }
     }
