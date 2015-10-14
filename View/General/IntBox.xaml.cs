@@ -84,6 +84,17 @@ namespace MeisterGeister.View.General
         public static DependencyProperty ButtonHiddenModeProperty = DependencyProperty.Register("ButtonHiddenMode", typeof(Visibility), typeof(IntBox),
                 new PropertyMetadata(Visibility.Collapsed));
 
+        /// <summary>
+        /// Gibt an, ob die Zahlen mit römischen Ziffern dargestellt werden sollen.
+        /// </summary>
+        public bool Roman
+        {
+            get { return (bool)GetValue(RomanProperty); }
+            set { SetValue(RomanProperty, value); }
+        }
+        public static DependencyProperty RomanProperty = DependencyProperty.Register("Roman", typeof(bool), typeof(IntBox),
+                new PropertyMetadata(false));
+
         public bool IsReadOnly
         {
             get { return (bool)GetValue(IsReadOnlyProperty); }
@@ -199,7 +210,8 @@ namespace MeisterGeister.View.General
             if (box.MarkPlusValue)
                 box.MarkRed(value != null && value > 0);
 
-            box._textBoxInt.Text = (value==null)?String.Empty:value.ToString();
+            box._textBoxInt.Text = box.Roman ? Logic.Extensions.IntExtenstions.ToRoman(value == null ? 0 : value.Value, true)
+                : (value == null) ? String.Empty : value.ToString();
 
             if (box.NumValueChanged != null)
                 box.NumValueChanged(box);
@@ -302,7 +314,7 @@ namespace MeisterGeister.View.General
             input = input.Trim();
             Value = Logic.General.Würfel.Parse(input, true);
             // Wert zurück in TextBox schreiben, falls Value korrigiert wurde
-            (sender as TextBox).Text = Value.ToString();
+            (sender as TextBox).Text = Roman ? Logic.Extensions.IntExtenstions.ToRoman(Value.Value, true) : Value.ToString();
         }
 
         public void FocusAndSelect()

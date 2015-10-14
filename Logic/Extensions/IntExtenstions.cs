@@ -8,8 +8,15 @@ namespace MeisterGeister.Logic.Extensions
 {
     public static class IntExtenstions
     {
-        public static string ToRoman(this int number)
+        public static string ToRoman(this int number, bool allowNegative = false)
         {
+            bool negative = false;
+            if (number < 0 && allowNegative)
+            {
+                number *= -1;
+                negative = true;
+            }
+
             if (number < 0 || number > 3999)
             {
                 throw new ArgumentException("Value must be in the range 0 – 3,999.");
@@ -31,6 +38,11 @@ namespace MeisterGeister.Logic.Extensions
                     number -= values[i];
                     result.Append(numerals[i]);
                 }
+            }
+            if (negative)
+            {
+                number *= -1;
+                result.Insert(0, "-");
             }
             return result.ToString();
         }
