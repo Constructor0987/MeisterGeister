@@ -429,20 +429,111 @@ namespace MeisterGeister.Model {
         #endregion
 
         #region Lebensenergie
+
+        public string LebensenergieGrundwertFormel
+        {
+            get
+            {
+                string le = string.Empty;
+                if (Regelsystem == "DSA 4.1")
+                    le = "(KO + KO + KK) / 2";
+                else if (Regelsystem == "DSA 5")
+                    le = "KO + KO";
+                return le;
+            }
+        }
+
         [DependentProperty("BaseKO"), DependentProperty("BaseKK")]
         public int LebensenergieBasis {
             get {
-                return (int)Math.Round((BaseKO * 2 + BaseKK) / 2.0, 0, MidpointRounding.AwayFromZero);
+                int le = 0;
+                if (Regelsystem == "DSA 4.1")
+                    le = (int)Math.Round((BaseKO * 2 + BaseKK) / 2.0, 0, MidpointRounding.AwayFromZero);
+                else if (Regelsystem == "DSA 5")
+                    le = BaseKO * 2;
+                return le;
             }
         }
-        [DependentProperty("LE_Mod")]
+        [DependentProperty("LebensenergieModSonstiges"), DependentProperty("LebensenergieModGenerierung"), DependentProperty("LebensenergieModVorNachteile"), DependentProperty("LebensenergieModZukauf")]
         public int LebensenergieMod {
+            get { return LebensenergieModGenerierung + LebensenergieModSonstiges + LebensenergieModVorNachteile + LebensenergieModZukauf; }
+        }
+
+        [DependentProperty("LE_Mod")]
+        public int LebensenergieModSonstiges
+        {
             get { return LE_Mod ?? 0; }
-            set {
+            set
+            {
                 LE_Mod = value;
-                OnChanged("LebensenergieMod");
+                OnChanged("LebensenergieModSonstiges");
             }
         }
+
+        [DependentProperty("LE_ModGen")]
+        public int LebensenergieModGenerierung
+        {
+            get { return LE_ModGen ?? 0; }
+            set
+            {
+                LE_ModGen = value;
+                OnChanged("LebensenergieModGenerierung");
+            }
+        }
+
+        [DependentProperty("LE_ModZukauf")]
+        public int LebensenergieModZukauf
+        {
+            get { return LE_ModZukauf ?? 0; }
+            set
+            {
+                LE_ModZukauf = value;
+                OnChanged("LebensenergieModZukauf");
+            }
+        }
+
+        [DependentProperty("Nachteile"), DependentProperty("Vorteile")]
+        public int LebensenergieModVorNachteile
+        {
+            get
+            {
+                int mod = 0;
+                mod += CalcVorNachteilEnergieMod(VorNachteil.HoheLebenskraft);
+                mod += CalcVorNachteilEnergieMod(VorNachteil.NiedrigeLebenskraft);
+                return mod;
+            }
+        }
+
+        private int CalcVorNachteilEnergieMod(string vn, int faktor = 1, int maxStufe = 7)
+        {
+            int mod = 0;
+            if (HatVorNachteil(vn, false))
+            {
+                if (HatVorNachteil(vn))
+                {
+                    if (vn.StartsWith("Hohe") || vn == VorNachteil.Ausdauernd)
+                        mod += VorNachteilWertInt(vn).GetValueOrDefault(0) * faktor;
+                    else if (vn.StartsWith("Niedrige") || vn == VorNachteil.Kurzatmig)
+                        mod -= VorNachteilWertInt(vn).GetValueOrDefault(0) * faktor;
+                }
+                else
+                {
+                    for (int i = maxStufe; i > 0; i--)
+                    {
+                        if (HatVorNachteil(string.Format("{0} {1}", vn, IntExtenstions.ToRoman(i))))
+                        {
+                            if (vn.StartsWith("Hohe"))
+                                mod += i;
+                            else if (vn.StartsWith("Niedrige"))
+                                mod -= i;
+                            break;
+                        }
+                    }
+                }
+            }
+            return mod;
+        }
+
         [DependentProperty("LE_Aktuell")]
         public int LebensenergieAktuell {
             get {
@@ -475,7 +566,10 @@ namespace MeisterGeister.Model {
         [DependentProperty("BaseMU"), DependentProperty("BaseKO"), DependentProperty("BaseGE")]
         public int AusdauerBasis {
             get {
-                return (int)Math.Round((BaseMU + BaseKO + BaseGE) / 2.0, 0, MidpointRounding.AwayFromZero);
+                if (Regelsystem == "DSA 4.1")
+                    return (int)Math.Round((BaseMU + BaseKO + BaseGE) / 2.0, 0, MidpointRounding.AwayFromZero);
+                else
+                    return 0;
             }
         }
         [DependentProperty("AU_Aktuell")]
@@ -487,14 +581,56 @@ namespace MeisterGeister.Model {
                 AU_Aktuell = value;
             }
         }
+
+        [DependentProperty("AusdauerModSonstiges"), DependentProperty("AusdauerModGenerierung"), DependentProperty("AusdauerModVorNachteile"), DependentProperty("AusdauerModZukauf")]
+        public int AusdauerMod
+        {
+            get { return AusdauerModGenerierung + AusdauerModSonstiges + AusdauerModVorNachteile + AusdauerModZukauf; }
+        }
+
         [DependentProperty("AU_Mod")]
-        public int AusdauerMod {
+        public int AusdauerModSonstiges {
             get { return AU_Mod ?? 0; }
             set {
                 AU_Mod = value;
-                //OnPropertyChanged(string.Empty);
+                OnChanged("AusdauerModSonstiges");
             }
         }
+
+        [DependentProperty("AU_ModGen")]
+        public int AusdauerModGenerierung
+        {
+            get { return AU_ModGen ?? 0; }
+            set
+            {
+                AU_ModGen = value;
+                OnChanged("AusdauerModGenerierung");
+            }
+        }
+
+        [DependentProperty("AU_ModZukauf")]
+        public int AusdauerModZukauf
+        {
+            get { return AU_ModZukauf ?? 0; }
+            set
+            {
+                AU_ModZukauf = value;
+                OnChanged("AusdauerModZukauf");
+            }
+        }
+
+        [DependentProperty("Nachteile"), DependentProperty("Vorteile")]
+        public int AusdauerModVorNachteile
+        {
+            get
+            {
+                int mod = 0;
+                mod += CalcVorNachteilEnergieMod(VorNachteil.Ausdauernd, 2);
+                mod += CalcVorNachteilEnergieMod(VorNachteil.Kurzatmig, 2);
+                return mod;
+            }
+        }
+
         [DependentProperty("AusdauerBasis"), DependentProperty("AusdauerMod")]
         [DependsOnModifikator(typeof(Mod.IModAU))]
         public int AusdauerMax {
@@ -1305,6 +1441,29 @@ namespace MeisterGeister.Model {
                 else if (vnName == VorNachteil.TierempathieAlle || vnName == VorNachteil.TierempathieSpeziell)
                     DeleteTalent("Tierempathie");
             }
+        }
+
+        /// <summary>
+        /// Gibt den Wert eines VorNachteils zurück.
+        /// </summary>
+        /// <param name="vn">Axakter Name des VorNachteils.</param>
+        /// <returns></returns>
+        public string VorNachteilWert(string vn)
+        {
+            var heldVN= Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Name == vn).FirstOrDefault();
+            string val = heldVN != null ? heldVN.Wert : null;
+
+            return val;
+        }
+        /// <summary>
+        /// Gibt den Integer Wert eines VorNachteils zurück.
+        /// </summary>
+        /// <param name="vn">Axakter Name des VorNachteils.</param>
+        /// <returns></returns>
+        public Nullable<int> VorNachteilWertInt(string vn)
+        {
+            var heldVN = Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Name == vn).FirstOrDefault();
+            return heldVN != null ? heldVN.WertInt : null;
         }
 
         public bool HatVorNachteil(VorNachteil vn) {

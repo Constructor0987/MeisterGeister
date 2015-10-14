@@ -647,6 +647,126 @@ namespace MeisterGeister.Model
     
         }
         private string _regelsystem;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> LE_ModGen
+        {
+            get { return _lE_ModGen; }
+            set
+    		{ 
+    			Set(ref _lE_ModGen, value);
+    		}
+    
+        }
+        private Nullable<int> _lE_ModGen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> LE_ModZukauf
+        {
+            get { return _lE_ModZukauf; }
+            set
+    		{ 
+    			Set(ref _lE_ModZukauf, value);
+    		}
+    
+        }
+        private Nullable<int> _lE_ModZukauf;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> AU_ModGen
+        {
+            get { return _aU_ModGen; }
+            set
+    		{ 
+    			Set(ref _aU_ModGen, value);
+    		}
+    
+        }
+        private Nullable<int> _aU_ModGen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> AU_ModZukauf
+        {
+            get { return _aU_ModZukauf; }
+            set
+    		{ 
+    			Set(ref _aU_ModZukauf, value);
+    		}
+    
+        }
+        private Nullable<int> _aU_ModZukauf;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> AE_ModGen
+        {
+            get { return _aE_ModGen; }
+            set
+    		{ 
+    			Set(ref _aE_ModGen, value);
+    		}
+    
+        }
+        private Nullable<int> _aE_ModGen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> AE_ModZukauf
+        {
+            get { return _aE_ModZukauf; }
+            set
+    		{ 
+    			Set(ref _aE_ModZukauf, value);
+    		}
+    
+        }
+        private Nullable<int> _aE_ModZukauf;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> AE_pAsP
+        {
+            get { return _aE_pAsP; }
+            set
+    		{ 
+    			Set(ref _aE_pAsP, value);
+    		}
+    
+        }
+        private Nullable<int> _aE_pAsP;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> KE_ModGen
+        {
+            get { return _kE_ModGen; }
+            set
+    		{ 
+    			Set(ref _kE_ModGen, value);
+    		}
+    
+        }
+        private Nullable<int> _kE_ModGen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> KE_ModZukauf
+        {
+            get { return _kE_ModZukauf; }
+            set
+    		{ 
+    			Set(ref _kE_ModZukauf, value);
+    		}
+    
+        }
+        private Nullable<int> _kE_ModZukauf;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> KE_pKaP
+        {
+            get { return _kE_pKaP; }
+            set
+    		{ 
+    			Set(ref _kE_pKaP, value);
+    		}
+    
+        }
+        private Nullable<int> _kE_pKaP;
 
         #endregion
 

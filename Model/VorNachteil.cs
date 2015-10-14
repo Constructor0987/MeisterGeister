@@ -27,6 +27,11 @@ namespace MeisterGeister.Model
         public const string TierempathieAlle = "Tierempathie (alle)";
         public const string TierempathieSpeziell = "Tierempathie (speziell)";
 
+        public const string HoheLebenskraft = "Hohe Lebenskraft";
+        public const string NiedrigeLebenskraft = "Niedrige Lebenskraft";
+        public const string Ausdauernd = "Ausdauernd";
+        public const string Kurzatmig = "Kurzatmig";
+
         // Geweiht
         public const string GeweihtZwölfgöttlicheKirche = "Geweiht [zwölfgöttliche Kirche]";
         public const string GeweihtHRanga = "Geweiht [H'Ranga]";
