@@ -504,7 +504,7 @@ namespace MeisterGeister.Model {
             }
         }
 
-        private int CalcVorNachteilEnergieMod(string vn, int faktor = 1, int maxStufe = 7)
+        private int CalcVorNachteilEnergieMod(string vn, int faktor = 1)
         {
             int mod = 0;
             if (HatVorNachteil(vn, false))
@@ -515,20 +515,6 @@ namespace MeisterGeister.Model {
                         mod += VorNachteilWertInt(vn).GetValueOrDefault(0) * faktor;
                     else if (vn.StartsWith("Niedrige") || vn == VorNachteil.Kurzatmig)
                         mod -= VorNachteilWertInt(vn).GetValueOrDefault(0) * faktor;
-                }
-                else
-                {
-                    for (int i = maxStufe; i > 0; i--)
-                    {
-                        if (HatVorNachteil(string.Format("{0} {1}", vn, IntExtenstions.ToRoman(i))))
-                        {
-                            if (vn.StartsWith("Hohe"))
-                                mod += i;
-                            else if (vn.StartsWith("Niedrige"))
-                                mod -= i;
-                            break;
-                        }
-                    }
                 }
             }
             return mod;
