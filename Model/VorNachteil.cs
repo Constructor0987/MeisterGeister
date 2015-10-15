@@ -37,6 +37,8 @@ namespace MeisterGeister.Model
         public const string Astralmacht = "Astralmacht";
         public const string HoheAstralkraft = "Hohe Astralkraft";
         public const string NiedrigeAstralkraft = "Niedrige Astralkraft";
+        public const string HoheKarmalkraft = "Hohe Karmalkraft";
+        public const string NiedrigeKarmalkraft = "Niedrige Karmalkraft";
 
         // Geweiht
         public const string GeweihtZwölfgöttlicheKirche = "Geweiht [zwölfgöttliche Kirche]";
@@ -45,5 +47,7 @@ namespace MeisterGeister.Model
         public const string GeweihtGravesh = "Geweiht [Gravesh]";
         public const string GeweihtNichtAlveranischeGottheit = "Geweiht [nicht-alveranische Gottheit]";
         public const string Sacerdos = "Sacerdos";
+        public const string GeweihtXoArtal = "Geweiht [Xo'Artal-Stadtpantheon]";
+        public const string Geweihter = "Geweihter";
     }
 }

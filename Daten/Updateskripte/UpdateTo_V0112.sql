@@ -18,7 +18,8 @@ ALTER TABLE [Held] ADD [KE_pKaP] int DEFAULT 0;
 -- [AU_Mod] modifizieren um VN: Ausdauernd (+2 AuP pro Stufe; max. 3 Stufen, also 6 AuP), Kurzatmig (-2 AuP pro Stufe; max. 3 Stufen, also 6 AuP)
 
 -- [AE_Mod] modifizieren um VN: Vollzauberer (+12 AsP), Halbzauberer (+6 AsP), Viertelzauberer (-6 AsP), Zauberhaar (+7 AsP), Astralmacht (+1 AsP pro Stufe; max. 6), Niedrige Astralkraft (-1 AsP pro Stufe; max. 6)
--- [KE_Mod] modifizieren um VN: Geweiht [zwölfgöttliche Kirche/H'Ranga/Angrosch/Gravesh] (24 KaP), Geweiht [nicht-alveranische Gottheit] (12 KaP)
+-- [KE_Mod] modifizieren um Vorteil Geweiht [zwölfgöttliche Kirche/H'Ranga/Angrosch/Gravesh/Xo'Artal-Stadtpantheon]; SF Spätweihe Alveranische Gottheit/Spätweihe Namenloser/Spätweihe (Xo'Artal-Pantheon)/Spätweihe (Xo'Artal-Pantheon) (+24 KaP), 
+--				Geweiht [nicht-alveranische Gottheit]; SF Spätweihe Nichtalveranische Gottheit/Kontakt zum Großen Geist (+12 KaP), Vorteil Sacerdos I bis IV; SF Spätweihe Dunkle Zeiten I bis III (+6 je Stufe)
 
 -- DSA5 Anpassungen
 ALTER TABLE [Held] ADD [LeiteigenschaftMagisch] nvarchar(2);

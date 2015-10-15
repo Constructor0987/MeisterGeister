@@ -551,6 +551,17 @@ namespace MeisterGeister.Model {
 
         #region Ausdauer
 
+        public string AusdauerGrundwertFormel
+        {
+            get
+            {
+                string au = string.Empty;
+                if (Regelsystem == "DSA 4.1")
+                    au = "(MU + KO + GE) / 2";
+                return au;
+            }
+        }
+
         [DependentProperty("BaseMU"), DependentProperty("BaseKO"), DependentProperty("BaseGE")]
         public int AusdauerBasis {
             get {
@@ -642,8 +653,129 @@ namespace MeisterGeister.Model {
 
         public bool Geweiht {
             get {
-                return HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) || HatVorNachteil(VorNachteil.GeweihtAngrosch) || HatVorNachteil(VorNachteil.Sacerdos) ||
-                    HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.KontaktZumGroßenGeist) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeiten);
+                if (Regelsystem == "DSA 4.1")
+                    return HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) 
+                        || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) || HatVorNachteil(VorNachteil.GeweihtAngrosch) 
+                        || HatVorNachteil(VorNachteil.Sacerdos) || HatVorNachteil(VorNachteil.GeweihtXoArtal)
+                        || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNamenloser) 
+                        || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.KontaktZumGroßenGeist) 
+                        || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeiten) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheXoArtal);
+                else if (Regelsystem == "DSA 5")
+                    return HatVorNachteil(VorNachteil.Geweihter);
+                return false;
+            }
+        }
+
+        public string KarmaenergieGrundwertFormel
+        {
+            get
+            {
+                string ke = string.Empty;
+                if (Regelsystem == "DSA 5")
+                    ke = "Leiteigenschaft der Geweihtentradition";
+                return ke;
+            }
+        }
+
+        [DependentProperty("LeiteigenschaftKlerikal"), DependentProperty("BaseMU"), DependentProperty("BaseKL"), DependentProperty("BaseIN"), DependentProperty("BaseCH"), DependentProperty("BaseFF"), DependentProperty("BaseGE"), DependentProperty("BaseKO"), DependentProperty("BaseKK")]
+        public int BaseLeiteigenschaftKarmal
+        {
+            get
+            {
+                return EigenschaftWert(LeiteigenschaftKlerikal, true);
+            }
+        }
+
+        [DependentProperty("BaseLeiteigenschaftKarmal")]
+        public int KarmaenergieBasis
+        {
+            get
+            {
+                int ke = 0;
+                if (Regelsystem == "DSA 5")
+                    ke = BaseLeiteigenschaftKarmal;
+                return ke;
+            }
+        }
+
+        [DependentProperty("KarmaenergieModSonstiges"), DependentProperty("KarmaenergieModGenerierung"), DependentProperty("KarmaenergieModVorNachteile"), DependentProperty("KarmaenergieModZukauf"), DependentProperty("KarmaenergieMod_pKaP")]
+        public int KarmaenergieMod
+        {
+            get { return KarmaenergieModGenerierung + KarmaenergieModSonstiges + KarmaenergieModVorNachteile + KarmaenergieModZukauf - KarmaenergieMod_pKaP; }
+        }
+
+        [DependentProperty("KE_pKaP")]
+        public int KarmaenergieMod_pKaP
+        {
+            get { return KE_pKaP ?? 0; }
+            set
+            {
+                KE_pKaP = value;
+                OnChanged("KarmaenergieMod_pKaP");
+            }
+        }
+
+        [DependentProperty("KE_Mod")]
+        public int KarmaenergieModSonstiges
+        {
+            get { return KE_Mod ?? 0; }
+            set
+            {
+                KE_Mod = value;
+                OnChanged("KarmaenergieModSonstiges");
+            }
+        }
+
+        [DependentProperty("KE_ModGen")]
+        public int KarmaenergieModGenerierung
+        {
+            get { return KE_ModGen ?? 0; }
+            set
+            {
+                KE_ModGen = value;
+                OnChanged("KarmaenergieModGenerierung");
+            }
+        }
+
+        [DependentProperty("KE_ModZukauf")]
+        public int KarmaenergieModZukauf
+        {
+            get { return KE_ModZukauf ?? 0; }
+            set
+            {
+                KE_ModZukauf = value;
+                OnChanged("KarmaenergieModZukauf");
+            }
+        }
+
+        [DependentProperty("Nachteile"), DependentProperty("Vorteile")]
+        public int KarmaenergieModVorNachteile
+        {
+            get
+            {
+                int mod = 0;
+                if (Regelsystem == "DSA 4.1")
+                {
+                    if (HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) 
+                        || HatVorNachteil(VorNachteil.GeweihtAngrosch) || HatVorNachteil(VorNachteil.GeweihtXoArtal) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheAlveranischeGottheit)
+                        || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheXoArtal))
+                        mod += 24;
+                    else if (HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeit(Sonderfertigkeit.KontaktZumGroßenGeist))
+                        mod += 12;
+                    else if (HatVorNachteil(VorNachteil.Sacerdos))
+                        mod += VorNachteilWertInt(VorNachteil.Sacerdos).GetValueOrDefault(0) * 6;
+                    else if (HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeiten))
+                        // TODO: SF umbauen in drei Stufen, SonderfertigkeitGUID = '00000000-0000-0000-005f-000000000923'
+                        mod += 6; // 6/12/18 je Stufe
+                }
+                else if (Regelsystem == "DSA 5")
+                {
+                    mod += CalcVorNachteilEnergieMod(VorNachteil.HoheKarmalkraft);
+                    mod += CalcVorNachteilEnergieMod(VorNachteil.NiedrigeKarmalkraft);
+                    if (HatVorNachteil(VorNachteil.Geweihter))
+                        mod += 20;
+                }
+                return mod;
             }
         }
 
@@ -657,24 +789,11 @@ namespace MeisterGeister.Model {
             }
         }
 
-        [DependentProperty("KE_Mod")]
-        public int KarmaenergieMod {
-            get {
-                //if(Geweiht) // hmm erstmal nicht
-                return KE_Mod ?? 0;
-                //return 0;
-            }
-            set {
-                KE_Mod = value;
-                //OnPropertyChanged(string.Empty);
-            }
-        }
-
         [DependsOnModifikator(typeof(Mod.IModKE))]
-        [DependentProperty("KarmaenergieMod")]
+        [DependentProperty("KarmaenergieBasis"), DependentProperty("KarmaenergieMod")]
         public int KarmaenergieMax {
             get {
-                int e = KarmaenergieMod;
+                int e = KarmaenergieBasis + KarmaenergieMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModKE).Select(m => (Mod.IModKE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKEMod(e));
                 return e;
@@ -734,7 +853,7 @@ namespace MeisterGeister.Model {
         /// <summary>
         /// Gibt den Wert der magischen Leiteigenschaft zurück.
         /// </summary>
-        [DependentProperty("BaseMU"), DependentProperty("BaseKL"), DependentProperty("BaseIN"), DependentProperty("BaseCH"), DependentProperty("BaseFF"), DependentProperty("BaseGE"), DependentProperty("BaseKO"), DependentProperty("BaseKK")]
+        [DependentProperty("LeiteigenschaftMagisch"), DependentProperty("BaseMU"), DependentProperty("BaseKL"), DependentProperty("BaseIN"), DependentProperty("BaseCH"), DependentProperty("BaseFF"), DependentProperty("BaseGE"), DependentProperty("BaseKO"), DependentProperty("BaseKK")]
         public int BaseLeiteigenschaftMagisch
         {
             get
@@ -743,7 +862,7 @@ namespace MeisterGeister.Model {
             }
         }
 
-        [DependentProperty("AstralenergieModSonstiges"), DependentProperty("AstralenergieModGenerierung"), DependentProperty("AstralenergieModVorNachteile"), DependentProperty("AstralenergieModZukauf")]
+        [DependentProperty("AstralenergieModSonstiges"), DependentProperty("AstralenergieModGenerierung"), DependentProperty("AstralenergieModVorNachteile"), DependentProperty("AstralenergieModZukauf"), DependentProperty("AstralenergieMod_pAsP")]
         public int AstralenergieMod
         {
             get { return AstralenergieModGenerierung + AstralenergieModSonstiges + AstralenergieModVorNachteile + AstralenergieModZukauf - AstralenergieMod_pAsP; }

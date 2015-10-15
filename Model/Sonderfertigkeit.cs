@@ -43,6 +43,7 @@ namespace MeisterGeister.Model
         public const string SpätweiheNichtAlveranischeGottheit = "Spätweihe Nichtalveranische Gottheit";
         public const string SpätweiheNamenloser = "Spätweihe Namenloser";
         public const string SpätweiheDunkleZeiten = "Spätweihe Dunkle Zeiten";
+        public const string SpätweiheXoArtal = "Spätweihe (Xo'Artal-Pantheon)";
         public const string KontaktZumGroßenGeist = "Kontakt zum Großen Geist";
 
         public bool CheckVoraussetzungen(Held held)
