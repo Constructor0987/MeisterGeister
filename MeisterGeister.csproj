@@ -342,10 +342,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GegnerBase_Audio_Playlist.cs" />
-    <Compile Include="Model\Held_Audio_Playlist.cs" />
     <Compile Include="Model\GegnerBase_Audio_Playlist_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Held_Audio_Playlist.cs" />
     <Compile Include="Model\Held_Audio_Playlist_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -353,14 +353,17 @@
     <Compile Include="Model\Held_BFAusrüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Held_Fernkampfwaffe.cs" />
     <Compile Include="Model\Held_Fernkampfwaffe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Rüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Held_Fernkampfwaffe.cs" />
     <Compile Include="Model\Held_Waffe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Kreatur_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Landschaftsgruppe_Poco.cs">
@@ -442,9 +445,6 @@
     </Compile>
     <Compile Include="Model\Kampfregel.cs" />
     <Compile Include="Model\Kampfregel_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Kreatur_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Kultur.cs" />

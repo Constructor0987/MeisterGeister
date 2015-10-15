@@ -101,7 +101,7 @@
                     </ViewGeneral:LiteraturControl>
                     <TextBlock Text="{Binding VorNachteil.Name}" VerticalAlignment="Center" />
                     <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
-                    <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="15,0,0,0" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                    <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="15,0,0,0" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" MinValue="{Binding VorNachteil.WertMin}" MaxValue="{Binding VorNachteil.WertMax}" Roman="{Binding VorNachteil.WertIsRoman}" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
                 </StackPanel>
             </Border>
         </DataTemplate>

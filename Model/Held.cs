@@ -1380,6 +1380,8 @@ namespace MeisterGeister.Model {
             hvn.VorNachteil = vn;
 
             hvn.Wert = wert ?? "";
+            if (hvn.Wert == "" && vn.Auswahl != null)
+                hvn.Wert = vn.Auswahl; // mit Auswahl-Wert vorbelegen
             if (vn.Vorteil != null) {
                 if ((bool)vn.Vorteil) {
                     hvn.VorNachteil.Vorteil = true;

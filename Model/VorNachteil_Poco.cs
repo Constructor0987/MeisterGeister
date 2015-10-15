@@ -200,6 +200,90 @@ namespace MeisterGeister.Model
     
         }
         private string _regelsystem;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<bool> WertIsRoman
+        {
+            get { return _wertIsRoman; }
+            set
+    		{ 
+    			Set(ref _wertIsRoman, value);
+    		}
+    
+        }
+        private Nullable<bool> _wertIsRoman;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> WertMin
+        {
+            get { return _wertMin; }
+            set
+    		{ 
+    			Set(ref _wertMin, value);
+    		}
+    
+        }
+        private Nullable<int> _wertMin;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> WertMax
+        {
+            get { return _wertMax; }
+            set
+    		{ 
+    			Set(ref _wertMax, value);
+    		}
+    
+        }
+        private Nullable<int> _wertMax;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> Kosten
+        {
+            get { return _kosten; }
+            set
+    		{ 
+    			Set(ref _kosten, value);
+    		}
+    
+        }
+        private Nullable<int> _kosten;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<bool> DarfMehrfach
+        {
+            get { return _darfMehrfach; }
+            set
+    		{ 
+    			Set(ref _darfMehrfach, value);
+    		}
+    
+        }
+        private Nullable<bool> _darfMehrfach;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> DarfMehrfachAnzahl
+        {
+            get { return _darfMehrfachAnzahl; }
+            set
+    		{ 
+    			Set(ref _darfMehrfachAnzahl, value);
+    		}
+    
+        }
+        private Nullable<int> _darfMehrfachAnzahl;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Auswahl
+        {
+            get { return _auswahl; }
+            set
+    		{ 
+    			Set(ref _auswahl, value);
+    		}
+    
+        }
+        private string _auswahl;
 
         #endregion
 

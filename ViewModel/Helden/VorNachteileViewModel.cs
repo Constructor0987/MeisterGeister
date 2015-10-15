@@ -147,11 +147,20 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null && SelectedAddVorteil != null && !IsReadOnly)
             {
+                bool hatVorteil = SelectedHeld.HatVorNachteil(SelectedAddVorteil);
                 if (
                     (SelectedAddVorteil.HatWert ?? false)
-                    || (!SelectedHeld.HatVorNachteil(SelectedAddVorteil))
+                    || (!hatVorteil)
                     )
+                {
+                    if (hatVorteil && !(SelectedAddVorteil.DarfMehrfach ?? false))
+                    {
+                        if (Confirm("Vorteil mehrfach einfügen", string.Format("Der Vorteil '{0}' darf laut Regeln nicht mehrfach eingefügt werden (siehe {1}). Soll er trotzdem eingefüt werden?", 
+                            SelectedAddVorteil.Name, SelectedAddVorteil.Literatur)) == false)
+                            return;
+                    }
                     SelectedHeld.AddVorNachteil(SelectedAddVorteil, null);
+                }
 
                 NotifyRefresh();
             }
@@ -161,11 +170,20 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null && SelectedAddNachteil != null && !IsReadOnly)
             {
+                bool hatNachteil = SelectedHeld.HatVorNachteil(SelectedAddNachteil);
                 if (
                     (SelectedAddNachteil.HatWert ?? false)
-                    || (!SelectedHeld.HatVorNachteil(SelectedAddNachteil))
+                    || (!hatNachteil)
                     )
+                {
+                    if (hatNachteil && !(SelectedAddNachteil.DarfMehrfach ?? false))
+                    {
+                        if (Confirm("Nachteil mehrfach einfügen", string.Format("Der Nachteil '{0}' darf laut Regeln nicht mehrfach eingefügt werden (siehe {1}). Soll er trotzdem eingefüt werden?",
+                            SelectedAddNachteil.Name, SelectedAddNachteil.Literatur)) == false)
+                            return;
+                    }
                     SelectedHeld.AddVorNachteil(SelectedAddNachteil, null);
+                }
 
                 NotifyRefresh();
             }
