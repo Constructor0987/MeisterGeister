@@ -147,7 +147,10 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null && SelectedAddVorteil != null && !IsReadOnly)
             {
-                if (!SelectedHeld.HatVorNachteil(SelectedAddVorteil))
+                if (
+                    (SelectedAddVorteil.HatWert ?? false)
+                    || (!SelectedHeld.HatVorNachteil(SelectedAddVorteil))
+                    )
                     SelectedHeld.AddVorNachteil(SelectedAddVorteil, null);
 
                 NotifyRefresh();
@@ -158,7 +161,10 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null && SelectedAddNachteil != null && !IsReadOnly)
             {
-                if (!SelectedHeld.HatVorNachteil(SelectedAddNachteil))
+                if (
+                    (SelectedAddNachteil.HatWert ?? false)
+                    || (!SelectedHeld.HatVorNachteil(SelectedAddNachteil))
+                    )
                     SelectedHeld.AddVorNachteil(SelectedAddNachteil, null);
 
                 NotifyRefresh();

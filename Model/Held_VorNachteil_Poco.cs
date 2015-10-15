@@ -130,6 +130,18 @@ namespace MeisterGeister.Model
     
         }
         private string _wert;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual long Id
+        {
+            get { return _id; }
+            set
+    		{ 
+    			Set(ref _id, value);
+    		}
+    
+        }
+        private long _id;
 
         #endregion
 

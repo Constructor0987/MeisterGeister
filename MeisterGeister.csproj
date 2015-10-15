@@ -2202,6 +2202,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0109.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0110.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0111.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0112.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

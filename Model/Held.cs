@@ -1354,17 +1354,22 @@ namespace MeisterGeister.Model {
 
         #region Vor/Nachteile
 
-        public VorNachteil AddVorNachteil(string vorNachName, string wert) {
+        public VorNachteil AddVorNachteil(string vorNachName, string wert = "") {
             return AddVorNachteil(Global.ContextHeld.Liste<VorNachteil>().Where(vn => vn.Name == vorNachName).FirstOrDefault(), wert);
         }
 
-        public VorNachteil AddVorNachteil(VorNachteil vn, string wert) {
+        public VorNachteil AddVorNachteil(VorNachteil vn, string wert = "") {
             if (vn == null)
                 return null;
             IEnumerable<Held_VorNachteil> existierendeZuordnung = Held_VorNachteil.Where(heldvn => heldvn.VorNachteilGUID == vn.VorNachteilGUID && heldvn.HeldGUID == HeldGUID);
-            if (existierendeZuordnung.Count() != 0) {
-                //Oder eine Exception werfen?
-                return existierendeZuordnung.First().VorNachteil;
+            if (existierendeZuordnung.Count() != 0)
+            { //es gibt bereits einen solchen VoNachteil auf dem helden
+                if (!vn.HatWert ?? false)
+                    //Da es eine ohne Wert ist, darf sie nur einmal vergeben werden
+                    return existierendeZuordnung.First().VorNachteil;
+                else if (existierendeZuordnung.Where(hvn1 => hvn1.Wert == wert || (string.IsNullOrWhiteSpace(wert) && string.IsNullOrWhiteSpace(hvn1.Wert))).Count() != 0)
+                    //Wenn sie mit diesem Wert bereits existiert, dann darf sie auch nicht nochmal hinzugefügt werden.
+                    return existierendeZuordnung.Where(hvn1 => hvn1.Wert == wert || (string.IsNullOrWhiteSpace(wert) && string.IsNullOrWhiteSpace(hvn1.Wert))).First().VorNachteil;
             }
 
             Held_VorNachteil hvn = new Model.Held_VorNachteil();
@@ -1374,7 +1379,7 @@ namespace MeisterGeister.Model {
             hvn.VorNachteilGUID = vn.VorNachteilGUID;
             hvn.VorNachteil = vn;
 
-            hvn.Wert = wert;
+            hvn.Wert = wert ?? "";
             if (vn.Vorteil != null) {
                 if ((bool)vn.Vorteil) {
                     hvn.VorNachteil.Vorteil = true;
@@ -1514,9 +1519,16 @@ namespace MeisterGeister.Model {
         /// Die Vorteile des Helden.
         /// Nicht zum ändern von Werten, da die Werte in Held_VorNachteil stehen.
         /// </summary>
-        public IDictionary<VorNachteil, string> Vorteile {
+        public IDictionary<VorNachteil, ICollection<string>> Vorteile {
             get {
-                return Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Vorteil == true).ToDictionary(hvn => hvn.VorNachteil, hvn => hvn.Wert);
+                Dictionary<VorNachteil, ICollection<string>> d = new Dictionary<VorNachteil, ICollection<string>>();
+                foreach (var hvn in Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Vorteil == true))
+                {
+                    if (!d.ContainsKey(hvn.VorNachteil))
+                        d.Add(hvn.VorNachteil, new List<string> { });
+                    d[hvn.VorNachteil].Add(hvn.Wert);
+                }
+                return d;
             }
         }
 
@@ -1525,7 +1537,7 @@ namespace MeisterGeister.Model {
         /// </summary>
         public List<VorNachteil> VorteileWählbar {
             get {
-                return Global.ContextVorNachteil.VorNachteilListe.Where(v => v.Vorteil == true).Except(Vorteile.Keys).OrderBy(v => v.Name).ToList();
+                return Global.ContextVorNachteil.VorNachteilListe.Where(v => v.Vorteil == true).Except(Vorteile.Keys.Where(s => !s.HatWert ?? false)).OrderBy(sf => sf.Name).ToList();
             }
         }
 
@@ -1533,9 +1545,16 @@ namespace MeisterGeister.Model {
         /// Die Nachteile des Helden.
         /// Nicht zum ändern von Werten, da die Werte in Held_VorNachteil stehen.
         /// </summary>
-        public IDictionary<VorNachteil, string> Nachteile {
+        public IDictionary<VorNachteil, ICollection<string>> Nachteile {
             get {
-                return Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Nachteil == true).ToDictionary(hvn => hvn.VorNachteil, hvn => hvn.Wert);
+                Dictionary<VorNachteil, ICollection<string>> d = new Dictionary<VorNachteil, ICollection<string>>();
+                foreach (var hvn in Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Nachteil == true))
+                {
+                    if (!d.ContainsKey(hvn.VorNachteil))
+                        d.Add(hvn.VorNachteil, new List<string> { });
+                    d[hvn.VorNachteil].Add(hvn.Wert);
+                }
+                return d;
             }
         }
 
@@ -1544,7 +1563,7 @@ namespace MeisterGeister.Model {
         /// </summary>
         public List<VorNachteil> NachteileWählbar {
             get {
-                return Global.ContextVorNachteil.VorNachteilListe.Where(n => n.Nachteil == true).Except(Nachteile.Keys).OrderBy(n => n.Name).ToList();
+                return Global.ContextVorNachteil.VorNachteilListe.Where(n => n.Nachteil == true).Except(Nachteile.Keys.Where(s => !s.HatWert ?? false)).OrderBy(sf => sf.Name).ToList();
             }
         }
 
