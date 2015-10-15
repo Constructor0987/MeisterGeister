@@ -21,7 +21,9 @@ ALTER TABLE [Held] ADD [KE_pKaP] int DEFAULT 0;
 -- [KE_Mod] modifizieren um VN: Geweiht [zwölfgöttliche Kirche/H'Ranga/Angrosch/Gravesh] (24 KaP), Geweiht [nicht-alveranische Gottheit] (12 KaP)
 
 -- DSA5 Anpassungen
-
+ALTER TABLE [Held] ADD [LeiteigenschaftMagisch] nvarchar(2);
+-- TODO: Wert aus vorhandenen SF setzen
+ALTER TABLE [Held] ADD [LeiteigenschaftKlerikal] nvarchar(2);
 
 --TODO Waffenset
 

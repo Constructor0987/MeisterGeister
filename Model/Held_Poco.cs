@@ -767,6 +767,30 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<int> _kE_pKaP;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string LeiteigenschaftMagisch
+        {
+            get { return _leiteigenschaftMagisch; }
+            set
+    		{ 
+    			Set(ref _leiteigenschaftMagisch, value);
+    		}
+    
+        }
+        private string _leiteigenschaftMagisch;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string LeiteigenschaftKlerikal
+        {
+            get { return _leiteigenschaftKlerikal; }
+            set
+    		{ 
+    			Set(ref _leiteigenschaftKlerikal, value);
+    		}
+    
+        }
+        private string _leiteigenschaftKlerikal;
 
         #endregion
 

@@ -18,6 +18,7 @@ namespace MeisterGeister.Model
         public const string ViertelzaubererUnbewusst = "Viertelzauberer (unbewusst)";
         public const string Halbzauberer = "Halbzauberer";
         public const string Vollzauberer = "Vollzauberer";
+        public const string Zauberer = "Zauberer";
         public const string Empathie = "Empathie";
         public const string Gefahreninstinkt = "Gefahreninstinkt";
         public const string Geräuschhexerei = "Geräuschhexerei";
@@ -27,10 +28,15 @@ namespace MeisterGeister.Model
         public const string TierempathieAlle = "Tierempathie (alle)";
         public const string TierempathieSpeziell = "Tierempathie (speziell)";
 
+        public const string Zauberhaar = "Zauberhaar";
+
         public const string HoheLebenskraft = "Hohe Lebenskraft";
         public const string NiedrigeLebenskraft = "Niedrige Lebenskraft";
         public const string Ausdauernd = "Ausdauernd";
         public const string Kurzatmig = "Kurzatmig";
+        public const string Astralmacht = "Astralmacht";
+        public const string HoheAstralkraft = "Hohe Astralkraft";
+        public const string NiedrigeAstralkraft = "Niedrige Astralkraft";
 
         // Geweiht
         public const string GeweihtZwölfgöttlicheKirche = "Geweiht [zwölfgöttliche Kirche]";

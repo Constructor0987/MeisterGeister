@@ -1000,6 +1000,8 @@
     <Property Name="KE_ModGen" Type="int" />
     <Property Name="KE_ModZukauf" Type="int" />
     <Property Name="KE_pKaP" Type="int" />
+    <Property Name="LeiteigenschaftMagisch" Type="nvarchar" MaxLength="2" />
+    <Property Name="LeiteigenschaftKlerikal" Type="nvarchar" MaxLength="2" />
   </EntityType>
   <EntityType Name="Held_Audio_Playlist">
     <Key>
@@ -4086,6 +4088,8 @@
     <Property Name="KE_ModGen" Type="Int32" />
     <Property Name="KE_ModZukauf" Type="Int32" />
     <Property Name="KE_pKaP" Type="Int32" />
+    <Property Name="LeiteigenschaftMagisch" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
+    <Property Name="LeiteigenschaftKlerikal" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Held_Modifikator" Relationship="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AA7" FromRole="Held" ToRole="Held_Modifikator" />
     <NavigationProperty Name="Held_Audio_Playlist" Relationship="DatabaseDSAModel.FK_Held_Audio_Playlist_Held" FromRole="Held" ToRole="Held_Audio_Playlist" />
     <NavigationProperty Name="Held_Pflanze" Relationship="DatabaseDSAModel.fk_Held_Pflanze_HeldGUID" FromRole="Held" ToRole="Held_Pflanze" />
@@ -6569,6 +6573,8 @@
           <ScalarProperty Name="KE_ModGen" ColumnName="KE_ModGen" />
           <ScalarProperty Name="KE_ModZukauf" ColumnName="KE_ModZukauf" />
           <ScalarProperty Name="KE_pKaP" ColumnName="KE_pKaP" />
+          <ScalarProperty Name="LeiteigenschaftMagisch" ColumnName="LeiteigenschaftMagisch" />
+          <ScalarProperty Name="LeiteigenschaftKlerikal" ColumnName="LeiteigenschaftKlerikal" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7342,17 +7348,17 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="589bb0dd41f6472c8f58e11da86f37bd" Name="Diagram1">
+      <Diagram DiagramId="a5265a2b595542408cee35d3407033bc" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="20.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="25.25" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="23" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="27.5" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="15.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="18" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="43.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="43.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="3" PointY="50" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="58.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="44.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="44.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="3" PointY="51" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="60.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="18" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Beschwörbares" Width="1.5" PointX="23" PointY="21.625" IsExpanded="true" />
@@ -7360,18 +7366,18 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="27.5" PointY="19.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="25.25" PointY="22" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="2.75" PointY="69.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="2.75" PointY="71.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="54.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="56.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="23" PointY="27.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="25.25" PointY="38.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="25.25" PointY="38.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="20.75" PointY="25.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="23" PointY="37.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="26" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="26" PointY="35.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="26" PointY="28.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="15.75" PointY="15.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="18" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Audio_Playlist" Width="1.5" PointX="3" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="6" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_BFAusrüstung" Width="1.5" PointX="8.25" PointY="15.75" IsExpanded="true" />
@@ -7391,31 +7397,31 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="25.25" PointY="24.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="2.75" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="5" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="58.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="52" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="60.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="54" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="10.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="49.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="50.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="3.75" PointY="31.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition_Setting" Width="1.5" PointX="18" PointY="21.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="11.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="5.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="53.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="18" PointY="35" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Typ" Width="1.5" PointX="6" PointY="59.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Verbreitung" Width="1.5" PointX="6" PointY="54.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="39.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="2.75" PointY="62" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="5" PointY="63.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="55.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="18" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Typ" Width="1.5" PointX="6" PointY="61.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Verbreitung" Width="1.5" PointX="6" PointY="56.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="2.75" PointY="64" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="5" PointY="65.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="5" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="9" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="13.5" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="15.75" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="6.75" PointY="31.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="18" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="33" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="34" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="40.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="11.75" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="6.75" PointY="35.5" IsExpanded="true" />

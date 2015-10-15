@@ -279,6 +279,8 @@ namespace MeisterGeister.Model {
         /// <param name="ohneMod">'True' falls der unmodifizierte Wert gewünscht ist.</param>
         /// <returns>Eigenschaftswert.</returns>
         public int EigenschaftWert(string eigenschaft, bool ohneMod = false) {
+            if (string.IsNullOrEmpty(eigenschaft))
+                return 0;
             switch (eigenschaft) {
                 case "MU":
                 case "Mut":
@@ -511,7 +513,7 @@ namespace MeisterGeister.Model {
             {
                 if (HatVorNachteil(vn))
                 {
-                    if (vn.StartsWith("Hohe") || vn == VorNachteil.Ausdauernd)
+                    if (vn.StartsWith("Hohe") || vn == VorNachteil.Ausdauernd || vn == VorNachteil.Astralmacht)
                         mod += VorNachteilWertInt(vn).GetValueOrDefault(0) * faktor;
                     else if (vn.StartsWith("Niedrige") || vn == VorNachteil.Kurzatmig)
                         mod -= VorNachteilWertInt(vn).GetValueOrDefault(0) * faktor;
@@ -685,17 +687,138 @@ namespace MeisterGeister.Model {
 
         public bool Magiebegabt {
             get {
-                return HatVorNachteil(VorNachteil.Vollzauberer) || HatVorNachteil(VorNachteil.Halbzauberer) || HatVorNachteil(VorNachteil.Viertelzauberer) || HatVorNachteil(VorNachteil.ViertelzaubererUnbewusst);
+                if (Regelsystem == "DSA 4.1")
+                    return HatVorNachteil(VorNachteil.Vollzauberer) || HatVorNachteil(VorNachteil.Halbzauberer) || HatVorNachteil(VorNachteil.Viertelzauberer) || HatVorNachteil(VorNachteil.ViertelzaubererUnbewusst);
+                else if (Regelsystem == "DSA 5")
+                    return HatVorNachteil(VorNachteil.Zauberer);
+                return false;
+                
             }
         }
 
-        [DependentProperty("BaseMU"), DependentProperty("BaseIN"), DependentProperty("BaseCH")]
+        public string AstralenergieGrundwertFormel
+        {
+            get
+            {
+                string ae = string.Empty;
+                if (Regelsystem == "DSA 4.1")
+                {
+                    if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.GefäßDerSterne))
+                        ae = "(MU + IN + CH + CH) / 2";
+                    else
+                        ae = "(MU + IN + CH) / 2";
+                }
+                else if (Regelsystem == "DSA 5")
+                    ae = "Leiteigenschaft der Zauberertradition";
+                return ae;
+            }
+        }
+
+        [DependentProperty("BaseMU"), DependentProperty("BaseIN"), DependentProperty("BaseCH"), DependentProperty("BaseLeiteigenschaftMagisch")]
         public int AstralenergieBasis {
             get {
-                int basis = BaseMU + BaseIN + BaseCH;
-                if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.GefäßDerSterne))
-                    basis += BaseCH;
-                return (int)Math.Round(basis / 2.0, 0, MidpointRounding.AwayFromZero);
+                int basis = 0;
+                if (Regelsystem == "DSA 4.1")
+                {
+                    basis = BaseMU + BaseIN + BaseCH;
+                    if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.GefäßDerSterne))
+                        basis += BaseCH;
+                    basis = (int)Math.Round(basis / 2.0, 0, MidpointRounding.AwayFromZero);
+                }
+                else if (Regelsystem == "DSA 5")
+                    basis = BaseLeiteigenschaftMagisch;
+                return basis;
+            }
+        }
+
+        /// <summary>
+        /// Gibt den Wert der magischen Leiteigenschaft zurück.
+        /// </summary>
+        [DependentProperty("BaseMU"), DependentProperty("BaseKL"), DependentProperty("BaseIN"), DependentProperty("BaseCH"), DependentProperty("BaseFF"), DependentProperty("BaseGE"), DependentProperty("BaseKO"), DependentProperty("BaseKK")]
+        public int BaseLeiteigenschaftMagisch
+        {
+            get
+            {
+                return EigenschaftWert(LeiteigenschaftMagisch, true);
+            }
+        }
+
+        [DependentProperty("AstralenergieModSonstiges"), DependentProperty("AstralenergieModGenerierung"), DependentProperty("AstralenergieModVorNachteile"), DependentProperty("AstralenergieModZukauf")]
+        public int AstralenergieMod
+        {
+            get { return AstralenergieModGenerierung + AstralenergieModSonstiges + AstralenergieModVorNachteile + AstralenergieModZukauf - AstralenergieMod_pAsP; }
+        }
+
+        [DependentProperty("AE_pAsP")]
+        public int AstralenergieMod_pAsP
+        {
+            get { return AE_pAsP ?? 0; }
+            set
+            {
+                AE_pAsP = value;
+                OnChanged("AstralenergieMod_pAsP");
+            }
+        }
+
+        [DependentProperty("AE_Mod")]
+        public int AstralenergieModSonstiges
+        {
+            get { return AE_Mod ?? 0; }
+            set
+            {
+                AE_Mod = value;
+                OnChanged("AstralenergieModSonstiges");
+            }
+        }
+
+        [DependentProperty("AE_ModGen")]
+        public int AstralenergieModGenerierung
+        {
+            get { return AE_ModGen ?? 0; }
+            set
+            {
+                AE_ModGen = value;
+                OnChanged("AstralenergieModGenerierung");
+            }
+        }
+
+        [DependentProperty("AE_ModZukauf")]
+        public int AstralenergieModZukauf
+        {
+            get { return AE_ModZukauf ?? 0; }
+            set
+            {
+                AE_ModZukauf = value;
+                OnChanged("AstralenergieModZukauf");
+            }
+        }
+
+        [DependentProperty("Nachteile"), DependentProperty("Vorteile")]
+        public int AstralenergieModVorNachteile
+        {
+            get
+            {
+                int mod = 0;
+                if (Regelsystem == "DSA 4.1")
+                {
+                    mod += CalcVorNachteilEnergieMod(VorNachteil.Astralmacht, 2);
+                    if (HatVorNachteil(VorNachteil.Vollzauberer))
+                        mod += 12;
+                    if (HatVorNachteil(VorNachteil.Halbzauberer))
+                        mod += 6;
+                    if (HatVorNachteil(VorNachteil.Viertelzauberer) || HatVorNachteil(VorNachteil.ViertelzaubererUnbewusst))
+                        mod -= 6;
+                    if (HatVorNachteil(VorNachteil.Zauberhaar))
+                        mod += 7;
+                }
+                else if (Regelsystem == "DSA 5")
+                {
+                    mod += CalcVorNachteilEnergieMod(VorNachteil.HoheAstralkraft);
+                    if (HatVorNachteil(VorNachteil.Zauberer))
+                        mod += 20;
+                }
+                mod += CalcVorNachteilEnergieMod(VorNachteil.NiedrigeAstralkraft);
+                return mod;
             }
         }
 
@@ -706,17 +829,6 @@ namespace MeisterGeister.Model {
             }
             set {
                 AE_Aktuell = value;
-            }
-        }
-
-        [DependentProperty("AE_Mod")]
-        public int AstralenergieMod {
-            get {
-                return AE_Mod ?? 0;
-            }
-            set {
-                AE_Mod = value;
-                //OnPropertyChanged(string.Empty);
             }
         }
 
