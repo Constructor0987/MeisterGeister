@@ -659,7 +659,8 @@ namespace MeisterGeister.Model {
                         || HatVorNachteil(VorNachteil.Sacerdos) || HatVorNachteil(VorNachteil.GeweihtXoArtal)
                         || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNamenloser) 
                         || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.KontaktZumGroßenGeist) 
-                        || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeiten) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheXoArtal);
+                        || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeitenIII) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeitenII) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeitenI)
+                        || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheXoArtal);
                 else if (Regelsystem == "DSA 5")
                     return HatVorNachteil(VorNachteil.Geweihter);
                 return false;
@@ -760,13 +761,15 @@ namespace MeisterGeister.Model {
                         || HatVorNachteil(VorNachteil.GeweihtAngrosch) || HatVorNachteil(VorNachteil.GeweihtXoArtal) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheAlveranischeGottheit)
                         || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheXoArtal))
                         mod += 24;
-                    else if (HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeit(Sonderfertigkeit.KontaktZumGroßenGeist))
+                    else if (HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) 
+                        || HatSonderfertigkeit(Sonderfertigkeit.KontaktZumGroßenGeist) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeitenII))
                         mod += 12;
                     else if (HatVorNachteil(VorNachteil.Sacerdos))
                         mod += VorNachteilWertInt(VorNachteil.Sacerdos).GetValueOrDefault(0) * 6;
-                    else if (HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeiten))
-                        // TODO: SF umbauen in drei Stufen, SonderfertigkeitGUID = '00000000-0000-0000-005f-000000000923'
-                        mod += 6; // 6/12/18 je Stufe
+                    else if (HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeitenIII))
+                        mod += 18;
+                    else if (HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeitenI))
+                        mod += 6;
                 }
                 else if (Regelsystem == "DSA 5")
                 {

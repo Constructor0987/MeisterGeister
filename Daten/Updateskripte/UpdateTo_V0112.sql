@@ -21,6 +21,13 @@ ALTER TABLE [Held] ADD [KE_pKaP] int DEFAULT 0;
 -- [KE_Mod] modifizieren um Vorteil Geweiht [zwölfgöttliche Kirche/H'Ranga/Angrosch/Gravesh/Xo'Artal-Stadtpantheon]; SF Spätweihe Alveranische Gottheit/Spätweihe Namenloser/Spätweihe (Xo'Artal-Pantheon)/Spätweihe (Xo'Artal-Pantheon) (+24 KaP), 
 --				Geweiht [nicht-alveranische Gottheit]; SF Spätweihe Nichtalveranische Gottheit/Kontakt zum Großen Geist (+12 KaP), Vorteil Sacerdos I bis IV; SF Spätweihe Dunkle Zeiten I bis III (+6 je Stufe)
 
+-- Spähtweihe DDZ korrigieren: Die SF kann in drei Stufen vorkommen.
+UPDATE [Sonderfertigkeit] SET [Name] = N'Spätweihe Dunkle Zeiten I' WHERE [SonderfertigkeitGUID] = N'00000000-0000-0000-005f-000000000923';
+INSERT INTO [Sonderfertigkeit] ([SonderfertigkeitGUID],[Name],[HatWert],[Typ],[Literatur]) VALUES (N'00000000-0000-0000-005f-000000001988',N'Spätweihe Dunkle Zeiten II',0,N'Klerikal',N'OiC 43');
+INSERT INTO [Sonderfertigkeit] ([SonderfertigkeitGUID],[Name],[HatWert],[Typ],[Literatur]) VALUES (N'00000000-0000-0000-005f-000000001989',N'Spätweihe Dunkle Zeiten III',0,N'Klerikal',N'OiC 43');
+INSERT INTO [Sonderfertigkeit_Setting] ([SonderfertigkeitGUID],[SettingGUID]) VALUES (N'00000000-0000-0000-005f-000000001988',N'00000000-0000-0000-5e77-000000000002');
+INSERT INTO [Sonderfertigkeit_Setting] ([SonderfertigkeitGUID],[SettingGUID]) VALUES (N'00000000-0000-0000-005f-000000001989',N'00000000-0000-0000-5e77-000000000002');
+
 -- DSA5 Anpassungen
 ALTER TABLE [Held] ADD [LeiteigenschaftMagisch] nvarchar(2);
 -- TODO: Wert aus vorhandenen SF setzen
