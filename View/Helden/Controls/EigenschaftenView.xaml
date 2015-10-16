@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MeisterGeister.View.Helden.Controls.EigenschaftenView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,6 +6,7 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:mg="clr-namespace:MeisterGeister"
+             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="MeisterGeister.View.Helden.Controls.EigenschaftenView"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="850" DataContext="{x:Null}"
              ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
@@ -42,6 +43,8 @@
                         <ColumnDefinition Width="70" />
                         <ColumnDefinition Width="54" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="67*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -65,41 +68,41 @@
                     <Label Grid.Column="0" Grid.Row="1" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedHeld.MU}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeMU}" WertName="MU-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.MU}" Wert="{Binding SelectedHeld.Mut}" />
+						StartWert="{Binding SelectedHeld.MU}" Wert="{Binding SelectedHeld.Mut}" />
                     <Label Grid.Column="0" Grid.Row="2" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding SelectedHeld.KL}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeKL}" WertName="KL-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.KL}" Wert="{Binding SelectedHeld.Klugheit}" />
+						StartWert="{Binding SelectedHeld.KL}" Wert="{Binding SelectedHeld.Klugheit}" />
                     <Label Grid.Column="0" Grid.Row="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" Value="{Binding SelectedHeld.IN}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeIN}" WertName="IN-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.IN}" Wert="{Binding SelectedHeld.Intuition}" />
+						StartWert="{Binding SelectedHeld.IN}" Wert="{Binding SelectedHeld.Intuition}" />
                     <Label Grid.Column="0" Grid.Row="4" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Charisma" Value="{Binding SelectedHeld.CH}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeCH}" WertName="CH-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.CH}" Wert="{Binding SelectedHeld.Charisma}" />
+						StartWert="{Binding SelectedHeld.CH}" Wert="{Binding SelectedHeld.Charisma}" />
                     <Label Grid.Column="3" Grid.Row="1" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" Value="{Binding SelectedHeld.FF}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeFF}" WertName="FF-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.FF}" Wert="{Binding SelectedHeld.Fingerfertigkeit}" />
+						StartWert="{Binding SelectedHeld.FF}" Wert="{Binding SelectedHeld.Fingerfertigkeit}" />
                     <Label Grid.Column="3" Grid.Row="2" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Gewandtheit" Value="{Binding SelectedHeld.GE}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeGE}" WertName="GE-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.GE}" Wert="{Binding SelectedHeld.Gewandtheit}" />
+						StartWert="{Binding SelectedHeld.GE}" Wert="{Binding SelectedHeld.Gewandtheit}" />
                     <Label Grid.Column="3" Grid.Row="3" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Konstitution" Value="{Binding SelectedHeld.KO}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeKO}" WertName="KO-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.KO}" Wert="{Binding SelectedHeld.Konstitution}" />
+						StartWert="{Binding SelectedHeld.KO}" Wert="{Binding SelectedHeld.Konstitution}" />
                     <Label Grid.Column="3" Grid.Row="4" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Körperkraft" Value="{Binding SelectedHeld.KK}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeKK}" WertName="KK-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.KK}" Wert="{Binding SelectedHeld.Körperkraft}" />
+						StartWert="{Binding SelectedHeld.KK}" Wert="{Binding SelectedHeld.Körperkraft}" />
 
                     <Label Grid.Column="7" Grid.Row="1" Margin="3,3,0,3" Content="INI-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="8" Grid.Row="1" HorizontalAlignment="Center" MinWidth="65" ShowButtons="True" ToolTip="Initiative-Modifikator durch Rasse/Kultur/Profession" Value="{Binding SelectedHeld.InitiativeModGen}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <TextBlock Grid.Column="9" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding SelectedHeld.InitiativeBasisOhneMod}" TextAlignment="Center" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeINIbasis}" WertName="INI-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.InitiativeBasisOhneMod}" Wert="{Binding SelectedHeld.InitiativeBasis}" />
+						StartWert="{Binding SelectedHeld.InitiativeBasisOhneMod}" Wert="{Binding SelectedHeld.InitiativeBasis}" />
                     <Label Grid.Column="8" Grid.Row="0" Content="Mod." ToolTip="Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="9" Grid.Row="0" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="10" Grid.Row="0" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" FontStyle="Italic" />
@@ -107,23 +110,23 @@
                     <Label Grid.Column="7" Grid.Row="2" Margin="3,3,0,3" Content="AT-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="2" HorizontalAlignment="Center" Text="{Binding SelectedHeld.AttackeBasisOhneMod}" TextAlignment="Center" ToolTip="Attacke-Basiswert" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeAT}" WertName="AT-Wert" 
-                                                        StartWert="{Binding SelectedHeld.AttackeBasisOhneMod}" Wert="{Binding SelectedHeld.Attacke}" />
+						StartWert="{Binding SelectedHeld.AttackeBasisOhneMod}" Wert="{Binding SelectedHeld.Attacke}" />
                     <Label Grid.Column="7" Grid.Row="3" Margin="3,3,0,3" Content="PA-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding SelectedHeld.ParadeBasisOhneMod}" TextAlignment="Center" ToolTip="Parade-Basiswert" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListePA}" WertName="PA-Wert" 
-                                                        StartWert="{Binding SelectedHeld.ParadeBasisOhneMod}" Wert="{Binding SelectedHeld.Parade}" />
+						StartWert="{Binding SelectedHeld.ParadeBasisOhneMod}" Wert="{Binding SelectedHeld.Parade}" />
                     <Label Grid.Column="7" Grid.Row="4" Margin="3,3,0,3" Content="FK-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="4" HorizontalAlignment="Center" Text="{Binding SelectedHeld.FernkampfBasisOhneMod}" TextAlignment="Center" ToolTip="Fernkampf-Basiswert" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeFKbasis}" WertName="FK-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.FernkampfBasisOhneMod}" Wert="{Binding SelectedHeld.Fernkampf}" />
+						StartWert="{Binding SelectedHeld.FernkampfBasisOhneMod}" Wert="{Binding SelectedHeld.Fernkampf}" />
                     <Label Grid.Column="0" Grid.Row="5" Content="GS:" ToolTip="Geschwindigkeit" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Text="{Binding SelectedHeld.GeschwindigkeitOhneMod}" TextAlignment="Center" ToolTip="Geschwindigkeit" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="5" ModListe="{Binding SelectedHeld.ModifikatorenListeGS}" WertName="GS" 
-                                                        StartWert="{Binding SelectedHeld.GeschwindigkeitOhneMod}" Wert="{Binding SelectedHeld.Geschwindigkeit}" />
+						StartWert="{Binding SelectedHeld.GeschwindigkeitOhneMod}" Wert="{Binding SelectedHeld.Geschwindigkeit}" />
                     <Label Grid.Column="7" Grid.Row="5" Margin="3,3,0,3" Content="Ausweichen:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="5" HorizontalAlignment="Center" Text="{Binding SelectedHeld.AusweichenOhneMod}" TextAlignment="Center" ToolTip="Ausweichen" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="5" ModListe="{Binding SelectedHeld.ModifikatorenListeAusweichen}" WertName="Ausweichen" 
-                                                        StartWert="{Binding SelectedHeld.AusweichenOhneMod}" Wert="{Binding SelectedHeld.Ausweichen}" />
+						StartWert="{Binding SelectedHeld.AusweichenOhneMod}" Wert="{Binding SelectedHeld.Ausweichen}" />
 
                     <Label Grid.Column="0" Grid.Row="7" Content="WS:" HorizontalAlignment="Left" ToolTip="Wundschwelle" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="1" Grid.Row="7" Margin="6,0,0,0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding SelectedHeld.Wundschwellen}" TextAlignment="Center" ToolTip="Wundschwelle" />
@@ -135,7 +138,32 @@
                     <ViewGeneral:IntBox x:Name="_intBoxMR" Grid.Column="8" Grid.Row="7" HorizontalAlignment="Center" MinWidth="65" ShowButtons="True" ToolTip="Magieresistenz-Modifikator durch Rasse/Kultur/Profession, Vor-/Nachteile, Zukauf, etc." Value="{Binding SelectedHeld.MR_Mod}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <TextBlock Grid.Column="9" Grid.Row="7" HorizontalAlignment="Center" Text="{Binding SelectedHeld.MagieresistenzOhneMod}" TextAlignment="Center" ToolTip="Magieresistenz" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="7" ModListe="{Binding SelectedHeld.ModifikatorenListeMR}" WertName="MR-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.MagieresistenzOhneMod}" Wert="{Binding SelectedHeld.Magieresistenz}" />
+						StartWert="{Binding SelectedHeld.MagieresistenzOhneMod}" Wert="{Binding SelectedHeld.Magieresistenz}" />
+
+                    <!--Leiteigenschaften-->
+                    <Label Grid.Column="11" Grid.Row="0" Grid.ColumnSpan="2" Content="Leiteigenschaft" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
+                    <Label Grid.Column="11" Grid.Row="1" Margin="3,3,0,3" Content="Magisch:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Label Grid.Column="11" Grid.Row="2" Margin="3,3,0,3" Content="Klerikal:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Visibility="{Binding SelectedHeld.Geweiht, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <ComboBox Grid.Column="12" Grid.Row="1" Margin="3" MinWidth="55" SelectedValuePath="Content" SelectedValue="{Binding SelectedHeld.LeiteigenschaftMagisch}" VerticalContentAlignment="Center" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ComboBoxItem Content="MU" Background="Red" />
+                        <ComboBoxItem Content="KL" Background="Purple" />
+                        <ComboBoxItem Content="IN" Background="Lime" />
+                        <ComboBoxItem Content="CH" Background="Black" Foreground="White" />
+                        <ComboBoxItem Content="FF" Background="Yellow" />
+                        <ComboBoxItem Content="GE" Background="Blue" />
+                        <ComboBoxItem Content="KO" Background="White" />
+                        <ComboBoxItem Content="KK" Background="#FFFF6600" />
+                    </ComboBox>
+                    <ComboBox Grid.Column="12" Grid.Row="2" Margin="3" MinWidth="55" SelectedValuePath="Content" SelectedValue="{Binding SelectedHeld.LeiteigenschaftKlerikal}" VerticalContentAlignment="Center" Visibility="{Binding SelectedHeld.Geweiht, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ComboBoxItem Content="MU" Background="Red" />
+                        <ComboBoxItem Content="KL" Background="Purple" />
+                        <ComboBoxItem Content="IN" Background="Lime" />
+                        <ComboBoxItem Content="CH" Background="Black" Foreground="White" />
+                        <ComboBoxItem Content="FF" Background="Yellow" />
+                        <ComboBoxItem Content="GE" Background="Blue" />
+                        <ComboBoxItem Content="KO" Background="White" />
+                        <ComboBoxItem Content="KK" Background="#FFFF6600" />
+                    </ComboBox>
                 </Grid>
             </Border>
         </Expander>
@@ -198,27 +226,27 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Grundwert-Formel:" FontWeight="Bold" />
                                         <TextBlock Text="{Binding SelectedHeld.LebensenergieGrundwertFormel}" Margin="2,0,0,0" />
-                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieBasis, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieBasis, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Generierung" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModGenerierung, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModGenerierung, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Vor- und Nachteile" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModVorNachteile, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModVorNachteile, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Zukauf" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModZukauf, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModZukauf, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Sonstiges" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModSonstiges, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.LebensenergieModSonstiges, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                 </StackPanel>
                             </TextBlock.ToolTip>
-                        </TextBlock>
+						</TextBlock>
                         <ViewGeneral:IntBox x:Name="_intBoxLeAktuell" Grid.Column="7" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Lebensenergie" Value="{Binding SelectedHeld.LebensenergieAktuell}" VerticalAlignment="Center" />
                         <Button Grid.Column="8" Grid.Row="1" Margin="4" ToolTip="LE auf den Maximalwert setzen." Command="{Binding OnMaxEnergie}" CommandParameter="{x:Static ViewGeneral:EnergieEnum.Lebensenergie}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Width="16" Height="16" />
@@ -237,27 +265,27 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Grundwert-Formel:" FontWeight="Bold" />
                                         <TextBlock Text="{Binding SelectedHeld.KarmaenergieGrundwertFormel}" Margin="2,0,0,0" />
-                                        <TextBlock Text="{Binding SelectedHeld.AusdauerBasis, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AusdauerBasis, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Generierung" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModGenerierung, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModGenerierung, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Vor- und Nachteile" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModVorNachteile, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModVorNachteile, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Zukauf" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModZukauf, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModZukauf, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Sonstiges" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModSonstiges, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AusdauerModSonstiges, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                 </StackPanel>
                             </TextBlock.ToolTip>
-                        </TextBlock>
+						</TextBlock>
                         <ViewGeneral:IntBox x:Name="_intBoxAuAktuell" Grid.Column="7" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Ausdauer" Value="{Binding SelectedHeld.AusdauerAktuell}" VerticalAlignment="Center" Visibility="{x:Static mg:Global.DSA4_1_Visibility}" />
                         <Button Grid.Column="8" Grid.Row="2" Margin="4" ToolTip="AU auf den Maximalwert setzen." Command="{Binding OnMaxEnergie}" CommandParameter="{x:Static ViewGeneral:EnergieEnum.Ausdauer}" Visibility="{x:Static mg:Global.DSA4_1_Visibility}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Width="16" Height="16" />
@@ -282,27 +310,27 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Grundwert-Formel:" FontWeight="Bold" />
                                         <TextBlock Text="{Binding SelectedHeld.AstralenergieGrundwertFormel}" Margin="2,0,0,0" />
-                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieBasis, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieBasis, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Generierung" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModGenerierung, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModGenerierung, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Vor- und Nachteile" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModVorNachteile, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModVorNachteile, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Zukauf" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModZukauf, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModZukauf, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Sonstiges" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModSonstiges, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.AstralenergieModSonstiges, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                 </StackPanel>
                             </TextBlock.ToolTip>
-                        </TextBlock>
+						</TextBlock>
                         <ViewGeneral:IntBox x:Name="_intBoxAeAktuell" Grid.Column="7" Grid.Row="3" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Astralenergie" Value="{Binding SelectedHeld.AstralenergieAktuell}" VerticalAlignment="Center"   Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <Button Grid.Column="8" Grid.Row="3" Margin="4" ToolTip="AE auf den Maximalwert setzen." Command="{Binding OnMaxEnergie}" CommandParameter="{x:Static ViewGeneral:EnergieEnum.Astralenergie}" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Width="16" Height="16" />
@@ -322,27 +350,27 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Grundwert-Formel:" FontWeight="Bold" />
                                         <TextBlock Text="{Binding SelectedHeld.KarmaenergieGrundwertFormel}" Margin="2,0,0,0" />
-                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieBasis, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieBasis, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Generierung" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModGenerierung, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModGenerierung, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Vor- und Nachteile" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModVorNachteile, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModVorNachteile, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Zukauf" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModZukauf, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModZukauf, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="+ Modifikator Sonstiges" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModSonstiges, StringFormat='=> {0}'}" Margin="2,0,0,0" />
+                                        <TextBlock Text="{Binding SelectedHeld.KarmaeenergieModSonstiges, StringFormat=\=&gt; \{0\}}" Margin="2,0,0,0" />
                                     </StackPanel>
                                 </StackPanel>
                             </TextBlock.ToolTip>
-                        </TextBlock>
+						</TextBlock>
                         <ViewGeneral:IntBox x:Name="_intBoxKeAktuell" Grid.Column="7" Grid.Row="4" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Karmaenergie" Value="{Binding SelectedHeld.KarmaenergieAktuell}" VerticalAlignment="Center"   Visibility="{Binding SelectedHeld.Geweiht, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <Button Grid.Column="8" Grid.Row="4" Margin="4" ToolTip="KE auf den Maximalwert setzen." Command="{Binding OnMaxEnergie}" CommandParameter="{x:Static ViewGeneral:EnergieEnum.Karmaenergie}"  Visibility="{Binding SelectedHeld.Geweiht, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Width="16" Height="16" />
