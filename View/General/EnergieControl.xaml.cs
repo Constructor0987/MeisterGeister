@@ -27,6 +27,14 @@ namespace MeisterGeister.View.General
             SetEnergieArt();
         }
 
+        public double MaxValueWidth
+        {
+            get { return (double)GetValue(MaxValueWidthProperty); }
+            set { SetValue(MaxValueWidthProperty, value); }
+        }
+        public static readonly DependencyProperty MaxValueWidthProperty = DependencyProperty.Register(
+          "MaxValueWidth", typeof(double), typeof(EnergieControl), new FrameworkPropertyMetadata(100.0));
+
         public EnergieEnum Energie
         {
             get { return (EnergieEnum)GetValue(EnergieProperty); }
@@ -184,14 +192,14 @@ namespace MeisterGeister.View.General
             if (energieAktuell < 0)
             {
                 _rectangleAktuell.Width = 0;
-                _rectangleMod.Width = 100;
+                _rectangleMod.Width = MaxValueWidth;
                 _rectangleÜberMax.Width = 0;
             }
             else if (energieAktuell <= energieMax)
             {
-                _rectangleAktuell.Width = Math.Max(0, (double)energieAktuell / energieMax * 100.0);
+                _rectangleAktuell.Width = Math.Max(0, (double)energieAktuell / energieMax * MaxValueWidth);
                 _rectangleMod.Width = Math.Max(0, (double)(energieMax - energieAktuell)
-                                                   / energieMax * 100.0);
+                                                   / energieMax * MaxValueWidth);
                 _rectangleÜberMax.Width = 0;
             }
             else
@@ -199,11 +207,11 @@ namespace MeisterGeister.View.General
                 if (energieMax == 0)
                     _rectangleAktuell.Width = 0;
                 else
-                    _rectangleAktuell.Width = 100;
+                    _rectangleAktuell.Width = MaxValueWidth;
                 _rectangleMod.Width = 0;
-                double w = Math.Max(0, (double)(energieAktuell - energieMax) / energieMax * 100.0);
+                double w = Math.Max(0, (double)(energieAktuell - energieMax) / energieMax * MaxValueWidth);
                 if (double.IsInfinity(w))
-                    _rectangleÜberMax.Width = 100;
+                    _rectangleÜberMax.Width = MaxValueWidth;
                 else
                     _rectangleÜberMax.Width = w;
 

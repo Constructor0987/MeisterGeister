@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignHeight="25" Height="25" Width="Auto"
+             mc:Ignorable="d" d:DesignHeight="25" Height="25" Width="Auto" x:Name="energieControl"
              MouseWheel="Control_MouseWheel">
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Rectangle Name="_rectangleAktuell" Margin="2,2,0,2" Stroke="Black" Width="100" StrokeThickness="0.1" />
+            <Rectangle Name="_rectangleAktuell" Margin="2,2,0,2" Stroke="Black" Width="{Binding ElementName=_energieControl, Path=MaxValueWidth}" StrokeThickness="0.1" />
             <Rectangle Name="_rectangleMod" Margin="0,2,0,2" Stroke="Black" Width="0" StrokeThickness="0.1" Opacity="0.3" />
             <Rectangle Name="_rectangleÜberMax" Margin="0,2,2,2" Stroke="Black" Width="0" StrokeThickness="0.1" />
         </StackPanel>
-        <Label Width="100" Name="_labelInfo" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="11" FontWeight="Normal" />
+        <Label Name="_labelInfo" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="11" FontWeight="Normal" />
     </Grid>
 </UserControl>
