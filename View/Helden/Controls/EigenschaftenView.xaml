@@ -61,40 +61,47 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="28*" />
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="1" Grid.ColumnSpan="6" Grid.RowSpan="4" Background="#99836023" CornerRadius="10" Opacity="0.8" />
                     <Label Grid.Column="1" Grid.Row="0" Margin="17,3" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="2" Grid.Row="0" Margin="16,3,17,3" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="4" Grid.Row="0" Margin="17,3" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="5" Grid.Row="0" Margin="16,3,17,3" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" FontStyle="Italic" />
-                    <Label Grid.Column="0" Grid.Row="1" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushMU}" />
+                    <Border Grid.Column="0" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushMU}" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox  Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedHeld.MU}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeMU}" WertName="MU-Basiswert" 
 						StartWert="{Binding SelectedHeld.MU}" Wert="{Binding SelectedHeld.Mut}" />
-                    <Label Grid.Column="0" Grid.Row="2" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushKL}" />
+                    <Border Grid.Column="0" Grid.Row="2" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKL}" />
+                    <Label Grid.Column="0" Grid.Row="2" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding SelectedHeld.KL}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeKL}" WertName="KL-Basiswert" 
 						StartWert="{Binding SelectedHeld.KL}" Wert="{Binding SelectedHeld.Klugheit}" />
-                    <Label Grid.Column="0" Grid.Row="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushIN}" />
+                    <Border Grid.Column="0" Grid.Row="3" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushIN}" />
+                    <Label Grid.Column="0" Grid.Row="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" Value="{Binding SelectedHeld.IN}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeIN}" WertName="IN-Basiswert" 
 						StartWert="{Binding SelectedHeld.IN}" Wert="{Binding SelectedHeld.Intuition}" />
-                    <Label Grid.Column="0" Grid.Row="4" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushCH}" />
+                    <Border Grid.Column="0" Grid.Row="4" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushCH}" />
+                    <Label Grid.Column="0" Grid.Row="4" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Charisma" Value="{Binding SelectedHeld.CH}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeCH}" WertName="CH-Basiswert" 
 						StartWert="{Binding SelectedHeld.CH}" Wert="{Binding SelectedHeld.Charisma}" />
-                    <Label Grid.Column="3" Grid.Row="1" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushFF}" />
+                    <Border Grid.Column="3" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushFF}" />
+                    <Label Grid.Column="3" Grid.Row="1" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" Value="{Binding SelectedHeld.FF}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeFF}" WertName="FF-Basiswert" 
 						StartWert="{Binding SelectedHeld.FF}" Wert="{Binding SelectedHeld.Fingerfertigkeit}" />
-                    <Label Grid.Column="3" Grid.Row="2" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushGE}" />
+                    <Border Grid.Column="3" Grid.Row="2" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushGE}" />
+                    <Label Grid.Column="3" Grid.Row="2" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Gewandtheit" Value="{Binding SelectedHeld.GE}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeGE}" WertName="GE-Basiswert" 
 						StartWert="{Binding SelectedHeld.GE}" Wert="{Binding SelectedHeld.Gewandtheit}" />
-                    <Label Grid.Column="3" Grid.Row="3" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushKO}" />
+                    <Border Grid.Column="3" Grid.Row="3" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKO}" />
+                    <Label Grid.Column="3" Grid.Row="3" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Konstitution" Value="{Binding SelectedHeld.KO}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeKO}" WertName="KO-Basiswert" 
 						StartWert="{Binding SelectedHeld.KO}" Wert="{Binding SelectedHeld.Konstitution}" />
-                    <Label Grid.Column="3" Grid.Row="4" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushKK}" />
+                    <Border Grid.Column="3" Grid.Row="4" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKK}" />
+                    <Label Grid.Column="3" Grid.Row="4" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Körperkraft" Value="{Binding SelectedHeld.KK}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeKK}" WertName="KK-Basiswert" 
 						StartWert="{Binding SelectedHeld.KK}" Wert="{Binding SelectedHeld.Körperkraft}" />
