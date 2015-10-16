@@ -12,6 +12,37 @@ namespace MeisterGeister.Logic.Karte
     public class DereGlobusToMapConverter : IValueConverter
     {
         private Point p1, p2, p3, l1, l2, l3;
+        public Point Map1
+        {
+            get { return p1; }
+            set { p1 = value; CalcD(); }
+        }
+        public Point Map2
+        {
+            get { return p2; }
+            set { p2 = value; CalcD(); }
+        }
+        public Point Map3
+        {
+            get { return p3; }
+            set { p3 = value; }
+        }
+        public Point DG1
+        {
+            get { return l1; }
+            set { l1 = value; CalcD(); }
+        }
+        public Point DG2
+        {
+            get { return l2; }
+            set { l2 = value; CalcD(); }
+        }
+        public Point DG3
+        {
+            get { return l3; }
+            set { l3 = value; }
+        }
+
         private double d1, d2;
         /// <summary>
         /// Dient der Umwandlung zwischen Karten- und DereGlobus Koordinaten.
@@ -29,6 +60,11 @@ namespace MeisterGeister.Logic.Karte
             p3 = new Point(3996, 5271);
             l3 = new Point(3.735098459, 29.79180236);
 
+            CalcD();
+        }
+
+        void CalcD()
+        {
             d1 = (l2.X - l1.X) / (p2.X - p1.X);
             d2 = (l2.Y - l1.Y) / (p2.Y - p1.Y);
         }
