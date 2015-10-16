@@ -51,20 +51,7 @@ namespace MeisterGeister.View.ZooBot
         {
             InitializeComponent();
             VM = new VM.BekanntePflanzenVM();
-
-            WindowStartupLocation = WindowStartupLocation.Manual;
-            Left = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.X + 20);
-            Top = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.Y + 20);
-        }
-
-        private void btnBekanntePflanzeEntfernen_Click(object sender, RoutedEventArgs e)
-        {
-            Held_Pflanze hPflanze = ((System.Windows.Controls.Button)sender).Tag as Held_Pflanze;
-            if (VM.ZooBotVM.SelectedHeld.Held_Pflanze.Contains(hPflanze))
-            {
-                Global.ContextZooBot.Delete<Held_Pflanze>(hPflanze);
-                VM.Refresh();
-            }
+            Width = 550;
         }
     }
 }

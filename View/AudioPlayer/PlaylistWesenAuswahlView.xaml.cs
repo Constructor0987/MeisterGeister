@@ -67,9 +67,9 @@ namespace MeisterGeister.View.AudioPlayer
         protected PlaylistWesenAuswahlView()
         {
             InitializeComponent();
-            WindowStartupLocation = WindowStartupLocation.Manual;
-            Left = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.X + 20);
-            Top = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.Y + 20);
+            //WindowStartupLocation = WindowStartupLocation.Manual;
+            //Left = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.X + 20);
+            //Top = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.Y + 20);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -36,6 +36,17 @@ namespace MeisterGeister.ViewModel.ZooBot
         private List<Model.Pflanze> _pflanzenImGebietUndLandschaft = new List<Model.Pflanze>();
 
 
+        private string _pflanzenFilter = "";
+        public string PflanzenFilter
+        {
+            get { return _pflanzenFilter; }
+            set
+            {
+                if (Set(ref _pflanzenFilter, value) && PflanzenListe != null)
+                    FilteredPflanzenListe = PflanzenListe.FindAll(t => t.Name.ToLower().Contains(value.ToLower()));                     
+            }
+        }
+
         private ZooBotViewModel _zooBotVM;
         public ZooBotViewModel ZooBotVM
         {
@@ -46,7 +57,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                 OnChanged();
                 if (value != null)
                 {
-                    InitUnbekanntePflanzenListe();
+                    InitPflanzenListe();
                     OnChanged("BekannteHeldenPflanzen");
                 }
             }
@@ -57,13 +68,25 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return ZooBotVM.SelectedHeld.Held_Pflanze.OrderBy(t => t.Pflanze.Name).ToList(); }
         }
 
-        private List<Pflanze> _unbekanntePflanzenListe;
-        public List<Pflanze> UnbekanntePflanzenListe
+        private List<Pflanze> _filteredPflanzenListe;
+        public List<Pflanze> FilteredPflanzenListe
         {
-            get { return _unbekanntePflanzenListe; }
+            get { return _filteredPflanzenListe; }
             set
             {
-                _unbekanntePflanzenListe = value;
+                _filteredPflanzenListe = value;
+
+                OnChanged();
+            }
+        }
+
+        private List<Pflanze> _pflanzenListe;
+        public List<Pflanze> PflanzenListe
+        {
+            get { return _pflanzenListe; }
+            set
+            {
+                _pflanzenListe = value;
                 OnChanged();
             }
         }
@@ -158,18 +181,19 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
         }
 
-        public void InitUnbekanntePflanzenListe()
+        public void InitPflanzenListe()
         {
             List<Model.Pflanze> uListe = new List<Model.Pflanze>();
             
             uListe = new List<Pflanze>();
-            uListe = ZooBotVM.PflanzenListe.ToList();
-            if (ZooBotVM.SelectedHeld != null)
-                foreach (Held_Pflanze bPflanze in ZooBotVM.SelectedHeld.Held_Pflanze)
-                {
-                    uListe.Remove(bPflanze.Pflanze);
-                }
-            UnbekanntePflanzenListe = uListe;
+            uListe = ZooBotVM.PflanzenListe.OrderBy(t => t.Name).ToList();
+            //if (ZooBotVM.SelectedHeld != null)
+            //    foreach (Held_Pflanze bPflanze in ZooBotVM.SelectedHeld.Held_Pflanze)
+            //    {
+            //        uListe.Remove(bPflanze.Pflanze);
+            //    }
+            PflanzenListe = uListe;
+            FilteredPflanzenListe = PflanzenListe;
         }
         
         public void Refresh()
@@ -180,8 +204,45 @@ namespace MeisterGeister.ViewModel.ZooBot
         #endregion
 
         #region //---- EVENTS ----
-         
-        
+
+
+        private Base.CommandBase _onPflanzenFilterLöschen = null;
+        public Base.CommandBase OnPflanzenFilterLöschen
+        {
+            get
+            {
+                if (_onPflanzenFilterLöschen == null)
+                    _onPflanzenFilterLöschen = new Base.CommandBase(PflanzenFilterLöschen, null);
+                return _onPflanzenFilterLöschen;
+            }
+        }
+        void PflanzenFilterLöschen(object obj)
+        {
+            PflanzenFilter = "";
+        }
+
+        private Base.CommandBase _onBekanntePflanzeEntfernen = null;
+        public Base.CommandBase OnBekanntePflanzeEntfernen
+        {
+            get
+            {
+                if (_onBekanntePflanzeEntfernen == null)
+                    _onBekanntePflanzeEntfernen = new Base.CommandBase(BekanntePflanzeEntfernen, null);
+                return _onBekanntePflanzeEntfernen;
+            }
+        }
+        void BekanntePflanzeEntfernen(object obj)
+        {
+            Held_Pflanze hPflanze = obj as Held_Pflanze;
+            if (ZooBotVM.SelectedHeld.Held_Pflanze.Contains(hPflanze))
+            {
+                Global.ContextZooBot.Delete<Held_Pflanze>(hPflanze);
+                ZooBotVM.SelectedHeld.Held_Pflanze.Remove(hPflanze);
+                Refresh();
+            }
+        }
+
+
         private Base.CommandBase _onAddBekanntePflanzeClick = null;
         public Base.CommandBase OnAddBekanntePflanzeClick
         {
@@ -194,6 +255,8 @@ namespace MeisterGeister.ViewModel.ZooBot
         }
         void AddBekanntePflanzeClick(object obj)
         {
+            if (ZooBotVM.SelectedHeld.Held_Pflanze.Where(t => t.Pflanze.PflanzeGUID == PflanzeAuswahl.PflanzeGUID).ToList().Count > 0)
+                return;
             Held_Pflanze hPflanze = new Held_Pflanze();
             hPflanze.HeldGUID = ZooBotVM.SelectedHeld.HeldGUID;
             hPflanze.ID = Guid.NewGuid();
@@ -201,7 +264,7 @@ namespace MeisterGeister.ViewModel.ZooBot
             hPflanze.Bekannt = true;
             if (Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze))
             {
-                UnbekanntePflanzenListe.Remove(PflanzeAuswahl);
+                //UnbekanntePflanzenListe.Remove(PflanzeAuswahl);
                 PflanzeAuswahl = null;
                 OnChanged("BekannteHeldenPflanzen");
             }
@@ -211,24 +274,6 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
             
         }
-        
-        //private Base.CommandBase _onBtnBekanntePflanzeEntfernenClick = null;
-        //public Base.CommandBase OnBtnBekanntePflanzeEntfernenClick
-        //{
-        //    get
-        //    {
-        //        if (_onBtnBekanntePflanzeEntfernenClick == null)
-        //            _onBtnBekanntePflanzeEntfernenClick = new Base.CommandBase(BtnBekanntePflanzeEntfernenClick, null);
-        //        return _onBtnBekanntePflanzeEntfernenClick;
-        //    }
-        //}
-        //void BtnBekanntePflanzeEntfernenClick(object obj)
-        //{
-        //    if (((System.Windows.Controls.Button)obj).Tag != null) 
-        //    {}
-        //    //SelectedHeld.Held_Pflanze.Remove( )
-        //    //Held_Pflanze hPflanze = ((obj)Button).Tag as Guid;
-        //}    
 
         #endregion  
     }

@@ -29,8 +29,9 @@
                             Command="{Binding OnBtnHeldAustragen}">
                         <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                     </Button>
-                    <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" />
-                    <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" />
+                    <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" Visibility="{Binding PirschSelected, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                    <ComboBox Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" ItemsSource="{Binding fernkampfWaffen}" SelectedItem="{Binding Zoo_Fernkampfwaffe}" SelectedIndex="0" VerticalContentAlignment="Center" 
+                              Visibility="{Binding PirschSelected, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                     <Button Width="28" Height="28" Margin="5,0,10,0" ToolTip="Bekannte Pflanzen" Padding="0"
                             Visibility="{Binding Zoo_HeldSelected, TargetNullValue=Collapsed}" Click="BtnBekanntePflanzenForm_Click">
                         <Image Source="/Images/Icons/pflanzenschriftrolle.png" HorizontalAlignment="Stretch" Width="28" Height="28" />
@@ -125,7 +126,7 @@
                                     <RowDefinition Height="35" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-  
+                                
                                 <Label Grid.Column="0" Grid.Row="0" Content="Gebiet" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
 
                                 <Button Grid.Column="1" Command="{Binding OnGebieteVonPos}" ToolTip="Klicken zum Aktualisieren" Margin="3" >
@@ -154,8 +155,28 @@
                                           ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" DisplayMemberPath="Name" />
                                 <!--ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-                                <ComboBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
-                                          ItemsSource="{Binding FilterPflanzenListe, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedItem="{Binding PflanzeSelected}" />
+                                
+                                <ComboBox Name="cmbxPflanze" Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
+                                          ItemsSource="{Binding FilterPflanzenListeBekannt, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding PflanzeSelectedBekannt}" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Width="250">
+                                                <TextBlock Text="{Binding Path=p.Name}" />
+                                                <TextBlock HorizontalAlignment="Right">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=bekannt, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                                    <Setter Property="Text" Value=" (bekannt)" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                                 <!-- PflanzenNamen-->
 
                                 <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding Kräuter_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
@@ -301,7 +322,7 @@
                     </Expander>
                 </Grid>
             </TabItem>
-            <TabItem Header="Pirsch- und Ansitzjagd" >
+            <TabItem Header="Pirsch- und Ansitzjagd" IsSelected="{Binding PirschSelected, UpdateSourceTrigger=PropertyChanged}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" MinHeight="40" />

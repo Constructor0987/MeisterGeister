@@ -23,8 +23,14 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.ZooBot
 {
+
     public class ZooBotViewModel : Base.ViewModelBase
     {
+    public class iPflanzeBekannt
+    {
+        public Pflanze p { get; set; }
+        public bool bekannt { get; set; }
+    }
         public ArrayList m_regionen = new ArrayList();
         public ArrayList m_landschaften = new ArrayList();
         public ArrayList m_pflanzen = new ArrayList();
@@ -43,8 +49,9 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _gebietListe; }
             set
             {
-                _gebietListe = value;
-                OnChanged();
+                //_gebietListe = value;
+                Set(ref _gebietListe, value);
+                //OnChanged();
             }
         }
 
@@ -54,8 +61,9 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _filterPflanzenListeNachGebietsauswahl; }
             set
             {
-                _filterPflanzenListeNachGebietsauswahl = value;
-                OnChanged();
+                //_filterPflanzenListeNachGebietsauswahl = value;
+                Set(ref _filterPflanzenListeNachGebietsauswahl, value);
+                //OnChanged();
             }
         }
 
@@ -65,18 +73,54 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _filterPflanzenListe; }
             set
             {
-                _filterPflanzenListe = value;
-                OnChanged();
+                //_filterPflanzenListe = value;
+                Set(ref _filterPflanzenListe, value);                
+                
+                ObservableCollection<iPflanzeBekannt> pflanzenBekannt = new ObservableCollection<iPflanzeBekannt>();                
+                foreach (Pflanze pflanze in value.OrderBy(t => t.Name))
+                {
+                    if (pflanzenBekannt.FirstOrDefault(t => t.p == pflanze) == null)
+                    {
+                        bool bekannt = (SelectedHeld != null &&
+                            SelectedHeld.Held_Pflanze.Where(t => t.Pflanze == pflanze).FirstOrDefault() != null &&
+                            SelectedHeld.Held_Pflanze.Where(t => t.Pflanze == pflanze).FirstOrDefault().Bekannt);
+
+                        pflanzenBekannt.Add(new iPflanzeBekannt()
+                        {
+                            p = pflanze,
+                            bekannt =
+                                (SelectedHeld != null ?
+                                bekannt : false)
+                        });
+                    }
+                }
+                FilterPflanzenListeBekannt = pflanzenBekannt;
+                
+                //OnChanged();
             }
         }
+
+        private ObservableCollection<iPflanzeBekannt> _filterPflanzenListeBekannt = new ObservableCollection<iPflanzeBekannt>();
+        public ObservableCollection<iPflanzeBekannt> FilterPflanzenListeBekannt
+        {
+            get { return _filterPflanzenListeBekannt; }
+            set
+            {
+                //_filterPflanzenListeBekannt = value;
+                Set(ref _filterPflanzenListeBekannt, value);
+                //OnChanged();
+            }
+        }
+        
         private List<Pflanze> _pflanzenListe = new List<Pflanze>();
         public List<Pflanze> PflanzenListe
         {
             get { return _pflanzenListe; }
             set
             {
-                _pflanzenListe = value;
-                OnChanged();
+                //_pflanzenListe = value;
+                Set(ref _pflanzenListe, value);
+                //OnChanged();
             }
         }
 
@@ -86,8 +130,9 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _landschaftenListe; }
             set
             {
-                _landschaftenListe = value;
-                OnChanged();
+                //_landschaftenListe = value;
+                Set(ref _landschaftenListe, value);
+                //OnChanged();
             }
         }
 
@@ -97,8 +142,9 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _landschaftenGebietListe; }
             set
             {
-                _landschaftenGebietListe = value;
-                OnChanged();
+                //_landschaftenGebietListe = value;
+                Set(ref _landschaftenGebietListe, value);
+                // OnChanged();
             }
         }
 
@@ -108,8 +154,9 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _landschaftGebietPflanzenListe; }
             set
             {
-                _landschaftGebietPflanzenListe = value;
-                OnChanged();
+                //_landschaftGebietPflanzenListe = value;
+                Set(ref _landschaftGebietPflanzenListe, value);
+                //OnChanged();
             }
         }
 
@@ -119,8 +166,334 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _heldenPos;}            
             set
             {
-                _heldenPos = value;
-                OnChanged();
+                //_heldenPos = value;
+                Set(ref _heldenPos, value);
+                //OnChanged();
+            }
+        }
+
+        private int _wertTaWTalent;
+        public int WertTaWTalent
+        {
+            get { return _wertTaWTalent; }
+            set
+            {
+                //_wertTaWTalent = value;
+                Set(ref _wertTaWTalent, value);
+                //OnChanged("WertTaWTalent");
+            }
+        }
+
+        private bool _pirschSelected;
+        public bool PirschSelected
+        {
+            get { return _pirschSelected; }
+            set { Set(ref _pirschSelected, value); }
+        }
+
+        private Held _zoo_HeldSelected = null;
+        public Held Zoo_HeldSelected
+        {
+            get { return _zoo_HeldSelected; }
+            set
+            {
+                //_zoo_HeldSelected = value;
+                Set(ref _zoo_HeldSelected, value);
+                //OnChanged();
+                SetHeldWerte();
+                SelectedHeld = value;
+                Kräuter_LandschaftGebietSelected = null;
+                PflanzeSelectedBekannt = null;
+                Kraeuter_Zuschlag = "";
+                Kräuter_LandschaftSelected = Kräuter_LandschaftSelected;
+                Nahrung_LandschaftSelected = Nahrung_LandschaftSelected;
+                Fischen_LandschaftSelected = Fischen_LandschaftSelected;
+            }
+        }
+
+
+        private List<Gebiet> _gebieteSelected = null;
+        public List<Gebiet> GebieteSelected
+        {
+            get { return _gebieteSelected; }
+            set
+            {
+                //_gebieteSelected = value;
+                Set(ref _gebieteSelected, value);
+
+                PflanzeSelected = null;
+                Kräuter_LandschaftGebietSelected = null;
+
+                List<Pflanze> pList = new List<Pflanze>();
+                List<Landschaft> pLandschaft = new List<Landschaft>();
+
+                if (value == null) return;
+
+                foreach (Gebiet g in value)
+                {
+                    if (g.Name == "ganz Aventurien" || g.Name == "überall")
+                    {
+                        pLandschaft = LandschaftenListe.OrderBy(t => t.Name).ToList();
+                        pList = PflanzenListe.OrderBy(t => t.Name).ToList();
+                        break;
+                    }
+                    else
+                    {
+                        foreach (var pGebiet in g.Pflanze)
+                        {
+                            if (!pList.Contains(pGebiet))
+                            {
+                                foreach (Pflanze_Ernte pErnte in pGebiet.Pflanze_Ernte)
+                                {
+                                    if (pGebiet.GetInErnte(MonatAuswahlWert)                                    
+                                         ||
+                                         MonatAuswahlWert == 0
+                                         && 
+                                         !pList.Contains(pGebiet))
+                                        pList.Add(pGebiet);
+                                }
+                            }
+                            pGebiet.Landschaften.ForEach(delegate(Landschaft l)
+                            {
+                                if (!pLandschaft.Contains(l))
+                                    pLandschaft.Add(l);
+                            });
+                        }
+                    }
+                }
+
+                //Ausklammern von Blutblatt und Karain, falls kein astraler Ort gewählt
+                //Ausklammern von Schwarzer Mohn, falls nicht Palakar gewählt
+                if (!SpeziellSelected.Equals("Astral durchzogener Ort"))
+                {
+                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Kairan")));
+                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Blutblatt")));
+                }
+                if (!SpeziellSelected.Equals("Palakar (Schwarze Stadt)"))
+                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Schwarzer Mohn")));
+
+                FilterPflanzenListe = pList;
+                FilterPflanzenListeNachGebietsauswahl = pList;
+                LandschaftGebietListe = pLandschaft.OrderBy(t => t.Name).ToList();
+                //OnChanged();
+            }
+        }
+                
+        private Landschaft _kräuter_LandschaftGebietSelected = null;
+        public Landschaft Kräuter_LandschaftGebietSelected
+        {
+            get { return _kräuter_LandschaftGebietSelected; }
+            set
+            {                
+                //_kräuter_LandschaftGebietSelected = value;
+                Set(ref _kräuter_LandschaftGebietSelected, value);
+                List<Pflanze> pList = new List<Pflanze>();// FilterPflanzenListeNachGebietsauswahl.ToList();
+                FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
+
+                if (value == null || !value.Name.Equals("überall"))
+                {
+                    FilterPflanzenListe.ForEach(delegate(Pflanze p)
+                    {
+                        if (p.Landschaften.Contains(value) && !pList.Contains(p))
+                            pList.Add(p);
+                        //if (!p.Landschaften.Contains(value))
+                        //    pList.Remove(p);
+                    });                    
+                }
+                if (value != null && value.Name.Equals("überall"))
+                    pList = FilterPflanzenListe;
+                FilterPflanzenListe = pList.OrderBy(t => t.Name).ToList();
+                //OnChanged();
+            }
+        }
+        
+
+        private string _regionSelected = "";
+        public string RegionSelected
+        {
+            get { return _regionSelected; }
+            set
+            {
+                //_regionSelected = value;
+                Set(ref _regionSelected, value);
+                //OnChanged();                
+                Region_SelectedIndexChanged();
+                Nahrung_SelectedIndexChanged();
+                Jagd_RegionSelectedIndexChanged();
+                Fischen_Region_SelectedIndexChanged();
+            }
+        }
+
+        private string _zoo_Fernkampfwaffe = "Bogen";
+        public string Zoo_Fernkampfwaffe
+        {
+            get { return _zoo_Fernkampfwaffe; }
+            set
+            {
+                //_zoo_Fernkampfwaffe = value;
+                SetHeldWerte();
+                BerechneTAWJagd();
+                Set(ref _zoo_Fernkampfwaffe, value);
+                //OnChanged();            
+            }
+        }
+                
+        private bool _nahrung_NutzeAckerbau = false;
+        public bool Nahrung_NutzeAckerbau
+        {
+            get { return _nahrung_NutzeAckerbau; }
+            set
+            {
+                //_nahrung_NutzeAckerbau = value;
+                Set(ref _nahrung_NutzeAckerbau, value);
+                //OnChanged();
+            }
+        }
+
+        private bool _kräuter_HatSuchdauerVerdoppelt = false;
+        public bool Kräuter_HatSuchdauerVerdoppelt
+        {
+            get { return _kräuter_HatSuchdauerVerdoppelt; }
+            set
+            {
+                //_kräuter_HatSuchdauerVerdoppelt = value;
+                Set(ref _kräuter_HatSuchdauerVerdoppelt, value);
+                //OnChanged();
+            }
+        }
+        private bool _nahrung_HatSuchdauerVerdoppelt = false;
+        public bool Nahrung_HatSuchdauerVerdoppelt
+        {
+            get { return _nahrung_HatSuchdauerVerdoppelt; }
+            set
+            {
+                //_nahrung_HatSuchdauerVerdoppelt = value;
+                Set(ref _nahrung_HatSuchdauerVerdoppelt, value);
+                //OnChanged();
+            }
+        }
+
+        private bool _fischen_FallenInRuheAufstellen = false;
+        public bool Fischen_FallenInRuheAufstellen
+        {
+            get { return _fischen_FallenInRuheAufstellen; }
+            set
+            {
+                //_fischen_FallenInRuheAufstellen = value;
+                Set(ref _fischen_FallenInRuheAufstellen, value);
+                //OnChanged();
+            }
+        }
+        
+
+        private string _kräuter_landschaftSelected = "";
+        public string Kräuter_LandschaftSelected
+        {
+            get { return _kräuter_landschaftSelected; }
+            set
+            {
+                //_kräuter_landschaftSelected = value;
+                Set(ref _kräuter_landschaftSelected, value);
+                //OnChanged();
+                Kräuter_Landschaft_SelectedIndexChanged();
+
+                // Fügt die Geländekunde hinzu nach der ausgewählten Region
+                Kräuter_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
+            }
+        }
+
+        private string _nahrung_landschaftSelected = "";
+        public string Nahrung_LandschaftSelected
+        {
+            get { return _nahrung_landschaftSelected; }
+            set
+            {
+                //_nahrung_landschaftSelected = value;
+                Set(ref _nahrung_landschaftSelected, value);
+                //OnChanged();
+
+                // Fügt die Geländekunde hinzu nach der ausgewählten Region
+                Nahrung_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
+            }
+        }
+
+        private string _fischen_landschaftSelected = "";
+        public string Fischen_LandschaftSelected
+        {
+            get { return _fischen_landschaftSelected; }
+            set
+            {
+                //_fischen_landschaftSelected = value;
+                Set(ref _fischen_landschaftSelected, value);
+                //OnChanged();
+
+                // Fügt die Geländekunde hinzu nach der ausgewählten Region
+                Fischen_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
+            }
+        }
+
+        private string _jagd_landschaftSelected = "";
+        public string Jagd_LandschaftSelected
+        {
+            get { return _jagd_landschaftSelected; }
+            set
+            {
+                //_jagd_landschaftSelected = value;
+                Set(ref _jagd_landschaftSelected, value);
+                //OnChanged();
+                Jagd_Landschaft_SelectedIndexChanged();
+                // Fügr die Geländekunde hinzu nach der ausgewählten Region
+                Jagd_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
+            }
+        }
+        //private string _pflanzeSelected = "";
+        //public string PflanzeSelected
+        //{
+        //    get { return _pflanzeSelected; }
+        //    set
+        //    {
+        //        _pflanzeSelected = value;
+        //        OnChanged();
+        //        Pflanze_SelectedIndexChanged();
+        //    }
+        //}
+
+        private iPflanzeBekannt _pflanzeSelectedBekannt = null;
+        public iPflanzeBekannt PflanzeSelectedBekannt
+        {
+            get { return _pflanzeSelectedBekannt; }
+            set
+            {
+                //_pflanzeSelectedBekannt = value;
+                Set(ref _pflanzeSelectedBekannt, value);
+                //OnChanged();
+                PflanzeSelected = (value != null)? value.p : null;
+            }
+        }
+
+        private Pflanze _pflanzeSelected = null;
+        public Pflanze PflanzeSelected
+        {
+            get { return _pflanzeSelected; }
+            set
+            {
+                //_pflanzeSelected = value;
+                Set(ref _pflanzeSelected, value);
+                //OnChanged();
+                Pflanze_SelectedIndexChanged();
+            }
+        }
+        
+        private string _jagd_TierSelected = "";
+        public string Jagd_TierSelected
+        {
+            get { return _jagd_TierSelected; }
+            set
+            {
+                //_jagd_TierSelected = value;
+                Set(ref _jagd_TierSelected, value);
+                //OnChanged();
+                Tier_SelectedIndexChanged();
             }
         }
 
@@ -450,17 +823,6 @@ namespace MeisterGeister.ViewModel.ZooBot
         }     
         
         #endregion
-
-        private int _wertTaWTalent;
-        public int WertTaWTalent
-        {
-            get { return _wertTaWTalent; }
-            set
-            {
-                _wertTaWTalent = value;
-                OnChanged("WertTaWTalent");
-            }
-        }
 
         #region Talente
         private Talent _talentKräuterSuchen;
@@ -1353,7 +1715,8 @@ namespace MeisterGeister.ViewModel.ZooBot
                 string suchmonat = (Datum.Aktuell.Monat == Monat.NamenloseTage ? "Namenlose Tage" : Datum.Aktuell.MonatString());
                 SuchMonatSelected = suchmonat;
 
-                HeldenPos = new Point(Global.HeldenLon, Global.HeldenLat); 
+                GebieteVonPos(null);
+                //HeldenPos = new Point(Global.HeldenLon, Global.HeldenLat); 
                 IsLoaded = true;
             }
         }
@@ -1368,283 +1731,7 @@ namespace MeisterGeister.ViewModel.ZooBot
         #endregion
 
         #region //---- EVENTS ----
-
-        private Held _zoo_HeldSelected = null;
-        public Held Zoo_HeldSelected
-        {
-            get { return _zoo_HeldSelected; }
-            set
-            {
-                _zoo_HeldSelected = value;
-                OnChanged();
-                SetHeldWerte();
-                SelectedHeld = value;
-                Kräuter_LandschaftSelected = Kräuter_LandschaftSelected;
-                Nahrung_LandschaftSelected = Nahrung_LandschaftSelected;
-                Fischen_LandschaftSelected = Fischen_LandschaftSelected;
-            }
-        }
-
-
-        private List<Gebiet> _gebieteSelected = null;
-        public List<Gebiet> GebieteSelected
-        {
-            get { return _gebieteSelected; }
-            set
-            {
-                _gebieteSelected = value;
-
-                PflanzeSelected = null;
-                Kräuter_LandschaftGebietSelected = null;
-
-                List<Pflanze> pList = new List<Pflanze>();
-                List<Landschaft> pLandschaft = new List<Landschaft>();
-
-                if (value == null) return;
-
-                foreach (Gebiet g in value)
-                {
-                    if (g.Name == "ganz Aventurien")
-                    {
-                        pLandschaft = LandschaftenListe.OrderBy(t => t.Name).ToList();
-                        pList = PflanzenListe.OrderBy(t => t.Name).ToList();
-                        break;
-                    }
-                    else
-                    {
-                        foreach (var pGebiet in g.Pflanze)
-                        {
-                            if (!pList.Contains(pGebiet))
-                            {
-                                foreach (Pflanze_Ernte pErnte in pGebiet.Pflanze_Ernte)
-                                {
-                                    if (pGebiet.GetInErnte(MonatAuswahlWert)
-                                    
-                                          ||
-                                          MonatAuswahlWert == 0
-                                         && 
-                                         !pList.Contains(pGebiet))
-                                        pList.Add(pGebiet);
-                                }
-                            }
-                            pGebiet.Landschaften.ForEach(delegate(Landschaft l)
-                            {
-                                if (!pLandschaft.Contains(l))
-                                    pLandschaft.Add(l);
-                            });
-                        }
-                    }
-                }
-
-                //Ausklammern von Blutblatt und Karain, falls kein astraler Ort gewählt
-                //Ausklammern von Schwarzer Mohn, falls nicht Palakar gewählt
-                if (!SpeziellSelected.Equals("Astral durchzogener Ort"))
-                {
-                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Kairan")));
-                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Blutblatt")));
-                }
-                if (!SpeziellSelected.Equals("Palakar (Schwarze Stadt)"))
-                    pList.Remove(pList.FirstOrDefault(t => t.Name.Equals("Schwarzer Mohn")));
-
-                FilterPflanzenListe = pList;
-                FilterPflanzenListeNachGebietsauswahl = pList;
-                LandschaftGebietListe = pLandschaft.OrderBy(t => t.Name).ToList();
-                OnChanged();
-            }
-        }
                 
-        private Landschaft _kräuter_LandschaftGebietSelected = null;
-        public Landschaft Kräuter_LandschaftGebietSelected
-        {
-            get { return _kräuter_LandschaftGebietSelected; }
-            set
-            {                
-                _kräuter_LandschaftGebietSelected = value;
-                List<Pflanze> pList = new List<Pflanze>();// FilterPflanzenListeNachGebietsauswahl.ToList();
-                FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
-
-                if (value == null || !value.Name.Equals("überall"))
-                {
-                    FilterPflanzenListe.ForEach(delegate(Pflanze p)
-                    {
-                        if (p.Landschaften.Contains(value) && !pList.Contains(p))
-                            pList.Add(p);
-                        //if (!p.Landschaften.Contains(value))
-                        //    pList.Remove(p);
-                    });
-                    
-                }
-
-                FilterPflanzenListe = pList.OrderBy(t => t.Name).ToList();
-                OnChanged();
-            }
-        }
-        
-
-        private string _regionSelected = "";
-        public string RegionSelected
-        {
-            get { return _regionSelected; }
-            set
-            {
-                _regionSelected = value;
-                OnChanged();                
-                Region_SelectedIndexChanged();
-                Nahrung_SelectedIndexChanged();
-                Jagd_RegionSelectedIndexChanged();
-                Fischen_Region_SelectedIndexChanged();
-            }
-        }
-
-        private string _zoo_Fernkampfwaffe = "Bogen";
-        public string Zoo_Fernkampfwaffe
-        {
-            get { return _zoo_Fernkampfwaffe; }
-            set
-            {
-                _zoo_Fernkampfwaffe = value;
-                SetHeldWerte();
-                BerechneTAWJagd();
-                OnChanged();            
-            }
-        }
-                
-        private bool _nahrung_NutzeAckerbau = false;
-        public bool Nahrung_NutzeAckerbau
-        {
-            get { return _nahrung_NutzeAckerbau; }
-            set
-            {
-                _nahrung_NutzeAckerbau = value;
-                OnChanged();
-            }
-        }
-
-        private bool _kräuter_HatSuchdauerVerdoppelt = false;
-        public bool Kräuter_HatSuchdauerVerdoppelt
-        {
-            get { return _kräuter_HatSuchdauerVerdoppelt; }
-            set
-            {
-                _kräuter_HatSuchdauerVerdoppelt = value;
-                OnChanged();
-            }
-        }
-        private bool _nahrung_HatSuchdauerVerdoppelt = false;
-        public bool Nahrung_HatSuchdauerVerdoppelt
-        {
-            get { return _nahrung_HatSuchdauerVerdoppelt; }
-            set
-            {
-                _nahrung_HatSuchdauerVerdoppelt = value;
-                OnChanged();
-            }
-        }
-
-        private bool _fischen_FallenInRuheAufstellen = false;
-        public bool Fischen_FallenInRuheAufstellen
-        {
-            get { return _fischen_FallenInRuheAufstellen; }
-            set
-            {
-                _fischen_FallenInRuheAufstellen = value;
-                OnChanged();
-            }
-        }
-        
-
-        private string _kräuter_landschaftSelected = "";
-        public string Kräuter_LandschaftSelected
-        {
-            get { return _kräuter_landschaftSelected; }
-            set
-            {
-                _kräuter_landschaftSelected = value;
-                OnChanged();
-                Kräuter_Landschaft_SelectedIndexChanged();
-
-                // Fügt die Geländekunde hinzu nach der ausgewählten Region
-                Kräuter_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
-            }
-        }
-
-        private string _nahrung_landschaftSelected = "";
-        public string Nahrung_LandschaftSelected
-        {
-            get { return _nahrung_landschaftSelected; }
-            set
-            {
-                _nahrung_landschaftSelected = value;
-                OnChanged();
-
-                // Fügt die Geländekunde hinzu nach der ausgewählten Region
-                Nahrung_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
-            }
-        }
-
-        private string _fischen_landschaftSelected = "";
-        public string Fischen_LandschaftSelected
-        {
-            get { return _fischen_landschaftSelected; }
-            set
-            {
-                _fischen_landschaftSelected = value;
-                OnChanged();
-
-                // Fügt die Geländekunde hinzu nach der ausgewählten Region
-                Fischen_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
-            }
-        }
-
-        private string _jagd_landschaftSelected = "";
-        public string Jagd_LandschaftSelected
-        {
-            get { return _jagd_landschaftSelected; }
-            set
-            {
-                _jagd_landschaftSelected = value;
-                OnChanged();
-                Jagd_Landschaft_SelectedIndexChanged();
-                // Fügr die Geländekunde hinzu nach der ausgewählten Region
-                Jagd_HatGeländekunde = (value != null && value != "") ? SetGeländekunde(value) : false;
-            }
-        }
-        //private string _pflanzeSelected = "";
-        //public string PflanzeSelected
-        //{
-        //    get { return _pflanzeSelected; }
-        //    set
-        //    {
-        //        _pflanzeSelected = value;
-        //        OnChanged();
-        //        Pflanze_SelectedIndexChanged();
-        //    }
-        //}
-
-        private Pflanze _pflanzeSelected = null;
-        public Pflanze PflanzeSelected
-        {
-            get { return _pflanzeSelected; }
-            set
-            {
-                _pflanzeSelected = value;
-                OnChanged();
-                Pflanze_SelectedIndexChanged();
-            }
-        }
-        
-        private string _jagd_TierSelected = "";
-        public string Jagd_TierSelected
-        {
-            get { return _jagd_TierSelected; }
-            set
-            {
-                _jagd_TierSelected = value;
-                OnChanged();
-                Tier_SelectedIndexChanged();
-            }
-        }
-        
         private void Region_SelectedIndexChanged()
         {
             //Setzt leere Strings in allen Boxen, da sonst NullPointExceptions
@@ -2073,15 +2160,14 @@ namespace MeisterGeister.ViewModel.ZooBot
                     _onGebieteVonPos = new Base.CommandBase(GebieteVonPos, null);
                 return _onGebieteVonPos;
             }
-        }
-        
+        }        
         /// <summary>
         /// Button zum Bestimmen der Gebiete in der aktuellen Position
         /// </summary>
         void GebieteVonPos(object obj)
         {
+            Kraeuter_Zuschlag = "";
             HeldenPos = new Point(Global.HeldenLon, Global.HeldenLat);
-
             List<Gebiet> gList = new List<Gebiet>();
             var gebiete = Global.ContextZooBot.GetGebiete(HeldenPos, 0.2);
             if (gebiete != null)
@@ -3202,8 +3288,7 @@ namespace MeisterGeister.ViewModel.ZooBot
             Fischen_Ausgabe = ausgabe;
         }
         #endregion
-
-
+        
         public void SetHeldWerte(string talentname = "")
         {            
             Model.Held h = null;
