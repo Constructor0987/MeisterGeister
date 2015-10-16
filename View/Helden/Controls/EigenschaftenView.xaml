@@ -61,43 +61,44 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="28*" />
                     </Grid.RowDefinitions>
+                    <Border Grid.Row="1" Grid.ColumnSpan="6" Grid.RowSpan="4" Background="#99836023" CornerRadius="10" Opacity="0.8" />
                     <Label Grid.Column="1" Grid.Row="0" Margin="17,3" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="2" Grid.Row="0" Margin="16,3,17,3" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="4" Grid.Row="0" Margin="17,3" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="5" Grid.Row="0" Margin="16,3,17,3" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" FontStyle="Italic" />
-                    <Label Grid.Column="0" Grid.Row="1" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                    <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedHeld.MU}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushMU}" />
+                    <ViewGeneral:IntBox  Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedHeld.MU}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeMU}" WertName="MU-Basiswert" 
 						StartWert="{Binding SelectedHeld.MU}" Wert="{Binding SelectedHeld.Mut}" />
-                    <Label Grid.Column="0" Grid.Row="2" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <Label Grid.Column="0" Grid.Row="2" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushKL}" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding SelectedHeld.KL}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeKL}" WertName="KL-Basiswert" 
 						StartWert="{Binding SelectedHeld.KL}" Wert="{Binding SelectedHeld.Klugheit}" />
-                    <Label Grid.Column="0" Grid.Row="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <Label Grid.Column="0" Grid.Row="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushIN}" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" Value="{Binding SelectedHeld.IN}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeIN}" WertName="IN-Basiswert" 
 						StartWert="{Binding SelectedHeld.IN}" Wert="{Binding SelectedHeld.Intuition}" />
-                    <Label Grid.Column="0" Grid.Row="4" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <Label Grid.Column="0" Grid.Row="4" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushCH}" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Charisma" Value="{Binding SelectedHeld.CH}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeCH}" WertName="CH-Basiswert" 
 						StartWert="{Binding SelectedHeld.CH}" Wert="{Binding SelectedHeld.Charisma}" />
-                    <Label Grid.Column="3" Grid.Row="1" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <Label Grid.Column="3" Grid.Row="1" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushFF}" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" Value="{Binding SelectedHeld.FF}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeFF}" WertName="FF-Basiswert" 
 						StartWert="{Binding SelectedHeld.FF}" Wert="{Binding SelectedHeld.Fingerfertigkeit}" />
-                    <Label Grid.Column="3" Grid.Row="2" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <Label Grid.Column="3" Grid.Row="2" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushGE}" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Gewandtheit" Value="{Binding SelectedHeld.GE}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeGE}" WertName="GE-Basiswert" 
 						StartWert="{Binding SelectedHeld.GE}" Wert="{Binding SelectedHeld.Gewandtheit}" />
-                    <Label Grid.Column="3" Grid.Row="3" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <Label Grid.Column="3" Grid.Row="3" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushKO}" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Konstitution" Value="{Binding SelectedHeld.KO}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeKO}" WertName="KO-Basiswert" 
 						StartWert="{Binding SelectedHeld.KO}" Wert="{Binding SelectedHeld.Konstitution}" />
-                    <Label Grid.Column="3" Grid.Row="4" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <Label Grid.Column="3" Grid.Row="4" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource BrushKK}" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Körperkraft" Value="{Binding SelectedHeld.KK}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeKK}" WertName="KK-Basiswert" 
 						StartWert="{Binding SelectedHeld.KK}" Wert="{Binding SelectedHeld.Körperkraft}" />
-
+                    
                     <Label Grid.Column="7" Grid.Row="1" Margin="3,3,0,3" Content="INI-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="8" Grid.Row="1" HorizontalAlignment="Center" MinWidth="65" ShowButtons="True" ToolTip="Initiative-Modifikator durch Rasse/Kultur/Profession" Value="{Binding SelectedHeld.InitiativeModGen}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                     <TextBlock Grid.Column="9" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding SelectedHeld.InitiativeBasisOhneMod}" TextAlignment="Center" VerticalAlignment="Center" />
@@ -145,24 +146,24 @@
                     <Label Grid.Column="11" Grid.Row="1" Margin="3,3,0,3" Content="Magisch:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     <Label Grid.Column="11" Grid.Row="2" Margin="3,3,0,3" Content="Klerikal:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Visibility="{Binding SelectedHeld.Geweiht, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     <ComboBox Grid.Column="12" Grid.Row="1" Margin="3" MinWidth="55" SelectedValuePath="Content" SelectedValue="{Binding SelectedHeld.LeiteigenschaftMagisch}" VerticalContentAlignment="Center" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ComboBoxItem Content="MU" Background="Red" />
-                        <ComboBoxItem Content="KL" Background="Purple" />
-                        <ComboBoxItem Content="IN" Background="Lime" />
-                        <ComboBoxItem Content="CH" Background="Black" Foreground="White" />
-                        <ComboBoxItem Content="FF" Background="Yellow" />
-                        <ComboBoxItem Content="GE" Background="Blue" />
-                        <ComboBoxItem Content="KO" Background="White" />
-                        <ComboBoxItem Content="KK" Background="#FFFF6600" />
+                        <ComboBoxItem Content="MU" Background="{DynamicResource BrushMU}" />
+                        <ComboBoxItem Content="KL" Background="{DynamicResource BrushKL}" />
+                        <ComboBoxItem Content="IN" Background="{DynamicResource BrushIN}" />
+                        <ComboBoxItem Content="CH" Background="{DynamicResource BrushCH}" Foreground="White" />
+                        <ComboBoxItem Content="FF" Background="{DynamicResource BrushFF}" />
+                        <ComboBoxItem Content="GE" Background="{DynamicResource BrushGE}" />
+                        <ComboBoxItem Content="KO" Background="{DynamicResource BrushKO}" />
+                        <ComboBoxItem Content="KK" Background="{DynamicResource BrushKK}" />
                     </ComboBox>
                     <ComboBox Grid.Column="12" Grid.Row="2" Margin="3" MinWidth="55" SelectedValuePath="Content" SelectedValue="{Binding SelectedHeld.LeiteigenschaftKlerikal}" VerticalContentAlignment="Center" Visibility="{Binding SelectedHeld.Geweiht, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ComboBoxItem Content="MU" Background="Red" />
-                        <ComboBoxItem Content="KL" Background="Purple" />
-                        <ComboBoxItem Content="IN" Background="Lime" />
-                        <ComboBoxItem Content="CH" Background="Black" Foreground="White" />
-                        <ComboBoxItem Content="FF" Background="Yellow" />
-                        <ComboBoxItem Content="GE" Background="Blue" />
-                        <ComboBoxItem Content="KO" Background="White" />
-                        <ComboBoxItem Content="KK" Background="#FFFF6600" />
+                        <ComboBoxItem Content="MU" Background="{DynamicResource BrushMU}" />
+                        <ComboBoxItem Content="KL" Background="{DynamicResource BrushKL}" />
+                        <ComboBoxItem Content="IN" Background="{DynamicResource BrushIN}" />
+                        <ComboBoxItem Content="CH" Background="{DynamicResource BrushCH}" Foreground="White" />
+                        <ComboBoxItem Content="FF" Background="{DynamicResource BrushFF}" />
+                        <ComboBoxItem Content="GE" Background="{DynamicResource BrushGE}" />
+                        <ComboBoxItem Content="KO" Background="{DynamicResource BrushKO}" />
+                        <ComboBoxItem Content="KK" Background="{DynamicResource BrushKK}" />
                     </ComboBox>
                 </Grid>
             </Border>

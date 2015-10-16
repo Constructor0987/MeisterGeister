@@ -7,6 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <!-- Eigenschaften Farben (nach DSA5) -->
+    <SolidColorBrush x:Key="BrushMU" Color="#FFD42329"/>
+    <SolidColorBrush x:Key="BrushKL" Color="#FF98478C"/>
+    <SolidColorBrush x:Key="BrushIN" Color="#FF68A94F"/>
+    <SolidColorBrush x:Key="BrushCH" Color="#FF0A0B0F"/>
+    <SolidColorBrush x:Key="BrushFF" Color="#FFE2CC1C"/>
+    <SolidColorBrush x:Key="BrushGE" Color="#FF2A4D91"/>
+    <SolidColorBrush x:Key="BrushKO" Color="#FFEEEEEE"/>
+    <SolidColorBrush x:Key="BrushKK" Color="#FFE48E21"/>
+    
     <!-- CombplexTpye -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     <mg:InverseBooleanConverter x:Key="InverseBooleanConverter1" />
