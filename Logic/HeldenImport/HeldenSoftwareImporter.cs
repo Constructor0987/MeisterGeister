@@ -463,73 +463,84 @@ namespace MeisterGeister.Logic.HeldenImport
             }
 
             // Eigenschaften
-            int mod, wert;
+            int mod, value, permanent;
             XmlNodeList eigenschaften = _xmlDoc.SelectNodes("helden/held/eigenschaften/eigenschaft");
             if (eigenschaften.Count == 0)
                 eigenschaften = _xmlDoc.SelectNodes("helden/held/eigenschaft");
 
             foreach (XmlNode eigenschaft in eigenschaften)
             {
-                // Wert
+                // Value (Zukauf)
                 if (eigenschaft.Attributes["value"] != null)
-                    wert = Convert.ToInt32(eigenschaft.Attributes["value"].Value);
+                    value = Convert.ToInt32(eigenschaft.Attributes["value"].Value);
                 else
-                    wert = 0;
+                    value = 0;
 
-                // Modifikator
+                // Modifikator (Generierung, VorNachteile)
                 if (eigenschaft.Attributes["mod"] != null)
                     mod = Convert.ToInt32(eigenschaft.Attributes["mod"].Value);
                 else
                     mod = 0;
 
+                // Permanent
+                if (eigenschaft.Attributes["permanent"] != null)
+                    permanent = Convert.ToInt32(eigenschaft.Attributes["permanent"].Value);
+                else
+                    permanent = 0;
+
                 switch (eigenschaft.Attributes["name"].Value)
                 {
                     case "Mut":
-                        _held.MU = wert + mod;
+                        _held.MU = value + mod;
                         break;
                     case "Klugheit":
-                        _held.KL = wert + mod;
+                        _held.KL = value + mod;
                         break;
                     case "Intuition":
-                        _held.IN = wert + mod;
+                        _held.IN = value + mod;
                         break;
                     case "Charisma":
-                        _held.CH = wert + mod;
+                        _held.CH = value + mod;
                         break;
                     case "Fingerfertigkeit":
-                        _held.FF = wert + mod;
+                        _held.FF = value + mod;
                         break;
                     case "Gewandtheit":
-                        _held.GE = wert + mod;
+                        _held.GE = value + mod;
                         break;
                     case "Konstitution":
-                        _held.KO = wert + mod;
+                        _held.KO = value + mod;
                         break;
                     case "Körperkraft":
-                        _held.KK = wert + mod;
+                        _held.KK = value + mod;
                         break;
                     case "Sozialstatus":
-                        _held.SO = wert + mod;
+                        _held.SO = value + mod;
                         break;
                     case "Lebensenergie":
-                        _held.LE_Mod = wert + mod;
+                        _held.LE_ModGen = mod - permanent; // VorNachteile werden in ImportVorNachteile() rausgerechnet werden
+                        _held.LE_ModZukauf = value;
+                        _held.LE_Mod = permanent;
                         break;
                     case "Ausdauer":
-                        _held.AU_Mod = wert + mod;
+                        _held.AU_ModGen = mod - permanent; // VorNachteile werden in ImportVorNachteile() rausgerechnet werden
+                        _held.AU_ModZukauf = value;
+                        _held.AU_Mod = permanent;
                         break;
                     case "Astralenergie":
-                        _held.AE_Mod = wert + mod;
+                        _held.AE_Mod = value + mod;
                         break;
                     case "Karmaenergie":
-                        _held.KE_Mod = wert + mod;
+                        _held.KE_Mod = value + mod;
                         break;
                     case "Magieresistenz":
-                        _held.MR_Mod = wert + mod;
+                        _held.MR_Mod = value + mod;
                         break;
                     default:
                         break;
                 }
             }
+
             _held.LebensenergieAktuell = _held.LebensenergieMax;
             _held.AusdauerAktuell = _held.AusdauerMax;
             _held.KarmaenergieAktuell = _held.KarmaenergieMax;
@@ -991,6 +1002,24 @@ namespace MeisterGeister.Logic.HeldenImport
                         string vtNameNeu = (vorNachteilName + " " + iWert.ToRoman()).ToLowerInvariant();
                         if (_vorNachteilMapping.ContainsKey(vtNameNeu))
                             added = AddVorNachteil(_vorNachteilMapping[vtNameNeu], null, _held);
+                    }
+                }
+
+                if (added)
+                {
+                    if (vorNachteilName == "Hohe Lebenskraft" || vorNachteilName == "Niedrige Lebenskraft" 
+                        || vorNachteilName == "Ausdauernd" || vorNachteilName == "Kurzatmig")
+                    {
+                        int iWert = 0;
+                        Int32.TryParse(wertString, out iWert);
+                        if (vorNachteilName.StartsWith("Hohe"))
+                            _held.LE_ModGen -= iWert;
+                        else if (vorNachteilName.StartsWith("Niedrige"))
+                            _held.LE_ModGen += iWert;
+                        else if (vorNachteilName.StartsWith("Ausdauernd"))
+                            _held.AU_ModGen -= iWert;
+                        else if (vorNachteilName.StartsWith("Kurzatmig"))
+                            _held.AU_ModGen += iWert;
                     }
                 }
 

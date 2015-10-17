@@ -624,8 +624,8 @@ namespace MeisterGeister.Model {
             get
             {
                 int mod = 0;
-                mod += CalcVorNachteilEnergieMod(VorNachteil.Ausdauernd, 2);
-                mod += CalcVorNachteilEnergieMod(VorNachteil.Kurzatmig, 2);
+                mod += CalcVorNachteilEnergieMod(VorNachteil.Ausdauernd);
+                mod += CalcVorNachteilEnergieMod(VorNachteil.Kurzatmig);
                 return mod;
             }
         }
