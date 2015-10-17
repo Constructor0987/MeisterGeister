@@ -388,6 +388,24 @@ namespace MeisterGeister.ViewModel.Helden
             if (existing != null && overwrite && (isHeldenblatt || isHeldenSoftware))
             { // MeisterGeister spezifische Daten beim Reimport übernehmen
                 importHeld.Spieler = existing.Spieler;
+                importHeld.Notizen = existing.Notizen;
+                importHeld.Kampfwerte = existing.Kampfwerte;
+                if (importHeld.CheckEnergieständeAbwechend(existing) 
+                    && ConfirmYesNoCancel("Energiestände & Wunden", "Sollen die aktuellen Energiestände und Wunden beibehalten werden?") == 2)
+                {
+                    importHeld.LebensenergieAktuell = existing.LebensenergieAktuell;
+                    importHeld.AusdauerAktuell = existing.AusdauerAktuell;
+                    importHeld.AstralenergieAktuell = existing.AstralenergieAktuell;
+                    importHeld.KarmaenergieAktuell = existing.KarmaenergieAktuell;
+                    importHeld.Wunden = existing.Wunden;
+                    importHeld.WundenArmL = existing.WundenArmL;
+                    importHeld.WundenArmR = existing.WundenArmR;
+                    importHeld.WundenBauch = existing.WundenBauch;
+                    importHeld.WundenBeinL = existing.WundenBeinL;
+                    importHeld.WundenBeinR = existing.WundenBeinR;
+                    importHeld.WundenBrust = existing.WundenBrust;
+                    importHeld.WundenKopf = existing.WundenKopf;
+                }
             }
 
             LoadDaten();

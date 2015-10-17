@@ -2272,6 +2272,22 @@ namespace MeisterGeister.Model {
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
 
+        public bool CheckEnergieständeAbwechend(Held h)
+        {
+            return (LebensenergieAktuell != h.LebensenergieAktuell)
+                || (AusdauerAktuell != h.AusdauerAktuell)
+                || (AstralenergieAktuell != h.AstralenergieAktuell)
+                || (KarmaenergieAktuell != h.KarmaenergieAktuell)
+                || (Wunden != h.Wunden)
+                || (WundenArmL != h.WundenArmL)
+                || (WundenArmR != h.WundenArmR)
+                || (WundenBauch != h.WundenBauch)
+                || (WundenBeinL != h.WundenBeinL)
+                || (WundenBeinR != h.WundenBeinR)
+                || (WundenBrust != h.WundenBrust)
+                || (WundenKopf != h.WundenKopf);
+        }
+
         public void Export(string pfad, bool batch = false) {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             serialization.ExportHeld(HeldGUID, pfad);
