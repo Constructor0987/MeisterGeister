@@ -169,6 +169,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _sonderfertigkeitMapping.Add("waffenloser kampfstil: echsenzwinger", "waffenlose kampftechnik (unauer schule/cyclopeisches ringen/echsenzwinger)");
             _sonderfertigkeitMapping.Add("waffenloser kampfstil: bornländisch", "waffenlose kampftechnik (bornländisch/gossenstil)");
             _sonderfertigkeitMapping.Add("waffenloser kampfstil: gossenstil", "waffenlose kampftechnik (bornländisch/gossenstil)");
+            _sonderfertigkeitMapping.Add("spätweihe ddz", "spätweihe dunkle zeiten");
         }
 
         private static void SetVorNachteilMapping()
@@ -463,7 +464,7 @@ namespace MeisterGeister.Logic.HeldenImport
             }
 
             // Eigenschaften
-            int mod, value, permanent;
+            int mod, value, permanent, grossemeditation, karmalqueste;
             XmlNodeList eigenschaften = _xmlDoc.SelectNodes("helden/held/eigenschaften/eigenschaft");
             if (eigenschaften.Count == 0)
                 eigenschaften = _xmlDoc.SelectNodes("helden/held/eigenschaft");
@@ -487,6 +488,16 @@ namespace MeisterGeister.Logic.HeldenImport
                     permanent = Convert.ToInt32(eigenschaft.Attributes["permanent"].Value);
                 else
                     permanent = 0;
+                // Grossemeditation
+                if (eigenschaft.Attributes["grossemeditation"] != null)
+                    grossemeditation = Convert.ToInt32(eigenschaft.Attributes["grossemeditation"].Value);
+                else
+                    grossemeditation = 0;
+                // Karmalqueste
+                if (eigenschaft.Attributes["karmalqueste"] != null)
+                    karmalqueste = Convert.ToInt32(eigenschaft.Attributes["karmalqueste"].Value);
+                else
+                    karmalqueste = 0;
 
                 switch (eigenschaft.Attributes["name"].Value)
                 {
@@ -518,20 +529,25 @@ namespace MeisterGeister.Logic.HeldenImport
                         _held.SO = value + mod;
                         break;
                     case "Lebensenergie":
-                        _held.LE_ModGen = mod - permanent; // VorNachteile werden in ImportVorNachteile() rausgerechnet werden
+                        _held.LE_ModGen = mod - permanent; // VorNachteile werden in ImportVorNachteile() rausgerechnet
                         _held.LE_ModZukauf = value;
                         _held.LE_Mod = permanent;
                         break;
                     case "Ausdauer":
-                        _held.AU_ModGen = mod - permanent; // VorNachteile werden in ImportVorNachteile() rausgerechnet werden
+                        _held.AU_ModGen = mod - permanent; // VorNachteile werden in ImportVorNachteile() rausgerechnet
                         _held.AU_ModZukauf = value;
                         _held.AU_Mod = permanent;
                         break;
                     case "Astralenergie":
-                        _held.AE_Mod = value + mod;
+                        _held.AE_ModGen = mod - permanent - grossemeditation; // VorNachteile werden in ImportVorNachteile() rausgerechnet
+                        _held.AE_pAsP = permanent * -1;
+                        _held.AE_ModZukauf = value;
+                        _held.AE_Mod = grossemeditation;
                         break;
                     case "Karmaenergie":
-                        _held.KE_Mod = value + mod;
+                        _held.KE_ModGen = mod - permanent - karmalqueste; // VorNachteile/SF werden in Import...() rausgerechnet
+                        _held.KE_ModZukauf = value;
+                        _held.KE_Mod = permanent + karmalqueste;
                         break;
                     case "Magieresistenz":
                         _held.MR_Mod = value + mod;
@@ -881,6 +897,18 @@ namespace MeisterGeister.Logic.HeldenImport
                     }
                 }
 
+                if (added)
+                {
+                    int iWert = 0;
+                    Int32.TryParse(wertString, out iWert);
+                    if (sfName == "Spätweihe Alveranische Gottheit" || sfName == "Spätweihe Namenloser" || sfName == "Spätweihe (Xo'Artal-Pantheon)")
+                        _held.KE_ModGen -= 24; // Hinweis: 'Spätweihe (Xo'Artal-Pantheon)' gibt es derzeit nicht in der HeldenSoftware
+                    else if (sfName == "Spätweihe Nichtalveranische Gottheit" || sfName == "Kontakt zum Großen Geist")
+                        _held.KE_ModGen -= 12;
+                    else if (sfName == "Spätweihe Dunkle Zeiten") // TODO: wie ist 'Spätweihe Dunkle Zeiten' in der HeldenSoftware abgebildet?
+                        _held.KE_ModGen -= 6 * Math.Max(1, iWert);
+                }
+
                 if (!added) // Import nicht mögliche
                     AddImportLog(ImportTypen.Sonderfertigkeit, sfName, String.Join(";", werte), _importLog);
             }
@@ -1007,20 +1035,35 @@ namespace MeisterGeister.Logic.HeldenImport
 
                 if (added)
                 {
-                    if (vorNachteilName == "Hohe Lebenskraft" || vorNachteilName == "Niedrige Lebenskraft" 
-                        || vorNachteilName == "Ausdauernd" || vorNachteilName == "Kurzatmig")
-                    {
-                        int iWert = 0;
-                        Int32.TryParse(wertString, out iWert);
-                        if (vorNachteilName.StartsWith("Hohe"))
-                            _held.LE_ModGen -= iWert;
-                        else if (vorNachteilName.StartsWith("Niedrige"))
-                            _held.LE_ModGen += iWert;
-                        else if (vorNachteilName.StartsWith("Ausdauernd"))
-                            _held.AU_ModGen -= iWert;
-                        else if (vorNachteilName.StartsWith("Kurzatmig"))
-                            _held.AU_ModGen += iWert;
-                    }
+                    int iWert = 0;
+                    Int32.TryParse(wertString, out iWert);
+                    if (vorNachteilName == "Hohe Lebenskraft")
+                        _held.LE_ModGen -= iWert;
+                    else if (vorNachteilName == "Niedrige Lebenskraft")
+                        _held.LE_ModGen += iWert;
+                    else if (vorNachteilName == "Ausdauernd")
+                        _held.AU_ModGen -= iWert;
+                    else if (vorNachteilName == "Kurzatmig")
+                        _held.AU_ModGen += iWert;
+                    else if (vorNachteilName == "Vollzauberer")
+                        _held.AE_ModGen -= 12;
+                    else if (vorNachteilName == "Halbzauberer")
+                        _held.AE_ModGen -= 6;
+                    else if (vorNachteilName == "Viertelzauberer" || vorNachteilName == "Unbewusster Viertelzauberer")
+                        _held.AE_ModGen -= 6;
+                    else if (vorNachteilName == "Zauberhaar")
+                        _held.AE_ModGen -= 7;
+                    else if (vorNachteilName == "Astralmacht")
+                        _held.AE_ModGen -= iWert;
+                    else if (vorNachteilName == "Niedrige Astralkraft")
+                        _held.AE_ModGen += iWert;
+                    else if (vorNachteilName == "Geweiht [zwölfgöttliche Kirche]" || vorNachteilName == "Geweiht[H'Ranga]" || vorNachteilName == "Geweiht [Gravesh]" 
+                        || vorNachteilName == "Geweiht [Angrosch]" || vorNachteilName == "Geweiht [Xo'Artal-Stadtpantheon]")
+                        _held.KE_ModGen -= 24;
+                    else if (vorNachteilName == "Geweiht [nicht-alveranische Gottheit]")
+                        _held.KE_ModGen -= 12;
+                    else if (vorNachteilName == "Sacerdos")
+                        _held.KE_ModGen -= 6 * Math.Max(1, iWert);
                 }
 
                 if (!added) // Import nicht möglich
