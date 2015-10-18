@@ -37,7 +37,11 @@ namespace MeisterGeister.Model
                     return nr;
                 return 0;
             }
-            set { Wert = value.ToString(); }
+            set
+            {
+                Wert = value.ToString();
+                OnChanged();
+            }
         }
 
         /// <summary>

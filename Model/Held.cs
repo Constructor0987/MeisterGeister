@@ -1607,7 +1607,12 @@ namespace MeisterGeister.Model {
                 hvn.Kosten = kosten ?? 0.0;
 
             hvn.Wert = wert ?? "";
-            if (hvn.Wert == "" && vn.Auswahl != null)
+            if (hvn.Wert == "" && vn.WertTyp == "int")
+            {
+                if (vn.WertMin.HasValue)
+                    hvn.Wert = vn.WertMin.Value.ToString();
+            }
+            else if (hvn.Wert == "" && vn.Auswahl != null)
                 hvn.Wert = vn.Auswahl; // mit Auswahl-Wert vorbelegen
             if (vn.Vorteil != null) {
                 if ((bool)vn.Vorteil) {
@@ -1644,6 +1649,13 @@ namespace MeisterGeister.Model {
             else if (vn.Name == VorNachteil.TierempathieAlle || vn.Name == VorNachteil.TierempathieSpeziell)
                 AddTalent("Tierempathie", 3);
 
+            // Gesamt-Kosten aktualisieren
+            if (hvn.VorNachteil.Vorteil ?? false)
+                SummeVorteile += hvn.KostenGesamt;
+            if (hvn.VorNachteil.Nachteil ?? false)
+                SummeNachteile += hvn.KostenGesamt;
+            hvn.PropertyChanged += Hvn_PropertyChanged;
+
             return vn;
         }
 
@@ -1655,6 +1667,14 @@ namespace MeisterGeister.Model {
         public void DeleteVorNachteil(Held_VorNachteil hvn) {
             if (hvn != null) {
                 string vnName = hvn.VorNachteil.Name;
+
+                // Gesamt-Kosten aktualisieren
+                if (hvn.VorNachteil.Vorteil ?? false)
+                    SummeVorteile -= hvn.KostenGesamt;
+                if (hvn.VorNachteil.Nachteil ?? false)
+                    SummeNachteile -= hvn.KostenGesamt;
+                hvn.PropertyChanged -= Hvn_PropertyChanged;
+
                 Global.ContextHeld.Delete<Model.Held_VorNachteil>(hvn);
 
                 // Falls Gabe -> Talent mit löschen
@@ -1797,6 +1817,76 @@ namespace MeisterGeister.Model {
             }
         }
 
+        private double? _summeNachteile = null;
+        public double SummeNachteile
+        {
+            get
+            {
+                if (_summeNachteile == null)
+                { // Summe zum ersten Mal berechnen
+                    _summeNachteile = 0.0;
+                    foreach (var hvn in Held_VorNachteil.Where(vn => vn.VorNachteil.Nachteil == true))
+                    {
+                        _summeNachteile += hvn.KostenGesamt;
+                        hvn.PropertyChanged += Hvn_PropertyChanged;
+                    }
+                }
+                return _summeNachteile.Value;
+            }
+            set
+            {
+                if (_summeNachteile != value)
+                {
+                    _summeNachteile = value;
+                    OnChanged();
+                }
+            }
+        }
+
+        private double? _summeVorteile = null;
+        public double SummeVorteile
+        {
+            get
+            {
+                if (_summeVorteile == null)
+                { // Summe zum ersten Mal berechnen
+                    _summeVorteile = 0.0;
+                    foreach (var hvn in Held_VorNachteil.Where(vn => vn.VorNachteil.Vorteil == true))
+                    {
+                        _summeVorteile += hvn.KostenGesamt;
+                        hvn.PropertyChanged += Hvn_PropertyChanged;
+                    }
+                }
+                return _summeVorteile.Value;
+            }
+            set
+            {
+                if (_summeVorteile != value)
+                {
+                    _summeVorteile = value;
+                    OnChanged();
+                }
+            }
+        }
+
+        private void Hvn_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is Held_VorNachteil && e.PropertyName == "WertInt")
+            {
+                // VorNachteile Summe neu berechnen
+                Held_VorNachteil hvn = (Held_VorNachteil)sender;
+                if (hvn.VorNachteil.Vorteil ?? false)
+                {
+                    _summeVorteile = null;
+                    OnChanged("SummeVorteile");
+                }
+                if (hvn.VorNachteil.Nachteil ?? false)
+                {
+                    _summeNachteile = null;
+                    OnChanged("SummeNachteile");
+                }
+            }
+        }
 
         #endregion
 

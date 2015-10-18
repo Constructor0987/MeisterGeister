@@ -642,6 +642,7 @@
     <Compile Include="ViewModel\Helden\TalentViewModel.cs" />
     <Compile Include="ViewModel\Helden\ListeViewModel.cs" />
     <Compile Include="ViewModel\Helden\AllgemeinViewModel.cs" />
+    <Compile Include="ViewModel\Helden\VorNachteilAuswahlViewModel.cs" />
     <Compile Include="ViewModel\Helden\VorNachteileViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\IAusrüstung.cs">
       <SubType>Code</SubType>
@@ -943,6 +944,9 @@
     </Compile>
     <Compile Include="View\Helden\Controls\ZauberView.xaml.cs">
       <DependentUpon>ZauberView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\VorNachteilAuswahlView.xaml.cs">
+      <DependentUpon>VorNachteilAuswahlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kalender\KalenderControl.xaml.cs">
       <DependentUpon>KalenderControl.xaml</DependentUpon>
@@ -1460,6 +1464,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Helden\Controls\ZauberView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\VorNachteilAuswahlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

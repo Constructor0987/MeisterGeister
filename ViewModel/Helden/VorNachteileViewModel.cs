@@ -71,34 +71,6 @@ namespace MeisterGeister.ViewModel.Helden
             set { _selectedAddNAchteil = value; OnChanged("SelectedAddNachteil"); }
         }
 
-        public double SummeNachteile
-        {
-            get
-            {
-                double summe = 0.0;
-                if (SelectedHeld != null)
-                {
-                    foreach (var hvn in SelectedHeld.Held_VorNachteil.Where(vn => vn.VorNachteil.Nachteil == true))
-                        summe += hvn.KostenGesamt;
-                }
-                return summe;
-            }
-        }
-
-        public double SummeVorteile
-        {
-            get
-            {
-                double summe = 0.0;
-                if (SelectedHeld != null)
-                {
-                    foreach (var hvn in SelectedHeld.Held_VorNachteil.Where(vn => vn.VorNachteil.Vorteil == true))
-                        summe += hvn.KostenGesamt;
-                }
-                return summe;
-            }
-        }
-
         // Listen
         public List<Model.Held_VorNachteil> VorNachteilListe
         {
@@ -157,8 +129,6 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("VorNachteilListe");
             OnChanged("VorteilAuswahlListe");
             OnChanged("NachteilAuswahlListe");
-            OnChanged("SummeVorteile");
-            OnChanged("SummeNachteile");
         }
 
         private void DeleteVorNachteil(object sender)

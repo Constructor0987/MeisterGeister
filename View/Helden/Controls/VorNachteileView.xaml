@@ -193,11 +193,11 @@
 
         <Border Grid.Row="1" Style="{DynamicResource ControlContentBorder}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="{Binding SummeVorteile}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SelectedHeld.SummeVorteile}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
                 <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
                 <TextBlock Text="Vorteile" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
                 <TextBlock Text="/" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding SummeNachteile}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SelectedHeld.SummeNachteile}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
                 <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
                 <TextBlock Text="Nachteile" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
             </StackPanel>
