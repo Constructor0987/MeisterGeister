@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             xmlns:mg="clr-namespace:MeisterGeister"
              x:Name="userControl"
              mc:Ignorable="d" DataContext="{x:Null}"
              d:DesignHeight="299" d:DesignWidth="677"
@@ -102,6 +103,30 @@
                     <TextBlock Text="{Binding VorNachteil.Name}" VerticalAlignment="Center" />
                     <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
                     <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="15,0,0,0" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" MinValue="{Binding VorNachteil.WertMin}" MaxValue="{Binding VorNachteil.WertMax}" Roman="{Binding VorNachteil.WertIsRoman}" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                    <TextBlock Text="{Binding KostenGesamt}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -109,6 +134,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -165,7 +191,19 @@
             </Border>
         </Expander>
 
-        <ListBox Grid.Row="1" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        <Border Grid.Row="1" Style="{DynamicResource ControlContentBorder}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding SummeVorteile}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="Vorteile" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="/" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SummeNachteile}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="Nachteile" FontWeight="Bold" Margin="5,0,0,0" VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+        
+        <ListBox Grid.Row="2" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemsSource="{Binding Source={StaticResource VorNachteilListeView}}" ItemTemplate="{StaticResource VorNachteileTemplate}" SelectedItem="{Binding SelectedHeldVorNachteil}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>

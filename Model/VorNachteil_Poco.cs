@@ -238,7 +238,7 @@ namespace MeisterGeister.Model
         private Nullable<int> _wertMax;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> Kosten
+        public virtual Nullable<double> Kosten
         {
             get { return _kosten; }
             set
@@ -247,7 +247,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _kosten;
+        private Nullable<double> _kosten;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<bool> DarfMehrfach

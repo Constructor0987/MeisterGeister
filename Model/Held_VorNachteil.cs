@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MeisterGeister.ViewModel.Helden.Logic;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
@@ -13,6 +14,7 @@ namespace MeisterGeister.Model
         {
             Wert = String.Empty;
             ValidatePropertyChanging += Held_VorNachteil_ValidatePropertyChanging;
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
         void Held_VorNachteil_ValidatePropertyChanging(object sender, string propertyName, object currentValue, object newValue)
@@ -36,6 +38,20 @@ namespace MeisterGeister.Model
                 return 0;
             }
             set { Wert = value.ToString(); }
+        }
+
+        /// <summary>
+        /// Gibt die gesamten AP/GP-Kosten zurück. Bei mehrstufigem VorNachteil also die Einzelkosten * Anzahl.
+        /// </summary>
+        [DependentProperty("Kosten"), DependentProperty("WertInt")]
+        public double KostenGesamt
+        {
+            get
+            {
+                if (VorNachteil != null && (VorNachteil.HatWert ?? false) && VorNachteil.WertTyp == "int")
+                    return Kosten * WertInt.Value;
+                return Kosten;
+            }
         }
     }
 }

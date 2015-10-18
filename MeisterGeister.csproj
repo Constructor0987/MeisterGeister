@@ -1031,6 +1031,9 @@
     <Compile Include="View\Reise\WetterView.xaml.cs">
       <DependentUpon>WetterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\InputIntWindown.xaml.cs">
+      <DependentUpon>InputIntWindown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\RegeleditionWindow.xaml.cs">
       <DependentUpon>RegeleditionWindow.xaml</DependentUpon>
     </Compile>
@@ -1571,6 +1574,10 @@
     <Page Include="View\Reise\WetterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\InputIntWindown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Windows\RegeleditionWindow.xaml">
       <SubType>Designer</SubType>

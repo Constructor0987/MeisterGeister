@@ -71,6 +71,34 @@ namespace MeisterGeister.ViewModel.Helden
             set { _selectedAddNAchteil = value; OnChanged("SelectedAddNachteil"); }
         }
 
+        public double SummeNachteile
+        {
+            get
+            {
+                double summe = 0.0;
+                if (SelectedHeld != null)
+                {
+                    foreach (var hvn in SelectedHeld.Held_VorNachteil.Where(vn => vn.VorNachteil.Nachteil == true))
+                        summe += hvn.KostenGesamt;
+                }
+                return summe;
+            }
+        }
+
+        public double SummeVorteile
+        {
+            get
+            {
+                double summe = 0.0;
+                if (SelectedHeld != null)
+                {
+                    foreach (var hvn in SelectedHeld.Held_VorNachteil.Where(vn => vn.VorNachteil.Vorteil == true))
+                        summe += hvn.KostenGesamt;
+                }
+                return summe;
+            }
+        }
+
         // Listen
         public List<Model.Held_VorNachteil> VorNachteilListe
         {
@@ -97,7 +125,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- KONSTRUKTOR ----
 
-        public VorNachteileViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError) : base(confirm, showError)
+        public VorNachteileViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError, Func<string, string, int, int, int, int?> inputIntDialog) : base(confirm, showError, inputIntDialog)
         {
             onDeleteVorNachteil = new Base.CommandBase(DeleteVorNachteil, null);
             onAddVorteil = new Base.CommandBase(AddVorteil, null);
@@ -129,6 +157,8 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("VorNachteilListe");
             OnChanged("VorteilAuswahlListe");
             OnChanged("NachteilAuswahlListe");
+            OnChanged("SummeVorteile");
+            OnChanged("SummeNachteile");
         }
 
         private void DeleteVorNachteil(object sender)
@@ -145,48 +175,50 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void AddVorteil(object sender)
         {
-            if (SelectedHeld != null && SelectedAddVorteil != null && !IsReadOnly)
+            AddVorNachteil("Vorteil");
+        }
+
+        private void AddVorNachteil(string typ)
+        {
+            Model.VorNachteil vn = null;
+            if (typ == "Vorteil")
+                vn = SelectedAddVorteil;
+            else if (typ == "Nachteil")
+                vn = SelectedAddNachteil;
+
+            if (SelectedHeld != null && vn != null && !IsReadOnly)
             {
-                bool hatVorteil = SelectedHeld.HatVorNachteil(SelectedAddVorteil);
-                if (
-                    (SelectedAddVorteil.HatWert ?? false)
-                    || (!hatVorteil)
-                    )
+                bool hatVorNachteil = SelectedHeld.HatVorNachteil(vn);
+                if ((vn.HatWert ?? false) || (!hatVorNachteil))
                 {
-                    if (hatVorteil && !(SelectedAddVorteil.DarfMehrfach ?? false))
+                    if (hatVorNachteil && !(vn.DarfMehrfach ?? false))
                     {
-                        if (Confirm("Vorteil mehrfach einfügen", string.Format("Der Vorteil '{0}' darf laut Regeln nicht mehrfach eingefügt werden (siehe {1}). Soll er trotzdem eingefüt werden?", 
-                            SelectedAddVorteil.Name, SelectedAddVorteil.Literatur)) == false)
+                        if (Confirm(string.Format("{0} mehrfach einfügen", typ), string.Format("Der {0} '{1}' darf laut Regeln nicht mehrfach eingefügt werden (siehe {2}). Soll er trotzdem eingefüt werden?",
+                            typ, vn.Name, vn.Literatur)) == false)
                             return;
                     }
-                    SelectedHeld.AddVorNachteil(SelectedAddVorteil, null);
+                    string wert = null;
+                    int? kosten = null;
+                    if ((vn.Kosten ?? 0) == 0)
+                    { // keine Kosten hinterlegt, also beim User nachfragen
+                        string kostenText = "";
+                        if (Global.DSA4_1)
+                            kostenText = "GP-Wert";
+                        else if (Global.DSA5)
+                            kostenText = "AP-Wert";
+                        kosten = InputIntDialog(kostenText, string.Format("Der {0} für den {1} '{2}' konnte nicht automatisch festgelegt werden. Bitte gib einen Wert ein (siehe {3}).",
+                            kostenText, typ, vn.Name, vn.Literatur), 0, (vn.Vorteil ?? false) ? 0 : int.MinValue, (vn.Nachteil ?? false) ? 0 : int.MaxValue);
+                    }
+                    SelectedHeld.AddVorNachteil(vn, kosten, wert);
                 }
-
+                
                 NotifyRefresh();
             }
         }
 
         private void AddNachteil(object sender)
         {
-            if (SelectedHeld != null && SelectedAddNachteil != null && !IsReadOnly)
-            {
-                bool hatNachteil = SelectedHeld.HatVorNachteil(SelectedAddNachteil);
-                if (
-                    (SelectedAddNachteil.HatWert ?? false)
-                    || (!hatNachteil)
-                    )
-                {
-                    if (hatNachteil && !(SelectedAddNachteil.DarfMehrfach ?? false))
-                    {
-                        if (Confirm("Nachteil mehrfach einfügen", string.Format("Der Nachteil '{0}' darf laut Regeln nicht mehrfach eingefügt werden (siehe {1}). Soll er trotzdem eingefüt werden?",
-                            SelectedAddNachteil.Name, SelectedAddNachteil.Literatur)) == false)
-                            return;
-                    }
-                    SelectedHeld.AddVorNachteil(SelectedAddNachteil, null);
-                }
-
-                NotifyRefresh();
-            }
+            AddVorNachteil("Nachteil");
         }
 
         private void OpenWiki(object sender)

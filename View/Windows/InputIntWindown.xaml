@@ -1,0 +1,12 @@
+﻿<Window x:Class="MeisterGeister.View.Windows.InputIntWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+        Title="TITEL" Height="200" Width="356" ResizeMode="NoResize" Background="{StaticResource Background1}" Loaded="Window_Loaded"
+        TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Button Content="OK" Margin="0,0,12,12" Name="_buttonOK" HorizontalAlignment="Right" Width="75" Height="23" VerticalAlignment="Bottom" Click="_buttonOK_Click" IsDefault="True" />
+        <ViewGeneral:IntBox Margin="12,0,12,41" x:Name="_intBoxWert" Height="23" VerticalAlignment="Bottom" ShowButtons="True" />
+        <TextBlock Margin="12,12,12,70" Name="_textBlockBeschreibung" Text="BESCHREIBUNG" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
+    </Grid>
+</Window>

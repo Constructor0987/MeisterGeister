@@ -70,6 +70,23 @@ namespace MeisterGeister.View.General
             return input;
         }
 
+        public static int? InputIntDialog(string caption, string msg, int init, int min = int.MinValue, int max = int.MaxValue)
+        {
+            int? input = null;
+            InputIntWindow inBox = new InputIntWindow();
+            inBox.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+            inBox.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            inBox.Title = caption;
+            inBox.Beschreibung = msg;
+            inBox.Wert = init;
+            inBox.WertMin = min;
+            inBox.WertMax = max;
+            inBox.ShowDialog();
+            if (inBox.OK_Click)
+                input = inBox.Wert;
+            return input;
+        }
+
         private static Regex invalidChars = null;
         public static string GetValidFilename(string path)
         {

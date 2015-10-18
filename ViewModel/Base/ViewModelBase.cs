@@ -22,6 +22,7 @@ namespace MeisterGeister.ViewModel.Base {
         private Func<string, string, bool, bool, string[], string> chooseFile;
         private Func<string, bool, string> chooseDirectory;
         private Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog;
+        private Func<string, string, int, int, int, int?> inputIntDialog;
 
         public virtual Dispatcher Dispatcher { get; protected set; }
         #endregion
@@ -36,7 +37,7 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
         /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterung ...)</param>
         /// <param name="showProbeDialog">Zeigt einen Probe-Dialog an (Probe, Held).</param>
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError, Func<string, string, int, int, int, int?> inputIntDialog)
         {
             this.Dispatcher = Dispatcher.CurrentDispatcher;
             this.popup = popup;
@@ -46,20 +47,22 @@ namespace MeisterGeister.ViewModel.Base {
             this.chooseDirectory = chooseDirectory;
             this.showError = showError;
             this.showProbeDialog = showProbeDialog;
+            this.inputIntDialog = inputIntDialog;
         }
 
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, null, null, showError) { }
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, chooseDirectory, null, showError) { }
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, showProbeDialog, showError) { }
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, null, showError) {}
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, null, null, null, showProbeDialog, showError) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, null, null, showError, null) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, chooseDirectory, null, showError, null) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, showProbeDialog, showError, null) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, null, showError, null) {}
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, null, null, null, showProbeDialog, showError, null) { }
         protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Action<string, Exception> showError) : this(popup, confirm, null, null, null, showError) { }
         protected ViewModelBase(Action<string> popup, Action<string, Exception> showError) : this(popup, null, null, null, null, showError) { }
         protected ViewModelBase(Func<string, string, bool> confirm, Action<string, Exception> showError) : this(null, confirm, null, null, null, showError) { }
+        protected ViewModelBase(Func<string, string, bool> confirm, Action<string, Exception> showError, Func<string, string, int, int, int, int?> inputIntDialog) : this(null, confirm, null, null, null, null, showError, inputIntDialog) { }
         protected ViewModelBase(Action<string, Exception> showError) : this(null, null, null, null, null, showError) {}
         protected ViewModelBase() : this(null, null, null, null, null, null) { }
         protected ViewModelBase(Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog) : this(null, null, null, showProbeDialog, null) { }
-
+        
         #endregion
 
         #region Methoden
@@ -160,6 +163,13 @@ namespace MeisterGeister.ViewModel.Base {
         {
             if (chooseDirectory != null)
                 return chooseDirectory(path, askRelativePath);
+            return null;
+        }
+
+        public int? InputIntDialog(string caption, string msg, int init, int min = int.MinValue, int max = int.MaxValue)
+        {
+            if (inputIntDialog != null)
+                return inputIntDialog(caption, msg, init, min, max);
             return null;
         }
 

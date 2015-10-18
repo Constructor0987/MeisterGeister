@@ -162,6 +162,24 @@ namespace MeisterGeister
             get { return _dsa4_1_Visibility; }
         }
 
+        private static string _text_Generierungseinheit_Abk = "GP";
+        public static string Text_Generierungseinheit_Abk
+        {
+            get
+            {
+                return _text_Generierungseinheit_Abk;
+            }
+        }
+
+        private static string _text_Generierungseinheit = "Gernerierungspunkte";
+        public static string Text_Generierungseinheit
+        {
+            get
+            {
+                return _text_Generierungseinheit;
+            }
+        }
+
         public static bool IsInitialized
         {
             get;
@@ -354,6 +372,8 @@ namespace MeisterGeister
             _regeleditionNummer = Regeledition.Replace(" ", "").Replace("DSA", string.Empty);
             _dsa5_Visibility = DSA5 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             _dsa4_1_Visibility = DSA4_1 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            _text_Generierungseinheit = _dsa5 ? "Abenteuerpunkte" : "Generierungspunkte";
+            _text_Generierungseinheit_Abk = _dsa5 ? "AP" : "GP";
         }
 
         public static void CleanUp()

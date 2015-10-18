@@ -1575,10 +1575,11 @@ namespace MeisterGeister.Model {
         #region Vor/Nachteile
 
         public VorNachteil AddVorNachteil(string vorNachName, string wert = "") {
-            return AddVorNachteil(Global.ContextHeld.Liste<VorNachteil>().Where(vn => vn.Name == vorNachName).FirstOrDefault(), wert);
+            VorNachteil vorNach = Global.ContextHeld.Liste<VorNachteil>().Where(vn => vn.Name == vorNachName).FirstOrDefault();
+            return AddVorNachteil(vorNach, vorNach.Kosten, wert);
         }
 
-        public VorNachteil AddVorNachteil(VorNachteil vn, string wert = "") {
+        public VorNachteil AddVorNachteil(VorNachteil vn, double? kosten, string wert = "") {
             if (vn == null)
                 return null;
             IEnumerable<Held_VorNachteil> existierendeZuordnung = Held_VorNachteil.Where(heldvn => heldvn.VorNachteilGUID == vn.VorNachteilGUID && heldvn.HeldGUID == HeldGUID);
@@ -1599,6 +1600,12 @@ namespace MeisterGeister.Model {
             hvn.VorNachteilGUID = vn.VorNachteilGUID;
             hvn.VorNachteil = vn;
 
+            // Kosten (AP bzw. GP)
+            if (kosten == null)
+                hvn.Kosten = vn.Kosten ?? 0.0;
+            else
+                hvn.Kosten = kosten ?? 0.0;
+
             hvn.Wert = wert ?? "";
             if (hvn.Wert == "" && vn.Auswahl != null)
                 hvn.Wert = vn.Auswahl; // mit Auswahl-Wert vorbelegen
@@ -1617,6 +1624,7 @@ namespace MeisterGeister.Model {
             if (!((bool)hvn.VorNachteil.Vorteil || (bool)hvn.VorNachteil.Nachteil)) {
                 throw new System.ArgumentNullException("Weder Vor noch Nachteil gesetzt");
             }
+
             Held_VorNachteil.Add(hvn);
 
             // abhängige Talente automatisch einfügen
