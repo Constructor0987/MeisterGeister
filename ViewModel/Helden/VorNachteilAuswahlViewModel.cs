@@ -37,45 +37,15 @@ namespace MeisterGeister.ViewModel.Helden
             { // Die Auswahl hat von der SKT abhängige Kosten
               // TODO: Kosten für DSA4.1 VorNachteile ergänzen.
               // Kosten nach DSA5
-                if (_vorNachteil.Name == "Begabung")
-                {
-                    kostenList.Add("A", 6);
-                    kostenList.Add("B", 12);
-                    kostenList.Add("C", 18);
-                    kostenList.Add("D", 24);
-                    kostenList.Add("E", 30); // E-Kosten interpoliert
-                }
-                else if (_vorNachteil.Name == "Herausragende Fertigkeit")
-                {
-                    kostenList.Add("A", 2);
-                    kostenList.Add("B", 4);
-                    kostenList.Add("C", 6);
-                    kostenList.Add("D", 8);
-                    kostenList.Add("E", 10); // E-Kosten interpoliert
-                }
-                else if (_vorNachteil.Name == "Herausragende Kampftechnik")
-                {
-                    kostenList.Add("A", 4); // A-Kosten interpoliert
-                    kostenList.Add("B", 8);
-                    kostenList.Add("C", 12);
-                    kostenList.Add("D", 16);
-                    kostenList.Add("E", 20); // E-Kosten interpoliert
-                }
-                else if (_vorNachteil.Name == "Waffenbegabung")
-                {
-                    kostenList.Add("A", 0); // A-Kosten interpoliert
-                    kostenList.Add("B", 10);
-                    kostenList.Add("C", 20);
-                    kostenList.Add("D", 30);
-                    kostenList.Add("E", 40); // E-Kosten interpoliert
-                }
-                else if (_vorNachteil.Name == "Unfähig")
-                {
-                    kostenList.Add("A", -1);
-                    kostenList.Add("B", -2);
-                    kostenList.Add("C", -3);
-                    kostenList.Add("D", -4);
-                    kostenList.Add("E", -5); // E-Kosten interpoliert
+
+                // SKT Faktor. Sonderfall 'Waffenbegabung' beginnt bei 0
+                int faktor = _vorNachteil.Name == "Waffenbegabung" ? 0 : 1;
+
+                for (int i = 1; i < 6; i++)
+                {   // Berechnet die Kosten nach Steigerungsfaktor.
+                    // Erzeugt eine Liste von SKT A bis E mit jeweils den Kosten des Steigerungsfaktors.
+                    kostenList.Add(Convert.ToChar(i + 64).ToString(), faktor * (_vorNachteil.Kosten ?? 0));
+                    faktor++;
                 }
             }
 
