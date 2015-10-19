@@ -148,8 +148,71 @@ INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting]
 INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach]) VALUES (N'Zeitgefühl',1,0,0,N'Vorteile',N'Aventurien',N'00000000-0000-0000-f024-000000000684',N'GRW5 170',N'DSA 5',0,2,0);
 INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach]) VALUES (N'Zweistimmiger Gesang',1,0,0,N'Vorteile',N'Aventurien',N'00000000-0000-0000-f024-000000000685',N'GRW5 170',N'DSA 5',0,5,0);
 INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach]) VALUES (N'Zwergennase',1,0,0,N'Vorteile',N'Aventurien',N'00000000-0000-0000-f024-000000000686',N'GRW5 170',N'DSA 5',0,8,0);
-INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach]) VALUES (N'Angst vor ... I',0,1,1,N'Nachteile',N'Aventurien',N'00000000-0000-0000-f024-000000000687',N'GRW5 170',N'DSA 5',0,-8,1);
-INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach]) VALUES (N'Angst vor ... II',0,1,1,N'Nachteile',N'Aventurien',N'00000000-0000-0000-f024-000000000688',N'GRW5 170',N'DSA 5',0,-16,1);
-INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach]) VALUES (N'Angst vor ... III',0,1,1,N'Nachteile',N'Aventurien',N'00000000-0000-0000-f024-000000000689',N'GRW5 170',N'DSA 5',0,-24,1);
+INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach],[Auswahl]) VALUES (N'Angst vor ... I',0,1,1,N'Nachteile',N'Aventurien',N'00000000-0000-0000-f024-000000000687',N'GRW5 170',N'DSA 5',0,-8,1,N'[ANGST]');
+INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach],[Auswahl]) VALUES (N'Angst vor ... II',0,1,1,N'Nachteile',N'Aventurien',N'00000000-0000-0000-f024-000000000688',N'GRW5 170',N'DSA 5',0,-16,1,N'[ANGST]');
+INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[Kosten],[DarfMehrfach],[Auswahl]) VALUES (N'Angst vor ... III',0,1,1,N'Nachteile',N'Aventurien',N'00000000-0000-0000-f024-000000000689',N'GRW5 170',N'DSA 5',0,-24,1,N'[ANGST]');
 INSERT INTO [VorNachteil] ([Name],[Vorteil],[Nachteil],[HatWert],[WertTyp],[Typ],[Setting],[VorNachteilGUID],[Literatur],[Regelsystem],[WertIsRoman],[WertMin],[WertMax],[Kosten],[DarfMehrfach]) VALUES (N'Arm',0,1,1,N'int',N'Nachteile',N'Aventurien',N'00000000-0000-0000-f024-000000000690',N'GRW5 170',N'DSA 5',1,1,3,-1,0);
 
+-- VorNachteilAuswahl
+CREATE TABLE [VorNachteilAuswahl] (
+	[VorNachteilAuswahlId] bigint NOT NULL IDENTITY(1,1) PRIMARY KEY, 
+	[Kategorie] nvarchar(150), 
+	[Name] nvarchar(150), 
+	[HatWert] bit DEFAULT 0, 
+	[Kosten] float DEFAULT 0, 
+	[Auswahl] nvarchar(150), 
+	[Literatur] nvarchar(500), 
+	[Regelsystem] nvarchar(50), 
+	[DarfMehrfach] bit DEFAULT 0
+)
+GO
+
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Aberglaube',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Autoritätsglaube',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Geiz',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Goldgier',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Jähzorn',0,-10,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Kleptomanie',0,-10,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Naiv',0,-10,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Neugier',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Rachsucht',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Spielsucht',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'SCHLECHTE EIGENSCHAFT',N'Verschwendungssucht',0,-5,N'GRW5 177',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Arroganz',0,-10,N'GRW5 174',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Eitelkeit',0,-10,N'GRW5 174',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Neid',0,-5,N'GRW5 174',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Streitsucht',0,-10,N'GRW5 174-175',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Unheimlich',0,-8,N'GRW5 175',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Verwöhnt',0,-10,N'GRW5 175',N'DSA 5');
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Auswahl],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Vorurteile',1,-5,N'[GRUPPE]',N'GRW5 175',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Auswahl],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'PERSÖNLICHKEITSSCHWÄCHE',N'Weltfremd',1,-10,N'[BEREICH]',N'GRW5 175',N'DSA 5',1);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Barfüßer',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Belästigung',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Dritte Person',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Duzer',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Erster',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Heulsuse',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Hypochonder',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Junge',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Langschläfer',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Links-Rechts-Schwäche',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Mein Kind',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Nägelkauer',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Nase-/Ohrenbohrer',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Nervös',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Putzfimmel',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Raucher',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Redet wie ein Wasserfall',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Schlechte Tischmanieren',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Selbstgespräche',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Unordentlich',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'SCHLECHTE ANGEWOHNHEIT',N'Wir',0,0,N'GRW5 176',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'Reptilien',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'Insekten',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'Spinnen',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'Blut',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'Dunkelheit (Dunkelangst)',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'Höhe (Höhenangst)',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'dem Meer (Meeresangst)',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'engen Räumen (Raumangst)',0,0,N'GRW5 170',N'DSA 5',0);
+INSERT INTO [VorNachteilAuswahl] ([Kategorie],[Name],[HatWert],[Kosten],[Literatur],[Regelsystem],[DarfMehrfach]) VALUES (N'ANGST',N'Toten und Untoten (Totenangst)',0,0,N'GRW5 170',N'DSA 5',0);

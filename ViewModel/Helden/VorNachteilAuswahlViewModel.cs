@@ -66,7 +66,7 @@ namespace MeisterGeister.ViewModel.Helden
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID == 1).OrderBy(t => t.Name))
                     list.Add(new VorNachteilAuswahlItem(talent.Name, kostenList[talent.Steigerung]));
             }
-            // TODO: weitere VorNachteil Auswahl-Typen
+            // TODO: weitere VorNachteil Auswahl-Typen aus VorNachteilAuswahl Tabelle
 
             AuswahlListe = list;
         }

@@ -86,6 +86,7 @@
     <EntitySet Name="Trageort" EntityType="DatabaseDSAModel.Store.Trageort" store:Type="Tables" />
     <EntitySet Name="Version" EntityType="DatabaseDSAModel.Store.Version" store:Type="Tables" />
     <EntitySet Name="VorNachteil" EntityType="DatabaseDSAModel.Store.VorNachteil" store:Type="Tables" />
+    <EntitySet Name="VorNachteilAuswahl" EntityType="DatabaseDSAModel.Store.VorNachteilAuswahl" store:Type="Tables" />
     <EntitySet Name="Waffe" EntityType="DatabaseDSAModel.Store.Waffe" store:Type="Tables" />
     <EntitySet Name="Waffe_Talent" EntityType="DatabaseDSAModel.Store.Waffe_Talent" store:Type="Tables" />
     <EntitySet Name="Zauber" EntityType="DatabaseDSAModel.Store.Zauber" store:Type="Tables" />
@@ -1591,6 +1592,20 @@
     <Property Name="DarfMehrfach" Type="bit" />
     <Property Name="DarfMehrfachAnzahl" Type="int" />
     <Property Name="Auswahl" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="VorNachteilAuswahl">
+    <Key>
+      <PropertyRef Name="VorNachteilAuswahlId" />
+    </Key>
+    <Property Name="VorNachteilAuswahlId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Kategorie" Type="nvarchar" MaxLength="150" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="HatWert" Type="bit" />
+    <Property Name="Kosten" Type="float" />
+    <Property Name="Auswahl" Type="nvarchar" MaxLength="150" />
+    <Property Name="Literatur" Type="nvarchar" MaxLength="500" />
+    <Property Name="Regelsystem" Type="nvarchar" MaxLength="50" />
+    <Property Name="DarfMehrfach" Type="bit" />
   </EntityType>
   <EntityType Name="Waffe">
     <Key>
@@ -3175,6 +3190,7 @@
     <EntitySet Name="Trageort" EntityType="DatabaseDSAModel.Trageort" />
     <EntitySet Name="Version" EntityType="DatabaseDSAModel.Version" />
     <EntitySet Name="VorNachteil" EntityType="DatabaseDSAModel.VorNachteil" />
+    <EntitySet Name="VorNachteilAuswahl" EntityType="DatabaseDSAModel.VorNachteilAuswahl" />
     <EntitySet Name="Waffe" EntityType="DatabaseDSAModel.Waffe" />
     <EntitySet Name="Zauber" EntityType="DatabaseDSAModel.Zauber" />
     <EntitySet Name="Zauber_Setting" EntityType="DatabaseDSAModel.Zauber_Setting" />
@@ -4763,6 +4779,20 @@
     <Property Name="DarfMehrfachAnzahl" Type="Int32" />
     <Property Name="Auswahl" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Held_VorNachteil" Relationship="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" FromRole="VorNachteil" ToRole="Held_VorNachteil" />
+  </EntityType>
+  <EntityType Name="VorNachteilAuswahl">
+    <Key>
+      <PropertyRef Name="VorNachteilAuswahlId" />
+    </Key>
+    <Property Name="VorNachteilAuswahlId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Kategorie" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="Name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="HatWert" Type="Boolean" />
+    <Property Name="Kosten" Type="Double" />
+    <Property Name="Auswahl" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="Literatur" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="Regelsystem" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DarfMehrfach" Type="Boolean" />
   </EntityType>
   <EntityType Name="Waffe">
     <Key>
@@ -7173,6 +7203,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="VorNachteilAuswahl">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.VorNachteilAuswahl">
+        <MappingFragment StoreEntitySet="VorNachteilAuswahl">
+          <ScalarProperty Name="VorNachteilAuswahlId" ColumnName="VorNachteilAuswahlId" />
+          <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="HatWert" ColumnName="HatWert" />
+          <ScalarProperty Name="Kosten" ColumnName="Kosten" />
+          <ScalarProperty Name="Auswahl" ColumnName="Auswahl" />
+          <ScalarProperty Name="Literatur" ColumnName="Literatur" />
+          <ScalarProperty Name="Regelsystem" ColumnName="Regelsystem" />
+          <ScalarProperty Name="DarfMehrfach" ColumnName="DarfMehrfach" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Waffe">
       <EntityTypeMapping TypeName="DatabaseDSAModel.Waffe">
         <MappingFragment StoreEntitySet="Waffe">
@@ -7351,7 +7396,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="dbf3f74b7abc4574874c98626f527e35" Name="Diagram1">
+      <Diagram DiagramId="4482fdb84d0e4d2daf86a5a4c3e73821" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.375" IsExpanded="true" />
@@ -7428,6 +7473,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="12.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="6.75" PointY="39.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteilAuswahl" Width="1.5" PointX="2.75" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="8.25" PointY="33.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="3.75" PointY="35.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="16" PointY="24.75" IsExpanded="true" />

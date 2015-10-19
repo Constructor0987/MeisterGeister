@@ -193,7 +193,8 @@ namespace MeisterGeister.ViewModel.Helden
                             if (auswahl != null)
                             {
                                 wert = auswahl.Name;
-                                kosten = auswahl.Kosten;
+                                if (kosten == null || kosten == 0)
+                                    kosten = auswahl.Kosten; // Kosten nur setzen, wenn VorNachteil keine Fixkosten hat
                             }
                         }
                     }
