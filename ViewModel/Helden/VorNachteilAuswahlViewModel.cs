@@ -27,7 +27,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void Init()
         {
-            Beschreibung = string.Format("Bitte treffe für den Vor-/Nachteil '{0}' folgende Auswahl (siehe {1}):\n{2}", _vorNachteil.Name, _vorNachteil.Literatur, _vorNachteil.Auswahl);
+            Beschreibung = string.Format("Bitte treffe für den Vor-/Nachteil '{0}' folgende Auswahl:\n{1}", _vorNachteil.Name, _vorNachteil.Auswahl);
 
             List<VorNachteilAuswahlItem> list = new List<VorNachteilAuswahlItem>();
 

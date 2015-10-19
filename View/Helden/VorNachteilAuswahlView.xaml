@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeisterGeister.View.Helden"
         xmlns:mg="clr-namespace:MeisterGeister"
+        xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
         mc:Ignorable="d" Background="{StaticResource Background1}"
         Title="Vor-/Nachteil Auswahl" Height="365.756" Width="503.123"
         TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner">
@@ -25,7 +26,14 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="12" Height="Auto" Text="{Binding Beschreibung}" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Margin="12" Height="Auto" Text="{Binding Beschreibung}" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
+            <ViewGeneral:LiteraturControl Grid.Column="1" Height="18" LiteraturAnzeigeArt="TextKurz" Literaturangabe="{Binding VorNachteil.Literatur}" HorizontalAlignment="Right" Margin="12" />
+        </Grid>
         <ListBox Grid.Row="1" Margin="12,10,8,10" ItemsSource="{Binding AuswahlListe}" SelectedItem="{Binding Auswahl}"  ItemTemplate="{StaticResource AuswahlListTemplate}" HorizontalContentAlignment="Stretch" />
         <Button Grid.Row="2" Content="OK" Margin="0,0,12,12" Name="_buttonOK" HorizontalAlignment="Right" Width="75" Height="23" VerticalAlignment="Bottom" Click="_buttonOK_Click" IsDefault="True" />
     </Grid>
