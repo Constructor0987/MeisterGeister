@@ -4,9 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MeisterGeister.View.Helden"
+        xmlns:mg="clr-namespace:MeisterGeister"
         mc:Ignorable="d" Background="{StaticResource Background1}"
-        Title="Vor-/Nachteil Auswahl" Height="349.648" Width="404.577">
+        Title="Vor-/Nachteil Auswahl" Height="365.756" Width="503.123"
+        TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <DataTemplate x:Key="AuswahlListTemplate">
+            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" VerticalAlignment="Top" />
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock Text="{Binding Kosten}" VerticalAlignment="Top" />
+                    <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" Margin="5,0,0,0" VerticalAlignment="Top" />
+                </StackPanel>
+            </DockPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Margin="12" Height="Auto" Text="{Binding Beschreibung}" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
+        <ListBox Grid.Row="1" Margin="12,10,8,10" ItemsSource="{Binding AuswahlListe}" SelectedItem="{Binding Auswahl}"  ItemTemplate="{StaticResource AuswahlListTemplate}" HorizontalContentAlignment="Stretch" />
+        <Button Grid.Row="2" Content="OK" Margin="0,0,12,12" Name="_buttonOK" HorizontalAlignment="Right" Width="75" Height="23" VerticalAlignment="Bottom" Click="_buttonOK_Click" IsDefault="True" />
     </Grid>
 </Window>

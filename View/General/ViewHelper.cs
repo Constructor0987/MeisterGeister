@@ -87,6 +87,18 @@ namespace MeisterGeister.View.General
             return input;
         }
 
+        public static ViewModel.Helden.VorNachteilAuswahlItem VorNachteilAuswahlDialog(Model.VorNachteil vn)
+        {
+            ViewModel.Helden.VorNachteilAuswahlItem auswahl = null;
+            Helden.VorNachteilAuswahlView dlg = new Helden.VorNachteilAuswahlView(vn);
+            dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+            dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            dlg.ShowDialog();
+            if (dlg.OK_Click)
+                auswahl = dlg.Auswahl;
+            return auswahl;
+        }
+
         private static Regex invalidChars = null;
         public static string GetValidFilename(string path)
         {

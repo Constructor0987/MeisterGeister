@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
+using System.Text.RegularExpressions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
@@ -93,16 +94,21 @@ namespace MeisterGeister.ViewModel.Helden
             get { return _isReadOnly; }
         }
 
+        // Funktion
+        private Func<Model.VorNachteil, VorNachteilAuswahlItem> auswahlDialog;
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
 
-        public VorNachteileViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError, Func<string, string, int, int, int, int?> inputIntDialog) : base(confirm, showError, inputIntDialog)
+        public VorNachteileViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError, Func<string, string, int, int, int, int?> inputIntDialog, Func<Model.VorNachteil, VorNachteilAuswahlItem> auswahlDialog) : base(confirm, showError, inputIntDialog)
         {
             onDeleteVorNachteil = new Base.CommandBase(DeleteVorNachteil, null);
             onAddVorteil = new Base.CommandBase(AddVorteil, null);
             onAddNachteil = new Base.CommandBase(AddNachteil, null);
             onOpenWiki = new Base.CommandBase(OpenWiki, null);
+
+            this.auswahlDialog = auswahlDialog;
         }
 
         #endregion
@@ -143,6 +149,13 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
+        public VorNachteilAuswahlItem Auswahl(Model.VorNachteil vn)
+        {
+            if (auswahlDialog != null)
+                return auswahlDialog(vn);
+            return null;
+        }
+
         private void AddVorteil(object sender)
         {
             AddVorNachteil("Vorteil");
@@ -167,15 +180,27 @@ namespace MeisterGeister.ViewModel.Helden
                             typ, vn.Name, vn.Literatur)) == false)
                             return;
                     }
+
                     string wert = null;
-                    int? kosten = null;
-                    if ((vn.Kosten ?? 0) == 0)
+                    double? kosten = vn.Kosten;
+
+                    // evtl. Auswahl treffen
+                    if (!string.IsNullOrEmpty(vn.Auswahl))
+                    {
+                        if (Regex.IsMatch(vn.Auswahl, @"^\[.*?\]$"))
+                        {
+                            VorNachteilAuswahlItem auswahl = Auswahl(vn);
+                            if (auswahl != null)
+                            {
+                                wert = auswahl.Name;
+                                kosten = auswahl.Kosten;
+                            }
+                        }
+                    }
+                    
+                    if ((kosten ?? 0) == 0)
                     { // keine Kosten hinterlegt, also beim User nachfragen
-                        string kostenText = "";
-                        if (Global.DSA4_1)
-                            kostenText = "GP-Wert";
-                        else if (Global.DSA5)
-                            kostenText = "AP-Wert";
+                        string kostenText = string.Format("{0}-Wert", Global.Text_Generierungseinheit_Abk);
                         kosten = InputIntDialog(kostenText, string.Format("Der {0} für den {1} '{2}' konnte nicht automatisch festgelegt werden. Bitte gib einen Wert ein (siehe {3}).",
                             kostenText, typ, vn.Name, vn.Literatur), 0, (vn.Vorteil ?? false) ? 0 : int.MinValue, (vn.Nachteil ?? false) ? 0 : int.MaxValue);
                     }
@@ -214,5 +239,23 @@ namespace MeisterGeister.ViewModel.Helden
 
         #endregion
     }
-    
+
+    #region SUBKLASSEN
+
+    public class VorNachteilAuswahlItem
+    {
+        private double v;
+
+        public VorNachteilAuswahlItem(string name, double? kosten)
+        {
+            Name = name;
+            Kosten = kosten;
+        }
+
+        public string Name { get; set; }
+        public double? Kosten { get; set; }
+    }
+
+    #endregion
+
 }

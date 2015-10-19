@@ -25,7 +25,7 @@ namespace MeisterGeister.View.Helden.Controls
         public VorNachteileView()
         {
             InitializeComponent();
-            VM = new VM.VorNachteileViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError, View.General.ViewHelper.InputIntDialog);
+            VM = new VM.VorNachteileViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError, View.General.ViewHelper.InputIntDialog, View.General.ViewHelper.VorNachteilAuswahlDialog);
         }
 
         /// <summary>
