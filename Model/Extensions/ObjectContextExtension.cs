@@ -141,7 +141,7 @@ namespace MeisterGeister.Model.Extensions
             if (attachedEntity == null)
             {
                 //avoid adding the same object multiple times.
-                if(context.GetChangedObjects().Where(ose => context.GetEntityKeyFromPrimaryKey(ose.Entity) == entityKey).Count() == 0)
+                if(context.GetChangedObjects().Where(ose => ose.Entity != null && context.GetEntityKeyFromPrimaryKey(ose.Entity) == entityKey).Count() == 0)
                 {
                     attachedEntity = context.GetShallowClone(entity);
                     context.AddObject(context.GetEntitySetName(entity.GetType()), attachedEntity);
@@ -183,6 +183,8 @@ namespace MeisterGeister.Model.Extensions
 
         public static EntityKey GetEntityKeyFromPrimaryKey(this ObjectContext context, object o) //where T : class
         {
+            if (o == null)
+                return null;
             IDictionary<string, object> key = new Dictionary<string, object>();
             string entitysetname = context.GetEntitySetName(o.GetType());
             foreach (System.Data.Entity.Core.Metadata.Edm.EdmMember keyMember in context.GetEntitySet(o.GetType()).ElementType.KeyMembers)
