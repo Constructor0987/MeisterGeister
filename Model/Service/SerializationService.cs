@@ -393,7 +393,7 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_Sonderfertigkeit.First().Sonderfertigkeit.Sonderfertigkeit_Setting.First().WithoutUpdate(),
                     h => h.Held_Talent,
                     h => h.Held_Talent.First().Talent.WithoutUpdate(),
-                    h => h.Held_VorNachteil,
+                    h => h.Held_VorNachteil.First().AlwaysInsert(),
                     h => h.Held_VorNachteil.First().VorNachteil.WithoutUpdate(),
                     h => h.Held_Zauber,
                     h => h.Held_Zauber.First().Zauber.WithoutUpdate(),

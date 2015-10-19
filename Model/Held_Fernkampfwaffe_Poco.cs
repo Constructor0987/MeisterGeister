@@ -87,13 +87,21 @@ namespace MeisterGeister.Model
             get { return _heldAusrüstungGUID; }
             set
             {
-                if (_heldAusrüstungGUID != value)
+                try
                 {
-                    if (Held_Ausrüstung != null && Held_Ausrüstung.HeldAusrüstungGUID != value)
+                    _settingFK = true;
+                    if (_heldAusrüstungGUID != value)
                     {
-                        Held_Ausrüstung = null;
+                        if (Held_Ausrüstung != null && Held_Ausrüstung.HeldAusrüstungGUID != value)
+                        {
+                            Held_Ausrüstung = null;
+                        }
+                        _heldAusrüstungGUID = value;
                     }
-                    _heldAusrüstungGUID = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
     
@@ -106,13 +114,21 @@ namespace MeisterGeister.Model
             get { return _fernkampfwaffeGUID; }
             set
             {
-                if (_fernkampfwaffeGUID != value)
+                try
                 {
-                    if (Fernkampfwaffe != null && Fernkampfwaffe.FernkampfwaffeGUID != value)
+                    _settingFK = true;
+                    if (_fernkampfwaffeGUID != value)
                     {
-                        Fernkampfwaffe = null;
+                        if (Fernkampfwaffe != null && Fernkampfwaffe.FernkampfwaffeGUID != value)
+                        {
+                            Fernkampfwaffe = null;
+                        }
+                        _fernkampfwaffeGUID = value;
                     }
-                    _fernkampfwaffeGUID = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
     
@@ -120,23 +136,31 @@ namespace MeisterGeister.Model
         private System.Guid _fernkampfwaffeGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid TalentGUID
+        public virtual Nullable<System.Guid> TalentGUID
         {
             get { return _talentGUID; }
             set
             {
-                if (_talentGUID != value)
+                try
                 {
-                    if (Talent != null && Talent.TalentGUID != value)
+                    _settingFK = true;
+                    if (_talentGUID != value)
                     {
-                        Talent = null;
+                        if (Talent != null && Talent.TalentGUID != value)
+                        {
+                            Talent = null;
+                        }
+                        _talentGUID = value;
                     }
-                    _talentGUID = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
     
         }
-        private System.Guid _talentGUID;
+        private Nullable<System.Guid> _talentGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int FKErleichterung
@@ -218,6 +242,8 @@ namespace MeisterGeister.Model
 
         #region Association Fixup
     
+        private bool _settingFK = false;
+    
         private void FixupFernkampfwaffe(Fernkampfwaffe previousValue)
         {
     		OnChanged("Fernkampfwaffe");
@@ -275,6 +301,10 @@ namespace MeisterGeister.Model
                 {
                     TalentGUID = Talent.TalentGUID;
                 }
+            }
+            else if (!_settingFK)
+            {
+                TalentGUID = null;
             }
         }
 

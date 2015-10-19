@@ -27,7 +27,10 @@ namespace MeisterGeister.Model
                 return null;
             if (h == null)
                 return w.Talent.FirstOrDefault();
-            return h.Kampftalente.Where(t => w.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault().Talent; 
+            var ht = h.Kampftalente.Where(t => w.Talent != null && w.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
+            if (ht == null)
+                return null;
+            return ht.Talent;
         }
 
         public Held_Talent BestesHeldTalent
@@ -42,7 +45,7 @@ namespace MeisterGeister.Model
         {
             if (w == null || h == null)
                 return null;
-            return h.Kampftalente.Where(t => w.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
+            return h.Kampftalente.Where(t => w.Talent != null && t.Talent != null && w.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
         }
 
         public List<Held_Talent> Kampftalente

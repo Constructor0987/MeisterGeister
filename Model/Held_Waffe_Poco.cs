@@ -87,13 +87,21 @@ namespace MeisterGeister.Model
             get { return _heldAusrüstungGUID; }
             set
             {
-                if (_heldAusrüstungGUID != value)
+                try
                 {
-                    if (Held_BFAusrüstung != null && Held_BFAusrüstung.HeldAusrüstungGUID != value)
+                    _settingFK = true;
+                    if (_heldAusrüstungGUID != value)
                     {
-                        Held_BFAusrüstung = null;
+                        if (Held_BFAusrüstung != null && Held_BFAusrüstung.HeldAusrüstungGUID != value)
+                        {
+                            Held_BFAusrüstung = null;
+                        }
+                        _heldAusrüstungGUID = value;
                     }
-                    _heldAusrüstungGUID = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
     
@@ -106,13 +114,21 @@ namespace MeisterGeister.Model
             get { return _waffeGUID; }
             set
             {
-                if (_waffeGUID != value)
+                try
                 {
-                    if (Waffe != null && Waffe.WaffeGUID != value)
+                    _settingFK = true;
+                    if (_waffeGUID != value)
                     {
-                        Waffe = null;
+                        if (Waffe != null && Waffe.WaffeGUID != value)
+                        {
+                            Waffe = null;
+                        }
+                        _waffeGUID = value;
                     }
-                    _waffeGUID = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
     
@@ -120,23 +136,31 @@ namespace MeisterGeister.Model
         private System.Guid _waffeGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid TalentGUID
+        public virtual Nullable<System.Guid> TalentGUID
         {
             get { return _talentGUID; }
             set
             {
-                if (_talentGUID != value)
+                try
                 {
-                    if (Talent != null && Talent.TalentGUID != value)
+                    _settingFK = true;
+                    if (_talentGUID != value)
                     {
-                        Talent = null;
+                        if (Talent != null && Talent.TalentGUID != value)
+                        {
+                            Talent = null;
+                        }
+                        _talentGUID = value;
                     }
-                    _talentGUID = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
     
         }
-        private System.Guid _talentGUID;
+        private Nullable<System.Guid> _talentGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int INI
@@ -242,6 +266,8 @@ namespace MeisterGeister.Model
 
         #region Association Fixup
     
+        private bool _settingFK = false;
+    
         private void FixupHeld_BFAusrüstung(Held_BFAusrüstung previousValue)
         {
     		OnChanged("Held_BFAusrüstung");
@@ -278,6 +304,10 @@ namespace MeisterGeister.Model
                 {
                     TalentGUID = Talent.TalentGUID;
                 }
+            }
+            else if (!_settingFK)
+            {
+                TalentGUID = null;
             }
         }
     

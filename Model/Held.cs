@@ -2129,7 +2129,7 @@ namespace MeisterGeister.Model {
         [DependsOnModifikator(typeof(Mod.IModifikator))]
         public List<Model.Held_Talent> Kampftalente {
             get {
-                return Held_Talent.Where(ht => ht.Talent.IsKampfTalent).OrderByDescending(ht => ht.TaW).ThenBy(ht => ht.Talent.Talentname).ToList();
+                return Held_Talent.Where(ht => ht.Talent != null && ht.Talent.IsKampfTalent).OrderByDescending(ht => ht.TaW).ThenBy(ht => ht.Talent.Talentname).ToList();
             }
         }
 
@@ -2631,47 +2631,73 @@ namespace MeisterGeister.Model {
                 RS[Trefferzone.Gesamt] = einfacherRs;
         }
 
-        public Held_Ausrüstung AddAusrüstung(Ausrüstung a)
+        public Held_Ausrüstung AddAusrüstung(Ausrüstung a, bool detached = false)
         {
-            Held_Ausrüstung ha = Global.ContextHeld.New<Held_Ausrüstung>();
+            Held_Ausrüstung ha = new Held_Ausrüstung();
+            if (!detached)
+                ha = Global.ContextHeld.New<Held_Ausrüstung>();
             ha.HeldGUID = HeldGUID;
             ha.Angelegt = false;
             ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
-            ha.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == ha.TrageortGUID).FirstOrDefault();
+            if(!detached)
+                ha.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == ha.TrageortGUID).FirstOrDefault();
 
             if(a.Waffe != null || a.Schild != null)
             {
-                var bfa = Global.ContextHeld.New<Held_BFAusrüstung>();
+                Held_BFAusrüstung bfa = new Held_BFAusrüstung();
+                if(!detached)
+                    bfa = Global.ContextHeld.New<Held_BFAusrüstung>();
                 bfa.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
                 int bf = 0;
                 if(a.Waffe != null)
                 {
-                    var hw = Global.ContextHeld.New<Held_Waffe>();
+                    var hw = new Held_Waffe();
+                    if(!detached)
+                        hw = Global.ContextHeld.New<Held_Waffe>();
                     hw.WaffeGUID = a.Waffe.WaffeGUID;
-                    hw.Waffe = a.Waffe;
+                    if(!detached)
+                        hw.Waffe = a.Waffe;
                     hw.TPBonus = a.Waffe.TPBonus;
                     hw.WMAT = a.Waffe.WMAT ?? 0;
                     hw.WMPA = a.Waffe.WMPA ?? 0;
                     hw.INI = a.Waffe.INI ?? 0;
                     bf = a.Waffe.BF ?? 0;
-                    hw.Talent = Held_Waffe.GetBestesTalent(this, a.Waffe);
+                    var t = Held_Waffe.GetBestesTalent(this, a.Waffe);
+                    if(t != null)
+                        hw.TalentGUID = t.TalentGUID;
+                    if(!detached)
+                        hw.Talent = t;
                     hw.HeldAusrüstungGUID = bfa.HeldAusrüstungGUID;
                     bfa.Held_Waffe = hw;
                 }
                 if (a.Schild != null)
                 {
                     bf = a.Schild.BF;
-                    bfa.Schild = a.Schild;
+                    if(!detached)
+                        bfa.Schild = a.Schild;
+                    else
+                    {
+                        var s = new Schild();
+                        s.SchildGUID = a.Schild.SchildGUID;
+                        bfa.Schild = s;
+                    }
                 }
                 bfa.StartBF = bfa.BF = bf;
                 ha.Held_BFAusrüstung = bfa;
             }
             if(a.Fernkampfwaffe != null)
             {
-                Held_Fernkampfwaffe hf = Global.ContextHeld.New<Held_Fernkampfwaffe>();
+                Held_Fernkampfwaffe hf = new Held_Fernkampfwaffe();
+                if(!detached)
+                    hf = Global.ContextHeld.New<Held_Fernkampfwaffe>();
                 hf.FernkampfwaffeGUID = a.Fernkampfwaffe.FernkampfwaffeGUID;
-                hf.Fernkampfwaffe = a.Fernkampfwaffe;
-                hf.Talent = Held_Fernkampfwaffe.GetBestesTalent(this, a.Fernkampfwaffe);
+                if(!detached)
+                    hf.Fernkampfwaffe = a.Fernkampfwaffe;
+                var t = Held_Fernkampfwaffe.GetBestesTalent(this, a.Fernkampfwaffe);
+                if (t != null)
+                    hf.TalentGUID = t.TalentGUID;
+                if (!detached)
+                    hf.Talent = t;
                 hf.FKErleichterung = 0;
                 hf.KKErleichterung = false;
                 hf.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
@@ -2679,9 +2705,12 @@ namespace MeisterGeister.Model {
             }
             if (a.Rüstung != null)
             {
-                var hr = Global.ContextHeld.New<Held_Rüstung>();
+                Held_Rüstung hr = new Held_Rüstung();
+                if(!detached)
+                    hr = Global.ContextHeld.New<Held_Rüstung>();
                 hr.RüstungGUID = a.Rüstung.RüstungGUID;
-                hr.Rüstung = a.Rüstung;
+                if(!detached)
+                    hr.Rüstung = a.Rüstung;
                 var struktur = (a.Rüstung.RS ?? 0) * 10; //ohne zonen
                 if (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung >= 2)
                     struktur = (int)Math.Ceiling((a.Rüstung.gRS ?? 0) * 10); //Trefferzonenmodell
@@ -2693,10 +2722,11 @@ namespace MeisterGeister.Model {
             return ha;
         }
 
-        public void RemoveAusrüstung(Held_Ausrüstung ha)
+        public void RemoveAusrüstung(Held_Ausrüstung ha, bool detached = false)
         {
             Held_Ausrüstung.Remove(ha);
-            Global.ContextHeld.Delete<Held_Ausrüstung>(ha);
+            if(!detached)
+                Global.ContextHeld.Delete<Held_Ausrüstung>(ha);
         }
 
         // TODO: Diese Add-Logik sollte mit dem Importer und dem InventarViewModel homogenisiert werden, sodass alle Stellen diese Methode verwenden

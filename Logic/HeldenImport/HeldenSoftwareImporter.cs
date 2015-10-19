@@ -1353,7 +1353,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 else if (a != null)
                 {
                     for (int ai = 1; ai <= anzahl; ai++)
-                        _held.AddAusrüstung(a);
+                        _held.AddAusrüstung(a, true);
                 }
             }
         }

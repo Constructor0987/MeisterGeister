@@ -1038,7 +1038,7 @@
     </Key>
     <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="FernkampfwaffeGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="TalentGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TalentGUID" Type="uniqueidentifier" />
     <Property Name="FKErleichterung" Type="int" Nullable="false" />
     <Property Name="KKErleichterung" Type="bit" Nullable="false" />
   </EntityType>
@@ -1143,7 +1143,7 @@
     </Key>
     <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="WaffeGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="TalentGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TalentGUID" Type="uniqueidentifier" />
     <Property Name="INI" Type="int" Nullable="false" />
     <Property Name="TPBonus" Type="int" Nullable="false" />
     <Property Name="WMAT" Type="int" Nullable="false" />
@@ -2310,7 +2310,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_Held_Fernkampfwaffe_Talent">
-    <End Role="Talent" Type="DatabaseDSAModel.Store.Talent" Multiplicity="1">
+    <End Role="Talent" Type="DatabaseDSAModel.Store.Talent" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Store.Held_Fernkampfwaffe" Multiplicity="*" />
@@ -2422,7 +2422,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_Held_Waffe_Talent">
-    <End Role="Talent" Type="DatabaseDSAModel.Store.Talent" Multiplicity="1">
+    <End Role="Talent" Type="DatabaseDSAModel.Store.Talent" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Held_Waffe" Type="DatabaseDSAModel.Store.Held_Waffe" Multiplicity="*" />
@@ -4147,7 +4147,7 @@
     </Key>
     <Property Name="HeldAusrüstungGUID" Type="Guid" Nullable="false" />
     <Property Name="FernkampfwaffeGUID" Type="Guid" Nullable="false" />
-    <Property Name="TalentGUID" Type="Guid" Nullable="false" />
+    <Property Name="TalentGUID" Type="Guid" />
     <Property Name="FKErleichterung" Type="Int32" Nullable="false" />
     <Property Name="KKErleichterung" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe" FromRole="Held_Fernkampfwaffe" ToRole="Fernkampfwaffe" />
@@ -4267,7 +4267,7 @@
     </Key>
     <Property Name="HeldAusrüstungGUID" Type="Guid" Nullable="false" />
     <Property Name="WaffeGUID" Type="Guid" Nullable="false" />
-    <Property Name="TalentGUID" Type="Guid" Nullable="false" />
+    <Property Name="TalentGUID" Type="Guid" />
     <Property Name="INI" Type="Int32" Nullable="false" />
     <Property Name="TPBonus" Type="Int32" Nullable="false" />
     <Property Name="WMAT" Type="Int32" Nullable="false" />
@@ -5587,7 +5587,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_Held_Fernkampfwaffe_Talent">
-    <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="1">
+    <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Held_Fernkampfwaffe" Type="DatabaseDSAModel.Held_Fernkampfwaffe" Multiplicity="*" />
@@ -5741,7 +5741,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="fk_Held_Waffe_Talent">
-    <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="1">
+    <End Role="Talent" Type="DatabaseDSAModel.Talent" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Held_Waffe" Type="DatabaseDSAModel.Held_Waffe" Multiplicity="*" />
@@ -7351,7 +7351,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="f600664808ad438892d7d2121afbb54e" Name="Diagram1">
+      <Diagram DiagramId="dbf3f74b7abc4574874c98626f527e35" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.375" IsExpanded="true" />

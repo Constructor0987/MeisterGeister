@@ -1040,7 +1040,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 }
                 
                 if (a != null) //wenn gefunden, hinzufügen
-                    _held.AddAusrüstung(a);
+                    _held.AddAusrüstung(a, true);
                 else
                     AddImportLog(ImportTypen.Gegenstand, ausrüstung, name, _importLog);
 
@@ -1112,7 +1112,7 @@ namespace MeisterGeister.Logic.HeldenImport
 
 
                 if (a != null) //wenn gefunden
-                    _held.AddAusrüstung(a);
+                    _held.AddAusrüstung(a, true);
                 else
                     AddImportLog(ImportTypen.Gegenstand, ausrüstung, null, _importLog);
             }

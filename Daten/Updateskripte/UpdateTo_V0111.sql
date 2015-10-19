@@ -1,4 +1,8 @@
-﻿/* Anpassungen an VorNachteile */
+﻿-- Talent null auf Held_Ausrüstung zulassen.
+ALTER TABLE Held_Waffe alter column TalentGUID uniqueidentifier null;
+ALTER TABLE Held_Fernkampfwaffe alter column TalentGUID uniqueidentifier null;
+
+/* Anpassungen an VorNachteile */
 -- Mehrere VorNachteile mit gleichem Namen möglich machen
 ALTER TABLE Held_VorNachteil ALTER COLUMN Wert SET DEFAULT ''
 GO

@@ -127,16 +127,17 @@ namespace MeisterGeister.Model.Service {
             return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T).Select(os => (T)os.Entity);
         }
 
-        protected virtual IDictionary<object, System.Data.Entity.EntityState> GetChangedEntities()
+        public virtual IDictionary<object, System.Data.Entity.EntityState> GetChangedEntities()
         {
             IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.Entity.EntityState.Added | System.Data.Entity.EntityState.Deleted | System.Data.Entity.EntityState.Modified);
             IDictionary<object, System.Data.Entity.EntityState> ret = new Dictionary<object, System.Data.Entity.EntityState>();
             foreach (ObjectStateEntry os in objectStates)
-                ret.Add(os.Entity, os.State);
+                if(os.Entity != null)
+                    ret.Add(os.Entity, os.State);
             return ret;
         }
 
-        protected virtual IList<System.Data.Entity.Core.EntityKey> GetChangedEntityKeys()
+        public virtual IList<System.Data.Entity.Core.EntityKey> GetChangedEntityKeys()
         {
             List<System.Data.Entity.Core.EntityKey> ret = new List<System.Data.Entity.Core.EntityKey>();
             IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.Entity.EntityState.Added | System.Data.Entity.EntityState.Deleted | System.Data.Entity.EntityState.Modified);
