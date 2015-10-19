@@ -258,7 +258,6 @@
     <Compile Include="Logic\General\Merkmale.cs" />
     <Compile Include="Logic\General\ReflectionHelper.cs" />
     <Compile Include="Logic\General\Repräsentationen.cs" />
-    <Compile Include="Logic\General\Sonderfertigkeiten.cs" />
     <Compile Include="Logic\General\TalentTypen.cs" />
     <Compile Include="Logic\General\WikiAventurica.cs" />
     <Compile Include="Logic\General\Würfel.cs" />
