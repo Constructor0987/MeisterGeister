@@ -1871,7 +1871,7 @@ namespace MeisterGeister.Model {
 
         private void Hvn_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (sender is Held_VorNachteil && e.PropertyName == "WertInt")
+            if (sender is Held_VorNachteil && e.PropertyName == "KostenGesamt")
             {
                 // VorNachteile Summe neu berechnen
                 Held_VorNachteil hvn = (Held_VorNachteil)sender;
