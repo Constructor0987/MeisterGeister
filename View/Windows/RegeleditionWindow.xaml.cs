@@ -28,14 +28,12 @@ namespace MeisterGeister.View.Windows
         {
             Global.Regeledition = "DSA 5";
             DialogResult = true;
-            Close();
         }
 
         private void buttonDSA4_1_Click(object sender, RoutedEventArgs e)
         {
             Global.Regeledition = "DSA 4.1";
             DialogResult = true;
-            Close();
         }
     }
 }

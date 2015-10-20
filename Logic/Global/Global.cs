@@ -343,7 +343,6 @@ namespace MeisterGeister
             ContextZooBot = new Service.ZooBotService();
 
             IsInitialized = true;
-
             Logic.Einstellung.Einstellungen.UpdateEinstellungen();
 
             RefreshRegeledition();

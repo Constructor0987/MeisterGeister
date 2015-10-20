@@ -7,7 +7,7 @@
         xmlns:mg="clr-namespace:MeisterGeister"
         mc:Ignorable="d"
         Title="Regeledition" Height="282.205" Width="352.816" ResizeMode="NoResize" Background="{StaticResource Background1}"
-        TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner" Topmost="True">
+        TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterScreen" Topmost="True">
     <Grid>
         <TextBlock Text="Bitte wähle die Regeledition aus, mit der du spielst. Die Auswahl kann später in den Einstellungen geändert werden. Nach der Auswahl wird MeisterGeister beendet und muss neu gestartet werden." Height="117" VerticalAlignment="Top" TextWrapping="Wrap" Margin="28,10,19,0" HorizontalAlignment="Center" FontSize="16" />
         <Button x:Name="buttonDSA5" Margin="66,138,0,0" VerticalAlignment="Top" Height="88" HorizontalAlignment="Left" Width="91" FontSize="18.667" FontWeight="Bold" Click="buttonDSA5_Click">
