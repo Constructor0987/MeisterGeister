@@ -536,6 +536,19 @@ namespace MeisterGeister.View
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Als erstes Regeledition prüfen und festlegen
+            if (string.IsNullOrEmpty(Global.Regeledition))
+            {
+                // noch keine Regeledition festgelegt, also abfragen...
+                View.Windows.RegeleditionWindow regWin = new RegeleditionWindow();
+                regWin.Owner = System.Windows.Application.Current.MainWindow;
+                regWin.ShowDialog();
+                regWin = null;
+                App.CloseSplashScreen();
+                Application.Current.Shutdown();
+                return;
+            }
+
             InitializeMenu();
 
             // wenn kein Jingle abgespielt wird, kann das Startup-Fenster spätestens jetzt geschlossen werden
@@ -559,17 +572,6 @@ namespace MeisterGeister.View
             if (System.Diagnostics.Debugger.IsAttached == false && Einstellungen.ShowChangeLog)
                 ViewHelper.ShowBrowserChangeLog(true);
 #endif
-
-            // Regeledition prüfen und festlegen
-            if (string.IsNullOrEmpty(Global.Regeledition))
-            {
-                // noch keine Regeledition festgelegt, also abfragen...
-                View.Windows.RegeleditionWindow regWin = new RegeleditionWindow();
-                regWin.Owner = this;
-                regWin.ShowDialog();
-                regWin = null;
-                Application.Current.Shutdown();
-            }
         }
 
         private void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)

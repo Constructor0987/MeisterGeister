@@ -31,8 +31,13 @@ namespace MeisterGeister {
 
         public static object SqlCompactVersion = "-";
 
-        public App() {
+        public App()
+        {
+            InitApp();
+        }
 
+        public void InitApp()
+        {
             LogInfo log = Logger.PerformanceLogStart("Programmstart");
 
 #if !DEBUG
@@ -55,13 +60,17 @@ namespace MeisterGeister {
             System.Windows.Forms.Application.EnableVisualStyles();
 
             // Prüfen, ob Datenbank vorhanden ist
-            if (!File.Exists(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf")) {
+            if (!File.Exists(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf"))
+            {
                 // Es handelt sich vermutlich um eine Neuinstallation:
                 // Standard-Datenbank kopieren und umbenennen
-                try {
+                try
+                {
                     File.Copy(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA_Standard.sdf",
                          Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf", false);
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     MsgWindow errWin = new MsgWindow("Datenbank-Fehler", "Die Standard-Datanbank konnte nicht gefunden werden!", ex);
                     errWin.ShowDialog();
                     Shutdown();
@@ -107,20 +116,25 @@ namespace MeisterGeister {
             }
 
             //Version der Datenbank überprüfen und upgraden.
-            try {
+            try
+            {
                 SqlCeUpgrade.Run(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf");
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MsgWindow errWin = new MsgWindow("Fehler beim Datenbank-Upgrade", "Beim Datenbank-Upgrade ist ein Fehler aufgetreten!", ex);
                 errWin.ShowDialog();
                 Shutdown();
             }
 
             // Auf Datenbank-Update prüfen
-            try {
+            try
+            {
                 string msg = string.Empty;
                 MsgWindow msgWin = null;
 
-                switch (DatabaseUpdate.PerformDatabaseUpdate()) {
+                switch (DatabaseUpdate.PerformDatabaseUpdate())
+                {
                     case DatabaseUpdateResult.DatenbankVersionOK:
                         break;
                     case DatabaseUpdateResult.DatenbankUpdateOK:
@@ -151,7 +165,9 @@ namespace MeisterGeister {
                         Shutdown();
                         return;
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MsgWindow errWin = new MsgWindow("Fehler beim Datenbank-Update", "Beim Datenbank-Update ist ein Fehler aufgetreten!\n" + DatabaseUpdate.UpdateStatus, ex);
                 errWin.ShowDialog();
                 Shutdown();
@@ -160,13 +176,16 @@ namespace MeisterGeister {
 
             InitializeComponent();
 
-            try {
+            try
+            {
                 // Jingle abspielen
 #if !(NO_JINGLE)
                 if (!Einstellungen.JingleAbstellen)
                     AudioPlayer.PlayJingle();
 #endif
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MsgWindow errWin = new MsgWindow("Audio Fehler", "Beim Abspielen des Start-Jingles ist ein Fehler aufgetreten.", ex);
                 Nullable<bool> dialogResult = errWin.ShowDialog();
                 errWin.Close();
