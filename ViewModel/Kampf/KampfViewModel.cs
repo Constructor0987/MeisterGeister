@@ -103,13 +103,13 @@ namespace MeisterGeister.ViewModel.Kampf
         public ICollection<IWesenPlaylist> WesenPlaylist
         {
             get {
-                return ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is Held)) ?
+                return ((SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is Held)) ?
                     new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()):
                     
-                    ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is GegnerBase)) ?
+                    ((SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) &&  (SelectedKämpferInfo.Kämpfer is GegnerBase)) ?
                     new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()):
 
-                    ((KämpferSelected && SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) && (SelectedKämpferInfo.Kämpfer is Gegner)) ?
+                    ((SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) && (SelectedKämpferInfo.Kämpfer is Gegner)) ?
                     new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as Gegner).GegnerBase.GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
 
                     null;
@@ -123,9 +123,8 @@ namespace MeisterGeister.ViewModel.Kampf
         private IKämpfer _selectedKämpfer;
         public IKämpfer SelectedKämpfer
         {
-            get {
-                
-                return (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null; 
+            get {                
+                return (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null;
             }
             set
             {
