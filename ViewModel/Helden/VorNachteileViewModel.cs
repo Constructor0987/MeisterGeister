@@ -192,7 +192,7 @@ namespace MeisterGeister.ViewModel.Helden
                             VorNachteilAuswahlItem auswahl = Auswahl(vn);
                             if (auswahl != null)
                             {
-                                wert = auswahl.Name;
+                                wert = auswahl.NameMitAuswahl;
                                 if (kosten == null || kosten == 0)
                                     kosten = auswahl.Kosten; // Kosten nur setzen, wenn VorNachteil keine Fixkosten hat
                             }
@@ -247,14 +247,43 @@ namespace MeisterGeister.ViewModel.Helden
     {
         private double v;
 
-        public VorNachteilAuswahlItem(string name, double? kosten)
+        public VorNachteilAuswahlItem(string name, double? kosten, string literatur)
         {
             Name = name;
             Kosten = kosten;
+            Literatur = literatur;
+            HatWert = false;
+        }
+        public VorNachteilAuswahlItem(Model.Talent t, double? kosten)
+        {
+            Name = t.Name;
+            Kosten = kosten;
+            Literatur = t.Literatur;
+            HatWert = false;
+        }
+        public VorNachteilAuswahlItem(Model.VorNachteil vn, Model.VorNachteilAuswahl vna)
+        {
+            Name = vna.Name;
+            Kosten = ((vna.Kosten ?? 0) == 0) ? vn.Kosten : vna.Kosten;
+            Literatur = vna.Literatur;
+            HatWert = vna.HatWert ?? false;
+            Auswahl = vna.Auswahl;
         }
 
+        public string NameMitAuswahl
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Auswahl))
+                    return Name;
+                return string.Format("{0} ({1})", Name, Auswahl);
+            }
+        }
         public string Name { get; set; }
         public double? Kosten { get; set; }
+        public string Literatur { get; set; }
+        public bool HatWert { get; set; }
+        public string Auswahl { get; set; }
     }
 
     #endregion

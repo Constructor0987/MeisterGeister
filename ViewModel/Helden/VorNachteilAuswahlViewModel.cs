@@ -53,26 +53,24 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 // Talente (ohne Kampftechniken), Zauber, Rituale, Liturgien
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID != 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent.Name, kostenList[talent.Steigerung]));
+                    list.Add(new VorNachteilAuswahlItem(talent, kostenList[talent.Steigerung]));
                 // TODO: andere fertigkeiten hinzufügen
             }
             else if (_vorNachteil.Auswahl == "[TALENT]")
             {
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID != 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent.Name, kostenList[talent.Steigerung]));
+                    list.Add(new VorNachteilAuswahlItem(talent, kostenList[talent.Steigerung]));
             }
             else if (_vorNachteil.Auswahl == "[KAMPFTECHNIK]")
             {
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID == 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent.Name, kostenList[talent.Steigerung]));
+                    list.Add(new VorNachteilAuswahlItem(talent, kostenList[talent.Steigerung]));
             }
             else
             { // Auswahl Einträge aus Tabelle abrufen
                 var listAuswahl = Global.ContextVorNachteil.VorNachteilAuswahlListeByKategorie(_vorNachteil.Auswahl.Trim('[', ']'));
                 foreach (var item in listAuswahl)
-                {
-                    list.Add(new VorNachteilAuswahlItem(item.Name, item.Kosten));
-                }
+                    list.Add(new VorNachteilAuswahlItem(_vorNachteil, item));
             }
             
             // TODO: weitere spezielle VorNachteil Auswahl-Typen wie z.B. GIFT und KRANKHEIT

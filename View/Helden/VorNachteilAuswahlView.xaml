@@ -10,12 +10,17 @@
         Title="Vor-/Nachteil Auswahl" Height="365.756" Width="503.123"
         TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner">
     <Window.Resources>
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed" />
         <DataTemplate x:Key="AuswahlListTemplate">
             <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" VerticalAlignment="Top" />
-                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <TextBlock Text="{Binding Kosten}" VerticalAlignment="Top" />
-                    <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" Margin="5,0,0,0" VerticalAlignment="Top" />
+                <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                    <TextBox Width="120" Text="{Binding Auswahl}" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="{Binding HatWert, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock Text="{Binding Kosten}" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static mg:Global.Text_Generierungseinheit_Abk}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    <ViewGeneral:LiteraturControl Height="18" LiteraturAnzeigeArt="NurIcon" Literaturangabe="{Binding Literatur}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </DockPanel>
         </DataTemplate>
