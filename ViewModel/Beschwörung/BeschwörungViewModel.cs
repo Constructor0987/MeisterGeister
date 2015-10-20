@@ -374,6 +374,8 @@ namespace MeisterGeister.ViewModel.Beschwörung
             kontrollwert.Wert = KontrollWert;
             kontrollwert.WerteNamen = "Kontrollwert";
             kontrollwert.Modifikator = GesamtHerrschMod;
+            kontrollwert.KritischVerhaltenPatzer = ProbeKritischVerhalten.BESTÄTIGUNG;
+            kontrollwert.KritischVerhaltenGlücklich = ProbeKritischVerhalten.DEAKTIVIERT;
             return ShowProbeDialog(kontrollwert, Held);
         }
 

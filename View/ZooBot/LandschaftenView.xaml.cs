@@ -27,7 +27,7 @@ namespace MeisterGeister.View.ZooBot
             set { SetValue(SelectedItemsProperty, value); }
         }
         public static DependencyProperty SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(IList<Model.Landschaft>), typeof(LandschaftenView),
-                new PropertyMetadata(false));
+                new PropertyMetadata(null));
 
 
         public VM.LandschaftenVM VM
@@ -46,13 +46,14 @@ namespace MeisterGeister.View.ZooBot
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            VM = new VM.LandschaftenVM();
+            VM.PropertyChanged += VM_PropertyChanged;
         }
 
         public LandschaftenView()
         {
             InitializeComponent();
-            VM = new VM.LandschaftenVM();
-            VM.PropertyChanged += VM_PropertyChanged;
+            
             
         }
 

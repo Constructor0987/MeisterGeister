@@ -68,6 +68,16 @@ namespace MeisterGeister.Model.Service
             return l2;
         }
 
+        public List<Landschaftsgruppe> GetLandschaftsgruppen()
+        {
+            return Context.Landschaftsgruppe.ToList();
+        }
+
+        public List<string> GetPflanzenTypen()
+        {
+            return Context.Pflanze_Typ.Select((pt) => pt.Typ).Distinct().ToList();
+        }
+
 
         #endregion
 

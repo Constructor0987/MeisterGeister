@@ -2218,7 +2218,13 @@
     <Resource Include="Images\Icons\DereGlobus\Grossstadt.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0109.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0110.sql" />
-    <Resource Include="Daten\Updateskripte\UpdateTo_V0111.sql" />
+	<Resource Include="Daten\Updateskripte\UpdateTo_V0111.sql" />    <Resource Include="Images\Icons\Pflanzen\Ahorn.png" />
+    <Resource Include="Images\Icons\Pflanzen\Drug.png" />
+    <Resource Include="Images\Icons\Pflanzen\Gefahr.png" />
+    <Resource Include="Images\Icons\Pflanzen\Gift.png" />
+    <Resource Include="Images\Icons\Pflanzen\Herz.png" />
+    <Resource Include="Images\Icons\Pflanzen\Parasit.png" />
+    <Resource Include="Images\Icons\Pflanzen\Special.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0112.sql" />
     <None Include="Images\Karten\Myranor.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

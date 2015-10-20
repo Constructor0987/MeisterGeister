@@ -3,9 +3,5 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:c="clr-namespace:MeisterGeister.View.Karte"
         Title="PflanzenAnOrtWindow" Height="300" Width="300">
-    <Grid>
-        <ScrollViewer>
-            <c:PflanzenMitLandschaftControl Pflanzen="{Binding Pflanzen}"/>
-        </ScrollViewer>
-    </Grid>
+    <c:PflanzenMitLandschaftControl Pflanzen="{Binding Pflanzen}"/>
 </Window>
