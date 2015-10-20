@@ -18,6 +18,15 @@ namespace MeisterGeister.Model.Service
                 .Where(vn => vn.Regelsystem == Global.Regeledition).Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).ToList(); }
         }
 
+        public List<Model.VorNachteilAuswahl> VorNachteilAuswahlListe
+        {
+            get
+            {
+                return Liste<VorNachteilAuswahl>()
+              .Where(vn => vn.Regelsystem == Global.Regeledition).ToList();
+            }
+        }
+
         #endregion
 
         #region //----- KONSTRUKTOR ----
@@ -29,6 +38,12 @@ namespace MeisterGeister.Model.Service
         #endregion
 
         #region //----- DATENBANKABFRAGEN ----
+
+        public List<Model.VorNachteilAuswahl> VorNachteilAuswahlListeByKategorie(string kat)
+        {
+            return Liste<VorNachteilAuswahl>()
+                .Where(vn => vn.Regelsystem == Global.Regeledition && vn.Kategorie == kat).OrderBy(vn => vn.Name).ToList();
+        }
 
         #endregion
 
