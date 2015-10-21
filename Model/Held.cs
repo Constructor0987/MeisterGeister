@@ -1576,10 +1576,10 @@ namespace MeisterGeister.Model {
 
         public VorNachteil AddVorNachteil(string vorNachName, string wert = "") {
             VorNachteil vorNach = Global.ContextHeld.Liste<VorNachteil>().Where(vn => vn.Name == vorNachName).FirstOrDefault();
-            return AddVorNachteil(vorNach, vorNach.Kosten, wert);
+            return AddVorNachteil(vorNach, vorNach.KostenGrund, vorNach.KostenFaktor, wert);
         }
 
-        public VorNachteil AddVorNachteil(VorNachteil vn, double? kosten, string wert = "") {
+        public VorNachteil AddVorNachteil(VorNachteil vn, double? kostenGrund, double? kostenFaktor, string wert = "") {
             if (vn == null)
                 return null;
             IEnumerable<Held_VorNachteil> existierendeZuordnung = Held_VorNachteil.Where(heldvn => heldvn.VorNachteilGUID == vn.VorNachteilGUID && heldvn.HeldGUID == HeldGUID);
@@ -1601,10 +1601,14 @@ namespace MeisterGeister.Model {
             hvn.VorNachteil = vn;
 
             // Kosten (AP bzw. GP)
-            if (kosten == null)
-                hvn.Kosten = vn.Kosten ?? 0.0;
+            if (kostenGrund == null)
+                hvn.KostenGrund = vn.KostenGrund ?? 0.0;
             else
-                hvn.Kosten = kosten ?? 0.0;
+                hvn.KostenGrund = kostenGrund ?? 0.0;
+            if (kostenFaktor == null)
+                hvn.KostenFaktor = vn.KostenFaktor ?? 0.0;
+            else
+                hvn.KostenFaktor = kostenFaktor ?? 0.0;
 
             hvn.Wert = wert ?? "";
             if (hvn.Wert == "" && vn.WertTyp == "int")

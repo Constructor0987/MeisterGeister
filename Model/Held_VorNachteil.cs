@@ -47,14 +47,14 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Gibt die gesamten AP/GP-Kosten zurück. Bei mehrstufigem VorNachteil also die Einzelkosten * Anzahl.
         /// </summary>
-        [DependentProperty("Kosten"), DependentProperty("WertInt")]
+        [DependentProperty("KostenGrund"), DependentProperty("KostenFaktor"), DependentProperty("WertInt")]
         public double KostenGesamt
         {
             get
             {
                 if (VorNachteil != null && (VorNachteil.HatWert ?? false) && VorNachteil.WertTyp == "int")
-                    return Kosten * WertInt.Value;
-                return Kosten;
+                    return KostenGrund + KostenFaktor * WertInt.Value;
+                return KostenGrund;
             }
         }
     }

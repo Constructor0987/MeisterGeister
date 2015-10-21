@@ -38,13 +38,11 @@ namespace MeisterGeister.ViewModel.Helden
               // TODO: Kosten für DSA4.1 VorNachteile ergänzen.
               // Kosten nach DSA5
 
-                // SKT Faktor. Sonderfall 'Waffenbegabung' beginnt bei 0
-                int faktor = _vorNachteil.Name == "Waffenbegabung" ? 0 : 1;
-
+                int faktor = 1;
                 for (int i = 1; i < 6; i++)
                 {   // Berechnet die Kosten nach Steigerungsfaktor.
                     // Erzeugt eine Liste von SKT A bis E mit jeweils den Kosten des Steigerungsfaktors.
-                    kostenList.Add(Convert.ToChar(i + 64).ToString(), faktor * (_vorNachteil.Kosten ?? 0));
+                    kostenList.Add(Convert.ToChar(i + 64).ToString(), faktor * (_vorNachteil.KostenFaktor ?? 0));
                     faktor++;
                 }
             }
@@ -53,18 +51,18 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 // Talente (ohne Kampftechniken), Zauber, Rituale, Liturgien
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID != 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent, kostenList[talent.Steigerung]));
+                    list.Add(new VorNachteilAuswahlItem(talent, (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung]));
                 // TODO: andere fertigkeiten hinzufügen
             }
             else if (_vorNachteil.Auswahl == "[TALENT]")
             {
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID != 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent, kostenList[talent.Steigerung]));
+                    list.Add(new VorNachteilAuswahlItem(talent, (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung]));
             }
             else if (_vorNachteil.Auswahl == "[KAMPFTECHNIK]")
             {
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID == 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent, kostenList[talent.Steigerung]));
+                    list.Add(new VorNachteilAuswahlItem(talent, (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung]));
             }
             else
             { // Auswahl Einträge aus Tabelle abrufen
@@ -72,8 +70,11 @@ namespace MeisterGeister.ViewModel.Helden
                 foreach (var item in listAuswahl)
                     list.Add(new VorNachteilAuswahlItem(_vorNachteil, item));
             }
-            
+
             // TODO: weitere spezielle VorNachteil Auswahl-Typen wie z.B. GIFT und KRANKHEIT
+
+            if (list.Count == 0) // keine Auswahl-Einträge gefunden, also Dummy anlegen
+                list.Add(new VorNachteilAuswahlItem(_vorNachteil.Auswahl, _vorNachteil.KostenGrund, _vorNachteil.Literatur));
 
             AuswahlListe = list;
         }

@@ -18,11 +18,11 @@ namespace MeisterGeister.Model.Service
                 .Where(vn => vn.Regelsystem == Global.Regeledition).Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).ToList(); }
         }
 
-        public List<Model.VorNachteilAuswahl> VorNachteilAuswahlListe
+        public List<Model.VorNachteil_Auswahl> VorNachteilAuswahlListe
         {
             get
             {
-                return Liste<VorNachteilAuswahl>()
+                return Liste<VorNachteil_Auswahl>()
               .Where(vn => vn.Regelsystem == Global.Regeledition).ToList();
             }
         }
@@ -39,9 +39,9 @@ namespace MeisterGeister.Model.Service
 
         #region //----- DATENBANKABFRAGEN ----
 
-        public List<Model.VorNachteilAuswahl> VorNachteilAuswahlListeByKategorie(string kat)
+        public List<Model.VorNachteil_Auswahl> VorNachteilAuswahlListeByKategorie(string kat)
         {
-            return Liste<VorNachteilAuswahl>()
+            return Liste<VorNachteil_Auswahl>()
                 .Where(vn => vn.Regelsystem == Global.Regeledition && vn.Kategorie == kat).OrderBy(vn => vn.Name).ToList();
         }
 

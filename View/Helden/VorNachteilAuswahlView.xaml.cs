@@ -46,7 +46,7 @@ namespace MeisterGeister.View.Helden
         {
             get
             {
-                if (VM != null)
+                if (VM != null && OK_Click == true)
                     return VM.Auswahl;
                 return null;
             }

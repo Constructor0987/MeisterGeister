@@ -528,11 +528,11 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<VorNachteil> _vorNachteil;
     
-        public ObjectSet<VorNachteilAuswahl> VorNachteilAuswahl
+        public ObjectSet<VorNachteil_Auswahl> VorNachteil_Auswahl
         {
-            get { return _vorNachteilAuswahl  ?? (_vorNachteilAuswahl = CreateObjectSet<VorNachteilAuswahl>("VorNachteilAuswahl")); }
+            get { return _vorNachteil_Auswahl  ?? (_vorNachteil_Auswahl = CreateObjectSet<VorNachteil_Auswahl>("VorNachteil_Auswahl")); }
         }
-        private ObjectSet<VorNachteilAuswahl> _vorNachteilAuswahl;
+        private ObjectSet<VorNachteil_Auswahl> _vorNachteil_Auswahl;
     
         public ObjectSet<Waffe> Waffe
         {
@@ -727,8 +727,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Version;
     		if(typeof(T) == typeof(VorNachteil))
     				return (ObjectSet<T>)(Object)VorNachteil;
-    		if(typeof(T) == typeof(VorNachteilAuswahl))
-    				return (ObjectSet<T>)(Object)VorNachteilAuswahl;
+    		if(typeof(T) == typeof(VorNachteil_Auswahl))
+    				return (ObjectSet<T>)(Object)VorNachteil_Auswahl;
     		if(typeof(T) == typeof(Waffe))
     				return (ObjectSet<T>)(Object)Waffe;
     		if(typeof(T) == typeof(Zauber))
@@ -898,8 +898,8 @@ namespace MeisterGeister.Model
     				return Version;
     		if(t == typeof(VorNachteil))
     				return VorNachteil;
-    		if(t == typeof(VorNachteilAuswahl))
-    				return VorNachteilAuswahl;
+    		if(t == typeof(VorNachteil_Auswahl))
+    				return VorNachteil_Auswahl;
     		if(t == typeof(Waffe))
     				return Waffe;
     		if(t == typeof(Zauber))

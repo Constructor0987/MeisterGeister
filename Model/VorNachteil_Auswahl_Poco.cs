@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 namespace MeisterGeister.Model
 {
     [DataContract(IsReference=true)]
-    public partial class VorNachteilAuswahl : INotifyPropertyChanged
+    public partial class VorNachteil_Auswahl : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
@@ -82,16 +82,16 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual long VorNachteilAuswahlId
+        public virtual long VorNachteil_AuswahlId
         {
-            get { return _vorNachteilAuswahlId; }
+            get { return _vorNachteil_AuswahlId; }
             set
     		{ 
-    			Set(ref _vorNachteilAuswahlId, value);
+    			Set(ref _vorNachteil_AuswahlId, value);
     		}
     
         }
-        private long _vorNachteilAuswahlId;
+        private long _vorNachteil_AuswahlId;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Kategorie

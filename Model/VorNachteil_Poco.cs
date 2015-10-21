@@ -238,16 +238,28 @@ namespace MeisterGeister.Model
         private Nullable<int> _wertMax;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<double> Kosten
+        public virtual Nullable<double> KostenGrund
         {
-            get { return _kosten; }
+            get { return _kostenGrund; }
             set
     		{ 
-    			Set(ref _kosten, value);
+    			Set(ref _kostenGrund, value);
     		}
     
         }
-        private Nullable<double> _kosten;
+        private Nullable<double> _kostenGrund;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> KostenFaktor
+        {
+            get { return _kostenFaktor; }
+            set
+    		{ 
+    			Set(ref _kostenFaktor, value);
+    		}
+    
+        }
+        private Nullable<double> _kostenFaktor;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<bool> DarfMehrfach

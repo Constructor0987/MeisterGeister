@@ -182,7 +182,8 @@ namespace MeisterGeister.ViewModel.Helden
                     }
 
                     string wert = null;
-                    double? kosten = vn.Kosten;
+                    double? kostenGrund = vn.KostenGrund;
+                    double? kostenFaktor = vn.KostenFaktor;
 
                     // evtl. Auswahl treffen
                     if (!string.IsNullOrEmpty(vn.Auswahl))
@@ -193,19 +194,20 @@ namespace MeisterGeister.ViewModel.Helden
                             if (auswahl != null)
                             {
                                 wert = auswahl.NameMitAuswahl;
-                                if (kosten == null || kosten == 0)
-                                    kosten = auswahl.Kosten; // Kosten nur setzen, wenn VorNachteil keine Fixkosten hat
+                                kostenGrund = auswahl.Kosten;
                             }
+                            else
+                                return; // Abbruch, da keine Auswahl
                         }
                     }
                     
-                    if ((kosten ?? 0) == 0)
+                    if (((kostenGrund ?? 0) == 0) && ((vn.HatWert ?? false) && (vn.WertTyp == "int") && (kostenFaktor ?? 0) == 0))
                     { // keine Kosten hinterlegt, also beim User nachfragen
                         string kostenText = string.Format("{0}-Wert", Global.Text_Generierungseinheit_Abk);
-                        kosten = InputIntDialog(kostenText, string.Format("Der {0} für den {1} '{2}' konnte nicht automatisch festgelegt werden. Bitte gib einen Wert ein (siehe {3}).",
+                        kostenGrund = InputIntDialog(kostenText, string.Format("Der {0} für den {1} '{2}' konnte nicht automatisch festgelegt werden. Bitte gib einen Wert ein (siehe {3}).",
                             kostenText, typ, vn.Name, vn.Literatur), 0, (vn.Vorteil ?? false) ? 0 : int.MinValue, (vn.Nachteil ?? false) ? 0 : int.MaxValue);
                     }
-                    SelectedHeld.AddVorNachteil(vn, kosten, wert);
+                    SelectedHeld.AddVorNachteil(vn, kostenGrund, kostenFaktor, wert);
                 }
                 
                 NotifyRefresh();
@@ -261,10 +263,10 @@ namespace MeisterGeister.ViewModel.Helden
             Literatur = t.Literatur;
             HatWert = false;
         }
-        public VorNachteilAuswahlItem(Model.VorNachteil vn, Model.VorNachteilAuswahl vna)
+        public VorNachteilAuswahlItem(Model.VorNachteil vn, Model.VorNachteil_Auswahl vna)
         {
             Name = vna.Name;
-            Kosten = ((vna.Kosten ?? 0) == 0) ? vn.Kosten : vna.Kosten;
+            Kosten = ((vna.Kosten ?? 0) == 0) ? vn.KostenGrund : vna.Kosten;
             Literatur = vna.Literatur;
             HatWert = vna.HatWert ?? false;
             Auswahl = vna.Auswahl;

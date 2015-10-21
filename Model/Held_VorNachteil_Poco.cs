@@ -144,16 +144,28 @@ namespace MeisterGeister.Model
         private long _id;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual double Kosten
+        public virtual double KostenGrund
         {
-            get { return _kosten; }
+            get { return _kostenGrund; }
             set
     		{ 
-    			Set(ref _kosten, value);
+    			Set(ref _kostenGrund, value);
     		}
     
         }
-        private double _kosten;
+        private double _kostenGrund;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual double KostenFaktor
+        {
+            get { return _kostenFaktor; }
+            set
+    		{ 
+    			Set(ref _kostenFaktor, value);
+    		}
+    
+        }
+        private double _kostenFaktor;
 
         #endregion
 
