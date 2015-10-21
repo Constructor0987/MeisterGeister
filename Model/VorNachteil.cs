@@ -39,6 +39,7 @@ namespace MeisterGeister.Model
         public const string NiedrigeAstralkraft = "Niedrige Astralkraft";
         public const string HoheKarmalkraft = "Hohe Karmalkraft";
         public const string NiedrigeKarmalkraft = "Niedrige Karmalkraft";
+        public const string HoheKarmaenergie = "Hohe Karmaenergie";
 
         // Geweiht
         public const string GeweihtZwölfgöttlicheKirche = "Geweiht [zwölfgöttliche Kirche]";

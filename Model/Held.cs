@@ -770,6 +770,8 @@ namespace MeisterGeister.Model {
                         mod += 18;
                     else if (HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeitenI))
                         mod += 6;
+                    else if (HatVorNachteil(VorNachteil.HoheKarmaenergie))
+                        mod += CalcVorNachteilEnergieMod(VorNachteil.HoheKarmaenergie);
                 }
                 else if (Regelsystem == "DSA 5")
                 {
