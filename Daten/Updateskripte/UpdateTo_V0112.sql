@@ -23,66 +23,48 @@ ALTER TABLE [Held] ADD [LeiteigenschaftKlerikal] nvarchar(2);
 
 -- Stufen-VorNachteile auf einen Eintrag zusammenführen
 -- Astrale Regeneration
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013', [Wert] = '3', [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000015'
-GO
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013', [Wert] = '2', [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000014'
-GO
-UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013'
-GO
-DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000015' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000014'
-GO
-UPDATE [VorNachteil] SET [Name] = 'Astrale Regeneration', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 3, [KostenGrund] = 0, [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013'
-GO
-DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000014' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000015'
-GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013', [Wert] = '3', [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000015';
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013', [Wert] = '2', [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000014';
+UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013';
+DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000015' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000014';
+UPDATE [VorNachteil] SET [Name] = 'Astrale Regeneration', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 3, [KostenGrund] = 0, [KostenFaktor] = 4 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000013';
+DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000014' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000015';
+
 -- Schnelle Heilung
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137', [Wert] = '3', [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000139'
-GO
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137', [Wert] = '2', [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138'
-GO
-UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137'
-GO
-DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138'
-GO
-UPDATE [VorNachteil] SET [Name] = 'Schnelle Heilung', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 3, [KostenGrund] = 0, [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137'
-GO
-DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000139'
-GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137', [Wert] = '3', [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000139';
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137', [Wert] = '2', [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138';
+UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137';
+DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138';
+UPDATE [VorNachteil] SET [Name] = 'Schnelle Heilung', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 3, [KostenGrund] = 0, [KostenFaktor] = 5 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000137';
+DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000138' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000139';
+
 -- Karmale Regeneration
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447', [Wert] = '3', [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000449'
-GO
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447', [Wert] = '2', [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000448'
-GO
-UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447'
-GO
-DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000448' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000449'
-GO
-UPDATE [VorNachteil] SET [Name] = 'Karmale Regeneration', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 3, [KostenGrund] = 0, [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447'
-GO
-DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000448' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000449'
-GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447', [Wert] = '3', [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000449';
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447', [Wert] = '2', [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000448';
+UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447';
+DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000448' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000449';
+UPDATE [VorNachteil] SET [Name] = 'Karmale Regeneration', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 3, [KostenGrund] = 0, [KostenFaktor] = 10 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000447';
+DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000448' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000449';
+
 -- Karmatiker (Myranor)
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '6', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455'
-GO
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '5', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454'
-GO
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '4', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453'
-GO
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '3', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452'
-GO
-UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '2', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451'
-GO
-UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450'
-GO
-DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451'
-GO
-UPDATE [VorNachteil] SET [Name] = 'Karmatiker', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 6, [KostenGrund] = 0, [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450'
-GO
-DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451'
-GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '6', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455';
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '5', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454';
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '4', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453';
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '3', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452';
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '2', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451';
+UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450';
+DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451';
+UPDATE [VorNachteil] SET [Name] = 'Karmatiker', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 6, [KostenGrund] = 0, [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450';
+DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451';
 
 -- TODO MT: Daten VorNachteile für DSA 4.1 überarbeiten (Kosten, etc.)
--- TODO MT: Held_VorNachteil Kosten eintragen
+
+-- Held_VorNachteil Kosten eintragen
+--#FOREACH;
+SELECT KostenGrund, KostenFaktor, VorNachteilGUID FROM VorNachteil;
+--#DO;
+UPDATE [Held_VorNachteil] SET KostenGrund={0}, KostenFaktor={1} WHERE VorNachteilGUID='{2}';
+--#END;
 
 -- TODO: Mod-Werte auf neue Felder verteilen
 -- [LE_ModGen] = Wert nach Rasse setzen und [LE_Mod] reduzieren
