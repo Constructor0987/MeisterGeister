@@ -424,7 +424,6 @@ namespace MeisterGeister.Daten
                             setCmd.Connection = connection;
                             setCmd.Transaction = transaction;
                             setCmd.CommandText = statement;
-                            SqlCeDataReader reader = setCmd.ExecuteReader();
 
                             statement = null;
                             while (String.IsNullOrWhiteSpace(statement))
@@ -447,6 +446,8 @@ namespace MeisterGeister.Daten
                             }
                             int blockEnd = j - 1;
                             i = j; //äußere for schleife muss nach dem END weitermachen
+
+                            using(SqlCeDataReader reader = setCmd.ExecuteReader())
                             while (reader.Read())
                             {
                                 for (j = blockStart; j <= blockEnd; j++)
