@@ -31,13 +31,11 @@ namespace MeisterGeister.ViewModel.Helden
 
             List<VorNachteilAuswahlItem> list = new List<VorNachteilAuswahlItem>();
 
-            bool isSKT = _vorNachteil.Auswahl == "[FERTIGKEIT]" || _vorNachteil.Auswahl == "[TALENT]" || _vorNachteil.Auswahl == "[KAMPFTECHNIK]";
+            bool isSKT = ((_vorNachteil.KostenFaktor ?? 0) != 0) && (_vorNachteil.Auswahl == "[FERTIGKEIT]" || _vorNachteil.Auswahl == "[TALENT]" || _vorNachteil.Auswahl == "[KAMPFTECHNIK]");
             Dictionary<string, double> kostenList = new Dictionary<string, double>(5);
             if (isSKT)
             { // Die Auswahl hat von der SKT abhängige Kosten
-              // TODO: Kosten für DSA4.1 VorNachteile ergänzen.
               // Kosten nach DSA5
-
                 int faktor = 1;
                 for (int i = 1; i < 6; i++)
                 {   // Berechnet die Kosten nach Steigerungsfaktor.
@@ -47,22 +45,63 @@ namespace MeisterGeister.ViewModel.Helden
                 }
             }
 
+            // TODO: Kosten für DSA4.1 VorNachteile ergänzen.
+            double? kosten = 0;
             if (_vorNachteil.Auswahl == "[FERTIGKEIT]")
             {
                 // Talente (ohne Kampftechniken), Zauber, Rituale, Liturgien
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID != 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent, (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung]));
+                {
+                    if (isSKT) // variable Kosten nach SKT
+                        kosten = (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung];
+                    else // Fixkosten
+                        kosten = _vorNachteil.KostenGrund ?? 0;
+                    list.Add(new VorNachteilAuswahlItem(talent, kosten));
+                }
                 // TODO: andere fertigkeiten hinzufügen
             }
             else if (_vorNachteil.Auswahl == "[TALENT]")
             {
-                foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID != 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent, (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung]));
+                List<Model.Talent> talentListe = null;
+                if (Global.DSA5)
+                    talentListe = Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID > 1).OrderBy(t => t.Name).ToList();
+                else
+                    // keine Sprachen & Schrifte, Meta-Talente
+                    talentListe = Global.ContextHeld.TalentListe.Where(t => (t.TalentgruppeID != 0) && (t.TalentgruppeID != 7) && (t.TalentgruppeID != 8)).OrderBy(t => t.Name).ToList();
+                foreach (var talent in talentListe)
+                {
+                    if (isSKT) // variable Kosten nach SKT
+                        kosten = (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung];
+                    else if (_vorNachteil.KostenGrund.GetValueOrDefault(0) == 0) // keine Kosten angegeben -> Sonderberechnung
+                    { // Vorteil: Begabung für Talent
+                      // Kosten: Kampf, Körper (außer Schwimmen, Sich Verstecken, Singen, Tanzen, Zechen) 6 GP, andere 4 GP, Sprache/Schrift nicht
+                        if (talent.Name == "Schwimmen" || talent.Name == "Sich Verstecken" || talent.Name == "Singen" || talent.Name == "Tanzen" || talent.Name == "Zechen")
+                            kosten = 4;
+                        else if (talent.TalentgruppeID == 1 /*Kampf*/ || talent.TalentgruppeID == 2 /*Körper*/)
+                            kosten = 6;
+                        else
+                            kosten = 4;
+                    }
+                    else // Fixkosten
+                        kosten = _vorNachteil.KostenGrund ?? 0;
+                    list.Add(new VorNachteilAuswahlItem(talent, kosten));
+                }
             }
             else if (_vorNachteil.Auswahl == "[KAMPFTECHNIK]")
             {
                 foreach (var talent in Global.ContextHeld.TalentListe.Where(t => t.TalentgruppeID == 1).OrderBy(t => t.Name))
-                    list.Add(new VorNachteilAuswahlItem(talent, (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung]));
+                {
+                    if (isSKT) // variable Kosten nach SKT
+                        kosten = (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung];
+                    else // Fixkosten
+                        kosten = _vorNachteil.KostenGrund ?? 0;
+                    list.Add(new VorNachteilAuswahlItem(talent, kosten));
+                }
+            }
+            else if (_vorNachteil.Auswahl == "[RITUAL]")
+            {
+                // TODO: Auswahl für RITUAL
+                // Kosten: 1/50 der AP Lern-Kosten als GP
             }
             else
             { // Auswahl Einträge aus Tabelle abrufen
