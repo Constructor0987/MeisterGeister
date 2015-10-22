@@ -656,7 +656,7 @@ namespace MeisterGeister.Model {
                 if (Regelsystem == "DSA 4.1")
                     return HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) 
                         || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) || HatVorNachteil(VorNachteil.GeweihtAngrosch) 
-                        || HatVorNachteil(VorNachteil.Sacerdos) || HatVorNachteil(VorNachteil.GeweihtXoArtal)
+                        || HatVorNachteil(VorNachteil.Sacerdos) || HatVorNachteil(VorNachteil.GeweihtXoArtal) || HatVorNachteil(VorNachteil.Karmatiker)
                         || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNamenloser) 
                         || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.KontaktZumGroßenGeist) 
                         || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeitenIII) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeitenII) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeitenI)
@@ -766,6 +766,8 @@ namespace MeisterGeister.Model {
                         mod += 12;
                     else if (HatVorNachteil(VorNachteil.Sacerdos))
                         mod += VorNachteilWertInt(VorNachteil.Sacerdos).GetValueOrDefault(0) * 6;
+                    else if (HatVorNachteil(VorNachteil.Karmatiker))
+                        mod += VorNachteilWertInt(VorNachteil.Karmatiker).GetValueOrDefault(0) * 6;
                     else if (HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeitenIII))
                         mod += 18;
                     else if (HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeitenI))

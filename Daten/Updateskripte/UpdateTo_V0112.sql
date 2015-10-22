@@ -61,6 +61,25 @@ UPDATE [VorNachteil] SET [Name] = 'Karmale Regeneration', [HatWert] = 1, [WertTy
 GO
 DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000448' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000449'
 GO
+-- Karmatiker (Myranor)
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '6', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455'
+GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '5', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454'
+GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '4', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453'
+GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '3', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452'
+GO
+UPDATE [Held_VorNachteil] SET [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450', [Wert] = '2', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451'
+GO
+UPDATE [Held_VorNachteil] SET [Wert] = '1', [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450'
+GO
+DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451'
+GO
+UPDATE [VorNachteil] SET [Name] = 'Karmatiker', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 6, [KostenGrund] = 0, [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450'
+GO
+DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451'
+GO
 
 -- TODO MT: Daten VorNachteile für DSA 4.1 überarbeiten (Kosten, etc.)
 -- TODO MT: Held_VorNachteil Kosten eintragen

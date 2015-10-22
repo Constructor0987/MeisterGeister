@@ -50,5 +50,6 @@ namespace MeisterGeister.Model
         public const string Sacerdos = "Sacerdos";
         public const string GeweihtXoArtal = "Geweiht [Xo'Artal-Stadtpantheon]";
         public const string Geweihter = "Geweihter";
+        public const string Karmatiker = "Karmatiker";
     }
 }

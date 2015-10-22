@@ -1058,7 +1058,7 @@ namespace MeisterGeister.Logic.HeldenImport
                         _held.KE_ModGen -= 24;
                     else if (vorNachteilName == "Geweiht [nicht-alveranische Gottheit]")
                         _held.KE_ModGen -= 12;
-                    else if (vorNachteilName == "Sacerdos")
+                    else if (vorNachteilName == "Sacerdos" || vorNachteilName == "Karmatiker")
                         _held.KE_ModGen -= 6 * Math.Max(1, iWert);
                 }
 
