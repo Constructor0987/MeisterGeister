@@ -22,7 +22,7 @@ CREATE UNIQUE INDEX UQ_Held_VorNachteil ON Held_VorNachteil (
 GO
 
 -- VorNachteile für DSA5 erweitert
-ALTER TABLE [Held_VorNachteil] ADD [KostenGesamt] float NOT NULL DEFAULT 0;
+ALTER TABLE [Held_VorNachteil] ADD [KostenGrund] float NOT NULL DEFAULT 0;
 ALTER TABLE [Held_VorNachteil] ADD [KostenFaktor] float NOT NULL DEFAULT 0;
 ALTER TABLE [VorNachteil] ADD [Regelsystem] nvarchar(50) NULL;
 UPDATE [VorNachteil] SET [Regelsystem] = 'DSA 4.1';

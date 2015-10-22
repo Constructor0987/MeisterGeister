@@ -200,17 +200,11 @@ namespace MeisterGeister.Logic.HeldenImport
             _vorNachteilMapping.Add("adlige abstammung", "adlig (adlige abstammung)");
             _vorNachteilMapping.Add("adliges erbe", "adlig (adliges erbe)");
             _vorNachteilMapping.Add("amtsadel", "adlig (amtsadel)");
-            _vorNachteilMapping.Add("astrale regeneration 1", "astrale regeneration i");
-            _vorNachteilMapping.Add("astrale regeneration 2", "astrale regeneration ii");
-            _vorNachteilMapping.Add("astrale regeneration 3", "astrale regeneration iii");
             _vorNachteilMapping.Add("begabung für [merkmal] dämonisch", "begabung für merkmal (dämonisch (gesamt))");
             _vorNachteilMapping.Add("begabung für [merkmal] elementar", "begabung für merkmal (elementar (gesamt))");
             _vorNachteilMapping.Add("begabung für [talent]", "begabung für talent");
             _vorNachteilMapping.Add("begabung für [ritual]", "begabung für ritual");
             _vorNachteilMapping.Add("begabung für [zauber]", "begabung für zauber");
-            _vorNachteilMapping.Add("schnelle heilung 1", "schnelle heilung i");
-            _vorNachteilMapping.Add("schnelle heilung 2", "schnelle heilung ii");
-            _vorNachteilMapping.Add("schnelle heilung 3", "schnelle heilung iii");
             _vorNachteilMapping.Add("gutaussehend", "gut aussehend");
             _vorNachteilMapping.Add("unfähigkeit für [talentgruppe] körperlich", "unfähigkeit für talentgruppe (körper)");
             _vorNachteilMapping.Add("unfähigkeit für [talent]", "unfähigkeit für talent");
@@ -1134,6 +1128,8 @@ namespace MeisterGeister.Logic.HeldenImport
                     hvn.HeldGUID = _held.HeldGUID;
                     hvn.VorNachteilGUID = vn.VorNachteilGUID;
                     hvn.Wert = wertString ?? "";
+                    hvn.KostenGrund = vn.KostenGrund ?? 0;
+                    hvn.KostenFaktor = vn.KostenFaktor ?? 0;
                     _held.Held_VorNachteil.Add(hvn);
                     return true;
                 }
