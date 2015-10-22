@@ -406,7 +406,76 @@ namespace MeisterGeister.Daten
 
                     if (statement.StartsWith("--#")) //Sonderbefehl
                     {
-                        if (statement == "--#WHILE")
+                        if(statement == "--#FOREACH")
+                        {
+                            //find next non-empty statement
+                            int j = i;
+                            statement = null;
+                            while (String.IsNullOrWhiteSpace(statement))
+                            {
+                                j++;
+                                if (j >= statements.Length)
+                                    throw new Exception("Das Updateskript hat eine unbeendete --#FOREACH-Anweisung");
+                                statement = statements[j];
+                            }
+                            if (!statements[j].StartsWith("SELECT"))
+                                throw new Exception("Hinter --#FOREACH fehlt eine SELECT-Anweisung.");
+                            SqlCeCommand setCmd = new SqlCeCommand();
+                            setCmd.Connection = connection;
+                            setCmd.Transaction = transaction;
+                            setCmd.CommandText = statement;
+                            SqlCeDataReader reader = setCmd.ExecuteReader();
+
+                            statement = null;
+                            while (String.IsNullOrWhiteSpace(statement))
+                            {
+                                j++;
+                                if (j >= statements.Length)
+                                    throw new Exception("Das Updateskript hat eine unbeendete --#WHILE-Anweisung");
+                                statement = statements[j];
+                            }
+                            if (statement != "--#DO")
+                                throw new Exception("Hinter --#FOREACH fehlt das --#DO ... --#END mit dem auszuführenden Block.");
+                            j++;
+                            int blockStart = j; //erstes block statement
+                            while (statement != "--#END")
+                            {
+                                j++;
+                                if (j >= statements.Length)
+                                    throw new Exception("Das Updateskript hat eine unbeendete --#FOREACH-Anweisung");
+                                statement = statements[j];
+                            }
+                            int blockEnd = j - 1;
+                            i = j; //äußere for schleife muss nach dem END weitermachen
+                            while (reader.Read())
+                            {
+                                for (j = blockStart; j <= blockEnd; j++)
+                                {
+                                    string newStatement = statements[j];
+                                    for (int fieldCounter = 0; fieldCounter < reader.FieldCount; fieldCounter++)
+                                    {
+                                        string valStr = "NULL";
+                                        if (!reader.IsDBNull(fieldCounter))
+                                        {
+                                            object value = reader.GetValue(fieldCounter);
+                                            valStr = String.Format("{0}", value).Replace("\'", "\'\'");
+                                        }
+                                        newStatement = newStatement.Replace("{" + fieldCounter + "}", valStr);
+                                    }
+                                    try
+                                    {
+                                        UpdateSkript = skriptName + " Zeile " + j + Environment.NewLine + newStatement;
+                                        command.CommandText = newStatement;
+                                        command.ExecuteNonQuery();
+                                    }
+                                    catch (Exception)
+                                    {
+                                        throw;
+                                    }
+                                }
+                            }
+                        }
+                        else if (statement == "--#WHILE")
                         {
                             //find next non-empty statement
                             int j = i;
@@ -490,7 +559,7 @@ namespace MeisterGeister.Daten
                     }
                     else //normaler befehl
                     {
-                        UpdateSkript = skriptName + Environment.NewLine + statement;
+                        UpdateSkript = skriptName + " Zeile " + i + Environment.NewLine + statement;
                         command.CommandText = statement;
                         command.ExecuteNonQuery();
                     }
