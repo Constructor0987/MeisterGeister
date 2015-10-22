@@ -1041,6 +1041,8 @@ namespace MeisterGeister.Logic.HeldenImport
                         _held.LE_ModGen -= iWert;
                     else if (vorNachteilName == "Niedrige Lebenskraft")
                         _held.LE_ModGen += iWert;
+                    if (vorNachteilName == "Hohe Karmaenergie")
+                        _held.KE_ModGen -= iWert;
                     else if (vorNachteilName == "Ausdauernd")
                         _held.AU_ModGen -= iWert;
                     else if (vorNachteilName == "Kurzatmig")
