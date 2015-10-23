@@ -1,4 +1,9 @@
-﻿-- TODO MT: Daten VorNachteile für DSA 4.1 überarbeiten (Kosten, etc.)
+﻿-- Held_Inventar mit ID versehen, damit der Trageort verändert werden kann.
+ALTER TABLE Held_Inventar add Id bigint IDENTITY NOT NULL;
+ALTER TABLE Held_Inventar drop constraint PK_Held_Inventar;
+ALTER TABLE Held_Inventar add constraint PK_Held_Inventar PRIMARY KEY (Id);
+
+-- TODO MT: Daten VorNachteile für DSA 4.1 überarbeiten (Kosten, etc.)
 
 -- Held_VorNachteil Kosten eintragen, falls keine individuellen Kosten hinterlegt sind
 --#FOREACH;
