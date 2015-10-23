@@ -1,6 +1,6 @@
 ﻿-- Spalte für Update-Hinweise auf dem Held
 ALTER TABLE [Held] ADD [UpdateHinweis] nvarchar(4000) NOT NULL DEFAULT '';
-UPDATE [Held] SET [UpdateHinweis] = [UpdateHinweis] + nchar(13) + nchar(10) + 'Der Modifikator der Energien (LE/AU/AE/KE) wurde auf mehrere Werte aufgeteilt. Möglicherweise müssen die Werte manuell korrigiert werden. Werte vor der Änderung: (LE-Mod=' + CAST([LE_Mod] AS nvarchar(20)) + ', AU-Mod=' + CAST([AU_Mod] AS nvarchar(20)) + ', AE-Mod=' + CAST([AE_Mod] AS nvarchar(20)) + ', KE-Mod=' + CAST([KE_Mod] AS nvarchar(20)) WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held] WHERE [LE_Mod] <> 0 OR [AU_Mod] <> 0 OR [AE_Mod] <> 0 OR [KE_Mod] <> 0);
+UPDATE [Held] SET [UpdateHinweis] = [UpdateHinweis] + nchar(13) + nchar(10) + 'Der Modifikator der Energien (LE/AU/AE/KE) wurde auf mehrere Werte aufgeteilt. Möglicherweise müssen die Werte manuell korrigiert werden. Werte vor der Änderung: (LE-Mod=' + COALESCE(CAST([LE_Mod] AS nvarchar(20)),'') + ', AU-Mod=' + COALESCE(CAST([AU_Mod] AS nvarchar(20)),'') + ', AE-Mod=' + COALESCE(CAST([AE_Mod] AS nvarchar(20)),'') + ', KE-Mod=' + COALESCE(CAST([KE_Mod] AS nvarchar(20)),'') WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held] WHERE [LE_Mod] <> 0 OR [AU_Mod] <> 0 OR [AE_Mod] <> 0 OR [KE_Mod] <> 0);
 
 -- Modifikatoren für abgeleitete Werte auftrennen
 ALTER TABLE [Held] ADD [LE_ModGen] int DEFAULT 0;
@@ -136,7 +136,12 @@ UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 12 WHERE [HeldGUID] IN (SELECT [HeldGUID
 UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 12 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000000485');
 UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 6 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000000923');
 
--- TODO: Mod-Werte auf neue Felder verteilen
 -- [LE_ModGen] = Wert nach Rasse setzen und [LE_Mod] reduzieren
 -- [AU_ModGen] = Wert nach Rasse setzen und [AU_Mod] reduzieren
-
+--#FOREACH;
+SELECT [HeldGUID], [LEMod], [AUMod] FROM [Held] H, [Rasse] R WHERE UPPER(H.[Rasse])=UPPER(R.[Variante]) ;
+--#DO;
+UPDATE [Held] SET [LE_ModGen]=CAST({1} AS int), [LE_Mod] = [LE_Mod] - CAST({1} AS int), [AU_ModGen]=CAST({2} AS int), [AU_Mod] = [AU_Mod] - CAST({2} AS int) WHERE [HeldGUID] = '{0}';
+--#END;
+UPDATE [Held] SET [UpdateHinweis] = [UpdateHinweis] + nchar(13) + nchar(10) + 'Es konnte zu diesem Held keine passende Rasse gefunden werden. Der LE-Mod und der Rassenbonus müssen manuell angepasst werden.'
+	WHERE UPPER([Rasse]) not in (SELECT UPPER([Variante]) from [Rasse]);
