@@ -21,6 +21,7 @@ namespace MeisterGeister.Model {
         public Held()
             : base() {
             HeldGUID = Guid.NewGuid();
+            UpdateHinweis = String.Empty;
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
             SetDefaultValues();
         }
