@@ -791,6 +791,18 @@ namespace MeisterGeister.Model
     
         }
         private string _leiteigenschaftKlerikal;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string UpdateHinweis
+        {
+            get { return _updateHinweis; }
+            set
+    		{ 
+    			Set(ref _updateHinweis, value);
+    		}
+    
+        }
+        private string _updateHinweis;
 
         #endregion
 

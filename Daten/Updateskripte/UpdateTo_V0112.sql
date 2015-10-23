@@ -1,4 +1,8 @@
-﻿-- Modifikatoren für abgeleitete Werte auftrennen
+﻿-- Spalte für Update-Hinweise auf dem Held
+ALTER TABLE [Held] ADD [UpdateHinweis] nvarchar(4000) NOT NULL DEFAULT '';
+UPDATE [Held] SET [UpdateHinweis] = [UpdateHinweis] + nchar(13) + nchar(10) + 'Der Modifikator der Energien (LE/AU/AE/KE) wurde auf mehrere Werte aufgeteilt. Möglicherweise müssen die Werte manuell korrigiert werden. Werte vor der Änderung: (LE-Mod=' + CAST([LE_Mod] AS nvarchar(20)) + ', AU-Mod=' + CAST([AU_Mod] AS nvarchar(20)) + ', AE-Mod=' + CAST([AE_Mod] AS nvarchar(20)) + ', KE-Mod=' + CAST([KE_Mod] AS nvarchar(20)) WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held] WHERE [LE_Mod] <> 0 OR [AU_Mod] <> 0 OR [AE_Mod] <> 0 OR [KE_Mod] <> 0);
+
+-- Modifikatoren für abgeleitete Werte auftrennen
 ALTER TABLE [Held] ADD [LE_ModGen] int DEFAULT 0;
 ALTER TABLE [Held] ADD [LE_ModZukauf] int DEFAULT 0;
 ALTER TABLE [Held] ADD [AU_ModGen] int DEFAULT 0;
@@ -57,25 +61,82 @@ DELETE FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f02
 UPDATE [VorNachteil] SET [Name] = 'Karmatiker', [HatWert] = 1, [WertTyp] = 'int', [WertIsRoman] = 1, [WertMin] = 1, [WertMax] = 6, [KostenGrund] = 0, [KostenFaktor] = 6 WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450';
 DELETE FROM [VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000455' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000454' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000453' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000452' OR [VorNachteilGUID] = '00000000-0000-0000-f024-000000000451';
 
--- TODO MT: Daten VorNachteile für DSA 4.1 überarbeiten (Kosten, etc.)
-
--- Held_VorNachteil Kosten eintragen
+-- Mod-Werte auf neue Felder verteilen
+-- [LE_Mod] modifizieren um VN: Hohe Lebenskraft (+1 LeP pro Stufe; max. 6), Niedrige Lebenskraft (-1 LeP pro Stufe; max. 6)
 --#FOREACH;
-SELECT KostenGrund, KostenFaktor, VorNachteilGUID FROM VorNachteil;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000113';
 --#DO;
-UPDATE [Held_VorNachteil] SET KostenGrund={0}, KostenFaktor={1} WHERE VorNachteilGUID='{2}';
+UPDATE [Held] SET [LE_Mod] = [LE_Mod] - CAST({1} AS int) WHERE [HeldGUID] = '{0}';
 --#END;
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000232';
+--#DO;
+UPDATE [Held] SET [LE_Mod] = [LE_Mod] + CAST({1} AS int) WHERE [HeldGUID] = '{0}';
+--#END;
+
+-- [AE_Mod] modifizieren um VN: Vollzauberer (+12 AsP), Halbzauberer (+6 AsP), Viertelzauberer (-6 AsP), Zauberhaar (+7 AsP), Astralmacht (+1 AsP pro Stufe; max. 6), Niedrige Astralkraft (-1 AsP pro Stufe; max. 6)
+UPDATE [Held] SET [AE_Mod] = [AE_Mod] - 12 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000151');
+UPDATE [Held] SET [AE_Mod] = [AE_Mod] - 6 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000096');
+UPDATE [Held] SET [AE_Mod] = [AE_Mod] + 6 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000150');
+UPDATE [Held] SET [AE_Mod] = [AE_Mod] + 6 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000348');
+UPDATE [Held] SET [AE_Mod] = [AE_Mod] - 7 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000158');
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000016';
+--#DO;
+UPDATE [Held] SET [AE_Mod] = [AE_Mod] - CAST({1} AS int) WHERE [HeldGUID] = '{0}';
+--#END;
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000231';
+--#DO;
+UPDATE [Held] SET [AE_Mod] = [AE_Mod] + CAST({1} AS int) WHERE [HeldGUID] = '{0}';
+--#END;
+
+-- [AU_Mod] modifizieren um VN: Ausdauernd (+2 AuP pro Stufe; max. 3 Stufen, also 6 AuP), Kurzatmig (-2 AuP pro Stufe; max. 3 Stufen, also 6 AuP)
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000017';
+--#DO;
+UPDATE [Held] SET [AU_Mod] = [AU_Mod] - CAST({1} AS int) WHERE [HeldGUID] = '{0}';
+--#END;
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000216';
+--#DO;
+UPDATE [Held] SET [AU_Mod] = [AU_Mod] + CAST({1} AS int) WHERE [HeldGUID] = '{0}';
+--#END;
+
+-- [KE_Mod] modifizieren um Vorteil Geweiht [zwölfgöttliche Kirche/H'Ranga/Angrosch/Gravesh/Xo'Artal-Stadtpantheon]; SF Spätweihe Alveranische Gottheit/Spätweihe Namenloser/Spätweihe (Xo'Artal-Pantheon)/Spätweihe (Xo'Artal-Pantheon) (+24 KaP), 
+--				Geweiht [nicht-alveranische Gottheit]; SF Spätweihe Nichtalveranische Gottheit/Kontakt zum Großen Geist (+12 KaP), Vorteil Sacerdos I bis IV, Vorteil Hohe Karmaenergie (DDZ) (+1 KaP pro Stufe; max. 6); SF Spätweihe Dunkle Zeiten I bis III (+6 je Stufe)
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000320');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000321');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000322');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000323');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000528');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 12 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_VorNachteil] HVN WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000324');
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000361';
+--#DO;
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - CAST({1} AS int) * 6 WHERE [HeldGUID] = '{0}';
+--#END;
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000450';
+--#DO;
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - CAST({1} AS int) * 6 WHERE [HeldGUID] = '{0}';
+--#END;
+--#FOREACH;
+SELECT [HeldGUID], [Wert] FROM [Held_VorNachteil] WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000360';
+--#DO;
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - CAST({1} AS int) WHERE [HeldGUID] = '{0}';
+--#END;
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000000515');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000000517');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000001651');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 24 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000001651');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 18 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000001989');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 12 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000000516');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 12 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000001988');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 12 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000000485');
+UPDATE [Held] SET [KE_Mod] = [KE_Mod] - 6 WHERE [HeldGUID] IN (SELECT [HeldGUID] FROM [Held_Sonderfertigkeit] WHERE [SonderfertigkeitGUID] = '00000000-0000-0000-005f-000000000923');
 
 -- TODO: Mod-Werte auf neue Felder verteilen
 -- [LE_ModGen] = Wert nach Rasse setzen und [LE_Mod] reduzieren
--- [LE_Mod] modifizieren um VN: Hohe Lebenskraft (+1 LeP pro Stufe; max. 6), Niedrige Lebenskraft (-1 LeP pro Stufe; max. 6)
-
 -- [AU_ModGen] = Wert nach Rasse setzen und [AU_Mod] reduzieren
--- [AU_Mod] modifizieren um VN: Ausdauernd (+2 AuP pro Stufe; max. 3 Stufen, also 6 AuP), Kurzatmig (-2 AuP pro Stufe; max. 3 Stufen, also 6 AuP)
 
--- [AE_Mod] modifizieren um VN: Vollzauberer (+12 AsP), Halbzauberer (+6 AsP), Viertelzauberer (-6 AsP), Zauberhaar (+7 AsP), Astralmacht (+1 AsP pro Stufe; max. 6), Niedrige Astralkraft (-1 AsP pro Stufe; max. 6)
--- [KE_Mod] modifizieren um Vorteil Geweiht [zwölfgöttliche Kirche/H'Ranga/Angrosch/Gravesh/Xo'Artal-Stadtpantheon]; SF Spätweihe Alveranische Gottheit/Spätweihe Namenloser/Spätweihe (Xo'Artal-Pantheon)/Spätweihe (Xo'Artal-Pantheon) (+24 KaP), 
---				Geweiht [nicht-alveranische Gottheit]; SF Spätweihe Nichtalveranische Gottheit/Kontakt zum Großen Geist (+12 KaP), Vorteil Sacerdos I bis IV, Vorteil Hohe Karmaenergie (DDZ) (+1 KaP pro Stufe; max. 6); SF Spätweihe Dunkle Zeiten I bis III (+6 je Stufe)
-
-
---TODO Waffenset

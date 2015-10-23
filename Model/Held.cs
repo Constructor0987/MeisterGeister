@@ -2445,6 +2445,15 @@ namespace MeisterGeister.Model {
 
         #region Sonstiges
 
+        [DependentProperty("UpdateHinweis")]
+        public bool HatUpdateHinweis
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(UpdateHinweis);
+            }
+        }
+
         [DependentProperty("Name")]
         public string Kurzname {
             get {

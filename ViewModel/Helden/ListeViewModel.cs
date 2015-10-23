@@ -432,5 +432,22 @@ namespace MeisterGeister.ViewModel.Helden
 
             Global.SetIsBusy(false);
         }
+
+        private Base.CommandBase onClearUpdateHinweis = null;
+        public Base.CommandBase OnClearUpdateHinweis
+        {
+            get
+            {
+                if (onClearUpdateHinweis == null)
+                    onClearUpdateHinweis = new Base.CommandBase(ClearUpdateHinweis, null);
+                return onClearUpdateHinweis;
+            }
+        }
+
+        private void ClearUpdateHinweis(object obj)
+        {
+            if (SelectedHeld != null)
+                SelectedHeld.UpdateHinweis = string.Empty;
+        }
     }
 }

@@ -1003,6 +1003,7 @@
     <Property Name="KE_pKaP" Type="int" />
     <Property Name="LeiteigenschaftMagisch" Type="nvarchar" MaxLength="2" />
     <Property Name="LeiteigenschaftKlerikal" Type="nvarchar" MaxLength="2" />
+    <Property Name="UpdateHinweis" Type="nvarchar" />
   </EntityType>
   <EntityType Name="Held_Audio_Playlist">
     <Key>
@@ -4109,6 +4110,7 @@
     <Property Name="KE_pKaP" Type="Int32" />
     <Property Name="LeiteigenschaftMagisch" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
     <Property Name="LeiteigenschaftKlerikal" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
+    <Property Name="UpdateHinweis" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Held_Modifikator" Relationship="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AA7" FromRole="Held" ToRole="Held_Modifikator" />
     <NavigationProperty Name="Held_Audio_Playlist" Relationship="DatabaseDSAModel.FK_Held_Audio_Playlist_Held" FromRole="Held" ToRole="Held_Audio_Playlist" />
     <NavigationProperty Name="Held_Pflanze" Relationship="DatabaseDSAModel.fk_Held_Pflanze_HeldGUID" FromRole="Held" ToRole="Held_Pflanze" />
@@ -6611,6 +6613,7 @@
           <ScalarProperty Name="KE_pKaP" ColumnName="KE_pKaP" />
           <ScalarProperty Name="LeiteigenschaftMagisch" ColumnName="LeiteigenschaftMagisch" />
           <ScalarProperty Name="LeiteigenschaftKlerikal" ColumnName="LeiteigenschaftKlerikal" />
+          <ScalarProperty Name="UpdateHinweis" ColumnName="UpdateHinweis" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7402,7 +7405,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="90d003593a1e4658919c80dfe6c2d8b0" Name="Diagram1">
+      <Diagram DiagramId="7f5163f9cd834a31ae93b642783eb0dc" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.25" IsExpanded="true" />
@@ -7431,7 +7434,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="24" PointY="30.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="13.75" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="16" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Audio_Playlist" Width="1.5" PointX="3" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="6" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_BFAusrüstung" Width="1.5" PointX="8.25" PointY="31.75" IsExpanded="true" />
