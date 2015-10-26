@@ -263,6 +263,13 @@ namespace MeisterGeister.ViewModel.Helden
             Literatur = t.Literatur;
             HatWert = false;
         }
+        public VorNachteilAuswahlItem(Model.Zauber z, double? kosten)
+        {
+            Name = z.Name;
+            Kosten = kosten;
+            Literatur = z.Literatur;
+            HatWert = false;
+        }
         public VorNachteilAuswahlItem(Model.VorNachteil vn, Model.VorNachteil_Auswahl vna)
         {
             Name = vna.Name;

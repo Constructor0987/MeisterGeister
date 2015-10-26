@@ -8,6 +8,7 @@ using System.IO;
 //Eigene Usings
 using App = System.Windows.Application;
 using MeisterGeister.View.Windows;
+using System.Globalization;
 
 namespace MeisterGeister.Daten
 {
@@ -18,7 +19,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 112;
+        public const int DatenbankVersionAktuell = 113;
 
         private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
@@ -459,7 +460,10 @@ namespace MeisterGeister.Daten
                                         if (!reader.IsDBNull(fieldCounter))
                                         {
                                             object value = reader.GetValue(fieldCounter);
-                                            valStr = String.Format("{0}", value).Replace("\'", "\'\'");
+                                            NumberFormatInfo nfi = new NumberFormatInfo();
+                                            nfi.NumberDecimalSeparator = ".";
+                                            nfi.NumberGroupSeparator = string.Empty;
+                                            valStr = String.Format(nfi, "{0}", value).Replace("\'", "\'\'");
                                         }
                                         newStatement = newStatement.Replace("{" + fieldCounter + "}", valStr);
                                     }

@@ -31,7 +31,7 @@ namespace MeisterGeister.ViewModel.Helden
 
             List<VorNachteilAuswahlItem> list = new List<VorNachteilAuswahlItem>();
 
-            bool isSKT = ((_vorNachteil.KostenFaktor ?? 0) != 0) && (_vorNachteil.Auswahl == "[FERTIGKEIT]" || _vorNachteil.Auswahl == "[TALENT]" || _vorNachteil.Auswahl == "[KAMPFTECHNIK]");
+            bool isSKT = ((_vorNachteil.KostenFaktor ?? 0) != 0) && (_vorNachteil.Auswahl == "[FERTIGKEIT]" || _vorNachteil.Auswahl.StartsWith("[TALENT") || _vorNachteil.Auswahl == "[KAMPFTECHNIK]");
             Dictionary<string, double> kostenList = new Dictionary<string, double>(5);
             if (isSKT)
             { // Die Auswahl hat von der SKT abhängige Kosten
@@ -58,9 +58,9 @@ namespace MeisterGeister.ViewModel.Helden
                         kosten = _vorNachteil.KostenGrund ?? 0;
                     list.Add(new VorNachteilAuswahlItem(talent, kosten));
                 }
-                // TODO: andere fertigkeiten hinzufügen
+                // TODO: andere fertigkeiten hinzufügen: Zauber, Liturgieen
             }
-            else if (_vorNachteil.Auswahl == "[TALENT]")
+            else if (_vorNachteil.Auswahl.StartsWith("[TALENT"))
             {
                 List<Model.Talent> talentListe = null;
                 if (Global.DSA5)
@@ -73,16 +73,32 @@ namespace MeisterGeister.ViewModel.Helden
                     if (isSKT) // variable Kosten nach SKT
                         kosten = (_vorNachteil.KostenGrund ?? 0) + kostenList[talent.Steigerung];
                     else if (_vorNachteil.KostenGrund.GetValueOrDefault(0) == 0) // keine Kosten angegeben -> Sonderberechnung
-                    { // Vorteil: Begabung für Talent
-                      // Kosten: Kampf, Körper (außer Schwimmen, Sich Verstecken, Singen, Tanzen, Zechen) 6 GP, andere 4 GP, Sprache/Schrift nicht
+                    {
+                        // Vorteil  Begabung für Talent: Kampf, Körper (außer Schwimmen, Sich Verstecken, Singen, Tanzen, Zechen) 6 GP, andere 4 GP, Sprache/Schrift nicht
+                        // Nachteil Unfähigkeit für Talent: Kampf, Körper (außer Schwimmen, Sich Verstecken, Singen, Tanzen, Zechen) -2 GP, andere -1 GP, Sprache/Schrift nicht
                         if (talent.Name == "Schwimmen" || talent.Name == "Sich Verstecken" || talent.Name == "Singen" || talent.Name == "Tanzen" || talent.Name == "Zechen")
-                            kosten = 4;
+                        {
+                            if (_vorNachteil.Auswahl == "[TALENT_BEGABUNG]")
+                                kosten = 4;
+                            else if (_vorNachteil.Auswahl == "[TALENT_UNFÄHIG]")
+                                kosten = -1;
+                        }
                         else if (talent.TalentgruppeID == 1 /*Kampf*/ || talent.TalentgruppeID == 2 /*Körper*/)
-                            kosten = 6;
+                        {
+                            if (_vorNachteil.Auswahl == "[TALENT_BEGABUNG]")
+                                kosten = 6;
+                            else if (_vorNachteil.Auswahl == "[TALENT_UNFÄHIG]")
+                                kosten = -2;
+                        }
                         else
-                            kosten = 4;
+                        {
+                            if (_vorNachteil.Auswahl == "[TALENT_BEGABUNG]")
+                                kosten = 4;
+                            else if (_vorNachteil.Auswahl == "[TALENT_UNFÄHIG]")
+                                kosten = -1;
+                        }
                     }
-                    else // Fixkosten
+                    else // Fixkosten: z.B. Talentschub
                         kosten = _vorNachteil.KostenGrund ?? 0;
                     list.Add(new VorNachteilAuswahlItem(talent, kosten));
                 }
@@ -96,6 +112,14 @@ namespace MeisterGeister.ViewModel.Helden
                     else // Fixkosten
                         kosten = _vorNachteil.KostenGrund ?? 0;
                     list.Add(new VorNachteilAuswahlItem(talent, kosten));
+                }
+            }
+            else if (_vorNachteil.Auswahl == "[ZAUBER]")
+            {
+                foreach (var zauber in Global.ContextHeld.ZauberListe.OrderBy(t => t.Name))
+                {
+                    kosten = _vorNachteil.KostenGrund ?? 0;
+                    list.Add(new VorNachteilAuswahlItem(zauber, kosten));
                 }
             }
             else if (_vorNachteil.Auswahl == "[RITUAL]")
