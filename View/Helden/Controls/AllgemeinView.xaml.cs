@@ -45,14 +45,6 @@ namespace MeisterGeister.View.Helden.Controls
         }
 
         #region //EVENTS
-        
-        private void ImageWikiHeldenbrief_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (VM.SelectedHeld != null)
-                WikiAventurica.OpenBrowser("Spielerhelden/"
-                    + VM.SelectedHeld.Name.Replace(" ", "_"));
-
-        }
 
         private void RefreshNotizen(object sender, EventArgs args)
         {

@@ -88,7 +88,11 @@
                                 </StackPanel>
                             </Grid.ToolTip>
                         </Grid>
-                        <Image Grid.Column="2" Grid.Row="0" Height="28" Margin="1" Cursor="Hand" MouseDown="ImageWikiHeldenbrief_MouseDown" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Uniform" ToolTip="Charakterbeschreibung im Wiki-Aventurica anzeigen (falls vorhanden)." />
+                        <Image Grid.Column="2" Grid.Row="0" Height="28" Margin="1" Cursor="Hand" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Uniform" ToolTip="Charakterbeschreibung im Wiki-Aventurica anzeigen (falls vorhanden).">
+                            <Image.InputBindings>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding OnOpenWikiHeldenbrief}" />
+                            </Image.InputBindings>
+                        </Image>
                         <Label Grid.Column="3" Grid.Row="0" Content="Spieler:" FontWeight="Bold" VerticalAlignment="Center" />
                         <TextBox Grid.Column="4" Grid.Row="0" Margin="2" Text="{Binding SelectedHeld.Spieler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Name des Spielers des Helden" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" />
                         <Label Grid.Column="0" Grid.Row="1" Content="Rasse:" FontWeight="Bold" />

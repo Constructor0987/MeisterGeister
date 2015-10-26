@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 //Eigene Usings
 using M = MeisterGeister.Model;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Helden {
     public class AllgemeinViewModel : Base.ViewModelBase {
@@ -46,6 +47,24 @@ namespace MeisterGeister.ViewModel.Helden {
         #endregion
 
         #region //METHODEN
+
+        private Base.CommandBase onOpenWikiHeldenbrief = null;
+        public Base.CommandBase OnOpenWikiHeldenbrief
+        {
+            get
+            {
+                if (onOpenWikiHeldenbrief == null)
+                    onOpenWikiHeldenbrief = new Base.CommandBase(OpenWikiHeldenbrief, null);
+                return onOpenWikiHeldenbrief;
+            }
+        }
+
+        public void OpenWikiHeldenbrief(object sender)
+        {
+            if (SelectedHeld != null)
+                WikiAventurica.OpenBrowser("Spielerwelten:"
+                    + SelectedHeld.Name.Replace(" ", "_"));
+        }
 
         public override void RegisterEvents()
         {
