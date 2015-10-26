@@ -127,6 +127,72 @@ namespace MeisterGeister.ViewModel.Helden
                 // TODO: Auswahl für RITUAL
                 // Kosten: 1/50 der AP Lern-Kosten als GP
             }
+            else if (_vorNachteil.Auswahl.StartsWith("[GIFT"))
+            {
+                if (_vorNachteil.Regelsystem == "DSA 4.1")
+                {
+                    int kostenAlle = 0, kostenArt = 0, kostenEinzel = 0;
+                    if (_vorNachteil.Auswahl == "[GIFT_IMMUNITÄT]")
+                    {
+                        kostenAlle = 35;
+                        kostenArt = 10;
+                        kostenEinzel = 5;
+                    }
+                    else if (_vorNachteil.Auswahl == "[GIFT_RESISTENZ]")
+                    {
+                        kostenAlle = 25;
+                        kostenArt = 7;
+                        kostenEinzel = 3;
+                    }
+                    list.Add(new VorNachteilAuswahlItem("alle Gifte", kostenAlle, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle Atemgifte", kostenArt, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle Einnahmegifte", kostenArt, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle Kontaktgifte", kostenArt, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle Waffengifte", kostenArt, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle alchimistischen Gifte", kostenArt, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle mineralischen Gifte", kostenArt, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle pflanzlichen Gifte", kostenArt, string.Empty));
+                    list.Add(new VorNachteilAuswahlItem("alle tierischen Gifte", kostenArt, string.Empty));
+
+                    // Einzelgifte
+                    // TODO: Gifte aus der Datenbank entnehmen
+                    VorNachteilAuswahlItem auswahlItem = new VorNachteilAuswahlItem("Einzelnes Gift", kostenEinzel, string.Empty);
+                    auswahlItem.HatWert = true;
+                    auswahlItem.Auswahl = "[GIFT]";
+                    list.Add(auswahlItem);
+                }
+                else
+                { // DSA 5 nur Einzelgifte
+                    // TODO: Gifte aus der Datenbank entnehmen
+                    list.Add(new VorNachteilAuswahlItem("Arax", 2, "GRW5 380")); // Stufe 3
+                    list.Add(new VorNachteilAuswahlItem("Kelmon", 1, "GRW5 380")); // Stufe 2
+                    list.Add(new VorNachteilAuswahlItem("Tulmadron", 2, "GRW5 380")); // Stufe 4
+                    list.Add(new VorNachteilAuswahlItem("Wurara", 1, "GRW5 380")); // Stufe 2
+                }
+            }
+            else if (_vorNachteil.Auswahl == "[KRANKHEIT]")
+            {
+                if (_vorNachteil.Regelsystem == "DSA 4.1")
+                {
+                    list.Add(new VorNachteilAuswahlItem("alle Krankheiten", 10, string.Empty));
+
+                    // Einzelkrankheit
+                    // TODO: Krankheiten aus der Datenbank entnehmen
+                    VorNachteilAuswahlItem auswahlItem = new VorNachteilAuswahlItem("einzelne Krankheit", 3, string.Empty);
+                    auswahlItem.HatWert = true;
+                    auswahlItem.Auswahl = "[KRANKHEIT]";
+                    list.Add(auswahlItem);
+                }
+                else
+                { // DSA 5 nur Einzelkrankheit
+                    // TODO: Krankheiten aus der Datenbank entnehmen
+                    list.Add(new VorNachteilAuswahlItem("Flinker Difar", 1, "GRW5 343")); // Stufe 1
+                    list.Add(new VorNachteilAuswahlItem("Lutanas", 2, "GRW5 343")); // Stufe 3
+                    list.Add(new VorNachteilAuswahlItem("Rascher Wahn", 3, "GRW5 343")); // Stufe 5
+                    list.Add(new VorNachteilAuswahlItem("Sumpffieber/Brabaker Schweiz", 2, "GRW5 344")); // Stufe 3
+                    list.Add(new VorNachteilAuswahlItem("Zorganpocken", 3, "GRW5 344")); // Stufe 5
+                }
+            }
             else
             { // Auswahl Einträge aus Tabelle abrufen
                 var listAuswahl = Global.ContextVorNachteil.VorNachteilAuswahlListeByKategorie(_vorNachteil.Auswahl.Trim('[', ']'));

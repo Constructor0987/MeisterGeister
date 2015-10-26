@@ -3,6 +3,9 @@ ALTER TABLE Held_Inventar add Id bigint IDENTITY NOT NULL;
 ALTER TABLE Held_Inventar drop constraint PK_Held_Inventar;
 ALTER TABLE Held_Inventar add constraint PK_Held_Inventar PRIMARY KEY (Id);
 
+-- Datenanpassung VorNachteile für DSA 5
+UPDATE [VorNachteil] SET [Auswahl] = '[GIFT_IMMUNITÄT]' WHERE [VorNachteilGUID] = '00000000-0000-0000-f024-000000000645';
+
 -- Daten VorNachteile für DSA 4.1 überarbeiten (Kosten, etc.)
 INSERT INTO [VorNachteil] (  [Name],  [Vorteil],  [Nachteil],  [HatWert],  [WertTyp],  [Typ],  [Setting],  [VorNachteilGUID],  [Literatur],  [Regelsystem],  [WertIsRoman],  [WertMin],  [WertMax],  [KostenGrund],  [KostenFaktor],  [DarfMehrfach],  [DarfMehrfachAnzahl],  [Auswahl]) 
  VALUES (N'Farbwandel (schwach)' ,1 ,0 ,0 ,NULL ,N'Vorteile' ,N'Myranor' ,'00000000-0000-0000-f024-000000000784' ,N'WnM 108' ,N'DSA 4.1' ,0 ,NULL ,NULL ,5 ,0 ,0 ,NULL ,NULL);
@@ -58,7 +61,7 @@ UPDATE [VorNachteil] SET [KostenGrund] = 12 WHERE [VorNachteilGUID]='00000000-00
 UPDATE [VorNachteil] SET [KostenGrund] = 5 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000112';
 UPDATE [VorNachteil] SET [WertMin] = 1 ,[WertMax] = 6 ,[KostenFaktor] = 2 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000113';
 UPDATE [VorNachteil] SET [WertMin] = 1 ,[WertMax] = 3 ,[KostenFaktor] = 2 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000114';
-UPDATE [VorNachteil] SET [Auswahl] = N'[GIFT]' WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000115';
+UPDATE [VorNachteil] SET [Auswahl] = N'[GIFT_IMMUNITÄT]' WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000115';
 UPDATE [VorNachteil] SET [Auswahl] = N'[KRANKHEIT]' WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000116';
 UPDATE [VorNachteil] SET [KostenGrund] = 7 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000117';
 UPDATE [VorNachteil] SET [KostenGrund] = 5 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000118';
@@ -74,7 +77,7 @@ UPDATE [VorNachteil] SET [KostenGrund] = 20 WHERE [VorNachteilGUID]='00000000-00
 UPDATE [VorNachteil] SET [WertMin] = 1 ,[WertMax] = 3 ,[KostenFaktor] = 10 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000130';
 UPDATE [VorNachteil] SET [Auswahl] = N'[SCHLECHTE EIGENSCHAFT]' WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000131';
 UPDATE [VorNachteil] SET [KostenGrund] = 12 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000132';
-UPDATE [VorNachteil] SET [Auswahl] = N'[GIFT]' WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000133';
+UPDATE [VorNachteil] SET [Auswahl] = N'[GIFT_RESISTENZ]' WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000133';
 UPDATE [VorNachteil] SET [KostenGrund] = 7 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000134';
 UPDATE [VorNachteil] SET [KostenGrund] = 3 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000135';
 UPDATE [VorNachteil] SET [KostenGrund] = 25 WHERE [VorNachteilGUID]='00000000-0000-0000-f024-000000000136';
