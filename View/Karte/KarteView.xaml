@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
+             xmlns:vmlogic="clr-namespace:MeisterGeister.ViewModel.Karte.Logic"
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
              xmlns:Reise="clr-namespace:MeisterGeister.View.Reise"
@@ -16,8 +17,6 @@
              SizeChanged="UserControl_SizeChanged">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
-        <LogicKarte:DereGlobusToMapConverter x:Key="DereGlobusToMapConverter" />
-        <LogicKarte:MapToDereGlobusConverter x:Key="MapToDereGlobusConverter" />
     </UserControl.Resources>
     <Border BorderThickness="1" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent">
@@ -56,7 +55,7 @@
                             </MenuItem>
                         </ContextMenu>
                     </Canvas.ContextMenu>
-                    <Image Source="pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
+                    <Image Source="{Binding SelectedKarte.Bildpfad}" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
                     <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="{Binding Zoom,ElementName=MapScrollViewer,Converter={StaticResource MGIconZoomConverter} }" Canvas.Left="{Binding HeldenX}" Canvas.Top="{Binding HeldenY}"  />
                 </Canvas>
             </wpfxc:ZoomControl>
@@ -74,6 +73,13 @@
                     <Button  Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen.">
                         <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
                     </Button>
+                    <ComboBox ItemsSource="{Binding Karten}" SelectedItem="{Binding SelectedKarte}" ToolTip="Aktuelle Karte">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vmlogic:Karte}">
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </Border>
             <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom"/>

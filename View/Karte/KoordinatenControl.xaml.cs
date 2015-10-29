@@ -32,9 +32,9 @@ namespace MeisterGeister.View.Karte
         {
             InitializeComponent();
         }
+        //TODO Eingabe möglich machen.
 
-        //TODO: Koordinatenform wählbar. Commnand zum auswählen auf der Karte und zur Anzeige in DG. Eingabe möglich machen.
-
+        //Koordinatenform wählbar. 
         public KoordinatenFormat Format
         {
             get { return (KoordinatenFormat)GetValue(FormatProperty); }

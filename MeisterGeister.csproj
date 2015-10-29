@@ -263,6 +263,8 @@
     <Compile Include="Logic\General\Würfel.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
     <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
+    <Compile Include="Logic\Karte\IAffineTransformation.cs" />
+    <Compile Include="Logic\Karte\SimpleAffineTransformation.cs" />
     <Compile Include="Logic\Karte\MapToDereGlobusConverter.cs" />
     <Compile Include="Logic\Karte\DereGlobusToMapConverter.cs" />
     <Compile Include="Logic\Literatur\ILiteratur.cs" />
@@ -654,6 +656,7 @@
     <Compile Include="ViewModel\Kalender\KalenderViewModel.cs" />
     <Compile Include="ViewModel\Kalender\Logic\DateList.cs" />
     <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
+    <Compile Include="Logic\Karte\AffineTransformation.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenAnOrtViewModel.cs" />
@@ -973,6 +976,7 @@
     <Compile Include="View\Karte\KoordinatenControl.xaml.cs">
       <DependentUpon>KoordinatenControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Karte\MGIconZoomConverter.cs" />
     <Compile Include="View\Karte\PflanzenAnOrtWindow.xaml.cs">
       <DependentUpon>PflanzenAnOrtWindow.xaml</DependentUpon>
     </Compile>
@@ -997,7 +1001,7 @@
     <Compile Include="View\Proben\ProbenView.xaml.cs">
       <DependentUpon>ProbenView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Karte\MGIconZoomConverter.cs" />
+    <Compile Include="View\General\WrappingConverter.cs" />
     <Compile Include="View\Reise\ReiseView.xaml.cs">
       <DependentUpon>ReiseView.xaml</DependentUpon>
     </Compile>

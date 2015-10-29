@@ -55,20 +55,67 @@ namespace MeisterGeister.ViewModel.Karte
             karten = KartenListeErstellen();
             if (!KartenVorhanden(karten) && Confirm("Karten herunterladen", "Mindestens eine Karte ist nicht installiert.\nSollen die fehlenden Karten von der MeisterGeister-Seite heruntergeladen werden?"))
                 DownloadKarten();
+            //TODO Karte anhand HeldenLon und HeldenLat bestimmen
             SelectedKarte = karten[0];
         }
 
         public static List<Logic.Karte> KartenListeErstellen()
         {
+            Point p1, p2, p3, l1, l2, l3;
             var l = new List<Logic.Karte>();
-            var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000);
+            // Dwurinsand
+            p1 = new Point(279, 1958);
+            l1 = new Point(-7.66832038, 38.96870934);
+            // Neu-Bosparan
+            p2 = new Point(6513, 10241);
+            l2 = new Point(11.45865558, 16.02534243);
+            // Gareth
+            p3 = new Point(3996, 5271);
+            l3 = new Point(3.735098459, 29.79180236);
+            var aventurien = new Logic.Karte("Aventurien", "pack://siteoforigin:,,,/Images/Karten/Aventurien.jpg", 7150, 11000,
+                p1, l1, p2, l2, p3, l3, false, false);
             l.Add(aventurien);
+
+            //Referenzpunkte in Myranor
+            // Shanali
+            p1 = new Point(6636, 7234);
+            l1 = new Point(-54.132385, -0.188961);
+            // Haldingaford
+            p2 = new Point(8032, 1626);
+            l2 = new Point(-47.376805, 28.632769);
+            // Südliches Ende der Orismanifälle
+            p3 = new Point(4215, 1980);
+            l3 = new Point(-68.1022, 26.0588);
+            var myranor = new Logic.Karte("Myranor", "pack://siteoforigin:,,,/Images/Karten/Myranor.jpg", 11000, 8076,
+                p1, l1, p2, l2, p3, l3, true, false);
+            l.Add(myranor);
+
+#if KOORDINATENTEST
+            //Koordiantentestkarte
+            // Punkt 1
+            p1 = new Point(7959, 1506);
+            l1 = new Point(-40.977896, 23.829324);
+            // Punkt 2
+            p2 = new Point(1497, 4479);
+            l2 = new Point(-102.659126, -4.548357);
+            // Punkt 3
+            p3 = new Point(6170, 6391);
+            l3 = new Point(-58.056499, -22.796352);
+            //// Punkt 4
+            //p4 = new Point(4945, 3125);
+            //l4 = new Point(-69.746588, 8.374168);
+            var koordinaten = new Logic.Karte("Koordinaten", "pack://siteoforigin:,,,/Images/Karten/koordinaten.png", 11000, 8076,
+                p1, l1, p2, l2, p3, l3, true, false);
+            l.Add(koordinaten);
+#endif
+
             return l;
         }
 
         bool firstLoad = true;
         public void Refresh(bool noCenter = false)
         {
+            //TODO Bounds der Karten überprüfen und anhand dessen die Karte wählen
             var p = (Point)dgConverter.Convert(new Point(Global.HeldenLon, Global.HeldenLat), typeof(Point), null, null);
             if (p != HeldenPosition && !noCenter)
                 firstLoad = true;
@@ -88,7 +135,7 @@ namespace MeisterGeister.ViewModel.Karte
 
         #region Properties
 
-        #region Karten
+        #region Karten und Konverter
         private List<Logic.Karte> karten = null;
         public List<Logic.Karte> Karten
         {
@@ -100,7 +147,28 @@ namespace MeisterGeister.ViewModel.Karte
         public Logic.Karte SelectedKarte
         {
             get { return selectedKarte; }
-            set { Set(ref selectedKarte, value); }
+            set {
+                if (Set(ref selectedKarte, value))
+                {
+                    DereGlobusToMapConverter = selectedKarte.DereGlobusToMapConverter;
+                    MapToDereGlobusConverter = selectedKarte.MapToDereGlobusConverter;
+                    SetHeldenPositionFromGlobusPosition();
+                }
+            }
+        }
+
+        private MeisterGeister.Logic.Karte.DereGlobusToMapConverter dgConverter;
+        public MeisterGeister.Logic.Karte.DereGlobusToMapConverter DereGlobusToMapConverter
+        {
+            get { return dgConverter; }
+            set { Set(ref dgConverter, value); }
+        }
+
+        MeisterGeister.Logic.Karte.MapToDereGlobusConverter mapConverter;
+        public MeisterGeister.Logic.Karte.MapToDereGlobusConverter MapToDereGlobusConverter
+        {
+            get { return mapConverter; }
+            set { Set(ref mapConverter, value); }
         }
         #endregion
 
@@ -134,8 +202,6 @@ namespace MeisterGeister.ViewModel.Karte
                 HeldenPosition = heldenPosition;
                 }
         }
-
-        private MeisterGeister.Logic.Karte.DereGlobusToMapConverter dgConverter = new MeisterGeister.Logic.Karte.DereGlobusToMapConverter();
 
         private Point heldenGlobusPosition = new Point();
         public Point HeldenGlobusPosition

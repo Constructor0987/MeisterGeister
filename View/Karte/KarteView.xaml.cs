@@ -21,8 +21,15 @@ namespace MeisterGeister.View.Karte
     /// </summary>
     public partial class KarteView : UserControl
     {
+        private WrappingConverter dereGlobusToMapConverter;
+        private WrappingConverter mapToDereGlobusConverter;
+
         public KarteView()
         {
+            dereGlobusToMapConverter = new WrappingConverter();
+            mapToDereGlobusConverter = new WrappingConverter();
+            this.Resources.Add("DereGlobusToMapConverter", dereGlobusToMapConverter);
+            this.Resources.Add("MapToDereGlobusConverter", mapToDereGlobusConverter);
             InitializeComponent();
             VM = new KarteViewModel();
         }
@@ -38,7 +45,27 @@ namespace MeisterGeister.View.Karte
                     return null;
                 return DataContext as KarteViewModel;
             }
-            set { DataContext = value; }
+            set {
+                if (VM != null)
+                    VM.PropertyChanged -= VM_PropertyChanged;
+                DataContext = value;
+                VM.PropertyChanged += VM_PropertyChanged;
+                RefreshConverter();
+            }
+        }
+
+        void RefreshConverter()
+        {
+            if (VM == null)
+                return;
+            dereGlobusToMapConverter.Converter = VM.DereGlobusToMapConverter;
+            mapToDereGlobusConverter.Converter = VM.MapToDereGlobusConverter;
+        }
+
+        private void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "DereGlobusToMapConverter" || e.PropertyName == "MapToDereGlobusConverter")
+                RefreshConverter();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
