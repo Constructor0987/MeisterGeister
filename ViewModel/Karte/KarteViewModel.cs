@@ -136,7 +136,7 @@ namespace MeisterGeister.ViewModel.Karte
         public void Refresh(bool noCenter = false)
         {
             //TODO Bounds der Karten überprüfen und anhand dessen die Karte wählen
-            var p = (Point)dgConverter.Convert(new Point(Global.HeldenLon, Global.HeldenLat), typeof(Point), null, null);
+            var p = (Point)dgConverter.Convert(Global.HeldenPosition, typeof(Point), null, null);
             if (p != HeldenPosition && !noCenter)
                 firstLoad = true;
             HeldenPosition = p;
@@ -298,11 +298,6 @@ namespace MeisterGeister.ViewModel.Karte
             if(args is Point)
             {
                 HeldenPosition = (Point)args;
-                Global.Standort.Name = "Heldenposition";
-                Global.HeldenLat = HeldenBreitengrad;
-                Global.HeldenLon = HeldenLängengrad;
-                //Zum Abgleich der Position wegen der Rundungsfehler
-                Refresh(true);
             }
         }
 
