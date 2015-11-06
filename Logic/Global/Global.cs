@@ -372,9 +372,8 @@ namespace MeisterGeister
                 if (Guid.TryParse(Logic.Einstellung.Einstellungen.SelectedHeld, out heldguid))
                     SelectedHeldGUID = heldguid;
             }
-            OnStandortChanged();
-
-
+            var sarr = Logic.Einstellung.Einstellungen.Standort.Split('#');
+            Standort = new DgSuche.Ortsmarke(sarr[0], sarr[1], sarr[2]);
             Logger.PerformanceLogEnd(log);
 
             //webserver
