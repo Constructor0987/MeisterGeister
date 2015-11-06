@@ -984,6 +984,7 @@
     <Compile Include="View\Karte\PflanzenSucheView.xaml.cs">
       <DependentUpon>PflanzenSucheView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Karte\PflanzeVerbreitungListViewConverter.cs" />
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
       <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
     </Compile>

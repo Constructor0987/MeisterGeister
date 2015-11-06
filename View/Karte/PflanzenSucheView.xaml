@@ -18,7 +18,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                     <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}"/>
-                    <CheckBox Content="Geländekunde" IsChecked="{Binding Geländekunde}" Margin="4,0,0,0"/>
+                    <CheckBox Content="{Binding Pflanze.Landschaft.Kundig}" IsChecked="{Binding Geländekunde}" Margin="4,0,0,0"/>
                 </StackPanel>
 
                 <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}">
@@ -53,7 +53,7 @@
                     <General:IntBox ShowButtons="True" Margin="4" Value="{Binding TaP}"/>
                 </StackPanel>
                 <TextBlock>
-                    Es wurde <Run Text="{Binding Funde,Mode=OneWay}"/> Mal <Run Text="{Binding Suche.Pflanze.Name,Mode=OneWay}"/> gefunden.
+                    Es wurde <Run Text="{Binding Funde,Mode=OneWay}"/> Mal <Run Text="{Binding Pflanze.Pflanze.Name,Mode=OneWay}"/> gefunden.
                 </TextBlock>
                 <ItemsControl ItemsSource="{Binding Suche.Pflanze.Pflanze_Ernte}">
                     <ItemsControl.ItemTemplate>

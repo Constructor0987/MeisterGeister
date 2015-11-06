@@ -15,8 +15,10 @@
     <UserControl.DataContext>
         <vm:PflanzenAnOrtViewModel/>
     </UserControl.DataContext>
-    
+
     <UserControl.Resources>
+        <Karte:PflanzeVerbreitungListViewConverter x:Key="verbreitungConverter"/>
+
         <DataTemplate x:Key="pflanzenTyp">
             <Grid>
                 <Rectangle/>
@@ -85,7 +87,7 @@
                     <Setter Property="General:UIElementBehavior.ViewModel" Value="{Binding}"/>
                     <Setter Property="ItemsSource" Value="{Binding Landschaften}"/>
                     <Setter Property="HeaderTemplate" Value="{StaticResource groupTemplate}"/>
-                        <Setter Property="ItemContainerStyle">
+                    <Setter Property="ItemContainerStyle">
                         <Setter.Value>
                             <Style TargetType="MenuItem">
                                 <Setter Property="StaysOpenOnClick" Value="True"/>
@@ -115,6 +117,9 @@
 
         <ScrollViewer Grid.Row="2">
             <ItemsControl Name="pflanzenliste" ItemsSource="{Binding SichtbarePflanzen}">
+                <ItemsControl.GroupStyle>
+
+                </ItemsControl.GroupStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type Model:Pflanze}">
 
@@ -139,32 +144,42 @@
                                 <General:LiteraturControl Grid.Column="1" Width="25" Height="25" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding Name}" Grid.Column="2" VerticalAlignment="Center"/>
 
-                                <ListBox ItemsSource="{Binding Pflanze_Verbreitung}" Grid.Column="3" VerticalAlignment="Center"
+                                <ListBox ItemsSource="{Binding Pflanze_Verbreitung,Converter={StaticResource verbreitungConverter}}" Grid.Column="3" VerticalAlignment="Center"
                                          SelectedValue="{Binding ElementName=suche,Path=DataContext.Pflanze,Mode=TwoWay}">
+                                    <ItemsControl.GroupStyle>
+                                        <GroupStyle>
+                                            <GroupStyle.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock x:Name="verbreitung" Margin="4,0,0,0" FontWeight="Bold" Text="{Binding Name}"/>
+                                                    <DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Name}" Value="1">
+                                                            <Setter TargetName="verbreitung" Property="Text" Value="Sehr häufig"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Name}" Value="2">
+                                                            <Setter TargetName="verbreitung" Property="Text" Value="Häufig"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Name}" Value="4">
+                                                            <Setter TargetName="verbreitung" Property="Text" Value="Gelegentlich"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Name}" Value="8">
+                                                            <Setter TargetName="verbreitung" Property="Text" Value="Selten"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Name}" Value="16">
+                                                            <Setter TargetName="verbreitung" Property="Text" Value="Sehr selten"/>
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>
+                                                </DataTemplate>
+                                            </GroupStyle.HeaderTemplate>
+                                        </GroupStyle>
+                                    </ItemsControl.GroupStyle>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type Model:Pflanze_Verbreitung}">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Landschaft.Name}"/>
+                                                <TextBlock Margin="8,0,0,0" Text="{Binding Landschaft.Name}"/>
                                                 <!--<TextBlock Text="{Binding Verbreitung, StringFormat={}{0:+0;-0}}" Margin="4,0,0,0"/>-->
-                                                <TextBlock Margin="4,0,0,0" x:Name="verbreitung"/>
+
                                             </StackPanel>
-                                            <DataTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding Verbreitung}" Value="1">
-                                                    <Setter TargetName="verbreitung" Property="Text" Value="Sehr häufig"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Verbreitung}" Value="2">
-                                                    <Setter TargetName="verbreitung" Property="Text" Value="Häufig"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Verbreitung}" Value="4">
-                                                    <Setter TargetName="verbreitung" Property="Text" Value="Gelegentlich"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Verbreitung}" Value="8">
-                                                    <Setter TargetName="verbreitung" Property="Text" Value="Selten"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Verbreitung}" Value="16">
-                                                    <Setter TargetName="verbreitung" Property="Text" Value="Sehr selten"/>
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
+
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ListBox>

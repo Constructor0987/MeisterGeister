@@ -15,7 +15,6 @@ namespace MeisterGeister.ViewModel.Karte
     {
         public PflanzenAnOrtViewModel()
         {
-            LadePflanzen();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
@@ -31,18 +30,18 @@ namespace MeisterGeister.ViewModel.Karte
         }
 
 
-        private List<string> pflanzenTypen;
+        private List<string> pflanzenTypen = new List<string>();
         public List<string> PflanzenTypen
         {
             get { return pflanzenTypen; }
-            set { pflanzenTypen = value; }
+            set { Set(ref pflanzenTypen, value); }
         }
 
-        private List<LandschaftsGruppeViewModel> landschaftsGruppen;
+        private List<LandschaftsGruppeViewModel> landschaftsGruppen = new List<LandschaftsGruppeViewModel>();
         public List<LandschaftsGruppeViewModel> LandschaftsGruppen
         {
             get { return landschaftsGruppen; }
-            set { landschaftsGruppen = value; }
+            set { Set(ref landschaftsGruppen, value); }
         }
 
 
@@ -50,19 +49,13 @@ namespace MeisterGeister.ViewModel.Karte
         public string PflanzenTyp
         {
             get { return pflanzenTyp; }
-            set
-            { Set(ref pflanzenTyp, value); }
+            set { Set(ref pflanzenTyp, value); }
         }
 
-        ObservableCollection<Model.Pflanze> pflanzen;
+        ObservableCollection<Model.Pflanze> pflanzen = new ObservableCollection<Pflanze>();
         public ObservableCollection<Model.Pflanze> Pflanzen
         {
-            get
-            {
-                if (pflanzen == null)
-                    pflanzen = new ObservableCollection<Model.Pflanze>();
-                return pflanzen;
-            }
+            get { return pflanzen; }
             protected set { Set(ref pflanzen, value); }
         }
 
@@ -94,10 +87,12 @@ namespace MeisterGeister.ViewModel.Karte
         }
 
 
-        void LadePflanzen()
+        private void LadePflanzen()
         {
+            if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+                return;
             Pflanzen.Clear();
-            var gebiete = Global.ContextZooBot.GetGebiete(Global.Standort.Koordinaten, Tolerance);
+            var gebiete = Global.ContextZooBot.GetGebiete(Global.HeldenPosition, Tolerance);
             HashSet<Guid> pset = new HashSet<Guid>();
             HashSet<string> typen = new HashSet<string>();
             HashSet<Landschaft> landschaften = new HashSet<Landschaft>();
@@ -124,17 +119,20 @@ namespace MeisterGeister.ViewModel.Karte
                 }
             }
             PflanzenTypen = typen.ToList();
-            LandschaftsGruppen = new List<LandschaftsGruppeViewModel>();
+            List<LandschaftsGruppeViewModel> gruppenVM = new List<LandschaftsGruppeViewModel>();
             foreach (Landschaftsgruppe gruppe in gruppen)
             {
                 var inGruppe = landschaften.Where((l) => l.Landschaftsgruppe.Contains(gruppe));
-                LandschaftsGruppen.Add(new LandschaftsGruppeViewModel(inGruppe, gruppe));
+                gruppenVM.Add(new LandschaftsGruppeViewModel(inGruppe, gruppe));
             }
+            LandschaftsGruppen = gruppenVM;
+            OnChanged("SichtbarePflanzen");
         }
 
         public override void RegisterEvents()
         {
             base.RegisterEvents();
+            LadePflanzen();
             foreach (LandschaftsGruppeViewModel gruppe in LandschaftsGruppen)
             {
                 gruppe.PropertyChanged += Gruppe_PropertyChanged;

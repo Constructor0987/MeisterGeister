@@ -124,7 +124,11 @@ namespace MeisterGeister.ViewModel.Karte
             {
                 int pflanzenkunde, sinnenschärfe, wildnisleben;
 
-                Global.SelectedHeld.GetHeldTalent("Pflanzenkunde", true, out pflanzenkunde);
+                if(Global.SelectedHeld.GetHeldTalent("Pflanzenkunde", true, out pflanzenkunde) == null)
+                {
+                    TaW = 0;
+                    return;
+                }
                 Global.SelectedHeld.GetHeldTalent("Sinnenschärfe", true, out sinnenschärfe);
                 Global.SelectedHeld.GetHeldTalent("Wildnisleben", true, out wildnisleben);
 
@@ -145,6 +149,7 @@ namespace MeisterGeister.ViewModel.Karte
         {
             base.RegisterEvents();
             Global.HeldSelectionChanged += Global_HeldSelectionChanged;
+            updateTaW();
         }
 
         public override void UnregisterEvents()
