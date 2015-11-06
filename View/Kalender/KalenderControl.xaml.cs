@@ -55,7 +55,6 @@ namespace MeisterGeister.View.Kalender
 
         void DrawUI()
         {
-            
             InitializeMonat();
             InitializeWochen();
             InitializeWochentage();

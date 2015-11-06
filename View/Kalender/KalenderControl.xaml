@@ -17,10 +17,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <UniformGrid Name="PART_WeekdayGrid" Grid.Row="0" Grid.Column="1" Rows="1" Columns="{Binding TageProWoche, Mode=OneWay}" />
-        <UniformGrid Name="PART_WeeknumberGrid" Grid.Row="1" Grid.Column="0" Rows="{Binding AnzuzeigendeWochen, Mode=OneWay}" Columns="1" />
-        <c:KalenderGrid x:Name="PART_MonthGrid" Grid.Column="1" Grid.Row="1" Rows="{Binding AnzuzeigendeWochen, Mode=OneWay}" Columns="{Binding TageProWoche, Mode=OneWay}">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        </StackPanel>
+        <UniformGrid Name="PART_WeekdayGrid"    Grid.Row="1" Grid.Column="1" Rows="1" Columns="{Binding TageProWoche, Mode=OneWay}" />
+        <UniformGrid Name="PART_WeeknumberGrid" Grid.Row="2" Grid.Column="0" Rows="{Binding AnzuzeigendeWochen, Mode=OneWay}" Columns="1" />
+        <c:KalenderGrid x:Name="PART_MonthGrid" Grid.Row="3" Grid.Column="1" Rows="{Binding AnzuzeigendeWochen, Mode=OneWay}" Columns="{Binding TageProWoche, Mode=OneWay}">
             <c:KalenderGrid.Resources>
                 <Style x:Key="DayButton" TargetType="Button">
                     <Setter Property="Content" Value="{Binding Data}" />
