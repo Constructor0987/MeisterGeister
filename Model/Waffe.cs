@@ -12,6 +12,27 @@ namespace MeisterGeister.Model
 {
     public partial class Waffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK, MeisterGeister.Logic.Literatur.ILiteratur, IFormattable
     {
+        public static Waffe Raufen = null;
+        public static Waffe Ringen = null;
+        static Waffe()
+        {
+            var w = new Waffe();
+            w.DK = "H";
+            w.AusdauerSchaden = true;
+            w.Name = "Raufen";
+            w.TPKKSchwelle = 10;
+            w.TPKKSchritt = 3;
+            Raufen = w;
+
+            w = new Waffe();
+            w.DK = "H";
+            w.AusdauerSchaden = true;
+            w.Name = "Ringen";
+            w.TPKKSchwelle = 10;
+            w.TPKKSchritt = 3;
+            Ringen = w;
+        }
+
         public Waffe()
         {
             Ausrüstung = new Ausrüstung();

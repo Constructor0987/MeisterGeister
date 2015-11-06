@@ -16,6 +16,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public KämpferNahkampfwaffe(Held_Ausrüstung ha, bool bestesTalent = false)
         {
+            if (ha == null)
+                throw new ArgumentNullException("ha darf nicht null sein.");
             if (ha.Held == null || ha.Ausrüstung == null || ha.Ausrüstung.Waffe == null)
                 throw new ArgumentNullException("Held_Ausrüstung enthält keinen Held oder keine Waffe.");
             _held = ha.Held;
@@ -28,11 +30,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public KämpferNahkampfwaffe(Held held, Waffe waffe, Held_Talent ht)
         {
+            if (held == null)
+                throw new ArgumentNullException("held darf nicht null sein.");
+            if (waffe == null)
+                throw new ArgumentNullException("waffe darf nicht null sein.");
+            if (ht == null)
+                throw new ArgumentNullException("ht darf nicht null sein.");
             _held = held; _waffe = waffe; _talent = ht;
         }
 
         public KämpferNahkampfwaffe(Gegner_Angriff ga)
         {
+            if (ga == null)
+                throw new ArgumentNullException("ga darf nicht null sein.");
             _gegner_angriff = ga;
         }
 
@@ -202,7 +212,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     }
                     // Waffenmodifikator
                     if (_waffe != null)
-                        heldat += _waffe.WMAT.Value;
+                        heldat += _waffe.WMAT ?? 0;
                     //TODO Waffenmeister
                 }
                 return heldat;
@@ -228,7 +238,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     }
                     // Waffenmodifikator
                     if (_waffe != null)
-                        heldpa += _waffe.WMPA.Value;
+                        heldpa += _waffe.WMPA ?? 0;
                     //TODO Waffenmeister
                 }
                 return heldpa;
@@ -242,7 +252,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 int at = 0;
                 if (_talent != null)
                 {
-                    at = _talent.AttackeOhneMod + (_waffe != null ? _waffe.WMAT.Value : 0);
+                    at = _talent.AttackeOhneMod + (_waffe != null ? _waffe.WMAT ?? 0 : 0);
                     if (_held != null && _held.HatSonderfertigkeitUndVoraussetzungen("Waffenspezialisierung", Name))
                     {
                         if (!_talent.IsZuteilbar)
@@ -266,7 +276,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 int pa = 0;
                 if (_talent != null)
                 {
-                    pa = _talent.ParadeOhneMod + (_waffe != null ? _waffe.WMPA.Value : 0);
+                    pa = _talent.ParadeOhneMod + (_waffe != null ? _waffe.WMPA ?? 0 : 0);
                     if (_held != null && _held.HatSonderfertigkeitUndVoraussetzungen("Waffenspezialisierung", Name))
                     {
                         if (_talent.IsZuteilbar)

@@ -2307,7 +2307,12 @@ namespace MeisterGeister.Model {
                 List<IWaffe> waffen = new List<IWaffe>();
                 waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
                 waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
-                //TODO: Raufen, Ringen
+                //Raufen, Ringen
+                int taw;
+                var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent("Raufen", false, out taw));
+                waffen.Add(raufen);
+                var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent("Ringen", false, out taw));
+                waffen.Add(ringen);
                 return waffen;
             }
         }
@@ -2318,7 +2323,12 @@ namespace MeisterGeister.Model {
             {
                 List<KämpferNahkampfwaffe> waffen = new List<KämpferNahkampfwaffe>();
                 waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha, true)));
-                //TODO: Raufen, Ringen
+                //Raufen, Ringen
+                int taw;
+                var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent("Raufen", false, out taw));
+                waffen.Add(raufen);
+                var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent("Ringen", false, out taw));
+                waffen.Add(ringen);
                 return waffen;
             }
         }
