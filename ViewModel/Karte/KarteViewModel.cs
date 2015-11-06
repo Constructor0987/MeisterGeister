@@ -59,6 +59,26 @@ namespace MeisterGeister.ViewModel.Karte
             SelectedKarte = karten[0];
         }
 
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+            Global.StandortChanged += Global_StandortChanged;
+        }
+
+        public override void UnregisterEvents()
+        {
+            Global.StandortChanged -= Global_StandortChanged;
+            base.UnregisterEvents();
+        }
+        
+        private bool ignoreGlobalStandortChangedEvent = false;
+        private void Global_StandortChanged(object sender, EventArgs e)
+        {
+            if (ignoreGlobalStandortChangedEvent)
+                return;
+            HeldenGlobusPosition = Global.HeldenPosition;
+        }
+
         public static List<Logic.Karte> KartenListeErstellen()
         {
             Point p1, p2, p3, l1, l2, l3;
@@ -212,23 +232,8 @@ namespace MeisterGeister.ViewModel.Karte
                 SetHeldenPositionFromGlobusPosition();
                 OnChanged("HeldenLängengrad");
                 OnChanged("HeldenBreitengrad");
+                UpdateGlobalStandort();
             }
-        }
-
-        private void SetHeldenPositionFromGlobusPosition()
-        {
-            heldenPosition = (Point)dgConverter.Convert(heldenGlobusPosition, typeof(Point), null, null);
-            OnChanged("HeldenPosition");
-            OnChanged("HeldenX");
-            OnChanged("HeldenY");
-        }
-
-        private void SetGlobusPositionFromHeldenPosition()
-        {
-            heldenGlobusPosition = (Point)dgConverter.ConvertBack(heldenPosition, typeof(Point), null, null);
-            OnChanged("HeldenGlobusPosition");
-            OnChanged("HeldenLängengrad");
-            OnChanged("HeldenBreitengrad");
         }
 
         public double HeldenLängengrad
@@ -247,6 +252,31 @@ namespace MeisterGeister.ViewModel.Karte
                 heldenGlobusPosition.Y = value;
                 HeldenGlobusPosition = heldenGlobusPosition;
             }
+        }
+
+        //Hilfsmethoden
+        private void UpdateGlobalStandort()
+        {
+            ignoreGlobalStandortChangedEvent = true;
+            Global.HeldenPosition = HeldenGlobusPosition;
+            ignoreGlobalStandortChangedEvent = false;
+        }
+
+        private void SetHeldenPositionFromGlobusPosition()
+        {
+            heldenPosition = (Point)dgConverter.Convert(heldenGlobusPosition, typeof(Point), null, null);
+            OnChanged("HeldenPosition");
+            OnChanged("HeldenX");
+            OnChanged("HeldenY");
+        }
+
+        private void SetGlobusPositionFromHeldenPosition()
+        {
+            heldenGlobusPosition = (Point)dgConverter.ConvertBack(heldenPosition, typeof(Point), null, null);
+            OnChanged("HeldenGlobusPosition");
+            OnChanged("HeldenLängengrad");
+            OnChanged("HeldenBreitengrad");
+            UpdateGlobalStandort();
         }
         #endregion
 

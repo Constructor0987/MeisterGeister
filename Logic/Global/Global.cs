@@ -44,14 +44,6 @@ namespace MeisterGeister
 
         #endregion
 
-        #region //FELDER
-
-        private static Model.Held _selectedHeld;
-        private static double _heldenLon = 32;
-        private static double _heldenLat = 3;
-
-        #endregion
-
         #region //EIGENSCHAFTSMETHODEN
 
         // TODO: Einstellung wird gecached, um Absturz zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
@@ -221,6 +213,7 @@ namespace MeisterGeister
             set
             {
                 standort = value;
+                HeldenPosition = new System.Windows.Point(standort.Longitude, standort.Latitude);
                 OnStandortChanged();
             }
         }
@@ -235,28 +228,54 @@ namespace MeisterGeister
             }
         }
 
+        /// <summary>
+        /// Längengrad (X)
+        /// </summary>
         public static double HeldenLon
         {
-            get { return Global._heldenLon; }
+            get { return Global.heldenPosition.X; }
             set
             {
-                Global._heldenLon = value;
-                Standort.Longitude = _heldenLon;
-                //OnStandortChanged();
+                Global.heldenPosition.X = value;
+                Standort.Longitude = value;
+                standort.Name = "";
+                OnStandortChanged();
             }
         }
 
+        /// <summary>
+        /// Breitengrad (Y)
+        /// </summary>
         public static double HeldenLat
         {
-            get { return Global._heldenLat; }
+            get { return Global.heldenPosition.Y; }
             set
             {
-                Global._heldenLat = value;
-                Standort.Latitude = _heldenLat;
-                //OnStandortChanged();
+                Global.heldenPosition.Y = value;
+                Standort.Latitude = value;
+                standort.Name = "";
+                OnStandortChanged();
             }
         }
 
+        static System.Windows.Point heldenPosition = new System.Windows.Point();
+        /// <summary>
+        /// Position als Point (Länge, Breite)
+        /// </summary>
+        public static System.Windows.Point HeldenPosition
+        {
+            get { return heldenPosition; }
+            set
+            {
+                heldenPosition = value;
+                standort.Longitude = heldenPosition.X;
+                standort.Latitude = heldenPosition.Y;
+                standort.Name = "";
+                OnStandortChanged();
+            }
+        }
+
+        private static Model.Held _selectedHeld;
         /// <summary>
         /// Ruft den aktuell ausgewählten Helden ab, oder legt ihn fest.
         /// </summary>
@@ -429,8 +448,6 @@ namespace MeisterGeister
         static void OnStandortChanged()
         {
             Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
-            _heldenLon = Standort.Longitude;
-            _heldenLat = Standort.Latitude;
 
             if (StandortChanged != null)
                 StandortChanged(null, new EventArgs());
