@@ -48,11 +48,11 @@
                                     <Image Source="pack://application:,,,/Images/Icons/General/info.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Vorhandene Pflanzen" ToolTip="Pflanzen anzeigen die hier zu finden sind" Command="{Binding Path=PlacementTarget.DataContext.OnShowPflanzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                            <!--<MenuItem Header="Vorhandene Pflanzen" ToolTip="Pflanzen anzeigen die hier zu finden sind" Command="{Binding Path=PlacementTarget.DataContext.OnShowPflanzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Icons/pflanzenschriftrolle.png" Width="25"/>
                                 </MenuItem.Icon>
-                            </MenuItem>
+                            </MenuItem>-->
                         </ContextMenu>
                     </Canvas.ContextMenu>
                     <Image Source="{Binding SelectedKarte.Bildpfad}" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
@@ -83,6 +83,15 @@
                 </StackPanel>
             </Border>
             <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="0,50,0,50">
+                <Expander.Header>
+                    <TextBlock Style="{StaticResource TextTitel}" Text="Pflanzensuche" HorizontalAlignment="Center"/>
+                </Expander.Header>
+                <Grid Background="{StaticResource Background1}">
+                    <Karte:PflanzenMitLandschaftControl/>
+                </Grid>
+                
+            </Expander>
         </Grid>
     </Border>
 </UserControl>

@@ -13,32 +13,21 @@ namespace MeisterGeister.ViewModel.Karte
 {
     public class PflanzenAnOrtViewModel : Base.ViewModelBase
     {
-        /// <summary>
-        /// Zeigt alle an einem Punkt p auffindbaren Pflanzen an.
-        /// </summary>
-        /// <param name="p">Punkt in DG-Koordinaten</param>
-        /// <param name="tolerance">Toleranz in Grad</param>
-        public PflanzenAnOrtViewModel(Point p, double tolerance = 0.2)
+        public PflanzenAnOrtViewModel()
         {
-            Point = p;
-            Tolerance = tolerance;
             LadePflanzen();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-        }
-
-        #region Properties
-        private Point point;
-        public Point Point
-        {
-            get { return point; }
-            set { Set(ref point, value); }
         }
 
         private double tolerance = 0.2;
         public double Tolerance
         {
             get { return tolerance; }
-            set { Set(ref tolerance, value); }
+            set
+            {
+                Set(ref tolerance, value);
+                LadePflanzen();
+            }
         }
 
 
@@ -65,13 +54,6 @@ namespace MeisterGeister.ViewModel.Karte
             { Set(ref pflanzenTyp, value); }
         }
 
-        private Model.Pflanze_Verbreitung suche;
-        public Model.Pflanze_Verbreitung Suche
-        {
-            get { return suche; }
-            set { Set(ref suche, value); }
-        }
-
         ObservableCollection<Model.Pflanze> pflanzen;
         public ObservableCollection<Model.Pflanze> Pflanzen
         {
@@ -93,17 +75,17 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        private List<Pflanze> filterTyp(IList<Pflanze> pflanzen)
+        private IEnumerable<Pflanze> filterTyp(IList<Pflanze> pflanzen)
         {
             if (PflanzenTyp == String.Empty)
                 return pflanzen.ToList();
             else return pflanzen.Where(p => p.Pflanze_Typ.Where(pt => pt.Typ == PflanzenTyp).Count() > 0).ToList();
         }
 
-        private List<Pflanze> filterLandschaft(IList<Pflanze> pflanzen)
+        private List<Pflanze> filterLandschaft(IEnumerable<Pflanze> pflanzen)
         {
             HashSet<Landschaft> landschaften = new HashSet<Landschaft>();
-            foreach(LandschaftsGruppeViewModel gruppe in LandschaftsGruppen)
+            foreach (LandschaftsGruppeViewModel gruppe in LandschaftsGruppen)
             {
                 foreach (LandschaftViewModel vm in gruppe.Landschaften.Where((l) => l.IsChecked))
                     landschaften.Add(vm.Landschaft);
@@ -111,13 +93,11 @@ namespace MeisterGeister.ViewModel.Karte
             return pflanzen.Where((p) => p.Landschaften.Any((l) => landschaften.Contains(l))).ToList();
         }
 
-        #endregion
 
-        #region Methoden
         void LadePflanzen()
         {
             Pflanzen.Clear();
-            var gebiete = Global.ContextZooBot.GetGebiete(Point, Tolerance);
+            var gebiete = Global.ContextZooBot.GetGebiete(Global.Standort.Koordinaten, Tolerance);
             HashSet<Guid> pset = new HashSet<Guid>();
             HashSet<string> typen = new HashSet<string>();
             HashSet<Landschaft> landschaften = new HashSet<Landschaft>();
@@ -145,7 +125,7 @@ namespace MeisterGeister.ViewModel.Karte
             }
             PflanzenTypen = typen.ToList();
             LandschaftsGruppen = new List<LandschaftsGruppeViewModel>();
-            foreach(Landschaftsgruppe gruppe in gruppen)
+            foreach (Landschaftsgruppe gruppe in gruppen)
             {
                 var inGruppe = landschaften.Where((l) => l.Landschaftsgruppe.Contains(gruppe));
                 LandschaftsGruppen.Add(new LandschaftsGruppeViewModel(inGruppe, gruppe));
@@ -155,29 +135,35 @@ namespace MeisterGeister.ViewModel.Karte
         public override void RegisterEvents()
         {
             base.RegisterEvents();
-            foreach(LandschaftsGruppeViewModel gruppe in LandschaftsGruppen)
+            foreach (LandschaftsGruppeViewModel gruppe in LandschaftsGruppen)
             {
                 gruppe.PropertyChanged += Gruppe_PropertyChanged;
             }
+            Global.StandortChanged += Global_StandortChanged;
         }
 
         public override void UnregisterEvents()
         {
+            Global.StandortChanged -= Global_StandortChanged;
             foreach (LandschaftsGruppeViewModel gruppe in LandschaftsGruppen)
             {
                 gruppe.PropertyChanged -= Gruppe_PropertyChanged;
             }
             base.UnregisterEvents();
         }
+
         private void Gruppe_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "IsChecked")
+            if (e.PropertyName == "IsChecked")
             {
                 OnChanged("SichtbarePflanzen");
             }
         }
 
-        #endregion
+        private void Global_StandortChanged(object sender, EventArgs e)
+        {
+            LadePflanzen();
+        }
     }
 
     public class LandschaftsGruppeViewModel : Base.ViewModelBase

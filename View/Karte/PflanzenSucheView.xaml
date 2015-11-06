@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="MeisterGeister.View.Karte.PflanzenSucheView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeisterGeister.View.Karte"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Karte"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             General:UIElementBehavior.ViewModel="{Binding}">
+    <UserControl.DataContext>
+        <vm:PflanzenSucheViewModel/>
+    </UserControl.DataContext>
+    <TabControl>
+        <TabItem Header="Gezielte Pflanzensuche">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                    <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}"/>
+                    <CheckBox Content="Geländekunde" IsChecked="{Binding Geländekunde}" Margin="4,0,0,0"/>
+                </StackPanel>
+
+                <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <System:Boolean>false</System:Boolean>
+                    <System:Boolean>true</System:Boolean>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="1 Stunde suchen" x:Name="text"/>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding}" Value="True">
+                                    <Setter TargetName="text" Property="Text" Value="2 Stunden suchen"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock>
+                    Probe wird auf Kräutersuchen <Bold><Run Text="{Binding TaW,Mode=OneWay}"/><Run Text="{Binding Modifikator,Mode=OneWay,StringFormat={}{0:+0;-0}}"/></Bold> abgelegt.
+                    <InlineUIContainer BaselineAlignment="Center">
+                        <Button MaxHeight="20" Padding="0" Command="{Binding SucheGezielt}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
+                        </Button>
+                    </InlineUIContainer>
+                </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="TaP*:" VerticalAlignment="Center"/>
+                    <General:IntBox ShowButtons="True" Margin="4" Value="{Binding TaP}"/>
+                </StackPanel>
+                <TextBlock>
+                    Es wurde <Run Text="{Binding Funde,Mode=OneWay}"/> Mal <Run Text="{Binding Suche.Pflanze.Name,Mode=OneWay}"/> gefunden.
+                </TextBlock>
+                <ItemsControl ItemsSource="{Binding Suche.Pflanze.Pflanze_Ernte}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Grundmenge,Mode=OneWay}"/> <Run Text="{Binding Pflanzenteil,Mode=OneWay}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+
+
+        </TabItem>
+        <TabItem Header="Allgemeine Pflanzensuche">
+
+        </TabItem>
+    </TabControl>
+</UserControl>

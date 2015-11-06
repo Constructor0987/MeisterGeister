@@ -1,7 +1,0 @@
-﻿<Window x:Class="MeisterGeister.View.Karte.PflanzenAnOrtWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:c="clr-namespace:MeisterGeister.View.Karte"
-        Title="PflanzenAnOrtWindow" Height="300" Width="300">
-    <c:PflanzenMitLandschaftControl Pflanzen="{Binding Pflanzen}"/>
-</Window>

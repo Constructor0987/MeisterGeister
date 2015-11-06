@@ -366,28 +366,28 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        private CommandBase onShowPflanzen;
-        public CommandBase OnShowPflanzen
-        {
-            get
-            {
-                if (onShowPflanzen == null)
-                    onShowPflanzen = new CommandBase(ShowPflanzen, null);
-                return onShowPflanzen;
-            }
-        }
+        //private CommandBase onShowPflanzen;
+        //public CommandBase OnShowPflanzen
+        //{
+        //    get
+        //    {
+        //        if (onShowPflanzen == null)
+        //            onShowPflanzen = new CommandBase(ShowPflanzen, null);
+        //        return onShowPflanzen;
+        //    }
+        //}
 
-        private void ShowPflanzen(object args)
-        {
-            if (args is Point)
-            {
-                var p = (Point)dgConverter.ConvertBack(args, typeof(Point), null, null); ;
-                var pvm = new PflanzenAnOrtViewModel(p, 0.2);
-                var pwin = new MeisterGeister.View.Karte.PflanzenAnOrtWindow();
-                pwin.VM = pvm;
-                pwin.ShowDialog();
-            }
-        }
+        //private void ShowPflanzen(object args)
+        //{
+        //    if (args is Point)
+        //    {
+        //        var p = (Point)dgConverter.ConvertBack(args, typeof(Point), null, null); ;
+        //        var pvm = new PflanzenAnOrtViewModel(p, 0.2);
+        //        var pwin = new MeisterGeister.View.Karte.PflanzenAnOrtWindow();
+        //        pwin.VM = pvm;
+        //        pwin.ShowDialog();
+        //    }
+        //}
         #endregion
 
         #region UI Bindings, wie Zoom und Translate

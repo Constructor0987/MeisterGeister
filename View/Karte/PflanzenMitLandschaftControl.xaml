@@ -8,9 +8,14 @@
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:Model="clr-namespace:MeisterGeister.Model"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              General:UIElementBehavior.ViewModel="{Binding}">
+    <UserControl.DataContext>
+        <vm:PflanzenAnOrtViewModel/>
+    </UserControl.DataContext>
+    
     <UserControl.Resources>
         <DataTemplate x:Key="pflanzenTyp">
             <Grid>
@@ -66,10 +71,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -139,35 +140,43 @@
                                 <TextBlock Text="{Binding Name}" Grid.Column="2" VerticalAlignment="Center"/>
 
                                 <ListBox ItemsSource="{Binding Pflanze_Verbreitung}" Grid.Column="3" VerticalAlignment="Center"
-                                         SelectedValue="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type ItemsControl},AncestorLevel=1},Path=DataContext.Suche,Mode=TwoWay}">
+                                         SelectedValue="{Binding ElementName=suche,Path=DataContext.Pflanze,Mode=TwoWay}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type Model:Pflanze_Verbreitung}">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Landschaft.Name}"/>
-                                                <TextBlock Text="{Binding Verbreitung, StringFormat={}{0:+0;-0}}" Margin="4,0,0,0"/>
+                                                <!--<TextBlock Text="{Binding Verbreitung, StringFormat={}{0:+0;-0}}" Margin="4,0,0,0"/>-->
+                                                <TextBlock Margin="4,0,0,0" x:Name="verbreitung"/>
                                             </StackPanel>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding Verbreitung}" Value="1">
+                                                    <Setter TargetName="verbreitung" Property="Text" Value="Sehr häufig"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Verbreitung}" Value="2">
+                                                    <Setter TargetName="verbreitung" Property="Text" Value="Häufig"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Verbreitung}" Value="4">
+                                                    <Setter TargetName="verbreitung" Property="Text" Value="Gelegentlich"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Verbreitung}" Value="8">
+                                                    <Setter TargetName="verbreitung" Property="Text" Value="Selten"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Verbreitung}" Value="16">
+                                                    <Setter TargetName="verbreitung" Property="Text" Value="Sehr selten"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ListBox>
-
                             </Grid>
-
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
 
+        <Karte:PflanzenSucheView x:Name="suche" Grid.Row="3"/>
 
-        <TextBlock Grid.Row="3">
-            Loriel Schwalbenruf sucht in Feuchten Wiesen nach Wirselkraut. Sie hat einen TaW in Kräuter suchen von <Bold>8</Bold>.
-        </TextBlock>
-
-        <CheckBox Content="2 Stunden statt nur einer suchen und den effektiven TaW erhöhen" Grid.Row="4"/>
-        <CheckBox Content="Loriel ist Waldkundig (-3)" Grid.Row="5"/>
-        <CheckBox Content="Loriel hat Ortskenntnis (-7)" Grid.Row="6"/>
-
-        <Button Content="Suchen" Grid.Row="7"/>
 
     </Grid>
 </UserControl>

@@ -16,7 +16,7 @@
     <SolidColorBrush x:Key="BrushGE" Color="#FF2A4D91"/>
     <SolidColorBrush x:Key="BrushKO" Color="#FFEEEEEE"/>
     <SolidColorBrush x:Key="BrushKK" Color="#FFE48E21"/>
-    
+
     <!-- CombplexTpye -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     <mg:InverseBooleanConverter x:Key="InverseBooleanConverter1" />
@@ -569,7 +569,7 @@
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="true">
                         <DockPanel>
-                            <Border Style="{DynamicResource ControlTitelBorder}" DockPanel.Dock="Top">
+                            <Border Style="{DynamicResource ControlTitelBorder}" x:Name="HeaderBorder" DockPanel.Dock="Top">
                                 <ToggleButton Margin="20,0,0,0" x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" Content="{TemplateBinding Header}" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="Right" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="Stretch"/>
                             </Border>
                             <ContentPresenter x:Name="ExpandSite" Visibility="Collapsed" DockPanel.Dock="Bottom" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0"  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -581,18 +581,31 @@
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">
                             <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
-                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
-                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderRightHeaderStyle}"/>
+                            <Setter Property="DockPanel.Dock" TargetName="HeaderBorder" Value="Left"/>
+                            <Setter Property="LayoutTransform" TargetName="HeaderBorder">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90"/>
+                                </Setter.Value>
+                            </Setter>
+                            <!--<Setter Property="CornerRadius" TargetName="HeaderBorder" Value="30,0,0,30"/>-->
+                            <!--<Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderRightHeaderStyle}"/>-->
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Up">
                             <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
-                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
-                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderUpHeaderStyle}"/>
+                            <Setter Property="DockPanel.Dock" TargetName="HeaderBorder" Value="Bottom"/>
+                            <!--<Setter Property="CornerRadius" TargetName="HeaderBorder" Value="0,0,30,30"/>-->
+                            <!--<Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderUpHeaderStyle}"/>-->
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Left">
                             <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left"/>
-                            <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right"/>
-                            <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderLeftHeaderStyle}"/>
+                            <Setter Property="DockPanel.Dock" TargetName="HeaderBorder" Value="Right"/>
+                            <Setter Property="LayoutTransform" TargetName="HeaderBorder">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90"/>
+                                </Setter.Value>
+                            </Setter>
+                            <!--<Setter Property="CornerRadius" TargetName="HeaderBorder" Value="0,30,30,0"/>-->
+                            <!--<Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderLeftHeaderStyle}"/>-->
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>

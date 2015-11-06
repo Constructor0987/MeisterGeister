@@ -660,6 +660,7 @@
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenAnOrtViewModel.cs" />
+    <Compile Include="ViewModel\Karte\PflanzenSucheViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
     <Compile Include="ViewModel\Reise\WetterGraphViewModel.cs" />
@@ -977,11 +978,11 @@
       <DependentUpon>KoordinatenControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\MGIconZoomConverter.cs" />
-    <Compile Include="View\Karte\PflanzenAnOrtWindow.xaml.cs">
-      <DependentUpon>PflanzenAnOrtWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Karte\PflanzenMitLandschaftControl.xaml.cs">
       <DependentUpon>PflanzenMitLandschaftControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Karte\PflanzenSucheView.xaml.cs">
+      <DependentUpon>PflanzenSucheView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
       <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
@@ -1505,11 +1506,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Karte\PflanzenAnOrtWindow.xaml">
+    <Page Include="View\Karte\PflanzenMitLandschaftControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Karte\PflanzenMitLandschaftControl.xaml">
+    <Page Include="View\Karte\PflanzenSucheView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
