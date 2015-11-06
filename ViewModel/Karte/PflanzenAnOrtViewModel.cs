@@ -119,11 +119,13 @@ namespace MeisterGeister.ViewModel.Karte
                 }
             }
             PflanzenTypen = typen.ToList();
+            //cache leeren
+            LandschaftViewModels.Clear();
             List<LandschaftsGruppeViewModel> gruppenVM = new List<LandschaftsGruppeViewModel>();
             foreach (Landschaftsgruppe gruppe in gruppen)
             {
                 var inGruppe = landschaften.Where((l) => l.Landschaftsgruppe.Contains(gruppe));
-                gruppenVM.Add(new LandschaftsGruppeViewModel(inGruppe, gruppe));
+                gruppenVM.Add(new LandschaftsGruppeViewModel(inGruppe, gruppe, LandschaftViewModels));
             }
             LandschaftsGruppen = gruppenVM;
             OnChanged("SichtbarePflanzen");
@@ -162,17 +164,31 @@ namespace MeisterGeister.ViewModel.Karte
         {
             LadePflanzen();
         }
+
+        private Dictionary<Guid, LandschaftViewModel> landschaftViewModels = new Dictionary<Guid,LandschaftViewModel>();
+        public Dictionary<Guid, LandschaftViewModel> LandschaftViewModels
+        {
+            get { return landschaftViewModels; }
+            protected set { Set(ref landschaftViewModels, value); }
+        }
     }
 
     public class LandschaftsGruppeViewModel : Base.ViewModelBase
     {
-        public LandschaftsGruppeViewModel(IEnumerable<Landschaft> ls, Landschaftsgruppe gruppe)
+        public LandschaftsGruppeViewModel(IEnumerable<Landschaft> ls, Landschaftsgruppe gruppe, Dictionary<Guid, LandschaftViewModel> lvmCache)
         {
             Gruppe = gruppe;
             landschaften = new List<LandschaftViewModel>();
             foreach (Landschaft l in ls)
             {
-                LandschaftViewModel vm = new LandschaftViewModel(l);
+                LandschaftViewModel vm = null;
+                if (lvmCache.ContainsKey(l.LandschaftGUID))
+                    vm = lvmCache[l.LandschaftGUID];
+                else
+                {
+                    vm = new LandschaftViewModel(l);
+                    lvmCache.Add(l.LandschaftGUID, vm);
+                }
                 landschaften.Add(vm);
             }
         }
