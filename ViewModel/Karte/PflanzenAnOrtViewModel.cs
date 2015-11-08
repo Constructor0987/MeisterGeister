@@ -13,6 +13,8 @@ namespace MeisterGeister.ViewModel.Karte
 {
     public class PflanzenAnOrtViewModel : Base.ViewModelBase
     {
+        private Landschaft überall, fastÜberall;
+
         public PflanzenAnOrtViewModel()
         {
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
@@ -59,31 +61,37 @@ namespace MeisterGeister.ViewModel.Karte
             protected set { Set(ref pflanzen, value); }
         }
 
+        private List<Pflanze> pflanzenInLandschaft = null;
+
         [DependentProperty("PflanzenTyp")]
         public List<Model.Pflanze> SichtbarePflanzen
         {
             get
             {
-                return filterLandschaft(filterTyp(Pflanzen));
+                if (pflanzenInLandschaft == null)
+                    filterLandschaft();
+                return filterTyp(pflanzenInLandschaft).OrderBy(p => p.Name).ToList();
             }
         }
 
-        private IEnumerable<Pflanze> filterTyp(IList<Pflanze> pflanzen)
+        private List<Pflanze> filterTyp(IList<Pflanze> pflanzen)
         {
             if (PflanzenTyp == String.Empty)
                 return pflanzen.ToList();
             else return pflanzen.Where(p => p.Pflanze_Typ.Where(pt => pt.Typ == PflanzenTyp).Count() > 0).ToList();
         }
 
-        private List<Pflanze> filterLandschaft(IEnumerable<Pflanze> pflanzen)
+        private void filterLandschaft()
         {
             HashSet<Landschaft> landschaften = new HashSet<Landschaft>();
+            landschaften.Add(überall);
+            landschaften.Add(fastÜberall);
             foreach (LandschaftsGruppeViewModel gruppe in LandschaftsGruppen)
             {
                 foreach (LandschaftViewModel vm in gruppe.Landschaften.Where((l) => l.IsChecked))
                     landschaften.Add(vm.Landschaft);
             }
-            return pflanzen.Where((p) => p.Landschaften.Any((l) => landschaften.Contains(l))).ToList();
+            pflanzenInLandschaft = Pflanzen.Where((p) => p.Landschaften.Any((l) => landschaften.Contains(l))).ToList();
         }
 
 
@@ -112,6 +120,16 @@ namespace MeisterGeister.ViewModel.Karte
                         typen.Add(pt.Typ);
                     foreach (var l in p.Landschaften)
                     {
+                        if (l.Name == "überall")
+                        {
+                            überall = l;
+                            continue;
+                        }
+                        else if (l.Name.StartsWith("überall "))
+                        {
+                            fastÜberall = l;
+                            continue;
+                        }
                         landschaften.Add(l);
                         foreach (var gr in l.Landschaftsgruppe)
                             gruppen.Add(gr);
@@ -128,6 +146,7 @@ namespace MeisterGeister.ViewModel.Karte
                 gruppenVM.Add(new LandschaftsGruppeViewModel(inGruppe, gruppe, LandschaftViewModels));
             }
             LandschaftsGruppen = gruppenVM;
+            pflanzenInLandschaft = null;
             OnChanged("SichtbarePflanzen");
         }
 
@@ -156,16 +175,19 @@ namespace MeisterGeister.ViewModel.Karte
         {
             if (e.PropertyName == "IsChecked")
             {
+                //Vorgefilterte Pflanzen nach Landschaft auf null setzen damit SichtbarePflanzen sie neu lädt
+                pflanzenInLandschaft = null;
                 OnChanged("SichtbarePflanzen");
             }
         }
 
         private void Global_StandortChanged(object sender, EventArgs e)
         {
-            LadePflanzen();
+            UnregisterEvents();
+            RegisterEvents();
         }
 
-        private Dictionary<Guid, LandschaftViewModel> landschaftViewModels = new Dictionary<Guid,LandschaftViewModel>();
+        private Dictionary<Guid, LandschaftViewModel> landschaftViewModels = new Dictionary<Guid, LandschaftViewModel>();
         public Dictionary<Guid, LandschaftViewModel> LandschaftViewModels
         {
             get { return landschaftViewModels; }

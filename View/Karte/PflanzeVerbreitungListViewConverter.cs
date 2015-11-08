@@ -1,6 +1,7 @@
 ﻿using MeisterGeister.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace MeisterGeister.View.Karte
         {
             IEnumerable<Pflanze_Verbreitung> pflanzen = (IEnumerable<Pflanze_Verbreitung>)value;
             ListCollectionView view = new ListCollectionView(pflanzen.ToList());
+            view.SortDescriptions.Add(new SortDescription("Verbreitung", ListSortDirection.Ascending));
             view.GroupDescriptions.Add(new PropertyGroupDescription("Verbreitung"));
             return view;
         }
