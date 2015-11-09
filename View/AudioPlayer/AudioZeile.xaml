@@ -378,7 +378,7 @@
                 </StackPanel.Style>
                 <TextBlock Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0"
                         Text="{Binding aPlayTitel.Audio_Titel.Länge, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--}" />
-                <Button Height="23" Margin="2,1,2,2" >
+                <Button Height="23" Margin="2,1,2,2" Background="{x:Null}" >
                     <Button.Style>
                         <Style TargetType="Button">
                             <Style.Triggers>

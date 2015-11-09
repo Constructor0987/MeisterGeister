@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using System.IO;
 // Eigene Usings
 using MeisterGeister.View.AudioPlayer;
-using MeisterGeister.ViewModel.AudioPlayer;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using System.Windows.Media.Imaging;
@@ -18,6 +17,7 @@ using MeisterGeister.View.General;
 using System.Windows.Media;
 using System.Threading;
 using MeisterGeister.Logic.Einstellung;
+using VM = MeisterGeister.ViewModel.AudioPlayer;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -25,6 +25,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     {
         //INotifyPropertyChanged
         #region //---- FELDER ----
+
+        public List<string> stdPfad = new List<string>();
 
         private bool _aktiv = false;
         public bool Aktiv
@@ -130,22 +132,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public btnHotkeyVM() 
         {
             // Event-Handler zur DependentProperty-Notification
-            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-
-            //_onlbEditorItemAdd = new Base.CommandBase(lbEditorItemAdd, null);                 
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;                                
         }
         #endregion
 
         #region //---- INSTANZMETHODEN ----
-        public AudioPlayerViewModel AudioVM;
         public List<DispatcherTimer> _timerTeilAbspielenList = new  List<DispatcherTimer>();
 
         private bool checkTitel(Audio_Titel titel)
         {
             if (titel == null) return false;
-            if (!Directory.Exists(titel.Pfad) && !File.Exists(titel.Pfad + "\\" + titel.Datei) && AudioVM != null)
+            if (!Directory.Exists(titel.Pfad) && !File.Exists(titel.Pfad + "\\" + titel.Datei))
             {
-                titel = AudioVM.setTitelStdPfad(titel);
+                titel = setTitelStdPfad(titel);
                 if (File.Exists(titel.Pfad + "\\" + titel.Datei))
                     Global.ContextAudio.Update<Audio_Titel>(titel);
             }
@@ -204,15 +203,17 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 titelPlay.mp = mp;
 
                 mpList.Add(mp);
-
+                
                 mp.Open(new Uri(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei));
                 mp.Volume = (double)(volume / 100);
                 if (aPlayTitel.TeilAbspielen)
                 {
-                    mp.Position = TimeSpan.FromMilliseconds(0);
+                    mp.Position = TimeSpan.FromMilliseconds(0); 
+                    MyTimer.start_timer();
                     // Bis zu 1000ms warten um die Musikdatei auszulesen und die Laufzeit zu ermitteln
                     if (SpinWait.SpinUntil(() => { return mp.NaturalDuration.HasTimeSpan; }, 1000))
                         mp.Position = TimeSpan.FromMilliseconds(aPlayTitel.TeilStart.Value);
+                    MyTimer.stop_timer("Hotkey_OnBtnClick");
                 }
 
                 mp.Play();
@@ -231,6 +232,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }                
             }
         }
+        
         public void _timerTeilAbspielen_Tick(object sender, EventArgs e)
         {
             double Ende = (double)(sender as DispatcherTimer).Tag;
@@ -268,6 +270,104 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Stoppen und Schließen des Media-Player nach einem Fehler ist ein Fehler aufgetreten.", ex);
             }
+        }
+
+
+        public void setStdPfad()
+        {
+            char[] charsToTrim = { '\\' };
+            if (stdPfad.Count > 0) stdPfad.RemoveRange(0, stdPfad.Count);
+            stdPfad.AddRange(MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }));
+        }
+
+        public Audio_Titel setTitelStdPfad(Audio_Titel aTitel)
+        {
+            if (stdPfad.Count == 0)
+                setStdPfad();
+            char[] charsToTrim = { '\\' };
+            //Check Titel -> Pfad vorhanden ansonsten Standard-Pfad hinzufügen
+            if (File.Exists(aTitel.Pfad + "\\" + aTitel.Datei))
+            {
+                foreach (string pfad in stdPfad)
+                {
+                    if (pfad == aTitel.Pfad)
+                        return aTitel;
+
+                    if (aTitel.Pfad != null && (aTitel.Pfad + "\\" + aTitel.Datei).Contains(pfad))
+                    {
+                        aTitel.Datei = (aTitel.Pfad.EndsWith("\\") ? aTitel.Pfad + aTitel.Datei : aTitel.Pfad + "\\" + aTitel.Datei).
+                            Substring(pfad.EndsWith("\\") ? pfad.Length : pfad.Length + 1);
+                        aTitel.Pfad = pfad.TrimEnd(charsToTrim);
+                        return aTitel;
+                    }
+                }
+                // Pfad noch kein Standard-Pfad
+                if (ViewHelper.Confirm("Audio-Pfad ist kein Standard-Pfad", "Der Pfad der Audio-Datei konnte nicht unter den Standard-Pfaden gefunden werden." +
+                    Environment.NewLine + "In dieser Konstellation ist es nicht zulässig, den Titel abzuspielen." + Environment.NewLine +
+                    "Soll der Pfad mit in die Standard-Pfade integriert werden?" + Environment.NewLine + Environment.NewLine + "Neuer Pfad:     " + aTitel.Pfad))
+                {
+                    MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis =
+                        MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis + "|" + aTitel.Pfad;
+                    setStdPfad();
+                }
+                return aTitel;
+            }
+
+            //Pfad+Titel nicht gefunden -> Check Titel in einem anderen Standard-Pfad
+            foreach (string pfad in stdPfad)
+            {
+                if (aTitel.Datei == null && aTitel.Pfad != null)
+                {
+                    aTitel.Datei = aTitel.Pfad;
+                    aTitel.Pfad = "";
+                }
+                if (File.Exists(pfad.TrimEnd(charsToTrim) + "\\" + aTitel.Datei))
+                {
+                    aTitel.Pfad = pfad.TrimEnd(charsToTrim);
+                    return aTitel;
+                }
+
+                if (File.Exists(pfad.TrimEnd(charsToTrim) + "\\" + System.IO.Path.GetFileName(aTitel.Datei)))
+                {
+                    aTitel.Pfad = pfad.TrimEnd(charsToTrim);
+                    aTitel.Datei = System.IO.Path.GetFileName(aTitel.Datei);
+                    return aTitel;
+                }
+            }
+
+            if (Einstellungen.AudioInAnderemPfadSuchen)
+            {
+                //ab hier: kein Std.-Pfad ist gültig -> Check in jedem Std.-Pfad mit Suche incl. Unterverzeichnisse nach dem Dateinamen
+                string gesuchteDatei = System.IO.Path.GetFileName(stdPfad[0].TrimEnd(charsToTrim) + "\\" + aTitel.Datei);
+                foreach (string pfad in stdPfad)
+                {
+                    if (pfad != "C:\\" && Directory.Exists(pfad))
+                    {
+                        string[] pfad_datei = Directory.GetFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.AllDirectories);
+                        if (pfad_datei.Length > 0)
+                        {
+                            aTitel.Pfad = System.IO.Path.GetDirectoryName(pfad_datei[0]);
+                            aTitel.Datei = System.IO.Path.GetFileName(pfad_datei[0]);
+                            aTitel = setTitelStdPfad(aTitel);
+                            return aTitel;
+                        }
+                    }
+                }
+            }
+
+            if (aTitel.Pfad == null) aTitel.Pfad = "";
+            if (aTitel.Pfad == "" || aTitel.Datei == null)
+            {
+                string pfadDatei = aTitel.Pfad != null || aTitel.Pfad != "" ? aTitel.Pfad : "";
+                if (pfadDatei != "" && !pfadDatei.EndsWith("\\"))
+                    pfadDatei = pfadDatei + "\\";
+                if (aTitel.Datei != null)
+                    pfadDatei = pfadDatei + aTitel.Datei;
+
+                aTitel.Pfad = System.IO.Path.GetDirectoryName(pfadDatei);
+                aTitel.Datei = System.IO.Path.GetFileName(pfadDatei);
+            }
+            return aTitel;
         }
 
         #endregion

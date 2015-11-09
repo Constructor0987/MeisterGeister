@@ -28,20 +28,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     {
         #region //---- FELDER ----
 
-       // public DispatcherTimer _timerReadAgain = new DispatcherTimer();
-      //  public DispatcherTimer _timerCheckLaufend = new DispatcherTimer();
-        //private bool MusikZeileIsChecked = false;
         private bool InAnderemPfadSuchen = Einstellungen.AudioInAnderemPfadSuchen;
         private MusikZeileModel _model;
         private BackgroundWorker _worker;
         private int _iterations = 50;
-       // private int _anzLastScan = 0;
-       // private int _anzGefunden = 0;
         private string _output;
         private bool _startEnabled = true;
         private bool _cancelEnabled = false;
 
-        //private BitmapImage _listBoxItemIcon;
         private lbThemeItemVM _item = null;
         private string _suchtext = string.Empty;
 
@@ -65,6 +59,17 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public DispatcherTimer wartezeitTimer = new DispatcherTimer();
         public Nullable<int> posObjGruppe;
 
+        private string _liste = null;
+        public string Liste
+        {
+            get { return _liste; }
+            set
+            {
+                _liste = value;
+                OnChanged();
+            }
+        }
+
         private MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt _grpobj = null;
         public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj
         {
@@ -72,15 +77,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set
             {
                 _grpobj = value;
-                //if (value != null)
-                //    _timerCheckLaufend.Start();
-                //else
-                //    _timerCheckLaufend.Stop();
-
                 OnChanged();
             }
         }
-
+        
         private MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel _aPlayerVM = null;
         public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel aPlayerVM
         {
@@ -91,7 +91,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged();
             }
         }
-
 
         //Commands
         private Base.CommandBase _onlbThemeItemAdd;        
@@ -177,87 +176,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
         
-        //private bool _PlaylistDoForce;
-        //public bool PlaylistDoForce
-        //{
-        //    get { return _PlaylistDoForce; }
-        //    set
-        //    {
-        //        _PlaylistDoForce = value;
-        //        aPlaylist.DoForce = value;
-
-        //        OnChanged();
-        //        VolumeUpdate();
-        //    }
-        //}
-
-        //private double _PlaylistForceVolumeValue;
-        //public double PlaylistForceVolumeValue
-        //{
-        //    get { return _PlaylistForceVolumeValue; }
-        //    set
-        //    {
-        //        _PlaylistForceVolumeValue = value;
-
-        //        //if (aPlaylist.DoForce)
-        //        //{
-        //        //    aPlaylist.ForceVolume = (Int32)value;
-        //        //    grpobj.force_Volume = value / 100;
-        //        //}
-        //        //else
-        //        //{
-        //        //    aPlaylist.ForceVolume = 0;
-        //        //    grpobj.force_Volume = null;
-        //        //}
-        //        OnChanged();
-        //        VolumeUpdate();
-                
-        //        OnChanged("PlaylistDoForce");
-        //    }
-        //}
-         
-        /// <summary>
-        /// Direkt Volume ändern wenn kein Fading läuft
-        /// </summary>
-        
-        //private void VolumeUpdate()
-        //{
-        //    if (!aPlaylist.Fading)
-        //    {
-        //        if (aPlaylist.DoForce)
-        //        {
-        //            aPlaylist.ForceVolume = (Int32)aPlaylist.ForceVolume;
-        //            grpobj.force_Volume = aPlaylist.ForceVolume / 100;
-
-        //            grpobj._listZeile.ForEach(delegate(MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.KlangZeile kZeile)
-        //            { if (kZeile._mplayer != null) kZeile._mplayer.Volume = aPlaylist.ForceVolume / 100; });
-        //        }
-        //        else
-        //        {
-        //            aPlaylist.ForceVolume = 0;
-        //            grpobj.force_Volume = null;
-
-        //            grpobj._listZeile.ForEach(delegate(MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.KlangZeile kZeile)
-        //            {
-        //                if (kZeile != null && kZeile._mplayer != null)
-        //                    kZeile._mplayer.Volume = kZeile.Aktuell_Volume * grpobj.Vol_PlaylistMod;
-        //            });
-        //        }
-        //    }
-        //}
-
-        //[DependentProperty("aPlaylist")]
-        //public string ListBoxItemIconBild
-        //{
-        //    get 
-        //    {
-        //     //   VolumeUpdate();
-        //        return (aPlaylist.Hintergrundmusik ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/copy.png" :
-        //                                             "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png");
-        //    }
-        //}
-        
-
         public lbThemeItemVM Item
         {
             get { return _item; }
@@ -269,18 +187,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
 
         }
-
-        //private bool _min1TitelIsPlaying;
-        //public bool Min1TitelIsPlaying
-        //{
-        //    get { return _min1TitelIsPlaying; }
-        //    set
-        //    {
-        //        _min1TitelIsPlaying = value;
-        //        OnChanged();
-        //    }
-        //}
-
+        
         private bool _playlistDoForce;
         public bool PlaylistDoForce
         {
@@ -361,7 +268,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _anzPauseChange; }
             set { _anzPauseChange = value; }
         }
-
+                
         public string PPlaylistName
         {
             get { return _playlistName; }
@@ -387,6 +294,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 _min1SongWirdGespielt = value;
                 OnChanged();
+
+                //if (grpobj._listZeile.Count(t => t.istLaufend) == 1)
+                //{
+                //    TitelLaufend = grpobj._listZeile.FirstOrDefault(t => t.istLaufend).aPlaylistTitel.Audio_Titel.Name;
+                //}
             }
         }
 
@@ -487,8 +399,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
            // _timerReadAgain.Interval = new TimeSpan(0, 0, 0, 1, 0);
             //_anzGefunden = 0;
-            //_anzLastScan = 0;
-                        
+            //_anzLastScan = 0;           
             MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt inGrpObject = 
                 aPlayerVM._GrpObjecte.Where(t => !t.visuell).FirstOrDefault(t => t.aPlaylist == aPlaylist);
 
@@ -502,7 +413,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 grpobj.visuell = false;
                 grpobj.force_Volume = (double)grpobj.aPlaylist.ForceVolume / 100;
                 grpobj.DoForceVolume = grpobj.aPlaylist.DoForce;
-                    
+
+                
                 foreach (Audio_Playlist_Titel aPlaylistTitel in grpobj.aPlaylist.Audio_Playlist_Titel)
                 {
                     if (aPlaylistTitel.Audio_Titel != null)
@@ -539,8 +451,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             if (!grpobj.wirdAbgespielt)
             {
                 grpobj.wirdAbgespielt = true;
-                //if (grpobj.aPlaylist.Hintergrundmusik)
-                //    aPlayerVM.SelectedMusikItem = aPlayerVM.MusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == grpobj.aPlaylist);
                 //WARTEZEIT DER PLAYLISTE EINBAUEN
                 grpobj.wartezeitTimer.Tag = grpobj;
                 if (!grpobj.aPlaylist.WarteZeitAktiv)
@@ -564,24 +474,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     }
             }
             aPlayerVM.ErwPlayerGeräuscheAktiv = true;
-
-         //   if (!aPlayerVM.BerechneSpieldauer)// TeilAbspielbarGecheckt)
-         //       StartProcess();   
         }
 
-        //private void _timerReadAgain_Tick(object sender, EventArgs e)
-        //{
-            //if (grpobj.wirdAbgespielt) 
-            //    StartProcess();
-            //_timerReadAgain.Interval += new TimeSpan(0, 0, 0, 2, 0);
-            //_timerReadAgain.Stop();
-        //}
-        
         public void wartezeitTimer_Tick(object sender, EventArgs e)
         {
-            //MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = (MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt)((DispatcherTimer)sender).Tag;
-            //grpobj.tbtnKlangPause.RaiseEvent(new RoutedEventArgs(ToggleButton.CheckedEvent));
-
             if (grpobj == null)
                 return;
 
@@ -624,7 +520,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
                 if (!grpobj.aPlaylist.Hintergrundmusik && grpobj.aPlaylist.Fading)
                     aPlayerVM.FadingOutGeräusch(true, true, grpobj);
-
+                else
+                    if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
+                    {
+                        aPlayerVM._GrpObjecte.Remove(grpobj);
+                        return;
+                    }
                 for (int i = 0; i < grpobj._listZeile.Count; i++)
                 {
                     if (!grpobj.aPlaylist.Hintergrundmusik)
@@ -653,11 +554,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }
                 aPlayerVM.CheckPlayStandbySongs(grpobj);
                 grpobj.totalTimePlylist = -1;
-
-                // Gruppenobject des Geräuschs wieder löschen damit Speicher freigegeben werden kann
-                // WIRD SCHON IM FADING OUT GEMACHT!
-           //     if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
-           //         aPlayerVM._GrpObjecte.Remove(grpobj);
             }
             aPlayerVM.ErwPlayerGeräuscheAktiv = aPlayerVM.ErwPlayerGeräuscheAktiv;
         }
@@ -807,7 +703,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }
                 if (worker.WorkerReportsProgress)
                 {
+                    MyTimer.start_timer();
                     SpinWait.SpinUntil(() => { return model.APlaylistTitel.Audio_Titel != null; }, 1000);
+                    MyTimer.stop_timer("Worker_DoWork");
                     if (model.APlaylistTitel.Audio_Titel != null)
                     {
                         if (!File.Exists(model.APlaylistTitel.Audio_Titel.Pfad + "\\" + model.APlaylistTitel.Audio_Titel.Datei))

@@ -9,7 +9,7 @@
              d:DesignHeight="42" d:DesignWidth="130" MouseEnter="grd_MouseEnter" MouseLeave="grd_MouseLeave" >
     
     <Grid Width="119" >
-        <ToggleButton Name="tbtnTheme" Focusable="False" Margin="0" Padding="1,-1,1,1" 
+        <ToggleButton Name="tbtnTheme" Focusable="False" Margin="0" Padding="1,-1,1,1"  
             ToolTip="{Binding ThemeTooltip}" >            
             <ToggleButton.Style>
                 <Style TargetType="ToggleButton">

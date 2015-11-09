@@ -114,7 +114,7 @@
                                     <ColumnDefinition Width="71" />
                                     <ColumnDefinition Width="140" />
                                     <ColumnDefinition Width="140"/>
-                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="20" />
                                     <ColumnDefinition Width="80" />
                                     <ColumnDefinition Width="70" />
                                     <ColumnDefinition Width="*" />
@@ -126,7 +126,7 @@
                                     <RowDefinition Height="35" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                
+
                                 <Label Grid.Column="0" Grid.Row="0" Content="Gebiet" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
 
                                 <Button Grid.Column="1" Command="{Binding OnGebieteVonPos}" ToolTip="Klicken zum Aktualisieren" Margin="3" >
@@ -139,7 +139,7 @@
                                     <Image Visibility="{Binding ElementName=koordPosition, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" 
                                         Source="/Images/Icons/General/Refresh.png" Margin="0,0,2,0" Height="20" />
                                 </StackPanel>-->
-                                
+
                                 <Button Grid.Column="2" HorizontalAlignment="Right" Margin="0,5" Tag="Karte" Click="KarteAusrufen_Click" >
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/Images/Icons/kartenzeichnen.png" Margin="-2" Height="20" />
@@ -155,7 +155,7 @@
                                           ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" DisplayMemberPath="Name" />
                                 <!--ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-                                
+
                                 <ComboBox Name="cmbxPflanze" Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
                                           ItemsSource="{Binding FilterPflanzenListeBekannt, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding PflanzeSelectedBekannt}" >
                                     <ComboBox.ItemTemplate>
@@ -178,7 +178,8 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <!-- PflanzenNamen-->
-
+                                <ViewGeneral:LiteraturControl Grid.Column="3" Grid.Row="2" LiteraturAnzeigeArt="NurIcon" Literaturangabe="{Binding LiteraturAusgewähltePflanze}" Height="20" />
+                                
                                 <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding Kräuter_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
                                 <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding Kräuter_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
 
@@ -199,7 +200,12 @@
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
                                 <TextBox Text="{Binding Kräuter_Ausgabe}" TextWrapping="Wrap"/>
+                                <ViewGeneral:LiteraturControl LiteraturAnzeigeArt="NurIcon" Literaturangabe="{Binding LiteraturReferenz}" Grid.Row="2"/>
                             </Grid>
                         </Border>
                     </Expander>

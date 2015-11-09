@@ -132,6 +132,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Audio_Titel> _audio_Titel;
     
+        public ObjectSet<Audio_WesenIcon> Audio_WesenIcon
+        {
+            get { return _audio_WesenIcon  ?? (_audio_WesenIcon = CreateObjectSet<Audio_WesenIcon>("Audio_WesenIcon")); }
+        }
+        private ObjectSet<Audio_WesenIcon> _audio_WesenIcon;
+    
         public ObjectSet<Ausrüstung> Ausrüstung
         {
             get { return _ausrüstung  ?? (_ausrüstung = CreateObjectSet<Ausrüstung>("Ausrüstung")); }
@@ -595,6 +601,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Audio_Theme;
     		if(typeof(T) == typeof(Audio_Titel))
     				return (ObjectSet<T>)(Object)Audio_Titel;
+    		if(typeof(T) == typeof(Audio_WesenIcon))
+    				return (ObjectSet<T>)(Object)Audio_WesenIcon;
     		if(typeof(T) == typeof(Ausrüstung))
     				return (ObjectSet<T>)(Object)Ausrüstung;
     		if(typeof(T) == typeof(Ausrüstung_Setting))
@@ -766,6 +774,8 @@ namespace MeisterGeister.Model
     				return Audio_Theme;
     		if(t == typeof(Audio_Titel))
     				return Audio_Titel;
+    		if(t == typeof(Audio_WesenIcon))
+    				return Audio_WesenIcon;
     		if(t == typeof(Ausrüstung))
     				return Ausrüstung;
     		if(t == typeof(Ausrüstung_Setting))

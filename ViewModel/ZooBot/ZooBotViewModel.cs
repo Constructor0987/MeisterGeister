@@ -160,6 +160,26 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
         }
 
+        private string _literaturAusgewähltePflanze = "";
+        public string LiteraturAusgewähltePflanze
+        {
+            get { return _literaturAusgewähltePflanze;}
+            set
+            {
+                Set(ref _literaturAusgewähltePflanze, value);
+            }
+        }
+
+        private string _literaturReferenz = "";
+        public string LiteraturReferenz
+        {
+            get { return _literaturReferenz; }
+            set
+            {
+                Set(ref _literaturReferenz, value);
+            }
+        }
+
         private Point _heldenPos = new Point();        
         public Point HeldenPos
         {
@@ -467,7 +487,8 @@ namespace MeisterGeister.ViewModel.ZooBot
                 //_pflanzeSelectedBekannt = value;
                 Set(ref _pflanzeSelectedBekannt, value);
                 //OnChanged();
-                PflanzeSelected = (value != null)? value.p : null;
+                PflanzeSelected = (value != null)? value.p : null;                
+                LiteraturAusgewähltePflanze = PflanzeSelected != null? PflanzeSelected.Literatur: null;
             }
         }
 
@@ -2262,6 +2283,7 @@ namespace MeisterGeister.ViewModel.ZooBot
         /// </summary>
         void btnGezielteSuche(object obj)
         {
+            LiteraturReferenz = null;
             bool doProbe = true;
             string ausgabe = "";
 
@@ -2342,7 +2364,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                         "Die Pflanze " + PflanzeSelected.Name + " hat keine bekannten verwertbaren Pflanzenteile. ";
 
                     ausgabe += "\r\n\r\nFür detailliertere Informationen siehe \"Zoo-Botanica Aventurica\" Seite " + referenz + ".";
-
+                    LiteraturReferenz = referenz;
                     if (!gefahr.Equals(""))
                     {
                         ausgabe += "\r\n\r\nHinweis: ";
@@ -2376,6 +2398,7 @@ namespace MeisterGeister.ViewModel.ZooBot
         /// </summary>
         void btnAllgemeineSuche(object obj)
         {
+            LiteraturReferenz = null;
             bool doProbe = true;
             string ausgabe = "";
 
@@ -2469,7 +2492,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                         else
                             ausgabe += "Die Pflanze " + (optionen[fund] as Pflanze).Name + " hat keine bekannten verwertbaren Pflanzenteile. ";
                         ausgabe += "\r\n\r\nFür detailliertere Informationen siehe \"Zoo-Botanica Aventurica\" Seite " + referenz + ".";
-
+                        LiteraturReferenz = referenz;
                         if (!gefahr.Equals(""))
                         {
                             ausgabe += "\r\n\r\nHinweis: ";
@@ -2869,6 +2892,7 @@ namespace MeisterGeister.ViewModel.ZooBot
 
         private void JagdAbwicklung(Talent JagdTalent, int Talentwert, double dauer)
         {
+            LiteraturReferenz = null;
             bool doProbe = true;
             string ausgabe = "";
 
@@ -2976,7 +3000,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                         ausgabe += "Das Tier " + Jagd_TierSelected + " hat keine bekannten verwertbaren Beuteteile. ";
 
                     ausgabe += "\r\n\r\nFür detailliertere Informationen siehe \"Zoo-Botanica Aventurica\" Seite " + referenz + ".";
-
+                    LiteraturReferenz = referenz;
                     if (!gefahr.Equals(""))
                     {
                         ausgabe += "\r\n\r\nHinweis: ";

@@ -962,7 +962,7 @@ namespace MeisterGeister.View.AudioPlayer
                         VM.FilteredMusikListItemListe.FindIndex(t =>
                             t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikItem.VM.aPlaylist.Audio_PlaylistGUID);
 
-                lbErwPlayerMusik.ScrollIntoView(e.AddedItems[0]);
+                //lbErwPlayerMusik.ScrollIntoView(e.AddedItems[0]);
             }
         }
 
@@ -976,7 +976,7 @@ namespace MeisterGeister.View.AudioPlayer
                         VM.FilteredErwPlayerMusikListItemListe.FindIndex(t =>
                             t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikItem.VM.aPlaylist.Audio_PlaylistGUID);
 
-                lbMusik.ScrollIntoView(e.AddedItems[0]);
+                //lbMusik.ScrollIntoView(e.AddedItems[0]);
             }
         }
 
@@ -1036,6 +1036,26 @@ namespace MeisterGeister.View.AudioPlayer
                 (VM.AktKlangPlaylist == null || VM.AktKlangPlaylist.Hintergrundmusik) ? Global.ContextAudio.PlaylistListe.FirstOrDefault(t => !t.Hintergrundmusik) : null;
             PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(VM.CurrentPlaylist);
             wesenAuswahlView.ShowDialog();
+        }
+
+        private void tcAudioPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tiMusik.IsSelected && lbMusik.SelectedItem != null)
+            {
+                int i = lbMusik.SelectedIndex;
+                if (i != -1) lbMusik.ScrollIntoView(lbMusik.Items[i]);
+            }
+            if (tiErwPlayer.IsSelected && lbErwPlayerMusik.SelectedItem != null)
+            {
+                int i = lbErwPlayerMusik.SelectedIndex;
+                if (i != -1) lbErwPlayerMusik.ScrollIntoView(lbErwPlayerMusik.Items[i]);
+            }
+        }
+
+        private void MusikTitelList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int i = lbMusikTitelList.SelectedIndex;
+            if (i != -1) lbMusikTitelList.ScrollIntoView(lbMusikTitelList.Items[i]);
         }
     }
 }

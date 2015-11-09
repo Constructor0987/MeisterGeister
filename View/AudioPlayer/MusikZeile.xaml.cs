@@ -49,29 +49,8 @@ namespace MeisterGeister.View.AudioPlayer
             VM = new VM.MusikZeileVM();
 
             _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
-
-            //VM._timerCheckLaufend.Tick += new EventHandler(_timerCheckLaufend_Tick);
-            //VM._timerCheckLaufend.Interval = new TimeSpan(0, 0, 0, 0, 500);
         }
 
-        //public void _timerCheckLaufend_Tick(object sender, EventArgs e)
-        //{
-        //    if (!(VM.aPlayerVM != null && VM.grpobj != null && VM.aPlayerVM._GrpObjecte.Contains(VM.grpobj)))
-        //        VM.Min1SongWirdGespielt = false;
-        //    else
-        //    {
-        //        for (int i = 0; i < VM.grpobj._listZeile.Count; i++)
-        //        {
-        //            if (VM.grpobj._listZeile[i]._mplayer != null && 
-        //                VM.grpobj._listZeile[i]._mplayer.HasAudio)
-        //            {
-        //                VM.Min1SongWirdGespielt = true;
-        //                return;
-        //            }
-        //        }
-        //        VM.Min1SongWirdGespielt = false;
-        //    }
-        //}
 
         #region //---- INSTANZMETHODEN ----
 
@@ -109,10 +88,14 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void OnTitelNameUpdated(object sender, DataTransferEventArgs e)
         {
-            //tblkTitel.Text = VM.TitelName;
             _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
         }
 
         #endregion
+
+        private void TitelListe_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            VM.Liste = VM.grpobj.ListTitelLaufend;
+        }
     }
 }

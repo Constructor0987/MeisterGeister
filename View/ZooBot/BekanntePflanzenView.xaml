@@ -82,11 +82,11 @@
             </Expander.Header>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                 <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
-                     <ListView Margin="5" Background="{x:Null}"                      
+                     <ListView Margin="5" Background="{x:Null}"
                               ItemsSource="{Binding BekannteHeldenPflanzen, UpdateSourceTrigger=PropertyChanged}" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Name="grdBtnEntfernen">
+                                <Grid Name="grdBtnEntfernen" Height="25">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30"/>
                                         <ColumnDefinition MinWidth="300"/>
@@ -97,7 +97,10 @@
                                             Visibility="{Binding Path=IsMouseOver, ElementName=grdBtnEntfernen, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Height="15" />
                                     </Button>
-                                    <CheckBox Content="{Binding Pflanze.Name}" IsChecked="{Binding Bekannt}" Grid.Column="1"  Margin="3,3,3,-3" VerticalAlignment="Center" ToolTip="Anhaken wenn bekannt" Height="22" />                                    
+                                    <StackPanel Orientation="Horizontal" Grid.Column="1"  Height="22" VerticalAlignment="Center" >
+                                        <CheckBox Content="{Binding Pflanze.Name}" IsChecked="{Binding Bekannt}" Margin="3,3,3,-3" ToolTip="Anhaken wenn bekannt"/>
+                                        <ViewGeneral:LiteraturControl LiteraturAnzeigeArt="NurIcon" Literaturangabe="{Binding Pflanze.Literatur}" />
+                                    </StackPanel>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

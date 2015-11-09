@@ -537,7 +537,7 @@
                                             </Border>
                                         </ScrollViewer>
                                         <Button Height="25" ToolTip="Audio Speed-Buttons verwalten" HorizontalAlignment="Right"
-                                                            Click="btnAudioSpeedButtonWesenZuweisen_Click" >
+                                                            Click="btnAudioSpeedButtonWesenZuweisen_Click" Background="{x:Null}">
                                             <Button.Content>
                                                 <Grid>
                                                     <Image Source="/Images/Icons/gegner.png" Margin="-1,2,4,-1" />

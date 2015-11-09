@@ -38,7 +38,7 @@
                         <Style TargetType="ColumnDefinition">
                             <Setter Property="Width" Value="100" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding GroßeAnsicht}" Value="True">
+                                <DataTrigger Binding="{Binding GroßeAnsicht,UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Width" Value="70" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -66,7 +66,7 @@
                         
             <StackPanel Orientation="Horizontal" Grid.RowSpan="2">
                 <ToggleButton Name="tbtnCheck" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Focusable="False" 
-                              ToolTip="Geräuscheplayliste abspielen/stoppen"
+                              ToolTip="Geräuscheplayliste abspielen/stoppen" 
                               Visibility="{Binding aPlaylist.Hintergrundmusik, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
@@ -87,7 +87,12 @@
 
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" 
                         Visibility="{Binding ShowLänge, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                <Image Width="16" HorizontalAlignment="Left" >
+                <Image Width="16" HorizontalAlignment="Left" PreviewMouseMove="TitelListe_PreviewMouseMove">
+                    <Image.ToolTip>
+                        <ToolTip>
+                            <TextBlock Text="{Binding Liste, UpdateSourceTrigger=PropertyChanged}" />
+                        </ToolTip>
+                    </Image.ToolTip>
                     <Image.Style>
                         <Style TargetType="Image">
                             <Style.Triggers>
@@ -104,7 +109,6 @@
                         </Style>
                     </Image.Style>
                 </Image>
-                           <!--Visibility="{Binding Min1SongWirdGespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" />-->
             
                 <TextBlock Name="tblkLänge" Grid.Column="1" Padding="4,2,4,0" HorizontalAlignment="Right" 
                            Text="{Binding aPlaylist.Länge, Converter={StaticResource DoubleToTimespanHHMMSSConverter1}, FallbackValue=--:--:--}" >     
@@ -120,8 +124,12 @@
                         <Binding Path="aPlaylist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter}" />
                     </MultiBinding>
                 </StackPanel.Visibility>
-                <Image Width="16" HorizontalAlignment="Left" Margin="0,2,0,0" >
-                           <!--Visibility="{Binding Min1SongWirdGespielt, Converter={StaticResource BooleanToVisibilityConverter1} }" >-->
+                <Image Width="16" HorizontalAlignment="Left" Margin="0,2,0,0" PreviewMouseMove="TitelListe_PreviewMouseMove">
+                    <Image.ToolTip>
+                        <ToolTip>                            
+                            <TextBlock Text="{Binding Liste, UpdateSourceTrigger=PropertyChanged}" />
+                        </ToolTip>
+                    </Image.ToolTip>
                     <Image.Style>
                         <Style TargetType="Image">
                             <Style.Triggers>
@@ -162,7 +170,7 @@
                 </Grid>
             </StackPanel>
 
-            <TextBlock Name="tbProzent" Margin="20,0,0,0" Foreground="#FF7C7B7B" />
+            <TextBlock Name="tbProzent" Margin="20,0,16,0" Foreground="#FF7C7B7B" />
             
             <!--ToolTip="Fading-Prozent der eingestellten Lautstärke" -->
             <Grid Name="grdForceVol" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,1,0,0" >

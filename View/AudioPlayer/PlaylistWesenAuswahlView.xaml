@@ -60,22 +60,27 @@
                         </Border>
                     </Expander>
 
-                    <Expander IsExpanded="True" Grid.Column="1" HorizontalAlignment="Right" Width="90" Margin="0,5,0,0" >
+                    <Expander IsExpanded="True" Grid.Column="1" HorizontalAlignment="Right" Width="110" Margin="0,5,0,0" >
                         <Expander.Header>
                             <TextBlock Text="Icon" Style="{DynamicResource TextTitel}" Margin="-10,0,0,0" />
                         </Expander.Header>
                         <Border Grid.Column="0" Style="{DynamicResource ControlContentBorder}"  >
-                            <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" 
-                                      SelectedItem="{Binding CurrentIcon, UpdateSourceTrigger=PropertyChanged}" >
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Image Height="25" Width="25" Source="{Binding Source}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" Width="60"
+                                          SelectedItem="{Binding CurrentIcon, UpdateSourceTrigger=PropertyChanged}" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Height="25" Width="25" Source="{Binding Source}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button Width="25" Height="25" ToolTip="Neues Icon aufnehmen"
+                                        Command="{Binding OnIconAdd}">
+                                    <Image Source="/Images/Icons/General/add.png" />
+                                </Button>
+                            </StackPanel>
                         </Border>
                     </Expander>
-
 
                     <Expander Grid.Row="1" IsExpanded="True" Margin="5,5,5,0">
                         <Expander.Header>
@@ -137,6 +142,8 @@
                             </StackPanel>
                         </Border>
                     </Expander>
+
+                    <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" Margin="0,0,-2,0" />
 
                     <Expander Grid.Row="1" Grid.Column="1" IsExpanded="True" Margin="5,5,5,0">
                         <Expander.Header>

@@ -499,6 +499,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                             Global.ContextAudio.ThemeListe.Remove(ATheme);
 
                         PlayerVM.EditorThemeListBoxItemListe = PlayerVM.lbiThemeListNeuErstellen();
+                        //PlayerVM.ErwPlayerThemeListe = PlayerVM.ThemeErwPlayerListeNeuErstellen();
                         PlayerVM.FilterThemeEditorPlaylistListe();                      
                         PlayerVM.FilterErwPlayerThemeListe();
                         if (PlayerVM.AktKlangTheme == null && PlayerVM.FilteredEditorThemeListBoxItemListe.Count > 0)

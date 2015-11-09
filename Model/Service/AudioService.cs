@@ -11,6 +11,11 @@ namespace MeisterGeister.Model.Service {
 
         #region //----- EIGENSCHAFT ----
 
+        public List<Model.Audio_WesenIcon> WesenIconListe
+        {
+            get { return Liste<Audio_WesenIcon>(); }
+        }
+
         public List<Model.Audio_Playlist> PlaylistListe
         {
             get { return Liste<Audio_Playlist>(); }

@@ -95,13 +95,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/wuerfelbecher.png", UriKind.Relative)) });
             iconlist.Add(new Image() { Source = new BitmapImage(new Uri("/DSA%20MeisterGeister;component/Images/Icons/zauberzeichen.png", UriKind.Relative)) });
 
+            foreach(Audio_WesenIcon aWesenIcon in Global.ContextAudio.WesenIconListe)
+            {
+                if (File.Exists(aWesenIcon.Pfad))
+                    iconlist.Add(new Image() { Source = new BitmapImage(new Uri(aWesenIcon.Pfad)) });
+            }
+
             return iconlist;
         }
 
         public void Init()
         {
             if (IconListe == null || IconListe.Count == 0)
+            {
                 IconListe = new ObservableCollection<Image>(GetIcons());
+            }
             if (CurrentIcon == null)
                 CurrentIcon = IconListe[0];
             if (CurrentIcon2 == null)
@@ -147,6 +155,28 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         #region Commands
         //Commands
+
+        private Base.CommandBase _onIconAdd = null;
+        public Base.CommandBase OnIconAdd
+        {
+            get
+            {
+                if (_onIconAdd == null)
+                    _onIconAdd = new Base.CommandBase(IconAdd, null);
+                return _onIconAdd;
+            }
+        }
+        private void IconAdd(object obj)
+        {
+            string datei = ViewHelper.ChooseFile("Neues Icon zur Datenbank hinzufügen","",false,false,false,new string[3] { "jpg", "png", "bmp" });
+            if (datei == null) return;
+
+            Audio_WesenIcon aWesenIcon = new Audio_WesenIcon();
+            aWesenIcon.Pfad = datei;
+            Global.ContextAudio.Insert<Audio_WesenIcon>(aWesenIcon);
+
+            IconListe = new ObservableCollection<Image>(GetIcons());
+        }
 
         private Base.CommandBase _onCopyWesenPlaylist2 = null;
         public Base.CommandBase OnCopyWesenPlaylist2
