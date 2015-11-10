@@ -560,3 +560,10 @@ SELECT KostenGrund, KostenFaktor, VorNachteilGUID FROM VorNachteil;
 --#DO;
 UPDATE [Held_VorNachteil] SET KostenGrund={0}, KostenFaktor={1} WHERE VorNachteilGUID='{2}' AND KostenGrund = 0 AND KostenFaktor = 0;
 --#END;
+
+--Audio Wesen Playlist Icon - Pfade
+CREATE TABLE [Audio_WesenIcon] (
+	[Audio_WesenIconGUID] uniqueidentifier NOT NULL DEFAULT newid(), 
+	[Pfad] nvarchar(254) NOT NULL,
+	CONSTRAINT [pk_Audio_WesenIcon] PRIMARY KEY ([Audio_WesenIconGUID])
+);
