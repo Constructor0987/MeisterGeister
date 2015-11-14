@@ -8226,7 +8226,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         
         public void GetTotalLength(Audio_Playlist aPlaylist, bool busyWindow)
         {
-            BerechneSpieldauer = false;
             if (!AudioSpieldauerBerechnen || aPlaylist == null)
                 return;
             if (aPlaylist.Länge == 0)
@@ -8236,14 +8235,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     if (aPlaylist.Audio_Playlist_Titel.ElementAt<Audio_Playlist_Titel>(i).Audio_Titel.Länge.HasValue)
                         gesLänge += aPlaylist.Audio_Playlist_Titel.ElementAt(i).Audio_Titel.Länge.Value;
             }
+            if (BerechneSpieldauer)     //BackgroundWorker läuft noch - nur einen zulassen
+                return;
             BerechneSpieldauer = true;
 
             if (busyWindow)
                 Global.SetIsBusy(true, string.Format("Länge der Titel wird überarbeitet..."));
-
-            //if (!workerGetLength.IsBusy)
-            //    workerGetLength.RunWorkerAsync(aPlaylist);
-
+            
             BackgroundWorker workerGetLength = new BackgroundWorker();
             workerGetLength.WorkerReportsProgress = true;
             workerGetLength.WorkerSupportsCancellation = true;
@@ -8329,17 +8327,18 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         {
             try
             {
-                BerechneSpieldauer = false;
 
                 if (args.Error == null &&
                     ((Audio_Playlist)args.Result).Länge != 0)
                     Global.ContextAudio.Update<Audio_Playlist>(((Audio_Playlist)args.Result));
 
+                BerechneSpieldauer = false;             // Berechnung der Gesamtlänge wieder freigeben
                 Global.SetIsBusy(false);
                 (sender as BackgroundWorker).Dispose();
             }
             catch (Exception)
             {
+                BerechneSpieldauer = false;             // Berechnung der Gesamtlänge wieder freigeben
                 Global.SetIsBusy(false);
                 (sender as BackgroundWorker).Dispose();
             }
