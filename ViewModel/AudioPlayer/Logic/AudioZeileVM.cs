@@ -92,7 +92,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
 
         #region //---- EIGENSCHAFTEN ----
-        
+                
         [DependentProperty("PlayerVM"), DependentProperty("EditorGroßeAnsicht")]
         public bool EditorGroßeAnsicht
         {

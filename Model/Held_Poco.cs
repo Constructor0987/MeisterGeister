@@ -649,6 +649,18 @@ namespace MeisterGeister.Model
         private string _regelsystem;
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual string UpdateHinweis
+        {
+            get { return _updateHinweis; }
+            set
+    		{ 
+    			Set(ref _updateHinweis, value);
+    		}
+    
+        }
+        private string _updateHinweis;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual Nullable<int> LE_ModGen
         {
             get { return _lE_ModGen; }
@@ -791,18 +803,6 @@ namespace MeisterGeister.Model
     
         }
         private string _leiteigenschaftKlerikal;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string UpdateHinweis
-        {
-            get { return _updateHinweis; }
-            set
-    		{ 
-    			Set(ref _updateHinweis, value);
-    		}
-    
-        }
-        private string _updateHinweis;
 
         #endregion
 

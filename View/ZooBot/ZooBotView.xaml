@@ -104,7 +104,7 @@
                             </Grid>
                         </Border>
                     </Expander>
-                    <Expander Grid.Row="1" IsExpanded="True">
+                    <Expander Grid.Row="1" IsExpanded="True" >
                         <Expander.Header>
                             <TextBlock Text="Such-Eigenschaften" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
@@ -152,7 +152,8 @@
                                 <!-- ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
                                 <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
-                                          ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" DisplayMemberPath="Name" />
+                                          ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" DisplayMemberPath="Name" PreviewMouseDown="ComboBox_PreviewMouseDown"
+                                          />
                                 <!--ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
 

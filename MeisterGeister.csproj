@@ -900,6 +900,9 @@
       <DependentUpon>ImageDuplicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\ImagePathConverter.cs" />
+    <Compile Include="View\General\IntBoxVertical.xaml.cs">
+      <DependentUpon>IntBoxVertical.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\Beschwörung\DämonenListViewConverter.cs" />
     <Compile Include="View\General\LiteraturControl.xaml.cs">
@@ -1417,6 +1420,10 @@
     <Page Include="View\General\ImageDuplicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\IntBoxVertical.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\General\LiteraturControl.xaml">
       <SubType>Designer</SubType>

@@ -21,6 +21,7 @@
         <vm:MultiBooleanODERToVisibilityConverter x:Key="MultiBooleanODERToVisibilityConverter1" />
         <vm:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
         <vm:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
+        <vm:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>        
         <vm:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>
         <vm:BooleanInverseToVisibilityHiddenConverter x:Key="BooleanInverseToVisibilityHiddenConverter1"/>
         <vm:DoubleToTimespanHHMMSSConverter x:Key="DoubleToTimespanHHMMSSConverter1" />
@@ -99,6 +100,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="15" />
                 <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="350"/>
                 <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="*" />
@@ -106,14 +108,18 @@
 
             <Label Grid.ColumnSpan="3" Grid.RowSpan="2" Cursor="Hand" />
             <Label Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" />
-            <Button Padding="0" Grid.RowSpan="2"  Height="25" 
+            <Button Grid.Column="0" Padding="0" Grid.RowSpan="2"  Height="25"
                 Command="{Binding OnAudioZeileRemove}"
                 Visibility="{Binding ElementName=_audioZeile, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" AllowDrop="False" />
             </Button>
-            <StackPanel Grid.RowSpan="2" Grid.Column="1" ToolTip="Reihenfolge ändern" >
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel" >
+            <Grid Grid.Column="1" Grid.RowSpan="2" ToolTip="Reihenfolge ändern" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.Style>
+                    <Style TargetType="Grid" >
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
                             <DataTrigger Value="True" >
@@ -127,18 +133,51 @@
                             </DataTrigger>                            
                         </Style.Triggers>                        
                     </Style>
-                </StackPanel.Style>
-                <Button Padding="0" Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveUp, UpdateSourceTrigger=PropertyChanged}"
+                </Grid.Style>                
+                <Button Grid.Row="0" Padding="0" Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveUp, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" />
                 </Button>
-                <Button Padding="0" Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveDown, UpdateSourceTrigger=PropertyChanged}"
+                <Button Grid.Row="1" Padding="0" Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveDown, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" />
                 </Button>
-            </StackPanel>
+            </Grid>
 
-            <Grid Name="grdDnD" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Stretch" Height="20" MinWidth="200" >
+            <Grid Grid.RowSpan="2" Grid.Column="2" Margin="0,-4"
+                  Visibility="{Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Padding="2,2,0,2" VerticalAlignment="Center" 
+                        Text="{Binding aPlayTitel.Wiederholungen, FallbackValue=1, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Padding="0,2" VerticalAlignment="Center"  Text="x" />
+                
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel" >
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Value="True" >
+                                    <DataTrigger.Binding>
+                                        <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" >
+                                            <Binding ElementName="_audioZeile" Path="IsMouseOver" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                            <Binding Path="aPlayTitel.Wiederholungen" FallbackValue="1" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter="2" />
+                                        </MultiBinding>
+                                    </DataTrigger.Binding>
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                </StackPanel>
+                    
+                <ViewGeneral:IntBoxVertical NoBackground="True" Padding="2" 
+                    MinValue="1" MaxValue="99" ShowButtons="True" Focusable="False"                    
+                    ToolTip="Anzahl der Wiederholungen des Titels"
+                    Value="{Binding aPlayTitel.Wiederholungen, FallbackValue=1}" 
+                    Visibility="{Binding ElementName=_audioZeile, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                </ViewGeneral:IntBoxVertical>
+            </Grid>
+            
+            <Grid Name="grdDnD" Grid.Column="3" Grid.RowSpan="2" VerticalAlignment="Stretch" Height="20" MinWidth="200" >
                 <ProgressBar Name="pbarTitel" Height="18" Margin="15,1,0,1"  ToolTip="Rechte Maustaste für mehr Einstellungen" 
                                 Value="{Binding Progress, UpdateSourceTrigger=PropertyChanged}"
                                 Minimum="{Binding TitelMinimum}"
@@ -177,7 +216,7 @@
             </Grid>
 
             <!-- Länge und 5-Sterne 2 Zeilig -->
-            <StackPanel Grid.Column="3" Grid.RowSpan="2" >
+            <StackPanel Grid.Column="4" Grid.RowSpan="2" >
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -222,7 +261,7 @@
             </StackPanel>   
             
             <!-- Geräusche-Spalten 2 Zeilig -->
-            <StackPanel Grid.Column="4" Grid.RowSpan="2" VerticalAlignment="Bottom" >
+            <StackPanel Grid.Column="5" Grid.RowSpan="2" VerticalAlignment="Bottom" >
                         <!--Visibility="{Binding Geräusch2Zeilig, Converter={StaticResource BooleanToVisibilityConverter1}}">-->
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
@@ -358,7 +397,7 @@
 
             <!-- Nicht aktive Zeile -->
             <!-- Länge und 5-Sterne 1 Zeilig -->
-            <StackPanel Grid.Column="3" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <StackPanel Grid.Column="4" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -398,7 +437,7 @@
             </StackPanel>
 
             <!-- Geräusche-Spalten 1 Zeilig -->
-            <StackPanel Grid.Column="4" Grid.RowSpan="2" VerticalAlignment="Center">
+            <StackPanel Grid.Column="5" Grid.RowSpan="2" VerticalAlignment="Center">
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Setter Property="Visibility" Value="Collapsed" />

@@ -217,7 +217,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200" />
                         <ColumnDefinition />
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="110"/>
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
@@ -419,19 +419,26 @@
                         </Border>
                     </Expander>
 
-                    <Expander IsExpanded="True" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="90" Margin="0,5,0,0" Height="72" >
+                    <Expander IsExpanded="True" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="110" Margin="0,5,0,0" Height="72" >
                         <Expander.Header>
                             <TextBlock Text="Icon" Style="{DynamicResource TextTitel}" Margin="-10,0,0,0" />
                         </Expander.Header>
                         <Border Grid.Column="0" Style="{DynamicResource ControlContentBorder}"  >
-                            <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" 
-                                      SelectedItem="{Binding CurrentIcon2, UpdateSourceTrigger=PropertyChanged}" >
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" 
+                                      SelectedItem="{Binding CurrentIcon2, UpdateSourceTrigger=PropertyChanged}" Width="60" >
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <Image Height="25" Width="25" Source="{Binding Source}" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
+
+                            <Button Width="25" Height="25" ToolTip="Neues Icon aufnehmen"
+                                        Command="{Binding OnIconAdd}">
+                                <Image Source="/Images/Icons/General/add.png" />
+                            </Button>
+                            </StackPanel>
                         </Border>
                     </Expander>
 

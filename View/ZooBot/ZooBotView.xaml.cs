@@ -90,5 +90,16 @@ namespace MeisterGeister.View.ZooBot
             }
 
         }
+
+        private void Expander_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (VM.HeldenPos != new Point(Global.HeldenLon, Global.HeldenLat))
+                VM.GebieteVonPos(null);
+        }
     }
 }

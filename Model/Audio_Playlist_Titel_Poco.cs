@@ -310,6 +310,18 @@ namespace MeisterGeister.Model
     
         }
         private int _reihenfolge;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<short> Wiederholungen
+        {
+            get { return _wiederholungen; }
+            set
+    		{ 
+    			Set(ref _wiederholungen, value);
+    		}
+    
+        }
+        private Nullable<short> _wiederholungen;
 
         #endregion
 

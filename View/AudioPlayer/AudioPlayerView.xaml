@@ -60,7 +60,7 @@
                 </Grid>
             </Border>
         </ControlTemplate>
-        
+
         <ControlTemplate x:Key="simpleSliderMax" TargetType="{x:Type Slider}">
             <Border SnapsToDevicePixels="true" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                 <Grid>
@@ -982,18 +982,18 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1" />
                                             <ColumnDefinition Width="17" />
-                                            <ColumnDefinition Width="25"/>
-                                            <ColumnDefinition Width="350"/>
+                                            <ColumnDefinition Width="45"/>
+                                            <ColumnDefinition Width="330"/>
                                             <ColumnDefinition Width="55" />
                                             <ColumnDefinition Width="23" />
                                             <ColumnDefinition Width="92" />
                                             <ColumnDefinition Width="56" />
                                             <ColumnDefinition Width="80" />
                                             <ColumnDefinition Width="80" />
-                                            <ColumnDefinition Width="110*" />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Name="brdTopKlangKategorie1" Height="25" Margin="84,4,0,0" Width="195" Grid.Column="3" CornerRadius="5" HorizontalAlignment="Left" ToolTip="Kategorie" VerticalAlignment="Top">
+                                        <Border Name="brdTopKlangKategorie1" Height="25" Margin="54,4,0,0" Width="195" Grid.Column="3" CornerRadius="5" HorizontalAlignment="Left" ToolTip="Kategorie" VerticalAlignment="Top">
                                             <Border.Background>
                                                 <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
                                                     <GradientStop Color="Beige" Offset="0" />
@@ -1005,7 +1005,7 @@
                                                 vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                                         </Border>
 
-                                        <ToggleButton Height="24" Name="btnEditShuffle" Grid.Column="6" Margin="-320,2,0,0" Width="24" ClickMode="Press" IsChecked="{Binding AktKlangPlaylist.Shuffle}" Background="{x:Null}" 
+                                        <ToggleButton Name="btnEditShuffle" Grid.Column="3" Margin="0,4,0,2" ClickMode="Press" HorizontalAlignment="Right" IsChecked="{Binding AktKlangPlaylist.Shuffle}" Background="{x:Null}" 
                                                       ToolTip="Shuffle-Mode" Focusable="False" IsTabStop="False" Visibility="{Binding Path=IsChecked, ElementName=rbIstTopMusikPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                             <Image>
                                                 <Image.Style>
@@ -1023,9 +1023,10 @@
                                             </Image>
                                         </ToggleButton>
 
-                                        <ToggleButton Name="btnEditRepeat" Height="24" Grid.Column="6" Margin="-260,2,0,0" Width="30" ClickMode="Press" IsChecked="{Binding AktKlangPlaylist.Repeat}" 
-                                                      Focusable="False" IsTabStop="False" Visibility="{Binding Path=IsChecked, ElementName=rbIstTopMusikPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" 
-                                                      IsThreeState="True" Background="{x:Null}" >
+                                        <ToggleButton Name="btnEditRepeat" Grid.Column="4" Margin="3,4,0,2" ClickMode="Press" HorizontalAlignment="Left" IsChecked="{Binding AktKlangPlaylist.Repeat}" 
+                                                      Focusable="False" IsTabStop="False" Width="30"
+                                                      IsThreeState="True" Background="{x:Null}" Grid.ColumnSpan="2" 
+                                                      Visibility="{Binding Path=IsChecked, ElementName=rbIstTopMusikPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                             <ToggleButton.Style >
                                                 <Style TargetType="ToggleButton">
                                                     <Style.Triggers>
@@ -1041,7 +1042,6 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </ToggleButton.Style>
-
                                             <Image>
                                                 <Image.Style>
                                                     <Style TargetType="Image">
@@ -1068,7 +1068,8 @@
                                                     vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                                         </GroupBox>
 
-                                        <CheckBox Name="rbEditorFading" IsChecked="{Binding AktKlangPlaylist.Fading}" Grid.Column="3" Grid.Row="2" Margin="0,0,5,0" HorizontalAlignment="Right" Content="Fading" ToolTip="Fading der Playliste" VerticalAlignment="Center" Visibility="{Binding Path=IsChecked, ElementName=rbIstTopKlangPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                        <CheckBox Name="rbEditorFading" IsChecked="{Binding AktKlangPlaylist.Fading}" Grid.Column="3" Grid.Row="2" Margin="0,0,5,0" HorizontalAlignment="Right" Content="Fading" ToolTip="Fading der Playliste" VerticalAlignment="Center" 
+                                                  Visibility="{Binding Path=IsChecked, ElementName=rbIstTopKlangPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" />
 
                                         <GroupBox Visibility="Collapsed" Name="gboxTopMusikSort1" Header="Musik sortieren" Grid.Column="3" Grid.RowSpan="2" Height="50" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -1137,7 +1138,7 @@
                                             </StackPanel>
                                         </GroupBox>
 
-                                        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Style="{DynamicResource ControlContentBorder}" Margin="85,2,0,0" Width="160" Height="26" Name="brdTopFilter1" ToolTip="Zeilen Filter" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Style="{DynamicResource ControlContentBorder}" Margin="55,2,0,0" Width="160" Height="26" Name="brdTopFilter1" ToolTip="Zeilen Filter" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="26" />
@@ -1156,14 +1157,14 @@
                                             </Grid>
                                         </Border>
 
-                                        <ToggleButton Name="tbtnKlangPause1" Tag="{Binding objGruppe}" Grid.Column="3" Margin="252,5,0,0" Grid.Row="1" Background="{x:Null}"
+                                        <ToggleButton Name="tbtnKlangPause1" Tag="{Binding objGruppe}" Grid.Column="3" Margin="222,2,0,0" Grid.Row="1" Background="{x:Null}"
                                                       Width="30" Height="30" HorizontalAlignment="Left" Grid.RowSpan="2" ToolTip="Playliste abspielen/pausieren" VerticalAlignment="Top" 
                                                       Focusable="False"
                                                       Checked="tbtnKlangPauseX_Checked" 
                                                       Unchecked="tbtnKlangPauseX_Unchecked" >
                                             <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
                                         </ToggleButton>
-                                        <ToggleButton Grid.Column="2" Grid.Row="2" Height="16" Width="17" Focusable="False" VerticalAlignment="Bottom" Margin="1"
+                                        <ToggleButton Grid.Column="2" Grid.Row="2" Height="16" Width="17" Focusable="False" VerticalAlignment="Bottom" Margin="5,0,5,1"
                                                 IsChecked="{Binding TitellistAZ}" Background="{x:Null}" >
                                             <Image Margin="-2,-2,-2,-3" >
                                                 <Image.Style>
@@ -1563,10 +1564,10 @@
                             <ListBox Padding="4" Name="lbMusik"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" 
                                 ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" SelectionMode="Single"
                                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
-                                ItemsSource="{Binding FilteredMusikListItemListe, UpdateSourceTrigger=PropertyChanged}" 
-                                SelectedItem="{Binding SelectedMusikItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                ItemsSource="{Binding FilteredMusikPlaylistItemListe, UpdateSourceTrigger=PropertyChanged}" 
+                                SelectedItem="{Binding SelectedMusikPlaylistItem, UpdateSourceTrigger=PropertyChanged}"
                                 SelectionChanged="lbMusik_SelectionChanged" >
-                            </ListBox> 
+                            </ListBox>
                         </Border>
 
                         <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" />
@@ -1608,6 +1609,9 @@
                                     </ToggleButton.Style>
                                 </ToggleButton>
 
+                                <Label Grid.Column="1" Content="{Binding wiederholungenLeft, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}"  ContentStringFormat="Wiederholungen: {0}" Padding="3"
+                                       Visibility="{Binding wiederholungenLeft, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=2 }" />
+                                
                                 <Image Source="/Images/Icons/General/filter.png" Stretch="Fill" Grid.Column="2" />
                                 <TextBox Margin="2,1" Name="tbBGTitelFilter" Grid.Column="3" 
                                         Text="{Binding Path=SuchTextMusikTitel, UpdateSourceTrigger=PropertyChanged}"
@@ -1642,7 +1646,7 @@
 
                         <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="5" Height="240" Margin="0,46,2,72" />
                         <Border Grid.Column="2" Height="100" Width="200" Margin="10" />
-                        <Border Grid.Column="2" Grid.Row="1" Height="270" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" Margin="6,50,0,0" HorizontalAlignment="Left">                            
+                        <Border Grid.Column="2" Grid.Row="1" Height="270" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" Margin="6,50,0,0" HorizontalAlignment="Left">
                             <Grid Visibility="{Binding BGPlayerAktPlaylistTitel, UpdateSourceTrigger=PropertyChanged, TargetNullValue=Collapsed}" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60*" MinWidth="60"/>
@@ -1663,15 +1667,30 @@
                                     <RowDefinition Height="50" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <Border Grid.ColumnSpan="4" Grid.Row="1" Style="{DynamicResource ControlContentBorder}" Margin="1" >
-                                    <Label Content="{Binding BGPlayerAktPlaylist.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Padding="0" HorizontalAlignment="Center" />
+                                
+                                <Border Grid.ColumnSpan="3" Grid.Row="1" Style="{DynamicResource ControlContentBorder}" Margin="1" >
+                                    <Label FontSize="14" Padding="0" HorizontalAlignment="Center" 
+                                           Content="{Binding BGPlayerAktPlaylist.Name, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Border>
+                                <Label Grid.Column="4" Grid.Row="1" FontSize="10" Padding="0" HorizontalAlignment="Center"
+                                       Visibility="{Binding BGPlayerAktPlaylistTitel.Wiederholungen, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=2}" >                                    
+                                    <Label.Content>
+                                        <TextBlock TextWrapping="Wrap">
+                                            <TextBlock.Text>                                                
+                                                <MultiBinding StringFormat="Wdh. ({0}x/{1}x)">
+                                                    <Binding Path="wiederholungenLeft" />
+                                                    <Binding Path="BGPlayerAktPlaylistTitel.Wiederholungen" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>                                        
+                                    </Label.Content>                                    
+                                </Label>
                                 <Label Content="{Binding Path=Info_BGTitel}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" FontWeight="Bold" />
                                 <Label Content="{Binding Path=Info_BGArtist}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" />
                                 <Label Content="{Binding Path=Info_BGAlbum}" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" />
                                 <Label Content="{Binding Path=Info_BGJahr}" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" />
                                 <Label Content="{Binding Path=Info_BGGenre}" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" />
-                                
+
                                 <Label Grid.Row="2" Content="Titel:" Margin="3,0,0,0" Padding="5,5,0,0" />
                                 <Label Grid.Row="3" Content="Interpret:" Margin="3,0,0,0" Grid.ColumnSpan="2" />
                                 <Label Grid.Row="4" Content="Album:" Margin="3,0,0,0" Grid.ColumnSpan="2" />
@@ -1926,7 +1945,7 @@
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                            
+
                                         </Button.Style>
                                         <Grid>
                                             <Image Source="/Images/Icons/General/copy.png" />
@@ -2271,7 +2290,7 @@
                                     MouseWheel="slVolume_MouseWheel" 
                                     Value="{Binding FadingGeräuscheVolProzent }" >
                                     <Slider.ToolTip>
-                                        <TextBlock Text="{Binding FadingGeräuscheVolProzent, StringFormat={}{0}% der Playlisten-Lautstärke}" />
+                                        <TextBlock Text="{Binding FadingGeräuscheVolProzent, StringFormat={}{0:N0}% der Playlisten-Lautstärke}" />
                                     </Slider.ToolTip>
 
                                     <Slider.Background>

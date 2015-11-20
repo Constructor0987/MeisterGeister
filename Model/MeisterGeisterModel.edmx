@@ -608,6 +608,7 @@
     <Property Name="Rating" Type="int" Nullable="false" />
     <Property Name="Länge" Type="float" Nullable="false" />
     <Property Name="Reihenfolge" Type="int" Nullable="false" />
+    <Property Name="Wiederholungen" Type="smallint" />
   </EntityType>
   <EntityType Name="Audio_Theme">
     <Key>
@@ -3709,6 +3710,7 @@
     <Property Name="Rating" Type="Int32" Nullable="false" />
     <Property Name="Länge" Type="Double" Nullable="false" />
     <Property Name="Reihenfolge" Type="Int32" Nullable="false" />
+    <Property Name="Wiederholungen" Type="Int16" />
     <NavigationProperty Name="Audio_Playlist" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist_Titel" ToRole="Audio_Playlist" />
     <NavigationProperty Name="Audio_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" FromRole="Audio_Playlist_Titel" ToRole="Audio_Titel" />
   </EntityType>
@@ -6251,6 +6253,7 @@
           <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="Länge" ColumnName="Länge" />
           <ScalarProperty Name="Reihenfolge" ColumnName="Reihenfolge" />
+          <ScalarProperty Name="Wiederholungen" ColumnName="Wiederholungen" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7429,7 +7432,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="26919300bb55494d9f14f15c684eb59a" Name="Diagram1">
+      <Diagram DiagramId="66fb7b2f050d48949698e20d678d4009" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.25" IsExpanded="true" />
@@ -7437,8 +7440,8 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="13.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="16" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="44.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="44.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="3" PointY="51" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="44.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="3" PointY="51.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="60.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_WesenIcon" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="4.875" IsExpanded="true" />

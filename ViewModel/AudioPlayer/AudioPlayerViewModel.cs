@@ -292,7 +292,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int intValue = (int)value;
+            int intValue = ((value == null)? 0: System.Convert.ToInt32(value));
             int compareToValue = System.Convert.ToInt32(parameter);
 
             return intValue >= compareToValue;
@@ -388,7 +388,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int intValue = (int)value;
+            int intValue = System.Convert.ToInt32(value);
             int compareToValue = System.Convert.ToInt32(parameter);
 
             return intValue >= compareToValue? Visibility.Visible: Visibility.Hidden;
@@ -819,6 +819,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             public List<string> allFilesWMA = new List<string>();
         }
 
+        private Int16 _wiederholungenLeft;
+            public Int16 wiederholungenLeft
+            {
+                get { return _wiederholungenLeft; }
+                set { Set(ref _wiederholungenLeft , value); }
+            }
+
         public class MusikView
         {
             private bool _isMuted;
@@ -1186,7 +1193,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
         
-        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikItem"), DependentProperty("BGPlayerAktPlaylistTitelTeilAbspielen")]
+        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikPlaylistItem"), DependentProperty("BGPlayerAktPlaylistTitelTeilAbspielen")]
         public double BGPlayerAktPlaylistTitelLänge
         {
             get
@@ -1208,7 +1215,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set { OnChanged(); }
         }
 
-        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikItem"), DependentProperty("BGPlayerAktPlaylistTitelTeilAbspielen")]
+        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikPlaylistItem"), DependentProperty("BGPlayerAktPlaylistTitelTeilAbspielen")]
         public double BGPlayerAktPlaylistTitelTeilStart
         {
             get { return (_bgPlayerAktPlaylistTitel != null && _bgPlayerAktPlaylistTitel.TeilStart != null ? 
@@ -1220,7 +1227,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikItem")]
+        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikPlaylistItem")]
         public bool BGPlayerAktPlaylistTitelTeilAbspielen
         {
             get { return _bgPlayerAktPlaylistTitel != null ?
@@ -1234,7 +1241,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikItem"), DependentProperty("BGPlayerAktPlaylistTitelTeilAbspielen")]
+        [DependentProperty("SelectedMusikTitelItem"), DependentProperty("SelectedMusikPlaylistItem"), DependentProperty("BGPlayerAktPlaylistTitelTeilAbspielen")]
         public double BGPlayerAktPlaylistTitelTeilEnde
         {
             get { return (_bgPlayerAktPlaylistTitel != null && _bgPlayerAktPlaylistTitel.TeilEnde != null ? 
@@ -1253,8 +1260,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _bgPlayerAktPlaylistTitel; }
             set
             {
+                if (_bgPlayerAktPlaylistTitel != value && value != null)
+                {
+                    if (value.Wiederholungen != null) wiederholungenLeft = value.Wiederholungen.Value;
+                    else
+                        wiederholungenLeft = 1;
+                }
+                else
+                    if (value == null && BGPlayer !=null) wiederholungenLeft = 0;
+
                 _bgPlayerAktPlaylistTitel = value;
                 BGPlayer.AktPlaylistTitel = value;
+
+                
                 OnChanged();
             }
         }
@@ -1459,9 +1477,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         //        if (value != null && _lbiMusikSelect != null &&
         //            _lbiMusikSelect.VM.aPlaylist.Audio_PlaylistGUID == value.VM.aPlaylist.Audio_PlaylistGUID)
         //            return;
-        //        SelectedMusikItem = value;
-        //        OnChanged("SelectedMusikItem");          
-        //        OnChanged("FilteredMusikListItemListe");
+        //        SelectedMusikPlaylistItem = value;
+        //        OnChanged("SelectedMusikPlaylistItem");          
+        //        OnChanged("FilteredMusikPlaylistItemListe");
         //        OnChanged("FilteredErwPlayerMusikListItemListe");
         //        _lbiMusikSelect = value;
 
@@ -1470,16 +1488,16 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         //    }
         //}
 
-        private MusikZeile _selectedMusikItem;
-        public MusikZeile SelectedMusikItem
+        private MusikZeile _SelectedMusikPlaylistItem;
+        public MusikZeile SelectedMusikPlaylistItem
         {
-            get { return _selectedMusikItem; }
+            get { return _SelectedMusikPlaylistItem; }
             set
             {
-                if (value == null || value == _selectedMusikItem) 
+                if (value == null || value == _SelectedMusikPlaylistItem) 
                     return;     
 
-                _selectedMusikItem = value;
+                _SelectedMusikPlaylistItem = value;
 
                 SuchTextMusikTitel = "";
                 BGPlayer.AktPlaylist = (value == null || value.VM.aPlaylist == null) ? null : value.VM.aPlaylist;
@@ -1585,14 +1603,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     BGPlayer.BG[BGPlayeraktiv].aPlaylist = BGPlayer.AktPlaylist;
                     BGPlayerAktPlaylistTitel = BGPlayer.AktPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID);
 
+                    //if (BGPlayerAktPlaylistTitel == null)
+                    //{
+                    //    if (BGPlayerAktPlaylistTitel.Wiederholungen == null)
+                    //        BGPlayer.wiederholungenLeft = 1;
+                    //    else
+                    //        BGPlayer.wiederholungenLeft = BGPlayerAktPlaylistTitel.Wiederholungen.Value;
+                    //}
+                   
                     BGPosition = 0;
                     if (BGPlayerAktPlaylistTitel == null)
                         //Falls nicht gefunden, neuen Titel abspielen
                         SpieleNeuenMusikTitel(Guid.Empty);
                     else
                         SpieleNeuenMusikTitel((Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID);
-                    
-                    //BGPlayer.BG[BGPlayeraktiv].aPlaylist = BGPlayer.AktPlaylist;
+
                     if (BGPlayer.MusikNOK.Contains((Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID))
                     {
                         value.Background = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0));         // Brushes.Red;
@@ -1621,17 +1646,22 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 if (BGPlayer == null || BGPlayer.AktPlaylist == null)
                     return null;
                 Guid old_GUID = BGPlayer.AktPlaylistTitel != null ? BGPlayer.AktPlaylistTitel.Audio_TitelGUID : Guid.Empty;
-                //if (old_GUID == Guid.Empty && BGPlayer.BG[BGPlayeraktiv].FadingOutStarted && BGPlayer.BG[BGPlayeraktiv].mPlayer.Source != null)
-                //    old_GUID = BGPlayer.BG[BGPlayeraktiv].aPlayTitel.Audio_TitelGUID;
-
+                
                 if (BGPlayer.AktPlaylist.Repeat == null &&
                     BGPlayer.AktPlaylistTitel != null)
                 {
-                    BGPlayerAktPlaylistTitel = null;
+                //    BGPlayerAktPlaylistTitel = null;
                     return FilteredHintergrundMusikListe.FirstOrDefault(t => (Guid)((Audio_Playlist_Titel)t.Tag).Audio_TitelGUID == old_GUID);
                 }
 
-                BGPlayerAktPlaylistTitel = null;
+                if (wiederholungenLeft > 1)
+                {
+                    wiederholungenLeft--;
+     //               BGPlayerAktPlaylistTitel = null;
+                    return FilteredHintergrundMusikListe.FirstOrDefault(t => (Guid)((Audio_Playlist_Titel)t.Tag).Audio_TitelGUID == old_GUID);
+                }
+
+       //         BGPlayerAktPlaylistTitel = null;
                 if (BGPlayer.NochZuSpielen.Count == 0 && BGPlayer.AktPlaylist != null && BGPlayer.AktPlaylist.Repeat != null &&
                     BGPlayer.AktPlaylist.Repeat.Value || BGPlayer.BG[BGPlayeraktiv].isPaused)
                     RenewMusikNochZuSpielen();
@@ -1686,12 +1716,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 return;
             if (MusikNacheinander && (BGPlayer.Gespielt.Count != 0 || BGPlayer.AktPlaylist.Audio_Playlist_Titel.Count == 0))
             {
-                int aktPos = FilteredMusikListItemListe.FindIndex(t => t.VM.aPlaylist == BGPlayer.AktPlaylist);
-                if (aktPos == FilteredMusikListItemListe.Count - 1)
-                    SelectedMusikItem = FilteredMusikListItemListe.First();
+                int aktPos = FilteredMusikPlaylistItemListe.FindIndex(t => t.VM.aPlaylist == BGPlayer.AktPlaylist);
+                if (aktPos == FilteredMusikPlaylistItemListe.Count - 1)
+                    SelectedMusikPlaylistItem = FilteredMusikPlaylistItemListe.First();
                 else
-                    if (FilteredMusikListItemListe.Count >= aktPos)
-                        SelectedMusikItem = FilteredMusikListItemListe.ElementAt(aktPos + 1);
+                    if (FilteredMusikPlaylistItemListe.Count >= aktPos)
+                        SelectedMusikPlaylistItem = FilteredMusikPlaylistItemListe.ElementAt(aktPos + 1);
                 return;
             }
             foreach (Audio_Playlist_Titel aPlaylistTitel in BGPlayer.AktPlaylist.Audio_Playlist_Titel)
@@ -1810,13 +1840,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-        private List<MusikZeile> _filteredMusikListItemListe;
-        public List<MusikZeile> FilteredMusikListItemListe
+        private List<MusikZeile> _FilteredMusikPlaylistItemListe;
+        public List<MusikZeile> FilteredMusikPlaylistItemListe
         {
-            get { return _filteredMusikListItemListe; }
+            get { return _FilteredMusikPlaylistItemListe; }
             set
             {
-                _filteredMusikListItemListe = value;
+                _FilteredMusikPlaylistItemListe = value;
                 OnChanged();
             }
         }
@@ -4319,7 +4349,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                 {
                                     if ((Guid)mZeile.Tag == aPlaylist.Audio_PlaylistGUID)
                                     {
-                                        SelectedMusikItem = mZeile;
+                                        SelectedMusikPlaylistItem = mZeile;
                                         break;
                                     }
                                 }
@@ -4837,20 +4867,20 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             if (MusikAZ)
             {
                 if (_suchTextMusik == string.Empty) // kein Suchwort
-                    FilteredMusikListItemListe = MusikListItemListe.OrderBy(n => n.VM.aPlaylist.Name).ToList();
+                    FilteredMusikPlaylistItemListe = MusikListItemListe.OrderBy(n => n.VM.aPlaylist.Name).ToList();
                 else if (suchWorte.Length == 1) // nur ein Suchwort                
-                    FilteredMusikListItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte[0])).OrderBy(n => n.VM.aPlaylist.Name).ToList();
+                    FilteredMusikPlaylistItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte[0])).OrderBy(n => n.VM.aPlaylist.Name).ToList();
                 else // mehrere Suchwörter
-                    FilteredMusikListItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte)).OrderBy(n => n.VM.aPlaylist.Name).ToList();
+                    FilteredMusikPlaylistItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte)).OrderBy(n => n.VM.aPlaylist.Name).ToList();
             }
             else
             {
                 if (_suchTextMusik == string.Empty) // kein Suchwort
-                    FilteredMusikListItemListe = MusikListItemListe.OrderBy(n => n.VM.aPlaylist.Reihenfolge).ToList();
+                    FilteredMusikPlaylistItemListe = MusikListItemListe.OrderBy(n => n.VM.aPlaylist.Reihenfolge).ToList();
                 else if (suchWorte.Length == 1) // nur ein Suchwort                
-                    FilteredMusikListItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte[0])).OrderBy(n => n.VM.aPlaylist.Reihenfolge).ToList();
+                    FilteredMusikPlaylistItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte[0])).OrderBy(n => n.VM.aPlaylist.Reihenfolge).ToList();
                 else // mehrere Suchwörter
-                    FilteredMusikListItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte)).OrderBy(n => n.VM.aPlaylist.Reihenfolge).ToList();
+                    FilteredMusikPlaylistItemListe = MusikListItemListe.FindAll(s => s.Contains(suchWorte)).OrderBy(n => n.VM.aPlaylist.Reihenfolge).ToList();
             }
         }
 

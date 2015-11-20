@@ -959,8 +959,8 @@ namespace MeisterGeister.View.AudioPlayer
                 if (lbMusik.SelectedItem == null ||
                     lbMusik.SelectedIndex != lbErwPlayerMusik.SelectedIndex)
                     lbMusik.SelectedIndex =
-                        VM.FilteredMusikListItemListe.FindIndex(t =>
-                            t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikItem.VM.aPlaylist.Audio_PlaylistGUID);
+                        VM.FilteredMusikPlaylistItemListe.FindIndex(t =>
+                            t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID);
 
                 //lbErwPlayerMusik.ScrollIntoView(e.AddedItems[0]);
             }
@@ -970,12 +970,15 @@ namespace MeisterGeister.View.AudioPlayer
         {
             if (e.AddedItems.Count > 0)
             {
-                if (lbErwPlayerMusik.SelectedItem == null ||
-                    lbMusik.SelectedIndex != lbErwPlayerMusik.SelectedIndex)
-                    lbErwPlayerMusik.SelectedIndex =
-                        VM.FilteredErwPlayerMusikListItemListe.FindIndex(t =>
-                            t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikItem.VM.aPlaylist.Audio_PlaylistGUID);
+                if ((lbErwPlayerMusik.SelectedItem == null ||
+                    lbMusik.SelectedIndex != lbErwPlayerMusik.SelectedIndex) &&
+                    VM.SelectedMusikPlaylistItem != null)
+                {
 
+                    //lbErwPlayerMusik.SelectedIndex =
+                    //    VM.FilteredErwPlayerMusikListItemListe.FindIndex(t =>
+                    //        t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID);
+                }
                 //lbMusik.ScrollIntoView(e.AddedItems[0]);
             }
         }

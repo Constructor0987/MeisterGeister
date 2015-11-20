@@ -139,7 +139,8 @@ namespace MeisterGeister.ViewModel.ZooBot
         private List<Landschaft> _landschaftenGebietListe = new List<Landschaft>();
         public List<Landschaft> LandschaftGebietListe
         {
-            get { return _landschaftenGebietListe; }
+            get {                
+                return _landschaftenGebietListe; }
             set
             {
                 //_landschaftenGebietListe = value;
@@ -2185,7 +2186,7 @@ namespace MeisterGeister.ViewModel.ZooBot
         /// <summary>
         /// Button zum Bestimmen der Gebiete in der aktuellen Position
         /// </summary>
-        void GebieteVonPos(object obj)
+        public void GebieteVonPos(object obj)
         {
             Kraeuter_Zuschlag = "";
             HeldenPos = new Point(Global.HeldenLon, Global.HeldenLat);
