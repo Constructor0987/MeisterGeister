@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="MeisterGeister.View.General.IntBoxVertical"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d" MouseWheel="UserControl_MouseWheel"
+             Name="_intBoxVertical" Height="58">
+    <UserControl.Resources>
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter2" False="Hidden" />
+        <Style x:Key="TextBoxIntStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="{StaticResource DefaultBorderBrushTextBox}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=_intBoxVertical, Path=NoBackground}" Value="true">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=_intBoxVertical, Path=WeissAufSchwarz}" Value="true">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="Black" />
+                    <Setter Property="BorderBrush" Value="Silver" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18*" />
+            <RowDefinition Height="22" />
+            <RowDefinition Height="18*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Row="1" Name="_textBoxInt" Text="0" ContextMenu="{x:Null}" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="_textBoxInt_KeyDown" 
+                 Style="{StaticResource TextBoxIntStyle}" BorderBrush="Transparent" LostFocus="_textBoxInt_LostFocus" GotFocus="_textBoxInt_GotFocus" PreviewKeyDown="_textBoxInt_PreviewKeyDown" 
+                 IsReadOnly="{Binding ElementName=_intBoxVertical, Path=IsReadOnly}" />
+        
+        <StackPanel Name="_stackPanelButtonPlus" Grid.Row="0" >
+            <StackPanel.Style>
+                <Style>
+                    <Setter Property="StackPanel.Visibility" Value="{Binding ElementName=_intBoxVertical, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_intBoxVertical, Path=ButtonHiddenMode}" Value="Hidden">
+                            <Setter Property="StackPanel.Visibility" Value="{Binding ElementName=_intBoxVertical, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter2}}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Button Name="_buttonPlus" Width="18" Padding="0" Click="ButtonPlus_Click">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+            </Button>            
+        </StackPanel>
+        <StackPanel Name="_stackPanelButtonMinus" Grid.Row="2" >
+            <StackPanel.Style>
+                <Style>
+                    <Setter Property="StackPanel.Visibility" Value="{Binding ElementName=_intBoxVertical, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_intBoxVertical, Path=ButtonHiddenMode}" Value="Hidden">
+                            <Setter Property="StackPanel.Visibility" Value="{Binding ElementName=_intBoxVertical, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter2}}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Button Name="_buttonMinus" Width="18" Padding="0" Click="ButtonMinus_Click">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
