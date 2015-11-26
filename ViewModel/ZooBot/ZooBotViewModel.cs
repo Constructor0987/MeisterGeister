@@ -136,16 +136,24 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
         }
 
+        private Dictionary<string, object> _landschaftenGebietListeString = new Dictionary<string, object>();
+        public Dictionary<string, object> LandschaftGebietListeString
+        {
+            get { return _landschaftenGebietListeString; }
+            set { Set(ref _landschaftenGebietListeString, value); }
+        }
+
         private List<Landschaft> _landschaftenGebietListe = new List<Landschaft>();
         public List<Landschaft> LandschaftGebietListe
         {
-            get {                
-                return _landschaftenGebietListe; }
+            get { return _landschaftenGebietListe; }
             set
             {
-                //_landschaftenGebietListe = value;
                 Set(ref _landschaftenGebietListe, value);
-                // OnChanged();
+
+                Dictionary<string, object> La = new Dictionary<string, object>();
+                value.ForEach(t => La.Add(t.Name, t));                
+                LandschaftGebietListeString = La;
             }
         }
 
@@ -299,6 +307,38 @@ namespace MeisterGeister.ViewModel.ZooBot
                 //OnChanged();
             }
         }
+
+
+        private Dictionary<string, object> _kräuter_LandschaftGebieteSelected = null;
+        public Dictionary<string, object> Kräuter_LandschaftGebieteSelected
+        {
+            get { return _kräuter_LandschaftGebieteSelected; }
+            set
+            {
+                Set(ref _kräuter_LandschaftGebieteSelected, value);
+
+                List<Pflanze> pList = new List<Pflanze>();
+                FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
+
+                if (value != null && !value.Keys.Contains("überall"))// || !value.Contains<string>("überall"))
+                {
+                    foreach (KeyValuePair<string, object> d in value)
+                    {
+                        FilterPflanzenListe.ForEach(delegate(Pflanze p)
+                        {
+                            if (p.Landschaften.Contains(d.Value) && !pList.Contains(p))
+                                pList.Add(p);
+                        });
+                    }
+                }
+                if (value != null && value.Keys.Contains("überall"))
+                    pList = FilterPflanzenListe;
+                FilterPflanzenListe = pList.OrderBy(t => t.Name).ToList();
+
+            }
+        }
+        
+
                 
         private Landschaft _kräuter_LandschaftGebietSelected = null;
         public Landschaft Kräuter_LandschaftGebietSelected
@@ -2172,7 +2212,7 @@ namespace MeisterGeister.ViewModel.ZooBot
         }
 
         #endregion
-
+        
         private Base.CommandBase _onGebieteVonPos = null;
         public Base.CommandBase OnGebieteVonPos
         {

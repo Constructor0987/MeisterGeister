@@ -194,14 +194,14 @@ namespace MeisterGeister.View.AudioPlayer
         private Point _dragStartPoint;
         TabItemControl AudioTIC = null;
 
-        public int BGPlayeraktiv
-        {
-            get { return VM.BGPlayeraktiv; }
-            set
-            {
-                VM.BGPlayeraktiv = value;
-            }
-        }
+        //public int BGPlayeraktiv
+        //{
+        //    get { return VM.BGPlayeraktiv; }
+        //    set
+        //    {
+        //        VM.BGPlayeraktiv = value;
+        //    }
+        //}
 
         public VM.AudioPlayerViewModel.MusikView BGPlayer
         {
@@ -237,7 +237,7 @@ namespace MeisterGeister.View.AudioPlayer
 
             BGPlayer = new ViewModel.AudioPlayer.AudioPlayerViewModel.MusikView();
             BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
-            BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
+         //   BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
 
             VM.setStdPfad();
             VM.fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
@@ -458,12 +458,12 @@ namespace MeisterGeister.View.AudioPlayer
         {
             try
             {
-                if (BGPlayer.AktPlaylist != null && BGPlayer.BG[BGPlayeraktiv].mPlayer != null)
+                if (BGPlayer.AktPlaylist != null && VM.MusikAktiv.mPlayer != null) // BGPlayer.BG[BGPlayeraktiv]
                 {
                     Point pts = e.GetPosition((sender as ProgressBar));
                     double total = (sender as ProgressBar).Maximum;
                     double res = ((pts.X * 100) / ((double)(sender as ProgressBar).ActualWidth)) / 100;
-                    BGPlayer.BG[BGPlayeraktiv].mPlayer.Position = TimeSpan.FromMilliseconds(total * res);
+                    VM.MusikAktiv.mPlayer.Position = TimeSpan.FromMilliseconds(total * res); //BGPlayer.BG[BGPlayeraktiv]
                 }
             }
             catch (Exception) { }
@@ -490,7 +490,7 @@ namespace MeisterGeister.View.AudioPlayer
                         if (grpobj.aPlaylist.Hintergrundmusik)
                         {
                             grpobj._listZeile[i].FadingOutStarted = false;
-                            VM.FadingIn(grpobj._listZeile[i], grpobj._listZeile[i]._mplayer, grpobj._listZeile[i].Aktuell_Volume / 100);
+                            VM.FadingIn(null, grpobj._listZeile[i], grpobj._listZeile[i]._mplayer, grpobj._listZeile[i].Aktuell_Volume / 100);
                         }
                     }
                     else

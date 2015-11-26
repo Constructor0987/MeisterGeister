@@ -17,6 +17,8 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Daten;
 using MeisterGeister.View.Windows;
 using MeisterGeister.Logic.Kalender;
+using MeisterGeister.Model;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.View.ZooBot
 {
@@ -101,5 +103,11 @@ namespace MeisterGeister.View.ZooBot
             if (VM.HeldenPos != new Point(Global.HeldenLon, Global.HeldenLat))
                 VM.GebieteVonPos(null);
         }
+        
+        private void cmbxPflanze_DropDownOpened(object sender, EventArgs e)
+        {
+            VM.Kräuter_LandschaftGebieteSelected = mComboGebieteSelected.SelectedItems;
+        }
+        
     }
 }

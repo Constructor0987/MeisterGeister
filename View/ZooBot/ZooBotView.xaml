@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.ZooBot"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte" 
+             xmlns:local="clr-namespace:MeisterGeister.View.ZooBot"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="765" Loaded="UserControl_Loaded">
     <Grid>
@@ -151,14 +152,26 @@
                                           ItemsSource="{Binding GebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding GebietSelected}" DisplayMemberPath="Name" />-->
                                 <!-- ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" -->
                                 <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-                                <ComboBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
-                                          ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" DisplayMemberPath="Name" PreviewMouseDown="ComboBox_PreviewMouseDown"
-                                          />
+
+                                <!--<ComboBox Name="_cmbxLandschaft" Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
+                                          ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" 
+                                          SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" PreviewMouseDown="ComboBox_PreviewMouseDown" 
+                                          DisplayMemberPath="Name" />-->
+
+                                <ZooBot:MultiSelectComboBox x:Name="mComboGebieteSelected" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 
+                                    ItemsSource="{Binding LandschaftGebietListeString, UpdateSourceTrigger=PropertyChanged}" 
+                                    SelectedItems="{Binding Kräuter_LandschaftGebieteSelected}" Margin="3,4,0,4" 
+                                    ToolTip="{Binding Path=Text, RelativeSource={RelativeSource Self}}" BorderBrush="#FF707070" />
+                                
+                                
                                 <!--ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" -->
+                                
                                 <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
 
                                 <ComboBox Name="cmbxPflanze" Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
-                                          ItemsSource="{Binding FilterPflanzenListeBekannt, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding PflanzeSelectedBekannt}" >
+                                          ItemsSource="{Binding FilterPflanzenListeBekannt, UpdateSourceTrigger=PropertyChanged}" 
+                                          SelectedItem="{Binding PflanzeSelectedBekannt}" DropDownOpened="cmbxPflanze_DropDownOpened"
+                                          >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Width="250">

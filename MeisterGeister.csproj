@@ -1083,6 +1083,9 @@
     <Compile Include="View\ZooBot\LandschaftenView.xaml.cs">
       <DependentUpon>LandschaftenView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ZooBot\MultiSelectComboBox.xaml.cs">
+      <DependentUpon>MultiSelectComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ZooBot\ZooBotView.xaml.cs">
       <DependentUpon>ZooBotView.xaml</DependentUpon>
     </Compile>
@@ -1626,6 +1629,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ZooBot\LandschaftenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ZooBot\MultiSelectComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

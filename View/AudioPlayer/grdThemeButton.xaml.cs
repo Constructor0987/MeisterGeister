@@ -59,7 +59,7 @@ namespace MeisterGeister.View.AudioPlayer
         public bool Contains(string suchWort)
         {
             _suchtext = VM.Theme.Name.ToLower() + ((VM.Theme.Kategorie !=null)? VM.Theme.Kategorie.ToLower(): "");
-            return _suchtext.Contains(suchWort);
+            return _suchtext.Contains(suchWort.ToLower());
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace MeisterGeister.View.AudioPlayer
         {
             foreach (string wort in suchWorte)
             {
-                if (!Contains(wort))
+                if (!Contains(wort.ToLower()))
                     return false;
             }
             return true;
