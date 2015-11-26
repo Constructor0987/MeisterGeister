@@ -74,6 +74,14 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
+        private Pflanze_Verbreitung suche = null;
+        public Pflanze_Verbreitung Suche
+        {
+            get { return suche; }
+            set { Set(ref suche, value); }
+        }
+
+
         private List<Pflanze> filterTyp(IList<Pflanze> pflanzen)
         {
             if (PflanzenTyp == String.Empty)

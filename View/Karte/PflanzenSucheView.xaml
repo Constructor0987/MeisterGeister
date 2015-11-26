@@ -10,67 +10,90 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              General:UIElementBehavior.ViewModel="{Binding}">
-    <UserControl.DataContext>
-        <vm:PflanzenSucheViewModel/>
-    </UserControl.DataContext>
-    <TabControl>
-        <TabItem Header="Gezielte Pflanzensuche">
-            <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                    <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}"/>
-                    <CheckBox Content="{Binding Pflanze.Landschaft.Kundig}" IsChecked="{Binding Geländekunde}" Margin="4,0,0,0"/>
-                </StackPanel>
+    <StackPanel Orientation="Vertical">
+        <TextBlock HorizontalAlignment="Center" FontSize="14" FontStyle="Italic" Margin="0,4,0,8">
+            Suche hier: <Run Text="{Binding Pflanze.Landschaft.Name,Mode=OneWay}"/>
+        </TextBlock>
+        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+            <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}"/>
+            <CheckBox Content="{Binding Pflanze.Landschaft.Kundig}" IsChecked="{Binding Geländekunde}" Margin="4,0,0,0">
+                <CheckBox.Style>
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Pflanze.Landschaft.Kundig}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CheckBox.Style>
+            </CheckBox>
+        </StackPanel>
 
-                <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <System:Boolean>false</System:Boolean>
-                    <System:Boolean>true</System:Boolean>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="1 Stunde suchen" x:Name="text"/>
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding}" Value="True">
-                                    <Setter TargetName="text" Property="Text" Value="2 Stunden suchen"/>
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <TextBlock>
-                    Probe wird auf Kräutersuchen <Bold><Run Text="{Binding TaW,Mode=OneWay}"/><Run Text="{Binding Modifikator,Mode=OneWay,StringFormat={}{0:+0;-0}}"/></Bold> abgelegt.
-                    <InlineUIContainer BaselineAlignment="Center">
-                        <Button MaxHeight="20" Padding="0" Command="{Binding SucheGezielt}">
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
-                        </Button>
-                    </InlineUIContainer>
-                </TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="TaP*:" VerticalAlignment="Center"/>
-                    <General:IntBox ShowButtons="True" Margin="4" Value="{Binding TaP}"/>
-                </StackPanel>
-                <TextBlock>
-                    Es wurde <Run Text="{Binding Funde,Mode=OneWay}"/> Mal <Run Text="{Binding Pflanze.Pflanze.Name,Mode=OneWay}"/> gefunden.
-                </TextBlock>
-                <ItemsControl ItemsSource="{Binding Suche.Pflanze.Pflanze_Ernte}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock>
-                                <Run Text="{Binding Grundmenge,Mode=OneWay}"/> <Run Text="{Binding Pflanzenteil,Mode=OneWay}"/>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+        <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <System:Boolean>false</System:Boolean>
+            <System:Boolean>true</System:Boolean>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="1 Stunde suchen" x:Name="text"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="True">
+                            <Setter TargetName="text" Property="Text" Value="2 Stunden suchen"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock>
+            Die Probe wird auf Kräutersuchen <Bold><Run Text="{Binding TaW,Mode=OneWay}"/><Run Text="{Binding Modifikator,Mode=OneWay,StringFormat={}{0:+0;-0}}"/></Bold> abgelegt.
+            <InlineUIContainer BaselineAlignment="Center">
+                <Button MaxHeight="20" Padding="0" Command="{Binding SucheGezielt}">
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
+                </Button>
+            </InlineUIContainer>
+        </TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="TaP*:" VerticalAlignment="Center"/>
+            <General:IntBox ShowButtons="True" Margin="4" Value="{Binding TaP}"/>
+            <TextBlock VerticalAlignment="Center">
+                = <Run Text="{Binding Funde,Mode=OneWay}"/> Pflanzenfunde.
+            </TextBlock>
+        </StackPanel>
 
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Ernte pro Pflanze: "/>
+            <TextBlock Text="Keine verwertbaren Pflanzenteile">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Pflanze.Pflanze.Pflanze_Ernte.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ItemsControl Margin="-4,0,0,0" ItemsSource="{Binding Pflanze.Pflanze.Pflanze_Ernte}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="4,0,0,0">
+                            <Run Text="{Binding Funde,Mode=OneWay}"/> <Run Text="{Binding Grundmenge,Mode=OneWay}"/> <Run Text="{Binding Pflanzenteil,Mode=OneWay}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
 
-
-        </TabItem>
-        <TabItem Header="Allgemeine Pflanzensuche">
-
-        </TabItem>
-    </TabControl>
+    </StackPanel>
 </UserControl>
