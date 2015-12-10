@@ -52,20 +52,13 @@ namespace MeisterGeister.View.ZooBot
         public Dictionary<string, object> ItemsSource
         {
             get { return (Dictionary<string, object>)GetValue(ItemsSourceProperty); }
-            set
-            {
-                SetValue(ItemsSourceProperty, value);
-            }
+            set { SetValue(ItemsSourceProperty, value); }
         }
 
         public Dictionary<string, object> SelectedItems
         {
             get { return (Dictionary<string, object>)GetValue(SelectedItemsProperty); }
-            set
-            {
-                SetValue(SelectedItemsProperty, value);
-                
-            }
+            set { SetValue(SelectedItemsProperty, value); }
         }
 
         public string Text
@@ -166,6 +159,7 @@ namespace MeisterGeister.View.ZooBot
             foreach (KeyValuePair<string, object> keyValue in this.ItemsSource)
             {
                 Node node = new Node(keyValue.Key);
+                node.Bold = keyValue.Value == null;
                 _nodeList.Add(node);
             }
             MultiSelectCombo.ItemsSource = _nodeList;
@@ -205,6 +199,7 @@ namespace MeisterGeister.View.ZooBot
     {
 
         private string _title;
+        private bool _bold ;
         private bool _isSelected;
         #region ctor
         public Node(string title)
@@ -224,6 +219,18 @@ namespace MeisterGeister.View.ZooBot
             {
                 _title = value;
                 NotifyPropertyChanged("Title");
+            }
+        }
+        public bool Bold
+        {
+            get
+            {
+                return _bold;
+            }
+            set
+            {
+                _bold = value;
+                NotifyPropertyChanged("Bold");
             }
         }
         public bool IsSelected

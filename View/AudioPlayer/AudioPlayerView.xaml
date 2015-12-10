@@ -424,6 +424,7 @@
                 <Grid>
                     <Image Source="/Images/Icons/gegner.png" Margin="0,3,5,0" />
                     <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
+                    <Image Source="/Images/Icons/General/speaker.png" Style="{StaticResource ImageEnabled}" Margin="-10,0,-10,-10" Opacity=".5" />
                 </Grid>
             </Button.Content>
         </Button>
@@ -935,14 +936,14 @@
                                     </Expander.Header>
                                     <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Von untergeordeten Themes werden nur die noch nicht ausgewählten Geräusch-Playlisten wiedergegeben" >
                                         <StackPanel Orientation="Horizontal">
-                                            <Grid Name="grdEditorThemeWPnlUTheme" Height="30">
+                                            <Grid Name="grdEditorThemeWPnlUTheme" Height="45">
                                                 <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" ToolTip="Untergeordnetes Theme hinzufügen" Width="30" HorizontalAlignment="Left" >
-                                                    <Grid Width="35" Height="25">
+                                                    <Grid Width="35" Height="35">
                                                         <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" />
                                                         <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/add.png" Width="20" Height="20" Margin="-20,-3,0,0" />
                                                     </Grid>
                                                 </Button>
-                                                <ComboBox 
+                                                <ComboBox Margin="5,0,0,0"
                                                     ItemsSource="{Binding EditorThemeÜbrigThemeListe}"
                                                     ItemTemplate="{StaticResource cmbxItemEditorThemeIcon}" 
                                                     SelectedItem="{Binding lbEditorThemeListboxIconSelected}">
@@ -952,7 +953,7 @@
                                                 <ItemsControl ItemsSource="{Binding boxThemeThemeList}" Margin="5">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <WrapPanel Name="wpnlEditorTopThemesThemes" ItemHeight="50" ItemWidth="150" AllowDrop="True" />
+                                                            <WrapPanel Name="wpnlEditorTopThemesThemes" ItemHeight="50" ItemWidth="180" AllowDrop="True" />
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                 </ItemsControl>
@@ -1082,8 +1083,35 @@
                                             </StackPanel>
                                         </GroupBox>
 
+                                        <StackPanel Name="FavoritenBtnEditor" Orientation="Horizontal" Grid.Column="5" Grid.ColumnSpan="3" Margin="0,3,0,-1"
+                                                    Visibility="{Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                                            
+                                            <ToggleButton Grid.Column="1" Width="74" Background="{x:Null}" HorizontalAlignment="Left" Focusable="False" ToolTip="Zur Favoriten-Leiste hinzugügen" 
+                                                IsChecked="{Binding AktKlangPlaylist.Favorite, UpdateSourceTrigger=PropertyChanged}"
+                                                Command="{Binding OnFavPlaylistClick}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" 
+                                                Tag ="{Binding AktKlangPlaylist, UpdateSourceTrigger=PropertyChanged}" > 
+                                                <ToggleButton.Content>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <StackPanel Margin="1,0,-3,0" Width="13" Height="18">
+                                                            <Image Source="/Images/Icons/General/zeile.png" Height="10" Margin="-4,0,7,0" Style="{StaticResource ImageEnabled}" Stretch="Fill" >
+                                                                <Image.LayoutTransform>
+                                                                    <RotateTransform Angle="-90" />
+                                                                </Image.LayoutTransform>
+                                                            </Image>
+                                                            <Image Source="/Images/Icons/General/zeile.png" Height="10" Margin="-4,-1,7,0" Style="{StaticResource ImageEnabled}" Stretch="Fill" >
+                                                                <Image.LayoutTransform>
+                                                                    <RotateTransform Angle="-90" />
+                                                                </Image.LayoutTransform>
+                                                            </Image>
+                                                        </StackPanel>
+                                                        <TextBlock Text="Fav-Leiste" VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </ToggleButton.Content>
+                                            </ToggleButton>
+                                        </StackPanel>
+
                                         <StackPanel Name="spnlTopHotkey1" Orientation="Horizontal" Grid.Column="5" Grid.ColumnSpan="4" Margin="0,1,35,1"
-                                                    Visibility="{Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" >
+                                            Visibility="{Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource BooleanInverseToVisibilityConverter1}, FallbackValue=Hidden}" >
 
                                             <Label Content="Hotkey" />
                                             <Button Width="30" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySet1" 
@@ -1565,8 +1593,7 @@
                                 ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" SelectionMode="Single"
                                 ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                                 ItemsSource="{Binding FilteredMusikPlaylistItemListe, UpdateSourceTrigger=PropertyChanged}" 
-                                SelectedItem="{Binding SelectedMusikPlaylistItem, UpdateSourceTrigger=PropertyChanged}"
-                                SelectionChanged="lbMusik_SelectionChanged" >
+                                SelectedItem="{Binding SelectedMusikPlaylistItem, UpdateSourceTrigger=PropertyChanged}" >
                             </ListBox>
                         </Border>
 
@@ -1576,9 +1603,10 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="34" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="74" />
+                                    <ColumnDefinition Width="126*"/>
                                     <ColumnDefinition Width="26" />
-                                    <ColumnDefinition Width="*" MaxWidth="200" MinWidth="30" />
+                                    <ColumnDefinition Width="106*" MaxWidth="200" MinWidth="30" />
                                     <ColumnDefinition Width="20" />
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton Name="tbtnMusikTitelAZ" Height="23" Width="22" Focusable="False" HorizontalAlignment="Left" Margin="5,0,0,0" Background="{x:Null}" 
@@ -1609,14 +1637,37 @@
                                     </ToggleButton.Style>
                                 </ToggleButton>
 
-                                <Label Grid.Column="1" Content="{Binding wiederholungenLeft, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}"  ContentStringFormat="Wiederholungen: {0}" Padding="3"
+                                <ToggleButton Grid.Column="1" Width="74" Background="{x:Null}" HorizontalAlignment="Left" Focusable="False" ToolTip="Zur Favoriten-Leiste hinzugügen"
+                                    Tag="{Binding BGPlayerAktPlaylist, UpdateSourceTrigger=PropertyChanged}"
+                                    IsChecked="{Binding BGPlayerAktPlaylist.Favorite, UpdateSourceTrigger=PropertyChanged}"
+                                    Command="{Binding OnFavPlaylistClick}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" > 
+                                    <ToggleButton.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel Margin="1,0,-3,0" Width="13" Height="18" >
+                                                <Image Source="/Images/Icons/General/zeile.png" Height="10" Margin="-4,0,7,0" Style="{StaticResource ImageEnabled}" Stretch="Fill" >
+                                                <Image.LayoutTransform>
+                                                    <RotateTransform Angle="-90" />
+                                                </Image.LayoutTransform>
+                                            </Image>
+                                                <Image Source="/Images/Icons/General/zeile.png" Height="10" Margin="-4,-1,7,0" Style="{StaticResource ImageEnabled}" Stretch="Fill" >
+                                                <Image.LayoutTransform>
+                                                    <RotateTransform Angle="-90" />
+                                                </Image.LayoutTransform>
+                                            </Image>
+                                            </StackPanel>
+                                            <TextBlock Text="Fav-Leiste" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </ToggleButton.Content>
+                                </ToggleButton>
+
+                                <Label Grid.Column="2" Content="{Binding wiederholungenLeft, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Null}}"  ContentStringFormat="Wiederholungen: {0}" Padding="3"
                                        Visibility="{Binding wiederholungenLeft, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=2 }" />
-                                
-                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill" Grid.Column="2" />
-                                <TextBox Margin="2,1" Name="tbBGTitelFilter" Grid.Column="3" 
+
+                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill" Grid.Column="3" />
+                                <TextBox Margin="2,1" Name="tbBGTitelFilter" Grid.Column="4" 
                                         Text="{Binding Path=SuchTextMusikTitel, UpdateSourceTrigger=PropertyChanged}"
                                         vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}"  />
-                                <Button Grid.Column="4" ToolTip="Filter löschen" Padding="0"
+                                <Button Grid.Column="5" ToolTip="Filter löschen" Padding="0"
                                         Command="{Binding OnSuchTextMusikTitelLöschen}" >
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                 </Button>
@@ -1667,23 +1718,23 @@
                                     <RowDefinition Height="50" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                
+
                                 <Border Grid.ColumnSpan="3" Grid.Row="1" Style="{DynamicResource ControlContentBorder}" Margin="1" >
                                     <Label FontSize="14" Padding="0" HorizontalAlignment="Center" 
                                            Content="{Binding BGPlayerAktPlaylist.Name, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Border>
                                 <Label Grid.Column="4" Grid.Row="1" FontSize="10" Padding="0" HorizontalAlignment="Center"
-                                       Visibility="{Binding BGPlayerAktPlaylistTitel.Wiederholungen, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=2}" >                                    
+                                       Visibility="{Binding BGPlayerAktPlaylistTitel.Wiederholungen, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=2}" >
                                     <Label.Content>
                                         <TextBlock TextWrapping="Wrap">
-                                            <TextBlock.Text>                                                
+                                            <TextBlock.Text>
                                                 <MultiBinding StringFormat="Wdh. ({0}x/{1}x)">
                                                     <Binding Path="wiederholungenLeft" />
                                                     <Binding Path="BGPlayerAktPlaylistTitel.Wiederholungen" />
                                                 </MultiBinding>
                                             </TextBlock.Text>
-                                        </TextBlock>                                        
-                                    </Label.Content>                                    
+                                        </TextBlock>
+                                    </Label.Content>
                                 </Label>
                                 <Label Content="{Binding Path=Info_BGTitel}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" FontWeight="Bold" />
                                 <Label Content="{Binding Path=Info_BGArtist}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" />

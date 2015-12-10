@@ -61,6 +61,16 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
+        public Boolean IsShowPlaylistFavorite
+        {
+            get { return MeisterGeister.Logic.Einstellung.Einstellungen.ShowPlaylistFavorite; }
+            set
+            {
+                MeisterGeister.Logic.Einstellung.Einstellungen.ShowPlaylistFavorite = value;
+                OnChanged("IsShowPlaylistFavorite");
+            }
+        }
+
         public Boolean IsMitUeberlastung
         {
             get { return MeisterGeister.Logic.Einstellung.Einstellungen.IsMitUeberlastung; }

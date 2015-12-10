@@ -308,6 +308,18 @@ namespace MeisterGeister.Model
     
         }
         private int _reihenfolge;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<bool> Favorite
+        {
+            get { return _favorite; }
+            set
+    		{ 
+    			Set(ref _favorite, value);
+    		}
+    
+        }
+        private Nullable<bool> _favorite;
 
         #endregion
 

@@ -59,7 +59,6 @@ namespace MeisterGeister.View.ZooBot
         public void Reload()
         {
             _comboBoxHeld.ItemsSource = Global.ContextHeld.HeldenGruppeListe;
-
         }
 
         private void BtnBekanntePflanzenForm_Click(object sender, RoutedEventArgs e)
@@ -90,13 +89,8 @@ namespace MeisterGeister.View.ZooBot
                 if (tag != null && tag is string)
                     (App.Current.MainWindow as View.MainView).StarteTab(tag.ToString());
             }
-
         }
 
-        private void Expander_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
 
         private void ComboBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -106,7 +100,19 @@ namespace MeisterGeister.View.ZooBot
         
         private void cmbxPflanze_DropDownOpened(object sender, EventArgs e)
         {
-            VM.Kräuter_LandschaftGebieteSelected = mComboGebieteSelected.SelectedItems;
+       //     VM.Kräuter_LandschaftGebieteSelected = mComboGebieteSelected.SelectedItems;
+        }
+
+
+        private void mComboGebieteSelected_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();            
+            VM.LandschaftsGruppen.FindAll(t => t.IsChecked != false).ForEach(delegate(ViewModel.Karte.LandschaftsGruppeViewModel lgVM)
+            {
+                lgVM.Landschaften.FindAll(t => t.IsChecked).ForEach(delegate(ViewModel.Karte.LandschaftViewModel l)
+                { if (!dic.Values.Contains(l.Landschaft)) dic.Add(l.Landschaft.Name, l.Landschaft); });
+            });
+            VM.Kräuter_LandschaftGebieteSelected = dic;            
         }
         
     }

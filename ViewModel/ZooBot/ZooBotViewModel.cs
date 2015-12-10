@@ -20,6 +20,7 @@ using MeisterGeister.Logic.Kalender;
 using MeisterGeister.Logic.General;
 using System.Windows;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Karte;
 
 namespace MeisterGeister.ViewModel.ZooBot
 {
@@ -124,6 +125,21 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
         }
 
+
+        private List<LandschaftsGruppeViewModel> landschaftsGruppen = new List<LandschaftsGruppeViewModel>();
+        public List<LandschaftsGruppeViewModel> LandschaftsGruppen
+        {
+            get { return landschaftsGruppen; }
+            set { Set(ref landschaftsGruppen, value); }
+        }
+
+        private Dictionary<Guid, LandschaftViewModel> landschaftViewModels = new Dictionary<Guid, LandschaftViewModel>();
+        public Dictionary<Guid, LandschaftViewModel> LandschaftViewModels
+        {
+            get { return landschaftViewModels; }
+            protected set { Set(ref landschaftViewModels, value); }
+        }
+
         private List<Landschaft> _landschaftenListe = new List<Landschaft>();
         public List<Landschaft> LandschaftenListe
         {
@@ -132,7 +148,22 @@ namespace MeisterGeister.ViewModel.ZooBot
             {
                 //_landschaftenListe = value;
                 Set(ref _landschaftenListe, value);
-                //OnChanged();
+                //OnChanged();              
+
+                HashSet<Landschaftsgruppe> gruppen = new HashSet<Landschaftsgruppe>();
+
+                foreach (Landschaft l in value)
+                    foreach (var gr in l.Landschaftsgruppe)
+                        gruppen.Add(gr);
+
+                LandschaftViewModels.Clear();
+                List<LandschaftsGruppeViewModel> gruppenVM = new List<LandschaftsGruppeViewModel>();
+                foreach (Landschaftsgruppe gruppe in gruppen)
+                {
+                    var inGruppe = value.Where((l) => l.Landschaftsgruppe.Contains(gruppe));
+                    gruppenVM.Add(new LandschaftsGruppeViewModel(inGruppe, gruppe, LandschaftViewModels));
+                }
+                LandschaftsGruppen = gruppenVM;
             }
         }
 
@@ -151,9 +182,12 @@ namespace MeisterGeister.ViewModel.ZooBot
             {
                 Set(ref _landschaftenGebietListe, value);
 
-                Dictionary<string, object> La = new Dictionary<string, object>();
-                value.ForEach(t => La.Add(t.Name, t));                
+                //value.ForEach(t => t.Landschaftsgruppe.ToList().ForEach(lg => La.Add(lg.Name, null)));
+
+                Dictionary<string, object> La = new Dictionary<string, object>(); 
+                value.ForEach(t => La.Add(t.Name, t));
                 LandschaftGebietListeString = La;
+
             }
         }
 
@@ -169,48 +203,39 @@ namespace MeisterGeister.ViewModel.ZooBot
             }
         }
 
+        private Pflanze_Verbreitung _landschaftsverbreitung = null;
+        public Pflanze_Verbreitung Landschaftsverbreitung 
+        {
+            get { return _landschaftsverbreitung; }
+            set { Set(ref _landschaftsverbreitung, value); }
+        }
+        
         private string _literaturAusgewähltePflanze = "";
         public string LiteraturAusgewähltePflanze
         {
             get { return _literaturAusgewähltePflanze;}
-            set
-            {
-                Set(ref _literaturAusgewähltePflanze, value);
-            }
+            set { Set(ref _literaturAusgewähltePflanze, value); }
         }
 
         private string _literaturReferenz = "";
         public string LiteraturReferenz
         {
             get { return _literaturReferenz; }
-            set
-            {
-                Set(ref _literaturReferenz, value);
-            }
+            set { Set(ref _literaturReferenz, value); }
         }
 
         private Point _heldenPos = new Point();        
         public Point HeldenPos
         {
-            get { return _heldenPos;}            
-            set
-            {
-                //_heldenPos = value;
-                Set(ref _heldenPos, value);
-                //OnChanged();
-            }
+            get { return _heldenPos;}
+            set { Set(ref _heldenPos, value); }
         }
 
         private int _wertTaWTalent;
         public int WertTaWTalent
         {
             get { return _wertTaWTalent; }
-            set
-            {
-                //_wertTaWTalent = value;
-                Set(ref _wertTaWTalent, value);
-                //OnChanged("WertTaWTalent");
-            }
+            set { Set(ref _wertTaWTalent, value); }
         }
 
         private bool _pirschSelected;
@@ -226,12 +251,10 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _zoo_HeldSelected; }
             set
             {
-                //_zoo_HeldSelected = value;
                 Set(ref _zoo_HeldSelected, value);
-                //OnChanged();
                 SetHeldWerte();
                 SelectedHeld = value;
-                Kräuter_LandschaftGebietSelected = null;
+                
                 PflanzeSelectedBekannt = null;
                 Kraeuter_Zuschlag = "";
                 Kräuter_LandschaftSelected = Kräuter_LandschaftSelected;
@@ -247,11 +270,10 @@ namespace MeisterGeister.ViewModel.ZooBot
             get { return _gebieteSelected; }
             set
             {
-                //_gebieteSelected = value;
                 Set(ref _gebieteSelected, value);
 
                 PflanzeSelected = null;
-                Kräuter_LandschaftGebietSelected = null;
+                Kräuter_LandschaftGebieteSelected = null;
 
                 List<Pflanze> pList = new List<Pflanze>();
                 List<Landschaft> pLandschaft = new List<Landschaft>();
@@ -320,7 +342,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                 List<Pflanze> pList = new List<Pflanze>();
                 FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
 
-                if (value != null && !value.Keys.Contains("überall"))// || !value.Contains<string>("überall"))
+                if (value != null && !value.Keys.Contains("überall"))
                 {
                     foreach (KeyValuePair<string, object> d in value)
                     {
@@ -340,33 +362,33 @@ namespace MeisterGeister.ViewModel.ZooBot
         
 
                 
-        private Landschaft _kräuter_LandschaftGebietSelected = null;
-        public Landschaft Kräuter_LandschaftGebietSelected
-        {
-            get { return _kräuter_LandschaftGebietSelected; }
-            set
-            {                
-                //_kräuter_LandschaftGebietSelected = value;
-                Set(ref _kräuter_LandschaftGebietSelected, value);
-                List<Pflanze> pList = new List<Pflanze>();// FilterPflanzenListeNachGebietsauswahl.ToList();
-                FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
+        //private Landschaft _kräuter_LandschaftGebietSelected = null;
+        //public Landschaft Kräuter_LandschaftGebietSelected
+        //{
+        //    get { return _kräuter_LandschaftGebietSelected; }
+        //    set
+        //    {                
+        //        //_kräuter_LandschaftGebietSelected = value;
+        //        Set(ref _kräuter_LandschaftGebietSelected, value);
+        //        List<Pflanze> pList = new List<Pflanze>();// FilterPflanzenListeNachGebietsauswahl.ToList();
+        //        FilterPflanzenListe = FilterPflanzenListeNachGebietsauswahl.ToList();
 
-                if (value == null || !value.Name.Equals("überall"))
-                {
-                    FilterPflanzenListe.ForEach(delegate(Pflanze p)
-                    {
-                        if (p.Landschaften.Contains(value) && !pList.Contains(p))
-                            pList.Add(p);
-                        //if (!p.Landschaften.Contains(value))
-                        //    pList.Remove(p);
-                    });                    
-                }
-                if (value != null && value.Name.Equals("überall"))
-                    pList = FilterPflanzenListe;
-                FilterPflanzenListe = pList.OrderBy(t => t.Name).ToList();
-                //OnChanged();
-            }
-        }
+        //        if (value == null || !value.Name.Equals("überall"))
+        //        {
+        //            FilterPflanzenListe.ForEach(delegate(Pflanze p)
+        //            {
+        //                if (p.Landschaften.Contains(value) && !pList.Contains(p))
+        //                    pList.Add(p);
+        //                //if (!p.Landschaften.Contains(value))
+        //                //    pList.Remove(p);
+        //            });                    
+        //        }
+        //        if (value != null && value.Name.Equals("überall"))
+        //            pList = FilterPflanzenListe;
+        //        FilterPflanzenListe = pList.OrderBy(t => t.Name).ToList();
+        //        //OnChanged();
+        //    }
+        //}
         
 
         private string _regionSelected = "";
@@ -1196,8 +1218,8 @@ namespace MeisterGeister.ViewModel.ZooBot
 
                 if (GebieteSelected != null)
                     GebieteSelected = GebieteSelected;
-                if (Kräuter_LandschaftGebietSelected != null)
-                    Kräuter_LandschaftGebietSelected = Kräuter_LandschaftGebietSelected;
+                if (Kräuter_LandschaftGebieteSelected != null && Kräuter_LandschaftGebieteSelected.Count > 0)//!= null)
+                    Kräuter_LandschaftGebieteSelected = Kräuter_LandschaftGebieteSelected;
 
                 //Falls Landschaft bereits gewählt wurde, wird in Abhängigkeit davon die Pflanzenliste neu berechnet, andernfalls 
                 //in Abhängigkeit der Region, so diese bereits gewählt wurde.
@@ -2040,12 +2062,31 @@ namespace MeisterGeister.ViewModel.ZooBot
             Kraeuter_Zuschlag = "";
         }
 
+        /// <summary>
+        /// Gibt den kleinsten Pflanze_Verbreitung von den ausgewählten Landschaften zurück
+        /// </summary>
+        /// <returns></returns>
+        private Pflanze_Verbreitung GetKräuterLandschaftVerbreitung(Pflanze pf)
+        {
+            Pflanze_Verbreitung pv_mini = null;
+            if (Kräuter_LandschaftGebieteSelected != null && pf != null)
+            {
+                foreach (KeyValuePair<string, object> dic in Kräuter_LandschaftGebieteSelected)
+                {
+                    Pflanze_Verbreitung pv = pf.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == (dic.Value as Landschaft).LandschaftGUID);
+                    if (pv != null && (pv_mini == null || pv_mini.Verbreitung > pv.Verbreitung))
+                        pv_mini = pv;
+                }
+            }
+            return pv_mini;                
+        }
+
         private void Pflanze_SelectedIndexChanged()
         {
             bool doProbe = true;
 
             //Prüfung ob Bedingungen für Berechnung des Zuschlag gegeben sind und alle Felder die dazu nötig ausgefüllt sind
-            if (PflanzeSelected == null || Kräuter_LandschaftGebietSelected == null) //Kräuter_LandschaftSelected == null)
+            if (PflanzeSelected == null || Kräuter_LandschaftGebieteSelected == null || Kräuter_LandschaftGebieteSelected.Count == 0)
                 doProbe = false;
 
             if (doProbe)
@@ -2060,12 +2101,10 @@ namespace MeisterGeister.ViewModel.ZooBot
                 //Ermittelung der Suchschwierigkeit
                 string verbreitung = "unbekannt";
 
-                int suchschwierigkeit = 
-                    PflanzeSelected.Bestimmung +
-                    (!Kräuter_LandschaftGebietSelected.Name.Equals("überall")?
-                    PflanzeSelected.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung:
-                    0);
+                Landschaftsverbreitung = GetKräuterLandschaftVerbreitung(PflanzeSelected);
                 
+                int suchschwierigkeit = PflanzeSelected.Bestimmung + Landschaftsverbreitung.Verbreitung;
+                                    
                 //Einrechnung von Boni
                 int erschw = 0;
                 if (suchschwierigkeit < 0)
@@ -2171,6 +2210,24 @@ namespace MeisterGeister.ViewModel.ZooBot
 
         #endregion
 
+        private bool _landschaftHöhlenRuinen = false;
+        public bool LandschaftHöhlenRuinen
+        {
+            get { return _landschaftHöhlenRuinen; }
+            set { Set(ref _landschaftHöhlenRuinen, value); }
+        }
+
+        private bool _cbAlleLandschaften = true;
+        public bool cbAlleLandschaften
+        {
+            get { return _cbAlleLandschaften; }
+            set 
+            {
+                Set(ref _cbAlleLandschaften, value);
+                LandschaftsGruppen.ForEach(t => t.IsChecked = value);
+            }
+        }
+
         #region Meta-Talente
 
         private Held_Talent ErstelleMetaTalent(string Talentname, int TaW)
@@ -2212,7 +2269,41 @@ namespace MeisterGeister.ViewModel.ZooBot
         }
 
         #endregion
+
+        private Base.CommandBase _onHöhlenRuinen = null;
+        public Base.CommandBase OnHöhlenRuinen
+        {
+            get
+            {
+                if (_onHöhlenRuinen == null)
+                    _onHöhlenRuinen = new Base.CommandBase(HöhlenRuinen, null);
+                return _onHöhlenRuinen;
+            }
+        }        
+        /// <summary>
+        /// Button zum Bestimmen der Gebiete in der aktuellen Position
+        /// </summary>
+        public void HöhlenRuinen(object obj)
+        {
+            Dictionary<string, object> dic = Kräuter_LandschaftGebieteSelected;
+            
+            if (LandschaftHöhlenRuinen)
+            {
+                //Alle Höhle* Definitionen hinzufügen
+                foreach (KeyValuePair<string, object> dic_part in LandschaftGebietListeString.ToList().FindAll(t => t.Key.StartsWith("Höhle")))
+                    if (!dic.Contains(dic_part))
+                        dic.Add(dic_part.Key, dic_part.Value);
+
+                //Einzelne hinzufügen
+                //KeyValuePair<string, object> dic_part = LandschaftGebietListeString.FirstOrDefault(t => t.Key == "Höhlen");
+                //if (!dic.Contains(dic_part))
+                //    dic.Add(dic_part.Key, dic_part.Value);
+                
+            }
+            Kräuter_LandschaftGebieteSelected = dic;
+        }
         
+
         private Base.CommandBase _onGebieteVonPos = null;
         public Base.CommandBase OnGebieteVonPos
         {
@@ -2255,7 +2346,6 @@ namespace MeisterGeister.ViewModel.ZooBot
         /// </summary>
         void BtnBekanntePflanzenForm(object obj)
         {
-
             Zoo_HeldSelected = null;
         }
 
@@ -2329,7 +2419,7 @@ namespace MeisterGeister.ViewModel.ZooBot
             string ausgabe = "";
 
             //Prüfung ob Bedingungen für Suche gegeben sind und alle Felder die dazu nötig ausgefüllt sind
-            if (PflanzeSelected == null || Kräuter_LandschaftGebietSelected == null) 
+            if (PflanzeSelected == null || Kräuter_LandschaftGebieteSelected == null || Kräuter_LandschaftGebieteSelected.Count == 0)//null) 
                 doProbe = false;
 
             if (doProbe)
@@ -2349,12 +2439,13 @@ namespace MeisterGeister.ViewModel.ZooBot
                 int modBestimmung = GetModBestimmung(PflanzeSelected);
 
                 //Ermittelung der Suchschwierigkeit
+                Landschaftsverbreitung = GetKräuterLandschaftVerbreitung(PflanzeSelected);
 
-                int suchschwierigkeit = 
-                    modBestimmung +
-                    (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
-                    PflanzeSelected.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
-                    0);
+                int suchschwierigkeit =
+                    modBestimmung + Landschaftsverbreitung.Verbreitung;
+                    //(!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
+                    //PflanzeSelected.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
+                    //0);
 
                 //Einrechnung von Boni
                 int erschw = 0;
@@ -2401,7 +2492,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                     }
                                         
                     ausgabe += !grundmenge.Equals("")?
-                        "Von der Pflanze " + PflanzeSelected.Name + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") gefunden. ":
+                        "Von der Pflanze " + PflanzeSelected.Name + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") in der Landschaft '" + Landschaftsverbreitung.Landschaft.Name + "' gefunden. " :
                         "Die Pflanze " + PflanzeSelected.Name + " hat keine bekannten verwertbaren Pflanzenteile. ";
 
                     ausgabe += "\r\n\r\nFür detailliertere Informationen siehe \"Zoo-Botanica Aventurica\" Seite " + referenz + ".";
@@ -2442,9 +2533,9 @@ namespace MeisterGeister.ViewModel.ZooBot
             LiteraturReferenz = null;
             bool doProbe = true;
             string ausgabe = "";
-
+            
             //Prüfung ob Bedingungen für Suche gegeben sind und alle Felder die dazu nötig ausgefüllt sind
-            if (Kräuter_LandschaftGebietSelected == null) // Kräuter_LandschaftSelected == null)
+            if (Kräuter_LandschaftGebieteSelected == null || Kräuter_LandschaftGebieteSelected.Count == 0)// == null) // Kräuter_LandschaftSelected == null)
                 doProbe = false;
 
             if (doProbe)
@@ -2471,18 +2562,17 @@ namespace MeisterGeister.ViewModel.ZooBot
 
                     //Bestimmung Suchschwierigkeit für jede grundsätzlich findbare Pflanze und Vergleich mit TaP* ob Fund möglich
                     
-                    ArrayList optionen = new ArrayList();  
+                    ArrayList optionen = new ArrayList();
+                    
                     foreach (Pflanze pflanze in FilterPflanzenListe) 
                     {                        
                         // Modifikation bei speziellen Situationen
                         int modBestimmung = GetModBestimmung(pflanze);
 
+                        Landschaftsverbreitung = GetKräuterLandschaftVerbreitung(pflanze);
+
                         //Ermittelung der Suchschwierigkeit
-                        int suchschwierigkeit = 
-                            modBestimmung + 
-                            (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
-                            pflanze.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
-                            0);
+                        int suchschwierigkeit = modBestimmung + Landschaftsverbreitung.Verbreitung;
                         
                         if (Math.Round(tapstern / 2.0, MidpointRounding.AwayFromZero) >= suchschwierigkeit)
                             optionen.Add(pflanze);
@@ -2497,12 +2587,10 @@ namespace MeisterGeister.ViewModel.ZooBot
                         // Modifikation bei speziellen Situationen
                         int modBestimmung = GetModBestimmung(optionen[fund] as Pflanze);
 
+                        Landschaftsverbreitung = GetKräuterLandschaftVerbreitung(optionen[fund] as Pflanze);
+
                         //Ermittelung der Suchschwierigkeit
-                        int suchschwierigkeit = 
-                            modBestimmung + 
-                            (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
-                            (optionen[fund] as Pflanze).Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
-                            0);                        
+                        int suchschwierigkeit = modBestimmung + Landschaftsverbreitung.Verbreitung;
 
                         if (suchschwierigkeit <= 0)
                             suchschwierigkeit = 2;
@@ -2529,7 +2617,7 @@ namespace MeisterGeister.ViewModel.ZooBot
                         }
 
                         if (!grundmenge.Equals(""))
-                            ausgabe += "Von der Pflanze " + (optionen[fund] as Pflanze).Name + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") gefunden. ";
+                            ausgabe += "Von der Pflanze " + (optionen[fund] as Pflanze).Name + " wurde insgesamt " + menge + " mal die Grundmenge (" + grundmenge + ") in der Landschaft '" + Landschaftsverbreitung.Landschaft.Name + "' gefunden. ";
                         else
                             ausgabe += "Die Pflanze " + (optionen[fund] as Pflanze).Name + " hat keine bekannten verwertbaren Pflanzenteile. ";
                         ausgabe += "\r\n\r\nFür detailliertere Informationen siehe \"Zoo-Botanica Aventurica\" Seite " + referenz + ".";
@@ -2556,22 +2644,21 @@ namespace MeisterGeister.ViewModel.ZooBot
                 {
                     int modBestimmung = GetModBestimmung(pflanze);
 
+                    Landschaftsverbreitung = GetKräuterLandschaftVerbreitung(pflanze);
+
                     int suchschwierigkeit =
-                        modBestimmung +
-                        (!Kräuter_LandschaftGebietSelected.Name.Equals("überall") ?
-                        pflanze.Pflanze_Verbreitung.FirstOrDefault(t => t.LandschaftGUID == Kräuter_LandschaftGebietSelected.LandschaftGUID).Verbreitung :
-                        0);
+                        modBestimmung + (Landschaftsverbreitung !=null?Landschaftsverbreitung.Verbreitung:0);
 
                     if (Math.Round((double)taw / 2.0, MidpointRounding.AwayFromZero) >= suchschwierigkeit)
                         moeglich.Add(pflanze);
                 }
                 if (moeglich.Count > 0)
                 {
-                    ausgabe += "\r\n\r\nMit dem TaW von " + taw + " und somit einen max Zuschlag der Pflanze von max. " + 
+                    ausgabe += "\r\n\r\nMit dem TaW von " + taw + " und somit einen max Zuschlag der Pflanze von max. TaP* " + 
                         Math.Round((double)taw / 2.0, MidpointRounding.AwayFromZero) + 
-                        ", können folgende Pflanzen gefunden werden: \r\n";
+                        ", kann bei einer allgemeinen Suche folgende Pflanzen gefunden werden: \r\n";
                     foreach (Pflanze p in moeglich.OrderBy(t => t.Name))
-                        ausgabe += p.Name + " (" + p.Bestimmung + "), ";
+                        ausgabe += p.Name + " (" + (p.Bestimmung + GetKräuterLandschaftVerbreitung(p).Verbreitung) + "), ";
                     ausgabe = ausgabe.Substring(0, ausgabe.Length - 2);
                 }
             }

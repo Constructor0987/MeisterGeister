@@ -542,6 +542,7 @@
                                                 <Grid>
                                                     <Image Source="/Images/Icons/gegner.png" Margin="-1,2,4,-1" />
                                                     <Image Source="/Images/Icons/helden.png" Margin="4,-3,-6,5" />
+                                                    <Image Source="/Images/Icons/General/speaker.png" Margin="-10,0,-10,-10" Opacity=".5" />
                                                 </Grid>
                                             </Button.Content>
                                         </Button>

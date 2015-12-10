@@ -584,6 +584,7 @@
     <Property Name="WarteZeitMin" Type="bigint" Nullable="false" />
     <Property Name="WarteZeitMax" Type="bigint" Nullable="false" />
     <Property Name="Reihenfolge" Type="int" Nullable="false" />
+    <Property Name="Favorite" Type="bit" />
   </EntityType>
   <EntityType Name="Audio_Playlist_Titel">
     <Key>
@@ -3682,6 +3683,7 @@
     <Property Name="WarteZeitMin" Type="Int64" Nullable="false" />
     <Property Name="WarteZeitMax" Type="Int64" Nullable="false" />
     <Property Name="Reihenfolge" Type="Int32" Nullable="false" />
+    <Property Name="Favorite" Type="Boolean" />
     <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
     <NavigationProperty Name="GegnerBase_Audio_Playlist" Relationship="DatabaseDSAModel.FK_GegnerBase_Audio_Playlist_Audio_Playlist" FromRole="Audio_Playlist" ToRole="GegnerBase_Audio_Playlist" />
     <NavigationProperty Name="Held_Audio_Playlist" Relationship="DatabaseDSAModel.FK_Held_Audio_Playlist_Audio_Playlist" FromRole="Audio_Playlist" ToRole="Held_Audio_Playlist" />
@@ -6229,6 +6231,7 @@
           <ScalarProperty Name="WarteZeitMin" ColumnName="WarteZeitMin" />
           <ScalarProperty Name="WarteZeitMax" ColumnName="WarteZeitMax" />
           <ScalarProperty Name="Reihenfolge" ColumnName="Reihenfolge" />
+          <ScalarProperty Name="Favorite" ColumnName="Favorite" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7432,14 +7435,14 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="66fb7b2f050d48949698e20d678d4009" Name="Diagram1">
+      <Diagram DiagramId="9e7f8e2a656e493eaa0c31f112967994" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="25.5" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="13.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="16" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="44.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="44" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="44.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="3" PointY="51.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="60.75" IsExpanded="true" />
@@ -7458,7 +7461,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="23.25" PointY="39.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="18.75" PointY="27" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="21" PointY="38.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="24" PointY="36.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="24" PointY="36.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="24" PointY="30.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="13.75" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="16" PointY="14.75" IsExpanded="true" />

@@ -13,17 +13,25 @@
                 <CheckBox Content="{Binding Title}"
                           IsChecked="{Binding Path=IsSelected, Mode=TwoWay}"
                           Tag="{RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}"
-                          Click="CheckBox_Click" />
+                          Click="CheckBox_Click" >
+                    <CheckBox.Style>
+                        <Style TargetType="CheckBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Bold}" Value="True">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </CheckBox.Style>
+                </CheckBox>
             </DataTemplate>
         </ComboBox.ItemTemplate>
         <ComboBox.Template>
             <ControlTemplate TargetType="ComboBox">
                 <Grid >
-                    <ToggleButton 
-                        x:Name="ToggleButton" 
+                    <ToggleButton x:Name="ToggleButton" 
                        Grid.Column="2" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                        Focusable="false"                           
-                        ClickMode="Press" HorizontalContentAlignment="Left" >
+                        Focusable="false" ClickMode="Press" HorizontalContentAlignment="Left" >
                         <ToggleButton.Template>
                             <ControlTemplate>
                                 <Grid>

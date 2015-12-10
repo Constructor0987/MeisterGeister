@@ -38,7 +38,6 @@ using MeisterGeister.View.AudioPlayer;
 using VM = MeisterGeister.ViewModel.AudioPlayer;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
-using MeisterGeister.View.AudioPlayer;
 
 namespace MeisterGeister.View.AudioPlayer
 {
@@ -193,16 +192,7 @@ namespace MeisterGeister.View.AudioPlayer
 
         private Point _dragStartPoint;
         TabItemControl AudioTIC = null;
-
-        //public int BGPlayeraktiv
-        //{
-        //    get { return VM.BGPlayeraktiv; }
-        //    set
-        //    {
-        //        VM.BGPlayeraktiv = value;
-        //    }
-        //}
-
+        
         public VM.AudioPlayerViewModel.MusikView BGPlayer
         {
             get { return VM.BGPlayer; }
@@ -237,7 +227,6 @@ namespace MeisterGeister.View.AudioPlayer
 
             BGPlayer = new ViewModel.AudioPlayer.AudioPlayerViewModel.MusikView();
             BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
-         //   BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
 
             VM.setStdPfad();
             VM.fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
@@ -434,7 +423,6 @@ namespace MeisterGeister.View.AudioPlayer
                     VM.KlangProgBarTimer.Stop();
                     VM.MusikProgBarTimer.Stop();
                     VM.workerGetLength.Dispose();
-
                 }
                 if (VM.workerGetLength.IsBusy)
                     VM.workerGetLength.Dispose();
@@ -954,35 +942,13 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void lbErwPlayerMusik_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0)
-            {
-                if (lbMusik.SelectedItem == null ||
-                    lbMusik.SelectedIndex != lbErwPlayerMusik.SelectedIndex)
-                    lbMusik.SelectedIndex =
-                        VM.FilteredMusikPlaylistItemListe.FindIndex(t =>
-                            t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID);
-
-                //lbErwPlayerMusik.ScrollIntoView(e.AddedItems[0]);
-            }
+            if (e.AddedItems.Count > 0 &&
+               (lbMusik.SelectedItem == null || lbMusik.SelectedIndex != lbErwPlayerMusik.SelectedIndex))
+                    lbMusik.SelectedIndex = VM.FilteredMusikPlaylistItemListe.FindIndex(t =>
+                        t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID);            
         }
 
-        private void lbMusik_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                if ((lbErwPlayerMusik.SelectedItem == null ||
-                    lbMusik.SelectedIndex != lbErwPlayerMusik.SelectedIndex) &&
-                    VM.SelectedMusikPlaylistItem != null)
-                {
-
-                    //lbErwPlayerMusik.SelectedIndex =
-                    //    VM.FilteredErwPlayerMusikListItemListe.FindIndex(t =>
-                    //        t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID);
-                }
-                //lbMusik.ScrollIntoView(e.AddedItems[0]);
-            }
-        }
-
+        
         double HOffset = 0;
         private void Slider_MouseMove(object sender, MouseEventArgs e)
         {
@@ -1000,16 +966,15 @@ namespace MeisterGeister.View.AudioPlayer
         private void Slider_MouseLeave(object sender, MouseEventArgs e)
         {
             ((ToolTip)(sender as Slider).ToolTip).IsOpen = false;
+            if (BGPlayer.AktPlaylistTitel != null)
+                Global.ContextAudio.Update<Audio_Playlist_Titel>(BGPlayer.AktPlaylistTitel);
         }
 
         private void grdEditorX_DragEnter(object sender, DragEventArgs e)
         {
             try
             {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                    e.Effects = DragDropEffects.Copy;
-                else
-                    e.Effects = DragDropEffects.None;
+                e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop)? DragDropEffects.Copy : DragDropEffects.None;
             }
             catch (Exception ex)
             {
@@ -1032,15 +997,6 @@ namespace MeisterGeister.View.AudioPlayer
             }
         }
 
-        private void btnAudioSpeedButtonWesenZuweisen_Click(object sender, RoutedEventArgs e)
-        {
-            VM.CurrentPlaylist =
-                (VM.AktKlangPlaylist != null && !VM.AktKlangPlaylist.Hintergrundmusik) ? VM.AktKlangPlaylist :
-                (VM.AktKlangPlaylist == null || VM.AktKlangPlaylist.Hintergrundmusik) ? Global.ContextAudio.PlaylistListe.FirstOrDefault(t => !t.Hintergrundmusik) : null;
-            PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(VM.CurrentPlaylist);
-            wesenAuswahlView.ShowDialog();
-        }
-
         private void tcAudioPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (tiMusik.IsSelected && lbMusik.SelectedItem != null)
@@ -1060,5 +1016,17 @@ namespace MeisterGeister.View.AudioPlayer
             int i = lbMusikTitelList.SelectedIndex;
             if (i != -1) lbMusikTitelList.ScrollIntoView(lbMusikTitelList.Items[i]);
         }
+
+        private void btnAudioSpeedButtonWesenZuweisen_Click(object sender, RoutedEventArgs e)
+        {
+            VM.CurrentPlaylist =
+                (VM.AktKlangPlaylist != null && !VM.AktKlangPlaylist.Hintergrundmusik) ? VM.AktKlangPlaylist :
+                (VM.AktKlangPlaylist == null || VM.AktKlangPlaylist.Hintergrundmusik) ? Global.ContextAudio.PlaylistListe.FirstOrDefault(t => !t.Hintergrundmusik) : null;
+            PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(VM.CurrentPlaylist);
+            wesenAuswahlView.ShowDialog();
+        }
+        
     }
 }
+
+

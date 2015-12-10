@@ -73,6 +73,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Menu ItemsSource="{Binding LandschaftsGruppen}" IsMainMenu="True" Grid.Row="0">
@@ -116,6 +117,9 @@
 
         <ScrollViewer Grid.Row="2">
             <ItemsControl Name="pflanzenliste" ItemsSource="{Binding SichtbarePflanzen}">
+                <ItemsControl.GroupStyle>
+
+                </ItemsControl.GroupStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type Model:Pflanze}">
 
@@ -126,7 +130,7 @@
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <ItemsControl ItemsSource="{Binding Pflanze_Typ}" VerticalAlignment="Center">
@@ -140,9 +144,8 @@
                                 <General:LiteraturControl Grid.Column="1" Width="25" Height="25" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding Name}" Grid.Column="2" VerticalAlignment="Center"/>
 
-                                <ListBox ItemsSource="{Binding Pflanze_Verbreitung,Converter={StaticResource verbreitungConverter}}"
-                                         SelectedValue="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.Suche, Mode=TwoWay}"
-                                         Grid.Column="3" VerticalAlignment="Center" General:ListBoxBehaviour.DeselectOnClick="True">
+                                <ListBox ItemsSource="{Binding Pflanze_Verbreitung,Converter={StaticResource verbreitungConverter}}" Grid.Column="3" VerticalAlignment="Center"
+                                         SelectedValue="{Binding ElementName=suche,Path=DataContext.Pflanze,Mode=TwoWay}">
                                     <ItemsControl.GroupStyle>
                                         <GroupStyle>
                                             <GroupStyle.HeaderTemplate>
@@ -169,32 +172,16 @@
                                             </GroupStyle.HeaderTemplate>
                                         </GroupStyle>
                                     </ItemsControl.GroupStyle>
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                            <Setter Property="ContentTemplate">
-                                                <Setter.Value>
-                                                    <DataTemplate DataType="Model:Pflanze_Verbreitung">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Margin="8,0,0,0" Text="{Binding Landschaft.Name}"/>
-                                                            <!--<TextBlock Text="{Binding Verbreitung, StringFormat={}{0:+0;-0}}" Margin="4,0,0,0"/>-->
-                                                            
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="ContentTemplate">
-                                                        <Setter.Value>
-                                                            <DataTemplate DataType="Model:Pflanze_Verbreitung">
-                                                                <Karte:PflanzenSucheView DataContext="{Binding Suche}"/>
-                                                            </DataTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type Model:Pflanze_Verbreitung}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Margin="8,0,0,0" Text="{Binding Landschaft.Name}"/>
+                                                <!--<TextBlock Text="{Binding Verbreitung, StringFormat={}{0:+0;-0}}" Margin="4,0,0,0"/>-->
+
+                                            </StackPanel>
+
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
                                 </ListBox>
                             </Grid>
                         </Border>
@@ -202,5 +189,9 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+
+        <Karte:PflanzenSucheView x:Name="suche" Grid.Row="3"/>
+
+
     </Grid>
 </UserControl>

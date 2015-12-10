@@ -10,6 +10,59 @@
              xmlns:local="clr-namespace:MeisterGeister.View.ZooBot"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="765" Loaded="UserControl_Loaded">
+
+
+    <UserControl.Resources>
+        <Karte:PflanzeVerbreitungListViewConverter x:Key="verbreitungConverter"/>
+
+        <!--<DataTemplate x:Key="pflanzenTyp">
+            <Grid>
+                <Rectangle/>
+                <Image x:Name="img" ToolTip="{Binding}" Margin="3"/>
+                <TextBlock x:Name="alle" Text="Alle" FontSize="20" Visibility="Hidden"/>
+            </Grid>
+
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding}" Value="{x:Static System:String.Empty}">
+                    <Setter TargetName="alle" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="img" Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Nutzpflanze">
+                    <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Ahorn.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Giftpflanze">
+                    <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Gift.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Droge">
+                    <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Drug.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Heilpflanze">
+                    <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Herz.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Übernatürliche Pflanze">
+                    <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Special.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Gefährliche Pflanze">
+                    <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Gefahr.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Parasit">
+                    <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Parasit.png"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>-->
+
+        <DataTemplate x:Key="groupTemplate">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}" VerticalAlignment="Center"/>
+                <TextBlock Margin="6,0,0,0" Text="{Binding Gruppe.Name}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="landschaftTemplate">
+            <TextBlock Text="{Binding Landschaft.Name}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -148,24 +201,75 @@
                                     </StackPanel>
                                 </Button>
 
+                                <StackPanel Grid.Column="4" Grid.ColumnSpan="3" Grid.Row="0" Orientation="Horizontal" Margin="3">
+                                    <CheckBox Content="Ortskenntnis" IsChecked="{Binding Kräuter_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" />
+                                    <CheckBox Content="Geländekunde" IsChecked="{Binding Kräuter_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="15,0" />
+                                </StackPanel>
+
                                 <!--<ComboBox Grid.Column="2" Grid.Row="0" Margin="90,4,0,4" HorizontalAlignment="Stretch" ToolTip="Gebiet" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}"
                                           ItemsSource="{Binding GebietListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding GebietSelected}" DisplayMemberPath="Name" />-->
                                 <!-- ItemsSource="{Binding RegionenNamen}" SelectedItem="{Binding RegionSelected}" -->
-                                <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
-
+                                <Label Grid.Column="0" Grid.Row="1" Content="Landschaft" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="0,-3,0,11" />
+                                <CheckBox Name="cbAlleLandschaften" Grid.Column="0" Grid.Row="1" Content="Alle" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                                          IsChecked="{Binding cbAlleLandschaften}" />
+                                          <!--Command="{Binding OnAlleLandschaft}" CommandParameter="{Binding ElementName=cbAlleLandschaften}" />-->
                                 <!--<ComboBox Name="_cmbxLandschaft" Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Landschaft" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
                                           ItemsSource="{Binding LandschaftGebietListe, UpdateSourceTrigger=PropertyChanged}" 
                                           SelectedItem="{Binding Kräuter_LandschaftGebietSelected}" PreviewMouseDown="ComboBox_PreviewMouseDown" 
                                           DisplayMemberPath="Name" />-->
 
-                                <ZooBot:MultiSelectComboBox x:Name="mComboGebieteSelected" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 
+                                <!--<ZooBot:MultiSelectComboBox x:Name="mComboGebieteSelected" Grid.Column="6" Grid.Row="1" Grid.ColumnSpan="2" 
                                     ItemsSource="{Binding LandschaftGebietListeString, UpdateSourceTrigger=PropertyChanged}" 
                                     SelectedItems="{Binding Kräuter_LandschaftGebieteSelected}" Margin="3,4,0,4" 
-                                    ToolTip="{Binding Path=Text, RelativeSource={RelativeSource Self}}" BorderBrush="#FF707070" />
+                                    ToolTip="{Binding Path=Text, RelativeSource={RelativeSource Self}}" BorderBrush="#FF707070" MouseLeave="mComboGebieteSelected_MouseLeave" />-->
+
+                                <Menu Background="{x:Null}" ItemsSource="{Binding LandschaftsGruppen}" IsMainMenu="True" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="6" Margin="0,0,10,0" 
+                                      MouseLeave="mComboGebieteSelected_MouseLeave">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemContainerStyle>
+                                        <Style TargetType="MenuItem">
+                                            <Setter Property="ViewGeneral:UIElementBehavior.ViewModel" Value="{Binding}"/>
+                                            <Setter Property="ItemsSource" Value="{Binding Landschaften}"/>
+                                            <Setter Property="HeaderTemplate" Value="{StaticResource groupTemplate}"/>
+                                            <Setter Property="ItemContainerStyle">
+                                                <Setter.Value>
+                                                    <Style TargetType="MenuItem">
+                                                        <Setter Property="StaysOpenOnClick" Value="True"/>
+                                                        <Setter Property="IsCheckable" Value="True"/>
+                                                        <Setter Property="IsChecked" Value="{Binding IsChecked,Mode=TwoWay}"/>
+                                                        <Setter Property="HeaderTemplate" Value="{StaticResource landschaftTemplate}"/>
+                                                    </Style>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ItemsControl.ItemContainerStyle>
+                                </Menu>
                                 
                                 
+                                <!--<WrapPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="6" Orientation="Horizontal" Margin="5" >
+                                    <CheckBox Content="sonstiges" Margin="5,0" />
+                                    <CheckBox Content="Höhlen, Ruinen" Margin="5,0" Command="{Binding OnHöhlenRuinen}" IsChecked="{Binding LandschaftHöhlenRuinen}" />
+                                    <CheckBox Content="Gebirge" Margin="5,0" />
+                                    <CheckBox Content="Hochland"  Margin="5,0" />
+                                    <CheckBox Content="Sumpf, Moor"  Margin="5,0" />
+                                    <CheckBox Content="Grasland, Wiesen" Margin="5,0" />
+                                    <CheckBox Content="Steppe, Buschland" Margin="5,0" />
+                                    <CheckBox Content="Wüste, Wüstenrand"  Margin="5,0" />
+                                    <CheckBox Content="Eis"  Margin="5,0" />
+                                    <CheckBox Content="Wald" Margin="5,0" />
+                                    <CheckBox Content="Waldrand" Margin="5,0" />
+                                    <CheckBox Content="Flüsse, Teiche, Seen" Margin="5,0" />
+                                    <CheckBox Content="Flussauen" Margin="5,0" />
+                                    <CheckBox Content="Regenwald" Margin="5,0" />
+                                </WrapPanel>-->
+
+
                                 <!--ItemsSource="{Binding LandschaftenNamen}" SelectedItem="{Binding Kräuter_LandschaftSelected}" -->
-                                
+
                                 <Label Grid.Column="0" Grid.Row="2" Content="Pflanze" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,3" />
 
                                 <ComboBox Name="cmbxPflanze" Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Stretch" ToolTip="Pflanze" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Grid.ColumnSpan="2" 
@@ -193,12 +297,23 @@
                                 </ComboBox>
                                 <!-- PflanzenNamen-->
                                 <ViewGeneral:LiteraturControl Grid.Column="3" Grid.Row="2" LiteraturAnzeigeArt="NurIcon" Literaturangabe="{Binding LiteraturAusgewähltePflanze}" Height="20" />
-                                
-                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Content="Ortskenntnis" IsChecked="{Binding Kräuter_HatOrtskenntnis}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
-                                <CheckBox Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Content="Geländekunde" IsChecked="{Binding Kräuter_HatGeländekunde}" VerticalAlignment="Center" FontWeight="Bold" Margin="0,8" />
 
                                 <Label Grid.Column="4" Grid.Row="2" Content="Zuschlag" Margin="15,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
-                                <TextBox Grid.Column="5" Grid.Row="2" IsReadOnly="True" Margin="5" Text="{Binding Kraeuter_Zuschlag}" />
+                                <TextBox Grid.Column="5" Grid.Row="2" IsReadOnly="True" Margin="5" Text="{Binding Kraeuter_Zuschlag}" 
+                                    Visibility="{Binding PflanzeSelectedBekannt, TargetNullValue=Hidden}" >
+                                    <TextBox.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding PflanzeSelected.Bestimmung, StringFormat='Pflanzenbestimmung +\{0\}'}" />
+                                            <TextBlock Text="{Binding Landschaftsverbreitung.Verbreitung, StringFormat='Verbreitungsmodifikation +\{0\}'}" />
+                                        </StackPanel>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+
+                                <StackPanel Grid.Column="6" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center"
+                                            Visibility="{Binding PflanzeSelectedBekannt, TargetNullValue=Collapsed}">
+                                    <TextBlock Text="{Binding PflanzeSelected.Bestimmung, StringFormat='Bestimmung +\{0\}, '}" />
+                                    <TextBlock Text="{Binding Landschaftsverbreitung.Verbreitung, StringFormat='Verbreitung +\{0\}'}" />
+                                </StackPanel>
 
                                 <CheckBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Verdopplung der Suchdauer" IsChecked="{Binding Kräuter_HatSuchdauerVerdoppelt}" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
 

@@ -328,6 +328,11 @@
                                 <TextBlock Margin="4,0,0,0" Text="Suchen nicht gefundener Dateien in allen Standard-Pfaden" Width="398" TextWrapping="WrapWithOverflow" />
                             </StackPanel>
 
+                            <StackPanel Margin="4,10" Orientation="Horizontal">
+                                <CheckBox x:Name="_checkboxShowPlaylistFavorite" Margin="2" IsChecked="{Binding IsShowPlaylistFavorite, Mode=TwoWay}" />
+                                <TextBlock Margin="4,0,0,0" Text="Favoriten-Playlisten in separatem Fenster zeigen" Width="398" TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
+
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
                                 <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />

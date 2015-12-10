@@ -26,7 +26,10 @@
 
                     <Expander IsExpanded="True" Margin="5,5,130,0" Grid.ColumnSpan="2" >
                         <Expander.Header>
-                            <TextBlock Text="Auswahl Playlist" Style="{DynamicResource TextTitel}" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Image Source="/Images/Icons/General/speaker.png" Margin="0,2,0,-2" />
+                                <TextBlock Text="Auswahl Playlist" Style="{DynamicResource TextTitel}" />
+                            </StackPanel>
                         </Expander.Header>
                         <Border Grid.Column="0" Style="{DynamicResource ControlContentBorder}"  >
                             <Grid>
@@ -85,7 +88,8 @@
                     <Expander Grid.Row="1" IsExpanded="True" Margin="5,5,5,0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Auswahl Helden" />
+                                <Image Source="/Images/Icons/helden.png" />
+                                <TextBlock VerticalAlignment="Center" Margin="0" Style="{DynamicResource TextTitel}" Text="Auswahl Helden" />
                             </StackPanel>
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
@@ -148,7 +152,8 @@
                     <Expander Grid.Row="1" Grid.Column="1" IsExpanded="True" Margin="5,5,5,0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Auswahl Gegner" />
+                                <Image Source="/Images/Icons/gegner.png"  />
+                                <TextBlock VerticalAlignment="Center" Style="{DynamicResource TextTitel}" Text="Auswahl Gegner" />
                             </StackPanel>
                         </Expander.Header>
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -222,7 +227,13 @@
                     </Grid.ColumnDefinitions>
 
                     <TabControl Background="{StaticResource Background1}" Grid.ColumnSpan="3" Margin="30,0,30,10" >
-                        <TabItem Header="Helden" Selector.IsSelected="{Binding Held2Aktiv, UpdateSourceTrigger=PropertyChanged}">
+                        <TabItem  Selector.IsSelected="{Binding Held2Aktiv, UpdateSourceTrigger=PropertyChanged}">
+                            <TabItem.Header>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
+                                    <Image Source="/Images/Icons/helden.png" Height="15" />
+                                    <TextBlock Text="Helden" />
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Border Style="{DynamicResource ControlContentBorder}">
                                     <StackPanel>
@@ -253,7 +264,13 @@
                             </Grid>
                         </TabItem>
 
-                        <TabItem Header="Gegner" Selector.IsSelected="{Binding Gegner2Aktiv, UpdateSourceTrigger=PropertyChanged}">
+                        <TabItem Selector.IsSelected="{Binding Gegner2Aktiv, UpdateSourceTrigger=PropertyChanged}">
+                            <TabItem.Header>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
+                                    <Image Source="/Images/Icons/gegner.png" Height="15" />
+                                    <TextBlock Text="Gegner" />
+                                </StackPanel>
+                            </TabItem.Header>
                             <Grid>
                                 <Border Style="{DynamicResource ControlContentBorder}">
                                     <StackPanel>
@@ -288,7 +305,8 @@
                     <Expander Grid.Row="1" Grid.ColumnSpan="2" IsExpanded="True" Margin="5,5,5,0">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Auflistung der Playlisten" />
+                                <Image Source="/Images/Icons/General/speaker.png" Margin="0,2,0,-2" />
+                                <TextBlock VerticalAlignment="Center" Style="{DynamicResource TextTitel}" Text="Auflistung der Playlisten" />
                             </StackPanel>
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
