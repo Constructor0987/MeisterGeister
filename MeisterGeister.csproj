@@ -379,6 +379,7 @@
     <Compile Include="Model\Pflanze_Typ_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+	<Compile Include="Model\Pflanze_Verbreitung.cs" />
     <Compile Include="Model\Polygon.cs" />
     <Compile Include="Model\Gebiet_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -909,6 +910,7 @@
     </Compile>
     <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\Beschwörung\DämonenListViewConverter.cs" />
+	<Compile Include="View\General\ListBoxBehaviour.cs" />
     <Compile Include="View\General\LiteraturControl.xaml.cs">
       <DependentUpon>LiteraturControl.xaml</DependentUpon>
     </Compile>
