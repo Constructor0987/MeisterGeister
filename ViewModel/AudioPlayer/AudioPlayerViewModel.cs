@@ -365,7 +365,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             return this;
         }
     }
-
+    
     public class IsNullOrEmptyToBoolConverter : System.Windows.Markup.MarkupExtension, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -477,7 +477,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             LbEditorMitGeräusche = true;
             LbEditorMitMusik = true;
             
-            //_timerBGFadingOut.Tick += new EventHandler(_timerBGFadingOut_Tick);
             _timerFadingIn.Tick += new EventHandler(_timerFadingIn_Tick);
             _timerFadingOut.Tick += new EventHandler(_timerFadingOut_Tick);
             _timerFadingOutGeräusche.Tick += new EventHandler(_timerFadingOutGeräusche_Tick);
@@ -505,15 +504,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 AktKlangPlaylist = _GrpObjecte.FirstOrDefault(t => t.visuell).aPlaylist;
             }
             SelectedEditorItem = EditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == AktKlangPlaylist);
-            //if (AktKlangTheme == null)
-            //{
-            //    NeuesKlangThemeInDB("");
-            //    //UpdateAlleListen();
-            //    FilterThemeEditorPlaylistListe();
-            //    FilterErwPlayerThemeListe();
-
-            //    SelectedEditorThemeItem = FilteredEditorThemeListBoxItemListe.FirstOrDefault(t => t.ATheme == AktKlangTheme);
-            //}
             firstshot = false;        
         }
 
@@ -4702,17 +4692,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 fadInfo.lookupVol = BGPlayerVolume;
                 fadInfo.fadingOutSofort = sofort;
                 fadInfo.mPlayerStoppen = playerStoppen;
-                MyTimer.stop_timer("FadingOut geklickt");
 
                 if (BG.mPlayer != null && BG.mPlayer == FadingIn_Started)
                 {
                     fadInfo.startVol = FadingIn_Started.Volume;
                     fadInfo.fadingInStartet = fadInInfo.fadingInStartet;
-                    MyTimer.stop_timer("FadingOut: FadingIn Zeit notiert");
                 }
                 else
                     fadInfo.startVol = BG.mPlayer.Volume;
-                MyTimer.stop_timer("FadingOut: Start-Volume gesetzt = " + fadInfo.startVol);
 
                 dtimer.Tag = fadInfo;
                 dtimer.Start();
@@ -4730,8 +4717,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             if (fadInfo.Start == DateTime.MinValue)
             {
                 fadInfo.Start = DateTime.Now;
-                fadInfo.fadingOutStartet = fadInfo.Start;
-                MyTimer.stop_timer("FadingOut: Startzeit gesetzt" + fadInfo.Start.ToString());                
+                fadInfo.fadingOutStartet = fadInfo.Start;            
             }
 
             if (fadInfo.fadingInStartet != DateTime.MinValue) 
@@ -4743,7 +4729,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     FadingOut_Started = null;
                     ((DispatcherTimer)sender).Stop();
                     _listMusikFadingOut.Remove(((DispatcherTimer)sender));
-                    MyTimer.stop_timer("FadingOut: Beendet - FadingIn hat Vorrang");
                     return;
                 }
             }      
@@ -4786,7 +4771,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                             //setNewLbFading(fadInfo.BG.mPlayer, "Backgroundmusik gestoppt");
                             fadInfo.mp.Stop();
                             fadInfo.mp.Close();
-                            MyTimer.stop_timer("FadingOut: Stop");
 
                             //MusikAktiv-Daten Löschen aus dem Speicher
                             if (MusikAktiv == BGPlayer.BG.FirstOrDefault(t => t.mPlayer == fadInfo.mp))
@@ -4802,7 +4786,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         FadingOut_Started = null;
                         ((DispatcherTimer)sender).Stop();
                         _listMusikFadingOut.Remove(((DispatcherTimer)sender));
-                        MyTimer.stop_timer("FadingOut: Beendet weil Volume = 0");
                     }
                 }
             }
@@ -4815,7 +4798,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 (klZeile != null || BG != null) && 
                 ((Fading)_timerFadingIn.Tag).mp != mplayer)              //Anderer Fading-In am laufen -> Abbrechen
             {
-                MyTimer.stop_timer("FadingIn: Anderer FadingIn wird beendet");
                 _timerFadingIn.Stop();
                 ((Fading)_timerFadingIn.Tag).mp.Pause();
                 ((Fading)_timerFadingIn.Tag).mp.Position = TimeSpan.FromMilliseconds(0);
@@ -4837,30 +4819,20 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             fadInInfo.startVol = 0;
             fadInInfo.lookupVol = BGPlayerVolume;
 
-            MyTimer.stop_timer("FadingIn: geklickt");
-
             DispatcherTimer fadOut = _listMusikFadingOut.FirstOrDefault(t => ((Fading)t.Tag).mp == mplayer);
             if (fadOut != null)
             {
                 fadInInfo.startVol = mplayer.Volume;
-                if (fadOut.IsEnabled)
-                {                    
-                    fadInInfo.fadingOutStartet = ((Fading)fadOut.Tag).fadingOutStartet;// fadOut.
-                    MyTimer.stop_timer("FadingIn: FadingOut Zeit notiert");
-                }
+                if (fadOut.IsEnabled)                       
+                    fadInInfo.fadingOutStartet = ((Fading)fadOut.Tag).fadingOutStartet;
             }
             else
             {
                 mplayer.Volume = 0;
-                MyTimer.stop_timer("FadingIn: Volume auf 0");
             }
-            MyTimer.stop_timer("FadingIn: Start-Volume gesetzt = " + fadInInfo.startVol);
             
             if (!(fadOut != null && fadOut.IsEnabled))
-            {
                 mplayer.Play();
-                MyTimer.stop_timer("FadingIn: Play");
-            }
 
             _timerFadingIn.Tag = fadInInfo;
             _timerFadingIn.Start();
@@ -4874,7 +4846,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             {
                 fadInfo.Start = DateTime.Now;
                 fadInfo.fadingInStartet = fadInfo.Start;
-                MyTimer.stop_timer("FadingIn: Startzeit gesetzt" + fadInfo.Start.ToString());
             }
 
             //Fading In abbrechen weil FadingOut des Titels aktiviert
@@ -4888,7 +4859,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 {
                     FadingIn_Started = null;
                     _timerFadingIn.Stop();
-                    MyTimer.stop_timer("FadingIn: Beendet - FadingOut hat Vorrang");
                     return;
                 }
             }
@@ -4917,7 +4887,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 {
                     FadingIn_Started = null;
                     _timerFadingIn.Stop();
-                    MyTimer.stop_timer("FadingIn: Beendet weil ZielVol erreicht");
                 }
                 stopFadingIn = false;
             }
@@ -8233,10 +8202,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     {
                         _player.Position = TimeSpan.FromMilliseconds(0);
                         // Bis zu 1000ms warten um die Musikdatei auszulesen und die Laufzeit zu ermitteln
-                        MyTimer.start_timer();
                         if (SpinWait.SpinUntil(() => { return _player.NaturalDuration.HasTimeSpan; }, 1000))
                             _player.Position = TimeSpan.FromMilliseconds(posStart.Value);
-                        MyTimer.stop_timer("PlayFile");
                     }
 
                     if (fading)   // ist Musik-Playlist

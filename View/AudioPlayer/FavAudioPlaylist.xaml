@@ -10,9 +10,8 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              MinHeight="70" Closing="_favAudioPlaylist_Closing" ShowInTaskbar="False" Topmost="True" 
              Icon="/DSA MeisterGeister;component/Images/Icons/General/audio.png" WindowStyle="ToolWindow" 
-             Background="{DynamicResource Background1}" SizeToContent="Width" Focusable="False" Left="5"
-             Loaded="_favAudioPlaylist_Loaded">
-
+             Background="{DynamicResource Background1}" Focusable="False" Left="5" Top="0"
+             SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />

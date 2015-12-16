@@ -1,5 +1,9 @@
-﻿using MeisterGeister.Model;
+﻿using MeisterGeister.Logic.Einstellung;
+using MeisterGeister.Logic.Kalender;
+using MeisterGeister.Logic.Kalender.DsaTool;
+using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.View.Karte;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,6 +43,27 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref pflanzenTypen, value); }
         }
 
+        private bool _alleLandschaftsGruppen = true;
+        public bool AlleLandschaftsGruppen
+        {
+            get { return _alleLandschaftsGruppen; }
+            set
+            {
+                Set(ref _alleLandschaftsGruppen, value);
+                LandschaftsGruppen.ForEach(t => t.IsChecked = value);
+            }
+        }
+
+        private bool _nurBekanntePflanzenZeigen = false;
+        public bool NurBekanntePflanzenZeigen
+        {
+            get { return _nurBekanntePflanzenZeigen; }
+            set
+            {
+                Set(ref _nurBekanntePflanzenZeigen, value);
+                LadePflanzen();
+            }
+        }
         private List<LandschaftsGruppeViewModel> landschaftsGruppen = new List<LandschaftsGruppeViewModel>();
         public List<LandschaftsGruppeViewModel> LandschaftsGruppen
         {
@@ -54,8 +79,8 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref pflanzenTyp, value); }
         }
 
-        ObservableCollection<Model.Pflanze> pflanzen = new ObservableCollection<Pflanze>();
-        public ObservableCollection<Model.Pflanze> Pflanzen
+        ObservableCollection<Pflanze> pflanzen = new ObservableCollection<Pflanze>();
+        public ObservableCollection<Pflanze> Pflanzen
         {
             get { return pflanzen; }
             protected set { Set(ref pflanzen, value); }
@@ -103,8 +128,70 @@ namespace MeisterGeister.ViewModel.Karte
         }
 
 
+        private Base.CommandBase _onBtnBekanntePflanzenOpen = null;
+        public Base.CommandBase OnBtnBekanntePflanzenOpen
+        {
+            get
+            {
+                if (_onBtnBekanntePflanzenOpen == null)
+                    _onBtnBekanntePflanzenOpen = new Base.CommandBase(BtnBekanntePflanzenOpen, null);
+                return _onBtnBekanntePflanzenOpen;
+            }
+        }        
+        /// <summary>
+        /// Button zum Bestimmen der Gebiete in der aktuellen Position
+        /// </summary>
+        public void BtnBekanntePflanzenOpen(object obj)
+        {
+            BekanntePflanzenView wndBekanntePflanzen = new BekanntePflanzenView();
+            wndBekanntePflanzen.VM.PflanzenAnOrtVM = this;
+            wndBekanntePflanzen.ShowDialog();   
+        }
+
+        
+        public List<Held> HeldenListe
+        {
+            get { return Global.ContextHeld.HeldenGruppeListe; }
+        }
+
+        public Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
+            }
+        }
+
+        private ObservableCollection<object> _monate = new ObservableCollection<object>();
+        public ObservableCollection<object> monate
+        {
+            get { return _monate; }
+            set { Set(ref _monate, value); }
+        }
+
+        private object _monatAuswahl = null;
+        public object MonatAuswahl
+        {
+            get { return _monatAuswahl; }
+            set
+            {
+                Set(ref _monatAuswahl, value);
+                LadePflanzen();
+            }
+        }
         private void LadePflanzen()
         {
+            if (_monatAuswahl == null)
+            {
+                ObservableCollection<object> monList = new ObservableCollection<object>();
+                monList.Add("Komplettes Jahr");
+                foreach (Monat item in Enum.GetValues(typeof(Monat)))
+                    monList.Add(item);
+                monate = monList;
+                MonatAuswahl = monate[0];
+            }
             if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
                 return;
             Pflanzen.Clear();
@@ -119,7 +206,14 @@ namespace MeisterGeister.ViewModel.Karte
             {
                 foreach (var p in g.Pflanze)
                 {
-                    if (pset.Contains(p.PflanzeGUID))
+                    if (pset.Contains(p.PflanzeGUID) || 
+                        (MonatAuswahl as string != "Komplettes Jahr" &&
+                         !p.GetInErnte(((int)MonatAuswahl) + 1)))
+                        continue;
+
+                    //Nicht bekannte Pflanzen überspringen
+                    if (NurBekanntePflanzenZeigen &&
+                        SelectedHeld.Held_Pflanze.Where(t => t.Bekannt).FirstOrDefault(t => t.Pflanze.PflanzeGUID == p.PflanzeGUID) == null)
                         continue;
 
                     pset.Add(p.PflanzeGUID);

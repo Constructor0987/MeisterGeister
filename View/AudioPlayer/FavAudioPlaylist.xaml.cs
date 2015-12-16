@@ -61,11 +61,5 @@ namespace MeisterGeister.View.AudioPlayer
             VM.AudioPlayerVM.SelectedMusikPlaylistItem = VM.AudioPlayerVM.MusikListItemListe.
                 FirstOrDefault(t => t.VM.aPlaylist == VM.SelectedFavPlaylist);
         }
-
-        private void _favAudioPlaylist_Loaded(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.Screen currentMonitor = System.Windows.Forms.Screen.FromHandle(new System.Windows.Interop.WindowInteropHelper(Application.Current.MainWindow).Handle);           
-            this.Top = (currentMonitor.WorkingArea.Height - this.ActualHeight) / 2;            
-        }
     }
 }

@@ -70,12 +70,38 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="16"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Menu ItemsSource="{Binding LandschaftsGruppen}" IsMainMenu="True" Grid.Row="0">
+        <StackPanel  Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Monat:" VerticalAlignment="Center" Margin="2,0,0,0" />
+            <ComboBox ItemsSource="{Binding monate}" SelectedItem="{Binding MonatAuswahl}" 
+                      Margin="3,0" HorizontalAlignment="Stretch" ToolTip="Suchmonat" VerticalAlignment="Center" Height="24" />
+            <Label Content="Held:" VerticalAlignment="Center" Margin="2,0,0,0" />
+            <ComboBox Name="_comboBoxHeld" MinWidth="150" Height="24" Margin="2,0,1,0" ToolTip="Held" VerticalContentAlignment="Center" 
+                      DisplayMemberPath="Name" SelectedItem="{Binding SelectedHeld}" ItemsSource="{Binding HeldenListe}" />
+            <Button Width="26" Height="26" Margin="0,0,10,0" ToolTip="Bekannte Pflanzen" Padding="0"
+                     Command="{Binding OnBtnBekanntePflanzenOpen}" > 
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedHeld}" Value="{x:Null}" >
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Image Source="/Images/Icons/pflanzenschriftrolle.png" HorizontalAlignment="Stretch" Width="26" Height="26" />
+            </Button>
+            <CheckBox Content="Nur bekannte zeigen" ToolTip="Nur dem Helden bekannte Pflanzen anzeigen" VerticalAlignment="Center"
+                    IsChecked="{Binding NurBekanntePflanzenZeigen}" />
+        </StackPanel>
+        <CheckBox Content="Alle" IsChecked="{Binding AlleLandschaftsGruppen}" Margin="8,0" Grid.Row="1" />
+        <Menu ItemsSource="{Binding LandschaftsGruppen}" IsMainMenu="True" Grid.Row="2">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
@@ -102,7 +128,7 @@
 
         <ListBox ItemsSource="{Binding PflanzenTypen}" ItemTemplate="{StaticResource pflanzenTyp}" SelectedValue="{Binding PflanzenTyp,Mode=TwoWay}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Grid.Row="1">
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Grid.Row="3">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="1"/>
@@ -110,11 +136,11 @@
             </ListBox.ItemsPanel>
         </ListBox>
 
-        <!--<DataGrid Grid.Row="2">
+        <!--<DataGrid Grid.Row="3">
             
         </DataGrid>-->
 
-        <ScrollViewer Grid.Row="2">
+        <ScrollViewer Grid.Row="4">
             <ItemsControl Name="pflanzenliste" ItemsSource="{Binding SichtbarePflanzen}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type Model:Pflanze}">
