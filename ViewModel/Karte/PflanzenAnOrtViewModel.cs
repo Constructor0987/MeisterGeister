@@ -42,18 +42,20 @@ namespace MeisterGeister.ViewModel.Karte
             get { return pflanzenTypen; }
             set { Set(ref pflanzenTypen, value); }
         }
-
-        private bool _alleLandschaftsGruppen = true;
-        public bool AlleLandschaftsGruppen
+        
+        private bool? _alleLandschaftsGruppen = true;
+        public bool? AlleLandschaftsGruppen
         {
             get { return _alleLandschaftsGruppen; }
             set
             {
                 Set(ref _alleLandschaftsGruppen, value);
-                LandschaftsGruppen.ForEach(t => t.IsChecked = value);
+
+                if (value != null)
+                    LandschaftsGruppen.ForEach(t => t.IsChecked = value);
             }
         }
-
+        
         private bool _nurBekanntePflanzenZeigen = false;
         public bool NurBekanntePflanzenZeigen
         {
@@ -61,7 +63,7 @@ namespace MeisterGeister.ViewModel.Karte
             set
             {
                 Set(ref _nurBekanntePflanzenZeigen, value);
-                LadePflanzen();
+                RegisterEvents();
             }
         }
         private List<LandschaftsGruppeViewModel> landschaftsGruppen = new List<LandschaftsGruppeViewModel>();
@@ -161,6 +163,7 @@ namespace MeisterGeister.ViewModel.Karte
             {
                 Global.SelectedHeld = value;
                 OnChanged();
+                RegisterEvents();
             }
         }
 
@@ -178,10 +181,11 @@ namespace MeisterGeister.ViewModel.Karte
             set
             {
                 Set(ref _monatAuswahl, value);
-                LadePflanzen();
+                RegisterEvents();
             }
         }
-        private void LadePflanzen()
+
+        public void LadePflanzen()
         {
             if (_monatAuswahl == null)
             {
@@ -280,6 +284,15 @@ namespace MeisterGeister.ViewModel.Karte
                 //Vorgefilterte Pflanzen nach Landschaft auf null setzen damit SichtbarePflanzen sie neu lädt
                 pflanzenInLandschaft = null;
                 OnChanged("SichtbarePflanzen");
+                int i = LandschaftsGruppen.Where(t => t.IsChecked != null).Count(t => t.IsChecked.Value);
+                if (LandschaftsGruppen.Count == i)
+                {
+                    if (AlleLandschaftsGruppen != true) AlleLandschaftsGruppen = true;
+                }
+                else
+                {
+                    if (AlleLandschaftsGruppen != null) AlleLandschaftsGruppen = null;
+                }
             }
         }
 
@@ -342,6 +355,7 @@ namespace MeisterGeister.ViewModel.Karte
         {
             OnChanged("IsChecked");
         }
+        
 
         private List<LandschaftViewModel> landschaften;
         public List<LandschaftViewModel> Landschaften
@@ -368,10 +382,12 @@ namespace MeisterGeister.ViewModel.Karte
             set
             {
                 if (value != null)
+                {
                     foreach (LandschaftViewModel vm in landschaften)
                     {
                         vm.IsChecked = value.Value;
                     }
+                }
             }
         }
 
@@ -391,6 +407,5 @@ namespace MeisterGeister.ViewModel.Karte
             get { return isChecked; }
             set { Set(ref isChecked, value); }
         }
-
     }
 }
