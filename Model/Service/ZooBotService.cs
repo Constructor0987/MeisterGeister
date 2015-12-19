@@ -62,7 +62,7 @@ namespace MeisterGeister.Model.Service
             where G.[Left]<{0} and G.[Right]>{1} and G.[Top]>{2}  and G.[Bot]<{3}
             and P.[Left]<{0} and P.[Right]>{1} and P.[Top]>{2}  and P.[Bot]<{3}";
             sql = String.Format(System.Globalization.CultureInfo.InvariantCulture, sql, dgCoords.X+tolerance, dgCoords.X-tolerance, dgCoords.Y-tolerance, dgCoords.Y+tolerance);
-            var l = Context.ExecuteStoreQuery<Polygon>(sql, "Polygon", System.Data.Entity.Core.Objects.MergeOption.PreserveChanges, null).ToList<Polygon>();
+            var l = Context.ExecuteStoreQuery<Polygon>(sql, "Polygon", System.Data.Entity.Core.Objects.MergeOption.PreserveChanges, null);
             //Hittest
             var l2 = l.Where(p => p.Contains(dgCoords, tolerance)).SelectMany(p => p.Gebiet).Distinct();
             return l2;

@@ -81,6 +81,27 @@ namespace MeisterGeister.Model
             get { return this.Pflanze_Verbreitung.ToList(); }
         }
 
+        public List<Pflanze_Verbreitung> VerbreitungSehrHäufig
+        {
+            get { return Pflanze_Verbreitung.Where(v => v.Verbreitung == (short)EVorkommen.SEHRHAEUFIG).ToList(); }
+        }
+        public List<Pflanze_Verbreitung> VerbreitungHäufig
+        {
+            get { return Pflanze_Verbreitung.Where(v => v.Verbreitung == (short)EVorkommen.HAEUFIG).ToList(); }
+        }
+        public List<Pflanze_Verbreitung> VerbreitungGelegentlich
+        {
+            get { return Pflanze_Verbreitung.Where(v => v.Verbreitung == (short)EVorkommen.GELEGENTLICH).ToList(); }
+        }
+        public List<Pflanze_Verbreitung> VerbreitungSelten
+        {
+            get { return Pflanze_Verbreitung.Where(v => v.Verbreitung == (short)EVorkommen.SELTEN).ToList(); }
+        }
+        public List<Pflanze_Verbreitung> VerbreitungSehrSelten
+        {
+            get { return Pflanze_Verbreitung.Where(v => v.Verbreitung == (short)EVorkommen.SEHRSELTEN).ToList(); }
+        }
+
         public List<Landschaft> Landschaften
         {
             get
@@ -95,7 +116,7 @@ namespace MeisterGeister.Model
         }
                     
 
-        public enum EVorkommen
+        public enum EVorkommen : short
         {
             SEHRHAEUFIG = 1,
             HAEUFIG = 2,

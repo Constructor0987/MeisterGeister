@@ -49,20 +49,20 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        private PflanzenAnOrtViewModel _PflanzenAnOrtVM;
-        public PflanzenAnOrtViewModel PflanzenAnOrtVM
-        {
-            get { return _PflanzenAnOrtVM; }
-            set
-            {
-                Set(ref _PflanzenAnOrtVM, value);
-                if (value != null)
-                {
-                    InitPflanzenListe();
-                    OnChanged("BekannteHeldenPflanzen");
-                }
-            }
-        }     
+        //private PflanzenAnOrtViewModel _PflanzenAnOrtVM;
+        //public PflanzenAnOrtViewModel PflanzenAnOrtVM
+        //{
+        //    get { return _PflanzenAnOrtVM; }
+        //    set
+        //    {
+        //        Set(ref _PflanzenAnOrtVM, value);
+        //        if (value != null)
+        //        {
+        //            InitPflanzenListe();
+        //            OnChanged("BekannteHeldenPflanzen");
+        //        }
+        //    }
+        //}     
            
         public List<Held_Pflanze> BekannteHeldenPflanzen
         {
@@ -156,7 +156,7 @@ namespace MeisterGeister.ViewModel.Karte
             List<Model.Pflanze> uListe = new List<Model.Pflanze>();
             
             uListe = new List<Pflanze>();
-            uListe = PflanzenAnOrtVM.Pflanzen.OrderBy(t => t.Name).ToList();
+            //uListe = PflanzenAnOrtVM.Pflanzen.OrderBy(t => t.Name).ToList();
 
             PflanzenListe = uListe;
             FilteredPflanzenListe = PflanzenListe;

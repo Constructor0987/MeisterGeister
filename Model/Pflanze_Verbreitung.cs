@@ -1,4 +1,5 @@
-﻿using MeisterGeister.ViewModel.Karte;
+﻿using MeisterGeister.Logic.Kalender;
+using MeisterGeister.ViewModel.Karte;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace MeisterGeister.Model
 {
     public partial class Pflanze_Verbreitung
     {
-        public PflanzenSucheViewModel Suche
+        public int Suchschwierigkeit
         {
             get
             {
-                return new PflanzenSucheViewModel() { Pflanze = this };
+                return Pflanze.Bestimmung + Verbreitung;
             }
         }
     }

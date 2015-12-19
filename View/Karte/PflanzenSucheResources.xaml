@@ -1,0 +1,103 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MeisterGeister.View.Karte"
+                    xmlns:General="clr-namespace:MeisterGeister.View.General"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+
+    <General:EnumToStringConverter x:Key="enumToStringConverter"/>
+    
+    <DataTemplate x:Key="pflanzenTypIcon">
+        <Image DockPanel.Dock="Left" x:Name="img" ToolTip="{Binding}"/>
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding}" Value="Nutzpflanze">
+                <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Ahorn.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Giftpflanze">
+                <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Gift.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Droge">
+                <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Drug.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Heilpflanze">
+                <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Herz.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Übernatürliche Pflanze">
+                <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Special.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Gefährliche Pflanze">
+                <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Gefahr.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Parasit">
+                <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Pflanzen/Parasit.png"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate x:Key="gridTypeTemplate">
+        <ItemsControl ItemsSource="{Binding Pflanze_Typ}" VerticalAlignment="Center">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding Typ}" Margin="3" ContentTemplate="{StaticResource pflanzenTypIcon}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ernteTemplate">
+        <ItemsControl ItemsSource="{Binding}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="4,0,0,0" TextWrapping="WrapWithOverflow" x:Name="text">
+                        <Run Text="{Binding Grundmenge,Mode=OneWay}"/> <Run Text="{Binding Pflanzenteil,Mode=OneWay}"/>
+                        <TextBlock.ToolTip>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" x:Name="rowBemerkung"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Verfügbarkeit: " HorizontalAlignment="Left"/>
+                                <TextBlock Grid.Column="1" x:Name="textMonate" HorizontalAlignment="Left">
+                                    <Run Text="{Binding VonMonat,Mode=OneWay,Converter={StaticResource enumToStringConverter}}" x:Name="von"/>-<Run Text="{Binding BisMonat,Mode=OneWay,Converter={StaticResource enumToStringConverter}}" x:Name="bis"/>
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" x:Name="textGanzesJahr" Text="Ganzes Jahr" HorizontalAlignment="Left"/>
+                                <TextBlock Text="Haltbarkeit: " Grid.Row="1" HorizontalAlignment="Left"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+                                    <Run Text="{Binding Haltbarkeit,Mode=OneWay}"/> <Run Text="{Binding HaltbarkeitEinheit}"/>
+                                </TextBlock>
+                                <TextBlock MaxWidth="500" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Bemerkung}" TextWrapping="WrapWithOverflow" x:Name="bemerkung"/>
+                            </Grid>
+                        </TextBlock.ToolTip>
+                    </TextBlock>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Verfügbar}" Value="False">
+                            <Setter TargetName="text" Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Bemerkung}" Value="{x:Static System:String.Empty}">
+                            <Setter TargetName="bemerkung" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="rowBemerkung" Property="Height" Value="0"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding GanzesJahrVerfügbar}" Value="True">
+                            <Setter TargetName="textMonate" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding GanzesJahrVerfügbar}" Value="False">
+                            <Setter TargetName="textGanzesJahr" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DataTemplate>
+
+</ResourceDictionary>

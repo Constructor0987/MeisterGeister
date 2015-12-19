@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="MeisterGeister.View.Karte.PflanzenSucheAllgemeinView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Karte"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             General:UIElementBehavior.ViewModel="{Binding}"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.DataContext>
+        <vm:PflanzenSucheAllgemeinViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="PflanzenSucheResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="groupTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}" VerticalAlignment="Center"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding Gruppe.Name}"/>
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="landschaftTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}" VerticalAlignment="Center"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding Landschaft.Name}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}" Margin="5,4,0,0"/>
+        <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}" Grid.Row="1">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <System:Boolean>false</System:Boolean>
+            <System:Boolean>true</System:Boolean>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="1 Stunde suchen" x:Name="text"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="True">
+                            <Setter TargetName="text" Property="Text" Value="2 Stunden suchen"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock Margin="5,0,0,4" Grid.Row="2">
+            Suche mit <Bold>Kräutersuchen (MU/IN/FF) <Run Text="{Binding TaW,Mode=OneWay}"/></Bold> in folgenden Landschaften:
+        </TextBlock>
+        <TreeView ItemsSource="{Binding SichtbareLandschaftsGruppen}" Grid.Row="3" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="General:UIElementBehavior.ViewModel" Value="{Binding}"/>
+                    <Setter Property="ItemsSource" Value="{Binding SichtbareLandschaften}"/>
+                    <Setter Property="HeaderTemplate" Value="{StaticResource groupTemplate}"/>
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}"/>
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="TreeViewItem">
+                                <Setter Property="HeaderTemplate" Value="{StaticResource landschaftTemplate}"/>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </TreeView>
+        <Button Margin="5,4,0,0" Grid.Row="4" Content="Suche nach Kräutern" Command="{Binding Suchen}" HorizontalAlignment="Left"/>
+        <StackPanel Orientation="Horizontal" Margin="5,4,0,0" Grid.Row="5">
+            <TextBlock Text="TaP*:" VerticalAlignment="Center"/>
+            <General:IntBox ShowButtons="True" Margin="4" Value="{Binding TaP}"/>
+            <Button Command="{Binding FindeAnderePflanzen}" Padding="0" MaxHeight="26" ToolTip="Andere Pflanzen finden">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"/>
+            </Button>
+        </StackPanel>
+        <DataGrid Grid.Row="6" ItemsSource="{Binding Funde}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Typ" Width="25" CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl ContentTemplate="{StaticResource gridTypeTemplate}" Content="{Binding Key}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Pflanze" Width="*" CellStyle="{StaticResource stretchCellStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DockPanel DataContext="{Binding Key}" HorizontalAlignment="Left">
+                                <General:LiteraturControl Width="25" Height="25" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Name}" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" DockPanel.Dock="Right"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Funde" Width="*" CellStyle="{StaticResource stretchCellStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="4,0,0,0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel>
+                                            <TextBlock TextWrapping="WrapWithOverflow" DockPanel.Dock="Top">
+                                                <Bold><Run Text="{Binding Value,Mode=OneWay}" x:Name="anzahl"/></Bold> Fund(e) hier <Run Text="{Binding Key.Landschaft.Name, Mode=OneWay}"/>
+                                            </TextBlock>
+                                            <TextBlock x:Name="textGeländekunde" DockPanel.Dock="Bottom" TextWrapping="WrapWithOverflow">
+                                                (weil <Run Text="{Binding Key.Landschaft.Kundig, Mode=OneWay}"/>)
+                                            </TextBlock>
+                                        </DockPanel>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Value}" Value="0">
+                                                <Setter TargetName="anzahl" Property="Text" Value="Ganz viele"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Key.Landschaft.GeländekundeAktiv}" Value="false">
+                                                <Setter TargetName="textGeländekunde" Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Ernte" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding Key.Pflanze_Ernte}" ContentTemplate="{StaticResource ernteTemplate}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

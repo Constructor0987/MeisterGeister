@@ -2,71 +2,63 @@
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Karte
 {
-    public class PflanzenSucheViewModel : Base.ViewModelBase
+    public abstract class PflanzenSucheViewModel : ViewModelBase
     {
         public PflanzenSucheViewModel() : base(ViewHelper.ShowProbeDialog)
         {
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-            sucheGezielt = new Base.CommandBase((o) => GezielteSuche(), (o) => Global.SelectedHeld != null);
+            Suchen = new CommandBase(o => ExecuteSuche(), o => CanExecuteSuche);
             updateTaW();
         }
 
-        private Base.CommandBase sucheGezielt;
-        public Base.CommandBase SucheGezielt
+        private double tolerance = 0.2;
+        public double Tolerance
         {
-            get { return sucheGezielt; }
-        }
-
-        private Model.Pflanze_Verbreitung pflanze;
-        public Model.Pflanze_Verbreitung Pflanze
-        {
-            get { return pflanze; }
+            get { return tolerance; }
             set
             {
-                Set(ref pflanze, value);
-                checkGeländekunde();
+                Set(ref tolerance, value);
+                LadePflanzen();
             }
         }
 
-        [DependentProperty("Schwierigkeit")]
-        [DependentProperty("Ortskenntnis")]
-        [DependentProperty("Geländekunde")]
-        public int Modifikator
+        private List<LandschaftsGruppeViewModel> landschaftsGruppen = new List<LandschaftsGruppeViewModel>();
+        public virtual List<LandschaftsGruppeViewModel> LandschaftsGruppen
         {
-            get
-            {
-                if (Pflanze == null)
-                    return 0;
-                return Math.Max(0, Schwierigkeit - (Ortskenntnis ? 7 : 0) - (Geländekunde ? 3 : 0));
-            }
+            get { return landschaftsGruppen; }
+            set { Set(ref landschaftsGruppen, value); }
         }
 
-        [DependentProperty("Pflanze")]
-        public int Schwierigkeit
+        private Suchmonat suchmonat = Suchmonat.AktuellerMonat;
+        public Suchmonat Suchmonat
         {
-            get
-            {
-                if (Pflanze == null)
-                    return 0;
-                return Pflanze.Verbreitung + Pflanze.Pflanze.Bestimmung;
-            }
+            get { return suchmonat; }
+            set { Set(ref suchmonat, value); }
         }
 
-        private bool ortskenntnis;
-        public bool Ortskenntnis
+        private List<string> pflanzenTypen = new List<string>();
+        public List<string> PflanzenTypen
         {
-            get { return ortskenntnis; }
-            set { Set(ref ortskenntnis, value); }
+            get { return pflanzenTypen; }
+            set { Set(ref pflanzenTypen, value); }
         }
 
+        private string pflanzenTyp = String.Empty;
+        public string PflanzenTyp
+        {
+            get { return pflanzenTyp; }
+            set { Set(ref pflanzenTyp, value); }
+        }
 
         private bool geländekunde;
         public bool Geländekunde
@@ -74,7 +66,6 @@ namespace MeisterGeister.ViewModel.Karte
             get { return geländekunde; }
             set { Set(ref geländekunde, value); }
         }
-
 
         private int taW = 0;
         public int TaW
@@ -90,21 +81,6 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref taP, value); }
         }
 
-
-        [DependentProperty("Schwierigkeit")]
-        [DependentProperty("TaP")]
-        public int Funde
-        {
-            get
-            {
-                if (TaP == 0 || Schwierigkeit == 0)
-                    return 0;
-                else
-                    return 1 + TaP / (int)Math.Round(Schwierigkeit / 2.0, MidpointRounding.AwayFromZero);
-            }
-        }
-
-
         private bool langeSuchen;
         public bool LangeSuchen
         {
@@ -116,75 +92,227 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        private void updateTaW()
+        protected void updateTaW()
+        {
+            TaW = calculateTaW();
+        }
+
+        protected virtual int calculateTaW()
         {
             if (Global.SelectedHeld == null)
-                TaW = 0;
+                return 0;
             else
             {
                 int pflanzenkunde, sinnenschärfe, wildnisleben;
 
-                if(Global.SelectedHeld.GetHeldTalent("Pflanzenkunde", true, out pflanzenkunde) == null)
+                if (Global.SelectedHeld.GetHeldTalent("Pflanzenkunde", true, out pflanzenkunde) == null)
                 {
-                    TaW = 0;
-                    return;
+                    return 0;
                 }
                 Global.SelectedHeld.GetHeldTalent("Sinnenschärfe", true, out sinnenschärfe);
                 Global.SelectedHeld.GetHeldTalent("Wildnisleben", true, out wildnisleben);
 
                 double mod = LangeSuchen ? 1.5 : 1;
-                TaW = (int)Math.Round(mod * (pflanzenkunde + sinnenschärfe + wildnisleben) / 3.0, MidpointRounding.AwayFromZero);
+                return (int)Math.Round(mod * (pflanzenkunde + sinnenschärfe + wildnisleben) / 3.0, MidpointRounding.AwayFromZero);
             }
         }
 
-        private void checkGeländekunde()
+
+
+
+        private Landschaft überall, fastÜberall;
+
+        private List<LandschaftsGruppeViewModel> sichtbareGruppen;
+
+        private void LadePflanzen()
         {
-            if (Global.SelectedHeld != null && Pflanze != null)
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                return;
+
+            //cache leeren
+            LandschaftViewModels.Clear();
+
+            var typen = getPflanzen().SelectMany(p => p.Pflanze_Typ).Select(t => t.Typ).Distinct();
+            List<Landschaft> landschaften = getPflanzen().SelectMany(p => p.Landschaften).Distinct().ToList();
+
+            //überall = landschaften.Where(l => l.Name == "überall").Single();
+            //fastÜberall = landschaften.Where(l => l.Name.StartsWith("überall ")).Single();
+            //landschaften.Remove(überall);
+            //landschaften.Remove(fastÜberall);
+
+            var gruppen = landschaften.SelectMany(l => l.Landschaftsgruppe).Distinct();
+            var gruppenVM = gruppen.Select(g => new LandschaftsGruppeViewModel(g.Landschaft.Intersect(landschaften), g, LandschaftViewModels));
+            gruppenVM = gruppenVM.Where(vm => vm.Landschaften.Count > 0).OrderBy(vm => vm.Gruppe.Name);
+
+            List<string> temp = typen.ToList();
+            temp.Insert(0, String.Empty);
+            PflanzenTypen = temp;
+
+            LandschaftsGruppen = gruppenVM.ToList();
+            OnChanged("SichtbarePflanzen");
+        }
+
+        private Dictionary<Guid, LandschaftViewModel> landschaftViewModels = new Dictionary<Guid, LandschaftViewModel>();
+        public Dictionary<Guid, LandschaftViewModel> LandschaftViewModels
+        {
+            get { return landschaftViewModels; }
+            protected set { Set(ref landschaftViewModels, value); }
+        }
+
+        private List<Pflanze> sichtbarePflanzen = null;
+
+        [DependentProperty("PflanzenTyp")]
+        [DependentProperty("Suchmonat")]
+        [DependentProperty("FilterGruppe")]
+        public List<Model.Pflanze> SichtbarePflanzen
+        {
+            get
             {
-                Geländekunde = Global.SelectedHeld.HatSonderfertigkeitUndVoraussetzungen(String.Format("Geländekunde ({0})", Pflanze.Landschaft.Kundig));
+                sichtbarePflanzen = filterLandschaft(filterTyp(filterMonat(getPflanzen()))).OrderBy(p => p.Name).ToList();
+                invalidateVerbreitung();
+                return sichtbarePflanzen;
             }
+        }
+
+        private IEnumerable<Pflanze> filterMonat(IEnumerable<Pflanze> pflanzen)
+        {
+            if (Suchmonat == Suchmonat.GanzesJahr)
+                return pflanzen;
+            else
+            {
+                return pflanzen.Where(p => p.Pflanze_Typ.Any(t => t.Typ == "Gefährliche Pflanze") || p.Pflanze_Ernte.Any(e => e.Verfügbar));
+            }
+        }
+
+        private IEnumerable<Pflanze> filterTyp(IEnumerable<Pflanze> pflanzen)
+        {
+            if (PflanzenTyp == String.Empty)
+                return pflanzen;
+            else return pflanzen.Where(p => p.Pflanze_Typ.Any(pt => pt.Typ == PflanzenTyp));
+        }
+
+        protected abstract IEnumerable<Pflanze> filterLandschaft(IEnumerable<Pflanze> pflanzen);
+
+        protected IEnumerable<Gebiet> getGebiete()
+        {
+            return Global.ContextZooBot.GetGebiete(Global.HeldenPosition, Tolerance);
+        }
+
+        protected IEnumerable<Pflanze> getPflanzen()
+        {
+            return getGebiete().SelectMany(g => g.Pflanze).Distinct();
+        }
+
+        private void invalidateVerbreitung()
+        {
+            OnChanged("VerbreitungSehrHäufig");
+            OnChanged("VerbreitungHäufig");
+            OnChanged("VerbreitungGelegentlich");
+            OnChanged("VerbreitungSelten");
+            OnChanged("VerbreitungSehrSelten");
+        }
+
+        public bool VerbreitungSehrHäufig
+        {
+            get { return sichtbarePflanzen.SelectMany(p => p.VerbreitungSehrHäufig).Count() > 0; }
+        }
+        public bool VerbreitungHäufig
+        {
+            get { return sichtbarePflanzen.SelectMany(p => p.VerbreitungHäufig).Count() > 0; }
+        }
+        public bool VerbreitungGelegentlich
+        {
+            get { return sichtbarePflanzen.SelectMany(p => p.VerbreitungGelegentlich).Count() > 0; }
+        }
+        public bool VerbreitungSelten
+        {
+            get { return sichtbarePflanzen.SelectMany(p => p.VerbreitungSelten).Count() > 0; }
+        }
+        public bool VerbreitungSehrSelten
+        {
+            get { return sichtbarePflanzen.SelectMany(p => p.VerbreitungSehrSelten).Count() > 0; }
+        }
+
+        private Base.CommandBase suchen;
+        public Base.CommandBase Suchen
+        {
+            get;
+            private set;
+        }
+
+        public virtual bool CanExecuteSuche
+        {
+            get { return Global.SelectedHeld != null; }
+        }
+
+        public abstract void ExecuteSuche();
+
+        private bool ortskenntnis;
+        public bool Ortskenntnis
+        {
+            get { return ortskenntnis; }
+            set { Set(ref ortskenntnis, value); }
         }
 
         public override void RegisterEvents()
         {
             base.RegisterEvents();
+            LadePflanzen();
+            PropertyChanged += PflanzenSucheViewModel_PropertyChanged;
             Global.HeldSelectionChanged += Global_HeldSelectionChanged;
+            Global.StandortChanged += Global_StandortChanged;
             updateTaW();
         }
 
         public override void UnregisterEvents()
         {
+            Global.StandortChanged -= Global_StandortChanged;
             Global.HeldSelectionChanged -= Global_HeldSelectionChanged;
+            PropertyChanged -= PflanzenSucheViewModel_PropertyChanged;
             base.UnregisterEvents();
+        }
+
+        private void PflanzenSucheViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CanExecuteSuche")
+                Suchen.Invalidate();
         }
 
         private void Global_HeldSelectionChanged(object sender, EventArgs e)
         {
             updateTaW();
-            sucheGezielt.Invalidate();
-            checkGeländekunde();
+            Suchen.Invalidate();
+            OnHeldChanged();
         }
 
-        private void GezielteSuche()
+        private void Global_StandortChanged(object sender, EventArgs e)
+        {
+            UnregisterEvents();
+            RegisterEvents();
+        }
+
+
+        protected virtual void OnHeldChanged()
+        {
+            OnChanged("CanExecuteSuche");
+        }
+
+        protected Probe getProbe()
         {
             Probe probe = new Probe();
-
             probe.Fertigkeitswert = TaW;
             probe.Probenname = "Kräuter suchen";
-            probe.Modifikator = Modifikator;
             probe.WerteNamen = "(MU/IN/FF)";
             probe.Werte = new int[] { Global.SelectedHeld.MU ?? 10, Global.SelectedHeld.IN ?? 10, Global.SelectedHeld.FF ?? 10 };
-
-            ProbenErgebnis e = ShowProbeDialog(probe, Global.SelectedHeld);
-            if (e == null)
-                return;
-
-            TaP = e.Übrig;
+            return probe;
         }
+    }
 
-        private void UngezielteSuche()
-        {
-
-        }
+    public enum Suchmonat
+    {
+        [Description("Ganzes Jahr")]
+        GanzesJahr,
+        [Description("Aktueller Monat")]
+        AktuellerMonat
     }
 }

@@ -1,0 +1,304 @@
+﻿<UserControl x:Class="MeisterGeister.View.Karte.PflanzenSucheGezieltView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeisterGeister.View.Karte"
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Karte"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             General:UIElementBehavior.ViewModel="{Binding}" DataContext="{DynamicResource viewModel}"
+             x:Name="sucheGezielt">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="PflanzenSucheResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <vm:PflanzenSucheGezieltViewModel x:Key="viewModel"/>
+
+            <DataTemplate x:Key="pflanzenTyp">
+                <DockPanel>
+                    <ContentControl DockPanel.Dock="Left" Content="{Binding}" ContentTemplate="{StaticResource pflanzenTypIcon}" x:Name="img" Margin="3" MaxHeight="18" Width="20"/>
+                    <TextBlock DockPanel.Dock="Right" x:Name="text" Text="Alle" VerticalAlignment="Center"/>
+                </DockPanel>
+
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding}" Value="{x:Static System:String.Empty}">
+                        <Setter TargetName="img" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="text" Property="Text" Value="Alle Pflanzen"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="Nutzpflanze">
+                        <Setter TargetName="text" Property="Text" Value="Nutzpflanzen"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="Giftpflanze">
+                        <Setter TargetName="text" Property="Text" Value="Giftpflanzen"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="Droge">
+                        <Setter TargetName="text" Property="Text" Value="Drogen"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="Heilpflanze">
+                        <Setter TargetName="text" Property="Text" Value="Heilpflanzen"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="Übernatürliche Pflanze">
+                        <Setter TargetName="text" Property="Text" Value="Übernatürliche Pflanzen"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="Gefährliche Pflanze">
+                        <Setter TargetName="text" Property="Text" Value="Gefährliche Pflanzen"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding}" Value="Parasit">
+                        <Setter TargetName="text" Property="Text" Value="Parasiten"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <DataTemplate x:Key="verbreitungTemplate">
+                <TextBlock FontSize="11" Text="{Binding Landschaft.Name}" TextWrapping="WrapWithOverflow"/>
+            </DataTemplate>
+
+            <Style TargetType="ListBoxItem" x:Key="verbreitungStyle">
+                <!--<Setter Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ScrollViewer}, Path=ActualWidth}"/>-->
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <ToggleButton Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="Stretch"
+                                      IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}" Margin="0,0,2,0"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}" x:Key="verbreitungListStyle">
+                <Setter Property="ItemTemplate" Value="{StaticResource verbreitungTemplate}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="ItemContainerStyle" Value="{StaticResource verbreitungStyle}"/>
+                <Setter Property="SelectedValue" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.Suche, Mode=TwoWay}"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <!--<Setter Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Border}, Path=ActualWidth}"/>-->
+            </Style>
+
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--<StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Pflanze}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>-->
+        <!--<TextBlock HorizontalAlignment="Center" FontSize="14" FontStyle="Italic" Margin="0,4,0,8">
+            Suche <Run Text="{Binding Pflanze.Pflanze.Name,Mode=OneWay}"/> hier: <Run Text="{Binding Pflanze.Landschaft.Name,Mode=OneWay}"/>
+            </TextBlock>-->
+        <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}" Grid.ColumnSpan="2" Margin="5,4,0,0"/>
+        <CheckBox Content="{Binding Suche.Landschaft.Kundig}" IsChecked="{Binding Geländekunde}" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,4,0,0">
+            <CheckBox.Style>
+                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Suche.Landschaft.Kundig}" Value="{x:Null}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Margin" Value="0"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>
+        </CheckBox>
+
+        <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}" Grid.Row="2" Grid.ColumnSpan="2">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <System:Boolean>false</System:Boolean>
+            <System:Boolean>true</System:Boolean>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="1 Stunde suchen" x:Name="text"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="True">
+                            <Setter TargetName="text" Property="Text" Value="2 Stunden suchen"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,0,4">
+                Suche mit <Bold>Kräutersuchen (MU/IN/FF) <Run Text="{Binding TaW,Mode=OneWay}"/><Run Text="{Binding Modifikator,Mode=OneWay,StringFormat={}{0:+0;-0}}"/></Bold>
+        </TextBlock>
+
+
+        <ComboBox ItemsSource="{Binding PflanzenTypen}" ItemTemplate="{StaticResource pflanzenTyp}" SelectedValue="{Binding PflanzenTyp,Mode=TwoWay}" Grid.Row="4" SelectedIndex="0" VerticalContentAlignment="Center"/>
+        <ComboBox ItemsSource="{Binding LandschaftsGruppen}" SelectedValue="{Binding FilterGruppe}" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" SelectedIndex="0">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock x:Name="text" Text="{Binding Gruppe.Name}" VerticalAlignment="Center"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Gruppe}" Value="{x:Null}">
+                            <Setter TargetName="text" Property="Text" Value="überall"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <DataGrid Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding SichtbarePflanzen}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" x:Name="dataGrid">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Typ" Width="25" CanUserResize="False" CellTemplate="{StaticResource gridTypeTemplate}"/>
+
+                <DataGridTemplateColumn Header="Name" Width="*" CellStyle="{StaticResource stretchCellStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" x:Name="rowErnte"/>
+                                </Grid.RowDefinitions>
+                                <General:LiteraturControl Grid.RowSpan="2" Width="25" Height="25" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" VerticalAlignment="Center"/>
+                                <TextBlock Margin="4,0,0,0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Name}" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                                <TextBlock Margin="4,0,0,0" x:Name="ernteLabel" Text="Ernte:" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
+                                <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Pflanze_Ernte}" x:Name="ernteItems" ContentTemplate="{StaticResource ernteTemplate}"/>
+
+                            </Grid>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Pflanze_Ernte.Count}" Value="0">
+                                    <!--<Setter TargetName="rowErnte" Property="Height" Value="0"/>-->
+                                    <Setter TargetName="ernteItems" Property="Visibility" Value="Collapsed"/>
+                                    <Setter TargetName="ernteLabel" Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
+                                        Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungSehrHäufig, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                    <DataGridTemplateColumn.Header>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="30" ToolTip="Sehr häufig"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding VerbreitungSehrHäufig}" Style="{StaticResource verbreitungListStyle}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
+                                        Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungHäufig, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                    <DataGridTemplateColumn.Header>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="26" ToolTip="Häufig"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding VerbreitungHäufig}" Style="{StaticResource verbreitungListStyle}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
+                                        Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungGelegentlich, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                    <DataGridTemplateColumn.Header>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="22" ToolTip="Gelegentlich"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding VerbreitungGelegentlich}" Style="{StaticResource verbreitungListStyle}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
+                                        Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungSelten, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                    <DataGridTemplateColumn.Header>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="18" ToolTip="Selten"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding VerbreitungSelten}" Style="{StaticResource verbreitungListStyle}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
+                                        Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungSehrSelten, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                    <DataGridTemplateColumn.Header>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="14" ToolTip="Sehr selten"/>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding VerbreitungSehrSelten}" Style="{StaticResource verbreitungListStyle}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="6" Grid.ColumnSpan="2" Command="{Binding Suchen}" Margin="5,4,0,0" HorizontalAlignment="Left">
+            <DockPanel>
+                <TextBlock x:Name="textPflanze">
+                    Suche hier nach <Run Text="{Binding Suche.Pflanze.Name}"/>: <Run Text="{Binding Suche.Landschaft.Name}"/>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Suche}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Text="Suche nach Pflanze in der Liste" x:Name="textAuswahl">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Suche}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </DockPanel>
+        </Button>
+        <StackPanel Orientation="Horizontal" Margin="5,4,0,0" Grid.Row="7" Grid.ColumnSpan="2">
+            <TextBlock Text="TaP*:" VerticalAlignment="Center"/>
+            <General:IntBox ShowButtons="True" Margin="4" Value="{Binding TaP}"/>
+            <TextBlock VerticalAlignment="Center">
+                = <Bold><Run Text="{Binding Funde,Mode=OneWay}"/> Pflanzenfunde</Bold>.
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+
+
+</UserControl>

@@ -18,7 +18,7 @@
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
     </UserControl.Resources>
-    <Border BorderThickness="1" BorderBrush="Gray" Background="White">
+    <Border BorderThickness="0" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent">
             <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
                                MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
@@ -82,8 +82,8 @@
                     </ComboBox>
                 </StackPanel>
             </Border>
-            <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="0,50,0,50">
+            <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-1"/>
+            <Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="0,50,-1,50">
                 <Expander.Header>
                     <TextBlock Style="{StaticResource TextTitel}" Text="Pflanzensuche" HorizontalAlignment="Center"/>
                 </Expander.Header>

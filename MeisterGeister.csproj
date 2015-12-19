@@ -370,12 +370,14 @@
     <Compile Include="Model\Kreatur_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Landschaft.cs" />
     <Compile Include="Model\Landschaftsgruppe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Munition_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Pflanze_Ernte.cs" />
     <Compile Include="Model\Pflanze_Typ_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -662,10 +664,10 @@
     <Compile Include="ViewModel\Kalender\Logic\DateList.cs" />
     <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
     <Compile Include="Logic\Karte\AffineTransformation.cs" />
-    <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
-    <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
+    <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />    <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />    <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
-    <Compile Include="ViewModel\Karte\PflanzenAnOrtViewModel.cs" />
+    <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
+    <Compile Include="ViewModel\Karte\PflanzenSucheGezieltViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
@@ -994,11 +996,14 @@
       <DependentUpon>KoordinatenControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\MGIconZoomConverter.cs" />
-    <Compile Include="View\Karte\PflanzenMitLandschaftControl.xaml.cs">
-      <DependentUpon>PflanzenMitLandschaftControl.xaml</DependentUpon>
+    <Compile Include="View\Karte\PflanzenSucheAllgemeinView.xaml.cs">
+      <DependentUpon>PflanzenSucheAllgemeinView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\PflanzenSucheView.xaml.cs">
       <DependentUpon>PflanzenSucheView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Karte\PflanzenSucheGezieltView.xaml.cs">
+      <DependentUpon>PflanzenSucheGezieltView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\PflanzeVerbreitungListViewConverter.cs" />
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
@@ -1538,11 +1543,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Karte\PflanzenMitLandschaftControl.xaml">
+    <Page Include="View\Karte\PflanzenSucheAllgemeinView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Karte\PflanzenSucheResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Karte\PflanzenSucheView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Karte\PflanzenSucheGezieltView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

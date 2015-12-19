@@ -1,5 +1,4 @@
-﻿using MeisterGeister.ViewModel.Karte;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +16,11 @@ using System.Windows.Shapes;
 namespace MeisterGeister.View.Karte
 {
     /// <summary>
-    /// Interaktionslogik für PflanzenMitLandschaftControl.xaml
+    /// Interaktionslogik für PflanzenSucheAllgemeinView.xaml
     /// </summary>
-    public partial class PflanzenMitLandschaftControl : UserControl
+    public partial class PflanzenSucheAllgemeinView : UserControl
     {
-        public PflanzenMitLandschaftControl()
+        public PflanzenSucheAllgemeinView()
         {
             InitializeComponent();
         }
