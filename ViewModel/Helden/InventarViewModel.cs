@@ -76,6 +76,8 @@ namespace MeisterGeister.ViewModel.Inventar
         //Zuordnungen
         private ExtendedObservableCollection<Model.Held_Ausrüstung> heldAusrüstungen = new ExtendedObservableCollection<Model.Held_Ausrüstung>();
 
+        private ExtendedObservableCollection<Model.Ausrüstungsset> heldAusrüstungssets = new ExtendedObservableCollection<Model.Ausrüstungsset>();
+
         private CollectionViewSource heldNahkampfWaffeImInventar;
         private CollectionViewSource heldFernkampfwaffeImInventar;
         private CollectionViewSource heldSchildImInventar;
@@ -88,6 +90,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private Base.CommandBase onAddFernkampfwaffe;
         private Base.CommandBase onAddSchild;
         private Base.CommandBase onAddRuestung;
+        private Base.CommandBase addSet;
 
         #endregion
 
@@ -363,6 +366,10 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             get { return heldAusrüstungen; }
         }
+        public ExtendedObservableCollection<Model.Ausrüstungsset> HeldAusrüstungssets
+        {
+            get { return heldAusrüstungssets; }
+        }
         public ICollectionView HeldNahkampfWaffeImInventar
         {
             get { return heldNahkampfWaffeImInventar.View; }
@@ -405,12 +412,17 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             get { return onAddRuestung; }
         }
+        public Base.CommandBase AddSet
+        {
+            get { return addSet; }
+        }
         #endregion
 
         #region //KONSTRUKTOR
         public InventarViewModel()
         {
             heldAusrüstungen.CollectionChanged += HeldAusrüstungen_CollectionChanged;
+            HeldAusrüstungssets.CollectionChanged += HeldAusrüstungssets_CollectionChanged;
 
             heldNahkampfWaffeImInventar = new CollectionViewSource() { Source = heldAusrüstungen };
             heldNahkampfWaffeImInventar.Filter += filterNahkampfwaffe;
@@ -429,15 +441,17 @@ namespace MeisterGeister.ViewModel.Inventar
             EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));
             EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("IsMitUeberlastung", ""));
 
-            onAddNahkampfwaffe = new Base.CommandBase(AddNahkampfwaffe, null);
-            onAddFernkampfwaffe = new Base.CommandBase(AddFernkampfwaffe, null);
-            onAddSchild = new Base.CommandBase(AddSchild, null);
-            onAddRuestung = new Base.CommandBase(AddRuestung, null);
+            onAddNahkampfwaffe = new Base.CommandBase(o => AddNahkampfwaffe(), null);
+            onAddFernkampfwaffe = new Base.CommandBase(o => AddFernkampfwaffe(), null);
+            onAddSchild = new Base.CommandBase(o => AddSchild(), null);
+            onAddRuestung = new Base.CommandBase(o => AddRuestung(), null);
+            addSet = new Base.CommandBase(o => AddAusrüstungsset(), null);
 
             SelectedFilterIndex = 0;
 
             LoadDaten();
         }
+
         #endregion
 
         #region // Private Methoden
@@ -445,7 +459,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private void HeldAusrüstungen_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //Beim Delete dafür sorgen dass die Ausrüstung auch aus der Datenbank verschwindet
-            switch(e.Action)
+            switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
@@ -454,7 +468,20 @@ namespace MeisterGeister.ViewModel.Inventar
                     break;
             }
         }
-        
+
+        private void HeldAusrüstungssets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //Beim Delete dafür sorgen dass die Ausrüstungssets auch aus der Datenbank verschwindet
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Replace:
+                    foreach (Model.Ausrüstungsset set in e.OldItems)
+                        Global.ContextInventar.Delete(set);
+                    break;
+            }
+        }
+
 
         private void filterNahkampfwaffe(object sender, FilterEventArgs f)
         {
@@ -506,7 +533,7 @@ namespace MeisterGeister.ViewModel.Inventar
             NahkampfwaffeListe = Global.ContextInventar.WaffeListe;
 
             //Fernkampf
-                FernkampWaffeTalentListe = Global.ContextTalent.TalentListe.Where(t => 
+            FernkampWaffeTalentListe = Global.ContextTalent.TalentListe.Where(t =>
                     t.TalentgruppeID == 1
                     && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE
                     && !FernkampWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname).ToList();
@@ -628,11 +655,12 @@ namespace MeisterGeister.ViewModel.Inventar
             SelectedHeld = Global.SelectedHeld;
             heldAusrüstungen.Clear();
             heldSonstigesImInventar.Clear();
+            heldAusrüstungssets.Clear();
 
             if (SelectedHeld != null)
             {
                 heldAusrüstungen.AddRange(SelectedHeld.Held_Ausrüstung);
-                
+
                 //Sonstiges / Held_Inventar
                 foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Inventar != null).OrderBy(i => i.Inventar.Name))
                 {
@@ -642,11 +670,13 @@ namespace MeisterGeister.ViewModel.Inventar
                 }
                 if (E.BEBerechnung == 0)
                     SelectedHeld.BerechneBehinderung();
+
+                HeldAusrüstungssets.AddRange(Global.ContextInventar.AusrüstungsSets.Where(set => set.Held == SelectedHeld));
             }
         }
 
         //--ADD
-        void AddNahkampfwaffe(object sender)
+        void AddNahkampfwaffe()
         {
             if (SelectedNahkampfwaffe != null && SelectedHeld != null && !IsReadOnly)
             {
@@ -655,7 +685,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
-        void AddFernkampfwaffe(object sender)
+        void AddFernkampfwaffe()
         {
             if (SelectedFernkampfwaffe != null && SelectedHeld != null && !IsReadOnly)
             {
@@ -664,7 +694,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
-        void AddSchild(object sender)
+        void AddSchild()
         {
             if (SelectedSchild != null && SelectedHeld != null && !IsReadOnly)
             {
@@ -673,7 +703,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
-        void AddRuestung(object sender)
+        void AddRuestung()
         {
             if (SelectedRuestung != null && SelectedHeld != null && !IsReadOnly)
             {
@@ -728,6 +758,22 @@ namespace MeisterGeister.ViewModel.Inventar
                     heldAusrüstungen.Remove(SelectedAusrüstung);
                     SelectedHeld.RemoveAusrüstung(SelectedAusrüstung);
                 }
+            }
+        }
+
+        private void AddAusrüstungsset()
+        {
+            var angelegt = SelectedHeld.Held_Ausrüstung.Where(ha => ha.Angelegt);
+            if (angelegt.Count() > 0)
+            {
+                Model.Ausrüstungsset set = Global.ContextInventar.New<Model.Ausrüstungsset>();
+                set.Name = "Neues Ausrüstungsset";
+
+                foreach (Model.Held_Ausrüstung ha in angelegt)
+                    set.Held_Ausrüstung.Add(ha);
+
+                if (Global.ContextInventar.Insert(set))
+                    HeldAusrüstungssets.Add(set);
             }
         }
         #endregion

@@ -149,5 +149,19 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref isChecked, value); }
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is LandschaftViewModel))
+                return false;
+            LandschaftViewModel other = (LandschaftViewModel)obj;
+            if (Landschaft == null && other.Landschaft == null)
+                return true;
+            return Landschaft.LandschaftGUID == other.Landschaft.LandschaftGUID;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

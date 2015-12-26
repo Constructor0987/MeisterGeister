@@ -58,6 +58,11 @@ namespace MeisterGeister.Model.Service
             get { return Liste<Held_Inventar>(); }
         }
 
+        public List<Model.Ausrüstungsset> AusrüstungsSets
+        {
+            get { return Liste<Ausrüstungsset>(); }
+        }
+
         #endregion
 
         #region //KONSTRUKTOR

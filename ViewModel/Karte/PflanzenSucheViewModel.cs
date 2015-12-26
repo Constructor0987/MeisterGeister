@@ -148,8 +148,20 @@ namespace MeisterGeister.ViewModel.Karte
             temp.Insert(0, String.Empty);
             PflanzenTypen = temp;
 
+            var neueLandschaften = landschaftenInGruppe(gruppenVM);
+            var aktiv = landschaftenInGruppe(LandschaftsGruppen).Where(l => l.IsChecked).Select(l=>l.Landschaft.LandschaftGUID);
+            foreach(LandschaftViewModel l in neueLandschaften.Where(l=>aktiv.Contains(l.Landschaft.LandschaftGUID)))
+            {
+                l.IsChecked = true;
+            }
+
             LandschaftsGruppen = gruppenVM.ToList();
             OnChanged("SichtbarePflanzen");
+        }
+
+        private IEnumerable<LandschaftViewModel> landschaftenInGruppe(IEnumerable<LandschaftsGruppeViewModel> gruppen)
+        {
+            return gruppen.SelectMany(g => g.Landschaften).Distinct();
         }
 
         private Dictionary<Guid, LandschaftViewModel> landschaftViewModels = new Dictionary<Guid, LandschaftViewModel>();

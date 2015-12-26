@@ -18,6 +18,7 @@
     <EntitySet Name="Audio_WesenIcon" EntityType="DatabaseDSAModel.Store.Audio_WesenIcon" store:Type="Tables" />
     <EntitySet Name="Ausrüstung" EntityType="DatabaseDSAModel.Store.Ausrüstung" store:Type="Tables" />
     <EntitySet Name="Ausrüstung_Setting" EntityType="DatabaseDSAModel.Store.Ausrüstung_Setting" store:Type="Tables" />
+    <EntitySet Name="Ausrüstungsset" EntityType="DatabaseDSAModel.Store.Ausrüstungsset" store:Type="Tables" />
     <EntitySet Name="Beschwörbares" EntityType="DatabaseDSAModel.Store.Beschwörbares" store:Type="Tables" />
     <EntitySet Name="Dämon" EntityType="DatabaseDSAModel.Store.Dämon" store:Type="Tables" />
     <EntitySet Name="Dämon_Domäne" EntityType="DatabaseDSAModel.Store.Dämon_Domäne" store:Type="Tables" />
@@ -39,6 +40,7 @@
     <EntitySet Name="Held" EntityType="DatabaseDSAModel.Store.Held" store:Type="Tables" />
     <EntitySet Name="Held_Audio_Playlist" EntityType="DatabaseDSAModel.Store.Held_Audio_Playlist" store:Type="Tables" />
     <EntitySet Name="Held_Ausrüstung" EntityType="DatabaseDSAModel.Store.Held_Ausrüstung" store:Type="Tables" />
+    <EntitySet Name="Held_Ausrüstung_Ausrüstungsset" EntityType="DatabaseDSAModel.Store.Held_Ausrüstung_Ausrüstungsset" store:Type="Tables" />
     <EntitySet Name="Held_BFAusrüstung" EntityType="DatabaseDSAModel.Store.Held_BFAusrüstung" store:Type="Tables" />
     <EntitySet Name="Held_Fernkampfwaffe" EntityType="DatabaseDSAModel.Store.Held_Fernkampfwaffe" store:Type="Tables" />
     <EntitySet Name="Held_Inventar" EntityType="DatabaseDSAModel.Store.Held_Inventar" store:Type="Tables" />
@@ -118,6 +120,14 @@
     <AssociationSet Name="FK__Gegner_Modifikator__0000000000000AD0" Association="DatabaseDSAModel.Store.FK__Gegner_Modifikator__0000000000000AD0">
       <End Role="Modifikator" EntitySet="Modifikator" />
       <End Role="Gegner_Modifikator" EntitySet="Gegner_Modifikator" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Held_Ausrüstung_Ausrüstungsset__000000000000104F" Association="DatabaseDSAModel.Store.FK__Held_Ausrüstung_Ausrüstungsset__000000000000104F">
+      <End Role="Ausrüstungsset" EntitySet="Ausrüstungsset" />
+      <End Role="Held_Ausrüstung_Ausrüstungsset" EntitySet="Held_Ausrüstung_Ausrüstungsset" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Held_Ausrüstung_Ausrüstungsset__0000000000001053" Association="DatabaseDSAModel.Store.FK__Held_Ausrüstung_Ausrüstungsset__0000000000001053">
+      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+      <End Role="Held_Ausrüstung_Ausrüstungsset" EntitySet="Held_Ausrüstung_Ausrüstungsset" />
     </AssociationSet>
     <AssociationSet Name="FK__Held_Modifikator__0000000000000AA7" Association="DatabaseDSAModel.Store.FK__Held_Modifikator__0000000000000AA7">
       <End Role="Held" EntitySet="Held" />
@@ -678,6 +688,13 @@
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
     <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
+  <EntityType Name="Ausrüstungsset">
+    <Key>
+      <PropertyRef Name="AusrüstungssetGUID" />
+    </Key>
+    <Property Name="AusrüstungssetGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+  </EntityType>
   <EntityType Name="Beschwörbares">
     <Key>
       <PropertyRef Name="GegnerBaseGUID" />
@@ -1035,6 +1052,14 @@
     <Property Name="TrageortGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Eigenname" Type="nvarchar" MaxLength="200" />
     <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Held_Ausrüstung_Ausrüstungsset">
+    <Key>
+      <PropertyRef Name="HeldAusrüstungGUID" />
+      <PropertyRef Name="AusrüstungssetGUID" />
+    </Key>
+    <Property Name="HeldAusrüstungGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AusrüstungssetGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="Held_BFAusrüstung">
     <Key>
@@ -1812,6 +1837,34 @@
       </Principal>
       <Dependent Role="Gegner_Modifikator">
         <PropertyRef Name="ModifikatorGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Held_Ausrüstung_Ausrüstungsset__000000000000104F">
+    <End Role="Ausrüstungsset" Type="DatabaseDSAModel.Store.Ausrüstungsset" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Ausrüstung_Ausrüstungsset" Type="DatabaseDSAModel.Store.Held_Ausrüstung_Ausrüstungsset" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ausrüstungsset">
+        <PropertyRef Name="AusrüstungssetGUID" />
+      </Principal>
+      <Dependent Role="Held_Ausrüstung_Ausrüstungsset">
+        <PropertyRef Name="AusrüstungssetGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Held_Ausrüstung_Ausrüstungsset__0000000000001053">
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Store.Held_Ausrüstung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Held_Ausrüstung_Ausrüstungsset" Type="DatabaseDSAModel.Store.Held_Ausrüstung_Ausrüstungsset" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Held_Ausrüstung">
+        <PropertyRef Name="HeldAusrüstungGUID" />
+      </Principal>
+      <Dependent Role="Held_Ausrüstung_Ausrüstungsset">
+        <PropertyRef Name="HeldAusrüstungGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3140,6 +3193,7 @@
     <EntitySet Name="Audio_WesenIcon" EntityType="DatabaseDSAModel.Audio_WesenIcon" />
     <EntitySet Name="Ausrüstung" EntityType="DatabaseDSAModel.Ausrüstung" />
     <EntitySet Name="Ausrüstung_Setting" EntityType="DatabaseDSAModel.Ausrüstung_Setting" />
+    <EntitySet Name="Ausrüstungsset" EntityType="DatabaseDSAModel.Ausrüstungsset" />
     <EntitySet Name="Beschwörbares" EntityType="DatabaseDSAModel.Beschwörbares" />
     <EntitySet Name="Dämon" EntityType="DatabaseDSAModel.Dämon" />
     <EntitySet Name="Dämon_Domäne" EntityType="DatabaseDSAModel.Dämon_Domäne" />
@@ -3563,6 +3617,10 @@
       <End Role="Gebiet" EntitySet="Gebiet" />
       <End Role="Polygon" EntitySet="Polygon" />
     </AssociationSet>
+    <AssociationSet Name="Held_Ausrüstung_Ausrüstungsset" Association="DatabaseDSAModel.Held_Ausrüstung_Ausrüstungsset">
+      <End Role="Ausrüstungsset" EntitySet="Ausrüstungsset" />
+      <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
+    </AssociationSet>
     <AssociationSet Name="Held_Schild" Association="DatabaseDSAModel.Held_Schild">
       <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
       <End Role="Schild" EntitySet="Schild" />
@@ -3777,6 +3835,14 @@
     <Property Name="Name" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" FromRole="Ausrüstung_Setting" ToRole="Ausrüstung" />
     <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Setting" FromRole="Ausrüstung_Setting" ToRole="Setting" />
+  </EntityType>
+  <EntityType Name="Ausrüstungsset">
+    <Key>
+      <PropertyRef Name="AusrüstungssetGUID" />
+    </Key>
+    <Property Name="AusrüstungssetGUID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.Held_Ausrüstung_Ausrüstungsset" FromRole="Ausrüstungsset" ToRole="Held_Ausrüstung" />
   </EntityType>
   <EntityType Name="Beschwörbares">
     <Key>
@@ -4169,6 +4235,7 @@
     <NavigationProperty Name="Held_Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Held_Ausrüstung" FromRole="Held_Ausrüstung" ToRole="Held_Fernkampfwaffe" />
     <NavigationProperty Name="Held_Rüstung" Relationship="DatabaseDSAModel.fk_Held_Rüstung_Held_Ausrüstung" FromRole="Held_Ausrüstung" ToRole="Held_Rüstung" />
     <NavigationProperty Name="Trageort" Relationship="DatabaseDSAModel.fk_TrageortGUID" FromRole="Held_Ausrüstung" ToRole="Trageort" />
+    <NavigationProperty Name="Ausrüstungsset" Relationship="DatabaseDSAModel.Held_Ausrüstung_Ausrüstungsset" FromRole="Held_Ausrüstung" ToRole="Ausrüstungsset" />
   </EntityType>
   <EntityType Name="Held_BFAusrüstung">
     <Key>
@@ -6118,6 +6185,10 @@
     <End Role="Gebiet" Type="DatabaseDSAModel.Gebiet" Multiplicity="*" />
     <End Role="Polygon" Type="DatabaseDSAModel.Polygon" Multiplicity="*" />
   </Association>
+  <Association Name="Held_Ausrüstung_Ausrüstungsset">
+    <End Role="Ausrüstungsset" Type="DatabaseDSAModel.Ausrüstungsset" Multiplicity="*" />
+    <End Role="Held_Ausrüstung" Type="DatabaseDSAModel.Held_Ausrüstung" Multiplicity="*" />
+  </Association>
   <Association Name="Held_Schild">
     <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Held_BFAusrüstung" Multiplicity="*" />
     <End Role="Schild" Type="DatabaseDSAModel.Schild" Multiplicity="0..1" />
@@ -6311,6 +6382,14 @@
           <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
           <ScalarProperty Name="Preis" ColumnName="Preis" />
           <ScalarProperty Name="Verbreitung" ColumnName="Verbreitung" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ausrüstungsset">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Ausrüstungsset">
+        <MappingFragment StoreEntitySet="Ausrüstungsset">
+          <ScalarProperty Name="AusrüstungssetGUID" ColumnName="AusrüstungssetGUID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -7395,6 +7474,14 @@
         <ScalarProperty Name="PolygonGUID" ColumnName="PolygonGUID" />
       </EndProperty>
     </AssociationSetMapping>
+    <AssociationSetMapping Name="Held_Ausrüstung_Ausrüstungsset" TypeName="DatabaseDSAModel.Held_Ausrüstung_Ausrüstungsset" StoreEntitySet="Held_Ausrüstung_Ausrüstungsset">
+      <EndProperty Name="Ausrüstungsset">
+        <ScalarProperty Name="AusrüstungssetGUID" ColumnName="AusrüstungssetGUID" />
+      </EndProperty>
+      <EndProperty Name="Held_Ausrüstung">
+        <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="Held_Schild" TypeName="DatabaseDSAModel.Held_Schild" StoreEntitySet="Held_Schild">
       <EndProperty Name="Held_BFAusrüstung">
         <ScalarProperty Name="HeldAusrüstungGUID" ColumnName="HeldAusrüstungGUID" />
@@ -7435,7 +7522,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="9e7f8e2a656e493eaa0c31f112967994" Name="Diagram1">
+      <Diagram DiagramId="d14ee3af05c44891b716d9c91b7cfd1f" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.25" IsExpanded="true" />
@@ -7449,6 +7536,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_WesenIcon" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="16" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstungsset" Width="1.5" PointX="3.75" PointY="17" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Beschwörbares" Width="1.5" PointX="21" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Dämon" Width="1.5" PointX="23.25" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="25.5" PointY="21.375" IsExpanded="true" />
@@ -7467,7 +7555,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="16" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Audio_Playlist" Width="1.5" PointX="3" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="6" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="6" PointY="23.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_BFAusrüstung" Width="1.5" PointX="8.25" PointY="31.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Fernkampfwaffe" Width="1.5" PointX="11.25" PointY="23.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="3" PointY="19.5" IsExpanded="true" />
@@ -7608,6 +7696,7 @@
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Gebiet_Polygon" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.Held_Ausrüstung_Ausrüstungsset" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Held_Schild" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Pflanze_Gebiet" ManuallyRouted="false" />

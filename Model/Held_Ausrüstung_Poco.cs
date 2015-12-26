@@ -238,6 +238,39 @@ namespace MeisterGeister.Model
             }
         }
         private Trageort _trageort;
+    
+    	[DataMember]
+        public virtual ICollection<Ausrüstungsset> Ausrüstungsset
+        {
+            get
+            {
+                if (_ausrüstungsset == null)
+                {
+                    var newCollection = new FixupCollection<Ausrüstungsset>();
+                    newCollection.CollectionChanged += FixupAusrüstungsset;
+                    _ausrüstungsset = newCollection;
+                }
+                return _ausrüstungsset;
+            }
+            set
+            {
+                if (!ReferenceEquals(_ausrüstungsset, value))
+                {
+                    var previousValue = _ausrüstungsset as FixupCollection<Ausrüstungsset>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAusrüstungsset;
+                    }
+                    _ausrüstungsset = value;
+                    var newValue = value as FixupCollection<Ausrüstungsset>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAusrüstungsset;
+                    }
+                }
+            }
+        }
+        private ICollection<Ausrüstungsset> _ausrüstungsset;
 
         #endregion
 
@@ -323,6 +356,32 @@ namespace MeisterGeister.Model
                 if (TrageortGUID != Trageort.TrageortGUID)
                 {
                     TrageortGUID = Trageort.TrageortGUID;
+                }
+            }
+        }
+    
+        private void FixupAusrüstungsset(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Ausrüstungsset");
+            if (e.NewItems != null)
+            {
+                foreach (Ausrüstungsset item in e.NewItems)
+                {
+                    if (!item.Held_Ausrüstung.Contains(this))
+                    {
+                        item.Held_Ausrüstung.Add(this);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Ausrüstungsset item in e.OldItems)
+                {
+                    if (item.Held_Ausrüstung.Contains(this))
+                    {
+                        item.Held_Ausrüstung.Remove(this);
+                    }
                 }
             }
         }

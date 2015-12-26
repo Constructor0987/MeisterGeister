@@ -150,6 +150,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Ausrüstung_Setting> _ausrüstung_Setting;
     
+        public ObjectSet<Ausrüstungsset> Ausrüstungsset
+        {
+            get { return _ausrüstungsset  ?? (_ausrüstungsset = CreateObjectSet<Ausrüstungsset>("Ausrüstungsset")); }
+        }
+        private ObjectSet<Ausrüstungsset> _ausrüstungsset;
+    
         public ObjectSet<Beschwörbares> Beschwörbares
         {
             get { return _beschwörbares  ?? (_beschwörbares = CreateObjectSet<Beschwörbares>("Beschwörbares")); }
@@ -607,6 +613,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Ausrüstung;
     		if(typeof(T) == typeof(Ausrüstung_Setting))
     				return (ObjectSet<T>)(Object)Ausrüstung_Setting;
+    		if(typeof(T) == typeof(Ausrüstungsset))
+    				return (ObjectSet<T>)(Object)Ausrüstungsset;
     		if(typeof(T) == typeof(Beschwörbares))
     				return (ObjectSet<T>)(Object)Beschwörbares;
     		if(typeof(T) == typeof(Dämon))
@@ -780,6 +788,8 @@ namespace MeisterGeister.Model
     				return Ausrüstung;
     		if(t == typeof(Ausrüstung_Setting))
     				return Ausrüstung_Setting;
+    		if(t == typeof(Ausrüstungsset))
+    				return Ausrüstungsset;
     		if(t == typeof(Beschwörbares))
     				return Beschwörbares;
     		if(t == typeof(Dämon))

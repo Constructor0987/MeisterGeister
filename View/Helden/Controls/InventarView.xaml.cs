@@ -20,21 +20,6 @@ using System.Windows.Media.Animation;
 namespace MeisterGeister.View.Helden.Controls {
     public partial class InventarView : UserControl {
 
-        #region Public
-
-        /// <summary>
-        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
-        /// </summary>
-        public VM.InventarViewModel VM {
-            get {
-                if (DataContext == null || !(DataContext is VM.InventarViewModel))
-                    return null;
-                return DataContext as VM.InventarViewModel;
-            }
-            set { DataContext = value; }
-        }
-
-        #endregion
 
         #region Konstruktor
 
@@ -43,42 +28,6 @@ namespace MeisterGeister.View.Helden.Controls {
         /// </summary>
         public InventarView() {
             InitializeComponent();
-            VM = new VM.InventarViewModel();
-        }
-
-        #endregion
-
-        #region --UI
-
-        /// <summary>
-        /// Welches Border?
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void brdKlicked(object sender, RoutedEventArgs e)
-        {
-            switch ((sender as Button).Name) {
-                case "borderAll":
-                    VM.SelectedFilterIndex = 0;
-                    break;
-                case "borderNahkampf":
-                    VM.SelectedFilterIndex = 1;
-                    break;
-                case "borderFernkampf":
-                    VM.SelectedFilterIndex = 2;
-                    break;
-                case "borderSchild":
-                    VM.SelectedFilterIndex = 3;
-                    break;
-                case "borderRuestung":
-                    VM.SelectedFilterIndex = 4;
-                    break;
-                case "borderSonstiges":
-                    VM.SelectedFilterIndex = 5;
-                    break;
-                default:
-                    break;
-            }
         }
 
         #endregion

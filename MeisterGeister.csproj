@@ -315,6 +315,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Ausrüstung.cs" />
+    <Compile Include="Model\Ausrüstungsset_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Ausrüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -536,6 +539,7 @@
     </Compile>
     <Compile Include="Model\Service\PflanzeService.cs" />
     <Compile Include="Model\Service\ZooBotService.cs" />
+    <Compile Include="Model\Ausrüstungsset.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -664,7 +668,9 @@
     <Compile Include="ViewModel\Kalender\Logic\DateList.cs" />
     <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
     <Compile Include="Logic\Karte\AffineTransformation.cs" />
-    <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />    <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />    <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
+    <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
+    <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
+    <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheGezieltViewModel.cs" />
@@ -2288,6 +2294,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0114.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0115.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0116.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0117.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
