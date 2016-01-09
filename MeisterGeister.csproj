@@ -243,6 +243,10 @@
     <Compile Include="Logic\Extensions\ObservableDictionary.cs" />
     <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
+    <Compile Include="Logic\General\BackgroundWorkerQueue.cs" />
+    <Compile Include="Logic\General\BackgroundWorkerQueueItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Logic\General\DataVirtualization\AsyncVirtualizingCollection.cs" />
     <Compile Include="Logic\General\DataVirtualization\DataPage.cs" />
     <Compile Include="Logic\General\DataVirtualization\DataWrapper.cs" />
@@ -262,7 +266,11 @@
     <Compile Include="Logic\General\WikiAventurica.cs" />
     <Compile Include="Logic\General\Würfel.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
+    <Compile Include="Logic\HeldenImport\HeldElement.cs" />
     <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
+    <Compile Include="Logic\HeldenImport\HeldenListe.cs" />
+    <Compile Include="Logic\HeldenImport\HeldenSoftwareOnlineHelper.cs" />
+    <Compile Include="Logic\HeldenImport\HeldenSoftwareOnlineService.cs" />
     <Compile Include="Logic\Karte\IAffineTransformation.cs" />
     <Compile Include="Logic\Karte\SimpleAffineTransformation.cs" />
     <Compile Include="Logic\Karte\MapToDereGlobusConverter.cs" />

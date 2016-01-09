@@ -31,6 +31,17 @@ namespace MeisterGeister {
 
         public static object SqlCompactVersion = "-";
 
+        private static BackgroundWorkerQueue _queue;
+        public static BackgroundWorkerQueue Queue
+        {
+            get
+            {
+                if (_queue == null)
+                    _queue = new BackgroundWorkerQueue();
+                return _queue;
+            }
+        }
+
         public App() {
 
             LogInfo log = Logger.PerformanceLogStart("Programmstart");
