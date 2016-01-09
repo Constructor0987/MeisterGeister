@@ -355,16 +355,22 @@ namespace MeisterGeister.Logic.HeldenImport
             return s;
         }
 
-        public static void ImportHeldenSoftwareFile(string _importPfad)
+        public static Held ImportHeldenSoftwareFile(string _importPfad)
         {
-            ImportHeldenSoftwareFile(_importPfad, Guid.Empty);
+            return ImportHeldenSoftwareFile(_importPfad, Guid.Empty);
         }
 
         public static Held ImportHeldenSoftwareFile(string _importPfad, Guid newGuid)
         {
-            System.Collections.Generic.List<string> _importLog = new List<string>();
             XmlDocument _xmlDoc = new XmlDocument();
             _xmlDoc.Load(_importPfad);
+
+            return ImportHeldenSoftwareFile(_importPfad, newGuid, _xmlDoc);
+        }
+
+        public static Held ImportHeldenSoftwareFile(string _importPfad, Guid newGuid, XmlDocument _xmlDoc)
+        {
+            List<string> _importLog = new List<string>();
 
             string name = null;
             Guid heldGuid = Guid.Empty;
@@ -440,7 +446,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 ap = _xmlDoc.SelectSingleNode("helden/held/abenteuerpunkte");
             if (ap != null)
                 _held.APGesamt = Convert.ToInt32(ap.Attributes["value"].Value);
-            
+
             ap = _xmlDoc.SelectSingleNode("helden/held/basis/freieabenteuerpunkte");
             if (ap == null)
                 ap = _xmlDoc.SelectSingleNode("helden/held/freieabenteuerpunkte");
@@ -1162,8 +1168,8 @@ namespace MeisterGeister.Logic.HeldenImport
                 System.Windows.Controls.TextBox txtLog = new System.Windows.Controls.TextBox();
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
-                txtLog.Text = _importPfad
-                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet sind, konnten denen in unserer Datenbank nicht zugeordnet werden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://forum.meistergeister.org/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die XML-Datei dort hoch. Vielen Dank!.\n\n";
+                txtLog.Text = string.IsNullOrEmpty(_importPfad) ? "" : _importPfad + "\n\n";
+                txtLog.Text += "Einige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet sind, konnten denen in unserer Datenbank nicht zugeordnet werden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://forum.meistergeister.org/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die XML-Datei dort hoch. Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;

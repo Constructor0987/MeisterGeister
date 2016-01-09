@@ -64,9 +64,12 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "ToolTitelAusblenden", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Tool Name im Tab-Titel ausblenden", Wert = "False" },
 
                 new Model.Einstellung() { Name = "CheckForUpdates", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Täglich nach neuen Updates suchen", Wert = "True" },
-                new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = DateTime.Now.ToString() },
+
+                new Model.Einstellung() { Name = "HeldenSoftwareOnlineURL", Kontext = "Allgemein", Kategorie = null, Typ = "String", Beschreibung = "URL zu HeldenSoftware-Online", Wert = "https://online.helden-software.de/index.php" },
+                new Model.Einstellung() { Name = "HeldenSoftwareOnlineToken", Kontext = "Allgemein", Kategorie = null, Typ = "String", Beschreibung = "Token zum HeldenSoftware-Online-Account", Wert = null },
 
                 //Versteckte
+                new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = DateTime.Now.ToString() },
                 new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "Standort", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Gareth#29.79180235685203#3.735098459067687" },
                 new Model.Einstellung() { Name = "SelectedHeld", Kontext = "Helden", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
@@ -294,6 +297,38 @@ namespace MeisterGeister.Logic.Einstellung
             {
                 SetEinstellung<string>("LastUpdateCheck", value);
                 _lastUpdateCheck = value;
+            }
+        }
+
+        private static string _heldenSoftwareOnlineURL = null;
+        public static string HeldenSoftwareOnlineURL
+        {
+            get
+            {
+                if (_heldenSoftwareOnlineURL == null)
+                    _heldenSoftwareOnlineURL = GetEinstellung<string>("HeldenSoftwareOnlineURL");
+                return _heldenSoftwareOnlineURL;
+            }
+            set
+            {
+                SetEinstellung<string>("HeldenSoftwareOnlineURL", value);
+                _heldenSoftwareOnlineURL = value;
+            }
+        }
+
+        private static string _heldenSoftwareOnlineToken = null;
+        public static string HeldenSoftwareOnlineToken
+        {
+            get
+            {
+                if (_heldenSoftwareOnlineToken == null)
+                    _heldenSoftwareOnlineToken = GetEinstellung<string>("HeldenSoftwareOnlineToken");
+                return _heldenSoftwareOnlineToken;
+            }
+            set
+            {
+                SetEinstellung<string>("HeldenSoftwareOnlineToken", value);
+                _heldenSoftwareOnlineToken = value;
             }
         }
 
