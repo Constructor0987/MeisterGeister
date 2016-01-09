@@ -42,9 +42,11 @@ namespace MeisterGeister.View.Helden.Controls {
             set { DataContext = value; }
         }
 
-        private void ButtonHeldNeu_Click(object sender, RoutedEventArgs e) {
-            _buttonHeldNeu.ContextMenu.PlacementTarget = this;
-            _buttonHeldNeu.ContextMenu.IsOpen = true;
+        private void ButtonWithContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            button.ContextMenu.PlacementTarget = this;
+            button.ContextMenu.IsOpen = true;
         }
 
         // TODO ??: MVVM konform umbauen

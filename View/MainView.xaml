@@ -580,6 +580,12 @@
                         <Border Margin="4,2,4,6" Background="#FF43474B" CornerRadius="8" ToolTip="Eingestellte Regeledition (kann in den Einstellungen geändert werden).">
                             <Label Content="{Binding RegeleditionNummer}" VerticalAlignment="Center" FontSize="10" Foreground="White" FontWeight="Bold" />
                         </Border>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Background="Gray" Height="20" MinWidth="85">
+                            <Grid Visibility="{Binding ProgressBarVisibility}">
+                                <ProgressBar IsIndeterminate="True" Name="progressBarMain" Value="{Binding CurrentProgress}" Minimum="0" Maximum="100" />
+                                <TextBlock Text="{Binding CurrentUserState}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
                     <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="12" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
                         <Border.Background>

@@ -355,21 +355,35 @@ namespace MeisterGeister.Logic.HeldenImport
             return s;
         }
 
-        public static Held ImportHeldenSoftwareFile(string _importPfad)
+        public static HeldenImportResult ImportHeldenSoftwareFile(string _importPfad)
         {
             return ImportHeldenSoftwareFile(_importPfad, Guid.Empty);
         }
 
-        public static Held ImportHeldenSoftwareFile(string _importPfad, Guid newGuid)
+        public static HeldenImportResult ImportHeldenSoftwareFile(string _importPfad, Guid newGuid)
         {
             XmlDocument _xmlDoc = new XmlDocument();
             _xmlDoc.Load(_importPfad);
 
-            return ImportHeldenSoftwareFile(_importPfad, newGuid, _xmlDoc);
+            // Import-Log erzeugen
+            HeldenImportResult result = ImportHeldenSoftwareXml(_xmlDoc, newGuid);
+            result.ImportPfad = _importPfad;
+
+            return result;
         }
 
-        public static Held ImportHeldenSoftwareFile(string _importPfad, Guid newGuid, XmlDocument _xmlDoc)
+        public static HeldenImportResult ImportHeldenSoftwareXml(XmlDocument _xmlDoc, Guid newGuid)
         {
+            // Import-Log erzeugen
+            HeldenImportResult result = Import(_xmlDoc, newGuid);
+            result.Held = Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == result.Held.HeldGUID).FirstOrDefault();
+
+            return result;
+        }
+
+        private static HeldenImportResult Import(XmlDocument _xmlDoc, Guid newGuid)
+        {
+            var result = new HeldenImportResult();
             List<string> _importLog = new List<string>();
 
             string name = null;
@@ -584,11 +598,9 @@ namespace MeisterGeister.Logic.HeldenImport
                 throw new Exception("Held konnte nicht in die Datenbank eingefügt werden.");
             }
             Global.ContextHeld.UpdateList<Held>();
-
-            // Import-Log erzeugen
-            ShowLogWindow(_importPfad, _importLog);
-
-            return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
+            result.Held = _held;
+            result.ImportLogs = _importLog;
+            return result;
         }
 
         private static void ImportZauber(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
@@ -1154,23 +1166,35 @@ namespace MeisterGeister.Logic.HeldenImport
             _importLog.Add(string.Format("{0}{1} {2} {3}", typString, name, wert, hinweis));
         }
 
-        private static void ShowLogWindow(string _importPfad, System.Collections.Generic.List<string> _importLog)
+        public static void ShowLogWindow(HeldenImportResult importResult)
         {
-            if (_importLog.Count > 0)
+            ShowLogWindow(new HeldenImportResult[] { importResult });
+        }
+
+        public static void ShowLogWindow(IEnumerable<HeldenImportResult> importResults)
+        {
+            if (importResults.Any(ir => ir.ImportLogs != null && ir.ImportLogs.Count > 0))
             {
                 System.Windows.Window gui = new System.Windows.Window();
                 gui.Title = "Import von Helden-Software";
                 gui.Height = 650;
                 gui.Width = 500;
-                string log = string.Empty;
-                foreach (var item in _importLog)
-                    log += item + "\n";
                 System.Windows.Controls.TextBox txtLog = new System.Windows.Controls.TextBox();
+                string log = string.Empty;
+                foreach(var result in importResults)
+                {
+                    if (result.ImportLogs != null && result.ImportLogs.Count > 0)
+                    {
+                        foreach (var item in result.ImportLogs)
+                            log += item + "\n";
+                        txtLog.Text = string.IsNullOrEmpty(result.ImportPfad) ? result.Held.Name : result.ImportPfad + "\n\n";
+                        txtLog.Text += "Einige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet sind, konnten denen in unserer Datenbank nicht zugeordnet werden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://forum.meistergeister.org/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die XML-Datei dort hoch. Vielen Dank!.\n\n";
+                        txtLog.Text += log;
+                    }
+                    txtLog.Text += "\n\n";
+                }
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
-                txtLog.Text = string.IsNullOrEmpty(_importPfad) ? "" : _importPfad + "\n\n";
-                txtLog.Text += "Einige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet sind, konnten denen in unserer Datenbank nicht zugeordnet werden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://forum.meistergeister.org/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die XML-Datei dort hoch. Vielen Dank!.\n\n";
-                txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;
                 gui.Content = txtLog;

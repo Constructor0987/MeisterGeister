@@ -188,6 +188,13 @@ namespace MeisterGeister {
 
             // Restliche Daten aus Datenbank laden
             LoadDataFromDatabase();
+
+            QueueAsyncJobs();
+        }
+
+        private void QueueAsyncJobs()
+        {
+            
         }
 
         private bool CheckNetzlaufwerk()

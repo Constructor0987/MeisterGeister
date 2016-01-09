@@ -268,6 +268,7 @@
     <Compile Include="Logic\Global\Tool.cs" />
     <Compile Include="Logic\HeldenImport\HeldElement.cs" />
     <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
+    <Compile Include="Logic\HeldenImport\HeldenImportResult.cs" />
     <Compile Include="Logic\HeldenImport\HeldenListe.cs" />
     <Compile Include="Logic\HeldenImport\HeldenSoftwareOnlineHelper.cs" />
     <Compile Include="Logic\HeldenImport\HeldenSoftwareOnlineService.cs" />
@@ -2303,7 +2304,6 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0115.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0116.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0117.sql" />
-    <Resource Include="Daten\Updateskripte\UpdateTo_V0118.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

@@ -6,6 +6,8 @@ using MeisterGeister.Model;
 using System.ComponentModel;
 
 using MeisterGeister.Logic.HeldenImport;
+using MeisterGeister.Logic.Einstellung;
+using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.ViewModel.Helden
 {
@@ -379,7 +381,11 @@ namespace MeisterGeister.ViewModel.Helden
                     overwrite = false;
             }
             if (isHeldenSoftware)
-                importHeld = HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
+            {
+                HeldenImportResult heldenImportResult = HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
+                importHeld = heldenImportResult.Held;
+                HeldenSoftwareImporter.ShowLogWindow(heldenImportResult);
+            }
             else if (isHeldenblatt)
                 importHeld = HeldenblattImporter.ImportHeldenblattFile(pfad);
             else
@@ -448,6 +454,62 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null)
                 SelectedHeld.UpdateHinweis = string.Empty;
+        }
+
+        private Base.CommandBase onDownloadHelden = null;
+        public Base.CommandBase OnDownloadHelden
+        {
+            get
+            {
+                if (onDownloadHelden == null)
+                    onDownloadHelden = new Base.CommandBase(DownloadHelden, null);
+                return onDownloadHelden;
+            }
+        }
+
+        private void DownloadHelden(object obj)
+        {
+            string token = Einstellungen.HeldenSoftwareOnlineToken;
+            bool tokenExists = !string.IsNullOrEmpty(token);
+
+            if (!tokenExists)
+            {
+                token = AddToken();
+                tokenExists = !string.IsNullOrEmpty(token);
+            }
+            if (tokenExists)
+            {
+                var syncer = new HeldenSoftwareOnlineService(token);
+                var worker = syncer.DownloadHeldenAsync();
+                worker.RunWorkerCompleted += DownloadCompleted;
+            }
+        }
+
+        private void DownloadCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var result = e.Result as IEnumerable<HeldenImportResult>;
+            MsgWindow window = null;
+            if (result != null && e.Error == null)
+                window = new MsgWindow("Download beendet", "Es wurden " + result.Count() + " Helden aktualisiert.", false);
+            else
+                window = new MsgWindow("Download nicht erfolgreich", "Der Download ist fehlgeschlagen.", false);
+            window.ShowDialog();
+            window.Close();
+        }
+
+        private string AddToken()
+        {
+            var dialog = new InputWindow();
+            dialog.Title = "Name eingeben";
+            dialog.Beschreibung = "Bitte einen HeldenSoftware-Online-Token eingeben.";
+            dialog.ShowDialog();
+            bool defined = dialog.OK_Click;
+            string tokenEntered = dialog.Wert;
+
+            if (defined && !string.IsNullOrEmpty(tokenEntered))
+                Einstellungen.HeldenSoftwareOnlineToken = tokenEntered;
+            
+            return tokenEntered;
         }
     }
 }

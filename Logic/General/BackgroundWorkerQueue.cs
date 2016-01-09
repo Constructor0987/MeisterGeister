@@ -12,15 +12,10 @@ namespace MeisterGeister.Logic.General
         public event RunWorkerCompletedEventHandler RunWorkerCompleted;
         public event ProgressChangedEventHandler ProgressChanged;
 
-        public void QueueWorker(BackgroundWorkerQueueItem worker, string userState)
+        public void QueueWorker(BackgroundWorkerQueueItem worker)
         {
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
-
-            worker.DoWork += (s, a) =>
-            {
-                worker.ReportProgress(0, userState);
-            };
 
             worker.ProgressChanged += (s, a) =>
             {
