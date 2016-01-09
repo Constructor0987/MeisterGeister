@@ -84,6 +84,30 @@ namespace MeisterGeister.Model
             }
         }
 
+        //TODO DB-Feld Kosten in mehrere Werte aufspalten:
+        public int LEKosten = 0;
+        public int AsPKosten = 0;
+        public int LEKostenProZeiteinheit = 0;
+        public int AsPKostenProZeiteinheit = 0;
+        public int Zeiteinheit = 0; // TODO Zeiteinheiten definieren (Akt, KR, SR, ...)
+        //TODO Ziel oder Zone? gibt es Zonenzauber mit zusätzlichen Zielkosten?
+        //TODO Kosten je Ziel, wie bei ABVENUM oder ADAMANTIUM: pro angefangenem Stein Gewicht
+        public int LEKostenProZiel = 0;
+        public int AsPKostenProZiel = 0;
+        public string Zieleinheit = ""; // TODO Zieleinheiten definieren: Raumschritt, angefangene 5 Stein, Illusionskomponente, ...
+        //TODO Minimale Kosten wie bei ALPGESTALT: mindestens aber 6 AsP
+        public int AsPKostenMin = 0;
+        public int LEKostenMin = 0;
+        //TODO Kostenmod wie bei ARMATRUTZ: RS*RS -ZfP*/2 AsP
+        //TODO Sonderkosten wie bei ALPGESTALT: MR des Opfers AsP
+        
+        //TODO Variable Kosten je nach Variante wie beim ADLERSCHWINGE: boden 1 AsP, amphibisch 2 AsP, fliegend 3 AsP - sehr hohe LE, Giftwirkung, etc.
+        //TODO Variable Kosten mit Schwellen je nach Zielgewicht/größe wie beim ANIMATIO
+        
+        //TODO Schelme haben geringere Zauberkosten
+        
+        
+
         public bool Zonenzauber = false; //TODO aus Zielobjekt ablesen
         public bool Freiwillig = false; //TODO aus Zielobjekt ablesen
         public bool MehrereZiele = false; //TODO aus Zielobjekt ablesen

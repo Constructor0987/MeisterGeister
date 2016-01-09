@@ -21,8 +21,26 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
                 zauber = value;
             }
         }
-        Held held;
-        public int Zauberdauer;
+
+        Held held = null;
+        public Held Held
+        {
+            get { return held; }
+            set { held = value; }
+        }
+
+        public int Zauberdauer
+        {
+            get
+            {
+                double zd = Int32.Parse(zauber.Zauberdauer);
+                if (!held.HatSonderfertigkeitUndVoraussetzungen("Matrixverständnis"))
+                    zd += ZentraleKomponenteModDauer + TechnikModDauer + ReichweiteModDauer + KostenModDauer + WirkungsdauerModDauer + WirkungsdauerFestDauer + ZielModDauer + WirkungsradiusModDauer;
+                zd *= ZauberdauerModDauer;
+                return (int)Math.Round(zd, MidpointRounding.AwayFromZero); //TODO Min 1 Akt
+            }
+        }
+
         public int Wirkungsdauer;
         public int Kosten
         {
@@ -31,7 +49,11 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
                 if (Zauber == null)
                     return 0;
                 //TODO Zauberkosten string -> int. besser gleich in der DB anders ablegen.
-                return (int)Math.Round(Int32.Parse(Zauber.Kosten) * WirkungsdauerModKosten, MidpointRounding.AwayFromZero);
+                double kosten = Math.Round(Int32.Parse(Zauber.Kosten) * WirkungsdauerModKosten * KostenModKosten, MidpointRounding.AwayFromZero);
+                if(held.HatSonderfertigkeitUndVoraussetzungen("Stabzauber: Kraftfokus"))
+                    kosten--;
+                //TODO SF Kraftkontrolle, dann 1 Punkt Erschöpfung und -1 AsP
+                return (int)Math.Max(kosten, 1);
             }
         }
         public int LEKosten
@@ -67,14 +89,34 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         public bool Aufrechterhalten = false;
         object Zieltyp; //Objekt, mehrere Objekte, Zone, Wesen, Person, mehrere Wesen, mehrere Personen
 
-        int MaximaleModifikationen
+        public int MaximaleModifikationen
         {
             get
             {
                 if (held == null || !held.Magiebegabt)
                     return 0;
                 int leiteigenschaft = held.EigenschaftWert(Repräsentationen.GetLeitattribut(held, Repräsentation));
-                return Math.Max(leiteigenschaft - 12, 0);
+                int mods = Math.Max(leiteigenschaft - 12, 0);
+                if (held.HatSonderfertigkeitUndVoraussetzungen("Matrixverständnis"))
+                    mods += 1;
+                if (held.HatSonderfertigkeitUndVoraussetzungen("Stabzauber: Modifikationsfokus"))
+                    mods += 1;
+                return mods;
+            }
+        }
+
+        public int Modifikationen
+        {
+            get
+            {
+                int mods = 0;
+                mods += Math.Abs(ZauberdauerMod);
+                if (KostenMod > 0)
+                    mods++;
+                else
+                    mods += Math.Abs(KostenMod);
+                //TODO ....
+                return mods;
             }
         }
 
@@ -91,6 +133,9 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         {
             get { return zauberdauerMod; }
             set { 
+                //TODO bei Rep Sch oder Bor keine Verdopplung möglich
+                if (value > 0 && (Repräsentation == Repräsentationen.GetRepräsentation("Sch") || Repräsentation == Repräsentationen.GetRepräsentation("Bor")))
+                    value = 0;
                 if (value > 1) value = 1;
                 zauberdauerMod = value;
             }
@@ -108,7 +153,12 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
                 if (ZauberdauerMod == 0)
                     return 0;
                 else if (ZauberdauerMod == 1)
+                {
+                    if (held.HatSonderfertigkeitUndVoraussetzungen("Repräsentation: Gildenmagier")) //TODO und Held_Zauber hat Mag
+                        return -4;
                     return -3;
+
+                }
                 else
                     return ZauberdauerMod * -5;
             }
@@ -118,7 +168,7 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         /// <summary>
         /// Zauberwirkung erzwingen (WdZ 20), Astralenergie einsparen (WdZ 21)
         ///  n>0
-        ///  Erleichterung = n , Kosten = Math.Floor(2^(n-1)), Zauberdauer + n
+        ///  Erleichterung = n , Kosten = Math.Floor(2^(n-1)), Zauberdauer + n, zählt nur als eine Modifikation
         ///  -5<=n<0
         ///  Erschwernis = n*3, Zauberdauer + n , Kosten = Math.Max(1, original Kosten * n/10.0)
         /// </summary>
@@ -126,6 +176,11 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         {
             get { return kostenMod; }
             set {
+                //In Rep Sch kein Erzwingen und Einsparen, Bor kein Einsparen
+                if (Repräsentation == Repräsentationen.GetRepräsentation("Sch"))
+                    value = 0;
+                if (value < 0 && Repräsentation == Repräsentationen.GetRepräsentation("Bor"))
+                    value = 0;
                 if (value < -5) value = -5;
                 kostenMod = value;
             }
@@ -145,7 +200,7 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
 
         public int KostenModDauer
         {
-            get { return Math.Abs(kostenMod); }
+            get { return Math.Abs(KostenMod); }
         }
 
         public double KostenModZfP
@@ -252,6 +307,7 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         /// <summary>
         /// Veränderte Technik (WdZ 19)
         /// 7 ZfP / fehlender Komponente
+        /// ZD + 3 / fehlender Komponente
         /// </summary>
         public int TechnikMod
         {
@@ -284,6 +340,7 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         /// <summary>
         /// Veränderte Technik (WdZ 19)
         /// 12 ZfP / verletzter zentraler Komponente
+        /// ZD + 3 / verletzter zentraler Komponente
         /// </summary>
         public int ZentraleKomponenteMod
         {
@@ -311,8 +368,16 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
                 return ZentraleKomponenteMod * 3;
             }
         }
-        
 
+        Dictionary<string, int> reichweiten;
+        int GetReichweitenKategorie(string rw)
+        {
+            if(!reichweiten.ContainsKey(rw))
+                return 0;
+            return reichweiten[rw];
+        }
+        
+        public bool ReichweiteAbhängigVomZfW = false;
         int reichweiteMod = 0;
         /// <summary>
         /// Modifikation der Reichweite (WdZ 22)
@@ -350,6 +415,7 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
             }
         }
 
+        public bool WirkungsradiusAbhängigVomZfW = false;
         int wirkungsradiusMod = 0;
         /// <summary>
         /// Modifikation des Wirkungsradius (WdZ 22)
@@ -379,7 +445,7 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         {
             get
             {
-                return ReichweiteMod;
+                return WirkungsradiusMod;
             }
         }
 
@@ -397,7 +463,7 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
             }
         }
 
-        bool zielIstFreiwillig = false; //TODO
+        bool zielIstFreiwillig = false;
         /// <summary>
         /// Modifikation des Zielobjektes (WdZ 21)
         ///  Zauberdauer + 1
@@ -418,36 +484,91 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         public int ZielAnzahl
         {
             get { return zielAnzahl; }
-            set { zielAnzahl = value; }
+            set
+            {
+                if (value < 1)
+                    value = 1;
+                zielAnzahl = value; 
+            }
         }
 
         public int ZielModZfp
         {
-            get { return 0; }
+            get
+            {
+                int zfpmod = 0;
+                if (ZielAnzahl > 1 && !Zauber.MehrereZiele)
+                {
+                    if (ZielIstFreiwillig)
+                        zfpmod += 3 + ZielAnzahl;
+                }
+                if (Zauber.Freiwillig && !ZielIstFreiwillig)
+                    zfpmod += 5;
+                if (!Zauber.Freiwillig && ZielIstFreiwillig)
+                    zfpmod += 2;
+                return 0; 
+            }
         }
 
         public int ZielModErschwernis
         {
-            get { return 0; }
+            get
+            {
+                int zfpmod = 0;
+                if (!Zauber.Freiwillig && ZielIstFreiwillig)
+                    zfpmod += 0; //TODO + MR/2
+                else if (!ZielIstFreiwillig)
+                    zfpmod += 0; //TODO + Max(MR)
+                if(!ZielIstFreiwillig)
+                    zfpmod += ZielAnzahl;
+                return zfpmod;
+            }
         }
 
         public int ZielModDauer
         {
-            get { return 0; }
+            get
+            {
+                int d = 0;
+                if (Zauber.Freiwillig && !ZielIstFreiwillig)
+                    d++;
+                if (ZielAnzahl > 1 && !Zauber.MehrereZiele)
+                    d++;
+                return d; 
+            }
         }
-        //END TODO
         
         //wirkende vorteile/sonderfertigkeiten/Ritualgegenstände
         /*
-         * Matrixverständnis
          * Fernzauberei
-         * Stabzauber: für Kosten
-         * Stabzauber: Modifikationsfokus
-         * 
          */
 
-        public ZauberProbe()
+        public ZauberProbe(Model.Held_Zauber hz)
         {
+            Zauber = hz.Zauber;
+            ZielIstFreiwillig = Zauber.Freiwillig;
+            Held = hz.Held;
+
+            var reichweiten = new Dictionary<string, int>();
+            reichweiten.Add("Selbst", 0);
+            reichweiten.Add("Berührung", 1);
+            reichweiten.Add("1 Schritt", 2); reichweiten.Add("ZfW Spann", 2);
+            reichweiten.Add("3 Schritt", 3); reichweiten.Add("ZfW/2 Schritt", 3);
+            reichweiten.Add("7 Schritt", 4); reichweiten.Add("ZfW Schritt", 4);
+            reichweiten.Add("21 Schritt", 5); reichweiten.Add("ZfW x 3 Schritt", 5);
+            reichweiten.Add("49 Schritt", 6); reichweiten.Add("ZfW x 7 Schritt", 6);
+            reichweiten.Add("Horizont", 7);
+            reichweiten.Add("Außer Sicht", 8);
+
+            //TODO expression parser für reichweiten und kosten schreiben. Dieser muss Kategorien extrahieren und ersetzen können.#
+            //TODO Passt eine Kategorie nicht, wird die nächste genommen. ZfP* entspricht zur Bestimmung 3,5.
+            //TODO Ist die Reichweite deutlich mehr als 49 Schritt (Zonenzauber/Sichtkomponente überprüfen), wird die Reichweite je Stufe verdoppelt.
+            if (Zauber.Reichweite.Contains("ZfW"))
+                ReichweiteAbhängigVomZfW = true;
+            if (Zauber.Wirkungsradius.Contains("ZfW"))
+                WirkungsradiusAbhängigVomZfW = true;
+            if (Zauber.Wirkungsdauer.Contains("ZfW"))
+                WirkungsdauerAbhängigVomZfW = true;
         }
     }
 }
