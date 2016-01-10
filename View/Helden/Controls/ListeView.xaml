@@ -107,6 +107,21 @@
                                         </StackPanel>
                                     </MenuItem.ToolTip>
                                 </MenuItem>
+                                <MenuItem Height="28" Command="{Binding OnDownloadHelden}">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.Header>
+                                        <TextBlock VerticalAlignment="Center" Text="Herunterladen" />
+                                    </MenuItem.Header>
+                                    <MenuItem.ToolTip>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold" Text="Helden aus HeldenSoftware-Online-Zugang herunterladen" />
+                                            <TextBlock Foreground="Red" Text="ACHTUNG!" />
+                                            <TextBlock Text="Bestehende Helden werden vollständig überschrieben!" />
+                                        </StackPanel>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
                                 <Separator />
                                 <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" ToolTip="Beipiel-Helden laden.">
                                     <MenuItem.Icon>
@@ -127,32 +142,8 @@
                                 </MenuItem>
                             </ContextMenu>
                         </Button.ContextMenu>
-                        <Button.Content>                            
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" Width="25" />        
-                        </Button.Content>
-                    </Button>
-                    <Button Width="25" Click="ButtonWithContextMenu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldSynchronisieren" ToolTip="Helden aus dem Internet synchronisieren" VerticalAlignment="Bottom" Padding="0">
-                        <Button.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Height="28" Command="{Binding OnDownloadHelden}">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                    <MenuItem.Header>
-                                        <TextBlock VerticalAlignment="Center" Text="Herunterladen" />
-                                    </MenuItem.Header>
-                                    <MenuItem.ToolTip>
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock FontWeight="Bold" Text="Helden aus HeldenSoftware-Online-Zugang herunterladen" />
-                                            <TextBlock Foreground="Red" Text="ACHTUNG!" />
-                                            <TextBlock Text="Bestehende Helden werden vollständig überschrieben!" />
-                                        </StackPanel>
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Button.ContextMenu>
                         <Button.Content>
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" Stretch="Fill" Width="25" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" Width="25" />
                         </Button.Content>
                     </Button>
                     <Button Grid.Column="1" Height="25" Width="25" Command="{Binding OnExportDemoHelden}" Content="Export" HorizontalAlignment="Right" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" FontWeight="Bold" ToolTip="Demohelden Exportieren"/>
