@@ -10,6 +10,7 @@ using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Helden.Logic;
 using System.Text.RegularExpressions;
 using MeisterGeister.Logic.Extensions;
+using MeisterGeister.Model.Service;
 
 namespace MeisterGeister.Logic.HeldenImport
 {

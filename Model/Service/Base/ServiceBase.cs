@@ -55,6 +55,14 @@ namespace MeisterGeister.Model.Service {
             }
         }
 
+        public static DatabaseDSAEntities NewContext
+        {
+            get
+            {
+                return new DatabaseDSAEntities(ConnectionString);
+            }
+        }
+
         public virtual bool Insert<T>(T aModelObject) where T : class {
             try {
                 Context.AddObject(typeof(T).Name, aModelObject);

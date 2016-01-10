@@ -134,6 +134,15 @@ namespace MeisterGeister.ViewModel.Helden
                 HeldListe = Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
             else
                 HeldListe = Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
+            
+            // Ein lokaler Context wäre hier eigentlich wünschenswert (wie an allen anderen Stellen auch)
+            //using (var localContext = ServiceBase.NewContext)
+            //{
+            //    if (SelectedSortierung == "Spieler")
+            //        HeldListe = localContext.Held.Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
+            //    else
+            //        HeldListe = localContext.Held.Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
+            //}
         }
 
         private Base.CommandBase onNewHeld = null;
@@ -479,28 +488,39 @@ namespace MeisterGeister.ViewModel.Helden
             }
             if (tokenExists)
             {
+                Global.SetIsBusy(true, "Helden werden heruntergeladen...");
                 var syncer = new HeldenSoftwareOnlineService(token);
-                var worker = syncer.DownloadHeldenAsync();
-                worker.RunWorkerCompleted += DownloadCompleted;
+                ICollection<HeldenImportResult> result = syncer.DownloadHelden();
+                if (result != null)
+                {
+                    MsgWindow window = null;
+                    window = new MsgWindow("Download beendet", "Es wurden " + result.Count() + " Helden aktualisiert.", false);
+                    window.ShowDialog();
+                    window.Close();
+                }
+                LoadDaten();
+                Global.SetIsBusy(false);
+                // Asynchroner Download aktuell leider nicht möglich wegen Singleton-DataContext
+                //var worker = syncer.DownloadHeldenAsync();
+                //worker.ProgressChanged += DownloadProgressed;
+                //worker.RunWorkerCompleted += DownloadCompleted;
             }
         }
 
-        private void DownloadCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            var result = e.Result as IEnumerable<HeldenImportResult>;
-            MsgWindow window = null;
-            if (result != null && e.Error == null)
-                window = new MsgWindow("Download beendet", "Es wurden " + result.Count() + " Helden aktualisiert.", false);
-            else
-                window = new MsgWindow("Download nicht erfolgreich", "Der Download ist fehlgeschlagen.", false);
-            window.ShowDialog();
-            window.Close();
-        }
+        //private void DownloadProgressed(object sender, ProgressChangedEventArgs e)
+        //{
+        //    LoadDaten();
+        //}
+
+        //private void DownloadCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+            
+        //}
 
         private string AddToken()
         {
             var dialog = new InputWindow();
-            dialog.Title = "Name eingeben";
+            dialog.Title = "Token eingeben";
             dialog.Beschreibung = "Bitte einen HeldenSoftware-Online-Token eingeben.";
             dialog.ShowDialog();
             bool defined = dialog.OK_Click;

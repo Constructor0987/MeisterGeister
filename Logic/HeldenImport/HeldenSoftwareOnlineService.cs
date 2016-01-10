@@ -76,29 +76,45 @@ namespace MeisterGeister.Logic.HeldenImport
         public BackgroundWorkerQueueItem DownloadHeldenAsync()
         {
             var worker = new BackgroundWorkerQueueItem(this);
-            worker.DoWork += (s, e) => 
+            worker.DoWork += (s, e) =>
             {
                 var bw = (BackgroundWorkerQueueItem)s;
-                bw.ReportProgress(0, "Helden-Download beginnt...");
-                ICollection<HeldenImportResult> helden = new List<HeldenImportResult>();
-                HeldenListe heldenListe = GetHeldenListe();
-                int amountHelden = heldenListe.Helden.Count;
-
-                for(int i = 1; i <= amountHelden; i++)
-                {
-                    helden.Add(DownloadHeld(heldenListe.Helden[i-1]));
-                    int progress = (i / amountHelden) * 100;
-                    bw.ReportProgress(progress, i + " von " + amountHelden + " Helden verarbeitet.");
-                }
+                ICollection<HeldenImportResult> helden = DownloadHelden(bw);
                 e.Result = helden;
             };
             worker.RunWorkerCompleted += (s, e) =>
             {
+                Global.SetIsBusy(false);
                 var result = (IEnumerable<HeldenImportResult>)e.Result;
                 HeldenSoftwareImporter.ShowLogWindow(result);
             };
             App.Queue.QueueWorker(worker);
             return worker;
+        }
+
+        public ICollection<HeldenImportResult> DownloadHelden()
+        {
+            return DownloadHelden(null);
+        }
+
+        private ICollection<HeldenImportResult> DownloadHelden(BackgroundWorkerQueueItem bw)
+        {
+            ICollection<HeldenImportResult> helden = new List<HeldenImportResult>();
+            HeldenListe heldenListe = GetHeldenListe();
+            int amountHelden = heldenListe.Helden.Count;
+            if(bw != null)
+                bw.ReportProgress(0, "0 von " + amountHelden + " Helden verarbeitet.");
+
+            for (int i = 1; i <= amountHelden; i++)
+            {
+                helden.Add(DownloadHeld(heldenListe.Helden[i - 1]));
+                if (bw != null)
+                {
+                    int progress = (i / amountHelden) * 100;
+                    bw.ReportProgress(progress, i + " von " + amountHelden + " Helden verarbeitet.");
+                }
+            }
+            return helden;
         }
 
         public HeldenImportResult DownloadHeld(HeldElement heldElement)
