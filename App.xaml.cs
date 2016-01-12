@@ -121,9 +121,11 @@ namespace MeisterGeister {
             try {
                 SqlCeUpgrade.Run(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf");
             } catch (Exception ex) {
+#if !DEBUG
                 MsgWindow errWin = new MsgWindow("Fehler beim Datenbank-Upgrade", "Beim Datenbank-Upgrade ist ein Fehler aufgetreten!", ex);
                 errWin.ShowDialog();
                 Shutdown();
+#endif
             }
 
             // Auf Datenbank-Update prüfen

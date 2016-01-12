@@ -22,3 +22,5 @@ UPDATE Waffe SET TPKKSchwelle = 13 WHERE WaffeGUID = '00000000-0000-0000-0001-00
 GO
 UPDATE Ausrüstung SET Literatur = 'AA 28 / AA Errata 2' WHERE AusrüstungGUID = '00000000-0000-0000-0001-000000000094'
 GO
+
+-- TODO 'Tenebaro Schattentanz' fehlt bei Zaubern

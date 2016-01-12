@@ -619,12 +619,16 @@ namespace MeisterGeister.Logic.HeldenImport
             {
                 bemerkung = null;
                 bool added = false;
+                bool hauszauber = false;
                 zauberName = zauber.Attributes["name"].Value;
 
                 if (zauber.Attributes["value"] != null)
                     wert = Convert.ToInt32(zauber.Attributes["value"].Value);
                 else
                     wert = 0;
+
+                if (zauber.Attributes["hauszauber"] != null)
+                    hauszauber = Convert.ToBoolean(zauber.Attributes["hauszauber"].Value);
 
                 if (zauber.Attributes["repraesentation"] != null)
                 {
@@ -1299,21 +1303,22 @@ namespace MeisterGeister.Logic.HeldenImport
                     {
                         if (gchild.Name == "modallgemein")
                         {
-                            foreach (XmlNode mchild in gegenstand.ChildNodes)
-                            {
-                                if (mchild.Name == "name")
+                            if(gchild.HasChildNodes)
+                                foreach (XmlNode mchild in gchild.ChildNodes)
                                 {
-                                    name = mchild.Attributes["value"].Value.Trim();
+                                    if (mchild.Name == "name")
+                                    {
+                                        name = mchild.Attributes["value"].Value.Trim();
+                                    }
+                                    else if (mchild.Name == "preis")
+                                    {
+                                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), out preis);
+                                    }
+                                    else if (mchild.Name == "gewicht")
+                                    {
+                                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), out gewicht);
+                                    }
                                 }
-                                else if (mchild.Name == "preis")
-                                {
-                                    Double.TryParse(mchild.Attributes["value"].Value.Trim(), out preis);
-                                }
-                                else if (mchild.Name == "gewicht")
-                                {
-                                    Double.TryParse(mchild.Attributes["value"].Value.Trim(), out gewicht);
-                                }
-                            }
                         }
                     }
 
