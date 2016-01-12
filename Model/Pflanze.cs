@@ -1,6 +1,7 @@
 ﻿using MeisterGeister.Logic.Kalender.DsaTool;
 using MeisterGeister.Logic.Literatur;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,22 @@ namespace MeisterGeister.Model
 {
     public partial class Pflanze : ILiteratur
     {
+        private bool _pflanzeHeldBekannt = false;
+        public bool PflanzeHeldBekannt
+        {
+            get 
+            {                
+                _pflanzeHeldBekannt = Held_Pflanze.FirstOrDefault(t => t.Held == Global.SelectedHeld) != null;
+                return _pflanzeHeldBekannt;                    
+            }
+            set { Set(ref _pflanzeHeldBekannt, value); }
+        }
+
+        public Held ActualHeld
+        {
+            get { return Global.SelectedHeld; }
+        }
+
         public List<string> GebietsNamen
         {
             get
@@ -232,7 +249,49 @@ namespace MeisterGeister.Model
         {
             return GetErnte(monatNr, false).Count>0;
         }
-                
+
+        #region Commands
+
+        private CommandBase onPflanzeHeldBekanntClick;
+        public CommandBase OnPflanzeHeldBekanntClick
+        {
+            get
+            {
+                if (onPflanzeHeldBekanntClick == null)
+                    onPflanzeHeldBekanntClick = new CommandBase(PflanzeHeldBekanntClick, null);
+                return onPflanzeHeldBekanntClick;
+            }
+        }
+
+        private void PflanzeHeldBekanntClick(object arg)
+        {
+            if (Global.SelectedHeld == null) return;
+
+            Pflanze p = (Pflanze)arg;
+
+            if (!p.PflanzeHeldBekannt)
+            {
+                Held_Pflanze hPflanze = new Held_Pflanze();
+                hPflanze.HeldGUID = Global.SelectedHeld.HeldGUID;
+                hPflanze.ID = Guid.NewGuid();
+                hPflanze.PflanzeGUID = p.PflanzeGUID;
+                hPflanze.Bekannt = true;
+                if (Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze))
+                    OnChanged("PflanzeHeldBekannt");
+            }
+            else
+            {
+                Held_Pflanze h_pflanze = p.Held_Pflanze.FirstOrDefault(t => t.Held == Global.SelectedHeld);
+                if (h_pflanze != null)
+                {
+                    Global.ContextZooBot.Delete<Held_Pflanze>(h_pflanze);
+                    Global.SelectedHeld.Held_Pflanze.Remove(h_pflanze);
+                    OnChanged("PflanzeHeldBekannt");
+                }
+            }
+        }
+        #endregion
+
         #region Import Export
 
         #endregion

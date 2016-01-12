@@ -24,5 +24,11 @@ namespace MeisterGeister.View.Karte
         {
             InitializeComponent();
         }
+
+        private void BtnBekanntePflanzenForm_Click(object sender, RoutedEventArgs e)
+        {
+            BekanntePflanzenView wndBekanntePflanzen = new BekanntePflanzenView();
+            wndBekanntePflanzen.ShowDialog();
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace MeisterGeister.ViewModel.Karte
                 findePflanzen();
 
         }
-
+        
         private IEnumerable<IGrouping<Pflanze, KeyValuePair<Pflanze_Verbreitung, int>>> funde;
         public IEnumerable<IGrouping<Pflanze, KeyValuePair<Pflanze_Verbreitung, int>>> Funde
         {
@@ -55,6 +55,7 @@ namespace MeisterGeister.ViewModel.Karte
             get
             {
                 return base.LandschaftsGruppen.Where(l => !l.IsEmpty).ToList();
+                
             }
         }
 
@@ -66,7 +67,7 @@ namespace MeisterGeister.ViewModel.Karte
                 return base.CanExecuteSuche && SichtbarePflanzen.Count > 0;
             }
         }
-
+                
         public override void ExecuteSuche()
         {
             Probe probe = getProbe();
@@ -103,7 +104,7 @@ namespace MeisterGeister.ViewModel.Karte
                 //0 Steht für unendlich
                 gefunden.Add(pv, 0);
 
-            Funde = gefunden.GroupBy(kvp => kvp.Key.Pflanze);
+            Funde = gefunden.GroupBy(kvp => kvp.Key.Pflanze);           
         }
 
         private int effektiveTaP(int tap, Pflanze_Verbreitung v)

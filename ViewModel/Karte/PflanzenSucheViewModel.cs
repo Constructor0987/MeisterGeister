@@ -53,6 +53,13 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref pflanzenTypen, value); }
         }
 
+        private List<bool> pflanzenBekannt = new List<bool>();
+        public List<bool> PflanzenBekannt
+        {
+            get { return pflanzenBekannt; }
+            set { Set(ref pflanzenBekannt, value); }
+        }
+
         private string pflanzenTyp = String.Empty;
         public string PflanzenTyp
         {
@@ -92,6 +99,14 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
+        private bool filterBekannt = false;
+        public bool FilterBekannt
+        {
+            get { return filterBekannt; }
+            set { Set(ref filterBekannt, value); }
+        }
+        
+        
         protected void updateTaW()
         {
             TaW = calculateTaW();
@@ -133,6 +148,7 @@ namespace MeisterGeister.ViewModel.Karte
             LandschaftViewModels.Clear();
 
             var typen = getPflanzen().SelectMany(p => p.Pflanze_Typ).Select(t => t.Typ).Distinct();
+             //   getPflanzen().ToList().FindAll(a => a.PflanzeHeldBekannt).SelectMany(p => p.Pflanze_Typ).Select(t => t.Typ).Distinct();
             List<Landschaft> landschaften = getPflanzen().SelectMany(p => p.Landschaften).Distinct().ToList();
 
             //überall = landschaften.Where(l => l.Name == "überall").Single();
@@ -145,6 +161,7 @@ namespace MeisterGeister.ViewModel.Karte
             gruppenVM = gruppenVM.Where(vm => vm.Landschaften.Count > 0).OrderBy(vm => vm.Gruppe.Name);
 
             List<string> temp = typen.ToList();
+
             temp.Insert(0, String.Empty);
             PflanzenTypen = temp;
 
@@ -176,11 +193,14 @@ namespace MeisterGeister.ViewModel.Karte
         [DependentProperty("PflanzenTyp")]
         [DependentProperty("Suchmonat")]
         [DependentProperty("FilterGruppe")]
+        [DependentProperty("FilterBekannt")]
         public List<Model.Pflanze> SichtbarePflanzen
         {
             get
             {
                 sichtbarePflanzen = filterLandschaft(filterTyp(filterMonat(getPflanzen()))).OrderBy(p => p.Name).ToList();
+                if (FilterBekannt)
+                    sichtbarePflanzen = sichtbarePflanzen.FindAll(t => t.PflanzeHeldBekannt);
                 invalidateVerbreitung();
                 return sichtbarePflanzen;
             }

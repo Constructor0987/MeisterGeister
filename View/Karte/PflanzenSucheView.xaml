@@ -29,7 +29,7 @@
                 <Karte:PflanzenSucheAllgemeinView/>
             </TabItem>
         </TabControl>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" >            
             <TextBlock Text="Suchmonat: " VerticalAlignment="Center"/>
             <ComboBox SelectedItem="{Binding ElementName=tabControl,Path=SelectedItem.Content.DataContext.Suchmonat,Mode=TwoWay}" SelectedIndex="1">
                 <x:StaticExtension Member="vm:Suchmonat.GanzesJahr"/>

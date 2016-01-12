@@ -47,6 +47,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}" Margin="5,4,0,0"/>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">            
+            <Button Width="20" HorizontalAlignment="Right" Background="{x:Null}" Focusable="False" Click="BtnBekanntePflanzenForm_Click">
+                <Grid ToolTip="Bekannte Pflanzen editieren">
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png"  Margin="-3" />
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/feder.png"  Margin="-1,-3,-5,-3" />
+                </Grid>
+            </Button>
+        </StackPanel>
         <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}" Grid.Row="1">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -113,7 +121,45 @@
                         <DataTemplate>
                             <DockPanel DataContext="{Binding Key}" HorizontalAlignment="Left">
                                 <General:LiteraturControl Width="25" Height="25" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" VerticalAlignment="Center" DockPanel.Dock="Left"/>
-                                <TextBlock Margin="4,0,0,0" Text="{Binding Name}" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" DockPanel.Dock="Right"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="4,0,0,0" Text="{Binding Name}" Grid.ColumnSpan="2" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" DockPanel.Dock="Right"/>
+                                    <ToggleButton x:Name="allgPflanzeBekannt" Margin="4,0,0,0" Grid.Column="2" VerticalAlignment="Center" Width="25" Height="25" Focusable="False"
+                                        IsChecked="{Binding PflanzeHeldBekannt}" Command="{Binding OnPflanzeHeldBekanntClick}" CommandParameter="{Binding}" Background="{x:Null}" >
+                                        <ToggleButton.Content>
+                                            <Image>
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/General/neu_grau.png" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding PflanzeHeldBekannt}" Value="True">
+                                                                <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/General/neu.png" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                        </ToggleButton.Content>
+                                        <ToggleButton.ToolTip>
+                                            <TextBlock>
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="Pflanze ist nicht bekannt" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding PflanzeHeldBekannt}" Value="True">
+                                                                <Setter Property="Text" Value="Pflanze ist bekannt" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </ToggleButton.ToolTip>
+                                    </ToggleButton>
+                                </Grid>
                             </DockPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -2,14 +2,17 @@
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.Base;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.Karte
-{
+{    
     public class PflanzenSucheGezieltViewModel : PflanzenSucheViewModel
     {
         private Pflanze_Verbreitung suche = null;
@@ -107,5 +110,7 @@ namespace MeisterGeister.ViewModel.Karte
                 return pflanzen;
             return pflanzen.Where(p => p.Pflanze_Verbreitung.Any(v => FilterGruppe.Gruppe.Landschaft.Contains(v.Landschaft)));
         }
+
+            
     }
 }

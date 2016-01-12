@@ -29,11 +29,17 @@ namespace MeisterGeister.ViewModel.Karte
 
     public class BekanntePflanzenVM : Base.ViewModelBase
     {
-        //public Action CloseAction { get; set; }
-        
         #region //---- FELDER ----
 
-        // Listen
+
+        #region //-Allgemein-
+
+        private bool IsLoaded;
+        
+        #endregion
+
+        #region //---- Listen ----
+        
         private List<Model.Pflanze> _pflanzenImGebiet = new List<Model.Pflanze>();
         private List<Model.Pflanze> _pflanzenImGebietUndLandschaft = new List<Model.Pflanze>();
 
@@ -48,21 +54,6 @@ namespace MeisterGeister.ViewModel.Karte
                     FilteredPflanzenListe = PflanzenListe.FindAll(t => t.Name.ToLower().Contains(value.ToLower()));                     
             }
         }
-
-        //private PflanzenAnOrtViewModel _PflanzenAnOrtVM;
-        //public PflanzenAnOrtViewModel PflanzenAnOrtVM
-        //{
-        //    get { return _PflanzenAnOrtVM; }
-        //    set
-        //    {
-        //        Set(ref _PflanzenAnOrtVM, value);
-        //        if (value != null)
-        //        {
-        //            InitPflanzenListe();
-        //            OnChanged("BekannteHeldenPflanzen");
-        //        }
-        //    }
-        //}     
            
         public List<Held_Pflanze> BekannteHeldenPflanzen
         {
@@ -92,6 +83,8 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
+        #endregion
+
         private Pflanze _pflanzeAuswahl;
         public Pflanze PflanzeAuswahl
         {
@@ -102,28 +95,7 @@ namespace MeisterGeister.ViewModel.Karte
                 OnChanged();
             }
         }
-        
-        private bool _pflanzeBekannt = false;
-        public bool PflanzeBekannt
-        {
-            get { return _pflanzeBekannt; }
-            set
-            {
-                _pflanzeBekannt = value;
-                OnChanged();
-            }
-        }
-        
-
-        #region //-Allgemein-
-        //Booleans
-        private bool IsLoaded;
-        //Listen
-        
-        //Werte
-        
-        #endregion
-
+                
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
@@ -150,13 +122,13 @@ namespace MeisterGeister.ViewModel.Karte
                 IsLoaded = true;
             }
         }
-
+        
         public void InitPflanzenListe()
         {
             List<Model.Pflanze> uListe = new List<Model.Pflanze>();
-            
+
             uListe = new List<Pflanze>();
-            //uListe = PflanzenAnOrtVM.Pflanzen.OrderBy(t => t.Name).ToList();
+            uListe = Global.ContextZooBot.ZooBotPflanzenListe.Where(t => !t.PflanzeHeldBekannt).OrderBy(t => t.Name).ToList();
 
             PflanzenListe = uListe;
             FilteredPflanzenListe = PflanzenListe;
@@ -164,14 +136,14 @@ namespace MeisterGeister.ViewModel.Karte
         
         public void Refresh()
         {
+            InitPflanzenListe();
             OnChanged("BekannteHeldenPflanzen");
         }        
 
         #endregion
 
         #region //---- EVENTS ----
-
-
+        
         private Base.CommandBase _onPflanzenFilterLöschen = null;
         public Base.CommandBase OnPflanzenFilterLöschen
         {
@@ -232,6 +204,7 @@ namespace MeisterGeister.ViewModel.Karte
             {
                 PflanzeAuswahl = null;
                 OnChanged("BekannteHeldenPflanzen");
+                Refresh();
             }
             else
             {
