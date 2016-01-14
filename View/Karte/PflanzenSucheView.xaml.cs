@@ -25,5 +25,6 @@ namespace MeisterGeister.View.Karte
         {
             InitializeComponent();
         }
+
     }
 }

@@ -62,12 +62,14 @@ namespace MeisterGeister.ViewModel.Karte
         public override void RegisterEvents()
         {
             base.RegisterEvents();
+            Global.HeldSelectionChanged += Global_HeldSelectionChanged;
             Global.StandortChanged += Global_StandortChanged;
         }
 
         public override void UnregisterEvents()
         {
             Global.StandortChanged -= Global_StandortChanged;
+            Global.HeldSelectionChanged -= Global_HeldSelectionChanged;
             base.UnregisterEvents();
         }
         
@@ -77,6 +79,11 @@ namespace MeisterGeister.ViewModel.Karte
             if (ignoreGlobalStandortChangedEvent)
                 return;
             HeldenGlobusPosition = Global.HeldenPosition;
+        }
+
+        private void Global_HeldSelectionChanged(object sender, EventArgs e)
+        {
+            OnChanged("SelectedHeld");
         }
 
         public static List<Logic.Karte> KartenListeErstellen()
@@ -444,5 +451,18 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref zoomControlSize, value); }
         }
         #endregion
+
+
+        public Model.Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                SelectedHeld = value;
+                OnChanged();
+            }
+        }
+
     }
 }

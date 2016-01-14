@@ -10,15 +10,23 @@
              Background="{StaticResource Background1}" >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="65"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-
-        <Expander Grid.Row="0" IsExpanded="True">
+        <Border Style="{DynamicResource ControlContentBorder}" Margin="0,1">
+            <StackPanel Orientation="Horizontal" Margin="0,-2">
+                <Label Content="Name:" FontWeight="Bold" Margin="0,1" />
+                <Label Content="{Binding SelectedHeld.Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="3,0,10,0" VerticalAlignment="Center" />
+                <Label Content="Spieler:" FontWeight="Bold" Margin="0,1" />
+                <Label Content="{Binding SelectedHeld.Spieler, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="3,0,10,0" VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+        <Expander Grid.Row="1" IsExpanded="True" >
             <Expander.Header>
                 <TextBlock Text="Pflanzenauswahl der nicht bekannten Pflanzen" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
@@ -44,12 +52,14 @@
                                     </ItemsPanelTemplate>
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
-                            <Button Grid.Column="1" Command="{Binding OnAddBekanntePflanzeClick}" Height="22" Width="25" HorizontalAlignment="Left" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Margin="4">
+                            <Button Grid.Column="1" Command="{Binding OnAddBekanntePflanzeClick}" Height="22" Width="25" HorizontalAlignment="Left" 
+                                    Style="{DynamicResource ReadOnlyButtonStyle}" 
+                                    IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Margin="4">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                             </Button>
 
                             <Grid Margin="2,2,2,0" Grid.Column="2">
-                                <Border HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Wesen-Filter">
+                                <Border HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Unbekannte Pflanzen-Filter">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="26" />
@@ -72,7 +82,7 @@
             </Grid>
         </Expander>
 
-        <Expander Grid.Row="1" IsExpanded="True" Margin="5,5,5,0">
+        <Expander Grid.Row="2" IsExpanded="True" Margin="5,5,5,0">
             <Expander.Header>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Bekannte Pflanzen" />
@@ -80,7 +90,7 @@
             </Expander.Header>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                 <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
-                     <ListView Margin="5" Background="{x:Null}"
+                    <ListView Margin="5" Background="{x:Null}"
                               ItemsSource="{Binding BekannteHeldenPflanzen, UpdateSourceTrigger=PropertyChanged}" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -88,7 +98,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30"/>
                                         <ColumnDefinition MinWidth="300"/>
-                                    </Grid.ColumnDefinitions>   
+                                    </Grid.ColumnDefinitions>
                                     <Label Grid.ColumnSpan="2" />
                                     <Button Name="btnBekanntePflanzeEntfernen" ToolTip="Bekannte Pflanze entfernen" Tag="{Binding}"
                                             Command="{Binding VM.OnBekanntePflanzeEntfernen, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
@@ -96,7 +106,7 @@
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Height="15" />
                                     </Button>
                                     <StackPanel Orientation="Horizontal" Grid.Column="1"  Height="22" VerticalAlignment="Center" >
-                                        <CheckBox Content="{Binding Pflanze.Name}" IsChecked="{Binding Bekannt}" Margin="3,3,3,-3" ToolTip="Anhaken wenn bekannt"/>
+                                        <Label Content="{Binding Pflanze.Name}" Margin="3,-3" VerticalAlignment="Center" />
                                         <ViewGeneral:LiteraturControl LiteraturAnzeigeArt="NurIcon" Literaturangabe="{Binding Pflanze.Literatur}" />
                                     </StackPanel>
                                 </Grid>

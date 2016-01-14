@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+// eigene
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.View.Karte
 {
@@ -27,8 +29,13 @@ namespace MeisterGeister.View.Karte
 
         private void BtnBekanntePflanzenForm_Click(object sender, RoutedEventArgs e)
         {
-            BekanntePflanzenView wndBekanntePflanzen = new BekanntePflanzenView();
-            wndBekanntePflanzen.ShowDialog();
+            if (Global.SelectedHeld == null)
+                ViewHelper.Popup("Bitte zuerst einen Helden auswählen");
+            else
+            {
+                BekanntePflanzenView wndBekanntePflanzen = new BekanntePflanzenView();
+                wndBekanntePflanzen.ShowDialog();
+            }
         }
     }
 }

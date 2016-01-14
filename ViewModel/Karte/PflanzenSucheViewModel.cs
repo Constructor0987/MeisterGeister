@@ -87,7 +87,7 @@ namespace MeisterGeister.ViewModel.Karte
             get { return taP; }
             set { Set(ref taP, value); }
         }
-
+        
         private bool langeSuchen;
         public bool LangeSuchen
         {
@@ -277,6 +277,7 @@ namespace MeisterGeister.ViewModel.Karte
             get { return Global.SelectedHeld != null; }
         }
 
+        
         public abstract void ExecuteSuche();
 
         private bool ortskenntnis;
@@ -290,10 +291,12 @@ namespace MeisterGeister.ViewModel.Karte
         {
             base.RegisterEvents();
             LadePflanzen();
-            PropertyChanged += PflanzenSucheViewModel_PropertyChanged;
+            PropertyChanged += PflanzenSucheViewModel_PropertyChanged;            
             Global.HeldSelectionChanged += Global_HeldSelectionChanged;
             Global.StandortChanged += Global_StandortChanged;
             updateTaW();
+            OnChanged("HeldListe");
+            OnChanged("SelectedHeld");
         }
 
         public override void UnregisterEvents()
@@ -312,9 +315,11 @@ namespace MeisterGeister.ViewModel.Karte
 
         private void Global_HeldSelectionChanged(object sender, EventArgs e)
         {
+            OnChanged("SelectedHeld");
             updateTaW();
             Suchen.Invalidate();
             OnHeldChanged();
+            LadePflanzen();
         }
 
         private void Global_StandortChanged(object sender, EventArgs e)
@@ -327,8 +332,9 @@ namespace MeisterGeister.ViewModel.Karte
         protected virtual void OnHeldChanged()
         {
             OnChanged("CanExecuteSuche");
+            OnChanged("SelectedHeld");
         }
-
+        
         protected Probe getProbe()
         {
             Probe probe = new Probe();

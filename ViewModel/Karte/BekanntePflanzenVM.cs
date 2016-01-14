@@ -35,6 +35,11 @@ namespace MeisterGeister.ViewModel.Karte
         #region //-Allgemein-
 
         private bool IsLoaded;
+
+        public Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+        }
         
         #endregion
 
@@ -54,7 +59,8 @@ namespace MeisterGeister.ViewModel.Karte
                     FilteredPflanzenListe = PflanzenListe.FindAll(t => t.Name.ToLower().Contains(value.ToLower()));                     
             }
         }
-           
+        
+
         public List<Held_Pflanze> BekannteHeldenPflanzen
         {
             get { return Global.SelectedHeld.Held_Pflanze.OrderBy(t => t.Pflanze.Name).ToList(); }
@@ -138,6 +144,7 @@ namespace MeisterGeister.ViewModel.Karte
         {
             InitPflanzenListe();
             OnChanged("BekannteHeldenPflanzen");
+            OnChanged("SelectedHeld");
         }        
 
         #endregion
@@ -193,7 +200,8 @@ namespace MeisterGeister.ViewModel.Karte
         }
         void AddBekanntePflanzeClick(object obj)
         {
-            if (Global.SelectedHeld.Held_Pflanze.Where(t => t.Pflanze.PflanzeGUID == PflanzeAuswahl.PflanzeGUID).ToList().Count > 0)
+            if (PflanzeAuswahl == null ||
+                Global.SelectedHeld.Held_Pflanze.Where(t => t.Pflanze.PflanzeGUID == PflanzeAuswahl.PflanzeGUID).ToList().Count > 0)
                 return;
             Held_Pflanze hPflanze = new Held_Pflanze();
             hPflanze.HeldGUID = Global.SelectedHeld.HeldGUID;

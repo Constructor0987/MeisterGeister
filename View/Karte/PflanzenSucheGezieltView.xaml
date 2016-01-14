@@ -113,7 +113,7 @@
             Suche <Run Text="{Binding Pflanze.Pflanze.Name,Mode=OneWay}"/> hier: <Run Text="{Binding Pflanze.Landschaft.Name,Mode=OneWay}"/>
             </TextBlock>-->
         <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}" Grid.ColumnSpan="2" Margin="5,4,0,0"/>
-        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" >
             <ToggleButton Width="20" Background="{x:Null}" IsChecked="{Binding FilterBekannt}" Focusable="False" Margin="0,0,2,0" >
                 <Grid ToolTip="Filter auf bekannte Pflanzen">
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Margin="-3" />
