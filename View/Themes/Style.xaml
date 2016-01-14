@@ -5,6 +5,7 @@
     xmlns:mg="clr-namespace:MeisterGeister.View.General"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
     mc:Ignorable="d">
 
     <!-- Eigenschaften Farben (nach DSA5) -->
@@ -20,6 +21,7 @@
     <!-- CombplexTpye -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     <mg:InverseBooleanConverter x:Key="InverseBooleanConverter1" />
+    <mg:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
 
     <!-- EasyTpye -->
     <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#8C8E94"/>
@@ -1035,7 +1037,7 @@
         <GradientStop Color="#E2E3EA" Offset="0.07"/>
         <GradientStop Color="#E3E9EF" Offset="1"/>
     </LinearGradientBrush>
-    <Style BasedOn="{x:Null}" TargetType="{x:Type TextBox}">
+    <Style BasedOn="{x:Null}" TargetType="{x:Type TextBox}" xmlns:sys="clr-namespace:System;assembly=mscorlib" >
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}"/>
@@ -1050,7 +1052,9 @@
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
                         <Microsoft_Windows_Themes:ListBoxChrome x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderFocused="{TemplateBinding IsKeyboardFocusWithin}" SnapsToDevicePixels="true">
-                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            <Border Name="Border" CornerRadius="0" Padding="0" BorderThickness="0" BorderBrush="Black" >
+                                <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
                         </Microsoft_Windows_Themes:ListBoxChrome>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -1059,6 +1063,27 @@
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="AutoCompleteBoxStyle" TargetType="toolkit:AutoCompleteBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="toolkit:AutoCompleteBox">
+                    <Grid>
+                        <Border Name="Border" CornerRadius="0" Padding="0" BorderThickness="0" BorderBrush="Black" >
+                            <Border.Background>
+                                <VisualBrush AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                                               Foreground="LightGray" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.Background>
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

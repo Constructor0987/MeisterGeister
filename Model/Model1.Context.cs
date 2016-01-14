@@ -432,6 +432,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<NscMerkmal> _nscMerkmal;
     
+        public ObjectSet<Ort> Ort
+        {
+            get { return _ort  ?? (_ort = CreateObjectSet<Ort>("Ort")); }
+        }
+        private ObjectSet<Ort> _ort;
+    
         public ObjectSet<Pflanze> Pflanze
         {
             get { return _pflanze  ?? (_pflanze = CreateObjectSet<Pflanze>("Pflanze")); }
@@ -510,6 +516,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Sonderfertigkeit_Setting> _sonderfertigkeit_Setting;
     
+        public ObjectSet<Strecke> Strecke
+        {
+            get { return _strecke  ?? (_strecke = CreateObjectSet<Strecke>("Strecke")); }
+        }
+        private ObjectSet<Strecke> _strecke;
+    
         public ObjectSet<Talent> Talent
         {
             get { return _talent  ?? (_talent = CreateObjectSet<Talent>("Talent")); }
@@ -551,6 +563,18 @@ namespace MeisterGeister.Model
             get { return _waffe  ?? (_waffe = CreateObjectSet<Waffe>("Waffe")); }
         }
         private ObjectSet<Waffe> _waffe;
+    
+        public ObjectSet<Weg> Weg
+        {
+            get { return _weg  ?? (_weg = CreateObjectSet<Weg>("Weg")); }
+        }
+        private ObjectSet<Weg> _weg;
+    
+        public ObjectSet<Wegtyp> Wegtyp
+        {
+            get { return _wegtyp  ?? (_wegtyp = CreateObjectSet<Wegtyp>("Wegtyp")); }
+        }
+        private ObjectSet<Wegtyp> _wegtyp;
     
         public ObjectSet<Zauber> Zauber
         {
@@ -707,6 +731,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Notizen;
     		if(typeof(T) == typeof(NscMerkmal))
     				return (ObjectSet<T>)(Object)NscMerkmal;
+    		if(typeof(T) == typeof(Ort))
+    				return (ObjectSet<T>)(Object)Ort;
     		if(typeof(T) == typeof(Pflanze))
     				return (ObjectSet<T>)(Object)Pflanze;
     		if(typeof(T) == typeof(Pflanze_Ernte))
@@ -733,6 +759,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Sonderfertigkeit;
     		if(typeof(T) == typeof(Sonderfertigkeit_Setting))
     				return (ObjectSet<T>)(Object)Sonderfertigkeit_Setting;
+    		if(typeof(T) == typeof(Strecke))
+    				return (ObjectSet<T>)(Object)Strecke;
     		if(typeof(T) == typeof(Talent))
     				return (ObjectSet<T>)(Object)Talent;
     		if(typeof(T) == typeof(Talentgruppe))
@@ -747,6 +775,10 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)VorNachteil_Auswahl;
     		if(typeof(T) == typeof(Waffe))
     				return (ObjectSet<T>)(Object)Waffe;
+    		if(typeof(T) == typeof(Weg))
+    				return (ObjectSet<T>)(Object)Weg;
+    		if(typeof(T) == typeof(Wegtyp))
+    				return (ObjectSet<T>)(Object)Wegtyp;
     		if(typeof(T) == typeof(Zauber))
     				return (ObjectSet<T>)(Object)Zauber;
     		if(typeof(T) == typeof(Zauber_Setting))
@@ -882,6 +914,8 @@ namespace MeisterGeister.Model
     				return Notizen;
     		if(t == typeof(NscMerkmal))
     				return NscMerkmal;
+    		if(t == typeof(Ort))
+    				return Ort;
     		if(t == typeof(Pflanze))
     				return Pflanze;
     		if(t == typeof(Pflanze_Ernte))
@@ -908,6 +942,8 @@ namespace MeisterGeister.Model
     				return Sonderfertigkeit;
     		if(t == typeof(Sonderfertigkeit_Setting))
     				return Sonderfertigkeit_Setting;
+    		if(t == typeof(Strecke))
+    				return Strecke;
     		if(t == typeof(Talent))
     				return Talent;
     		if(t == typeof(Talentgruppe))
@@ -922,6 +958,10 @@ namespace MeisterGeister.Model
     				return VorNachteil_Auswahl;
     		if(t == typeof(Waffe))
     				return Waffe;
+    		if(t == typeof(Weg))
+    				return Weg;
+    		if(t == typeof(Wegtyp))
+    				return Wegtyp;
     		if(t == typeof(Zauber))
     				return Zauber;
     		if(t == typeof(Zauber_Setting))

@@ -62,9 +62,9 @@ namespace MeisterGeister_Tests
             var syncer = new HeldenSoftwareOnlineService(_token);
             HeldenListe heldenListe = syncer.GetHeldenListe();
             HeldElement heldElement = heldenListe.Helden.FirstOrDefault(h => h.Name.Contains("Rethis"));
-            Held held = syncer.DownloadHeld(heldElement);
+            HeldenImportResult held = syncer.DownloadHeld(heldElement);
             Assert.IsTrue(held != null);
-            Assert.IsTrue(held.Name.Contains("Rethis"));
+            Assert.IsTrue(held.Held.Name.Contains("Rethis"));
         }
     }
 }

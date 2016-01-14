@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MeisterGeister.ViewModel.Karte;
+using DgSuche;
 
 namespace MeisterGeister.View.Karte
 {
@@ -84,7 +85,9 @@ namespace MeisterGeister.View.Karte
 
         private void DGSuche_Click(object sender, RoutedEventArgs e)
         {
-            var win = new MeisterGeister.View.Globus.SelectLandmarkeWindow();
+            var button = sender as Button;
+
+            var win = button != null ? new Globus.SelectLandmarkeWindow(button.Name) : new Globus.SelectLandmarkeWindow();
             win.SelectedItemChanged += DGSuche_SelectedItemChanged;
             win.Owner = Application.Current.MainWindow;
             win.Show();
@@ -95,7 +98,20 @@ namespace MeisterGeister.View.Karte
             var win = sender as MeisterGeister.View.Globus.SelectLandmarkeWindow;
             if (win == null)
                 return;
-            VM.CenterOn(win.SelectedItem);
+
+            Ortsmarke ort = win.SelectedItem;
+
+            switch (win.ButtonName)
+            {
+                case "btnRouteStarting":
+                    VM.RouteStarting = ort;
+                    break;
+                case "btnRouteEnding":
+                    VM.RouteEnding = ort;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

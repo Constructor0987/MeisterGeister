@@ -20,6 +20,14 @@ namespace MeisterGeister.View.Globus
     /// </summary>
     public partial class SelectLandmarkeWindow : Window
     {
+        public string ButtonName { get; private set; }
+
+        public SelectLandmarkeWindow(string buttonName)
+            : this()
+        {
+            ButtonName = buttonName;
+        }
+
         public SelectLandmarkeWindow()
         {
             InitializeComponent();

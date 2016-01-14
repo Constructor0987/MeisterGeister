@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using MeisterGeister.Logic.Extensions;
 using System.Net;
 using MeisterGeister.View.General;
+using MeisterGeister.Logic.Karte;
 
 namespace MeisterGeister.ViewModel.Karte
 {
@@ -287,9 +288,63 @@ namespace MeisterGeister.ViewModel.Karte
         }
         #endregion
 
+        #region Routenplaner
+
+        private Ortsmarke routeStarting;
+        public Ortsmarke RouteStarting
+        {
+            get
+            {
+                return routeStarting;
+            }
+            set
+            {
+                if(value != routeStarting)
+                {
+                    Set(ref routeStarting, value);
+                    Refocus();
+                }
+            }
+        }
+
+        public Point RouteStartingPoint
+        {
+            get
+            {
+                return ConvertOrtsmarkeToPoint(routeStarting);
+            }
+        }
+
+        private Ortsmarke routeEnding;
+        public Ortsmarke RouteEnding
+        {
+            get
+            {
+                return routeEnding;
+            }
+            set
+            {
+                if (value != routeEnding)
+                {
+                    Set(ref routeEnding, value);
+                    Refocus();
+                }
+            }
+        }
+
+        public Point RouteEndingPoint
+        {
+            get
+            {
+                return ConvertOrtsmarkeToPoint(routeEnding);
+            }
+        }
+
         #endregion
 
-        #region Commands
+            #endregion
+
+            #region Commands
         private CommandBase onHeldenPositionSetzen;
         public CommandBase OnHeldenPositionSetzen
         {
@@ -342,6 +397,42 @@ namespace MeisterGeister.ViewModel.Karte
             View.SpielerScreen.SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)sender));
         }
 
+        private void Refocus()
+        {
+            if (RouteStarting != null)
+            {
+                if (RouteEnding != null)
+                {
+                    Point center = GetRouteCenter();
+                    AdjustViewToRoute(center);
+                }
+                else
+                    CenterOn(RouteStarting);
+            }
+            else if (RouteEnding != null)
+                CenterOn(RouteEnding);
+
+        }
+
+        private void AdjustViewToRoute(Point center)
+        {
+            var routingService = new RoutingService();
+            CenterOn(center);
+            double adjustmentFactor = routingService.GetZoomAdjustment(ZoomControlSize, Zoom, center, RouteStartingPoint);
+
+            if(adjustmentFactor != default(double))
+            {
+                Zoom /= adjustmentFactor;
+            }
+        }
+
+        private Point GetRouteCenter()
+        {
+            var startingPoint = RouteStartingPoint;
+            var endingPoint = RouteEndingPoint;
+            return new Point((startingPoint.X + endingPoint.X) / 2, (startingPoint.Y + endingPoint.Y) / 2);
+        }
+
         public void CenterOn(Point p)
         {
             Zoom = 1;
@@ -351,9 +442,15 @@ namespace MeisterGeister.ViewModel.Karte
 
         public void CenterOn(DgSuche.Ortsmarke ort)
         {
+            Point p = ConvertOrtsmarkeToPoint(ort);
+            CenterOn(p);
+        }
+
+        private Point ConvertOrtsmarkeToPoint(Ortsmarke ort)
+        {
             var dgp = new Point(ort.Longitude, ort.Latitude);
             Point p = (Point)dgConverter.Convert(dgp, typeof(Point), null, null);
-            CenterOn(p);
+            return p;
         }
 
         private void CenterOnHelden(object obj)
@@ -428,6 +525,14 @@ namespace MeisterGeister.ViewModel.Karte
         {
             get { return zoom; }
             set { Set(ref zoom, value); }
+        }
+
+        public Point Center
+        {
+            get
+            {
+                return new Point(translateX, translateY);
+            }
         }
 
         private double translateX = 0;

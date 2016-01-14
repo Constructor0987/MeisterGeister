@@ -478,6 +478,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void DownloadHelden(object obj)
         {
+
             string token = Einstellungen.HeldenSoftwareOnlineToken;
             bool tokenExists = !string.IsNullOrEmpty(token);
 
@@ -490,15 +491,25 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 Global.SetIsBusy(true, "Helden werden heruntergeladen...");
                 var syncer = new HeldenSoftwareOnlineService(token);
-                ICollection<HeldenImportResult> result = syncer.DownloadHelden();
-                if (result != null)
+                try
                 {
-                    MsgWindow window = null;
-                    window = new MsgWindow("Download beendet", "Es wurden " + result.Count() + " Helden aktualisiert.", false);
-                    window.ShowDialog();
-                    window.Close();
+                    ICollection<HeldenImportResult> result = syncer.DownloadHelden();
+                    if (result != null)
+                    {
+                        MsgWindow window = null;
+                        window = new MsgWindow("Download beendet", "Es wurden " + result.Count() + " Helden aktualisiert.", false);
+                        window.ShowDialog();
+                        window.Close();
+                    }
+                    LoadDaten();
                 }
-                LoadDaten();
+                catch (Exception ex)
+                {
+                    string msg = "Beim Aufruf der HeldenSoftware-Online ist ein Fehler aufgetreten.";
+                    var errWin = new MsgWindow("Abruf Heldenliste", msg, ex);
+                    errWin.ShowDialog();
+                    errWin.Close();
+                }
                 Global.SetIsBusy(false);
                 // Asynchroner Download aktuell leider nicht möglich wegen Singleton-DataContext
                 //var worker = syncer.DownloadHeldenAsync();

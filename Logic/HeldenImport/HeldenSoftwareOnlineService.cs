@@ -99,6 +99,7 @@ namespace MeisterGeister.Logic.HeldenImport
 
         private ICollection<HeldenImportResult> DownloadHelden(BackgroundWorkerQueueItem bw)
         {
+
             ICollection<HeldenImportResult> helden = new List<HeldenImportResult>();
             HeldenListe heldenListe = GetHeldenListe();
             int amountHelden = heldenListe.Helden.Count;

@@ -118,7 +118,8 @@
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock FontWeight="Bold" Text="Helden aus HeldenSoftware-Online-Zugang herunterladen" />
                                             <TextBlock Foreground="Red" Text="ACHTUNG!" />
-                                            <TextBlock Text="Bestehende Helden werden vollständig überschrieben!" />
+                                            <TextBlock Text="Helden die heruntergeladen werden und bereits existieren, werden vollständig überschrieben!" />
+                                            <TextBlock Text="Der Download kann, je nach Menge der Helden, etwas Zeit in Anspruch nehmen." />
                                         </StackPanel>
                                     </MenuItem.ToolTip>
                                 </MenuItem>

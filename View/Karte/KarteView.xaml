@@ -12,6 +12,7 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
+             xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="600"
              SizeChanged="UserControl_SizeChanged">
@@ -20,7 +21,7 @@
     </UserControl.Resources>
     <Border BorderThickness="0" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent">
-            <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
+            <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536"  
                                MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
                                Mode="Custom" TranslateX="{Binding TranslateX, Mode=TwoWay}" TranslateY="{Binding TranslateY, Mode=TwoWay}"
                                Zoom="{Binding Zoom, Mode=TwoWay}"
@@ -62,24 +63,35 @@
             <Border Padding="0"
                     CornerRadius="5"
                     Background="#88C0C0C0"
-                    Margin="95,20,0,0" MinWidth="145" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top">
-                <StackPanel Orientation="Horizontal">
-                    <Button MinWidth="145" Padding="5" HorizontalAlignment="Left" Cursor="Hand" Command="{Binding OnCenterOnHelden}" ToolTip="Heldenposition&#x0a;Auf die Helden zentrieren.">
-                        <Karte:KoordinatenControl Value="{Binding HeldenGlobusPosition}" Format="Dezimalminuten" />
-                    </Button>
-                    <Button Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="26" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=MapScrollViewer}" ToolTip="Kartenausschnitt im Spieler-Fenster anzeigen.">
-                        <Image Source="/Images/Icons/General/screen.png" />
-                    </Button>
-                    <Button  Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen.">
-                        <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
-                    </Button>
-                    <ComboBox ItemsSource="{Binding Karten}" SelectedItem="{Binding SelectedKarte}" ToolTip="Aktuelle Karte">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate DataType="{x:Type vmlogic:Karte}">
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    Margin="95,20,0,0" MinWidth="145" HorizontalAlignment="Left" Height="76" VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Button MinWidth="145" Padding="5" HorizontalAlignment="Left" Cursor="Hand" Command="{Binding OnCenterOnHelden}" ToolTip="Heldenposition&#x0a;Auf die Helden zentrieren.">
+                            <Karte:KoordinatenControl Value="{Binding HeldenGlobusPosition}" Format="Dezimalminuten" />
+                        </Button>
+                        <Button Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="26" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=MapScrollViewer}" ToolTip="Kartenausschnitt im Spieler-Fenster anzeigen.">
+                            <Image Source="/Images/Icons/General/screen.png" />
+                        </Button>
+                        <ComboBox ItemsSource="{Binding Karten}" SelectedItem="{Binding SelectedKarte}" ToolTip="Aktuelle Karte">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vmlogic:Karte}">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding RouteStarting.Name}" Tag="Startpunkt festlegen ..." Width="178"/>
+                        <Button VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen." Name="btnRouteStarting">
+                            <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding RouteEnding.Name}" Tag="Zielpunkt festlegen ..." Width="178"/>
+                        <Button VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen." Name="btnRouteEnding">
+                            <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </Border>
             <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-1"/>

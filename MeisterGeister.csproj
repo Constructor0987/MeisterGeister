@@ -200,6 +200,14 @@
     <Reference Include="System.Web.Http.Owin">
       <HintPath>packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -219,6 +227,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\WPFExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Xceed.Wpf.Toolkit.dll</HintPath>
@@ -237,11 +249,15 @@
     <Compile Include="Logic\Extensions\ExtendedObservableCollection.cs" />
     <Compile Include="Logic\Extensions\FileExtensions.cs" />
     <Compile Include="Logic\Extensions\ListExtensions.cs" />
+    <Compile Include="Logic\Extensions\PointExtensions.cs" />
     <Compile Include="Logic\Extensions\TypeExtensions.cs" />
     <Compile Include="Logic\Extensions\StringExtensions.cs" />
     <Compile Include="Logic\Extensions\IntExtenstions.cs" />
     <Compile Include="Logic\Extensions\ObservableDictionary.cs" />
     <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
+    <Compile Include="Logic\General\AStar\AStarService.cs" />
+    <Compile Include="Logic\General\AStar\Node.cs" />
+    <Compile Include="Logic\General\AStar\NodeState.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\BackgroundWorkerQueue.cs" />
     <Compile Include="Logic\General\BackgroundWorkerQueueItem.cs">
@@ -273,6 +289,7 @@
     <Compile Include="Logic\HeldenImport\HeldenSoftwareOnlineHelper.cs" />
     <Compile Include="Logic\HeldenImport\HeldenSoftwareOnlineService.cs" />
     <Compile Include="Logic\Karte\IAffineTransformation.cs" />
+    <Compile Include="Logic\Karte\RoutingService.cs" />
     <Compile Include="Logic\Karte\SimpleAffineTransformation.cs" />
     <Compile Include="Logic\Karte\MapToDereGlobusConverter.cs" />
     <Compile Include="Logic\Karte\DereGlobusToMapConverter.cs" />
@@ -387,6 +404,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Munition_Setting_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Ort.cs" />
+    <Compile Include="Model\Ort_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pflanze_Ernte.cs" />
@@ -546,6 +567,7 @@
     <Compile Include="Model\Schild_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\GeoService.cs" />
     <Compile Include="Model\Service\PflanzeService.cs" />
     <Compile Include="Model\Service\ZooBotService.cs" />
     <Compile Include="Model\Ausrüstungsset.cs" />
@@ -558,6 +580,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Sonderfertigkeit_Setting_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Strecke_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Talent.cs" />
@@ -590,6 +615,12 @@
     <Compile Include="Model\Extensions\SqlFunctionsExtension.cs" />
     <Compile Include="Model\Service\NamenService.cs" />
     <Compile Include="Model\Waffe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Wegtyp_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Weg_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Zauber.cs" />
@@ -928,6 +959,7 @@
     </Compile>
     <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\Beschwörung\DämonenListViewConverter.cs" />
+    <Compile Include="View\General\IsNullOrEmptyConverter.cs" />
     <Compile Include="View\General\ListBoxBehaviour.cs" />
     <Compile Include="View\General\LiteraturControl.xaml.cs">
       <DependentUpon>LiteraturControl.xaml</DependentUpon>
