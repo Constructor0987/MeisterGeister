@@ -126,6 +126,21 @@ namespace MeisterGeister.Model.Service
             }
         }
 
+        public bool RemoveEmptySets()
+        {
+            try
+            {
+                bool result = true;
+                foreach (Ausrüstungsset emptySet in Context.Ausrüstungsset.Where((set) => set.Held_Ausrüstung.Count == 0))
+                    result &= base.Delete<Ausrüstungsset>(emptySet);
+                return result;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region //--UPDATE

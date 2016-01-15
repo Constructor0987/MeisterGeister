@@ -31,11 +31,6 @@ namespace MeisterGeister.ViewModel.Inventar
         private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
 
         //UI
-        private bool isNahkampfwaffevorhanden = false;
-        private bool isFernkampfwaffevorhanden = false;
-        private bool isSchildVorhanden = false;
-        private bool isRuestungVorhanden = false;
-        private bool isSonstigesVorhanden = false;
         private Visibility isRuestungEinfachEingeben = Visibility.Hidden;
         private Visibility isBEEingebenVisibility = Visibility.Hidden;
         private Visibility isUeberlastungEingebenVisibility = Visibility.Hidden;
@@ -91,6 +86,9 @@ namespace MeisterGeister.ViewModel.Inventar
         private Base.CommandBase onAddSchild;
         private Base.CommandBase onAddRuestung;
         private Base.CommandBase addSet;
+        private Base.CommandBase equipAllSets;
+        private Base.CommandBase unequipAllSets;
+        private Base.CommandBase allesAblegen;
 
         #endregion
 
@@ -416,6 +414,18 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             get { return addSet; }
         }
+        public Base.CommandBase EquipAllSets
+        {
+            get { return equipAllSets; }
+        }
+        public Base.CommandBase UnequipAllSets
+        {
+            get { return unequipAllSets; }
+        }
+        public Base.CommandBase AllesAblegen
+        {
+            get { return allesAblegen; }
+        }
         #endregion
 
         #region //KONSTRUKTOR
@@ -446,6 +456,9 @@ namespace MeisterGeister.ViewModel.Inventar
             onAddSchild = new Base.CommandBase(o => AddSchild(), null);
             onAddRuestung = new Base.CommandBase(o => AddRuestung(), null);
             addSet = new Base.CommandBase(o => AddAusrüstungsset(), null);
+            equipAllSets = new Base.CommandBase(o => AlleSetsAnlegen(), null);
+            unequipAllSets = new Base.CommandBase(o => AlleSetsAblegen(), null);
+            allesAblegen = new Base.CommandBase(o => AlleAusrüstungAblegen(), null);
 
             SelectedFilterIndex = 0;
 
@@ -660,7 +673,6 @@ namespace MeisterGeister.ViewModel.Inventar
             if (SelectedHeld != null)
             {
                 heldAusrüstungen.AddRange(SelectedHeld.Held_Ausrüstung);
-
                 //Sonstiges / Held_Inventar
                 foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Inventar != null).OrderBy(i => i.Inventar.Name))
                 {
@@ -671,6 +683,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 if (E.BEBerechnung == 0)
                     SelectedHeld.BerechneBehinderung();
 
+                Global.ContextInventar.RemoveEmptySets();
                 HeldAusrüstungssets.AddRange(Global.ContextInventar.AusrüstungsSets.Where(set => set.Held == SelectedHeld));
             }
         }
@@ -720,7 +733,7 @@ namespace MeisterGeister.ViewModel.Inventar
         }
 
         //--REMOVE
-        void RemoveAusruestung(object sender)
+        private void RemoveAusruestung(object sender)
         {
             if (SelectedHeld != null && !IsReadOnly)
             {
@@ -746,10 +759,6 @@ namespace MeisterGeister.ViewModel.Inventar
                         Global.ContextInventar.HeldZuInventarListe.Remove(item.EntityHI);
                         Global.ContextInventar.RemoveInventarVonHeld(item.EntityHI);
                         SelectedHeld.BerechneAusruestungsGewicht();
-                        if (HeldSonstigesImInventar.Count() == 0)
-                        {
-                            isSonstigesVorhanden = false;
-                        }
                     }
                 }
                 else if (SelectedAusrüstung != null)
@@ -776,6 +785,26 @@ namespace MeisterGeister.ViewModel.Inventar
                     HeldAusrüstungssets.Add(set);
             }
         }
+
+        private void AlleSetsAnlegen()
+        {
+            foreach (Model.Ausrüstungsset set in HeldAusrüstungssets)
+                set.Anlegen();
+        }
+
+        private void AlleSetsAblegen()
+        {
+            foreach (Model.Ausrüstungsset set in HeldAusrüstungssets)
+                set.Ablegen();
+        }
+
+        private void AlleAusrüstungAblegen()
+        {
+            foreach (Model.Held_Ausrüstung ha in HeldAusrüstungen)
+                ha.Angelegt = false;
+        }
+
+
         #endregion
     }
 

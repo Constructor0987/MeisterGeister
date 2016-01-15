@@ -660,15 +660,25 @@
                         </StackPanel>
                     </Expander.Header>
 
-                    <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Margin="6,4,0,4">
+                            <TextBlock Text="Alles: " Style="{StaticResource Label}"/>
+                            <!--<Button Content="Anlegen" Command="{Binding EquipAllSets}" Margin="4,0,0,0"/>-->
+                            <Button Content="Ablegen" Command="{Binding AllesAblegen}" Margin="4,0,0,0"/>
+                        </StackPanel>
                         <Button Command="{Binding AddSet}" HorizontalAlignment="Center" Content="Aktuelle Ausrüstung als neues Set speichern" Margin="0,4,0,4"/>
-                        <DataGrid ItemsSource="{Binding HeldAusrüstungssets}" CanUserAddRows="False"
+                        <DataGrid ItemsSource="{Binding HeldAusrüstungssets}" CanUserAddRows="False" Grid.Row="1"
                                   ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn HeaderTemplate="{StaticResource angelegtTemplate}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox IsChecked="{Binding Angelegt,Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <!--<CheckBox IsChecked="{Binding Angelegt,Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                                            <Button Content="Anlegen" Command="{Binding SetAnlegen}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -732,7 +742,7 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                    </StackPanel>
+                    </Grid>
                 </Expander>
             </StackPanel>
         </ScrollViewer>

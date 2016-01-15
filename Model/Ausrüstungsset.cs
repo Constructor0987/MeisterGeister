@@ -4,15 +4,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.Model
 {
     public partial class Ausrüstungsset
     {
+        private CommandBase anlegen, ablegen;
+
+        public CommandBase SetAnlegen
+        {
+            get { return anlegen; }
+        }
+
+        public CommandBase SetAblegen
+        {
+            get { return ablegen; }
+        }
+
         public Ausrüstungsset()
         {
             AusrüstungssetGUID = Guid.NewGuid();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+            anlegen = new CommandBase(o => Anlegen(), null);
+            ablegen = new CommandBase(o => Ablegen(), null);
         }
 
         public IEnumerable<Held_Waffe> Nahkampfwaffen
@@ -63,9 +78,25 @@ namespace MeisterGeister.Model
             set
             {
                 if (value.HasValue)
-                    foreach (Held_Ausrüstung ha in Held_Ausrüstung)
-                        ha.Angelegt = value.Value;
+                {
+                    if (value.Value)
+                        Anlegen();
+                    else
+                        Ablegen();
+                }
             }
+        }
+
+        public void Anlegen()
+        {
+            foreach (Held_Ausrüstung ha in Held_Ausrüstung)
+                ha.Angelegt = true;
+        }
+
+        public void Ablegen()
+        {
+            foreach (Held_Ausrüstung ha in Held_Ausrüstung)
+                ha.Angelegt = false;
         }
     }
 }
