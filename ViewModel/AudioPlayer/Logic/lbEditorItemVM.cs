@@ -78,7 +78,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set
             {
                 _item = value;
-                _suchtext = Name.ToLower() + (Kategorie != null ? Kategorie.ToLower() : "");
+                _suchtext = (this.ATheme != null? ATheme.Name.ToLower(): this.APlaylist.Name.ToLower()) + (Kategorie != null ? Kategorie.ToLower() : "");
                 OnChanged();
             }
         }
@@ -214,15 +214,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return APlaylist == null ? null : APlaylist.GetType(); }
         }
 
+        private string _name = string.Empty;
         public string Name
         {
-            get 
-            {
-                if (ATheme == null)
-                    return APlaylist == null || APlaylist.Name == null ? string.Empty : APlaylist.Name;
-                else
-                    return ATheme.Name;
-            }
+            get { return _name; }
+            set { Set(ref _name, value); }
         }
 
         public string Kategorie

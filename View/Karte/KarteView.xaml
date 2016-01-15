@@ -100,7 +100,7 @@
                     <TextBlock Style="{StaticResource TextTitel}" Text="Pflanzensuche" HorizontalAlignment="Center"/>
                 </Expander.Header>
                 <Grid Background="{StaticResource Background1}">
-                    <Karte:PflanzenMitLandschaftControl Width="600"/>
+                    <Karte:PflanzenMitLandschaftControl General:UIElementBehavior.ViewModel="{Binding}" Width="600"/>
                 </Grid>
                 
             </Expander>

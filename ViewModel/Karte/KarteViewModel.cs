@@ -65,6 +65,7 @@ namespace MeisterGeister.ViewModel.Karte
             base.RegisterEvents();
             Global.HeldSelectionChanged += Global_HeldSelectionChanged;
             Global.StandortChanged += Global_StandortChanged;
+            OnChanged("SelectedHeld");
         }
 
         public override void UnregisterEvents()
@@ -561,12 +562,6 @@ namespace MeisterGeister.ViewModel.Karte
         public Model.Held SelectedHeld
         {
             get { return Global.SelectedHeld; }
-            set
-            {
-                Global.SelectedHeld = value;
-                SelectedHeld = value;
-                OnChanged();
-            }
         }
 
     }

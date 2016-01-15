@@ -19,7 +19,7 @@ namespace MeisterGeister.Model.Service
 
             foreach (var ort in candidates)
             {
-                double tempDistance = result.Dista                                      nceTo(ort);
+                double tempDistance = result.DistanceTo(ort);
                 if (tempDistance < lowestDistance)
                     lowestDistance = tempDistance;
             }

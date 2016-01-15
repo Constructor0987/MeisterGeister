@@ -47,20 +47,7 @@ namespace MeisterGeister.ViewModel.Karte
         
         private List<Model.Pflanze> _pflanzenImGebiet = new List<Model.Pflanze>();
         private List<Model.Pflanze> _pflanzenImGebietUndLandschaft = new List<Model.Pflanze>();
-
-
-        private string _pflanzenFilter = "";
-        public string PflanzenFilter
-        {
-            get { return _pflanzenFilter; }
-            set
-            {
-                if (Set(ref _pflanzenFilter, value) && PflanzenListe != null)
-                    FilteredPflanzenListe = PflanzenListe.FindAll(t => t.Name.ToLower().Contains(value.ToLower()));                     
-            }
-        }
         
-
         public List<Held_Pflanze> BekannteHeldenPflanzen
         {
             get { return Global.SelectedHeld.Held_Pflanze.OrderBy(t => t.Pflanze.Name).ToList(); }
@@ -70,36 +57,34 @@ namespace MeisterGeister.ViewModel.Karte
         public List<Pflanze> FilteredPflanzenListe
         {
             get { return _filteredPflanzenListe; }
-            set
-            {
-                _filteredPflanzenListe = value;
-
-                OnChanged();
-            }
+            set { Set(ref _filteredPflanzenListe, value); }
         }
 
         private List<Pflanze> _pflanzenListe;
         public List<Pflanze> PflanzenListe
         {
             get { return _pflanzenListe; }
-            set
-            {
-                _pflanzenListe = value;
-                OnChanged();
-            }
+            set { Set(ref _pflanzenListe, value); }
         }
 
         #endregion
+
+        private string _pflanzenFilter = "";
+        public string PflanzenFilter
+        {
+            get { return _pflanzenFilter; }
+            set
+            {
+                if (Set(ref _pflanzenFilter, value) && PflanzenListe != null)
+                    FilteredPflanzenListe = PflanzenListe.FindAll(t => t.Name.ToLower().Contains(value.ToLower()));
+            }
+        }        
 
         private Pflanze _pflanzeAuswahl;
         public Pflanze PflanzeAuswahl
         {
             get { return _pflanzeAuswahl; }
-            set
-            {
-                _pflanzeAuswahl = value;
-                OnChanged();
-            }
+            set { Set(ref _pflanzeAuswahl, value); }
         }
                 
         #endregion
@@ -137,7 +122,7 @@ namespace MeisterGeister.ViewModel.Karte
             uListe = Global.ContextZooBot.ZooBotPflanzenListe.Where(t => !t.PflanzeHeldBekannt).OrderBy(t => t.Name).ToList();
 
             PflanzenListe = uListe;
-            FilteredPflanzenListe = PflanzenListe;
+            FilteredPflanzenListe = PflanzenListe.FindAll(t => t.Name.ToLower().Contains(PflanzenFilter.ToLower()));
         }
         
         public void Refresh()

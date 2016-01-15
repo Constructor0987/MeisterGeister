@@ -429,7 +429,7 @@
                     <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
                     <Image Source="/Images/Icons/General/speaker.png" Style="{StaticResource ImageEnabled}" Margin="-10,0,-10,-10" Opacity=".5" />
                 </Grid>
-            </Button.Content>
+            </Button.Content>           
         </Button>
 
         <Image Grid.Column="1" Height=" 30" Margin="10,0,10,-20" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png"
@@ -721,6 +721,7 @@
                             <Label Name="lblEditorListName" Content="Playlisten-Name" VerticalContentAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Name="tboxEditorName" Background="{x:Null}" ForceCursor="True" FontWeight="Bold" ToolTip="Name der Playliste" Height="25" Grid.Column="1" 
                                      Text="{Binding AktKlangPlaylist.Name, UpdateSourceTrigger=PropertyChanged}" 
+                                     KeyDown="TextBox_KeyDown"
                                      vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
 
                             <Image Name="imgPlaylistLängeCheck" Width="22" Grid.Column="2" Source="/Images/Icons/General/refresh.png" 
@@ -746,6 +747,7 @@
                             <Label Content="Theme-Name" VerticalContentAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" FontWeight="Bold" ToolTip="Name des Themes" Height="25" Grid.Column="1" Background="{x:Null}" ForceCursor="True" 
                                     Text="{Binding AktKlangTheme.Name}" 
+                                     KeyDown="TextBox_KeyDown"
                                     vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
                             <Image Width="22" Grid.Column="2" Source="/Images/Icons/General/refresh.png" Visibility="Hidden" />
 
@@ -2424,6 +2426,6 @@
                     </Border>
                 </Grid>
             </TabItem>
-        </TabControl>
+        </TabControl>        
     </Grid>
 </UserControl>

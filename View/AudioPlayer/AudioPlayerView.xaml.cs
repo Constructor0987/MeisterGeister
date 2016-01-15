@@ -1025,6 +1025,12 @@ namespace MeisterGeister.View.AudioPlayer
             PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(VM.CurrentPlaylist);
             wesenAuswahlView.ShowDialog();
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (VM.SelectedEditorItem != null)
+                VM.SelectedEditorItem.Name = ((TextBox)e.OriginalSource).Text;
+        }
         
     }
 }

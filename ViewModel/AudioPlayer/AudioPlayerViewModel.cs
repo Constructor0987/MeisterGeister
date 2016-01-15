@@ -2405,6 +2405,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 //Playlist - Items erstellen
                 lbEditorItemVM lbi = new lbEditorItemVM();
                 lbi.APlaylist = aplylist;
+                lbi.Name = aplylist.Name;
                 lbi.IstMusik = aplylist.Hintergrundmusik;
                 lbi.PPlaylistName = lbi.Name;
                 lbi.PlayerVM = this;
@@ -2423,6 +2424,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 //Theme - Items erstellen        
                 lbEditorItemVM lbi = new lbEditorItemVM();
                 lbi.ATheme = aTheme;
+                lbi.Name = aTheme.Name;
                 lbi.PPlaylistName = aTheme.Name;
                 lbi.PlayerVM = this;
                 lbi.Item = lbi.Item;
@@ -4163,11 +4165,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             {
                 //Sortierung nach Alphabet
                 if (suchTextEditor == string.Empty) // kein Suchwort
-                    FilteredEditorListBoxItemListe = FilteredEditorListBoxItemListe.OrderBy(n => n.Name).ToList();
+                    FilteredEditorListBoxItemListe = FilteredEditorListBoxItemListe.OrderBy(n => n.APlaylist.Name).ToList();
                 else if (suchWorte.Length == 1) // nur ein Suchwort
-                    FilteredEditorListBoxItemListe = FilteredEditorListBoxItemListe.FindAll(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
+                    FilteredEditorListBoxItemListe = FilteredEditorListBoxItemListe.FindAll(s => s.Contains(suchWorte[0])).OrderBy(n => n.APlaylist.Name).ToList();
                 else // mehrere Suchwörter
-                    FilteredEditorListBoxItemListe = FilteredEditorListBoxItemListe.FindAll(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+                    FilteredEditorListBoxItemListe = FilteredEditorListBoxItemListe.FindAll(s => s.Contains(suchWorte)).OrderBy(n => n.APlaylist.Name).ToList();
             }
             else
             {
@@ -8249,8 +8251,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-
         #endregion
-
     }
 }
