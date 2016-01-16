@@ -12,13 +12,13 @@
              General:UIElementBehavior.ViewModel="{Binding}" DataContext="{DynamicResource viewModel}"
              x:Name="sucheGezielt">
 
-    <UserControl.Resources>        
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="PflanzenSucheResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <vm:PflanzenSucheGezieltViewModel x:Key="viewModel"/>
-            
+
             <DataTemplate x:Key="pflanzenTyp">
                 <DockPanel>
                     <ContentControl DockPanel.Dock="Left" Content="{Binding}" ContentTemplate="{StaticResource pflanzenTypIcon}" x:Name="img" Margin="3" MaxHeight="18" Width="20"/>
@@ -112,33 +112,37 @@
         <!--<TextBlock HorizontalAlignment="Center" FontSize="14" FontStyle="Italic" Margin="0,4,0,8">
             Suche <Run Text="{Binding Pflanze.Pflanze.Name,Mode=OneWay}"/> hier: <Run Text="{Binding Pflanze.Landschaft.Name,Mode=OneWay}"/>
             </TextBlock>-->
-        <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}" Grid.ColumnSpan="2" Margin="5,4,0,0"/>
+        <CheckBox Content="Ortskenntnis (-7)" IsChecked="{Binding Ortskenntnis}" Grid.ColumnSpan="2" Margin="5,4,0,0"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" >
-            <ToggleButton Width="20" Background="{x:Null}" IsChecked="{Binding FilterBekannt}" Focusable="False" Margin="0,0,2,0" >
+            <ToggleButton Width="20" Background="{x:Null}" IsChecked="{Binding FilterBekannt}" Padding="0" Focusable="False" Margin="0,0,2,0" >
                 <Grid ToolTip="Filter auf bekannte Pflanzen">
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Margin="-3" />
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/Filter.png"  Margin="-3" />
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/Filter.png"/>
                 </Grid>
             </ToggleButton>
-            <Button Width="20" HorizontalAlignment="Right" Background="{x:Null}" Focusable="False" Click="BtnBekanntePflanzenForm_Click">
+            <Button Width="20" HorizontalAlignment="Right" Background="{x:Null}" Focusable="False" Padding="0" Click="BtnBekanntePflanzenForm_Click">
                 <Grid ToolTip="Bekannte Pflanzen editieren">
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png"  Margin="-3" />
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/feder.png"  Margin="-1,-3,-5,-3" />
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" />
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/feder.png" Margin="0,0,0,0" />
                 </Grid>
             </Button>
         </StackPanel>
-        <CheckBox Content="{Binding Suche.Landschaft.Kundig}" IsChecked="{Binding Geländekunde}" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,4,0,0">
-            <CheckBox.Style>
-                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Suche.Landschaft.Kundig}" Value="{x:Null}">
-                            <Setter Property="IsEnabled" Value="False"/>
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Setter Property="Margin" Value="0"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
+        <CheckBox IsChecked="{Binding Geländekunde}" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,4,0,0">
+            <TextBlock>
+                <Run>
+                    <Run.Style>
+                        <Style TargetType="Run">
+                            <Setter Property="Text" Value="{Binding Suche.Landschaft.Kundig,Mode=OneWay}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Suche.Landschaft.Kundig}" Value="{x:Null}">
+                                    <Setter Property="Text" Value="Geländekunde"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Run.Style>
+                </Run>
+                <Run Text="(-3)"/>
+            </TextBlock>
         </CheckBox>
 
         <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}" Grid.Row="2" Grid.ColumnSpan="2">
@@ -183,7 +187,7 @@
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Typ" Width="25" CanUserResize="False" CellTemplate="{StaticResource gridTypeTemplate}"/>
 
-                <DataGridTemplateColumn Header="Name" Width="*" CellStyle="{StaticResource stretchCellStyle}">                    
+                <DataGridTemplateColumn Header="Name" Width="*" CellStyle="{StaticResource stretchCellStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -198,7 +202,10 @@
                                     <RowDefinition Height="Auto" x:Name="rowErnte" />
                                 </Grid.RowDefinitions>
                                 <General:LiteraturControl Grid.RowSpan="2" Width="25" Height="25" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" VerticalAlignment="Center"/>
-                                <TextBlock Margin="4,0,0,0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Name}" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                                <TextBlock Margin="4,0,0,0" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="WrapWithOverflow">
+                                    <Run Text="{Binding Name,Mode=OneWay}"/>
+                                    <Run Text="{Binding Bestimmung,StringFormat={}({0:+0;-0}),Mode=OneWay}" ToolTip="Bestimmungsschwierigkeit"/>
+                                </TextBlock>
 
                                 <ToggleButton x:Name="pflanzeBekannt" Margin="4,0,0,0" Grid.Column="3" VerticalAlignment="Center" Width="25" Height="25" Focusable="False"
                                         IsChecked="{Binding PflanzeHeldBekannt}" Command="{Binding OnPflanzeHeldBekanntClick}" CommandParameter="{Binding}" Background="{x:Null}" >
@@ -252,7 +259,7 @@
                 <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
                                         Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungSehrHäufig, Converter={StaticResource BooleanToVisibilityConverter1}}">
                     <DataGridTemplateColumn.Header>
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="30" ToolTip="Sehr häufig"/>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="30" ToolTip="Sehr häufig (+1)"/>
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -264,7 +271,7 @@
                 <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
                                         Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungHäufig, Converter={StaticResource BooleanToVisibilityConverter1}}">
                     <DataGridTemplateColumn.Header>
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="26" ToolTip="Häufig"/>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="26" ToolTip="Häufig (+2)"/>
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -276,7 +283,7 @@
                 <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
                                         Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungGelegentlich, Converter={StaticResource BooleanToVisibilityConverter1}}">
                     <DataGridTemplateColumn.Header>
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="22" ToolTip="Gelegentlich"/>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="22" ToolTip="Gelegentlich (+4)"/>
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -288,7 +295,7 @@
                 <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
                                         Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungSelten, Converter={StaticResource BooleanToVisibilityConverter1}}">
                     <DataGridTemplateColumn.Header>
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="18" ToolTip="Selten"/>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="18" ToolTip="Selten (+8)"/>
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -300,7 +307,7 @@
                 <DataGridTemplateColumn Width="90" CellStyle="{StaticResource stretchCellStyle}"
                                         Visibility="{Binding Source={StaticResource viewModel}, Path=VerbreitungSehrSelten, Converter={StaticResource BooleanToVisibilityConverter1}}">
                     <DataGridTemplateColumn.Header>
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="14" ToolTip="Sehr selten"/>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kraeutersuche.png" Width="14" ToolTip="Sehr selten (+16)"/>
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

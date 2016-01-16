@@ -154,15 +154,15 @@ namespace MeisterGeister.View
 
         private void InitializeMenuPunkte()
         {
-            foreach (var item in _menuTools.Items)
-            {
-                if (item is MenuItem)
-                {
-                    MenuItem menuItem = (MenuItem)item;
-                    if (!(menuItem.Header is Image) && menuItem.Header is TextBlock)
-                        MenuPunkte.Add((menuItem.Header as TextBlock).Text.ToString(), menuItem);
-                }
-            }
+            //foreach (var item in _menuTools.Items)
+            //{
+            //    if (item is MenuItem)
+            //    {
+            //        MenuItem menuItem = (MenuItem)item;
+            //        if (!(menuItem.Header is Image) && menuItem.Header is TextBlock)
+            //            MenuPunkte.Add((menuItem.Header as TextBlock).Text.ToString(), menuItem);
+            //    }
+            //}
         }
 
         public void StarteTab(string tabName, int position = -1)
@@ -213,12 +213,12 @@ namespace MeisterGeister.View
                 }
 
                 // Add-Tab ans Ende setzen
-                int addTabIndex = _tabControlMain.Items.IndexOf(_tabAdd);
-                if (addTabIndex != _tabControlMain.Items.Count - 1)
-                {
-                    _tabControlMain.Items.Remove(_tabAdd);
-                    _tabControlMain.Items.Add(_tabAdd);
-                }
+                //int addTabIndex = _tabControlMain.Items.IndexOf(_tabAdd);
+                //if (addTabIndex != _tabControlMain.Items.Count - 1)
+                //{
+                //    _tabControlMain.Items.Remove(_tabAdd);
+                //    _tabControlMain.Items.Add(_tabAdd);
+                //}
             }
 
             Global.SetIsBusy(false);
@@ -473,23 +473,23 @@ namespace MeisterGeister.View
 
         private void _tabControlMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (IsInitialized && IsLoaded)
-            {
-                if (_tabControlMain.SelectedItem == _tabAdd)
-                {
-                    // Menü aufklappen
-                    if (isPopOut)
-                    {
-                        Storyboard animation = (Storyboard)FindResource("MenuPopIn");
-                        animation.Begin(this);
-                        isPopOut = false;
-                    }
-                    e.Handled = true;
-                    _tabControlMain.SelectedIndex = _TabItemIndex;
-                }
-                App.SaveAll();
-            }
-            _TabItemIndex = _tabControlMain.SelectedIndex;
+            //if (IsInitialized && IsLoaded)
+            //{
+            //    if (_tabControlMain.SelectedItem == _tabAdd)
+            //    {
+            //        // Menü aufklappen
+            //        if (isPopOut)
+            //        {
+            //            Storyboard animation = (Storyboard)FindResource("MenuPopIn");
+            //            animation.Begin(this);
+            //            isPopOut = false;
+            //        }
+            //        e.Handled = true;
+            //        _tabControlMain.SelectedIndex = _TabItemIndex;
+            //    }
+            //    App.SaveAll();
+            //}
+            //_TabItemIndex = _tabControlMain.SelectedIndex;
         }
 
         private void MenuItemWeb_Click(object sender, RoutedEventArgs e)
