@@ -88,12 +88,12 @@ namespace MeisterGeister.View.Karte
             var button = sender as Button;
 
             var win = button != null ? new Globus.SelectLandmarkeWindow(button.Name) : new Globus.SelectLandmarkeWindow();
-            win.SelectedItemChanged += DGSuche_SelectedItemChanged;
+            win.LandmarkeDoubleClicked += DGSuche_LandmarkeDoubleClicked;
             win.Owner = Application.Current.MainWindow;
             win.Show();
         }
 
-        private void DGSuche_SelectedItemChanged(object sender, EventArgs e)
+        private void DGSuche_LandmarkeDoubleClicked(object sender, MouseButtonEventArgs e)
         {
             var win = sender as MeisterGeister.View.Globus.SelectLandmarkeWindow;
             if (win == null)
@@ -112,6 +112,6 @@ namespace MeisterGeister.View.Karte
                 default:
                     break;
             }
-        }
+        }        
     }
 }

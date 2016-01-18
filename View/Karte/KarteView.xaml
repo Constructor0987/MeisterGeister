@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
+             xmlns:vmkarte="clr-namespace:MeisterGeister.ViewModel.Karte"
              xmlns:vmlogic="clr-namespace:MeisterGeister.ViewModel.Karte.Logic"
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
@@ -21,7 +22,7 @@
     </UserControl.Resources>
     <Border BorderThickness="0" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent">
-            <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536"  
+            <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
                                MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
                                Mode="Custom" TranslateX="{Binding TranslateX, Mode=TwoWay}" TranslateY="{Binding TranslateY, Mode=TwoWay}"
                                Zoom="{Binding Zoom, Mode=TwoWay}"
@@ -58,12 +59,33 @@
                     </Canvas.ContextMenu>
                     <Image Source="{Binding SelectedKarte.Bildpfad}" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
                     <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="{Binding Zoom,ElementName=MapScrollViewer,Converter={StaticResource MGIconZoomConverter} }" Canvas.Left="{Binding HeldenX}" Canvas.Top="{Binding HeldenY}"  />
+                    <ItemsControl ItemsSource="{Binding Path=Lines}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas x:Name="routingCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                                <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type vmkarte:RoutingLine}">
+                                <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding LineType.Color}" StrokeThickness="4"></Line>
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vmkarte:RoutingPoint}">
+                                <Border BorderBrush="Red" BorderThickness="2" Width="10" Height="10" Background="Red" />
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                    </ItemsControl>
                 </Canvas>
             </wpfxc:ZoomControl>
             <Border Padding="0"
                     CornerRadius="5"
                     Background="#88C0C0C0"
-                    Margin="95,20,0,0" MinWidth="145" HorizontalAlignment="Left" Height="76" VerticalAlignment="Top">
+                    Margin="95,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button MinWidth="145" Padding="5" HorizontalAlignment="Left" Cursor="Hand" Command="{Binding OnCenterOnHelden}" ToolTip="Heldenposition&#x0a;Auf die Helden zentrieren.">
@@ -81,21 +103,27 @@
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding RouteStarting.Name}" Tag="Startpunkt festlegen ..." Width="178"/>
+                        <TextBox Text="{Binding RouteStarting.Name}" Tag="Startpunkt festlegen ..." Width="178" IsReadOnly="True"/>
                         <Button VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen." Name="btnRouteStarting">
                             <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
                         </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding RouteEnding.Name}" Tag="Zielpunkt festlegen ..." Width="178"/>
+                        <TextBox Text="{Binding RouteEnding.Name}" Tag="Zielpunkt festlegen ..." Width="178" IsReadOnly="True"/>
                         <Button VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen." Name="btnRouteEnding">
                             <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
                         </Button>
                     </StackPanel>
+                    <Button VerticalAlignment="Top" Height="25" Command="{Binding FindRouteCommand}" ToolTip="Route suchen." Name="btnFindRoute">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/Icons/DereGlobus/way2.png" />
+                            <TextBlock Text="Route suchen" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Border>
             <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-1"/>
-            <Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="0,50,-1,50">
+            <Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="-1,50,0,50">
                 <Expander.Header>
                     <TextBlock Style="{StaticResource TextTitel}" Text="Pflanzensuche" HorizontalAlignment="Center"/>
                 </Expander.Header>

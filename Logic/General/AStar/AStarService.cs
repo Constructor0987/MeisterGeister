@@ -4,63 +4,103 @@ using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MeisterGeister.Logic.General.AStar
 {
     public class AStarService
     {
+        SearchParameters searchParameters;
         Size boundaries;
         ICollection<Node> nodes;
         Node endNode;
+        Node startNode;
 
-        public AStarService(ICollection<Node> allNodes, Size boundaries)
+        public AStarService(SearchParameters searchParameters)
         {
-            this.nodes = allNodes;
-            this.boundaries = boundaries;
+            this.nodes = new List<Node>();
+            this.searchParameters = searchParameters;
+            this.endNode = searchParameters.EndNode;
+            this.startNode = searchParameters.StartNode;
+            this.boundaries = searchParameters.Boundaries;
         }                                                                                                                                                                                                                       
 
-        public List<Point> FindPath(Node startNode, Node endNode)
+        public List<Node> FindPath()
         {
-            this.endNode = endNode;
-            List<Point> path = new List<Point>();
-            bool success = Search(startNode);
+            List<Node> path = new List<Node>();
+            bool success = Search();
             if (success)
             {
                 Node node = this.endNode;
-                while (node.ParentNode != null)
+                while (node != null)
                 {
-                    path.Add(node.Location);
+                    path.Add(node);
                     node = node.ParentNode;
                 }
                 path.Reverse();
+                foreach (var item in path)
+                {
+                    item.EnrichData(path);
+                }
             }
             return path;
         }
 
-        private bool Search(Node currentNode)
+        private bool Search()
         {
-            currentNode.State = NodeState.Closed;
-            List<Node> nextNodes = GetAdjacentWalkableNodes(currentNode);
-            nextNodes.Sort((node1, node2) => node1.LengthFromStartToEnd.CompareTo(node2.LengthFromStartToEnd));
-            foreach (var nextNode in nextNodes)
+            Node currentNode = startNode;
+            nodes.Add(currentNode);
+            while (AnyOpenNodes())
             {
-                if (nextNode.Location == this.endNode.Location)
-                {
+                if (currentNode == endNode)
                     return true;
-                }
-                else
-                {
-                    if (Search(nextNode)) // Note: Recurses back into Search(Node)
-                        return true;
-                }
+
+                currentNode.State = NodeState.Closed;
+                CheckAdjacentWalkableNodes(currentNode);
+                currentNode = GetLowestOverallLength();
             }
             return false;
+            //Debug.WriteLine("-------------------");
+            //currentNode.State = NodeState.Closed;
+            //List<Node> nextNodes = GetAdjacentWalkableNodes(currentNode);
+            //Debug.WriteLine("Walkable Nodes: " + String.Join(", ", nextNodes));
+            //nextNodes.Sort((node1, node2) => node1.LengthFromStartToEnd.CompareTo(node2.LengthFromStartToEnd));
+            //Debug.WriteLine("Sorted Walkable Nodes: " + String.Join(", ", nextNodes));
+
+            //foreach (var nextNode in nextNodes)
+            //{
+            //    if (nextNode.Location == this.endNode.Location)
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        Debug.WriteLine("Next Search: " + nextNode);
+            //        if (Search(nextNode)) // Note: Recurses back into Search(Node)
+            //            return true;
+            //    }
+            //}
+            //return false;
         }
 
-        private List<Node> GetAdjacentWalkableNodes(Node fromNode)
+        private Node GetLowestOverallLength()
         {
-            List<Node> walkableNodes = new List<Node>();
-            IEnumerable<Node> nextNodes = GetAdjacentNodes(fromNode);
+            var orderedNodes = nodes
+                .Where(n => n.State == NodeState.Open)
+                .OrderBy(n => n.LengthFromStartToEnd);
+            return orderedNodes.FirstOrDefault();
+        }
+
+        private bool AnyOpenNodes()
+        {
+            return nodes.Any(n => n.State == NodeState.Open || n.State == NodeState.Untested);
+        }
+
+        private void CheckAdjacentWalkableNodes(Node fromNode)
+        {
+            Debug.WriteLine("From Node: " + fromNode);
+            IEnumerable<Node> nextNodes = fromNode.GetAdjacentNodes();
+            Debug.WriteLine("Adjacent Nodes: " + String.Join(", ", nextNodes));
 
             foreach (var node in nextNodes)
             {
@@ -68,7 +108,7 @@ namespace MeisterGeister.Logic.General.AStar
                 double y = node.Location.Y;
 
                 // Stay within the grid's boundaries
-                if (IsWithinBoundaries(x, y))
+                if (IsNotWithinBoundaries(x, y))
                     continue;
 
                 // Ignore non-walkable nodes
@@ -82,12 +122,12 @@ namespace MeisterGeister.Logic.General.AStar
                 // Already-open nodes are only added to the list if their G-value is lower going via this route.
                 if (node.State == NodeState.Open)
                 {
-                    double traversalCost = node.GetTraversalCostsFromParent();
+                    double traversalCost = fromNode.GetTraversalCost(node);
                     double gTemp = fromNode.LengthFromStart + traversalCost;
                     if (gTemp < node.LengthFromStart)
                     {
                         node.ParentNode = fromNode;
-                        walkableNodes.Add(node);
+                        AddNode(node);
                     }
                 }
                 else
@@ -95,29 +135,30 @@ namespace MeisterGeister.Logic.General.AStar
                     // If it's untested, set the parent and flag it as 'Open' for consideration
                     node.ParentNode = fromNode;
                     node.State = NodeState.Open;
-                    walkableNodes.Add(node);
+                    AddNode(node);
                 }
             }
-
-            return walkableNodes;
         }
 
-        private bool IsWithinBoundaries(Point location)
+        private void AddNode(Node node)
+        {
+            if(!nodes.Contains(node))
+            {
+                nodes.Add(node);
+            }
+        }
+
+        private bool IsNotWithinBoundaries(Point location)
         {
             double x = location.X;
             double y = location.Y;
 
-            return IsWithinBoundaries(x, y);
+            return IsNotWithinBoundaries(x, y);
         }
 
-        private bool IsWithinBoundaries(double x, double y)
+        private bool IsNotWithinBoundaries(double x, double y)
         {
             return x < 0 || x >= this.boundaries.Width || y < 0 || y >= this.boundaries.Height;
-        }
-
-        private IEnumerable<Node> GetAdjacentNodes(Node node)
-        {
-            return node.GetAdjacentLocations(node);
         }
     }
 }

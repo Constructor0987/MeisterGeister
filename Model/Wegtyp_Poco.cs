@@ -131,5 +131,69 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region Navigation Properties
+    
+    	[DataMember]
+        public virtual ICollection<Strecke> Strecke
+        {
+            get
+            {
+                if (_strecke == null)
+                {
+                    var newCollection = new FixupCollection<Strecke>();
+                    newCollection.CollectionChanged += FixupStrecke;
+                    _strecke = newCollection;
+                }
+                return _strecke;
+            }
+            set
+            {
+                if (!ReferenceEquals(_strecke, value))
+                {
+                    var previousValue = _strecke as FixupCollection<Strecke>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupStrecke;
+                    }
+                    _strecke = value;
+                    var newValue = value as FixupCollection<Strecke>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupStrecke;
+                    }
+                }
+            }
+        }
+        private ICollection<Strecke> _strecke;
+
+        #endregion
+
+        #region Association Fixup
+    
+        private void FixupStrecke(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Strecke");
+            if (e.NewItems != null)
+            {
+                foreach (Strecke item in e.NewItems)
+                {
+                    item.Wegtyp = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Strecke item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Wegtyp, this))
+                    {
+                        item.Wegtyp = null;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
     }
 }

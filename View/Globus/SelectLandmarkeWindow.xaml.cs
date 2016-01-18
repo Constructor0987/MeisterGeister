@@ -39,13 +39,39 @@ namespace MeisterGeister.View.Globus
                 _grid.Children.Add(_globusControl);
 
                 ListBox listBoxOrtsmarken = _globusControl.ListBoxOrtsmarken;
-                if (listBoxOrtsmarken != null)
+                {
                     listBoxOrtsmarken.SelectionChanged += Landmarke_SelectionChanged;
+                    listBoxOrtsmarken.MouseDoubleClick += ListBoxOrtsmarken_MouseDoubleClick;
+                }
             }
             catch (Exception ex)
             {
                 MsgWindow errWin = new MsgWindow("PlugIn Fehler", "Beim Laden eines PlugIns ist ein Fehler aufgetreten.", ex);
                 errWin.ShowDialog();
+            }
+        }
+
+        private void Landmarke_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetSelectedItem();
+        }
+
+        private void ListBoxOrtsmarken_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            SetSelectedItem();
+            OnLandmarkeDoubleClicked(e.MouseDevice, e.Timestamp, e.ChangedButton);
+            Close();
+        }
+
+        private void SetSelectedItem()
+        {
+            if (IsInitialized && IsLoaded)
+            {
+                if (Kalender != null)
+                {
+                    Kalender.SetzeStandort(SelectedItem);
+                }
+                OnSelectedItemChanged();
             }
         }
 
@@ -84,15 +110,13 @@ namespace MeisterGeister.View.Globus
             }
         }
 
-        private void Landmarke_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public event MouseButtonEventHandler LandmarkeDoubleClicked;
+        private void OnLandmarkeDoubleClicked(MouseDevice mouse, int timestamp, MouseButton button)
         {
-            if (IsInitialized && IsLoaded)
+            if (LandmarkeDoubleClicked != null)
             {
-                if (Kalender != null)
-                {
-                    Kalender.SetzeStandort(SelectedItem);
-                }
-                OnSelectedItemChanged();
+                var e = new MouseButtonEventArgs(mouse, timestamp, button);
+                LandmarkeDoubleClicked(this, e);
             }
         }
     }

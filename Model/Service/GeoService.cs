@@ -11,17 +11,21 @@ namespace MeisterGeister.Model.Service
     {
         public Ort LoadClosestOrt(Point point, double tolerance = 150)
         {
-            IQueryable<Ort> candidates = Context.Ort.Where(o => o.X >= (point.X - tolerance) && o.X <= (point.X + tolerance) &&
-                o.Y >= (point.Y - tolerance) && o.Y <= (point.Y + tolerance));
+            IEnumerable<Ort> candidates = Context.Ort
+                .Where(o => o.X >= (point.X - tolerance) && o.X <= (point.X + tolerance) && o.Y >= (point.Y - tolerance) && o.Y <= (point.Y + tolerance));
 
             Ort result = candidates.First();
-            double lowestDistance = 9999;
+            double lowestDistance = result.DistanceTo(point);
 
-            foreach (var ort in candidates)
+            for(int i = 1; i < candidates.Count(); i++)
             {
-                double tempDistance = result.DistanceTo(ort);
+                var ort = candidates.ElementAt(i);
+                double tempDistance = ort.DistanceTo(point);
                 if (tempDistance < lowestDistance)
+                {
                     lowestDistance = tempDistance;
+                    result = ort;
+                }
             }
             return result;
         }

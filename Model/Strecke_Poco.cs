@@ -148,9 +148,16 @@ namespace MeisterGeister.Model
         {
             get { return _typ; }
             set
-    		{ 
-    			Set(ref _typ, value);
-    		}
+            {
+                if (_typ != value)
+                {
+                    if (Wegtyp != null && Wegtyp.ID != value)
+                    {
+                        Wegtyp = null;
+                    }
+                    _typ = value;
+                }
+            }
     
         }
         private int _typ;
@@ -190,6 +197,22 @@ namespace MeisterGeister.Model
             }
         }
         private Ort _zielOrt;
+    
+    	[DataMember]
+        public virtual Wegtyp Wegtyp
+        {
+            get { return _wegtyp; }
+            set
+            {
+                if (!ReferenceEquals(_wegtyp, value))
+                {
+                    var previousValue = _wegtyp;
+                    _wegtyp = value;
+                    FixupWegtyp(previousValue);
+                }
+            }
+        }
+        private Wegtyp _wegtyp;
     
     	[DataMember]
         public virtual ICollection<Weg> Weg
@@ -266,6 +289,27 @@ namespace MeisterGeister.Model
                 if (Ziel != ZielOrt.ID)
                 {
                     Ziel = ZielOrt.ID;
+                }
+            }
+        }
+    
+        private void FixupWegtyp(Wegtyp previousValue)
+        {
+    		OnChanged("Wegtyp");
+            if (previousValue != null && previousValue.Strecke.Contains(this))
+            {
+                previousValue.Strecke.Remove(this);
+            }
+    
+            if (Wegtyp != null)
+            {
+                if (!Wegtyp.Strecke.Contains(this))
+                {
+                    Wegtyp.Strecke.Add(this);
+                }
+                if (Typ != Wegtyp.ID)
+                {
+                    Typ = Wegtyp.ID;
                 }
             }
         }

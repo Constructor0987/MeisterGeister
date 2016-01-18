@@ -132,6 +132,11 @@
                     <SolidColorBrush />
                 </TextBox.Background>
             </TextBox>
+            <TextBox TextWrapping="Wrap" Margin="5,4,4,0" TextAlignment="Justify" Text="Einige der verwendeten Icons entstammen der Website Freepik (http://www.flaticon.com)." IsReadOnly="True" BorderThickness="0" FontSize="11">
+                <TextBox.Background>
+                    <SolidColorBrush />
+                </TextBox.Background>
+            </TextBox>
             <Grid Margin="5,4,4,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

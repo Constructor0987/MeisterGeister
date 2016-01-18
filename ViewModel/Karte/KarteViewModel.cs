@@ -12,11 +12,16 @@ using MeisterGeister.Logic.Extensions;
 using System.Net;
 using MeisterGeister.View.General;
 using MeisterGeister.Logic.Karte;
+using MeisterGeister.Model.Service;
+using MeisterGeister.Model;
+using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Karte
 {
     public class KarteViewModel : Base.ViewModelBase
     {
+        GeoService _geoService;
+
         #region Kartendownload
         public static void DownloadKarten()
         {
@@ -58,6 +63,7 @@ namespace MeisterGeister.ViewModel.Karte
                 DownloadKarten();
             //TODO Karte anhand HeldenLon und HeldenLat bestimmen
             SelectedKarte = karten[0];
+            _geoService = new GeoService();
         }
 
         public override void RegisterEvents()
@@ -291,7 +297,7 @@ namespace MeisterGeister.ViewModel.Karte
 
         #region Routenplaner
 
-        private Ortsmarke routeStarting;
+            private Ortsmarke routeStarting;
         public Ortsmarke RouteStarting
         {
             get
@@ -341,11 +347,115 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
+        private ObservableCollection<ViewModelBase> _lines;
+        public ObservableCollection<ViewModelBase> Lines
+        {
+            get
+            {
+                if (_lines == null)
+                    Lines = new ObservableCollection<ViewModelBase>();
+                return _lines;
+            }
+            set
+            {
+                if(value != _lines)
+                {
+                    Set(ref _lines, value);
+                }
+            }
+        }
+
+        private void Refocus()
+        {
+            if (RouteStarting != null)
+            {
+                if (RouteEnding != null)
+                {
+                    AdjustViewToRoute();
+                }
+                else
+                    CenterOn(RouteStarting);
+            }
+            else if (RouteEnding != null)
+                CenterOn(RouteEnding);
+
+        }
+
+        private void FindRoute(object args)
+        {
+            if (RouteStarting != null && RouteEnding != null)
+            {
+                Global.SetIsBusy(true, "Berechne Route...");
+                AdjustViewToRoute();
+                IEnumerable<Ort> nodes = CalculateRoute();
+                DrawRoute(nodes);
+                Global.SetIsBusy(false);
+            }
+        }
+
+        private IEnumerable<Ort> CalculateRoute()
+        {
+            var service = new RoutingService();
+            IEnumerable<Ort> result = service.GetShortestPath(new Size(SelectedKarte.Breite, SelectedKarte.Höhe), RouteStartingPoint, RouteEndingPoint);
+            return result;
+        }
+
+        private void DrawRoute(IEnumerable<Ort> nodes)
+        {
+            Lines.Clear();
+            for(int j = 0; j < (nodes.Count() - 1); j++)
+            {
+                Ort ort = nodes.ElementAt(j);
+                Strecke strecke = ort.RoutingStrecke;
+                ICollection<Weg> wege = strecke.Weg;
+                RoutingLineType lineType = new RoutingLineType(strecke.Wegtyp);
+                var firstWeg = wege.First();
+                for (int i=1; i<wege.Count; i++)
+                {
+                    var secondWeg = wege.ElementAt(i);
+                    Lines.Add(new RoutingLine(firstWeg.X, firstWeg.Y, secondWeg.X, secondWeg.Y, lineType));
+                    firstWeg = secondWeg;
+                }
+                Lines.Add(new RoutingPoint(ort.X, ort.Y, ort.ToString()));
+            }
+        }
+
+        private void AdjustViewToRoute()
+        {
+            Point center = GetRouteCenter();
+            var routingService = new RoutingService();
+            CenterOn(center);
+            double adjustmentFactor = routingService.GetZoomAdjustment(ZoomControlSize, Zoom, center, RouteStartingPoint);
+
+            if (adjustmentFactor != default(double))
+            {
+                Zoom /= adjustmentFactor;
+            }
+        }
+
+        private Point GetRouteCenter()
+        {
+            var startingPoint = RouteStartingPoint;
+            var endingPoint = RouteEndingPoint;
+            return new Point((startingPoint.X + endingPoint.X) / 2, (startingPoint.Y + endingPoint.Y) / 2);
+        }
+
         #endregion
 
-            #endregion
+        #endregion
 
-            #region Commands
+        #region Commands
+        private CommandBase findRouteCommand;
+        public CommandBase FindRouteCommand
+        {
+            get
+            {
+                if (findRouteCommand == null)
+                    findRouteCommand = new CommandBase(FindRoute, null);
+                return findRouteCommand;
+            }
+        }
+
         private CommandBase onHeldenPositionSetzen;
         public CommandBase OnHeldenPositionSetzen
         {
@@ -396,42 +506,6 @@ namespace MeisterGeister.ViewModel.Karte
         private void ShowSpielerInfo(object sender)
         {
             View.SpielerScreen.SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)sender));
-        }
-
-        private void Refocus()
-        {
-            if (RouteStarting != null)
-            {
-                if (RouteEnding != null)
-                {
-                    Point center = GetRouteCenter();
-                    AdjustViewToRoute(center);
-                }
-                else
-                    CenterOn(RouteStarting);
-            }
-            else if (RouteEnding != null)
-                CenterOn(RouteEnding);
-
-        }
-
-        private void AdjustViewToRoute(Point center)
-        {
-            var routingService = new RoutingService();
-            CenterOn(center);
-            double adjustmentFactor = routingService.GetZoomAdjustment(ZoomControlSize, Zoom, center, RouteStartingPoint);
-
-            if(adjustmentFactor != default(double))
-            {
-                Zoom /= adjustmentFactor;
-            }
-        }
-
-        private Point GetRouteCenter()
-        {
-            var startingPoint = RouteStartingPoint;
-            var endingPoint = RouteEndingPoint;
-            return new Point((startingPoint.X + endingPoint.X) / 2, (startingPoint.Y + endingPoint.Y) / 2);
         }
 
         public void CenterOn(Point p)

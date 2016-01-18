@@ -445,6 +445,10 @@
       <End Role="Ort" EntitySet="Ort" />
       <End Role="Strecke" EntitySet="Strecke" />
     </AssociationSet>
+    <AssociationSet Name="fk_Strecke_Wegtyp" Association="DatabaseDSAModel.Store.fk_Strecke_Wegtyp">
+      <End Role="Wegtyp" EntitySet="Wegtyp" />
+      <End Role="Strecke" EntitySet="Strecke" />
+    </AssociationSet>
     <AssociationSet Name="fk_TrageortGUID" Association="DatabaseDSAModel.Store.fk_TrageortGUID">
       <End Role="Trageort" EntitySet="Trageort" />
       <End Role="Held_Ausrüstung" EntitySet="Held_Ausrüstung" />
@@ -3002,6 +3006,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_Strecke_Wegtyp">
+    <End Role="Wegtyp" Type="DatabaseDSAModel.Store.Wegtyp" Multiplicity="1" />
+    <End Role="Strecke" Type="DatabaseDSAModel.Store.Strecke" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Wegtyp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Strecke">
+        <PropertyRef Name="Typ" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_TrageortGUID">
     <End Role="Trageort" Type="DatabaseDSAModel.Store.Trageort" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -3690,6 +3706,10 @@
     <AssociationSet Name="FK_Zauberzeichen_Sonderfertigkeit" Association="DatabaseDSAModel.FK_Zauberzeichen_Sonderfertigkeit">
       <End Role="Sonderfertigkeit" EntitySet="Sonderfertigkeit" />
       <End Role="Zauberzeichen" EntitySet="Zauberzeichen" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Strecke_Wegtyp" Association="DatabaseDSAModel.fk_Strecke_Wegtyp">
+      <End Role="Wegtyp" EntitySet="Wegtyp" />
+      <End Role="Strecke" EntitySet="Strecke" />
     </AssociationSet>
     <AssociationSet Name="fk_Weg_Strecke" Association="DatabaseDSAModel.fk_Weg_Strecke">
       <End Role="Strecke" EntitySet="Strecke" />
@@ -4928,6 +4948,7 @@
     <Property Name="Typ" Type="Int32" Nullable="false" />
     <NavigationProperty Name="StartOrt" Relationship="DatabaseDSAModel.fk_Strecke_Ort_Start" FromRole="Strecke" ToRole="Ort" />
     <NavigationProperty Name="ZielOrt" Relationship="DatabaseDSAModel.fk_Strecke_Ort_Ziel" FromRole="Strecke" ToRole="Ort" />
+    <NavigationProperty Name="Wegtyp" Relationship="DatabaseDSAModel.fk_Strecke_Wegtyp" FromRole="Strecke" ToRole="Wegtyp" />
     <NavigationProperty Name="Weg" Relationship="DatabaseDSAModel.fk_Weg_Strecke" FromRole="Strecke" ToRole="Weg" />
   </EntityType>
   <EntityType Name="Talent">
@@ -5062,6 +5083,7 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Multiplikator" Type="Double" Nullable="false" />
     <Property Name="Typ" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Strecke" Relationship="DatabaseDSAModel.fk_Strecke_Wegtyp" FromRole="Wegtyp" ToRole="Strecke" />
   </EntityType>
   <EntityType Name="Zauber">
     <Key>
@@ -6292,6 +6314,18 @@
       </Principal>
       <Dependent Role="Zauberzeichen">
         <PropertyRef Name="SonderfertigkeitGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Strecke_Wegtyp">
+    <End Role="Wegtyp" Type="DatabaseDSAModel.Wegtyp" Multiplicity="1" />
+    <End Role="Strecke" Type="DatabaseDSAModel.Strecke" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Wegtyp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Strecke">
+        <PropertyRef Name="Typ" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -7758,7 +7792,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="912910168ea248e28f498e057069f736" Name="Diagram1">
+      <Diagram DiagramId="ec31773f8dbf48859b2d3bfa7390e8e7" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="18.75" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="23.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="21" PointY="2.25" IsExpanded="true" />
@@ -7778,7 +7812,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="25.5" PointY="21.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="23.25" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="5.75" PointY="61" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="7.75" PointY="54" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="56.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="21" PointY="28.875" IsExpanded="true" />
@@ -7807,27 +7841,27 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="21.75" PointY="17.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="23.25" PointY="26.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="5.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="8" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="66.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="67" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="7.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="10" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="64.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="65" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="18.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="50.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="3.75" PointY="31.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition_Setting" Width="1.5" PointX="16" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="12.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ort" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="12.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="15.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="17.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ort" Width="1.5" PointX="5.75" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="55.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="16" PointY="35.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Typ" Width="1.5" PointX="6" PointY="64.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Typ" Width="1.5" PointX="6" PointY="61.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Verbreitung" Width="1.5" PointX="6" PointY="56.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="63.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="5.75" PointY="46.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="8" PointY="48.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="8" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="61.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="7.75" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="10" PointY="48.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="10" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="9" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="13.5" PointY="31.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="13.75" PointY="11.375" IsExpanded="true" />
@@ -7837,12 +7871,12 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="34" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="40.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="6.75" PointY="40.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil_Auswahl" Width="1.5" PointX="15.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil_Auswahl" Width="1.5" PointX="20.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="8.25" PointY="34.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Weg" Width="1.5" PointX="10.25" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Wegtyp" Width="1.5" PointX="17.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Weg" Width="1.5" PointX="10.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Wegtyp" Width="1.5" PointX="5.75" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="3.75" PointY="35.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="16" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="6" PointY="34.375" IsExpanded="true" />
@@ -7930,6 +7964,7 @@
         <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Setting" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_SonderfertigkeitSetting_Sonderfertigkeit" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK_Zauberzeichen_Sonderfertigkeit" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Strecke_Wegtyp" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Weg_Strecke" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.Gruppe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK__Zauber_Variante__0000000000000A6D" ManuallyRouted="false" />

@@ -258,6 +258,7 @@
     <Compile Include="Logic\General\AStar\AStarService.cs" />
     <Compile Include="Logic\General\AStar\Node.cs" />
     <Compile Include="Logic\General\AStar\NodeState.cs" />
+    <Compile Include="Logic\General\AStar\SearchParameters.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\BackgroundWorkerQueue.cs" />
     <Compile Include="Logic\General\BackgroundWorkerQueueItem.cs">
@@ -304,268 +305,268 @@
     <Compile Include="Logic\Würfel\ParseTree.cs" />
     <Compile Include="Logic\Würfel\Scanner.cs" />
     <Compile Include="Model\Abenteuer_Ereignis_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Abenteuer_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Abenteuer_Szene_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Abenteuer_Verweis_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Alchimierezept.cs" />
     <Compile Include="Model\Alchimierezept_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Alchimierezept_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Audio_Playlist_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Audio_Playlist_Titel_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Audio_Theme.cs" />
     <Compile Include="Model\Audio_Theme_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Audio_Titel.cs" />
     <Compile Include="Model\Audio_Titel_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Audio_WesenIcon_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Ausrüstung.cs" />
     <Compile Include="Model\Ausrüstungsset_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Ausrüstung_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Ausrüstung_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Beschwörbares_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Dämon_Domäne_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Dämon_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Einstellung.cs" />
     <Compile Include="Model\Einstellung_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Elementarwesen_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Extensions\ValidatePropertyChanging.cs" />
     <Compile Include="Model\Farbe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Fernkampfwaffe.cs" />
     <Compile Include="Model\Fernkampfwaffe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GegnerBase_Audio_Playlist.cs" />
     <Compile Include="Model\GegnerBase_Audio_Playlist_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Audio_Playlist.cs" />
     <Compile Include="Model\Held_Audio_Playlist_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Ausrüstung.cs" />
     <Compile Include="Model\Held_BFAusrüstung_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Fernkampfwaffe.cs" />
     <Compile Include="Model\Held_Fernkampfwaffe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Rüstung_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Waffe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Kreatur_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Landschaft.cs" />
     <Compile Include="Model\Landschaftsgruppe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Munition_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Ort.cs" />
     <Compile Include="Model\Ort_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pflanze_Ernte.cs" />
     <Compile Include="Model\Pflanze_Typ_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pflanze_Verbreitung.cs" />
     <Compile Include="Model\Polygon.cs" />
     <Compile Include="Model\Gebiet_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gegner.cs" />
     <Compile Include="Model\GegnerBase.cs" />
     <Compile Include="Model\GegnerBase_Angriff.cs" />
     <Compile Include="Model\GegnerBase_Angriff_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GegnerBase_Kampfregel_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GegnerBase_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gegner_Modifikator_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gegner_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Handelsgut.cs" />
     <Compile Include="Model\Handelsgut_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Handelsgut_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held.cs" />
     <Compile Include="Model\Held_Ausrüstung_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Inventar_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Modifikator_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Munition_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Pflanze_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Sonderfertigkeit.cs" />
     <Compile Include="Model\Held_Sonderfertigkeit_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Talent.cs" />
     <Compile Include="Model\Held_Talent_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_VorNachteil.cs" />
     <Compile Include="Model\Held_VorNachteil_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Held_Zauber.cs" />
     <Compile Include="Model\Held_Zauber_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Inventar.cs" />
     <Compile Include="Model\Inventar_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Kampfregel.cs" />
     <Compile Include="Model\Kampfregel_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Kultur.cs" />
     <Compile Include="Model\Kultur_Name_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Kultur_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Landschaft_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Literatur.cs" />
     <Compile Include="Model\Literatur_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MenuLink_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Model1.Context.cs">
+    <Compile Include="Model\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Extensions\DependentPropertyAttribute.cs" />
     <Compile Include="Model\Extensions\IInitializable.cs" />
     <Compile Include="Model\Audio_Theme_Playlist.cs" />
     <Compile Include="Model\Modifikator_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gebiet.cs" />
     <Compile Include="Model\Munition.cs" />
     <Compile Include="Model\Munition_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MusikZeileModel.cs" />
     <Compile Include="Model\Name_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Notizen.cs" />
     <Compile Include="Model\Notizen_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NscMerkmal_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pflanze.cs" />
     <Compile Include="Model\Pflanze_Ernte_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pflanze_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pflanze_Verbreitung_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Polygon_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rasse.cs" />
     <Compile Include="Model\Rasse_Farbe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rasse_Kultur_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rasse_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rüstung.cs" />
     <Compile Include="Model\Rüstung_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Schild.cs" />
     <Compile Include="Model\Schild_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Service\GeoService.cs" />
     <Compile Include="Model\Service\PflanzeService.cs" />
@@ -573,37 +574,37 @@
     <Compile Include="Model\Ausrüstungsset.cs" />
     <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Sonderfertigkeit.cs" />
     <Compile Include="Model\Sonderfertigkeit_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Sonderfertigkeit_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Strecke_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Talent.cs" />
     <Compile Include="Model\Talentgruppe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Talent_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Trageort_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Version_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VorNachteil.cs" />
     <Compile Include="Model\VorNachteil_Auswahl_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VorNachteil_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Waffe.cs" />
     <Compile Include="Model\Service\AudioService.cs" />
@@ -615,31 +616,31 @@
     <Compile Include="Model\Extensions\SqlFunctionsExtension.cs" />
     <Compile Include="Model\Service\NamenService.cs" />
     <Compile Include="Model\Waffe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Wegtyp_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Weg_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Zauber.cs" />
     <Compile Include="Model\Held_Waffe.cs" />
     <Compile Include="Model\Zauberzeichen.cs" />
     <Compile Include="Model\Zauberzeichen_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Zauberzeichen_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Zauber_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Zauber_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Zauber_Variante_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Net\Server.cs" />
     <Compile Include="Net\Starter.cs" />
@@ -715,6 +716,9 @@
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheGezieltViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheViewModel.cs" />
+    <Compile Include="ViewModel\Karte\RoutingLine.cs" />
+    <Compile Include="ViewModel\Karte\RoutingLineType.cs" />
+    <Compile Include="ViewModel\Karte\RoutingPoint.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
     <Compile Include="ViewModel\Reise\WetterGraphViewModel.cs" />
@@ -1863,13 +1867,13 @@
       <SubType>Designer</SubType>
     </None>
     <Resource Include="Fonts\DSA Symbole G&amp;D v1.6.ttf" />
-    <None Include="Model\Model1.Context.tt">
+    <None Include="Model\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
     </None>
-    <None Include="Model\Model1.tt">
+    <None Include="Model\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <LastGenOutput>Model.cs</LastGenOutput>
     </None>
     <EntityDeploy Include="Model\MeisterGeisterModel.edmx" />
     <None Include="Daten\meistergeister.kmz">
@@ -2336,6 +2340,8 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0115.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0116.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0117.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0118.sql" />
+    <Resource Include="Images\Icons\DereGlobus\way2.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

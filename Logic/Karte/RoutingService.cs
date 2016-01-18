@@ -1,4 +1,5 @@
-﻿using MeisterGeister.Model;
+﻿using MeisterGeister.Logic.General.AStar;
+using MeisterGeister.Model;
 using MeisterGeister.Model.Service;
 using System;
 using System.Collections.Generic;
@@ -44,20 +45,29 @@ namespace MeisterGeister.Logic.Karte
             return result;
         }
 
-        public void GetShortestPath(Point actualStart, Point actualTarget)
+        public IEnumerable<Ort> GetShortestPath(Size boundaries, Point actualStart, Point actualTarget)
         {
             Ort start = GetClosestOrt(actualStart);
             Ort target = GetClosestOrt(actualTarget);
 
-            if(start != null & target != null)
+            if (start != null & target != null)
             {
-                GetShortestPath(start, target);
+                return GetShortestPath(boundaries, start, target);
             }
+            else
+                // TODO: Fehlermeldung ausgeben
+                return null;
         }
 
-        private void GetShortestPath(Ort start, Ort target)
+        public IEnumerable<Ort> GetShortestPath(Size boundaries, Ort start, Ort target)
         {
-            
+            IEnumerable<Ort> orte = _geoService.Liste<Ort>();
+            foreach (var ort in orte)
+                ort.Init(ort.X, ort.Y, true, target);
+
+            var searchingService = new AStarService(new SearchParameters(boundaries, start,target));
+            List<Node> result = searchingService.FindPath();
+            return result.OfType<Ort>();
         }
 
         public Ort GetClosestOrt(Point actualStart)
