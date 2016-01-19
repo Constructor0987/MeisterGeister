@@ -2342,6 +2342,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0117.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0118.sql" />
     <Resource Include="Images\Icons\DereGlobus\way2.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0119.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

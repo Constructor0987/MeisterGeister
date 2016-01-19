@@ -154,6 +154,18 @@ namespace MeisterGeister.Model
     
         }
         private string _bemerkung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<bool> Hauszauber
+        {
+            get { return _hauszauber; }
+            set
+    		{ 
+    			Set(ref _hauszauber, value);
+    		}
+    
+        }
+        private Nullable<bool> _hauszauber;
 
         #endregion
 
