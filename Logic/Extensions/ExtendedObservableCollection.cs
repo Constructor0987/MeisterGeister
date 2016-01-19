@@ -14,6 +14,12 @@ namespace MeisterGeister.Logic.Extensions
     {
         private bool _unterdrückeOnCollectionChanged = false;
 
+        public bool SuppressNotification
+        {
+            get { return _unterdrückeOnCollectionChanged; }
+            set { _unterdrückeOnCollectionChanged = value; }
+        }
+
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (!_unterdrückeOnCollectionChanged)

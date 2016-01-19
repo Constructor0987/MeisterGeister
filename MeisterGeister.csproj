@@ -720,6 +720,9 @@
     <Compile Include="ViewModel\Karte\RoutingLineType.cs" />
     <Compile Include="ViewModel\Karte\RoutingPoint.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Menu\SeperatorViewModel.cs" />
+    <Compile Include="ViewModel\Menu\ToolTabViewModel.cs" />
+    <Compile Include="ViewModel\Menu\MenuItemViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
     <Compile Include="ViewModel\Reise\WetterGraphViewModel.cs" />
     <Compile Include="ViewModel\Reise\Wetter.cs" />

@@ -13,6 +13,8 @@ namespace MeisterGeister
     /// </summary>
     public class Tool
     {
+        public static string[] Gruppen = new string[] { "Wege des Meisters", "Wege des Kampfes", "Wege der Magie", "Wege des Handels", "Wege des Wanderers", "Eigene Wege" };
+
         #region //---- TOOLLISTE -----
         static Tool()
         {

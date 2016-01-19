@@ -99,7 +99,6 @@ namespace MeisterGeister.View
             _tabControlMain.SelectionChanged += _tabControlMain_SelectionChanged;
 
             _labelVersion.ToolTip = string.Format("MeisterGeisterID: {0}", mgID.ToString());
-
 #if TEST
             _labelVersion.Foreground = Brushes.Red;
             _labelVersion.Background = Brushes.LightYellow;
@@ -148,21 +147,26 @@ namespace MeisterGeister.View
                 ExternProgrammMenuItem extItem = new ExternProgrammMenuItem(mLink);
 
                 if (menuItem.Items.Count > 0)
-                    menuItem.Items.Insert(menuItem.Items.Count - 1, extItem);
+                    menuItem.Items.Insert(menuItem.Items.Count - 1, extItem); //TODO geht nicht: die anderen Items sind in XAML definiert, dann kann man so nichts neues hinzufügen.
+                    // Oder abwarten bis das neue VM fertig ist. Zumindest crasht es so nicht mehr.
             }
         }
 
         private void InitializeMenuPunkte()
         {
-            //foreach (var item in _menuTools.Items)
-            //{
-            //    if (item is MenuItem)
-            //    {
-            //        MenuItem menuItem = (MenuItem)item;
-            //        if (!(menuItem.Header is Image) && menuItem.Header is TextBlock)
-            //            MenuPunkte.Add((menuItem.Header as TextBlock).Text.ToString(), menuItem);
-            //    }
-            //}
+            var control = _tabControlMain.Template.LoadContent() as FrameworkElement;
+            var m = control.FindName("_menuTools");
+            Menu _menuTools = m as Menu;
+            var mi = _menuTools.Items[0] as MenuItem;
+            foreach (var item in mi.Items)
+            {
+                if (item is MenuItem)
+                {
+                    MenuItem menuItem = (MenuItem)item;
+                    if (!(menuItem.Header is Image) && menuItem.Header is TextBlock)
+                        MenuPunkte.Add((menuItem.Header as TextBlock).Text.ToString(), menuItem);
+                }
+            }
         }
 
         public void StarteTab(string tabName, int position = -1)

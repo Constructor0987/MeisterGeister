@@ -106,7 +106,7 @@
                                                     </TextBlock>
                                                 </Grid>
                                             </StackPanel>
-                                            <Menu DockPanel.Dock="Left" x:Name="_menuTools" FontSize="15" VerticalAlignment="Center" Background="Transparent">
+                                            <Menu DockPanel.Dock="Left" Name="_menuTools" FontSize="15" VerticalAlignment="Center" Background="Transparent">
                                                 <MenuItem>
                                                     <MenuItem.Header>
                                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="20"/>
