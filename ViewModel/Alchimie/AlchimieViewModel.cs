@@ -16,7 +16,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Alchimie
 {
-    class AlchimieViewModel : Base.ViewModelBase
+    class AlchimieViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----

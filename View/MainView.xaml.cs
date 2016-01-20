@@ -87,16 +87,16 @@ namespace MeisterGeister.View
             // MeisterGeisterID abrufen
             Guid mgID = Einstellungen.MeisterGeisterID;
 
-            InitializeMenuPunkte();
+            //InitializeMenuPunkte();
 
-            string[] tabs = Einstellungen.StartTabs.Split('#');
-            foreach (string tab in tabs)
-                StarteTab(tab);
+            //string[] tabs = Einstellungen.StartTabs.Split('#');
+            //foreach (string tab in tabs)
+            //    StarteTab(tab);
 
             if (_tabControlMain.Items.Count > 0 && Einstellungen.SelectedTab >=0 && Einstellungen.SelectedTab < _tabControlMain.Items.Count)
                 _tabControlMain.SelectedIndex = Einstellungen.SelectedTab;
 
-            _tabControlMain.SelectionChanged += _tabControlMain_SelectionChanged;
+            //_tabControlMain.SelectionChanged += _tabControlMain_SelectionChanged;
 
             _labelVersion.ToolTip = string.Format("MeisterGeisterID: {0}", mgID.ToString());
 #if TEST
@@ -135,8 +135,8 @@ namespace MeisterGeister.View
             // TODO MT: Tool-Menü-Einträge erzeugen
 
             // User-Verknüpfungen ins Menü einhängen
-            foreach (var mLink in Global.ContextMenuLink.Liste<Model.MenuLink>())
-                AddMenuExternesProgramm(mLink);
+            //foreach (var mLink in Global.ContextMenuLink.Liste<Model.MenuLink>())
+            //    AddMenuExternesProgramm(mLink);
         }
 
         public static void AddMenuExternesProgramm(Model.MenuLink mLink)

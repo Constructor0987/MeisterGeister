@@ -25,7 +25,7 @@ using MeisterGeister.ViewModel.Karte;
 namespace MeisterGeister.ViewModel.ZooBot
 {
 
-    public class ZooBotViewModel : Base.ViewModelBase
+    public class ZooBotViewModel : Base.ToolViewModelBase
     {
     public class iPflanzeBekannt
     {

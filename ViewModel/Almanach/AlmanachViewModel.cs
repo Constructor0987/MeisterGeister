@@ -9,7 +9,7 @@ using Base = MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.ViewModel.Almanach
 {
-    public class AlmanachViewModel : Base.ViewModelBase
+    public class AlmanachViewModel : Base.ToolViewModelBase
     {
          #region //---- FELDER ----
 

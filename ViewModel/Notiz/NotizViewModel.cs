@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Notiz
 {
-    public class NotizViewModel : Base.ViewModelBase
+    public class NotizViewModel : Base.ToolViewModelBase
     {
         #region //SUBKLASSEN
 

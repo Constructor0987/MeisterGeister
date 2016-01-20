@@ -402,7 +402,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
     #endregion
 
-    public class AudioPlayerViewModel : Base.ViewModelBase
+    public class AudioPlayerViewModel : Base.ToolViewModelBase
     {
         #region //---- AudioPlayer Close EVENT ----
         

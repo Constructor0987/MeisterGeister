@@ -6,7 +6,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
-    public class HeldenViewModel : Base.ViewModelBase
+    public class HeldenViewModel : Base.ToolViewModelBase
     {
         #region //---- COMMANDS ----
 

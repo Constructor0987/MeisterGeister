@@ -11,7 +11,7 @@ using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.ViewModel.Proben
 {
-    public class ProbenViewModel : ViewModel.Base.ViewModelBase
+    public class ProbenViewModel : Base.ToolViewModelBase
     {
         #region //---- COMMANDS ----
 

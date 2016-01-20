@@ -13,7 +13,7 @@ using MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
-    public class KampfViewModel : Base.ViewModelBase
+    public class KampfViewModel : Base.ToolViewModelBase
     {
         private K _kampf = null;
 

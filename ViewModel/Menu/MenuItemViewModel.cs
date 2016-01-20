@@ -13,11 +13,11 @@ namespace MeisterGeister.ViewModel.Menu
         {
             Children = new ExtendedObservableCollection<MenuItemViewModel>(); //TODO Auch Seperators erlauben
         }
-
+        public bool HasChildren { get { return Children.Count > 0; } }
         public string Icon { get; set; }
         public string Header { get; set; }
         public string Tooltip { get; set; }
         public System.Windows.Input.ICommand Command { get; set; }
-        public IList<MenuItemViewModel> Children { get; set; }
+        public ExtendedObservableCollection<MenuItemViewModel> Children { get; set; }
     }
 }

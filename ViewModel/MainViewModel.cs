@@ -22,6 +22,7 @@ namespace MeisterGeister.ViewModel
         {
             App.Queue.ProgressChanged += Queue_ProgressChanged;
             BuildMenu();
+            OpenTabs();
         }
 
         #region Regeledition und Version
@@ -112,8 +113,6 @@ namespace MeisterGeister.ViewModel
         #endregion
 
         #region Menu
-        ExtendedObservableCollection<MenuItemViewModel> menuItems;
-
         void BuildMenu()
         {
             MenuItems = new ExtendedObservableCollection<MenuItemViewModel>();
@@ -158,7 +157,7 @@ namespace MeisterGeister.ViewModel
             var g = Gruppen[tool.MenuGruppe];
             var mi = new MenuItemViewModel();
             mi.Header = tool.Name;
-            mi.Icon = tool.Icon;
+            mi.Icon = (String.IsNullOrWhiteSpace(tool.Icon)?null:"/Images/"+tool.Icon);
             Action<object> c = o => 
                 {
                     OpenTool(tool);
@@ -167,8 +166,8 @@ namespace MeisterGeister.ViewModel
             g.Children.Add(mi);
             return mi;
         }
-
-        public IList<MenuItemViewModel> MenuItems { get { return menuItems; } protected set { menuItems = value as ExtendedObservableCollection<MenuItemViewModel>; } }
+        ExtendedObservableCollection<MenuItemViewModel> menuItems;
+        public ExtendedObservableCollection<MenuItemViewModel> MenuItems { get { return menuItems; } protected set { menuItems = value as ExtendedObservableCollection<MenuItemViewModel>; } }
         #endregion
 
         #region Tabs

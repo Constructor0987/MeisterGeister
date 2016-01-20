@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace MeisterGeister
 {
-    // TODO MT: erweitern, dass das Menü automatisch aus der Liste heraus erzeugt wird
+    // TODO: Icon-Pfade korrigieren
 
     /// <summary>
     /// Stellt die MeisterGeister-Tool-Liste dar

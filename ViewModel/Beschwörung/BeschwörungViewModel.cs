@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Beschwörung
 {
-    public abstract class BeschwörungViewModel : Base.ViewModelBase
+    public abstract class BeschwörungViewModel : Base.ToolViewModelBase
     {
         public BeschwörungViewModel()
             : base(View.General.ViewHelper.ShowProbeDialog)

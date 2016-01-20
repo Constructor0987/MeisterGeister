@@ -13,7 +13,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
 {
     //TODO MP: Export nach Notiztool
     //TODO MP: Verknüpfung mit Kalender Datum
-    public class ZauberzeichenViewModel : Base.ViewModelBase
+    public class ZauberzeichenViewModel : Base.ToolViewModelBase
     {
 
         //TODO MP: AbrichtenTool

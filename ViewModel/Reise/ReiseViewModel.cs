@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Reise
 {
-    public class ReiseViewModel : Base.ViewModelBase
+    public class ReiseViewModel : Base.ToolViewModelBase
     {
         #region //---- FELDER ----
 

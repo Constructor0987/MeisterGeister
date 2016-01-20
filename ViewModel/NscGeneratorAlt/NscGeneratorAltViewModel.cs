@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace MeisterGeister.ViewModel.NscGeneratorAlt
 {
-    class NscGeneratorAltViewModel : Base.ViewModelBase
+    class NscGeneratorAltViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----

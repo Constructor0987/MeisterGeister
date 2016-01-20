@@ -11,7 +11,7 @@ using MeisterGeister.Logic.Umrechner;
 
 namespace MeisterGeister.ViewModel.Basar
 {
-    public class BasarViewModel : Base.ViewModelBase
+    public class BasarViewModel : Base.ToolViewModelBase
     {
         #region //---- FELDER ----
 

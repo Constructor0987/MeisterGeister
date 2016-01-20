@@ -18,7 +18,7 @@ using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Karte
 {
-    public class KarteViewModel : Base.ViewModelBase
+    public class KarteViewModel : Base.ToolViewModelBase
     {
         GeoService _geoService;
 

@@ -15,7 +15,7 @@ using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.Generator
 {
-    public class GeneratorViewModel : Base.ViewModelBase
+    public class GeneratorViewModel : Base.ToolViewModelBase
     {
         #region //---- FELDER ----
         //Intern: Zeichenketten und weiteres

@@ -14,7 +14,7 @@ using MeisterGeister.View.SpielerScreen;
 
 namespace MeisterGeister.ViewModel.SpielerScreen
 {
-    public class SpielerScreenControlViewModel : Base.ViewModelBase
+    public class SpielerScreenControlViewModel : Base.ToolViewModelBase
     {
         #region //---- FELDER ----
 
