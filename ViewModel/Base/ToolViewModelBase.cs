@@ -12,12 +12,28 @@ namespace MeisterGeister.ViewModel.Base
         /// <summary>
         /// Name des Tools.
         /// </summary>
-        public string Name { get; protected set; }
+        public virtual string Name { get { return Tool.Name; } }
 
         /// <summary>
         /// Pfad des Tool-Icons.
         /// </summary>
-        public string Icon { get; protected set; }
+        public virtual string Icon { get { return Tool.Icon; } }
+
+        /// <summary>
+        /// Tool
+        /// </summary>
+        public virtual Tool Tool { get; set; }
+
+        bool isSelected = false;
+        /// <summary>
+        /// Ist das Tool im TabControl selektiert?
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { Set(ref isSelected, value); }
+        }
+
 
         #endregion
 

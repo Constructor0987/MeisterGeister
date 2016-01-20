@@ -12,12 +12,13 @@ using MeisterGeister.Logic.Extensions;
 using System.Windows.Controls;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Einstellung;
+using MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.ViewModel
 {
     public class MainViewModel : Base.ViewModelBase
     {
-        public MainViewModel()
+        public MainViewModel() : base(View.General.ViewHelper.ShowError)
         {
             App.Queue.ProgressChanged += Queue_ProgressChanged;
             BuildMenu();
@@ -121,7 +122,25 @@ namespace MeisterGeister.ViewModel
                 Gruppen.Add(g, AddGruppe(g));
             foreach(var tool in Tool.ToolListe.Values)
                 AddTool(tool);
-            //TODO Externe Verknüpfungen
+            foreach (var mLink in Global.ContextMenuLink.Liste<Model.MenuLink>())
+                AddExternesProgramm(mLink);
+        }
+
+        MenuItemViewModel AddExternesProgramm(Model.MenuLink mLink)
+        {
+            if(!Gruppen.ContainsKey(mLink.MenuPunkt))
+                return null;
+            var g = Gruppen[mLink.MenuPunkt];
+            var mi = new MenuItemViewModel();
+            mi.Header = mLink.Name;
+            mi.Icon = mLink.Bild;
+            Action<object> c = o => 
+                {
+                    StartExtern(mLink.ProgrammPfad);
+                };
+            mi.Command = new Base.CommandBase(c, null);
+            g.Children.Add(mi);
+            return mi;
         }
 
         public Dictionary<string, MenuItemViewModel> Gruppen;
@@ -153,8 +172,8 @@ namespace MeisterGeister.ViewModel
         #endregion
 
         #region Tabs
-        ExtendedObservableCollection<ToolTabViewModel> openTools;
-        public ExtendedObservableCollection<ToolTabViewModel> OpenTools
+        ExtendedObservableCollection<ToolViewModelBase> openTools;
+        public ExtendedObservableCollection<ToolViewModelBase> OpenTools
         {
             get { return openTools; }
             set { Set(ref openTools, value); }
@@ -173,7 +192,7 @@ namespace MeisterGeister.ViewModel
 
         void OpenTabs()
         {
-            OpenTools = new ExtendedObservableCollection<ToolTabViewModel>();
+            OpenTools = new ExtendedObservableCollection<ToolViewModelBase>();
             //StartTabs
             string[] tabs = Einstellungen.StartTabs.Split('#');
             foreach (string tab in tabs)
@@ -190,7 +209,7 @@ namespace MeisterGeister.ViewModel
             {
                 if (tabs != string.Empty)
                     tabs += "#";
-                tabs += tab.Tool.Name;
+                tabs += tab.Name;
             }
             return tabs;
         }
@@ -201,7 +220,7 @@ namespace MeisterGeister.ViewModel
                 return;
 
             // Falls Tool bereits geöffnet, kein zweites öffnen, sondern geöffnetes aktivieren
-            ToolTabViewModel tvm = OpenTools.Where(tv => tv.Tool == t).FirstOrDefault();;
+            var tvm = OpenTools.Where(tv => tv.Tool == t).FirstOrDefault();;
             if(tvm != null)
             {
                 tvm.IsSelected = true;
@@ -210,13 +229,42 @@ namespace MeisterGeister.ViewModel
 
             //sonst erstellen und auswählen
             Global.SetIsBusy(true, string.Format("{0} Tab wird geladen...", t.Name));
-            tvm = new ToolTabViewModel(t);
-            if (tvm.ViewModel != null)
+            tvm = t.CreateToolViewModel();
+            if (tvm != null)
             {
                 OpenTools.Add(tvm);
                 tvm.IsSelected = true;
             }
             Global.SetIsBusy(false);
+        }
+
+        void StartExtern(string ProgrammPfad)
+        {
+            if (!string.IsNullOrWhiteSpace(ProgrammPfad))
+            {
+                try
+                {
+                    string curDir = Environment.CurrentDirectory;
+                    string fileName = ProgrammPfad;
+                    if (!ProgrammPfad.StartsWith("http"))
+                    {
+                        if (fileName.StartsWith("\\")) // bei relativem Pfad das HomeDir hinzufügen
+                        {
+                            fileName = fileName.Remove(0, 1).Insert(0, Logic.Extensions.FileExtensions.GetHomeDirectory());
+                            Logic.Extensions.FileExtensions.SetCurrentDir(fileName);
+                        }
+                        else
+                            Logic.Extensions.FileExtensions.SetCurrentDir();
+                    }
+
+                    System.Diagnostics.Process.Start(fileName);
+                    Environment.CurrentDirectory = curDir;
+                }
+                catch (Exception ex)
+                {
+                    ShowError("Beim Starten eines externen Programms ist ein Fehler aufgetreten!", ex);
+                }
+            }
         }
 
         //TODO Drag und Drop der Position oder geht das automatisch?

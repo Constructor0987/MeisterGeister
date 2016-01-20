@@ -18,8 +18,6 @@ namespace MeisterGeister.ViewModel.Kalender
     {
         public KalenderViewModel()
         {
-            Icon = "";
-            Name = "Kalender";
             kalender = new DSADateCalendarTwelve();
             datum = new DSADateTime(DateTime.Now); // TODO aus den Einstellungen laden
             Kalender.Date = Datum;

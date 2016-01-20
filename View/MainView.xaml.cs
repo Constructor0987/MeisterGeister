@@ -156,7 +156,7 @@ namespace MeisterGeister.View
         {
             var control = _tabControlMain.Template.LoadContent() as FrameworkElement;
             var m = control.FindName("_menuTools");
-            Menu _menuTools = m as Menu;
+            System.Windows.Controls.Menu _menuTools = m as System.Windows.Controls.Menu;
             var mi = _menuTools.Items[0] as MenuItem;
             foreach (var item in mi.Items)
             {

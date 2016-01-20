@@ -12,10 +12,12 @@ using MeisterGeister.ViewModel.Schmiede.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeFernkampfwaffeViewModel : Base.ToolViewModelBase
+    public class SchmiedeFernkampfwaffeViewModel : Base.ViewModelBase
     {
 
         #region //---- FELDER ----
+        public string Icon { get; protected set; }
+        public string Name { get; protected set; }
 
         //Intern: Zeichenketten für DB-Abfragen
         const string TALENTFERNKAMPFWAFFEUNTERKATEGORIE = "Fernkampf";

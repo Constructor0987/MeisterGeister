@@ -655,6 +655,8 @@
     <Compile Include="ViewModel\Almanach\AlmanachViewModel.cs" />
     <Compile Include="ViewModel\Almanach\Logic\AlmanachItem.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
+    <Compile Include="ViewModel\AresPlayer\AresPlayerViewModel.cs" />
+    <Compile Include="ViewModel\ArtGen\ArtGenViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayerViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\FavAudioPlaylistVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\AudioZeileVM.cs" />
@@ -689,6 +691,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\VisualTreeExtensions.cs" />
     <Compile Include="ViewModel\Einstellungen\EinstellungenViewModel.cs" />
     <Compile Include="ViewModel\Einstellungen\NetzwerkeinstellungenViewModel.cs" />
+    <Compile Include="ViewModel\Globus\GlobusViewModel.cs" />
     <Compile Include="ViewModel\Helden\AusrüstungViewModel.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
@@ -721,7 +724,6 @@
     <Compile Include="ViewModel\Karte\RoutingPoint.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Menu\SeperatorViewModel.cs" />
-    <Compile Include="ViewModel\Menu\ToolTabViewModel.cs" />
     <Compile Include="ViewModel\Menu\MenuItemViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />
     <Compile Include="ViewModel\Reise\WetterGraphViewModel.cs" />
@@ -785,6 +787,8 @@
     <Compile Include="ViewModel\Schmiede\SchmiedeSchildViewModel.cs" />
     <Compile Include="ViewModel\SpielerScreen\SpielerScreenControlViewModel.cs" />
     <Compile Include="ViewModel\Reise\WetterViewModel.cs" />
+    <Compile Include="ViewModel\Umrechner\UmrechnerViewModel.cs" />
+    <Compile Include="ViewModel\Würfeln\WürfelViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="ViewModel\Zauber\Logic\ZauberProbe.cs" />
     <Compile Include="ViewModel\ZooBot\BekanntePflanzenVM.cs" />
@@ -1060,6 +1064,7 @@
       <DependentUpon>PflanzenSucheGezieltView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\PflanzeVerbreitungListViewConverter.cs" />
+    <Compile Include="View\Menu\Logic\ToolViewSelector.cs" />
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
       <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
     </Compile>

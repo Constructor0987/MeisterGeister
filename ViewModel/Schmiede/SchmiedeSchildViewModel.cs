@@ -10,7 +10,7 @@ using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeSchildViewModel : Base.ToolViewModelBase
+    public class SchmiedeSchildViewModel : Base.ViewModelBase
     {
 
         #region //---- FELDER ----
@@ -54,6 +54,9 @@ namespace MeisterGeister.ViewModel.Schmiede
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
+
+        public string Icon { get; protected set; }
+        public string Name { get; protected set; }
 
         //Felder        
         public int ProbePunkte
@@ -137,8 +140,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeSchildViewModel()
         {
-            this.Name = "Schild";
-            this.Icon = "/DSA%20MeisterGeister;component/Images/Icons/schild.png";
+            Name = "Schild";
+            Icon = "/DSA%20MeisterGeister;component/Images/Icons/schild.png";
             Init();
             TawSchmied = 12;
         }
