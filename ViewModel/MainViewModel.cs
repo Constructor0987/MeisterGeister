@@ -157,7 +157,7 @@ namespace MeisterGeister.ViewModel
             var g = Gruppen[tool.MenuGruppe];
             var mi = new MenuItemViewModel();
             mi.Header = tool.Name;
-            mi.Icon = (String.IsNullOrWhiteSpace(tool.Icon)?null:"/Images/"+tool.Icon);
+            mi.Icon = tool.Icon;
             Action<object> c = o => 
                 {
                     OpenTool(tool);

@@ -24,7 +24,7 @@ namespace MeisterGeister
             ToolListe.Add("Helden", new Tool()
             {
                 Name = "Helden",
-                Icon = "Icons/helden.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/helden.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Helden.HeldenView),
                 ViewModelType = typeof(ViewModel.Helden.HeldenViewModel)
@@ -32,7 +32,7 @@ namespace MeisterGeister
             ToolListe.Add("Proben", new Tool()
             {
                 Name = "Proben",
-                Icon = "Icons/Wuerfel/w20.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/w20.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Proben.ProbenView),
                 ViewModelType = typeof(ViewModel.Proben.ProbenViewModel)
@@ -40,7 +40,7 @@ namespace MeisterGeister
             ToolListe.Add("Kampf", new Tool()
             {
                 Name = "Kampf",
-                Icon = "Icons/nahkampf_01.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png",
                 MenuGruppe = "Wege des Kampfes",
                 ViewType = typeof(View.Kampf.KampfView),
                 ViewModelType = typeof(ViewModel.Kampf.KampfViewModel)
@@ -48,7 +48,7 @@ namespace MeisterGeister
             ToolListe.Add("Gegner", new Tool()
             {
                 Name = "Gegner",
-                Icon = "Icons/gegner.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/gegner.png",
                 MenuGruppe = "Wege des Kampfes",
                 ViewType = typeof(View.Kampf.Controls.GegnerView),
                 ViewModelType = typeof(ViewModel.Kampf.GegnerViewModel)
@@ -56,7 +56,7 @@ namespace MeisterGeister
             ToolListe.Add("Notizen", new Tool()
             {
                 Name = "Notizen",
-                Icon = "Icons/notiz.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/notiz.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Notiz.NotizView),
                 ViewModelType = typeof(ViewModel.Notiz.NotizViewModel)
@@ -64,7 +64,7 @@ namespace MeisterGeister
             ToolListe.Add("Kalender", new Tool()
             {
                 Name = "Kalender",
-                Icon = "Icons/kalender.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/kalender.png",
                 MenuGruppe = "Wege des Wanderers",
                 ViewType = typeof(View.Kalender.KalenderView),
                 ViewModelType = typeof(ViewModel.Kalender.KalenderViewModel)
@@ -72,7 +72,7 @@ namespace MeisterGeister
             ToolListe.Add("NSCs", new Tool()
             {
                 Name = "NSCs",
-                Icon = "Icons/meisterperson.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/meisterperson.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.NscGeneratorAlt.NscGeneratorAltView),
                 ViewModelType = typeof(ViewModel.NscGeneratorAlt.NscGeneratorAltViewModel)
@@ -80,7 +80,7 @@ namespace MeisterGeister
             ToolListe.Add("Umrechner", new Tool()
             {
                 Name = "Umrechner",
-                Icon = "Icons/masse.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/masse.png",
                 MenuGruppe = "Wege des Handels",
                 ViewType = typeof(View.Umrechner.UmrechnerView),
                 ViewModelType = typeof(ViewModel.Umrechner.UmrechnerViewModel)
@@ -88,7 +88,7 @@ namespace MeisterGeister
             ToolListe.Add("Würfel", new Tool()
             {
                 Name = "Würfel",
-                Icon = "Icons/wuerfelbecher.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/wuerfelbecher.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Würfeln.WürfelView),
                 ViewModelType = typeof(ViewModel.Würfeln.WürfelViewModel)
@@ -96,7 +96,7 @@ namespace MeisterGeister
             ToolListe.Add("SpielerInfo", new Tool()
             {
                 Name = "SpielerInfo",
-                Icon = "Icons/General/screen.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/General/screen.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.SpielerScreen.SpielerScreenControlView),
                 ViewModelType = typeof(ViewModel.SpielerScreen.SpielerScreenControlViewModel)
@@ -104,7 +104,7 @@ namespace MeisterGeister
             ToolListe.Add("Audio", new Tool()
             {
                 Name = "Audio",
-                Icon = "Icons/General/audio.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/General/audio.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.AudioPlayer.AudioPlayerView),
                 ViewModelType = typeof(ViewModel.AudioPlayer.AudioPlayerViewModel)
@@ -112,7 +112,7 @@ namespace MeisterGeister
             ToolListe.Add("Basar", new Tool()
             {
                 Name = "Basar",
-                Icon = "Icons/muenzen.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/muenzen.png",
                 MenuGruppe = "Wege des Handels",
                 ViewType = typeof(View.Basar.BasarView),
                 ViewModelType = typeof(ViewModel.Basar.BasarViewModel)
@@ -120,7 +120,7 @@ namespace MeisterGeister
             ToolListe.Add("Schmiede", new Tool()
             {
                 Name = "Schmiede",
-                Icon = "Icons/schmiede.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/schmiede.png",
                 MenuGruppe = "Wege des Handels",
                 ViewType = typeof(View.Schmiede.SchmiedeView),
                 ViewModelType = typeof(ViewModel.Schmiede.SchmiedeViewModel)
@@ -128,7 +128,7 @@ namespace MeisterGeister
             ToolListe.Add("Globus", new Tool()
             {
                 Name = "Globus",
-                Icon = "Logos/DereGlobus_Icon2.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Logos/DereGlobus_Icon2.png",
                 MenuGruppe = "Wege des Wanderers",
                 ViewType = typeof(View.Globus.GlobusView),
                 ViewModelType = typeof(ViewModel.Globus.GlobusViewModel)
@@ -136,7 +136,7 @@ namespace MeisterGeister
             ToolListe.Add("Artefakte", new Tool()
             {
                 Name = "Artefakte",
-                Icon = "Icons/artefakt.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/artefakt.png",
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.ArtGen.ArtGenView),
                 ViewModelType = typeof(ViewModel.ArtGen.ArtGenViewModel)
@@ -144,7 +144,7 @@ namespace MeisterGeister
             //ToolListe.Add("ZooBot", new Tool()
             //{
             //    Name = "ZooBot",
-            //    Icon = "Icons/kraeutersuche.png",
+            //    Icon = "/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png",
             //    MenuGruppe = "Wege des Wanderers",
             //    ViewType = typeof(View.ZooBotAlt.ZooBotView),
             //    ViewModelType = typeof(ViewModel.Helden.HeldenViewModel)
@@ -152,7 +152,7 @@ namespace MeisterGeister
             ToolListe.Add("Zauberzeichen", new Tool()
             {
                 Name = "Zauberzeichen",
-                Icon = "Icons/zauberzeichen.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/zauberzeichen.png",
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Zauberzeichen.ZauberzeichenView),
                 ViewModelType = typeof(ViewModel.Zauberzeichen.ZauberzeichenViewModel)
@@ -160,7 +160,7 @@ namespace MeisterGeister
             ToolListe.Add("Ares", new Tool()
             {
                 Name = "Ares",
-                Icon = "Logos/Ares_Logo.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Logos/Ares_Logo.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.AresPlayer.AresPlayerView),
                 ViewModelType = typeof(ViewModel.AresPlayer.AresPlayerViewModel)
@@ -168,7 +168,7 @@ namespace MeisterGeister
             ToolListe.Add("Almanach", new Tool()
             {
                 Name = "Almanach",
-                Icon = "Icons/hesinde.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/hesinde.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Almanach.AlmanachView),
                 ViewModelType = typeof(ViewModel.Almanach.AlmanachViewModel)
@@ -176,7 +176,7 @@ namespace MeisterGeister
             ToolListe.Add("Alchimie", new Tool()
             {
                 Name = "Alchimie",
-                Icon = "Icons/alchimie.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/alchimie.png",
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Alchimie.AlchimieView),
                 ViewModelType = typeof(ViewModel.Alchimie.AlchimieViewModel)
@@ -184,7 +184,7 @@ namespace MeisterGeister
             ToolListe.Add("Beschwörung", new Tool()
             {
                 Name = "Beschwörung",
-                Icon = "Icons/magie.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/magie.png",
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Beschwörung.BeschwörungView),
                 ViewModelType = typeof(ViewModel.Beschwörung.BeschwörungViewModel)
@@ -192,14 +192,14 @@ namespace MeisterGeister
             //ToolListe.Add("Reise", new Tool()
             //{
             //    Name = "Reise",
-            //    Icon = "Icons/kartenzeichnen.png",
+            //    Icon = "/DSA%20MeisterGeister;component/Images/Icons/kartenzeichnen.png",
             //    MenuGruppe = "Wege des Wanderers",
             //    ViewType = typeof(View.Reise.ReiseView)
             //});
             ToolListe.Add("Karte", new Tool()
             {
                 Name = "Karte",
-                Icon = "Icons/kartenzeichnen.png",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/kartenzeichnen.png",
                 MenuGruppe = "Wege des Wanderers",
                 ViewType = typeof(View.Karte.KarteView),
                 ViewModelType = typeof(ViewModel.Karte.KarteViewModel)
@@ -209,7 +209,7 @@ namespace MeisterGeister
                 ToolListe.Add("ZooBotNeu", new Tool()
                 {
                     Name = "ZooBot (neu)",
-                    Icon = "Icons/kraeutersuche.png",
+                    Icon = "/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png",
                     MenuGruppe = "Wege des Wanderers",
                     ViewType = typeof(View.ZooBot.ZooBotView),
                     ViewModelType = typeof(ViewModel.ZooBot.ZooBotViewModel)
@@ -217,7 +217,7 @@ namespace MeisterGeister
                 ToolListe.Add("Abenteuer", new Tool()
                 {
                     Name = "Abenteuer",
-                    Icon = "Icons/meistertools_02.png",
+                    Icon = "/DSA%20MeisterGeister;component/Images/Icons/meistertools_02.png",
                     MenuGruppe = "Wege des Meisters",
                     ViewType = typeof(View.Abenteuer.AbenteuerView),
                     ViewModelType = typeof(ViewModel.Abenteuer.AbenteuerViewModel)
@@ -225,7 +225,7 @@ namespace MeisterGeister
                 ToolListe.Add("Generator", new Tool()
                 {
                     Name = "Generator",
-                    Icon = "Icons/meisterperson.png",
+                    Icon = "/DSA%20MeisterGeister;component/Images/Icons/meisterperson.png",
                     MenuGruppe = "Wege des Meisters",
                     ViewType = typeof(View.Generator.GeneratorView),
                     ViewModelType = typeof(ViewModel.Generator.GeneratorViewModel)
