@@ -1,6 +1,7 @@
 ﻿using MeisterGeister.ViewModel.Base;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,8 @@ namespace MeisterGeister.View.Menu.Logic
             context.XmlnsDictionary.Add("vm", "vm");
             context.XmlnsDictionary.Add("v", "v");
 
-            var template = (DataTemplate)XamlReader.Parse(xaml, context);
+            var template = (DataTemplate)XamlReader.Load((Stream)new MemoryStream(Encoding.UTF8.GetBytes(xaml)), context);
+            //var template = (DataTemplate)XamlReader.Parse(xaml, context);
             return template;
         }
     }

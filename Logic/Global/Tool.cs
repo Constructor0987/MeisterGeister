@@ -187,7 +187,7 @@ namespace MeisterGeister
                 Icon = "/DSA%20MeisterGeister;component/Images/Icons/magie.png",
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Beschwörung.BeschwörungView),
-                ViewModelType = typeof(ViewModel.Beschwörung.BeschwörungViewModel)
+                ViewModelType = typeof(ViewModel.Beschwörung.BeschwörungMainViewModel)
             });
             //ToolListe.Add("Reise", new Tool()
             //{
