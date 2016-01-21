@@ -10,7 +10,7 @@ using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeSchildViewModel : Base.ViewModelBase
+    public class SchmiedeSchildViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----
@@ -54,10 +54,6 @@ namespace MeisterGeister.ViewModel.Schmiede
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
-
-        public string Icon { get; protected set; }
-        public string Name { get; protected set; }
-
         //Felder        
         public int ProbePunkte
         {

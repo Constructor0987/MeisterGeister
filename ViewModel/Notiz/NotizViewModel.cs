@@ -198,7 +198,7 @@ namespace MeisterGeister.ViewModel.Notiz
 
         #region //---- KONSTRUKTOR ----
 
-        public NotizViewModel()
+        public NotizViewModel() : base()
         {
 
         }

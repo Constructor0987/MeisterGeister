@@ -44,6 +44,18 @@
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
         <menulogic:ToolViewSelector x:Key="ToolViewSelector"/>
+        <DataTemplate x:Key="ClosableTabItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Image Height="24" Width="24" Source="{Binding Path=Icon}" />
+                <TextBlock Text="{Binding Path=Name}" Margin="4, 0, 0, 0" VerticalAlignment="Center" FontSize="11" />
+                <Button Padding="0" Command="{Binding Path=CloseCommand}" Margin="7,0,0,0" Height="15" Width="15"  BorderThickness="0.5" Opacity="0.5" ToolTip="Tool schließen (auch mit mittlerer Maustaste)" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
+                    <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                </Button>
+                <StackPanel.InputBindings>
+                    <MouseBinding Gesture="MiddleClick" Command="{Binding Path=CloseCommand}" />
+                </StackPanel.InputBindings>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
     <Window.Background>
         <StaticResource ResourceKey="Background2"/>
@@ -66,12 +78,13 @@
             </StatusBarItem>
         </StatusBar>
         <Grid>
-            <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain">
+            <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True">
                 <TabControl.Style>
                     <Style TargetType="{x:Type TabControl}">
                         <Setter Property="ItemsSource" Value="{Binding OpenTools}" />
                         <Setter Property="SelectedIndex" Value="{Binding SelectedTab}" />
                         <Setter Property="ContentTemplateSelector" Value="{StaticResource ToolViewSelector}" />
+                        <Setter Property="ItemTemplate" Value="{StaticResource ClosableTabItemTemplate}" />
                         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                         <Setter Property="Padding" Value="4,4,4,4"/>
                         <Setter Property="BorderThickness" Value="1"/>

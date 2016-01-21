@@ -8,5 +8,6 @@ namespace MeisterGeister.ViewModel.Globus
 {
     public class GlobusViewModel : Base.ToolViewModelBase
     {
+        public GlobusViewModel() : base() { }
     }
 }

@@ -434,7 +434,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         #region //---- KONSTRUKTOR ----
 
-        public SpielerScreenControlViewModel()
+        public SpielerScreenControlViewModel() : base()
         {
             Init();
         }

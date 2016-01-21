@@ -23,7 +23,7 @@ namespace MeisterGeister.ViewModel.Reise
 
         #region //---- KONSTRUKTOR ----
 
-        public ReiseViewModel()
+        public ReiseViewModel() : base()
         {
 
         }

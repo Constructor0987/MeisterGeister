@@ -39,7 +39,7 @@ namespace MeisterGeister.ViewModel.Base
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
-
+        private string name = null;
         /// <summary>
         /// Name des Tools.
         /// </summary>
@@ -47,12 +47,15 @@ namespace MeisterGeister.ViewModel.Base
         {
             get
             {
-                if (Tool == null)
-                    return null;
-                return Tool.Name;
+                return name;
+            }
+            set
+            {
+                Set(ref name, value);
             }
         }
 
+        private string icon;
         /// <summary>
         /// Pfad des Tool-Icons.
         /// </summary>
@@ -60,16 +63,41 @@ namespace MeisterGeister.ViewModel.Base
         {
             get
             {
-                if (Tool == null)
-                    return null; 
-                return Tool.Icon;
+                return icon;
+            }
+            set
+            {
+                Set(ref icon, value);
             }
         }
 
+        private Tool tool = null;
         /// <summary>
         /// Tool
         /// </summary>
-        public virtual Tool Tool { get; set; }
+        public virtual Tool Tool
+        {
+            get
+            {
+                return tool;
+            }
+            set
+            {
+                if(Set(ref tool, value))
+                {
+                    if (value != null)
+                    {
+                        Icon = tool.Icon;
+                        Name = tool.Name;
+                    }
+                    else
+                    {
+                        Icon = null;
+                        Name = null;
+                    }
+                }
+            }
+        }
 
         bool isSelected = false;
         /// <summary>

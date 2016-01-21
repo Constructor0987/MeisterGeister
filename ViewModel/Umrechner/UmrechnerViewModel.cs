@@ -8,5 +8,6 @@ namespace MeisterGeister.ViewModel.Umrechner
 {
     public class UmrechnerViewModel : Base.ToolViewModelBase
     {
+        public UmrechnerViewModel() : base() { }
     }
 }

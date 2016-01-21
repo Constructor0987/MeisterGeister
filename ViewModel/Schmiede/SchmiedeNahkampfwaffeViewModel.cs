@@ -11,7 +11,7 @@ using MeisterGeister.ViewModel.Schmiede.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeNahkampfwaffeViewModel : Base.ViewModelBase
+    public class SchmiedeNahkampfwaffeViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----
@@ -76,8 +76,6 @@ namespace MeisterGeister.ViewModel.Schmiede
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
-        public string Icon { get; protected set; }
-        public string Name { get; protected set; }
         //Felder        
 
         public int BfVerbesserung

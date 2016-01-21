@@ -8,5 +8,6 @@ namespace MeisterGeister.ViewModel.ArtGen
 {
     public class ArtGenViewModel : Base.ToolViewModelBase
     {
+        public ArtGenViewModel() : base() { }
     }
 }

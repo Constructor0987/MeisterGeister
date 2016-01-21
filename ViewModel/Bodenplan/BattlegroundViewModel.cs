@@ -20,6 +20,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
 //  *Bilder Fixen!
 //  *Größe Kreaturen
 
+        public BattlegroundViewModel() : base() { }
+
         private bool _pathLine = false;
         private bool _filledPathLine = false;
         private double _currentMousePositionX, _currentMousePositionY;

@@ -34,6 +34,8 @@ namespace MeisterGeister.ViewModel.Arena
         private ViewModel.Kampf.KampfViewModel _kampfViewModel;
         public ViewModel.Kampf.KampfViewModel KampfViewModel { get { return _kampfViewModel; } }
 
+        public Arena() : this(25, 25) { }
+
         public Arena(int width, int height) {
             _width = width;
             _height = height;

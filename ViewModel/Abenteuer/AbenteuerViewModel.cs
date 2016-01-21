@@ -11,6 +11,8 @@ namespace MeisterGeister.ViewModel.Abenteuer
         private string m_Name;
         //private IEnumerable<Szene> m_Szenen;
 
+        public AbenteuerViewModel() : this(0, null) { }
+
         public AbenteuerViewModel(int nummer, string name) : base()
         {
             m_Nummer = nummer;

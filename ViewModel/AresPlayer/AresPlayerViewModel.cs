@@ -8,5 +8,6 @@ namespace MeisterGeister.ViewModel.AresPlayer
 {
     public class AresPlayerViewModel : Base.ToolViewModelBase
     {
+        public AresPlayerViewModel() : base() { }
     }
 }

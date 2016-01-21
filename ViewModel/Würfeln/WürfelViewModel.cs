@@ -8,5 +8,6 @@ namespace MeisterGeister.ViewModel.Würfeln
 {
     public class WürfelViewModel : Base.ToolViewModelBase
     {
+        public WürfelViewModel() : base() { }
     }
 }

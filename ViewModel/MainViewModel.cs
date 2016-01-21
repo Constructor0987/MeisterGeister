@@ -192,6 +192,7 @@ namespace MeisterGeister.ViewModel
         void OpenTabs()
         {
             OpenTools = new ExtendedObservableCollection<ToolViewModelBase>();
+            OpenTools.CollectionChanged += OpenTools_CollectionChanged;
             //StartTabs
             string[] tabs = Einstellungen.StartTabs.Split('#');
             foreach (string tab in tabs)
@@ -231,6 +232,7 @@ namespace MeisterGeister.ViewModel
             tvm = t.CreateToolViewModel();
             if (tvm != null)
             {
+                //TODO showerror, popup, etc verdrahten. - evtl sollten die in der base durch events ersetzt werden auf die sich dann die views oder andere VMs registrieren können. Nochmal durchdenken...
                 OpenTools.Add(tvm);
                 tvm.IsSelected = true;
             }
@@ -266,7 +268,25 @@ namespace MeisterGeister.ViewModel
             }
         }
 
-        //TODO Drag und Drop der Position oder geht das automatisch?
+        void OpenTools_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Count != 0)
+                foreach (Base.ToolViewModelBase tool in e.NewItems)
+                    tool.RequestClose += this.ToolRequestClose;
+            if (e.OldItems != null && e.OldItems.Count != 0)
+                foreach (Base.ToolViewModelBase tool in e.OldItems)
+                    tool.RequestClose -= this.ToolRequestClose;
+        }
+
+        void ToolRequestClose(object sender, EventArgs e)
+        {
+            Base.ToolViewModelBase tool = sender as Base.ToolViewModelBase;
+            if(tool != null)
+                this.OpenTools.Remove(tool);
+        }
+
+
+        //TODO Drag und Drop der Position
         #endregion
     }
 }

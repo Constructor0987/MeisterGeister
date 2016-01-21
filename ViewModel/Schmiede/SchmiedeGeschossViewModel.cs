@@ -12,7 +12,7 @@ using MeisterGeister.ViewModel.Schmiede.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeGeschossViewModel : Base.ViewModelBase
+    public class SchmiedeGeschossViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----
@@ -61,8 +61,6 @@ namespace MeisterGeister.ViewModel.Schmiede
         #region //---- EIGENSCHAFTEN ----
 
         //Felder
-        public string Icon { get; protected set; }
-        public string Name { get; protected set; }
 
         public int Anzahl
         {

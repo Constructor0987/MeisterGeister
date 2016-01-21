@@ -477,6 +477,8 @@ namespace MeisterGeister.ViewModel.Proben
 
         #region //---- KONSTRUKTOR ----
 
+        public ProbenViewModel() : this(MeisterGeister.View.General.ViewHelper.Confirm, MeisterGeister.View.General.ViewHelper.ShowError) { }
+
         public ProbenViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError)
             : base(confirm, showError)
         {
