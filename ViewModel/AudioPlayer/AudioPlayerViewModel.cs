@@ -1357,7 +1357,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _SelectedMusikPlaylistItem; }
             set
             {
-                if (value == null || value == _SelectedMusikPlaylistItem || BGPlayer == null) 
+                if (value == null || value == _SelectedMusikPlaylistItem) 
                     return;     
 
                 Set(ref _SelectedMusikPlaylistItem, value);
