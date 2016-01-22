@@ -1,54 +1,56 @@
-﻿using System;
+﻿using MeisterGeister.View.General;
+using MeisterGeister.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-// Eigene Usings
-using MeisterGeister.View;
-using MeisterGeister.View.Windows;
-using MeisterGeister.ViewModel;
+using System.Threading.Tasks;
 
-
-namespace MeisterGeister.View.General
+namespace MeisterGeister.ViewModel.Menu
 {
-    /// <summary>
-    /// Interaktionslogik für ExterneVerknüpfungAddMenuItem.xaml
-    /// </summary>
-    public partial class ExterneVerknüpfungAddMenuItem : MenuItem
+    public class AddExternMenuItemViewModel : MenuItemViewModel
     {
-        public ExterneVerknüpfungAddMenuItem()
+        public AddExternMenuItemViewModel() : base()
         {
-            InitializeComponent();
+            Header = "Externe Verknüpfung...";
+            ToolTip = "Verknüpfung zu einem externen Programm (etc.) ins Menü einfügen.";
+            Children = new Logic.Extensions.ExtendedObservableCollection<MenuItemViewModel>();
+            var mi = new MenuItemViewModel();
+            mi.Header = "Programm oder Datei";
+            mi.ToolTip = "Verknüpfung zu einem externen Programm (etc.) ins Menü einfügen.";
+            mi.Icon = "/DSA MeisterGeister;component/Images/Icons/meistertools_02.png";
+            mi.Command = new Base.CommandBase((o) => { ShowInputDialog("Programm oder Datei"); }, null);
+            Children.Add(mi);
+            mi = new MenuItemViewModel();
+            mi.Header = "Ordner";
+            mi.ToolTip = "Verknüpfung zu einem Ordner ins Menü einfügen.";
+            mi.Icon = "/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png";
+            mi.Command = new Base.CommandBase((o) => { ShowInputDialog("Ordner"); }, null);
+            Children.Add(mi);
+            mi = new MenuItemViewModel();
+            mi.Header = "Webseite";
+            mi.ToolTip = "Verknüpfung zu einer Webseite ins Menü einfügen.";
+            mi.Icon = "/DSA MeisterGeister;component/Images/Icons/General/web.png";
+            mi.Command = new Base.CommandBase((o) => { ShowInputDialog("Webseite"); }, null);
+            Children.Add(mi);
         }
 
-        public string MenuPunkt
+        MainViewModel mainViewModel = null;
+        public MainViewModel MainViewModel
         {
-            get
-            {
-                if (Parent != null && Parent is MenuItem)
-                {
-                    return (((MenuItem)Parent).Header as TextBlock).Text.ToString();
-                }
-                return string.Empty;
-            }
+            get { return mainViewModel; }
+            set { Set(ref mainViewModel, value); }
         }
 
-        MainViewModel parentVM = null;
-        public MainViewModel ParentVM
+        string gruppe = null;
+
+        public string Gruppe
         {
-            get { return parentVM; }
-            set { parentVM = value; }
+            get { return gruppe; }
+            set { Set(ref gruppe, value); }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void ShowInputDialog(string menu)
         {
             try
             {
@@ -57,9 +59,7 @@ namespace MeisterGeister.View.General
                 string name = string.Empty;
                 string bild = null;
 
-                string menu = (((MenuItem)sender).Header as TextBlock).Text.ToString();
-
-                if (sender is MenuItem)
+                if (Gruppe != null && MainViewModel != null)
                 {
                     if (menu == "Programm oder Datei")
                     {
@@ -138,14 +138,14 @@ namespace MeisterGeister.View.General
                     {
                         Model.MenuLink mLink = new Model.MenuLink()
                         {
-                            MenuPunkt = MenuPunkt,
+                            MenuPunkt = Gruppe,
                             ProgrammPfad = pfad,
                             Name = name,
                             Bild = bild
                         };
                         Global.ContextMenuLink.Insert<Model.MenuLink>(mLink);
-                        if(parentVM != null)
-                            parentVM.AddExternesProgramm(mLink);
+                        if (MainViewModel != null)
+                            MainViewModel.AddExternesProgramm(mLink);
                     }
                 }
             }

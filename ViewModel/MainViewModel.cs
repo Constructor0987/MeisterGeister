@@ -125,49 +125,53 @@ namespace MeisterGeister.ViewModel
                 AddExternesProgramm(mLink);
         }
 
-        MenuItemViewModel AddExternesProgramm(Model.MenuLink mLink)
-        {
-            if(mLink == null || !Gruppen.ContainsKey(mLink.MenuPunkt))
-                return null;
-            var g = Gruppen[mLink.MenuPunkt];
-            var mi = new MenuItemViewModel();
-            mi.Header = mLink.Name;
-            mi.Icon = "/DSA%20MeisterGeister;component/Images/" + mLink.Bild;
-            Action<object> c = o => 
-                {
-                    StartExtern(mLink.ProgrammPfad);
-                };
-            mi.Command = new Base.CommandBase(c, null);
-            g.Children.Add(mi);
-            return mi;
-        }
-
         public Dictionary<string, MenuItemViewModel> Gruppen;
 
-        MenuItemViewModel AddGruppe(string name)
+        public MenuItemViewModel AddGruppe(string name)
         {
+            if (String.IsNullOrWhiteSpace(name))
+                return null;
+            if (Gruppen.ContainsKey(name))
+                return Gruppen[name];
             var mi = new MenuItemViewModel();
             mi.Header = name;
             MenuItems.Add(mi);
+            var ext = new AddExternMenuItemViewModel();
+            ext.MainViewModel = this;
+            ext.Gruppe = name;
+            mi.Children.Add(ext);
             return mi;
         }
 
-        MenuItemViewModel AddTool(Tool tool)
+        public MenuItemViewModel AddTool(Tool tool)
         {
             var g = Gruppen[tool.MenuGruppe];
             var mi = new MenuItemViewModel();
             mi.Header = tool.Name;
             mi.Icon = tool.Icon;
-            Action<object> c = o => 
-                {
-                    OpenTool(tool);
-                };
+            Action<object> c = o =>
+            {
+                OpenTool(tool);
+            };
             mi.Command = new Base.CommandBase(c, null);
-            g.Children.Add(mi);
+            g.Children.Insert(g.Children.Count - 1, mi);
             return mi;
         }
+
+        public MenuItemViewModel AddExternesProgramm(Model.MenuLink mLink)
+        {
+            if(mLink == null || !Gruppen.ContainsKey(mLink.MenuPunkt))
+                return null;
+            var g = Gruppen[mLink.MenuPunkt];
+            var mi = new ExternMenuItemViewModel();
+            mi.MenuLink = mLink;
+            mi.MainViewModel = this;
+            g.Children.Insert(g.Children.Count - 1, mi);
+            return mi;
+        }
+
         ExtendedObservableCollection<MenuItemViewModel> menuItems;
-        public ExtendedObservableCollection<MenuItemViewModel> MenuItems { get { return menuItems; } protected set { menuItems = value as ExtendedObservableCollection<MenuItemViewModel>; } }
+        public ExtendedObservableCollection<MenuItemViewModel> MenuItems { get { return menuItems; } protected set { Set(ref menuItems, value); } }
         #endregion
 
         #region Tabs
@@ -214,7 +218,7 @@ namespace MeisterGeister.ViewModel
             return tabs;
         }
 
-        void OpenTool(Tool t)
+        public void OpenTool(Tool t)
         {
             if (t == null)
                 return;
@@ -232,40 +236,12 @@ namespace MeisterGeister.ViewModel
             tvm = t.CreateToolViewModel();
             if (tvm != null)
             {
-                //TODO showerror, popup, etc verdrahten. - evtl sollten die in der base durch events ersetzt werden auf die sich dann die views oder andere VMs registrieren können. Nochmal durchdenken...
+                //showerror, popup, etc verdrahten.
+                tvm.SetFromViewHelper(); //evtl sollten die in der base durch events ersetzt werden auf die sich dann die views oder andere VMs registrieren können. Nochmal durchdenken...
                 OpenTools.Add(tvm);
                 tvm.IsSelected = true;
             }
             Global.SetIsBusy(false);
-        }
-
-        void StartExtern(string ProgrammPfad)
-        {
-            if (!string.IsNullOrWhiteSpace(ProgrammPfad))
-            {
-                try
-                {
-                    string curDir = Environment.CurrentDirectory;
-                    string fileName = ProgrammPfad;
-                    if (!ProgrammPfad.StartsWith("http"))
-                    {
-                        if (fileName.StartsWith("\\")) // bei relativem Pfad das HomeDir hinzufügen
-                        {
-                            fileName = fileName.Remove(0, 1).Insert(0, Logic.Extensions.FileExtensions.GetHomeDirectory());
-                            Logic.Extensions.FileExtensions.SetCurrentDir(fileName);
-                        }
-                        else
-                            Logic.Extensions.FileExtensions.SetCurrentDir();
-                    }
-
-                    System.Diagnostics.Process.Start(fileName);
-                    Environment.CurrentDirectory = curDir;
-                }
-                catch (Exception ex)
-                {
-                    ShowError("Beim Starten eines externen Programms ist ein Fehler aufgetreten!", ex);
-                }
-            }
         }
 
         void OpenTools_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -276,6 +252,8 @@ namespace MeisterGeister.ViewModel
             if (e.OldItems != null && e.OldItems.Count != 0)
                 foreach (Base.ToolViewModelBase tool in e.OldItems)
                     tool.RequestClose -= this.ToolRequestClose;
+            // geöffnete Tabs abspeichern
+            Einstellungen.StartTabs = OpenedTabs();
         }
 
         void ToolRequestClose(object sender, EventArgs e)

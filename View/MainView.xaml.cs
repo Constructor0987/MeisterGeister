@@ -87,17 +87,6 @@ namespace MeisterGeister.View
             // MeisterGeisterID abrufen
             Guid mgID = Einstellungen.MeisterGeisterID;
 
-            //InitializeMenuPunkte();
-
-            //string[] tabs = Einstellungen.StartTabs.Split('#');
-            //foreach (string tab in tabs)
-            //    StarteTab(tab);
-
-            if (_tabControlMain.Items.Count > 0 && Einstellungen.SelectedTab >=0 && Einstellungen.SelectedTab < _tabControlMain.Items.Count)
-                _tabControlMain.SelectedIndex = Einstellungen.SelectedTab;
-
-            //_tabControlMain.SelectionChanged += _tabControlMain_SelectionChanged;
-
             _labelVersion.ToolTip = string.Format("MeisterGeisterID: {0}", mgID.ToString());
 #if TEST
             _labelVersion.Foreground = Brushes.Red;
@@ -125,110 +114,20 @@ namespace MeisterGeister.View
             set { DataContext = value; }
         }
 
-        private static Dictionary<string, MenuItem> MenuPunkte = new Dictionary<string, MenuItem>(5);
-
-        /// <summary>
-        /// Erzeugt die Menü-Einträge.
-        /// </summary>
-        private void InitializeMenu()
+        public void StarteTab(string toolName)
         {
-            // TODO MT: Tool-Menü-Einträge erzeugen
-
-            // User-Verknüpfungen ins Menü einhängen
-            //foreach (var mLink in Global.ContextMenuLink.Liste<Model.MenuLink>())
-            //    AddMenuExternesProgramm(mLink);
-        }
-
-        public static void AddMenuExternesProgramm(Model.MenuLink mLink)
-        {
-            MenuItem menuItem = MenuPunkte[mLink.MenuPunkt];
-            if (menuItem != null)
-            {
-                ExternProgrammMenuItem extItem = new ExternProgrammMenuItem(mLink);
-
-                if (menuItem.Items.Count > 0)
-                    menuItem.Items.Insert(menuItem.Items.Count - 1, extItem); //TODO geht nicht: die anderen Items sind in XAML definiert, dann kann man so nichts neues hinzufügen.
-                    // Oder abwarten bis das neue VM fertig ist. Zumindest crasht es so nicht mehr.
-            }
-        }
-
-        private void InitializeMenuPunkte()
-        {
-            var control = _tabControlMain.Template.LoadContent() as FrameworkElement;
-            var m = control.FindName("_menuTools");
-            System.Windows.Controls.Menu _menuTools = m as System.Windows.Controls.Menu;
-            var mi = _menuTools.Items[0] as MenuItem;
-            foreach (var item in mi.Items)
-            {
-                if (item is MenuItem)
-                {
-                    MenuItem menuItem = (MenuItem)item;
-                    if (!(menuItem.Header is Image) && menuItem.Header is TextBlock)
-                        MenuPunkte.Add((menuItem.Header as TextBlock).Text.ToString(), menuItem);
-                }
-            }
-        }
-
-        public void StarteTab(string tabName, int position = -1)
-        {
-            // falls Tool-Name nicht vorhanden, Tab-Erzeugung abbrechen
-            if (!Tool.ToolListe.ContainsKey(tabName)) return;
-
-            // Falls Tool bereits geöffnet, kein zweites öffnen, sondern geöffnetes aktivieren
-            TabItem tabItem = IsTabOpend(tabName);
-            if (tabItem != null)
-            {
-                _tabControlMain.SelectedItem = tabItem;
+            if (VM == null || toolName == null || !Tool.ToolListe.ContainsKey(toolName))
                 return;
-            }
-
-            LogInfo log = Logger.PerformanceLogStart(string.Format("Init Tab {0}", tabName));
-
-            Global.SetIsBusy(true, string.Format("{0} Tab wird geladen...", tabName));
-
-            Tool t = Tool.ToolListe[tabName];
-            Control con = t.CreateToolView();
-
-            // falls View nicht erzeugt werden konnte, abbrechen
-            if (con == null) { Global.SetIsBusy(false); return; }
-
-            // Event-Handler verbinden
-            switch (tabName)
-            {
-                case "Kalender":
-                    ((Kalender.KalenderView)con).DatumAktuellChanged += TabItemControl_RefreshDatumAktuell;
-                    break;
-                default:
-                    break;
-            }
-
-            if (con != null)
-            {
-                TabItemControl tab = new TabItemControl(con, tabName, t.Icon);
-                if (position < 0)
-                {
-                    _tabControlMain.Items.Add(tab);
-                    _tabControlMain.SelectedIndex = _tabControlMain.Items.Count - 1;
-                }
-                else
-                {
-                    _tabControlMain.Items.Insert(position + 1, tab);
-                    _tabControlMain.SelectedIndex = position + 1;
-                }
-
-                // Add-Tab ans Ende setzen
-                //int addTabIndex = _tabControlMain.Items.IndexOf(_tabAdd);
-                //if (addTabIndex != _tabControlMain.Items.Count - 1)
-                //{
-                //    _tabControlMain.Items.Remove(_tabAdd);
-                //    _tabControlMain.Items.Add(_tabAdd);
-                //}
-            }
-
-            Global.SetIsBusy(false);
-
-            Logger.PerformanceLogEnd(log);
+            var t = Tool.ToolListe[toolName];
+            VM.OpenTool(t);
         }
+
+        //public void AddMenuExternesProgramm(Model.MenuLink mlink)
+        //{
+        //    if (VM == null || mlink == null)
+        //        return;
+        //    VM.AddExternesProgramm(mlink);
+        //}
 
         private void TabItemControl_RefreshDatumAktuell(object sender, EventArgs e)
         {
@@ -270,62 +169,11 @@ namespace MeisterGeister.View
             ((Button)sender).ContextMenu.IsOpen = true;
         }
 
-        private string OpenedTabs()
-        {
-            string tabs = string.Empty;
-            foreach (object tab in _tabControlMain.Items)
-            {
-                if (tabs != string.Empty)
-                    tabs += "#";
-                
-                if (tab is TabItemControl)
-                    tabs += (tab as TabItemControl).Titel;
-            }
-            return tabs;
-        }
-
-        private TabItemControl IsTabOpend(string tabName)
-        {
-            TabItemControl tab = null;
-            foreach (object tabItem in _tabControlMain.Items)
-            {
-                if (tabItem != null && tabItem is TabItemControl)
-                {
-
-                    if ((tabItem as TabItemControl).Titel == tabName)
-                    {
-                        tab = (tabItem as TabItemControl);
-                        break;
-                    }
-                }
-            }
-            return tab;
-        }
-
-        private void ShowTab(string tabName)
-        {
-            foreach (var tab in _tabControlMain.Items)
-            {
-                if (tab is TabItemControl)
-                {
-                    if (((TabItemControl)tab).Titel == tabName)
-                    {
-                        _tabControlMain.SelectedItem = tab;
-                        break;
-                    }
-                }
-            }
-        }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Schließe Spieler-Fenster
             SpielerWindow.Close();
             SpielerInfoPreviewWindow.Close();
-
-            // Tab-Einstellungen speichern
-            Einstellungen.StartTabs = OpenedTabs();
-            Einstellungen.SelectedTab = _tabControlMain.SelectedIndex;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -366,12 +214,7 @@ namespace MeisterGeister.View
 
         private void MenuItemSpielerInfoControl_Click(object sender, RoutedEventArgs e)
         {
-            TabItemControl tab = IsTabOpend("SpielerInfo");
-            if (tab == null)
-                StarteTab("SpielerInfo", _tabControlMain.SelectedIndex);
-            else
-                _tabControlMain.SelectedItem = tab;
-
+            StarteTab("SpielerInfo");
             SpielerWindow.Show();
         }
 
@@ -470,57 +313,9 @@ namespace MeisterGeister.View
                 Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), Environment.CurrentDirectory));
         }
 
-        /// <summary>
-        /// Speichert den letzten ToolTab-Index.
-        /// </summary>
-        private int _TabItemIndex = -1;
-
-        private void _tabControlMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (IsInitialized && IsLoaded)
-            //{
-            //    if (_tabControlMain.SelectedItem == _tabAdd)
-            //    {
-            //        // Menü aufklappen
-            //        if (isPopOut)
-            //        {
-            //            Storyboard animation = (Storyboard)FindResource("MenuPopIn");
-            //            animation.Begin(this);
-            //            isPopOut = false;
-            //        }
-            //        e.Handled = true;
-            //        _tabControlMain.SelectedIndex = _TabItemIndex;
-            //    }
-            //    App.SaveAll();
-            //}
-            //_TabItemIndex = _tabControlMain.SelectedIndex;
-        }
-
         private void MenuItemWeb_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(((MenuItem)sender).Tag.ToString());
-        }
-
-        private void ButtonTool_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender != null && (sender is Button || sender is MenuItem))
-            {
-                object tag = null;
-                if (sender is Button)
-                    tag = ((Button)sender).Tag;
-                else if (sender is MenuItem)
-                    tag = ((MenuItem)sender).Tag;
-                if (tag != null && tag is string)
-                    StarteTab(tag.ToString(), _tabControlMain.SelectedIndex);
-            }
-
-            // Menü zuklappen
-            if (isPopOut == false)
-            {
-                Storyboard animation = (Storyboard)FindResource("MenuPopOut");
-                animation.Begin(this);
-                isPopOut = true;
-            }
         }
 
         private void ButtonWürfel_Wx_Click(object sender, RoutedEventArgs e)
@@ -551,9 +346,6 @@ namespace MeisterGeister.View
                 Application.Current.Shutdown();
                 return;
             }
-
-            InitializeMenu();
-
             // wenn kein Jingle abgespielt wird, kann das Startup-Fenster spätestens jetzt geschlossen werden
 #if !(NO_JINGLE)
             if (Einstellungen.JingleAbstellen)

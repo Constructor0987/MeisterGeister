@@ -16,13 +16,53 @@ namespace MeisterGeister.ViewModel.Base {
         private bool _hasValidationErrors = false;
 
         private Action<string> popup;
+        public Action<string> PopupDelegate
+        {
+            get { return popup; }
+            set { popup = value; }
+        }
         private Action<string, Exception> showError;
+        public Action<string, Exception> ShowErrorDelegate
+        {
+            get { return showError; }
+            set { showError = value; }
+        }
         private Func<string, string, bool> confirm;
+        public Func<string, string, bool> ConfirmDelegate
+        {
+            get { return confirm; }
+            set { confirm = value; }
+        }
         private Func<string, string, int> confirmYesNoCancel;
+        public Func<string, string, int> ConfirmYesNoCancelDelegate
+        {
+            get { return confirmYesNoCancel; }
+            set { confirmYesNoCancel = value; }
+        }
         private Func<string, string, bool, bool, string[], string> chooseFile;
+        public Func<string, string, bool, bool, string[], string> ChooseFileDelegate
+        {
+            get { return chooseFile; }
+            set { chooseFile = value; }
+        }
         private Func<string, bool, string> chooseDirectory;
+        public Func<string, bool, string> ChooseDirectoryDelegate
+        {
+            get { return chooseDirectory; }
+            set { chooseDirectory = value; }
+        }
         private Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog;
+        public Func<Probe, Model.Held, ProbenErgebnis> ShowProbeDialogDelegate
+        {
+            get { return showProbeDialog; }
+            set { showProbeDialog = value; }
+        }
         private Func<string, string, int, int, int, int?> inputIntDialog;
+        public Func<string, string, int, int, int, int?> InputIntDialogDelegate
+        {
+            get { return inputIntDialog; }
+            set { inputIntDialog = value; }
+        }
 
         public virtual Dispatcher Dispatcher { get; protected set; }
         #endregion
@@ -86,6 +126,21 @@ namespace MeisterGeister.ViewModel.Base {
             storage = value;
             this.OnChanged(propertyName);
             return true;
+        }
+
+        /// <summary>
+        /// Setzt die Dialog-Delegate-Functions auf die von MeisterGeister.View.General.ViewHelper.
+        /// </summary>
+        public void SetFromViewHelper()
+        {
+            this.popup = MeisterGeister.View.General.ViewHelper.Popup;
+            this.confirm = MeisterGeister.View.General.ViewHelper.Confirm;
+            this.confirmYesNoCancel = MeisterGeister.View.General.ViewHelper.ConfirmYesNoCancel;
+            this.chooseFile = MeisterGeister.View.General.ViewHelper.ChooseFile;
+            this.chooseDirectory = MeisterGeister.View.General.ViewHelper.ChooseDirectory;
+            this.showError = MeisterGeister.View.General.ViewHelper.ShowError;
+            this.showProbeDialog = MeisterGeister.View.General.ViewHelper.ShowProbeDialog;
+            this.inputIntDialog = MeisterGeister.View.General.ViewHelper.InputIntDialog;
         }
 
         /// <summary>

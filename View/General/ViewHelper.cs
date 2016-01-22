@@ -12,6 +12,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.View.Kampf;
 using MeisterGeister.View.Windows;
 using System.Text.RegularExpressions;
+using System.Windows.Markup;
 
 namespace MeisterGeister.View.General
 {
@@ -468,6 +469,22 @@ namespace MeisterGeister.View.General
                 };
             }
             return win;
+        }
+
+        public static object ParseXAML(string xaml, IDictionary<string, Type> userNamespaceTypes = null)
+        {
+            var context = new ParserContext();
+            context.XamlTypeMapper = new XamlTypeMapper(new string[0]);
+            if (userNamespaceTypes != null)
+                foreach(var abbreviation in userNamespaceTypes.Keys)
+                {
+                    context.XamlTypeMapper.AddMappingProcessingInstruction(abbreviation, userNamespaceTypes[abbreviation].Namespace, userNamespaceTypes[abbreviation].Assembly.FullName);
+                    context.XmlnsDictionary.Add(abbreviation, abbreviation);
+                }
+            context.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
+            context.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
+
+            return XamlReader.Load((Stream)new MemoryStream(Encoding.UTF8.GetBytes(xaml)), context);
         }
 
     }

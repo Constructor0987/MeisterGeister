@@ -724,6 +724,8 @@
     <Compile Include="ViewModel\Karte\RoutingLineType.cs" />
     <Compile Include="ViewModel\Karte\RoutingPoint.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Menu\ExternMenuItemViewModel.cs" />
+    <Compile Include="ViewModel\Menu\AddExternMenuItemViewModel.cs" />
     <Compile Include="ViewModel\Menu\SeperatorViewModel.cs" />
     <Compile Include="ViewModel\Menu\MenuItemViewModel.cs" />
     <Compile Include="ViewModel\Reise\TemperaturZoneViewModel.cs" />

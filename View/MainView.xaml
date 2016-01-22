@@ -56,6 +56,7 @@
                 </StackPanel.InputBindings>
             </StackPanel>
         </DataTemplate>
+        <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
     </Window.Resources>
     <Window.Background>
         <StaticResource ResourceKey="Background2"/>
@@ -79,6 +80,11 @@
         </StatusBar>
         <Grid>
             <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                    </Style>
+                </TabControl.Resources>
                 <TabControl.Style>
                     <Style TargetType="{x:Type TabControl}">
                         <Setter Property="ItemsSource" Value="{Binding OpenTools}" />
@@ -139,9 +145,14 @@
                                                                 <Image Source="{Binding Icon}" x:Key="image" x:Shared="false" Height="20"/>
                                                             </Style.Resources>
                                                             <Setter Property="Command" Value="{Binding Command}" />
-                                                            <Setter Property="Icon" Value="{StaticResource image}"/>
                                                             <Setter Property="Header" Value="{Binding Header}" />
+                                                            <Setter Property="ToolTip" Value="{Binding ToolTip}"/>
                                                             <Setter Property="ItemsSource" Value="{Binding Children}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Icon, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                                    <Setter Property="Icon" Value="{StaticResource image}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
                                                         </Style>
                                                     </MenuItem.ItemContainerStyle>
                                                 </MenuItem>
