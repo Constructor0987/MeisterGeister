@@ -920,12 +920,6 @@
     <Compile Include="View\General\EnumItemsSource.cs" />
     <Compile Include="View\General\EnumMatchToBooleanConverter.cs" />
     <Compile Include="View\General\EnumToStringConverter.cs" />
-    <Compile Include="View\General\ExterneVerknüpfungMenuItem.xaml.cs">
-      <DependentUpon>ExterneVerknüpfungMenuItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\General\ExterneVerknüpfungAddMenuItem.xaml.cs">
-      <DependentUpon>ExterneVerknüpfungAddMenuItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Arena\ArenaControlPanel.cs" />
     <Compile Include="View\Arena\ArenaViewer.cs" />
     <Compile Include="View\Arena\CreatureCanvas.cs" />
@@ -1484,14 +1478,6 @@
     <Page Include="View\General\EnergieControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\General\ExterneVerknüpfungMenuItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\General\ExterneVerknüpfungAddMenuItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ArtGen\ArtGenView.xaml">
       <Generator>MSBuild:Compile</Generator>
