@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.ViewModel.AudioPlayer.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,6 +67,14 @@ namespace MeisterGeister.View.Kampf.Controls
                 sections += (expanderJagd.IsExpanded ? "1" : "0");
                 Logic.Einstellung.Einstellungen.GegnerDetailViewExpandedSections = sections;
             }
+        }
+
+        private btnHotkeyVM SpeedbtnAudio = new btnHotkeyVM();
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SpeedbtnAudio.aPlaylistGuid = ((sender as Button).Tag as IWesenPlaylist).Audio_Playlist.Audio_PlaylistGUID;
+            SpeedbtnAudio.aPlaylist = ((sender as Button).Tag as IWesenPlaylist).Audio_Playlist;
+            SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
         }
     }
 }

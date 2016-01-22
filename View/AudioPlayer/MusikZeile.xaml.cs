@@ -22,7 +22,7 @@ namespace MeisterGeister.View.AudioPlayer
     /// <summary>
     /// Interaktionslogik für MusikZeile.xaml
     /// </summary>
-    public partial class MusikZeile : ListBoxItem
+    public partial class MusikZeile : UserControl
     {
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
@@ -81,10 +81,6 @@ namespace MeisterGeister.View.AudioPlayer
             return true;
         }
 
-        private void tboxTextChanged(object sender, TextChangedEventArgs e)
-        {
-            _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
-        }
 
         private void OnTitelNameUpdated(object sender, DataTransferEventArgs e)
         {
@@ -96,6 +92,12 @@ namespace MeisterGeister.View.AudioPlayer
         private void TitelListe_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             VM.Liste = VM.grpobj.ListTitelLaufend;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (this.HorizontalContentAlignment != System.Windows.HorizontalAlignment.Stretch)
+                this.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
         }
     }
 }

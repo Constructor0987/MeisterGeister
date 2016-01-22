@@ -944,8 +944,8 @@ namespace MeisterGeister.View.AudioPlayer
         {
             if (e.AddedItems.Count > 0 &&
                (lbMusik.SelectedItem == null || lbMusik.SelectedIndex != lbErwPlayerMusik.SelectedIndex))
-                    lbMusik.SelectedIndex = VM.FilteredMusikPlaylistItemListe.FindIndex(t =>
-                        t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID);            
+                lbMusik.SelectedIndex = VM.FilteredMusikPlaylistItemListe.FindIndex(t =>
+                    t.VM.aPlaylist.Audio_PlaylistGUID == VM.SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID);            
         }
 
         
@@ -1031,7 +1031,7 @@ namespace MeisterGeister.View.AudioPlayer
             if (VM.SelectedEditorItem != null)
                 VM.SelectedEditorItem.Name = ((TextBox)e.OriginalSource).Text;
         }
-        
+
     }
 }
 

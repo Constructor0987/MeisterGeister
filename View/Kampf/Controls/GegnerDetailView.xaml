@@ -55,6 +55,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Expander IsExpanded="True" Grid.Row="0" Name="expanderBasisinformationen" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
@@ -429,7 +430,51 @@
                     </Border>
                 </Expander>
 
-                <Expander IsExpanded="False" Grid.Row="3" Visibility="Collapsed">
+                <Expander IsExpanded="False" Grid.Row="3" Name="expanderAudio" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                    <Expander.Header>
+                        <TextBlock Text="Gegner Geräuschzuordnung" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}" ToolTip="Audio Speed-Buttons" >
+                        <Grid>
+                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" HorizontalAlignment="Left" Height="22" Margin="0,1,0,0" />
+
+                            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="25,0,35,0" >
+                                <Border ToolTip="Audio Speed-Buttons" Style="{DynamicResource ControlContentBorder}">
+                                    <Grid>
+                                        <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel ItemWidth="30" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Button Width="24" Tag="{Binding}" Focusable="False" Click="Button_Click"                                                        
+                                                        ToolTip="{Binding Audio_Playlist.Name}" >
+                                                        <Button.Content>
+                                                            <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
+                                                        </Button.Content>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </Border>
+                            </ScrollViewer>
+                            <Button Name="btnAudioZuweisen" Height="25" ToolTip="Audio Speed-Buttons verwalten" HorizontalAlignment="Right"
+                                    Command="{Binding OnAudioSpeedButtonWesenZuweisen}" Background="{x:Null}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Image Source="/Images/Icons/gegner.png" Margin="-1,2,4,-1" />
+                                        <Image Source="/Images/Icons/helden.png" Margin="4,-3,-6,5" />
+                                        <Image Source="/Images/Icons/General/speaker.png" Margin="-10,0,-10,-10" Opacity=".5" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Expander>
+                <Expander IsExpanded="False" Grid.Row="4" Visibility="Collapsed">
                     <Expander.Header>
                         <TextBlock Text="Besondere Kampfregeln" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>

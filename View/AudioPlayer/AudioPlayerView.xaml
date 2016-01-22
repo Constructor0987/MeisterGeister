@@ -13,6 +13,13 @@
              Loaded="Window_Loaded" Unloaded="Window_Unloaded" KeyDown="Window_KeyDown" >
 
     <UserControl.Resources>
+        <Style x:Key="myLBStyle" TargetType="{x:Type ListBoxItem}">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                             Color="Transparent"/>
+            </Style.Resources>
+        </Style>
+        
         <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
         <vmAudioPlayer:MultiBooleanORConverter x:Key="MultiBooleanORConverter1" />    
         <vmAudioPlayer:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
@@ -310,7 +317,10 @@
         </Style>
 
         <Style x:Key="SimpleListBoxItem" TargetType="ListBoxItem">
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+            </Style.Resources>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -328,7 +338,7 @@
                                 <Setter TargetName="Border" Property="Background" Value="#389E804D" />
                             </Trigger>
                         </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                    </ControlTemplate>                    
                 </Setter.Value>
             </Setter>
         </Style>
@@ -1605,9 +1615,9 @@
                             </Border.Background>
                             <ListBox Padding="4" Name="lbMusik"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" 
                                 ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" SelectionMode="Single"
-                                ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
                                 ItemsSource="{Binding FilteredMusikPlaylistItemListe, UpdateSourceTrigger=PropertyChanged}" 
-                                SelectedItem="{Binding SelectedMusikPlaylistItem, UpdateSourceTrigger=PropertyChanged}" >
+                                SelectedItem="{Binding SelectedMusikPlaylistItem, UpdateSourceTrigger=PropertyChanged}" 
+                                ItemContainerStyle="{DynamicResource ListBoxItemStretch}" >
                             </ListBox>
                         </Border>
 
@@ -2387,8 +2397,8 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="3">
-                        <Expander Name="exPListMusik" IsExpanded="True" Margin="30,5,30,10"  MinWidth="200" ForceCursor="False" >
+                    <Border Grid.Row="3" Grid.Column="0" >
+                        <Expander Name="exPListMusik" Margin="30,5,30,10" IsExpanded="True" MinWidth="200" ForceCursor="False" >
                             <Expander.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                     <Image Source="/Images/Icons/General/audio.png" />
@@ -2396,16 +2406,17 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ListBox Name="lbErwPlayerMusik"  Background="Transparent" VerticalAlignment="Stretch" 
+                                <ListBox Name="lbErwPlayerMusik"  Background="Transparent" VerticalAlignment="Stretch"
                                     ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" 
-                                    ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
-                                    HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                                     ItemsSource="{Binding FilteredErwPlayerMusikListItemListe, UpdateSourceTrigger=PropertyChanged}" 
-                                    SelectedItem="{Binding SelectedMusikPlaylistItem, UpdateSourceTrigger=PropertyChanged}"
-                                    SelectionChanged="lbErwPlayerMusik_SelectionChanged" />
+                                    SelectedItem="{Binding SelectedMusikPlaylistItem}"
+                                    SelectionChanged="lbErwPlayerMusik_SelectionChanged"
+                                    ItemContainerStyle="{DynamicResource ListBoxItemStretch}" >
+                                </ListBox>
                             </Border>
                         </Expander>
                     </Border>
+                    
                     <Border Grid.Row="3" Grid.Column="1" >
                         <Expander Name="exPListPlaylists" Margin="30,5,30,10" IsExpanded="True" MinWidth="200" ForceCursor="False" >
                             <Expander.Header>
@@ -2415,15 +2426,17 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ListBox Name="lbPListGeräusche" Background="Transparent" VerticalAlignment="Stretch" Style="{StaticResource ReadOnlyStyle}"
-                                         ToolTip="Liste aller Geräusche-Playlisten. Zum Anspielen einen Haken setzen oder das entsprechende Theme auswählen"
-                                         ItemContainerStyle="{StaticResource SimpleListBoxItem}"
+                                <ListBox Name="lbPListGeräusche" Background="Transparent" VerticalAlignment="Stretch"
+                                         ToolTip="Liste aller Geräusche-Playlisten. Zum Anspielen einen Haken setzen oder das entsprechende Theme auswählen" 
                                          ItemsSource="{Binding FilteredErwPlayerGeräuscheListItemListe, UpdateSourceTrigger=PropertyChanged}" 
                                          SelectedItem="{Binding SelectedGeräuschItem}"
-                                         SelectionChanged="lb_SelectionChanged" />
+                                         SelectionChanged="lb_SelectionChanged" 
+                                         ItemContainerStyle="{DynamicResource ListBoxItemStretch}" >
+                                </ListBox>
                             </Border>
                         </Expander>
                     </Border>
+
                 </Grid>
             </TabItem>
         </TabControl>        

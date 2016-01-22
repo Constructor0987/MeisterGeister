@@ -7,6 +7,8 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 
 using System.ComponentModel;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
+using MeisterGeister.View.AudioPlayer;
+using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
@@ -133,6 +135,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("SelectedGegnerBase");
                 OnChanged("AngriffListe");
                 OnChanged("SelectedGegnerBaseIsNotNull");
+                OnChanged("WesenPlaylist");
                 if (onDeleteGegnerBase != null)
                     onDeleteGegnerBase.Invalidate();
             }
@@ -933,6 +936,41 @@ namespace MeisterGeister.ViewModel.Kampf
             if (SelectedGegnerBase != null)
                 Global.ContextHeld.Update<GegnerBase>(SelectedGegnerBase);
         }
+        #endregion
+
+        #region Audio Properties/Commands
+
+        private ICollection<IWesenPlaylist> _wesenPlaylist = null;
+        public ICollection<IWesenPlaylist> WesenPlaylist
+        {
+            get
+            {
+                return (SelectedGegnerBase == null) ? null :
+                    new ObservableCollection<IWesenPlaylist>((SelectedGegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>());
+            }
+            set
+            {
+                Set(ref _wesenPlaylist, value);
+            }
+        }
+
+        private Base.CommandBase onAudioSpeedButtonWesenZuweisen = null;
+        public Base.CommandBase OnAudioSpeedButtonWesenZuweisen
+        {
+            get
+            {
+                if (onAudioSpeedButtonWesenZuweisen == null)
+                    onAudioSpeedButtonWesenZuweisen = new Base.CommandBase(AudioSpeedButtonWesenZuweisen, null);
+                return onAudioSpeedButtonWesenZuweisen;
+            }
+        }
+        private void AudioSpeedButtonWesenZuweisen(object args)
+        {
+            PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(SelectedGegnerBase);
+            wesenAuswahlView.ShowDialog();
+            OnChanged("WesenPlaylist");
+        }
+
         #endregion
     }
 

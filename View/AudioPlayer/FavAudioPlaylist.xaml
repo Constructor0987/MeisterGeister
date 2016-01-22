@@ -10,15 +10,15 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              MinHeight="70" Closing="_favAudioPlaylist_Closing" ShowInTaskbar="False" Topmost="True" 
              Icon="/DSA MeisterGeister;component/Images/Icons/General/audio.png" WindowStyle="ToolWindow" 
-             Background="{DynamicResource Background1}" Focusable="False" Left="5" Top="0"
+             Background="{DynamicResource Background1}" Focusable="False" Left="1" Top="30"
              SizeToContent="WidthAndHeight">
-    <Grid>
+    <Grid AllowDrop="True" Drop="Grid_Drop" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Grid.Column="2" Width="20" Height="20" Background="White" ToolTip="Nächster Titel" 
-                Focusable="False" Command="{Binding AudioPlayerVM.OnbtnBGNext}" Padding="1" >
+        <Button Margin="0,5,0,0" Width="20" Height="20" Background="White" ToolTip="Nächster Titel" 
+                Focusable="False" Command="{Binding AudioPlayerVM.OnbtnBGNext}" Padding="1" Drop="Grid_Drop">
             <Button.Style>
                 <Style TargetType="Button">
                     <Style.Triggers>
@@ -31,7 +31,7 @@
             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" />
         </Button>
         <Menu Grid.Row="1" Focusable="False" Background="{x:Null}" Name="lbFav" IsMainMenu="True"
-        ItemsSource="{Binding FavPlaylistListe, UpdateSourceTrigger=PropertyChanged}" >
+            ItemsSource="{Binding FavPlaylistListe, UpdateSourceTrigger=PropertyChanged}" >
             <Menu.LayoutTransform>
                 <RotateTransform Angle="-90" />
             </Menu.LayoutTransform>

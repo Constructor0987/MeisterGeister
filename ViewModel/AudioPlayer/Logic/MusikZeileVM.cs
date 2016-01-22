@@ -104,32 +104,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public bool TeilAbspielbar
         {
             get { return _teilAbspielbar; }
-            set
-            {
-                _teilAbspielbar = value;
-                OnChanged();
-            }
+            set { Set(ref _teilAbspielbar, value); }
         }
 
         private bool _teilAbspielbarGecheckt;
         public bool TeilAbspielbarGecheckt
         {
             get { return _teilAbspielbarGecheckt; }
-            set
-            {
-                _teilAbspielbarGecheckt = value;
-            }
+            set { Set(ref _teilAbspielbarGecheckt, value); }
         }
 
         private bool _showLänge;
         public bool ShowLänge
         {
             get { return _showLänge; }
-            set
-            {
-                _showLänge = value;
-                OnChanged();
-            }
+            set { Set(ref _showLänge, value); }
         }
 
         private bool _asGeräuscheMusikZeile = false;
@@ -138,8 +127,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _asGeräuscheMusikZeile; }
             set
             {
-                _asGeräuscheMusikZeile = value;
-                OnChanged();
+                Set(ref _asGeräuscheMusikZeile, value);
                 ShowLänge = !asGeräuscheMusikZeile || asGeräuscheMusikZeile && GroßeAnsicht;
             }
         }
@@ -150,8 +138,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _großeAnsicht; }
             set
             {
-                _großeAnsicht = value;
-                OnChanged();
+                Set(ref _großeAnsicht, value);
                 ShowLänge = !asGeräuscheMusikZeile || asGeräuscheMusikZeile && GroßeAnsicht;
             }
         }
@@ -167,11 +154,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     PlaylistDoForce = value.DoForce;
                     PlaylistForceVolume = value.ForceVolume;
                 }
-                
-                _aPlaylist = value;
+
+                Set(ref _aPlaylist, value);
                 asGeräuscheMusikZeile = !_aPlaylist.Hintergrundmusik;
                 OnChanged("asGeräuscheMusikZeile");
-                OnChanged();
 
             }
         }
@@ -181,9 +167,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _item; }
             set
             {
-                _item = value;
+                Set(ref _item, value);
                 _suchtext = Name.ToLower() + Kategorie.ToLower();
-                OnChanged();
             }
 
         }
@@ -194,13 +179,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _playlistDoForce; }
             set
             {
-                _playlistDoForce = value;
+                Set(ref _playlistDoForce, value);
                 if (aPlaylist != null)
                 {
                     aPlaylist.DoForce = value;
                     grpobj.DoForceVolume = value;
                 }
-                OnChanged();
             }
         }
 
@@ -210,127 +194,109 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _playlistForceVolume; }
             set
             {
-                _playlistForceVolume = value;
+                Set(ref _playlistForceVolume, value);
                 if (aPlaylist != null)
                 {
                     aPlaylist.ForceVolume = value;
                     grpobj.force_Volume = (double)value / 100;
                 }
-                
-                OnChanged();
             }
         }
         
         public bool Changed
         {
             get { return _changed; }
-            set { _changed = value; }
+            set { Set(ref _changed, value); }
         }
         
         public double TotalTimePlylist
         {
             get { return _totalTimePlylist; }
-            set { _totalTimePlylist = value; }
+            set { Set(ref _totalTimePlylist, value); }
         }
         
         public double Vol_PlaylistMod
         {
             get { return _vol_PlaylistMod; }
-            set { _vol_PlaylistMod = value; }
+            set { Set(ref _vol_PlaylistMod, value); }
         }
 
         public DateTime LastVolUpdate
         {
             get { return _lastVolUpdate; }
-            set { _lastVolUpdate = value; }
+            set { Set(ref _lastVolUpdate, value); }
         }
         
         public uint SollBtnGedrueckt
         {
             get { return _sollBtnGedrueckt; }
-            set { _sollBtnGedrueckt = value; }
+            set { Set(ref _sollBtnGedrueckt, value); }
         }
         
         public int ObjGruppe
         {
             get { return _objGruppe; }
-            set { _objGruppe = value; }
+            set { Set(ref _objGruppe, value); }
         }
 
         public UInt16 AnzVolChange
         {
             get { return _anzVolChange; }
-            set { _anzVolChange = value; }
+            set { Set(ref _anzVolChange, value); }
         }
 
         public UInt16 AnzPauseChange
         {
             get { return _anzPauseChange; }
-            set { _anzPauseChange = value; }
+            set { Set(ref _anzPauseChange, value); }
         }
                 
         public string PPlaylistName
         {
             get { return _playlistName; }
-            set { _playlistName = value; }
+            set { Set(ref _playlistName, value); }
         }
 
         public bool IstMusik
         {
             get { return _istMusik; }
-            set { _istMusik = value; }
+            set { Set(ref _istMusik, value); }
         }
 
         public List<MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.KlangZeile> ListZeile
         {
             get { return _listZeile; }
-            set { _listZeile = value; }
+            set { Set(ref _listZeile, value); }
         }
 
         public Nullable<bool> Min1SongWirdGespielt
         {
             get { return _min1SongWirdGespielt; }
-            set
-            {
-                _min1SongWirdGespielt = value;
-                OnChanged();
-
-                //if (grpobj._listZeile.Count(t => t.istLaufend) == 1)
-                //{
-                //    TitelLaufend = grpobj._listZeile.FirstOrDefault(t => t.istLaufend).aPlaylistTitel.Audio_Titel.Name;
-                //}
-            }
+            set { Set(ref _min1SongWirdGespielt, value); }
         }
 
         public List<Guid> NochZuSpielen
         {
             get { return _nochZuSpielen; }
-            set { _nochZuSpielen = value; }
+            set { Set(ref _nochZuSpielen, value); }
         }
         
         public  List<UInt16> Gespielt
         {
             get { return _gespielt; }
-            set { _gespielt = value; }
+            set { Set(ref _gespielt, value); }
         }
 
         public Nullable<double> Force_Volume
         {
             get { return _force_Volume; }
-            set 
-            {
-                _force_Volume = value;
-                OnChanged();
-            }
+            set { Set(ref _force_Volume, value); }
         }
 
         public bool visuell
         {
             get { return _visuell; }
-            set
-            {
-                _visuell = value;
-            }
+            set { Set(ref _visuell, value); }
         }
 
         public Type ItemType 
@@ -566,27 +532,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public List<string> StdPfad
         {
             get { return _stdPfad; }
-            set
-            {
-                if (_stdPfad != value)
-                {
-                    _stdPfad = value;
-                    OnChanged();
-                }
-            }
+            set { Set(ref _stdPfad, value); }
         }
 
         public int Iterations
         {
             get { return _iterations; }
-            set
-            {
-                if (_iterations != value)
-                {
-                    _iterations = value;
-                    OnChanged();
-                }
-            }
+            set { Set(ref _iterations, value); }
         }
 
         private double _fadingPercentage = 0;
@@ -619,39 +571,18 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public string Output
         {
             get { return _output; }
-            set
-            {
-                if (_output != value)
-                {
-                    _output = value;
-                    OnChanged();
-                }
-            }
+            set { Set(ref _output, value); }
         }
         public bool StartEnabled
         {
             get { return _startEnabled; }
-            set
-            {
-                if (_startEnabled != value)
-                {
-                    _startEnabled = value;
-                    OnChanged();
-                }
-            }
+            set { Set(ref _startEnabled, value); }
         }
 
         public bool CancelEnabled
         {
             get { return _cancelEnabled; }
-            set
-            {
-                if (_cancelEnabled != value)
-                {
-                    _cancelEnabled = value;
-                    OnChanged();
-                }
-            }
+            set { Set(ref _cancelEnabled, value); }
         }
 
         #endregion

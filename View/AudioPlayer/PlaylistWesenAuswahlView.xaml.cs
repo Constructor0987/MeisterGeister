@@ -36,15 +36,7 @@ namespace MeisterGeister.View.AudioPlayer
                     return null;
                 return DataContext as VM.PlaylistWesenAuswahlVM;
             }
-            set
-            {
-                DataContext = value;
-            }
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-          
+            set { DataContext = value; }
         }
 
         public PlaylistWesenAuswahlView(GegnerBase gegner)
@@ -53,7 +45,8 @@ namespace MeisterGeister.View.AudioPlayer
             VM = new VM.PlaylistWesenAuswahlVM(null, null, gegner);
         }
 
-        public PlaylistWesenAuswahlView(Held held) : this()
+        public PlaylistWesenAuswahlView(Held held)
+            : this()
         {
             VM = new VM.PlaylistWesenAuswahlVM(null, held, null);
         }
@@ -67,14 +60,43 @@ namespace MeisterGeister.View.AudioPlayer
         protected PlaylistWesenAuswahlView()
         {
             InitializeComponent();
-            //WindowStartupLocation = WindowStartupLocation.Manual;
-            //Left = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.X + 20);
-            //Top = Convert.ToDouble(Screen.PrimaryScreen.Bounds.Location.Y + 20);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PListPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (VM.FilteredPlaylist2Liste.Contains(VM.CurrentPlaylist))
+                VM.SelectedPlaylist2 = VM.CurrentPlaylist;
+        }
 
+        private void WesenPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VM.FilteredPlaylistListe.Contains(VM.SelectedPlaylist2))
+                VM.CurrentPlaylist = VM.SelectedPlaylist2;
+        }
+
+        private void WesenHeld_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VM.FilteredHeldenListe.Contains(VM.SelectedHeld2))
+                VM.SelectedHeld = VM.SelectedHeld2;
+        }
+
+        private void WesenGegner_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VM.FilteredGegnerListe.Contains(VM.SelectedGegner2))
+                VM.SelectedGegner = VM.SelectedGegner2;
+        }
+
+        private void PListGegner_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VM.FilteredGegner2Liste.Contains(VM.SelectedGegner))
+                VM.SelectedGegner2 = VM.SelectedGegner;
+
+        }
+
+        private void PListHeld_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (VM.FilteredHelden2Liste.Contains(VM.SelectedHeld))
+                VM.SelectedHeld2 = VM.SelectedHeld;
         }
     }
 }

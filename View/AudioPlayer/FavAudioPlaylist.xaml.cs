@@ -17,6 +17,7 @@ using MeisterGeister.Model.Extensions;
 using VM = MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.Model;
 using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.AudioPlayer.Logic;
 //using MeisterGeister.Model;
 
 namespace MeisterGeister.View.AudioPlayer
@@ -60,6 +61,17 @@ namespace MeisterGeister.View.AudioPlayer
             VM.SelectedFavPlaylist = (sender as Button).Tag as Audio_Playlist;
             VM.AudioPlayerVM.SelectedMusikPlaylistItem = VM.AudioPlayerVM.MusikListItemListe.
                 FirstOrDefault(t => t.VM.aPlaylist == VM.SelectedFavPlaylist);
+        }
+
+        private void Grid_Drop(object sender, DragEventArgs e)
+        {
+            lbEditorItemVM source = e.Data.GetData("lbiPlaylistVM") as lbEditorItemVM;
+            if (source != null && source.APlaylist.Hintergrundmusik)
+            {
+                source.APlaylist.Favorite = true;
+                Global.ContextAudio.Update<Audio_Playlist>(source.APlaylist);
+                VM.AudioPlayerVM.UpdateFavorites();
+            }
         }
     }
 }
