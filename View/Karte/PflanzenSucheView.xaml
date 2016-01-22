@@ -57,7 +57,7 @@
                                 <Setter TargetName="text" Property="Text" Value="Ganzes Jahr"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding}" Value="{x:Static vm:Suchmonat.AktuellerMonat}">
-                                <Setter TargetName="text" Property="Text" Value="{Binding Source={x:Static Kalender:Datum.Aktuell},Path=Monat,Converter={StaticResource enumToStringConverter},StringFormat='Aktueller Monat ({0})'}"/>
+                                <Setter TargetName="text" Property="Text" Value="Aktueller Monat"/>
                             </DataTrigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>

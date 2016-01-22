@@ -132,29 +132,18 @@
                                                     </MenuItem.Header>
                                                     <MenuItem.ItemContainerStyle>
                                                         <Style TargetType="{x:Type MenuItem}">
+                                                            <!--Da das Menu-Icon nicht auf einem Template basiert können wir das Image-Control nicht einfach so in den Style schreiben
+                                                            Wenn wir das machen wird nur EINE Instanz des Image-Controls erstellt (auch wenn wir mehrere brauchen)
+                                                            Desshalb hier ein Workaround: Wir speichern das ImageControl im ResoruceDict und sagen er soll es bei jeden StaticResource-Verweis neu instanziieren-->
+                                                            <Style.Resources>
+                                                                <Image Source="{Binding Icon}" x:Key="image" x:Shared="false" Height="20"/>
+                                                            </Style.Resources>
                                                             <Setter Property="Command" Value="{Binding Command}" />
-                                                            <Setter Property="Icon">
-                                                                <Setter.Value>
-                                                                    <Image Source="{Binding Icon}" Height="20" />
-                                                                </Setter.Value>
-                                                            </Setter>
+                                                            <Setter Property="Icon" Value="{StaticResource image}"/>
                                                             <Setter Property="Header" Value="{Binding Header}" />
                                                             <Setter Property="ItemsSource" Value="{Binding Children}" />
                                                         </Style>
                                                     </MenuItem.ItemContainerStyle>
-                                                    <!--<MenuItem.ItemTemplate>
-                                                        <HierarchicalDataTemplate DataType="menu:MenuItemViewModel" ItemsSource="{Binding Children}">
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Icon"/>
-                                                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Header"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <Image Source="{Binding Icon, FallbackValue={x:Null}}" Grid.Column="0"/>
-                                                                <TextBlock Text="{Binding Header}" Grid.Column="1"/>
-                                                            </Grid>
-                                                        </HierarchicalDataTemplate>
-                                                    </MenuItem.ItemTemplate>-->
-
                                                 </MenuItem>
                                                 <MenuItem Click="MenuItemEinstellungen_Click" ToolTip="Einstellungen">
                                                     <MenuItem.Header>
