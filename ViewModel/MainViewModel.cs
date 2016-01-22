@@ -127,12 +127,12 @@ namespace MeisterGeister.ViewModel
 
         MenuItemViewModel AddExternesProgramm(Model.MenuLink mLink)
         {
-            if(!Gruppen.ContainsKey(mLink.MenuPunkt))
+            if(mLink == null || !Gruppen.ContainsKey(mLink.MenuPunkt))
                 return null;
             var g = Gruppen[mLink.MenuPunkt];
             var mi = new MenuItemViewModel();
             mi.Header = mLink.Name;
-            mi.Icon = mLink.Bild;
+            mi.Icon = "/DSA%20MeisterGeister;component/Images/" + mLink.Bild;
             Action<object> c = o => 
                 {
                     StartExtern(mLink.ProgrammPfad);
