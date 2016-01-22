@@ -983,6 +983,7 @@
       <DependentUpon>SelectImageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\StringEmptyToVisibilityConverter.cs" />
+    <Compile Include="View\General\TabContent.cs" />
     <Compile Include="View\General\TextBoxModInfo.xaml.cs">
       <DependentUpon>TextBoxModInfo.xaml</DependentUpon>
     </Compile>
