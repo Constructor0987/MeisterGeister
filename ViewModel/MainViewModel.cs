@@ -18,11 +18,24 @@ namespace MeisterGeister.ViewModel
 {
     public class MainViewModel : Base.ViewModelBase
     {
-        public MainViewModel() : base(View.General.ViewHelper.ShowError)
+        private MainViewModel() : base(View.General.ViewHelper.ShowError)
         {
             App.Queue.ProgressChanged += Queue_ProgressChanged;
             BuildMenu();
             OpenTabs();
+        }
+
+        static MainViewModel instance;
+        public static MainViewModel Instance
+        {
+            get {
+                if(instance == null)
+                {
+                    instance = new MainViewModel();
+                }
+                return MainViewModel.instance; 
+            }
+            private set { MainViewModel.instance = value; }
         }
 
         #region Regeledition und Version

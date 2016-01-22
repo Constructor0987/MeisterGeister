@@ -12,8 +12,17 @@ using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
-    public class GegnerViewModel : Base.ViewModelBase
+    public class GegnerViewModel : Base.ToolViewModelBase
     {
+        public GegnerViewModel() : base()
+        {
+            SetFromViewHelper();
+            this.selectImage = MeisterGeister.View.General.ViewHelper.SelectImage;
+            this.changeTag = MeisterGeister.View.General.ViewHelper.InputDialog;
+
+            LoadDaten();
+        }
+
         public GegnerViewModel(Func<string, string, string, string> input, Func<string> selectImage, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {

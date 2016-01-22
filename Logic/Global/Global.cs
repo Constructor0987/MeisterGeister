@@ -7,6 +7,7 @@ using MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
 using System.Globalization;
 using MeisterGeister.Net;
+using MeisterGeister.ViewModel;
 
 namespace MeisterGeister
 {
@@ -404,18 +405,12 @@ namespace MeisterGeister
 
         /// <summary>
         /// Versetzt die Anwendung in einen "Beschäftig-Status" bzw. entfernt diesen Status.
-        /// Das Hauptfenster zeigt dabei ein Busy-Overlay.
+        /// Das Hauptfenster zeigt dabei ein Busy-Overlay. (deaktiviert)
         /// </summary>
         /// <param name="isBusy">'True' falls Anwendung gerade arbeitet.</param>
         /// <param name="info">Info Text.</param>
         public static void SetIsBusy(bool isBusy, string info = "Beschäftigt...")
         {
-            if (App.Current.MainWindow != null
-                && App.Current.MainWindow is View.MainView && App.Current.MainWindow.IsLoaded)
-            {
-                (App.Current.MainWindow as View.MainView).IsBusyInfoText = info;
-                (App.Current.MainWindow as View.MainView).IsBusy = isBusy;
-            }
         }
 
         /// <summary>

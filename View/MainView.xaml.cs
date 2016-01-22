@@ -46,30 +46,6 @@ namespace MeisterGeister.View
     public partial class MainView : Window
     {
 
-        #region // ---- IS BUSY ----
-
-        /// <summary>
-        /// Steuert, ob die Anwendung gerade beschäftigt ist. Es wird ein Busy-Overlay angezeigt.
-        /// </summary>
-        public bool IsBusy
-        {
-            get { return _busyBorder.Visibility == System.Windows.Visibility.Visible ? true : false; }
-            set { _busyBorder.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; _busyBorder.Refresh(); }
-        }
-
-        public string IsBusyInfoText 
-        {
-            get { return _textBlockIsBusyInfo.Text; }
-            set { _textBlockIsBusyInfo.Text = value; }
-        }
-
-        private void ButtonCloseIsBusy_Click(object sender, RoutedEventArgs e)
-        {
-            IsBusy = false;
-        }
-
-        #endregion // ---- IS BUSY ----
-
         #region //FELDER
 
         private bool isPopOut = true;
@@ -80,7 +56,8 @@ namespace MeisterGeister.View
         {
             InitializeComponent();
 
-            VM = new MainViewModel();
+            VM = MainViewModel.Instance;
+            VM.PropertyChanged += VM_PropertyChanged;
 
             Opacity = 0.5;
 
@@ -96,6 +73,14 @@ namespace MeisterGeister.View
             {
                 _labelVersion.Foreground = Brushes.Red;
                 _labelVersion.Background = Brushes.LightYellow;
+            }
+        }
+
+        void VM_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsBusy")
+            {
+                //Dispatcher.BeginInvoke(new Action(() => { _busyBorder.Refresh(); }), System.Windows.Threading.DispatcherPriority.Render, null);
             }
         }
 

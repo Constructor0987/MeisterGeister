@@ -360,12 +360,12 @@ namespace MeisterGeister.View.AudioPlayer
         {
             try
             {
-                if (AudioTIC == null)
-                {
-                    AudioTIC = ((TabItemControl)((AudioPlayerView)e.Source).Parent);
-                    AudioTIC.CommandBindings.Add(new CommandBinding(AudioTabClose, VM.OnAudioTabClose));
-                    AudioTIC._buttonClose.Command = AudioTabClose;
-                }
+                //if (AudioTIC == null)
+                //{
+                //    AudioTIC = ((TabItemControl)((AudioPlayerView)e.Source).Parent);
+                //    AudioTIC.CommandBindings.Add(new CommandBinding(AudioTabClose, VM.OnAudioTabClose));
+                //    AudioTIC._buttonClose.Command = AudioTabClose;
+                //}
                 rbEditorMusik.Focus();
             }
             catch (Exception ex)

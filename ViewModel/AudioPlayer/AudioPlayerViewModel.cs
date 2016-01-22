@@ -406,7 +406,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
     {
         #region //---- AudioPlayer Close EVENT ----
         
-        public void OnAudioTabClose(object sender, RoutedEventArgs e)
+        public void OnAudioTabClose(object sender, EventArgs e)
         {
             KlangProgBarTimer.Stop();
             MusikProgBarTimer.Stop();
@@ -454,9 +454,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         {
             setStdPfad();
             StdPadAufC = stdPfad.Contains("c:\\") || stdPfad.Contains("C:\\");
+            RequestClose += OnAudioTabClose;
             Init();
         }
-
         #endregion
 
         #region //---- INSTANZMETHODEN ----

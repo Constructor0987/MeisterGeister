@@ -395,22 +395,6 @@
                     </Border>
                 </Grid>
             </Border>
-
-            <Border Name="_busyBorder" BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="Hidden">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Button Name="_buttonCloseIsBusy" Margin="50,50,50,0" HorizontalAlignment="Right" ToolTip="Beschäftigt-Anzeige schließen." Click="ButtonCloseIsBusy_Click">
-                        <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
-                    </Button>
-                    <StackPanel Grid.Row="1" Margin="0,0,120,0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical">
-                        <TextBlock Name="_textBlockIsBusyInfo" TextWrapping="Wrap" MaxWidth="600" HorizontalAlignment="Right" Text="Beschäftigt..." FontSize="24" FontWeight="Bold" Foreground="#7EFFFFFF"/>
-                        <TextBlock TextWrapping="Wrap" Text="Bitte warten..." FontSize="26.667" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#7EFFFFFF"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
         </Grid>
 
     </DockPanel>
