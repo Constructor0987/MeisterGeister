@@ -101,17 +101,17 @@ namespace MeisterGeister.View.Karte
 
             Ortsmarke ort = win.SelectedItem;
 
-            switch (win.ButtonName)
-            {
-                case "btnRouteStarting":
-                    VM.RouteStarting = ort;
-                    break;
-                case "btnRouteEnding":
-                    VM.RouteEnding = ort;
-                    break;
-                default:
-                    break;
-            }
+            //switch (win.ButtonName)
+            //{
+            //    case "btnRouteStarting":
+            //        VM.RouteStarting = ort;
+            //        break;
+            //    case "btnRouteEnding":
+            //        VM.RouteEnding = ort;
+            //        break;
+            //    default:
+            //        break;
+            //}
         }        
     }
 }

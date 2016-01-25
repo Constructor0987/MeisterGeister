@@ -60,27 +60,6 @@ namespace MeisterGeister.Logic.General.AStar
                 currentNode = GetLowestOverallLength();
             }
             return false;
-            //Debug.WriteLine("-------------------");
-            //currentNode.State = NodeState.Closed;
-            //List<Node> nextNodes = GetAdjacentWalkableNodes(currentNode);
-            //Debug.WriteLine("Walkable Nodes: " + String.Join(", ", nextNodes));
-            //nextNodes.Sort((node1, node2) => node1.LengthFromStartToEnd.CompareTo(node2.LengthFromStartToEnd));
-            //Debug.WriteLine("Sorted Walkable Nodes: " + String.Join(", ", nextNodes));
-
-            //foreach (var nextNode in nextNodes)
-            //{
-            //    if (nextNode.Location == this.endNode.Location)
-            //    {
-            //        return true;
-            //    }
-            //    else
-            //    {
-            //        Debug.WriteLine("Next Search: " + nextNode);
-            //        if (Search(nextNode)) // Note: Recurses back into Search(Node)
-            //            return true;
-            //    }
-            //}
-            //return false;
         }
 
         private Node GetLowestOverallLength()

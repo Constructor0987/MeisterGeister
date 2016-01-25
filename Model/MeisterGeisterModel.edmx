@@ -27,6 +27,8 @@
     <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Store.Farbe" store:Type="Tables" />
     <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe" store:Type="Tables" />
     <EntitySet Name="Fernkampfwaffe_Talent" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe_Talent" store:Type="Tables" />
+    <EntitySet Name="Fortbewegung" EntityType="DatabaseDSAModel.Store.Fortbewegung" store:Type="Tables" />
+    <EntitySet Name="Fortbewegung_Modifikation" EntityType="DatabaseDSAModel.Store.Fortbewegung_Modifikation" store:Type="Tables" />
     <EntitySet Name="Gebiet" EntityType="DatabaseDSAModel.Store.Gebiet" store:Type="Tables" />
     <EntitySet Name="Gebiet_Polygon" EntityType="DatabaseDSAModel.Store.Gebiet_Polygon" store:Type="Tables" />
     <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Store.Gegner" store:Type="Tables" />
@@ -224,6 +226,14 @@
     <AssociationSet Name="fk_FernkampfwaffeTalent_Waffe" Association="DatabaseDSAModel.Store.fk_FernkampfwaffeTalent_Waffe">
       <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
       <End Role="Fernkampfwaffe_Talent" EntitySet="Fernkampfwaffe_Talent" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Fortbewegung_Modifikation_Fortbewegung" Association="DatabaseDSAModel.Store.fk_Fortbewegung_Modifikation_Fortbewegung">
+      <End Role="Fortbewegung" EntitySet="Fortbewegung" />
+      <End Role="Fortbewegung_Modifikation" EntitySet="Fortbewegung_Modifikation" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Fortbewegung_Modifikation_Wegtyp" Association="DatabaseDSAModel.Store.fk_Fortbewegung_Modifikation_Wegtyp">
+      <End Role="Wegtyp" EntitySet="Wegtyp" />
+      <End Role="Fortbewegung_Modifikation" EntitySet="Fortbewegung_Modifikation" />
     </AssociationSet>
     <AssociationSet Name="fk_Gebiet_Polygon_Gebiet" Association="DatabaseDSAModel.Store.fk_Gebiet_Polygon_Gebiet">
       <End Role="Gebiet" EntitySet="Gebiet" />
@@ -800,6 +810,22 @@
     </Key>
     <Property Name="FernkampfwaffeGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TalentGUID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Fortbewegung">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Fortbewegung_Modifikation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Fortbewegung" Type="int" Nullable="false" />
+    <Property Name="Wegtyp" Type="int" Nullable="false" />
+    <Property Name="Multiplikator" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="Gebiet">
     <Key>
@@ -2239,6 +2265,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_Fortbewegung_Modifikation_Fortbewegung">
+    <End Role="Fortbewegung" Type="DatabaseDSAModel.Store.Fortbewegung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Fortbewegung_Modifikation" Type="DatabaseDSAModel.Store.Fortbewegung_Modifikation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fortbewegung">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Fortbewegung_Modifikation">
+        <PropertyRef Name="Fortbewegung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Fortbewegung_Modifikation_Wegtyp">
+    <End Role="Wegtyp" Type="DatabaseDSAModel.Store.Wegtyp" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Fortbewegung_Modifikation" Type="DatabaseDSAModel.Store.Fortbewegung_Modifikation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Wegtyp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Fortbewegung_Modifikation">
+        <PropertyRef Name="Wegtyp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_Gebiet_Polygon_Gebiet">
     <End Role="Gebiet" Type="DatabaseDSAModel.Store.Gebiet" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -3312,6 +3366,8 @@
     <EntitySet Name="Elementarwesen" EntityType="DatabaseDSAModel.Elementarwesen" />
     <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Farbe" />
     <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Fernkampfwaffe" />
+    <EntitySet Name="Fortbewegung" EntityType="DatabaseDSAModel.Fortbewegung" />
+    <EntitySet Name="Fortbewegung_Modifikation" EntityType="DatabaseDSAModel.Fortbewegung_Modifikation" />
     <EntitySet Name="Gebiet" EntityType="DatabaseDSAModel.Gebiet" />
     <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Gegner" />
     <EntitySet Name="Gegner_Modifikator" EntityType="DatabaseDSAModel.Gegner_Modifikator" />
@@ -3483,6 +3539,14 @@
     <AssociationSet Name="fk_HeldMunition_Fernkampfwaffe" Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe">
       <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
       <End Role="Held_Munition" EntitySet="Held_Munition" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Fortbewegung_Modifikation_Fortbewegung" Association="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Fortbewegung">
+      <End Role="Fortbewegung" EntitySet="Fortbewegung" />
+      <End Role="Fortbewegung_Modifikation" EntitySet="Fortbewegung_Modifikation" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Fortbewegung_Modifikation_Wegtyp" Association="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Wegtyp">
+      <End Role="Wegtyp" EntitySet="Wegtyp" />
+      <End Role="Fortbewegung_Modifikation" EntitySet="Fortbewegung_Modifikation" />
     </AssociationSet>
     <AssociationSet Name="FK__Gegner_Modifikator__0000000000000ACC" Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC">
       <End Role="Gegner" EntitySet="Gegner" />
@@ -4065,6 +4129,25 @@
     <NavigationProperty Name="Held_Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe" FromRole="Fernkampfwaffe" ToRole="Held_Fernkampfwaffe" />
     <NavigationProperty Name="Held_Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" FromRole="Fernkampfwaffe" ToRole="Held_Munition" />
     <NavigationProperty Name="Talent" Relationship="DatabaseDSAModel.Fernkampfwaffe_Talent" FromRole="Fernkampfwaffe" ToRole="Talent" />
+  </EntityType>
+  <EntityType Name="Fortbewegung">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Fortbewegung_Modifikation" Relationship="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Fortbewegung" FromRole="Fortbewegung" ToRole="Fortbewegung_Modifikation" />
+  </EntityType>
+  <EntityType Name="Fortbewegung_Modifikation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Fortbewegung" Type="Int32" Nullable="false" />
+    <Property Name="Wegtyp" Type="Int32" Nullable="false" />
+    <Property Name="Multiplikator" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Fortbewegung1" Relationship="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Fortbewegung" FromRole="Fortbewegung_Modifikation" ToRole="Fortbewegung" />
+    <NavigationProperty Name="Wegtyp1" Relationship="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Wegtyp" FromRole="Fortbewegung_Modifikation" ToRole="Wegtyp" />
   </EntityType>
   <EntityType Name="Gebiet">
     <Key>
@@ -5085,6 +5168,7 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Multiplikator" Type="Double" Nullable="false" />
     <Property Name="Typ" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Fortbewegung_Modifikation" Relationship="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Wegtyp" FromRole="Wegtyp" ToRole="Fortbewegung_Modifikation" />
     <NavigationProperty Name="Strecke" Relationship="DatabaseDSAModel.fk_Strecke_Wegtyp" FromRole="Wegtyp" ToRole="Strecke" />
   </EntityType>
   <EntityType Name="Zauber">
@@ -5534,6 +5618,34 @@
       </Principal>
       <Dependent Role="Held_Munition">
         <PropertyRef Name="FernkampfwaffeGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Fortbewegung_Modifikation_Fortbewegung">
+    <End Role="Fortbewegung" Type="DatabaseDSAModel.Fortbewegung" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Fortbewegung_Modifikation" Type="DatabaseDSAModel.Fortbewegung_Modifikation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fortbewegung">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Fortbewegung_Modifikation">
+        <PropertyRef Name="Fortbewegung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Fortbewegung_Modifikation_Wegtyp">
+    <End Role="Wegtyp" Type="DatabaseDSAModel.Wegtyp" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Fortbewegung_Modifikation" Type="DatabaseDSAModel.Fortbewegung_Modifikation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Wegtyp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Fortbewegung_Modifikation">
+        <PropertyRef Name="Wegtyp" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -6708,6 +6820,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Fortbewegung">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Fortbewegung">
+        <MappingFragment StoreEntitySet="Fortbewegung">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fortbewegung_Modifikation">
+      <EntityTypeMapping TypeName="DatabaseDSAModel.Fortbewegung_Modifikation">
+        <MappingFragment StoreEntitySet="Fortbewegung_Modifikation">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Fortbewegung" ColumnName="Fortbewegung" />
+          <ScalarProperty Name="Wegtyp" ColumnName="Wegtyp" />
+          <ScalarProperty Name="Multiplikator" ColumnName="Multiplikator" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Gebiet">
       <EntityTypeMapping TypeName="DatabaseDSAModel.Gebiet">
         <MappingFragment StoreEntitySet="Gebiet">
@@ -7795,7 +7925,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="a3a6f127413a48e491df3dc4e2933808" Name="Diagram1">
+      <Diagram DiagramId="4f1ed2597f4b4aacb3f0307e987753b5" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="2.75" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="7.25" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="5" PointY="11.625" IsExpanded="true" />
@@ -7817,6 +7947,8 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="23.25" PointY="28.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="21.75" PointY="19.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="44.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Fortbewegung" Width="1.5" PointX="3.75" PointY="74" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Fortbewegung_Modifikation" Width="1.5" PointX="6" PointY="69.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="62" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="21" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="23.25" PointY="45" IsExpanded="true" />
@@ -7847,7 +7979,7 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="18.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="21" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="70.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="70.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="73.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="11.75" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="9.75" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="57" IsExpanded="true" />
@@ -7879,10 +8011,10 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil_Auswahl" Width="1.5" PointX="21.75" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="8.25" PointY="40.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Weg" Width="1.5" PointX="7.25" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Wegtyp" Width="1.5" PointX="2.75" PointY="66.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Wegtyp" Width="1.5" PointX="2.75" PointY="66.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="19" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="3" PointY="73.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="3" PointY="76.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="16.75" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="19" PointY="15.125" IsExpanded="true" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" ManuallyRouted="false" />
@@ -7911,6 +8043,8 @@
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Fortbewegung" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Wegtyp" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000AD0" ManuallyRouted="false" />

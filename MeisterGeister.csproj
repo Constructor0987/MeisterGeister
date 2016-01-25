@@ -270,6 +270,7 @@
     <Compile Include="Logic\General\DataVirtualization\IItemsProvider.cs" />
     <Compile Include="Logic\General\DataVirtualization\VirtualizingCollection.cs" />
     <Compile Include="Logic\General\Domänen.cs" />
+    <Compile Include="Logic\General\Patterns\IBuilder.cs" />
     <Compile Include="Logic\General\WeakEvent.cs" />
     <Compile Include="Logic\General\KeyEqualityComparer.cs" />
     <Compile Include="Logic\General\Pdf.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Logic\HeldenImport\HeldenSoftwareOnlineService.cs" />
     <Compile Include="Logic\Karte\IAffineTransformation.cs" />
     <Compile Include="Logic\Karte\RoutingService.cs" />
+    <Compile Include="Logic\Karte\SearchParametersRouting.cs" />
     <Compile Include="Logic\Karte\SimpleAffineTransformation.cs" />
     <Compile Include="Logic\Karte\MapToDereGlobusConverter.cs" />
     <Compile Include="Logic\Karte\DereGlobusToMapConverter.cs" />
@@ -373,6 +375,12 @@
     </Compile>
     <Compile Include="Model\Fernkampfwaffe.cs" />
     <Compile Include="Model\Fernkampfwaffe_Poco.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fortbewegung_Modifikation_Poco.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fortbewegung_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GegnerBase_Audio_Playlist.cs" />
@@ -717,12 +725,17 @@
     <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingSummary.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilder.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilderArgs.cs" />
+    <Compile Include="ViewModel\Karte\Logic\TravelType.cs" />
+    <Compile Include="View\General\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheGezieltViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheViewModel.cs" />
-    <Compile Include="ViewModel\Karte\RoutingLine.cs" />
-    <Compile Include="ViewModel\Karte\RoutingLineType.cs" />
-    <Compile Include="ViewModel\Karte\RoutingPoint.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingLine.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingLineType.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingPoint.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Menu\ExternMenuItemViewModel.cs" />
     <Compile Include="ViewModel\Menu\AddExternMenuItemViewModel.cs" />
@@ -2339,8 +2352,24 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0116.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0117.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0118.sql" />
-    <Resource Include="Images\Icons\DereGlobus\way2.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0119.sql" />
+    <Resource Include="Images\Icons\Karte\way2.png" />
+    <Resource Include="Images\Icons\DereGlobus\Dorf.png" />
+    <Resource Include="Images\Icons\DereGlobus\Kleinstadt.png" />
+    <Resource Include="Images\Icons\DereGlobus\Metropole.png" />
+    <Resource Include="Images\Icons\DereGlobus\Stadt.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Staatliches_Bauwerk.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Privathaus.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Handelsstaette.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Oeffentliches_Bauwerk.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Gaststaette.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Sakralbauwerk.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Ruine.png" />
+    <Resource Include="Images\Icons\DereGlobus\Sonstige_Werkstaette.png" />
+    <Resource Include="Images\Icons\Karte\horse123.png" />
+    <Resource Include="Images\Icons\Karte\man-silhouette1.png" />
+    <Resource Include="Images\Icons\Karte\transport460.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0120.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

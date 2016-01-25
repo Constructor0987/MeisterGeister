@@ -93,6 +93,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="RadioButtonToggleStyle" BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
+        <Style.Setters>
+            <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+        </Style.Setters>
+    </Style>
+
     <Style x:Key="RadioListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Template">
             <Setter.Value>

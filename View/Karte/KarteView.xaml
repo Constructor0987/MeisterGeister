@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Reise"
-             xmlns:vmkarte="clr-namespace:MeisterGeister.ViewModel.Karte"
              xmlns:vmlogic="clr-namespace:MeisterGeister.ViewModel.Karte.Logic"
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
@@ -19,6 +18,13 @@
              SizeChanged="UserControl_SizeChanged">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
+        <DataTemplate x:Key="AutoCompleteBoxStartingItemTemplate">
+            <Label Content="{Binding Name}" />
+        </DataTemplate>
+        <DataTemplate x:Key="AutoCompleteBoxEndingItemTemplate">
+            <Label Content="{Binding Name}" />
+        </DataTemplate>
+        <General:EnumToBooleanConverter x:Key="enumConverter" />
     </UserControl.Resources>
     <Border BorderThickness="0" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent">
@@ -66,17 +72,67 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                                <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.ZIndex" Value="1" />
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.Resources>
-                            <DataTemplate DataType="{x:Type vmkarte:RoutingLine}">
+                            <DataTemplate DataType="{x:Type vmlogic:RoutingLine}">
                                 <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding LineType.Color}" StrokeThickness="4"></Line>
                             </DataTemplate>
-                            <DataTemplate DataType="{x:Type vmkarte:RoutingPoint}">
-                                <Border BorderBrush="Red" BorderThickness="2" Width="10" Height="10" Background="Red" />
+                        </ItemsControl.Resources>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding Path=Lines}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas x:Name="pointingCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                <Setter Property="Canvas.ZIndex" Value="2" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type vmlogic:RoutingPoint}">
+                                <Image Source="{Binding Image}" Width="40" Height="40" RenderTransformOrigin="0.5, 0.5" Stretch="Fill" >
+                                    <!--<Image.Style>
+                                        <Style TargetType ="{x:Type Image}">
+                                            <Setter Property="RenderTransform">
+                                                <Setter.Value>
+                                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    // Welche Trigger setzt man hier am sinnvollsten, 
+                                                    // um auf das selektierte Grid aus WayPointItems zu lauschen?
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding ElementName=WayPointItem, Path=IsMouseOver}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.2" Duration="0:0:0.2" />
+                                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.2" Duration="0:0:0.2" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </MultiDataTrigger.EnterActions>
+                                                    <MultiDataTrigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1" Duration="0:0:0.2" />
+                                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:0.2" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </MultiDataTrigger.ExitActions>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>-->
+                                </Image>
                             </DataTemplate>
                         </ItemsControl.Resources>
                     </ItemsControl>
@@ -86,8 +142,8 @@
                     CornerRadius="5"
                     Background="#88C0C0C0"
                     Margin="95,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
+                <DockPanel DockPanel.Dock="Top" MaxWidth="300">
+                    <DockPanel DockPanel.Dock="Top">
                         <Button MinWidth="145" Padding="5" HorizontalAlignment="Left" Cursor="Hand" Command="{Binding OnCenterOnHelden}" ToolTip="Heldenposition&#x0a;Auf die Helden zentrieren.">
                             <Karte:KoordinatenControl Value="{Binding HeldenGlobusPosition}" Format="Dezimalminuten" />
                         </Button>
@@ -101,26 +157,128 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding RouteStarting.Name}" Tag="Startpunkt festlegen ..." Width="178" IsReadOnly="True"/>
-                        <Button VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen." Name="btnRouteStarting">
-                            <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding RouteEnding.Name}" Tag="Zielpunkt festlegen ..." Width="178" IsReadOnly="True"/>
-                        <Button VerticalAlignment="Top" Height="25" Width="26" Click="DGSuche_Click" ToolTip="Ort suchen." Name="btnRouteEnding">
-                            <Image Source="/Images/Icons/DereGlobus/Grossstadt.png" />
-                        </Button>
-                    </StackPanel>
-                    <Button VerticalAlignment="Top" Height="25" Command="{Binding FindRouteCommand}" ToolTip="Route suchen." Name="btnFindRoute">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Images/Icons/DereGlobus/way2.png" />
-                            <TextBlock Text="Route suchen" Margin="5,0,0,0"/>
+                    </DockPanel>
+                    <Expander>
+                        <Expander.Header>
+                            <TextBlock Style="{StaticResource TextTitel}" Text="Routensuche" HorizontalAlignment="Center"/>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Vertical" Grid.Column="0">
+                                    <toolkit:AutoCompleteBox ItemsSource="{Binding Orte}" SelectedItem="{Binding RouteStarting, Mode=TwoWay}" 
+                                                        ValueMemberPath="Name" ItemTemplate="{StaticResource AutoCompleteBoxStartingItemTemplate}">
+                                    </toolkit:AutoCompleteBox>
+                                    <toolkit:AutoCompleteBox ItemsSource="{Binding Orte}" SelectedItem="{Binding RouteEnding, Mode=TwoWay}"  
+                                                            ValueMemberPath="Name" ItemTemplate="{StaticResource AutoCompleteBoxEndingItemTemplate}">
+                                    </toolkit:AutoCompleteBox>
+                                    <GroupBox Header="Optionen" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth}">
+                                        <WrapPanel MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
+                                            <CheckBox Content="Flüsse meiden" IsChecked="{Binding IsAvoidRivers}" />
+                                            <CheckBox Content="Meere meiden" IsChecked="{Binding IsAvoidSeas}" Margin="5,0,0,0" />
+                                            <CheckBox Content="Gebirge meiden" IsChecked="{Binding IsAvoidMountains}" />
+                                            <CheckBox Content="Wälder meiden" IsChecked="{Binding IsAvoidForrests}" Margin="5,0,0,0" />
+                                        </WrapPanel>
+                                    </GroupBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
+                                    <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Afoot" 
+                                    IsChecked="{Binding Path=SelectedTravelType, Mode=TwoWay, Converter={StaticResource enumConverter},
+                                    ConverterParameter=Afoot}" >
+                                        <Image Source="/Images/Icons/Karte/man-silhouette1.png" Height="24"/>
+                                    </RadioButton>
+                                    <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Horse" Margin="0,7,0,0"
+                                    IsChecked="{Binding Path=SelectedTravelType, Mode=TwoWay, Converter={StaticResource enumConverter},
+                                    ConverterParameter=Horse}">
+                                        <Image Source="/Images/Icons/Karte/horse123.png" Height="24"/>
+                                    </RadioButton>
+                                    <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Carriage" Margin="0,7,0,0" 
+                                    IsChecked="{Binding Path=SelectedTravelType, Mode=TwoWay, Converter={StaticResource enumConverter},
+                                    ConverterParameter=Carriage}">
+                                        <Image Source="/Images/Icons/Karte/transport460.png" Height="24"/>
+                                    </RadioButton>
+                                </StackPanel>
+                            </Grid>
+                            <Button VerticalAlignment="Top" Height="25" Command="{Binding FindRouteCommand}" ToolTip="Route suchen." Name="btnFindRoute">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Images/Icons/Karte/way2.png" />
+                                    <TextBlock Text="Route suchen" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <StackPanel Orientation="Vertical" Background="White">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Lines.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <Separator Margin="5,5,5,0"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Padding="5" FontSize="12">
+                                    <Run Text="Strecke: " FontWeight="Bold" /><Run Text="{Binding RoutingSummary.TotalDistance, Mode=OneWay}" /><Run Text=" Meilen"/><LineBreak />
+                                    <Run Text="Reisedauer: " FontWeight="Bold"/><Run Text="{Binding RoutingSummary.Duration, Mode=OneWay}"/><Run Text=" Tage"/><LineBreak />
+                                    <Run Text="Fortbewegung: " FontWeight="Bold"/><Run Text="{Binding RoutingSummary.TravelType, Mode=OneWay}" />
+                                </TextBlock>
+                                <Separator Margin="5,0,5,5"/>
+                            </StackPanel>
+                            <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" 
+                                          MaxHeight="250" CanContentScroll="True" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
+                                <ItemsControl ItemsSource="{Binding WayPoints}" x:Name="WayPointItems">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Vertical" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.Resources>
+                                        <DataTemplate DataType="{x:Type vmlogic:RoutingPoint}">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                            
+                                                <Grid x:Name="WayPointItem" Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="4*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.Style>
+                                                        <Style TargetType ="{x:Type Grid}">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="#5DA06D00" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                    <Image Grid.Row="0" Source="{Binding Image}" Grid.Column="0" Width="40" Height="40"/>
+                                                    <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap" Padding="0,0,5,0"
+                                                               MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}, Path=ActualWidth}">
+                                                        <Run Text="{Binding Wegtyp, Mode=OneWay}" /><Run Text=" für" />
+                                                        <Run Text="{Binding Strecke, Mode=OneWay}" /><Run Text=" Meilen bis " />
+                                                        <Run Text="{Binding Name, Mode=OneWay}" FontWeight="Bold"/><Run FontSize="10" Foreground="Gray" Text=" (" />
+                                                        <Run Text="{Binding Duration, Mode=OneWay}" FontSize="10" Foreground="Gray"/><Run Text=" Stunden )" FontSize="10" Foreground="Gray"/>
+                                                    </TextBlock>
+                                                </Grid>
+                                                <Separator Grid.Row="1"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.Resources>
+                                </ItemsControl>
+                            </ScrollViewer>
                         </StackPanel>
-                    </Button>
-                </StackPanel>
+                    </Expander>
+                </DockPanel>
             </Border>
             <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-1"/>
             <Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="-1,50,0,50">

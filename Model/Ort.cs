@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using MeisterGeister.Logic.Karte;
 
 namespace MeisterGeister.Model
 {
@@ -29,7 +30,7 @@ namespace MeisterGeister.Model
         public Strecke RoutingStrecke { get; set; }
 
         public Ort()
-            :base(-1, -1, true, null)
+            : base(-1, -1, true, null, null)
         {
         }
 
@@ -49,9 +50,12 @@ namespace MeisterGeister.Model
 
         public override IEnumerable<Node> GetAdjacentNodes()
         {
-            var streckenStarts = this.StartStrecke.Select(s => s.ZielOrt);
-            var streckenZiele = this.ZielStrecke.Select(s => s.StartOrt);
-            return streckenStarts.Concat(streckenZiele);
+            IEnumerable<Strecke> streckenStarts = this.StartStrecke;
+            streckenStarts = ApplyConditions(streckenStarts);
+            IEnumerable<Strecke> streckenZiele = this.ZielStrecke;
+            streckenZiele = ApplyConditions(streckenZiele);
+            var result = streckenStarts.Select(s => s.ZielOrt).Concat(streckenZiele.Select(s => s.StartOrt));
+            return result;
         }
 
         public override double GetTraversalCost(Node target)
@@ -59,20 +63,26 @@ namespace MeisterGeister.Model
             Ort targetOrt = (Ort)target;
             if (target == null || target == this)
                 return 0.0;
-            else
-            {
-                if (target.Location.X == EndLocation.X && target.Location.Y == EndLocation.Y)
-                    return this.DistanceTo(targetOrt);
 
-                Strecke strecke = GetFastestStrecke(targetOrt);
+            if (target.Location.X == EndLocation.X && target.Location.Y == EndLocation.Y)
+                return this.DistanceTo(targetOrt);
 
+            Strecke strecke = GetFastestStrecke(targetOrt);
+
+            if (strecke != null)
                 return GetTraversalCost(strecke);
-            }
+            else
+                return Double.MaxValue;
         }
 
         private double GetTraversalCost(Strecke strecke)
         {
-            return strecke.Strecke1 / strecke.Wegtyp.Multiplikator;
+            // Veraltet 
+            // return strecke.Strecke1 / strecke.Wegtyp.Multiplikator;
+
+            var parameters = (SearchParametersRouting)SearchParameters;
+            Fortbewegung_Modifikation modifikator = strecke.Wegtyp.Fortbewegung_Modifikation.Single(f => f.Fortbewegung == parameters.Fortbewegung.ID);
+            return strecke.Strecke1 / modifikator.Multiplikator;
         }
 
         private Strecke GetFastestStrecke(Ort targetOrt)
@@ -90,7 +100,7 @@ namespace MeisterGeister.Model
                 return result;
             }
             else
-                throw new ArgumentException("Das angegebene Element existiert nicht.", "target");
+                return null;
         }
 
         private IEnumerable<Strecke> GetStreckenToTarget(Ort targetOrt)
@@ -98,15 +108,22 @@ namespace MeisterGeister.Model
             var strecken = this.StartStrecke.Where(s => (s.StartOrt.ID == this.ID && s.ZielOrt.ID == targetOrt.ID));
             if (strecken == null || strecken.Count() == 0)
                 strecken = this.ZielStrecke.Where(s => s.StartOrt.ID == targetOrt.ID && s.ZielOrt.ID == this.ID);
+
+            strecken = ApplyConditions(strecken);
             return strecken;
         }
 
-        private Strecke GetStreckeToTarget(Ort targetOrt)
+        private IEnumerable<Strecke> ApplyConditions(IEnumerable<Strecke> strecken)
         {
-            var strecke = this.StartStrecke.SingleOrDefault(s => (s.StartOrt.ID == this.ID && s.ZielOrt.ID == targetOrt.ID));
-            if (strecke == null)
-                strecke = this.ZielStrecke.Single(s => s.StartOrt.ID == targetOrt.ID && s.ZielOrt.ID == this.ID);
-            return strecke;
+            var result = strecken;
+            if (SearchParameters != null)
+            {
+                var routingConditions = SearchParameters as SearchParametersRouting;
+
+                if (routingConditions != null)
+                    result = strecken.Where(s => !routingConditions.WegtypenNotAllowed.Contains(s.Wegtyp));
+            }
+            return result;
         }
 
         private Strecke GetFastestStrecke(IEnumerable<Strecke> strecken)
@@ -131,11 +148,8 @@ namespace MeisterGeister.Model
             var nodeIndex = path.IndexOf(this);
             if (nodeIndex >= 0 && nodeIndex < path.Count)
             {
-                if (nodeIndex < (path.Count - 1))
-                {
-                    var followingNode = (Ort)path[nodeIndex + 1];
-                    this.RoutingStrecke = GetFastestStrecke(followingNode);
-                }
+                if(nodeIndex > 0)
+                    this.RoutingStrecke = GetFastestStrecke((Ort)ParentNode);
             }
             else
                 throw new ArgumentException("Der gesuchte Ort ist nicht vorhanden in dem Routing-Ergebnis.", "path");

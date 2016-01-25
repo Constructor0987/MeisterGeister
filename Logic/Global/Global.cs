@@ -18,6 +18,7 @@ namespace MeisterGeister
 
         public static Service.AudioService ContextAudio;
         public static Service.DataService ContextHeld;
+        public static Service.GeoService ContextGeo;
         public static Service.InventarService ContextInventar;
         public static Service.KampfService ContextKampf;
         public static Service.TalentService ContextTalent;
@@ -351,6 +352,7 @@ namespace MeisterGeister
 
             ContextAudio = new Service.AudioService();
             ContextHeld = new Service.DataService();
+            ContextGeo = new Service.GeoService();
             ContextInventar = new Service.InventarService();
             ContextKampf = new Service.KampfService();
             ContextTalent = new Service.TalentService();

@@ -134,6 +134,39 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
+        public virtual ICollection<Fortbewegung_Modifikation> Fortbewegung_Modifikation
+        {
+            get
+            {
+                if (_fortbewegung_Modifikation == null)
+                {
+                    var newCollection = new FixupCollection<Fortbewegung_Modifikation>();
+                    newCollection.CollectionChanged += FixupFortbewegung_Modifikation;
+                    _fortbewegung_Modifikation = newCollection;
+                }
+                return _fortbewegung_Modifikation;
+            }
+            set
+            {
+                if (!ReferenceEquals(_fortbewegung_Modifikation, value))
+                {
+                    var previousValue = _fortbewegung_Modifikation as FixupCollection<Fortbewegung_Modifikation>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupFortbewegung_Modifikation;
+                    }
+                    _fortbewegung_Modifikation = value;
+                    var newValue = value as FixupCollection<Fortbewegung_Modifikation>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupFortbewegung_Modifikation;
+                    }
+                }
+            }
+        }
+        private ICollection<Fortbewegung_Modifikation> _fortbewegung_Modifikation;
+    
+    	[DataMember]
         public virtual ICollection<Strecke> Strecke
         {
             get
@@ -169,6 +202,29 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private void FixupFortbewegung_Modifikation(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Fortbewegung_Modifikation");
+            if (e.NewItems != null)
+            {
+                foreach (Fortbewegung_Modifikation item in e.NewItems)
+                {
+                    item.Wegtyp1 = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Fortbewegung_Modifikation item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Wegtyp1, this))
+                    {
+                        item.Wegtyp1 = null;
+                    }
+                }
+            }
+        }
     
         private void FixupStrecke(object sender, NotifyCollectionChangedEventArgs e)
         {

@@ -10,8 +10,8 @@ namespace MeisterGeister.Logic.General.AStar
     public class SearchParameters
     {
         public Size Boundaries { get; private set; }
-        public Node StartNode { get; private set; }
-        public Node EndNode { get; private set; }
+        public Node StartNode { get; protected set; }
+        public Node EndNode { get; protected set; }
 
         public SearchParameters(Size boundaries, Node startNode, Node endNode)
         {

@@ -198,6 +198,18 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Fernkampfwaffe> _fernkampfwaffe;
     
+        public ObjectSet<Fortbewegung> Fortbewegung
+        {
+            get { return _fortbewegung  ?? (_fortbewegung = CreateObjectSet<Fortbewegung>("Fortbewegung")); }
+        }
+        private ObjectSet<Fortbewegung> _fortbewegung;
+    
+        public ObjectSet<Fortbewegung_Modifikation> Fortbewegung_Modifikation
+        {
+            get { return _fortbewegung_Modifikation  ?? (_fortbewegung_Modifikation = CreateObjectSet<Fortbewegung_Modifikation>("Fortbewegung_Modifikation")); }
+        }
+        private ObjectSet<Fortbewegung_Modifikation> _fortbewegung_Modifikation;
+    
         public ObjectSet<Gebiet> Gebiet
         {
             get { return _gebiet  ?? (_gebiet = CreateObjectSet<Gebiet>("Gebiet")); }
@@ -653,6 +665,10 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Farbe;
     		if(typeof(T) == typeof(Fernkampfwaffe))
     				return (ObjectSet<T>)(Object)Fernkampfwaffe;
+    		if(typeof(T) == typeof(Fortbewegung))
+    				return (ObjectSet<T>)(Object)Fortbewegung;
+    		if(typeof(T) == typeof(Fortbewegung_Modifikation))
+    				return (ObjectSet<T>)(Object)Fortbewegung_Modifikation;
     		if(typeof(T) == typeof(Gebiet))
     				return (ObjectSet<T>)(Object)Gebiet;
     		if(typeof(T) == typeof(Gegner))
@@ -836,6 +852,10 @@ namespace MeisterGeister.Model
     				return Farbe;
     		if(t == typeof(Fernkampfwaffe))
     				return Fernkampfwaffe;
+    		if(t == typeof(Fortbewegung))
+    				return Fortbewegung;
+    		if(t == typeof(Fortbewegung_Modifikation))
+    				return Fortbewegung_Modifikation;
     		if(t == typeof(Gebiet))
     				return Gebiet;
     		if(t == typeof(Gegner))

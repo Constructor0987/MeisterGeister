@@ -17,6 +17,7 @@ namespace MeisterGeister.Logic.General.AStar
         public double LengthFromStartToEnd { get { return this.LengthFromStart + this.LengthToEnd; } }
         public NodeState State { get; set; }
         protected Point EndLocation { get; private set; }
+        protected SearchParameters SearchParameters { get; set; }
         
         private Node _parentNode;
         public Node ParentNode
@@ -29,21 +30,20 @@ namespace MeisterGeister.Logic.General.AStar
             }
         }
 
-        public Node(double x, double y, bool isWalkable, Node endLocation)
+        public Node(double x, double y, bool isWalkable, Node endLocation, SearchParameters searchParameters)
         {
-            Init(x, y, isWalkable, endLocation);
+            Init(x, y, isWalkable, endLocation, searchParameters);
         }
 
-        public void Init(double x, double y, bool isWalkable, Node endLocation)
+        public void Init(double x, double y, bool isWalkable, Node endLocation, SearchParameters searchParameters)
         {
+            this.SearchParameters = searchParameters;
             this.Location = new Point(x, y);
             this.State = NodeState.Untested;
             this.IsWalkable = isWalkable;
             SetEndLocation(endLocation);
             this.LengthFromStart = 0;
         }
-
-        public abstract void EnrichData(List<Node> path);
 
         public void SetEndLocation(Node endLocation)
         {
@@ -61,6 +61,8 @@ namespace MeisterGeister.Logic.General.AStar
             else
                 return this.Location.DistanceTo(target.Location);
         }
+
+        public abstract void EnrichData(List<Node> path);
 
         public abstract IEnumerable<Node> GetAdjacentNodes();
     }

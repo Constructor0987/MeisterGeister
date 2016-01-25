@@ -15,12 +15,13 @@ using MeisterGeister.Logic.Karte;
 using MeisterGeister.Model.Service;
 using MeisterGeister.Model;
 using System.Collections.ObjectModel;
+using MeisterGeister.ViewModel.Karte.Logic;
 
 namespace MeisterGeister.ViewModel.Karte
 {
     public class KarteViewModel : Base.ToolViewModelBase
     {
-        GeoService _geoService;
+        private const double FLYING_CONST = 13.333333333333333;
 
         #region Kartendownload
         public static void DownloadKarten()
@@ -63,9 +64,9 @@ namespace MeisterGeister.ViewModel.Karte
                 DownloadKarten();
             //TODO Karte anhand HeldenLon und HeldenLat bestimmen
             SelectedKarte = karten[0];
-            _geoService = new GeoService();
+            InitializeOrte();
         }
-
+        
         public override void RegisterEvents()
         {
             base.RegisterEvents();
@@ -297,8 +298,91 @@ namespace MeisterGeister.ViewModel.Karte
 
         #region Routenplaner
 
-            private Ortsmarke routeStarting;
-        public Ortsmarke RouteStarting
+        private bool _isAvoidMountains = true;
+        public bool IsAvoidMountains
+        {
+            get { return _isAvoidMountains; }
+            set
+            {
+                if (value != _isAvoidMountains)
+                {
+                    Set(ref _isAvoidMountains, value);
+                }
+            }
+        }
+        private bool _isAvoidForrests = false;
+        public bool IsAvoidForrests
+        {
+            get { return _isAvoidForrests; }
+            set
+            {
+                if (value != _isAvoidForrests)
+                {
+                    Set(ref _isAvoidForrests, value);
+                }
+            }
+        }
+        private bool _isAvoidSeas = false;
+        public bool IsAvoidSeas
+        {
+            get { return _isAvoidSeas; }
+            set
+            {
+                if (value != _isAvoidSeas)
+                {
+                    Set(ref _isAvoidSeas, value);
+                }
+            }
+        }
+        private bool _isAvoidRivers = false;
+        public bool IsAvoidRivers
+        {
+            get { return _isAvoidRivers; }
+            set
+            {
+                if (value != _isAvoidRivers)
+                {
+                    Set(ref _isAvoidRivers, value);
+                }
+            }
+        }
+
+        public Fortbewegung SelectedFortbewegung
+        {
+            get
+            {
+                return Global.ContextGeo.Liste<Fortbewegung>().Single(f => f.ID == (int)SelectedTravelType);
+            }
+        }
+
+        private RoutingSummary _routingSummary;
+        public RoutingSummary RoutingSummary
+        {
+            get
+            {
+                return _routingSummary;
+            }
+            set
+            {
+                Set(ref _routingSummary, value);
+            }
+        }
+
+        private TravelType _selectedTravelType = TravelType.Afoot;
+        public TravelType SelectedTravelType
+        {
+            get { return _selectedTravelType; }
+            set
+            {
+                if(value != _selectedTravelType)
+                {
+                    Set(ref _selectedTravelType, value);
+                }
+            }
+        }
+
+        private Ort routeStarting;
+        public Ort RouteStarting
         {
             get
             {
@@ -314,16 +398,8 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        public Point RouteStartingPoint
-        {
-            get
-            {
-                return ConvertOrtsmarkeToPoint(routeStarting);
-            }
-        }
-
-        private Ortsmarke routeEnding;
-        public Ortsmarke RouteEnding
+        private Ort routeEnding;
+        public Ort RouteEnding
         {
             get
             {
@@ -339,12 +415,48 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        public Point RouteEndingPoint
+        public ObservableCollection<RoutingPoint> WayPoints
         {
             get
             {
-                return ConvertOrtsmarkeToPoint(routeEnding);
+                return GetRouteDescription();
             }
+        }
+
+        private ObservableCollection<RoutingPoint> GetRouteDescription()
+        {
+            var routingPoints = Lines.OfType<RoutingPoint>().ToList();
+            var routingPointsWithoutJunctions = new ObservableCollection<RoutingPoint>();
+
+            if (routingPoints.Any())
+            {
+                routingPointsWithoutJunctions.Add(routingPoints.First());
+                routingPoints.Remove(routingPoints.First());
+                double strecke = 0;
+                double totalDuration = 0;
+                RoutingPoint lastRoutingPoint = null;
+
+                foreach (var routingPoint in routingPoints)
+                {
+                    strecke += routingPoint.Strecke;
+
+                    if (!string.IsNullOrEmpty(routingPoint.Name)) //|| routingPoint.PointType == "Kreuzung")
+                    {
+                        var result = (RoutingPoint)routingPoint.Clone();
+                        result.Strecke = Math.Round(strecke, 2);
+                        totalDuration += result.Duration;
+                        //if (routingPoint.PointType == "Kreuzung")
+                        //    result.Name = result.PointType;
+                        routingPointsWithoutJunctions.Add(result);
+                        strecke = 0;
+                    }
+                    lastRoutingPoint = routingPoint;
+                }
+                RoutingSummary = new RoutingSummary(routingPointsWithoutJunctions.Sum(p => p.Strecke),
+                    SelectedFortbewegung.Name, Math.Round(totalDuration / 8, 2));
+            }
+
+            return routingPointsWithoutJunctions;
         }
 
         private ObservableCollection<ViewModelBase> _lines;
@@ -361,7 +473,39 @@ namespace MeisterGeister.ViewModel.Karte
                 if(value != _lines)
                 {
                     Set(ref _lines, value);
+                    OnChanged("WayPoints");
                 }
+            }
+        }
+
+        private ObservableCollection<Ort> _orte;
+        public ObservableCollection<Ort> Orte
+        {
+            get
+            {
+                if (_orte == null)
+                    Orte = new ObservableCollection<Ort>();
+                return _orte;
+            }
+            set
+            {
+                if (value != _orte)
+                {
+                    Set(ref _orte, value);
+                }
+            }
+        }
+
+        private void InitializeOrte()
+        {
+            Orte.Clear();
+            var orte =  Global.ContextGeo.Liste<Ort>()
+                .Where(o => !string.IsNullOrEmpty(o.Name))
+                .OrderBy(o => o.Name);
+
+            foreach (var ort in orte)
+            {
+                Orte.Add(ort);
             }
         }
 
@@ -370,14 +514,12 @@ namespace MeisterGeister.ViewModel.Karte
             if (RouteStarting != null)
             {
                 if (RouteEnding != null)
-                {
                     AdjustViewToRoute();
-                }
                 else
-                    CenterOn(RouteStarting);
+                    CenterOn(RouteStarting.Location);
             }
             else if (RouteEnding != null)
-                CenterOn(RouteEnding);
+                CenterOn(RouteEnding.Location);
 
         }
 
@@ -395,29 +537,64 @@ namespace MeisterGeister.ViewModel.Karte
 
         private IEnumerable<Ort> CalculateRoute()
         {
+            SearchParametersRouting searchingParameters = CreateSearchingParameters();
             var service = new RoutingService();
-            IEnumerable<Ort> result = service.GetShortestPath(new Size(SelectedKarte.Breite, SelectedKarte.Höhe), RouteStartingPoint, RouteEndingPoint);
+            IEnumerable<Ort> result = service.GetShortestPath(searchingParameters);
             return result;
+        }
+
+        private SearchParametersRouting CreateSearchingParameters()
+        {
+            return new SearchParametersRouting(new Size(SelectedKarte.Breite, SelectedKarte.Höhe), RouteStarting,
+                            RouteEnding, SelectedTravelType, !IsAvoidRivers, !IsAvoidSeas, !IsAvoidMountains, !IsAvoidForrests);
         }
 
         private void DrawRoute(IEnumerable<Ort> nodes)
         {
             Lines.Clear();
-            for(int j = 0; j < (nodes.Count() - 1); j++)
+            var routingPointBuilder = new RoutingPointBuilder();
+            for (int j = 0; j < nodes.Count(); j++)
             {
                 Ort ort = nodes.ElementAt(j);
+                string followingOrtName = j < (nodes.Count()-1) ? nodes.ElementAt(j+1).Name : null;
                 Strecke strecke = ort.RoutingStrecke;
-                ICollection<Weg> wege = strecke.Weg;
+                AddRoutingLine(strecke);
+                AddRoutingPoint(routingPointBuilder, ort, strecke);
+            }
+            OnChanged("WayPoints");
+        }
+
+        private void AddRoutingLine(Strecke strecke)
+        {
+            if (strecke != null)
+            {
+                IEnumerable<Weg> wege = strecke.Weg.OrderBy(w => w.ID);
                 RoutingLineType lineType = new RoutingLineType(strecke.Wegtyp);
                 var firstWeg = wege.First();
-                for (int i=1; i<wege.Count; i++)
+                for (int i = 1; i < wege.Count(); i++)
                 {
                     var secondWeg = wege.ElementAt(i);
                     Lines.Add(new RoutingLine(firstWeg.X, firstWeg.Y, secondWeg.X, secondWeg.Y, lineType));
                     firstWeg = secondWeg;
                 }
-                Lines.Add(new RoutingPoint(ort.X, ort.Y, ort.ToString()));
             }
+        }
+
+        private void AddRoutingPoint(RoutingPointBuilder routingPointBuilder, Ort ort, Strecke strecke)
+        {
+            RoutingPointBuilderArgs routingPointBuilderArgs = null;
+
+            if (strecke != null)
+            {
+                var modifier = SelectedFortbewegung.Fortbewegung_Modifikation.Single(m => m.Wegtyp == strecke.Wegtyp.ID).Multiplikator;
+                routingPointBuilderArgs = new RoutingPointBuilderArgs(ort.X, ort.Y, ort.Name, ort.Typ, ort.LengthToEnd, modifier, strecke.Wegtyp.Name, strecke.Strecke1);
+            }
+            else
+            {
+                routingPointBuilderArgs = new RoutingPointBuilderArgs(ort.X, ort.Y, RouteEnding.Name, ort.Typ, ort.LengthToEnd, FLYING_CONST, "Luftlinie", Math.Round(ort.LengthToEnd, 2));
+            }
+
+            Lines.Add(routingPointBuilder.Build(routingPointBuilderArgs));
         }
 
         private void AdjustViewToRoute()
@@ -425,7 +602,7 @@ namespace MeisterGeister.ViewModel.Karte
             Point center = GetRouteCenter();
             var routingService = new RoutingService();
             CenterOn(center);
-            double adjustmentFactor = routingService.GetZoomAdjustment(ZoomControlSize, Zoom, center, RouteStartingPoint);
+            double adjustmentFactor = routingService.GetZoomAdjustment(ZoomControlSize, Zoom, center, RouteStarting.Location);
 
             if (adjustmentFactor != default(double))
             {
@@ -435,8 +612,8 @@ namespace MeisterGeister.ViewModel.Karte
 
         private Point GetRouteCenter()
         {
-            var startingPoint = RouteStartingPoint;
-            var endingPoint = RouteEndingPoint;
+            var startingPoint = RouteStarting;
+            var endingPoint = RouteEnding;
             return new Point((startingPoint.X + endingPoint.X) / 2, (startingPoint.Y + endingPoint.Y) / 2);
         }
 

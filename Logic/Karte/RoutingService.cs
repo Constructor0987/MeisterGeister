@@ -12,13 +12,6 @@ namespace MeisterGeister.Logic.Karte
 {
     public class RoutingService
     {
-        protected GeoService _geoService;
-
-        public RoutingService()
-        {
-            this._geoService = new GeoService();
-        }
-
         public double GetZoomAdjustment(Size zoomControlSize, double zoom, Point center, Point routeStartingPoint)
         {
             // Standardmäßig soll keine Änderung stattfinden
@@ -45,34 +38,17 @@ namespace MeisterGeister.Logic.Karte
             return result;
         }
 
-        public IEnumerable<Ort> GetShortestPath(Size boundaries, Point actualStart, Point actualTarget)
+        public IEnumerable<Ort> GetShortestPath(SearchParametersRouting searchParameters)
         {
-            Ort start = GetClosestOrt(actualStart);
-            Ort target = GetClosestOrt(actualTarget);
+            IEnumerable<Ort> orte = Global.ContextGeo.Liste<Ort>();
+            Ort target = (Ort)searchParameters.EndNode;
 
-            if (start != null & target != null)
-            {
-                return GetShortestPath(boundaries, start, target);
-            }
-            else
-                // TODO: Fehlermeldung ausgeben
-                return null;
-        }
-
-        public IEnumerable<Ort> GetShortestPath(Size boundaries, Ort start, Ort target)
-        {
-            IEnumerable<Ort> orte = _geoService.Liste<Ort>();
             foreach (var ort in orte)
-                ort.Init(ort.X, ort.Y, true, target);
+                ort.Init(ort.X, ort.Y, true, target, searchParameters);
 
-            var searchingService = new AStarService(new SearchParameters(boundaries, start,target));
+            var searchingService = new AStarService(searchParameters);
             List<Node> result = searchingService.FindPath();
             return result.OfType<Ort>();
-        }
-
-        public Ort GetClosestOrt(Point actualStart)
-        {
-            return _geoService.LoadClosestOrt(actualStart);
         }
     }
 }
