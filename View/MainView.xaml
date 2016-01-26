@@ -112,11 +112,11 @@
                                         </Grid.ColumnDefinitions>
 
                                         <DockPanel>
-                                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,0,0,5">
+                                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,5,0,0">
                                                 <Image Margin="5,0,0,0" Source="/Images/Icons/helden.png" Width="24"/>
                                                 <Grid Margin="5,0,5,0" Width="200" VerticalAlignment="Center">
                                                     <ComboBox ItemsSource="{Binding Source={x:Static my:Global.ContextHeld}, Path=HeldenGruppeListe}" x:Name="comboBox"
-                                                              DisplayMemberPath="Name" FontWeight="Bold"/>
+                                                              DisplayMemberPath="Name" FontWeight="Bold" Focusable="False"/>
                                                     <TextBlock FontWeight="Bold" Text="NSC" VerticalAlignment="Center" Margin="5,0,0,0" IsHitTestVisible="False">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
@@ -131,210 +131,217 @@
                                                     </TextBlock>
                                                 </Grid>
                                             </StackPanel>
-                                            <Menu DockPanel.Dock="Left" Name="_menuTools" FontSize="15" VerticalAlignment="Center" Background="Transparent">
-                                                <MenuItem ItemsSource="{Binding MenuItems}">
-                                                    <MenuItem.Header>
-                                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="20"/>
-                                                    </MenuItem.Header>
-                                                    <MenuItem.ItemContainerStyle>
-                                                        <Style TargetType="{x:Type MenuItem}">
-                                                            <!--Da das Menu-Icon nicht auf einem Template basiert können wir das Image-Control nicht einfach so in den Style schreiben
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Right">
+                                                <Menu Background="Transparent" IsMainMenu="False">
+                                                    <MenuItem>
+                                                        <MenuItem.Header>
+                                                            <Image Source="/Images/Icons/General/question.png" Height="20"  />
+                                                        </MenuItem.Header>
+                                                        <MenuItem Height="28" Click="MenuItemUpdateCheck_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="Auf Updates prüfen..." VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Source="/Images/Icons/General/update.png" Margin="2" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator   />
+                                                        <MenuItem Height="28" Click="MenuItemHilfeHomepage_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="MeisterGeister Homepage" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28" Click="MenuItemHilfeForum_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="MeisterGeister Forum" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28" Click="MenuItemHilfeFacebook_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="MeisterGeister bei Facebook" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Logos/facebook.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28" Click="MenuItemHilfeTwitter_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="MeisterGeister bei Twitter" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Logos/twitter.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.wiki-aventurica.de/wiki/DSA_MeisterGeister">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="MeisterGeister im Wiki-Aventurica" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28" Click="MenuItemHilfeEMail_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="E-Mail an Support" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Icons/General/email.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="MeisterGeister in Foren..." VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.dsa4forum.de/viewtopic.php?f=9&amp;t=22246">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="MeisterGeister im DSA4-Forum" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.ulisses-spiele.de/forum/viewtopic.php?f=144&amp;t=612">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="MeisterGeister im Ulisses-Forum" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Ulisses_Icon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.orkenspalter.de/viewtopic.php?f=1&amp;t=10204">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="MeisterGeister im Orkenspalter-Forum" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://vinsalt.regioconnect.net/wbb2/thread.php?postid=299664">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="MeisterGeister im Vinsalt-Forum" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Vinsalt_Favicon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://tanelorn.net/index.php/topic,67418.0.html">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="MeisterGeister im Tanelorn-Forum" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Tanelorn_Favicon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://community.uhrwerk-verlag.de/index.php?topic=470.0">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="MeisterGeister im Uhrwerk (Myranor)-Forum" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Uhrwerk_Icon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="MeisterGeister in Archiven..." VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="​http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="Download bei Orkenspalter" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.dsa4forum.de/downloads.php?view=detail&amp;df_id=116">
+                                                                <MenuItem.Header>
+                                                                    <TextBlock Text="Download DSA4-Forum" VerticalAlignment="Center" />
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                        </MenuItem>
+                                                        <Separator   />
+
+                                                        <MenuItem Height="28" Click="MenuItemHerokonOnline_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="Herokon Online" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Logos/HerokonOnline_Icon.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+
+                                                        <MenuItem Height="28" Click="MenuItemDereGlobus_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="DereGlobus Projekt" VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Logos/DereGlobus_Icon.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator   />
+                                                        <MenuItem Height="28" Click="MenuItemSysInfo_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="Systeminformationen..." VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Height="28" Click="MenuItemHilfeÜber_Click">
+                                                            <MenuItem.Header>
+                                                                <TextBlock Text="Über MeisterGeister..." VerticalAlignment="Center" />
+                                                            </MenuItem.Header>
+                                                            <MenuItem.Icon>
+                                                                <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </MenuItem>
+                                                </Menu>
+                                                <Menu Background="Transparent" IsMainMenu="False">
+                                                    <MenuItem Click="MenuItemEinstellungen_Click" ToolTip="Einstellungen">
+                                                        <MenuItem.Header>
+                                                            <Image Source="/Images/Icons/mechanik.png" Height="20"  />
+                                                        </MenuItem.Header>
+                                                    </MenuItem>
+                                                </Menu>
+                                                <Menu Background="Transparent" IsMainMenu="True">
+                                                    <MenuItem ItemsSource="{Binding MenuItems}">
+                                                        <MenuItem.Header>
+                                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="20"/>
+                                                        </MenuItem.Header>
+                                                        <MenuItem.ItemContainerStyle>
+                                                            <Style TargetType="{x:Type MenuItem}">
+                                                                <!--Da das Menu-Icon nicht auf einem Template basiert können wir das Image-Control nicht einfach so in den Style schreiben
                                                             Wenn wir das machen wird nur EINE Instanz des Image-Controls erstellt (auch wenn wir mehrere brauchen)
                                                             Desshalb hier ein Workaround: Wir speichern das ImageControl im ResoruceDict und sagen er soll es bei jeden StaticResource-Verweis neu instanziieren-->
-                                                            <Style.Resources>
-                                                                <Image Source="{Binding Icon}" x:Key="image" x:Shared="false" Height="20"/>
-                                                            </Style.Resources>
-                                                            <Setter Property="Command" Value="{Binding Command}" />
-                                                            <Setter Property="Header" Value="{Binding Header}" />
-                                                            <Setter Property="ToolTip" Value="{Binding ToolTip}"/>
-                                                            <Setter Property="ItemsSource" Value="{Binding Children}" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Icon, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
-                                                                    <Setter Property="Icon" Value="{StaticResource image}"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </MenuItem.ItemContainerStyle>
-                                                </MenuItem>
-                                                <MenuItem Click="MenuItemEinstellungen_Click" ToolTip="Einstellungen">
-                                                    <MenuItem.Header>
-                                                        <Image Source="/Images/Icons/mechanik.png" Height="20"  />
-                                                    </MenuItem.Header>
-                                                </MenuItem>
-                                                <MenuItem>
-                                                    <MenuItem.Header>
-                                                        <Image Source="/Images/Icons/General/question.png" Height="20"  />
-                                                    </MenuItem.Header>
-                                                    <MenuItem Height="28" Click="MenuItemUpdateCheck_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="Auf Updates prüfen..." VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Source="/Images/Icons/General/update.png" Margin="2" />
-                                                        </MenuItem.Icon>
+                                                                <Style.Resources>
+                                                                    <Image Source="{Binding Icon}" x:Key="image" x:Shared="false" Height="20"/>
+                                                                </Style.Resources>
+                                                                <Setter Property="Command" Value="{Binding Command}" />
+                                                                <Setter Property="Header" Value="{Binding Header}" />
+                                                                <Setter Property="ToolTip" Value="{Binding ToolTip}"/>
+                                                                <Setter Property="ItemsSource" Value="{Binding Children}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Icon, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                                        <Setter Property="Icon" Value="{StaticResource image}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </MenuItem.ItemContainerStyle>
                                                     </MenuItem>
-                                                    <Separator   />
-                                                    <MenuItem Height="28" Click="MenuItemHilfeHomepage_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="MeisterGeister Homepage" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28" Click="MenuItemHilfeForum_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="MeisterGeister Forum" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Logos/MG_Icon.ico" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28" Click="MenuItemHilfeFacebook_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="MeisterGeister bei Facebook" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Logos/facebook.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28" Click="MenuItemHilfeTwitter_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="MeisterGeister bei Twitter" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Logos/twitter.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.wiki-aventurica.de/wiki/DSA_MeisterGeister">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="MeisterGeister im Wiki-Aventurica" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28" Click="MenuItemHilfeEMail_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="E-Mail an Support" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Icons/General/email.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="MeisterGeister in Foren..." VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.dsa4forum.de/viewtopic.php?f=9&amp;t=22246">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="MeisterGeister im DSA4-Forum" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.ulisses-spiele.de/forum/viewtopic.php?f=144&amp;t=612">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="MeisterGeister im Ulisses-Forum" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Ulisses_Icon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.orkenspalter.de/viewtopic.php?f=1&amp;t=10204">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="MeisterGeister im Orkenspalter-Forum" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://vinsalt.regioconnect.net/wbb2/thread.php?postid=299664">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="MeisterGeister im Vinsalt-Forum" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Vinsalt_Favicon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://tanelorn.net/index.php/topic,67418.0.html">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="MeisterGeister im Tanelorn-Forum" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Tanelorn_Favicon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://community.uhrwerk-verlag.de/index.php?topic=470.0">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="MeisterGeister im Uhrwerk (Myranor)-Forum" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Uhrwerk_Icon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="MeisterGeister in Archiven..." VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="​http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="Download bei Orkenspalter" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                        <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.dsa4forum.de/downloads.php?view=detail&amp;df_id=116">
-                                                            <MenuItem.Header>
-                                                                <TextBlock Text="Download DSA4-Forum" VerticalAlignment="Center" />
-                                                            </MenuItem.Header>
-                                                            <MenuItem.Icon>
-                                                                <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
-                                                            </MenuItem.Icon>
-                                                        </MenuItem>
-                                                    </MenuItem>
-                                                    <Separator   />
+                                                </Menu>
+                                            </StackPanel>
 
-                                                    <MenuItem Height="28" Click="MenuItemHerokonOnline_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="Herokon Online" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Logos/HerokonOnline_Icon.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-
-                                                    <MenuItem Height="28" Click="MenuItemDereGlobus_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="DereGlobus Projekt" VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Logos/DereGlobus_Icon.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <Separator   />
-                                                    <MenuItem Height="28" Click="MenuItemSysInfo_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="Systeminformationen..." VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Height="28" Click="MenuItemHilfeÜber_Click">
-                                                        <MenuItem.Header>
-                                                            <TextBlock Text="Über MeisterGeister..." VerticalAlignment="Center" />
-                                                        </MenuItem.Header>
-                                                        <MenuItem.Icon>
-                                                            <Image Margin="2" Source="/Images/Icons/General/info.png" Stretch="Fill" />
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                </MenuItem>
-                                            </Menu>
-                                            <TextBlock DockPanel.Dock="Right" Text="3. Rondra 1023 BF" Style="{StaticResource TextTitel}" VerticalAlignment="Center"/>
+                                            <TextBlock DockPanel.Dock="Left" Text="3. Rondra 1023 BF" Style="{StaticResource TextTitel}" VerticalAlignment="Center"/>
                                         </DockPanel>
 
                                         <TabPanel Grid.Column="1" DockPanel.Dock="Left" x:Name="HeaderPanel" IsItemsHost="true" Margin="2,2,2,0" KeyboardNavigation.TabIndex="1" VerticalAlignment="Bottom" Panel.ZIndex="1"/>

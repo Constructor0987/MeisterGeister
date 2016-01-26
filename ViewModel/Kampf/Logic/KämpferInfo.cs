@@ -7,6 +7,8 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.Specialized;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
+using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -69,6 +71,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     if (w != null)
                         w.ZLevel = 100 + _team;
                 }
+            }
+        }
+
+        public int Index
+        {
+            get
+            {
+                return Kampf.Kämpfer.IndexOf(this);
             }
         }
 
@@ -234,10 +244,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 aktionen = 1;
             }
-            var m = ManöverInfos.Where(mi => mi.Manöver is Manöver.LängerfristigeHandlung && mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Initiative).FirstOrDefault();
+            var m = AngriffsManöver.Where(mi => mi.Manöver is Manöver.LängerfristigeHandlung && mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.InitiativeStart).FirstOrDefault();
             if (m != null) //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann 
             {
-                if (m.InitiativeMod == 0)
+                if (m.InitiativeModStart == 0)
                 {
                     //als erste Aktion: Angriffsaktionen = Math.Min(Math.Max(VerbleibendeDauer, 2), Aktionen)
                     Aktionen = aktionen;
@@ -380,53 +390,62 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { _waffenloserKampfstil = value; }
         }
 
-        public List<ManöverInfo> ManöverInfos
+        public IEnumerable<ManöverInfo> AngriffsManöver
         {
             get {
                 if (Kampf == null)
                     return new List<ManöverInfo>();
-                return Kampf.InitiativListe.Where(mi => mi.KämpferInfo == this).OrderByDescending(mi => mi.Initiative).ToList(); 
+                return Kampf.InitiativListe.Where(mi => mi.KämpferInfo == this).OrderByDescending(mi => mi.InitiativeStart); 
+            }
+        }
+
+        private ObservableCollection<ManöverInfo> _abwehrManöver = new ObservableCollection<ManöverInfo>();
+
+        public ObservableCollection<ManöverInfo> AbwehrManöver
+        {
+            get
+            {
+                return _abwehrManöver;
             }
         }
 
         private void DeleteManöver(ref List<ManöverInfo> geplanteAktionen)
         {
-            var ki = this;
             //manöver mit negativer INI löschen
-            foreach (var mi in ManöverInfos.Where(mi => mi.Initiative < 0 && mi.InitiativeMod != 0).ToList())
+            foreach (var mi in AngriffsManöver.Where(mi => mi.InitiativeStart < 0 && mi.InitiativeModStart != 0).ToList())
                 Kampf.InitiativListe.Remove(mi);
 
-            var ersterAngriff = ki.ManöverInfos.Where(mi => mi.Manöver is Manöver.Angriffsaktion).FirstOrDefault();
+            var ersterAngriff = AngriffsManöver.Where(mi => mi.Manöver is Manöver.Angriffsaktion).FirstOrDefault();
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist.
-            if (ki.Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
+            if (Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
             {
-                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).ToList())
+                foreach (var mi in AngriffsManöver.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).ToList())
                     Kampf.InitiativListe.Remove(mi);
             }
             else
             {
                 //ZusätzlicheAngriffsaktion löschen, für die die Bedingungen nicht erfüllt sind
-                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion && (ersterAngriff == null || mi.Initiative > ersterAngriff.Initiative-4)).ToList())
+                foreach (var mi in AngriffsManöver.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion && (ersterAngriff == null || mi.InitiativeStart > ersterAngriff.InitiativeStart-4)).ToList())
                     Kampf.InitiativListe.Remove(mi);
             }
-            if (ki.Kampfstil != Kampfstil.Parierwaffenstil)
+            if (Kampfstil != Kampfstil.Parierwaffenstil)
             {
-                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.TodVonLinks).ToList())
+                foreach (var mi in AngriffsManöver.Where(mi => mi.Manöver is Manöver.TodVonLinks).ToList())
                     Kampf.InitiativListe.Remove(mi);
             }
             else
             {
                 //TodVonLinks löschen, für die die Bedingungen nicht erfüllt sind
-                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.TodVonLinks && (Abwehraktionen != 1 || ersterAngriff == null || mi.Initiative > ersterAngriff.Initiative - 8)).ToList())
+                foreach (var mi in AngriffsManöver.Where(mi => mi.Manöver is Manöver.TodVonLinks && (Abwehraktionen != 1 || ersterAngriff == null || mi.InitiativeStart > ersterAngriff.InitiativeStart - 8)).ToList())
                     Kampf.InitiativListe.Remove(mi);
             }
-            while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Angriffsaktionen)
+            while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > Angriffsaktionen)
             {
                 var manöver = geplanteAktionen.FirstOrDefault();
                 //Das letzte Manöver wird in KeineAktion umgewandelt um den Kämpfer weiterhin in der Liste zu haben.
-                if (ki.Angriffsaktionen == 0 && geplanteAktionen.Count == 1)
+                if (Angriffsaktionen == 0 && geplanteAktionen.Count == 1)
                 {
-                    manöver.Manöver = new Manöver.KeineAktion(ki);
+                    manöver.Manöver = new Manöver.KeineAktion(this);
                     break;
                 }
                 //alle anderen Manöver, die zuviel sind, löschen.
@@ -434,20 +453,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 geplanteAktionen.Remove(manöver);
             }
             //wenn die Liste ganz leer ist, füge KeineAktion hinzu
-            if (ki.Angriffsaktionen == 0 && Kampf.InitiativListe.Where(mi => mi.KämpferInfo == ki).Count() == 0)
-                Kampf.InitiativListe.Add(ki, new Manöver.KeineAktion(ki), 0);
+            //if (Angriffsaktionen == 0 && Kampf.InitiativListe.Where(mi => mi.KämpferInfo == this).Count() == 0)
+            //    Kampf.InitiativListe.Add(this, new Manöver.KeineAktion(this), 0);
+
+            AbwehrManöver.Clear();
         }
 
         public void StandardAktionenSetzen()
         {
             var ki = this;
-            var geplanteAktionen = ManöverInfos.Where(mi => mi.IsAktion).ToList().OrderBy(mi => mi.Initiative).ToList();
+            var geplanteAktionen = AngriffsManöver.Where(mi => mi.IsAktion).ToList().OrderBy(mi => mi.InitiativeStart).ToList();
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist. oder für die zu wenig aktionen vorhanden sind.
             DeleteManöver(ref geplanteAktionen);
-            var lfh = ManöverInfos.Where(mi => mi.Manöver is Manöver.LängerfristigeHandlung && mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Initiative).FirstOrDefault();
+            var lfh = AngriffsManöver.Where(mi => mi.Manöver is Manöver.LängerfristigeHandlung && mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.InitiativeStart).FirstOrDefault();
             if (lfh != null)
             {
-                if (lfh.InitiativeMod != 0) //zweite aktion
+                if (lfh.InitiativeModStart != 0) //zweite aktion
                     return;
                 if(Aktionen > 1)
                     Kampf.InitiativListe.Add(ki, lfh.Manöver, -8);
@@ -459,7 +480,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (i == 0)
                 {
-                    var m = ManöverInfos.Where(mi => mi.Manöver is Manöver.KeineAktion).FirstOrDefault();
+                    var m = AngriffsManöver.Where(mi => mi.Manöver is Manöver.KeineAktion).FirstOrDefault();
                     if (m == null)
                         Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), 0);
                     else
@@ -467,7 +488,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
                 else // i>=1
                 {
-                    var ersterAngriff = ki.ManöverInfos.Where(mi => mi.Manöver is Manöver.Angriffsaktion).FirstOrDefault();
+                    var ersterAngriff = ki.AngriffsManöver.Where(mi => mi.Manöver is Manöver.Angriffsaktion).FirstOrDefault();
                     if (ki.Kampfstil == Kampfstil.BeidhändigerKampf)
                     {
                         //normale Aktionen und zusatzaktionen getrennt zählen, dann ist es einfach
@@ -485,7 +506,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             else
                             {
                                 //4 ini-phasen nach dem ersten angriff
-                                Kampf.InitiativListe.Add(ki, new Manöver.ZusätzlicheAngriffsaktion(ki), ersterAngriff.InitiativeMod + (zusatzAktionen + 1) * -4);
+                                Kampf.InitiativListe.Add(ki, new Manöver.ZusätzlicheAngriffsaktion(ki), ersterAngriff.InitiativeModStart + (zusatzAktionen + 1) * -4);
                                 zusatzAktionen++;
                             }
                         }
@@ -504,6 +525,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
             }
 
+            //Parade-Manöver setzen
+            for (int i = 0; i < Abwehraktionen; i++)
+                AbwehrManöver.Add(new ManöverInfo(this, new Abwehraktion(this), 0, Kampf.Kampfrunde));
         }
         #endregion
 
@@ -646,7 +670,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void Sort()
         {
             base.Sort(CompareInitiative);
-            OnChanged("Sort");
         }
 
         /// <summary>
@@ -691,6 +714,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (CollectionChanged != null)
             {
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
+
+                if (action == NotifyCollectionChangedAction.Add ||
+                    action == NotifyCollectionChangedAction.Remove ||
+                    action == NotifyCollectionChangedAction.Reset)
+                    OnChanged("Count");
+
+                //TODO: Optimieren. Nur die IndexChanged-Events in Gang setzen, die sich auch wirklich geändert haben
+                foreach (KämpferInfo info in this)
+                    info.OnChanged("Index");
             }
         }
 

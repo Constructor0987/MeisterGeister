@@ -721,6 +721,9 @@
     <Compile Include="ViewModel\Kalender\Logic\DateList.cs" />
     <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
     <Compile Include="Logic\Karte\AffineTransformation.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Finte.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\GezielterStich.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Todesstoß.cs" />
     <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
     <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
@@ -970,6 +973,7 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\GridBehaviour.cs" />
     <Compile Include="View\General\HandlingEventTrigger.cs" />
     <Compile Include="View\General\ImageDuplicator.xaml.cs">
       <DependentUpon>ImageDuplicator.xaml</DependentUpon>
@@ -1054,6 +1058,9 @@
     <Compile Include="ViewModel\Kampf\Logic\Farbmarkierungen.cs" />
     <Compile Include="View\Kampf\GegnerWindow.xaml.cs">
       <DependentUpon>GegnerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\InitiativListe.xaml.cs">
+      <DependentUpon>InitiativListe.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
@@ -1590,6 +1597,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Kampf\GegnerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\InitiativListe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

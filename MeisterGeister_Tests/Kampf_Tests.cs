@@ -176,27 +176,27 @@ namespace MeisterGeister_Tests
             var manöver = kampf.Next();
             Assert.AreEqual(1, kampf.Kampfrunde);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
-            Assert.AreEqual(21, manöver.Initiative);
+            Assert.AreEqual(21, manöver.InitiativeStart);
             manöver = kampf.Next();
             Assert.AreEqual(1, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
-            Assert.AreEqual(18, manöver.Initiative);
+            Assert.AreEqual(18, manöver.InitiativeStart);
             manöver = kampf.Next();
             Assert.AreEqual(1, kampf.Kämpfer[zant].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Zusätzliche Angriffsaktion", manöver.Manöver.Name);
-            Assert.AreEqual(17, manöver.Initiative);
+            Assert.AreEqual(17, manöver.InitiativeStart);
             manöver = kampf.Next();
             Assert.AreEqual(2, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
-            Assert.AreEqual(14, manöver.Initiative);
+            Assert.AreEqual(14, manöver.InitiativeStart);
             manöver = kampf.Next();
             Assert.AreEqual(2, kampf.Kämpfer[zant].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
-            Assert.AreEqual(13, manöver.Initiative);
+            Assert.AreEqual(13, manöver.InitiativeStart);
             manöver = kampf.Next();
             Assert.AreEqual(3, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
-            Assert.AreEqual(10, manöver.Initiative);
+            Assert.AreEqual(10, manöver.InitiativeStart);
             manöver = kampf.Next();
             //neue Kampfrunde
             Assert.IsNull(manöver);
@@ -250,9 +250,9 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(3, kampf.Kämpfer[gero].Aktionen, "Wieder 3 Aktionen");
             Assert.AreEqual(3, kampf.Kämpfer[gero].Angriffsaktionen, "Wieder 3 Angriffsaktionen");
             Assert.AreEqual("Attacke", kampf.InitiativListe[1].Manöver.Name, "Noch ein normaler Angriff");
-            Assert.AreEqual(-8, kampf.InitiativListe[1].InitiativeMod);
+            Assert.AreEqual(-8, kampf.InitiativListe[1].InitiativeModStart);
             Assert.AreEqual("Zusätzliche Angriffsaktion", kampf.InitiativListe[2].Manöver.Name, "Und eine Zusatzattacke");
-            Assert.AreEqual(-12, kampf.InitiativListe[2].InitiativeMod);
+            Assert.AreEqual(-12, kampf.InitiativListe[2].InitiativeModStart);
         }
 
         [Test]

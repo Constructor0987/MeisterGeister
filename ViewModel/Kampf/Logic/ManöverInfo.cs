@@ -18,28 +18,102 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             private set { _kämpferInfo = value; }
         }
 
-        private int _inimod;
-        public int InitiativeMod
+        public int Index
+        {
+            //TODO: PropertyChanged
+            get { return KämpferInfo.Kampf.InitiativListe.IndexOf(this); }
+        }
+
+        public int DauerInKampfaktionen
         {
             get
             {
-                return _inimod;
-            }
-            set
-            {
-                _inimod = value;
-                OnChanged("Initiative");
+                //TODO: Implementieren
+                return Längerfristig ? 10 : 1;
             }
         }
 
-        public int Initiative
+        private int iniModStart;
+        public int InitiativeModStart
         {
-            get { return ((KämpferInfo == null) ? 0 : KämpferInfo.Initiative) + InitiativeMod; }
+            get
+            {
+                return iniModStart;
+            }
+            set
+            {
+                iniModStart = value;
+                OnChanged("InitiativeModStart");
+                OnChanged("InitiativeStart");
+            }
         }
-        public int InitiativeBasis
+
+        private int kampfrundeStart;
+
+        public int KampfrundeStart
         {
-            get { return ((KämpferInfo == null) ? 0 : KämpferInfo.InitiativeBasis); }
+            get
+            {
+                return kampfrundeStart;
+            }
+            set
+            {
+                kampfrundeStart = value;
+                OnChanged("KampfrundeStart");
+            }
         }
+
+        public int InitiativeStart
+        {
+            get { return ((KämpferInfo == null) ? 0 : KämpferInfo.Initiative) + InitiativeModStart; }
+        }
+
+
+        private int iniModEnd;
+
+        public int InitiativeModEnd
+        {
+            get
+            {
+                return iniModEnd;
+            }
+            set
+            {
+                iniModEnd = value;
+                OnChanged("InitiativeModEnd");
+                OnChanged("InitiativeEnd");
+            }
+        }
+
+        private int kampfrundeEnd;
+
+        public int KampfrundeEnd
+        {
+            get
+            {
+                return kampfrundeEnd;
+            }
+            set
+            {
+                kampfrundeEnd = value;
+                OnChanged("KampfrundeEnd");
+            }
+        }
+
+        public int InitiativeEnd
+        {
+            get { return ((KämpferInfo == null) ? 0 : KämpferInfo.Initiative) + InitiativeModEnd; }
+        }
+
+        public bool Längerfristig { get; set; }
+
+
+        //public int InitiativeBasis
+        //{
+        //    get { return ((KämpferInfo == null) ? 0 : KämpferInfo.InitiativeBasis); }
+        //}
+
+
         public string KämpferName
         {
             get { return ((KämpferInfo == null) ? "Effekt" : KämpferInfo.Kämpfer.Name); }
@@ -82,14 +156,23 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return !(Manöver is Manöver.KeineAktion); }
         }
 
-        public ManöverInfo(KämpferInfo ki, Manöver.Manöver m, int inimod)
+        private Base.CommandBase _ausführen;
+        public Base.CommandBase Ausführen
         {
+            get { return _ausführen; }
+        }
+
+        public ManöverInfo(KämpferInfo ki, Manöver.Manöver m, int inimod, int kampfrunde)
+        {
+            _ausführen = new Base.CommandBase(o => Ausgeführt = !Ausgeführt, null);
             KämpferInfo = ki;
             if (ki != null)
                 ki.PropertyChanged += OnKämpferInfoChanged;
-            InitiativeMod = inimod;
+            InitiativeModStart = inimod;
+            KampfrundeStart = kampfrunde;
             Manöver = m;
             Ausgeführt = false;
+            Längerfristig = false;
         }
 
         private bool ausgeführt = false;
@@ -133,7 +216,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private void OnKämpferInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
         {
             if (args.PropertyName == "Initiative")
-                OnChanged("Initiative");
+                OnChanged("InitiativeStart");
             else if (args.PropertyName == "Angriffsaktionen")
                 OnChanged("Angriffsaktionen");
             else if (args.PropertyName == "Name")

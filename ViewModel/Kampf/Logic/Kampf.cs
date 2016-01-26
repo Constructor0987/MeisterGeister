@@ -108,7 +108,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     if (mi.KämpferInfo != null)
                         mi.KämpferInfo.OnChanged("IsAktuell");
                 }
-
             }
         }
 
@@ -166,7 +165,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (!(mi.Manöver is Manöver.KeineAktion) && !mi.Ausgeführt)
                 {
                     AktuelleAktion = mi;
-                    INIPhase = mi.Initiative;
+                    INIPhase = mi.InitiativeStart;
                     return mi;
                     //in diesem Zustand muss das UI die Manöverdetails und die Proben anzeigen.
                 }
@@ -205,7 +204,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ki.VerbrauchteFreieAktionen = 0;
 
                 ki.AktionenBerechnen();
-                StandardAktionenSetzen(ki);
+                ki.StandardAktionenSetzen();
 
                 ki.VerbrauchteAbwehraktionen = 0;
                 ki.VerbrauchteAngriffsaktionen = 0;
@@ -215,7 +214,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             Kampfrunde++;
             if (InitiativListe.Count > 0)
-                INIPhase = InitiativListe[0].Initiative;
+                INIPhase = InitiativListe[0].InitiativeStart;
             else
                 INIPhase = 0;
             //im UI markieren, dass man nun bis zur ersten Aktions-Ansage umwandeln kann
@@ -277,7 +276,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
         }
 
-        public void Kämpfer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+        public void Kämpfer_PropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == "Sort")
             {
@@ -289,8 +288,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 KämpferInfo ki = null;
                 if (sender is KämpferInfo)
                     ki = sender as KämpferInfo;
-                if(ki != null)
-                    StandardAktionenSetzen(ki);
+                if (ki != null)
+                    ki.StandardAktionenSetzen();
             }
         }
 
@@ -299,7 +298,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (args.Action == NotifyCollectionChangedAction.Remove)
                 InitiativListe.Remove((KämpferInfo)args.OldItems[0]);
             else if (args.Action == NotifyCollectionChangedAction.Add)
-                StandardAktionenSetzen((KämpferInfo)args.NewItems[0]);
+                ((KämpferInfo)args.NewItems[0]).StandardAktionenSetzen();
                 //InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
         }
 
@@ -316,13 +315,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             foreach (KämpferInfo ki in Kämpfer)
             {
-                StandardAktionenSetzen(ki);
+                ki.StandardAktionenSetzen();
             }
-        }
-
-        private void StandardAktionenSetzen(KämpferInfo ki)
-        {
-            ki.StandardAktionenSetzen();
         }
 
         /// <summary>

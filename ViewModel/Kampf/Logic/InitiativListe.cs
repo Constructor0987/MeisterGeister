@@ -14,6 +14,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public InitiativListe(Kampf kampf)
         {
             _kampf = kampf;
+            CollectionChanged += InitiativListe_CollectionChanged;
+        }
+
+        private void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //TODO: Optimieren. Nur die IndexChanged-Events in Gang setzen, die sich auch wirklich geändert haben
+            foreach (ManöverInfo info in this)
+                info.OnChanged("Index");
         }
 
         public ManöverInfo[] this[IKämpfer k]
@@ -56,12 +64,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void Add(Manöver.Manöver m, int inimod)
         {
-            Add(new ManöverInfo(m.Ausführender, m, inimod));
+            Add(m.Ausführender, m, inimod);
         }
 
         public void Add(KämpferInfo ki, Manöver.Manöver m, int inimod)
         {
-            Add(new ManöverInfo(ki, m, inimod));
+            Add(new ManöverInfo(ki, m, inimod, Kampf.Kampfrunde));
         }
 
         public new void Remove(ManöverInfo mi)
@@ -122,7 +130,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (mi.KämpferInfo != null && ( mi.Manöver is Manöver.LängerfristigeHandlung || mi.Manöver.VerbleibendeDauer > 1 || mi.Manöver.Angriffsaktionen > 1))
                 {
                     // dann  werden alle nachfolgenden manöverinfos gelöscht
-                    RemoveAll(i => i.KämpferInfo != null && i.KämpferInfo == mi.KämpferInfo && i.Initiative < mi.Initiative);
+                    RemoveAll(i => i.KämpferInfo != null && i.KämpferInfo == mi.KämpferInfo && i.InitiativeStart < mi.InitiativeStart);
 
                     //Danach Aktionen berechnen und StandardaktionenSetzen
                     mi.KämpferInfo.AktionenBerechnen();
@@ -156,13 +164,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (x == null) return 1;
             if (y == null) return -1;
             // Vergleich
-            if (x.Initiative > y.Initiative)
+            if (x.InitiativeStart > y.InitiativeStart)
                 return -1;
-            if (x.Initiative < y.Initiative)
+            if (x.InitiativeStart < y.InitiativeStart)
                 return 1;
-            if (x.InitiativeBasis > y.InitiativeBasis)
+            if (x.KämpferInfo.InitiativeBasis > y.KämpferInfo.InitiativeBasis)
                 return -1;
-            if (x.InitiativeBasis < y.InitiativeBasis)
+            if (x.KämpferInfo.InitiativeBasis < y.KämpferInfo.InitiativeBasis)
                 return 1;
             return x.KämpferInfo.Kämpfer.Name.CompareTo(y.KämpferInfo.Kämpfer.Name);
         }

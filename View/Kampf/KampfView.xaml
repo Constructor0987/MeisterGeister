@@ -7,6 +7,8 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:Kampf="clr-namespace:MeisterGeister.View.Kampf"
              xmlns:model="clr-namespace:MeisterGeister.Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -102,12 +104,12 @@
                         </StackPanel.ToolTip>
                         <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image Width="24" Height="24" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
-                            <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,4,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Foreground="DarkGoldenrod">
+                            <TextBlock Text="{Binding InitiativeStart}" Width="20" Height="20" Margin="0,4,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Foreground="DarkGoldenrod">
                                 <TextBlock.Effect>
                                     <BlurEffect Radius="8.0" KernelType="Gaussian" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,4,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" />
+                            <TextBlock Text="{Binding InitiativeStart}" Width="20" Height="20" Margin="0,4,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" />
                         </Grid>
                         <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
                                Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
@@ -146,7 +148,7 @@
                             <Style>
                                 <Setter Property="StackPanel.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding InitiativeMod}" Value="0">
+                                    <DataTrigger Binding="{Binding InitiativeModStart}" Value="0">
                                         <Setter Property="StackPanel.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -310,11 +312,85 @@
             <ColumnDefinition Width="650*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="200" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <GridSplitter Grid.Column="0" Grid.RowSpan="2" Background="DarkGray" Width="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" />
-        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="4" >
+
+        <!--<Expander Grid.Row="1" IsExpanded="True" MaxHeight="100" VerticalAlignment="Top">
+            <Expander.Header>
+                <TextBlock Text="Kampf" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Button Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="51" Height="55" HorizontalAlignment="Left" Margin="4" Background="DarkGreen" Command="{Binding OnShowBodenplanView}" ToolTip="Bodenplan öffnen...">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Stretch="Uniform" />
+                        </Button>
+                        -->
+        <!--<CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox> -->
+        <!--
+                        <Button Grid.Column="1" Grid.Row="0" Name="_buttonSpielerInfo" Height="28" Width="28" Click="ButtonSpielerInfo_Click" Visibility="Visible" Margin="4,4,4,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Button.ToolTip>
+                                <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
+            		Den Spielern die INI-Liste in einem separaten Fenster zeigen.
+                                </TextBlock>
+                            </Button.ToolTip>
+                            <Grid>
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2,3,2,8" />
+                            </Grid>
+                        </Button>
+                        <Button Grid.Column="1" Grid.Row="1" Height="28" Width="28" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
+                            <Grid>
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                            </Grid>
+                        </Button>
+                    </Grid>
+
+                    <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                        <Grid Width="82" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Text="KR" TextAlignment="Center" FontSize="10" />
+                            <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="0" Text="{Binding Kampf.Kampfrunde, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." />
+                            <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="1" Text="Phase" TextAlignment="Center" FontSize="10" />
+                            <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="1" Text="{Binding Kampf.INIPhase, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" ToolTip="Aktuelle INI-Phase." />
+                        </Grid>
+                        <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="4" Padding="0" Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
+                    </StackPanel>
+
+                    <Button Grid.Column="2" Grid.Row="0" Content="Neue KR" Margin="4" HorizontalAlignment="Right" Width="82" Command="{Binding OnNextKampfrunde}" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
+                    <Button Grid.Column="2" Grid.Row="1" Content="Neuer Kampf" Height="23" Margin="4" VerticalAlignment="Top" Command="{Binding OnNewKampf}" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
+                </Grid>
+            </Border>
+        </Expander>-->
+
+        <!--<Grid Grid.Column="0" Grid.Row="1" Margin="0,100,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -360,7 +436,9 @@
                                                     <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker" VerticalAlignment="Center">
                                                         <i:Interaction.Triggers>
                                                             <ViewGeneral:HandlingEventTrigger EventName="Click" />
-                                                            <!--Genügt leider nicht um den MouseUp-Event zuu fangen-->
+                                                            -->
+        <!--Genügt leider nicht um den MouseUp-Event zuu fangen-->
+        <!--
                                                         </i:Interaction.Triggers>
                                                     </xctk:ColorPicker>
                                                 </StackPanel>
@@ -450,7 +528,8 @@
                 </Border>
             </Expander>
 
-        </Grid>
+        </Grid>-->
+
         <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="0,0,4,4" Name="_scrollViewerKämpferDetails" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <Border Style="{DynamicResource ControlContentBorder}">
                 <TabControl>
@@ -525,8 +604,8 @@
                                                         ToolTip="{Binding Audio_Playlist.Name}" >
                                                                     <Button.Content>
                                                                         <!--<Grid>-->
-                                                                            <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
-                                                                            <!--<Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" Height="22" Opacity="0.5" Margin="-3" />
+                                                                        <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
+                                                                        <!--<Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" Height="22" Opacity="0.5" Margin="-3" />
                                                                         </Grid>-->
                                                                     </Button.Content>
                                                                 </Button>
@@ -813,7 +892,7 @@
                                         <TextBlock Text="{Binding Path=SelectedKämpfer.MR, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Körper)" />
                                         <TextBlock Margin="0,6,0,2" Text="/" />
                                         <TextBlock Text="{Binding Path=SelectedKämpfer.MRGeist, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Geist)" />
-                                        <ComboBox SelectedValue="{Binding Path=SelectedKämpfer.Position, Converter={StaticResource PositionenValues}}" ItemsSource="{StaticResource PositionenValues}" Width="100" ToolTip="Position" />
+                                        <ComboBox SelectedValue="{Binding Path=SelectedKämpfer.Position, Converter={StaticResource PositionenValues}}" ItemsSource="{StaticResource PositionenValues}" Width="100" ToolTip="Position"/>
                                     </StackPanel>
                                 </StackPanel>
                                 <Grid Grid.Row="2" Margin="0,8,0,0">
@@ -911,24 +990,22 @@
                             </Grid>
                         </Grid>
                     </TabItem>
-                    <!--
-                    <TabItem Header="Manöver">
-                        
-                    </TabItem> -->
+                    <TabItem Header="Karte"/>
                 </TabControl>
             </Border>
         </ScrollViewer>
-        <Grid Grid.Row="0" Grid.Column="1" Margin="0,4,4,4">
+
+        <!--<Grid Grid.Row="0" Grid.Column="1" Margin="0,4,4,4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
                 <RowDefinition />
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>-->
 
-            <Expander IsExpanded="True" Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        <!--<Expander IsExpanded="True" Margin="0" Grid.Row="1">
                 <Expander.Header>
                     <TextBlock Text="Kampf-Log" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -936,9 +1013,183 @@
                     <ListBox Height="65" Background="Transparent" BorderThickness="0" ItemsSource="{Binding Kampf.KampfLog}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
                     </ListBox>
                 </Border>
-            </Expander>
+            </Expander>-->
 
-            <Expander Grid.Row="1" Grid.Column="0" Margin="0,0,4,0" IsExpanded="True">
+        <Expander IsExpanded="True" Margin="0" Grid.Row="1">
+            <Expander.Header>
+                <TextBlock Text="Manöver" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Border.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </Border.Resources>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Dämmerungssicht / Nachtsicht-->
+                    <TextBlock Grid.Row="0" Text="Licht"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="licht" SelectedValuePath="DataContext" SelectedIndex="0">
+                        <ComboBoxItem Content="Tageslicht" DataContext="0"/>
+                        <ComboBoxItem Content="Mondlicht" DataContext="3"/>
+                        <ComboBoxItem Content="Sternenlicht" DataContext="5"/>
+                        <ComboBoxItem Content="Finsternis" DataContext="8"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding ElementName=licht,Path=SelectedValue}"/>
+
+                    <TextBlock Grid.Row="1" Text="Distanzklasse"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="distanzklasse" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Passend" DataContext="0"/>
+                        <ComboBoxItem Content="Um 1 zu lang oder kurz" DataContext="6"/>
+                        <ComboBoxItem Content="Um 2 zu lang oder kurz" IsEnabled="False" ToolTip="Angreifen nicht möglich"/>
+                        <Separator/>
+                        <ComboBoxItem Content="Um 2 vergrößern" DataContext="8"/>
+                        <ComboBoxItem Content="Um 1 vergrößern" DataContext="4"/>
+                        <ComboBoxItem Content="Um 1 verkleinern (parierbar)" DataContext="0"/>
+                        <ComboBoxItem Content="Um 2 verkleinern (parierbar)" DataContext="8"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ElementName=distanzklasse,Path=SelectedValue}"/>
+
+                    <TextBlock Grid.Row="2" Text="Überrascht"/>
+                    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="überrascht" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Nein" DataContext="0"/>
+                        <ComboBoxItem Content="Überrumpelt" DataContext="-5"/>
+                        <ComboBoxItem Content="Schlafend / Bewusstlos" DataContext="-8"/>
+                        <ComboBoxItem Content="Vollkommen unbeweglich" DataContext="-10"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ElementName=überrascht,Path=SelectedValue}"/>
+
+                    <TextBlock Grid.Row="3" Text="Umgebung"/>
+                    <ComboBox Grid.Row="3" Grid.Column="1" x:Name="umgebung" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Genügend Freiraum" DataContext="0"/>
+                        <ComboBoxItem Content="Beengte Verhältnisse (kurze Schwungwaffe / Infanteriewaffe)" DataContext="2"/>
+                        <ComboBoxItem Content="Beengte Verhältnisse (lange Schwungwaffe)" DataContext="6"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=umgebung,Path=SelectedValue}"/>
+
+                    <!--Kampf im Wasser / Unterwasserkampf-->
+                    <TextBlock Grid.Row="4" Text="Wasser"/>
+                    <ComboBox Grid.Row="4" Grid.Column="1" x:Name="wasser" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Nein" DataContext="0"/>
+                        <ComboBoxItem Content="Hüfttief" DataContext="2"/>
+                        <ComboBoxItem Content="Schultertier" DataContext="4"/>
+                        <ComboBoxItem Content="Unter Wasser" DataContext="6"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding ElementName=wasser,Path=SelectedValue}"/>
+
+                    <TextBlock Grid.Row="5" Text="Position (Selbst)"/>
+                    <ComboBox Grid.Row="5" Grid.Column="1" x:Name="pos" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Stehend" DataContext="0"/>
+                        <ComboBoxItem Content="Kniend" DataContext="1"/>
+                        <ComboBoxItem Content="Liegend" DataContext="3"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding ElementName=pos,Path=SelectedValue}"/>
+
+                    <TextBlock Grid.Row="6" Text="Position (Gegner)"/>
+                    <ComboBox Grid.Row="6" Grid.Column="1" x:Name="posGegner" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Stehend" DataContext="0"/>
+                        <ComboBoxItem Content="Kniend" DataContext="-1"/>
+                        <ComboBoxItem Content="Liegend" DataContext="-3"/>
+                        <ComboBoxItem Content="Fliegend" DataContext="2"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding ElementName=posGegner,Path=SelectedValue}"/>
+
+                    <!--Wuchtschlag-->
+                    <TextBlock Grid.Row="7" Text="Wuchtschlag"/>
+                    <Slider Grid.Row="7" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" x:Name="wuchtschlag"/>
+                    <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding ElementName=wuchtschlag,Path=Value}"/>
+
+                    <!--Finte-->
+                    <TextBlock Grid.Row="8" Text="Finte"/>
+                    <Slider Grid.Row="8" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" x:Name="finte"/>
+                    <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding ElementName=finte,Path=Value}"/>
+
+                    <TextBlock Grid.Row="9" Text="Stumpfer Schlag"/>
+                    <ComboBox Grid.Row="9" Grid.Column="1" x:Name="stumpf" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Nein" DataContext="0"/>
+                        <ComboBoxItem Content="Stäbe &amp; Knüppel" DataContext="2"/>
+                        <ComboBoxItem Content="Hiebwaffen mit flacher Seite" DataContext="4"/>
+                        <ComboBoxItem Content="Sonstige mögliche Waffe" DataContext="8"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding ElementName=stumpf,Path=SelectedValue}"/>
+
+                    <!--Benötigt Finte / bei Gezielter Stich nur halber Zuschlag - 2 -->
+                    <TextBlock Grid.Row="10" Text="Gezielter Schlag"/>
+                    <ComboBox Grid.Row="10" Grid.Column="1" x:Name="gezielt" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Nein" DataContext="0"/>
+                        <ComboBoxItem Content="Kopf" DataContext="6"/>
+                        <ComboBoxItem Content="Brust" DataContext="8"/>
+                        <ComboBoxItem Content="Schwertarm" DataContext="6"/>
+                        <ComboBoxItem Content="Schildarm" DataContext="8"/>
+                        <ComboBoxItem Content="Bauch" DataContext="6"/>
+                        <ComboBoxItem Content="Beine" DataContext="4"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding ElementName=gezielt,Path=SelectedValue}"/>
+
+                    <!--Gegner Aufmerksamkeit? / Ini-Mod der eigenen Waffe-->
+                    <CheckBox Grid.Row="11" Grid.ColumnSpan="2" Content="Passierschlag"/>
+                    <TextBlock Grid.Row="11" Grid.Column="2" Text="{Binding ElementName=passierschlag,Path=SelectedValue}"/>
+
+                    <!--+9 / Linkhand / Beidhändiger Kampf I / Linkshändig / Beidhändig-->
+                    <CheckBox Grid.Row="12" Grid.ColumnSpan="2" Content="Kampf mit der falschen Hand"/>
+                    <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding ElementName=falscheHand,Path=SelectedValue}"/>
+
+                    <!--Taktik-Probe?-->
+                    <TextBlock Grid.Row="13" Text="Überzahl"/>
+                    <Slider Grid.Row="13" Grid.Column="1" Interval="1"  Minimum="-5" Maximum="5" x:Name="überzahl"/>
+                    <TextBlock Grid.Row="13" Grid.Column="2" Text="{Binding ElementName=überzahl,Path=Value}"/>
+
+                    <!--+1-->
+                    <CheckBox Grid.Row="14" Grid.ColumnSpan="2" Content="Unbewaffneter Angriff gegen Bewaffnete"/>
+                    <TextBlock Grid.Row="14" Grid.Column="2" Text="{Binding ElementName=falscheHand,Path=SelectedValue}"/>
+
+                    <!--Zielgröße-->
+                    <TextBlock Grid.Row="15" Text="Zielgröße"/>
+                    <ComboBox Grid.Row="15" Grid.Column="1" x:Name="größe" SelectedIndex="0" SelectedValuePath="DataContext">
+                        <ComboBoxItem Content="Winzig" DataContext="4"/>
+                        <ComboBoxItem Content="Sehr klein" DataContext="2"/>
+                        <ComboBoxItem Content="Klein oder größer" DataContext="0"/>
+                    </ComboBox>
+                    <TextBlock Grid.Row="15" Grid.Column="2" Text="{Binding ElementName=größe,Path=SelectedValue}"/>
+
+
+
+                </Grid>
+            </Border>
+        </Expander>
+
+        <Kampf:InitiativListe Grid.ColumnSpan="2"/>
+
+
+        <!--<Expander Grid.Row="1" Grid.Column="0" Margin="0,0,4,0" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Längerfristige Handlungen / Effekte einfügen" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -961,86 +1212,21 @@
                         <Label Content="Dauer:" Height="28" HorizontalAlignment="Left" Margin="2,9,0,0" VerticalAlignment="Top" Grid.Row="2" />
                         <Label Content="Aktionen" Height="28" HorizontalAlignment="Left" Margin="156,10,0,0" VerticalAlignment="Top" FontStyle="Italic" Grid.Row="2" />
                         <Button Grid.Row="2" Height="23" Width="25" Margin="0,11,4,0" HorizontalAlignment="Right" ToolTip="Aktion einfügen">
-                            <!--="{Binding OnAddAktion}" -->
+                            -->
+        <!--="{Binding OnAddAktion}" -->
+        <!--
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                         </Button>
-                        <!-- TODO ??: Entfernen wenn Aktionen fertig sind -->
+                        -->
+        <!-- TODO ??: Entfernen wenn Aktionen fertig sind -->
+        <!--
                         <Border Grid.RowSpan="3" Background="DarkGray" Opacity="0.7" />
                         <TextBlock Grid.RowSpan="3" Text="Die Aktions-Verwaltung steht in dieser Version noch nicht zur Verfügung." Foreground="Brown" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5" />
                     </Grid>
                 </Border>
-            </Expander>
-            <Expander Grid.Row="1" Grid.Column="1" IsExpanded="True">
-                <Expander.Header>
-                    <TextBlock Text="Kampf" Style="{DynamicResource TextTitel}" />
-                </Expander.Header>
-                <Border Style="{DynamicResource ControlContentBorder}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Button Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="51" Height="55" HorizontalAlignment="Left" Margin="4" Background="DarkGreen" Command="{Binding OnShowBodenplanView}" ToolTip="Bodenplan öffnen...">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Stretch="Uniform" />
-                            </Button>
-                            <!--<CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox> -->
-                            <Button Grid.Column="1" Grid.Row="0" Name="_buttonSpielerInfo" Height="28" Width="28" Click="ButtonSpielerInfo_Click" Visibility="Visible" Margin="4,4,4,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Button.ToolTip>
-                                    <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
-            		Den Spielern die INI-Liste in einem separaten Fenster zeigen.
-                                    </TextBlock>
-                                </Button.ToolTip>
-                                <Grid>
-                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
-                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2,3,2,8" />
-                                </Grid>
-                            </Button>
-                            <Button Grid.Column="1" Grid.Row="1" Height="28" Width="28" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
-                                <Grid>
-                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
-                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
-                                </Grid>
-                            </Button>
-                        </Grid>
+            </Expander>-->
 
-                        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                            <Grid Width="82" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Text="KR" TextAlignment="Center" FontSize="10" />
-                                <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="0" Text="{Binding Kampf.Kampfrunde, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." />
-                                <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="1" Text="Phase" TextAlignment="Center" FontSize="10" />
-                                <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="1" Text="{Binding Kampf.INIPhase, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" ToolTip="Aktuelle INI-Phase." />
-                            </Grid>
-                            <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="4" Padding="0" Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
-                        </StackPanel>
-
-                        <Button Grid.Column="2" Grid.Row="0" Content="Neue KR" Margin="4" HorizontalAlignment="Right" Width="82" Command="{Binding OnNextKampfrunde}" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
-                        <Button Grid.Column="2" Grid.Row="1" Content="Neuer Kampf" Height="23" Margin="4" VerticalAlignment="Top" Command="{Binding OnNewKampf}" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
-                    </Grid>
-                </Border>
-            </Expander>
-        </Grid>
+        <!--</Grid>-->
+        <GridSplitter Grid.Row="0" Grid.ColumnSpan="2" Background="DarkGray" Height="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
     </Grid>
 </UserControl>
