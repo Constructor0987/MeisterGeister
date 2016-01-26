@@ -68,6 +68,7 @@
     <Reference Include="pnunit.framework">
       <HintPath>lib\pnunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -78,12 +79,20 @@
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WPFExtensions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=39de8b1cac8f3dd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\WPFExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFToolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeldenSoftwareOnline_Tests.cs" />
@@ -98,6 +107,7 @@
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="Serialization_Tests.cs" />
     <Compile Include="Update_Tests.cs" />
+    <Compile Include="InteractiveUI_Tests.cs" />
     <Compile Include="Voraussetzungen_Tests.cs" />
     <Compile Include="Service_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

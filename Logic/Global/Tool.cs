@@ -1,4 +1,5 @@
-﻿using MeisterGeister.ViewModel.Base;
+﻿using ImpromptuInterface;
+using MeisterGeister.ViewModel.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -256,11 +257,31 @@ namespace MeisterGeister
             return toolControl;
         }
 
+        static bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
+        {
+            while (toCheck != null && toCheck != typeof(object))
+            {
+                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                if (generic == cur)
+                {
+                    return true;
+                }
+                toCheck = toCheck.BaseType;
+            }
+            return false;
+        }
+
         public ToolViewModelBase CreateToolViewModel()
         {
             ToolViewModelBase toolControl = null;
-
-            object toolObject = Activator.CreateInstance(ViewModelType);
+            object toolObject = null;
+            if(IsSubclassOfRawGeneric(typeof(SingletonToolViewModelBase<>), ViewModelType))
+            {
+                var staticContext = InvokeContext.CreateStatic;
+                toolObject = ViewModelType.GetProperty("Instance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.FlattenHierarchy).GetValue(null, null);
+            }
+            else
+                toolObject = Activator.CreateInstance(ViewModelType);
             if (toolObject is ToolViewModelBase)
                 toolControl = (ToolViewModelBase)toolObject;
             toolControl.Tool = this;

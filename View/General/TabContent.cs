@@ -238,22 +238,9 @@ namespace MeisterGeister.View.General
             {
                 _tabControl = tabControl;
                 _border = border;
-                //INotifyCollectionChanged sourceCollection = _tabControl as INotifyCollectionChanged;
-                //if (sourceCollection != null)
-                //{
-                //    sourceCollection.CollectionChanged += sourceCollection_CollectionChanged;
-                //}
                 _tabControl.SelectionChanged += (sender, args) => { UpdateSelectedTab(); };
             }
 
-            //void sourceCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-            //{
-            //    foreach(object o in e.OldItems)
-            //    {
-            //        var tabItem = o as TabItem;
-            //        var content = TabContent.GetInternalCachedContent(tabItem);
-            //    }
-            //}
 
             public void ReplaceContainer(Decorator newBorder)
             {

@@ -20,7 +20,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
 //  *Bilder Fixen!
 //  *Größe Kreaturen
 
-        public BattlegroundViewModel() : base() { }
+        public BattlegroundViewModel() : base()
+        {
+            TilePathData = BattlegroundUtilities.HexCellTile(100);
+        }
 
         private bool _pathLine = false;
         private bool _filledPathLine = false;

@@ -196,7 +196,7 @@ namespace MeisterGeister.ViewModel
         }
 
         int selectedTab = 0;
-        public int SelectedTab
+        public int SelectedTabIndex
         {
             get { return selectedTab; }
             set
@@ -204,6 +204,19 @@ namespace MeisterGeister.ViewModel
                 if (Set(ref selectedTab, value))
                     Einstellungen.SelectedTab = value;
             }
+        }
+
+        public int SelectTool(Tool t)
+        {
+            for(int j=0; j<OpenTools.Count; j++)
+                if(OpenTools[j].Tool == t)
+                    return SelectedTabIndex = j;
+            return -1 ;
+        }
+
+        public int SelectTool(ToolViewModelBase tv)
+        {
+            return OpenTools.IndexOf(tv);
         }
 
         void OpenTabs()
@@ -217,6 +230,7 @@ namespace MeisterGeister.ViewModel
                 if(Tool.ToolListe.ContainsKey(tab))
                     OpenTool(Tool.ToolListe[tab]);
             }
+            SelectedTabIndex = Einstellungen.SelectedTab;
         }
 
         private string OpenedTabs()
@@ -240,7 +254,7 @@ namespace MeisterGeister.ViewModel
             var tvm = OpenTools.Where(tv => tv.Tool == t).FirstOrDefault();;
             if(tvm != null)
             {
-                tvm.IsSelected = true;
+                SelectTool(tvm);
                 return;
             }
 
@@ -252,7 +266,7 @@ namespace MeisterGeister.ViewModel
                 //showerror, popup, etc verdrahten.
                 tvm.SetFromViewHelper(); //evtl sollten die in der base durch events ersetzt werden auf die sich dann die views oder andere VMs registrieren können. Nochmal durchdenken...
                 OpenTools.Add(tvm);
-                tvm.IsSelected = true;
+                SelectTool(tvm);
             }
             Global.SetIsBusy(false);
         }

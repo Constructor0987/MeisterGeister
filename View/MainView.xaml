@@ -80,15 +80,15 @@
         </StatusBar>
         <Grid>
             <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" ViewGeneral:TabContent.IsCached="True" ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}">
-                <TabControl.Resources>
+                <!--<TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
                     </Style>
-                </TabControl.Resources>
+                </TabControl.Resources>-->
                 <TabControl.Style>
                     <Style TargetType="{x:Type TabControl}">
                         <Setter Property="ItemsSource" Value="{Binding OpenTools}" />
-                        <Setter Property="SelectedIndex" Value="{Binding SelectedTab}" />
+                        <Setter Property="SelectedIndex" Value="{Binding SelectedTabIndex}" />
                         <!--<Setter Property="ContentTemplateSelector" Value="{StaticResource ToolViewSelector}" />-->
                         <Setter Property="ItemTemplate" Value="{StaticResource ClosableTabItemTemplate}" />
                         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>

@@ -225,6 +225,7 @@ namespace MeisterGeister.View.AudioPlayer
 
             VM = new VM.AudioPlayerViewModel();
 
+            //TODO JB: Diese Initialisierungen gehören eigentlich in den Konstruktor des ViewModfels und sollten im View per Binding aufgerufen werden.
             BGPlayer = new ViewModel.AudioPlayer.AudioPlayerViewModel.MusikView();
             BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
 

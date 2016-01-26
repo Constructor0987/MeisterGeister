@@ -30,7 +30,8 @@ namespace MeisterGeister.View.Notiz
         {
             try
             {
-                VM.LoadDaten();
+                if(VM != null)
+                    VM.LoadDaten();
             }
             catch (Exception) { }
         }

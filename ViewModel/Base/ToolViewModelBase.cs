@@ -35,7 +35,6 @@ namespace MeisterGeister.ViewModel.Base
         protected ToolViewModelBase(Action<string, Exception> showError) : this(null, null, null, null, null, showError) {}
         protected ToolViewModelBase() : this(null, null, null, null, null, null) { }
         protected ToolViewModelBase(Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog) : this(null, null, null, showProbeDialog, null) { }
-        
         #endregion
 
         #region //---- EIGENSCHAFTEN ----

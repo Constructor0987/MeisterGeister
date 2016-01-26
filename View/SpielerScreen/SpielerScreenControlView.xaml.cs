@@ -16,7 +16,7 @@ using MeisterGeister.View;
 using System.IO;
 using MeisterGeister.View.Windows;
 using MeisterGeister.View.General;
-using VM = MeisterGeister.ViewModel.SpielerScreen;
+using MeisterGeister.ViewModel.SpielerScreen;
 
 namespace MeisterGeister.View.SpielerScreen
 {
@@ -28,35 +28,38 @@ namespace MeisterGeister.View.SpielerScreen
         public SpielerScreenControlView()
         {
             InitializeComponent();
-            if (Global.CurrentSpielerScreen == null)
-            {
-                VM = new VM.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
-                Global.CurrentSpielerScreen = VM;
-            }
-            else
-                VM = Global.CurrentSpielerScreen;
 
             SpielerWindow.SpielerWindowInstantiated += SpielerWindow_SpielerWindowInstantiated;
             SpielerWindow.SpielerWindowClosed += SpielerWindow_Closed;
 
-            // Text-Feld setzen
-            if (!String.IsNullOrEmpty(VM.TextToShow))
-                _RTBNotiz.ParseTextToFlowDoument(VM.TextToShow);
+            DataContextChanged += SpielerScreenControlView_DataContextChanged;
+        }
 
-            if (SpielerWindow.IsInstantiated)
-                SetPreviews();
+        void SpielerScreenControlView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(VM != null)
+            {
+                //if (Global.CurrentSpielerScreen != VM)
+                //    Global.CurrentSpielerScreen = VM;
+                // Text-Feld setzen
+                if (!String.IsNullOrEmpty(VM.TextToShow))
+                    _RTBNotiz.ParseTextToFlowDoument(VM.TextToShow);
+                if (SpielerWindow.IsInstantiated)
+                    SetPreviews();
+            }
+
         }
 
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
         /// </summary>
-        public VM.SpielerScreenControlViewModel VM
+        public SpielerScreenControlViewModel VM
         {
             get
             {
-                if (DataContext == null || !(DataContext is VM.SpielerScreenControlViewModel))
+                if (DataContext == null || !(DataContext is SpielerScreenControlViewModel))
                     return null;
-                return DataContext as VM.SpielerScreenControlViewModel;
+                return DataContext as SpielerScreenControlViewModel;
             }
             set
             {
@@ -97,14 +100,17 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void SetPreviews()
         {
-            double width = VM.SpielerScreen.Bounds.Width;
-            double height = VM.SpielerScreen.Bounds.Height;
-            _spielerWindowVorschau.Height = _spielerWindowVorschau.Width / width * height;
-            _spielerWindowVorschau.Fill = SpielerWindow.VisualBrush;
-            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0 / width * height, Fill = SpielerWindow.VisualBrush };
+            if (VM != null)
+            {
+                double width = VM.SpielerScreen.Bounds.Width;
+                double height = VM.SpielerScreen.Bounds.Height;
+                _spielerWindowVorschau.Height = _spielerWindowVorschau.Width / width * height;
+                _spielerWindowVorschau.Fill = SpielerWindow.VisualBrush;
+                _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0 / width * height, Fill = SpielerWindow.VisualBrush };
 
-            if (SpielerInfoPreviewWindow.IsInstantiated)
-                SpielerInfoPreviewWindow.Instance.SetVisualBrush();
+                if (SpielerInfoPreviewWindow.IsInstantiated)
+                    SpielerInfoPreviewWindow.Instance.SetVisualBrush();
+            }
         }
 
         void SpielerWindow_Closed(object sender, EventArgs e)

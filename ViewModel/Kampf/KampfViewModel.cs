@@ -382,7 +382,19 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private Action<K> showGegnerView;
 
+        public Action<K> ShowGegnerViewAction
+        {
+            get { return showGegnerView; }
+            set { showGegnerView = value; }
+        }
+
         private Action<KampfViewModel> showBodenplanView;
+
+        public Action<KampfViewModel> ShowBodenplanViewAction
+        {
+            get { return showBodenplanView; }
+            set { showBodenplanView = value; }
+        }
 
         private void ShowBodenplanView(object obj)
         {

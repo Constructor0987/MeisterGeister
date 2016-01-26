@@ -1,4 +1,5 @@
 ﻿using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.SpielerScreen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace MeisterGeister.View.SpielerScreen
 
             SetVisualBrush();
 
-            DataContext = Global.CurrentSpielerScreen;
+            DataContext = SpielerScreenControlViewModel.Instance;
         }
 
         public static SpielerInfoPreviewWindow Instance
@@ -50,9 +51,9 @@ namespace MeisterGeister.View.SpielerScreen
         {
             get
             {
-                if (Global.CurrentSpielerScreen == null)
-                    Global.CurrentSpielerScreen = new ViewModel.SpielerScreen.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
-                return Global.CurrentSpielerScreen;
+                if (DataContext != null)
+                    return DataContext as SpielerScreenControlViewModel;
+                return null;
             }
         }
 
@@ -116,37 +117,37 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonKampf_Click(object sender, RoutedEventArgs e)
         {
-            Global.CurrentSpielerScreen.ShowKampf();
+            VM.ShowKampf();
         }
 
         private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)
         {
-            Global.CurrentSpielerScreen.SpielerInfoOpen();
+            VM.SpielerInfoOpen();
         }
 
         private void ButtonBodenplan_Click(object sender, RoutedEventArgs e)
         {
-            Global.CurrentSpielerScreen.ShowBodenplan();
+            VM.ShowBodenplan();
         }
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
-            Global.CurrentSpielerScreen.SpielerInfoClose();
+            VM.SpielerInfoClose();
         }
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
-            Global.CurrentSpielerScreen.ShowImage();
+            VM.ShowImage();
         }
 
         private void ButtonTextZeigen_Click(object sender, RoutedEventArgs e)
         {
-            Global.CurrentSpielerScreen.ShowText();
+            VM.ShowText();
         }
 
         private void ButtonSlideShow_Click(object sender, RoutedEventArgs e)
         {
-            Global.CurrentSpielerScreen.ShowSlideShow();
+            VM.ShowSlideShow();
         }
 
         private void CheckBoxWindowFixed_CheckedChanged(object sender, RoutedEventArgs e)

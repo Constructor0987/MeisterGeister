@@ -31,9 +31,7 @@ namespace MeisterGeister.View.Bodenplan
         public BattlegroundView()
         {
             InitializeComponent();
-            VM = new BattlegroundViewModel();
-
-            VM.TilePathData = BattlegroundUtilities.HexCellTile(100); //evtl in den setter rein?
+            //VM = new BattlegroundViewModel();
             
             ArenaGrid.Cursor = Cursors.Arrow;
             AddPictureButtons();

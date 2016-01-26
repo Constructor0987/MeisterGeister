@@ -1,4 +1,5 @@
 ﻿using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.SpielerScreen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,11 @@ namespace MeisterGeister.View.SpielerScreen
             InitializeComponent();
 
             int xPoint = 0, yPoint = 0;
-            xPoint = VM.SpielerScreen.Bounds.Location.X + 20;
-            yPoint = VM.SpielerScreen.Bounds.Location.Y + 20;
+            if (VM != null)
+            {
+                xPoint = VM.SpielerScreen.Bounds.Location.X + 20;
+                yPoint = VM.SpielerScreen.Bounds.Location.Y + 20;
+            }
             WindowStartupLocation = WindowStartupLocation.Manual;
             Left = Convert.ToDouble(xPoint);
             Top = Convert.ToDouble(yPoint);
@@ -52,9 +56,7 @@ namespace MeisterGeister.View.SpielerScreen
         {
             get
             {
-                if (Global.CurrentSpielerScreen == null)
-                    Global.CurrentSpielerScreen = new ViewModel.SpielerScreen.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
-                return Global.CurrentSpielerScreen;
+                return DataContext as SpielerScreenControlViewModel;
             }
         }
 
@@ -191,13 +193,13 @@ namespace MeisterGeister.View.SpielerScreen
                 SpielerPointer pointer = new SpielerPointer();
 
                 Binding pointerMarginBinding = new Binding("PointerMarginSpieler");
-                pointerMarginBinding.Source = Global.CurrentSpielerScreen;
+                pointerMarginBinding.Source = SpielerScreenControlViewModel.Instance;
                 pointer.SetBinding(UserControl.MarginProperty, pointerMarginBinding);
 
                 Grid grid = new Grid();
                 grid.Children.Add(img);
                 grid.Children.Add(pointer);
-                grid.DataContext = Global.CurrentSpielerScreen;
+                grid.DataContext = SpielerScreenControlViewModel.Instance;
 
                 SetContent(grid);
             }
@@ -249,7 +251,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (VM.ScreenList.Count > 1)
+            if (VM != null && VM.ScreenList.Count > 1)
             {
                 WindowState = System.Windows.WindowState.Maximized;
                 WindowStyle = System.Windows.WindowStyle.None;

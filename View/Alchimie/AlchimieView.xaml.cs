@@ -36,7 +36,7 @@ namespace MeisterGeister.View.Alchimie
             }
             catch (Exception ex)
             {
-                View.Windows.MsgWindow errWin = new View.Windows.MsgWindow("Zauberzeichen-Tool", "Beim Laden des Alchimie-Tools ist ein Fehler aufgetreten.", ex);
+                View.Windows.MsgWindow errWin = new View.Windows.MsgWindow("Alchimie-Tool", "Beim Laden des Alchimie-Tools ist ein Fehler aufgetreten.", ex);
                 errWin.ShowDialog();
             }
         }

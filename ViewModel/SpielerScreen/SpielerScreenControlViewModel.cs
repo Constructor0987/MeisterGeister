@@ -14,7 +14,7 @@ using MeisterGeister.View.SpielerScreen;
 
 namespace MeisterGeister.ViewModel.SpielerScreen
 {
-    public class SpielerScreenControlViewModel : Base.ToolViewModelBase
+    public class SpielerScreenControlViewModel : Base.SingletonToolViewModelBase<SpielerScreenControlViewModel>
     {
         #region //---- FELDER ----
 
@@ -435,19 +435,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         #region //---- KONSTRUKTOR ----
 
         public SpielerScreenControlViewModel() : base()
-        {
-            Init();
-        }
-
-        ///// <summary>
-        ///// ViewModel mit Callbacks.
-        ///// </summary>
-        ///// <param name="popup">Ein OK-Popup-Dialog. (Nachricht)</param>
-        ///// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
-        ///// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
-        ///// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterungen ...)</param>
-        public SpielerScreenControlViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Action<string, Exception> showError) :
-            base(popup, confirm, confirmYesNoCancel, chooseFile, chooseDirectory, showError)
         {
             Init();
         }

@@ -676,6 +676,7 @@
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItemVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\PlaylistWesenAuswahlVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\MusikZeileVM.cs" />
+    <Compile Include="ViewModel\Base\SingletonToolViewModelBase.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungsModifikator.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />

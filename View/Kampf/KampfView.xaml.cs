@@ -26,10 +26,21 @@ namespace MeisterGeister.View.Kampf
         public KampfView()
         {
             InitializeComponent();
-            VM = new VM.KampfViewModel(ShowBodenplanWindow, View.General.ViewHelper.ShowGegnerView, View.General.ViewHelper.Confirm);
+            //VM = new VM.KampfViewModel(ShowBodenplanWindow, View.General.ViewHelper.ShowGegnerView, View.General.ViewHelper.Confirm);
 
             View.General.EnumItemsSource tpValues = (View.General.EnumItemsSource)Resources["TrefferzonenValues"];
             tpValues.Remove("Gesamt");
+            this.DataContextChanged += KampfView_DataContextChanged;
+        }
+
+        void KampfView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var k = DataContext as VM.KampfViewModel;
+            Global.CurrentKampf = k;
+            if (k == null)
+                return;
+            k.ShowBodenplanViewAction = ShowBodenplanWindow;
+            k.ShowGegnerViewAction = View.General.ViewHelper.ShowGegnerView;
         }
 
         /// <summary>

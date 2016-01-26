@@ -29,7 +29,7 @@ namespace MeisterGeister.View.Helden
             InitializeComponent();
 
             //VM an View Registrieren
-            VM = new VM.HeldenViewModel();
+            //VM = new VM.HeldenViewModel();
         }
 
         /// <summary>

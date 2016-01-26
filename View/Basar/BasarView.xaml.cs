@@ -27,7 +27,7 @@ namespace MeisterGeister.View.Basar
         public BasarView()
         {
             InitializeComponent();
-            VM = new VM.BasarViewModel(ViewHelper.Popup, ViewHelper.ShowError);
+            //VM = new VM.BasarViewModel(ViewHelper.Popup, ViewHelper.ShowError);
         }
 
         /// <summary>

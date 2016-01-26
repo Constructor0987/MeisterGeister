@@ -53,7 +53,7 @@ namespace MeisterGeister.View.ZooBot
         {
             InitializeComponent();
 
-            VM = new VM.ZooBotViewModel();            
+            //VM = new VM.ZooBotViewModel();            
         }
 
         public void Reload()

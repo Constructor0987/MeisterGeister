@@ -32,7 +32,21 @@ namespace MeisterGeister.View.Karte
             this.Resources.Add("DereGlobusToMapConverter", dereGlobusToMapConverter);
             this.Resources.Add("MapToDereGlobusConverter", mapToDereGlobusConverter);
             InitializeComponent();
-            VM = new KarteViewModel();
+            //VM = new KarteViewModel();
+            DataContextChanged += KarteView_DataContextChanged;
+        }
+
+        void KarteView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(e.OldValue is KarteViewModel)
+            {
+                (e.OldValue as KarteViewModel).PropertyChanged -= VM_PropertyChanged;
+            }
+            if(VM != null)
+            {
+                VM.PropertyChanged += VM_PropertyChanged;
+                RefreshConverter();
+            }
         }
 
         /// <summary>
@@ -47,11 +61,7 @@ namespace MeisterGeister.View.Karte
                 return DataContext as KarteViewModel;
             }
             set {
-                if (VM != null)
-                    VM.PropertyChanged -= VM_PropertyChanged;
                 DataContext = value;
-                VM.PropertyChanged += VM_PropertyChanged;
-                RefreshConverter();
             }
         }
 

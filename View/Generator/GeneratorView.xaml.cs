@@ -26,7 +26,7 @@ namespace MeisterGeister.View.Generator
         public GeneratorView()
         {
             InitializeComponent();
-            VM = new VM.GeneratorViewModel();
+            //VM = new VM.GeneratorViewModel();
         }
 
         public VM.GeneratorViewModel VM

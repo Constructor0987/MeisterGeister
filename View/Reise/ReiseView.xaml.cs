@@ -25,7 +25,7 @@ namespace MeisterGeister.View.Reise
         public ReiseView()
         {
             InitializeComponent();
-            VM = new VMR.ReiseViewModel();
+            //VM = new VMR.ReiseViewModel();
         }
 
         /// <summary>

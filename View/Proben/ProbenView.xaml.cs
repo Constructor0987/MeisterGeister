@@ -27,7 +27,7 @@ namespace MeisterGeister.View.Proben
         {
             InitializeComponent();
 
-            VM = new VM.ProbenViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+            //VM = new VM.ProbenViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
         }
 
         /// <summary>

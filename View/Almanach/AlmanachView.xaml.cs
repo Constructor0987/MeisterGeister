@@ -25,7 +25,7 @@ namespace MeisterGeister.View.Almanach
         public AlmanachView()
         {
             InitializeComponent();
-            VM = new VM.AlmanachViewModel();
+            //VM = new VM.AlmanachViewModel();
         }
 
         /// <summary>
