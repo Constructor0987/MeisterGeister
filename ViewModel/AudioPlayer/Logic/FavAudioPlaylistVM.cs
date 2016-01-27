@@ -84,7 +84,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         #endregion
 
         #region //---- COMMAND ----
-         
+                
         #endregion
 
         #region //---- INSTANZMETHODEN ----

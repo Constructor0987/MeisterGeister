@@ -498,10 +498,12 @@
                                 <RowDefinition>
                                     <RowDefinition.Style>
                                         <Style TargetType="RowDefinition">
+                                            <Setter Property="Height" Value="200*" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=rbEditorEditTheme,Path=IsChecked}" Value="True">
-                                                    <Setter Property="Height" Value="200*" />
-                                                </DataTrigger>
+                                                <!--<Binding ElementName="rbEditorEditTheme, Path=IsChecked, FallbackValue=False}"-->
+                                                <!--<DataTrigger Binding="{Binding ElementName=rbEditorEditPList, Path=IsChecked, FallbackValue=True}" Value="False">
+                                                    
+                                                </DataTrigger>-->
                                                 <DataTrigger Binding="{Binding ElementName=rbEditorEditPList,Path=IsChecked}" Value="True">
                                                     <Setter Property="Height" Value="*" />
                                                 </DataTrigger>
@@ -527,7 +529,7 @@
                             </Grid.RowDefinitions>
 
                             <Expander Name="exEditorTheme" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Margin="0,-1,7,10" VerticalAlignment="Stretch" VerticalContentAlignment="Top" 
-                                      Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditTheme, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                                      Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditPlaylist, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" >
                                 <Expander.Header>
                                     <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
@@ -588,7 +590,7 @@
                             </Expander>
 
                             <GridSplitter Name="grdsplitEditorList" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" 
-                                Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditTheme, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditPlaylist, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" />
 
                             <Expander Name="exKlangPList" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" >
                                 <Expander.Header>
@@ -692,20 +694,28 @@
 
                                                 <ListBox.Style>
                                                     <Style TargetType="ListBox">
-                                                        <Setter Property="ToolTip" Value="{x:Null}" />
+                                                        <!--<Setter Property="ToolTip" Value="{x:Null}" />-->
+                                                        <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=rbEditorEditTheme,Path=IsChecked, FallbackValue=False}"  Value="True">
-                                                                <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />
-                                                            </DataTrigger>
-
+                                                            <!--<DataTrigger Binding="{Binding ElementName=rbEditorEditPlaylist,Path=IsChecked, FallbackValue=False, Converter={StaticResource InvertedBoolenConverter1}}" Value="True">-->
+                                                            <!--<Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />-->                                                            
+                                                            <!--</DataTrigger>-->
                                                             <DataTrigger Value="True">
                                                                 <DataTrigger.Binding>
                                                                     <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
-                                                                        <Binding ElementName="rbEditorEditTheme,Path=IsChecked, FallbackValue=False}" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                                                        <Binding ElementName="rbEditorEditPlaylist, Path=IsChecked, FallbackValue=True}" /> <!--Converter="{StaticResource InvertedBoolenConverter1}"-->
                                                                         <Binding Path="PlaylistAZ" Converter="{StaticResource InvertedBoolenConverter1}" />
                                                                     </MultiBinding>
                                                                 </DataTrigger.Binding>
-                                                                <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Position innerhalb der Liste verändern" />
+                                                                <Setter Property="ToolTip">
+                                                                    <Setter.Value>
+                                                                        <TextBlock>
+                                                                            - Per Drag&amp;Drop die Position innerhalb der Liste verändern
+                                                                            <LineBreak />
+                                                                            - Ziehen der Playliste in Favoriten-Leiste zum Hinzufügen
+                                                                        </TextBlock>
+                                                                    </Setter.Value>
+                                                                </Setter>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -743,7 +753,7 @@
                     <Border Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
                         <Border.Visibility>
                             <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                                <Binding ElementName="rbEditorEditTheme" Path="IsChecked" />
+                                <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
                                 <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
                             </MultiBinding>
                         </Border.Visibility>
@@ -837,7 +847,7 @@
                     <Border Name="brgEditorThemeKategorieBackground" Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,0,60,0" Style="{DynamicResource ControlContentBorder}" >
                         <Border.Visibility>
                             <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                                <Binding ElementName="rbEditorEditTheme" Path="IsChecked" />
+                                <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
                                 <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
                             </MultiBinding>
                         </Border.Visibility>
@@ -907,7 +917,7 @@
                             <StackPanel Orientation="Vertical" >
                                 <StackPanel.Visibility>
                                     <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                                        <Binding ElementName="rbEditorEditTheme" Path="IsChecked" />
+                                        <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
                                         <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
                                     </MultiBinding>
                                 </StackPanel.Visibility>
@@ -1722,7 +1732,17 @@
                         <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="5" Height="240" Margin="0,46,2,72" />
                         <Border Grid.Column="2" Height="100" Width="200" Margin="10" />
                         <Border Grid.Column="2" Grid.Row="1" Height="270" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" Margin="6,50,0,0" HorizontalAlignment="Left">
-                            <Grid Visibility="{Binding BGPlayerAktPlaylistTitel, UpdateSourceTrigger=PropertyChanged, TargetNullValue=Collapsed}" >
+                            <Grid>
+                                <!--Visibility="{Binding BGPlayerAktPlaylistTitel, UpdateSourceTrigger=PropertyChanged, TargetNullValue=Collapsed}"-->
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding BGPlayerAktPlaylistTitel}" Value="{x:Null}" >
+                                                <Setter Property="Visibility" Value="Collapsed" />                                                
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60*" MinWidth="60"/>
                                     <ColumnDefinition Width="56*" />
@@ -2429,7 +2449,6 @@
                                 <ListBox Name="lbPListGeräusche" Background="Transparent" VerticalAlignment="Stretch"
                                          ToolTip="Liste aller Geräusche-Playlisten. Zum Anspielen einen Haken setzen oder das entsprechende Theme auswählen" 
                                          ItemsSource="{Binding FilteredErwPlayerGeräuscheListItemListe, UpdateSourceTrigger=PropertyChanged}" 
-                                         SelectedItem="{Binding SelectedGeräuschItem}"
                                          SelectionChanged="lb_SelectionChanged" 
                                          ItemContainerStyle="{DynamicResource ListBoxItemStretch}" >
                                 </ListBox>

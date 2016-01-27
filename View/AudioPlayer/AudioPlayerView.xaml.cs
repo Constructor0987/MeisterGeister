@@ -225,7 +225,6 @@ namespace MeisterGeister.View.AudioPlayer
 
             VM = new VM.AudioPlayerViewModel();
 
-            //TODO JB: Diese Initialisierungen gehören eigentlich in den Konstruktor des ViewModfels und sollten im View per Binding aufgerufen werden.
             BGPlayer = new ViewModel.AudioPlayer.AudioPlayerViewModel.MusikView();
             BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
 
@@ -361,12 +360,12 @@ namespace MeisterGeister.View.AudioPlayer
         {
             try
             {
-                //if (AudioTIC == null)
-                //{
-                //    AudioTIC = ((TabItemControl)((AudioPlayerView)e.Source).Parent);
-                //    AudioTIC.CommandBindings.Add(new CommandBinding(AudioTabClose, VM.OnAudioTabClose));
-                //    AudioTIC._buttonClose.Command = AudioTabClose;
-                //}
+                if (AudioTIC == null)
+                {
+                    AudioTIC = ((TabItemControl)((AudioPlayerView)e.Source).Parent);
+                    AudioTIC.CommandBindings.Add(new CommandBinding(AudioTabClose, VM.OnAudioTabClose));
+                    AudioTIC._buttonClose.Command = AudioTabClose;
+                }
                 rbEditorMusik.Focus();
             }
             catch (Exception ex)

@@ -12,6 +12,7 @@
              Icon="/DSA MeisterGeister;component/Images/Icons/General/audio.png" WindowStyle="ToolWindow" 
              Background="{DynamicResource Background1}" Focusable="False" Left="1" Top="30"
              SizeToContent="WidthAndHeight">
+    
     <Grid AllowDrop="True" Drop="Grid_Drop" >
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -36,9 +37,15 @@
                 <RotateTransform Angle="-90" />
             </Menu.LayoutTransform>
             <Menu.ItemTemplate>            
-            <DataTemplate>
-                <Button Content="{Binding Name}" Tag="{Binding}" Click="Button_Click" />
-            </DataTemplate>                
+                <DataTemplate>
+                    <Button Content="{Binding Name}" Tag="{Binding}" Click="Button_Click" >
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Entfernen" Tag="{Binding}" Click="MenuItem_Click"/>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                </DataTemplate>                
         </Menu.ItemTemplate>
     </Menu>
     </Grid>

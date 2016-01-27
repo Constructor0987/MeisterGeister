@@ -21,22 +21,22 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
     public class lbEditorItemVM : Base.ViewModelBase
     {
-        //INotifyPropertyChanged
         #region //---- FELDER ----
-        public ListBox ParentIs;
-        public AudioPlayerViewModel PlayerVM = null;
         
-        //private BitmapImage _listBoxItemIcon;
+        public AudioPlayerViewModel PlayerVM = null;        
         private lbEditorItem _item = null;
         private string _suchtext = string.Empty;
+        private Audio_Theme _aTheme = null;
+        private Audio_Playlist _aPlaylist = null;
 
+        /*
+        public ListBox ParentIs;
+        private BitmapImage _listBoxItemIcon;
         private bool _changed = false;
         private double _totalTimePlylist = 0;
         private double _vol_PlaylistMod = 0;
         private DateTime _lastVolUpdate = DateTime.Now;
         private uint _sollBtnGedrueckt = 0;
-        private Audio_Theme _aTheme = null;
-        private Audio_Playlist _aPlaylist = null;
         private List<Audio_Playlist_Titel> _aPlaylistTitel;
         private int _objGruppe;
         private UInt16 _anzVolChange = 0;
@@ -51,50 +51,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         private bool _visuell = true;
         public DispatcherTimer wartezeitTimer = new DispatcherTimer();
-
-
-        //Commands
+        */
 
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
 
-        [DependentProperty("APlaylist"), DependentProperty("AktKlangPlaylist")]
-        public string ListBoxItemIconBild
-        {
-            get
-            {
-                if (APlaylist != null)
-                    return (APlaylist.Hintergrundmusik ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" :
-                                                         "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png");
-                else
-                    return "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/copy.png";
-            }
-        }
-
-        public lbEditorItem Item
-        {
-            get { return _item; }
-            set
-            {
-                _item = value;
-                _suchtext = (this.ATheme != null? ATheme.Name.ToLower(): this.APlaylist.Name.ToLower()) + (Kategorie != null ? Kategorie.ToLower() : "");
-                OnChanged();
-            }
-        }
-
-        public bool PlaylistAZ
-        {
-            get { return PlayerVM.PlaylistAZ; }            
-        }
-
-        private bool _mouseOnSubObject = false;
-        public bool MouseOnSubObject
-        {
-            get { return _mouseOnSubObject; }
-            set { _mouseOnSubObject = value; }
-        }
-
+        /*
         public bool Changed
         {
             get { return _changed; }
@@ -123,18 +86,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             get { return _sollBtnGedrueckt; }
             set { _sollBtnGedrueckt = value; }
-        }
-
-        public Audio_Playlist APlaylist
-        {
-            get { return _aPlaylist; }
-            set { _aPlaylist = value; }
-        }
-
-        public Audio_Theme ATheme
-        {
-            get { return _aTheme; }
-            set { _aTheme = value; }
         }
 
         public List<Audio_Playlist_Titel> APlaylistTitel
@@ -208,6 +159,81 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _visuell; }
             set { _visuell = value; }
         }
+          
+         */
+
+        [DependentProperty("Reihenfolge")]
+        public bool IstErsteZeile
+        {
+            get
+            {
+                return PlayerVM.FilteredEditorListBoxItemListe.Count > 0 ?
+                  PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).First().APlaylist == APlaylist :
+                  true;
+            }
+            set { OnChanged(); }
+        }
+
+        [DependentProperty("Reihenfolge")]
+        public bool IstLetzteZeile
+        {
+            get
+            {
+                return (APlaylist == null || PlayerVM.FilteredEditorListBoxItemListe.Count < 1) ?
+                    true :
+                    PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).Last().APlaylist == APlaylist;
+            }
+            set { OnChanged(); }
+        }
+
+        [DependentProperty("APlaylist"), DependentProperty("AktKlangPlaylist")]
+        public string ListBoxItemIconBild
+        {
+            get
+            {
+                if (APlaylist != null)
+                    return (APlaylist.Hintergrundmusik ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" :
+                                                         "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png");
+                else
+                    return "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/copy.png";
+            }
+        }
+
+        public lbEditorItem Item
+        {
+            get { return _item; }
+            set
+            {
+                _item = value;
+                _suchtext = (this.ATheme != null? ATheme.Name.ToLower(): this.APlaylist.Name.ToLower()) + (Kategorie != null ? Kategorie.ToLower() : "");
+                OnChanged();
+            }
+        }
+
+        public bool PlaylistAZ
+        {
+            get { return PlayerVM.PlaylistAZ; }            
+        }
+
+        private bool _mouseOnSubObject = false;
+        public bool MouseOnSubObject
+        {
+            get { return _mouseOnSubObject; }
+            set { _mouseOnSubObject = value; }
+        }
+
+        public Audio_Playlist APlaylist
+        {
+            get { return _aPlaylist; }
+            set { _aPlaylist = value; }
+        }
+
+        public Audio_Theme ATheme
+        {
+            get { return _aTheme; }
+            set { _aTheme = value; }
+        }
+
 
         public Type ItemType
         {
@@ -241,8 +267,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
 
         #endregion
-
-
+        
         #region //---- KONSTRUKTOR ----
 
         public lbEditorItemVM()
@@ -255,8 +280,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         #endregion
 
         #region //---- INSTANZMETHODEN ----
-
-
+        
         /// <summary>
         /// Prüft, ob 'suchWort' im Namen, der Kategorie oder in den Tags vorkommt.
         /// </summary>
@@ -282,7 +306,17 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
             return true;
         }
+                
+        public event EventHandler lbEditorItemAddEvent;
+        private void lbEditorItemAdd(object sender)
+        {
+            if (lbEditorItemAddEvent != null)
+                lbEditorItemAddEvent(this, new EventArgs());
+        }
 
+        #endregion
+
+        #region //---- COMMANDS ----
 
         private Base.CommandBase _onBtnExportLbEditor = null;
         public Base.CommandBase OnBtnExportLbEditor
@@ -321,27 +355,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        [DependentProperty("Reihenfolge")]
-        public bool IstErsteZeile
-        {
-            get
-            { return PlayerVM.FilteredEditorListBoxItemListe.Count > 0?  
-                PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).First().APlaylist == APlaylist : 
-                true; }
-            set { OnChanged(); }
-        }
-
-        [DependentProperty("Reihenfolge")]
-        public bool IstLetzteZeile
-        {
-            get
-            {
-                return (APlaylist == null || PlayerVM.FilteredEditorListBoxItemListe.Count < 1) ?
-                    true :
-                    PlayerVM.FilteredEditorListBoxItemListe.OrderBy(t => t.APlaylist.Reihenfolge).Last().APlaylist == APlaylist;
-            }
-            set { OnChanged(); }
-        }
 
         private Base.CommandBase _onReihenfolgePListMoveUp;
         public Base.CommandBase OnReihenfolgePListMoveUp
@@ -550,42 +563,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        /*
-        private void InventarAdd(object sender)
-        {
-            if (InventarAddEvent != null)
-                InventarAddEvent(this, new EventArgs());
-        }
-
-        public event EventHandler InventarAddEvent;
-
         #endregion
 
-        #region //---- INotifyPropertyChanged Member ----
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-        */
-
-        public event EventHandler lbEditorItemAddEvent;
-        private void lbEditorItemAdd(object sender)
-        {
-            if (lbEditorItemAddEvent != null)
-                lbEditorItemAddEvent(this, new EventArgs());
-        }
-
-
-        #endregion
-
-
-
+        #region //---- Kalkulationen & Export ----
+        
         private string validateString(string s)
         {
             while (s.Contains("--"))
@@ -654,7 +635,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }
             }
         }
-
+        #endregion
     }
 
 }

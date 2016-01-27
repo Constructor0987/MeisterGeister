@@ -402,11 +402,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
     #endregion
 
-    public class AudioPlayerViewModel : Base.ToolViewModelBase
+    public class AudioPlayerViewModel : Base.ViewModelBase
     {
         #region //---- AudioPlayer Close EVENT ----
         
-        public void OnAudioTabClose(object sender, EventArgs e)
+        public void OnAudioTabClose(object sender, RoutedEventArgs e)
         {
             KlangProgBarTimer.Stop();
             MusikProgBarTimer.Stop();
@@ -454,9 +454,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         {
             setStdPfad();
             StdPadAufC = stdPfad.Contains("c:\\") || stdPfad.Contains("C:\\");
-            RequestClose += OnAudioTabClose;
             Init();
         }
+
         #endregion
 
         #region //---- INSTANZMETHODEN ----
@@ -2406,8 +2406,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 lbEditorItemVM lbi = new lbEditorItemVM();
                 lbi.APlaylist = aplylist;
                 lbi.Name = aplylist.Name;
-                lbi.IstMusik = aplylist.Hintergrundmusik;
-                lbi.PPlaylistName = lbi.Name;
+                //lbi.IstMusik = aplylist.Hintergrundmusik;
+                //lbi.PPlaylistName = lbi.Name;
                 lbi.PlayerVM = this;
                 lbi.Item = lbi.Item;
                 
@@ -2425,7 +2425,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 lbEditorItemVM lbi = new lbEditorItemVM();
                 lbi.ATheme = aTheme;
                 lbi.Name = aTheme.Name;
-                lbi.PPlaylistName = aTheme.Name;
+                //lbi.PPlaylistName = aTheme.Name;
                 lbi.PlayerVM = this;
                 lbi.Item = lbi.Item;
                 lbiThemeList.Add(lbi);
@@ -2702,6 +2702,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void FavPlaylistClick(object obj)
         {
             Audio_Playlist aPlay = (obj as ToggleButton).Tag as Audio_Playlist;
+            if (aPlay == null) return;
             if (aPlay.Favorite == null || !aPlay.Favorite.Value)
                 FavPlaylist.Remove(aPlay);
             else
@@ -4226,7 +4227,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         /// </summary>
         private void FilterMusikTitelListe()
         {
-            if (HintergrundMusikListe == null) return;
             string[] suchWorte = _suchTextMusikTitel.ToLower().Split(' ');
             
             HintergrundMusikListe.ForEach(delegate(ListBoxItem lbi) { lbi.Visibility = Visibility.Visible; });
@@ -5664,19 +5664,18 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                     grpobj._listZeile[zeile].istPause = false;
                     grpobj._listZeile[zeile].istLaufend = false;
-                    grpobj._listZeile[zeile].istStandby = true;// !(grpobj._listZeile[zeile].playMediaFailed > 4);
-                    grpobj._listZeile[zeile].playable = true;// !(grpobj._listZeile[zeile].playMediaFailed > 4);
+                    grpobj._listZeile[zeile].istStandby = true;
+                    grpobj._listZeile[zeile].playable = true;
+                                        
+                    // *** VORGANG WENN ES ZU OFT VORGEKOMMEN IST, DASS DER TITEL NICHT ABGESPIELT WERDEN KANN
+                    // *** WIRD DER TITEL ALS nicht abspielbar GEKENNZEICHNET
 
-                    //if (!(grpobj._listZeile[zeile].playMediaFailed > 4) &&
-                    //    grpobj._listZeile[zeile].audioZeileVM != null)
-                    //    grpobj._listZeile[zeile].audioZeileVM.FilePlayable = false;
-
-                    if ((grpobj._listZeile[zeile].playMediaFailed > 4))
-                    {
-                        grpobj._listZeile[zeile].playable = false;
-                        if (grpobj._listZeile[zeile].audioZeileVM != null)
-                            grpobj._listZeile[zeile].audioZeileVM.FilePlayable = false;
-                    }
+                    //if ((grpobj._listZeile[zeile].playMediaFailed > 4))
+                    //{
+                    //    grpobj._listZeile[zeile].playable = false;
+                    //    if (grpobj._listZeile[zeile].audioZeileVM != null)
+                    //        grpobj._listZeile[zeile].audioZeileVM.FilePlayable = false;
+                    //}
 
                     foreach (MusikZeile mZeile in ErwPlayerGeräuscheListItemListe)
                     {
@@ -6471,11 +6470,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                         int loops = 0;
                                         while (!grpobj._listZeile.First(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]).istStandby &&
                                                (grpobj._listZeile.FindAll(t => t.istStandby).Count != 0) && 
-                                               loops < 5 * grpobj.NochZuSpielen.Count)                         // sicher gehen, dass kein unendlich-Loop entsteht
+                                               loops < 10 * grpobj.NochZuSpielen.Count)                         // sicher gehen, dass kein unendlich-Loop entsteht
                                         {
                                             neuPos = (new Random()).Next(0, grpobj.NochZuSpielen.Count);
                                             loops++;
                                         }
+                                        if (loops > 10 * grpobj.NochZuSpielen.Count)
+                                            neuPos = (new Random()).Next(0, grpobj.NochZuSpielen.Count);
                                     }
 
                                     Guid zuspielendeGuid = grpobj.NochZuSpielen[neuPos];

@@ -73,5 +73,13 @@ namespace MeisterGeister.View.AudioPlayer
                 VM.AudioPlayerVM.UpdateFavorites();
             }
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Audio_Playlist aPlaylist = (sender as MenuItem).Tag as Audio_Playlist;
+            aPlaylist.Favorite = false;
+            Global.ContextAudio.Update<Audio_Playlist>(aPlaylist);
+            VM.AudioPlayerVM.UpdateFavorites();
+        }
     }
 }
