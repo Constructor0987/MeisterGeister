@@ -990,6 +990,7 @@
     <Compile Include="View\General\LiteraturControl.xaml.cs">
       <DependentUpon>LiteraturControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\MouseOverBehavior.cs" />
     <Compile Include="View\General\OpaqueClickableImage.cs" />
     <Compile Include="View\General\ShowSignConverter.cs" />
     <Compile Include="View\General\SolidBrushToColorConverter.cs" />

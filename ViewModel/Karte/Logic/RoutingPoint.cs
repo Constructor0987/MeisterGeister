@@ -13,11 +13,24 @@ namespace MeisterGeister.ViewModel.Karte.Logic
         public double ActualY { get; private set; }
         public double X { get { return ActualX - 20; } }
         public double Y { get { return ActualY - 30; } }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value != _isSelected)
+                {
+                    Set(ref _isSelected, value);
+                }
+            }
+        }
         public string Name { get; set; }
         public string PointType { get; private set; }
         public string Image { get; private set; }
         public string Wegtyp { get; set; }
         public double Strecke { get; set; }
+        public double AggregatedStrecke { get; set; }
         public double RouteToEnd { get; set; }
         public double MovementModifier { get; set; }
         public double Duration
@@ -25,6 +38,13 @@ namespace MeisterGeister.ViewModel.Karte.Logic
             get
             {
                 return Math.Round(Strecke / (3.75 * MovementModifier), 2);
+            }
+        }
+        public double AggregatedDuration
+        {
+            get
+            {
+                return Math.Round(AggregatedStrecke / (3.75 * MovementModifier), 2);
             }
         }
 

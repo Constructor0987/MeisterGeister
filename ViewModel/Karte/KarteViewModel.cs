@@ -16,6 +16,7 @@ using MeisterGeister.Model.Service;
 using MeisterGeister.Model;
 using System.Collections.ObjectModel;
 using MeisterGeister.ViewModel.Karte.Logic;
+using System.Windows.Input;
 
 namespace MeisterGeister.ViewModel.Karte
 {
@@ -423,40 +424,59 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
+        private RoutingPoint selectedRoutingPoint;
+        public RoutingPoint SelectedRoutingPoint
+        {
+            get
+            {
+                return selectedRoutingPoint;
+            }
+            set
+            {
+                var obj = value as RoutingPoint;
+                if (value != selectedRoutingPoint)
+                {
+                    if(selectedRoutingPoint != null)
+                        selectedRoutingPoint.IsSelected = false;
+                    if (obj != null)
+                        value.IsSelected = true;
+                    Set(ref selectedRoutingPoint, value);
+                }
+            }
+        }
+
         private ObservableCollection<RoutingPoint> GetRouteDescription()
         {
-            var routingPoints = Lines.OfType<RoutingPoint>().ToList();
-            var routingPointsWithoutJunctions = new ObservableCollection<RoutingPoint>();
-
+            var routingPoints = Lines.OfType<RoutingPoint>();
+            var resultingPoints = new ObservableCollection<RoutingPoint>();
+            
             if (routingPoints.Any())
             {
-                routingPointsWithoutJunctions.Add(routingPoints.First());
-                routingPoints.Remove(routingPoints.First());
+                resultingPoints.Add(routingPoints.First());
                 double strecke = 0;
                 double totalDuration = 0;
-                RoutingPoint lastRoutingPoint = null;
+                double totalStrecke = 0;
 
-                foreach (var routingPoint in routingPoints)
+                for (int i = 1; i < routingPoints.Count(); i++)
                 {
+                    var routingPoint = routingPoints.ElementAt(i);
                     strecke += routingPoint.Strecke;
 
                     if (!string.IsNullOrEmpty(routingPoint.Name)) //|| routingPoint.PointType == "Kreuzung")
                     {
-                        var result = (RoutingPoint)routingPoint.Clone();
+                        var result = routingPoint;
                         result.Strecke = Math.Round(strecke, 2);
+                        resultingPoints.Add(result);
+                        totalStrecke += result.Strecke;
                         totalDuration += result.Duration;
-                        //if (routingPoint.PointType == "Kreuzung")
-                        //    result.Name = result.PointType;
-                        routingPointsWithoutJunctions.Add(result);
                         strecke = 0;
                     }
-                    lastRoutingPoint = routingPoint;
                 }
-                RoutingSummary = new RoutingSummary(routingPointsWithoutJunctions.Sum(p => p.Strecke),
+                RoutingSummary = new RoutingSummary(totalStrecke,
                     SelectedFortbewegung.Name, Math.Round(totalDuration / 8, 2));
             }
 
-            return routingPointsWithoutJunctions;
+            return resultingPoints;
         }
 
         private ObservableCollection<ViewModelBase> _lines;

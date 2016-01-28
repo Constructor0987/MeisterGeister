@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="MeisterGeister.View.Karte.KarteView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -15,7 +16,7 @@
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="600"
-             SizeChanged="UserControl_SizeChanged">
+             SizeChanged="UserControl_SizeChanged" x:Name="view">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
         <DataTemplate x:Key="AutoCompleteBoxStartingItemTemplate">
@@ -98,7 +99,7 @@
                         <ItemsControl.Resources>
                             <DataTemplate DataType="{x:Type vmlogic:RoutingPoint}">
                                 <Image Source="{Binding Image}" Width="40" Height="40" RenderTransformOrigin="0.5, 0.5" Stretch="Fill" >
-                                    <!--<Image.Style>
+                                    <Image.Style>
                                         <Style TargetType ="{x:Type Image}">
                                             <Setter Property="RenderTransform">
                                                 <Setter.Value>
@@ -106,32 +107,27 @@
                                                 </Setter.Value>
                                             </Setter>
                                             <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    // Welche Trigger setzt man hier am sinnvollsten, 
-                                                    // um auf das selektierte Grid aus WayPointItems zu lauschen?
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding ElementName=WayPointItem, Path=IsMouseOver}" Value="True"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.EnterActions>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <DataTrigger.EnterActions>
                                                         <BeginStoryboard>
                                                             <Storyboard>
                                                                 <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.2" Duration="0:0:0.2" />
                                                                 <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.2" Duration="0:0:0.2" />
                                                             </Storyboard>
                                                         </BeginStoryboard>
-                                                    </MultiDataTrigger.EnterActions>
-                                                    <MultiDataTrigger.ExitActions>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
                                                         <BeginStoryboard>
                                                             <Storyboard>
                                                                 <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1" Duration="0:0:0.2" />
                                                                 <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:0.2" />
                                                             </Storyboard>
                                                         </BeginStoryboard>
-                                                    </MultiDataTrigger.ExitActions>
-                                                </MultiDataTrigger>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </Image.Style>-->
+                                    </Image.Style>
                                 </Image>
                             </DataTemplate>
                         </ItemsControl.Resources>
@@ -175,7 +171,7 @@
                                     <toolkit:AutoCompleteBox ItemsSource="{Binding Orte}" SelectedItem="{Binding RouteEnding, Mode=TwoWay}"  
                                                             ValueMemberPath="Name" ItemTemplate="{StaticResource AutoCompleteBoxEndingItemTemplate}">
                                     </toolkit:AutoCompleteBox>
-                                    <GroupBox Header="Optionen" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth}">
+                                    <GroupBox Header="Optionen" >
                                         <WrapPanel MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
                                             <CheckBox Content="Flüsse meiden" IsChecked="{Binding IsAvoidRivers}" />
                                             <CheckBox Content="Meere meiden" IsChecked="{Binding IsAvoidSeas}" Margin="5,0,0,0" />
@@ -237,13 +233,13 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.Resources>
                                         <DataTemplate DataType="{x:Type vmlogic:RoutingPoint}">
-                                            <Grid>
+                                            <Grid General:MouseOverBehaviour.MouseOver="{Binding DataContext.SelectedRoutingPoint, ElementName=view}">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition />
                                                     <RowDefinition />
                                                 </Grid.RowDefinitions>
                                             
-                                                <Grid x:Name="WayPointItem" Grid.Row="0">
+                                                <Grid x:Name="WayPointItem" Grid.Row="0" >
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="1*"/>
                                                         <ColumnDefinition Width="4*"/>
