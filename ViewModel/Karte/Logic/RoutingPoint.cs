@@ -30,23 +30,16 @@ namespace MeisterGeister.ViewModel.Karte.Logic
         public string Image { get; private set; }
         public string Wegtyp { get; set; }
         public double Strecke { get; set; }
-        public double AggregatedStrecke { get; set; }
         public double RouteToEnd { get; set; }
         public double MovementModifier { get; set; }
         public double Duration
         {
             get
             {
-                return Math.Round(Strecke / (3.75 * MovementModifier), 2);
+                return _travelService.GetTravelDuration(Strecke, MovementModifier);
             }
         }
-        public double AggregatedDuration
-        {
-            get
-            {
-                return Math.Round(AggregatedStrecke / (3.75 * MovementModifier), 2);
-            }
-        }
+        private TravelService _travelService;
 
         public RoutingPoint(double x, double y, string name, string wegtyp, double strecke, double routeToEnd, double movementModifier)
         {
@@ -57,6 +50,7 @@ namespace MeisterGeister.ViewModel.Karte.Logic
             this.Wegtyp = wegtyp;
             this.RouteToEnd = routeToEnd;
             this.MovementModifier = movementModifier;
+            this._travelService = new TravelService();
         }
 
         public RoutingPoint(double x, double y, string name, string wegtyp, double strecke, double routeToEnd, double movementModifier, 
