@@ -17,6 +17,7 @@ using MeisterGeister.Model;
 using System.Collections.ObjectModel;
 using MeisterGeister.ViewModel.Karte.Logic;
 using System.Windows.Input;
+using MeisterGeister.Logic.General.AStar;
 
 namespace MeisterGeister.ViewModel.Karte
 {
@@ -297,6 +298,22 @@ namespace MeisterGeister.ViewModel.Karte
 
         #region Routenplaner
 
+        public ObservableCollection<Node> _allNodes;
+        public ObservableCollection<Node> AllNodes
+        {
+            get
+            {
+                return _allNodes;
+            }
+            set
+            {
+                if(value != _allNodes)
+                {
+                    Set(ref _allNodes, value);
+                }
+            }
+        }
+
         private bool _isToleranceActive = false;
         public bool IsToleranceActive
         {
@@ -561,9 +578,8 @@ namespace MeisterGeister.ViewModel.Karte
                 RouteDescribingConditions conditions = GetRouteDescribingConditions();
                 var routeDescribingService = new RouteDescribingService();
                 this.Lines = routeDescribingService.DrawRoute(nodes, conditions);
-
-                if (IsShowStages)
-                    ShowStages(nodes.Select(o => o.RoutingStrecke).Where(s => s != null), conditions, routeDescribingService);
+                //if (IsShowStages)
+                //    ShowStages(nodes.Select(o => o.RoutingStrecke).Where(s => s != null), conditions, routeDescribingService);
 
                 Global.SetIsBusy(false);
             }
@@ -586,6 +602,9 @@ namespace MeisterGeister.ViewModel.Karte
             SearchParametersRouting searchingParameters = CreateSearchingParameters();
             var service = new RoutingService();
             IEnumerable<Ort> result = service.GetShortestPath(searchingParameters);
+#if DEBUG
+            this.AllNodes = new ObservableCollection<Node>(service.AllNodes);
+#endif
             return result;
         }
 

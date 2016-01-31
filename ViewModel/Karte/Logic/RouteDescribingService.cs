@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using MeisterGeister.Logic.Karte;
 
 namespace MeisterGeister.ViewModel.Karte.Logic
 {

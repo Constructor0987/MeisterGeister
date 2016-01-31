@@ -9,6 +9,7 @@
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
              xmlns:Reise="clr-namespace:MeisterGeister.View.Reise"
+             xmlns:AStar="clr-namespace:MeisterGeister.Logic.General.AStar"
              xmlns:LogicKarte="clr-namespace:MeisterGeister.Logic.Karte"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
@@ -130,6 +131,41 @@
                                         </Style>
                                     </Image.Style>
                                 </Image>
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding Path=AllNodes}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas x:Name="testPoints" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
+                                <Setter Property="Canvas.ZIndex" Value="2" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type AStar:Node}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="0" Text="{Binding LengthFromStartToEnd, StringFormat={}{0:#.00}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="2" Text="{Binding ID}"/>
+                                    <Border Background="Red" BorderBrush="Red" BorderThickness="3" Grid.Row="1" Grid.Column="1" CornerRadius="3"/>
+                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="0" Text="{Binding LengthFromStart, StringFormat={}{0:#.00}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="2" Text="{Binding LengthToEnd, StringFormat={}{0:#.00}}"/>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.Resources>
                     </ItemsControl>
