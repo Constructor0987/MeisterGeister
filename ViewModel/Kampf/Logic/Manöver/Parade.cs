@@ -16,9 +16,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
         }
 
-        public override String Name
+        protected override void Init()
         {
-            get { return "Parade"; }
+            base.Init();
+            Name = "Abwehraktion";
+            Literatur = "WdS 66";
+        }
+
+        protected override void Erfolg(IKämpfer ziel)
+        {
+            //Bei Erfolg passiert garnichts
         }
     }
 }

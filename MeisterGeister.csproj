@@ -725,6 +725,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Finte.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\GezielterStich.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Todesstoß.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\ZeitImKampf.cs" />
     <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
     <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
@@ -772,7 +773,6 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Angriffsaktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\KeineAktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Gegenhalten.cs" />
-    <Compile Include="ViewModel\Kampf\Logic\Manöver\LängerfristigeHandlung.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\ZusätzlicheAngriffsaktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\TodVonLinks.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Parade.cs" />

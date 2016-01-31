@@ -31,11 +31,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Kampf()
         {
             Kämpfer = new KämpferInfoListe(this);
-            Kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             Kämpfer.CollectionChanged += Kämpfer_CollectionChanged;
             InitiativListe = new InitiativListe(this);
             InitiativListe.CollectionChanged += InitiativListe_CollectionChanged;
-            INIPhase = 0;
+            //INIPhase = 0;
             Kampfrunde = 0;
         }
 
@@ -62,21 +61,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             private set { _kämpfer = value; }
         }
 
-        private float _iniphase;
-        public float INIPhase
+        public int INIPhase
         {
-            get { return _iniphase; }
-            set { _iniphase = value; OnChanged("INIPhase"); }
+            get { return AktuelleAktion == null ? 0 : (int)AktuelleAktion.Start.InitiativPhase; }
         }
-
-        public delegate void NeueKampfrundeEventHandler(object sender, int kampfrunde);
-        public event NeueKampfrundeEventHandler OnNeueKampfrunde;
 
         private int _kampfrunde;
         public int Kampfrunde
         {
             get { return _kampfrunde; }
-            private set { 
+            private set
+            {
                 _kampfrunde = value;
                 Kampfzeit = new TimeSpan(0, 0, 3 * Math.Max(value - 1, 0));
                 OnChanged("Kampfrunde");
@@ -94,20 +89,27 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        private ZeitImKampf aktuelleAktionszeit;
+        public ZeitImKampf AktuelleAktionszeit
+        {
+            get { return aktuelleAktionszeit; }
+            private set
+            {
+                aktuelleAktionszeit = value;
+                OnChanged("AktuelleAktionszeit");
+                AktuelleAktion = InitiativListe.First(mi => mi.Aktionszeiten.Contains(value));
+            }
+        }
+
+
         private ManöverInfo aktuelleAktion;
         public ManöverInfo AktuelleAktion
         {
             get { return aktuelleAktion; }
-            set { 
+            private set
+            {
                 aktuelleAktion = value;
                 OnChanged("AktuelleAktion");
-                // NotifyChanged IsAktuell
-                foreach (ManöverInfo mi in InitiativListe)
-                {
-                    mi.OnChanged("IsAktuell");
-                    if (mi.KämpferInfo != null)
-                        mi.KämpferInfo.OnChanged("IsAktuell");
-                }
             }
         }
 
@@ -122,26 +124,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public ManöverInfo Next()
         {
-            if (Kampfrunde < 1)
-                KampfBeginn();
             if (AktuelleAktion != null && !AktuelleAktion.Ausgeführt)
             {
                 //Was muss in ManöverInfo und was ins Manöver?
 
                 //Die aktuelle Aktion wurde noch nicht ausgeführt
                 //es wurde kein Ergebnis zugewiesen.
-                if (!AktuelleAktion.Manöver.ErgebnisseAkzeptiert)
-                {
-                    //das eingetragene bzw. vorgeschlagene ProbenErgebnis anwenden
-                    AktuelleAktion.Manöver.ErgebnisseAkzeptiert = true;
-                }
-                else
-                {
-                    //Next darf nicht weitergehen, wenn die letzte Aktion des Manövers dran ist und die Auswirkungen noch nicht bestätigt wurden (neues feld im Manöver oder ManöverInfo?)
-                    //if(AktuelleAktion.Manöver.VerbleibendeDauer == 1)
-                }
+                //if (!AktuelleAktion.Manöver.ErgebnisseAkzeptiert)
+                //{
+                //    //das eingetragene bzw. vorgeschlagene ProbenErgebnis anwenden
+                //    AktuelleAktion.Manöver.ErgebnisseAkzeptiert = true;
+                //}
+                //else
+                //{
+                //    //Next darf nicht weitergehen, wenn die letzte Aktion des Manövers dran ist und die Auswirkungen noch nicht bestätigt wurden (neues feld im Manöver oder ManöverInfo?)
+                //    //if(AktuelleAktion.Manöver.VerbleibendeDauer == 1)
+                //}
                 //aktion wurde in dieser Runde bearbeitet, aktionen werden verbraucht
-                AktuelleAktion.Ausgeführt = true;
+                AktuelleAktion.Manöver.Aktion();
                 //irgendwie müssen die Auswirkungen noch zum tragen kommen und bestätigt werden
                 //AktuelleAktion.Manöver.AuswirkungenAkzeptiert
 
@@ -156,46 +156,48 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //        //Hier muss noch mehr am Konzept gearbeitet werden.
                 //    }
                 //}
-                UmwandelnMöglich = false;
+                //UmwandelnMöglich = false;
             }
 
-            //neues Manöver auswählen und neue INIPhase setzen
-            foreach (ManöverInfo mi in InitiativListe)
+            ZeitImKampf next;
+            if (AktuelleAktion != null)
             {
-                if (!(mi.Manöver is Manöver.KeineAktion) && !mi.Ausgeführt)
-                {
-                    AktuelleAktion = mi;
-                    INIPhase = mi.InitiativeStart;
-                    return mi;
-                    //in diesem Zustand muss das UI die Manöverdetails und die Proben anzeigen.
-                }
+                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit > AktuelleAktionszeit).OrderBy(zeit => zeit).First();
             }
-            NeueKampfrunde();
-            return null;
+            else
+            {
+                NeueKampfrunde();
+                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit.Kampfrunde == Kampfrunde).OrderBy(zeit => zeit).First();
+            }
+            AktuelleAktionszeit = next;
+            return AktuelleAktion;
         }
 
         public void NeueKampfrunde()
         {
-            //Alle Manöver, die noch nicht ausgeführt wurden
-            var nichtAusgeführt = InitiativListe.Where(mi => mi.Ausgeführt == false);
-            //TODO JT: entweder warnen
-            foreach (var mi in nichtAusgeführt)
-            {
-                //oder einfach als ausgeführt setzen
-                if (mi.Manöver != null)
-                {
-                    var probe = mi.Manöver.Ausführen();
-                    //Siehe kommentar in next() ... das design ist mist.
-                    //Wenn die probe ignoriert wird passiert auch nichts weiter, ausser dass die Verbleibenden Aktionen sinken.
-                }
-                else
-                    mi.Ausgeführt = true;
-            }
+            ////Alle Manöver, die noch nicht ausgeführt wurden
+            //var nichtAusgeführt = InitiativListe.Where(mi => mi.Ausgeführt == false);
+            ////TODO JT: entweder warnen
+            //foreach (var mi in nichtAusgeführt)
+            //{
+            //    //oder einfach als ausgeführt setzen
+            //    if (mi.Manöver != null)
+            //    {
+            //        var probe = mi.Manöver.Ausführen();
+            //        //Siehe kommentar in next() ... das design ist mist.
+            //        //Wenn die probe ignoriert wird passiert auch nichts weiter, ausser dass die Verbleibenden Aktionen sinken.
+            //    }
+            //    else
+            //        mi.Ausgeführt = true;
+            //}
             //Alte Ansagen löschen
-            InitiativListe.LöscheBeendeteManöver();
-            //Modifikatoren entfernen
+            //InitiativListe.LöscheBeendeteManöver();
+
+            Kampfrunde++;
+
             foreach (KämpferInfo ki in Kämpfer)
             {
+                //Modifikatoren entfernen
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
 
                 //sollte in KämpferInfo rein
@@ -204,7 +206,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ki.VerbrauchteFreieAktionen = 0;
 
                 ki.AktionenBerechnen();
-                ki.StandardAktionenSetzen();
+                ki.StandardAktionenSetzen(Kampfrunde);
 
                 ki.VerbrauchteAbwehraktionen = 0;
                 ki.VerbrauchteAngriffsaktionen = 0;
@@ -212,31 +214,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)
             }
-            Kampfrunde++;
-            if (InitiativListe.Count > 0)
-                INIPhase = InitiativListe[0].InitiativeStart;
-            else
-                INIPhase = 0;
+
+            //if (InitiativListe.Count > 0)
+            //    INIPhase = InitiativListe[0].InitiativeStart;
+            //else
+            //    INIPhase = 0;
             //im UI markieren, dass man nun bis zur ersten Aktions-Ansage umwandeln kann
-            UmwandelnMöglich = true;
+            //UmwandelnMöglich = true;
             //eventuell in die Property?
-            if (OnNeueKampfrunde != null)
-                OnNeueKampfrunde(this, _kampfrunde);
 
             Log(string.Format("Kampfrunde {0} gestartet", Kampfrunde));
         }
 
-        bool _umwandelnMöglich = true;
-        public bool UmwandelnMöglich
-        {
-            get { return _umwandelnMöglich; }
-            private set { _umwandelnMöglich = value; OnChanged("UmwandelnMöglich"); }
-        }
-
         public void KampfNeuStarten()
         {
-            NeueKampfrunde(); // KR abschließen
             KampfEnde();
+            AktuelleAktionszeit = default(ZeitImKampf);
+            AktuelleAktion = null;
+            InitiativListe.Clear();
+            Kampfrunde = 0;
+            NeueKampfrunde(); // KR abschließen
 
             // INI neu ermitteln
             foreach (var kämpferInfo in Kämpfer)
@@ -244,22 +241,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (kämpferInfo != null)
                     kämpferInfo.Initiative = kämpferInfo.Kämpfer.Initiative();
             }
-            Kampfrunde = 0;
+
         }
 
-        public void KampfBeginn()
-        {
-            //TODO JT: Globales Datum holen und mit Uhrzeit in Kampfbeginn abspeichern.
-            //TODO: Die Kampfzeit wird für neue Modifikatoren in Erstellt abgelegt.
-            Kampfrunde = 1;
-            UmwandelnMöglich = true;
-            if (OnNeueKampfrunde != null)
-                OnNeueKampfrunde(this, _kampfrunde);
-
-            Log(string.Format("Kampfrunde {0} gestartet", Kampfrunde));
-        }
-
-        public void KampfEnde()
+        private void KampfEnde()
         {
             foreach (var ki in Kämpfer)
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampf);
@@ -276,30 +261,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
         }
 
-        public void Kämpfer_PropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == "Sort")
-            {
-                //INI Liste sortieren
-                InitiativListe.Sort();
-            }
-            else if (args.PropertyName == "Angriffsaktionen")
-            {
-                KämpferInfo ki = null;
-                if (sender is KämpferInfo)
-                    ki = sender as KämpferInfo;
-                if (ki != null)
-                    ki.StandardAktionenSetzen();
-            }
-        }
-
         public void Kämpfer_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             if (args.Action == NotifyCollectionChangedAction.Remove)
                 InitiativListe.Remove((KämpferInfo)args.OldItems[0]);
             else if (args.Action == NotifyCollectionChangedAction.Add)
-                ((KämpferInfo)args.NewItems[0]).StandardAktionenSetzen();
-                //InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
+                ((KämpferInfo)args.NewItems[0]).StandardAktionenSetzen(Kampfrunde);
+            //InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
         }
 
         public void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -309,14 +277,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (args.Action == NotifyCollectionChangedAction.Add && !(args.NewItems[0] is Manöver.KeineAktion))
                 UmwandelnMöglich = false;
              * */
-        }
-
-        private void StandardAktionenSetzen()
-        {
-            foreach (KämpferInfo ki in Kämpfer)
-            {
-                ki.StandardAktionenSetzen();
-            }
         }
 
         /// <summary>

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class Angriffsaktion : Manöver
+    public abstract class Angriffsaktion : Manöver
     {
         public Angriffsaktion(KämpferInfo ausführender)
             : base(ausführender)
@@ -19,19 +20,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender, waffe, ziel)
         { }
 
-        public override String Name
+        protected override void Init()
         {
-            get { return "Angriffsaktion"; }
+            base.Init();
+            Angriffsaktionen = 1;
         }
 
-        protected override void OnAktion()
+        protected override IEnumerable<Probe> ProbenAnlegen()
         {
-            //TODO JT: Wenn AusdauerImKampf
-            //Wenn Waffe schwerer als KK*10 Unzen
-            // Ausführender.AusdauerAktuell--;
-            //Wenn BE / 3 > 0
-            // Ausführender.AusdauerAktuell-= BE/3;
-            base.OnAktion();
+            Probe p = new Probe();
+            p.Probenname = Name;
+            p.Werte = new int[] { Ausführender.Kämpfer.AT ?? 0 };
+            p.WerteNamen = "AT";
+            yield return p;
         }
+
+        //TODO JT: Wenn AusdauerImKampf
+        //Wenn Waffe schwerer als KK*10 Unzen
+        // Ausführender.AusdauerAktuell--;
+        //Wenn BE / 3 > 0
+        // Ausführender.AusdauerAktuell-= BE/3;
     }
 }

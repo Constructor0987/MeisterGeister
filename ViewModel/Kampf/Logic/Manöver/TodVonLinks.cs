@@ -5,8 +5,18 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class TodVonLinks : Angriffsaktion
+    public class TodVonLinks : Attacke
     {
+        public static new bool BeherrschtManöver(KämpferInfo ausführender)
+        {
+            if (ausführender == null)
+                return false;
+            if (ausführender.Kämpfer is Model.Held)
+                return ((Model.Held)ausführender.Kämpfer).HatSonderfertigkeitUndVoraussetzungen("Tod von Links", true);
+            else //TODO evtl check auf Kampfregel
+                return false;
+        }
+
         public TodVonLinks(KämpferInfo ausführender)
             : base(ausführender)
         { }
@@ -16,19 +26,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
         }
 
-        public override String Name
+        protected override void Init()
         {
-            get { return "Tod von Links"; }
-        }
-
-        public static new bool BeherrschtManöver(KämpferInfo ausführender)
-        {
-            if (ausführender == null)
-                return false;
-            if (ausführender.Kämpfer is Model.Held)
-                return ((Model.Held)ausführender.Kämpfer).HatSonderfertigkeitUndVoraussetzungen("Tod von Links", true);
-            else //TODO evtl check auf Kampfregel
-                return false;
+            base.Init();
+            Name = "Tod von Links";
+            Literatur = "WdS 65";
         }
     }
 }

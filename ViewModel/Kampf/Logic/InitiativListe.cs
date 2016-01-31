@@ -21,14 +21,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             //TODO: Optimieren. Nur die IndexChanged-Events in Gang setzen, die sich auch wirklich geändert haben
             foreach (ManöverInfo info in this)
-                info.OnChanged("Index");
+                info.NotifyIndexChanged();
         }
 
         public ManöverInfo[] this[IKämpfer k]
         {
             get
             {
-                return this.Where(mi => mi.KämpferInfo.Kämpfer == k).ToArray();
+                return this.Where(mi => mi.Manöver.Ausführender.Kämpfer == k).ToArray();
             }
         }
 
@@ -39,20 +39,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { _kampf = value; }
         }
 
-        public void LöscheBeendeteManöver()
-        {
-            RemoveAll(mi => mi.Manöver.VerbleibendeDauer == 0);
-            //Längerfristige Aktionen hier 1-2x neu einstellen.
-            var l = this.Distinct(new KeyEqualityComparer<ManöverInfo, Manöver.Manöver>(m => m.Manöver)).ToList();
-            Clear();
-            foreach (var mi in l)
-            {
-                Add(mi.KämpferInfo, mi.Manöver, 0);
-                if (mi.Manöver.VerbleibendeDauer >= 2)
-                    Add(mi.KämpferInfo, mi.Manöver, -8);
-            }
-            l = null;
-        }
+        //public void LöscheBeendeteManöver()
+        //{
+        //    RemoveAll(mi => mi.Manöver.VerbleibendeDauer == 0);
+        //    //Längerfristige Aktionen hier 1-2x neu einstellen.
+        //    var l = this.Distinct(new KeyEqualityComparer<ManöverInfo, Manöver.Manöver>(m => m.Manöver)).ToList();
+        //    Clear();
+        //    foreach (var mi in l)
+        //    {
+        //        Add(mi.KämpferInfo, mi.Manöver, 0);
+        //        if (mi.Manöver.VerbleibendeDauer >= 2)
+        //            Add(mi.KämpferInfo, mi.Manöver, -8);
+        //    }
+        //    l = null;
+        //}
 
         #region Add and Remove
         public new void Add(ManöverInfo mi)
@@ -62,14 +62,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Sort();
         }
 
-        public void Add(Manöver.Manöver m, int inimod)
+        public void Add(Manöver.Manöver m, int inimod, int kampfrunde)
         {
-            Add(m.Ausführender, m, inimod);
-        }
-
-        public void Add(KämpferInfo ki, Manöver.Manöver m, int inimod)
-        {
-            Add(new ManöverInfo(ki, m, inimod, Kampf.Kampfrunde));
+            Add(new ManöverInfo(m, inimod, kampfrunde));
         }
 
         public new void Remove(ManöverInfo mi)
@@ -117,7 +112,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
         #endregion
 
-        private void OnManöverInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
+        private void OnManöverInfoChanged(object o, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == "Initiative")
                 Sort();
@@ -126,54 +121,53 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 var mi = o as ManöverInfo;
                 if (mi == null)
                     return;
-                //TODO JT: wenn das manöver eine längerfristige Aktion ist oder eine dauer > 1 hat oder mehr als nur eine Angriffsaktion verbraucht,
-                if (mi.KämpferInfo != null && ( mi.Manöver is Manöver.LängerfristigeHandlung || mi.Manöver.VerbleibendeDauer > 1 || mi.Manöver.Angriffsaktionen > 1))
+                //TODO JT: wenn das manöver eine längerfristige Aktion ist oder mehr als nur eine Angriffsaktion verbraucht,
+                if (mi.Manöver.Ausführender != null && (mi.Manöver.VerbleibendeDauer > 1 || mi.Manöver.Angriffsaktionen > 1))
                 {
                     // dann  werden alle nachfolgenden manöverinfos gelöscht
-                    RemoveAll(i => i.KämpferInfo != null && i.KämpferInfo == mi.KämpferInfo && i.InitiativeStart < mi.InitiativeStart);
+                    RemoveAll(i => i.Manöver.Ausführender != null && i.Manöver.Ausführender == mi.Manöver.Ausführender && i.Start < mi.Start);
 
                     //Danach Aktionen berechnen und StandardaktionenSetzen
-                    mi.KämpferInfo.AktionenBerechnen();
+                    mi.Manöver.Ausführender.AktionenBerechnen();
                 }
             }
         }
 
-        public void Sort()
+        private void Sort()
         {
-            var l = Items.ToList();
-            l.Sort(CompareInitiative);
+            var l = this.OrderByDescending(mi => mi.Start).ToList();
             foreach (var item in l)
             {
                 int i1 = IndexOf(item), i2 = l.IndexOf(item);
-                if(i1!=i2)
+                if (i1 != i2)
                     Move(i1, i2);
             }
             OnChanged("Sort");
         }
 
-        /// <summary>
-        /// Höhere Initiative nach oben.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public static int CompareInitiative(ManöverInfo x, ManöverInfo y)
-        {
-            // prüfen auf null-Übergabe
-            if (x == null && y == null) return 0;
-            if (x == null) return 1;
-            if (y == null) return -1;
-            // Vergleich
-            if (x.InitiativeStart > y.InitiativeStart)
-                return -1;
-            if (x.InitiativeStart < y.InitiativeStart)
-                return 1;
-            if (x.KämpferInfo.InitiativeBasis > y.KämpferInfo.InitiativeBasis)
-                return -1;
-            if (x.KämpferInfo.InitiativeBasis < y.KämpferInfo.InitiativeBasis)
-                return 1;
-            return x.KämpferInfo.Kämpfer.Name.CompareTo(y.KämpferInfo.Kämpfer.Name);
-        }
+        ///// <summary>
+        ///// Höhere Initiative nach oben.
+        ///// </summary>
+        ///// <param name="x"></param>
+        ///// <param name="y"></param>
+        ///// <returns></returns>
+        //private static int CompareInitiative(ManöverInfo x, ManöverInfo y)
+        //{
+        //    // prüfen auf null-Übergabe
+        //    if (x == null && y == null) return 0;
+        //    if (x == null) return 1;
+        //    if (y == null) return -1;
+        //    // Vergleich
+        //    if (x.InitiativeStart > y.InitiativeStart)
+        //        return -1;
+        //    if (x.InitiativeStart < y.InitiativeStart)
+        //        return 1;
+        //    if (x.KämpferInfo.InitiativeBasis > y.KämpferInfo.InitiativeBasis)
+        //        return -1;
+        //    if (x.KämpferInfo.InitiativeBasis < y.KämpferInfo.InitiativeBasis)
+        //        return 1;
+        //    return x.KämpferInfo.Kämpfer.Name.CompareTo(y.KämpferInfo.Kämpfer.Name);
+        //}
 
         #region INotifyPropertyChanged
         public new event PropertyChangedEventHandler PropertyChanged;

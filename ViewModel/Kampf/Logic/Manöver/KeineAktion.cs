@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -11,9 +12,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        public override String Name
+        protected override void Erfolg(IKämpfer ziel)
         {
-            get { return "Keine Aktion"; }
+        }
+
+        protected override IEnumerable<Probe> ProbenAnlegen()
+        {
+            return null;
         }
     }
 }

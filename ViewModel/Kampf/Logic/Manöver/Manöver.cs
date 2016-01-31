@@ -17,15 +17,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
     //TODO JT: überarbeiten
     //Probe für ein Manöver wird am Anfang des Manövers ausgeführt.
     //Wenn die VerbleibendeDauer auf 0 geht wird es angewandt.
-    public class Manöver : INotifyPropertyChanged
+    public abstract class Manöver : INotifyPropertyChanged
     {
+
         protected static Object syncRoot = new Object();
         protected static volatile List<Type> _manöverListe = null;
         public static List<Type> ManöverListe
         {
-            get {
-                if (Manöver._manöverListe == null) {
-                    lock (Manöver.syncRoot) {
+            get
+            {
+                if (Manöver._manöverListe == null)
+                {
+                    lock (Manöver.syncRoot)
+                    {
                         if (Manöver._manöverListe == null)
                         {
                             Assembly ass = Assembly.GetAssembly(typeof(Manöver));
@@ -59,7 +63,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
         }
 
-        protected Manöver(KämpferInfo ausführender, double dauer)
+        protected Manöver(KämpferInfo ausführender, int dauer)
             : this(ausführender, new Dictionary<IWaffe, KämpferInfo>(1), dauer)
         {
         }
@@ -69,41 +73,47 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
         }
 
-        protected Manöver(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel, double dauer)
+        protected Manöver(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel, int dauer)
             : this(ausführender, new Dictionary<IWaffe, KämpferInfo>() { { waffe, ziel } }, dauer)
         {
         }
 
         protected Manöver(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel)
-            : this (ausführender, waffe_ziel, 1)
+            : this(ausführender, waffe_ziel, 1)
         {
         }
 
-        protected Manöver(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel, double dauer)
+        protected Manöver(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel, int dauer)
         {
-            Ansage = 0;
             Ausführender = ausführender;
             WaffeZiel = waffe_ziel;
-            Dauer = dauer;
-            VerbleibendeDauer = Dauer;
+            Dauer = VerbleibendeDauer = dauer;
+            Init();
+        }
+
+        protected virtual void Init()
+        {
+            Name = "Manöver";
+            Literatur = "WdS 59";
+            Ansage = 0;
         }
 
         //felder/parameter
-        public virtual String Name
+        public String Name
         {
-            get { return "Manöver"; }
+            get; protected set;
         }
 
-        public virtual String Literatur
+        public String Literatur
         {
-            get { return "WdS 59"; }
+            get; protected set;
         }
 
         /*
          * ausführender, ziele, variable erschwernis (aufgeteilt in ansage und grunderschwernis,
          * so dass man den aufschlag bei misslingen für die nächste aktion erstellen kann)
          */
-        public virtual KämpferInfo Ausführender
+        public KämpferInfo Ausführender
         {
             get;
             private set;
@@ -115,7 +125,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             private set;
         }
 
-        public virtual IEnumerable<KämpferInfo> Ziele
+        public IEnumerable<KämpferInfo> Ziele
         {
             get
             {
@@ -123,7 +133,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
-        public virtual IEnumerable<IWaffe> Waffen
+        public IEnumerable<IWaffe> Waffen
         {
             get
             {
@@ -131,32 +141,32 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
-        public virtual int Grunderschwernis
+        public int Grunderschwernis
         {
-            get { return 0; }
+            get; protected set;
         }
 
-        public virtual int Ansage
+        public int Ansage
         {
-            get;
-            set;
+            get; protected set;
         }
 
-        private double dauer = 1;
-        public virtual double Dauer
+        private int dauer = 1;
+        public virtual int Dauer
         {
             get { return dauer; }
-            set { 
+            set
+            {
                 dauer = value;
                 OnChanged("Dauer");
             }
         }
 
-        private double verbleibendeDauer = 1;
+        private int verbleibendeDauer = 1;
         /// <summary>
         /// Die Restdauer der Aktion in Aktionen.
         /// </summary>
-        public virtual double VerbleibendeDauer
+        public int VerbleibendeDauer
         {
             get { return verbleibendeDauer; }
             set
@@ -172,88 +182,66 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
-        public virtual int Erschwernis
+        public int Erschwernis
         {
             get { return Ansage + Grunderschwernis; }
         }
 
-        public virtual int ProbenAnzahl
-        {
-            get { return 1; }
-        }
+        protected abstract IEnumerable<Probe> ProbenAnlegen();
 
-        protected virtual void ProbenAnlegen()
-        {
-            var p = new Probe();
-            p.Probenname = "Manöverprobe";
-            p.Werte = new int[] { 10 };
-            p.IsBehinderung = false;
-            if (Proben.Count >= 1)
-                Proben[0] = p;
-            else
-                Proben.Add(p);
-        }
-
-        protected List<Probe> proben = null;
-        public List<Probe> Proben
+        private List<Probe> proben = null;
+        protected List<Probe> Proben
         {
             get
             {
                 if (proben == null)
                 {
-                    proben = new List<Probe>(ProbenAnzahl);
-                    ProbenAnlegen();
+                    proben = new List<Probe>();
+                    proben.AddRange(ProbenAnlegen());
                 }
                 return proben;
             }
         }
 
-        private ObservableCollection<ProbenErgebnis> probenErgebnisse = null;
-        /// <summary>
-        /// Speichert die ProbenErgebnisse.
-        /// </summary>
-        public ObservableCollection<ProbenErgebnis> ProbenErgebnisse
-        {
-            get
-            {
-                if (probenErgebnisse == null)
-                {
-                    probenErgebnisse = new ObservableCollection<ProbenErgebnis>();
-                    for (int i = 0; i < ProbenAnzahl; i++ )
-                        probenErgebnisse.Add(ProbenErgebnis.KeinErgebnis);
-                }
-                return probenErgebnisse;
-            }
-            set
-            { probenErgebnisse = value; OnChanged("ProbenErgebnisse"); }
-        }
+        //private bool ergebnisseAkzeptiert = false;
+        ///// <summary>
+        ///// Akzeptiert die eingetragenen ProbenErgebnisse.
+        ///// Wenn nicht genug Ergebnisse eingetragen wurden, dann werden diese zufällig bestimmt.
+        ///// </summary>
+        //public bool ErgebnisseAkzeptiert
+        //{
+        //    get { return ergebnisseAkzeptiert; }
+        //    set
+        //    {
+        //        ergebnisseAkzeptiert = value;
+        //        for (int i = 0; i < ProbenAnzahl; i++)
+        //        {
+        //            if (ProbenErgebnisse[i].Ergebnis == ErgebnisTyp.KEIN_ERGEBNIS)
+        //                ProbenErgebnisse[i] = Proben[i].Würfeln();
+        //        }
+        //        OnChanged("ErgebnisseAkzeptiert");
+        //    }
+        //}
 
-        private bool ergebnisseAkzeptiert = false;
-        /// <summary>
-        /// Akzeptiert die eingetragenen ProbenErgebnisse.
-        /// Wenn nicht genug Ergebnisse eingetragen wurden, dann werden diese zufällig bestimmt.
-        /// </summary>
-        public bool ErgebnisseAkzeptiert
-        {
-            get { return ergebnisseAkzeptiert; }
-            set { 
-                ergebnisseAkzeptiert = value;
-                for (int i = 0; i < ProbenAnzahl; i++)
-                {
-                    if (ProbenErgebnisse[i].Ergebnis == ErgebnisTyp.KEIN_ERGEBNIS)
-                        ProbenErgebnisse[i] = Proben[i].Würfeln();
-                }
-                OnChanged("ErgebnisseAkzeptiert"); }
-        }
+        //private bool auswirkungenAngewendet = false;
+        //public bool AuswirkungenAngewendet
+        //{
+        //    get { return auswirkungenAngewendet; }
+        //    set
+        //    {
+        //        auswirkungenAngewendet = value;
+        //        OnChanged("AuswirkungenAngewendet");
+        //    }
+        //}
 
-        private bool auswirkungenAngewendet = false;
-        public bool AuswirkungenAngewendet
+        /// <summary>
+        /// Zieht von der Ausführungsdauer eine Aktion ab und kümmert sich bei Bedarf darum dass z.B. Proben gewürfelt oder die Aktion ausgeführt wird
+        /// </summary>
+        public void Aktion()
         {
-            get { return auswirkungenAngewendet; }
-            set { 
-                auswirkungenAngewendet = value;
-                OnChanged("AuswirkungenAngewendet");
-            }
+            VerbleibendeDauer--;
+            if (VerbleibendeDauer <= 0)
+                Ausführen();
         }
 
         /// <summary>
@@ -261,12 +249,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         /// Verbraucht Aktion(en) des Kämpfers.
         /// </summary>
         /// <returns></returns>
-        public virtual List<Probe> Ausführen()
+        public List<Probe> Ausführen()
         {
-            AktionenVerbrauchen();
-            VerbleibendeDauer--;
-            RaiseOnAusführung();
-            if(VerbleibendeDauer > 0) //TODO Inkorrekt. Ich glaube die Probe wird am Anfang ausgeführt.
+            //AktionenVerbrauchen();
+            VerbleibendeDauer = 0;
+            OnAusführung();
+            if (VerbleibendeDauer > 0) //TODO Inkorrekt. Ich glaube die Probe wird am Anfang ausgeführt.
                 return null;
             return Proben;
         }
@@ -274,51 +262,58 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         /// <summary>
         /// Die Anzahl der Angriffsaktionen, die verbraucht werden.
         /// </suAusführender
-        public virtual int Angriffsaktionen
+        public int Angriffsaktionen
         {
-            get { return 1; }
+            get; protected set;
         }
 
         /// <summary>
         /// Die Anzahl der Abwehraktionen, die verbraucht werden.
         /// </suAusführender
-        public virtual int Abwehraktionen
+        public int Abwehraktionen
         {
-            get { return 0; }
+            get; protected set;
         }
 
         /// <summary>
         /// Die Anzahl der freien Aktionen, die verbraucht werden.
         /// </suAusführender
-        public virtual int FreieAktionen
+        public int FreieAktionen
         {
-            get { return 0; }
+            get; protected set;
         }
 
-        protected virtual void AktionenVerbrauchen()
-        {
-            if (Ausführender == null)
-                return;
-            Ausführender.VerbrauchteAngriffsaktionen += Angriffsaktionen;
-            Ausführender.VerbrauchteAbwehraktionen += Abwehraktionen;
-            Ausführender.VerbrauchteFreieAktionen += FreieAktionen;
-        }
+        //protected virtual void AktionenVerbrauchen()
+        //{
+        //    if (Ausführender == null)
+        //        return;
+        //    Ausführender.VerbrauchteAngriffsaktionen += Angriffsaktionen;
+        //    Ausführender.VerbrauchteAbwehraktionen += Abwehraktionen;
+        //    Ausführender.VerbrauchteFreieAktionen += FreieAktionen;
+        //}
 
         //eine weitere methode für den erfolg
         /// <summary>
         /// Die Auswirkungen des Manövers auf das Ziel anwenden.
         /// </summary>
         /// <param name="ziel"></param>
-        public virtual void Erfolg(IKämpfer ziel)
+        protected abstract void Erfolg(IKämpfer ziel);
+
+        protected virtual void GlücklicherErfolg(IKämpfer ziel)
         {
-            OnAktion();
+            Erfolg(ziel);
+        }
+
+        protected virtual void KritischerErfolg(IKämpfer ziel)
+        {
+            GlücklicherErfolg(ziel);
         }
 
         //und eine für den misserfolg
         /// <summary>
         /// Legt den MisslungenModifikator auf dem Ausführenden an.
         /// </summary>
-        public virtual void Misserfolg()
+        protected virtual void Misserfolg()
         {
             // Erschwernis als Malus bis zur nächsten Aktion.
             int malus = Erschwernis;
@@ -335,22 +330,67 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 //TODO JT: Klasse MisslungenModifikator anlegen
                 //Ausführender.Kämpfer.Modifikatoren.Add(new MisslungenModifikator(malus));
             }
-            OnAktion();
         }
 
-        //sollte man sowas als Event machen?
-        protected virtual void OnAktion()
+        protected virtual void Patzer()
         {
-   
+            Misserfolg();
         }
 
-        public delegate void OnAusführungEventHandler(object sender);
-        public event OnAusführungEventHandler OnAusführung;
-        protected void RaiseOnAusführung()
+        protected virtual void FatalerPatzer()
         {
-            if (OnAusführung != null)
-                OnAusführung(this);
+            Patzer();
         }
+
+        public event EventHandler<ManöverEventArgs> Ausführung;
+        protected void OnAusführung()
+        {
+            EventHandler<ManöverEventArgs> handler = Ausführung;
+            if (handler != null)
+            {
+                ManöverEventArgs args = new ManöverEventArgs(Proben);
+                handler(this, args);
+                if (!args.Abgebrochen)
+                    ProbenAuswerten();
+            }
+        }
+
+        protected virtual void ProbenAuswerten()
+        {
+            foreach (Probe p in Proben)
+                ProbeAuswerten(p);
+        }
+
+        protected virtual void ProbeAuswerten(Probe p)
+        {
+            switch (p.Ergebnis.Ergebnis)
+            {
+                case ErgebnisTyp.GELUNGEN:
+                    foreach (KämpferInfo info in Ziele)
+                        Erfolg(info.Kämpfer);
+                    break;
+                case ErgebnisTyp.GLÜCKLICH:
+                    foreach (KämpferInfo info in Ziele)
+                        GlücklicherErfolg(info.Kämpfer);
+                    break;
+                case ErgebnisTyp.MEISTERHAFT:
+                    foreach (KämpferInfo info in Ziele)
+                        KritischerErfolg(info.Kämpfer);
+                    break;
+
+                case ErgebnisTyp.MISSLUNGEN:
+                    Misserfolg();
+                    break;
+                case ErgebnisTyp.PATZER:
+                    Patzer();
+                    break;
+                case ErgebnisTyp.FATALER_PATZER:
+                    FatalerPatzer();
+                    break;
+            }
+        }
+
+
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -364,5 +404,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         #endregion
+    }
+
+    public class ManöverEventArgs : EventArgs
+    {
+        public ManöverEventArgs(List<Probe> proben)
+        {
+            Proben = proben;
+        }
+
+        public bool Abgebrochen { get; set; }
+        public List<Probe> Proben { get; private set; }
     }
 }

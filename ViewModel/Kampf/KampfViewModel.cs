@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
-using MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
     public class KampfViewModel : Base.ToolViewModelBase
     {
-        private K _kampf = null;
 
         public KampfViewModel() : this(null, View.General.ViewHelper.Confirm)
         {
@@ -33,7 +30,6 @@ namespace MeisterGeister.ViewModel.Kampf
             this.showBodenplanView = showBodenplanView;
 
             _kampf = new K();
-            _kampf.OnNeueKampfrunde += _kampf_OnNeueKampfRunde;
             Kampf.PropertyChanged += Kampf_PropertyChanged;
             InitiativListe.PropertyChanged += InitiativListe_PropertyChanged;
         }
@@ -43,10 +39,6 @@ namespace MeisterGeister.ViewModel.Kampf
             if (e.PropertyName == "INIPhase") OnChanged("INIPhase");
         }
 
-        void _kampf_OnNeueKampfRunde(object sender, int kampfrunde)
-        {
-            OnChanged("Kampfrunde");
-        }
 
         private void InitiativListe_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -75,12 +67,11 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("BodenplanWindow");
             }
         }
-        
 
+        private K _kampf = null;
         public K Kampf
         {
             get { return _kampf; }
-            set { _kampf = value; OnChanged("Kampf"); }
         }
 
         [DependentProperty("Kampf")]
@@ -151,7 +142,7 @@ namespace MeisterGeister.ViewModel.Kampf
 
         public KämpferInfo SelectedKämpferInfo
         {
-            get { return (SelectedManöverInfo != null) ? SelectedManöverInfo.KämpferInfo : null;
+            get { return (SelectedManöverInfo != null) ? SelectedManöverInfo.Manöver.Ausführender : null;
             }
             //set { SelectedTreeItem = value; }
         }
