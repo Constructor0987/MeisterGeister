@@ -10,9 +10,9 @@ namespace MeisterGeister.ViewModel.Karte.Logic
     public class RouteDescribingResult
     {
         public RoutingSummary RoutingSummary { get; private set; }
-        public ObservableCollection<RoutingPoint> RouteDescription { get; private set; }
+        public ObservableCollection<RoutingOrt> RouteDescription { get; private set; }
 
-        public RouteDescribingResult(ObservableCollection<RoutingPoint> routeDescription,
+        public RouteDescribingResult(ObservableCollection<RoutingOrt> routeDescription,
             RoutingSummary routingSummary)
         {
             this.RouteDescription = routeDescription;

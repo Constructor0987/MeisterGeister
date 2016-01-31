@@ -730,9 +730,11 @@
     <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RouteDescribingConditions.cs" />
     <Compile Include="ViewModel\Karte\Logic\RouteDescribingResult.cs" />
     <Compile Include="ViewModel\Karte\Logic\RouteDescribingService.cs" />
-    <Compile Include="ViewModel\Karte\Logic\RouteDrawingService.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingPoint.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingStage.cs" />
     <Compile Include="ViewModel\Karte\Logic\RoutingSummary.cs" />
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilder.cs" />
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilderArgs.cs" />
@@ -744,7 +746,7 @@
     <Compile Include="ViewModel\Karte\PflanzenSucheViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\RoutingLine.cs" />
     <Compile Include="ViewModel\Karte\Logic\RoutingLineType.cs" />
-    <Compile Include="ViewModel\Karte\Logic\RoutingPoint.cs" />
+    <Compile Include="ViewModel\Karte\Logic\RoutingOrt.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Menu\ExternMenuItemViewModel.cs" />
     <Compile Include="ViewModel\Menu\AddExternMenuItemViewModel.cs" />
@@ -2387,6 +2389,8 @@
     <Resource Include="Images\Icons\Karte\man-silhouette1.png" />
     <Resource Include="Images\Icons\Karte\transport460.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0120.sql" />
+    <Resource Include="Images\Icons\Karte\pin56.png" />
+    <Content Include="Daten\Updateskripte\UpdateTo_V0121.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

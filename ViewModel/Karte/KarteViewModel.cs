@@ -297,6 +297,32 @@ namespace MeisterGeister.ViewModel.Karte
 
         #region Routenplaner
 
+        private bool _isToleranceActive = false;
+        public bool IsToleranceActive
+        {
+            get { return _isToleranceActive; }
+            set
+            {
+                if (value != _isToleranceActive)
+                {
+                    Set(ref _isToleranceActive, value);
+                }
+            }
+        }
+
+        private bool _isShowStages = false;
+        public bool IsShowStages
+        {
+            get { return _isShowStages; }
+            set
+            {
+                if (value != _isShowStages)
+                {
+                    Set(ref _isShowStages, value);
+                }
+            }
+        }
+
         private bool _isAvoidMountains = true;
         public bool IsAvoidMountains
         {
@@ -414,7 +440,7 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        public ObservableCollection<RoutingPoint> WayPoints
+        public ObservableCollection<RoutingOrt> WayPoints
         {
             get
             {
@@ -422,8 +448,8 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        private RoutingPoint selectedRoutingPoint;
-        public RoutingPoint SelectedRoutingPoint
+        private RoutingOrt selectedRoutingPoint;
+        public RoutingOrt SelectedRoutingPoint
         {
             get
             {
@@ -431,7 +457,7 @@ namespace MeisterGeister.ViewModel.Karte
             }
             set
             {
-                var obj = value as RoutingPoint;
+                var obj = value as RoutingOrt;
                 if (value != selectedRoutingPoint)
                 {
                     if(selectedRoutingPoint != null)
@@ -443,15 +469,16 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
-        private ObservableCollection<RoutingPoint> GetRouteDescription()
+        private ObservableCollection<RoutingOrt> GetRouteDescription()
         {
-            var routingPoints = Lines.OfType<RoutingPoint>();
-            ObservableCollection<RoutingPoint> resultingPoints = null;
+            var routingPoints = Lines.OfType<RoutingOrt>();
+            ObservableCollection<RoutingOrt> resultingPoints = null;
 
             if (routingPoints.Any())
             {
-                var routeDescribingService = new RouteDescribingService(SelectedFortbewegung);
-                var routeDescribingResult = routeDescribingService.GetDescription(routingPoints, true);
+                var routeDescribingService = new RouteDescribingService();
+                var routeDescribingResult = routeDescribingService.GetDescription(routingPoints, 
+                    new RouteDescribingConditions(SelectedFortbewegung, RouteEnding, IsToleranceActive));
                 resultingPoints = routeDescribingResult.RouteDescription;
                 RoutingSummary = routeDescribingResult.RoutingSummary;
             }
@@ -528,12 +555,30 @@ namespace MeisterGeister.ViewModel.Karte
             if (RouteStarting != null && RouteEnding != null)
             {
                 Global.SetIsBusy(true, "Berechne Route...");
-                var routeDrawingService = new RouteDrawingService(SelectedFortbewegung, RouteEnding);
                 AdjustViewToRoute();
+
                 IEnumerable<Ort> nodes = CalculateRoute();
-                this.Lines = routeDrawingService.DrawRoute(nodes);
+                RouteDescribingConditions conditions = GetRouteDescribingConditions();
+                var routeDescribingService = new RouteDescribingService();
+                this.Lines = routeDescribingService.DrawRoute(nodes, conditions);
+
+                if (IsShowStages)
+                    ShowStages(nodes.Select(o => o.RoutingStrecke).Where(s => s != null), conditions, routeDescribingService);
+
                 Global.SetIsBusy(false);
             }
+        }
+
+        private RouteDescribingConditions GetRouteDescribingConditions()
+        {
+            return new RouteDescribingConditions(SelectedFortbewegung, RouteEnding, IsToleranceActive);
+        }
+
+        private void ShowStages(IEnumerable<Strecke> strecken, RouteDescribingConditions conditions, RouteDescribingService routeDescribingService)
+        {
+            var stages = routeDescribingService.GetStages(strecken, conditions);
+            foreach (var stage in stages)
+                this.Lines.Add(stage);
         }
 
         private IEnumerable<Ort> CalculateRoute()

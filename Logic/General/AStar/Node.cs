@@ -43,6 +43,7 @@ namespace MeisterGeister.Logic.General.AStar
             this.IsWalkable = isWalkable;
             SetEndLocation(endLocation);
             this.LengthFromStart = 0;
+            //this.ParentNode = null;
         }
 
         public void SetEndLocation(Node endLocation)

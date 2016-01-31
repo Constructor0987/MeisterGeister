@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Karte.Logic
 {
-    public class RoutingPoint : ViewModelBase, ICloneable
+    public class RoutingPoint : ViewModelBase
     {
-        public double ActualX { get; private set; }
-        public double ActualY { get; private set; }
-        public double X { get { return ActualX - 20; } }
-        public double Y { get { return ActualY - 30; } }
+        public virtual double X { get; set; }
+        public virtual double Y { get; set; }
         private bool _isSelected;
         public bool IsSelected
         {
@@ -25,45 +23,19 @@ namespace MeisterGeister.ViewModel.Karte.Logic
                 }
             }
         }
-        public string Name { get; set; }
-        public string PointType { get; private set; }
         public string Image { get; private set; }
-        public string Wegtyp { get; set; }
-        public double Strecke { get; set; }
-        public double RouteToEnd { get; set; }
-        public double MovementModifier { get; set; }
-        public double Duration
-        {
-            get
-            {
-                return _travelService.GetTravelDuration(Strecke, MovementModifier);
-            }
-        }
-        private TravelService _travelService;
 
-        public RoutingPoint(double x, double y, string name, string wegtyp, double strecke, double routeToEnd, double movementModifier)
+        public RoutingPoint(double x, double y)
         {
-            this.ActualX = x;
-            this.ActualY = y;
-            this.Name = name;
-            this.Strecke = strecke;
-            this.Wegtyp = wegtyp;
-            this.RouteToEnd = routeToEnd;
-            this.MovementModifier = movementModifier;
-            this._travelService = new TravelService();
+            this.X = x;
+            this.Y = y;
+            this.IsSelected = false;
         }
 
-        public RoutingPoint(double x, double y, string name, string wegtyp, double strecke, double routeToEnd, double movementModifier, 
-            string image, string pointType)
-            : this(x, y, name, wegtyp, strecke, routeToEnd, movementModifier)
+        public RoutingPoint(double x, double y, string image)
+            : this(x, y)
         {
-            this.PointType = pointType;
             this.Image = image;
-        }
-
-        public object Clone()
-        {
-            return new RoutingPoint(ActualX, ActualY, Name, Wegtyp, Strecke, RouteToEnd, MovementModifier, Image, PointType);
         }
     }
 }

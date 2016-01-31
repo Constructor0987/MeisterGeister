@@ -26,6 +26,7 @@
             <Label Content="{Binding Name}" />
         </DataTemplate>
         <General:EnumToBooleanConverter x:Key="enumConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Border BorderThickness="0" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent">
@@ -177,6 +178,9 @@
                                             <CheckBox Content="Meere meiden" IsChecked="{Binding IsAvoidSeas}" Margin="5,0,0,0" />
                                             <CheckBox Content="Gebirge meiden" IsChecked="{Binding IsAvoidMountains}" />
                                             <CheckBox Content="Wälder meiden" IsChecked="{Binding IsAvoidForrests}" Margin="5,0,0,0" />
+                                            <CheckBox Content="Etappen anzeigen" IsChecked="{Binding IsShowStages}" />
+                                            <CheckBox Content="Nahe gelegene Orte bevorzugen" IsChecked="{Binding IsToleranceActive}" 
+                                                      Visibility="{Binding IsShowStages, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                         </WrapPanel>
                                     </GroupBox>
                                 </StackPanel>
@@ -232,7 +236,40 @@
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.Resources>
-                                        <DataTemplate DataType="{x:Type vmlogic:RoutingPoint}">
+                                        <DataTemplate DataType="{x:Type vmlogic:RoutingStage}">
+                                            <Grid General:MouseOverBehaviour.MouseOver="{Binding DataContext.SelectedRoutingPoint, ElementName=view}">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <Grid x:Name="WayPointItem" Grid.Row="0" >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="4*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.Style>
+                                                        <Style TargetType ="{x:Type Grid}">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="#5DA06D00" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                    <Image Grid.Row="0" Source="{Binding Image}" Grid.Column="0" Width="40" Height="40"/>
+                                                    <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap" Padding="0,0,5,0"
+                                                               MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}, Path=ActualWidth}">
+                                                        Test
+                                                    </TextBlock>
+                                                </Grid>
+                                                <Separator Grid.Row="1"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type vmlogic:RoutingOrt}">
                                             <Grid General:MouseOverBehaviour.MouseOver="{Binding DataContext.SelectedRoutingPoint, ElementName=view}">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition />

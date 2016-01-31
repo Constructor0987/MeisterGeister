@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Karte.Logic
 {
-    public class RoutingPointBuilder : IBuilder<RoutingPoint, RoutingPointBuilderArgs>
+    public class RoutingPointBuilder : IBuilder<RoutingOrt, RoutingPointBuilderArgs>
     {
-        public RoutingPoint Build(RoutingPointBuilderArgs args)
+        public RoutingOrt Build(RoutingPointBuilderArgs args)
         {
-            RoutingPoint result = new RoutingPoint(args.X, args.Y, args.Name, args.Wegtyp, args.Strecke, args.RouteToEnd, args.MovementModifier, GetImage(args.PointType, args.Name), args.PointType);
+            RoutingOrt result = new RoutingOrt(args.X, args.Y, args.Name, args.Wegtyp, args.Strecke, args.RouteToEnd, args.MovementModifier, GetImage(args.PointType, args.Name), args.PointType);
             return result;
         }
 
