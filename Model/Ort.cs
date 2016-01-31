@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using MeisterGeister.Logic.Karte;
+using MeisterGeister.ViewModel.Karte.Logic;
 
 namespace MeisterGeister.Model
 {
@@ -50,9 +51,10 @@ namespace MeisterGeister.Model
 
         public override IEnumerable<Node> GetAdjacentNodes()
         {
+            // RoutingStrecke = null;
             IEnumerable<Strecke> streckenStarts = this.StartStrecke;
             streckenStarts = ApplyConditions(streckenStarts);
-            IEnumerable<Strecke> streckenZiele = this.ZielStrecke;
+            IEnumerable<Strecke> streckenZiele = this.ZielStrecke; //.Where(s => TravelService.DIRECTION_DEPENDENT_WEGTYPEN.Contains(s.Wegtyp.ID));
             streckenZiele = ApplyConditions(streckenZiele);
             var result = streckenStarts.Select(s => s.ZielOrt).Concat(streckenZiele.Select(s => s.StartOrt));
             return result;
@@ -77,9 +79,6 @@ namespace MeisterGeister.Model
 
         private double GetTraversalCost(Strecke strecke)
         {
-            // Veraltet 
-            // return strecke.Strecke1 / strecke.Wegtyp.Multiplikator;
-
             var parameters = (SearchParametersRouting)SearchParameters;
             Fortbewegung_Modifikation modifikator = strecke.Wegtyp.Fortbewegung_Modifikation.Single(f => f.Fortbewegung == parameters.Fortbewegung.ID);
             return strecke.Strecke1 / modifikator.Multiplikator;
@@ -100,15 +99,14 @@ namespace MeisterGeister.Model
                 return result;
             }
             else
-                return null;
+                throw new ArgumentException("Zum gesuchten Ort gibt es keine Strecke.", "strecke");
         }
 
         private IEnumerable<Strecke> GetStreckenToTarget(Ort targetOrt)
         {
             var strecken = this.StartStrecke.Where(s => (s.StartOrt.ID == this.ID && s.ZielOrt.ID == targetOrt.ID));
-            if (strecken == null || strecken.Count() == 0)
-                strecken = this.ZielStrecke.Where(s => s.StartOrt.ID == targetOrt.ID && s.ZielOrt.ID == this.ID);
-
+            strecken = strecken.Concat(this.ZielStrecke.Where(s => s.StartOrt.ID == targetOrt.ID
+                && s.ZielOrt.ID == this.ID));// && TravelService.DIRECTION_DEPENDENT_WEGTYPEN.Contains(s.Wegtyp.ID)));
             strecken = ApplyConditions(strecken);
             return strecken;
         }
