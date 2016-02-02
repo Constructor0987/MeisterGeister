@@ -16,7 +16,7 @@ namespace MeisterGeister.Logic.General.AStar
         public virtual double LengthToEnd { get; protected set; }
         public double LengthFromStartToEnd { get { return this.LengthFromStart + this.LengthToEnd; } }
         public NodeState State { get; set; }
-        protected Point EndLocation { get; private set; }
+        protected Point EndLocation { get; set; }
         protected SearchParameters SearchParameters { get; set; }
         
         private Node _parentNode;
@@ -26,7 +26,8 @@ namespace MeisterGeister.Logic.General.AStar
             set
             {
                 this._parentNode = value;
-                this.LengthFromStart = this._parentNode.LengthFromStart + GetTraversalCost(this._parentNode);
+                if(_parentNode != null)
+                    this.LengthFromStart = this._parentNode.LengthFromStart + GetTraversalCost(this._parentNode);
             }
         }
 
@@ -43,10 +44,10 @@ namespace MeisterGeister.Logic.General.AStar
             this.IsWalkable = isWalkable;
             SetEndLocation(endLocation);
             this.LengthFromStart = 0;
-            //this.ParentNode = null;
+            this.ParentNode = null;
         }
 
-        public void SetEndLocation(Node endLocation)
+        public virtual void SetEndLocation(Node endLocation)
         {
             if (endLocation != null)
             {

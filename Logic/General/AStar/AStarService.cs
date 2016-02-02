@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.IO;
 
 namespace MeisterGeister.Logic.General.AStar
 {
@@ -12,13 +13,16 @@ namespace MeisterGeister.Logic.General.AStar
     {
         SearchParameters searchParameters;
         Size boundaries;
-        ICollection<Node> nodes;
         Node endNode;
         Node startNode;
+        public ICollection<Node> Nodes
+        {
+            get; set;
+        }
 
         public AStarService(SearchParameters searchParameters)
         {
-            this.nodes = new List<Node>();
+            this.Nodes = new List<Node>();
             this.searchParameters = searchParameters;
             this.endNode = searchParameters.EndNode;
             this.startNode = searchParameters.StartNode;
@@ -27,6 +31,7 @@ namespace MeisterGeister.Logic.General.AStar
 
         public List<Node> FindPath()
         {
+            var findPathStopWatch = Stopwatch.StartNew();
             List<Node> path = new List<Node>();
             bool success = Search();
             if (success)
@@ -43,13 +48,15 @@ namespace MeisterGeister.Logic.General.AStar
                     item.EnrichData(path);
                 }
             }
+            findPathStopWatch.Stop();
+            Debug.WriteLine("findPathStopWatch: " + findPathStopWatch.Elapsed.TotalSeconds);
             return path;
         }
 
         private bool Search()
         {
             Node currentNode = startNode;
-            nodes.Add(currentNode);
+            Nodes.Add(currentNode);
             while (AnyOpenNodes())
             {
                 if (currentNode == endNode)
@@ -64,22 +71,31 @@ namespace MeisterGeister.Logic.General.AStar
 
         private Node GetLowestOverallLength()
         {
-            var orderedNodes = nodes
-                .Where(n => n.State == NodeState.Open)
-                .OrderBy(n => n.LengthFromStartToEnd);
-            return orderedNodes.FirstOrDefault();
+            Node result = Nodes.First();
+            double minDistance = Double.MaxValue;
+            foreach(var node in Nodes.Where(n => n.State == NodeState.Open))
+            {
+                if (node.LengthFromStartToEnd < minDistance)
+                {
+                    result = node;
+                    minDistance = node.LengthFromStartToEnd;
+                }
+            }
+            return result;
         }
 
         private bool AnyOpenNodes()
         {
-            return nodes.Any(n => n.State == NodeState.Open || n.State == NodeState.Untested);
+            bool anyOpenNodes = Nodes.Any(n => n.State == NodeState.Open || n.State == NodeState.Untested);
+            return anyOpenNodes;
         }
 
         private void CheckAdjacentWalkableNodes(Node fromNode)
         {
-            Debug.WriteLine("From Node: " + fromNode);
+            //var checkAdjacentWalkableNodesStopWatch = Stopwatch.StartNew();
+            // Debug.WriteLine("From Node: " + fromNode);
             IEnumerable<Node> nextNodes = fromNode.GetAdjacentNodes();
-            Debug.WriteLine("Adjacent Nodes: " + String.Join(", ", nextNodes));
+            // Debug.WriteLine("Adjacent Nodes: " + String.Join(", ", nextNodes));
 
             foreach (var node in nextNodes)
             {
@@ -117,13 +133,15 @@ namespace MeisterGeister.Logic.General.AStar
                     AddNode(node);
                 }
             }
+            //checkAdjacentWalkableNodesStopWatch.Stop();
+            //Debug.WriteLine("checkAdjacentWalkableNodesStopWatch: " + checkAdjacentWalkableNodesStopWatch.Elapsed.TotalMilliseconds);
         }
 
         private void AddNode(Node node)
         {
-            if(!nodes.Contains(node))
+            if(!Nodes.Contains(node))
             {
-                nodes.Add(node);
+                Nodes.Add(node);
             }
         }
 

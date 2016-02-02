@@ -3,6 +3,7 @@ using MeisterGeister.Model;
 using MeisterGeister.Model.Service;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace MeisterGeister.Logic.Karte
 {
     public class RoutingService
     {
+        public IEnumerable<Node> AllNodes { get; private set; }
+
         public double GetZoomAdjustment(Size zoomControlSize, double zoom, Point center, Point routeStartingPoint)
         {
             // Standardmäßig soll keine Änderung stattfinden
@@ -40,14 +43,20 @@ namespace MeisterGeister.Logic.Karte
 
         public IEnumerable<Ort> GetShortestPath(SearchParametersRouting searchParameters)
         {
+            var getShortestPathLengthInitStopWatch = Stopwatch.StartNew();
             IEnumerable<Ort> orte = Global.ContextGeo.Liste<Ort>();
             Ort target = (Ort)searchParameters.EndNode;
+
 
             foreach (var ort in orte)
                 ort.Init(ort.X, ort.Y, true, target, searchParameters);
 
             var searchingService = new AStarService(searchParameters);
+            getShortestPathLengthInitStopWatch.Stop();
+            Debug.WriteLine("getShortestPathLengthInitStopWatch: " + getShortestPathLengthInitStopWatch.Elapsed.TotalMilliseconds);
             List<Node> result = searchingService.FindPath();
+            AllNodes = searchingService.Nodes;
+
             return result.OfType<Ort>();
         }
     }

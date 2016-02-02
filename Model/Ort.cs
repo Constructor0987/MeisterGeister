@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using MeisterGeister.Logic.Karte;
 using MeisterGeister.ViewModel.Karte.Logic;
+using System.Diagnostics;
 
 namespace MeisterGeister.Model
 {
@@ -49,15 +50,25 @@ namespace MeisterGeister.Model
             return distance;
         }
 
+        public override void SetEndLocation(Node endLocation)
+        {
+            if (endLocation != null)
+            {
+                this.EndLocation = endLocation.Location;
+                this.LengthToEnd = GetTraversalCost(endLocation) / Global.ContextGeo.MaxMovementModificator;
+            }
+        }
+
         public override IEnumerable<Node> GetAdjacentNodes()
         {
             // RoutingStrecke = null;
-            IEnumerable<Strecke> streckenStarts = this.StartStrecke;
-            streckenStarts = ApplyConditions(streckenStarts);
-            IEnumerable<Strecke> streckenZiele = this.ZielStrecke; //.Where(s => TravelService.DIRECTION_DEPENDENT_WEGTYPEN.Contains(s.Wegtyp.ID));
-            streckenZiele = ApplyConditions(streckenZiele);
-            var result = streckenStarts.Select(s => s.ZielOrt).Concat(streckenZiele.Select(s => s.StartOrt));
-            return result;
+            //IEnumerable<Strecke> streckenStarts = this.StartStrecke;
+            //streckenStarts = ApplyConditions(streckenStarts);
+            //IEnumerable<Strecke> streckenZiele = this.ZielStrecke; //.Where(s => TravelService.DIRECTION_DEPENDENT_WEGTYPEN.Contains(s.Wegtyp.ID));
+            //streckenZiele = ApplyConditions(streckenZiele);
+            //var result = streckenStarts.Select(s => s.ZielOrt).Concat(streckenZiele.Select(s => s.StartOrt));
+            //return result;
+            return Global.ContextGeo.GetAdjacentOrte(this);
         }
 
         public override double GetTraversalCost(Node target)
@@ -87,41 +98,22 @@ namespace MeisterGeister.Model
         private Strecke GetFastestStrecke(Ort targetOrt)
         {
             IEnumerable<Strecke> strecken = GetStreckenToTarget(targetOrt);
+            Strecke result = null;
 
             if (strecken != null && strecken.Count() != 0)
             {
-                Strecke result = null;
                 if (strecken.Count() == 1)
                     result = strecken.First();
                 else
                     result = GetFastestStrecke(strecken);
-
-                return result;
             }
-            else
-                throw new ArgumentException("Zum gesuchten Ort gibt es keine Strecke.", "strecke");
+            return result;
         }
 
         private IEnumerable<Strecke> GetStreckenToTarget(Ort targetOrt)
         {
-            var strecken = this.StartStrecke.Where(s => (s.StartOrt.ID == this.ID && s.ZielOrt.ID == targetOrt.ID));
-            strecken = strecken.Concat(this.ZielStrecke.Where(s => s.StartOrt.ID == targetOrt.ID
-                && s.ZielOrt.ID == this.ID));// && TravelService.DIRECTION_DEPENDENT_WEGTYPEN.Contains(s.Wegtyp.ID)));
-            strecken = ApplyConditions(strecken);
+            var strecken = Global.ContextGeo.GetStreckenToTarget(this, targetOrt, (SearchParametersRouting)SearchParameters);
             return strecken;
-        }
-
-        private IEnumerable<Strecke> ApplyConditions(IEnumerable<Strecke> strecken)
-        {
-            var result = strecken;
-            if (SearchParameters != null)
-            {
-                var routingConditions = SearchParameters as SearchParametersRouting;
-
-                if (routingConditions != null)
-                    result = strecken.Where(s => !routingConditions.WegtypenNotAllowed.Contains(s.Wegtyp));
-            }
-            return result;
         }
 
         private Strecke GetFastestStrecke(IEnumerable<Strecke> strecken)
@@ -146,7 +138,7 @@ namespace MeisterGeister.Model
             var nodeIndex = path.IndexOf(this);
             if (nodeIndex >= 0 && nodeIndex < path.Count)
             {
-                if(nodeIndex > 0)
+                if (nodeIndex > 0)
                     this.RoutingStrecke = GetFastestStrecke((Ort)ParentNode);
             }
             else

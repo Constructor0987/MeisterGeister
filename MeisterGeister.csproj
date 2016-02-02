@@ -738,7 +738,7 @@
     <Compile Include="ViewModel\Karte\Logic\RoutingSummary.cs" />
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilder.cs" />
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilderArgs.cs" />
-    <Compile Include="ViewModel\Karte\Logic\TravelService.cs" />
+    <Compile Include="Logic\Karte\TravelService.cs" />
     <Compile Include="ViewModel\Karte\Logic\TravelType.cs" />
     <Compile Include="View\General\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />

@@ -98,7 +98,8 @@ namespace MeisterGeister.ViewModel.Karte.Logic
             }
             else
             {
-                routingPointBuilderArgs = new RoutingPointBuilderArgs(ort.X, ort.Y, routeEnding.Name, ort.Typ, ort.LengthToEnd, TravelService.FLYING_CONST, "Luftlinie", Math.Round(ort.LengthToEnd, 2));
+                routingPointBuilderArgs = new RoutingPointBuilderArgs(ort.X, ort.Y, routeEnding.Name, ort.Typ, 
+                    ort.LengthToEnd * Global.ContextGeo.MaxMovementModificator, TravelService.FLYING_CONST, "Luftlinie", Math.Round(ort.LengthToEnd, 2));
             }
 
             return routingPointBuilder.Build(routingPointBuilderArgs);
