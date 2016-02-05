@@ -85,7 +85,7 @@
                             </DataTemplate>
                         </ItemsControl.Resources>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding Path=Lines}">
+                    <ItemsControl ItemsSource="{Binding Path=Points}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas x:Name="pointingCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
@@ -160,11 +160,11 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="0" Text="{Binding LengthFromStartToEnd, StringFormat={}{0:#.00}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="0" Text="{Binding LengthFromStartToEnd, StringFormat={}{0:0000.00}}"/>
                                     <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="2" Text="{Binding ID}"/>
                                     <Border Background="Red" BorderBrush="Red" BorderThickness="3" Grid.Row="1" Grid.Column="1" CornerRadius="3"/>
-                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="0" Text="{Binding LengthFromStart, StringFormat={}{0:#.00}}"/>
-                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="2" Text="{Binding LengthToEnd, StringFormat={}{0:#.00}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="0" Text="{Binding LengthFromStart, StringFormat={}{0:0000.00}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="2" Text="{Binding LengthToEnd, StringFormat={}{0:0000.00}}"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.Resources>

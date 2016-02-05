@@ -65,6 +65,7 @@ namespace MeisterGeister.ViewModel.Karte
             //TODO Karte anhand HeldenLon und HeldenLat bestimmen
             SelectedKarte = karten[0];
             InitializeOrte();
+            this.PropertyChanged += KarteViewModel_PropertyChanged;
         }
         
         public override void RegisterEvents()
@@ -79,9 +80,19 @@ namespace MeisterGeister.ViewModel.Karte
         {
             Global.StandortChanged -= Global_StandortChanged;
             Global.HeldSelectionChanged -= Global_HeldSelectionChanged;
+            this.PropertyChanged -= KarteViewModel_PropertyChanged;
             base.UnregisterEvents();
         }
-        
+
+        private void KarteViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Lines")
+            {
+                OnChanged("Points");
+                OnChanged("WayPoints");
+            }
+        }
+
         private bool ignoreGlobalStandortChangedEvent = false;
         private void Global_StandortChanged(object sender, EventArgs e)
         {
@@ -517,8 +528,15 @@ namespace MeisterGeister.ViewModel.Karte
                 if(value != _lines)
                 {
                     Set(ref _lines, value);
-                    OnChanged("WayPoints");
                 }
+            }
+        }
+
+        public ObservableCollection<RoutingPoint> Points
+        {
+            get
+            {
+                return new ObservableCollection<RoutingPoint>(Lines.OfType<RoutingPoint>());
             }
         }
 

@@ -47,7 +47,6 @@ namespace MeisterGeister.Logic.Karte
             IEnumerable<Ort> orte = Global.ContextGeo.Liste<Ort>();
             Ort target = (Ort)searchParameters.EndNode;
 
-
             foreach (var ort in orte)
                 ort.Init(ort.X, ort.Y, true, target, searchParameters);
 

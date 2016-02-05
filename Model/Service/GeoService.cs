@@ -1,16 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using MeisterGeister.Logic.General.AStar;
 using MeisterGeister.Logic.Karte;
+using System.Diagnostics;
 
 namespace MeisterGeister.Model.Service
 {
     public class GeoService : ServiceBase
     {
+        public GeoService()
+        {
+            LoadRouten();
+        }
+        private void LoadRouten()
+        {
+            Context.Ort
+                .Include(o => o.StartStrecke)
+                .Include(o => o.ZielStrecke)
+                .Load();
+        }
+
         private double _maxMovementModificator = -1;
         public double MaxMovementModificator
         {
@@ -45,19 +59,26 @@ namespace MeisterGeister.Model.Service
 
         public IEnumerable<Node> GetAdjacentOrte(Ort ort)
         {
+            var getFastestStreckeStopWatch = Stopwatch.StartNew();
             long ortId = ort.ID;
-            var result = from strecke in Context.Strecke
-                         where strecke.Start == ortId || strecke.Ziel == ortId
-                         select strecke.Start == ortId ? strecke.ZielOrt : strecke.StartOrt;
+            var result = ort.ZielStrecke.Select(o => o.StartOrt).Concat(ort.StartStrecke.Select(o => o.ZielOrt));
+            //var result = from strecke in Context.Strecke
+            //             where strecke.Start == ortId || strecke.Ziel == ortId
+            //             select strecke.Start == ortId ? strecke.ZielOrt : strecke.StartOrt;
+            getFastestStreckeStopWatch.Stop();
+            Debug.WriteLine("GetAdjacentOrte: " + getFastestStreckeStopWatch.Elapsed.TotalMilliseconds);
             return result;
         }
 
         public IEnumerable<Strecke> GetStreckenToTarget(Ort sourceOrt, Ort targetOrt, SearchParametersRouting conditions)
         {
-            var sourceOrtId = sourceOrt.ID;
             var targetOrtId = targetOrt.ID;
-            var strecken = Context.Strecke
-                .Where(s => (s.Start == sourceOrtId && s.Ziel == targetOrtId || s.Start == targetOrtId && s.Ziel == sourceOrtId ));
+            var strecken = sourceOrt.StartStrecke
+                .Where(s => (s.Ziel == targetOrtId))
+                .Concat(
+                    sourceOrt.ZielStrecke
+                        .Where(s => (s.Start == targetOrtId))
+                );
             ICollection<Strecke> result = new List<Strecke>();
             if (strecken.Any())
             {

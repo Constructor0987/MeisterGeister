@@ -57,10 +57,15 @@ namespace MeisterGeister.Logic.General.AStar
         {
             Node currentNode = startNode;
             Nodes.Add(currentNode);
+            var searchStopWatch = Stopwatch.StartNew();
             while (AnyOpenNodes())
             {
                 if (currentNode == endNode)
+                {
+                    searchStopWatch.Stop();
+                    Debug.WriteLine("searchStopWatchStopWatch: " + searchStopWatch.Elapsed.TotalMilliseconds);
                     return true;
+                }
 
                 currentNode.State = NodeState.Closed;
                 CheckAdjacentWalkableNodes(currentNode);
@@ -117,6 +122,7 @@ namespace MeisterGeister.Logic.General.AStar
                 // Already-open nodes are only added to the list if their G-value is lower going via this route.
                 if (node.State == NodeState.Open)
                 {
+                    //var checkAdjacentWalkableNodesStopWatch = Stopwatch.StartNew();
                     double traversalCost = fromNode.GetTraversalCost(node);
                     double gTemp = fromNode.LengthFromStart + traversalCost;
                     if (gTemp < node.LengthFromStart)
@@ -124,6 +130,8 @@ namespace MeisterGeister.Logic.General.AStar
                         node.ParentNode = fromNode;
                         AddNode(node);
                     }
+                    //checkAdjacentWalkableNodesStopWatch.Stop();
+                    //Debug.WriteLine("checkAdjacentWalkableNodesStopWatch: " + checkAdjacentWalkableNodesStopWatch.Elapsed.TotalMilliseconds);
                 }
                 else
                 {
