@@ -31,11 +31,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Kampf()
         {
             Kämpfer = new KämpferInfoListe(this);
-            Kämpfer.CollectionChanged += Kämpfer_CollectionChanged;
+            Kämpfer.CollectionChangedExtended += Kämpfer_CollectionChangedExtended;
             InitiativListe = new InitiativListe(this);
-            InitiativListe.CollectionChanged += InitiativListe_CollectionChanged;
             //INIPhase = 0;
-            Kampfrunde = 0;
+            KampfNeuStarten();
         }
 
         //public Arena.Arena Bodenplan { get; set; }
@@ -59,11 +58,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get { return _kämpfer; }
             private set { _kämpfer = value; }
-        }
-
-        public int INIPhase
-        {
-            get { return AktuelleAktion == null ? 0 : (int)AktuelleAktion.Start.InitiativPhase; }
         }
 
         private int _kampfrunde;
@@ -97,7 +91,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 aktuelleAktionszeit = value;
                 OnChanged("AktuelleAktionszeit");
-                AktuelleAktion = InitiativListe.First(mi => mi.Aktionszeiten.Contains(value));
+                AktuelleAktion = InitiativListe.FirstOrDefault(mi => mi.Aktionszeiten.Contains(value));
             }
         }
 
@@ -119,7 +113,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         /// <param name="msg">Zu speichernder Log-Text.</param>
         public void Log(string msg)
         {
-            KampfLog.Insert(0, string.Format("{0}.{1}: {2}", Kampfrunde, INIPhase, msg));
+            KampfLog.Insert(0, string.Format("{0}.{1}: {2}", Kampfrunde, AktuelleAktionszeit.InitiativPhase, msg));
         }
 
         public ManöverInfo Next()
@@ -159,17 +153,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //UmwandelnMöglich = false;
             }
 
-            ZeitImKampf next;
+            ZeitImKampf next = default(ZeitImKampf);
             if (AktuelleAktion != null)
-            {
-                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit > AktuelleAktionszeit).OrderBy(zeit => zeit).First();
-            }
+                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit > AktuelleAktionszeit).OrderBy(zeit => zeit).FirstOrDefault();
             else
-            {
-                NeueKampfrunde();
-                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit.Kampfrunde == Kampfrunde).OrderBy(zeit => zeit).First();
-            }
+                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit.Kampfrunde == Kampfrunde).OrderBy(zeit => zeit).FirstOrDefault();
+
             AktuelleAktionszeit = next;
+            if (next == default(ZeitImKampf))
+                NeueKampfrunde();
             return AktuelleAktion;
         }
 
@@ -195,6 +187,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
             Kampfrunde++;
 
+            //Wir speichern unsere neuen Manöver zuerst hier zwischen und fügen dann den kompletten Satz an neuen Aktionen auf einmach zur IniListe hinzu
+            //Das verhindert dass bei jedem Manöver ein separates Change-Event ausgelöst wird, welches in der GUI Performance kostet
+            List<ManöverInfo> neueManöver = new List<ManöverInfo>();
+
             foreach (KämpferInfo ki in Kämpfer)
             {
                 //Modifikatoren entfernen
@@ -205,8 +201,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ki.VerbrauchteAngriffsaktionen = 0;
                 ki.VerbrauchteFreieAktionen = 0;
 
-                ki.AktionenBerechnen();
-                ki.StandardAktionenSetzen(Kampfrunde);
+                neueManöver.AddRange(ki.StandardAktionenSetzen(Kampfrunde));
 
                 ki.VerbrauchteAbwehraktionen = 0;
                 ki.VerbrauchteAngriffsaktionen = 0;
@@ -214,6 +209,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)
             }
+
+            if (neueManöver.Count > 0)
+                InitiativListe.AddRange(neueManöver);
 
             //if (InitiativListe.Count > 0)
             //    INIPhase = InitiativListe[0].InitiativeStart;
@@ -233,15 +231,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             AktuelleAktion = null;
             InitiativListe.Clear();
             Kampfrunde = 0;
-            NeueKampfrunde(); // KR abschließen
 
             // INI neu ermitteln
-            foreach (var kämpferInfo in Kämpfer)
+            foreach (KämpferInfo kämpferInfo in Kämpfer)
             {
                 if (kämpferInfo != null)
                     kämpferInfo.Initiative = kämpferInfo.Kämpfer.Initiative();
             }
 
+            // KR abschließen
+            NeueKampfrunde();
         }
 
         private void KampfEnde()
@@ -261,22 +260,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
         }
 
-        public void Kämpfer_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        public void Kämpfer_CollectionChangedExtended(object sender, NotifyCollectionChangedEventArgs args)
         {
             if (args.Action == NotifyCollectionChangedAction.Remove)
-                InitiativListe.Remove((KämpferInfo)args.OldItems[0]);
+            {
+                InitiativListe.RemoveAll(mi => args.OldItems.Contains(mi.Manöver.Ausführender));
+            }
             else if (args.Action == NotifyCollectionChangedAction.Add)
-                ((KämpferInfo)args.NewItems[0]).StandardAktionenSetzen(Kampfrunde);
+            {
+                InitiativListe.AddRange(args.NewItems.Cast<KämpferInfo>().SelectMany(ki => ki.StandardAktionenSetzen(Kampfrunde)));
+            }
             //InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
-        }
-
-        public void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
-        {
-
-            /* ich glaube das taugt nichts, frei editierbar ist besser.
-            if (args.Action == NotifyCollectionChangedAction.Add && !(args.NewItems[0] is Manöver.KeineAktion))
-                UmwandelnMöglich = false;
-             * */
         }
 
         /// <summary>
@@ -334,10 +328,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             //TODO ??: ich finde diese Lösung noch nicht optimal. Das geht schief, wenn man speichern und laden möchte.
             //Alle Gegenerinstanzen löschen
-            foreach (var k in Kämpfer.Where(ki => ki.Kämpfer is Model.Gegner).Select(ki => ki.Kämpfer).ToList())
+            foreach (var k in Kämpfer.Where(ki => ki.Kämpfer is Model.Gegner).Select(ki => ki.Kämpfer))
             {
                 Kämpfer.Remove(k);
             }
+
+            Kämpfer.CollectionChanged -= Kämpfer_CollectionChangedExtended;
+
+            //Alles aus der Ini-Liste löschen damit die Events abgemeldet werden
+            while (InitiativListe.Count > 0)
+                InitiativListe.RemoveAt(0);
         }
 
         #region INotifyPropertyChanged

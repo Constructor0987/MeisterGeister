@@ -61,14 +61,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (KampfVM != null)
                 {
-                    _kampfVM.KämpferListe.CollectionChanged -= OnKämpferListeChanged;
+                    _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
                     _kampfVM.PropertyChanged -= OnKampfPropertyChanged;
                 }
                 _kampfVM = value;
                 AddAllCreatures();
                 if (KampfVM != null)
                 {
-                    _kampfVM.KämpferListe.CollectionChanged += OnKämpferListeChanged;
+                    _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
                     _kampfVM.PropertyChanged += OnKampfPropertyChanged;
                 }
                 UpdateCreaturesFromChangedKampferlist();
@@ -77,11 +77,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void UpdateCreaturesFromChangedKampferlist()
         {
-            foreach (var k in KampfVM.KämpferListe)
+            foreach (var k in KampfVM.Kampf.Kämpfer)
             {
                 ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
             }
-            foreach (var k in KampfVM.KämpferListe)
+            foreach (var k in KampfVM.Kampf.Kämpfer)
             {
                 ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged += OnWesenPropertyChanged;
             }
@@ -167,7 +167,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void AddAllCreatures()
         {
-            foreach (var k in KampfVM.KämpferListe)
+            foreach (var k in KampfVM.Kampf.Kämpfer)
             {
                 AddCreature(k.Kämpfer);
             }
@@ -814,9 +814,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     // Free any other managed objects here. 
                     if (KampfVM != null)
                     {
-                        _kampfVM.KämpferListe.CollectionChanged -= OnKämpferListeChanged;
+                        _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
                         _kampfVM.PropertyChanged -= OnKampfPropertyChanged;
-                        foreach (var k in KampfVM.KämpferListe)
+                        foreach (var k in KampfVM.Kampf.Kämpfer)
                         {
                             ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
                         }

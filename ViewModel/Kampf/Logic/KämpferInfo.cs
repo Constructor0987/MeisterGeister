@@ -9,6 +9,9 @@ using System.Collections.Specialized;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -21,25 +24,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _kämpfer; }
             private set
             {
-                _kämpfer = value; AktionenBerechnen();
+                _kämpfer = value;
                 OnChanged("Kämpfer");
             }
         }
 
         #region Initiative
 
+        //private const int RANDOM_SIZE = 100000;
+
         private decimal Kommastellen(int initiative)
         {
             decimal kommas = initiative;
-            decimal random = new Random(GetHashCode()).Next(0, 1000);
-            return kommas / 100 + random / 100000;
+            return kommas / 100;
+            //decimal random = new Random(GetHashCode()).Next(0, RANDOM_SIZE);
+            //return kommas / 100 + random / (RANDOM_SIZE * 100);
         }
 
         public decimal InitiativeMitKommas
         {
             get
             {
-                return Initiative + Kommastellen(InitiativeBasis);
+                return Initiative + Kommastellen(Kämpfer.InitiativeBasis);
             }
         }
 
@@ -63,15 +69,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 OnChanged("Angriffsaktionen"); OnChanged("Abwehraktionen"); OnChanged("Aktionen");
                 OnChanged("Initiative");
             }
-        }
-        public int InitiativeBasis
-        {
-            get { return Kämpfer.InitiativeBasis; }
-        }
-
-        public int InitiativeWurf
-        {
-            get { return Kämpfer.InitiativeWurf; }
         }
         #endregion
 
@@ -101,19 +98,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public void NotifyIndexChanged()
+        {
+            OnChanged("Index");
+        }
+
         private Kampf kampf;
         public Kampf Kampf
         {
             get { return kampf; }
             set { kampf = value; OnChanged("Kampf"); }
-        }
-
-        public bool IsAktuell
-        {
-            get
-            {
-                return this == Kampf.AktuelleAktion.Manöver.Ausführender;
-            }
         }
 
         public KämpferInfo(IKämpfer k, Kampf kampf)
@@ -125,31 +119,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Kämpfer = k;
             Kampf = kampf;
             Kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
-            Kampf.PropertyChanged += Kampf_PropertyChanged;
             Team = 1;
             Initiative = k.Initiative();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-            PropertyChanged += KämpferInfo_PropertyChanged;
-        }
-
-        private void Kampf_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "AktuelleAktion")
-                OnChanged("IsAktuell");
-        }
-
-        private void KämpferInfo_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Angriffsaktionen")
-                StandardAktionenSetzen(Kampf.Kampfrunde);
         }
 
         private void Kämpfer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "InitiativeBasis" || e.PropertyName == "InitiativeWurf")
             {
-                Initiative = InitiativeBasis + InitiativeWurf;
-                OnChanged(e.PropertyName);
+                Initiative = Kämpfer.InitiativeBasis + Kämpfer.InitiativeWurf;
             }
         }
 
@@ -268,7 +247,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return FreieAktionen - VerbrauchteFreieAktionen; }
         }
 
-        public void AktionenBerechnen()
+        private void AktionenBerechnen()
         {
             int aktionen = 2;
             if (Initiative < 0)
@@ -425,8 +404,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get
             {
-                if (Kampf == null)
-                    return new List<ManöverInfo>();
                 return Kampf.InitiativListe.Where(mi => mi.Manöver.Ausführender == this).OrderByDescending(mi => mi.Start);
             }
         }
@@ -499,12 +476,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             AbwehrManöver.Clear();
         }
 
-        public void StandardAktionenSetzen(int kampfrunde)
+        public IEnumerable<ManöverInfo> StandardAktionenSetzen(int kampfrunde)
         {
-            var ki = this;
-            var geplanteAktionen = AngriffsManöver.Where(mi => mi.IsAktion).ToList().OrderBy(mi => mi.Start).ToList();
+            if (kampfrunde == 0)
+                yield break;
+
+            AktionenBerechnen();
+
+            var geplanteAktionen = AngriffsManöver.Where(mi => mi.IsAktion && mi.Start.Kampfrunde <= kampfrunde && mi.End.Kampfrunde >= kampfrunde).OrderBy(mi => mi.Start);
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist. oder für die zu wenig aktionen vorhanden sind.
-            DeleteManöver(ref geplanteAktionen);
+            //DeleteManöver(ref geplanteAktionen);
             //var lfh = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.InitiativeStart).FirstOrDefault();
             //if (lfh != null)
             //{
@@ -513,57 +494,65 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //    return;
             //}
 
-            int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).Count();
-            for (int i = geplanteAktionen.Count; i < ki.Angriffsaktionen; i++)
+            int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is ZusätzlicheAngriffsaktion).Count();
+
+            DateTime dtstart = DateTime.Now;
+            Debug.WriteLine(String.Format("KR {1}: Aktionen berechnen: {0}", DateTime.Now - dtstart, kampfrunde));
+            for (int i = geplanteAktionen.SelectMany(ki => ki.Aktionszeiten).Where(zeit => zeit.Kampfrunde == kampfrunde).Count(); i < Angriffsaktionen; i++)
             {
                 if (i == 0)
                 {
                     var m = AngriffsManöver.Where(mi => mi.Manöver is Manöver.KeineAktion).FirstOrDefault();
                     if (m == null)
-                        Kampf.InitiativListe.Add(new Attacke(ki), 0, kampfrunde);
+                        yield return new ManöverInfo(new Attacke(this), 0, kampfrunde);
                     else
-                        m.Manöver = new Attacke(ki);
+                        m.Manöver = new Attacke(this);
                 }
                 else // i>=1
                 {
-                    var ersterAngriff = ki.AngriffsManöver.Where(mi => mi.Manöver is Manöver.Angriffsaktion).FirstOrDefault();
-                    if (ki.Kampfstil == Kampfstil.BeidhändigerKampf)
+                    var ersterAngriff = AngriffsManöver.Where(mi => mi.Manöver is Angriffsaktion).FirstOrDefault();
+                    if (Kampfstil == Kampfstil.BeidhändigerKampf)
                     {
                         //normale Aktionen und zusatzaktionen getrennt zählen, dann ist es einfach
                         //wenn noch keine Angriffsaktion da ist, dann Attacke bei i*-8
                         //wenn schon eine Angriffsaktion in der Liste ist, und i<Aktionen, dann zusatzaktion bei erste Angriffsaktion-4. sonst Attacke bei -8
                         if (ersterAngriff == null)
                         {
-                            Kampf.InitiativListe.Add(new Attacke(ki), Math.Min(i * -4, -8), kampfrunde);
+                            yield return new ManöverInfo(new Attacke(this), Math.Min(i * -4, -8), kampfrunde);
                         }
                         else
                         if (ersterAngriff != null)
                         {
-                            if (zusatzAktionen > 0 && ki.Abwehraktionen == 0 && i == ki.Angriffsaktionen - 1) //es wurde umgewandelt.
-                                Kampf.InitiativListe.Add(new Attacke(ki), -8, kampfrunde);
+                            if (zusatzAktionen > 0 && Abwehraktionen == 0 && i == Angriffsaktionen - 1) //es wurde umgewandelt.
+                                yield return new ManöverInfo(new Attacke(this), -8, kampfrunde);
                             else
                             {
                                 //4 ini-phasen nach dem ersten angriff
-                                Kampf.InitiativListe.Add(new ZusätzlicheAngriffsaktion(ki), ersterAngriff.InitiativeModStart + (zusatzAktionen + 1) * -4, kampfrunde);
+                                yield return new ManöverInfo(new ZusätzlicheAngriffsaktion(this), ersterAngriff.InitiativeModStart + (zusatzAktionen + 1) * -4, kampfrunde);
                                 zusatzAktionen++;
                             }
                         }
                     }
-                    else if (ki.Kampfstil == Kampfstil.Parierwaffenstil)
+                    else if (Kampfstil == Kampfstil.Parierwaffenstil)
                     {
-                        if (ki.Abwehraktionen == 1 && ersterAngriff != null && (ki.Kämpfer is Model.Gegner || (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")) && geplanteAktionen.Where(mi => mi.Manöver is Manöver.TodVonLinks).Count() == 0)
-                            Kampf.InitiativListe.Add(new TodVonLinks(ki), Math.Min(i * -4, -8), kampfrunde);
+                        if (Abwehraktionen == 1 && ersterAngriff != null &&
+                            (Kämpfer is Model.Gegner || (Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")) &&
+                            geplanteAktionen.Where(mi => mi.Manöver is TodVonLinks).Count() == 0)
+                            yield return new ManöverInfo(new TodVonLinks(this), Math.Min(i * -4, -8), kampfrunde);
                         else
-                            Kampf.InitiativListe.Add(new Attacke(ki), Math.Min(i * -4, -8), kampfrunde);
+                            yield return new ManöverInfo(new Attacke(this), Math.Min(i * -4, -8), kampfrunde);
                     }
-                    else if (ki.Kämpfer is Model.Gegner && ki.Aktionen > 2)
-                        Kampf.InitiativListe.Add(new Attacke(ki), i * -4, kampfrunde);
+                    else if (Kämpfer is Model.Gegner && Aktionen > 2)
+                        yield return new ManöverInfo(new Attacke(this), i * -4, kampfrunde);
                     else
-                        Kampf.InitiativListe.Add(new Attacke(ki), Math.Min(i * -4, -8), kampfrunde);
+                        yield return new ManöverInfo(new Attacke(this), Math.Min(i * -4, -8), kampfrunde);
                 }
             }
 
+            Debug.WriteLine(String.Format("KR {1}: Manöver erstellen: {0}", DateTime.Now - dtstart, kampfrunde));
+
             //Parade-Manöver setzen
+            AbwehrManöver.Clear();
             for (int i = 0; i < Abwehraktionen; i++)
                 AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));
         }
@@ -589,12 +578,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Kämpfer.PropertyChanged -= Kämpfer_PropertyChanged;
                 Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
             }
-            Kampf.PropertyChanged -= Kampf_PropertyChanged;
             PropertyChanged -= DependentProperty.PropagateINotifyProperyChanged;
         }
     }
 
-    public class KämpferInfoListe : List<KämpferInfo>, INotifyPropertyChanged, INotifyCollectionChanged
+    public class KämpferInfoListe : ExtendedObservableCollection<KämpferInfo>
     {
         private Dictionary<IKämpfer, KämpferInfo> _kämpfer_kämpferinfo;
 
@@ -602,6 +590,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             _kampf = kampf;
             _kämpfer_kämpferinfo = new Dictionary<IKämpfer, KämpferInfo>();
+            lazySort = new LazyUpdate(() => Sort());
+            CollectionChangedExtended += KämpferInfoListe_CollectionChangedExtended;
         }
 
         public KämpferInfo this[IKämpfer k]
@@ -621,18 +611,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Kampf Kampf
         {
             get { return _kampf; }
-            set { _kampf = value; }
+            private set { _kampf = value; }
         }
 
         #region Add and Remove
-        public new void Add(KämpferInfo ki)
-        {
-            base.Add(ki);
-            _kämpfer_kämpferinfo.Add(ki.Kämpfer, ki);
-            ki.PropertyChanged += OnKämpferInfoChanged;
-            Sort();
-            OnCollectionChanged(NotifyCollectionChangedAction.Add, ki);
-        }
+
 
         public void Add(IKämpfer k)
         {
@@ -647,42 +630,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             ki.Angriffsaktionen = Math.Max(ki.Aktionen - ki.Abwehraktionen, 0);
         }
 
-        public new void Remove(KämpferInfo ki)
-        {
-            ki.PropertyChanged -= OnKämpferInfoChanged;
-            _kämpfer_kämpferinfo.Remove(ki.Kämpfer);
-            //TODO JT: sobald ein Kampf abgespeichert werden kann muss dies weg
-            Model.Gegner g = ki.Kämpfer as Model.Gegner;
-            if (g != null)
-                Global.ContextKampf.Delete<Model.Gegner>(g);
-
-            base.Remove(ki);
-            OnCollectionChanged(NotifyCollectionChangedAction.Remove, ki);
-        }
-
-        public new void RemoveAt(int index)
-        {
-            var removed = this[index];
-            removed.PropertyChanged -= OnKämpferInfoChanged;
-            _kämpfer_kämpferinfo.Remove(removed.Kämpfer);
-            //TODO JT: sobald ein Kampf abgespeichert werden kann muss dies weg
-            Model.Gegner g = removed.Kämpfer as Model.Gegner;
-            if (g != null)
-                Global.ContextKampf.Delete<Model.Gegner>(g);
-
-            base.RemoveAt(index);
-            OnCollectionChanged(NotifyCollectionChangedAction.Remove, removed);
-        }
-
-        public new void RemoveAll(Predicate<KämpferInfo> match)
+        public void RemoveAll(Predicate<KämpferInfo> match)
         {
             foreach (KämpferInfo k in this.Where(ki => match(ki)).ToList())
                 Remove(k);
-        }
-
-        public new void RemoveRange(int index, int range)
-        {
-            throw new NotImplementedException();
         }
 
         public void Remove(IKämpfer k)
@@ -698,72 +649,44 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
         #endregion
 
-        private void OnKämpferInfoChanged(object o, PropertyChangedEventArgs args)
+        private void KämpferInfoListe_CollectionChangedExtended(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (KämpferInfo k in e.NewItems)
+                {
+                    _kämpfer_kämpferinfo.Add(k.Kämpfer, k);
+                    k.PropertyChanged += KämpferInfo_PropertyChanged;
+                }
+                lazySort.Do();
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (KämpferInfo k in e.OldItems)
+                {
+                    k.PropertyChanged -= KämpferInfo_PropertyChanged;
+                    _kämpfer_kämpferinfo.Remove(k.Kämpfer);
+                }
+                lazySort.Do();
+            }
+        }
+
+        private LazyUpdate lazySort;
+
+        private void KämpferInfo_PropertyChanged(object o, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == "Initiative")
-                Sort();
-        }
-
-        public new void Sort()
-        {
-            base.Sort(CompareInitiative);
-        }
-
-        /// <summary>
-        /// Höhere Initiative nach oben.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public static int CompareInitiative(KämpferInfo x, KämpferInfo y)
-        {
-            return y.InitiativeMitKommas.CompareTo(x.InitiativeMitKommas);
-            // prüfen auf null-Übergabe
-            //if (x == null && y == null) return 0;
-            //if (x == null) return 1;
-            //if (y == null) return -1;
-            //// Vergleich
-            //if (x.Initiative > y.Initiative)
-            //    return -1;
-            //if (x.Initiative < y.Initiative)
-            //    return 1;
-            //if (x.InitiativeBasis > y.InitiativeBasis)
-            //    return -1;
-            //if (x.InitiativeBasis < y.InitiativeBasis)
-            //    return 1;
-            //return x.Kämpfer.Name.CompareTo(y.Kämpfer.Name);
-        }
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnChanged(String info, object sender = null)
-        {
-            if (PropertyChanged != null)
             {
-                PropertyChanged(sender ?? this, new PropertyChangedEventArgs(info));
+                lazySort.Do();
             }
         }
 
-        #endregion
 
-        private void OnCollectionChanged(NotifyCollectionChangedAction action, object element)
+        public void Sort()
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
-
-                if (action == NotifyCollectionChangedAction.Add ||
-                    action == NotifyCollectionChangedAction.Remove ||
-                    action == NotifyCollectionChangedAction.Reset)
-                    OnChanged("Count");
-
-                //TODO: Optimieren. Nur die IndexChanged-Events in Gang setzen, die sich auch wirklich geändert haben
-                foreach (KämpferInfo info in this)
-                    info.OnChanged("Index");
-            }
+            base.Sort(ki => ki.InitiativeMitKommas);
+            foreach (KämpferInfo ki in this)
+                ki.NotifyIndexChanged();
         }
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }

@@ -725,6 +725,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Finte.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\GezielterStich.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Todesstoß.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Zauber.cs" />
     <Compile Include="ViewModel\Kampf\Logic\ZeitImKampf.cs" />
     <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
     <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
@@ -980,6 +981,7 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\EqualsMultiConverter.cs" />
     <Compile Include="View\General\GridBehaviour.cs" />
     <Compile Include="View\General\HandlingEventTrigger.cs" />
     <Compile Include="View\General\ImageDuplicator.xaml.cs">
@@ -992,6 +994,7 @@
     <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\Beschwörung\DämonenListViewConverter.cs" />
     <Compile Include="View\General\IsNullOrEmptyConverter.cs" />
+    <Compile Include="View\General\LazyUpdate.cs" />
     <Compile Include="View\General\ListBoxBehaviour.cs" />
     <Compile Include="View\General\LiteraturControl.xaml.cs">
       <DependentUpon>LiteraturControl.xaml</DependentUpon>
@@ -1072,6 +1075,12 @@
     </Compile>
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\Manöver\AttackeOptionenView.xaml.cs">
+      <DependentUpon>AttackeOptionenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\Manöver\ZauberOptionenView.xaml.cs">
+      <DependentUpon>ZauberOptionenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\BekanntePflanzenView.xaml.cs">
       <DependentUpon>BekanntePflanzenView.xaml</DependentUpon>
@@ -1613,6 +1622,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kampf\KampfInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Manöver\AttackeOptionenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Manöver\ZauberOptionenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

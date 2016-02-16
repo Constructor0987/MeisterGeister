@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="MeisterGeister.View.Kampf.Manöver.AttackeOptionenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeisterGeister.View.Kampf.Manöver"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Dämmerungssicht / Nachtsicht-->
+        <TextBlock Grid.Row="0" Text="Licht"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="licht" SelectedValuePath="DataContext" SelectedIndex="0">
+            <ComboBoxItem Content="Tageslicht" DataContext="0"/>
+            <ComboBoxItem Content="Mondlicht" DataContext="3"/>
+            <ComboBoxItem Content="Sternenlicht" DataContext="5"/>
+            <ComboBoxItem Content="Finsternis" DataContext="8"/>
+        </ComboBox>
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding ElementName=licht,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="1" Text="Distanzklasse"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="distanzklasse" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Passend" DataContext="0"/>
+            <ComboBoxItem Content="Um 1 zu lang oder kurz" DataContext="6"/>
+            <ComboBoxItem Content="Um 2 zu lang oder kurz" IsEnabled="False" ToolTip="Angreifen nicht möglich"/>
+            <Separator/>
+            <ComboBoxItem Content="Um 2 vergrößern" DataContext="8"/>
+            <ComboBoxItem Content="Um 1 vergrößern" DataContext="4"/>
+            <ComboBoxItem Content="Um 1 verkleinern (parierbar)" DataContext="0"/>
+            <ComboBoxItem Content="Um 2 verkleinern (parierbar)" DataContext="8"/>
+        </ComboBox>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ElementName=distanzklasse,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="2" Text="Überrascht"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="überrascht" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Nein" DataContext="0"/>
+            <ComboBoxItem Content="Überrumpelt" DataContext="-5"/>
+            <ComboBoxItem Content="Schlafend / Bewusstlos" DataContext="-8"/>
+            <ComboBoxItem Content="Vollkommen unbeweglich" DataContext="-10"/>
+        </ComboBox>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ElementName=überrascht,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="3" Text="Umgebung"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="umgebung" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Genügend Freiraum" DataContext="0"/>
+            <ComboBoxItem Content="Beengte Verhältnisse (kurze Schwungwaffe / Infanteriewaffe)" DataContext="2"/>
+            <ComboBoxItem Content="Beengte Verhältnisse (lange Schwungwaffe)" DataContext="6"/>
+        </ComboBox>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=umgebung,Path=SelectedValue}"/>
+
+        <!--Kampf im Wasser / Unterwasserkampf-->
+        <TextBlock Grid.Row="4" Text="Wasser"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="wasser" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Nein" DataContext="0"/>
+            <ComboBoxItem Content="Hüfttief" DataContext="2"/>
+            <ComboBoxItem Content="Schultertier" DataContext="4"/>
+            <ComboBoxItem Content="Unter Wasser" DataContext="6"/>
+        </ComboBox>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding ElementName=wasser,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="5" Text="Position (Selbst)"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="pos" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Stehend" DataContext="0"/>
+            <ComboBoxItem Content="Kniend" DataContext="1"/>
+            <ComboBoxItem Content="Liegend" DataContext="3"/>
+        </ComboBox>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding ElementName=pos,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="6" Text="Position (Gegner)"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="posGegner" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Stehend" DataContext="0"/>
+            <ComboBoxItem Content="Kniend" DataContext="-1"/>
+            <ComboBoxItem Content="Liegend" DataContext="-3"/>
+            <ComboBoxItem Content="Fliegend" DataContext="2"/>
+        </ComboBox>
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding ElementName=posGegner,Path=SelectedValue}"/>
+
+        <!--Wuchtschlag-->
+        <TextBlock Grid.Row="7" Text="Wuchtschlag"/>
+        <Slider Grid.Row="7" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" x:Name="wuchtschlag"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding ElementName=wuchtschlag,Path=Value}"/>
+
+        <!--Finte-->
+        <TextBlock Grid.Row="8" Text="Finte"/>
+        <Slider Grid.Row="8" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" x:Name="finte"/>
+        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding ElementName=finte,Path=Value}"/>
+
+        <TextBlock Grid.Row="9" Text="Stumpfer Schlag"/>
+        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="stumpf" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Nein" DataContext="0"/>
+            <ComboBoxItem Content="Stäbe &amp; Knüppel" DataContext="2"/>
+            <ComboBoxItem Content="Hiebwaffen mit flacher Seite" DataContext="4"/>
+            <ComboBoxItem Content="Sonstige mögliche Waffe" DataContext="8"/>
+        </ComboBox>
+        <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding ElementName=stumpf,Path=SelectedValue}"/>
+
+        <!--Benötigt Finte / bei Gezielter Stich nur halber Zuschlag - 2 -->
+        <TextBlock Grid.Row="10" Text="Gezielter Schlag"/>
+        <ComboBox Grid.Row="10" Grid.Column="1" x:Name="gezielt" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Nein" DataContext="0"/>
+            <ComboBoxItem Content="Kopf" DataContext="6"/>
+            <ComboBoxItem Content="Brust" DataContext="8"/>
+            <ComboBoxItem Content="Schwertarm" DataContext="6"/>
+            <ComboBoxItem Content="Schildarm" DataContext="8"/>
+            <ComboBoxItem Content="Bauch" DataContext="6"/>
+            <ComboBoxItem Content="Beine" DataContext="4"/>
+        </ComboBox>
+        <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding ElementName=gezielt,Path=SelectedValue}"/>
+
+        <!--Gegner Aufmerksamkeit? / Ini-Mod der eigenen Waffe-->
+        <CheckBox Grid.Row="11" Grid.ColumnSpan="2" Content="Passierschlag"/>
+        <TextBlock Grid.Row="11" Grid.Column="2" Text="{Binding ElementName=passierschlag,Path=SelectedValue}"/>
+
+        <!--+9 / Linkhand / Beidhändiger Kampf I / Linkshändig / Beidhändig-->
+        <CheckBox Grid.Row="12" Grid.ColumnSpan="2" Content="Kampf mit der falschen Hand"/>
+        <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding ElementName=falscheHand,Path=SelectedValue}"/>
+
+        <!--Taktik-Probe?-->
+        <TextBlock Grid.Row="13" Text="Überzahl"/>
+        <Slider Grid.Row="13" Grid.Column="1" Interval="1"  Minimum="-5" Maximum="5" x:Name="überzahl"/>
+        <TextBlock Grid.Row="13" Grid.Column="2" Text="{Binding ElementName=überzahl,Path=Value}"/>
+
+        <!--+1-->
+        <CheckBox Grid.Row="14" Grid.ColumnSpan="2" Content="Unbewaffneter Angriff gegen Bewaffnete"/>
+        <TextBlock Grid.Row="14" Grid.Column="2" Text="{Binding ElementName=falscheHand,Path=SelectedValue}"/>
+
+        <!--Zielgröße-->
+        <TextBlock Grid.Row="15" Text="Zielgröße"/>
+        <ComboBox Grid.Row="15" Grid.Column="1" x:Name="größe" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Winzig" DataContext="4"/>
+            <ComboBoxItem Content="Sehr klein" DataContext="2"/>
+            <ComboBoxItem Content="Klein oder größer" DataContext="0"/>
+        </ComboBox>
+        <TextBlock Grid.Row="15" Grid.Column="2" Text="{Binding ElementName=größe,Path=SelectedValue}"/>
+
+
+
+    </Grid>
+</UserControl>

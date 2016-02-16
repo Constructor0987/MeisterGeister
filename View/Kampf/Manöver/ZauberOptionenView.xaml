@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="MeisterGeister.View.Kampf.Manöver.ZauberOptionenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeisterGeister.View.Kampf.Manöver"
+             xmlns:General="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Dämmerungssicht / Nachtsicht-->
+        <TextBlock Grid.Row="0" Text="Zauberdauer (Basis)"/>
+        <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="0" Grid.Column="1" Value="{Binding Dauer}"/>
+
+        <TextBlock Grid.Row="1" Text="Zauberdauer"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="zauberdauer" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="* 2" DataContext="-3"/>
+            <Separator/>
+            <ComboBoxItem Content="Normal" IsSelected="True" DataContext="0"/>
+            <Separator/>
+            <ComboBoxItem Content="÷ 2" DataContext="5"/>
+            <ComboBoxItem Content="÷ 4" DataContext="10"/>
+            <ComboBoxItem Content="÷ 8" DataContext="15"/>
+        </ComboBox>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ElementName=zauberdauer,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="2" Text="Wirkungsdauer"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="wirkungsdauer" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="÷ 8" DataContext="9"/>
+            <ComboBoxItem Content="÷ 4" DataContext="6"/>
+            <ComboBoxItem Content="÷ 2" DataContext="3"/>
+            <Separator/>
+            <ComboBoxItem Content="Normal" DataContext="0" IsSelected="True"/>
+            <Separator/>
+            <ComboBoxItem Content="* 2" DataContext="7"/>
+            <ComboBoxItem Content="* 4" DataContext="14"/>
+            <ComboBoxItem Content="* 8" DataContext="21"/>
+        </ComboBox>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ElementName=wirkungsdauer,Path=SelectedValue}"/>
+
+        <CheckBox Grid.Row="3" Grid.ColumnSpan="2" Content="Aufrechterhaltung in feste Dauer umwandeln"/>
+
+        <!--Kampf im Wasser / Unterwasserkampf-->
+        <TextBlock Grid.Row="4" Text="Reichweite / Radius"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="reichweite" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Um 3 verkleinern" DataContext="9"/>
+            <ComboBoxItem Content="Um 2 verkleinern" DataContext="6"/>
+            <ComboBoxItem Content="Um 1 verkleinern" DataContext="3"/>
+            <Separator/>
+            <ComboBoxItem Content="Normal" DataContext="0" IsSelected="True"/>
+            <Separator/>
+            <ComboBoxItem Content="Um 1 vergrößern" DataContext="5"/>
+            <ComboBoxItem Content="Um 2 vergrößern" DataContext="10"/>
+            <ComboBoxItem Content="Um 3 vergrößern" DataContext="15"/>
+        </ComboBox>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding ElementName=reichweite,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="5" Text="Erzwingen / Sparen"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="kosten" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="30% sparen" DataContext="9"/>
+            <ComboBoxItem Content="20% sparen" DataContext="6"/>
+            <ComboBoxItem Content="10% sparen" DataContext="3"/>
+            <Separator/>
+            <ComboBoxItem Content="Normal" DataContext="0" IsSelected="True"/>
+            <Separator/>
+            <ComboBoxItem Content="Erzwingen +1 AsP" DataContext="-1"/>
+            <ComboBoxItem Content="Erzwingen +2 AsP" DataContext="-2"/>
+            <ComboBoxItem Content="Erzwingen +4 AsP" DataContext="-3"/>
+            <ComboBoxItem Content="Erzwingen +8 AsP" DataContext="-4"/>
+            <ComboBoxItem Content="Erzwingen +16 AsP" DataContext="-5"/>
+            <ComboBoxItem Content="Erzwingen +32 AsP" DataContext="-6"/>
+        </ComboBox>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding ElementName=kosten,Path=SelectedValue}"/>
+
+        <TextBlock Grid.Row="6" Text="Zielobjekt"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="freiwillig" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Keine Besonderheiten" DataContext="0"/>
+            <ComboBoxItem Content="Freiwillig -> Unfreiwillig" DataContext="5"/>
+            <ComboBoxItem Content="Unfreiwillig -> Freiwillig" DataContext="2"/>
+        </ComboBox>
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding ElementName=freiwillig,Path=SelectedValue}"/>
+
+        <!--Wuchtschlag-->
+        <TextBlock Grid.Row="7" Text="Anzahl der Ziele"/>
+        <Slider Grid.Row="7" Grid.Column="1" Interval="1" Minimum="1" Maximum="10" x:Name="wuchtschlag"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding ElementName=wuchtschlag,Path=Value}"/>
+
+        <!--Finte-->
+        <TextBlock Grid.Row="8" Text="Veränderte Technik"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="technik" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Nein" DataContext="0"/>
+            <ComboBoxItem Content="1 Komponente" DataContext="7"/>
+            <ComboBoxItem Content="2 Komponenten" DataContext="14"/>
+            <ComboBoxItem Content="3 Komponenten" DataContext="21"/>
+        </ComboBox>
+        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding ElementName=technik,Path=Value}"/>
+
+        <TextBlock Grid.Row="9" Text="Veränderte Technik (Zentral)"/>
+        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="technikzentral" SelectedIndex="0" SelectedValuePath="DataContext">
+            <ComboBoxItem Content="Nein" DataContext="0"/>
+            <ComboBoxItem Content="1 zentrale Komponente" DataContext="12"/>
+            <ComboBoxItem Content="2 zentrale Komponenten" DataContext="24"/>
+            <ComboBoxItem Content="3 zentrale Komponenten" DataContext="36"/>
+        </ComboBox>
+        <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding ElementName=technikzentral,Path=Value}"/>
+        
+    </Grid>
+</UserControl>

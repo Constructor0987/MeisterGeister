@@ -24,11 +24,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
         public static bool operator >=(ZeitImKampf left, ZeitImKampf right)
         {
-            return !(right < left);
+            return !(left < right);
         }
         public static bool operator <=(ZeitImKampf left, ZeitImKampf right)
         {
-            return !(right > left);
+            return !(left > right);
         }
         public static bool operator ==(ZeitImKampf left, ZeitImKampf right)
         {
@@ -64,7 +64,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (InitiativPhase == other.InitiativPhase)
                     return 0;
                 else
-                    return Math.Sign(InitiativPhase - other.InitiativPhase);
+                    return Math.Sign(other.InitiativPhase - InitiativPhase);
             }
             else return diffKR;
         }

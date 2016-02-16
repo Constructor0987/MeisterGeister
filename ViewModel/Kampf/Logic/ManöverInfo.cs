@@ -19,15 +19,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (umwandeln == null)
                 {
-                    umwandeln = new CommandBase(o => ExecuteUmwandeln(o as Type), o => CanExecuteUmwandeln());
+                    umwandeln = new CommandBase(o => ExecuteUmwandeln(), o => CanExecuteUmwandeln());
                 }
                 return umwandeln;
             }
         }
 
-        private void ExecuteUmwandeln(Type neuesManöver)
+        private void ExecuteUmwandeln()
         {
-
+            Manöver = new Manöver.Zauber(Manöver.Ausführender, null);
         }
 
         private bool CanExecuteUmwandeln()
@@ -37,27 +37,33 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         #endregion
 
-        public int Index
+        #region Kampfaktionen
+
+        [DependentProperty("Start")]
+        public int IndexInKampfaktionen
         {
-            get { return Kampf.InitiativListe.SelectMany(mi => mi.Aktionszeiten).Count(zeit => zeit < Start); }
+            get { return Kampf.InitiativListe.Aktionszeiten.Count(zeit => zeit < Start); }
         }
 
-        public void NotifyIndexChanged()
-        {
-            OnChanged("Index");
-        }
-
+        [DependentProperty("Start")]
+        [DependentProperty("End")]
         public int DauerInKampfaktionen
         {
             get
             {
-                var aktionszeiten = Kampf.InitiativListe.SelectMany(mi => mi.Aktionszeiten);
-                int dauer = aktionszeiten.Count(
-                    zeit =>
-                    zeit >= Start && zeit <= End);
+                var aktionszeiten = Kampf.InitiativListe.Aktionszeiten;
+                int dauer = aktionszeiten.Count(zeit => zeit >= Start && zeit <= End);
                 return dauer;
             }
         }
+
+        public void NotifyKampfaktionenChanged()
+        {
+            OnChanged("DauerInKampfaktionen");
+            OnChanged("IndexInKampfaktionen");
+        }
+
+        #endregion
 
         #region Initiative
 
@@ -82,7 +88,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get
             {
-                return new ZeitImKampf(kampfrundeStart, Manöver.Ausführender.InitiativeMitKommas + InitiativeModStart);
+                return new ZeitImKampf(kampfrundeStart, Manöver.Ausführender.InitiativeMitKommas - InitiativeModStart);
             }
         }
 
@@ -108,18 +114,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get
             {
-                return new ZeitImKampf(kampfrundeEnd, Manöver.Ausführender.InitiativeMitKommas + InitiativeModEnd);
+                return new ZeitImKampf(kampfrundeEnd, Manöver.Ausführender.InitiativeMitKommas - InitiativeModEnd);
             }
         }
 
-        [DependentProperty("Manöver")]
+        private void BerechneEnd()
+        {
+            kampfrundeEnd = kampfrundeStart + (manöver.Dauer - (InitiativeModStart == 0 ? 1 : 0)) / 2;
+            InitiativeModEnd = (InitiativeModStart + (manöver.Dauer % 2 == 0 ? 8 : 0)) % 16;
+        }
+
+        [DependentProperty("Start")]
+        [DependentProperty("End")]
         public IEnumerable<ZeitImKampf> Aktionszeiten
         {
             get
             {
                 ZeitImKampf zeit = Start;
                 yield return zeit;
-                while (zeit != End)
+                while (zeit < End)
                 {
                     if (zeit.InitiativPhase == Manöver.Ausführender.InitiativeMitKommas)
                         zeit.InitiativPhase -= 8;
@@ -152,8 +165,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     kampf.InitiativListe.CollectionChanged += InitiativListe_CollectionChanged;
                     Kampf.PropertyChanged += Kampf_PropertyChanged;
                 }
+                NotifyKampfaktionenChanged();
                 OnChanged("Kampf");
             }
+        }
+
+        private void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            NotifyKampfaktionenChanged();
         }
 
         private Manöver.Manöver manöver;
@@ -163,12 +182,27 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 if (manöver != null)
+                {
                     manöver.Ausführender.PropertyChanged -= Kämpfer_PropertyChanged;
+                    manöver.PropertyChanged -= Manöver_PropertyChanged;
+                }
                 manöver = value;
                 if (manöver != null)
+                {
+                    manöver.PropertyChanged += Manöver_PropertyChanged;
                     manöver.Ausführender.PropertyChanged += Kämpfer_PropertyChanged;
+                    BerechneEnd();
+                }
 
                 OnChanged("Manöver");
+            }
+        }
+
+        private void Manöver_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Dauer")
+            {
+                BerechneEnd();
             }
         }
 
@@ -199,10 +233,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
             InitiativeModStart = inimod;
             kampfrundeStart = kampfrunde;
-            if (inimod == 0)
-                kampfrundeEnd = kampfrundeStart + (m.Dauer - 1) / 2;
-            else
-                kampfrundeEnd = kampfrundeStart + m.Dauer / 2;
             Manöver = m;
 
             Ausgeführt = false;
@@ -263,17 +293,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 OnChanged("IsAktuell");
         }
 
-        private void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnChanged("DauerInKampfaktionen");
-            OnChanged("Index");
-        }
-
 
         public void Dispose()
         {
             Kampf = null;
-            Manöver.Ausführender.PropertyChanged -= Kämpfer_PropertyChanged;
+            Manöver = null;
         }
     }
 }
