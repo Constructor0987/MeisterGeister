@@ -4,7 +4,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     public struct ZeitImKampf : IComparable, IComparable<ZeitImKampf>
     {
-        public ZeitImKampf(int kampfrunde, decimal initiativPhase)
+        public ZeitImKampf(int kampfrunde, decimal initiativPhase) : this()
         {
             Kampfrunde = kampfrunde;
             InitiativPhase = initiativPhase;
