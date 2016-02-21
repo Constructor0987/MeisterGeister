@@ -11,91 +11,19 @@ using MeisterGeister.Logic.Extensions;
 using System.ComponentModel;
 using ImpromptuInterface;
 using System.Collections.ObjectModel;
+using MeisterGeister.ViewModel.Base;
+using System.Runtime.CompilerServices;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     //TODO JT: überarbeiten
     //Probe für ein Manöver wird am Anfang des Manövers ausgeführt.
     //Wenn die VerbleibendeDauer auf 0 geht wird es angewandt.
-    public abstract class Manöver : INotifyPropertyChanged
+    public abstract class Manöver : ViewModelBase
     {
-
-        protected static Object syncRoot = new Object();
-        protected static volatile List<Type> _manöverListe = null;
-        public static List<Type> ManöverListe
-        {
-            get
-            {
-                if (Manöver._manöverListe == null)
-                {
-                    lock (Manöver.syncRoot)
-                    {
-                        if (Manöver._manöverListe == null)
-                        {
-                            Assembly ass = Assembly.GetAssembly(typeof(Manöver));
-                            Manöver._manöverListe = ass.GetTypes().Where(t => t.IsSubclassOf(typeof(Manöver))).ToList(); ;
-                        }
-                    }
-                }
-                return Manöver._manöverListe;
-            }
-        }
-
-        public static List<Type> MöglicheManöver(KämpferInfo ausführender)
-        {
-            var staticContext = InvokeContext.CreateStatic;
-            List<Type> l = new List<Type>();
-            foreach (Type t in ManöverListe)
-            {
-                if ((bool)Impromptu.InvokeMember(staticContext(t), "BeherrschtManöver", ausführender))
-                    l.Add(t);
-            }
-            return l;
-        }
-
-        public static bool BeherrschtManöver(KämpferInfo ausführender)
-        {
-            return true;
-        }
-
-        protected Manöver(KämpferInfo ausführender)
-            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>(1), 1)
-        {
-        }
-
-        protected Manöver(KämpferInfo ausführender, int dauer)
-            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>(1), dauer)
-        {
-        }
-
-        protected Manöver(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
-            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>() { { waffe, ziel } }, 1)
-        {
-        }
-
-        protected Manöver(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel, int dauer)
-            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>() { { waffe, ziel } }, dauer)
-        {
-        }
-
-        protected Manöver(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel)
-            : this(ausführender, waffe_ziel, 1)
-        {
-        }
-
-        protected Manöver(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel, int dauer)
+        public Manöver(KämpferInfo ausführender)
         {
             Ausführender = ausführender;
-            WaffeZiel = waffe_ziel;
-            Dauer = VerbleibendeDauer = dauer;
-            Init();
-        }
-
-        protected virtual void Init()
-        {
-            Name = "Manöver";
-            Literatur = "WdS 59";
-            Ansage = 0;
         }
 
         //felder/parameter
@@ -119,26 +47,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             private set;
         }
 
-        public virtual IDictionary<IWaffe, KämpferInfo> WaffeZiel
+        public abstract IEnumerable<KämpferInfo> Ziele
         {
             get;
-            private set;
-        }
-
-        public IEnumerable<KämpferInfo> Ziele
-        {
-            get
-            {
-                return WaffeZiel.Values.Distinct();
-            }
-        }
-
-        public IEnumerable<IWaffe> Waffen
-        {
-            get
-            {
-                return WaffeZiel.Keys.Distinct();
-            }
         }
 
         public int Grunderschwernis
@@ -389,21 +300,93 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     break;
             }
         }
+    }
 
+    public interface IManöver<out TWaffe> where TWaffe : IWaffe
+    {
 
+    }
 
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnChanged(String info)
+    public abstract class Manöver<TWaffe> : Manöver, IManöver<TWaffe> where TWaffe : IWaffe
+    {
+        protected Manöver(KämpferInfo ausführender)
+            : this(ausführender, new Dictionary<TWaffe, KämpferInfo>(1), 1)
         {
-            if (PropertyChanged != null)
+        }
+
+        protected Manöver(KämpferInfo ausführender, int dauer)
+            : this(ausführender, new Dictionary<TWaffe, KämpferInfo>(1), dauer)
+        {
+
+        }
+
+        protected Manöver(KämpferInfo ausführender, TWaffe waffe, KämpferInfo ziel)
+            : this(ausführender, new Dictionary<TWaffe, KämpferInfo>() { { waffe, ziel } }, 1)
+        {
+        }
+
+        protected Manöver(KämpferInfo ausführender, TWaffe waffe, KämpferInfo ziel, int dauer)
+            : this(ausführender, new Dictionary<TWaffe, KämpferInfo>() { { waffe, ziel } }, dauer)
+        {
+        }
+
+        protected Manöver(KämpferInfo ausführender, IDictionary<TWaffe, KämpferInfo> waffe_ziel)
+            : this(ausführender, waffe_ziel, 1)
+        {
+        }
+
+        protected Manöver(KämpferInfo ausführender, IDictionary<TWaffe, KämpferInfo> waffe_ziel, int dauer)
+            : base(ausführender)
+        {
+            WaffeZiel = waffe_ziel;
+            Dauer = VerbleibendeDauer = dauer;
+            Init();
+            InitMods();
+        }
+
+        protected virtual void Init()
+        {
+            Name = "Manöver";
+            Literatur = "WdS 59";
+            Ansage = 0;
+        }
+
+        protected Dictionary<string, ManöverModifikator<TWaffe>> mods;
+        private ReadOnlyDictionary<string, ManöverModifikator<TWaffe>> readonlymods;
+
+        protected virtual void InitMods()
+        {
+            mods = new Dictionary<string, ManöverModifikator<TWaffe>>();
+            readonlymods = new ReadOnlyDictionary<string, ManöverModifikator<TWaffe>>(mods);
+        }
+
+        public ReadOnlyDictionary<string, ManöverModifikator<TWaffe>> Mods
+        {
+            get { return readonlymods; }
+        }
+
+
+        public virtual IDictionary<TWaffe, KämpferInfo> WaffeZiel
+        {
+            get;
+            private set;
+        }
+
+        public override IEnumerable<KämpferInfo> Ziele
+        {
+            get
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
+                return WaffeZiel.Values.Distinct();
             }
         }
 
-        #endregion
+        public IEnumerable<TWaffe> Waffen
+        {
+            get
+            {
+                return WaffeZiel.Keys.Distinct();
+            }
+        }
     }
 
     public class ManöverEventArgs : EventArgs

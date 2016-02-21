@@ -271,7 +271,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get
             {
-                return this == Kampf.AktuelleAktion;
+                return Aktionszeiten.Contains(Kampf.AktuelleAktionszeit);
             }
         }
 

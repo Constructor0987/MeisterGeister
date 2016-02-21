@@ -722,11 +722,15 @@
     <Compile Include="ViewModel\Kalender\Logic\DateList.cs" />
     <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
     <Compile Include="Logic\Karte\AffineTransformation.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Größe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Finte.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\GezielterStich.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\ManöverModifikator.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\NahkampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Todesstoß.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Zauber.cs" />
     <Compile Include="ViewModel\Kampf\Logic\ZeitImKampf.cs" />
+    <Compile Include="ViewModel\Kampf\SchadenMachen.cs" />
     <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
     <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
@@ -773,13 +777,13 @@
     <Compile Include="ViewModel\Kampf\Logic\KämpferWaffe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\ManöverInfo.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Attacke.cs" />
-    <Compile Include="ViewModel\Kampf\Logic\Manöver\Angriffsaktion.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\AngriffsManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\KeineAktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Gegenhalten.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\ZusätzlicheAngriffsaktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\TodVonLinks.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Parade.cs" />
-    <Compile Include="ViewModel\Kampf\Logic\Manöver\Abwehraktion.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\AbwehrManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Manöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\DependsOnModifikatorAttribute.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModifikator.cs" />
@@ -1060,9 +1064,6 @@
     <Compile Include="View\Kampf\Controls\GegnerDetailView.xaml.cs">
       <DependentUpon>GegnerDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Kampf\Controls\ManöverView.xaml.cs">
-      <DependentUpon>ManöverView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Kampf\Controls\GegnerView.xaml.cs">
       <DependentUpon>GegnerView.xaml</DependentUpon>
     </Compile>
@@ -1078,6 +1079,9 @@
     </Compile>
     <Compile Include="View\Kampf\Manöver\AttackeOptionenView.xaml.cs">
       <DependentUpon>AttackeOptionenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\Manöver\ManöverOptionenView.xaml.cs">
+      <DependentUpon>ManöverOptionenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\Manöver\ZauberOptionenView.xaml.cs">
       <DependentUpon>ZauberOptionenView.xaml</DependentUpon>
@@ -1605,10 +1609,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Kampf\Controls\ManöverView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\Kampf\Controls\GegnerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1626,6 +1626,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kampf\Manöver\AttackeOptionenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Manöver\ManöverOptionenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

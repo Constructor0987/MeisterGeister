@@ -385,12 +385,12 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public void UpdateCreaturePosition()
         {
-            if (((Wesen)this).Position == Position.liegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
-            else if (((Wesen)this).Position == Position.kniend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
-            else if (((Wesen)this).Position == Position.stehend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
-            else if (((Wesen)this).Position == Position.schwebend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
-            else if (((Wesen)this).Position == Position.fliegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
-            else if (((Wesen)this).Position == Position.reitend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";    
+            if (((Wesen)this).Position == Position.Liegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
+            else if (((Wesen)this).Position == Position.Kniend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
+            else if (((Wesen)this).Position == Position.Stehend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+            else if (((Wesen)this).Position == Position.Schwebend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+            else if (((Wesen)this).Position == Position.Fliegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
+            else if (((Wesen)this).Position == Position.Reitend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";    
         }
     }
 }

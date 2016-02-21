@@ -6,7 +6,7 @@ using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class Gegenhalten : Abwehraktion
+    public class Gegenhalten : AbwehrManöver
     {
         public static new bool BeherrschtManöver(KämpferInfo ausführender)
         {
@@ -22,7 +22,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        public Gegenhalten(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
+        public Gegenhalten(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         {
         }

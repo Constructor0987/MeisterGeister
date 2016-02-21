@@ -8,11 +8,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     public enum Position
     {
-        fliegend = -2,
-        schwebend = -1,
-        stehend = 0,
-        kniend = 1,
-        liegend = 2,
-        reitend = 3
+        Fliegend = -2,
+        Schwebend = -1,
+        Stehend = 0,
+        Kniend = 1,
+        Liegend = 2,
+        Reitend = 3
     }
 }

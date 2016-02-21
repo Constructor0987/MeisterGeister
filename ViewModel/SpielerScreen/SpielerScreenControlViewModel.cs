@@ -508,7 +508,9 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         public void ShowBodenplan(object sender = null)
         {
-            SpielerWindow.SetBodenplanView();
+            //Der Bodenplan wie er aktuell existiert wird geändert
+            //In der neuen Version soll der komplette Kampf an der UI gezeigt werden, nicht nur der Bodenplan
+            //SpielerWindow.SetBodenplanView();
             SlideShowStop();
         }
 

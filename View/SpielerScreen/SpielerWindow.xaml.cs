@@ -235,17 +235,17 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        public static void SetBodenplanView()
-        {
-            if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanWindow != null)
-            {
-                System.Windows.Media.VisualBrush vb = new VisualBrush(Global.CurrentKampf.BodenplanWindow);
-                Rectangle rect = new Rectangle();
-                rect.Fill = vb;
+        //public static void SetBodenplanView()
+        //{
+        //    if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanWindow != null)
+        //    {
+        //        System.Windows.Media.VisualBrush vb = new VisualBrush(Global.CurrentKampf.BodenplanWindow);
+        //        Rectangle rect = new Rectangle();
+        //        rect.Fill = vb;
 
-                SetContent(rect);
-            }
-        }
+        //        SetContent(rect);
+        //    }
+        //}
 
         public bool IsKampfInfoModus { get; set; }
 

@@ -8,7 +8,7 @@ using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class Zauber : Manöver
+    public class Zauber : Manöver<IWaffe>
     {
         public Zauber(KämpferInfo ausführender, Held_Zauber zauber):base(ausführender, 1)
         {

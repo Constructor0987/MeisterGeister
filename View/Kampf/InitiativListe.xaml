@@ -14,30 +14,8 @@
              d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
         <System:Double x:Key="gridSize">25</System:Double>
-
-        <!--<Style x:Key="aktionMenuStyle" TargetType="{x:Type MenuItem}">
-            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-            <Style.Triggers>
-                <Trigger Property="Role" Value="TopLevelHeader">
-                    <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                </Trigger>
-                <Trigger Property="Role" Value="TopLevelItem">
-                    <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                </Trigger>
-                <Trigger Property="Role" Value="SubmenuHeader">
-                    <Setter Property="Padding" Value="2,3,2,3"/>
-                    <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                </Trigger>
-                <Trigger Property="Role" Value="SubmenuItem">
-                    <Setter Property="Padding" Value="2,3,2,3"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>-->
-
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
+        <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
     </UserControl.Resources>
 
     <UserControl.ContextMenu>
@@ -311,15 +289,34 @@
                             </GroupStyle.Panel>
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
-                                    <Border>
+                                    <Border x:Name="border" RenderTransformOrigin="0.5,0.5">
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                <GradientStop Offset="0" Color="LightGray"/>
-                                                <GradientStop Offset="1" Color="Gray"/>
+                                                <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                                <!--<GradientStop Color="#FFA6895C" Offset="1"/>-->
+                                                <GradientStop Color="Orange" Offset="1"/>
                                             </LinearGradientBrush>
                                         </Border.Background>
-                                        <TextBlock Text="{Binding Name,StringFormat={}KR {0}}" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="txt" Text="{Binding Name,StringFormat={}KR {0}}" HorizontalAlignment="Center"/>
                                     </Border>
+                                    <DataTemplate.Triggers>
+                                        <!--AnsagePhase bei aktiver Kampfrunde anzeigen-->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Value="True">
+                                                    <Condition.Binding>
+                                                        <MultiBinding Converter="{StaticResource equalsMultiConverter}">
+                                                            <Binding Path="Name"/>
+                                                            <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" Path="DataContext.Kampf.Kampfrunde"/>
+                                                        </MultiBinding>
+                                                    </Condition.Binding>
+                                                </Condition>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.Kampf.AktuelleAktionszeit.Kampfrunde}" Value="0"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter TargetName="txt" Property="Text" Value="Ansage-Phase"/>
+                                            <Setter TargetName="border" Property="Background" Value="Orange"/>
+                                        </MultiDataTrigger>
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>
                         </GroupStyle>
@@ -335,7 +332,7 @@
                                 <TextBlock Text="{Binding InitiativPhase, StringFormat={}{0:N0}}" TextAlignment="Center"/>
                                 <Border.ToolTip>
                                     <TextBlock>
-                                    Initiativphase <Run Text="{Binding InitiativPhase,StringFormat={}{0:N6},Mode=OneWay}"/><LineBreak/>
+                                    Initiativphase <Run Text="{Binding InitiativPhase,StringFormat={}{0:N2},Mode=OneWay}"/><LineBreak/>
                                     Kampfrunde <Run Text="{Binding Kampfrunde,Mode=OneWay}"/>
                                     </TextBlock>
                                 </Border.ToolTip>
@@ -343,10 +340,7 @@
                             <DataTemplate.Triggers>
                                 <DataTrigger Value="True">
                                     <DataTrigger.Binding>
-                                        <MultiBinding>
-                                            <MultiBinding.Converter>
-                                                <ViewGeneral:EqualsMultiConverter/>
-                                            </MultiBinding.Converter>
+                                        <MultiBinding Converter="{StaticResource equalsMultiConverter}">
                                             <Binding ElementName="iniListe" Path="DataContext.Kampf.AktuelleAktionszeit"/>
                                             <Binding/>
                                         </MultiBinding>
@@ -421,15 +415,6 @@
                                             <MenuItem Header="In Bewegung umwandeln"/>
                                             <MenuItem Header="In Parade umwandeln"/>
                                             <MenuItem Header="Testzauber" Command="{Binding Umwandeln}"/>
-                                            <MenuItem>
-                                                <MenuItem.Header>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="Wuchtschlag"/>
-                                                        <Slider Minimum="0" Maximum="10" TickFrequency="1" IsSnapToTickEnabled="True" Width="100" Interval="1" x:Name="slider"/>
-                                                        <TextBlock Text="{Binding ElementName=slider, Path=Value}"/>
-                                                    </StackPanel>
-                                                </MenuItem.Header>
-                                            </MenuItem>
                                             <MenuItem Header="Zaubern" ItemsSource="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}">
                                                 <MenuItem.Icon>
                                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" MaxWidth="24"/>

@@ -17,6 +17,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     public class KämpferInfo : INotifyPropertyChanged, IDisposable
     {
+        #region Commands
+
+        private SchadenMachen schadenMachen;
+        public SchadenMachen SchadenMachen
+        {
+            get
+            {
+                if (schadenMachen == null)
+                    schadenMachen = new SchadenMachen(Kämpfer);
+                return schadenMachen;
+            }
+        }
+
+        #endregion
+
         private IKämpfer _kämpfer;
 
         public IKämpfer Kämpfer
@@ -432,7 +447,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             foreach (var mi in AngriffsManöver.Where(mi => mi.Start.InitiativPhase < 0 && mi.InitiativeModStart != 0).ToList())
                 Kampf.InitiativListe.Remove(mi);
 
-            var ersterAngriff = AngriffsManöver.Where(mi => mi.Manöver is Angriffsaktion).FirstOrDefault();
+            var ersterAngriff = AngriffsManöver.Where(mi => mi.Manöver is AngriffsManöver).FirstOrDefault();
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist.
             if (Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
             {
@@ -496,8 +511,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
             int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is ZusätzlicheAngriffsaktion).Count();
 
-            DateTime dtstart = DateTime.Now;
-            Debug.WriteLine(String.Format("KR {1}: Aktionen berechnen: {0}", DateTime.Now - dtstart, kampfrunde));
+            //DateTime dtstart = DateTime.Now;
+            //Debug.WriteLine(String.Format("KR {1}: Aktionen berechnen: {0}", DateTime.Now - dtstart, kampfrunde));
             for (int i = geplanteAktionen.SelectMany(ki => ki.Aktionszeiten).Where(zeit => zeit.Kampfrunde == kampfrunde).Count(); i < Angriffsaktionen; i++)
             {
                 if (i == 0)
@@ -510,7 +525,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
                 else // i>=1
                 {
-                    var ersterAngriff = AngriffsManöver.Where(mi => mi.Manöver is Angriffsaktion).FirstOrDefault();
+                    var ersterAngriff = AngriffsManöver.Where(mi => mi.Manöver is AngriffsManöver).FirstOrDefault();
                     if (Kampfstil == Kampfstil.BeidhändigerKampf)
                     {
                         //normale Aktionen und zusatzaktionen getrennt zählen, dann ist es einfach
@@ -549,7 +564,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
             }
 
-            Debug.WriteLine(String.Format("KR {1}: Manöver erstellen: {0}", DateTime.Now - dtstart, kampfrunde));
+            //Debug.WriteLine(String.Format("KR {1}: Manöver erstellen: {0}", DateTime.Now - dtstart, kampfrunde));
 
             //Parade-Manöver setzen
             AbwehrManöver.Clear();

@@ -103,7 +103,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void ManöverInfo_PropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == "Manöver")
+            if (args.PropertyName == "Start" || args.PropertyName == "End")
             {
                 foreach (ManöverInfo mi in this)
                     mi.NotifyKampfaktionenChanged();

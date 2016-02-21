@@ -19,40 +19,10 @@ namespace MeisterGeister.ViewModel.Kampf
         }
 
         public KampfViewModel(Action<K> showGegnerView, Func<string, string, bool> confirm)
-            : this(null, showGegnerView, confirm)
-        {
-        }
-
-        public KampfViewModel(Action<KampfViewModel> showBodenplanView, Action<K> showGegnerView, Func<string, string, bool> confirm)
             : base(confirm, View.General.ViewHelper.ShowError)
         {
             this.showGegnerView = showGegnerView;
-            this.showBodenplanView = showBodenplanView;
-
             _kampf = new K();
-        }
-
-        //private View.Arena.ArenaWindow _bodenplanWindow;
-        //public View.Arena.ArenaWindow BodenplanWindow
-        //{
-        //    get { return _bodenplanWindow; }
-        //    set 
-        //    { 
-        //        _bodenplanWindow = value;
-        //        Kampf.Bodenplan = value == null ? null : value.Arena;
-        //        OnChanged("BodenplanWindow"); }
-        //}
-
-        private View.Bodenplan.BattlegroundWindow _bodenplanWindow;
-        public View.Bodenplan.BattlegroundWindow BodenplanWindow
-        {
-            get { return _bodenplanWindow; }
-            set
-            {
-                _bodenplanWindow = value;
-                Kampf.Bodenplan = value ?? null;
-                OnChanged("BodenplanWindow");
-            }
         }
 
         private K _kampf = null;
@@ -61,39 +31,31 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return _kampf; }
             set
             {
-                if(_kampf != null)
+                if (_kampf != null)
                 {
 
                 }
                 Set(ref _kampf, value);
-                if(_kampf != null)
+                if (_kampf != null)
                 {
 
                 }
             }
         }
 
-        private ManöverInfo selectedManöver;
-        public ManöverInfo SelectedManöver
-        {
-            get { return selectedManöver; }
-            set { Set(ref selectedManöver, value); }
-        }
-
-
         private ICollection<IWesenPlaylist> _wesenPlaylist = null;
         public ICollection<IWesenPlaylist> WesenPlaylist
         {
             get
             {
-                return ((SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) && (SelectedKämpferInfo.Kämpfer is Held)) ?
-                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
+                return ((SelectedKämpfer != null && SelectedKämpfer.Kämpfer != null) && (SelectedKämpfer.Kämpfer is Held)) ?
+                    new ObservableCollection<IWesenPlaylist>((SelectedKämpfer.Kämpfer as Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
 
-                    ((SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) && (SelectedKämpferInfo.Kämpfer is GegnerBase)) ?
-                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
+                    ((SelectedKämpfer != null && SelectedKämpfer.Kämpfer != null) && (SelectedKämpfer.Kämpfer is GegnerBase)) ?
+                    new ObservableCollection<IWesenPlaylist>((SelectedKämpfer.Kämpfer as GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
 
-                    ((SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null) && (SelectedKämpferInfo.Kämpfer is Gegner)) ?
-                    new ObservableCollection<IWesenPlaylist>((SelectedKämpferInfo.Kämpfer as Gegner).GegnerBase.GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
+                    ((SelectedKämpfer != null && SelectedKämpfer.Kämpfer != null) && (SelectedKämpfer.Kämpfer is Gegner)) ?
+                    new ObservableCollection<IWesenPlaylist>((SelectedKämpfer.Kämpfer as Gegner).GegnerBase.GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
 
                     null;
             }
@@ -103,96 +65,33 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private IKämpfer _selectedKämpfer;
-        public IKämpfer SelectedKämpfer
+
+
+        private ManöverInfo selectedManöver;
+        public ManöverInfo SelectedManöver
+        {
+            get { return selectedManöver; }
+            set
+            {
+                Set(ref selectedManöver, value);
+                //Wenn ein Manöver selektiert wird, soll auch der Kämpfer ausgewählt werden
+                //Wird ein Kämpfer ausgewählt ändert sich am Selektierten Manöver garnichts
+                if (value != null)
+                    SelectedKämpfer = value.Manöver.Ausführender;
+            }
+        }
+
+        private KämpferInfo _selectedKämpfer;
+        public KämpferInfo SelectedKämpfer
         {
             get
             {
-                return (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null;
+                return _selectedKämpfer;
             }
             set
             {
-                _selectedKämpfer = (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null;
-                OnChanged();
+                Set(ref _selectedKämpfer, value);
             }
-
-            //set
-            //{
-            //    foreach (var mi in InitiativListe)
-            //    {
-            //        if (mi.KämpferInfo.Kämpfer == value)
-            //        {
-            //            SelectedManöverInfo = mi;
-            //            KämpferSelected = true;                       
-            //            break;
-            //        }
-            //    }
-            //    OnChanged("SelectedKämpfer");
-
-
-            //}
-        }
-
-        public KämpferInfo SelectedKämpferInfo
-        {
-            get
-            {
-                return (SelectedManöverInfo != null) ? SelectedManöverInfo.Manöver.Ausführender : null;
-            }
-            //set { SelectedTreeItem = value; }
-        }
-
-        private ManöverInfo _selectedManöverInfo = null;
-        public ManöverInfo SelectedManöverInfo
-        {
-            get { return _selectedManöverInfo; }
-            set
-            {
-                _selectedManöverInfo = value;
-                OnChanged("SelectedManöverInfo"); OnChanged("SelectedKämpferInfo"); OnChanged("SelectedKämpfer"); OnChanged("WesenPlaylist");
-            }
-        }
-
-        private bool kämpferSelected = false;
-        /// <summary>
-        /// Um ManöverInfo und auch KämpferInfo unterscheiden zu können.
-        /// </summary>
-        public bool KämpferSelected
-        {
-            get { return kämpferSelected; }
-            set
-            {
-                kämpferSelected = value;
-                OnChanged("KämpferSelected");
-            }
-        }
-
-        private int schaden = 5;
-        public int Schaden
-        {
-            get { return schaden; }
-            set { schaden = value; OnChanged("Schaden"); }
-        }
-
-        private TrefferpunkteOptions wundschwellenOption = TrefferpunkteOptions.Default;
-        public TrefferpunkteOptions WundschwellenOption
-        {
-            get { return wundschwellenOption; }
-            set { wundschwellenOption = value; OnChanged("WundschwellenOption"); }
-        }
-
-        private TrefferpunkteOptions ausdauerSchadenMachtKeineSchadenspunkte = TrefferpunkteOptions.Default;
-        public TrefferpunkteOptions? AusdauerSchadenMachtKeineSchadenspunkte
-        {
-            get { return ausdauerSchadenMachtKeineSchadenspunkte; }
-            set { ausdauerSchadenMachtKeineSchadenspunkte = value ?? TrefferpunkteOptions.Default; OnChanged("AusdauerSchadenMachtKeineSchadenspunkte"); }
-        }
-
-        private Trefferzone selectedTrefferzone = Trefferzone.Unlokalisiert;
-        public Trefferzone SelectedTrefferzone
-        {
-            get { return selectedTrefferzone; }
-            set { selectedTrefferzone = value; OnChanged("SelectedTrefferzone"); }
         }
 
         private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
@@ -228,12 +127,12 @@ namespace MeisterGeister.ViewModel.Kampf
             get
             {
                 if (onAddHelden == null)
-                    onAddHelden = new Base.CommandBase(AddHelden, null);
+                    onAddHelden = new Base.CommandBase((o) => AddHelden(), null);
                 return onAddHelden;
             }
         }
 
-        private void AddHelden(object obj)
+        private void AddHelden()
         {
             KämpferInfo ki = null;
             foreach (Model.Held held in Global.ContextHeld.HeldenGruppeListe)
@@ -242,10 +141,6 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     ki = new KämpferInfo(held, Kampf);
                     Kampf.Kämpfer.Add(held);
-
-                    if (BodenplanWindow != null)
-                        ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).UpdateCreaturesFromChangedKampferlist();
-
                 }
             }
         }
@@ -256,19 +151,17 @@ namespace MeisterGeister.ViewModel.Kampf
             get
             {
                 if (onDeleteKämpfer == null)
-                    onDeleteKämpfer = new Base.CommandBase(DeleteKämpfer, null);
+                    onDeleteKämpfer = new Base.CommandBase((o) => DeleteKämpfer(), null);
                 return onDeleteKämpfer;
             }
         }
 
-        public void DeleteKämpfer(object obj)
+        public void DeleteKämpfer()
         {
-            if (SelectedKämpferInfo != null && Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", SelectedKämpferInfo.Kämpfer.Name)))
+            if (SelectedKämpfer != null && Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", SelectedKämpfer.Kämpfer.Name)))
             {
-                IKämpfer k = SelectedKämpferInfo.Kämpfer;
-                Kampf.Kämpfer.Remove(SelectedKämpferInfo);
-                if (BodenplanWindow != null)
-                    ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).UpdateCreaturesFromChangedKampferlist();
+                IKämpfer k = SelectedKämpfer.Kämpfer;
+                Kampf.Kämpfer.Remove(SelectedKämpfer);
             }
         }
 
@@ -278,12 +171,12 @@ namespace MeisterGeister.ViewModel.Kampf
             get
             {
                 if (onDeleteAllKämpfer == null)
-                    onDeleteAllKämpfer = new Base.CommandBase(DeleteAllKämpfer, null);
+                    onDeleteAllKämpfer = new Base.CommandBase((o) => DeleteAllKämpfer(), null);
                 return onDeleteAllKämpfer;
             }
         }
 
-        private void DeleteAllKämpfer(object obj)
+        private void DeleteAllKämpfer()
         {
             if (Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
             {
@@ -309,10 +202,10 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void EinfärbenKämpfer(object obj)
         {
-            if (SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null && obj != null)
+            if (SelectedKämpfer != null && SelectedKämpfer.Kämpfer != null && obj != null)
             {
                 System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(obj.ToString());
-                SelectedKämpferInfo.Kämpfer.Farbmarkierung = color;
+                SelectedKämpfer.Kämpfer.Farbmarkierung = color;
             }
 
         }
@@ -406,15 +299,7 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void Next(object obj)
         {
-            var mi = Kampf.Next();
-            if (mi != null)
-            {
-                //if(SelectedManöverInfo != null)
-                //SelectedManöverInfo.IsSelected = false;
-                //mi.IsSelected = true;
-                KämpferSelected = false;
-                SelectedManöverInfo = mi;
-            }
+            Kampf.Next();
         }
 
         private Base.CommandBase onNextKampfrunde = null;

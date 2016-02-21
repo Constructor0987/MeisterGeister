@@ -8,10 +8,12 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using MeisterGeister.ViewModel.Base;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
-    public class Kampf : IDisposable, INotifyPropertyChanged
+    public class Kampf : ViewModelBase, IDisposable
     {
         /*
          * Die Klasse hält und kontrolliert alle globalen Kampfinformationen und -Aktionen
@@ -22,23 +24,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
          * 
          * Eine Liste der Kämpfer
          * Zur Unterstützung einer beliebigen Anzahl an Parteien gehört zu jedem Teilnehmer eine Teamnummer
-         * 
-         * Soll die Initiative im Kämpfer oder im Kampf gehalten werden?
-         * Im Kampf, so könnte man es mit abspeichern.
-         * 
-         * Automatische Erkennung des Kampfendes anhand der Teams und des Zustandes der Kämpfer (kampfunfähig, geflohen, tot, bewusstlos)
          */
         public Kampf()
         {
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
             Kämpfer = new KämpferInfoListe(this);
             Kämpfer.CollectionChangedExtended += Kämpfer_CollectionChangedExtended;
             InitiativListe = new InitiativListe(this);
-            //INIPhase = 0;
             KampfNeuStarten();
         }
-
-        //public Arena.Arena Bodenplan { get; set; }
-        public BattlegroundWindow Bodenplan { get; set; }
 
         private ObservableCollection<string> _kampfLog = new ObservableCollection<string>();
         public ObservableCollection<string> KampfLog
@@ -78,8 +72,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _kampfzeit; }
             private set
             {
-                _kampfzeit = value;
-                OnChanged("Kampfzeit");
+                Set(ref _kampfzeit, value);
             }
         }
 
@@ -89,22 +82,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return aktuelleAktionszeit; }
             private set
             {
-                aktuelleAktionszeit = value;
-                OnChanged("AktuelleAktionszeit");
-                AktuelleAktion = InitiativListe.FirstOrDefault(mi => mi.Aktionszeiten.Contains(value));
+                Set(ref aktuelleAktionszeit, value);
             }
         }
 
-
-        private ManöverInfo aktuelleAktion;
-        public ManöverInfo AktuelleAktion
+        [DependentProperty("AktuelleAktionszeit")]
+        private IEnumerable<ManöverInfo> AktuelleAktionen
         {
-            get { return aktuelleAktion; }
-            private set
-            {
-                aktuelleAktion = value;
-                OnChanged("AktuelleAktion");
-            }
+            get { return InitiativListe.Where(mi => mi.Aktionszeiten.Contains(AktuelleAktionszeit)); }
         }
 
         /// <summary>
@@ -116,53 +101,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             KampfLog.Insert(0, string.Format("{0}.{1}: {2}", Kampfrunde, AktuelleAktionszeit.InitiativPhase, msg));
         }
 
-        public ManöverInfo Next()
+        public void Next()
         {
-            if (AktuelleAktion != null && !AktuelleAktion.Ausgeführt)
+            foreach (ManöverInfo mi in AktuelleAktionen)
             {
-                //Was muss in ManöverInfo und was ins Manöver?
-
-                //Die aktuelle Aktion wurde noch nicht ausgeführt
-                //es wurde kein Ergebnis zugewiesen.
-                //if (!AktuelleAktion.Manöver.ErgebnisseAkzeptiert)
-                //{
-                //    //das eingetragene bzw. vorgeschlagene ProbenErgebnis anwenden
-                //    AktuelleAktion.Manöver.ErgebnisseAkzeptiert = true;
-                //}
-                //else
-                //{
-                //    //Next darf nicht weitergehen, wenn die letzte Aktion des Manövers dran ist und die Auswirkungen noch nicht bestätigt wurden (neues feld im Manöver oder ManöverInfo?)
-                //    //if(AktuelleAktion.Manöver.VerbleibendeDauer == 1)
-                //}
-                //aktion wurde in dieser Runde bearbeitet, aktionen werden verbraucht
-                AktuelleAktion.Manöver.Aktion();
-                //irgendwie müssen die Auswirkungen noch zum tragen kommen und bestätigt werden
-                //AktuelleAktion.Manöver.AuswirkungenAkzeptiert
-
-                //if (AktuelleAktion.Manöver != null)
-                //{
-                //    var probe = AktuelleAktion.Manöver.Ausführen(); //dies darf vielleicht keine Methode sein. Es sollte ein property sein, die gebunden werden kann.
-                //    if (probe != null)
-                //    {
-                //        var pe = probe.Würfeln();
-                //        //TODO JT: Probe anzeigen und Erfolg oder Misserfolg auswerten.
-                //        //Das ist keine gute idee. Eine Probe und die Parade muss auch schon angezeigt werden, wenn das Manöver nur ausgewählt wird.
-                //        //Hier muss noch mehr am Konzept gearbeitet werden.
-                //    }
-                //}
-                //UmwandelnMöglich = false;
+                if(!mi.Ausgeführt)
+                    mi.Manöver.Aktion();
             }
 
             ZeitImKampf next = default(ZeitImKampf);
-            if (AktuelleAktion != null)
-                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit > AktuelleAktionszeit).OrderBy(zeit => zeit).FirstOrDefault();
+
+            if (AktuelleAktionen.Count() > 0)
+                next = InitiativListe.Aktionszeiten.Where(zeit => zeit > AktuelleAktionszeit && zeit.Kampfrunde == Kampfrunde).FirstOrDefault();
             else
-                next = InitiativListe.SelectMany(mi => mi.Aktionszeiten).Where(zeit => zeit.Kampfrunde == Kampfrunde).OrderBy(zeit => zeit).FirstOrDefault();
+                next = InitiativListe.Aktionszeiten.Where(zeit => zeit.Kampfrunde == Kampfrunde).FirstOrDefault();
 
             AktuelleAktionszeit = next;
             if (next == default(ZeitImKampf))
                 NeueKampfrunde();
-            return AktuelleAktion;
         }
 
         public void NeueKampfrunde()
@@ -228,7 +184,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             KampfEnde();
             AktuelleAktionszeit = default(ZeitImKampf);
-            AktuelleAktion = null;
             InitiativListe.Clear();
             Kampfrunde = 0;
 
@@ -273,57 +228,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
         }
 
-        /// <summary>
-        /// Trefferpunkte auf einen Kämpfer. Kümmert sich um Wunden und TP(A).
-        /// </summary>
-        /// <param name="k">Kämpfer</param>
-        /// <param name="tp">Trefferpunkte</param>
-        /// <param name="zone">Trefferzone</param>
-        /// <param name="verwundend">WS-2</param>
-        /// <param name="alsSP">Rüstung wird ignoriert</param>
-        /// <param name="alsTPA">als Ausdauerschaden</param>
-        public void Trefferpunkte(IKämpfer k, int tp, Trefferzone zone = Trefferzone.Unlokalisiert, TrefferpunkteOptions optionen = TrefferpunkteOptions.Default)
-        {
-            if (Kämpfer[k] == null)
-                return;
-
-            if (zone == Trefferzone.Zufall)
-                zone = TrefferzonenHelper.ZufallsZone();
-            int rs = 0;
-            if ((optionen & TrefferpunkteOptions.IgnoriertRüstung) != TrefferpunkteOptions.IgnoriertRüstung)
-                rs = k.RS[zone];
-            int spa = 0;
-            int sp = Math.Max(tp - rs, 0);
-            if ((optionen & TrefferpunkteOptions.Ausdauerschaden) == TrefferpunkteOptions.Ausdauerschaden)
-            {
-                spa = sp;
-                if ((optionen & TrefferpunkteOptions.AusdauerschadenMachtKeineEchtenSchadenspunkte) == TrefferpunkteOptions.AusdauerschadenMachtKeineEchtenSchadenspunkte)
-                    sp = 0;
-                else
-                    sp = (int)Math.Round(spa / 2.0, MidpointRounding.AwayFromZero);
-            }
-            k.LebensenergieAktuell -= sp;
-            k.AusdauerAktuell -= spa;
-
-            Log(string.Format("Treffer bei '{0}': {1} SP ({2} TP, RS {3}) in Zone {4}", k.Name, sp, tp, rs, zone));
-
-            if ((optionen & TrefferpunkteOptions.KeineWunden) != TrefferpunkteOptions.KeineWunden)
-            {
-                int wsmod = 0 - ((optionen & TrefferpunkteOptions.VerringerteWundschwelle) == TrefferpunkteOptions.VerringerteWundschwelle ? 2 : 0) + ((optionen & TrefferpunkteOptions.Ausdauerschaden) == TrefferpunkteOptions.Ausdauerschaden ? 2 : 0);
-                int wunden = 0;
-                if (sp > k.Wundschwelle3 + wsmod)
-                    wunden = 3;
-                else if (sp > k.Wundschwelle2 + wsmod)
-                    wunden = 2;
-                else if (sp > k.Wundschwelle + wsmod)
-                    wunden = 1;
-                k.Wunden[zone] += wunden;
-
-                if (wunden > 0)
-                    Log(string.Format("Wunde(n) bei '{0}': {1} Wunde(n) in Zone {2}", k.Name, wunden, zone));
-            }
-        }
-
         public void Dispose()
         {
             //TODO ??: ich finde diese Lösung noch nicht optimal. Das geht schief, wenn man speichern und laden möchte.
@@ -339,19 +243,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             while (InitiativListe.Count > 0)
                 InitiativListe.RemoveAt(0);
         }
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
-        #endregion
 
     }
 

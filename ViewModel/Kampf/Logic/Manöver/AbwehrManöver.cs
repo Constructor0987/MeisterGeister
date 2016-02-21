@@ -6,17 +6,17 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public abstract class Abwehraktion : Manöver
+    public abstract class AbwehrManöver : NahkampfManöver
     {
-        public Abwehraktion(KämpferInfo ausführender)
+        public AbwehrManöver(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public Abwehraktion(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel)
+        public AbwehrManöver(KämpferInfo ausführender, IDictionary<INahkampfwaffe, KämpferInfo> waffe_ziel)
             : base(ausführender, waffe_ziel)
         { }
 
-        public Abwehraktion(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
+        public AbwehrManöver(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         { }
 

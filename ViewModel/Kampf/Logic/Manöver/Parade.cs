@@ -5,13 +5,13 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class Parade : Abwehraktion
+    public class Parade : AbwehrManöver
     {
         public Parade(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public Parade(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
+        public Parade(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         {
         }

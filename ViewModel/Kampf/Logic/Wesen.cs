@@ -28,7 +28,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
-        private Position _position = Position.stehend;
+        private Position _position = Position.Stehend;
         public Position Position
         {
             get { return _position; }

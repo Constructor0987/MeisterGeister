@@ -6,7 +6,7 @@ using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class KeineAktion : Manöver
+    public class KeineAktion : Manöver<IWaffe>
     {
         public KeineAktion(KämpferInfo ausführender)
             : base(ausführender)

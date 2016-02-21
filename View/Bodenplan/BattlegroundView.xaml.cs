@@ -208,9 +208,9 @@ namespace MeisterGeister.View.Bodenplan
 
                         //Change position
                         //((BattlegroundCreature)vm.SelectedObject).UpdateCreaturePosition(Position.stehend, true);
-                        if (((Wesen)vm.SelectedObject).Position == Position.stehend) ((Wesen)vm.SelectedObject).Position = Position.liegend;
-                        else if (((Wesen)vm.SelectedObject).Position == Position.liegend) ((Wesen)vm.SelectedObject).Position = Position.kniend;
-                        else ((Wesen)vm.SelectedObject).Position = Position.stehend;
+                        if (((Wesen)vm.SelectedObject).Position == Position.Stehend) ((Wesen)vm.SelectedObject).Position = Position.Liegend;
+                        else if (((Wesen)vm.SelectedObject).Position == Position.Liegend) ((Wesen)vm.SelectedObject).Position = Position.Kniend;
+                        else ((Wesen)vm.SelectedObject).Position = Position.Stehend;
                     }
                     ArenaGrid.Cursor = Cursors.Arrow;
                 }

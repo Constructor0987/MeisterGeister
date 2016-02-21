@@ -5,13 +5,13 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class Attacke : Angriffsaktion
+    public class Attacke : AngriffsManöver
     {
         public Attacke(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public Attacke(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
+        public Attacke(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         {
         }
