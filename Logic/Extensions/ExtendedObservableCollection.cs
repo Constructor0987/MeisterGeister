@@ -14,6 +14,10 @@ namespace MeisterGeister.Logic.Extensions
     /// <remarks>Die üblicherweise nach jedem Add vorkommenden OnCollectionChanged werden unterdrückt, um die Geschwindigkeit zu erhöhen.</remarks>
     public class ExtendedObservableCollection<T> : ObservableCollection<T>
     {
+        public ExtendedObservableCollection() : base() { }
+        public ExtendedObservableCollection(IEnumerable<T> collection) : base(collection) { }
+        public ExtendedObservableCollection(List<T> list) : base(list) { }
+
         /// <summary>
         /// Stellt eine bessere Variante des CollectionChangedEvents dar
         /// Besser heißt in diesem Fall dass Bereichsaktionen unterstützt werden

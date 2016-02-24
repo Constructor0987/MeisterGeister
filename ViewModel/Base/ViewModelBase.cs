@@ -9,7 +9,7 @@ using System.Windows.Threading;
 using System.Runtime.CompilerServices;
 
 namespace MeisterGeister.ViewModel.Base {
-    public abstract class ViewModelBase : INotifyPropertyChanged {
+    public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging {
 
         #region //----- FELDER ----
         
@@ -122,7 +122,7 @@ namespace MeisterGeister.ViewModel.Base {
         protected bool Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
         {
             if (object.Equals(storage, value)) return false;
-
+            this.OnChanging(propertyName);
             storage = value;
             this.OnChanged(propertyName);
             return true;
@@ -336,7 +336,24 @@ namespace MeisterGeister.ViewModel.Base {
 
         virtual public void Destroy() { }
 
-        #endregion
+        /// <summary>
+        /// Notifies listeners that a property value ís changing.
+        /// </summary>
+        /// <param name="propertyName">Name of the property used to notify listeners.  This
+        /// value is optional and can be provided automatically when invoked from compilers
+        /// that support <see cref="CallerMemberNameAttribute"/>.</param>
+        protected void OnChanging([CallerMemberName] string propertyName = null)
+        {
+            this.VerifyPropertyName(propertyName);
+            _propertyChanging.Raise(this, new PropertyChangingEventArgs(propertyName));
+        }
 
+        WeakEvent<PropertyChangingEventHandler> _propertyChanging = new WeakEvent<PropertyChangingEventHandler>();
+        public event PropertyChangingEventHandler PropertyChanging
+        {
+            add { _propertyChanging.Add(value); }
+            remove { _propertyChanging.Remove(value); }
+        }
+        #endregion
     }
 }

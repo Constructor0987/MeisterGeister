@@ -38,7 +38,7 @@
         </Style>
         <DataTemplate x:Key="HeldListTemplate">
             <DockPanel VerticalAlignment="Center" Height="40">
-                <Image MaxWidth="40" DockPanel.Dock="Left" Source="{Binding Bild}" Margin="0,0,8,0"/>
+                <Image MaxWidth="40" DockPanel.Dock="Left" Source="{Binding Bild, TargetNullValue={x:Null}}" Margin="0,0,8,0"/>
                 <TextBlock DockPanel.Dock="Top" Style="{StaticResource HeldenListTextBlockStyle}" Text="{Binding Name}" VerticalAlignment="Center">
                     <TextBlock.ToolTip>
                         <StackPanel>

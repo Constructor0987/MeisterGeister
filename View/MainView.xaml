@@ -115,8 +115,9 @@
                                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,5,0,0">
                                                 <Image Margin="5,0,0,0" Source="/Images/Icons/helden.png" Width="24"/>
                                                 <Grid Margin="5,0,5,0" Width="200" VerticalAlignment="Center">
-                                                    <ComboBox ItemsSource="{Binding Source={x:Static my:Global.ContextHeld}, Path=HeldenGruppeListe}" x:Name="comboBox"
-                                                              DisplayMemberPath="Name" FontWeight="Bold" Focusable="False"/>
+                                                    <ComboBox ItemsSource="{Binding HeldenGruppe}" x:Name="comboBox"
+                                                              DisplayMemberPath="Name" FontWeight="Bold" Focusable="False"
+                                                              SelectedItem="{Binding SelectedHeld}"/>
                                                     <TextBlock FontWeight="Bold" Text="NSC" VerticalAlignment="Center" Margin="5,0,0,0" IsHitTestVisible="False">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">

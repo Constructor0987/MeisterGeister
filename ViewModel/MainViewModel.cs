@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.ViewModel.Base;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel
 {
@@ -37,6 +38,64 @@ namespace MeisterGeister.ViewModel
             }
             private set { MainViewModel.instance = value; }
         }
+
+        #region Held
+        public void InvalidateHelden()
+        {
+            helden = null;
+        }
+
+        private ExtendedObservableCollection<Model.Held> helden = null;
+        public ExtendedObservableCollection<Model.Held> Helden
+        {
+            get
+            {
+                if(helden == null)
+                {
+                    helden = new ExtendedObservableCollection<Model.Held>(Global.ContextHeld.Liste<Model.Held>());
+                }
+                return helden;
+            }
+            set { Set(ref helden, value); }
+        }
+
+        private void filterHeldengruppe(object sender, FilterEventArgs f)
+        {
+            Model.Held h = (Model.Held)f.Item;
+            f.Accepted = (h.AktiveHeldengruppe ?? false) && (h.Regelsystem == Global.Regeledition);
+        }
+
+        CollectionViewSource heldenGruppe = null;
+        public ICollectionView HeldenGruppe
+        {
+            get
+            {
+                if (heldenGruppe == null)
+                {
+                    heldenGruppe = new CollectionViewSource() { Source = Helden };
+                    heldenGruppe.Filter += filterHeldengruppe;
+                    heldenGruppe.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                }
+
+                return heldenGruppe.View;
+            }
+        }
+
+
+        private Model.Held selectedHeld = null;
+        public Model.Held SelectedHeld
+        {
+            get { return selectedHeld; }
+            set
+            {
+                //Eventuell abspeichern oder nicht? Vorher wurde das abspeichern zu oft ausgeführt.
+                if(Set(ref selectedHeld, value))
+                {
+                    Logic.Einstellung.Einstellungen.SelectedHeld = (value != null) ? value.HeldGUID.ToString() : null;
+                }
+            }
+        }
+        #endregion
 
         #region Regeledition und Version
         public string VersionInfo

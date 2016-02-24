@@ -283,32 +283,8 @@ namespace MeisterGeister
         /// </summary>
         public static Model.Held SelectedHeld
         {
-            get { return _selectedHeld; }
-            set
-            {
-                // Falls der gleiche Held erneut gesetzt werden soll
-                // -> abbrechen, da keine Änderung erfolgt
-                if (_selectedHeld == value)
-                    return;
-
-                // Event vor der Held-Änderung werfen
-                if (HeldSelectionChanging != null)
-                    HeldSelectionChanging(null, new EventArgs());
-
-                // neuen Helden setzen und Änderungen in DB speichern
-                _selectedHeld = value;
-                if (_selectedHeld != null)
-                {
-                    Global.ContextHeld.Update<Model.Held>(SelectedHeld);
-                    Logic.Einstellung.Einstellungen.SelectedHeld = value.HeldGUID.ToString();
-                }
-                else
-                    Logic.Einstellung.Einstellungen.SelectedHeld = null;
-
-                // Event nach der Held-Änderung werfen
-                if (HeldSelectionChanged != null)
-                    HeldSelectionChanged(null, new EventArgs());
-            }
+            get { return MainViewModel.Instance.SelectedHeld; }
+            set { MainViewModel.Instance.SelectedHeld = value; }
         }
 
         /// <summary>
@@ -383,6 +359,23 @@ namespace MeisterGeister
             WebServer = new Server();
 
             Downloader = new Net.Web.Downloader();
+
+            //Hilfsweise Events - TODO löschen sobald alle Referenzen aufs MainViewModel umgestellt sind:
+            MainViewModel.Instance.PropertyChanging += MVM_PropertyChanging;
+            MainViewModel.Instance.PropertyChanged += MVM_PropertyChanged;
+
+        }
+
+        private static void MVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedHeld")
+                OnSelectedHeldChanged();
+        }
+
+        static void MVM_PropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e)
+        {
+            if (e.PropertyName == "SelectedHeld")
+                OnSelectedHeldChanging();
         }
 
         private static void RefreshRegeledition()
@@ -455,6 +448,18 @@ namespace MeisterGeister
 
             if (ZeitpunktChanged != null)
                 ZeitpunktChanged(null, new EventArgs());
+        }
+
+        static void OnSelectedHeldChanged()
+        {
+            if (HeldSelectionChanged != null)
+                HeldSelectionChanged(null, new EventArgs());
+        }
+
+        static void OnSelectedHeldChanging()
+        {
+            if (HeldSelectionChanging != null)
+                HeldSelectionChanging(null, new EventArgs());
         }
 
         public static event GruppenProbeWürfelnEventHandler GruppenProbeWürfeln;

@@ -8,13 +8,13 @@ using System.ComponentModel;
 using MeisterGeister.Logic.HeldenImport;
 using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.View.Windows;
+using MeisterGeister.Logic.Extensions;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.Helden
 {
     public class ListeViewModel : Base.ViewModelBase
     {
-        private List<Model.Held> _heldListe;
-
         public ListeViewModel()
         {
 
@@ -30,32 +30,40 @@ namespace MeisterGeister.ViewModel.Helden
         public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) :
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
-            LoadDaten();
         }
 
         public override void RegisterEvents()
         {
             base.RegisterEvents();
             MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            MainViewModel.Instance.PropertyChanged += MainViewModel_PropertyChanged;
         }
         public override void UnregisterEvents()
         {
             base.UnregisterEvents();
             MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
+            MainViewModel.Instance.PropertyChanged -= MainViewModel_PropertyChanged;
         }
 
+        void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedHeld")
+                SelectedHeld = MainViewModel.Instance.SelectedHeld;
+        }
+
+        Held selectedHeld = null;
         public Held SelectedHeld
         {
-            get { return Global.SelectedHeld; }
+            get { return selectedHeld; }
             set
             {
-                if (Global.SelectedHeld != null)
-                    Global.SelectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
-                Global.SelectedHeld = value;
-                if (Global.SelectedHeld != null)
-                    Global.SelectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
-
-                OnChanged("SelectedHeld");
+                if (selectedHeld != null && !object.Equals(selectedHeld, value))
+                    selectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
+                if (Set(ref selectedHeld, value) && value != null)
+                {
+                    selectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
+                    MainViewModel.Instance.SelectedHeld = selectedHeld;
+                }
             }
         }
 
@@ -73,18 +81,20 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (new string[] { "Name", "Spieler", "AktiveHeldengruppe" }.Contains(args.PropertyName))
-                SortList();
+            //if (new string[] { "Name", "Spieler", "AktiveHeldengruppe" }.Contains(args.PropertyName))
+            //    SortList();
         }
 
-        public List<Model.Held> HeldListe
+        private CollectionViewSource heldListe = null;
+        public ICollectionView HeldListe
         {
-            get { return _heldListe; }
-            set
-            {
-                _heldListe = value;
-                OnChanged("HeldListe");
-                OnChanged("HeldenAnzahlAnderesRegelsystem");
+            get {
+                if (heldListe == null)
+                {
+                    heldListe = new CollectionViewSource() { Source = MainViewModel.Instance.Helden };
+                    heldListe.SortDescriptions.Add(new SortDescription("AktiveHeldengruppe", ListSortDirection.Descending));
+                }
+                return heldListe.View;
             }
         }
 
@@ -103,6 +113,8 @@ namespace MeisterGeister.ViewModel.Helden
             set { _sortierungListe = value; OnChanged("SortierungListe"); }
         }
 
+        private SortDescription nameSort = new SortDescription("Name", ListSortDirection.Ascending);
+        private SortDescription spielerSort = new SortDescription("Spieler", ListSortDirection.Ascending);
         private string _selectedSortierung = "Held";
         public string SelectedSortierung
         {
@@ -111,38 +123,18 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 _selectedSortierung = value;
                 OnChanged("SelectedSortierung");
-                //Liste aktualisieren
-                LoadDaten();
+                //Liste umsortieren
+                if (_selectedSortierung == "Held")
+                {
+                    HeldListe.SortDescriptions.Remove(spielerSort);
+                    HeldListe.SortDescriptions.Add(nameSort);
+                }
+                else
+                {
+                    HeldListe.SortDescriptions.Remove(nameSort);
+                    HeldListe.SortDescriptions.Add(spielerSort);
+                }
             }
-        }
-
-        public void LoadDaten()
-        {
-            Guid tmp = (SelectedHeld == null) ? Guid.Empty : SelectedHeld.HeldGUID;
-            SelectedHeld = null;
-            if (Global.ContextHeld != null)
-            {
-                SortList();
-                if (tmp != Guid.Empty)
-                    SelectedHeld = HeldListe.Where(h => h.HeldGUID == tmp).FirstOrDefault();
-            }
-        }
-
-        private void SortList()
-        {
-            if (SelectedSortierung == "Spieler")
-                HeldListe = Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
-            else
-                HeldListe = Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
-            
-            // Ein lokaler Context wäre hier eigentlich wünschenswert (wie an allen anderen Stellen auch)
-            //using (var localContext = ServiceBase.NewContext)
-            //{
-            //    if (SelectedSortierung == "Spieler")
-            //        HeldListe = localContext.Held.Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
-            //    else
-            //        HeldListe = localContext.Held.Where(h => h.Regelsystem == Global.Regeledition).OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
-            //}
         }
 
         private Base.CommandBase onNewHeld = null;
@@ -164,7 +156,7 @@ namespace MeisterGeister.ViewModel.Helden
             if (Global.ContextHeld.Insert<Held>(h))
             {
                 //Liste aktualisieren
-                LoadDaten();
+                MainViewModel.Instance.Helden.Add(h);
             }
         }
 
@@ -188,8 +180,8 @@ namespace MeisterGeister.ViewModel.Helden
                     && Global.ContextHeld.Delete<Held>(h))
                 {
                     //Liste aktualisieren
-                    LoadDaten();
-                    SelectedHeld = HeldListe.FirstOrDefault();
+                    MainViewModel.Instance.Helden.Remove(h);
+                    SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
                 }
             }
         }
@@ -207,14 +199,14 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void DeleteHeldAll(object sender)
         {
-            if (!IsReadOnly && Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.Count)))
+            if (!IsReadOnly && Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.SourceCollection.Cast<Held>().Count() )))
             {
                 Global.SetIsBusy(true, "Alle Helden werden gelöscht...");
 
                 Global.ContextHeld.DeleteAll<Held>();
-
+                MainViewModel.Instance.Helden.Clear();
+                
                 //Liste aktualisieren
-                LoadDaten();
                 SelectedHeld = null;
 
                 Global.SetIsBusy(false);
@@ -270,7 +262,7 @@ namespace MeisterGeister.ViewModel.Helden
             if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
                 System.IO.Directory.CreateDirectory("Daten\\Helden\\Demohelden");
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
-            foreach (Held h in HeldListe)
+            foreach (Held h in HeldListe.SourceCollection.Cast<Held>())
             {
                 string fileName = System.IO.Path.Combine("Daten\\Helden\\Demohelden", View.General.ViewHelper.GetValidFilename(System.IO.Path.ChangeExtension(h.Name, "xml")));
                 h.Export(fileName, true);
@@ -302,7 +294,7 @@ namespace MeisterGeister.ViewModel.Helden
             }
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
             Held.UpdateLists();
-            LoadDaten();
+            MainViewModel.Instance.InvalidateHelden();
 
             Global.SetIsBusy(false);
         }
@@ -423,7 +415,7 @@ namespace MeisterGeister.ViewModel.Helden
                 }
             }
 
-            LoadDaten();
+            MainViewModel.Instance.InvalidateHelden();
             return importHeld;
         }
 
@@ -443,7 +435,7 @@ namespace MeisterGeister.ViewModel.Helden
             Global.SetIsBusy(true, "Held wird kopiert...");
 
             Held h = SelectedHeld.Clone();
-            LoadDaten();
+            MainViewModel.Instance.InvalidateHelden();
 
             Global.SetIsBusy(false);
         }
@@ -501,7 +493,7 @@ namespace MeisterGeister.ViewModel.Helden
                         window.ShowDialog();
                         window.Close();
                     }
-                    LoadDaten();
+                    MainViewModel.Instance.InvalidateHelden();
                 }
                 catch (Exception ex)
                 {
