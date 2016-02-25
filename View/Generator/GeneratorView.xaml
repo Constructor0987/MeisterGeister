@@ -147,16 +147,14 @@
         </Expander>
 
         <Expander Grid.Row="1" Margin="2" IsExpanded="True">
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <ListBox Padding="4" Background="Transparent" FontSize="14" 
+            <ListBox Padding="4" Background="Transparent" FontSize="14" 
                          ItemContainerStyle="{DynamicResource ListBoxItemStretch}" 
                          ItemsSource="{Binding GenerierteObjekteListe}" 
                          SelectionMode="Extended">
-                    <ListBox.BorderBrush>
-                        <SolidColorBrush />
-                    </ListBox.BorderBrush>
-                </ListBox>
-            </Border>
+                <ListBox.BorderBrush>
+                    <SolidColorBrush />
+                </ListBox.BorderBrush>
+            </ListBox>
         </Expander>
 
         <Expander Grid.Column="1" Grid.Row="1" ExpandDirection="Right" IsExpanded="{Binding ZeigeZusatzinformationen}">

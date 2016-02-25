@@ -35,31 +35,27 @@
             <Expander.Header>
                 <TextBlock Text="Filter" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <Grid>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
-                        <TextBox Margin="5,10" Width="250" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
-                        <TextBlock Text="Hier kann eine Stichwortsuche über alle Literaturangaben durchgeführt werden." ToolTip="Es sind noch nicht sämliche Daten im Suchindex verfügbar. Dies wird in kommenden Versionen erweitert." TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Margin="5" FontSize="10" />
-                        <ViewGeneral:WikiLinkControl Width="24" Height="24" Tag="{Binding SuchText}" />
-                    </StackPanel>
-                </Grid>
-            </Border>
+            <Grid>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
+                    <TextBox Margin="5,10" Width="250" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
+                    <TextBlock Text="Hier kann eine Stichwortsuche über alle Literaturangaben durchgeführt werden." ToolTip="Es sind noch nicht sämliche Daten im Suchindex verfügbar. Dies wird in kommenden Versionen erweitert." TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Margin="5" FontSize="10" />
+                    <ViewGeneral:WikiLinkControl Width="24" Height="24" Tag="{Binding SuchText}" />
+                </StackPanel>
+            </Grid>
         </Expander>
         <Expander Grid.Row="1" Margin="4" IsExpanded="True">
             <Expander.Header>
                 <TextBlock Text="Almanach-Einträge" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <ListBox Padding="4" Background="Transparent" FontSize="14" 
+            <ListBox Padding="4" Background="Transparent" FontSize="14" 
                  ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
                  ItemsSource="{Binding FilteredAlmanachItemListe}" ItemTemplate="{StaticResource AlmanachItemTemplate}"
                  VirtualizingStackPanel.IsVirtualizing="True">
-                    <ListBox.BorderBrush>
-                        <SolidColorBrush />
-                    </ListBox.BorderBrush>
-                </ListBox>
-            </Border>
+                <ListBox.BorderBrush>
+                    <SolidColorBrush />
+                </ListBox.BorderBrush>
+            </ListBox>
         </Expander>
     </Grid>
 </UserControl>

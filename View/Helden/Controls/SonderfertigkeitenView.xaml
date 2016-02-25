@@ -66,20 +66,18 @@
                             <Expander.Header>
                                 <TextBlock Style="{DynamicResource TextTitel}" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
                             </Expander.Header>
-                            <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Element für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
-                                    <ItemsPresenter Grid.Column="1" />
-                                </Grid>
-                            </Border>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                                    <Image.ToolTip>
+                                        <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Element für weitere Aktionen."/></TextBlock>
+                                    </Image.ToolTip>
+                                </Image>
+                                <ItemsPresenter Grid.Column="1" />
+                            </Grid>
                         </Expander>
                     </ControlTemplate>
                 </Setter.Value>
@@ -97,34 +95,32 @@
             <Expander.Header>
                 <TextBlock Text="Sonderfertigkeitauswahl" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Center" IsEditable="True">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                        <ComboBox.InputBindings>
-                            <KeyBinding Key="Enter"  Command="{Binding OnAddSonderfertigkeit}" />
-                        </ComboBox.InputBindings>
-                    </ComboBox>
-                    <Button Padding="0" Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                    </Button>
-                    <Button Padding="0" Grid.Column="2" Margin="10,0,0,0" x:Name="_buttonMultiAdd" Command="{Binding OnShowAddMultiSonderfertigkeit}" Height="23" Width="23" ToolTip="Mehrere gleichzeitig einfügen..." Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
-                        <Grid>
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="-2,-2,2,2" />
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
-                        </Grid>
-                    </Button>
-                </Grid>
-            </Border>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Center" IsEditable="True">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.InputBindings>
+                        <KeyBinding Key="Enter"  Command="{Binding OnAddSonderfertigkeit}" />
+                    </ComboBox.InputBindings>
+                </ComboBox>
+                <Button Padding="0" Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                </Button>
+                <Button Padding="0" Grid.Column="2" Margin="10,0,0,0" x:Name="_buttonMultiAdd" Command="{Binding OnShowAddMultiSonderfertigkeit}" Height="23" Width="23" ToolTip="Mehrere gleichzeitig einfügen..." Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                    <Grid>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="-2,-2,2,2" />
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
+                    </Grid>
+                </Button>
+            </Grid>
         </Expander>
         <ListBox Grid.Row="1" ItemsSource="{Binding Source={StaticResource SonderfertigkeitListeView}}" SelectedItem="{Binding SelectedHeldSonderfertigkeit}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">

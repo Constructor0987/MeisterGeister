@@ -105,14 +105,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             foreach (ManöverInfo mi in AktuelleAktionen)
             {
-                if(!mi.Ausgeführt)
+                if (!mi.Ausgeführt)
                     mi.Manöver.Aktion();
             }
 
             ZeitImKampf next = default(ZeitImKampf);
 
-            if (AktuelleAktionen.Count() > 0)
-                next = InitiativListe.Aktionszeiten.Where(zeit => zeit > AktuelleAktionszeit && zeit.Kampfrunde == Kampfrunde).FirstOrDefault();
+            if (AktuelleAktionszeit != default(ZeitImKampf))
+            {
+                var nextActions = InitiativListe.Aktionszeiten.Where(zeit => zeit > AktuelleAktionszeit && zeit.Kampfrunde == Kampfrunde).OrderBy(zeit => zeit);
+                next = nextActions.FirstOrDefault();
+            }
             else
                 next = InitiativListe.Aktionszeiten.Where(zeit => zeit.Kampfrunde == Kampfrunde).FirstOrDefault();
 

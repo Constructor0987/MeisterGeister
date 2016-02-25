@@ -35,6 +35,57 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             return true;
         }
 
+
+
+        private Base.CommandBase aktivieren;
+        public Base.CommandBase Aktivieren
+        {
+            get
+            {
+                if (aktivieren == null)
+                    aktivieren = new CommandBase(o => ToggleAktiv(), o => CanToggleAktiv());
+                return aktivieren;
+            }
+        }
+
+        public bool CanToggleAktiv()
+        {
+            if (Kampf.AktuelleAktionszeit == default(ZeitImKampf))
+                return false;
+
+            //Aufsparen
+            if (Kampf.InitiativListe.Contains(this))
+            {
+                //Ein Manöver kann nur aufgespart werden wenn es dran ist
+                //Längerfristige Aktionen können nicht aufgespart werden
+                //Länger Zielen und Zauber bereithalten können erreicht werden indem die Aktionsdauer verändert wird
+                return Start == End && Start == Kampf.AktuelleAktionszeit;
+            }
+            //Aktivieren
+            else
+            {
+                //Aktivieren geht nicht wenn der Ausführende in der gleichen Aktion schon etwas anderes macht
+                return !Manöver.Ausführender.AngriffsManöver.Any(m => m.Start <= Kampf.AktuelleAktionszeit && m.End >= Kampf.AktuelleAktionszeit);
+            }
+        }
+
+        public void ToggleAktiv()
+        {
+            if (Kampf.InitiativListe.Contains(this))
+            {
+                Kampf.InitiativListe.Remove(this);
+                Manöver.Ausführender.AbwehrManöver.Add(this);
+            }
+            else
+            {
+                Manöver.Ausführender.AbwehrManöver.Remove(this);
+                kampfrundeStart = kampfrundeEnd = Kampf.AktuelleAktionszeit.Kampfrunde;
+                Start = new ZeitImKampf(kampfrundeStart, Kampf.AktuelleAktionszeit.InitiativPhase);
+                End = new ZeitImKampf(kampfrundeEnd, Kampf.AktuelleAktionszeit.InitiativPhase);
+                Kampf.InitiativListe.Add(this);
+            }
+        }
+
         #endregion
 
         #region Kampfaktionen
@@ -51,7 +102,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get
             {
-                var aktionszeiten = Kampf.InitiativListe.Aktionszeiten;
+                var aktionszeiten = Kampf.InitiativListe.Aktionszeiten.Distinct();
                 int dauer = aktionszeiten.Count(zeit => zeit >= Start && zeit <= End);
                 return dauer;
             }
@@ -77,19 +128,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 Set(ref iniModStart, value);
+                if (Manöver != null)
+                    BerechneStart();
             }
         }
 
         private int kampfrundeStart;
 
-        [DependentProperty("InitiativeModStart")]
-        [DependentProperty("Manöver")]
+        private ZeitImKampf start;
         public ZeitImKampf Start
         {
             get
             {
-                return new ZeitImKampf(kampfrundeStart, Manöver.Ausführender.InitiativeMitKommas - InitiativeModStart);
+                return start;
             }
+            set
+            {
+                Set(ref start, value);
+            }
+        }
+        private void BerechneStart()
+        {
+            Start = new ZeitImKampf(kampfrundeStart, Manöver.Ausführender.InitiativeMitKommas - InitiativeModStart);
         }
 
 
@@ -103,25 +163,30 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 Set(ref iniModEnd, value);
+                BerechneEnd();
             }
         }
 
         private int kampfrundeEnd;
 
-        [DependentProperty("InitiativeModEnd")]
-        [DependentProperty("Manöver")]
+        private ZeitImKampf end;
         public ZeitImKampf End
         {
             get
             {
-                return new ZeitImKampf(kampfrundeEnd, Manöver.Ausführender.InitiativeMitKommas - InitiativeModEnd);
+                return end;
+            }
+            set
+            {
+                Set(ref end, value);
             }
         }
 
         private void BerechneEnd()
         {
             kampfrundeEnd = kampfrundeStart + (manöver.Dauer - (InitiativeModStart == 0 ? 1 : 0)) / 2;
-            InitiativeModEnd = (InitiativeModStart + (manöver.Dauer % 2 == 0 ? 8 : 0)) % 16;
+            iniModEnd = (InitiativeModStart + (manöver.Dauer % 2 == 0 ? 8 : 0)) % 16;
+            End = new ZeitImKampf(kampfrundeEnd, Manöver.Ausführender.InitiativeMitKommas - InitiativeModEnd);
         }
 
         [DependentProperty("Start")]
@@ -173,6 +238,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             NotifyKampfaktionenChanged();
+            Aktivieren.Invalidate();
         }
 
         private Manöver.Manöver manöver;
@@ -191,6 +257,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     manöver.PropertyChanged += Manöver_PropertyChanged;
                     manöver.Ausführender.PropertyChanged += Kämpfer_PropertyChanged;
+                    BerechneStart();
                     BerechneEnd();
                 }
 
@@ -200,7 +267,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void Manöver_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "Dauer")
+            if (e.PropertyName == "Dauer")
             {
                 BerechneEnd();
             }
@@ -279,8 +346,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             if (args.PropertyName == "Initiative")
             {
-                OnChanged("Start");
-                OnChanged("End");
+                BerechneStart();
+                BerechneEnd();
                 OnChanged("Aktionszeiten");
             }
             else if (args.PropertyName == "Angriffsaktionen")
@@ -291,6 +358,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             if (e.PropertyName == "AktuelleAktion")
                 OnChanged("IsAktuell");
+            if (e.PropertyName == "AktuelleAktionszeit")
+            {
+                Aktivieren.Invalidate();
+            }
         }
 
 

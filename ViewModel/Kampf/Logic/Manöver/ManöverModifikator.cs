@@ -12,32 +12,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public abstract class ManöverModifikator<TWaffe> : INotifyPropertyChanged where TWaffe : IWaffe
     {
-        private Manöver<TWaffe> manöver;
+        protected Manöver<TWaffe> manöver;
         public ManöverModifikator(Manöver<TWaffe> manöver)
         {
             this.manöver = manöver;
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
-        private Func<TWaffe, int> getMod;
-        public Func<TWaffe, int> GetMod
+        public abstract int Result
         {
-            get { return getMod; }
-            set
-            {
-                getMod = value;
-                OnChanged("GetMod");
-            }
-        }
-
-        public int Result
-        {
-            get
-            {
-                int result = GetMod(manöver.Waffen.FirstOrDefault());
-                //Debug.WriteLine("ManöverResult = " + result);
-                return result;
-            }
+            get;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,7 +38,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public ManöverModifikator(Manöver<TWaffe> manöver) : base(manöver)
         {
             if (typeof(T) == typeof(int))
-                GetMod = (w) => Convert.ToInt32(Value);
+                GetMod = (w, v) => Convert.ToInt32(Value);
+        }
+
+        private Func<TWaffe, T, int> getMod;
+        public Func<TWaffe, T, int> GetMod
+        {
+            get { return getMod; }
+            set
+            {
+                getMod = value;
+                OnChanged("GetMod");
+            }
+        }
+
+        public override int Result
+        {
+            get
+            {
+                return GetMod(manöver.Waffen.FirstOrDefault(), Value);
+            }
         }
 
         private T value;

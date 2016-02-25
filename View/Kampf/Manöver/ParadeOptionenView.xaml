@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="MeisterGeister.View.Kampf.Manöver.ParadeOptionenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+             xmlns:local="clr-namespace:MeisterGeister.View.Kampf.Manöver"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary Source="ManöverResources.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Umgebung" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
+
+        <!--Dämmerungssicht / Nachtsicht-->
+        <TextBlock Grid.Row="1" Text="Licht"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="licht" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Licht].Value}">
+            <ComboBoxItem Content="Tageslicht" DataContext="0"/>
+            <ComboBoxItem Content="Mondlicht" DataContext="3"/>
+            <ComboBoxItem Content="Sternenlicht" DataContext="5"/>
+            <ComboBoxItem Content="Finsternis" DataContext="8"/>
+        </ComboBox>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Mods[Licht].Result}"/>
+
+        <!--Kampf im Wasser / Unterwasserkampf-->
+        <TextBlock Grid.Row="2" Text="Wasser"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="wasser" ItemsSource="{StaticResource wasserValues}" SelectedItem="{Binding Mods[Wasser].Value,Converter={StaticResource wasserValues}}"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Wasser].Result}"/>
+
+        <CheckBox Content="Beengte Umgebung" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Beengt].Result}"/>
+
+        <TextBlock Grid.Row="4" Text="Distanzklasse"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="distanzklasse" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Distanzklasse].Value}">
+            <ComboBoxItem Content="Passend oder zu kurz" DataContext="0"/>
+            <ComboBoxItem Content="Um 1 zu lang" DataContext="6"/>
+            <ComboBoxItem Content="Um 2 zu lang" IsEnabled="False" ToolTip="Parieren nicht möglich" ToolTipService.ShowOnDisabled="True"/>
+        </ComboBox>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Mods[Distanzklasse].Result}"/>
+
+        <TextBlock Grid.Row="5" Text="Überzahl"/>
+        <Slider Grid.Row="5" Grid.Column="1" Interval="1" Minimum="-5" Maximum="5" Value="{Binding Mods[Überzahl].Value}" AutoToolTipPlacement="BottomRight"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Mods[Überzahl].Result}"/>
+
+        <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Text="Selbst" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="7" Text="Position"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionSelbst].Value,Converter={StaticResource positionValues}}"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Mods[PositionSelbst].Result}"/>
+
+        <!--+1-->
+        <CheckBox Grid.Row="8" Grid.ColumnSpan="2" Content="Unbewaffneter Angriff gegen Bewaffnete" IsChecked="{Binding Mods[Unbewaffnet].Value}"/>
+        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Mods[Unbewaffnet].Result}"/>
+
+        <!--+9 / Linkhand / Beidhändiger Kampf I / Linkshändig / Beidhändig-->
+        <CheckBox Grid.Row="9" Grid.ColumnSpan="2" Content="Kampf mit der falschen Hand" IsChecked="{Binding Mods[FalscheHand].Value}"/>
+        <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Mods[FalscheHand].Result}"/>
+
+        <TextBlock Grid.Row="10" Grid.ColumnSpan="3" Text="Gegner" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="11" Text="Position"/>
+        <ComboBox Grid.Row="11" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionGegner].Value,Converter={StaticResource positionValues}}"/>
+        <TextBlock Grid.Row="11" Grid.Column="2" Text="{Binding Mods[PositionGegner].Result}"/>
+
+        <!--Finte-->
+        <TextBlock Grid.Row="12" Text="Finte"/>
+        <Slider Grid.Row="12" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Finte].Value}"/>
+        <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding Mods[Finte].Result}"/>
+
+        <CheckBox Grid.Row="13" Grid.ColumnSpan="2" Content="Glücklicher / Kritischer Treffer" IsChecked="{Binding Mods[Glücklich].Value}"/>
+        <TextBlock Grid.Row="13" Grid.Column="2" Text="{Binding Mods[Glücklich].Result}"/>
+
+        <CheckBox Grid.Row="14" Grid.ColumnSpan="2" Content="Linkshänder (ersten 5 Kampfrunden)" IsChecked="{Binding Mods[Linkshänder].Value}"/>
+        <TextBlock Grid.Row="14" Grid.Column="2" Text="{Binding Mods[Linkshänder].Result}"/>
+
+        <!--Zielgröße-->
+        <TextBlock Grid.Row="15" Text="Zielgröße"/>
+        <ComboBox Grid.Row="15" Grid.Column="1" ItemsSource="{StaticResource größenValues}" SelectedItem="{Binding Mods[Zielgröße].Value,Converter={StaticResource größenValues}}"/>
+        <TextBlock Grid.Row="15" Grid.Column="2" Text="{Binding Mods[Zielgröße].Result}"/>
+
+    </Grid>
+</UserControl>

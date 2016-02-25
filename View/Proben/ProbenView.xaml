@@ -22,163 +22,161 @@
             <Expander.Header>
                 <TextBlock Text="" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="120*" />
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="10*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="120*" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-                    <ComboBox Height="32" Width="48" Margin="5" ItemsSource="{Binding FilterListe}" SelectedItem="{Binding SelectedFilterItem}">
-                        <ComboBox.ToolTip>
-                            <StackPanel>
-                                <TextBlock Text="Probenfilter" FontWeight="Bold" />
-                                <TextBlock Text="{Binding SelectedFilterItem.Name}" />
+                <ComboBox Height="32" Width="48" Margin="5" ItemsSource="{Binding FilterListe}" SelectedItem="{Binding SelectedFilterItem}">
+                    <ComboBox.ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Probenfilter" FontWeight="Bold" />
+                            <TextBlock Text="{Binding SelectedFilterItem.Name}" />
+                        </StackPanel>
+                    </ComboBox.ToolTip>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding ImagePath}" Width="24" />
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
                             </StackPanel>
-                        </ComboBox.ToolTip>
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding ImagePath}" Width="24" />
-                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <CheckBox Grid.Column="1" IsChecked="{Binding IsAktivierteProben}" Margin="5" ToolTip="Nur aktivierte Proben in Auswahlliste anzeigen." VerticalAlignment="Center">
-                        <CheckBox.Content>
-                            <Image Source="/Images/Icons/General/ok.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
-                        </CheckBox.Content>
-                    </CheckBox>
-                    <Image Grid.Column="2" Width="24" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Opacity="0.8" />
-                    <ComboBox Grid.Column="3" Height="23" ItemsSource="{Binding FilteredProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Probenname" ToolTip="Proben-Auswahl" IsEditable="True">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                        <ComboBox.InputBindings>
-                            <KeyBinding Key="Enter"  Command="{Binding OnWürfeln}" />
-                        </ComboBox.InputBindings>
-                    </ComboBox>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <CheckBox Grid.Column="1" IsChecked="{Binding IsAktivierteProben}" Margin="5" ToolTip="Nur aktivierte Proben in Auswahlliste anzeigen." VerticalAlignment="Center">
+                    <CheckBox.Content>
+                        <Image Source="/Images/Icons/General/ok.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                    </CheckBox.Content>
+                </CheckBox>
+                <Image Grid.Column="2" Width="24" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Opacity="0.8" />
+                <ComboBox Grid.Column="3" Height="23" ItemsSource="{Binding FilteredProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Probenname" ToolTip="Proben-Auswahl" IsEditable="True">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.InputBindings>
+                        <KeyBinding Key="Enter"  Command="{Binding OnWürfeln}" />
+                    </ComboBox.InputBindings>
+                </ComboBox>
 
-                    <ViewGeneral:IntBox Grid.Column="4" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
+                <ViewGeneral:IntBox Grid.Column="4" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
 
-                    <CheckBox Grid.Column="5" IsChecked="{Binding IsBehinderung}" Margin="5" ToolTip="Behinderung berücksichtigen." VerticalAlignment="Center">
-                        <CheckBox.Content>
-                            <Image Source="/Images/Icons/ueberanstrengung.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
-                        </CheckBox.Content>
-                    </CheckBox>
-                    
-                    <ListBox Grid.Column="6" Margin="4" Height="35"  Width="210" Name="_listBoxMods" SelectedValue="{Binding SelectedMod}" SelectedValuePath="Tag" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" FontSize="10" 
+                <CheckBox Grid.Column="5" IsChecked="{Binding IsBehinderung}" Margin="5" ToolTip="Behinderung berücksichtigen." VerticalAlignment="Center">
+                    <CheckBox.Content>
+                        <Image Source="/Images/Icons/ueberanstrengung.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                    </CheckBox.Content>
+                </CheckBox>
+
+                <ListBox Grid.Column="6" Margin="4" Height="35"  Width="210" Name="_listBoxMods" SelectedValue="{Binding SelectedMod}" SelectedValuePath="Tag" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" FontSize="10" 
                              ToolTip="Erschwernisse/Erleichterungen" Foreground="#FF4F4F4F" SelectionChanged="ListBoxMods_SelectionChanged">
-                        <StackPanel Orientation="Horizontal" Tag="-7">
-                            <TextBlock Text="-7" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="für Ungeübte zu schaffen" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Tag="-3">
-                            <TextBlock Text="-3" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="in Fleisch und Blut übergegangen" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Tag="0">
-                            <TextBlock Text="+/-0" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="alltägliche Routine" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Tag="3">
-                            <TextBlock Text="+3" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="Fummelarbeit" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Tag="7">
-                            <TextBlock Text="+7" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="anspruchsvoll" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Tag="12">
-                            <TextBlock Text="+12" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="wirklich schwierig" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Tag="18">
-                            <TextBlock Text="+18" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="ohne notwendige Hilfsmittel" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Tag="25">
-                            <TextBlock Text="+25" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="selbst mit Hilfsmittel fast unmöglich" Margin="5,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </ListBox>
+                    <StackPanel Orientation="Horizontal" Tag="-7">
+                        <TextBlock Text="-7" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="für Ungeübte zu schaffen" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Tag="-3">
+                        <TextBlock Text="-3" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="in Fleisch und Blut übergegangen" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Tag="0">
+                        <TextBlock Text="+/-0" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="alltägliche Routine" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Tag="3">
+                        <TextBlock Text="+3" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="Fummelarbeit" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Tag="7">
+                        <TextBlock Text="+7" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="anspruchsvoll" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Tag="12">
+                        <TextBlock Text="+12" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="wirklich schwierig" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Tag="18">
+                        <TextBlock Text="+18" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="ohne notwendige Hilfsmittel" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Tag="25">
+                        <TextBlock Text="+25" FontWeight="Bold" Width="22" />
+                        <TextBlock Text="selbst mit Hilfsmittel fast unmöglich" Margin="5,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListBox>
 
-                    <Button Grid.Column="8" Grid.RowSpan="2" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}" Padding="0">
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
-                    </Button>
+                <Button Grid.Column="8" Grid.RowSpan="2" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}" Padding="0">
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
+                </Button>
 
-                    <CheckBox Grid.Column="9" Grid.RowSpan="2" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
-                        <CheckBox.Content>
-                            <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
-                        </CheckBox.Content>
-                    </CheckBox>
+                <CheckBox Grid.Column="9" Grid.RowSpan="2" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
+                    <CheckBox.Content>
+                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                    </CheckBox.Content>
+                </CheckBox>
 
-                        <Button Grid.Row="1" Command="{Binding OnAddFavorit}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="23" Width="23" Margin="5,2,2,2" ToolTip="Die aktuelle Probe als Favoriten-Button einfügen.">
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                        </Button>
-                        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" Margin="30,0,0,0" BorderBrush="#00000000" Background="#00000000" ItemsSource="{Binding ProbeFavoritenListe}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListBoxItem}">
-                                    <Setter Property="Focusable" Value="False"/>
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Height="23" Margin="2" Command="{Binding DataContext.OnWürfelFavorit, ElementName=userControl}" CommandParameter="{Binding}" 
+                <Button Grid.Row="1" Command="{Binding OnAddFavorit}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="23" Width="23" Margin="5,2,2,2" ToolTip="Die aktuelle Probe als Favoriten-Button einfügen.">
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                </Button>
+                <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" Margin="30,0,0,0" BorderBrush="#00000000" Background="#00000000" ItemsSource="{Binding ProbeFavoritenListe}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Height="23" Margin="2" Command="{Binding DataContext.OnWürfelFavorit, ElementName=userControl}" CommandParameter="{Binding}" 
                                             Tag="{Binding DataContext, ElementName=userControl}">
-                                        <Button.ToolTip>
-                                            <StackPanel>
-                                                <TextBlock Text="Links-Klick: Probe würfeln." />
-                                                <TextBlock Text="Rechts-Klick: Context-Menü zum Löschen." />
-                                            </StackPanel>
-                                        </Button.ToolTip>
-                                        <Button.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavorit, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}">
-                                                    <MenuItem.Icon>
-                                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                                                    </MenuItem.Icon>
-                                                <MenuItem.Header>
-                                                    <TextBlock VerticalAlignment="Center" Text="Löschen" />
-                                                </MenuItem.Header>
-                                            </MenuItem>
-                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavoritAll, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                                    <MenuItem.Icon>
-                                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
-                                                    </MenuItem.Icon>
-                                                <MenuItem.Header>
-                                                    <TextBlock VerticalAlignment="Center" Text="Alle Löschen" />
-                                                </MenuItem.Header>
-                                            </MenuItem>
-                                            </ContextMenu>
-                                        </Button.ContextMenu>
-                                        <TextBlock Text="{Binding Probenname}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" />
-                                    </Button>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                </Grid>
-            </Border>
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Text="Links-Klick: Probe würfeln." />
+                                        <TextBlock Text="Rechts-Klick: Context-Menü zum Löschen." />
+                                    </StackPanel>
+                                </Button.ToolTip>
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavorit, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}">
+                                            <MenuItem.Icon>
+                                                <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                            </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Löschen" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                        <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavoritAll, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                                            <MenuItem.Icon>
+                                                <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
+                                            </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Alle Löschen" />
+                                            </MenuItem.Header>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                                <TextBlock Text="{Binding Probenname}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" />
+                            </Button>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
         </Expander>
 
         <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
@@ -197,154 +195,148 @@
                     <TextBlock VerticalAlignment="Center" Margin="2,0" Style="{DynamicResource TextTitel}" Text="{Binding SelectedProbe.WerteNamen, FallbackValue=(XX/XX/XX)}" />
                 </StackPanel>
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
-                <WrapPanel>
-                    <WrapPanel.Resources>
-                        <Style TargetType="{x:Type Label}">
-                            <Setter Property="FontStyle" Value="Italic" />
-                            <Setter Property="FontSize" Value="11" />
-                        </Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="FontStyle" Value="Italic" />
-                            <Setter Property="FontSize" Value="11" />
-                        </Style>
-                    </WrapPanel.Resources>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Literatur:" FontWeight="Bold" />
-                        <ViewGeneral:LiteraturControl VerticalAlignment="Center" Height="20" Padding="2,0,2,0" Literaturangabe="{Binding SelectedProbe.Literatur}" LiteraturAnzeigeArt="TextKurz" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" ToolTip="Effektive Behinderung (eBE)" Visibility="{Binding SelectedProbeHat_eBE, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                        <Label Content="eBE:" FontWeight="Bold" />
-                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.eBE, FallbackValue=-}" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" ToolTip="Spalte auf der Steigerungskosten-Tabelle (SKT)">
-                        <Label Content="Komplexität:" FontWeight="Bold" />
-                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Steigerung}" />
-                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Komplex}" />
-                    </StackPanel>
-                    <Label Content="Voraussetzungen:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Voraussetzungen, FallbackValue=-}" />
-                    <Label Content="Spezialisierungen:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Spezialisierungen, FallbackValue=-}" />
-                    <Label Content="Merkmale:" FontWeight="Bold" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Merkmale, FallbackValue=-}" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                    <Label Content="Repräsentationen:" FontWeight="Bold" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                    <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Repräsentationen, FallbackValue=-}" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                </WrapPanel>
-            </Border>
+            <WrapPanel>
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="FontStyle" Value="Italic" />
+                        <Setter Property="FontSize" Value="11" />
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontStyle" Value="Italic" />
+                        <Setter Property="FontSize" Value="11" />
+                    </Style>
+                </WrapPanel.Resources>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Literatur:" FontWeight="Bold" />
+                    <ViewGeneral:LiteraturControl VerticalAlignment="Center" Height="20" Padding="2,0,2,0" Literaturangabe="{Binding SelectedProbe.Literatur}" LiteraturAnzeigeArt="TextKurz" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" ToolTip="Effektive Behinderung (eBE)" Visibility="{Binding SelectedProbeHat_eBE, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                    <Label Content="eBE:" FontWeight="Bold" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.eBE, FallbackValue=-}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" ToolTip="Spalte auf der Steigerungskosten-Tabelle (SKT)">
+                    <Label Content="Komplexität:" FontWeight="Bold" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Steigerung}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Komplex}" />
+                </StackPanel>
+                <Label Content="Voraussetzungen:" FontWeight="Bold" />
+                <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Voraussetzungen, FallbackValue=-}" />
+                <Label Content="Spezialisierungen:" FontWeight="Bold" />
+                <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Spezialisierungen, FallbackValue=-}" />
+                <Label Content="Merkmale:" FontWeight="Bold" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Merkmale, FallbackValue=-}" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                <Label Content="Repräsentationen:" FontWeight="Bold" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Repräsentationen, FallbackValue=-}" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+            </WrapPanel>
         </Expander>
 
         <Expander Grid.Row="2" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
             <Expander.Header>
                 <TextBlock Text="Probenergebnisse" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ListBox Grid.Column="0" Grid.Row="0" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ListBox Grid.Column="0" Grid.Row="0" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                              ItemsSource="{Binding SpezielleErfahrungListe}" TextElement.FontStyle="Italic" TextElement.FontSize="11" MaxHeight="55" Margin="5,0,0,0"
                              ToolTip="Bei Doppel- oder Dreifach-Eins wird eine Spezielle Erfahrung im Notiz-Tool vermerkt (WdS 162).">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Background="#7FF9DAB5">
-                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Width="14" />
-                                    <TextBlock Text="{Binding}" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Background="#7FF9DAB5">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Width="14" />
+                                <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
-                    <ListBox Grid.Column="0" Grid.Row="1" Name="_probeErgebnisListe" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                <ListBox Grid.Column="0" Grid.Row="1" Name="_probeErgebnisListe" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                              ItemsSource="{Binding ProbeErgebnisListe}" ItemsPanel="{Binding ProbeErgebnisListePanel}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}">
-                                <Setter Property="Focusable" Value="False"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border Margin="5">
-                                    <StackPanel>
-                                        <Grid>
-                                            <Proben:ProbeControl Orientation="Horizontal" />
-                                            <ToggleButton IsChecked="{Binding NichtProben}" Margin="0,0,0,0" Height="15" Width="15" BorderThickness="0.5" Opacity="0.5" 
-                                                          HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Probe berücksichtigen oder ignorieren.">
-                                                <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                                            </ToggleButton>
-                                        </Grid>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Margin="5">
-                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnAddFreieProbe}" ToolTip="Eine frei editierbare Probe einfügen...">
-                            <Grid>
-                                <Image Source="/Images/Icons/meisterperson.png" />
-                                <Image Source="/Images/Icons/General/add.png" Opacity="0.8" Width="22" Margin="24,8,0,0" />
-                            </Grid>
-                        </Button>
-                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="50" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="{Binding ImagePath}" Width="24" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="50" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}">
-                            <ComboBox.ToolTip>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="5">
                                 <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Content="Sortierung:" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SelectedSortierung.Name}" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                    <TextBlock Text="Übrig: Übrigbehaltene Punkte" />
-                                    <TextBlock Text="Wert: Fertigkeitswert" />
-                                    <TextBlock Text="Name: Heldenname" />
+                                    <Grid>
+                                        <Proben:ProbeControl Orientation="Horizontal" />
+                                        <ToggleButton IsChecked="{Binding NichtProben}" Margin="0,0,0,0" Height="15" Width="15" BorderThickness="0.5" Opacity="0.5" 
+                                                          HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Probe berücksichtigen oder ignorieren.">
+                                            <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                        </ToggleButton>
+                                    </Grid>
                                 </StackPanel>
-                            </ComboBox.ToolTip>
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="{Binding ImagePath}" Width="24" />
-                                        <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=_probeErgebnisListe}" ToolTip="Probenergebnisse im Spieler-Fenster anzeigen.">
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Margin="5">
+                    <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnAddFreieProbe}" ToolTip="Eine frei editierbare Probe einfügen...">
+                        <Grid>
+                            <Image Source="/Images/Icons/meisterperson.png" />
+                            <Image Source="/Images/Icons/General/add.png" Opacity="0.8" Width="22" Margin="24,8,0,0" />
+                        </Grid>
+                    </Button>
+                    <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="50" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding ImagePath}" Width="24" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="50" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}">
+                        <ComboBox.ToolTip>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Sortierung:" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding SelectedSortierung.Name}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Text="Übrig: Übrigbehaltene Punkte" />
+                                <TextBlock Text="Wert: Fertigkeitswert" />
+                                <TextBlock Text="Name: Heldenname" />
+                            </StackPanel>
+                        </ComboBox.ToolTip>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding ImagePath}" Width="24" />
+                                    <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=_probeErgebnisListe}" ToolTip="Probenergebnisse im Spieler-Fenster anzeigen.">
+                        <Image Source="/Images/Icons/General/screen.png" />
+                    </Button>
+                    <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnCloseSpielerInfo}" ToolTip="Spieler-Fenster schließen.">
+                        <Grid>
                             <Image Source="/Images/Icons/General/screen.png" />
-                        </Button>
-                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnCloseSpielerInfo}" ToolTip="Spieler-Fenster schließen.">
-                            <Grid>
-                                <Image Source="/Images/Icons/General/screen.png" />
-                                <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
-                            </Grid>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-            </Border>
+                            <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Expander>
 
         <Expander Grid.Row="3" Grid.Column="0" IsExpanded="True" Margin="5">
             <Expander.Header>
                 <TextBlock Text="Zusammenarbeit" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
-                    <TextBlock Text="{Binding GruppenErgebnis}"/>
-                </StackPanel>
-            </Border>
+            <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
+                <TextBlock Text="{Binding GruppenErgebnis}"/>
+            </StackPanel>
         </Expander>
 
     </Grid>

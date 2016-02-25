@@ -19,54 +19,48 @@
         <General:EnumItemsSource x:Key="jahreszeiten" Type="{x:Type Kalender:Season}"/>
         <General:EnumToStringConverter x:Key="converter"/>
     </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+            <TextBlock FontWeight="Bold" Text="Klimazone:" VerticalAlignment="Center"/>
+            <ComboBox Margin="8,0,0,0" VerticalAlignment="Center" ItemsSource="{StaticResource klimazonen}" SelectedItem="{Binding Klimazone,Converter={StaticResource klimazonen}}"/>
+            <ComboBox Margin="8,0,0,0" VerticalAlignment="Center" ItemsSource="{StaticResource jahreszeiten}" SelectedItem="{Binding Jahreszeit,Converter={StaticResource jahreszeiten}}"/>
+            <ListBox Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource RadioListBoxStyle}" SelectedValuePath="DataContext" SelectedValue="{Binding Windreich}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBoxItem DataContext="0" Content="Normale Windverhältnisse"/>
+                <ListBoxItem DataContext="1" Content="Flachland / Meer"/>
+                <ListBoxItem DataContext="2" Content="Küste / Berggipfel"/>
+            </ListBox>
+            <CheckBox Margin="8,0,0,0" VerticalAlignment="Center" IsChecked="{Binding Wüste}" Content="Wüste"/>
+            <Button Margin="8,0,0,0" Content="Nächster Tag" Command="{Binding NächsterTagCmd}"/>
+        </StackPanel>
+        <TabControl Grid.Row="1" DataContext="{Binding Heute}" SelectedIndex="1">
+            <TabItem Header="Gestern" DataContext="{Binding Gestern}">
+                <view:TagesWetterView/>
+            </TabItem>
+            <TabItem Header="Heute">
+                <view:TagesWetterView/>
+            </TabItem>
+            <TabItem Header="Morgen" DataContext="{Binding Morgen}">
+                <view:TagesWetterView/>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,20,0,0">
+            <view:WetterGraph />
+            <TextBlock Margin="0,40,0,0" FontWeight="Black" Text="{Binding Heute.Unwetter, Converter={StaticResource converter}}" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
     
-    <Expander MinWidth="866">
-        <Expander.Header>
-            <TextBlock Text="Wettervorhersage" Style="{DynamicResource TextTitel}" />
-        </Expander.Header>
-        <Border Style="{DynamicResource ControlContentBorder}" Background="{StaticResource Background2}" Padding="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                    <TextBlock FontWeight="Bold" Text="Klimazone:" VerticalAlignment="Center"/>
-                    <ComboBox Margin="8,0,0,0" VerticalAlignment="Center" ItemsSource="{StaticResource klimazonen}" SelectedItem="{Binding Klimazone,Converter={StaticResource klimazonen}}"/>
-                    <ComboBox Margin="8,0,0,0" VerticalAlignment="Center" ItemsSource="{StaticResource jahreszeiten}" SelectedItem="{Binding Jahreszeit,Converter={StaticResource jahreszeiten}}"/>
-                    <ListBox Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource RadioListBoxStyle}" SelectedValuePath="DataContext" SelectedValue="{Binding Windreich}">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBoxItem DataContext="0" Content="Normale Windverhältnisse"/>
-                        <ListBoxItem DataContext="1" Content="Flachland / Meer"/>
-                        <ListBoxItem DataContext="2" Content="Küste / Berggipfel"/>
-                    </ListBox>
-                    <CheckBox Margin="8,0,0,0" VerticalAlignment="Center" IsChecked="{Binding Wüste}" Content="Wüste"/>
-                    <Button Margin="8,0,0,0" Content="Nächster Tag" Command="{Binding NächsterTagCmd}"/>
-                </StackPanel>
-                <TabControl Grid.Row="1" DataContext="{Binding Heute}" SelectedIndex="1">
-                    <TabItem Header="Gestern" DataContext="{Binding Gestern}">
-                        <view:TagesWetterView/>
-                    </TabItem>
-                    <TabItem Header="Heute">
-                        <view:TagesWetterView/>
-                    </TabItem>
-                    <TabItem Header="Morgen" DataContext="{Binding Morgen}">
-                        <view:TagesWetterView/>
-                    </TabItem>
-                </TabControl>
-                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,20,0,0">
-                    <view:WetterGraph />
-                    <TextBlock Margin="0,40,0,0" FontWeight="Black" Text="{Binding Heute.Unwetter, Converter={StaticResource converter}}" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Grid>
-        </Border>
-    </Expander>
 </UserControl>

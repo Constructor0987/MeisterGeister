@@ -13,12 +13,10 @@
             <Expander.Header>
                 <TextBlock Text="Heldenauswahl" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="8,0,0,0" />
-                    <ComboBox Name="_comboBoxHeld" Width="300" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
-                </StackPanel>
-            </Border>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="8,0,0,0" />
+                <ComboBox Name="_comboBoxHeld" Width="300" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
+            </StackPanel>
         </Expander>
         <WindowsFormsHost Grid.Row="1" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" Name="windowsFormsHost1" VerticalAlignment="Stretch" Background="{x:Null}" />
     </Grid>

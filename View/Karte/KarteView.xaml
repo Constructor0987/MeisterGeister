@@ -16,7 +16,7 @@
              xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="600"
+             d:DesignHeight="500" d:DesignWidth="1000"
              SizeChanged="UserControl_SizeChanged" x:Name="view">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
@@ -349,7 +349,12 @@
                     </Expander>
                 </DockPanel>
             </Border>
-            <Reise:WetterView HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-1"/>
+            <Expander VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="{StaticResource Background2}" Padding="10" Width="860">
+                <Expander.Header>
+                    <TextBlock Text="Wettervorhersage" Style="{StaticResource TextTitel}"/>
+                </Expander.Header>
+                <Reise:WetterView/>
+            </Expander>
             <Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="-1,50,0,50">
                 <Expander.Header>
                     <TextBlock Style="{StaticResource TextTitel}" Text="Pflanzensuche" HorizontalAlignment="Center"/>
@@ -357,7 +362,6 @@
                 <Grid Background="{StaticResource Background1}">
                     <Karte:PflanzenMitLandschaftControl General:UIElementBehavior.ViewModel="{Binding}" Width="600"/>
                 </Grid>
-                
             </Expander>
         </Grid>
     </Border>

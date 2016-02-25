@@ -31,58 +31,54 @@
                                 <TextBlock Text="Auswahl Playlist" Style="{DynamicResource TextTitel}" />
                             </StackPanel>
                         </Expander.Header>
-                        <Border Grid.Column="0" Style="{DynamicResource ControlContentBorder}"  >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="30" />
-                                    <ColumnDefinition Width="130" />
-                                </Grid.ColumnDefinitions>
-                                <ComboBox DisplayMemberPath="Name" FontSize="15" Margin="5,10" 
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <ComboBox DisplayMemberPath="Name" FontSize="15" Margin="5,10" 
                                           ItemsSource="{Binding FilteredPlaylistListe}" 
                                           SelectionChanged="PListPlaylist_SelectionChanged"
                                           SelectedItem="{Binding CurrentPlaylist, UpdateSourceTrigger=PropertyChanged}" />
 
-                                <Button Grid.Column="1" Margin="0,9" ToolTip="Anspielen der Playliste" 
+                            <Button Grid.Column="1" Margin="0,9" ToolTip="Anspielen der Playliste" 
                                                 Command="{Binding OnPlaylistAnspielenClick}">
-                                    <Button.Content>
-                                        <Image Source="/Images/Icons/General/speaker.png" Margin="-1,0,-1,-2" />
-                                    </Button.Content>
-                                </Button>
+                                <Button.Content>
+                                    <Image Source="/Images/Icons/General/speaker.png" Margin="-1,0,-1,-2" />
+                                </Button.Content>
+                            </Button>
 
-                                <Border Margin="5,12" Grid.Column="2" >
-                                    <Border.Background>
-                                        <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
-                                            <GradientStop Color="Beige" Offset="0" />
-                                            <GradientStop Color="#FFFFFFC7" Offset="1" />
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                    <ComboBox ItemsSource="{Binding KategorieListe, UpdateSourceTrigger=PropertyChanged}" FontSize="12" FontStyle="Italic" Background="{x:Null}" ToolTip="Kategorie" VerticalContentAlignment="Center"                                               
+                            <Border Margin="5,12" Grid.Column="2" >
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                                        <GradientStop Color="Beige" Offset="0" />
+                                        <GradientStop Color="#FFFFFFC7" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <ComboBox ItemsSource="{Binding KategorieListe, UpdateSourceTrigger=PropertyChanged}" FontSize="12" FontStyle="Italic" Background="{x:Null}" ToolTip="Kategorie" VerticalContentAlignment="Center"                                               
                                               Text="{Binding CurrentKategorie, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" />
-                                    <!--SelectedValue="{Binding SelectedKategorie, UpdateSourceTrigger=PropertyChanged}"-->
-                                </Border>
-                            </Grid>
-                        </Border>
+                                <!--SelectedValue="{Binding SelectedKategorie, UpdateSourceTrigger=PropertyChanged}"-->
+                            </Border>
+                        </Grid>
                     </Expander>
 
                     <Expander IsExpanded="True" Grid.Column="1" HorizontalAlignment="Right" Width="110" Margin="0,5,0,0" >
                         <Expander.Header>
                             <TextBlock Text="Icon" Style="{DynamicResource TextTitel}" Margin="-10,0,0,0" />
                         </Expander.Header>
-                        <Border Grid.Column="0" Style="{DynamicResource ControlContentBorder}"  >
-                            <StackPanel Orientation="Horizontal">
-                                <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" Width="60"
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" Width="60"
                                           SelectedItem="{Binding CurrentIcon, UpdateSourceTrigger=PropertyChanged}" >
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Image Height="25" Width="25" Source="{Binding Source}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <Button Width="25" Height="25" ToolTip="Neues Icon aufnehmen"
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image Height="25" Width="25" Source="{Binding Source}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Width="25" Height="25" ToolTip="Neues Icon aufnehmen"
                                         Command="{Binding OnIconAdd}" Content="..." />
-                            </StackPanel>
-                        </Border>
+                        </StackPanel>
                     </Expander>
 
                         
@@ -93,7 +89,77 @@
                                 <TextBlock VerticalAlignment="Center" Margin="0" Style="{DynamicResource TextTitel}" Text="Auswahl Helden" />
                             </StackPanel>
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Margin="2,2,2,0">
+                                <Border HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlisten-Filter">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="26" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="20" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                        <TextBox Margin="2,1" Grid.Column="1" 
+                                                Text="{Binding HeldenFilter, UpdateSourceTrigger=PropertyChanged}" />
+                                        <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
+                                                    Command="{Binding OnHeldenFilterLöschen}">
+                                            <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <Grid Margin="3" Grid.Row="1" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="75*"/>
+                                    <ColumnDefinition Width="25"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox ItemsSource="{Binding FilteredHeldenListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedHeld}" DisplayMemberPath="Name"
+                                              SelectionChanged="PListHeld_SelectionChanged"/>
+                                <Button Grid.Column="1" Width="25" Padding="0" 
+                                        Command="{Binding OnAddWesenPlaylist}" CommandParameter="{Binding}" >
+                                    <Image Source="/Images/Icons/General/add.png" Margin="1" />
+                                </Button>
+                            </Grid>
+
+                            <Label Content="Geräusche des Helden" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
+                            <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <ListView ItemsSource="{Binding HeldenPlaylistListe, UpdateSourceTrigger=PropertyChanged}" 
+                                              SelectedItem="{Binding CurrentHeldenPlaylist, UpdateSourceTrigger=PropertyChanged}"
+                                              Margin="5" Background="{x:Null}" Tag="{Binding}" >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Name="spnlHeldenPlaylist" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
+                                                <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
+                                                            Command="{Binding VM.OnDeleteWesenPlaylist, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
+                                                            Visibility="{Binding Path=IsMouseOver, ElementName=spnlHeldenPlaylist, Converter={StaticResource BooleanToVisibilityConverter1} }" >
+                                                    <Image Source="/Images/Icons/General/entf_01.png" Margin="1,1,3,1" />
+                                                </Button>
+                                                <TextBlock Text="{Binding Path=Held.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Image Source="{Binding Path=Icon,UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0" Height="20" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </ScrollViewer>
+                        </Grid>
+                    </Expander>
+
+                    <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" Margin="0,0,-2,0" />
+
+                    <Expander Grid.Row="1" Grid.Column="1" IsExpanded="True" Margin="5,5,5,0">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Image Source="/Images/Icons/gegner.png"  />
+                                <TextBlock VerticalAlignment="Center" Style="{DynamicResource TextTitel}" Text="Auswahl Gegner" />
+                            </StackPanel>
+                        </Expander.Header>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30" />
@@ -111,120 +177,46 @@
                                             </Grid.ColumnDefinitions>
                                             <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
                                             <TextBox Margin="2,1" Grid.Column="1" 
-                                                Text="{Binding HeldenFilter, UpdateSourceTrigger=PropertyChanged}" />
+                                                Text="{Binding GegnerFilter, UpdateSourceTrigger=PropertyChanged}" />
                                             <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
-                                                    Command="{Binding OnHeldenFilterLöschen}">
+                                                    Command="{Binding OnGegnerFilterLöschen}">
                                                 <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                             </Button>
                                         </Grid>
                                     </Border>
                                 </Grid>
-                                <Grid Margin="3" Grid.Row="1" >
+                                <Grid Margin="3" Grid.Row="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="75*"/>
                                         <ColumnDefinition Width="25"/>
                                     </Grid.ColumnDefinitions>
-                                    <ComboBox ItemsSource="{Binding FilteredHeldenListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedHeld}" DisplayMemberPath="Name"
-                                              SelectionChanged="PListHeld_SelectionChanged"/>
+                                    <ComboBox ItemsSource="{Binding FilteredGegnerListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedGegner}" DisplayMemberPath="Name"
+                                                  SelectionChanged="PListGegner_SelectionChanged"/>
                                     <Button Grid.Column="1" Width="25" Padding="0" 
                                         Command="{Binding OnAddWesenPlaylist}" CommandParameter="{Binding}" >
                                         <Image Source="/Images/Icons/General/add.png" Margin="1" />
                                     </Button>
                                 </Grid>
 
-                                <Label Content="Geräusche des Helden" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
-                                <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <ListView ItemsSource="{Binding HeldenPlaylistListe, UpdateSourceTrigger=PropertyChanged}" 
-                                              SelectedItem="{Binding CurrentHeldenPlaylist, UpdateSourceTrigger=PropertyChanged}"
-                                              Margin="5" Background="{x:Null}" Tag="{Binding}" >
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Name="spnlHeldenPlaylist" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
-                                                    <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
-                                                            Command="{Binding VM.OnDeleteWesenPlaylist, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
-                                                            Visibility="{Binding Path=IsMouseOver, ElementName=spnlHeldenPlaylist, Converter={StaticResource BooleanToVisibilityConverter1} }" >
-                                                        <Image Source="/Images/Icons/General/entf_01.png" Margin="1,1,3,1" />
-                                                    </Button>
-                                                    <TextBlock Text="{Binding Path=Held.Name, UpdateSourceTrigger=PropertyChanged}" />
-                                                    <Image Source="{Binding Path=Icon,UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0" Height="20" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </ScrollViewer>
-                            </Grid>
-                        </Border>
-                    </Expander>
-
-                    <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" Margin="0,0,-2,0" />
-
-                    <Expander Grid.Row="1" Grid.Column="1" IsExpanded="True" Margin="5,5,5,0">
-                        <Expander.Header>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Image Source="/Images/Icons/gegner.png"  />
-                                <TextBlock VerticalAlignment="Center" Style="{DynamicResource TextTitel}" Text="Auswahl Gegner" />
-                            </StackPanel>
-                        </Expander.Header>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition Height="20" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid Margin="2,2,2,0">
-                                        <Border HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlisten-Filter">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="26" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="20" />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                                <TextBox Margin="2,1" Grid.Column="1" 
-                                                Text="{Binding GegnerFilter, UpdateSourceTrigger=PropertyChanged}" />
-                                                <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
-                                                    Command="{Binding OnGegnerFilterLöschen}">
-                                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
-                                                </Button>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                    <Grid Margin="3" Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="75*"/>
-                                            <ColumnDefinition Width="25"/>
-                                        </Grid.ColumnDefinitions>
-                                        <ComboBox ItemsSource="{Binding FilteredGegnerListe, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedGegner}" DisplayMemberPath="Name"
-                                                  SelectionChanged="PListGegner_SelectionChanged"/>
-                                        <Button Grid.Column="1" Width="25" Padding="0" 
-                                        Command="{Binding OnAddWesenPlaylist}" CommandParameter="{Binding}" >
-                                            <Image Source="/Images/Icons/General/add.png" Margin="1" />
-                                        </Button>
-                                    </Grid>
-                                    
-                                    <Label Content="Geräusche des Gegners" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
-                                    <ListView Grid.Row="3" ItemsSource="{Binding GegnerPlaylistListe, UpdateSourceTrigger=PropertyChanged}" 
+                                <Label Content="Geräusche des Gegners" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
+                                <ListView Grid.Row="3" ItemsSource="{Binding GegnerPlaylistListe, UpdateSourceTrigger=PropertyChanged}" 
                                               SelectedItem="{Binding CurrentGegnerPlaylist, UpdateSourceTrigger=PropertyChanged}"
                                               Margin="5" Background="{x:Null}" Tag="{Binding}" >
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Name="spnlGegenerPlaylist" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
-                                                    <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Name="spnlGegenerPlaylist" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
+                                                <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
                                                             Command="{Binding VM.OnDeleteWesenPlaylist, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
                                                             Visibility="{Binding Path=IsMouseOver, ElementName=spnlGegenerPlaylist, Converter={StaticResource BooleanToVisibilityConverter1} }" >
-                                                        <Image Source="/Images/Icons/General/entf_01.png" Margin="1,1,3,1" />
-                                                    </Button>
-                                                    <TextBlock Text="{Binding Path=GegnerBase.Name, UpdateSourceTrigger=PropertyChanged}" />
-                                                    <Image Source="{Binding Path=Icon,UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0" Height="20" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
-                            </Border>
+                                                    <Image Source="/Images/Icons/General/entf_01.png" Margin="1,1,3,1" />
+                                                </Button>
+                                                <TextBlock Text="{Binding Path=GegnerBase.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Image Source="{Binding Path=Icon,UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0" Height="20" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
                         </ScrollViewer>
                     </Expander>
                 </Grid>
@@ -328,154 +320,150 @@
                                 <TextBlock VerticalAlignment="Center" Style="{DynamicResource TextTitel}" Text="Auflistung der Playlisten" />
                             </StackPanel>
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="60" />
-                                    <RowDefinition Height="33" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="130" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                    <Grid Margin="2,2,2,0">
-                                        <Border HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlisten-Filter">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="26" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="20" />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                                <TextBox Margin="2,1" Grid.Column="1" 
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="33" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Grid Margin="2,2,2,0">
+                                    <Border HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlisten-Filter">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="26" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="20" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                            <TextBox Margin="2,1" Grid.Column="1" 
                                                 Text="{Binding Playlist2Filter, UpdateSourceTrigger=PropertyChanged}" />
-                                                <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
+                                            <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
                                                     Command="{Binding OnPlaylist2FilterLöschen}">
-                                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
-                                                </Button>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                    <Grid Margin="3">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="75*"/>
-                                            <ColumnDefinition Width="25"/>
-                                        </Grid.ColumnDefinitions>
-                                        <ComboBox ItemsSource="{Binding FilteredPlaylist2Liste, UpdateSourceTrigger=PropertyChanged}" 
+                                                <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Grid Margin="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="75*"/>
+                                        <ColumnDefinition Width="25"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox ItemsSource="{Binding FilteredPlaylist2Liste, UpdateSourceTrigger=PropertyChanged}" 
                                                   SelectedItem="{Binding SelectedPlaylist2}" DisplayMemberPath="Name"
                                                   SelectionChanged="WesenPlaylist_SelectionChanged"/>
-                                        <Button Grid.Column="1" Width="25" Padding="0" 
+                                    <Button Grid.Column="1" Width="25" Padding="0" 
                                             Command="{Binding OnAddWesenPlaylist2}" CommandParameter="{Binding}" >
-                                            <Image Source="/Images/Icons/General/add.png" Margin="1" />
-                                        </Button>
-                                    </Grid>                                    
-                                </StackPanel>
+                                        <Image Source="/Images/Icons/General/add.png" Margin="1" />
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
 
-                                <Border Margin="5,03" VerticalAlignment="Top" Grid.Column="1" Height="24" >
-                                    <Border.Background>
-                                        <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
-                                            <GradientStop Color="Beige" Offset="0" />
-                                            <GradientStop Color="#FFFFFFC7" Offset="1" />
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                    <ComboBox ItemsSource="{Binding KategorieListe, UpdateSourceTrigger=PropertyChanged}" FontSize="12" FontStyle="Italic" Background="{x:Null}" ToolTip="Kategorie" VerticalContentAlignment="Center" 
+                            <Border Margin="5,03" VerticalAlignment="Top" Grid.Column="1" Height="24" >
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                                        <GradientStop Color="Beige" Offset="0" />
+                                        <GradientStop Color="#FFFFFFC7" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <ComboBox ItemsSource="{Binding KategorieListe, UpdateSourceTrigger=PropertyChanged}" FontSize="12" FontStyle="Italic" Background="{x:Null}" ToolTip="Kategorie" VerticalContentAlignment="Center" 
                                                   SelectedValue="{Binding SelectedKategorie2, UpdateSourceTrigger=PropertyChanged}"
                                                   Text="{Binding CurrentKategorie2, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" />
-                                </Border>
+                            </Border>
 
-                                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="2" >
-                                    <Button Width="25" Padding="0" Margin="2" Height="25" 
+                            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="2" >
+                                <Button Width="25" Padding="0" Margin="2" Height="25" 
                                                 ToolTip="Kopieren der Playlisten in den Zwischenspeicher"
                                                 Command="{Binding OnCopyWesenPlaylist2}" CommandParameter="{Binding}" >
-                                        <Button.Style>
-                                            <Style TargetType="Button">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding WesenPlaylistListe2, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}" >
-                                                        <Setter Property="IsEnabled" Value="False" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                        <Image Source="/Images/Icons/General/copy.png" Margin="1" />
-                                    </Button>
-                                    <Button Width="25" Padding="0" Margin="2" Height="25"
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding WesenPlaylistListe2, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}" >
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Image Source="/Images/Icons/General/copy.png" Margin="1" />
+                                </Button>
+                                <Button Width="25" Padding="0" Margin="2" Height="25"
                                                 ToolTip="Einfügen von Playlisten aus dem Zwischenspeicher"
                                                 Command="{Binding OnPasteWesenPlaylist2}" CommandParameter="{Binding}" >
-                                        <Button.Style>
-                                            <Style TargetType="Button">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding WesenSpeicher, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}" >
-                                                        <Setter Property="IsEnabled" Value="False" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                        <Image Source="/Images/Icons/General/paste.png" Margin="1" />
-                                    </Button>
-                                </StackPanel>
-                                <Label Content="Geräusche des Wesens" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
-                                <ScrollViewer Grid.ColumnSpan="2" Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <ListView ItemsSource="{Binding WesenPlaylistListe2, UpdateSourceTrigger=PropertyChanged}" 
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding WesenSpeicher, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}" >
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Image Source="/Images/Icons/General/paste.png" Margin="1" />
+                                </Button>
+                            </StackPanel>
+                            <Label Content="Geräusche des Wesens" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
+                            <ScrollViewer Grid.ColumnSpan="2" Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <ListView ItemsSource="{Binding WesenPlaylistListe2, UpdateSourceTrigger=PropertyChanged}" 
                                               SelectedItem="{Binding CurrentWesenPlaylist2, UpdateSourceTrigger=PropertyChanged}"
                                               Margin="5" Background="{x:Null}" Tag="{Binding}" >
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Name="spnlWesenPlaylist2" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
-                                                    <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Name="spnlWesenPlaylist2" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
+                                                <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
                                                             Command="{Binding VM.OnDeleteWesenPlaylist, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
                                                             Visibility="{Binding Path=IsMouseOver, ElementName=spnlWesenPlaylist2, Converter={StaticResource BooleanToVisibilityConverter1} }" >
-                                                        <Image Source="/Images/Icons/General/entf_01.png" Margin="1,1,3,1" />
-                                                    </Button>
-                                                    <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0" ToolTip="Anspielen der Playliste" 
+                                                    <Image Source="/Images/Icons/General/entf_01.png" Margin="1,1,3,1" />
+                                                </Button>
+                                                <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0" ToolTip="Anspielen der Playliste" 
                                                             Command="{Binding VM.OnPlaylistAnspielen2Click, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
                                                             Visibility="{Binding Path=IsMouseOver, ElementName=spnlWesenPlaylist2, Converter={StaticResource BooleanToVisibilityConverter1} }" >
-                                                        <Button.Content>
-                                                            <Image Source="/Images/Icons/General/speaker.png" Margin="-1,0,-1,-2" />
-                                                        </Button.Content>                                                   
-                                                    </Button>
-                                                    <TextBlock>
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock">
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Path=Held}" Value="{x:Null}">
-                                                                        <Setter Property="Text" Value="{Binding Path=Audio_Playlist.Name, UpdateSourceTrigger=PropertyChanged}" />
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding Path=GegnerBase}" Value="{x:Null}">
-                                                                        <Setter Property="Text" Value="{Binding Path=Audio_Playlist.Name, UpdateSourceTrigger=PropertyChanged}" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                    <Image Source="{Binding Path=Icon,UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0" Height="20" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </ScrollViewer>
-                            </Grid>
-                        </Border>
+                                                    <Button.Content>
+                                                        <Image Source="/Images/Icons/General/speaker.png" Margin="-1,0,-1,-2" />
+                                                    </Button.Content>
+                                                </Button>
+                                                <TextBlock>
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=Held}" Value="{x:Null}">
+                                                                    <Setter Property="Text" Value="{Binding Path=Audio_Playlist.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=GegnerBase}" Value="{x:Null}">
+                                                                    <Setter Property="Text" Value="{Binding Path=Audio_Playlist.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <Image Source="{Binding Path=Icon,UpdateSourceTrigger=PropertyChanged}" Margin="3,0,0,0" Height="20" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </ScrollViewer>
+                        </Grid>
                     </Expander>
 
                     <Expander IsExpanded="True" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="110" Margin="0,5,0,0" Height="72" >
                         <Expander.Header>
                             <TextBlock Text="Icon" Style="{DynamicResource TextTitel}" Margin="-10,0,0,0" />
                         </Expander.Header>
-                        <Border Grid.Column="0" Style="{DynamicResource ControlContentBorder}"  >
-                            <StackPanel Orientation="Horizontal">
-                                <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" 
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox ItemsSource="{Binding IconListe, UpdateSourceTrigger=PropertyChanged}" Margin="7" 
                                       SelectedItem="{Binding CurrentIcon2, UpdateSourceTrigger=PropertyChanged}" Width="60" >
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <Image Height="25" Width="25" Source="{Binding Source}" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                                </ComboBox>
+                            </ComboBox>
                             <Button Width="25" Height="25" ToolTip="Neues Icon aufnehmen" Command="{Binding OnIconAdd}" Content="..." />
-                            </StackPanel>
-                        </Border>
+                        </StackPanel>
                     </Expander>
 
                 </Grid>

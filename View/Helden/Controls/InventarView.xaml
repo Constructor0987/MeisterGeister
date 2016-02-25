@@ -154,80 +154,79 @@
                 <TextBlock Text="Held" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Grid x:Name="Statistik" >
-                <Border Style="{DynamicResource ControlContentBorder}">
-                    <Grid x:Name="HeldInhalt">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="50"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="24"/>
-                        </Grid.RowDefinitions>
-                        <Border BorderThickness="0,0,1,0" BorderBrush="#B3996C" Grid.RowSpan="4"/>
+                <Grid x:Name="HeldInhalt">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderThickness="0,0,1,0" BorderBrush="#B3996C" Grid.RowSpan="4"/>
 
-                        <TextBlock Margin="4,0,0,0" Text="Tragkraft" Style="{StaticResource Label}" />
-                        <TextBlock Margin="4,0,0,0" Text="Gewicht" Style="{StaticResource Label}" Grid.Row="1"/>
-                        <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Grid.Row="2">
-                            <TextBlock Text="Behinderung" Style="{StaticResource Label}"/>
-                            <Image Height="16" ToolTipService.ToolTip="(Behinderung) Kann in den Einstellungen aktiviert/deaktiviert werden">
-                                <Image.Source>
-                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
-                                </Image.Source>
-                            </Image>
-                        </StackPanel>
-                        <StackPanel Margin="4,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="3">
-                            <TextBlock Text="Überlastung" Style="{StaticResource Label}"/>
-                            <Image Margin="4,0,0,0" VerticalAlignment="Center" Height="16" Width="16" ToolTipService.ToolTip="(Überlastung) Kann in den Einstellungen aktiviert/deaktiviert werden">
-                                <Image.Source>
-                                    <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
-                                </Image.Source>
-                            </Image>
-                        </StackPanel>
-
-
-                        <Border Grid.Column="1" Grid.RowSpan="4" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
-
-                        <TextBlock Margin="4,0,0,0" Text="{Binding SelectedHeld.Tragkraft}" Grid.Column="1" VerticalAlignment="Center"/>
-                        <TextBlock Margin="4,0,0,0" Text="{Binding SelectedHeld.Gewicht}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
-                        <ViewGeneral:IntBox VerticalAlignment="Center" Margin="4,0,0,0" Grid.Column="1" Grid.Row="2" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsBehinderungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsBehinderungEingeben}" NoBackground="{Binding IsBehinderungEingeben}" Style="{DynamicResource ReadOnlyStyle}" HorizontalAlignment="Left"/>
-                        <StackPanel VerticalAlignment="Center" Margin="4,0,0,0" Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
-                            <ViewGeneral:IntBox MinValue="0" MinWidth="20" HorizontalAlignment="Left" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsUeberlastungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Überlastung" Value="{Binding SelectedHeld.Ueberlastung}" IsReadOnly="{Binding IsUeberlastungEingeben}" NoBackground="{Binding IsUeberlastungEingeben}" Style="{DynamicResource ReadOnlyStyle}"/>
-                            <TextBlock VerticalAlignment="Center">/<Run Text="{Binding SelectedHeld.GewichtZuTragkraftProzent,Mode=OneWay}"/>%</TextBlock>
-                        </StackPanel>
-
-                        <Border Grid.RowSpan="4" Grid.Column="2" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
-
-                        <TextBlock Margin="4,0,0,0" Text="Attacke" Style="{StaticResource Label}" Grid.Column="2"/>
-                        <TextBlock Margin="4,0,0,0" Text="Parade" Style="{StaticResource Label}" Grid.Column="2" Grid.Row="1"/>
-                        <TextBlock Margin="4,0,0,0" Text="Iniative" Style="{StaticResource Label}" Grid.Column="2" Grid.Row="2"/>
-                        <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Grid.Column="2" Grid.Row="3">
-                            <TextBlock Text="RS-Gesamt" Style="{StaticResource Label}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                            <Image Height="16" Width="16" Stretch="Fill" ToolTipService.ToolTip="(RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
-                                <Image.Source>
-                                    <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
-                                </Image.Source>
-                            </Image>
-                        </StackPanel>
+                    <TextBlock Margin="4,0,0,0" Text="Tragkraft" Style="{StaticResource Label}" />
+                    <TextBlock Margin="4,0,0,0" Text="Gewicht" Style="{StaticResource Label}" Grid.Row="1"/>
+                    <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Grid.Row="2">
+                        <TextBlock Text="Behinderung" Style="{StaticResource Label}"/>
+                        <Image Height="16" ToolTipService.ToolTip="(Behinderung) Kann in den Einstellungen aktiviert/deaktiviert werden">
+                            <Image.Source>
+                                <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
+                            </Image.Source>
+                        </Image>
+                    </StackPanel>
+                    <StackPanel Margin="4,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="3">
+                        <TextBlock Text="Überlastung" Style="{StaticResource Label}"/>
+                        <Image Margin="4,0,0,0" VerticalAlignment="Center" Height="16" Width="16" ToolTipService.ToolTip="(Überlastung) Kann in den Einstellungen aktiviert/deaktiviert werden">
+                            <Image.Source>
+                                <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
+                            </Image.Source>
+                        </Image>
+                    </StackPanel>
 
 
-                        <Border Grid.RowSpan="4" Grid.Column="3" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
-                        <TextBlock VerticalAlignment="Center" Margin="4,0,0,0" Text="{Binding SelectedHeld.AT}" Grid.Column="3"/>
-                        <TextBlock VerticalAlignment="Center" Margin="4,0,0,0" Text="{Binding SelectedHeld.PA}" Grid.Column="3" Grid.Row="1"/>
-                        <TextBlock VerticalAlignment="Center" Margin="4,0,0,0" Text="{Binding SelectedHeld.InitiativeBasisOhneMod}" Grid.Column="3" Grid.Row="2"/>
-                        <ViewGeneral:IntBox VerticalAlignment="Center" Margin="4,0,0,0" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}"/>
+                    <Border Grid.Column="1" Grid.RowSpan="4" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
 
-                        <Border Grid.RowSpan="4" Grid.Column="4" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
-                        <TextBlock Margin="4,0,0,0" Text="Zonen-RS: " Grid.Column="4" Style="{StaticResource Label}"/>
+                    <TextBlock Margin="4,0,0,0" Text="{Binding SelectedHeld.Tragkraft}" Grid.Column="1" VerticalAlignment="Center"/>
+                    <TextBlock Margin="4,0,0,0" Text="{Binding SelectedHeld.Gewicht}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+                    <ViewGeneral:IntBox VerticalAlignment="Center" Margin="4,0,0,0" Grid.Column="1" Grid.Row="2" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsBehinderungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsBehinderungEingeben}" NoBackground="{Binding IsBehinderungEingeben}" Style="{DynamicResource ReadOnlyStyle}" HorizontalAlignment="Left"/>
+                    <StackPanel VerticalAlignment="Center" Margin="4,0,0,0" Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
+                        <ViewGeneral:IntBox MinValue="0" MinWidth="20" HorizontalAlignment="Left" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsUeberlastungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Überlastung" Value="{Binding SelectedHeld.Ueberlastung}" IsReadOnly="{Binding IsUeberlastungEingeben}" NoBackground="{Binding IsUeberlastungEingeben}" Style="{DynamicResource ReadOnlyStyle}"/>
+                        <TextBlock VerticalAlignment="Center">/<Run Text="{Binding SelectedHeld.GewichtZuTragkraftProzent,Mode=OneWay}"/>%</TextBlock>
+                    </StackPanel>
 
-                        <TextBlock Margin="4,0,0,0" Grid.Column="5" VerticalAlignment="Center">
+                    <Border Grid.RowSpan="4" Grid.Column="2" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
+
+                    <TextBlock Margin="4,0,0,0" Text="Attacke" Style="{StaticResource Label}" Grid.Column="2"/>
+                    <TextBlock Margin="4,0,0,0" Text="Parade" Style="{StaticResource Label}" Grid.Column="2" Grid.Row="1"/>
+                    <TextBlock Margin="4,0,0,0" Text="Iniative" Style="{StaticResource Label}" Grid.Column="2" Grid.Row="2"/>
+                    <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Grid.Column="2" Grid.Row="3">
+                        <TextBlock Text="RS-Gesamt" Style="{StaticResource Label}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                        <Image Height="16" Width="16" Stretch="Fill" ToolTipService.ToolTip="(RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
+                            <Image.Source>
+                                <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
+                            </Image.Source>
+                        </Image>
+                    </StackPanel>
+
+
+                    <Border Grid.RowSpan="4" Grid.Column="3" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
+                    <TextBlock VerticalAlignment="Center" Margin="4,0,0,0" Text="{Binding SelectedHeld.AT}" Grid.Column="3"/>
+                    <TextBlock VerticalAlignment="Center" Margin="4,0,0,0" Text="{Binding SelectedHeld.PA}" Grid.Column="3" Grid.Row="1"/>
+                    <TextBlock VerticalAlignment="Center" Margin="4,0,0,0" Text="{Binding SelectedHeld.InitiativeBasisOhneMod}" Grid.Column="3" Grid.Row="2"/>
+                    <ViewGeneral:IntBox VerticalAlignment="Center" Margin="4,0,0,0" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}"/>
+
+                    <Border Grid.RowSpan="4" Grid.Column="4" BorderThickness="0,0,1,0" BorderBrush="#B3996C"/>
+                    <TextBlock Margin="4,0,0,0" Text="Zonen-RS: " Grid.Column="4" Style="{StaticResource Label}"/>
+
+                    <TextBlock Margin="4,0,0,0" Grid.Column="5" VerticalAlignment="Center">
                             <Run Text="{Binding SelectedHeld.RS[Kopf], Mode=OneWay}" ToolTip="Kopf"/>
                             <Run Text="|" />
                             <Run Text="{Binding SelectedHeld.RS[Brust], Mode=OneWay}" ToolTip="Brust"/>
@@ -245,67 +244,66 @@
                             <Run Text="{Binding SelectedHeld.RS[BeinR], Mode=OneWay}" ToolTip="BeinR"/>
                             <Run Text="|" />
                             <Run Text="{Binding SelectedHeld.RS[Gesamt], Mode=OneWay}" ToolTip="Gesamt"/>
-                        </TextBlock>
+                    </TextBlock>
 
-                        <Grid x:Name="ZoenenRuestungOeffnen" Grid.Column="6" Grid.RowSpan="4">
-                            <ToggleButton x:Name="btnZonenOverlay" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ShowOnDisabled="True">
-                                <ToggleButton.Effect>
-                                    <DropShadowEffect RenderingBias="Quality"/>
-                                </ToggleButton.Effect>
-                                <ToggleButton.ToolTip>
-                                    <StackPanel Background="#389E804D">
-                                        <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" Visibility="{Binding IsRuestungBerechnungZonen,Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                                        <Grid Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Grid.Background>
-                                                <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
-                                            </Grid.Background>
-                                            <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
-                                            <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedHeld.RS[Gesamt]}" />
-                                            <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
-                                            <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
-                                            <ViewGeneral:IntBox Margin="130,59,62,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" />
-                                            <ViewGeneral:IntBox Margin="17,95,175,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" />
-                                            <ViewGeneral:IntBox Margin="177,95,15,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" />
-                                            <ViewGeneral:IntBox Margin="81,125,84,118" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" />
-                                            <ViewGeneral:IntBox Margin="40,179,125,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" />
-                                            <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
-                                        </Grid>
-                                    </StackPanel>
-                                </ToggleButton.ToolTip>
-                                <Image Margin="1" Height="50" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
-                            </ToggleButton>
-                            <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="(Zonen RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
-                                <Image.Source>
-                                    <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
-                                </Image.Source>
-                            </Image>
-                            <Popup x:Name="_rsZonenRsControl" PlacementTarget="{Binding ElementName=btnZonenOverlay}" Placement="Left" IsOpen="{Binding ElementName=btnZonenOverlay, Path=IsChecked}">
-                                <Border Background="#F27A7A7A">
-                                    <Grid  Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid x:Name="ZoenenRuestungOeffnen" Grid.Column="6" Grid.RowSpan="4">
+                        <ToggleButton x:Name="btnZonenOverlay" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ShowOnDisabled="True">
+                            <ToggleButton.Effect>
+                                <DropShadowEffect RenderingBias="Quality"/>
+                            </ToggleButton.Effect>
+                            <ToggleButton.ToolTip>
+                                <StackPanel Background="#389E804D">
+                                    <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" Visibility="{Binding IsRuestungBerechnungZonen,Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                    <Grid Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Grid.Background>
                                             <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
                                         </Grid.Background>
                                         <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
-                                        <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
-                                        <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
-                                        <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" />
-                                        <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" />
-                                        <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" />
-                                        <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" />
-                                        <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" />
-                                        <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
+                                        <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedHeld.RS[Gesamt]}" />
+                                        <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
+                                        <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
+                                        <ViewGeneral:IntBox Margin="130,59,62,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" />
+                                        <ViewGeneral:IntBox Margin="17,95,175,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" />
+                                        <ViewGeneral:IntBox Margin="177,95,15,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" />
+                                        <ViewGeneral:IntBox Margin="81,125,84,118" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" />
+                                        <ViewGeneral:IntBox Margin="40,179,125,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" />
+                                        <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
                                     </Grid>
-                                    <!--<StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" >
+                                </StackPanel>
+                            </ToggleButton.ToolTip>
+                            <Image Margin="1" Height="50" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
+                        </ToggleButton>
+                        <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="(Zonen RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
+                            <Image.Source>
+                                <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
+                            </Image.Source>
+                        </Image>
+                        <Popup x:Name="_rsZonenRsControl" PlacementTarget="{Binding ElementName=btnZonenOverlay}" Placement="Left" IsOpen="{Binding ElementName=btnZonenOverlay, Path=IsChecked}">
+                            <Border Background="#F27A7A7A">
+                                <Grid  Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                                    </Grid.Background>
+                                    <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
+                                    <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
+                                    <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
+                                    <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" />
+                                    <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" />
+                                    <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" />
+                                    <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" />
+                                    <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" />
+                                    <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
+                                </Grid>
+                                <!--<StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" >
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                                                     <Button ToolTip="Rüstung entfernen" Command="{Binding OnRemoveRüstung}"/>
                                                     <Button ToolTip="Rüstung hinzufügen" Command="{Binding OnAddRüstung}"/>
                                                 </StackPanel>
                                             </StackPanel>-->
-                                </Border>
-                            </Popup>
-                        </Grid>
+                            </Border>
+                        </Popup>
                     </Grid>
-                </Border>
+                </Grid>
             </Grid>
         </Expander>
 

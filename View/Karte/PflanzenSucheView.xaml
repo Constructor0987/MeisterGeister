@@ -21,20 +21,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="28" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Border Style="{DynamicResource ControlContentBorder}" Margin="0,1">
-            <StackPanel Orientation="Horizontal" Margin="0,-2">
-                <Label Content="Name:" FontWeight="Bold" Margin="0,1" />
-                <Label Content="{Binding SelectedHeld.Name}" Padding="0" Margin="3,0,10,0" VerticalAlignment="Center" />
-                <Label Content="Spieler:" FontWeight="Bold" Margin="0,1" />
-                <Label Content="{Binding SelectedHeld.Spieler, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="3,0,10,0" VerticalAlignment="Center" />
-            </StackPanel>
-        </Border>
-
-        <TabControl Grid.Row="1" x:Name="tabControl">
+        <TabControl x:Name="tabControl">
             <TabItem Header="Gezielte Pflanzensuche">
                 <Karte:PflanzenSucheGezieltView/>
             </TabItem>
@@ -42,10 +29,9 @@
                 <Karte:PflanzenSucheAllgemeinView/>
             </TabItem>
         </TabControl>
-        
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" >
-            <Label Content="{Binding ActualHeldname , UpdateSourceTrigger=PropertyChanged}" />
-            <!--<TextBlock Text="Suchmonat: " VerticalAlignment="Center"/>-->
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBlock Text="Suchmonat: " VerticalAlignment="Center"/>
             <ComboBox SelectedItem="{Binding ElementName=tabControl,Path=SelectedItem.Content.DataContext.Suchmonat,Mode=TwoWay}" SelectedIndex="1">
                 <x:StaticExtension Member="vm:Suchmonat.GanzesJahr"/>
                 <x:StaticExtension Member="vm:Suchmonat.AktuellerMonat"/>

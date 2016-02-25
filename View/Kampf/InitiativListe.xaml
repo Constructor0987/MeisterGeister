@@ -13,7 +13,7 @@
              mc:Ignorable="d" x:Name="iniListe" Background="Transparent"
              d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
-        <System:Double x:Key="gridSize">25</System:Double>
+        <System:Double x:Key="gridSize">30</System:Double>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
     </UserControl.Resources>
@@ -39,7 +39,7 @@
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
                             </MenuItem.Icon>
                         </MenuItem>-->
-                <MenuItem Name="_menuItemKämpferAktuell" Height="28" Command="{Binding OnAktionAusführen}">
+                <!--<MenuItem Name="_menuItemKämpferAktuell" Height="28" Command="{Binding OnAktionAusführen}">
                     <MenuItem.Icon>
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
                     </MenuItem.Icon>
@@ -73,7 +73,7 @@
                         <TextBlock VerticalAlignment="Center" Text="Kämpfer/Held entfernen" />
                     </MenuItem.Header>
                 </MenuItem>
-                <Separator />
+                <Separator />-->
                 <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Command="{Binding OnAddHelden}">
                     <MenuItem.Icon>
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
@@ -106,7 +106,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -119,7 +119,7 @@
             <Button Content="Neuer Kampf" Command="{Binding OnNewKampf}"/>
         </StackPanel>
 
-        <ItemsControl x:Name="kämpferListe" ItemsSource="{Binding Kampf.Kämpfer}" Grid.Row="1">
+        <ItemsControl x:Name="kämpferListe" ItemsSource="{Binding Kampf.Kämpfer}" Grid.Row="1" VerticalAlignment="Top">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
@@ -196,23 +196,18 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Image x:Name="img" Source="/DSA MeisterGeister;component/Images/Icons/schild_gestrichen.png">
-                                        <Image.ContextMenu>
+                                    <Grid>
+                                        <Grid.ContextMenu>
                                             <ContextMenu>
-                                                <MenuItem Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
+                                                <MenuItem x:Name="menuStreichen" Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
+                                                <MenuItem Header="Aktivieren" Command="{Binding Aktivieren}"/>
                                             </ContextMenu>
-                                        </Image.ContextMenu>
-                                    </Image>
+                                        </Grid.ContextMenu>
+                                        <View:ManöverSymbol/>
+                                    </Grid>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding Ausgeführt}" Value="False">
-                                            <Setter TargetName="img" Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/schild.png"/>
-                                            <Setter TargetName="img" Property="ContextMenu">
-                                                <Setter.Value>
-                                                    <ContextMenu>
-                                                        <MenuItem Header="Ausführen" Command="{Binding Ausführen}"/>
-                                                    </ContextMenu>
-                                                </Setter.Value>
-                                            </Setter>
+                                            <Setter TargetName="menuStreichen" Property="Header" Value="Aktion streichen"/>
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
@@ -372,71 +367,86 @@
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Setter Property="Margin" Value="0"/>
                             <Setter Property="Padding" Value="0"/>
+                            
                             <Setter Property="Grid.Column" Value="{Binding IndexInKampfaktionen}"/>
                             <Setter Property="Grid.ColumnSpan" Value="{Binding DauerInKampfaktionen}"/>
                             <Setter Property="Grid.Row" Value="{Binding Manöver.Ausführender.Index}"/>
+
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#00000000"/>
+                                                    <GradientStop Offset="1" Color="#50202020"/>
+                                                </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                            <Border.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Ausführen" Command="{Binding Ausführen}">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/w20.png" MaxWidth="24"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="Aufsparen" Command="{Binding Aktivieren}"/>
+                                                    <Separator/>
+                                                    <MenuItem Header="In Bewegung umwandeln"/>
+                                                    <MenuItem Header="In Parade umwandeln"/>
+                                                    <MenuItem Header="Testzauber" Command="{Binding Umwandeln}"/>
+                                                    <MenuItem Header="Zaubern" ItemsSource="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" MaxWidth="24"/>
+                                                        </MenuItem.Icon>
+                                                        <MenuItem.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Zauber.Name}"/>
+                                                            </DataTemplate>
+                                                        </MenuItem.ItemTemplate>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </Border.ContextMenu>
+                                            <ContentPresenter/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Orange"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderThickness="1" BorderBrush="Black">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Offset="0" Color="#00000000"/>
-                                        <GradientStop Offset="1" Color="#50202020"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <StackPanel x:Name="panel" VerticalAlignment="Center" Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
-                                    <Grid>
-                                        <Image x:Name="icon"/>
-                                        <Image x:Name="gestrichen" Source="/DSA MeisterGeister;component/Images/Icons/General/gestrichen.png"/>
-                                    </Grid>
-                                    <TextBlock Margin="4,0,0,0" FontSize="10" x:Name="description" Text="{Binding Manöver.Name}" VerticalAlignment="Center" DockPanel.Dock="Right"/>
-                                    <StackPanel.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Manöver.Name}"/>
-                                            <TextBlock Text="{Binding Manöver.Ausführender.Kämpfer.Name}"/>
-                                            <TextBlock>
+                            <StackPanel x:Name="panel" VerticalAlignment="Center" Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
+                                <Grid>
+                                    <View:ManöverSymbol/>
+                                    <Image x:Name="gestrichen" Source="/DSA MeisterGeister;component/Images/Icons/General/gestrichen.png"/>
+                                </Grid>
+                                <TextBlock Margin="4,0,0,0" FontSize="10" x:Name="description" Text="{Binding Manöver.Name}" VerticalAlignment="Center" DockPanel.Dock="Right"/>
+                                <StackPanel.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Manöver.Name}"/>
+                                        <TextBlock Text="{Binding Manöver.Ausführender.Kämpfer.Name}"/>
+                                        <TextBlock>
                                                 (<Run Text="{Binding IndexInKampfaktionen,Mode=OneWay}"/> / <Run Text="{Binding Manöver.Ausführender.Index,Mode=OneWay}"/>)
-                                            </TextBlock>
-                                            <TextBlock>
+                                        </TextBlock>
+                                        <TextBlock>
                                             Dauer = <Run Text="{Binding DauerInKampfaktionen,Mode=OneWay}"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </StackPanel.ToolTip>
-                                    <StackPanel.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Ausführen" Command="{Binding Ausführen}">
-                                                <MenuItem.Icon>
-                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/w20.png" MaxWidth="24"/>
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                            <Separator/>
-                                            <MenuItem Header="In Bewegung umwandeln"/>
-                                            <MenuItem Header="In Parade umwandeln"/>
-                                            <MenuItem Header="Testzauber" Command="{Binding Umwandeln}"/>
-                                            <MenuItem Header="Zaubern" ItemsSource="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}">
-                                                <MenuItem.Icon>
-                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" MaxWidth="24"/>
-                                                </MenuItem.Icon>
-                                                <MenuItem.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding Zauber.Name}"/>
-                                                    </DataTemplate>
-                                                </MenuItem.ItemTemplate>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </StackPanel.ContextMenu>
-                                </StackPanel>
-                            </Border>
-
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel.ToolTip>
+                            </StackPanel>
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding Manöver.Dauer}" Value="1">
                                     <Setter TargetName="description" Property="Visibility" Value="Collapsed"/>
                                     <Setter TargetName="panel" Property="HorizontalAlignment" Value="Center"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Manöver.Name}" Value="Attacke">
-                                    <Setter TargetName="icon" Property="Source" Value="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Ausgeführt}" Value="False">
                                     <Setter TargetName="gestrichen" Property="Visibility" Value="Collapsed"/>

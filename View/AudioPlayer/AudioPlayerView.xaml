@@ -533,60 +533,58 @@
                                 <Expander.Header>
                                     <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
-                                <Border Style="{DynamicResource ControlContentBorder}" ToolTip="Theme zum Editieren auswählen" VerticalAlignment="Stretch">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="32" />
-                                            <RowDefinition Height="26" />
-                                            <RowDefinition Height="297*" />
-                                        </Grid.RowDefinitions>
-                                        <Border>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button Padding="0" Name="btnKlangNeuTheme" ToolTip="Neues Theme" Height="28" Width="22" 
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition Height="26" />
+                                        <RowDefinition Height="297*" />
+                                    </Grid.RowDefinitions>
+                                    <Border>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button Padding="0" Name="btnKlangNeuTheme" ToolTip="Neues Theme" Height="28" Width="22" 
                                                         Command="{Binding OnNeuesTheme}" >
-                                                    <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
-                                                </Button>
-                                                <Button Padding="0" Name="btnKlangThemeImport" ToolTip="Theme importieren" Height="28" Width="22" Margin="1,0,0,0" 
+                                                <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
+                                            </Button>
+                                            <Button Padding="0" Name="btnKlangThemeImport" ToolTip="Theme importieren" Height="28" Width="22" Margin="1,0,0,0" 
                                                          Command="{Binding OnBtnThemeImport}" >
-                                                    <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
-                                                </Button>
-                                                <Button Padding="0" Name="btnThemeExportALL" ToolTip="Alle Themes exportieren" Height="28" Width="22" Margin="1,0,0,0" 
+                                                <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
+                                            </Button>
+                                            <Button Padding="0" Name="btnThemeExportALL" ToolTip="Alle Themes exportieren" Height="28" Width="22" Margin="1,0,0,0" 
                                                         Command="{Binding OnThemeExportAll}">
-                                                    <Grid>
-                                                        <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
-                                                        <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="3,3,-3,-3" />
-                                                    </Grid>
-                                                </Button>
-                                            </StackPanel>
-                                        </Border>
+                                                <Grid>
+                                                    <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
+                                                    <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="3,3,-3,-3" />
+                                                </Grid>
+                                            </Button>
+                                        </StackPanel>
+                                    </Border>
 
-                                        <Border HorizontalAlignment="Stretch" Grid.Row="1" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Theme Filter" Name="brdKlangThemeFilter">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="26" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="20" />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                                <TextBox Margin="2,1" Name="tbEditorThemeFilter" Grid.Column="1" 
+                                    <Border HorizontalAlignment="Stretch" Grid.Row="1" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Theme Filter" Name="brdKlangThemeFilter">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="26" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="20" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                            <TextBox Margin="2,1" Name="tbEditorThemeFilter" Grid.Column="1" 
                                                     Text="{Binding Path=SuchTextEditorTheme, UpdateSourceTrigger=PropertyChanged}" 
                                                     vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                                                <Button Grid.Column="2" ToolTip="Filter löschen"
+                                            <Button Grid.Column="2" ToolTip="Filter löschen"
                                                         Command="{Binding OnSuchTextEditorThemeLöschen}">
-                                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
-                                                </Button>
-                                            </Grid>
-                                        </Border>
+                                                <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                            </Button>
+                                        </Grid>
+                                    </Border>
 
-                                        <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
-                                            <ListBox Background="Transparent" Name="lbEditorTheme"     
+                                    <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
+                                        <ListBox Background="Transparent" Name="lbEditorTheme"     
                                                     ItemsSource="{Binding FilteredEditorThemeListBoxItemListe, UpdateSourceTrigger=PropertyChanged}"
                                                     ItemTemplate="{StaticResource lbEditorThemeListboxIcon}" 
                                                     SelectedItem="{Binding SelectedEditorThemeItem}"   
                                                     SelectionChanged="lb_SelectionChanged" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
+                                    </Border>
+                                </Grid>
                             </Expander>
 
                             <GridSplitter Name="grdsplitEditorList" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" 
@@ -596,89 +594,88 @@
                                 <Expander.Header>
                                     <TextBlock Text="Playlisten" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
-                                <Border Style="{DynamicResource ControlContentBorder}" >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="32" />
-                                            <RowDefinition Height="26" />
-                                            <RowDefinition Height="500*" />
-                                        </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32" />
+                                        <RowDefinition Height="26" />
+                                        <RowDefinition Height="500*" />
+                                    </Grid.RowDefinitions>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="92" />
-                                        </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="92" />
+                                    </Grid.ColumnDefinitions>
 
-                                        <StackPanel Margin="5,0,0,2">
-                                            <CheckBox Name="rbEditorKlang" IsChecked="{Binding LbEditorMitGeräusche}" Content="Geräusche" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Geräusch-Playlisten anzeigen" />
-                                            <CheckBox Name="rbEditorMusik" IsChecked="{Binding LbEditorMitMusik}" Content="Musik" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Musik-Playlisten anzeigen" />
-                                        </StackPanel>
+                                    <StackPanel Margin="5,0,0,2">
+                                        <CheckBox Name="rbEditorKlang" IsChecked="{Binding LbEditorMitGeräusche}" Content="Geräusche" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Geräusch-Playlisten anzeigen" />
+                                        <CheckBox Name="rbEditorMusik" IsChecked="{Binding LbEditorMitMusik}" Content="Musik" VerticalAlignment="Top" Padding="2,0,0,0" ToolTip="Musik-Playlisten anzeigen" />
+                                    </StackPanel>
 
-                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <ToggleButton Name="tbtnPlaylistAZ" Height="28" Width="22" Grid.Column="1" Focusable="False" 
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <ToggleButton Name="tbtnPlaylistAZ" Height="28" Width="22" Grid.Column="1" Focusable="False" 
                                                 IsChecked="{Binding PlaylistAZ}" Background="{x:Null}" >
-                                                <Image Margin="-2" >
-                                                    <Image.Style>
-                                                        <Style TargetType="Image">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding PlaylistAZ}" Value="True">
-                                                                    <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding PlaylistAZ}" Value="False">
-                                                                    <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
-                                                <ToggleButton.Style>
-                                                    <Style TargetType="ToggleButton">
-                                                        <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                            <Image Margin="-2" >
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding PlaylistAZ}" Value="True">
-                                                                <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                                <Setter Property="Source" Value="/Images/Icons/General/sort.png" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding PlaylistAZ}" Value="False">
+                                                                <Setter Property="Source" Value="/Images/Icons/General/sort1.png" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </ToggleButton.Style>
-                                            </ToggleButton>
-                                            <Button Padding="0" Name="btnNeuePlaylist" ToolTip="Neue Playliste"  Height="28" Width="22" Grid.Column="1" 
+                                                </Image.Style>
+                                            </Image>
+                                            <ToggleButton.Style>
+                                                <Style TargetType="ToggleButton">
+                                                    <Setter Property="ToolTip" Value="Sortierung: nach Reihenfolge" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding PlaylistAZ}" Value="True">
+                                                            <Setter Property="ToolTip" Value="Sortierung: Alphabethisch" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ToggleButton.Style>
+                                        </ToggleButton>
+                                        <Button Padding="0" Name="btnNeuePlaylist" ToolTip="Neue Playliste"  Height="28" Width="22" Grid.Column="1" 
                                                 Command="{Binding OnNeuePlaylist}">
-                                                <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
-                                            </Button>
-                                            <Button Padding="0" Name="btnPlaylistImport" ToolTip="Playist importieren" Height="28" Width="22" Margin="1,0,0,0" 
+                                            <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
+                                        </Button>
+                                        <Button Padding="0" Name="btnPlaylistImport" ToolTip="Playist importieren" Height="28" Width="22" Margin="1,0,0,0" 
                                                     Command="{Binding OnPlaylistImportieren}" >
-                                                <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
-                                            </Button>
-                                            <Button Padding="0" Name="btnPlaylistExportALL" ToolTip="Alle Playisten exportieren" Height="28" Width="22" Margin="1,0,0,0" 
+                                            <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
+                                        </Button>
+                                        <Button Padding="0" Name="btnPlaylistExportALL" ToolTip="Alle Playisten exportieren" Height="28" Width="22" Margin="1,0,0,0" 
                                                     Command="{Binding OnExportAllPlaylisten}">
-                                                <Grid>
-                                                    <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
-                                                    <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="3,3,-3,-3" />
-                                                </Grid>
-                                            </Button>
-                                        </StackPanel>
-
-                                        <Border Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlisten-Filter">
                                             <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="26" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="20" />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                                <TextBox Margin="2,1" Name="tbEditorPlaylistFilter" Grid.Column="1" 
+                                                <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
+                                                <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="3,3,-3,-3" />
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+
+                                    <Border Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Playlisten-Filter">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="26" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="20" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                            <TextBox Margin="2,1" Name="tbEditorPlaylistFilter" Grid.Column="1" 
                                                     Text="{Binding Path=SuchTextEditor, UpdateSourceTrigger=PropertyChanged}"
                                                     vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                                                <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
+                                            <Button Grid.Column="2" ToolTip="Filter löschen" Padding="0"
                                                         Command="{Binding OnSuchTextEditorPlaylistLöschen}">
-                                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
-                                                </Button>
-                                            </Grid>
-                                        </Border>
+                                                <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                            </Button>
+                                        </Grid>
+                                    </Border>
 
-                                        <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}"  >
-                                            <local:ItemDragAndDropListBox Background="Transparent" x:Name="lbEditor" VerticalAlignment="Stretch"  
+                                    <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}"  >
+                                        <local:ItemDragAndDropListBox Background="Transparent" x:Name="lbEditor" VerticalAlignment="Stretch"  
                                                 ItemsSource="{Binding FilteredEditorListBoxItemListe, UpdateSourceTrigger=PropertyChanged}"
                                                 AllowDrop="True"
                                                 PreviewMouseMove="lbEditorPlaylist_PreviewMouseMove"
@@ -686,44 +683,44 @@
                                                 Drop="lbEditor_Drop"     
                                                 SelectedItem="{Binding SelectedEditorItem, UpdateSourceTrigger=PropertyChanged}" 
                                                 SelectionChanged="lb_SelectionChanged"  >
-                                                <ListBox.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <local:lbEditorItem/>
-                                                    </DataTemplate>
-                                                </ListBox.ItemTemplate>
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <local:lbEditorItem/>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
 
-                                                <ListBox.Style>
-                                                    <Style TargetType="ListBox">
-                                                        <!--<Setter Property="ToolTip" Value="{x:Null}" />-->
-                                                        <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />
-                                                        <Style.Triggers>
-                                                            <!--<DataTrigger Binding="{Binding ElementName=rbEditorEditPlaylist,Path=IsChecked, FallbackValue=False, Converter={StaticResource InvertedBoolenConverter1}}" Value="True">-->
-                                                            <!--<Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />-->                                                            
-                                                            <!--</DataTrigger>-->
-                                                            <DataTrigger Value="True">
-                                                                <DataTrigger.Binding>
-                                                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
-                                                                        <Binding ElementName="rbEditorEditPlaylist, Path=IsChecked, FallbackValue=True}" /> <!--Converter="{StaticResource InvertedBoolenConverter1}"-->
-                                                                        <Binding Path="PlaylistAZ" Converter="{StaticResource InvertedBoolenConverter1}" />
-                                                                    </MultiBinding>
-                                                                </DataTrigger.Binding>
-                                                                <Setter Property="ToolTip">
-                                                                    <Setter.Value>
-                                                                        <TextBlock>
+                                            <ListBox.Style>
+                                                <Style TargetType="ListBox">
+                                                    <!--<Setter Property="ToolTip" Value="{x:Null}" />-->
+                                                    <Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />
+                                                    <Style.Triggers>
+                                                        <!--<DataTrigger Binding="{Binding ElementName=rbEditorEditPlaylist,Path=IsChecked, FallbackValue=False, Converter={StaticResource InvertedBoolenConverter1}}" Value="True">-->
+                                                        <!--<Setter Property="ToolTip" Value="Per Drag&amp;Drop die Playlisten in das Theme einbinden" />-->
+                                                        <!--</DataTrigger>-->
+                                                        <DataTrigger Value="True">
+                                                            <DataTrigger.Binding>
+                                                                <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
+                                                                    <Binding ElementName="rbEditorEditPlaylist, Path=IsChecked, FallbackValue=True}" />
+                                                                    <!--Converter="{StaticResource InvertedBoolenConverter1}"-->
+                                                                    <Binding Path="PlaylistAZ" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                                                </MultiBinding>
+                                                            </DataTrigger.Binding>
+                                                            <Setter Property="ToolTip">
+                                                                <Setter.Value>
+                                                                    <TextBlock>
                                                                             - Per Drag&amp;Drop die Position innerhalb der Liste verändern
                                                                             <LineBreak />
                                                                             - Ziehen der Playliste in Favoriten-Leiste zum Hinzufügen
-                                                                        </TextBlock>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ListBox.Style>
-                                            </local:ItemDragAndDropListBox>
-                                        </Border>
-                                    </Grid>
-                                </Border>
+                                                                    </TextBlock>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ListBox.Style>
+                                        </local:ItemDragAndDropListBox>
+                                    </Border>
+                                </Grid>
                             </Expander>
                         </Grid>
                     </Border>
@@ -925,66 +922,60 @@
                                     <Expander.Header>
                                         <TextBlock Text="Musik Playliste        " Style="{DynamicResource TextTitel}" />
                                     </Expander.Header>
-                                    <Border Name="brdEditorThemesMusik" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                        <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemsSource="{Binding boxThemeThemeHintergrundList}" Margin="5">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <WrapPanel Name="wpnlEditorThemeMusik" ItemHeight="47" ItemWidth="200" MinHeight="47" MinWidth="200" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                            </ItemsControl>
-                                        </ScrollViewer>
-                                    </Border>
+                                    <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl ItemsSource="{Binding boxThemeThemeHintergrundList}" Margin="5">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Name="wpnlEditorThemeMusik" ItemHeight="47" ItemWidth="200" MinHeight="47" MinWidth="200" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </ScrollViewer>
                                 </Expander>
 
                                 <Expander Name="expEditorThemesGeräusch" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" >
                                     <Expander.Header>
                                         <TextBlock Text="Geräusche Playliste(n)      " Style="{DynamicResource TextTitel}" />
                                     </Expander.Header>
-                                    <Border Name="brdEditorThemesGeräusch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                        <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemsSource="{Binding boxThemeThemeGeräuscheList}" Margin="5">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <WrapPanel Name="wpnlEditorThemeGeräusch" ItemHeight="47" ItemWidth="200" MinHeight="47" MinWidth="200" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                            </ItemsControl>
-                                        </ScrollViewer>
-                                    </Border>
+                                    <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl ItemsSource="{Binding boxThemeThemeGeräuscheList}" Margin="5">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Name="wpnlEditorThemeGeräusch" ItemHeight="47" ItemWidth="200" MinHeight="47" MinWidth="200" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </ScrollViewer>
                                 </Expander>
 
                                 <Expander Name="expEditorTopThemeTheme" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" >
                                     <Expander.Header>
                                         <TextBlock Text="Untergeordnete Themes    " Style="{DynamicResource TextTitel}" />
                                     </Expander.Header>
-                                    <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Von untergeordeten Themes werden nur die noch nicht ausgewählten Geräusch-Playlisten wiedergegeben" >
-                                        <StackPanel Orientation="Horizontal">
-                                            <Grid Name="grdEditorThemeWPnlUTheme" Height="45">
-                                                <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" ToolTip="Untergeordnetes Theme hinzufügen" Width="30" HorizontalAlignment="Left" >
-                                                    <Grid Width="35" Height="35">
-                                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" />
-                                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/add.png" Width="20" Height="20" Margin="-20,-3,0,0" />
-                                                    </Grid>
-                                                </Button>
-                                                <ComboBox Margin="5,0,0,0"
+                                    <StackPanel Orientation="Horizontal" ToolTip="Von untergeordeten Themes werden nur die noch nicht ausgewählten Geräusch-Playlisten wiedergegeben">
+                                        <Grid Name="grdEditorThemeWPnlUTheme" Height="45">
+                                            <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" ToolTip="Untergeordnetes Theme hinzufügen" Width="30" HorizontalAlignment="Left" >
+                                                <Grid Width="35" Height="35">
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/add.png" Width="20" Height="20" Margin="-20,-3,0,0" />
+                                                </Grid>
+                                            </Button>
+                                            <ComboBox Margin="5,0,0,0"
                                                     ItemsSource="{Binding EditorThemeÜbrigThemeListe}"
                                                     ItemTemplate="{StaticResource cmbxItemEditorThemeIcon}" 
                                                     SelectedItem="{Binding lbEditorThemeListboxIconSelected}">
-                                                </ComboBox>
-                                            </Grid>
-                                            <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
-                                                <ItemsControl ItemsSource="{Binding boxThemeThemeList}" Margin="5">
-                                                    <ItemsControl.ItemsPanel>
-                                                        <ItemsPanelTemplate>
-                                                            <WrapPanel Name="wpnlEditorTopThemesThemes" ItemHeight="50" ItemWidth="180" AllowDrop="True" />
-                                                        </ItemsPanelTemplate>
-                                                    </ItemsControl.ItemsPanel>
-                                                </ItemsControl>
-                                            </ScrollViewer>
-                                        </StackPanel>
-                                    </Border>
+                                            </ComboBox>
+                                        </Grid>
+                                        <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding boxThemeThemeList}" Margin="5">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Name="wpnlEditorTopThemesThemes" ItemHeight="50" ItemWidth="180" AllowDrop="True" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </StackPanel>
                                 </Expander>
                             </StackPanel>
                         </Border>
@@ -1712,21 +1703,19 @@
                             <Expander.Header>
                                 <TextBlock Text="Titel" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
-                            <Border Style="{DynamicResource ControlContentBorder}">
-                                <ListBox Name="lbMusikTitelList"
+                            <ListBox Name="lbMusikTitelList"
                                          Background="Transparent" VerticalAlignment="Stretch" 
                                          ItemsSource="{Binding FilteredHintergrundMusikListe}" 
                                          SelectedItem="{Binding SelectedMusikTitelItem, UpdateSourceTrigger=PropertyChanged}" 
                                          ToolTip="Anklicken um den Titel abzuspielen" Focusable="True"
                                          SelectionChanged="MusikTitelList_SelectionChanged">
 
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <ListBoxItem Tag="{Binding}" />
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Border>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ListBoxItem Tag="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </Expander>
 
                         <GridSplitter Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="5" Height="240" Margin="0,46,2,72" />
@@ -2109,35 +2098,33 @@
 
                     <Border Grid.Row="1" Grid.ColumnSpan="2">
                         <StackPanel>
-                            <Expander Name="exErwPlayerTheme" IsExpanded="True" Margin="30,5,30,10" MinWidth="200" MaxHeight="500" ForceCursor="False" >
+                            <Expander Name="exErwPlayerTheme" IsExpanded="True" Margin="30,5,30,10" MinWidth="200" MaxHeight="500" ForceCursor="False" ToolTip="Liste aller erstellten Themes (Zusammenstellungen von Musik und Geräusche-Playlisten)">
                                 <Expander.Header>
                                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                         <Image Source="/Images/Icons/General/copy.png" />
                                         <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                     </StackPanel>
                                 </Expander.Header>
-                                <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Liste aller erstellten Themes (Zusammenstellungen von Musik und Geräusche-Playlisten)">
-                                    <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" >
-                                        <ItemsControl ItemsSource="{Binding FilteredErwPlayerThemeListe, UpdateSourceTrigger=PropertyChanged}" >
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel Name="wpnlPListThemes" ItemWidth="130" MinHeight="60" >
-                                                        <WrapPanel.Style>
-                                                            <Style TargetType="WrapPanel">
-                                                                <Setter Property="ItemHeight" Value="50" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ThemeGroßeAnsicht}" Value="False" >
-                                                                        <Setter Property="ItemHeight" Value="25" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </WrapPanel.Style>
-                                                    </WrapPanel>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                        </ItemsControl>
-                                    </ScrollViewer>
-                                </Border>
+                                <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" >
+                                    <ItemsControl ItemsSource="{Binding FilteredErwPlayerThemeListe, UpdateSourceTrigger=PropertyChanged}" >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Name="wpnlPListThemes" ItemWidth="130" MinHeight="60" >
+                                                    <WrapPanel.Style>
+                                                        <Style TargetType="WrapPanel">
+                                                            <Setter Property="ItemHeight" Value="50" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ThemeGroßeAnsicht}" Value="False" >
+                                                                    <Setter Property="ItemHeight" Value="25" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </WrapPanel.Style>
+                                                </WrapPanel>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </ScrollViewer>
                             </Expander>
                         </StackPanel>
                     </Border>
@@ -2425,15 +2412,13 @@
                                     <TextBlock Text="Musik-Playlisten" Style="{DynamicResource TextTitel}" />
                                 </StackPanel>
                             </Expander.Header>
-                            <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ListBox Name="lbErwPlayerMusik"  Background="Transparent" VerticalAlignment="Stretch"
+                            <ListBox Name="lbErwPlayerMusik"  Background="Transparent" VerticalAlignment="Stretch"
                                     ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" 
                                     ItemsSource="{Binding FilteredErwPlayerMusikListItemListe, UpdateSourceTrigger=PropertyChanged}" 
                                     SelectedItem="{Binding SelectedMusikPlaylistItem}"
                                     SelectionChanged="lbErwPlayerMusik_SelectionChanged"
                                     ItemContainerStyle="{DynamicResource ListBoxItemStretch}" >
-                                </ListBox>
-                            </Border>
+                            </ListBox>
                         </Expander>
                     </Border>
                     
@@ -2445,14 +2430,12 @@
                                     <TextBlock Text="Geräusche-Playlisten" Style="{DynamicResource TextTitel}" />
                                 </StackPanel>
                             </Expander.Header>
-                            <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ListBox Name="lbPListGeräusche" Background="Transparent" VerticalAlignment="Stretch"
+                            <ListBox Name="lbPListGeräusche" Background="Transparent" VerticalAlignment="Stretch"
                                          ToolTip="Liste aller Geräusche-Playlisten. Zum Anspielen einen Haken setzen oder das entsprechende Theme auswählen" 
                                          ItemsSource="{Binding FilteredErwPlayerGeräuscheListItemListe, UpdateSourceTrigger=PropertyChanged}" 
                                          SelectionChanged="lb_SelectionChanged" 
                                          ItemContainerStyle="{DynamicResource ListBoxItemStretch}" >
-                                </ListBox>
-                            </Border>
+                            </ListBox>
                         </Expander>
                     </Border>
 

@@ -21,80 +21,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender, waffe, ziel)
         { }
 
-        public const string LICHT_MOD = "Licht";
-        public const string WASSER_MOD = "Wasser";
-        public const string UMGEBUNG_MOD = "Umgebung";
-        public const string DISTANZLASSE_MOD = "Distanzklasse";
+        #region Mods
+
         public const string WUCHTSCHLAG_MOD = "Wuchtschlag";
         public const string FINTE_MOD = "Finte";
         public const string STUMPF_MOD = "Stumpf";
-        public const string POS_SELBST_MOD = "PositionSelbst";
-        public const string POS_ZIEL_MOD = "PositionZiel";
         public const string ÜBERRASCHT_MOD = "Überrascht";
-        public const string ÜBERZAHL_MOD = "Überzahl";
-        public const string FALSCHE_HAND_MOD = "FalscheHand";
         public const string PASSIERSCHLAG_MOD = "Passierschlag";
-        public const string GRÖSSE_MOD = "Zielgröße";
-        public const string UNBEWAFFNET_MOD = "Unbewaffnet";
 
         protected override void InitMods()
         {
             base.InitMods();
 
-            //----------UMGEBUNG----------
-
-            NahkampfModifikator<int> licht = new NahkampfModifikator<int>(this);
-            licht.GetMod = (waffe) =>
-            {
-                int mod = licht.Value;
-                Held held = Ausführender.Kämpfer as Held;
-                if (held != null)
-                {
-                    if (held.HatVorNachteil("Dämmerungssicht") || held.HatVorNachteil("Nachtsicht"))
-                        mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
-                    if (held.HatVorNachteil("Nachticht") ||
-                       //TODO: keine Peitsche/Lanzenreiten und keine Pikenreichweite um Blindkampf zu nutzen
-                       (held.HatSonderfertigkeitUndVoraussetzungen("Blindkampf") && (waffe.Distanzklasse&Distanzklasse.HNS) != Distanzklasse.None))
-                        mod = Math.Min(mod, 2);
-                    if (held.HatVorNachteil("Nachtblind"))
-                        mod *= 2;
-                }
-                return Math.Min(8, mod);
-            };
-            mods.Add(LICHT_MOD, licht);
-
-            NahkampfModifikator<int> wasser = new NahkampfModifikator<int>(this);
-            wasser.GetMod = (waffe) =>
-            {
-                int mod = wasser.Value;
-                Held held = Ausführender.Kämpfer as Held;
-                if (held != null)
-                {
-                    //TODO: Die SF kann in schultertiefem Wasser nur mit den Talenten Dolche, Infanteriewaffen und Speere genutzt werden, ansonsten mit allen Nahkampffertigkeiten außer Peitsche und Lanzenreiten.
-                    if (held.HatSonderfertigkeitUndVoraussetzungen("Kampf im Wasser"))
-                        mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
-                    //TODO: Kann nur mit den Nahkampf-Talenten Dolche, Fechtwaffen, Raufen, Ringen und Speere eingesetzt werden.
-                    if (mod == 6 && held.HatSonderfertigkeitUndVoraussetzungen("Unterwasserkampf"))
-                        mod = 0;
-                }
-                return mod;
-            };
-            mods.Add(WASSER_MOD, wasser);
-
-            //Anderthalbhänder, Kettenwaffen, Peitschen, Stäbe, Zweihandflegel, Zweihandhiebwaffen und Zweihandschwerter/-säbel
-            //Hiebwaffen, Infanteriewaffen, Säbel und Schwerter
-            NahkampfModifikator<int> umgebung = new NahkampfModifikator<int>(this);
-            mods.Add(UMGEBUNG_MOD, umgebung);
-
-            NahkampfModifikator<int> distanzklasse = new NahkampfModifikator<int>(this);
-            mods.Add(DISTANZLASSE_MOD, distanzklasse);
-
             //----------ANSAGEN----------
 
             NahkampfModifikator<int> wuchtschlag = new NahkampfModifikator<int>(this);
+            wuchtschlag.GetMod = WuchtschlagMod;
             mods.Add(WUCHTSCHLAG_MOD, wuchtschlag);
 
             NahkampfModifikator<int> finte = new NahkampfModifikator<int>(this);
+            finte.GetMod = FinteMod;
             mods.Add(FINTE_MOD, finte);
 
             NahkampfModifikator<int> stumpf = new NahkampfModifikator<int>(this);
@@ -102,102 +48,115 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             //----------POSITION UND SITUATION----------
 
-            NahkampfModifikator<Position> position_selbst = new NahkampfModifikator<Position>(this);
-            position_selbst.GetMod = (waffe) =>
-            {
-                switch (position_selbst.Value)
-                {
-                    case Position.Liegend:
-                        return 3;
-                    case Position.Kniend:
-                        return 1;
-                    default:
-                        return 0;
-                }
-            };
-            mods.Add(POS_SELBST_MOD, position_selbst);
-
-            NahkampfModifikator<Position> position_ziel = new NahkampfModifikator<Position>(this);
-            position_ziel.GetMod = (waffe) =>
-            {
-                switch (position_ziel.Value)
-                {
-                    case Position.Liegend:
-                        return -3;
-                    case Position.Kniend:
-                        return -1;
-                    case Position.Fliegend:
-                        return 2;
-                    default:
-                        return 0;
-                }
-            };
-            mods.Add(POS_ZIEL_MOD, position_ziel);
-
             NahkampfModifikator<bool> passierschlag = new NahkampfModifikator<bool>(this);
-            passierschlag.GetMod = (waffe) =>
-            {
-                //TODO: Ini-Modifikator beachten, Aufmerksamkeit
-                if (passierschlag.Value)
-                    return 4;
-                else return 0;
-            };
+            passierschlag.GetMod = PassierschlagMod;
             mods.Add(PASSIERSCHLAG_MOD, passierschlag);
-
-            NahkampfModifikator<int> überzahl = new NahkampfModifikator<int>(this);
-            überzahl.GetMod = (waffe) =>
-            {
-                return überzahl.Value > 0 ? -1 : 0;
-            };
-            mods.Add(ÜBERZAHL_MOD, überzahl);
 
             NahkampfModifikator<int> überrascht = new NahkampfModifikator<int>(this);
             mods.Add(ÜBERRASCHT_MOD, überrascht);
-
-            NahkampfModifikator<Größe> größe = new NahkampfModifikator<Größe>(this);
-            größe.Value = Größe.Mittel;
-            größe.GetMod = (waffe) =>
-            {
-                switch (größe.Value)
-                {
-                    case Größe.Winzig:
-                        return 4;
-                    case Größe.SehrKlein:
-                        return 2;
-                    default:
-                        return 0;
-                }
-            };
-            mods.Add(GRÖSSE_MOD, größe);
-
-            NahkampfModifikator<bool> falscheHand = new NahkampfModifikator<bool>(this);
-            falscheHand.GetMod = (waffe) =>
-            {
-                if (falscheHand.Value)
-                {
-                    int malus = 9;
-                    if (Ausführender.Kämpfer is Held)
-                    {
-                        Held held = (Held)Ausführender.Kämpfer;
-                        if (held.HatSonderfertigkeitUndVoraussetzungen("Linkhand"))
-                            malus -= 3;
-                        if (held.HatSonderfertigkeitUndVoraussetzungen("Beidhändiger Kampf I"))
-                            malus -= 3;
-                        if (held.HatSonderfertigkeitUndVoraussetzungen("Beidhändiger Kampf II"))
-                            malus -= 3;
-                        if (held.HatVorNachteil("Beidhändig"))
-                            malus = 0;
-                    }
-                    return malus;
-                }
-                else return 0;
-            };
-            mods.Add(FALSCHE_HAND_MOD, falscheHand);
-
-            NahkampfModifikator<bool> unbewaffnet = new NahkampfModifikator<bool>(this);
-            unbewaffnet.GetMod = (waffe) => unbewaffnet.Value ? -1 : 0;
-            mods.Add(UNBEWAFFNET_MOD, unbewaffnet);
         }
+
+        protected virtual int WuchtschlagMod(INahkampfwaffe waffe, int value)
+        {
+            Held held = Ausführender.Kämpfer as Held;
+            if (held != null && held.HatSonderfertigkeitUndVoraussetzungen("Wuchtschlag"))
+            {
+                return value;
+            }
+            else return Math.Max(0, value * 2 - 1);
+        }
+
+        protected virtual int FinteMod(INahkampfwaffe waffe, int value)
+        {
+            Held held = Ausführender.Kämpfer as Held;
+            if (held != null && held.HatSonderfertigkeitUndVoraussetzungen("Finte"))
+            {
+                return value;
+            }
+            else return Math.Max(0, value * 2 - 1);
+        }
+
+        protected virtual int PassierschlagMod(INahkampfwaffe waffe, bool value)
+        {
+            //TODO: Ini-Modifikator beachten, Aufmerksamkeit(+4), Kampfgespür(+2)
+            if (value)
+                return 4;
+            else return 0;
+        }
+
+        protected override int GrößeMod(INahkampfwaffe waffe, Größe value)
+        {
+            switch (value)
+            {
+                case Größe.Winzig:
+                    return 4;
+                case Größe.SehrKlein:
+                    return 2;
+                default:
+                    return 0;
+            }
+        }
+
+        protected override int PositionGegnerMod(INahkampfwaffe waffe, Position value)
+        {
+            switch (value)
+            {
+                case Position.Liegend:
+                    return -3;
+                case Position.Kniend:
+                    return -1;
+                case Position.Fliegend:
+                    return 2;
+                default:
+                    return 0;
+            }
+        }
+
+        protected override int ÜberzahlMod(INahkampfwaffe waffe, int value)
+        {
+            return value > 0 ? -1 : 0;
+        }
+
+        protected override int UnbewaffnetMod(INahkampfwaffe waffe, bool value)
+        {
+            return value ? 1 : 0;
+        }
+
+        protected override int BeengtMod(INahkampfwaffe waffe, bool value)
+        {
+            if (value)
+            {
+                //Anderthalbhänder, Kettenwaffen, Peitschen, Stäbe, Zweihandflegel, Zweihandhiebwaffen und Zweihandschwerter/-säbel
+                //return 6;
+
+                //Hiebwaffen, Infanteriewaffen, Säbel und Schwerter
+                //return 2;
+            }
+            return 0;
+        }
+
+        protected override int WasserMod(INahkampfwaffe waffe, Wassertiefe value)
+        {
+            int mod;
+            switch (value)
+            {
+                case Wassertiefe.Hüfttief:
+                    mod = 2;
+                    break;
+                case Wassertiefe.Schultertief:
+                    mod = 4;
+                    break;
+                case Wassertiefe.UnterWasser:
+                    mod = 6;
+                    break;
+                default:
+                    mod = 0;
+                    break;
+            }
+            return CheckWasserkampf(mod, value, Ausführender.Kämpfer as Held);
+        }
+
+        #endregion
 
         protected override void Init()
         {

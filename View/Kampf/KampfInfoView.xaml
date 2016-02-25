@@ -169,16 +169,14 @@
                     <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Kampfrunden-Überblick" />
                 </StackPanel>
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
-                <StackPanel Margin="5" Height="Auto" VerticalAlignment="Top" Orientation="Horizontal">
-                    <TextBlock Text="Kampfrunde:" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="4,5,4,0" />
-                    <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" Margin="4" TextAlignment="Center" VerticalAlignment="Center"  FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
-                    <TextBlock Text="INI-Phase:" TextAlignment="Center" VerticalAlignment="Center"  FontSize="18" Margin="4,5,4,0" />
-                    <TextBlock Text="{Binding Kampf.INIPhase}" Margin="4" TextAlignment="Center" VerticalAlignment="Center"  FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
-                    <TextBlock Text="Zeit:" TextAlignment="Center" VerticalAlignment="Center"  FontSize="18" Margin="4,0" />
-                    <TextBlock Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" VerticalAlignment="Center"  Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
-                </StackPanel>
-            </Border>
+            <StackPanel Margin="5" Height="Auto" VerticalAlignment="Top" Orientation="Horizontal">
+                <TextBlock Text="Kampfrunde:" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="4,5,4,0" />
+                <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" Margin="4" TextAlignment="Center" VerticalAlignment="Center"  FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
+                <TextBlock Text="INI-Phase:" TextAlignment="Center" VerticalAlignment="Center"  FontSize="18" Margin="4,5,4,0" />
+                <TextBlock Text="{Binding Kampf.INIPhase}" Margin="4" TextAlignment="Center" VerticalAlignment="Center"  FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
+                <TextBlock Text="Zeit:" TextAlignment="Center" VerticalAlignment="Center"  FontSize="18" Margin="4,0" />
+                <TextBlock Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" VerticalAlignment="Center"  Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
+            </StackPanel>
         </Expander>
 
         <Expander Grid.Column="0" Grid.Row="1" IsExpanded="True" Margin="5,5,5,0">
@@ -188,16 +186,14 @@
                 </StackPanel>
             </Expander.Header>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
-                    <ItemsControl Padding="30, 20" ItemTemplate="{StaticResource InitiativeListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
+                <ItemsControl Padding="30, 20" ItemTemplate="{StaticResource InitiativeListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
                       Background="Transparent" FontSize="18">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Vertical" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </Border>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </ScrollViewer>
         </Expander>
     </Grid>

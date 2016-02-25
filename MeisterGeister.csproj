@@ -729,6 +729,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\NahkampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Todesstoß.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Zauber.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Wassertiefe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\ZeitImKampf.cs" />
     <Compile Include="ViewModel\Kampf\SchadenMachen.cs" />
     <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
@@ -1077,11 +1078,17 @@
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Kampf\ManöverSymbol.xaml.cs">
+      <DependentUpon>ManöverSymbol.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Kampf\Manöver\AttackeOptionenView.xaml.cs">
       <DependentUpon>AttackeOptionenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\Manöver\ManöverOptionenView.xaml.cs">
       <DependentUpon>ManöverOptionenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\Manöver\ParadeOptionenView.xaml.cs">
+      <DependentUpon>ParadeOptionenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\Manöver\ZauberOptionenView.xaml.cs">
       <DependentUpon>ZauberOptionenView.xaml</DependentUpon>
@@ -1625,11 +1632,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Kampf\ManöverSymbol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Kampf\Manöver\AttackeOptionenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kampf\Manöver\ManöverOptionenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Manöver\ManöverResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Manöver\ParadeOptionenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

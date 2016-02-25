@@ -16,14 +16,12 @@
             <Expander.Header>
                 <TextBlock Text="Heldenauswahl" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                     <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="8,0,0,0" />
                     <ComboBox Name="_comboBoxHeld" Width="300" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
                     <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" />
                     <ComboBox Name="_comboBoxFernkampfwaffe" Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" SelectedIndex="0" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
                 </StackPanel>
-            </Border>
         </Expander>
         <WindowsFormsHost Grid.Row="1" Name="windowsFormsHost1" Background="{x:Null}" />
     </Grid>

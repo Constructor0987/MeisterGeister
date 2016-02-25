@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ViewManöver="clr-namespace:MeisterGeister.View.Kampf.Manöver"
+                    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+                    xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic">
+    <ViewGeneral:EnumItemsSource x:Key="größenValues" Type="{x:Type KampfLogic:Größe}"/>
+    <ViewGeneral:EnumItemsSource x:Key="wasserValues" Type="{x:Type KampfLogic:Wassertiefe}"/>
+    <ViewGeneral:EnumItemsSource x:Key="positionValues" Type="{x:Type KampfLogic:Position}"/>
+</ResourceDictionary>

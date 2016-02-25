@@ -51,5 +51,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             //TODO: Prüfen wer besser trifft und den Schaden verursachen
             throw new NotImplementedException();
         }
+
+        protected override int GrößeMod(INahkampfwaffe waffe, Größe value)
+        {
+            //TODO: Gedanken machen
+            return 0;
+        }
     }
 }

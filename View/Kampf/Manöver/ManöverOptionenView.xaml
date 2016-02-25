@@ -5,26 +5,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Manöver="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
              xmlns:ViewManöver="clr-namespace:MeisterGeister.View.Kampf.Manöver"
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
+
         <Style TargetType="TextBlock">
             <!--<Setter Property="FontWeight" Value="Bold"/>-->
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
         </Style>
         <Style TargetType="CheckBox">
             <!--<Setter Property="FontWeight" Value="Bold"/>-->
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
+        </Style>
+        <Style TargetType="Slider">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="AutoToolTipPlacement" Value="BottomRight"/>
+        </Style>
+        <Style TargetType="ComboBox">
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <DataTemplate DataType="{x:Type Manöver:Attacke}">
             <ViewManöver:AttackeOptionenView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type Manöver:Parade}">
+            <ViewManöver:ParadeOptionenView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type Manöver:Zauber}">
             <ViewManöver:ZauberOptionenView/>
         </DataTemplate>
     </UserControl.Resources>
-    
+
     <ContentControl Content="{Binding SelectedManöver.Manöver}"/>
-    
+
 </UserControl>

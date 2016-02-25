@@ -25,25 +25,23 @@
                 <Expander.Header>
                     <TextBlock Text="Datum" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
-                <Border Style="{DynamicResource ControlContentBorder}">
-                    <Grid>
-                        <GroupBox Header="Tag" Height="57" HorizontalAlignment="Left" Margin="5,6,0,0" VerticalAlignment="Top" Width="81">
-                            <ComboBox Height="23" Name="_comboBoxTag" Width="56" SelectionChanged="_comboBoxTag_SelectionChanged" />
-                        </GroupBox>
-                        <GroupBox Header="Monat" Height="57" HorizontalAlignment="Left" Margin="100,6,0,0" VerticalAlignment="Top" Width="151">
-                            <ComboBox Height="23" Name="_comboBoxMonat" Width="115" SelectionChanged="_comboBoxMonat_SelectionChanged" />
-                        </GroupBox>
-                        <GroupBox Header="Jahr" Height="57" HorizontalAlignment="Left" Margin="260,6,0,0" VerticalAlignment="Top" Width="116">
-                            <ViewGeneral:IntBox xml:lang="de" x:Name="_intBoxJahr" Value="1019" ShowButtons="True" Width="88" Height="23" NumValueChanged="_intBoxJahr_NumValueChanged" KeyDown="_intBoxJahr_KeyDown" />
-                        </GroupBox>
-                        <GroupBox Header="Zeitrechnung" Height="57" HorizontalAlignment="Left" Margin="389,6,0,0" VerticalAlignment="Top" Width="160">
-                            <ComboBox Height="23" Name="_comboBoxZeitrechnung" SelectionChanged="_comboBoxZeitrechnung_SelectionChanged" ToolTip="Ausgangszeitrechnung" SelectedIndex="-1" Width="137" />
-                        </GroupBox>
-                        <ViewGeneral:WikiLinkControl Tag="Zeitrechnung" Margin="0,20,17,0" Height="34" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" />
-                        <Button Content="Tag zurück" Height="31" HorizontalAlignment="Left" Margin="572,24,0,0" Name="_buttonTagZurück" VerticalAlignment="Top" Width="72" Click="_buttonTagZurück_Click" MouseWheel="ControlTag_MouseWheel" FontWeight="Bold" />
-                        <Button Content="Tag vor" Height="31" Margin="650,24,0,0" Name="_buttonTagVor" VerticalAlignment="Top" Click="_buttonTagVor_Click" MouseWheel="ControlTag_MouseWheel" FontWeight="Bold" HorizontalAlignment="Left" Width="72" />
-                    </Grid>
-                </Border>
+                <Grid>
+                    <GroupBox Header="Tag" Height="57" HorizontalAlignment="Left" Margin="5,6,0,0" VerticalAlignment="Top" Width="81">
+                        <ComboBox Height="23" Name="_comboBoxTag" Width="56" SelectionChanged="_comboBoxTag_SelectionChanged" />
+                    </GroupBox>
+                    <GroupBox Header="Monat" Height="57" HorizontalAlignment="Left" Margin="100,6,0,0" VerticalAlignment="Top" Width="151">
+                        <ComboBox Height="23" Name="_comboBoxMonat" Width="115" SelectionChanged="_comboBoxMonat_SelectionChanged" />
+                    </GroupBox>
+                    <GroupBox Header="Jahr" Height="57" HorizontalAlignment="Left" Margin="260,6,0,0" VerticalAlignment="Top" Width="116">
+                        <ViewGeneral:IntBox xml:lang="de" x:Name="_intBoxJahr" Value="1019" ShowButtons="True" Width="88" Height="23" NumValueChanged="_intBoxJahr_NumValueChanged" KeyDown="_intBoxJahr_KeyDown" />
+                    </GroupBox>
+                    <GroupBox Header="Zeitrechnung" Height="57" HorizontalAlignment="Left" Margin="389,6,0,0" VerticalAlignment="Top" Width="160">
+                        <ComboBox Height="23" Name="_comboBoxZeitrechnung" SelectionChanged="_comboBoxZeitrechnung_SelectionChanged" ToolTip="Ausgangszeitrechnung" SelectedIndex="-1" Width="137" />
+                    </GroupBox>
+                    <ViewGeneral:WikiLinkControl Tag="Zeitrechnung" Margin="0,20,17,0" Height="34" VerticalAlignment="Top" HorizontalAlignment="Right" Width="30" />
+                    <Button Content="Tag zurück" Height="31" HorizontalAlignment="Left" Margin="572,24,0,0" Name="_buttonTagZurück" VerticalAlignment="Top" Width="72" Click="_buttonTagZurück_Click" MouseWheel="ControlTag_MouseWheel" FontWeight="Bold" />
+                    <Button Content="Tag vor" Height="31" Margin="650,24,0,0" Name="_buttonTagVor" VerticalAlignment="Top" Click="_buttonTagVor_Click" MouseWheel="ControlTag_MouseWheel" FontWeight="Bold" HorizontalAlignment="Left" Width="72" />
+                </Grid>
             </Expander>
 
             <Grid Grid.Row="1" Margin="2">
@@ -63,99 +61,97 @@
                         <Expander.Header>
                             <TextBlock Text="Gebräuchliche Zeitrechnungen" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <Label Name="_labelBF" Content="TAG. MONAT JAHR BF">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Bosparans Fall" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Ganz Aventurien" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelHal" Content="TAG. MONAT JAHR Hal">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Kaiser Hal von Gareth" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 994 BF - 1028 BF" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelHoras" Content="TAG. MONAT JAHR Horas">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Horas" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Horasreich (davor Liebliches Feld)" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelGolgari" Content="TAG. MONAT JAHR GE">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Golgaris Erscheinen" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Alanfanisches Imperium" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelRastullah" Content="TAG. MONAT JAHR Rastullah">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach der Offenbarung (Rastullahs Erscheinen)" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Novadis" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelThorwal" Content="TAG. MONAT JAHR JL">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Jurgas Landung" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Thorwal" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelZwerge" Content="TAG. MONAT JAHR BF">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung der Zwerge" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Zwerge" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelAndergastNostria" Content="TAG. MONAT JAHR d.U.">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach der Unabhängigkeit (Nostrias bzw. Andergasts)" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Andergast und Nostria" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelKurkum" Content="TAG. MONAT JAHR Kurkum">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach der Fertigstellung der Burg Kurkum" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Amazonen" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelImperium" Content="TAG. MONAT JAHR IZ">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Nach Imperialer Zeitrechnung" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Myranor" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelEngasal" Content="TAG. MONAT JAHR nach der E.-Akte">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Nach Gründung der Burg Angasal" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Herzogtum Engasal" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                            </StackPanel>
-                        </Border>
+                        <StackPanel>
+                            <Label Name="_labelBF" Content="TAG. MONAT JAHR BF">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Bosparans Fall" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Ganz Aventurien" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelHal" Content="TAG. MONAT JAHR Hal">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Kaiser Hal von Gareth" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 994 BF - 1028 BF" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelHoras" Content="TAG. MONAT JAHR Horas">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Horas" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Horasreich (davor Liebliches Feld)" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelGolgari" Content="TAG. MONAT JAHR GE">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Golgaris Erscheinen" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Alanfanisches Imperium" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelRastullah" Content="TAG. MONAT JAHR Rastullah">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach der Offenbarung (Rastullahs Erscheinen)" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Novadis" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelThorwal" Content="TAG. MONAT JAHR JL">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Jurgas Landung" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Thorwal" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelZwerge" Content="TAG. MONAT JAHR BF">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung der Zwerge" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Zwerge" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelAndergastNostria" Content="TAG. MONAT JAHR d.U.">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach der Unabhängigkeit (Nostrias bzw. Andergasts)" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Andergast und Nostria" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelKurkum" Content="TAG. MONAT JAHR Kurkum">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach der Fertigstellung der Burg Kurkum" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Amazonen" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelImperium" Content="TAG. MONAT JAHR IZ">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Nach Imperialer Zeitrechnung" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Myranor" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelEngasal" Content="TAG. MONAT JAHR nach der E.-Akte">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Nach Gründung der Burg Angasal" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Herzogtum Engasal" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                        </StackPanel>
                     </Expander>
                 </Grid>
                 <Grid Grid.Column="1" MinWidth="280">
@@ -169,84 +165,76 @@
                         <Expander.Header>
                             <TextBlock Text="Irdische Entsprechung" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Wochentag:" FontStyle="Italic" />
-                                    <Label Name="_labelWochentag" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Monat:" FontStyle="Italic" />
-                                    <Label Name="_labelMonat" />
-                                </StackPanel>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Wochentag:" FontStyle="Italic" />
+                                <Label Name="_labelWochentag" />
                             </StackPanel>
-                        </Border>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Monat:" FontStyle="Italic" />
+                                <Label Name="_labelMonat" />
+                            </StackPanel>
+                        </StackPanel>
                     </Expander>
                     <Expander Name="_expanderVeraltete" Grid.Row="1" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                         <Expander.Header>
                             <TextBlock Text="Veraltete Zeitrechnungen" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <Label Name="_labelReto" Content="TAG. MONAT JAHR Reto">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Kaiser Reto von Gareth" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 975 BF - 993 BF" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelBardoCella" Content="TAG. MONAT JAHR Bardo und Cella">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach den Kaiserzwillingen Bardo und Cella von Gareth" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 948 BF - 975 BF" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelPerval" Content="TAG. MONAT JAHR Perval">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Kaiser Perval von Gareth" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 933 BF - 948 BF" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                                <Label Name="_labelPriesterkaiser" Content="TAG. MONAT JAHR Jahr des Lichts">
-                                    <Label.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Jahren des Lichts (Priesterkaiser)" FontWeight="Bold" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
-                                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 335 BF - 465 BF" />
-                                        </StackPanel>
-                                    </Label.ToolTip>
-                                </Label>
-                            </StackPanel>
-                        </Border>
+                        <StackPanel>
+                            <Label Name="_labelReto" Content="TAG. MONAT JAHR Reto">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Kaiser Reto von Gareth" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 975 BF - 993 BF" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelBardoCella" Content="TAG. MONAT JAHR Bardo und Cella">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach den Kaiserzwillingen Bardo und Cella von Gareth" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 948 BF - 975 BF" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelPerval" Content="TAG. MONAT JAHR Perval">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Kaiser Perval von Gareth" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 933 BF - 948 BF" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                            <Label Name="_labelPriesterkaiser" Content="TAG. MONAT JAHR Jahr des Lichts">
+                                <Label.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitrechnung nach Jahren des Lichts (Priesterkaiser)" FontWeight="Bold" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Verbreitung: Mittelreich" />
+                                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="300" Text="Zeitraum: 335 BF - 465 BF" />
+                                    </StackPanel>
+                                </Label.ToolTip>
+                            </Label>
+                        </StackPanel>
                     </Expander>
                     <Expander Name="_expanderFeiertage" Grid.Row="2" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                         <Expander.Header>
                             <TextBlock Text="Feiertage" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <TextBlock Text="Aktuell:" Margin="20,0,0,0" FontStyle="Italic" />
-                                <ListBox Name="_listBoxFeiertage" ItemTemplate="{StaticResource FeiertagListTemplate}" Background="Transparent" BorderThickness="0" />
-                                <TextBlock Text="Nächster Tag:" Margin="20,0,0,0" FontStyle="Italic" Opacity="0.5" />
-                                <ListBox Name="_listBoxFeiertageVorschau" ItemTemplate="{StaticResource FeiertagListTemplate}" Background="Transparent" BorderThickness="0" Opacity="0.5" />
-                            </StackPanel>
-                        </Border>
+                        <StackPanel>
+                            <TextBlock Text="Aktuell:" Margin="20,0,0,0" FontStyle="Italic" />
+                            <ListBox Name="_listBoxFeiertage" ItemTemplate="{StaticResource FeiertagListTemplate}" Background="Transparent" BorderThickness="0" />
+                            <TextBlock Text="Nächster Tag:" Margin="20,0,0,0" FontStyle="Italic" Opacity="0.5" />
+                            <ListBox Name="_listBoxFeiertageVorschau" ItemTemplate="{StaticResource FeiertagListTemplate}" Background="Transparent" BorderThickness="0" Opacity="0.5" />
+                        </StackPanel>
                     </Expander>
                     <Expander Name="_expanderKalenderTest" Grid.Row="3" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                         <Expander.Header>
                             <TextBlock Text="KalenderTest" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <c:KalenderControl />
-                        </Border>
+                        <c:KalenderControl />
                     </Expander>
                 </Grid>
                 <Grid Grid.Column="2">
@@ -258,12 +246,10 @@
                         <Expander.Header>
                             <TextBlock Text="Madamal" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel Width="160" HorizontalAlignment="Left">
-                                <Image Name="_imageMada" Margin="0, 5" Source="/Images/Madamal/mada1.jpg" Stretch="Fill" ToolTip="Madamalphase" Width="100" Height="100" MouseWheel="ControlTag_MouseWheel" />
-                                <TextBlock Text="(Phase 1)" Margin="0, 5" FontSize="13" FontWeight="Bold" Name="_txtBlockMadaZahl" Width="100" TextAlignment="Center" />
-                            </StackPanel>
-                        </Border>
+                        <StackPanel Width="160" HorizontalAlignment="Left">
+                            <Image Name="_imageMada" Margin="0, 5" Source="/Images/Madamal/mada1.jpg" Stretch="Fill" ToolTip="Madamalphase" Width="100" Height="100" MouseWheel="ControlTag_MouseWheel" />
+                            <TextBlock Text="(Phase 1)" Margin="0, 5" FontSize="13" FontWeight="Bold" Name="_txtBlockMadaZahl" Width="100" TextAlignment="Center" />
+                        </StackPanel>
                     </Expander>
                     <Expander Name="_expanderSonnenuhr" Grid.Row="1" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                         <Expander.Header>
@@ -271,24 +257,22 @@
                                 <TextBlock Text="Sonnenuhr und Standort" Style="{DynamicResource TextTitel}" />
                             </StackPanel>
                         </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <Image Source="/Images/Icons/kartenzeichnen.png" Height="32" Margin="5" Stretch="Uniform" Cursor="Hand" MouseDown="ImageStandort_MouseDown" ToolTip="Standort festlegen... (Internet-Verbindung erforderlich!)" VerticalAlignment="Bottom" />
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Name="_labelStandort" Content="Standort (X | Y)" />
-                                    <ViewGeneral:DereGlobusLinkControl x:Name="_dereGlobusLinkControl" Tag="{Binding}" Height="20" Width="20" Margin="2,0,0,0" PreviewMouseDown="DereGlobusLinkControl_PreviewMouseDown" />
-                                </StackPanel>
-                                <Label Name="_labelSonne" Content="Sonnenaufgang:" />
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="(Koordinaten nach" />
-                                    <Image Source="/Images/Logos/DereGlobus_Icon.png" Height="18" Stretch="Uniform" Cursor="Hand" MouseDown="ImageDereGlobus_MouseDown" />
-                                    <TextBlock Margin="2,5,0,0">
-                        <Hyperlink NavigateUri="http://www.dereglobus.org/" RequestNavigate="Hyperlink_RequestNavigate">DereGlobus</Hyperlink>
-                                    </TextBlock>
-                                    <Label Content=")" />
-                                </StackPanel>
+                        <StackPanel>
+                            <Image Source="/Images/Icons/kartenzeichnen.png" Height="32" Margin="5" Stretch="Uniform" Cursor="Hand" MouseDown="ImageStandort_MouseDown" ToolTip="Standort festlegen... (Internet-Verbindung erforderlich!)" VerticalAlignment="Bottom" />
+                            <StackPanel Orientation="Horizontal">
+                                <Label Name="_labelStandort" Content="Standort (X | Y)" />
+                                <ViewGeneral:DereGlobusLinkControl x:Name="_dereGlobusLinkControl" Tag="{Binding}" Height="20" Width="20" Margin="2,0,0,0" PreviewMouseDown="DereGlobusLinkControl_PreviewMouseDown" />
                             </StackPanel>
-                        </Border>
+                            <Label Name="_labelSonne" Content="Sonnenaufgang:" />
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="(Koordinaten nach" />
+                                <Image Source="/Images/Logos/DereGlobus_Icon.png" Height="18" Stretch="Uniform" Cursor="Hand" MouseDown="ImageDereGlobus_MouseDown" />
+                                <TextBlock Margin="2,5,0,0">
+                        <Hyperlink NavigateUri="http://www.dereglobus.org/" RequestNavigate="Hyperlink_RequestNavigate">DereGlobus</Hyperlink>
+                                </TextBlock>
+                                <Label Content=")" />
+                            </StackPanel>
+                        </StackPanel>
                     </Expander>
                 </Grid>
             </Grid>

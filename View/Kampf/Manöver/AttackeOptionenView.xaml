@@ -6,48 +6,48 @@
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="400">
     <UserControl.Resources>
-        <ViewGeneral:EnumItemsSource x:Key="größenValues" Type="{x:Type KampfLogic:Größe}" />
+        <ResourceDictionary Source="ManöverResources.xaml"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Ansagen" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
         <!--Wuchtschlag-->
         <TextBlock Grid.Row="1" Text="Wuchtschlag"/>
-        <Slider Grid.Row="1" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Wuchtschlag].Value}" AutoToolTipPlacement="BottomRight"/>
+        <Slider Grid.Row="1" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Wuchtschlag].Value}"/>
         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Mods[Wuchtschlag].Result}"/>
 
         <!--Finte-->
         <TextBlock Grid.Row="2" Text="Finte"/>
-        <Slider Grid.Row="2" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Finte].Value}" AutoToolTipPlacement="BottomRight"/>
+        <Slider Grid.Row="2" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Finte].Value}"/>
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Finte].Result}"/>
 
         <TextBlock Grid.Row="3" Text="Stumpfer Schlag"/>
@@ -71,29 +71,18 @@
         </ComboBox>
         <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Mods[Licht].Result}"/>
 
-        <!--Kampf im Wasser / Unterwasserkampf-->
         <TextBlock Grid.Row="6" Text="Wasser"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="wasser" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Wasser].Value}">
-            <ComboBoxItem Content="Nein" DataContext="0"/>
-            <ComboBoxItem Content="Hüfttief" DataContext="2"/>
-            <ComboBoxItem Content="Schultertier" DataContext="4"/>
-            <ComboBoxItem Content="Unter Wasser" DataContext="6"/>
-        </ComboBox>
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="wasser" ItemsSource="{StaticResource wasserValues}" SelectedItem="{Binding Mods[Wasser].Value,Converter={StaticResource wasserValues}}"/>
         <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Mods[Wasser].Result}"/>
 
-        <TextBlock Grid.Row="7" Text="Umgebung"/>
-        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="umgebung" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Umgebung].Value}">
-            <ComboBoxItem Content="Genügend Freiraum" DataContext="0"/>
-            <ComboBoxItem Content="Beengte Verhältnisse (kurze Schwungwaffe / Infanteriewaffe)" DataContext="2"/>
-            <ComboBoxItem Content="Beengte Verhältnisse (lange Schwungwaffe)" DataContext="6"/>
-        </ComboBox>
-        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Mods[Umgebung].Result}"/>
+        <CheckBox Content="Beengte Umgebung" Grid.Row="7" Grid.ColumnSpan="2"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Mods[Beengt].Result}"/>
 
         <TextBlock Grid.Row="8" Text="Distanzklasse"/>
         <ComboBox Grid.Row="8" Grid.Column="1" x:Name="distanzklasse" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Distanzklasse].Value}">
             <ComboBoxItem Content="Passend" DataContext="0"/>
             <ComboBoxItem Content="Um 1 zu lang oder kurz" DataContext="6"/>
-            <ComboBoxItem Content="Um 2 zu lang oder kurz" IsEnabled="False" ToolTip="Angreifen nicht möglich"/>
+            <ComboBoxItem Content="Um 2 zu lang oder kurz" IsEnabled="False" ToolTip="Angreifen nicht möglich" ToolTipService.ShowOnDisabled="True"/>
             <Separator/>
             <ComboBoxItem Content="Um 2 vergrößern" DataContext="8"/>
             <ComboBoxItem Content="Um 1 vergrößern" DataContext="4"/>
@@ -104,20 +93,13 @@
 
         <!--Taktik-Probe?-->
         <TextBlock Grid.Row="9" Text="Überzahl"/>
-        <Slider Grid.Row="9" Grid.Column="1" Interval="1" Minimum="-5" Maximum="5" Value="{Binding Mods[Überzahl].Value}" AutoToolTipPlacement="BottomRight"/>
+        <Slider Grid.Row="9" Grid.Column="1" Interval="1" Minimum="-5" Maximum="5" Value="{Binding Mods[Überzahl].Value}"/>
         <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Mods[Überzahl].Result}"/>
 
         <TextBlock Grid.Row="10" Grid.ColumnSpan="3" Text="Selbst" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
         <TextBlock Grid.Row="11" Text="Position"/>
-        <ComboBox Grid.Row="11" Grid.Column="1" SelectedValue="{Binding Mods[PositionSelbst].Value}">
-            <x:StaticExtension Member="KampfLogic:Position.Fliegend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Schwebend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Stehend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Kniend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Liegend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Reitend"/>
-        </ComboBox>
+        <ComboBox Grid.Row="11" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionSelbst].Value,Converter={StaticResource positionValues}}"/>
         <TextBlock Grid.Row="11" Grid.Column="2" Text="{Binding Mods[PositionSelbst].Result}"/>
 
         <!--+1-->
@@ -135,15 +117,8 @@
         <TextBlock Grid.Row="15" Grid.ColumnSpan="3" Text="Gegner" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
         <TextBlock Grid.Row="16" Text="Position"/>
-        <ComboBox Grid.Row="16" Grid.Column="1" SelectedValue="{Binding Mods[PositionZiel].Value}">
-            <x:StaticExtension Member="KampfLogic:Position.Fliegend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Schwebend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Stehend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Kniend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Liegend"/>
-            <x:StaticExtension Member="KampfLogic:Position.Reitend"/>
-        </ComboBox>
-        <TextBlock Grid.Row="16" Grid.Column="2" Text="{Binding Mods[PositionZiel].Result}"/>
+        <ComboBox Grid.Row="16" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionGegner].Value,Converter={StaticResource positionValues}}"/>
+        <TextBlock Grid.Row="16" Grid.Column="2" Text="{Binding Mods[PositionGegner].Result}"/>
 
         <TextBlock Grid.Row="17" Text="Überrascht"/>
         <ComboBox Grid.Row="17" Grid.Column="1" x:Name="überrascht" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Überrascht].Value}">
