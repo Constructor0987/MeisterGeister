@@ -310,7 +310,7 @@ namespace MeisterGeister.ViewModel
                 return;
 
             // Falls Tool bereits geöffnet, kein zweites öffnen, sondern geöffnetes aktivieren
-            var tvm = OpenTools.Where(tv => tv.Tool == t).FirstOrDefault();;
+            var tvm = OpenTools.Where(tv => tv.Tool == t).FirstOrDefault();
             if(tvm != null)
             {
                 SelectTool(tvm);

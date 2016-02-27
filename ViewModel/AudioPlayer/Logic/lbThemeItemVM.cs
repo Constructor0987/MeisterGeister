@@ -18,7 +18,7 @@ using System.IO;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
-    public class lbThemeItemVM : Base.ViewModelBase
+    public class lbThemeItemVM : Base.ToolViewModelBase
     {
         #region //---- FELDER ----
 

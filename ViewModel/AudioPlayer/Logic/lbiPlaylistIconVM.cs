@@ -27,7 +27,7 @@ using System.IO;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
-    public class lbiPlaylistIconVM  : Base.ViewModelBase
+    public class lbiPlaylistIconVM  : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----

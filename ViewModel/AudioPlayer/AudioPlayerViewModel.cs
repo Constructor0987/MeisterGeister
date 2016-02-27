@@ -402,7 +402,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
     #endregion
 
-    public class AudioPlayerViewModel : Base.ViewModelBase
+    public class AudioPlayerViewModel : Base.ToolViewModelBase
     {
         #region //---- AudioPlayer Close EVENT ----
         
@@ -1499,6 +1499,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 if (Einstellungen.GeneralGeräuscheVolume != (int)Math.Round(value))
                     Einstellungen.SetEinstellung<int>("GeneralGeräuscheVolume", (int)Math.Round(value));
             }
+        }
+        
+        private Base.CommandBase _onBtnAllUpdateClick = null;
+        public Base.CommandBase OnBtnAllUpdateClick
+        {
+            get
+            {
+                if (_onBtnAllUpdateClick == null)
+                    _onBtnAllUpdateClick = new Base.CommandBase(BtnAllUpdateClick, null);
+                return _onBtnAllUpdateClick;
+            }
+        }
+        void BtnAllUpdateClick(object obj)
+        {
+            UpdateAlleListen();
         }
 
         private Base.CommandBase _allVol0 = null;
@@ -3871,7 +3886,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }
                 OnChanged("SelectedEditorItem");
                 OnChanged();
-                SelectedEditorItem = FilteredEditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == AktKlangPlaylist);
+                SelectedEditorItem = FilteredEditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == AktKlangPlaylist);                
             }
             catch (Exception ex)
             {

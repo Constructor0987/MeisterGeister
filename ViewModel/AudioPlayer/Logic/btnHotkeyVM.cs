@@ -21,7 +21,7 @@ using VM = MeisterGeister.ViewModel.AudioPlayer;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
-    public class btnHotkeyVM : Base.ViewModelBase
+    public class btnHotkeyVM : Base.ToolViewModelBase
     {
         //INotifyPropertyChanged
         #region //---- FELDER ----

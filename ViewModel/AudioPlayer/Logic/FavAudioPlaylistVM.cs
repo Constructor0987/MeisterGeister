@@ -23,7 +23,7 @@ using System.Globalization;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {    
-    public class FavAudioPlaylistVM  : Base.ViewModelBase
+    public class FavAudioPlaylistVM  : Base.ToolViewModelBase
     {
         #region //---- FELDER & EIGENSCHAFTEN  + Get/Set ----
         public object DataContext { get; set; }

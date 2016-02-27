@@ -19,7 +19,7 @@ using System.Windows.Media;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
-    public class grdThemeBtnVM : Base.ViewModelBase
+    public class grdThemeBtnVM : Base.ToolViewModelBase
     {
         //INotifyPropertyChanged
         #region //---- FELDER ----

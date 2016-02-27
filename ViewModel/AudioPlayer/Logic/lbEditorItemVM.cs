@@ -19,7 +19,7 @@ using System.Xml;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
-    public class lbEditorItemVM : Base.ViewModelBase
+    public class lbEditorItemVM : Base.ToolViewModelBase
     {
         #region //---- FELDER ----
         

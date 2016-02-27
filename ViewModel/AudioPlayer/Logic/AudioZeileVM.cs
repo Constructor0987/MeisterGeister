@@ -22,7 +22,7 @@ using System.IO;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
-    public class AudioZeileVM  : Base.ViewModelBase
+    public class AudioZeileVM  : Base.ToolViewModelBase
     {
         public event EventHandler AudioZeileAddEvent;
 

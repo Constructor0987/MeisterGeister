@@ -24,7 +24,7 @@ using System.Windows.Media;
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
     
-    public class MusikZeileVM : Base.ViewModelBase
+    public class MusikZeileVM : Base.ToolViewModelBase
     {
         #region //---- FELDER ----
 

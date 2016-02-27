@@ -26,7 +26,7 @@ using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
-    public class PlaylistWesenAuswahlVM : Base.ViewModelBase
+    public class PlaylistWesenAuswahlVM : Base.ToolViewModelBase
     {
 
         #region Konstruktur, Init und Refresh

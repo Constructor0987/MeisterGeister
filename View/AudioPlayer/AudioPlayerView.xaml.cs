@@ -363,8 +363,11 @@ namespace MeisterGeister.View.AudioPlayer
                 if (AudioTIC == null)
                 {
                     AudioTIC = ((TabItemControl)((AudioPlayerView)e.Source).Parent);
-                    AudioTIC.CommandBindings.Add(new CommandBinding(AudioTabClose, VM.OnAudioTabClose));
-                    AudioTIC._buttonClose.Command = AudioTabClose;
+                    if (AudioTIC != null)
+                    {
+                        AudioTIC.CommandBindings.Add(new CommandBinding(AudioTabClose, VM.OnAudioTabClose));
+                        AudioTIC._buttonClose.Command = AudioTabClose;
+                    }
                 }
                 rbEditorMusik.Focus();
             }
@@ -1008,7 +1011,7 @@ namespace MeisterGeister.View.AudioPlayer
             {
                 int i = lbErwPlayerMusik.SelectedIndex;
                 if (i != -1) lbErwPlayerMusik.ScrollIntoView(lbErwPlayerMusik.Items[i]);
-            }
+            }            
         }
 
         private void MusikTitelList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1031,7 +1034,6 @@ namespace MeisterGeister.View.AudioPlayer
             if (VM.SelectedEditorItem != null)
                 VM.SelectedEditorItem.Name = ((TextBox)e.OriginalSource).Text;
         }
-
     }
 }
 
