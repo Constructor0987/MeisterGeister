@@ -10,6 +10,7 @@ using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.View.Windows;
 using MeisterGeister.Logic.Extensions;
 using System.Windows.Data;
+using MeisterGeister.View.Helden;
 
 namespace MeisterGeister.ViewModel.Helden
 {
@@ -470,62 +471,35 @@ namespace MeisterGeister.ViewModel.Helden
             get
             {
                 if (onDownloadHelden == null)
-                    onDownloadHelden = new Base.CommandBase(DownloadHelden, null);
+                    onDownloadHelden = new Base.CommandBase(ShowHeldenDownloadWindow, null);
                 return onDownloadHelden;
             }
         }
 
-        private void DownloadHelden(object obj)
+        private void ShowHeldenDownloadWindow(object obj)
         {
-
             string token = Einstellungen.HeldenSoftwareOnlineToken;
-            bool tokenExists = !string.IsNullOrEmpty(token);
+            bool isTokenValid = IsTokenValid(token);
 
-            if (!tokenExists)
+            if (!isTokenValid)
             {
                 token = AddToken();
-                tokenExists = !string.IsNullOrEmpty(token);
+                isTokenValid = IsTokenValid(token);
             }
-            if (tokenExists)
+            if (isTokenValid)
             {
-                Global.SetIsBusy(true, "Helden werden heruntergeladen...");
-                var syncer = new HeldenSoftwareOnlineService(token);
-                try
-                {
-                    ICollection<HeldenImportResult> result = syncer.DownloadHelden();
-                    if (result != null)
-                    {
-                        MsgWindow window = null;
-                        window = new MsgWindow("Download beendet", "Es wurden " + result.Count() + " Helden aktualisiert.", false);
-                        window.ShowDialog();
-                        window.Close();
-                    }
-                    MainViewModel.Instance.InvalidateHelden();
-                }
-                catch (Exception ex)
-                {
-                    string msg = "Beim Aufruf der HeldenSoftware-Online ist ein Fehler aufgetreten.";
-                    var errWin = new MsgWindow("Abruf Heldenliste", msg, ex);
-                    errWin.ShowDialog();
-                    errWin.Close();
-                }
-                Global.SetIsBusy(false);
-                // Asynchroner Download aktuell leider nicht möglich wegen Singleton-DataContext
-                //var worker = syncer.DownloadHeldenAsync();
-                //worker.ProgressChanged += DownloadProgressed;
-                //worker.RunWorkerCompleted += DownloadCompleted;
+                var downloadHeldenViewModel = new DownloadHeldenViewModel(token);
+                var downloadHeldenView = new DownloadHeldenView();
+                downloadHeldenView.DataContext = downloadHeldenViewModel;
+                downloadHeldenView.ShowDialog();
+                MainViewModel.Instance.InvalidateHelden();
             }
         }
 
-        //private void DownloadProgressed(object sender, ProgressChangedEventArgs e)
-        //{
-        //    LoadDaten();
-        //}
-
-        //private void DownloadCompleted(object sender, RunWorkerCompletedEventArgs e)
-        //{
-            
-        //}
+        private bool IsTokenValid(string token)
+        {
+            return !string.IsNullOrEmpty(token);
+        }
 
         private string AddToken()
         {

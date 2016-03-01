@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using MeisterGeister.Logic.Karte;
+using System.Diagnostics;
 
 namespace MeisterGeister.ViewModel.Karte.Logic
 {
@@ -54,10 +55,10 @@ namespace MeisterGeister.ViewModel.Karte.Logic
         {
             ObservableCollection<ViewModelBase> routingElements = new ObservableCollection<ViewModelBase>();
             var routingPointBuilder = new RoutingPointBuilder();
-            for (int j = 0; j < nodes.Count(); j++)
+            int nodesCount = nodes.Count();
+            for (int j = 0; j < nodesCount; j++)
             {
                 Ort ort = nodes.ElementAt(j);
-                string followingOrtName = j < (nodes.Count() - 1) ? nodes.ElementAt(j + 1).Name : null;
                 Strecke strecke = ort.RoutingStrecke;
                 foreach (var line in CreateRoutingLines(strecke))
                     routingElements.Add(line);
@@ -73,22 +74,30 @@ namespace MeisterGeister.ViewModel.Karte.Logic
             ICollection<RoutingLine> routingLines = new List<RoutingLine>();
             if (strecke != null)
             {
+                var stopWatch = Stopwatch.StartNew();
                 IEnumerable<Weg> wege = strecke.Weg.OrderBy(w => w.ID);
+                Debug.WriteLine("strecke.Weg.ToList(): " + stopWatch.Elapsed.TotalMilliseconds);
                 RoutingLineType lineType = new RoutingLineType(strecke.Wegtyp);
                 var firstWeg = wege.First();
-                for (int i = 1; i < wege.Count(); i++)
+                int amountWege = wege.Count();
+                for (int i = 1; i < amountWege; i++)
                 {
                     var secondWeg = wege.ElementAt(i);
                     routingLines.Add(new RoutingLine(firstWeg.X, firstWeg.Y, secondWeg.X, secondWeg.Y, lineType));
                     firstWeg = secondWeg;
                 }
+                stopWatch.Stop();
+                Debug.WriteLine("CreateRoutingLines: " + stopWatch.Elapsed.TotalMilliseconds);
             }
+            //stopWatch.Stop();
+            //Debug.WriteLine("CreateRoutingLines: " + stopWatch.Elapsed.TotalMilliseconds);
             return routingLines;
         }
 
         private RoutingOrt CreateRoutingPoint(RoutingPointBuilder routingPointBuilder, Ort ort, Strecke strecke, 
             Fortbewegung fortbewegung, Ort routeEnding)
         {
+            //var stopWatch = Stopwatch.StartNew();
             RoutingPointBuilderArgs routingPointBuilderArgs = null;
 
             if (strecke != null)
@@ -101,7 +110,8 @@ namespace MeisterGeister.ViewModel.Karte.Logic
                 routingPointBuilderArgs = new RoutingPointBuilderArgs(ort.X, ort.Y, routeEnding.Name, ort.Typ, 
                     ort.LengthToEnd * Global.ContextGeo.MaxMovementModificator, TravelService.FLYING_CONST, "Luftlinie", Math.Round(ort.LengthToEnd, 2));
             }
-
+            //stopWatch.Stop();
+            //Debug.WriteLine("CreateRoutingPoint: " + stopWatch.Elapsed.TotalMilliseconds);
             return routingPointBuilder.Build(routingPointBuilderArgs);
         }
 

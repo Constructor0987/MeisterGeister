@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using MeisterGeister.ViewModel.Karte.Logic;
 using System.Windows.Input;
 using MeisterGeister.Logic.General.AStar;
+using System.Diagnostics;
 
 namespace MeisterGeister.ViewModel.Karte
 {
@@ -499,6 +500,7 @@ namespace MeisterGeister.ViewModel.Karte
 
         private ObservableCollection<RoutingOrt> GetRouteDescription()
         {
+            //var stopWatch = Stopwatch.StartNew();
             var routingPoints = Lines.OfType<RoutingOrt>();
             ObservableCollection<RoutingOrt> resultingPoints = null;
 
@@ -511,6 +513,8 @@ namespace MeisterGeister.ViewModel.Karte
                 RoutingSummary = routeDescribingResult.RoutingSummary;
             }
 
+            //stopWatch.Stop();
+            //Debug.WriteLine("GetRouteDescription: " + stopWatch.Elapsed.TotalMilliseconds);
             return resultingPoints;
         }
 
@@ -582,7 +586,6 @@ namespace MeisterGeister.ViewModel.Karte
             }
             else if (RouteEnding != null)
                 CenterOn(RouteEnding.Location);
-
         }
 
         private void FindRoute(object args)
@@ -590,29 +593,32 @@ namespace MeisterGeister.ViewModel.Karte
             if (RouteStarting != null && RouteEnding != null)
             {
                 Global.SetIsBusy(true, "Berechne Route...");
-                AdjustViewToRoute();
 
+                AdjustViewToRoute();
                 IEnumerable<Ort> nodes = CalculateRoute();
-                RouteDescribingConditions conditions = GetRouteDescribingConditions();
-                var routeDescribingService = new RouteDescribingService();
-                this.Lines = routeDescribingService.DrawRoute(nodes, conditions);
-                //if (IsShowStages)
-                //    ShowStages(nodes.Select(o => o.RoutingStrecke).Where(s => s != null), conditions, routeDescribingService);
+                PrintRoute(nodes);
 
                 Global.SetIsBusy(false);
             }
         }
 
+        private void PrintRoute(IEnumerable<Ort> nodes)
+        {
+            RouteDescribingConditions conditions = GetRouteDescribingConditions();
+            var routeDescribingService = new RouteDescribingService();
+            ObservableCollection<ViewModelBase> route = routeDescribingService.DrawRoute(nodes, conditions);
+            //if (IsShowStages)
+            //{
+            //    var stages = routeDescribingService.GetStages(nodes.Select(o => o.RoutingStrecke).Where(s => s != null), conditions);
+            //    foreach (var stage in stages)
+            //        route.Add(stage);
+            //}
+            this.Lines = route;
+        }
+
         private RouteDescribingConditions GetRouteDescribingConditions()
         {
             return new RouteDescribingConditions(SelectedFortbewegung, RouteEnding, IsToleranceActive);
-        }
-
-        private void ShowStages(IEnumerable<Strecke> strecken, RouteDescribingConditions conditions, RouteDescribingService routeDescribingService)
-        {
-            var stages = routeDescribingService.GetStages(strecken, conditions);
-            foreach (var stage in stages)
-                this.Lines.Add(stage);
         }
 
         private IEnumerable<Ort> CalculateRoute()
@@ -621,7 +627,7 @@ namespace MeisterGeister.ViewModel.Karte
             var service = new RoutingService();
             IEnumerable<Ort> result = service.GetShortestPath(searchingParameters);
 #if DEBUG
-            this.AllNodes = new ObservableCollection<Node>(service.AllNodes);
+            //this.AllNodes = new ObservableCollection<Node>(service.AllNodes);
 #endif
             return result;
         }

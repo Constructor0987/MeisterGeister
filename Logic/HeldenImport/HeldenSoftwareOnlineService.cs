@@ -9,12 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.ComponentModel;
 
 namespace MeisterGeister.Logic.HeldenImport
 {
-    public class HeldenSoftwareOnlineService
+    public class HeldenSoftwareOnlineService : ILongLivingProcess
     {
         private string _token;
+
+        public event EventHandler<DoWorkEventArgs> DoWork;
+        public event EventHandler<ProgressChangedEventArgs> ProgressChanged;
+        public event EventHandler<RunWorkerCompletedEventArgs> RunWorkerCompleted;
 
         public HeldenSoftwareOnlineService(string token)
         {
@@ -81,15 +86,28 @@ namespace MeisterGeister.Logic.HeldenImport
                 var bw = (BackgroundWorkerQueueItem)s;
                 ICollection<HeldenImportResult> helden = DownloadHelden(bw);
                 e.Result = helden;
+                OnDoWork(s, e);
             };
             worker.RunWorkerCompleted += (s, e) =>
             {
                 Global.SetIsBusy(false);
                 var result = (IEnumerable<HeldenImportResult>)e.Result;
-                HeldenSoftwareImporter.ShowLogWindow(result);
+                OnRunWorkerCompleted(s, e);
             };
             App.Queue.QueueWorker(worker);
             return worker;
+        }
+
+        private void OnRunWorkerCompleted(object s, RunWorkerCompletedEventArgs e)
+        {
+            if (RunWorkerCompleted != null)
+                RunWorkerCompleted(s, e);
+        }
+
+        private void OnDoWork(object s, DoWorkEventArgs e)
+        {
+            if (DoWork != null)
+                DoWork(s, e);
         }
 
         public ICollection<HeldenImportResult> DownloadHelden()
@@ -108,14 +126,26 @@ namespace MeisterGeister.Logic.HeldenImport
 
             for (int i = 1; i <= amountHelden; i++)
             {
-                helden.Add(DownloadHeld(heldenListe.Helden[i - 1]));
+                var held = heldenListe.Helden[i - 1];
+                helden.Add(DownloadHeld(held));
+                int progress = (i / amountHelden) * 100;
+
                 if (bw != null)
                 {
-                    int progress = (i / amountHelden) * 100;
                     bw.ReportProgress(progress, i + " von " + amountHelden + " Helden verarbeitet.");
+                }
+                else
+                {
+                    OnProgressChanged(progress, held);
                 }
             }
             return helden;
+        }
+
+        private void OnProgressChanged(int progress, object userState)
+        {
+            if (ProgressChanged != null)
+                ProgressChanged(this, new ProgressChangedEventArgs(progress, userState));
         }
 
         public HeldenImportResult DownloadHeld(HeldElement heldElement)

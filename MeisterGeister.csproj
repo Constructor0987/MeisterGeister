@@ -270,6 +270,7 @@
     <Compile Include="Logic\General\DataVirtualization\IItemsProvider.cs" />
     <Compile Include="Logic\General\DataVirtualization\VirtualizingCollection.cs" />
     <Compile Include="Logic\General\Domänen.cs" />
+    <Compile Include="Logic\General\ILongLivingProcess.cs" />
     <Compile Include="Logic\General\Patterns\IBuilder.cs" />
     <Compile Include="Logic\General\WeakEvent.cs" />
     <Compile Include="Logic\General\KeyEqualityComparer.cs" />
@@ -703,6 +704,8 @@
     <Compile Include="ViewModel\Einstellungen\NetzwerkeinstellungenViewModel.cs" />
     <Compile Include="ViewModel\Globus\GlobusViewModel.cs" />
     <Compile Include="ViewModel\Helden\AusrüstungViewModel.cs" />
+    <Compile Include="ViewModel\Helden\DownloadHeldenViewModel.cs" />
+    <Compile Include="ViewModel\Helden\HeldenSoftwareOnlineHeldViewModel.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
@@ -746,6 +749,7 @@
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilderArgs.cs" />
     <Compile Include="Logic\Karte\TravelService.cs" />
     <Compile Include="ViewModel\Karte\Logic\TravelType.cs" />
+    <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheGezieltViewModel.cs" />
@@ -1055,6 +1059,9 @@
     </Compile>
     <Compile Include="View\Helden\Controls\ZauberView.xaml.cs">
       <DependentUpon>ZauberView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\DownloadHeldenView.xaml.cs">
+      <DependentUpon>DownloadHeldenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Helden\VorNachteilAuswahlView.xaml.cs">
       <DependentUpon>VorNachteilAuswahlView.xaml</DependentUpon>
@@ -1602,6 +1609,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Helden\Controls\ZauberView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\DownloadHeldenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -2430,11 +2441,11 @@
     <Resource Include="Images\Icons\Karte\man-silhouette1.png" />
     <Resource Include="Images\Icons\Karte\transport460.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0120.sql" />
-    <Resource Include="Images\Icons\Karte\pin56.png" />
-    <Resource Include="Daten\Updateskripte\UpdateTo_V0122.sql" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0121.sql" />
+    <Resource Include="Images\Icons\Karte\pin56.png" />
+	<Resource Include="Daten\Updateskripte\UpdateTo_V0122.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
-    <Content Include="Libs\ArtefaktGenerator.dll" />
+	<Resource Include="Images\Icons\General\loading.png" />    <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\WPFExtensions.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />

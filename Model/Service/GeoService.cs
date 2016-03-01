@@ -59,14 +59,11 @@ namespace MeisterGeister.Model.Service
 
         public IEnumerable<Node> GetAdjacentOrte(Ort ort)
         {
-            var getFastestStreckeStopWatch = Stopwatch.StartNew();
+            //var getFastestStreckeStopWatch = Stopwatch.StartNew();
             long ortId = ort.ID;
             var result = ort.ZielStrecke.Select(o => o.StartOrt).Concat(ort.StartStrecke.Select(o => o.ZielOrt));
-            //var result = from strecke in Context.Strecke
-            //             where strecke.Start == ortId || strecke.Ziel == ortId
-            //             select strecke.Start == ortId ? strecke.ZielOrt : strecke.StartOrt;
-            getFastestStreckeStopWatch.Stop();
-            Debug.WriteLine("GetAdjacentOrte: " + getFastestStreckeStopWatch.Elapsed.TotalMilliseconds);
+            //getFastestStreckeStopWatch.Stop();
+            //Debug.WriteLine("GetAdjacentOrte: " + getFastestStreckeStopWatch.Elapsed.TotalMilliseconds);
             return result;
         }
 

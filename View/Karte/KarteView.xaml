@@ -214,7 +214,7 @@
                                             <CheckBox Content="Meere meiden" IsChecked="{Binding IsAvoidSeas}" Margin="5,0,0,0" />
                                             <CheckBox Content="Gebirge meiden" IsChecked="{Binding IsAvoidMountains}" />
                                             <CheckBox Content="Wälder meiden" IsChecked="{Binding IsAvoidForrests}" Margin="5,0,0,0" />
-                                            <CheckBox Content="Etappen anzeigen" IsChecked="{Binding IsShowStages}" />
+                                            <CheckBox Content="Etappen anzeigen" IsChecked="{Binding IsShowStages}" Visibility="Collapsed"/>
                                             <CheckBox Content="Nahe gelegene Orte bevorzugen" IsChecked="{Binding IsToleranceActive}" 
                                                       Visibility="{Binding IsShowStages, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                         </WrapPanel>

@@ -217,10 +217,6 @@ namespace MeisterGeister_Tests
             kampf.Kämpfer[gero].Initiative = 21;
             kampf.Kämpfer[gero].Kampfstil = Kampfstil.Parierwaffenstil;
             var ki = kampf.Kämpfer[gero];
-            var möglicheManöver = Manöver.MöglicheManöver(ki);
-            Assert.Greater(möglicheManöver.Count, 0);
-            Assert.IsTrue(möglicheManöver.Contains(typeof(TodVonLinks)));
-            Assert.IsFalse(möglicheManöver.Contains(typeof(Gegenhalten)));
         }
 
         [Test]

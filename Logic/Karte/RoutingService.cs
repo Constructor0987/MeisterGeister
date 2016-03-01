@@ -33,10 +33,10 @@ namespace MeisterGeister.Logic.Karte
             double distanceToBorder = isXDistanceHigher ? normalizedSize.Width / 2 : normalizedSize.Height / 2;
             bool isOutOfSight = distanceToBorder <= distanceToCompare;
 
-            // Falls dem so ist, muss der Zoom reduziert werden. Der Faktor 1.2 sorgt dafür, 
+            // Falls dem so ist, muss der Zoom reduziert werden. Der Faktor 1.3 sorgt dafür, 
             // dass die beiden Punkte nicht genau auf dem Rand des sichtbaren Bereichs liegen.
             if (isOutOfSight)
-                result = (distanceToCompare / distanceToBorder) * 1.2;
+                result = (distanceToCompare / distanceToBorder) * 1.3;
 
             return result;
         }

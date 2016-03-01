@@ -1,0 +1,70 @@
+﻿<Window x:Class="MeisterGeister.View.Helden.DownloadHeldenView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MeisterGeister.View.Helden"
+        xmlns:vmlogic="clr-namespace:MeisterGeister.ViewModel.Helden"
+        xmlns:base="clr-namespace:MeisterGeister.View.General"
+        base:DialogCloser.DialogResult="{Binding DialogResult}"
+        mc:Ignorable="d"
+        Title="Heldendownload" Height="400" Width="300">
+    <Grid Background="{StaticResource Background1}" Margin="5,0,5,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Die folgenden Helden werden heruntergeladen: " Margin="0,5,0,10"/>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Helden}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type vmlogic:HeldenSoftwareOnlineHeldViewModel}">
+                    <Grid Margin="0,0,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                        <Image Width="24" Grid.Column="1">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsLoaded}" Value="True">
+                                            <Setter Property="Source" Value="/Images/Icons/General/ok.png"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsLoaded}" Value="False">
+                                            <Setter Property="Source" Value="/Images/Icons/General/loading.png"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.Resources>
+        </ItemsControl>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding DownloadHeldenCommand}" Grid.Column="0">
+                <StackPanel Orientation="Horizontal" >
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" Width="25" />
+                    <TextBlock Text="Herunterladen" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding FinishCommand}" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" >
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/ok.png" Stretch="Fill" Width="25" />
+                    <TextBlock Text="Abschließen" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
