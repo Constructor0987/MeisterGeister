@@ -1171,9 +1171,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _bgPlayer; }
             set
             {
-                Set(ref _bgPlayer , value);
-                LoadMusikTitelListe();
-                BGPlayerAktPlaylist = BGPlayer.AktPlaylist;
+                if (Set(ref _bgPlayer, value))
+                {
+                    LoadMusikTitelListe();
+                    BGPlayerAktPlaylist = BGPlayer.AktPlaylist;
+                }
             }
         }
 
@@ -1190,8 +1192,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _lbEditorMitGeräusche; }
             set
             {
-                Set(ref _lbEditorMitGeräusche, value);
-                FilterEditorPlaylistListe();
+                if(Set(ref _lbEditorMitGeräusche, value))
+                    FilterEditorPlaylistListe();
             }
         }
 
@@ -1201,8 +1203,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _lbEditorMitMusik; }
             set
             {
-                Set(ref _lbEditorMitMusik, value);
-                FilterEditorPlaylistListe();
+                if(Set(ref _lbEditorMitMusik, value))
+                    FilterEditorPlaylistListe();
             }
         }
 
@@ -1212,12 +1214,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _selectedEditorThemeItem; }
             set
             {
-                Set(ref _selectedEditorThemeItem, value);
-                AktKlangTheme = value == null ? null : value.ATheme;
-                if (AktKlangTheme != null) 
-                    LadeBoxThemeList();
-                EditorThemeÜbrigThemeListe = FilterThemeÜbrigListBoxItemListe();
-                FilterEditorPlaylistListe();
+                if (Set(ref _selectedEditorThemeItem, value))
+                {
+                    AktKlangTheme = value == null ? null : value.ATheme;
+                    if (AktKlangTheme != null)
+                        LadeBoxThemeList();
+                    EditorThemeÜbrigThemeListe = FilterThemeÜbrigListBoxItemListe();
+                    FilterEditorPlaylistListe();
+                }
             }
         }
 
@@ -1227,14 +1231,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _lbEditorThemeListboxIconSelected; }
             set
             {
-                Set(ref _lbEditorThemeListboxIconSelected, value);
-                if (value != null && !AktKlangTheme.Audio_Theme1.Contains(value.ATheme))
-                {
-                    AktKlangTheme.Audio_Theme1.Add(value.ATheme);
-                    Global.ContextAudio.Update<Audio_Theme>(AktKlangTheme);
-                    SelectedEditorThemeItem = SelectedEditorThemeItem;
-                    _lbEditorThemeListboxIconSelected = null;
-                }              
+                if(Set(ref _lbEditorThemeListboxIconSelected, value))
+                    if (value != null && !AktKlangTheme.Audio_Theme1.Contains(value.ATheme))
+                    {
+                        AktKlangTheme.Audio_Theme1.Add(value.ATheme);
+                        Global.ContextAudio.Update<Audio_Theme>(AktKlangTheme);
+                        SelectedEditorThemeItem = SelectedEditorThemeItem;
+                        _lbEditorThemeListboxIconSelected = null;
+                    }              
             }
         }
 

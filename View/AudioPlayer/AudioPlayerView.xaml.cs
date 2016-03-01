@@ -223,18 +223,26 @@ namespace MeisterGeister.View.AudioPlayer
         {
             InitializeComponent();
 
-            VM = new VM.AudioPlayerViewModel();
-
-            BGPlayer = new ViewModel.AudioPlayer.AudioPlayerViewModel.MusikView();
-            BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
-
-            VM.setStdPfad();
-            VM.fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
             slPlaylistVolume.Value = Einstellungen.GeneralGeräuscheVolume;
             slBGVolume.Value = Einstellungen.GeneralMusikVolume;
             slHotkey.Value = Einstellungen.GeneralHotkeyVolume;
 
-            VM.AktualisiereHotKeys();
+            DataContextChanged += AudioPlayerView_DataContextChanged;
+        }
+
+        void AudioPlayerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (VM != null)
+            {
+                if (BGPlayer == null)
+                {
+                    BGPlayer = new ViewModel.AudioPlayer.AudioPlayerViewModel.MusikView();
+                    BGPlayer.BG.Add(new MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.Musik());
+                }
+                VM.setStdPfad();
+                VM.fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
+                VM.AktualisiereHotKeys();
+            }
         }
 
         /// <summary>

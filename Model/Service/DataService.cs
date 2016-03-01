@@ -15,7 +15,7 @@ namespace MeisterGeister.Model.Service
 
         public List<Model.Held> HeldenGruppeListe
         {
-            get { return Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).Where(h => h.AktiveHeldengruppe == true).OrderBy(h => h.Name).ToList(); }
+            get { return Liste<Held>().Where(h => h.Regelsystem == Global.Regeledition).Where(h => h.AktiveHeldengruppe == true && !(h.HeldGUID.ToString("D").ToUpperInvariant().StartsWith("00000000-0000-0000-045C")) && h.Regelsystem == Global.Regeledition).OrderBy(h => h.Name).ToList(); }
         }
 
         /// <summary>

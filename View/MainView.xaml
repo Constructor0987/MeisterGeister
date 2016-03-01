@@ -3,6 +3,7 @@
         xmlns:my="clr-namespace:MeisterGeister"
         xmlns:menulogic="clr-namespace:MeisterGeister.View.Menu.Logic"
         xmlns:menu="clr-namespace:MeisterGeister.ViewModel.Menu"
+        xmlns:model="clr-namespace:MeisterGeister.Model"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" xmlns:mg="clr-namespace:MeisterGeister"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MeisterGeister.View.MainView" 
         Height="650" Width="1045" Closing="Window_Closing" 
@@ -115,9 +116,17 @@
                                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,5,0,0">
                                                 <Image Margin="5,0,0,0" Source="/Images/Icons/helden.png" Width="24"/>
                                                 <Grid Margin="5,0,5,0" Width="200" VerticalAlignment="Center">
-                                                    <ComboBox ItemsSource="{Binding HeldenGruppe}" x:Name="comboBox"
-                                                              DisplayMemberPath="Name" FontWeight="Bold" Focusable="False"
-                                                              SelectedItem="{Binding SelectedHeld}"/>
+                                                    <ViewGeneral:NullItemSelectorAdapter ItemsSource="{Binding HeldenGruppe}" NullItem="{Binding NSC}">
+                                                        <ComboBox x:Name="comboBox"
+                                                                  FontWeight="Bold" Focusable="False"
+                                                                  SelectedItem="{Binding SelectedHeld}">
+                                                            <ComboBox.Resources>
+                                                                <DataTemplate DataType="{x:Type model:Held}">
+                                                                    <TextBlock Text="{Binding Name}" />
+                                                                </DataTemplate>
+                                                            </ComboBox.Resources>
+                                                        </ComboBox>
+                                                    </ViewGeneral:NullItemSelectorAdapter>
                                                     <TextBlock FontWeight="Bold" Text="NSC" VerticalAlignment="Center" Margin="5,0,0,0" IsHitTestVisible="False">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">

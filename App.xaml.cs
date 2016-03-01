@@ -393,7 +393,9 @@ namespace MeisterGeister {
 
 
         internal static string GetOSName() {
-            if (Environment.OSVersion.Version.ToString().StartsWith("6.2"))
+            if (Environment.OSVersion.Version.Major == 10)
+                return "Windows 10";
+            else if (Environment.OSVersion.Version.ToString().StartsWith("6.2"))
                 return "Windows 8";
             else if (Environment.OSVersion.Version.ToString().StartsWith("6.1.8400"))
                 return "Windows Home Server 2011";

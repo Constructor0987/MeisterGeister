@@ -62,7 +62,7 @@ namespace MeisterGeister.ViewModel
         private void filterHeldengruppe(object sender, FilterEventArgs f)
         {
             Model.Held h = (Model.Held)f.Item;
-            f.Accepted = (h.AktiveHeldengruppe ?? false) && (h.Regelsystem == Global.Regeledition);
+            f.Accepted = (h.AktiveHeldengruppe ?? false) && (h.Regelsystem == Global.Regeledition) && !(h.HeldGUID.ToString("D").ToUpperInvariant().StartsWith("00000000-0000-0000-045C"));
         }
 
         CollectionViewSource heldenGruppe = null;
@@ -88,11 +88,37 @@ namespace MeisterGeister.ViewModel
             get { return selectedHeld; }
             set
             {
+                if (value != null && value.HeldGUID == Guid.Empty)
+                    value = null;
                 //Eventuell abspeichern oder nicht? Vorher wurde das abspeichern zu oft ausgeführt.
                 if(Set(ref selectedHeld, value))
                 {
                     Logic.Einstellung.Einstellungen.SelectedHeld = (value != null) ? value.HeldGUID.ToString() : null;
                 }
+            }
+        }
+
+        private Model.Held nsc = null;
+        public Model.Held NSC
+        {
+            get
+            {
+                if(nsc == null)
+                {
+                    Guid g = Guid.Parse(String.Format("00000000-0000-0000-045c-0000000000{0:00}", Global.RegeleditionNummer.Replace(".","")));
+                    nsc = Helden.Where(h => h.HeldGUID == g).FirstOrDefault();
+                    if (nsc == null)
+                    {
+                        nsc =  Global.ContextHeld.New<Model.Held>();
+                        nsc.HeldGUID = g;
+                        nsc.Name = "NSC";
+                        nsc.Regelsystem = Global.Regeledition;
+                        nsc.AddBasisTalente();
+                        Global.ContextHeld.Insert<Model.Held>(nsc);
+                        Helden.Add(nsc);
+                    }
+                }
+                return nsc;
             }
         }
         #endregion

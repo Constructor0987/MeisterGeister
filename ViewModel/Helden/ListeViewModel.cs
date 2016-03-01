@@ -92,10 +92,17 @@ namespace MeisterGeister.ViewModel.Helden
                 if (heldListe == null)
                 {
                     heldListe = new CollectionViewSource() { Source = MainViewModel.Instance.Helden };
+                    heldListe.Filter += filterHeldengruppe;
                     heldListe.SortDescriptions.Add(new SortDescription("AktiveHeldengruppe", ListSortDirection.Descending));
                 }
                 return heldListe.View;
             }
+        }
+
+        private void filterHeldengruppe(object sender, FilterEventArgs f)
+        {
+            Model.Held h = (Model.Held)f.Item;
+            f.Accepted = (h.Regelsystem == Global.Regeledition) && !(h.HeldGUID.ToString("D").ToUpperInvariant().StartsWith("00000000-0000-0000-045C"));
         }
 
         /// <summary>

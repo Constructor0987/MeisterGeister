@@ -59,6 +59,8 @@ namespace MeisterGeister.View
             VM = MainViewModel.Instance;
             VM.PropertyChanged += VM_PropertyChanged;
 
+            Application.Current.MainWindow = this;
+
             Opacity = 0.5;
 
             // MeisterGeisterID abrufen
