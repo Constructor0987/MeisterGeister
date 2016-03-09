@@ -73,9 +73,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
     }
 
+
+
+    public class ZauberModifikator<T> : ManöverModifikator<T, IWaffe>
+    {
+        public ZauberModifikator(Manöver<IWaffe> manöver) : base(manöver)
+        {
+
+        }
+    }
+
     public class NahkampfModifikator<T> : ManöverModifikator<T, INahkampfwaffe>
     {
         public NahkampfModifikator(Manöver<INahkampfwaffe> manöver) : base(manöver)
+        {
+        }
+    }
+
+    public class FernkampfModifikator<T> : ManöverModifikator<T, IFernkampfwaffe>
+    {
+        public FernkampfModifikator(Manöver<IFernkampfwaffe> manöver) : base(manöver)
         {
         }
     }

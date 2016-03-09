@@ -14,70 +14,69 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
         </Grid.RowDefinitions>
 
-        <!--Dämmerungssicht / Nachtsicht-->
         <TextBlock Grid.Row="0" Text="Zauberdauer (Basis)"/>
-        <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="0" Grid.Column="1" Value="{Binding Dauer}"/>
+        <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="0" Grid.Column="1" Value="{Binding BasisDauer}"/>
+        <TextBlock Grid.Column="3" Text="{Binding Dauer}"/>
 
         <TextBlock Grid.Row="1" Text="Zauberdauer"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="zauberdauer" SelectedValuePath="DataContext">
-            <ComboBoxItem Content="* 2" DataContext="-3"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="zauberdauer" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Zauberdauer].Value}">
+            <ComboBoxItem Content="Verdoppeln" DataContext="-1"/>
             <Separator/>
             <ComboBoxItem Content="Normal" IsSelected="True" DataContext="0"/>
             <Separator/>
-            <ComboBoxItem Content="÷ 2" DataContext="5"/>
-            <ComboBoxItem Content="÷ 4" DataContext="10"/>
-            <ComboBoxItem Content="÷ 8" DataContext="15"/>
+            <ComboBoxItem Content="Halbieren" DataContext="1"/>
+            <ComboBoxItem Content="Vierteln" DataContext="2"/>
+            <ComboBoxItem Content="Achteln" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ElementName=zauberdauer,Path=SelectedValue}"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Mods[Zauberdauer].Result}"/>
 
         <TextBlock Grid.Row="2" Text="Wirkungsdauer"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="wirkungsdauer" SelectedValuePath="DataContext">
-            <ComboBoxItem Content="÷ 8" DataContext="9"/>
-            <ComboBoxItem Content="÷ 4" DataContext="6"/>
-            <ComboBoxItem Content="÷ 2" DataContext="3"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="wirkungsdauer" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Wirkungsdauer].Value}">
+            <ComboBoxItem Content="÷ 8" DataContext="-3"/>
+            <ComboBoxItem Content="÷ 4" DataContext="-2"/>
+            <ComboBoxItem Content="÷ 2" DataContext="-1"/>
             <Separator/>
             <ComboBoxItem Content="Normal" DataContext="0" IsSelected="True"/>
             <Separator/>
-            <ComboBoxItem Content="* 2" DataContext="7"/>
-            <ComboBoxItem Content="* 4" DataContext="14"/>
-            <ComboBoxItem Content="* 8" DataContext="21"/>
+            <ComboBoxItem Content="* 2" DataContext="1"/>
+            <ComboBoxItem Content="* 4" DataContext="2"/>
+            <ComboBoxItem Content="* 8" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding ElementName=wirkungsdauer,Path=SelectedValue}"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Wirkungsdauer].Result}"/>
 
-        <CheckBox Grid.Row="3" Grid.ColumnSpan="2" Content="Aufrechterhaltung in feste Dauer umwandeln"/>
+        <CheckBox Grid.Row="3" Grid.ColumnSpan="2" Content="Aufrechterhaltung in feste Dauer umwandeln" IsChecked="{Binding Mods[FesteDauer].Value}"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[FesteDauer].Result}"/>
 
-        <!--Kampf im Wasser / Unterwasserkampf-->
         <TextBlock Grid.Row="4" Text="Reichweite / Radius"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="reichweite" SelectedValuePath="DataContext">
-            <ComboBoxItem Content="Um 3 verkleinern" DataContext="9"/>
-            <ComboBoxItem Content="Um 2 verkleinern" DataContext="6"/>
-            <ComboBoxItem Content="Um 1 verkleinern" DataContext="3"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="reichweite" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Reichweite].Value}">
+            <ComboBoxItem Content="Um 3 verkleinern" DataContext="-3"/>
+            <ComboBoxItem Content="Um 2 verkleinern" DataContext="-2"/>
+            <ComboBoxItem Content="Um 1 verkleinern" DataContext="-1"/>
             <Separator/>
             <ComboBoxItem Content="Normal" DataContext="0" IsSelected="True"/>
             <Separator/>
-            <ComboBoxItem Content="Um 1 vergrößern" DataContext="5"/>
-            <ComboBoxItem Content="Um 2 vergrößern" DataContext="10"/>
-            <ComboBoxItem Content="Um 3 vergrößern" DataContext="15"/>
+            <ComboBoxItem Content="Um 1 vergrößern" DataContext="1"/>
+            <ComboBoxItem Content="Um 2 vergrößern" DataContext="2"/>
+            <ComboBoxItem Content="Um 3 vergrößern" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding ElementName=reichweite,Path=SelectedValue}"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Mods[Reichweite].Result}"/>
 
         <TextBlock Grid.Row="5" Text="Erzwingen / Sparen"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="kosten" SelectedValuePath="DataContext">
-            <ComboBoxItem Content="30% sparen" DataContext="9"/>
-            <ComboBoxItem Content="20% sparen" DataContext="6"/>
-            <ComboBoxItem Content="10% sparen" DataContext="3"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="kosten" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Erzwingen].Value}">
+            <ComboBoxItem Content="30% sparen" DataContext="3"/>
+            <ComboBoxItem Content="20% sparen" DataContext="2"/>
+            <ComboBoxItem Content="10% sparen" DataContext="1"/>
             <Separator/>
             <ComboBoxItem Content="Normal" DataContext="0" IsSelected="True"/>
             <Separator/>
@@ -88,39 +87,38 @@
             <ComboBoxItem Content="Erzwingen +16 AsP" DataContext="-5"/>
             <ComboBoxItem Content="Erzwingen +32 AsP" DataContext="-6"/>
         </ComboBox>
-        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding ElementName=kosten,Path=SelectedValue}"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Mods[Erzwingen].Result}"/>
 
-        <TextBlock Grid.Row="6" Text="Zielobjekt"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="freiwillig" SelectedIndex="0" SelectedValuePath="DataContext">
-            <ComboBoxItem Content="Keine Besonderheiten" DataContext="0"/>
-            <ComboBoxItem Content="Freiwillig -> Unfreiwillig" DataContext="5"/>
-            <ComboBoxItem Content="Unfreiwillig -> Freiwillig" DataContext="2"/>
-        </ComboBox>
-        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding ElementName=freiwillig,Path=SelectedValue}"/>
+        <CheckBox Grid.Row="6" Grid.ColumnSpan="2" Content="Unfreiwillig statt Freiwillig">
+            <CheckBox.Style>
+                <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Held_Zauber.Magieresistenz}" Value="True">
+                            <Setter Property="Content" Value="Freiwillig statt Unfreiwillig"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>
+        </CheckBox>
+        <TextBlock Grid.Row="6" Grid.Column="3" Text="{Binding Mods[Zielobjekt].Result}"/>
 
-        <!--Wuchtschlag-->
-        <TextBlock Grid.Row="7" Text="Anzahl der Ziele"/>
-        <Slider Grid.Row="7" Grid.Column="1" Interval="1" Minimum="1" Maximum="10" x:Name="wuchtschlag"/>
-        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding ElementName=wuchtschlag,Path=Value}"/>
-
-        <!--Finte-->
-        <TextBlock Grid.Row="8" Text="Veränderte Technik"/>
-        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="technik" SelectedIndex="0" SelectedValuePath="DataContext">
+        <TextBlock Grid.Row="7" Text="Veränderte Technik"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="technik" SelectedIndex="0" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Technik].Value}">
             <ComboBoxItem Content="Nein" DataContext="0"/>
-            <ComboBoxItem Content="1 Komponente" DataContext="7"/>
-            <ComboBoxItem Content="2 Komponenten" DataContext="14"/>
-            <ComboBoxItem Content="3 Komponenten" DataContext="21"/>
+            <ComboBoxItem Content="1 Komponente" DataContext="1"/>
+            <ComboBoxItem Content="2 Komponenten" DataContext="2"/>
+            <ComboBoxItem Content="3 Komponenten" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding ElementName=technik,Path=Value}"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Mods[Technik].Result}"/>
 
-        <TextBlock Grid.Row="9" Text="Veränderte Technik (Zentral)"/>
-        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="technikzentral" SelectedIndex="0" SelectedValuePath="DataContext">
+        <TextBlock Grid.Row="8" Text="Veränderte Technik (Zentral)"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="technikzentral" SelectedIndex="0" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[TechnikZentral].Value}">
             <ComboBoxItem Content="Nein" DataContext="0"/>
-            <ComboBoxItem Content="1 zentrale Komponente" DataContext="12"/>
-            <ComboBoxItem Content="2 zentrale Komponenten" DataContext="24"/>
-            <ComboBoxItem Content="3 zentrale Komponenten" DataContext="36"/>
+            <ComboBoxItem Content="1 zentrale Komponente" DataContext="1"/>
+            <ComboBoxItem Content="2 zentrale Komponenten" DataContext="2"/>
+            <ComboBoxItem Content="3 zentrale Komponenten" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding ElementName=technikzentral,Path=Value}"/>
+        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Mods[TechnikZentral].Result}"/>
         
     </Grid>
 </UserControl>

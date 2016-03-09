@@ -11,11 +11,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        public Attacke(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
-            : base(ausführender, waffe, ziel)
-        {
-        }
-
         protected override void Init()
         {
             base.Init();

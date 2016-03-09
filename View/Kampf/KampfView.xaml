@@ -239,226 +239,25 @@
 
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="260*" />
-            <ColumnDefinition Width="650*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300" />
+            <RowDefinition Height="300"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <!--<Expander Grid.Row="1" IsExpanded="True" MaxHeight="100" VerticalAlignment="Top">
-            <Expander.Header>
-                <TextBlock Text="Kampf" Style="{DynamicResource TextTitel}" />
-            </Expander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Button Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="51" Height="55" HorizontalAlignment="Left" Margin="4" Background="DarkGreen" Command="{Binding OnShowBodenplanView}" ToolTip="Bodenplan öffnen...">
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Stretch="Uniform" />
-                        </Button>
-                        -->
-        <!--<CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox> -->
-        <!--
-                        <Button Grid.Column="1" Grid.Row="0" Name="_buttonSpielerInfo" Height="28" Width="28" Click="ButtonSpielerInfo_Click" Visibility="Visible" Margin="4,4,4,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Button.ToolTip>
-                                <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
-            		Den Spielern die INI-Liste in einem separaten Fenster zeigen.
-                                </TextBlock>
-                            </Button.ToolTip>
-                            <Grid>
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2,3,2,8" />
-                            </Grid>
-                        </Button>
-                        <Button Grid.Column="1" Grid.Row="1" Height="28" Width="28" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
-                            <Grid>
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
-                            </Grid>
-                        </Button>
-                    </Grid>
+        <Kampf:InitiativListe/>
 
-                    <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                        <Grid Width="82" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Text="KR" TextAlignment="Center" FontSize="10" />
-                            <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="0" Text="{Binding Kampf.Kampfrunde, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." />
-                            <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="1" Text="Phase" TextAlignment="Center" FontSize="10" />
-                            <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="1" Text="{Binding Kampf.INIPhase, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" ToolTip="Aktuelle INI-Phase." />
-                        </Grid>
-                        <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="4" Padding="0" Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
-                    </StackPanel>
+        <GridSplitter Grid.Row="0" Grid.ColumnSpan="2" Background="DarkGray" Height="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
 
-                    <Button Grid.Column="2" Grid.Row="0" Content="Neue KR" Margin="4" HorizontalAlignment="Right" Width="82" Command="{Binding OnNextKampfrunde}" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
-                    <Button Grid.Column="2" Grid.Row="1" Content="Neuer Kampf" Height="23" Margin="4" VerticalAlignment="Top" Command="{Binding OnNewKampf}" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
-                </Grid>
-        </Expander>-->
-
-        <!--<Grid Grid.Column="0" Grid.Row="1" Margin="0,100,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Expander IsExpanded="True">
-                <Expander.Header>
-                    <TextBlock Text="Initiative-Liste" Style="{DynamicResource TextTitel}" />
-                </Expander.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="90*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,2,0,0">
-                            <Button Margin="6,0" Name="_buttonNächsterKämpfer" Command="{Binding OnNext}" Height="23" FontWeight="Bold" ToolTip="Wählt die nächste Aktion aus." HorizontalAlignment="Right">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" />
-                                    <TextBlock Text="Weiter" VerticalAlignment="Center" Margin="5,0,5,0" />
-                                </StackPanel>
-                            </Button>
-
-                        </StackPanel>
-                        <TreeView Name="_treeInitiative" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
-                             TreeViewItem.Selected="InitiativeListe_TreeViewItemSelected" Background="Transparent" Padding="4,8" ItemContainerStyle="{StaticResource TreeViewItemStyle1}">
-                            <e:Interaction.Behaviors>
-                                <ViewGeneral:BindableSelectedItemBehavior SelectedItem="{Binding SelectedManöverInfo, Mode=TwoWay}" PreferNestedItems="{Binding KämpferSelected, Converter={StaticResource InverseBooleanConverter}}" />
-                            </e:Interaction.Behaviors>
-                            <TreeView.InputBindings>
-                                <KeyBinding Key="Delete" Command="{Binding OnDeleteKämpfer}" />
-                            </TreeView.InputBindings>
-                            <TreeView.BorderBrush>
-                                <SolidColorBrush />
-                            </TreeView.BorderBrush>
-                            <TreeView.ContextMenu>
-                                <ContextMenu Opened="ContextMenu_Opened">
-                                    <ContextMenu.Items>
-                                        <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" ToolTip="Unter 'Advanced' -> 'A' kann die Transparenz eingestellt werden!">
-                                            <MenuItem.Header>
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="Farbe: " VerticalAlignment="Center" />
-                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker" VerticalAlignment="Center">
-                                                        <i:Interaction.Triggers>
-                                                            <ViewGeneral:HandlingEventTrigger EventName="Click" />
-                                                            -->
-        <!--Genügt leider nicht um den MouseUp-Event zuu fangen-->
-        <!--
-                                                        </i:Interaction.Triggers>
-                                                    </xctk:ColorPicker>
-                                                </StackPanel>
-                                            </MenuItem.Header>
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Name="_menuItemKämpferAktuell" Height="28" Command="{Binding OnAktionAusführen}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                            <MenuItem.Header>
-                                                <TextBlock VerticalAlignment="Center" Text="Aktion ausführen" />
-                                            </MenuItem.Header>
-                                        </MenuItem>
-                                        <Separator />
-                                        <MenuItem Name="_menuItemKämpferInitiaveWürfeln" Height="28" Command="{Binding OnInitiativeWürfeln}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                            <MenuItem.Header>
-                                                <TextBlock VerticalAlignment="Center" Text="INI neu würfeln..." />
-                                            </MenuItem.Header>
-                                        </MenuItem>
-                                        <MenuItem Name="_menuItemKämpferOrientieren" Height="28" Command="{Binding OnOrientieren}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                            <MenuItem.Header>
-                                                <TextBlock VerticalAlignment="Center" Text="Orientieren" />
-                                            </MenuItem.Header>
-                                        </MenuItem>
-                                        <Separator />
-                                        <MenuItem Name="_menuItemKämpferEntfernen" Height="28" Command="{Binding OnDeleteKämpfer}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/kämpfer_entf.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                            <MenuItem.Header>
-                                                <TextBlock VerticalAlignment="Center" Text="Kämpfer/Held entfernen" />
-                                            </MenuItem.Header>
-                                        </MenuItem>
-                                        <Separator />
-                                        <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Command="{Binding OnAddHelden}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                            <MenuItem.Header>
-                                                <TextBlock VerticalAlignment="Center" Text="Helden einfügen" />
-                                            </MenuItem.Header>
-                                        </MenuItem>
-                                        <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Command="{Binding OnShowGegnerView}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                            <MenuItem.Header>
-                                                <TextBlock VerticalAlignment="Center" Text="Gegner einfügen..." />
-                                            </MenuItem.Header>
-                                        </MenuItem>
-                                        <Separator />
-                                        <MenuItem Name="_menuItemListeLeeren" Height="28" Command="{Binding OnDeleteAllKämpfer}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                            <MenuItem.Header>
-                                                <TextBlock VerticalAlignment="Center" Text="Liste leeren" />
-                                            </MenuItem.Header>
-                                        </MenuItem>
-                                    </ContextMenu.Items>
-                                </ContextMenu>
-                            </TreeView.ContextMenu>
-                        </TreeView>
-                        <Image Grid.Row="0" Height="16" HorizontalAlignment="Right" Margin="0,4,4,0" Name="_imageInfoKämpferListe" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" Width="16" VerticalAlignment="Top">
-                            <Image.ToolTip>
-                                <StackPanel>
-                                    <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Rechtsklick für weitere Funktionen.</TextBlock>
-                                </StackPanel>
-                            </Image.ToolTip>
-                        </Image>
-                        <Button Grid.Row="2" Height="23" Command="{Binding OnShowGegnerView}" Margin="2" ToolTip="Gegner-Verwaltung öffnen">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" />
-                                <TextBlock Text="Gegner einfügen..." Margin="3,0" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-            </Expander>
-
-        </Grid>-->
-
-        <Expander Grid.Column="1" Grid.Row="1" Header="{Binding SelectedKämpfer.Name}" IsExpanded="True">
+        <Expander Grid.RowSpan="2" Header="{Binding SelectedKämpfer.Kämpfer.Name}">
+            <Expander.Style>
+                <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedKämpfer}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Expander.Style>
             <Grid DataContext="{Binding Kämpfer}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -801,74 +600,22 @@
                 </Grid>
             </Grid>
         </Expander>
-        
 
-        <!--<Grid Grid.Row="0" Grid.Column="1" Margin="0,4,4,4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100" />
-                <RowDefinition />
-            </Grid.RowDefinitions>-->
-
-        <!--<Expander IsExpanded="True" Margin="0" Grid.Row="1">
-                <Expander.Header>
-                    <TextBlock Text="Kampf-Log" Style="{DynamicResource TextTitel}" />
-                </Expander.Header>
-                <Border Style="{DynamicResource ControlContentBorder}">
-                    <ListBox Height="65" Background="Transparent" BorderThickness="0" ItemsSource="{Binding Kampf.KampfLog}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
-                    </ListBox>
-                </Border>
-            </Expander>-->
-
-        <Expander IsExpanded="True" Margin="0" Grid.Row="1">
+        <Expander IsExpanded="True" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                  Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5">
             <Expander.Header>
-                <TextBlock Text="Manöver" Style="{DynamicResource TextTitel}" />
+                <TextBlock Text="{Binding SelectedManöver.Manöver.Name}" Style="{DynamicResource TextTitel}"/>
             </Expander.Header>
             <ViewManöver:ManöverOptionenView/>
+            <Expander.Style>
+                <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedManöver}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Expander.Style>
         </Expander>
-
-        <Kampf:InitiativListe Grid.ColumnSpan="2"/>
-
-
-        <!--<Expander Grid.Row="1" Grid.Column="0" Margin="0,0,4,0" IsExpanded="True">
-                <Expander.Header>
-                    <TextBlock Text="Längerfristige Handlungen / Effekte einfügen" Style="{DynamicResource TextTitel}" />
-                </Expander.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="35*" />
-                                <ColumnDefinition Width="65*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Height="23" Margin="2" Name="_textBoxAktionQuelle" VerticalAlignment="Top" ToolTip="Aktions-Quelle." />
-                            <TextBox Grid.Column="1" Height="23" Margin="2" Name="_textBoxAktionName" VerticalAlignment="Top" ToolTip="Aktions-Beschreibung." />
-                        </Grid>
-                        <ViewGeneral:IntBox Height="25" HorizontalAlignment="Left" Margin="60,9,0,0" x:Name="_intBoxAktionDauer" VerticalAlignment="Top" Width="75" Value="2" Grid.Row="2" ToolTip="Aktions-Dauer in Aktionen." ShowButtons="True" />
-                        <Label Content="Dauer:" Height="28" HorizontalAlignment="Left" Margin="2,9,0,0" VerticalAlignment="Top" Grid.Row="2" />
-                        <Label Content="Aktionen" Height="28" HorizontalAlignment="Left" Margin="156,10,0,0" VerticalAlignment="Top" FontStyle="Italic" Grid.Row="2" />
-                        <Button Grid.Row="2" Height="23" Width="25" Margin="0,11,4,0" HorizontalAlignment="Right" ToolTip="Aktion einfügen">
-                            -->
-        <!--="{Binding OnAddAktion}" -->
-        <!--
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
-                        </Button>
-                        -->
-        <!-- TODO ??: Entfernen wenn Aktionen fertig sind -->
-        <!--
-                        <Border Grid.RowSpan="3" Background="DarkGray" Opacity="0.7" />
-                        <TextBlock Grid.RowSpan="3" Text="Die Aktions-Verwaltung steht in dieser Version noch nicht zur Verfügung." Foreground="Brown" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5" />
-                    </Grid>
-            </Expander>-->
-
-        <!--</Grid>-->
-        <GridSplitter Grid.Row="0" Grid.ColumnSpan="2" Background="DarkGray" Height="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
     </Grid>
 </UserControl>

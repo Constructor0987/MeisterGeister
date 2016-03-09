@@ -13,14 +13,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        public AngriffsManöver(KämpferInfo ausführender, IDictionary<INahkampfwaffe, KämpferInfo> waffe_ziel)
-            : base(ausführender, waffe_ziel)
-        { }
-
-        public AngriffsManöver(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
-            : base(ausführender, waffe, ziel)
-        { }
-
         #region Mods
 
         public const string WUCHTSCHLAG_MOD = "Wuchtschlag";

@@ -6,4 +6,6 @@
     <ViewGeneral:EnumItemsSource x:Key="größenValues" Type="{x:Type KampfLogic:Größe}"/>
     <ViewGeneral:EnumItemsSource x:Key="wasserValues" Type="{x:Type KampfLogic:Wassertiefe}"/>
     <ViewGeneral:EnumItemsSource x:Key="positionValues" Type="{x:Type KampfLogic:Position}"/>
+    <ViewGeneral:EnumItemsSource x:Key="lichtValues" Type="{x:Type KampfLogic:Lichtstufe}"/>
+    <ViewGeneral:EnumItemsSource x:Key="trefferzonenValues" Type="{x:Type KampfLogic:Trefferzone}"/>
 </ResourceDictionary>

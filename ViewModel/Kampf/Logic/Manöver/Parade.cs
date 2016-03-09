@@ -11,11 +11,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        public Parade(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
-            : base(ausführender, waffe, ziel)
-        {
-        }
-
         protected override int GrößeMod(INahkampfwaffe waffe, Größe value)
         {
             switch (value)

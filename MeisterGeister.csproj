@@ -726,8 +726,11 @@
     <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
     <Compile Include="Logic\Karte\AffineTransformation.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Größe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Lichtstufe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\FernkampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Finte.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\GezielterStich.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\KampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\ManöverModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\NahkampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Todesstoß.cs" />
@@ -1091,6 +1094,9 @@
     </Compile>
     <Compile Include="View\Kampf\Manöver\AttackeOptionenView.xaml.cs">
       <DependentUpon>AttackeOptionenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\Manöver\FernkampfOptionenView.xaml.cs">
+      <DependentUpon>FernkampfOptionenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\Manöver\ManöverOptionenView.xaml.cs">
       <DependentUpon>ManöverOptionenView.xaml</DependentUpon>
@@ -1649,6 +1655,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kampf\Manöver\AttackeOptionenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Manöver\FernkampfOptionenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -2443,9 +2453,10 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0120.sql" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0121.sql" />
     <Resource Include="Images\Icons\Karte\pin56.png" />
-	<Resource Include="Daten\Updateskripte\UpdateTo_V0122.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0122.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
-	<Resource Include="Images\Icons\General\loading.png" />    <Content Include="Libs\ArtefaktGenerator.dll" />
+    <Resource Include="Images\Icons\General\loading.png" />
+    <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\WPFExtensions.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />

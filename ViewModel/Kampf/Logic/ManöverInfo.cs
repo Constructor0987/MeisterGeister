@@ -5,34 +5,66 @@ using MeisterGeister.ViewModel.Base;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.Specialized;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     public class ManöverInfo : ViewModelBase, IDisposable
     {
-        #region Umwandeln
+        #region Commands
 
-        private Base.CommandBase umwandeln;
-        public Base.CommandBase Umwandeln
+        private Base.CommandBase umwandelnZauber;
+        public Base.CommandBase UmwandelnZauber
         {
             get
             {
-                if (umwandeln == null)
+                if (umwandelnZauber == null)
                 {
-                    umwandeln = new CommandBase(o => ExecuteUmwandeln(), o => CanExecuteUmwandeln());
+                    umwandelnZauber = new CommandBase(ExecuteUmwandelnZauber, null);
                 }
-                return umwandeln;
+                return umwandelnZauber;
             }
         }
 
-        private void ExecuteUmwandeln()
+        private void ExecuteUmwandelnZauber(object o)
         {
-            Manöver = new Manöver.Zauber(Manöver.Ausführender, null);
+            if (o is Held_Zauber)
+                Manöver = new Manöver.Zauber(Manöver.Ausführender, (Held_Zauber)o);
         }
 
-        private bool CanExecuteUmwandeln()
+        private Base.CommandBase umwandelnFernkampf;
+        public Base.CommandBase UmwandelnFernkampf
         {
-            return true;
+            get
+            {
+                if (umwandelnFernkampf == null)
+                {
+                    umwandelnFernkampf = new CommandBase(ExecuteUmwandelnFernkampf, null);
+                }
+                return umwandelnFernkampf;
+            }
+        }
+
+        private void ExecuteUmwandelnFernkampf(object o)
+        {
+            Manöver = new Manöver.FernkampfManöver(Manöver.Ausführender);
+        }
+
+
+        private Base.CommandBase umwandelnAttacke;
+        public Base.CommandBase UmwandelnAttacke
+        {
+            get
+            {
+                if (umwandelnAttacke == null)
+                    umwandelnAttacke = new CommandBase(ExecuteUmwandelnAttacke, null);
+                return umwandelnAttacke;
+            }
+        }
+
+        private void ExecuteUmwandelnAttacke(object o)
+        {
+            Manöver = new Manöver.Attacke(Manöver.Ausführender);
         }
 
 

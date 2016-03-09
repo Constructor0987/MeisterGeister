@@ -13,14 +13,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        public AbwehrManöver(KämpferInfo ausführender, IDictionary<INahkampfwaffe, KämpferInfo> waffe_ziel)
-            : base(ausführender, waffe_ziel)
-        { }
-
-        public AbwehrManöver(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
-            : base(ausführender, waffe, ziel)
-        { }
-
         #region Mods
 
         public const string GLÜCKLICH_MOD = "Glücklich";

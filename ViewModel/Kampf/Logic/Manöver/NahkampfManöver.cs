@@ -7,23 +7,22 @@ using System.Threading.Tasks;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public abstract class NahkampfManöver : Manöver<INahkampfwaffe>
+    public abstract class NahkampfManöver : KampfManöver<INahkampfwaffe>
     {
         public NahkampfManöver(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public NahkampfManöver(KämpferInfo ausführender, IDictionary<INahkampfwaffe, KämpferInfo> waffe_ziel)
-            : base(ausführender, waffe_ziel)
-        { }
+        //public NahkampfManöver(KämpferInfo ausführender, IDictionary<INahkampfwaffe, KämpferInfo> waffe_ziel)
+        //    : base(ausführender, waffe_ziel)
+        //{ }
 
-        public NahkampfManöver(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
-            : base(ausführender, waffe, ziel)
-        { }
+        //public NahkampfManöver(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
+        //    : base(ausführender, waffe, ziel)
+        //{ }
 
         #region Mods
 
-        public const string LICHT_MOD = "Licht";
         public const string WASSER_MOD = "Wasser";
         public const string BEENGT_MOD = "Beengt";
         public const string DISTANZLASSE_MOD = "Distanzklasse";
@@ -32,13 +31,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string FALSCHE_HAND_MOD = "FalscheHand";
         public const string ÜBERZAHL_MOD = "Überzahl";
         public const string UNBEWAFFNET_MOD = "Unbewaffnet";
-        public const string GRÖSSE_MOD = "Zielgröße";
 
         protected override void InitMods()
         {
             base.InitMods();
 
-            NahkampfModifikator<int> licht = new NahkampfModifikator<int>(this);
+            NahkampfModifikator<Lichtstufe> licht = new NahkampfModifikator<Lichtstufe>(this);
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
 
@@ -81,7 +79,41 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             mods.Add(GRÖSSE_MOD, größe);
         }
 
-        protected abstract int GrößeMod(INahkampfwaffe waffe, Größe value);
+        protected override int LichtMod(INahkampfwaffe waffe, Lichtstufe value)
+        {
+            int mod = 0;
+            switch (value)
+            {
+                case Lichtstufe.Mondlicht:
+                    mod = 3;
+                    break;
+                case Lichtstufe.Sternenlicht:
+                    mod = 5;
+                    break;
+                case Lichtstufe.Finsternis:
+                    mod = 8;
+                    break;
+                default:
+                    mod = 0;
+                    break;
+            }
+            Held held = Ausführender.Kämpfer as Held;
+            if (held != null)
+            {
+                if (held.HatVorNachteil("Dämmerungssicht") || held.HatVorNachteil("Nachtsicht"))
+                    mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
+
+                //TODO: keine Peitsche/Lanzenreiten und keine Pikenreichweite um Blindkampf zu nutzen
+                bool blindkampf = held.HatSonderfertigkeitUndVoraussetzungen("Blindkampf") &&
+                    (waffe.Distanzklasse & Distanzklasse.HNS) != Distanzklasse.None;
+
+                if (held.HatVorNachteil("Nachtsicht") || blindkampf)
+                    mod = Math.Min(mod, 2);
+                if (held.HatVorNachteil("Nachtblind"))
+                    mod *= 2;
+            }
+            return Math.Min(8, mod);
+        }
 
         protected abstract int BeengtMod(INahkampfwaffe waffe, bool value);
 
@@ -125,24 +157,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         protected abstract int PositionGegnerMod(INahkampfwaffe waffe, Position value);
-
-        protected virtual int LichtMod(INahkampfwaffe waffe, int value)
-        {
-            int mod = value;
-            Held held = Ausführender.Kämpfer as Held;
-            if (held != null)
-            {
-                if (held.HatVorNachteil("Dämmerungssicht") || held.HatVorNachteil("Nachtsicht"))
-                    mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
-                if (held.HatVorNachteil("Nachtsicht") ||
-                   //TODO: keine Peitsche/Lanzenreiten und keine Pikenreichweite um Blindkampf zu nutzen
-                   (held.HatSonderfertigkeitUndVoraussetzungen("Blindkampf") && (waffe.Distanzklasse & Distanzklasse.HNS) != Distanzklasse.None))
-                    mod = Math.Min(mod, 2);
-                if (held.HatVorNachteil("Nachtblind"))
-                    mod *= 2;
-            }
-            return Math.Min(8, mod);
-        }
 
         protected abstract int WasserMod(INahkampfwaffe waffe, Wassertiefe value);
 

@@ -63,12 +63,7 @@
 
         <!--Dämmerungssicht / Nachtsicht-->
         <TextBlock Grid.Row="5" Text="Licht"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="licht" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Licht].Value}">
-            <ComboBoxItem Content="Tageslicht" DataContext="0"/>
-            <ComboBoxItem Content="Mondlicht" DataContext="3"/>
-            <ComboBoxItem Content="Sternenlicht" DataContext="5"/>
-            <ComboBoxItem Content="Finsternis" DataContext="8"/>
-        </ComboBox>
+        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value, Converter={StaticResource lichtValues}}"/>
         <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Mods[Licht].Result}"/>
 
         <TextBlock Grid.Row="6" Text="Wasser"/>

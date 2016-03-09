@@ -12,10 +12,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
         }
 
-        public Finte(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel) : base(ausführender, waffe, ziel)
-        {
-        }
-
         
     }
 }

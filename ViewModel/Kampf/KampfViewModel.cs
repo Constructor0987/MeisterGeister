@@ -74,10 +74,8 @@ namespace MeisterGeister.ViewModel.Kampf
             set
             {
                 Set(ref selectedManöver, value);
-                //Wenn ein Manöver selektiert wird, soll auch der Kämpfer ausgewählt werden
-                //Wird ein Kämpfer ausgewählt ändert sich am Selektierten Manöver garnichts
                 if (value != null)
-                    SelectedKämpfer = value.Manöver.Ausführender;
+                    SelectedKämpfer = null;
             }
         }
 
@@ -91,6 +89,8 @@ namespace MeisterGeister.ViewModel.Kampf
             set
             {
                 Set(ref _selectedKämpfer, value);
+                if (value != null)
+                    SelectedManöver = null;
             }
         }
 

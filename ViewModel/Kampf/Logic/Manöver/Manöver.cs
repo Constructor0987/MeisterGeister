@@ -13,6 +13,7 @@ using ImpromptuInterface;
 using System.Collections.ObjectModel;
 using MeisterGeister.ViewModel.Base;
 using System.Runtime.CompilerServices;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -302,12 +303,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
     }
 
-    public interface IManöver<out TWaffe> where TWaffe : IWaffe
-    {
-
-    }
-
-    public abstract class Manöver<TWaffe> : Manöver, IManöver<TWaffe> where TWaffe : IWaffe
+    public abstract class Manöver<TWaffe> : Manöver where TWaffe : IWaffe
     {
         protected Manöver(KämpferInfo ausführender)
             : this(ausführender, new Dictionary<TWaffe, KämpferInfo>(1), 1)

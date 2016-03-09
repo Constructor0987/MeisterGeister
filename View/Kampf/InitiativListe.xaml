@@ -11,7 +11,7 @@
              xmlns:mg="clr-namespace:MeisterGeister"
              xmlns:model="clr-namespace:MeisterGeister.Model"
              mc:Ignorable="d" x:Name="iniListe" Background="Transparent"
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <System:Double x:Key="gridSize">30</System:Double>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
@@ -113,12 +113,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <!--Buttons-->
         <StackPanel Orientation="Horizontal" x:Name="buttons" VerticalAlignment="Center">
             <Button Content="Weiter" Command="{Binding OnNext}"/>
             <Button Content="Neue Kampfrunde" Command="{Binding OnNextKampfrunde}"/>
             <Button Content="Neuer Kampf" Command="{Binding OnNewKampf}"/>
         </StackPanel>
 
+        <!--Kämpferliste-->
         <ItemsControl x:Name="kämpferListe" ItemsSource="{Binding Kampf.Kämpfer}" Grid.Row="1" VerticalAlignment="Top">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -169,9 +171,9 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" VerticalAlignment="Center" />
                                     <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
@@ -347,6 +349,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
+                <!--ManöverListe-->
                 <ListBox Height="{Binding ElementName=kämpferListe,Path=ActualHeight}" ItemsSource="{Binding Kampf.InitiativListe}"
                       Grid.Row="1" ViewGeneral:ListBoxBehaviour.DeselectOnClick="True" SelectedItem="{Binding SelectedManöver}">
                     <ListBox.Template>
@@ -367,7 +370,7 @@
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Setter Property="Margin" Value="0"/>
                             <Setter Property="Padding" Value="0"/>
-                            
+
                             <Setter Property="Grid.Column" Value="{Binding IndexInKampfaktionen}"/>
                             <Setter Property="Grid.ColumnSpan" Value="{Binding DauerInKampfaktionen}"/>
                             <Setter Property="Grid.Row" Value="{Binding Manöver.Ausführender.Index}"/>
@@ -377,9 +380,9 @@
                             <Setter Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#00000000"/>
-                                                    <GradientStop Offset="1" Color="#50202020"/>
-                                                </LinearGradientBrush>
+                                        <GradientStop Offset="0" Color="#00000000"/>
+                                        <GradientStop Offset="1" Color="#50202020"/>
+                                    </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Template">
@@ -395,13 +398,27 @@
                                                     </MenuItem>
                                                     <MenuItem Header="Aufsparen" Command="{Binding Aktivieren}"/>
                                                     <Separator/>
-                                                    <MenuItem Header="In Bewegung umwandeln"/>
-                                                    <MenuItem Header="In Parade umwandeln"/>
-                                                    <MenuItem Header="Testzauber" Command="{Binding Umwandeln}"/>
-                                                    <MenuItem Header="Zaubern" ItemsSource="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}">
+                                                    <MenuItem Header="Attacke" Command="{Binding UmwandelnAttacke}">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" MaxWidth="24"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="Fernkampf" Command="{Binding UmwandelnFernkampf}">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" MaxWidth="24"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="Zaubern" ItemsSource="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}" IsEnabled="{Binding Manöver.Ausführender.Kämpfer.Magiebegabt}"
+                                                              Visibility="{Binding RelativeSource={RelativeSource Self},Path=IsEnabled,Converter={StaticResource BooleanToVisibilityConverter1}}">
                                                         <MenuItem.Icon>
                                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" MaxWidth="24"/>
                                                         </MenuItem.Icon>
+                                                        <MenuItem.ItemContainerStyle>
+                                                            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=MenuItem},Path=DataContext.UmwandelnZauber}"/>
+                                                                <Setter Property="CommandParameter" Value="{Binding}"/>
+                                                            </Style>
+                                                        </MenuItem.ItemContainerStyle>
                                                         <MenuItem.ItemTemplate>
                                                             <DataTemplate>
                                                                 <TextBlock Text="{Binding Zauber.Name}"/>
@@ -425,10 +442,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel x:Name="panel" VerticalAlignment="Center" Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
-                                <Grid>
-                                    <View:ManöverSymbol/>
-                                    <Image x:Name="gestrichen" Source="/DSA MeisterGeister;component/Images/Icons/General/gestrichen.png"/>
-                                </Grid>
+                                <View:ManöverSymbol/>
                                 <TextBlock Margin="4,0,0,0" FontSize="10" x:Name="description" Text="{Binding Manöver.Name}" VerticalAlignment="Center" DockPanel.Dock="Right"/>
                                 <StackPanel.ToolTip>
                                     <StackPanel>
@@ -447,9 +461,6 @@
                                 <DataTrigger Binding="{Binding Manöver.Dauer}" Value="1">
                                     <Setter TargetName="description" Property="Visibility" Value="Collapsed"/>
                                     <Setter TargetName="panel" Property="HorizontalAlignment" Value="Center"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Ausgeführt}" Value="False">
-                                    <Setter TargetName="gestrichen" Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
