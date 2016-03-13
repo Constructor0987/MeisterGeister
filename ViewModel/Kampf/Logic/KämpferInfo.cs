@@ -39,10 +39,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _kämpfer; }
             private set
             {
+                //Auf Änderung von InitiativeBasis und InitiativeWurf hören und den Aktuellen INI-Wert anpassen. Dafür muss die Veränderung zum Basiswert gespeichert werden.
+                if (_kämpfer == value)
+                    return;
+                if (_kämpfer != null)
+                    _kämpfer.PropertyChanged -= Kämpfer_PropertyChanged;
                 _kämpfer = value;
+                if (_kämpfer != null)
+                    _kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
                 OnChanged("Kämpfer");
             }
         }
+
 
         #region Initiative
 
@@ -133,7 +141,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 throw new ArgumentNullException("Kampf kampf darf nicht null sein.");
             Kämpfer = k;
             Kampf = kampf;
-            Kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             Team = 1;
             Initiative = k.Initiative();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;

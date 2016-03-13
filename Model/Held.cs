@@ -2301,20 +2301,19 @@ namespace MeisterGeister.Model {
             }
         }
 
-        public IList<IWaffe> Angriffswaffen {
-            get {
-                //TODO: Cache?
-                //alle Waffen
-                List<IWaffe> waffen = new List<IWaffe>();
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
-                //Raufen, Ringen
-                int taw;
-                var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent("Raufen", false, out taw));
-                waffen.Add(raufen);
-                var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent("Ringen", false, out taw));
-                waffen.Add(ringen);
-                return waffen;
+        public IList<INahkampfwaffe> Angriffswaffen
+        {
+            get
+            {
+                return Nahkampfwaffen.Where(w => w.AT > 0).OrderByDescending(w => w.AT).Cast<INahkampfwaffe>().ToList();
+            }
+        }
+
+        public IList<INahkampfwaffe> Paradewaffen
+        {
+            get
+            {
+                return Nahkampfwaffen.Where(w => w.PA > 0).OrderByDescending(w => w.PA).Cast<INahkampfwaffe>().ToList();
             }
         }
 
@@ -2322,8 +2321,10 @@ namespace MeisterGeister.Model {
         {
             get
             {
+                //TODO: Cache?
+                //alle Waffen
                 List<KämpferNahkampfwaffe> waffen = new List<KämpferNahkampfwaffe>();
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha, true)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
                 //Raufen, Ringen
                 int taw;
                 var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent("Raufen", false, out taw));
@@ -2334,12 +2335,13 @@ namespace MeisterGeister.Model {
             }
         }
 
-        public IList<KämpferFernkampfwaffe> Fernkampfwaffen
+        public IList<IFernkampfwaffe> Fernkampfwaffen
         {
             get
             {
-                List<KämpferFernkampfwaffe> waffen = new List<KämpferFernkampfwaffe>();
+                List<IFernkampfwaffe> waffen = new List<IFernkampfwaffe>();
                 waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha, true)));
+                waffen.Sort((a, b) => ((KämpferFernkampfwaffe)a).AT.CompareTo((b)));
                 return waffen;
             }
         }

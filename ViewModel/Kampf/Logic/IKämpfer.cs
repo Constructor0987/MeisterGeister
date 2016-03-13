@@ -80,9 +80,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //int VerbrauchteAbwehraktionen { get; set; }
         //int VerbrauchteFreieAktionen { get; set; }
         
-        ////Aktuellen Kampfstil abbilden. Halbschwert, Mercanario, Beidhändiger Kampf, Schildkampf, ...
+        ////Aktuellen Kampfstil abbilden. Halbschwert, Beidhändiger Kampf, Schildkampf, ...
         //Kampfstil Kampfstil { get; set; }
-        //WaffenloserKampfstil WaffenloserKampfstil { get; set; }
 
         Modifikatoren.ModifikatorenListe Modifikatoren { get; }
 
@@ -92,9 +91,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         List<Manöver.Manöver> Manöver { get; }
 
         /// <summary>
-        /// Alle zur Zeit verwendeten Waffen.
+        /// Alle zur Zeit verwendeten Waffen mit denen Nahkampfangriffe ausgeführt werden können.
+        /// Sortiert nach AT-Wert.
         /// </summary>
-        IList<IWaffe> Angriffswaffen { get; }
+        IList<INahkampfwaffe> Angriffswaffen { get; }
+
+        /// <summary>
+        /// Alle zur Zeit verwendeten Waffen mit denen Paraden durchgeführt werden können.
+        /// Sortiert nach PA-Wert.
+        /// </summary>
+        IList<INahkampfwaffe> Paradewaffen { get; }
+
+        /// <summary>
+        /// Alle zur Zeit verwendeten Waffen mit denen Fernkampfangriffe ausgeführt werden können.
+        /// Sortiert nach FK-Wert.
+        /// </summary>
+        IList<IFernkampfwaffe> Fernkampfwaffen { get; }
 
         System.Windows.Media.Color Farbmarkierung { get; set; }
         string HinweisText { get; set; }

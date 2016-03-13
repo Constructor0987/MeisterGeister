@@ -129,12 +129,20 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("INIBasis")]
+        [DependsOnModifikator(typeof(Mod.IModINIBasis))]
         public int InitiativeBasis
         {
-            get { return INIBasis; }
+            get
+            {
+                int ini = INIBasis;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModINIBasis).Select(m => (Mod.IModINIBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => ini = m.ApplyINIBasisMod(ini));
+                return ini;
+            }
         }
 
         [DependentProperty("Konstitution")]
+        [DependsOnModifikator(typeof(Mod.IModKK))]
         public int Körperkraft
         {
             get 
@@ -149,6 +157,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("Konstitution")]
+        [DependsOnModifikator(typeof(Mod.IModGE))]
         public int Gewandtheit
         {
             get
@@ -194,6 +203,7 @@ namespace MeisterGeister.Model
 
         //return GS abhängig vom Modus (fliegend, am boden, galopp, etc.)
         [DependentProperty("GS")]
+        [DependsOnModifikator(typeof(Mod.IModGS))]
         public double Geschwindigkeit
         {
             get
@@ -206,6 +216,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("LE")]
+        [DependsOnModifikator(typeof(Mod.IModLE))]
         public int LebensenergieMax
         {
             get {
@@ -239,6 +250,7 @@ namespace MeisterGeister.Model
         }
         
         [DependentProperty("AU")]
+        [DependsOnModifikator(typeof(Mod.IModAU))]
         public int AusdauerMax
         {
             get
@@ -273,6 +285,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("AE")]
+        [DependsOnModifikator(typeof(Mod.IModAE))]
         public int AstralenergieMax
         {
             get
@@ -299,6 +312,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependsOnModifikator(typeof(Mod.IModKE))]
         public int KarmaenergieMax
         {
             get
@@ -321,6 +335,7 @@ namespace MeisterGeister.Model
             set {}
         }
 
+        [DependsOnModifikator(typeof(Mod.IModAT)), DependsOnModifikator(typeof(Mod.IModATBasis))]
         int? KampfLogic.IKämpfer.AT
         {
             get {
@@ -336,6 +351,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependsOnModifikator(typeof(Mod.IModPA)), DependsOnModifikator(typeof(Mod.IModPABasis))]
         int? KampfLogic.IKämpfer.PA
         {
             get {
@@ -350,6 +366,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("MRKörper")]
+        [DependsOnModifikator(typeof(Mod.IModMR))]
         public int MR
         {
             get { 
@@ -450,9 +467,19 @@ namespace MeisterGeister.Model
             get { throw new NotImplementedException(); }
         }
 
-        public IList<KampfLogic.IWaffe> Angriffswaffen
+        public IList<KampfLogic.INahkampfwaffe> Angriffswaffen
         {
-            get { return GegnerBase.GegnerBase_Angriff.Select(ga => (KampfLogic.IWaffe)ga).ToList(); }
+            get { return GegnerBase.GegnerBase_Angriff.Where(ga => ga.Distanzklasse != Distanzklasse.None && ga.AT > 0).Select(ga => (KampfLogic.INahkampfwaffe)ga).OrderByDescending(ga => ga.AT).ToList(); }
+        }
+
+        public IList<KampfLogic.INahkampfwaffe> Paradewaffen
+        {
+            get { return GegnerBase.GegnerBase_Angriff.Where(ga => ga.Distanzklasse != Distanzklasse.None && ga.PA > 0).Select(ga => (KampfLogic.INahkampfwaffe)ga).OrderByDescending(ga => ga.PA).ToList(); }
+        }
+
+        public IList<KampfLogic.IFernkampfwaffe> Fernkampfwaffen
+        {
+            get { return GegnerBase.GegnerBase_Angriff.Where(ga => (ga.Reichweite ?? 0) > 0 && ga.AT > 0).Select(ga => (KampfLogic.IFernkampfwaffe)ga).OrderByDescending(ga => ga.AT).ToList(); }
         }
 
         [DependsOnModifikator(typeof(Mod.IModifikator))]
