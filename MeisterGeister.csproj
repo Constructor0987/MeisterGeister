@@ -56,6 +56,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -667,7 +668,6 @@
     <Compile Include="ViewModel\AresPlayer\AresPlayerViewModel.cs" />
     <Compile Include="ViewModel\ArtGen\ArtGenViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayerViewModel.cs" />
-    <Compile Include="ViewModel\AudioPlayer\Logic\FavAudioPlaylistVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\AudioZeileVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\btnHotkeyVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\grdThemeBtnVM.cs" />
@@ -849,9 +849,6 @@
     </Compile>
     <Compile Include="View\AudioPlayer\AudioPlayerView.xaml.cs">
       <DependentUpon>AudioPlayerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AudioPlayer\FavAudioPlaylist.xaml.cs">
-      <DependentUpon>FavAudioPlaylist.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\AudioZeile.xaml.cs">
       <DependentUpon>AudioZeile.xaml</DependentUpon>
@@ -1407,10 +1404,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AudioPlayer\AudioPlayerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\AudioPlayer\FavAudioPlaylist.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

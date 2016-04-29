@@ -58,6 +58,8 @@
             </StackPanel>
         </DataTemplate>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
+        <!--<ViewGeneral:MultiBooleanANDConverter x:Key="MultiBooleanANDConverter"/>
+        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter"/>-->
     </Window.Resources>
     <Window.Background>
         <StaticResource ResourceKey="Background2"/>
@@ -74,13 +76,83 @@
         </EventTrigger>
     </Window.Triggers>
     <DockPanel>
-        <StatusBar Name="_statusBar" Visibility="Collapsed" DockPanel.Dock="Bottom">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition >
+                    <ColumnDefinition.Style>
+                        <Style TargetType="ColumnDefinition">
+                            <Setter Property="Width" Value="Auto" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowFavPlaylist, UpdateSourceTrigger=PropertyChanged}" Value="False" >
+                                    <Setter Property="Width" Value="0" />                                    
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ColumnDefinition.Style>
+                </ColumnDefinition>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Margin="0,0,1,0" 
+                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >            
+                <Border BorderThickness="1" BorderBrush= "{DynamicResource TabControlNormalBorderBrush}" >
+                    <Grid AllowDrop="True" Drop="Grid_Drop" MinWidth="45" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <Image HorizontalAlignment="Left" Source="/DSA%20MeisterGeister;component/Images/Icons/General/audio.png" />
+                    <Button HorizontalAlignment="Right" Margin="0,5,2,0" Width="20" Height="20" Background="White" ToolTip="Nächster Titel" 
+                        Focusable="False" Command="{Binding aPlayerVM.OnbtnBGNext}" Padding="1" Drop="Grid_Drop">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding aPlayerVM.SelectedMusikPlaylistItem}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" />
+                    </Button>
+                    <Menu Focusable="False" Background="{x:Null}" Name="lbFav" IsMainMenu="True" Drop="Grid_Drop"
+                        ItemsSource="{Binding FavPlaylist, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2" >
+                        <Menu.LayoutTransform>
+                            <RotateTransform Angle="-90" />
+                        </Menu.LayoutTransform>
+                        <Menu.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Name}" MaxHeight="120" Tag="{Binding VM,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=VM.OnBtnFavPlaylistClick}" CommandParameter="{Binding}">
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Entfernen" CommandParameter="{Binding}"
+                                                Command="{Binding Path=PlacementTarget.Tag.OnFavPlaylistEntfernenClick, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                                                <MenuItem.Icon>
+                                                    <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                            </DataTemplate>
+                        </Menu.ItemTemplate>
+                    </Menu>
+                </Grid>
+            </Border>
+            </Grid>
+            
+            <GridSplitter Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" Margin="1,0,0,0"
+                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            
+            <StatusBar Name="_statusBar" Visibility="Collapsed" DockPanel.Dock="Bottom" Grid.ColumnSpan="2">
             <StatusBarItem>
                 <TextBlock Name="_statusInfoTextBox" />
             </StatusBarItem>
         </StatusBar>
-        <Grid>
-            <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" ViewGeneral:TabContent.IsCached="True" ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}">
+            <Grid Grid.Column="1">
+                <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" ViewGeneral:TabContent.IsCached="True" ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}" Margin="0,4,0.143,-4.286">
                 <!--<TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
@@ -378,7 +450,7 @@
                 </TabItem>-->
             </TabControl>
 
-            <Border Visibility="Collapsed" x:Name="Menue" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="40" CornerRadius="0,0,30,30" RenderTransformOrigin="0.5,0.5" Margin="0" Background="{DynamicResource Background1}">
+                <Border Visibility="Collapsed" x:Name="Menue" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="40" CornerRadius="0,0,30,30" RenderTransformOrigin="0.5,0.5" Margin="0" Background="{DynamicResource Background1}">
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -412,6 +484,7 @@
                     </Border>
                 </Grid>
             </Border>
+            </Grid>
         </Grid>
 
     </DockPanel>

@@ -418,5 +418,18 @@ namespace MeisterGeister.View
 
         #endregion
 
+        
+        private void Grid_Drop(object sender, DragEventArgs e)
+        {
+            MeisterGeister.ViewModel.AudioPlayer.Logic.lbEditorItemVM source = e.Data.GetData("lbiPlaylistVM") as
+                MeisterGeister.ViewModel.AudioPlayer.Logic.lbEditorItemVM;
+            if (source != null && source.APlaylist.Hintergrundmusik)
+            {
+                source.APlaylist.Favorite = true;
+                Global.ContextAudio.Update<MeisterGeister.Model.Audio_Playlist>(source.APlaylist);
+                VM.UpdateFavorites();
+            }
+        }
+
     }
 }

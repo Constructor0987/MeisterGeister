@@ -15,15 +15,32 @@ using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.ViewModel.Base;
 using System.Windows.Data;
 
+using MeisterGeister.Model;
+using MeisterGeister.Model.Extensions;
+
 namespace MeisterGeister.ViewModel
 {
     public class MainViewModel : Base.ViewModelBase
     {
+
         private MainViewModel() : base(View.General.ViewHelper.ShowError)
         {
             App.Queue.ProgressChanged += Queue_ProgressChanged;
             BuildMenu();
             OpenTabs();
+            ShowFavPlaylist = Einstellungen.ShowPlaylistFavorite &&
+                (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null);
+
+            Einstellungen.EinstellungChanged += Einstellungen_EinstellungChanged;                     
+        }
+
+        void Einstellungen_EinstellungChanged(object sender, EinstellungChangedEventArgs e)
+        {
+            if (e.PropertyName == "ShowPlaylistFavorite")
+            {
+                ShowFavPlaylist = Einstellungen.ShowPlaylistFavorite &&
+                (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null);
+            }
         }
 
         static MainViewModel instance;
@@ -364,6 +381,7 @@ namespace MeisterGeister.ViewModel
             if (e.OldItems != null && e.OldItems.Count != 0)
                 foreach (Base.ToolViewModelBase tool in e.OldItems)
                     tool.RequestClose -= this.ToolRequestClose;
+
             // geöffnete Tabs abspeichern
             Einstellungen.StartTabs = OpenedTabs();
         }
@@ -378,5 +396,90 @@ namespace MeisterGeister.ViewModel
 
         //TODO Drag und Drop der Position
         #endregion
+
+        #region AudioFavoriten
+        private AudioPlayer.AudioPlayerViewModel _aPlayerVM = null;
+        public AudioPlayer.AudioPlayerViewModel aPlayerVM
+        {
+            get { return _aPlayerVM; }
+            set { Set(ref _aPlayerVM, value); }
+        }
+        
+        private List<Audio_Playlist> _favPlaylist = new List<Audio_Playlist>();
+        public List<Audio_Playlist> FavPlaylist
+        {
+            get { return _favPlaylist; }
+            set { Set(ref _favPlaylist, value); }
+        }
+
+        private bool _showFavPlaylist = false;
+        public bool ShowFavPlaylist
+        {
+            get { return _showFavPlaylist; }
+            set
+            {
+                if (Set(ref _showFavPlaylist, value))
+                    UpdateFavorites();
+            }
+        }
+        
+        public void UpdateFavorites()
+        {
+            ToolViewModelBase audioTool = OpenTools.FirstOrDefault(t => t.Name == "Audio");
+            if (audioTool != null)
+            {
+                List<Audio_Playlist> favList = new List<Audio_Playlist>();
+                Global.ContextAudio.PlaylistListe.Where(t => t.Favorite != null).Where(t2 => t2.Favorite.Value).OrderBy(t3 => t3.Name).ToList().
+                    ForEach(fav => favList.Add(fav));
+
+                FavPlaylist = favList;
+                if (favList.Count > 0)
+                {
+                    aPlayerVM = audioTool as AudioPlayer.AudioPlayerViewModel;
+                    if (Einstellungen.ShowPlaylistFavorite) ShowFavPlaylist = true;
+                }
+                else
+                    ShowFavPlaylist = false;
+            }
+        }
+
+        
+        private Base.CommandBase _onBtnFavPlaylistClick = null;
+        public Base.CommandBase OnBtnFavPlaylistClick
+        {
+            get
+            {
+                if (_onBtnFavPlaylistClick == null)
+                    _onBtnFavPlaylistClick = new Base.CommandBase(BtnFavPlaylistClick, null);
+                return _onBtnFavPlaylistClick;
+            }
+        }
+        void BtnFavPlaylistClick(object obj)
+        {
+            aPlayerVM.SelectedMusikPlaylistItem = aPlayerVM.MusikListItemListe.
+                FirstOrDefault(t => t.VM.aPlaylist == obj as MeisterGeister.Model.Audio_Playlist);
+        }
+
+        private Base.CommandBase _onFavPlaylistEntfernenClick = null;
+        public Base.CommandBase OnFavPlaylistEntfernenClick
+        {
+            get
+            {
+                if (_onFavPlaylistEntfernenClick == null)
+                    _onFavPlaylistEntfernenClick = new Base.CommandBase(FavPlaylistEntfernenClick, null);
+                return _onFavPlaylistEntfernenClick;
+            }
+        }
+        void FavPlaylistEntfernenClick(object obj)
+        {
+            MeisterGeister.Model.Audio_Playlist aPlaylist = obj as MeisterGeister.Model.Audio_Playlist;
+            aPlaylist.Favorite = false;
+            Global.ContextAudio.Update<MeisterGeister.Model.Audio_Playlist>(aPlaylist);
+            UpdateFavorites();
+        }
+
+        #endregion
+
+
     }
 }

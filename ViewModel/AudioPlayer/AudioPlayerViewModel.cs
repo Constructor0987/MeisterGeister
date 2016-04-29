@@ -439,10 +439,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 if (dispTmr != null) dispTmr.Stop();
 
             AlleKlangSongsAus(null, true, true, false, true);
-
-            if (FavPlayView != null)
-                FavPlayView.Close();
-
+                        
             _GrpObjecte.Clear();
             lstKlangPlayEndetimer.Clear();
         }
@@ -453,6 +450,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         public AudioPlayerViewModel()
         {
+            BGPlayer = new MusikView();
+            BGPlayer.BG.Add(new Musik());
             setStdPfad();
             StdPadAufC = stdPfad.Contains("c:\\") || stdPfad.Contains("C:\\");
             Init();
@@ -470,10 +469,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             workerGetLength.DoWork += new DoWorkEventHandler(workerGetLength_DoWork);
             workerGetLength.RunWorkerCompleted += new RunWorkerCompletedEventHandler(workerGetLength_RunWorkerCompleted);
             
+            fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
+            AktualisiereHotKeys();
+
             UpdateHotkeyUsed();
             UpdateAlleListen();
-            if (Einstellungen.ShowPlaylistFavorite) 
-                UpdateFavorites();
+            //if (Einstellungen.ShowPlaylistFavorite) 
+            //    UpdateFavorites();
             Refresh();
 
             LbEditorMitGeräusche = true;
@@ -515,11 +517,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             OnChanged("AktKlangTheme");
         }
                
-        ///// <summary>
-        ///// Läd alle Lieder und Geräusche - Boxen des ausgewählten Themes
-        ///// </summary>
-        //public static RoutedCommand cmdThemeThemeBtnClose = new RoutedCommand();
-        
 
         #endregion
 
@@ -823,12 +820,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         public List<btnHotkey> hotkeyListe = new List<btnHotkey>();
         private List<KlangZeile> _klangzeilen;
 
-        private FavAudioPlaylist _favPlayView = null;
-        public FavAudioPlaylist FavPlayView
-        { 
-            get { return _favPlayView; }
-            set { Set(ref _favPlayView, value); }
-        }
+        //private FavAudioPlaylist _favPlayView = null;
+        //public FavAudioPlaylist FavPlayView
+        //{ 
+        //    get { return _favPlayView; }
+        //    set { Set(ref _favPlayView, value); }
+        //}
 
         private List<GruppenObjekt> _grpObjecte = new List<GruppenObjekt>();
         public List<GruppenObjekt> _GrpObjecte
@@ -1337,25 +1334,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }  
         
-        //private MusikZeile _lbiMusikSelect;
-        //public MusikZeile lbiMusikSelect
-        //{
-        //    get { return _lbiMusikSelect; }
-        //    set
-        //    {
-        //        if (value != null && _lbiMusikSelect != null &&
-        //            _lbiMusikSelect.VM.aPlaylist.Audio_PlaylistGUID == value.VM.aPlaylist.Audio_PlaylistGUID)
-        //            return;
-        //        SelectedMusikPlaylistItem = value;
-        //        OnChanged("SelectedMusikPlaylistItem");          
-        //        OnChanged("FilteredMusikPlaylistItemListe");
-        //        OnChanged("FilteredErwPlayerMusikListItemListe");
-        //        _lbiMusikSelect = value;
-
-        //        Set(ref _lbiMusikSelect, value);
-        //        //OnChanged();
-        //    }
-        //}
 
         private MusikZeile _SelectedMusikPlaylistItem;
         public MusikZeile SelectedMusikPlaylistItem
@@ -2716,7 +2694,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get
             {
                 if (_onFavPlaylistClick == null)
+                {
                     _onFavPlaylistClick = new Base.CommandBase(FavPlaylistClick, null);
+                }
                 return _onFavPlaylistClick;                
             }
         }
@@ -2730,7 +2710,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 FavPlaylist.Add(aPlay);
 
             if (Einstellungen.ShowPlaylistFavorite)
-                UpdateFavorites();
+                MainViewModel.Instance.UpdateFavorites();
         }
         
 
@@ -4249,7 +4229,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         private void FilterMusikTitelListe()
         {
             string[] suchWorte = _suchTextMusikTitel.ToLower().Split(' ');
-            
+            if (HintergrundMusikListe == null || HintergrundMusikListe.Count == 0) return;
             HintergrundMusikListe.ForEach(delegate(ListBoxItem lbi) { lbi.Visibility = Visibility.Visible; });
             FilteredHintergrundMusikListe = MusikTitelAZ ?
                 HintergrundMusikListe.OrderBy(n => ((Audio_Playlist_Titel)n.Tag).Audio_Titel.Name).ToList():
@@ -7937,25 +7917,25 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-        public void UpdateFavorites()
-        {
-            List<Audio_Playlist> favList = new List<Audio_Playlist>();
-            Global.ContextAudio.PlaylistListe.Where(t => t.Favorite != null).Where(t2 => t2.Favorite.Value).OrderBy(t3 => t3.Name).ToList().
-                ForEach(fav => favList.Add(fav));
+        //public void UpdateFavorites()
+        //{
+        //    List<Audio_Playlist> favList = new List<Audio_Playlist>();
+        //    Global.ContextAudio.PlaylistListe.Where(t => t.Favorite != null).Where(t2 => t2.Favorite.Value).OrderBy(t3 => t3.Name).ToList().
+        //        ForEach(fav => favList.Add(fav));
             
-            FavPlaylist = favList;
-            if (favList.Count > 0 && FavPlayView == null)
-            {
-                FavPlayView = new FavAudioPlaylist(FavPlaylist);
-                FavPlayView.VM.AudioPlayerVM = this;
-                FavPlayView.VM.FavPlaylistListe = FavPlaylist;
-                FavPlayView.Show();
-            }
-            else
-                if (FavPlayView != null) FavPlayView.VM.FavPlaylistListe = FavPlaylist;
-            if (FavPlaylist.Count == 0 && FavPlayView != null)
-                FavPlayView.Close();
-        }
+        //    FavPlaylist = favList;
+        //    if (favList.Count > 0 && FavPlayView == null)
+        //    {
+        //        FavPlayView = new FavAudioPlaylist(FavPlaylist);
+        //        FavPlayView.VM.AudioPlayerVM = this;
+        //        FavPlayView.VM.FavPlaylistListe = FavPlaylist;
+        //        FavPlayView.Show();
+        //    }
+        //    else
+        //        if (FavPlayView != null) FavPlayView.VM.FavPlaylistListe = FavPlaylist;
+        //    if (FavPlaylist.Count == 0 && FavPlayView != null)
+        //        FavPlayView.Close();
+        //}
 
         #endregion
 

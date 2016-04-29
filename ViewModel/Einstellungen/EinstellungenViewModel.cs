@@ -60,7 +60,7 @@ namespace MeisterGeister.ViewModel.Settings
                 OnChanged("IsInAnderemPfadSuchen");
             }
         }
-
+        
         public Boolean IsShowPlaylistFavorite
         {
             get { return MeisterGeister.Logic.Einstellung.Einstellungen.ShowPlaylistFavorite; }
