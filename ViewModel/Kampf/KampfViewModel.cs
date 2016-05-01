@@ -14,7 +14,7 @@ namespace MeisterGeister.ViewModel.Kampf
     public class KampfViewModel : Base.ToolViewModelBase
     {
 
-        public KampfViewModel() : this(null, View.General.ViewHelper.Confirm)
+        public KampfViewModel() : this((k => new MeisterGeister.View.Kampf.GegnerWindow(k).ShowDialog()), View.General.ViewHelper.Confirm)
         {
         }
 
@@ -264,7 +264,6 @@ namespace MeisterGeister.ViewModel.Kampf
         }
 
         private Action<K> showGegnerView;
-
         public Action<K> ShowGegnerViewAction
         {
             get { return showGegnerView; }

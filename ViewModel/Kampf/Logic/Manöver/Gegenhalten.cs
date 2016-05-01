@@ -8,15 +8,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class Gegenhalten : AbwehrManöver
     {
-        public static new bool BeherrschtManöver(KämpferInfo ausführender)
-        {
-            if (ausführender == null)
-                return false;
-            if (ausführender.Kämpfer is Model.Held)
-                return ((Model.Held)ausführender.Kämpfer).HatSonderfertigkeitUndVoraussetzungen("Gegenhalten", true);
-            else //TODO evtl check auf Kampfregel
-                return false;
-        }
 
         public Gegenhalten(KämpferInfo ausführender)
             : base(ausführender)
@@ -32,20 +23,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Grunderschwernis = 4;
         }
 
-        protected override IEnumerable<Probe> ProbenAnlegen()
-        {
-            Probe p = new Probe();
-            p.Probenname = Name;
-            p.Werte = new int[] { Ausführender.Kämpfer.AT ?? 0 };
-            p.WerteNamen = "AT";
-            p.Modifikator = Erschwernis;
-            yield return p;
-        }
+        //protected override IEnumerable<Probe> ProbenAnlegen()
+        //{
+        //    Probe p = new Probe();
+        //    p.Probenname = Name;
+        //    p.Werte = new int[] { Ausführender.Kämpfer.AT ?? 0 };
+        //    p.WerteNamen = "AT";
+        //    p.Modifikator = Erschwernis;
+        //    yield return p;
+        //}
 
-        protected override void Erfolg(IKämpfer ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel)
         {
             //TODO: Prüfen wer besser trifft und den Schaden verursachen
-            throw new NotImplementedException();
+            
         }
 
         protected override int GrößeMod(INahkampfwaffe waffe, Größe value)

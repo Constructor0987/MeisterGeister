@@ -12,10 +12,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
-    public class KämpferInfo : INotifyPropertyChanged, IDisposable
+    public class KämpferInfo : ViewModelBase, IDisposable
     {
         #region Commands
 
@@ -27,6 +28,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (schadenMachen == null)
                     schadenMachen = new SchadenMachen(Kämpfer);
                 return schadenMachen;
+            }
+        }
+
+        private CommandBase entfernen;
+        public CommandBase Entfernen
+        {
+            get
+            {
+                if (entfernen == null)
+                    entfernen = new CommandBase((o) => Kampf.Kämpfer.Remove(this), null);
+                return entfernen;
             }
         }
 
@@ -44,10 +56,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     return;
                 if (_kämpfer != null)
                     _kämpfer.PropertyChanged -= Kämpfer_PropertyChanged;
-                _kämpfer = value;
+                Set(ref _kämpfer, value);
                 if (_kämpfer != null)
                     _kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
-                OnChanged("Kämpfer");
             }
         }
 
@@ -89,7 +100,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     Kämpfer.Modifikatoren.Add(new Mod.PABonusDurchHoheIni(bonus));
                 //Wenn INI < 0 -> Kämpfer verliert eine (Angriffs)Aktion
                 AktionenBerechnen();
-                OnChanged("Angriffsaktionen"); OnChanged("Abwehraktionen"); OnChanged("Aktionen");
+
+                //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
+                //Dazwischen sollen die Aktionen allerdings neu berechnet werden
                 OnChanged("Initiative");
             }
         }
@@ -101,8 +114,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _team; }
             set
             {
-                _team = value;
-                OnChanged("Team");
+                Set(ref _team, value);
+
                 //ZLevel für den Bodenplan abhängig vom Team setzen und aktualisieren.
                 if (Kämpfer != null)
                 {
@@ -130,7 +143,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Kampf Kampf
         {
             get { return kampf; }
-            set { kampf = value; OnChanged("Kampf"); }
+            set { Set(ref kampf, value); }
         }
 
         public KämpferInfo(IKämpfer k, Kampf kampf)
@@ -156,6 +169,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         #region Aktionen
         private int _aktionen = 2;
+        [DependentProperty("Initiative")]
         public int Aktionen
         {
             get
@@ -189,12 +203,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             private set
             {
-                _freieAktionen = value;
-                OnChanged("FreieAktionen");
+                Set(ref _freieAktionen, value);
             }
         }
 
         private int _angriffsaktionen = 1;
+        [DependentProperty("Initiative")]
         public int Angriffsaktionen
         {
             get { return _angriffsaktionen; }
@@ -206,13 +220,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     value = Aktionen;
                 _angriffsaktionen = value;
                 _abwehraktionen = Aktionen - _angriffsaktionen;
-                AktionenBerechnen();
-                _abwehraktionen = Aktionen - _angriffsaktionen;
-                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+                AktionenNeuSetzen();
             }
         }
 
         private int _abwehraktionen = 1;
+        [DependentProperty("Initiative")]
         public int Abwehraktionen
         {
             get { return _abwehraktionen; }
@@ -224,9 +237,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     value = Aktionen;
                 _abwehraktionen = value;
                 _angriffsaktionen = Aktionen - _abwehraktionen;
-                AktionenBerechnen();
-                _angriffsaktionen = Aktionen - _abwehraktionen;
-                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+                AktionenNeuSetzen();
             }
         }
 
@@ -234,7 +245,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public int VerbrauchteAngriffsaktionen
         {
             get { return _verbrauchteAngriffsaktionen; }
-            set { _verbrauchteAngriffsaktionen = value; OnChanged("VerbrauchteAngriffsaktionen"); }
+            set { Set(ref _verbrauchteAngriffsaktionen, value); }
         }
 
         [DependentProperty("VerbrauchteAngriffsaktionen"), DependentProperty("Angriffsaktionen")]
@@ -247,7 +258,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public int VerbrauchteAbwehraktionen
         {
             get { return _verbrauchteAbwehraktionen; }
-            set { _verbrauchteAbwehraktionen = value; OnChanged("VerbrauchteAbwehraktionen"); }
+            set { Set(ref _verbrauchteAbwehraktionen, value); }
         }
 
         [DependentProperty("VerbrauchteAbwehraktionen"), DependentProperty("Abwehraktionen")]
@@ -260,7 +271,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public int VerbrauchteFreieAktionen
         {
             get { return _verbrauchteFreieAktionen; }
-            set { _verbrauchteFreieAktionen = value; OnChanged("VerbrauchteFreieAktionen"); }
+            set { Set(ref _verbrauchteFreieAktionen, value); }
         }
 
         [DependentProperty("VerbrauchteFreieAktionen"), DependentProperty("FreieAktionen")]
@@ -272,26 +283,30 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private void AktionenBerechnen()
         {
             int aktionen = 2;
+
+            //Wenn die Initiative auf 0 sinkt hat man nur noch eine Abwehraktion
+            //Bei längerfristigen Handlungen hat man nur noch eine Aktion pro KR
             if (Initiative < 0)
             {
                 aktionen = 1;
             }
-            var m = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
-            if (m != null) //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann 
+
+            //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann hat man maximal 2 Aktionen während die Abwehraktionen verfallen
+            var längerfristig = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
+            if (längerfristig != null)
             {
-                if (m.InitiativeModStart == 0)
+                if (längerfristig.InitiativeModStart == 0)
                 {
-                    //als erste Aktion: Angriffsaktionen = Math.Min(Math.Max(VerbleibendeDauer, 2), Aktionen)
                     Aktionen = aktionen;
                     _angriffsaktionen = Math.Min(2, Aktionen);
                     _abwehraktionen = 0;
                     return;
                 }
-                //als zweite Aktion: Abwehraktionen = 0
                 _abwehraktionen = 0;
             }
 
             bool parierwaffenII = false; bool todVonLinks = false;
+
             if (Kämpfer is Model.Gegner)
             {
                 Aktionen = (Kämpfer as Model.Gegner).Aktionen;
@@ -397,6 +412,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
             }
             //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
+
+            OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
         }
 
         //TODO Kampfstile in Kämpfer verschieben
@@ -408,10 +425,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (_kampfstil == value)
                     return;
-                _kampfstil = value;
+                Set(ref _kampfstil, value);
                 AktionenBerechnen();
-                OnChanged("Kampfstil");
-                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
             }
         }
 
@@ -419,7 +434,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public WaffenloserKampfstil WaffenloserKampfstil
         {
             get { return _waffenloserKampfstil; }
-            set { _waffenloserKampfstil = value; }
+            set { Set(ref _waffenloserKampfstil, value); }
         }
 
         public IEnumerable<ManöverInfo> AngriffsManöver
@@ -498,6 +513,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             AbwehrManöver.Clear();
         }
 
+        private void AktionenNeuSetzen()
+        {
+            Kampf.InitiativListe.RemoveAll(mi => mi.Manöver.Ausführender == this && mi.Start.Kampfrunde == Kampf.Kampfrunde);
+            Kampf.InitiativListe.AddRange(StandardAktionenSetzen(Kampf.Kampfrunde));
+        }
+
         public IEnumerable<ManöverInfo> StandardAktionenSetzen(int kampfrunde)
         {
             if (kampfrunde == 0)
@@ -540,13 +561,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         //wenn schon eine Angriffsaktion in der Liste ist, und i<Aktionen, dann zusatzaktion bei erste Angriffsaktion-4. sonst Attacke bei -8
                         if (ersterAngriff == null)
                         {
-                            yield return new ManöverInfo(new Attacke(this), Math.Min(i * -4, -8), kampfrunde);
+                            yield return new ManöverInfo(new Attacke(this), Math.Max(i * 4, 8), kampfrunde);
                         }
                         else
                         if (ersterAngriff != null)
                         {
                             if (zusatzAktionen > 0 && Abwehraktionen == 0 && i == Angriffsaktionen - 1) //es wurde umgewandelt.
-                                yield return new ManöverInfo(new Attacke(this), -8, kampfrunde);
+                                yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
                             else
                             {
                                 //4 ini-phasen nach dem ersten angriff
@@ -560,14 +581,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         if (Abwehraktionen == 1 && ersterAngriff != null &&
                             (Kämpfer is Model.Gegner || (Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")) &&
                             geplanteAktionen.Where(mi => mi.Manöver is TodVonLinks).Count() == 0)
-                            yield return new ManöverInfo(new TodVonLinks(this), Math.Min(i * -4, -8), kampfrunde);
+                            yield return new ManöverInfo(new TodVonLinks(this), Math.Max(i * 4, 8), kampfrunde);
                         else
-                            yield return new ManöverInfo(new Attacke(this), Math.Min(i * -4, -8), kampfrunde);
+                            yield return new ManöverInfo(new Attacke(this), Math.Max(i * 4, 8), kampfrunde);
                     }
                     else if (Kämpfer is Model.Gegner && Aktionen > 2)
-                        yield return new ManöverInfo(new Attacke(this), i * -4, kampfrunde);
+                        yield return new ManöverInfo(new Attacke(this), i * 4, kampfrunde);
                     else
-                        yield return new ManöverInfo(new Attacke(this), Math.Min(i * -4, -8), kampfrunde);
+                        yield return new ManöverInfo(new Attacke(this), Math.Max(i * 4, 8), kampfrunde);
                 }
             }
 
@@ -578,19 +599,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             for (int i = 0; i < Abwehraktionen; i++)
                 AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));
         }
-        #endregion
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnChanged(String info, object sender = null)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(sender ?? this, new PropertyChangedEventArgs(info));
-            }
-        }
-
         #endregion
 
         public void Dispose()

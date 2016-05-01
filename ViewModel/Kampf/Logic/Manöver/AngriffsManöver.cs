@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -154,16 +155,32 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             base.Init();
             Angriffsaktionen = 1;
+            Typ = ManöverTyp.Aktion;
         }
 
-        protected override IEnumerable<Probe> ProbenAnlegen()
+        public override void Ausführen()
         {
-            Probe p = new Probe();
-            p.Probenname = Name;
-            p.Werte = new int[] { Ausführender.Kämpfer.AT ?? 0 };
-            p.WerteNamen = "AT";
-            p.Modifikator = mods.Values.Sum(mod => mod.Result);
-            yield return p;
+            base.Ausführen();
+
+            foreach (var wz in WaffeZiel)
+            {
+                Probe p = new Probe();
+                p.Probenname = Name;
+                p.Werte = new int[] { wz.Key.AT };
+                p.WerteNamen = "AT";
+                p.Modifikator = Mods.Values.Sum(mod => mod.Result);
+                ViewHelper.ShowProbeDialog(p, Ausführender.Kämpfer as Held);
+
+                ProbeAuswerten(p, wz.Value);
+            }
+        }
+
+        protected override void Erfolg(Probe p, KämpferInfo ziel)
+        {
+            //TODO: Prüfen ob das Ziel pariert o.Ä.
+            //Ansonsten Schaden machen
+
+
         }
 
         //TODO JT: Wenn AusdauerImKampf

@@ -1,0 +1,240 @@
+﻿<UserControl x:Class="MeisterGeister.View.Kampf.KämpferView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeisterGeister.View.Kampf"
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+             xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
+             xmlns:model="clr-namespace:MeisterGeister.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
+        <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
+        <VM:TrefferpunkteOptionsConverter x:Key="TrefferpunkteOptionsConverter" />
+        <ViewGeneral:ValueConverterGroup x:Key="EnumMatchThenInvert">
+            <ViewGeneral:EnumMatchToBooleanConverter />
+            <ViewGeneral:InverseBooleanConverter />
+        </ViewGeneral:ValueConverterGroup>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="0,8,0,0" Orientation="Vertical">
+            <!-- Lebensenergie -->
+            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}">
+                <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
+                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=LebensenergieMax}" ToolTip="Maximale Lebensenergie" />
+                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=LebensenergieAktuell}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" ShowButtons="True" />
+                <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding}" />
+            </StackPanel>
+            <!-- Ausdauer -->
+            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}">
+                <TextBlock Text="AU:" Margin="2,6,2,2" Width="25" />
+                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding AusdauerMax}" ToolTip="Maximale Ausdauer" />
+                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding AusdauerAktuell}" ToolTip="Aktuelle Ausdauer" FontWeight="Bold" ShowButtons="True" />
+                <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding}" />
+            </StackPanel>
+            <!-- Astralenergie -->
+            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}" Visibility="{Binding Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                <TextBlock Text="AE:" Margin="2,6,2,2" Width="25" />
+                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding AstralenergieMax}" ToolTip="Maximale Astralenergie" />
+                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=AstralenergieAktuell}" ToolTip="Aktuelle Astralenergie" FontWeight="Bold" ShowButtons="True" />
+                <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding}" />
+            </StackPanel>
+            <!-- Karmaenergie -->
+            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}" Visibility="{Binding Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                <TextBlock Text="KE:" Margin="2,6,2,2" Width="25" />
+                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=KarmaenergieMax}" ToolTip="Maximale Karmaenergie" />
+                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=KarmaenergieAktuell}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" ShowButtons="True" />
+                <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding}" />
+            </StackPanel>
+            
+            <local:SchadenMachenView Margin="0,8,0,0" DataContext="{Binding SchadenMachen}" HorizontalAlignment="Left"/>
+
+            <StackPanel Orientation="Horizontal" Margin="4" ToolTip="Der Hinweis-Text wird in der INI-Liste angezeigt.">
+                <TextBlock Text="Hinweis-Text:" FontWeight="Bold" VerticalAlignment="Center" />
+                <TextBox HorizontalAlignment="Stretch" Width="250" Margin="4,0,0,0" Text="{Binding HinweisText}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <local:KämpferZonenView Grid.Row="0" Grid.Column="1" Margin="5" DataContext="{Binding Kämpfer}"/>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding Kämpfer}">
+            <StackPanel.Resources>
+                <DataTemplate DataType="{x:Type model:Held}">
+                    <StackPanel Orientation="Vertical">
+                        <ListBox ItemsSource="{Binding Path=Nahkampfwaffen, IsAsync=True}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel.ToolTip>
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Talent " FontWeight="Bold" />
+                                                    <TextBlock Text="{Binding Talent.Talentname}" Margin="2,0,4,0" />
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding Bemerkung}" Margin="2,0,2,0" />
+                                            </StackPanel>
+                                        </StackPanel.ToolTip>
+                                        <TextBlock Text="{Binding Name}" MinWidth="150" />
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
+                                                                                  StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
+                                            <StackPanel Orientation="Horizontal" MinWidth="50">
+                                                <StackPanel.ToolTip>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="TP " FontWeight="Bold" />
+                                                        <TextBlock Text="{Binding TPStringOhneKK}" Margin="2,0,4,0" />
+                                                        <TextBlock Text="TP/KK" FontWeight="Bold" />
+                                                        <TextBlock Text="{Binding TPKKString}" Margin="2,0,4,0" />
+                                                        <TextBlock Text="-> " FontWeight="Bold" />
+                                                        <TextBlock Text="{Binding TPKKBonus}" Margin="2,0,0,0" />
+                                                    </StackPanel>
+                                                </StackPanel.ToolTip>
+                                                <TextBlock Text="TP " FontWeight="Bold" />
+                                                <TextBlock Text="{Binding TPString}" Margin="2,0,0,0" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
+                                                <TextBlock Text="{Binding Distanzklasse}" Margin="2,0,0,0" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="INI " FontWeight="Bold" Margin="20,0,0,0" />
+                                                <TextBlock Text="{Binding INI}" Margin="2,0,0,0" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="WM " FontWeight="Bold" Margin="20,0,0,0" />
+                                                <TextBlock Text="{Binding WMString}" Margin="2,0,0,0" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <ListBox ItemsSource="{Binding Path=Fernkampfwaffen, IsAsync=True}" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" MinWidth="150" />
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding FernkampfOhneMod}" Wert="{Binding AT}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
+                                            <TextBlock Text="TP " FontWeight="Bold" />
+                                            <TextBlock Text="{Binding TPString}" Margin="2,0,0,0" />
+                                            <TextBlock Text="Reichweite " FontWeight="Bold" Margin="20,0,0,0" />
+                                            <TextBlock Text="{Binding Reichweiten}" Margin="2,0,0,0" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type model:Gegner}">
+                    <ListBox ItemsSource="{Binding Path=Angriffe, IsAsync=True}" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" ToolTip="{Binding Bemerkung}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" MinWidth="150" />
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" Visibility="{Binding IsFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" Visibility="{Binding IsNahkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding AT}" Wert="{Binding Attacke}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding IsNahkampf, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
+                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
+                                                                                  StartWert="{Binding PA}" Wert="{Binding Parade}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="25,0,0,0" Visibility="{Binding IsBasisNot, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                        <TextBlock Text="TP " FontWeight="Bold" />
+                                        <TextBlock Text="{Binding TP}" Margin="2,0,0,0" />
+                                        <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
+                                        <TextBlock Text="{Binding DK}" Margin="2,0,0,0" />
+                                        <TextBlock Text="Reichweite " FontWeight="Bold" Margin="20,0,0,0" Visibility="{Binding IsFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                        <TextBlock Text="{Binding Reichweite}" Margin="2,0,0,0" Visibility="{Binding IsFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DataTemplate>
+            </StackPanel.Resources>
+            <TextBox Margin="4" Text="{Binding Path=Bemerkung}" ToolTip="Bemerkungen" TextWrapping="Wrap" AcceptsReturn="True">
+                <!--<TextBox.BorderBrush>
+                    <SolidColorBrush />
+                </TextBox.BorderBrush>
+                <TextBox.Background>
+                    <SolidColorBrush />
+                </TextBox.Background>-->
+            </TextBox>
+            <ContentPresenter Content="{Binding}" />
+            <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding Modifikatoren}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" HorizontalAlignment="Left" />
+                            <ViewGeneral:LiteraturControl DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Padding="2,0,2,0" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding Auswirkung}" HorizontalAlignment="Right" Margin="4,0,4,0" FontStyle="Italic" Foreground="#FF6C6C6C" />
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <!--<StackPanel Grid.Row="0" Margin="6,0,0,0" Orientation="Horizontal">
+                <TextBlock Text="INI (Aktuell):" Margin="4,6,4,2" />
+                <ViewGeneral:IntBox Margin="2" MinWidth="60" Value="{Binding Path=Initiative}" ToolTip="Initiative" FontWeight="Bold" ShowButtons="True" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}">
+                <TextBlock Margin="10,6,2,2" Text="WS: " />
+                <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen" MinWidth="80">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} / {1} / {2}">
+                            <Binding Path="Wundschwelle" Mode="OneWay"/>
+                            <Binding Path="Wundschwelle2" Mode="OneWay"/>
+                            <Binding Path="Wundschwelle3" Mode="OneWay"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Margin="10,6,2,2" Text="GS: " ToolTip="Geschwindigkeit (GS)" />
+                <TextBlock Text="{Binding Path=Geschwindigkeit, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Geschwindigkeit (GS)" />
+                <TextBlock Margin="10,6,2,2" Text="MR: " ToolTip="Magieresistenz (MR)" />
+                <TextBlock Text="{Binding Path=MR, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Körper)" />
+                <TextBlock Margin="0,6,0,2" Text="/" />
+                <TextBlock Text="{Binding Path=MRGeist, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Geist)" />
+                <ComboBox SelectedValue="{Binding Path=Position, Converter={StaticResource PositionenValues}}" ItemsSource="{StaticResource PositionenValues}" Width="100" ToolTip="Position"/>
+            </StackPanel>-->
+    </Grid>
+</UserControl>

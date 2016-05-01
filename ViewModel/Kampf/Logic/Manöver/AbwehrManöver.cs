@@ -1,5 +1,6 @@
 ﻿using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
+using MeisterGeister.View.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,23 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string LINKSHÄNDER_MOD = "Linkshänder";
         public const string FINTE_MOD = "Finte";
 
+        protected NahkampfModifikator<bool> linkshänder;
+        protected NahkampfModifikator<bool> glücklich;
+        protected NahkampfModifikator<int> finte;
+
         protected override void InitMods()
         {
             base.InitMods();
 
-            NahkampfModifikator<bool> linkshänder = new NahkampfModifikator<bool>(this);
+            linkshänder = new NahkampfModifikator<bool>(this);
             linkshänder.GetMod = LinkshänderMod;
             mods.Add(LINKSHÄNDER_MOD, linkshänder);
 
-            NahkampfModifikator<bool> glücklich = new NahkampfModifikator<bool>(this);
+            glücklich = new NahkampfModifikator<bool>(this);
             glücklich.GetMod = GlücklichMod;
             mods.Add(GLÜCKLICH_MOD, glücklich);
 
-            NahkampfModifikator<int> finte = new NahkampfModifikator<int>(this);
+            finte = new NahkampfModifikator<int>(this);
             mods.Add(FINTE_MOD, finte);
         }
 
@@ -111,19 +116,27 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         //TODO JT: In der Probe muss hier ein Paradeerleichterungsmodifikator abgefragt werden. Ebenso Paradeerschwernisse durch Finten oder Linkshändig.
         //Gezielte Schläge sind einfacher zu parieren. (Modifikator mit dem angreifenden Manöver gespeichert zur Verifikation)
 
-        protected override IEnumerable<Probe> ProbenAnlegen()
+        public override void Ausführen()
         {
-            Probe p = new Probe();
-            p.Probenname = Name;
-            p.Werte = new int[] { Ausführender.Kämpfer.PA ?? 0 };
-            p.WerteNamen = "PA";
-            yield return p;
+            base.Ausführen();
+
+            foreach (var wz in WaffeZiel)
+            {
+                Probe p = new Probe();
+                p.Probenname = Name;
+                p.Werte = new int[] { Ausführender.Kämpfer.PA ?? 0 };
+                p.WerteNamen = "PA";
+                ViewHelper.ShowProbeDialog(p, Ausführender.Kämpfer as Held);
+
+                ProbeAuswerten(p, wz.Value);
+            }
         }
 
         protected override void Init()
         {
             base.Init();
             Abwehraktionen = 1;
+            Typ = ManöverTyp.Reaktion;
         }
 
         //TODO JT: Wenn AusdauerImKampf

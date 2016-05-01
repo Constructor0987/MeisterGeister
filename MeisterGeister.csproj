@@ -730,9 +730,11 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\FernkampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Finte.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\GezielterStich.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\GezieltesAusweichen.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\KampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\ManöverModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\NahkampfManöver.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\SonstigesManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Todesstoß.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Zauber.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Wassertiefe.cs" />
@@ -1086,6 +1088,12 @@
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Kampf\KämpferView.xaml.cs">
+      <DependentUpon>KämpferView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\KämpferZonenView.xaml.cs">
+      <DependentUpon>KämpferZonenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Kampf\ManöverSymbol.xaml.cs">
       <DependentUpon>ManöverSymbol.xaml</DependentUpon>
     </Compile>
@@ -1095,14 +1103,23 @@
     <Compile Include="View\Kampf\Manöver\FernkampfOptionenView.xaml.cs">
       <DependentUpon>FernkampfOptionenView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Kampf\Manöver\GezieltesAusweichenOptionenView.xaml.cs">
+      <DependentUpon>GezieltesAusweichenOptionenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Kampf\Manöver\ManöverOptionenView.xaml.cs">
       <DependentUpon>ManöverOptionenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\Manöver\ParadeOptionenView.xaml.cs">
       <DependentUpon>ParadeOptionenView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Kampf\Manöver\SonstigesOptionenView.xaml.cs">
+      <DependentUpon>SonstigesOptionenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Kampf\Manöver\ZauberOptionenView.xaml.cs">
       <DependentUpon>ZauberOptionenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\SchadenMachenView.xaml.cs">
+      <DependentUpon>SchadenMachenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\BekanntePflanzenView.xaml.cs">
       <DependentUpon>BekanntePflanzenView.xaml</DependentUpon>
@@ -1643,6 +1660,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Kampf\KämpferView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\KämpferZonenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Kampf\ManöverSymbol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1652,6 +1677,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kampf\Manöver\FernkampfOptionenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Manöver\GezieltesAusweichenOptionenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1667,7 +1696,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Kampf\Manöver\SonstigesOptionenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Kampf\Manöver\ZauberOptionenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\SchadenMachenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -2447,6 +2484,7 @@
     <Content Include="Daten\Updateskripte\UpdateTo_V0121.sql" />
     <Resource Include="Images\Icons\Karte\pin56.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0122.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0123.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

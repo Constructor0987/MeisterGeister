@@ -1,4 +1,6 @@
-﻿using MeisterGeister.Model;
+﻿using MeisterGeister.Logic.General;
+using MeisterGeister.Model;
+using MeisterGeister.View.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +15,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        //public NahkampfManöver(KämpferInfo ausführender, IDictionary<INahkampfwaffe, KämpferInfo> waffe_ziel)
-        //    : base(ausführender, waffe_ziel)
-        //{ }
-
-        //public NahkampfManöver(KämpferInfo ausführender, INahkampfwaffe waffe, KämpferInfo ziel)
-        //    : base(ausführender, waffe, ziel)
-        //{ }
-
         #region Mods
 
         public const string WASSER_MOD = "Wasser";
@@ -32,23 +26,34 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string ÜBERZAHL_MOD = "Überzahl";
         public const string UNBEWAFFNET_MOD = "Unbewaffnet";
 
+        protected NahkampfModifikator<Lichtstufe> licht;
+        protected NahkampfModifikator<Wassertiefe> wasser;
+        protected NahkampfModifikator<bool> beengt;
+        protected NahkampfModifikator<int> distanzklasse;
+        protected NahkampfModifikator<Position> position_selbst;
+        protected NahkampfModifikator<Position> position_gegner;
+        protected NahkampfModifikator<bool> falscheHand;
+        protected NahkampfModifikator<int> überzahl;
+        protected NahkampfModifikator<bool> unbewaffnet;
+        protected NahkampfModifikator<Größe> größe;
+
         protected override void InitMods()
         {
             base.InitMods();
 
-            NahkampfModifikator<Lichtstufe> licht = new NahkampfModifikator<Lichtstufe>(this);
+            licht = new NahkampfModifikator<Lichtstufe>(this);
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
 
-            NahkampfModifikator<Wassertiefe> wasser = new NahkampfModifikator<Wassertiefe>(this);
+            wasser = new NahkampfModifikator<Wassertiefe>(this);
             wasser.GetMod = WasserMod;
             mods.Add(WASSER_MOD, wasser);
 
-            NahkampfModifikator<bool> beengt = new NahkampfModifikator<bool>(this);
+            beengt = new NahkampfModifikator<bool>(this);
             beengt.GetMod = BeengtMod;
             mods.Add(BEENGT_MOD, beengt);
 
-            NahkampfModifikator<int> distanzklasse = new NahkampfModifikator<int>(this);
+            distanzklasse = new NahkampfModifikator<int>(this);
             mods.Add(DISTANZLASSE_MOD, distanzklasse);
 
             //----------POSITION----------
@@ -177,5 +182,53 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         #endregion
+
+        protected override void Init()
+        {
+            base.Init();
+            //TODO: Sinnvolles Standardziel auswählen
+            WaffeZiel[Ausführender.Kämpfer.Angriffswaffen.First()] = null;
+        }
+
+        protected override void Patzer(Probe p, KämpferInfo ziel)
+        {
+            int random = ViewHelper.ShowWürfelDialog("2W6", "Patzer");
+            switch(random)
+            {
+                case 2:
+                    //Waffe zerstört
+                    Ausführender.Initiative -= 4;
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    //Sturz
+                    Ausführender.Initiative -= 2;
+                    Ausführender.Kämpfer.Position = Position.Liegend;
+                    break;
+                case 6:
+                case 7:
+                case 8:
+                    //Stolpern
+                    Ausführender.Initiative -= 2;
+                    break;
+                case 9:
+                case 10:
+                    //Waffe verloren
+                    Ausführender.Initiative -= 2;
+                    break;
+                case 11:
+                    //Selbst verletzt
+                    Ausführender.Initiative -= 3;
+                    break;
+                case 12:
+                    //Schwerer Eigentreffer
+                    Ausführender.Initiative -= 4;
+                    break;
+            }
+
+            //Misserfolg
+            base.Patzer(p, ziel);
+        }
     }
 }

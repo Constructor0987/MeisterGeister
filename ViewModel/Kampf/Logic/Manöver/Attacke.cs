@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -18,9 +19,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Literatur = "WdS 59";
         }
 
-        protected override void Erfolg(IKämpfer ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel)
         {
-            //TODO: Parade des Ziels anfordern und schaden machen
+            
         }
     }
 }

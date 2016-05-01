@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:MeisterGeister.View.Kampf.Manöver"
              xmlns:General="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="324">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="24"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="26"/>

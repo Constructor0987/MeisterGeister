@@ -19,6 +19,12 @@
         <DataTemplate DataType="{x:Type Manöver:FernkampfManöver}">
             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png"/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type Manöver:SonstigesManöver}">
+            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Manöver:GezieltesAusweichen}">
+            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png"/>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <ContentControl Content="{Binding Manöver}"/>

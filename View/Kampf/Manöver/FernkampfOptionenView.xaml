@@ -14,7 +14,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="24"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="26"/>
@@ -35,8 +35,8 @@
 
         <!--Wuchtschlag-->
         <TextBlock Grid.Row="1" Text="Ansage"/>
-        <Slider Grid.Row="1" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Wuchtschlag].Value}"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Mods[Wuchtschlag].Result}"/>
+        <Slider Grid.Row="1" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Ansage].Value}"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Mods[Ansage].Result}"/>
 
         <TextBlock Grid.Row="2" Text="Trefferzone"/>
         <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{StaticResource trefferzonenValues}" SelectedItem="{Binding Mods[Trefferzone].Value,Converter={StaticResource trefferzonenValues}}"/>
@@ -65,7 +65,11 @@
         <TextBlock Grid.Row="9" Grid.ColumnSpan="3" Text="Gegner" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
         <TextBlock Grid.Row="10" Text="Entfernung"/>
-        <ViewGeneral:IntBox Grid.Row="10" Grid.Column="1" ShowButtons="True" Value="{Binding Mods[Entfernung].Value}"/>
+        <DockPanel Grid.Row="10" Grid.Column="1">
+            <Slider Value="{Binding Mods[Entfernung].Value}" Minimum="0" Maximum="100" DockPanel.Dock="Left" Width="100"/>
+            <ViewGeneral:IntBox DockPanel.Dock="Right" ShowButtons="True" Value="{Binding Mods[Entfernung].Value}"/>
+        </DockPanel>
+        
         <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Mods[Entfernung].Result}"/>
 
         <!--Zielgröße-->

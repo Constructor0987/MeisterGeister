@@ -11,7 +11,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     public class ManöverInfo : ViewModelBase, IDisposable
     {
-        #region Commands
+        #region Umwandeln
+
+        private bool CanExecuteUmwandelnAktion(object o)
+        {
+            return Manöver.Typ == Logic.Manöver.ManöverTyp.Aktion;
+        }
+
+        private bool CanExecuteUmwandelnReaktion(object o)
+        {
+            return Manöver.Typ == Logic.Manöver.ManöverTyp.Reaktion;
+        }
 
         private Base.CommandBase umwandelnZauber;
         public Base.CommandBase UmwandelnZauber
@@ -20,7 +30,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (umwandelnZauber == null)
                 {
-                    umwandelnZauber = new CommandBase(ExecuteUmwandelnZauber, null);
+                    umwandelnZauber = new CommandBase(ExecuteUmwandelnZauber, CanExecuteUmwandelnAktion);
                 }
                 return umwandelnZauber;
             }
@@ -39,7 +49,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (umwandelnFernkampf == null)
                 {
-                    umwandelnFernkampf = new CommandBase(ExecuteUmwandelnFernkampf, null);
+                    umwandelnFernkampf = new CommandBase(ExecuteUmwandelnFernkampf, CanExecuteUmwandelnAktion);
                 }
                 return umwandelnFernkampf;
             }
@@ -57,7 +67,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (umwandelnAttacke == null)
-                    umwandelnAttacke = new CommandBase(ExecuteUmwandelnAttacke, null);
+                    umwandelnAttacke = new CommandBase(ExecuteUmwandelnAttacke, CanExecuteUmwandelnAktion);
                 return umwandelnAttacke;
             }
         }
@@ -67,7 +77,55 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Manöver = new Manöver.Attacke(Manöver.Ausführender);
         }
 
+        private Base.CommandBase umwandelnSonstiges;
+        public Base.CommandBase UmwandelnSonstiges
+        {
+            get
+            {
+                if (umwandelnSonstiges == null)
+                    umwandelnSonstiges = new CommandBase(ExecuteUmwandelnSonstiges, CanExecuteUmwandelnAktion);
+                return umwandelnSonstiges;
+            }
+        }
 
+        private void ExecuteUmwandelnSonstiges(object o)
+        {
+            Manöver = new Manöver.SonstigesManöver(Manöver.Ausführender);
+        }
+
+        private Base.CommandBase umwandelnParade;
+        public Base.CommandBase UmwandelnParade
+        {
+            get
+            {
+                if (umwandelnParade == null)
+                    umwandelnParade = new CommandBase(ExecuteUmwandelnParade, CanExecuteUmwandelnReaktion);
+                return umwandelnParade;
+            }
+        }
+
+        private void ExecuteUmwandelnParade(object o)
+        {
+            Manöver = new Manöver.Parade(Manöver.Ausführender);
+        }
+
+        private Base.CommandBase umwandelnGezieltesAusweichen;
+        public Base.CommandBase UmwandelnGezieltesAusweichen
+        {
+            get
+            {
+                if (umwandelnGezieltesAusweichen == null)
+                    umwandelnGezieltesAusweichen = new CommandBase(ExecuteUmwandelnGezieltesAusweichen, CanExecuteUmwandelnReaktion);
+                return umwandelnGezieltesAusweichen;
+            }
+        }
+
+        private void ExecuteUmwandelnGezieltesAusweichen(object o)
+        {
+            Manöver = new Manöver.GezieltesAusweichen(Manöver.Ausführender);
+        }
+
+        #endregion
 
         private Base.CommandBase aktivieren;
         public Base.CommandBase Aktivieren
@@ -91,7 +149,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //Ein Manöver kann nur aufgespart werden wenn es dran ist
                 //Längerfristige Aktionen können nicht aufgespart werden
                 //Länger Zielen und Zauber bereithalten können erreicht werden indem die Aktionsdauer verändert wird
-                return Start == End && Start == Kampf.AktuelleAktionszeit;
+                //return Start == End && Start == Kampf.AktuelleAktionszeit;
+
+                //Hinweis: Aufsparen ist immer aktiviert da bei Helden mit Aufmerksamkeit passieren kann dass Aktionen aufgespart werden, und anschließend umgewandelt wird
+                return true;
+                
             }
             //Aktivieren
             else
@@ -118,7 +180,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
-        #endregion
+        
 
         #region Kampfaktionen
 
@@ -289,8 +351,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     manöver.PropertyChanged += Manöver_PropertyChanged;
                     manöver.Ausführender.PropertyChanged += Kämpfer_PropertyChanged;
-                    BerechneStart();
-                    BerechneEnd();
+                    //Bei Abwehrmanövern sollen sich die Aktionszeiten nicht ändern
+                    if (!(Manöver is Manöver.AbwehrManöver))
+                    {
+                        BerechneStart();
+                        BerechneEnd();
+                    }
                 }
 
                 OnChanged("Manöver");
@@ -303,11 +369,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 BerechneEnd();
             }
-        }
-
-        void manöver_OnAusführung(object sender)
-        {
-            //Ausgeführt = true;
         }
 
         [DependentProperty("Manöver")]

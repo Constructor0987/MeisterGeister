@@ -63,6 +63,8 @@ namespace MeisterGeister.ViewModel.Kampf
                     //Log(string.Format("Wunde(n) bei '{0}': {1} Wunde(n) in Zone {2}", k.Name, wunden, zone));
                 }
             }
+
+            LetzteTrefferzone = zone;
         }
 
         private int schaden = 5;
@@ -107,13 +109,19 @@ namespace MeisterGeister.ViewModel.Kampf
             set { Set(ref keineWunden, value); }
         }
 
-
-
         private Trefferzone trefferzone = Trefferzone.Zufall;
         public Trefferzone Trefferzone
         {
             get { return trefferzone; }
             set { Set(ref trefferzone, value); }
         }
+
+        private Trefferzone letzteTrefferzone = Trefferzone.Unlokalisiert;
+        public Trefferzone LetzteTrefferzone
+        {
+            get { return letzteTrefferzone; }
+            private set { Set(ref letzteTrefferzone, value); }
+        }
+
     }
 }

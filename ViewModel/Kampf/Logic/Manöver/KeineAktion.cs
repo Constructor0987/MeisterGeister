@@ -12,13 +12,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender)
         { }
 
-        protected override void Erfolg(IKämpfer ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel)
         {
-        }
-
-        protected override IEnumerable<Probe> ProbenAnlegen()
-        {
-            return null;
         }
     }
 }

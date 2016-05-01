@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -12,7 +13,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
     {
         public FernkampfManöver(KämpferInfo ausführender) : base(ausführender)
         {
-
         }
 
         #region Mods
@@ -22,33 +22,55 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string NAHKAMPF_MOD = "Nahkampf";
         public const string HANDGEMENGE_MOD = "Handgemenge";
         public const string ZIELEN_MOD = "Zielen";
+        public const string ANSAGE_MOD = "Ansage";
+
+        protected FernkampfModifikator<Lichtstufe> licht;
+        protected FernkampfModifikator<Größe> größe;
+        protected FernkampfModifikator<int> distanz;
+        protected FernkampfModifikator<Trefferzone> trefferzone;
+        protected FernkampfModifikator<int> nahkampf;
+        protected FernkampfModifikator<int> handgemenge;
+        protected FernkampfModifikator<int> zielen;
+        protected FernkampfModifikator<int> ansage;
 
         protected override void InitMods()
         {
             base.InitMods();
-            FernkampfModifikator<Lichtstufe> licht = new FernkampfModifikator<Lichtstufe>(this);
+
+            licht = new FernkampfModifikator<Lichtstufe>(this);
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
 
-            FernkampfModifikator<int> distanz = new FernkampfModifikator<int>(this);
+            größe = new FernkampfModifikator<Größe>(this);
+            größe.GetMod = GrößeMod;
+            mods.Add(GRÖSSE_MOD, größe);
+
+            distanz = new FernkampfModifikator<int>(this);
             distanz.GetMod = DistanzMod;
             mods.Add(DISTANZ_MOD, distanz);
 
-            FernkampfModifikator<Trefferzone> trefferzone = new FernkampfModifikator<Trefferzone>(this);
+            trefferzone = new FernkampfModifikator<Trefferzone>(this);
             trefferzone.GetMod = TrefferzoneMod;
             mods.Add(TREFFERZONE_MOD, trefferzone);
 
-            FernkampfModifikator<int> nahkampf = new FernkampfModifikator<int>(this);
+            nahkampf = new FernkampfModifikator<int>(this);
             nahkampf.GetMod = NahkampfMod;
             mods.Add(NAHKAMPF_MOD, nahkampf);
 
-            FernkampfModifikator<int> handgemenge = new FernkampfModifikator<int>(this);
+            handgemenge = new FernkampfModifikator<int>(this);
             handgemenge.GetMod = HandgemengeMod;
             mods.Add(HANDGEMENGE_MOD, handgemenge);
 
-            FernkampfModifikator<int> zielen = new FernkampfModifikator<int>(this);
+            zielen = new FernkampfModifikator<int>(this);
             zielen.GetMod = ZielenMod;
+            mods.Add(ZIELEN_MOD, zielen);
+            zielen.Value = 1;
+
+            ansage = new FernkampfModifikator<int>(this);
+            ansage.GetMod = AnsageMod;
+            mods.Add(ANSAGE_MOD, ansage);
         }
+
 
         private int SchützenIndex(IFernkampfwaffe waffe)
         {
@@ -131,6 +153,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         private int DistanzMod(IFernkampfwaffe waffe, int distanz)
         {
+            if (waffe == null)
+                return 0;
             int mod;
             if (distanz <= waffe.RWSehrNah)
                 mod = -2;
@@ -190,21 +214,72 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         private int ZielenMod(IFernkampfwaffe waffe, int value)
         {
+            int mod = 0;
             if (value == 0)
-                return new int[] { 2, 1, 0 }[SchützenIndex(waffe)];
-            else return -Math.Min(4, (int)Math.Floor(new double[] { 0.5, 1, 1 }[SchützenIndex(waffe)] * (value - 1)));
+                mod= new int[] { 2, 1, 0 }[SchützenIndex(waffe)];
+            else mod= -Math.Min(4, (int)Math.Floor(new double[] { 0.5, 1, 1 }[SchützenIndex(waffe)] * (value - 1)));
+            //TODO: Ladezeit eintragen
+            //Ladezeit + zielen + Schuss
+            Dauer = 2 + value + 1;
+            return mod;
+        }
+
+        private int AnsageMod(IFernkampfwaffe waffe, int value)
+        {
+            Held held = Ausführender.Kämpfer as Held;
+            if (SchützenIndex(waffe) > 0)
+            {
+                return value;
+            }
+            else return Math.Max(0, value * 2 - 1);
         }
 
         #endregion
 
-        protected override void Erfolg(IKämpfer ziel)
+        protected override void Init()
         {
-            throw new NotImplementedException();
+            base.Init();
+            //TODO: Aktionen?
+            Typ = ManöverTyp.Aktion;
         }
 
-        protected override IEnumerable<Probe> ProbenAnlegen()
+        protected override void Erfolg(Probe p, KämpferInfo ziel)
         {
-            throw new NotImplementedException();
+            //TODO: Implementieren
+        }
+
+        //TODO: Ausführen implementieren
+
+        protected override void Patzer(Probe p, KämpferInfo ziel)
+        {
+            int random = ViewHelper.ShowWürfelDialog("2W6", "Patzer");
+            switch (random)
+            {
+                case 2:
+                    //Waffe zerstört
+                    Ausführender.Initiative -= 4;
+                    break;
+                case 3:
+                    //Waffe beschädigt
+                    Ausführender.Initiative -= 3;
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 9:
+                case 10:
+                    //Fehlschuss
+                    Ausführender.Initiative -= 2;
+                    break;
+                case 11:
+                case 12:
+                    //Kamerad getroffen
+                    Ausführender.Initiative -= 3;
+                    break;
+            }
+
+            base.Patzer(p, ziel);
         }
     }
 }

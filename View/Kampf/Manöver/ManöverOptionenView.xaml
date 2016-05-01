@@ -35,11 +35,17 @@
         <DataTemplate DataType="{x:Type Manöver:Parade}">
             <ViewManöver:ParadeOptionenView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type Manöver:GezieltesAusweichen}">
+            <ViewManöver:GezieltesAusweichenOptionenView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type Manöver:Zauber}">
             <ViewManöver:ZauberOptionenView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type Manöver:FernkampfManöver}">
             <ViewManöver:FernkampfOptionenView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Manöver:SonstigesManöver}">
+            <ViewManöver:SonstigesOptionenView/>
         </DataTemplate>
     </UserControl.Resources>
 

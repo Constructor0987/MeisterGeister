@@ -10,6 +10,9 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -91,6 +94,23 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get { return InitiativListe.Where(mi => mi.Aktionszeiten.Contains(AktuelleAktionszeit)); }
         }
+
+        private Lichtstufe licht = Lichtstufe.Tageslicht;
+        public Lichtstufe Licht
+        {
+            get { return licht; }
+            set
+            {
+                Set(ref licht, value);
+                foreach (ManöverInfo mi in InitiativListe)
+                {
+                    KampfManöver<IWaffe> manöver = mi.Manöver as KampfManöver<IWaffe>;
+                    if (manöver != null)
+                        ((ManöverModifikator<Lichtstufe, IWaffe>)manöver.Mods[KampfManöver<IWaffe>.LICHT_MOD]).Value = value;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Speichert einen Text im Kampf-Log.
@@ -247,6 +267,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 InitiativListe.RemoveAt(0);
         }
 
+    }
+
+    public class DoubleLichtConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (int)(Lichtstufe)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (Lichtstufe)(int)Math.Round((double)value);
+        }
     }
 
     [Flags]

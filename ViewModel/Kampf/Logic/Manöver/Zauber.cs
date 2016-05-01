@@ -50,6 +50,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             base.Init();
             Name = "Zauber: ";
+            //TODO: Literatur
+            Typ = ManöverTyp.Aktion;
         }
 
         #region Mods
@@ -172,15 +174,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         #endregion
 
-        protected override void Erfolg(IKämpfer ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel)
         {
 
-        }
-
-        protected override IEnumerable<Probe> ProbenAnlegen()
-        {
-            //TODO: Implementieren
-            yield return new Probe();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.Logic.General;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,7 +42,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Literatur = "WdS 66";
         }
 
-        protected override void Erfolg(IKämpfer ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel)
         {
             //Bei Erfolg passiert garnichts
         }
