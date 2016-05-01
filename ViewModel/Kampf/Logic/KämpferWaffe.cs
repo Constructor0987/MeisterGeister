@@ -56,7 +56,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //    }
         //}
 
-        public Held_Talent Talent
+        public Talent Talent
+        {
+            get
+            {
+                if (_talent == null)
+                    return null;
+                return _talent.Talent;
+            }
+        }
+
+        public Held_Talent Held_Talent
         {
             get
             {
@@ -358,7 +368,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //    }
         //}
 
-        public Held_Talent Talent
+        public Talent Talent
+        {
+            get
+            {
+                if (_talent == null)
+                    return null;
+                return _talent.Talent;
+            }
+        }
+
+        public Held_Talent Held_Talent
         {
             get
             {

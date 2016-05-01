@@ -16,6 +16,11 @@ namespace MeisterGeister.Model
         {
             get { return 0; }
         }
+
+        public Talent Talent
+        {
+            get { return null; }
+        }
         #endregion
 
         #region IFernkampfwaffe
