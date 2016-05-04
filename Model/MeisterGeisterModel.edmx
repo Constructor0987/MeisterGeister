@@ -1769,7 +1769,7 @@
     <Property Name="Merkmale" Type="nvarchar" MaxLength="300" />
     <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
     <Property Name="ZauberGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Zauberdauer" Type="nvarchar" MaxLength="300" />
+    <Property Name="Zauberdauer" Type="int" />
     <Property Name="Wirkungsdauer" Type="nvarchar" MaxLength="300" />
     <Property Name="Reichweite" Type="nvarchar" MaxLength="300" />
     <Property Name="Wirkungsradius" Type="nvarchar" MaxLength="300" />
@@ -5183,7 +5183,7 @@
     <Property Name="Merkmale" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Literatur" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="ZauberGUID" Type="Guid" Nullable="false" />
-    <Property Name="Zauberdauer" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="Zauberdauer" Type="Int32" />
     <Property Name="Wirkungsdauer" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Reichweite" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Wirkungsradius" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
@@ -7925,7 +7925,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="4f1ed2597f4b4aacb3f0307e987753b5" Name="Diagram1">
+      <Diagram DiagramId="c29330aad3ed405baad565619ec16f99" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="2.75" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="7.25" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="5" PointY="11.625" IsExpanded="true" />

@@ -33,11 +33,11 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
         {
             get
             {
-                double zd = Int32.Parse(zauber.Zauberdauer);
+                int zd = zauber.Zauberdauer ?? 0;
                 if (!held.HatSonderfertigkeitUndVoraussetzungen("Matrixverständnis"))
                     zd += ZentraleKomponenteModDauer + TechnikModDauer + ReichweiteModDauer + KostenModDauer + WirkungsdauerModDauer + WirkungsdauerFestDauer + ZielModDauer + WirkungsradiusModDauer;
                 zd *= ZauberdauerModDauer;
-                return (int)Math.Round(zd, MidpointRounding.AwayFromZero); //TODO Min 1 Akt
+                return Math.Max(1, zd);
             }
         }
 

@@ -172,11 +172,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return value * 12;
         }
 
+
+
         #endregion
 
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel, IWaffe waffe, ManöverEventArgs e_init)
         {
-
+            //TODO: Logeintrag o.Ä. schreiben damit der Meister weis was zu tun ist
+            //Zauberwirkungen sind sehr vielfältig und werden wohl vorerst nicht von MG abgedeckt werden
         }
     }
 }

@@ -178,7 +178,7 @@ namespace MeisterGeister.Model
         private System.Guid _zauberGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Zauberdauer
+        public virtual Nullable<int> Zauberdauer
         {
             get { return _zauberdauer; }
             set
@@ -187,7 +187,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private string _zauberdauer;
+        private Nullable<int> _zauberdauer;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Wirkungsdauer

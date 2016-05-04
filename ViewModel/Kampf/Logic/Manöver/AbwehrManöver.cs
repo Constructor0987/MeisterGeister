@@ -73,15 +73,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     mod = 0;
                     break;
             }
-            return CheckWasserkampf(mod, value, Ausführender.Kämpfer as Held);
+            return CheckWasserkampf(mod, value, Ausführender.Kämpfer as Held, waffe);
         }
+
 
         protected override int BeengtMod(INahkampfwaffe waffe, bool value)
         {
             if (value)
             {
-                //Anderthalbhänder, Kettenwaffen, Peitschen, Stäbe, Zweihandflegel, Zweihandhiebwaffen und Zweihandschwerter/-säbel, Infanteriewaffen, Speer
-                //return 2;
+                string[] beengteTalente = new string[] {
+                    "Anderthalbhänder", "Kettenwaffen", "Peitsche",
+                    "Stäbe", "Zweihandflegel", "Zweihand-Hiebwaffen",
+                    "Zweihandschwerter/-säbel", "Infanteriewaffen", "Speere" };
+
+                Talent talent = waffe.Talent;
+                if (talent != null && beengteTalente.Contains(talent.Name))
+                    return 2;
             }
             return 0;
         }
@@ -116,9 +123,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         //TODO JT: In der Probe muss hier ein Paradeerleichterungsmodifikator abgefragt werden. Ebenso Paradeerschwernisse durch Finten oder Linkshändig.
         //Gezielte Schläge sind einfacher zu parieren. (Modifikator mit dem angreifenden Manöver gespeichert zur Verifikation)
 
-        public override void Ausführen()
+        public override void ReaktionAusführen(ManöverEventArgs e)
         {
-            base.Ausführen();
+            base.ReaktionAusführen(e);
 
             foreach (var wz in WaffeZiel)
             {
@@ -128,8 +135,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 p.WerteNamen = "PA";
                 ViewHelper.ShowProbeDialog(p, Ausführender.Kämpfer as Held);
 
-                ProbeAuswerten(p, wz.Value);
+                bool cancel = OnAusgeführt(p);
+                if(!cancel)
+                    ProbeAuswerten(p, wz.Value, wz.Key, e);
             }
+        }
+
+        protected override void Erfolg(Probe p, KämpferInfo ziel, INahkampfwaffe waffe, ManöverEventArgs e_init)
+        {
+            //Bei Erfolg des Abwehrmanövers wird das InitialManöver abgebrochen
+            e_init.Abgebrochen = true;
+        }
+
+        protected override void KritischerErfolg(Probe p, KämpferInfo ziel, INahkampfwaffe waffe, ManöverEventArgs e_init)
+        {
+            base.KritischerErfolg(p, ziel, waffe, e_init);
+
+            //Bei einem kritischen Abwehrmanöver wird die Aktion nicht verbraucht
+            IsAusgeführt = false;
         }
 
         protected override void Init()

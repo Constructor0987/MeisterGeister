@@ -41,10 +41,5 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Name = "Parade";
             Literatur = "WdS 66";
         }
-
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
-        {
-            //Bei Erfolg passiert garnichts
-        }
     }
 }

@@ -788,7 +788,6 @@
     <Compile Include="ViewModel\Kampf\Logic\ManöverInfo.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Attacke.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\AngriffsManöver.cs" />
-    <Compile Include="ViewModel\Kampf\Logic\Manöver\KeineAktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Gegenhalten.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\ZusätzlicheAngriffsaktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\TodVonLinks.cs" />

@@ -42,6 +42,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string LICHT_MOD = "Licht";
         public const string GRÖSSE_MOD = "Zielgröße";
 
+        protected bool KämpftMitTalent(TWaffe waffe, params string[] talente)
+        {
+            if (waffe.Talent == null)
+                return false;
+            return talente.Contains(waffe.Talent.Name);
+        }
+
         protected override void InitMods()
         {
             base.InitMods();

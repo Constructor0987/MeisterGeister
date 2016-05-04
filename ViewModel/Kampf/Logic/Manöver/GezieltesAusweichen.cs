@@ -73,8 +73,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Literatur = "WdS 66";
         }
 
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel, INahkampfwaffe waffe, ManöverEventArgs e_init)
         {
+            base.Erfolg(p, ziel, waffe, e_init);
             //Bei winzigen Gegnern verliert man keine INI wenn man ausweicht
             if (größe.Value != Größe.Winzig)
                 Ausführender.Initiative -= 2;

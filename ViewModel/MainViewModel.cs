@@ -120,13 +120,13 @@ namespace MeisterGeister.ViewModel
         {
             get
             {
-                if(nsc == null)
+                if (nsc == null)
                 {
-                    Guid g = Guid.Parse(String.Format("00000000-0000-0000-045c-0000000000{0:00}", Global.RegeleditionNummer.Replace(".","")));
+                    Guid g = Guid.Parse(String.Format("00000000-0000-0000-045c-0000000000{0:00}", Global.RegeleditionNummer.Replace(".", "")));
                     nsc = Helden.Where(h => h.HeldGUID == g).FirstOrDefault();
                     if (nsc == null)
                     {
-                        nsc =  Global.ContextHeld.New<Model.Held>();
+                        nsc = Global.ContextHeld.New<Model.Held>();
                         nsc.HeldGUID = g;
                         nsc.Name = "NSC";
                         nsc.Regelsystem = Global.Regeledition;

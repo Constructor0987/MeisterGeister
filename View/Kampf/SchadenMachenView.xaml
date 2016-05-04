@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MeisterGeister.View.Kampf"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
-             Width="300" Height="120"
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic" Height="120"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ViewGeneral:EnumItemsSource x:Key="TrefferzonenValues" Type="{x:Type KampfLogic:Trefferzone}" />

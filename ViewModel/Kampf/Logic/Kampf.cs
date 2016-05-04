@@ -125,7 +125,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             foreach (ManöverInfo mi in AktuelleAktionen)
             {
-                if (!mi.Ausgeführt)
+                //Es werden nur aktive Manöver ausgeführt (also keine Paraden)
+                if (!mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
                     mi.Manöver.Aktion();
             }
 

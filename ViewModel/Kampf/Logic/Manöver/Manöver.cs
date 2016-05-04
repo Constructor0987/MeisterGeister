@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.View.General;
 using MeisterGeister.Model;
+using System.ComponentModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -48,9 +49,48 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             private set;
         }
 
+        /// <summary>
+        /// Bei Aktionen stehen hier die Ziele des Manövers (meißt nur einer)
+        /// </summary>
         public abstract IEnumerable<KämpferInfo> Ziele
         {
             get;
+        }
+
+        private IEnumerable<Manöver> initialManöver;
+        /// <summary>
+        /// Bei Reaktionen stehen hier die Manöver, die pariert werden
+        /// </summary>
+        public IEnumerable<Manöver> InitialManöver
+        {
+            get { return initialManöver; }
+            set
+            {
+                foreach(Manöver m in initialManöver)
+                {
+                    unregisterInitialManöver(m);
+                }
+                initialManöver = value;
+                foreach(Manöver m in initialManöver)
+                {
+                    registerInitialManöver(m);
+                }
+            }
+        }
+
+        protected virtual void registerInitialManöver(Manöver initialManöver)
+        {
+            initialManöver.Ausgeführt += InitialManöver_Ausgeführt;
+        }
+
+        protected virtual void unregisterInitialManöver(Manöver initialManöver)
+        {
+            initialManöver.Ausgeführt -= InitialManöver_Ausgeführt;
+        }
+
+        private void InitialManöver_Ausgeführt(object sender, ManöverEventArgs e)
+        {
+            ReaktionAusführen(e);
         }
 
         public int Grunderschwernis
@@ -94,41 +134,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
+        private bool isAusgeführt = false;
+        /// <summary>
+        /// Gibt an ob dieses Manöver schon ausgeführt wurde.
+        /// </summary>
+        public bool IsAusgeführt
+        {
+            get { return isAusgeführt; }
+            set
+            {
+                if (isAusgeführt == value)
+                    return;
+                isAusgeführt = value;
+                if (isAusgeführt)
+                    AktionAusführen();
+                OnChanged("IsAusgeführt");
+            }
+        }
+
         public int Erschwernis
         {
             get { return Ansage + Grunderschwernis; }
         }
-
-        //private bool ergebnisseAkzeptiert = false;
-        ///// <summary>
-        ///// Akzeptiert die eingetragenen ProbenErgebnisse.
-        ///// Wenn nicht genug Ergebnisse eingetragen wurden, dann werden diese zufällig bestimmt.
-        ///// </summary>
-        //public bool ErgebnisseAkzeptiert
-        //{
-        //    get { return ergebnisseAkzeptiert; }
-        //    set
-        //    {
-        //        ergebnisseAkzeptiert = value;
-        //        for (int i = 0; i < ProbenAnzahl; i++)
-        //        {
-        //            if (ProbenErgebnisse[i].Ergebnis == ErgebnisTyp.KEIN_ERGEBNIS)
-        //                ProbenErgebnisse[i] = Proben[i].Würfeln();
-        //        }
-        //        OnChanged("ErgebnisseAkzeptiert");
-        //    }
-        //}
-
-        //private bool auswirkungenAngewendet = false;
-        //public bool AuswirkungenAngewendet
-        //{
-        //    get { return auswirkungenAngewendet; }
-        //    set
-        //    {
-        //        auswirkungenAngewendet = value;
-        //        OnChanged("AuswirkungenAngewendet");
-        //    }
-        //}
 
         /// <summary>
         /// Zieht von der Ausführungsdauer eine Aktion ab und kümmert sich bei Bedarf darum dass z.B. Proben gewürfelt oder die Aktion ausgeführt wird
@@ -137,20 +164,58 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             VerbleibendeDauer--;
             if (VerbleibendeDauer <= 0)
-                Ausführen();
+                AktionAusführen();
         }
 
         /// <summary>
-        /// Ausführen einer Aktion des Manövers.
-        /// Verbraucht Aktion(en) des Kämpfers.
+        /// Führt die Aktion aus. Wird in der letzen Aktion des Manövers aufgerufen
         /// </summary>
         /// <returns></returns>
-        public virtual void Ausführen()
+        public virtual void AktionAusführen()
         {
             //AktionenVerbrauchen();
             VerbleibendeDauer = 0;
-            //OnAusführung();
+            OnAusführung();
+            IsAusgeführt = true;
+            
         }
+
+        /// <summary>
+        /// Führt die Reaktion aus. Wird im Zuge der Ausführung des InitialManövers aufgerufen und kann dieses Manöver abbrechen (z.B. Parade pariert Angriff)
+        /// </summary>
+        public virtual void ReaktionAusführen(ManöverEventArgs e)
+        {
+            OnAusführung();
+            IsAusgeführt = true;
+        }
+
+        private void OnAusführung()
+        {
+            EventHandler handler = Ausführung;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected bool OnAusgeführt(Probe probe)
+        {
+            ManöverEventArgs e = new ManöverEventArgs(probe);
+            EventHandler<ManöverEventArgs> handler = Ausgeführt;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+            return e.Abgebrochen;
+        }
+
+        /// <summary>
+        /// Wird gefeuert während das Manöver ausgeführt wird
+        /// </summary>
+        public event EventHandler Ausführung;
+        /// <summary>
+        /// Wird gefeuert nachdem das Manöver gewürfelt wurde
+        /// Zum Zeitpunkt dieses Events wurden noch keine Auswirkungen auf 
+        /// </summary>
+        public event EventHandler<ManöverEventArgs> Ausgeführt;
 
         /// <summary>
         /// Die Anzahl der Angriffsaktionen, die verbraucht werden.
@@ -184,98 +249,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         //    Ausführender.VerbrauchteAbwehraktionen += Abwehraktionen;
         //    Ausführender.VerbrauchteFreieAktionen += FreieAktionen;
         //}
-
-        //eine weitere methode für den erfolg
-        /// <summary>
-        /// Die Auswirkungen des Manövers auf das Ziel anwenden.
-        /// </summary>
-        /// <param name="ziel"></param>
-        protected abstract void Erfolg(Probe p, KämpferInfo ziel);
-
-        protected virtual void GlücklicherErfolg(Probe p, KämpferInfo ziel)
-        {
-            Erfolg(p, ziel);
-        }
-
-        protected virtual void KritischerErfolg(Probe p, KämpferInfo ziel)
-        {
-            GlücklicherErfolg(p, ziel);
-        }
-
-        //und eine für den misserfolg
-        /// <summary>
-        /// Legt den MisslungenModifikator auf dem Ausführenden an.
-        /// </summary>
-        protected virtual void Misserfolg(Probe p, KämpferInfo ziel)
-        {
-            // Erschwernis als Malus bis zur nächsten Aktion.
-            int malus = Erschwernis;
-            // Klingentänzer haben nur die halbe Ansage als Malus
-            if (Ausführender.Kämpfer is Model.Held)
-            {
-                Model.Held h = Ausführender.Kämpfer as Model.Held;
-                if (h.HatSonderfertigkeitUndVoraussetzungen("Klingentänzer"))
-                    malus = (int)Math.Round(malus / 2.0, MidpointRounding.AwayFromZero);
-            }
-            //TODO: Das gleiche auch für Gegner in Form einer Kampfregel?
-            if (malus > 0)
-            {
-                //TODO JT: Klasse MisslungenModifikator anlegen
-                //Ausführender.Kämpfer.Modifikatoren.Add(new MisslungenModifikator(malus));
-            }
-        }
-
-        protected virtual void Patzer(Probe p, KämpferInfo ziel)
-        {
-            Misserfolg(p, ziel);
-        }
-
-        protected virtual void FatalerPatzer(Probe p, KämpferInfo ziel)
-        {
-            Patzer(p, ziel);
-        }
-
-        //public event EventHandler<ManöverEventArgs> Ausführung;
-        //protected void OnAusführung()
-        //{
-        //    bool cancel = false;
-        //    EventHandler<ManöverEventArgs> handler = Ausführung;
-        //    if (handler != null)
-        //    {
-        //        ManöverEventArgs args = new ManöverEventArgs(Proben);
-        //        handler(this, args);
-        //        if (args.Abgebrochen)
-        //            cancel = true;
-        //    }
-        //    if (!cancel)
-        //        ProbenAuswerten();
-        //}
-
-        protected void ProbeAuswerten(Probe p, KämpferInfo ziel)
-        {
-            switch (p.Ergebnis.Ergebnis)
-            {
-                case ErgebnisTyp.GELUNGEN:
-                    Erfolg(p, ziel);
-                    break;
-                case ErgebnisTyp.GLÜCKLICH:
-                    GlücklicherErfolg(p, ziel);
-                    break;
-                case ErgebnisTyp.MEISTERHAFT:
-                    KritischerErfolg(p, ziel);
-                    break;
-
-                case ErgebnisTyp.MISSLUNGEN:
-                    Misserfolg(p, ziel);
-                    break;
-                case ErgebnisTyp.PATZER:
-                    Patzer(p, ziel);
-                    break;
-                case ErgebnisTyp.FATALER_PATZER:
-                    FatalerPatzer(p, ziel);
-                    break;
-            }
-        }
     }
 
     public abstract class Manöver<TWaffe> : Manöver where TWaffe : IWaffe
@@ -341,17 +314,99 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 return WaffeZiel.Keys.Distinct();
             }
         }
+
+        /// <summary>
+        /// Die Auswirkungen des Manövers auf das Ziel anwenden.
+        /// </summary>
+        /// <param name="ziel"></param>
+        protected abstract void Erfolg(Probe p, KämpferInfo ziel, TWaffe waffe, ManöverEventArgs e_init);
+
+        protected virtual void GlücklicherErfolg(Probe p, KämpferInfo ziel, TWaffe waffe, ManöverEventArgs e_init)
+        {
+            Erfolg(p, ziel, waffe, e_init);
+        }
+
+        protected virtual void KritischerErfolg(Probe p, KämpferInfo ziel, TWaffe waffe, ManöverEventArgs e_init)
+        {
+            GlücklicherErfolg(p, ziel, waffe, e_init);
+        }
+
+        //und eine für den misserfolg
+        /// <summary>
+        /// Legt den MisslungenModifikator auf dem Ausführenden an.
+        /// </summary>
+        protected virtual void Misserfolg(Probe p, KämpferInfo ziel, TWaffe waffe, ManöverEventArgs e_init)
+        {
+            // Erschwernis als Malus bis zur nächsten Aktion.
+            int malus = Erschwernis;
+            // Klingentänzer haben nur die halbe Ansage als Malus
+            if (Ausführender.Kämpfer is Model.Held)
+            {
+                Model.Held h = Ausführender.Kämpfer as Model.Held;
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Klingentänzer"))
+                    malus = (int)Math.Round(malus / 2.0, MidpointRounding.AwayFromZero);
+            }
+            //TODO: Das gleiche auch für Gegner in Form einer Kampfregel?
+            if (malus > 0)
+            {
+                //TODO JT: Klasse MisslungenModifikator anlegen
+                //Ausführender.Kämpfer.Modifikatoren.Add(new MisslungenModifikator(malus));
+            }
+        }
+
+        protected virtual void Patzer(Probe p, KämpferInfo ziel, TWaffe waffe, ManöverEventArgs e_init)
+        {
+            Misserfolg(p, ziel, waffe, e_init);
+        }
+
+        protected virtual void FatalerPatzer(Probe p, KämpferInfo ziel, TWaffe waffe, ManöverEventArgs e_init)
+        {
+            Patzer(p, ziel, waffe, e_init);
+        }
+
+        /// <summary>
+        /// Wertet die Probe aus, die im Zuge des Manövers geworfen wurde
+        /// </summary>
+        /// <param name="p">Die Probe, die beim Manöver geworfen wurde</param>
+        /// <param name="ziel">Das Ziel des Manövers</param>
+        /// <param name="waffe">Die Waffe mit der das Manöver ausgeführt wird</param>
+        /// <param name="e_init">Die ManöverEventArgs des Initialmanövers. Kann benutzt werden um das InitialManöver abzubrechen o.Ä.</param>
+        protected void ProbeAuswerten(Probe p, KämpferInfo ziel, TWaffe waffe, ManöverEventArgs e_init)
+        {
+            switch (p.Ergebnis.Ergebnis)
+            {
+                case ErgebnisTyp.GELUNGEN:
+                    Erfolg(p, ziel, waffe, e_init);
+                    break;
+                case ErgebnisTyp.GLÜCKLICH:
+                    GlücklicherErfolg(p, ziel, waffe, e_init);
+                    break;
+                case ErgebnisTyp.MEISTERHAFT:
+                    KritischerErfolg(p, ziel, waffe, e_init);
+                    break;
+
+                case ErgebnisTyp.MISSLUNGEN:
+                    Misserfolg(p, ziel, waffe, e_init);
+                    break;
+                case ErgebnisTyp.PATZER:
+                    Patzer(p, ziel, waffe, e_init);
+                    break;
+                case ErgebnisTyp.FATALER_PATZER:
+                    FatalerPatzer(p, ziel, waffe, e_init);
+                    break;
+            }
+        }
     }
 
     public class ManöverEventArgs : EventArgs
     {
-        public ManöverEventArgs(List<Probe> proben)
+        public ManöverEventArgs(Probe probe)
         {
-            Proben = proben;
+            Probe = probe;
         }
 
         public bool Abgebrochen { get; set; }
-        public List<Probe> Proben { get; private set; }
+        public Probe Probe { get; private set; }
     }
 
     public enum ManöverTyp

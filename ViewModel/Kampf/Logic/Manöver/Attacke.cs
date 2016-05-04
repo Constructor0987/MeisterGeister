@@ -18,10 +18,5 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Name = "Attacke";
             Literatur = "WdS 59";
         }
-
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
-        {
-            
-        }
     }
 }

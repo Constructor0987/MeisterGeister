@@ -32,7 +32,7 @@
             <Image.Style>
                 <Style TargetType="Image">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Ausgeführt}" Value="False">
+                        <DataTrigger Binding="{Binding Manöver.IsAusgeführt}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>

@@ -75,12 +75,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         private int SchützenIndex(IFernkampfwaffe waffe)
         {
             Held held = Ausführender.Kämpfer as Held;
-            if (held != null)
+            if (held != null && waffe.Talent != null)
             {
-                //TODO: Talent beachten
-                if (held.HatSonderfertigkeitUndVoraussetzungen("Meisterschütze ()"))
+                if (held.HatSonderfertigkeitUndVoraussetzungen("Meisterschütze (" + waffe.Talent.Name + ")"))
                     return 2;
-                else if (held.HatSonderfertigkeitUndVoraussetzungen("Scharfschütze ()"))
+                else if (held.HatSonderfertigkeitUndVoraussetzungen("Scharfschütze (" + waffe.Talent.Name + ")"))
                     return 1;
             }
             return 0;
@@ -216,8 +215,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             int mod = 0;
             if (value == 0)
-                mod= new int[] { 2, 1, 0 }[SchützenIndex(waffe)];
-            else mod= -Math.Min(4, (int)Math.Floor(new double[] { 0.5, 1, 1 }[SchützenIndex(waffe)] * (value - 1)));
+                mod = new int[] { 2, 1, 0 }[SchützenIndex(waffe)];
+            else mod = -Math.Min(4, (int)Math.Floor(new double[] { 0.5, 1, 1 }[SchützenIndex(waffe)] * (value - 1)));
             //TODO: Ladezeit eintragen
             //Ladezeit + zielen + Schuss
             Dauer = 2 + value + 1;
@@ -243,14 +242,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Typ = ManöverTyp.Aktion;
         }
 
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel, IFernkampfwaffe waffe, ManöverEventArgs e_init)
         {
             //TODO: Implementieren
         }
 
         //TODO: Ausführen implementieren
 
-        protected override void Patzer(Probe p, KämpferInfo ziel)
+        protected override void Patzer(Probe p, KämpferInfo ziel, IFernkampfwaffe waffe, ManöverEventArgs e_init)
         {
             int random = ViewHelper.ShowWürfelDialog("2W6", "Patzer");
             switch (random)
@@ -279,7 +278,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     break;
             }
 
-            base.Patzer(p, ziel);
+            base.Patzer(p, ziel, waffe, e_init);
         }
     }
 }

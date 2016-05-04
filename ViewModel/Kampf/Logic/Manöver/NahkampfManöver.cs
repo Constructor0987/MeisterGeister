@@ -108,9 +108,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 if (held.HatVorNachteil("Dämmerungssicht") || held.HatVorNachteil("Nachtsicht"))
                     mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
 
-                //TODO: keine Peitsche/Lanzenreiten und keine Pikenreichweite um Blindkampf zu nutzen
+                //keine Peitsche/Lanzenreiten und keine Pikenreichweite um Blindkampf zu nutzen
                 bool blindkampf = held.HatSonderfertigkeitUndVoraussetzungen("Blindkampf") &&
-                    (waffe.Distanzklasse & Distanzklasse.HNS) != Distanzklasse.None;
+                    (waffe.Distanzklasse & Distanzklasse.HNS) != Distanzklasse.None &&
+                    !KämpftMitTalent(waffe, "Peitsche", "Lanzenreiten");
 
                 if (held.HatVorNachteil("Nachtsicht") || blindkampf)
                     mod = Math.Min(mod, 2);
@@ -165,17 +166,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         protected abstract int WasserMod(INahkampfwaffe waffe, Wassertiefe value);
 
-        protected int CheckWasserkampf(int mod, Wassertiefe tiefe, Held ausführender)
+        protected int CheckWasserkampf(int mod, Wassertiefe tiefe, Held ausführender, INahkampfwaffe waffe)
         {
             if (ausführender == null)
                 return mod;
 
-            //TODO: Die SF kann in schultertiefem Wasser nur mit den Talenten Dolche, Infanteriewaffen und Speere genutzt werden, ansonsten mit allen Nahkampffertigkeiten außer Peitsche und Lanzenreiten.
+            //Kampf im Wasser
+            string[] schulterTiefTalente = new string[] { "Dolche", "Infanteriewaffen", "Speere" };
+            string[] hüftKnieTiefTalente = new string[] { "Peitsche", "Lanzenreiten" };
+
             bool kampfImWasser = ausführender.HatSonderfertigkeitUndVoraussetzungen("Kampf im Wasser");
+            if (tiefe == Wassertiefe.Schultertief)
+                kampfImWasser &= KämpftMitTalent(waffe, "Dolche", "Infanteriewaffen", "Speere");
+            else
+                kampfImWasser &= !KämpftMitTalent(waffe, "Peitsche", "Lanzenreiten");
+
             if (kampfImWasser && tiefe != Wassertiefe.KeinWasser && tiefe != Wassertiefe.UnterWasser)
                 mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
-            //TODO: Kann nur mit den Nahkampf-Talenten Dolche, Fechtwaffen, Raufen, Ringen und Speere eingesetzt werden.
-            if (ausführender.HatSonderfertigkeitUndVoraussetzungen("Unterwasserkampf") && tiefe == Wassertiefe.UnterWasser)
+
+            //Unterwasserkampf
+            bool unterwasserKampf = ausführender.HatSonderfertigkeitUndVoraussetzungen("Unterwasserkampf");
+            unterwasserKampf &= KämpftMitTalent(waffe, "Dolche", "Fechtwaffen", "Raufen", "Ringen", "Speere");
+            if (unterwasserKampf && tiefe == Wassertiefe.UnterWasser)
                 mod = 0;
 
             return mod;
@@ -186,14 +198,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected override void Init()
         {
             base.Init();
-            //TODO: Sinnvolles Standardziel auswählen
-            WaffeZiel[Ausführender.Kämpfer.Angriffswaffen.First()] = null;
+
+            INahkampfwaffe waffe = Ausführender.Kämpfer.Angriffswaffen.FirstOrDefault();
+            if (waffe != null)
+                //TODO: Sinnvolles Standardziel auswählen
+                WaffeZiel[waffe] = null;
         }
 
-        protected override void Patzer(Probe p, KämpferInfo ziel)
+        protected override void Patzer(Probe p, KämpferInfo ziel, INahkampfwaffe waffe, ManöverEventArgs e_init)
         {
             int random = ViewHelper.ShowWürfelDialog("2W6", "Patzer");
-            switch(random)
+            switch (random)
             {
                 case 2:
                     //Waffe zerstört
@@ -228,7 +243,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
 
             //Misserfolg
-            base.Patzer(p, ziel);
+            base.Patzer(p, ziel, waffe, e_init);
         }
     }
 }

@@ -23,22 +23,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Grunderschwernis = 4;
         }
 
-        //protected override IEnumerable<Probe> ProbenAnlegen()
-        //{
-        //    Probe p = new Probe();
-        //    p.Probenname = Name;
-        //    p.Werte = new int[] { Ausführender.Kämpfer.AT ?? 0 };
-        //    p.WerteNamen = "AT";
-        //    p.Modifikator = Erschwernis;
-        //    yield return p;
-        //}
-
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
-        {
-            //TODO: Prüfen wer besser trifft und den Schaden verursachen
-            
-        }
-
         protected override int GrößeMod(INahkampfwaffe waffe, Größe value)
         {
             //TODO: Gedanken machen

@@ -20,10 +20,5 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 yield return null;
             }
         }
-
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
-        {
-            //Nichts passiert
-        }
     }
 }

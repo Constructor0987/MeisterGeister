@@ -119,11 +119,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             if (value)
             {
-                //Anderthalbhänder, Kettenwaffen, Peitschen, Stäbe, Zweihandflegel, Zweihandhiebwaffen und Zweihandschwerter/-säbel
-                //return 6;
-
-                //Hiebwaffen, Infanteriewaffen, Säbel und Schwerter
-                //return 2;
+                Talent talent = waffe.Talent;
+                if (talent != null)
+                {
+                    if (KämpftMitTalent(waffe, "Anderthalbhänder", "Kettenwaffen", "Peitsche", "Stäbe", "Zweihandflegel", "Zweihand-Hiebwaffen", "Zweihandschwerter/-säbel"))
+                        return 6;
+                    else if (KämpftMitTalent(waffe, "Hiebwaffen", "Infanteriewaffen", "Säbel", "Schwerter"))
+                        return 2;
+                }
             }
             return 0;
         }
@@ -146,7 +149,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     mod = 0;
                     break;
             }
-            return CheckWasserkampf(mod, value, Ausführender.Kämpfer as Held);
+            return CheckWasserkampf(mod, value, Ausführender.Kämpfer as Held, waffe);
         }
 
         #endregion
@@ -158,9 +161,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Typ = ManöverTyp.Aktion;
         }
 
-        public override void Ausführen()
+        public override void AktionAusführen()
         {
-            base.Ausführen();
+            base.AktionAusführen();
 
             foreach (var wz in WaffeZiel)
             {
@@ -169,18 +172,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 p.Werte = new int[] { wz.Key.AT };
                 p.WerteNamen = "AT";
                 p.Modifikator = Mods.Values.Sum(mod => mod.Result);
+                p.KritischVerhaltenGlücklich = ProbeKritischVerhalten.BESTÄTIGUNG;
+                p.KritischVerhaltenPatzer = ProbeKritischVerhalten.BESTÄTIGUNG;
                 ViewHelper.ShowProbeDialog(p, Ausführender.Kämpfer as Held);
 
-                ProbeAuswerten(p, wz.Value);
+                //Prüfen ob das Ziel pariert o.Ä.
+                bool cancel = OnAusgeführt(p);
+                if (!cancel)
+                {
+                    ProbeAuswerten(p, wz.Value, wz.Key, null);
+                }
             }
         }
 
-        protected override void Erfolg(Probe p, KämpferInfo ziel)
+        protected override void Erfolg(Probe p, KämpferInfo ziel, INahkampfwaffe waffe, ManöverEventArgs e_init)
         {
-            //TODO: Prüfen ob das Ziel pariert o.Ä.
-            //Ansonsten Schaden machen
+            //Schaden machen
+            int schaden = ViewHelper.ShowWürfelDialog(String.Format("{0}W{1}+{2}", waffe.TPWürfelAnzahl, waffe.TPWürfel, waffe.TPBonus + waffe.TPKKBonus), "Schaden mit " + waffe.Name);
 
-
+            if (ziel != null)
+                ziel.SchadenMachen.Execute(schaden);
         }
 
         //TODO JT: Wenn AusdauerImKampf

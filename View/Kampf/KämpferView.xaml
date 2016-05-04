@@ -8,8 +8,8 @@
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
              xmlns:model="clr-namespace:MeisterGeister.Model"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" Width="400"
+             d:DesignHeight="400" d:DesignWidth="400">
 
     <UserControl.Resources>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
@@ -65,13 +65,13 @@
                 <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=KarmaenergieAktuell}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" ShowButtons="True" />
                 <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding}" />
             </StackPanel>
-            
+
             <local:SchadenMachenView Margin="0,8,0,0" DataContext="{Binding SchadenMachen}" HorizontalAlignment="Left"/>
 
-            <StackPanel Orientation="Horizontal" Margin="4" ToolTip="Der Hinweis-Text wird in der INI-Liste angezeigt.">
-                <TextBlock Text="Hinweis-Text:" FontWeight="Bold" VerticalAlignment="Center" />
-                <TextBox HorizontalAlignment="Stretch" Width="250" Margin="4,0,0,0" Text="{Binding HinweisText}"/>
-            </StackPanel>
+            <DockPanel Margin="4">
+                <TextBlock Text="Hinweis-Text:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                <TextBox Margin="4,0,0,0" Text="{Binding HinweisText}" DockPanel.Dock="Right"/>
+            </DockPanel>
         </StackPanel>
 
         <local:KämpferZonenView Grid.Row="0" Grid.Column="1" Margin="5" DataContext="{Binding Kämpfer}"/>
@@ -80,82 +80,81 @@
             <StackPanel.Resources>
                 <DataTemplate DataType="{x:Type model:Held}">
                     <StackPanel Orientation="Vertical">
-                        <ListBox ItemsSource="{Binding Path=Nahkampfwaffen, IsAsync=True}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <StackPanel.ToolTip>
-                                            <StackPanel Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Talent " FontWeight="Bold" />
-                                                    <TextBlock Text="{Binding Talent.Talentname}" Margin="2,0,4,0" />
-                                                </StackPanel>
-                                                <TextBlock Text="{Binding Bemerkung}" Margin="2,0,2,0" />
-                                            </StackPanel>
-                                        </StackPanel.ToolTip>
-                                        <TextBlock Text="{Binding Name}" MinWidth="150" />
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
-                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
-                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
-                                                                                  StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
-                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
-                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
-                                                                                  StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
-                                            <StackPanel Orientation="Horizontal" MinWidth="50">
-                                                <StackPanel.ToolTip>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="TP " FontWeight="Bold" />
-                                                        <TextBlock Text="{Binding TPStringOhneKK}" Margin="2,0,4,0" />
-                                                        <TextBlock Text="TP/KK" FontWeight="Bold" />
-                                                        <TextBlock Text="{Binding TPKKString}" Margin="2,0,4,0" />
-                                                        <TextBlock Text="-> " FontWeight="Bold" />
-                                                        <TextBlock Text="{Binding TPKKBonus}" Margin="2,0,0,0" />
-                                                    </StackPanel>
-                                                </StackPanel.ToolTip>
-                                                <TextBlock Text="TP " FontWeight="Bold" />
-                                                <TextBlock Text="{Binding TPString}" Margin="2,0,0,0" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
-                                                <TextBlock Text="{Binding Distanzklasse}" Margin="2,0,0,0" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="INI " FontWeight="Bold" Margin="20,0,0,0" />
-                                                <TextBlock Text="{Binding INI}" Margin="2,0,0,0" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="WM " FontWeight="Bold" Margin="20,0,0,0" />
-                                                <TextBlock Text="{Binding WMString}" Margin="2,0,0,0" />
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <ListBox ItemsSource="{Binding Path=Fernkampfwaffen, IsAsync=True}" Background="Transparent">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}" MinWidth="150" />
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
-                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
-                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="AT-Wert"
-                                                                                  StartWert="{Binding FernkampfOhneMod}" Wert="{Binding AT}" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
-                                            <TextBlock Text="TP " FontWeight="Bold" />
-                                            <TextBlock Text="{Binding TPString}" Margin="2,0,0,0" />
-                                            <TextBlock Text="Reichweite " FontWeight="Bold" Margin="20,0,0,0" />
-                                            <TextBlock Text="{Binding Reichweiten}" Margin="2,0,0,0" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+                                <Setter Property="Margin" Value="0,6,0,0"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Resources>
+                        <DataGrid ItemsSource="{Binding Path=Nahkampfwaffen, IsAsync=True}" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Waffe" Width="*"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.Header>
+                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" />
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ViewGeneral:TextBoxModInfo ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert" StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.Header>
+                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ViewGeneral:TextBoxModInfo ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert" StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="TP">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TPString}">
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}TP-Basis {0} + TP/KK({1}) {2}">
+                                                                <Binding Path="TPStringOhneKK"/>
+                                                                <Binding Path="TPKKString"/>
+                                                                <Binding Path="TPKKBonus"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </TextBlock.ToolTip>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="DK" Binding="{Binding Distanzklasse}" MinWidth="30"/>
+                                <DataGridTextColumn Header="INI" Binding="{Binding INI}" MinWidth="30"/>
+                                <DataGridTextColumn Header="WM" Binding="{Binding WMString}" MinWidth="30"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DataGrid ItemsSource="{Binding Path=Fernkampfwaffen, IsAsync=True}" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Waffe" Width="*"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.Header>
+                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" />
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ViewGeneral:TextBoxModInfo ModListe="{Binding ModifikatorenListeFK}" WertName="AT-Wert" StartWert="{Binding FernkampfOhneMod}" Wert="{Binding AT}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="TP" Binding="{Binding TPString}"/>
+                                <DataGridTextColumn Header="Reichweiten" Binding="{Binding Reichweiten}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type model:Gegner}">

@@ -26,14 +26,19 @@ namespace MeisterGeister.ViewModel.Kampf
 
         public void Execute(object parameter)
         {
-            Trefferzone zone = Trefferzone == Trefferzone.Zufall ? TrefferzonenHelper.ZufallsZone() : Trefferzone;
+            Execute(Schaden, Trefferzone, Verletzend, KeineWunden, Ausdauerschaden, IgnoriertRüstung);
+        }
+
+        public void Execute(int schaden, Trefferzone zone = Trefferzone.Zufall, bool verletzend = false, bool keineWunden = false, bool ausdauerschaden = false, bool ignoriertRüstung = false)
+        {
+            zone = Trefferzone == Trefferzone.Zufall ? TrefferzonenHelper.ZufallsZone() : Trefferzone;
 
             int rs = 0;
-            if (!IgnoriertRüstung)
+            if (!ignoriertRüstung)
                 rs = kämpfer.RS[zone];
             int spa = 0;
-            int sp = Math.Max(Schaden - rs, 0);
-            if (Ausdauerschaden)
+            int sp = Math.Max(schaden - rs, 0);
+            if (ausdauerschaden)
             {
                 spa = sp;
                 if (AusdauerschadenMachtKeinenEchtenSchaden)
@@ -46,9 +51,9 @@ namespace MeisterGeister.ViewModel.Kampf
 
             //Log(string.Format("Treffer bei '{0}': {1} SP ({2} TP, RS {3}) in Zone {4}", k.Name, sp, tp, rs, zone));
 
-            if (!KeineWunden)
+            if (!keineWunden)
             {
-                int wsmod = -(Verletzend ? 2 : 0) + (Ausdauerschaden ? 2 : 0);
+                int wsmod = -(verletzend ? 2 : 0) + (ausdauerschaden ? 2 : 0);
                 int wunden = 0;
                 if (sp > kämpfer.Wundschwelle3 + wsmod)
                     wunden = 3;

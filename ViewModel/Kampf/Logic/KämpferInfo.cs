@@ -496,12 +496,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > Angriffsaktionen)
             {
                 var manöver = geplanteAktionen.FirstOrDefault();
-                //Das letzte Manöver wird in KeineAktion umgewandelt um den Kämpfer weiterhin in der Liste zu haben.
-                if (Angriffsaktionen == 0 && geplanteAktionen.Count == 1)
-                {
-                    manöver.Manöver = new KeineAktion(this);
-                    break;
-                }
                 //alle anderen Manöver, die zuviel sind, löschen.
                 Kampf.InitiativListe.Remove(manöver);
                 geplanteAktionen.Remove(manöver);
@@ -526,7 +520,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
             AktionenBerechnen();
 
-            var geplanteAktionen = AngriffsManöver.Where(mi => mi.IsAktion && mi.Start.Kampfrunde <= kampfrunde && mi.End.Kampfrunde >= kampfrunde).OrderBy(mi => mi.Start);
+            var geplanteAktionen = AngriffsManöver.Where(mi => mi.Start.Kampfrunde <= kampfrunde && mi.End.Kampfrunde >= kampfrunde).OrderBy(mi => mi.Start);
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist. oder für die zu wenig aktionen vorhanden sind.
             //DeleteManöver(ref geplanteAktionen);
             //var lfh = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.InitiativeStart).FirstOrDefault();
@@ -545,11 +539,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (i == 0)
                 {
-                    var m = AngriffsManöver.Where(mi => mi.Manöver is Manöver.KeineAktion).FirstOrDefault();
-                    if (m == null)
-                        yield return new ManöverInfo(new Attacke(this), 0, kampfrunde);
-                    else
-                        m.Manöver = new Attacke(this);
+                    yield return new ManöverInfo(new Attacke(this), 0, kampfrunde);
                 }
                 else // i>=1
                 {

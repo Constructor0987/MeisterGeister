@@ -232,15 +232,15 @@
                                     <Grid>
                                         <Grid.ContextMenu>
                                             <ContextMenu>
-                                                <MenuItem x:Name="menuStreichen" Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
+                                                <MenuItem x:Name="menuAusführen" Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
                                                 <MenuItem Header="Aktivieren" Command="{Binding Aktivieren}"/>
                                             </ContextMenu>
                                         </Grid.ContextMenu>
                                         <View:ManöverSymbol/>
                                     </Grid>
                                     <DataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding Ausgeführt}" Value="False">
-                                            <Setter TargetName="menuStreichen" Property="Header" Value="Aktion streichen"/>
+                                        <DataTrigger Binding="{Binding Manöver.IsAusgeführt}" Value="False">
+                                            <Setter TargetName="menuAusführen" Property="Header" Value="Aktion ausführen"/>
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
