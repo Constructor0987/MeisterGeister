@@ -122,7 +122,7 @@ namespace MeisterGeister.ViewModel
             {
                 if (nsc == null)
                 {
-                    Guid g = Guid.Parse(String.Format("00000000-0000-0000-045c-0000000000{0:00}", Global.RegeleditionNummer.Replace(".", "")));
+                    Guid g = Guid.Parse(String.Format("00000000-0000-0000-045c-0000000000{0:00}", Global.RegeleditionNummer.Replace(".", "").PadLeft(2, '0')));
                     nsc = Helden.Where(h => h.HeldGUID == g).FirstOrDefault();
                     if (nsc == null)
                     {
