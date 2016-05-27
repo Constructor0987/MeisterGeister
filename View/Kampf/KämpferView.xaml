@@ -26,6 +26,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -67,16 +68,21 @@
             </StackPanel>
 
             <local:SchadenMachenView Margin="0,8,0,0" DataContext="{Binding SchadenMachen}" HorizontalAlignment="Left"/>
-
-            <DockPanel Margin="4">
-                <TextBlock Text="Hinweis-Text:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
-                <TextBox Margin="4,0,0,0" Text="{Binding HinweisText}" DockPanel.Dock="Right"/>
-            </DockPanel>
         </StackPanel>
+        
+        <DockPanel Margin="4" Grid.Row="1">
+            <TextBlock Text="Hinweis-Text:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+            <TextBox Margin="4,0,0,0" Text="{Binding HinweisText}" DockPanel.Dock="Right"/>
+        </DockPanel>
+
+        <DockPanel Margin="4" Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Initiative:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+            <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="50" Value="{Binding Initiative}" FontWeight="Bold" ShowButtons="True" />
+        </DockPanel>
 
         <local:KämpferZonenView Grid.Row="0" Grid.Column="1" Margin="5" DataContext="{Binding Kämpfer}"/>
 
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding Kämpfer}">
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" DataContext="{Binding Kämpfer}">
             <StackPanel.Resources>
                 <DataTemplate DataType="{x:Type model:Held}">
                     <StackPanel Orientation="Vertical">

@@ -561,7 +561,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             else
                             {
                                 //4 ini-phasen nach dem ersten angriff
-                                yield return new ManöverInfo(new ZusätzlicheAngriffsaktion(this), ersterAngriff.InitiativeModStart + (zusatzAktionen + 1) * -4, kampfrunde);
+                                yield return new ManöverInfo(new ZusätzlicheAngriffsaktion(this), ersterAngriff.InitiativeModStart + (zusatzAktionen + 1) * 4, kampfrunde);
                                 zusatzAktionen++;
                             }
                         }

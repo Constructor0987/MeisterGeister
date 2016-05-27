@@ -5,6 +5,7 @@ using System.Text;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.View.General;
+using System.Diagnostics;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {

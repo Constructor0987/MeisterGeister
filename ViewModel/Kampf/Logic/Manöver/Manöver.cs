@@ -164,7 +164,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             VerbleibendeDauer--;
             if (VerbleibendeDauer <= 0)
-                AktionAusführen();
+                IsAusgeführt = true;
         }
 
         /// <summary>
