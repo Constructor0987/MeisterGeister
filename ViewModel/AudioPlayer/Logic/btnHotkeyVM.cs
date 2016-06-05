@@ -125,8 +125,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         //Commands
         
         #endregion
-
-
+        
         #region //---- KONSTRUKTOR ----
 
         public btnHotkeyVM() 

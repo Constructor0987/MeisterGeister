@@ -19,6 +19,7 @@ using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.AudioPlayer;
 using System.Windows.Input;
 using System.IO;
+using System.Collections.Specialized;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -31,11 +32,61 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         Audio_Playlist_Titel _aPlayTitel = new Audio_Playlist_Titel();
 
-        public AudioPlayerViewModel PlayerVM;                
+        public AudioPlayerViewModel PlayerVM;
         public MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = null;
+        
+        #endregion
+        
+        #region //---- KONSTRUKTOR ----
+
+        public AudioZeileVM()
+        {
+            AZeile = this;
+        }
+        #endregion
+        
+        #region //---- calcualtions ----
+
+        public double UpdateVolSmallChgBeimVerringern(double volumeBezug, double volumeSmallChg)
+        {
+            return (volumeBezug - 3 >= 1) ? 3 :                                              // Änderung im höherem Bereich: Step 3
+                        (volumeBezug > 1 && volumeBezug - 3 < 1) ? .1 :                       // Erreichen des niedrigen Bereich: auf 1, Step .1
+                            (volumeBezug <= 1 && Math.Round(volumeBezug, 2) - .1 >= 0) ? .1 : // Änderung im niedrigen Bereich: Step .1
+                                (volumeBezug - volumeSmallChg < 0) ? 0 :                     // Erreichen der 0-Schwelle: Volume = 0
+                                    volumeBezug - 3;
+        }
+        public double VolumeVerringern(double volumeBezug, double volumeSmallChg)
+        {
+            return (volumeBezug - 3 >= 1) ? volumeBezug - volumeSmallChg :                                                              // Änderung im höherem Bereich: Step 3
+                        (volumeBezug > 1 && volumeBezug - 3 < 1) ? 1 :                                                                  // Erreichen des niedrigen Bereich: auf 1, Step .1
+                            (volumeBezug <= 1 && Math.Round(volumeBezug, 2) - .1 >= 0) ? Math.Round(volumeBezug - volumeSmallChg, 2) :  // Änderung im niedrigen Bereich: Step .1
+                                (volumeBezug - volumeSmallChg < 0) ? 0 :                                                                // Erreichen der 0-Schwelle: Volume = 0
+                                    0;
+        }
+
+
+        public double UpdateVolSmallChgBeimErhöhen(double volumeBezug, double volumeSmallChg)
+        {
+            return (volumeBezug >= 1 && volumeBezug + 3 <= 100) ? 3 :           // Änderung im höherem Bereich: Step 3
+                        (volumeBezug < 1 && volumeBezug + .1 <= 1) ? .1 :         // Bleiben im niedrigen Bereich: auf 1, Step .1
+                            (volumeBezug == 1) ? 3 :                              // Änderung im höheren Bereich: Step 3
+                                (volumeBezug + volumeSmallChg > 100) ?           // Erreichen der 0-Schwelle: Volume = 0
+                                    volumeSmallChg : volumeSmallChg;              // Erreichen der 100-Schwelle: Volume = 100
+
+        }
+        public double VolumeErhöhen(double volumeBezug, double volumeSmallChg)
+        {
+            return (volumeBezug >= 1 && volumeBezug + 3 <= 100) ? volumeBezug + volumeSmallChg :                        // Änderung im höherem Bereich: Step 3
+                        (volumeBezug < 1 && volumeBezug + .1 <= 1) ? Math.Round(volumeBezug + volumeSmallChg, 2) :      // Bleiben im niedrigen Bereich: auf 1, Step .1
+                            (volumeBezug == 1) ? Math.Round(volumeBezug + volumeSmallChg, 2) :                          // Änderung im höheren Bereich: Step 3
+                                (volumeBezug + volumeSmallChg > 100) ?                                                  // Erreichen der 0-Schwelle: Volume = 0
+                                    100 : volumeBezug + volumeSmallChg;                                                 // Erreichen der 100-Schwelle: Volume = 100
+        }
 
         #endregion
 
+        #region //---- EIGENSCHAFTEN ----
+        
         public DoubleCollection SliderTicks
         {
             get
@@ -45,6 +96,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                      20000, 25000, 30000, 40000, 50000, 60000, 90000, 120000, 180000, 240000, 300000, 450000, 600000, 900000}; 
             }            
         }
+
+        private double _volSmallChg = 3;
+        public double volSmallChg
+        { 
+            get { return _volSmallChg; }
+            set { Set(ref _volSmallChg, value); }
+        }
+        
 
         private bool _showHotkeyPanel = false;
         public bool ShowHotkeyPanel
@@ -89,10 +148,24 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         //    }
         //}
 
+        
 
+        private AudioZeileVM _aZeile = null;
+        public AudioZeileVM AZeile
+        {
+            get { return _aZeile; }
+            set
+            {
+                _aZeile = value;
+                if (value.aPlayTitel.Audio_Titel != null &&
+                    value.aPlayTitel.Audio_Titel.Länge != 0 &&
+                    value.aPlayTitel.Audio_Titel.Länge != null &&
+                    value.TitelMaximum != value.aPlayTitel.Audio_Titel.Länge)
+                    value.TitelMaximum = value.aPlayTitel.Audio_Titel.Länge.Value;
+                OnChanged();
+            }
+        }        
 
-        #region //---- EIGENSCHAFTEN ----
-                
         [DependentProperty("PlayerVM"), DependentProperty("EditorGroßeAnsicht")]
         public bool EditorGroßeAnsicht
         {
@@ -193,6 +266,30 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
+        private double _aPlayTitelVolumeMin = 0;
+        public double aPlayTitelVolumeMin
+        {
+            get { return aPlayTitel.VolumeMin; }
+            set
+            {
+                _aPlayTitelVolumeMin = value;
+                aPlayTitel.VolumeMin = value;
+                OnChanged();
+           }
+        }
+
+        private double _aPlayTitelVolumeMax = 100;
+        public double aPlayTitelVolumeMax
+        {
+            get { return aPlayTitel.VolumeMax; }
+            set
+            {
+                _aPlayTitelVolumeMax = value;
+                aPlayTitel.VolumeMax = value;
+                OnChanged();
+            }
+        }
+
         private int _aPlayTitelPauseMin = 0;
         public int aPlayTitelPauseMin
         {
@@ -264,22 +361,28 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private AudioZeileVM _aZeile = null;
-        public AudioZeileVM AZeile
+        public double aPlayTitelVolume
         {
-            get { return _aZeile; }
+            get { return aPlayTitel.Volume; }
             set
             {
-                _aZeile = value;
-                if (value.aPlayTitel.Audio_Titel != null &&
-                    value.aPlayTitel.Audio_Titel.Länge != 0 &&
-                    value.aPlayTitel.Audio_Titel.Länge != null &&
-                    value.TitelMaximum != value.aPlayTitel.Audio_Titel.Länge)
-                    value.TitelMaximum = value.aPlayTitel.Audio_Titel.Länge.Value;
+                //if (value == aPlayTitel.Volume) return;
+                if (value < aPlayTitel.Volume)
+                //{
+                    volSmallChg = UpdateVolSmallChgBeimVerringern(aPlayTitel.Volume, volSmallChg);
+                //    value = VolumeVerringern(aPlayTitelVolume, volSmallChg);
+                //}
+                else
+                //    if (value > aPlayTitel.Volume)
+                //    {
+                        volSmallChg = UpdateVolSmallChgBeimErhöhen(aPlayTitelVolume, volSmallChg);
+                //        value = VolumeErhöhen(aPlayTitelVolume, volSmallChg);  
+                //    }
+                    
+                aPlayTitel.Volume = value;
                 OnChanged();
             }
         }
-
         public long aPlayTitelPause
         {
             get { return aPlayTitel.Pause; }
@@ -395,14 +498,22 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 return (_aPlayTitel.Audio_Titel != null && (_aPlayTitel.Audio_Titel.Länge != null && _aPlayTitel.Audio_Titel.Länge.Value != 0) ? 
                 _aPlayTitel.Audio_Titel.Länge.Value : 10000000); }
-            set { OnChanged(); }
+            set
+            {
+                aPlayTitel.Länge = value;
+                OnChanged();
+            }
         }
 
         [DependentProperty("aPlayTitel")]
-        public double aPlayTitelTeilStart
+        public Nullable<double> aPlayTitelTeilStart
         {
             get { return (_aPlayTitel.TeilStart != null ? _aPlayTitel.TeilStart.Value: 0);}
-            set { OnChanged(); }        
+            set
+            {
+                aPlayTitel.TeilStart = value; 
+                OnChanged();
+            }        
         }
 
         [DependentProperty("aPlayTitel")]
@@ -415,12 +526,16 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged("Audio_Playlist");
             }
         }
-        
+
         [DependentProperty("aPlayTitel")]
-        public double aPlayTitelTeilEnde
+        public Nullable<double> aPlayTitelTeilEnde
         {
             get { return (_aPlayTitel.TeilEnde != null ? _aPlayTitel.TeilEnde.Value : 10000000); }
-            set { OnChanged(); }
+            set 
+            {
+                aPlayTitel.TeilEnde = value;
+                OnChanged(); 
+            }
         }
 
 
@@ -429,12 +544,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return _aPlayTitel; }
             set
             {
-                _aPlayTitel = value;
+                Set(ref _aPlayTitel, value);
+                //_aPlayTitel = value;
 
                 _aPlayTitelPauseMin = (int)aPlayTitel.PauseMin;
                 _aPlayTitelPauseMax = (int)aPlayTitel.PauseMax;
                 _aPlayTitelSpeed = aPlayTitel.Speed;
-                OnChanged();
+                //OnChanged();
             }
         }
 
@@ -589,8 +705,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             if (aPlayTitel.TeilAbspielen)
             {
-                aPlayTitel.TeilStart = 0;
-                aPlayTitel.TeilEnde = aPlayTitel.Audio_Titel.Länge;                
+                aPlayTitelTeilStart = 0;
+                aPlayTitelTeilEnde = aPlayTitel.Audio_Titel.Länge.Value;                
             }
             aPlayTitelTeilAbspielen = aPlayTitel.TeilAbspielen;
         }
@@ -712,17 +828,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
         
         #endregion
-        
-        #region //---- KONSTRUKTOR ----
-
-        public AudioZeileVM()
-        {
-            AZeile = this;
-        }
-
-        
-        #endregion
-
+                
         #region //---- INSTANZMETHODEN ----
         
         /// <summary>

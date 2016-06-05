@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
         private bool _aktiv;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int Volume
+        public virtual double Volume
         {
             get { return _volume; }
             set
@@ -141,7 +141,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private int _volume;
+        private double _volume;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual bool VolumeChange
@@ -156,7 +156,7 @@ namespace MeisterGeister.Model
         private bool _volumeChange;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int VolumeMin
+        public virtual double VolumeMin
         {
             get { return _volumeMin; }
             set
@@ -165,10 +165,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private int _volumeMin;
+        private double _volumeMin;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int VolumeMax
+        public virtual double VolumeMax
         {
             get { return _volumeMax; }
             set
@@ -177,7 +177,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private int _volumeMax;
+        private double _volumeMax;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual long Pause

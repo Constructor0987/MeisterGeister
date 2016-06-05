@@ -24,7 +24,7 @@ namespace MeisterGeister.View.AudioPlayer
     /// <summary>
     /// Interaktionslogik für lbEditorItem.xaml
     /// </summary>
-    public partial class lbEditorItem : ListBoxItem
+    public partial class lbEditorItem : ListViewItem
     {
         public bool _animateOnMouseEvent = true;
 

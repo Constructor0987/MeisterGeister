@@ -405,8 +405,8 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _aPlayerVM, value); }
         }
         
-        private List<Audio_Playlist> _favPlaylist = new List<Audio_Playlist>();
-        public List<Audio_Playlist> FavPlaylist
+        private List<object> _favPlaylist = new List<object>();
+        public List<object> FavPlaylist
         {
             get { return _favPlaylist; }
             set { Set(ref _favPlaylist, value); }
@@ -428,10 +428,11 @@ namespace MeisterGeister.ViewModel
             ToolViewModelBase audioTool = OpenTools.FirstOrDefault(t => t.Name == "Audio");
             if (audioTool != null)
             {
-                List<Audio_Playlist> favList = new List<Audio_Playlist>();
+                List<object> favList = new List<object>();
+				Global.ContextAudio.ThemeListe.Where(t => t.Favorite != null).Where(t2 => t2.Favorite.Value).OrderBy(t3 => t3.Name).ToList().
+                    ForEach(fav => favList.Add(fav));
                 Global.ContextAudio.PlaylistListe.Where(t => t.Favorite != null).Where(t2 => t2.Favorite.Value).OrderBy(t3 => t3.Name).ToList().
                     ForEach(fav => favList.Add(fav));
-
                 FavPlaylist = favList;
                 if (favList.Count > 0)
                 {
@@ -456,9 +457,17 @@ namespace MeisterGeister.ViewModel
         }
         void BtnFavPlaylistClick(object obj)
         {
-            aPlayerVM.SelectedMusikPlaylistItem = aPlayerVM.MusikListItemListe.
-                FirstOrDefault(t => t.VM.aPlaylist == obj as MeisterGeister.Model.Audio_Playlist);
-        }
+			if (obj is MeisterGeister.Model.Audio_Theme)
+            {
+                System.Windows.Controls.Primitives.ToggleButton tbtn = aPlayerVM.ErwPlayerThemeListe.FirstOrDefault(t => t.VM.Theme == obj as MeisterGeister.Model.Audio_Theme).tbtnTheme;
+                tbtn.IsChecked =  !tbtn.IsChecked.Value;
+                aPlayerVM.ThemeButton_Checked(tbtn, null);
+            }
+            else
+                if (obj is MeisterGeister.Model.Audio_Playlist)
+                    aPlayerVM.SelectedMusikPlaylistItem = aPlayerVM.MusikListItemListe.FirstOrDefault(t => t.VM.aPlaylist == obj as MeisterGeister.Model.Audio_Playlist);                
+
+		}
 
         private Base.CommandBase _onFavPlaylistEntfernenClick = null;
         public Base.CommandBase OnFavPlaylistEntfernenClick
@@ -472,9 +481,19 @@ namespace MeisterGeister.ViewModel
         }
         void FavPlaylistEntfernenClick(object obj)
         {
-            MeisterGeister.Model.Audio_Playlist aPlaylist = obj as MeisterGeister.Model.Audio_Playlist;
-            aPlaylist.Favorite = false;
-            Global.ContextAudio.Update<MeisterGeister.Model.Audio_Playlist>(aPlaylist);
+            if (obj is MeisterGeister.Model.Audio_Playlist)
+            {
+                MeisterGeister.Model.Audio_Playlist aPlaylist = obj as MeisterGeister.Model.Audio_Playlist;
+                aPlaylist.Favorite = false;
+                Global.ContextAudio.Update<MeisterGeister.Model.Audio_Playlist>(aPlaylist);
+            }
+            else
+            if (obj is MeisterGeister.Model.Audio_Theme)
+            {
+                MeisterGeister.Model.Audio_Theme aTheme = obj as MeisterGeister.Model.Audio_Theme;
+                aTheme.Favorite = false;
+                Global.ContextAudio.Update<MeisterGeister.Model.Audio_Theme>(aTheme);
+            }
             UpdateFavorites();
         }
 

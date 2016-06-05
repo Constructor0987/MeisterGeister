@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="76*" />
                 <ColumnDefinition Width="27" />
             </Grid.ColumnDefinitions>
-            <Image Name="imgIcon" Margin="1,5,2,0" />
+            <Image Name="imgIcon" Margin="1,5,2,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" /> 
             <TextBlock Name="txblkName" TextWrapping="Wrap" Text="{Binding aPlaylist.Name, NotifyOnTargetUpdated=True}" Padding="2"
                     TargetUpdated="OnPlaylistNameUpdated" VerticalAlignment="Center" Grid.Column="1" Margin="2,2,2,0" IsEnabled="False" />
             <Button Name="btnRemove" ToolTip="Entfernen des untergeordneten Themes" Margin="5,5,2,0" Padding="0" Grid.Column="2" >

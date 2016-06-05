@@ -670,8 +670,10 @@
     <Compile Include="ViewModel\AudioPlayer\AudioPlayerViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\AudioZeileVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\btnHotkeyVM.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\FavAudioPlaylistVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\grdThemeBtnVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbEditorItemVM.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\lbEditorThemeItemVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbiPlaylistIconVM.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItem.cs" />
     <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItemVM.cs" />
@@ -754,6 +756,12 @@
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilderArgs.cs" />
     <Compile Include="Logic\Karte\TravelService.cs" />
     <Compile Include="ViewModel\Karte\Logic\TravelType.cs" />
+    <Compile Include="View\AudioPlayer\FavAudioPlaylist.xaml.cs">
+      <DependentUpon>FavAudioPlaylist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\lbEditorThemeItem.xaml.cs">
+      <DependentUpon>lbEditorThemeItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
@@ -1435,6 +1443,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\AudioPlayer\FavAudioPlaylist.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\AudioPlayer\grdThemeButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1444,6 +1456,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioPlayer\lbEditorItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\lbEditorThemeItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -45,5 +45,12 @@ namespace MeisterGeister.View.AudioPlayer
             InitializeComponent();
             VM = new VM.btnHotkeyVM();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ((sender as MenuItem).Tag as Audio_Playlist).Key = null;
+            Global.ContextAudio.Update<Audio_Playlist>((sender as MenuItem).Tag as Audio_Playlist);
+            this.Visibility = Visibility.Collapsed;
+        }
     }
 }

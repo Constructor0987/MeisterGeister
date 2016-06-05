@@ -25,6 +25,15 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-        </Button.Style>
+        </Button.Style> 
+        <Button.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Entfernen" Tag="{Binding aPlaylist}" Click="MenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/General/entf_01.png" Height="20" Margin="-1,-2" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Button.ContextMenu>
     </Button>
 </UserControl>

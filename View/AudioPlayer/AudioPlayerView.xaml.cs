@@ -462,6 +462,13 @@ namespace MeisterGeister.View.AudioPlayer
             try
             {
                 MeisterGeister.ViewModel.AudioPlayer.AudioPlayerViewModel.GruppenObjekt grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);
+                if (VM.SelectedEditorItem != null && grpobj == null)
+                {
+                    lbEditorItemVM lbi = VM.SelectedEditorItem;
+                    VM.SelectedEditorItem = null;
+                    VM.SelectedEditorItem = lbi;
+                    grpobj = VM._GrpObjecte.FirstOrDefault(t => t.visuell);
+                }
                 if (grpobj == null)
                     return;
                 if (tiEditor.IsSelected)
@@ -580,7 +587,6 @@ namespace MeisterGeister.View.AudioPlayer
                 //    child.GetValue(System.Windows.Documents.Run.TextProperty) + "' ist ein Fehler aufgetreten.", ex);
                 return null;
             }
-
         }
 
         private void lbEditorPlaylist_PreviewMouseMove(object sender, MouseEventArgs e)
@@ -602,8 +608,8 @@ namespace MeisterGeister.View.AudioPlayer
 
                 if (VM.lbiEditorPlaylistStartDnD != null &&
                     e.LeftButton == MouseButtonState.Pressed &&
-                    (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+                    (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance/2 ||
+                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance/2))
                 {
                     if (lbi != null && VM.lbiEditorPlaylistStartDnD.VM != null)
                     {
@@ -617,6 +623,40 @@ namespace MeisterGeister.View.AudioPlayer
             else
                 VM.PlaylistListeNichtUpdaten = false;
         }
+        
+        private void lbEditorTheme_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            var lbi = (e.OriginalSource is Visual) ? FindVisualParent<lbEditorThemeItem>((DependencyObject)e.OriginalSource) : null;
+            if (lbi != null)
+            {
+                if (VM.pointerPlaylistDragDrop == null)
+                    return;
+
+                var lb = sender as ListBox;
+                VM.lbiPlaylistMouseOverDropped = VM.FilteredEditorThemeListBoxItemListe.IndexOf(lbi.VM);
+                Point point = e.GetPosition(null);
+                Vector diff = ((Point)VM.pointerPlaylistDragDrop) - point;
+
+                if (e.LeftButton != MouseButtonState.Pressed)
+                    VM.lbiEditorThemeStartDnD = lbi;
+
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance/2 ||
+                    Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance/2))
+                {
+                    if (lbi != null && VM.lbiEditorThemeStartDnD != null && VM.lbiEditorThemeStartDnD.VM != null)
+                    {
+                        VM.PlaylistListeNichtUpdaten = true;
+                        DataObject dragData = new DataObject("lbiThemeVM", VM.lbiEditorThemeStartDnD.VM);
+                        DragDrop.DoDragDrop(VM.lbiEditorThemeStartDnD, dragData, DragDropEffects.Move);
+                        VM.lbiEditorThemeStartDnD = null;
+                    }
+                }
+            }
+            else
+                VM.PlaylistListeNichtUpdaten = false;
+        }
+        
 
         private void lbEditor_Drop(object sender, DragEventArgs e)
         {
@@ -926,13 +966,25 @@ namespace MeisterGeister.View.AudioPlayer
             if (VM.rbEditorEditPlaylist) return;
             if (e.LeftButton == MouseButtonState.Pressed)
                 VM.DnDZielObject = e.GetPosition(null);
+        }
 
+        private void lbiEditorTheme_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _dragStartPoint = e.GetPosition(null);
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+                VM.pointerPlaylistDragDrop = e.GetPosition(null);
         }
 
         private void lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
+            {
                 ((ListBox)sender).ScrollIntoView(e.AddedItems[0]);
+                if ((e.RemovedItems.Count > 0  &&  e.RemovedItems[0] != e.AddedItems[0]) ||
+                    (VM.SelectedEditorItem != null && VM.SelectedEditorItem == e.AddedItems[0]))
+                    (sender as ListBox).Focus();
+            }
             if (tbtnKlangPause1.IsChecked.Value)
             {
                 tbtnKlangPause1.IsChecked = false;
@@ -1031,6 +1083,7 @@ namespace MeisterGeister.View.AudioPlayer
             if (VM.SelectedEditorItem != null)
                 VM.SelectedEditorItem.Name = ((TextBox)e.OriginalSource).Text;
         }
+
     }
 }
 

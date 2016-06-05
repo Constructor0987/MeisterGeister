@@ -64,9 +64,16 @@
         </ListBoxItem.Style>
         <ListBoxItem.ContextMenu>
             <ContextMenu Name="contextAudioZeile">
-                <MenuItem Header="Datei duplizieren"
-                          Command="{Binding OnTitelDuplizieren}"/>
-                <MenuItem Header="Datei kopieren nach..." >
+                <MenuItem Header="Datei duplizieren" 
+                          Command="{Binding OnTitelDuplizieren}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/General/audioadd.png" Height="20" Margin="-1,-2" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Datei kopieren nach...">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/General/copy.png" Height="20" Margin="-1,-2" />
+                    </MenuItem.Icon>
                     <ItemsControl ItemsSource="{Binding DisplayPath}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -81,14 +88,30 @@
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
                 </MenuItem>
-                <MenuItem Header="Datei entfernen" Command="{Binding OnAudioZeileRemove}" />
+                <MenuItem Header="Datei entfernen" Command="{Binding OnAudioZeileRemove}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/General/entf_01.png" Height="20" Margin="-1,-2" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
-                <MenuItem Header="Nur einen Teil abspielenww" IsCheckable="True" 
+                <MenuItem Header="Nur einen Teil abspielen" IsCheckable="True" 
                           IsChecked="{Binding aPlayTitel.TeilAbspielen }" 
-                          Command="{Binding OnPlayTitelTeilAbspielen}" />
+                          Command="{Binding OnPlayTitelTeilAbspielen}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/General/cut.png" Height="20" Margin="-1,-2" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
-                <MenuItem Header="Dateipfad ändern" Command="{Binding OnDateiPfadÄndern}"/>
-                <MenuItem Header="Dateipfad öffnen" Command="{Binding OnDateiPfadÖffnen}"/>
+                    <MenuItem Header="Dateipfad ändern" Command="{Binding OnDateiPfadÄndern}">
+                        <MenuItem.Icon>
+                        <Image Source="/Images/Icons/General/feder.png" Height="20" Margin="-1,-2"  />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Dateipfad öffnen" Command="{Binding OnDateiPfadÖffnen}">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Icons/General/oeffnen.png" Height="20" Margin="-1,-2" />
+                        </MenuItem.Icon>
+                    </MenuItem>
             </ContextMenu>
         </ListBoxItem.ContextMenu>
 
@@ -183,11 +206,12 @@
                                 Minimum="{Binding TitelMinimum}"
                                 Maximum="{Binding TitelMaximum, UpdateSourceTrigger=PropertyChanged}" />
 
-                <CheckBox Name="chkTitel" HorizontalAlignment="Left" VerticalAlignment="Center" IsTabStop="False" Margin="0,2" 
-                        Content="{Binding aPlayTitel.Audio_Titel.Name}" 
+                <CheckBox Name="chkTitel" HorizontalAlignment="Left" VerticalAlignment="Center" IsTabStop="False" Margin="0,2" Content="" 
                         Command="{Binding OnBtnAktiv}"
                         IsChecked="{Binding aPlayTitel.Aktiv}" >
-                    <CheckBox.ToolTip>
+                </CheckBox>
+                <Label Content="{Binding aPlayTitel.Audio_Titel.Name}" Margin="17,0,0,0" Padding="5,0" VerticalContentAlignment="Center"  >
+                    <Label.ToolTip>
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding StringFormat=" {0}\{1}" >
@@ -196,8 +220,8 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                    </CheckBox.ToolTip>
-                </CheckBox>
+                    </Label.ToolTip>                    
+                </Label>
 
                 <local:SliderRange x:Name="rsldTeilSong"  VerticalAlignment="Center" Margin="17,1,0,0" 
                     Minimum="0" 
@@ -301,7 +325,7 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                <Grid>
+                <Grid Width="{Binding Path=ActualWidth, ElementName=lbEditorListe}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
                         <RowDefinition Height="26" />
@@ -313,16 +337,18 @@
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+                    <Label Grid.RowSpan="2" Grid.ColumnSpan="7" />
 
                     <Image Margin="1,0,87,0" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Grid.ColumnSpan="2" />
                     <Image Margin="1,0,87,0" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" Grid.ColumnSpan="2" />
 
-                    <Slider Grid.Column="1" Margin="6,2,4,1" LargeChange="10" SmallChange="1" Minimum="0" Maximum="100" VerticalAlignment="Center" ToolTipService.ShowDuration="10000"
-                        Value="{Binding aPlayTitel.Volume, UpdateSourceTrigger=PropertyChanged}"
+                    <Slider Grid.Column="1" Margin="6,2,4,1" LargeChange="10" SmallChange="{Binding volSmallChg}" Minimum="0" Maximum="100" VerticalAlignment="Center" ToolTipService.ShowDuration="10000"
+                        Value="{Binding aPlayTitelVolume, UpdateSourceTrigger=PropertyChanged}" ValueChanged="Slider_ValueChanged"
                         MouseWheel="VolumeWert_MouseWheel" >
                         <Slider.ToolTip>
-                            <TextBlock Text="{Binding aPlayTitel.Volume , StringFormat='\{0\}%'}" />
+                            <TextBlock Text="{Binding aPlayTitelVolume, StringFormat='{}{0:#,0.0}%'}" />
                         </Slider.ToolTip>
                     </Slider>
                     
@@ -342,7 +368,7 @@
                         vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
                         <ViewGeneral:IntBox.ToolTip>
                             <StackPanel>
-                                <TextBlock Text="{Binding aPlayTitel.VolumeMin , StringFormat='\{0\}%'}" />
+                                <TextBlock Text="{Binding aPlayTitelVolumeMin , StringFormat='\{0\}%'}" />
                                 <TextBlock Text="Minimale Lautstärke bei variabeler Lautstärke" />
                             </StackPanel>
                         </ViewGeneral:IntBox.ToolTip>
@@ -353,13 +379,13 @@
                         vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
                         <ViewGeneral:IntBox.ToolTip>
                             <StackPanel>
-                                <TextBlock Text="{Binding aPlayTitel.VolumeMax , StringFormat='\{0\}%'}" />
+                                <TextBlock Text="{Binding aPlayTitelVolumeMax , StringFormat='\{0\}%'}" />
                                 <TextBlock Text="Maximale Lautstärke bei variabeler Lautstärke" />
                             </StackPanel>
                         </ViewGeneral:IntBox.ToolTip>
                     </ViewGeneral:IntBox>
 
-                    <Border VerticalAlignment="Bottom" Grid.ColumnSpan="7" BorderBrush="Gray" Margin="0,0,105,24" Height="1" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
+                    <Border VerticalAlignment="Bottom" Grid.ColumnSpan="6" BorderBrush="Gray" Margin="0,0,105,24" Height="1" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
 
                     <Slider Grid.Column="1" Grid.Row="1" Maximum="900000" IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
                         Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,3,4,1" 
@@ -385,8 +411,9 @@
                             ToolTip="{Binding ZeigePauseMax, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="6,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
-                    <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitelSpeed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="6" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
-                            IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" Foreground="DarkSlateGray" Margin="32,14,32,15" >
+                    <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitelSpeed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
+                            IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" Foreground="DarkSlateGray" Margin="32,14,32,15"
+                            MouseWheel="SpeedWert_MouseWheel">
                         <Slider.ToolTip>
                             <TextBlock Text="{Binding ToolTipPlaySpeed}" />
                         </Slider.ToolTip>
@@ -457,13 +484,13 @@
                     </Style>
                 </StackPanel.Style>
 
-                <Grid>
+                <Grid Margin="-5,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="48" />
                         <ColumnDefinition Width="65" />
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="60" />
@@ -471,11 +498,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Margin="5,-1,-1,0"/>
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Margin="0,-1,-1,0"/>
                     <Label Grid.Column="1">
                         <Label.Content>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding aPlayTitel.Volume}" />
+                                <TextBlock Text="{Binding aPlayTitelVolume, StringFormat='{}{0:#,0.0}'}" />
                                 <TextBlock Text="%" />
                             </StackPanel>
                         </Label.Content>

@@ -57,9 +57,7 @@
                 </StackPanel.InputBindings>
             </StackPanel>
         </DataTemplate>
-        <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
-        <!--<ViewGeneral:MultiBooleanANDConverter x:Key="MultiBooleanANDConverter"/>
-        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter"/>-->
+        <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>        
     </Window.Resources>
     <Window.Background>
         <StaticResource ResourceKey="Background2"/>
@@ -94,9 +92,9 @@
             </Grid.ColumnDefinitions>
             
             <Grid Margin="0,0,1,0" 
-                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >            
+                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                 <Border BorderThickness="1" BorderBrush= "{DynamicResource TabControlNormalBorderBrush}" >
-                    <Grid AllowDrop="True" Drop="Grid_Drop" MinWidth="45" >
+                    <Grid AllowDrop="True" MinWidth="45" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
                         <RowDefinition Height="*" />
@@ -117,14 +115,31 @@
                         <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" />
                     </Button>
                     <Menu Focusable="False" Background="{x:Null}" Name="lbFav" IsMainMenu="True" Drop="Grid_Drop"
-                        ItemsSource="{Binding FavPlaylist, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2" >
+                        ItemsSource="{Binding FavPlaylist, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" >
                         <Menu.LayoutTransform>
                             <RotateTransform Angle="-90" />
                         </Menu.LayoutTransform>
                         <Menu.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding Name}" MaxHeight="120" Tag="{Binding VM,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
-                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=VM.OnBtnFavPlaylistClick}" CommandParameter="{Binding}">
+                                <Button MaxHeight="100" Tag="{Binding VM,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" Focusable="False"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=VM.OnBtnFavPlaylistClick}" CommandParameter="{Binding}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Height="12" Margin="-1,-2" >
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Source" Value="/Images/Icons/General/audio.png" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Audio_ThemeGUID, Converter={StaticResource IsNullOrEmptyConverter}}" Value="false" >
+                                                                <Setter Property="Source" Value="/Images/Icons/General/copy.png" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </Button.Content>
                                     <Button.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="Entfernen" CommandParameter="{Binding}"

@@ -1,4 +1,4 @@
-﻿<ListBoxItem x:Class="MeisterGeister.View.AudioPlayer.lbEditorItem"
+﻿<ListViewItem x:Class="MeisterGeister.View.AudioPlayer.lbEditorItem"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,12 +6,12 @@
              xmlns:vmAudioPlayer="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
              mc:Ignorable="d" 
              d:DesignHeight="27" d:DesignWidth="200" >
-    <ListBoxItem.Resources>
+    <ListViewItem.Resources>
         <vmAudioPlayer:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
         <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
         <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter1" />
         <vmAudioPlayer:BooleanInverseToVisibilityHiddenConverter x:Key="BooleanInverseToVisibilityHiddenConverter1"/>
-    </ListBoxItem.Resources>
+    </ListViewItem.Resources>
 
     <StackPanel Name="spnllbiIcon" Orientation="Horizontal"
                 Tag="{Binding Path=APlaylist}"                        
@@ -88,4 +88,4 @@
             </StackPanel>
         </Grid>
     </StackPanel>
-</ListBoxItem>
+</ListViewItem>

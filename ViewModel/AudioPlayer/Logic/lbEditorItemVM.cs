@@ -473,95 +473,95 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
         
 
-        private Base.CommandBase _onBtnLöschenLbEditorTheme = null;
-        public Base.CommandBase OnBtnLöschenLbEditorTheme
-        {
-            get
-            {
-                if (_onBtnLöschenLbEditorTheme == null)
-                    _onBtnLöschenLbEditorTheme = new Base.CommandBase(BtnLöschenLbEditorTheme, null);
-                return _onBtnLöschenLbEditorTheme;
-            }
-        }
-        void BtnLöschenLbEditorTheme(object obj)
-        {
-            try
-            {
-                if (ATheme != null)
-                {
-                    if (ViewHelper.ConfirmYesNoCancel("Löschen des Themes", "Wollen Sie wirklich das ausgewählte Theme  '" + ATheme.Name + "'  löschen.") == 2)
-                    {
-                        Global.SetIsBusy(true, string.Format("Theme '" + ATheme.Name + "' wird gelöscht..."));
+        //private Base.CommandBase _onBtnLöschenLbEditorTheme = null;
+        //public Base.CommandBase OnBtnLöschenLbEditorTheme
+        //{
+        //    get
+        //    {
+        //        if (_onBtnLöschenLbEditorTheme == null)
+        //            _onBtnLöschenLbEditorTheme = new Base.CommandBase(BtnLöschenLbEditorTheme, null);
+        //        return _onBtnLöschenLbEditorTheme;
+        //    }
+        //}
+        //void BtnLöschenLbEditorTheme(object obj)
+        //{
+        //    try
+        //    {
+        //        if (ATheme != null)
+        //        {
+        //            if (ViewHelper.ConfirmYesNoCancel("Löschen des Themes", "Wollen Sie wirklich das ausgewählte Theme  '" + ATheme.Name + "'  löschen.") == 2)
+        //            {
+        //                Global.SetIsBusy(true, string.Format("Theme '" + ATheme.Name + "' wird gelöscht..."));
 
-                        List<lbEditorItemVM> lbTheme = PlayerVM.EditorThemeListBoxItemListe;
-                        List<lbEditorItemVM> lbFilteredTheme = PlayerVM.FilteredEditorThemeListBoxItemListe;
+        //                List<lbEditorItemVM> lbTheme = PlayerVM.EditorThemeListBoxItemListe;
+        //                List<lbEditorItemVM> lbFilteredTheme = PlayerVM.FilteredEditorThemeListBoxItemListe;
 
-                        if (PlayerVM.SelectedEditorThemeItem == lbFilteredTheme.First(t => t.ATheme == ATheme))
-                            PlayerVM.SelectedEditorThemeItem = null;
-                        lbFilteredTheme.Remove(lbFilteredTheme.First(t => t.ATheme == ATheme));
-                        lbTheme.Remove(lbTheme.First(t => t.ATheme == ATheme));
+        //                if (PlayerVM.SelectedEditorThemeItem == lbFilteredTheme.First(t => t.ATheme == ATheme))
+        //                    PlayerVM.SelectedEditorThemeItem = null;
+        //                lbFilteredTheme.Remove(lbFilteredTheme.First(t => t.ATheme == ATheme));
+        //                lbTheme.Remove(lbTheme.First(t => t.ATheme == ATheme));
 
-                        List<grdThemeButton> grdThBtnList = PlayerVM.ErwPlayerThemeListe.FindAll(t => t.VM.Theme.Audio_ThemeGUID != ATheme.Audio_ThemeGUID);
-                        PlayerVM.ErwPlayerThemeListe = grdThBtnList;
+        //                List<grdThemeButton> grdThBtnList = PlayerVM.ErwPlayerThemeListe.FindAll(t => t.VM.Theme.Audio_ThemeGUID != ATheme.Audio_ThemeGUID);
+        //                PlayerVM.ErwPlayerThemeListe = grdThBtnList;
                         
-                        if (!Global.ContextAudio.Delete<Audio_Theme>(ATheme))
-                            Global.ContextAudio.ThemeListe.Remove(ATheme);
+        //                if (!Global.ContextAudio.Delete<Audio_Theme>(ATheme))
+        //                    Global.ContextAudio.ThemeListe.Remove(ATheme);
 
-                        PlayerVM.EditorThemeListBoxItemListe = PlayerVM.lbiThemeListNeuErstellen();
-                        //PlayerVM.ErwPlayerThemeListe = PlayerVM.ThemeErwPlayerListeNeuErstellen();
-                        PlayerVM.FilterThemeEditorPlaylistListe();                      
-                        PlayerVM.FilterErwPlayerThemeListe();
-                        if (PlayerVM.AktKlangTheme == null && PlayerVM.FilteredEditorThemeListBoxItemListe.Count > 0)
-                            PlayerVM.SelectedEditorThemeItem = PlayerVM.FilteredEditorThemeListBoxItemListe[0];
+        //                PlayerVM.EditorThemeListBoxItemListe = PlayerVM.lbiThemeListNeuErstellen();
+        //                //PlayerVM.ErwPlayerThemeListe = PlayerVM.ThemeErwPlayerListeNeuErstellen();
+        //                PlayerVM.FilterThemeEditorPlaylistListe();                      
+        //                PlayerVM.FilterErwPlayerThemeListe();
+        //                if (PlayerVM.AktKlangTheme == null && PlayerVM.FilteredEditorThemeListBoxItemListe.Count > 0)
+        //                    PlayerVM.SelectedEditorThemeItem = PlayerVM.FilteredEditorThemeListBoxItemListe[0];
                         
-                        Global.SetIsBusy(false);
-                    }
-                }
-                else
-                    ViewHelper.ShowError("Das ausgewählte Theme konnte in der Datenbank nicht gefunden werden. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", new Exception());
-            }
-            catch (Exception ex)
-            {
-                Global.SetIsBusy(false);
-                ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Löschen des Themes ist ein Fehler aufgetreten.", ex);
-            }
-        }
+        //                Global.SetIsBusy(false);
+        //            }
+        //        }
+        //        else
+        //            ViewHelper.ShowError("Das ausgewählte Theme konnte in der Datenbank nicht gefunden werden. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", new Exception());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Global.SetIsBusy(false);
+        //        ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Löschen des Themes ist ein Fehler aufgetreten.", ex);
+        //    }
+        //}
 
 
-        private Base.CommandBase _onBtnExportLbEditorTheme = null;
-        public Base.CommandBase OnBtnExportLbEditorTheme
-        {
-            get
-            {
-                if (_onBtnExportLbEditorTheme == null)
-                    _onBtnExportLbEditorTheme = new Base.CommandBase(BtnExportLbEditorTheme, null);
-                return _onBtnExportLbEditorTheme;
-            }
-        }
-        void BtnExportLbEditorTheme(object obj)
-        {
-            try
-            {                
-                if (ATheme != null)
-                {
-                    string pfaddatei = ViewHelper.ChooseFile("Theme exportieren", "Theme_" + ATheme.Name.Replace("/", "_") + ".xml", true, "xml");
+        //private Base.CommandBase _onBtnExportLbEditorTheme = null;
+        //public Base.CommandBase OnBtnExportLbEditorTheme
+        //{
+        //    get
+        //    {
+        //        if (_onBtnExportLbEditorTheme == null)
+        //            _onBtnExportLbEditorTheme = new Base.CommandBase(BtnExportLbEditorTheme, null);
+        //        return _onBtnExportLbEditorTheme;
+        //    }
+        //}
+        //void BtnExportLbEditorTheme(object obj)
+        //{
+        //    try
+        //    {                
+        //        if (ATheme != null)
+        //        {
+        //            string pfaddatei = ViewHelper.ChooseFile("Theme exportieren", "Theme_" + ATheme.Name.Replace("/", "_") + ".xml", true, "xml");
 
-                    pfaddatei = validateString(pfaddatei);
+        //            pfaddatei = validateString(pfaddatei);
 
-                    ExportTheme(ATheme, pfaddatei);
-                    ViewHelper.Popup("Die Themeliste wurde erfolgreich gesichert." + Environment.NewLine + Environment.NewLine +
-                        "!!! Bitte beachten Sie, dass Die PLAYLISTEN SEPARAT gesichert werden müssen !!!");
-                    Global.SetIsBusy(false);
-                }
-                else
-                    ViewHelper.ShowError("Das ausgewählte Theme konnte in der Datenbank nicht gefunden werden. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", new Exception());
-            }
-            catch (Exception ex)
-            {
-                Global.SetIsBusy(false);
-                ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Exportieren des Themes ist ein Fehler aufgetreten.", ex);
-            }
-        }
+        //            ExportTheme(ATheme, pfaddatei);
+        //            ViewHelper.Popup("Die Themeliste wurde erfolgreich gesichert." + Environment.NewLine + Environment.NewLine +
+        //                "!!! Bitte beachten Sie, dass Die PLAYLISTEN SEPARAT gesichert werden müssen !!!");
+        //            Global.SetIsBusy(false);
+        //        }
+        //        else
+        //            ViewHelper.ShowError("Das ausgewählte Theme konnte in der Datenbank nicht gefunden werden. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", new Exception());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Global.SetIsBusy(false);
+        //        ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Exportieren des Themes ist ein Fehler aufgetreten.", ex);
+        //    }
+        //}
 
         #endregion
 

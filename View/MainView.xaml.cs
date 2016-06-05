@@ -420,7 +420,7 @@ namespace MeisterGeister.View
 
         
         private void Grid_Drop(object sender, DragEventArgs e)
-        {
+        {            
             MeisterGeister.ViewModel.AudioPlayer.Logic.lbEditorItemVM source = e.Data.GetData("lbiPlaylistVM") as
                 MeisterGeister.ViewModel.AudioPlayer.Logic.lbEditorItemVM;
             if (source != null && source.APlaylist.Hintergrundmusik)
@@ -428,6 +428,17 @@ namespace MeisterGeister.View
                 source.APlaylist.Favorite = true;
                 Global.ContextAudio.Update<MeisterGeister.Model.Audio_Playlist>(source.APlaylist);
                 VM.UpdateFavorites();
+            }
+            else
+            {
+                MeisterGeister.ViewModel.AudioPlayer.Logic.lbEditorThemeItemVM sourceTheme = e.Data.GetData("lbiThemeVM") as
+                    MeisterGeister.ViewModel.AudioPlayer.Logic.lbEditorThemeItemVM;
+                if (sourceTheme != null)
+                {
+                    sourceTheme.ATheme.Favorite = true;
+                    Global.ContextAudio.Update<MeisterGeister.Model.Audio_Theme>(sourceTheme.ATheme);
+                    VM.UpdateFavorites();
+                }
             }
         }
 

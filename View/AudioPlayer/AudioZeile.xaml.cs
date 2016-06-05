@@ -106,18 +106,49 @@ namespace MeisterGeister.View.AudioPlayer
                         ((Slider)sender).Value = VM.SliderTicks[VM.SliderTicks.IndexOf(((Slider)sender).Value) + 1];
             }
         }
+        
+        private void SpeedWert_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double aktWert = ((Slider)sender).Value;
 
+            if (e.Delta < 0)
+            {
+                if (aktWert > ((Slider)sender).Ticks.Min())
+                    ((Slider)sender).Value = ((Slider)sender).Ticks[((Slider)sender).Ticks.IndexOf(aktWert) - 1]; 
+            }
+            else
+            {
+                if (aktWert < ((Slider)sender).Ticks.Max())
+                    ((Slider)sender).Value = ((Slider)sender).Ticks[((Slider)sender).Ticks.IndexOf(aktWert) + 1];
+            }
+        }
+                
         private void VolumeWert_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta < 0)
-                VM.aPlayTitel.Volume = VM.aPlayTitel.Volume - 3 < 0 ? 0 : VM.aPlayTitel.Volume - 3;
-            else
-                VM.aPlayTitel.Volume = VM.aPlayTitel.Volume + 3 > 100 ? 100 : VM.aPlayTitel.Volume + 3;
+            if (e.Delta < 0)                                                                // ---  Volume verringern  ---
+            {
+                VM.volSmallChg = VM.UpdateVolSmallChgBeimVerringern(VM.aPlayTitelVolume, VM.volSmallChg);
+                VM.aPlayTitelVolume = VM.VolumeVerringern(VM.aPlayTitelVolume, VM.volSmallChg);
+            }
+            else                                                                            // ---  Volume erhöhen  ---
+            {
+                VM.volSmallChg = VM.UpdateVolSmallChgBeimErhöhen(VM.aPlayTitelVolume, VM.volSmallChg);
+                VM.aPlayTitelVolume = VM.VolumeErhöhen(VM.aPlayTitelVolume, VM.volSmallChg);                
+            }
         }
 
         private void AudioZeile_DragOver(object sender, DragEventArgs e)
         {
             VM.PlayerVM.audioZeileMouseOverDropped = VM.PlayerVM.FilteredLbEditorAudioZeilenListe.IndexOf(this.VM);
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            VM.volSmallChg = (e.NewValue < 1 || e.OldValue == 2 && e.NewValue == 1) ? .1 : 3;
+            if (e.OldValue > e.NewValue && e.NewValue < .5)
+                VM.aPlayTitelVolume = 0;
+            else
+                if (e.OldValue < e.NewValue && e.NewValue < .5) VM.aPlayTitelVolume = .5;
         }
     }
 }
