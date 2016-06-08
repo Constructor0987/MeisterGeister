@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.Specialized;
 using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -415,7 +416,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void Kämpfer_PropertyChanged(object o, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == "Initiative")
+            if (args.PropertyName == "Initiative" && Manöver.Typ == ManöverTyp.Aktion)
             {
                 BerechneStart();
                 BerechneEnd();
