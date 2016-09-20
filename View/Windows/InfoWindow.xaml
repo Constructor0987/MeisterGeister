@@ -132,7 +132,7 @@
                     <SolidColorBrush />
                 </TextBox.Background>
             </TextBox>
-            <TextBox TextWrapping="Wrap" Margin="5,4,4,0" TextAlignment="Justify" Text="Einige der verwendeten Icons entstammen der Website Freepik (http://www.flaticon.com)." IsReadOnly="True" BorderThickness="0" FontSize="11">
+            <TextBox TextWrapping="Wrap" Margin="5,4,4,0" TextAlignment="Justify" Text="Es werden Icons von Benutzern der Website Freepik (http://www.flaticon.com) verwendet: Freepik, Madebyoliver, Google" IsReadOnly="True" BorderThickness="0" FontSize="11">
                 <TextBox.Background>
                     <SolidColorBrush />
                 </TextBox.Background>

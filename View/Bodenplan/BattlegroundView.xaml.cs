@@ -33,7 +33,7 @@ namespace MeisterGeister.View.Bodenplan
             InitializeComponent();
             //VM = new BattlegroundViewModel();
             
-            ArenaGrid.Cursor = Cursors.Arrow;
+            //ArenaGrid.Cursor = Cursors.Arrow;
             AddPictureButtons();
             AddFogOfWar();
         }
@@ -119,6 +119,9 @@ namespace MeisterGeister.View.Bodenplan
 
         void ArenaGrid_PreviewRightMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ListBox lb = sender as ListBox;
+            if (lb == null)
+                return;
             e.Handled = true;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
@@ -127,11 +130,11 @@ namespace MeisterGeister.View.Bodenplan
 
                 if (vm.SelectedObject is ViewModel.Kampf.Logic.Wesen)
                 {
-                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y), checkBox5_Grid.IsChecked.Value);
+                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(lb).X, e.GetPosition(lb).Y), checkBox5_Grid.IsChecked.Value);
                 }
                 else if (vm.SelectedObject is ImageObject)
                 {
-                    ((ImageObject)vm.SelectedObject).CalculateNewDirection(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
+                    ((ImageObject)vm.SelectedObject).CalculateNewDirection(new Point(e.GetPosition(lb).X, e.GetPosition(lb).Y));
                 }
             }
         }
@@ -143,6 +146,9 @@ namespace MeisterGeister.View.Bodenplan
 
         private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ListBox lb = sender as ListBox;
+            if (lb == null)
+                return;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
@@ -150,8 +156,8 @@ namespace MeisterGeister.View.Bodenplan
 
                 if (vm.CreateLine)
                 {
-                    _x1 = e.GetPosition(ArenaGrid).X;
-                    _y1 = e.GetPosition(ArenaGrid).Y;
+                    _x1 = e.GetPosition(lb).X;
+                    _y1 = e.GetPosition(lb).Y;
                     vm.CreatingNewLine = true;
                     var line = vm.CreateNewPathLine(_x1, _y1);
                     line.IsNew = true;
@@ -159,8 +165,8 @@ namespace MeisterGeister.View.Bodenplan
                 }
                 else if (vm.CreateFilledLine)
                 {
-                    _x1 = e.GetPosition(ArenaGrid).X;
-                    _y1 = e.GetPosition(ArenaGrid).Y;
+                    _x1 = e.GetPosition(lb).X;
+                    _y1 = e.GetPosition(lb).Y;
                     vm.CreatingNewFilledLine = true;
                     var line = vm.CreateNewFilledLine(_x1, _y1);
                     line.IsNew = true;
@@ -171,6 +177,9 @@ namespace MeisterGeister.View.Bodenplan
 
         private void ArenaGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            ListBox lb = sender as ListBox;
+            if (lb == null)
+                return;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
@@ -212,22 +221,25 @@ namespace MeisterGeister.View.Bodenplan
                         else if (((Wesen)vm.SelectedObject).Position == Position.Liegend) ((Wesen)vm.SelectedObject).Position = Position.Kniend;
                         else ((Wesen)vm.SelectedObject).Position = Position.Stehend;
                     }
-                    ArenaGrid.Cursor = Cursors.Arrow;
+                    lb.Cursor = Cursors.Arrow;
                 }
             }
         }
 
         private void ArenaGrid_MouseMove(object sender, MouseEventArgs e)
         {
+            ListBox lb = sender as ListBox;
+            if (lb == null)
+                return;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
                 //cursor pixelchange?
-                if (Math.Round(e.GetPosition(ArenaGrid).X, 0) != vm.CurrentMousePositionX ||
-                    Math.Round(e.GetPosition(ArenaGrid).Y, 0) != vm.CurrentMousePositionY)
+                if (Math.Round(e.GetPosition(lb).X, 0) != vm.CurrentMousePositionX ||
+                    Math.Round(e.GetPosition(lb).Y, 0) != vm.CurrentMousePositionY)
                 {
-                    vm.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
-                    vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+                    vm.CurrentMousePositionX = e.GetPosition(lb).X;
+                    vm.CurrentMousePositionY = e.GetPosition(lb).Y;
                     var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
                     //handling different possibilities based on Objects (like MoveObject or Hero, Create Line..)
                     var tempstick = vm.BattlegroundObjects.Where(x=>x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).ToList();
@@ -237,13 +249,13 @@ namespace MeisterGeister.View.Bodenplan
                     }
                     if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
                     {
-                        _x2 = e.GetPosition(ArenaGrid).X;
-                        _y2 = e.GetPosition(ArenaGrid).Y;
-                        vm.MoveWhileDrawing(_x2, _y2, vm.LeftShiftPressed);
+                        _x2 = e.GetPosition(lb).X;
+                        _y2 = e.GetPosition(lb).Y;
+                        vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
                     }
                     else if (e.LeftButton == MouseButtonState.Pressed && vm.SelectedObject != null && vm.IsMoving)
                     {
-                        ArenaGrid.Cursor = Cursors.Hand;
+                        lb.Cursor = Cursors.Hand;
                         vm.MoveObject(_xMovingOld, _yMovingOld, vm.CurrentMousePositionX, vm.CurrentMousePositionY);
                     }
                     _xMovingOld = vm.CurrentMousePositionX;
@@ -254,14 +266,17 @@ namespace MeisterGeister.View.Bodenplan
 
         private void ArenaScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
+            ListBox lb = sender as ListBox;
+            if (lb == null)
+                return;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
                 if (_zoomChanged)
                 {
                     _zoomChanged = false;
-                    vm.CurrentMousePositionX = Mouse.GetPosition(ArenaGrid).X;
-                    vm.CurrentMousePositionY = Mouse.GetPosition(ArenaGrid).Y;
+                    vm.CurrentMousePositionX = Mouse.GetPosition(lb).X;
+                    vm.CurrentMousePositionY = Mouse.GetPosition(lb).Y;
                 }
             }
         }
@@ -277,13 +292,16 @@ namespace MeisterGeister.View.Bodenplan
 
         private void ArenaGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ListBox lb = sender as ListBox;
+            if (lb == null)
+                return;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
                 var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
                 if (listboxItem != null)
                 {
-                    BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
+                    BattlegroundBaseObject o = lb.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
                     vm.SelectedObject = o; //TODO: Zugriff muss aus dem anderen Thread ausgeführt werden.
                     vm.IsMoving = true;
                     e.Handled = true;
@@ -297,13 +315,13 @@ namespace MeisterGeister.View.Bodenplan
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
-                vm.LeftShiftPressed = (e.Key == Key.LeftShift);
+                vm.Freizeichnen = (e.Key == Key.LeftShift);
                 if (e.Key == Key.Delete && vm.SelectedObject != null) vm.Delete(); 
-                if (vm.LeftShiftPressed && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
+                if (vm.Freizeichnen && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
                 {
                     _x2 = _xMovingOld;
                     _y2 = _yMovingOld;
-                    vm.MoveWhileDrawing(_x2, _y2, vm.LeftShiftPressed);
+                    vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
                 }
             }
             if (e.Key == Key.Escape) UnselectObjects();
@@ -317,7 +335,7 @@ namespace MeisterGeister.View.Bodenplan
              var vm = DataContext as BattlegroundViewModel;
              if (vm != null)
              {
-                 if (e.Key == Key.LeftShift) vm.LeftShiftPressed = !vm.LeftShiftPressed;
+                 if (e.Key == Key.LeftShift) vm.Freizeichnen = !vm.Freizeichnen;
              }
         }
 
@@ -327,13 +345,8 @@ namespace MeisterGeister.View.Bodenplan
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
-                if (vm.SelectedObject != null) vm.SelectedObject = null;
-                else
-                {
-                    vm.CreateLine = false;
-                    vm.CreateFilledLine = false;
-  
-                }
+                if (vm.SelectedObject != null)
+                    vm.SelectedObject = null;
             } 
         }
 

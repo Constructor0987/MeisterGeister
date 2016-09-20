@@ -702,6 +702,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\PathLine.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\Ressources.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\VisualTreeExtensions.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\ZeichenModus.cs" />
     <Compile Include="ViewModel\Einstellungen\EinstellungenViewModel.cs" />
     <Compile Include="ViewModel\Einstellungen\NetzwerkeinstellungenViewModel.cs" />
     <Compile Include="ViewModel\Globus\GlobusViewModel.cs" />
@@ -763,6 +764,7 @@
       <DependentUpon>lbEditorThemeItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\DialogCloser.cs" />
+    <Compile Include="View\General\DictionaryValueConverter.cs" />
     <Compile Include="View\General\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheGezieltViewModel.cs" />
@@ -2500,6 +2502,14 @@
     <Resource Include="Images\Icons\Karte\pin56.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0122.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0123.sql" />
+    <Resource Include="Images\Icons\Zeichnen\auswahlpfeil.png" />
+    <Resource Include="Images\Icons\Zeichnen\bild.png" />
+    <Resource Include="Images\Icons\Zeichnen\fill.png" />
+    <Resource Include="Images\Icons\Zeichnen\quadrat_leer.png" />
+    <Resource Include="Images\Icons\Zeichnen\scribble.png" />
+    <Resource Include="Images\Icons\Zeichnen\stift.png" />
+    <Resource Include="Images\Icons\Zeichnen\orc.png" />
+    <Resource Include="Images\Icons\Zeichnen\knight.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

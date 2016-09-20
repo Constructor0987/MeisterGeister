@@ -22,6 +22,11 @@ namespace MeisterGeister.Model
             w.Name = "Raufen";
             w.TPKKSchwelle = 10;
             w.TPKKSchritt = 3;
+            w.TPWürfelAnzahl = 1;
+            w.TPWürfel = 6;
+            w.WMAT = 0;
+            w.WMPA = 0;
+            w.INI = 0;
             Raufen = w;
 
             w = new Waffe();
@@ -30,6 +35,11 @@ namespace MeisterGeister.Model
             w.Name = "Ringen";
             w.TPKKSchwelle = 10;
             w.TPKKSchritt = 3;
+            w.TPWürfelAnzahl = 1;
+            w.TPWürfel = 6;
+            w.WMAT = 0;
+            w.WMPA = 0;
+            w.INI = 0;
             Ringen = w;
         }
 
@@ -137,6 +147,18 @@ namespace MeisterGeister.Model
         #endregion
 
         #region //---- IAusrüstung ----
+        public string BasisName
+        {
+            get
+            {
+                return Ausrüstung.BasisAusrüstung ?? Ausrüstung.Name;
+            }
+            set
+            {
+                Ausrüstung.Name = value;
+            }
+        }
+
         public string Name
         {
             get

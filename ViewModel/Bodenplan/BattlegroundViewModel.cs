@@ -10,10 +10,12 @@ using System.Windows.Media;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.Model.Extensions;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
-    public class BattlegroundViewModel : INotifyPropertyChanged, IDisposable
+    public class BattlegroundViewModel : Base.ViewModelBase, IDisposable
     {
         //  *Hintergrundfarbe
         //  *ZLevel bei initialisierung fix
@@ -22,6 +24,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public BattlegroundViewModel() : base()
         {
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
             TilePathData = BattlegroundUtilities.HexCellTile(100);
         }
 
@@ -31,7 +34,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private PathGeometry _tilePathData = new PathGeometry();
         private Color _selectedColor = Colors.DarkGray, _selectedFillColor = Colors.LightGray;
         private bool _loadWithoutPictures = false, _saveWithoutPictures = false;
-        private KämpferInfoListe _kaempferliste;
         private List<BattlegroundBaseObject> stickyHeroesTempList = new List<BattlegroundBaseObject>();
 
         public List<BattlegroundBaseObject> StickyListBoxBattlegroundObjects
@@ -49,11 +51,55 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public ObservableCollection<BattlegroundBaseObject> BattlegroundObjects
         {
             get { return _battlegroundObjects ?? (_battlegroundObjects = new ObservableCollection<BattlegroundBaseObject>()); }
-            set { _battlegroundObjects = value; }
+            set
+            {
+                if (Set(ref _battlegroundObjects, value))
+                {
+                    kämpferliste = null;
+                    objektliste = null;
+                }
+            }
+        }
+
+        private void filterKämpfer(object sender, FilterEventArgs f)
+        {
+            f.Accepted = f.Item is IKämpfer;
+        }
+
+        private void filterObjekt(object sender, FilterEventArgs f)
+        {
+            f.Accepted = !(f.Item is IKämpfer);
+        }
+
+        private CollectionViewSource kämpferliste = null;
+        public CollectionViewSource KämpferListe
+        {
+            get
+            {
+                if (kämpferliste == null)
+                {
+                    kämpferliste = new CollectionViewSource() { Source = BattlegroundObjects };
+                    kämpferliste.Filter += filterKämpfer;
+                }
+                return kämpferliste;
+            }
+        }
+
+        private CollectionViewSource objektliste = null;
+        public CollectionViewSource ObjektListe
+        {
+            get
+            {
+                if (objektliste == null)
+                {
+                    objektliste = new CollectionViewSource() { Source = BattlegroundObjects };
+                    objektliste.Filter += filterObjekt;
+                }
+                return objektliste;
+            }
         }
 
         private Kampf.KampfViewModel _kampfVM;
-
         public Kampf.KampfViewModel KampfVM
         {
             get { return _kampfVM; }
@@ -178,14 +224,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         }
 
-        private bool _leftShiftPressed = false;
-        public bool LeftShiftPressed
+        private bool _freizeichnen = false;
+        public bool Freizeichnen
         {
-            get { return _leftShiftPressed; }
+            get { return _freizeichnen; }
             set
             {
-                _leftShiftPressed = value;
-                OnPropertyChanged("LeftShiftPressed");
+                Set(ref _freizeichnen, value);
             }
         }
 
@@ -313,8 +358,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _isEditorModeEnabled; }
             set
             {
-                _isEditorModeEnabled = value;
-                OnPropertyChanged("IsEditorModeEnabled");
+                Set(ref _isEditorModeEnabled, value);
                 //Ressources.SetEditorMode(ref _battlegroundObjects, _isEditorModeEnabled);
             }
         }
@@ -490,33 +534,35 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 else BattlegroundObjects.Remove(SelectedObject);
         }
 
-        #region different lines 
+        #region ZeichenModi
+        private ZeichenModus zeichenModus;
+        public ZeichenModus ZeichenModus
+        {
+            get { return zeichenModus; }
+            set {
+                if(Set(ref zeichenModus, value))
+                {
+                    //eventuell aktionen ausführen, wie Bild platzieren
+                    //oder Properties auf dem model umsetzen wie CreateLine = true
+                }
+            }
+        }
+        
+        [DependentProperty("ZeichenModus")]
         public bool CreateLine
         {
-            get { return _pathLine; }
-            set
-            {
-                _pathLine = value;
-                if (_pathLine) CreateFilledLine = false;
-                OnPropertyChanged("CreateLine");
-                IsEditorModeEnabled = !value;
-            }
+            get { return ZeichenModus == Logic.ZeichenModus.Linie; }
         }
 
-
+        [DependentProperty("ZeichenModus")]
         public bool CreateFilledLine
         {
-            get { return _filledPathLine; }
-            set
-            {
-                _filledPathLine = value;
-                if (_filledPathLine) CreateLine = false;
-                OnPropertyChanged("CreateFilledLine");
-                IsEditorModeEnabled = !value;
-            }
+            get { return ZeichenModus == Logic.ZeichenModus.Fläche; }
         }
 
+
         #endregion
+
 
         private bool _creatingNewLine;
         public bool CreatingNewLine

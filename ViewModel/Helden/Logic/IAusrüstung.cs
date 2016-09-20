@@ -7,6 +7,11 @@ namespace MeisterGeister.ViewModel.Inventar.Logic
 {
     public interface IAusrüstung
     {
+        string BasisName
+        {
+            get;
+        }
+
         string Name
         {
             get;

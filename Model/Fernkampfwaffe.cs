@@ -187,6 +187,11 @@ namespace MeisterGeister.Model
         }
 
         #region IAusrüstung
+        public string BasisName
+        {
+            get { return Ausrüstung.BasisAusrüstung ?? Ausrüstung.Name;  }
+        }
+
         public string Name
         {
             get

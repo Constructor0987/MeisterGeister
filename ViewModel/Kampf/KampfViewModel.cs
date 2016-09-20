@@ -43,6 +43,20 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private BattlegroundViewModel bodenplanViewModel = null;
+        public BattlegroundViewModel BodenplanViewModel
+        {
+            get {
+                if (bodenplanViewModel == null)
+                    BodenplanViewModel = new BattlegroundViewModel();
+                return bodenplanViewModel; 
+            }
+            private set {
+                if (Set(ref bodenplanViewModel, value))
+                    value.KampfVM = this;
+            }
+        }
+
         private ICollection<IWesenPlaylist> _wesenPlaylist = null;
         public ICollection<IWesenPlaylist> WesenPlaylist
         {

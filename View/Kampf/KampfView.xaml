@@ -11,6 +11,7 @@
              xmlns:Kampf="clr-namespace:MeisterGeister.View.Kampf"
              xmlns:Manöver="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
              xmlns:ViewManöver="clr-namespace:MeisterGeister.View.Kampf.Manöver"
+             xmlns:ViewBodenplan="clr-namespace:MeisterGeister.View.Bodenplan"
              xmlns:model="clr-namespace:MeisterGeister.Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -243,6 +244,7 @@
         </Grid.ColumnDefinitions>
         
         <!--Bodenplan kommt hier hin-->
+        <ViewBodenplan:BattlegroundView Grid.Row="1" DataContext="{Binding BodenplanViewModel}"/>
 
         <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
