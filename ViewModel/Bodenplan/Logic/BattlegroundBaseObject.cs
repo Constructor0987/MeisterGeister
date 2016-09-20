@@ -13,7 +13,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private bool _isNew;
-        private bool _isHighlighted = false;
+        private bool _isSelected = false;
         private bool _isMoving = false;
         private double _strokethickness = 6;
         [NonSerialized] private SolidColorBrush _objectColor;
@@ -50,10 +50,21 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         //is selected? 
         public bool IsHighlighted
         {
-            get { return _isHighlighted; }
+            get { return IsSelected; }
             set
             {
-                Set(ref _isHighlighted, value);
+                if (Set(ref _isSelected, value))
+                    OnChanged("IsSelected");
+            }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (Set(ref _isSelected, value))
+                    OnChanged("IsHighlighted");
             }
         }
 

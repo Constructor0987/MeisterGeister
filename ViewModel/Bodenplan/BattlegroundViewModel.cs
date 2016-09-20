@@ -28,8 +28,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             TilePathData = BattlegroundUtilities.HexCellTile(100);
         }
 
-        private bool _pathLine = false;
-        private bool _filledPathLine = false;
         private double _currentMousePositionX, _currentMousePositionY;
         private PathGeometry _tilePathData = new PathGeometry();
         private Color _selectedColor = Colors.DarkGray, _selectedFillColor = Colors.LightGray;
@@ -277,7 +275,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 _selectedObjectsFromListBox = value;
                 OnPropertyChanged("SelectedObjectsFromListBox");
-                Console.WriteLine(_selectedObjectsFromListBox);
+                System.Diagnostics.Debug.WriteLine(_selectedObjectsFromListBox);
             }
         }
 
