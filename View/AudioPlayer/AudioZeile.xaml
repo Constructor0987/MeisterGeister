@@ -336,7 +336,7 @@
                         <ColumnDefinition Width="56" />
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="0" /> <!--"110"-->
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.RowSpan="2" Grid.ColumnSpan="7" />

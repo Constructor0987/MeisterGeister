@@ -332,14 +332,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             try
             {
-                string datei = ViewHelper.ChooseFile("Playliste exportieren", "Playlist_" + this.APlaylist.Name.Replace("/", "_") + ".xml", true, "xml");
+                string datei = ViewHelper.ChooseFile("Playliste exportieren", "Playlist_" + ViewHelper.GetValidFilename(this.APlaylist.Name) + ".xml", true, "xml");
                 if (datei != null)
                 {
                     Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
-
-                    datei = datei.Replace("--", "-");
-                    while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
-                        datei = datei.Substring(0, datei.Length - 5) + ".xml";
+                    string pfad = Path.GetDirectoryName(datei);                    
+                    string ext = Path.GetExtension(datei);
+                    datei = ViewHelper.GetValidFilename(Path.GetFileNameWithoutExtension(datei));
+                    datei = pfad + @"\" + datei + ext;
 
                     File.Delete(datei);
                     this.APlaylist.Export(datei, this.APlaylist.Audio_PlaylistGUID);
@@ -433,7 +433,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 if (ViewHelper.ConfirmYesNoCancel("Löschen der Playlist", "Wollen Sie wirklich die ausgewählte Playlist  '" + APlaylist.Name + "'  löschen.") == 2)
                 {
                     bool aPlaylistWarHintergrund = APlaylist.Hintergrundmusik;
-                    Global.SetIsBusy(true, string.Format("Playlist '" + APlaylist.Name + "' wird gelöscht..."));
+                    Global.SetIsBusy(true, string.Format("Playlist '" + ViewHelper.GetValidFilename(APlaylist.Name) + "' wird gelöscht..."));
                     List<lbEditorItemVM> lbPlaylist = PlayerVM.EditorListBoxItemListe;
                     List<lbEditorItemVM> lbFilteredPlaylist = PlayerVM.FilteredEditorListBoxItemListe;
 
@@ -567,19 +567,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         #region //---- Kalkulationen & Export ----
         
-        private string validateString(string s)
-        {
-            while (s.Contains("--"))
-                s = s.Replace("--", "-");
+        //private string validateString(string s)
+        //{
+        //    while (s.Contains("--"))
+        //        s = s.Replace("--", "-");
 
-            s = s.TrimEnd(new char[] { ' ', '-', '/' });
-            s = s.TrimStart(new char[] { ' ', '-', '/' });
+        //    s = s.TrimEnd(new char[] { ' ', '-', '/' });
+        //    s = s.TrimStart(new char[] { ' ', '-', '/' });
 
-            while (s.EndsWith("-.xml") || s.EndsWith(" .xml"))
-                s = s.Substring(0, s.Length - 5) + ".xml";
+        //    while (s.EndsWith("-.xml") || s.EndsWith(" .xml"))
+        //        s = s.Substring(0, s.Length - 5) + ".xml";
 
-            return s;
-        }
+        //    return s;
+        //}
 
         private void ExportTheme(Audio_Theme aTheme, string pfaddatei)
         {
@@ -587,7 +587,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 if (pfaddatei != null)
                 {
-                    Global.SetIsBusy(true, string.Format("Das Theme '" + aTheme.Name + "'  wird exportiert ..."));
+                    Global.SetIsBusy(true, string.Format("Das Theme '" + ViewHelper.GetValidFilename(aTheme.Name) + "'  wird exportiert ..."));
 
                     File.Delete(pfaddatei);
                     XmlTextWriter textWriter = new XmlTextWriter(pfaddatei, null);

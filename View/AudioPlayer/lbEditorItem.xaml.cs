@@ -73,10 +73,10 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void lbitemEditor_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("meineAudioZeile"))
+            if (e.Data.GetDataPresent("meineAudioZeile") || e.Data.GetDataPresent("meineAudioZeilenListe"))
             {
                 VM.PlayerVM.DropZielPlaylist = (Audio_Playlist)((StackPanel)sender).Tag;
-                AudioZeile aZeile = e.Data.GetData("meineAudioZeile") as AudioZeile;
+               // AudioZeile aZeile = e.Data.GetData("meineAudioZeile") as AudioZeile;
             }
             else
             {

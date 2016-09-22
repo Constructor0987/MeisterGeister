@@ -112,6 +112,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\ArtefaktGenerator.dll</HintPath>
     </Reference>
+    <Reference Include="bass.net">
+      <HintPath>Audio\BASS\bass.net.dll</HintPath>
+    </Reference>
     <Reference Include="DG-Suche, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\DG-Suche.dll</HintPath>
@@ -2360,6 +2363,18 @@
     <Resource Include="Images\Icons\General\stop.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0080.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0081.sql" />
+    <Content Include="Audio\BASS\bass.net.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audio\BASS\Plugin\basswma.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audio\BASS\X64\bass.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audio\BASS\X86\bass.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Daten\Bodenplan\DoorHorizontalClosed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2765,6 +2780,10 @@ if not $(ConfigurationName) == Debug (
    mkdir "$(ProjectDir)publish\$(TargetName)\Daten\Bodenplan"
    mkdir "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden"
    mkdir "$(ProjectDir)publish\$(TargetName)\Audio"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Audio\BASS"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Audio\BASS\X86"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Audio\BASS\X64"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Audio\BASS\Plugin"
    mkdir "$(ProjectDir)publish\$(TargetName)\License"
    mkdir "$(ProjectDir)publish\$(TargetName)\de"
    mkdir "$(ProjectDir)publish\$(TargetName)\Images"
@@ -2772,6 +2791,9 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)$(TargetFileName).config" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)README.txt" "$(ProjectDir)publish\$(TargetName)"
+
+   copy "$(TargetDir)Audio\BASS\bass.net.dll" "$(ProjectDir)publish\$(TargetName)"
+
    copy "$(TargetDir)Daten\DatabaseDSA_Standard.sdf" "$(ProjectDir)publish\$(TargetName)\Daten"
    copy "$(TargetDir)Daten\meistergeister.kmz" "$(ProjectDir)publish\$(TargetName)\Daten"
    copy "$(TargetDir)Daten\Helden\Demohelden\*.xml" "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden\"
@@ -2781,6 +2803,11 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)de\EntityFramework.SqlServer.resources.dll" "$(ProjectDir)publish\$(TargetName)\de"
    copy "$(TargetDir)Audio\meistergeister.wav" "$(ProjectDir)publish\$(TargetName)\Audio"
    copy "$(TargetDir)Audio\WuerfelnSound0000.wav" "$(ProjectDir)publish\$(TargetName)\Audio"
+   copy "$(TargetDir)Audio\BASS\bass.net.dll" "$(ProjectDir)publish\$(TargetName)\Audio\BASS"
+   copy "$(TargetDir)Audio\BASS\X86\bass.dll" "$(ProjectDir)publish\$(TargetName)\Audio\BASS\X86"
+   copy "$(TargetDir)Audio\BASS\X64\bass.dll" "$(ProjectDir)publish\$(TargetName)\Audio\BASS\X64"
+   copy "$(TargetDir)Audio\BASS\Bass.Net.dll" "$(ProjectDir)publish\$(TargetName)\Audio\BASS"
+   copy "$(TargetDir)Audio\BASS\Plugin\basswma.dll" "$(ProjectDir)publish\$(TargetName)\Audio\BASS\Plugin"
    copy "$(TargetDir)License\Apache License.txt" "$(ProjectDir)publish\$(TargetName)\License"
    copy "$(TargetDir)Aq.ExpressionJsonSerializer.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Ares.MeisterGeisterPlugin.dll" "$(ProjectDir)publish\$(TargetName)"
@@ -2794,6 +2821,9 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)EntityFramework.SqlServerCompact.xml" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)ImpromptuInterface.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)ImpromptuInterface.xml" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)WPFToolkit.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)System.Windows.Controls.Input.Toolkit.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)System.Windows.Controls.Layout.Toolkit.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Effects.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Interactions.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(ProjectDir)publish\$(TargetName)"

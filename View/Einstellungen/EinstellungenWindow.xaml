@@ -338,10 +338,10 @@
                                 <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
                             </StackPanel>
 
-                            <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">                                
+                            <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal" >                                
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" MaxHeight="200" MinHeight="60"/>
+                                        <RowDefinition Height="*" MinHeight="60"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
@@ -352,9 +352,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Content="Standard-Verzeichnis" />
-                                    <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" >
-                                        <ListBox Name="lbStandardPfade" Margin="0,1" Background="Transparent" />
-                                    </ScrollViewer>
+                                    <ListBox Name="lbStandardPfade" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,1" Background="Transparent" />
                                 </Grid>
                             </StackPanel>
                         </ListBox>

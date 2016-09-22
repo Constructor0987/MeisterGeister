@@ -99,5 +99,15 @@ namespace MeisterGeister.View.AudioPlayer
             if (this.HorizontalContentAlignment != System.Windows.HorizontalAlignment.Stretch)
                 this.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
         }
+
+        private void slVolume_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 1)
+            {
+                ((Slider)sender).Value += ((((Slider)sender).Value < 98) ? 3 : ((100 - ((Slider)sender).Value)));
+            }
+            else
+            { ((Slider)sender).Value += ((((Slider)sender).Value > 2) ? -3 : 0); }
+        }
     }
 }

@@ -21,6 +21,7 @@ using MeisterGeister.View.Settings;
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel;
 using System.ComponentModel;
+using Un4seen.Bass;
 
 namespace MeisterGeister.View
 {
@@ -76,6 +77,7 @@ namespace MeisterGeister.View
                 _labelVersion.Foreground = Brushes.Red;
                 _labelVersion.Background = Brushes.LightYellow;
             }
+            InitBASS();
         }
 
         void VM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -197,6 +199,8 @@ namespace MeisterGeister.View
                 MsgWindow errWin = new MsgWindow("Fehler beim Bereinigen", "Beim Breinigen des Temporären Ordners ist ein Fehler aufgetreten!", ex);
                 errWin.ShowDialog();
             }
+            // BASS.Net freigeben
+            Bass.FreeMe();
         }
 
         private void MenuItemSpielerInfoControl_Click(object sender, RoutedEventArgs e)
@@ -441,6 +445,31 @@ namespace MeisterGeister.View
                 }
             }
         }
+
+        public void InitBASS()
+        {
+            string appBaseDir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            string sourcePath = appBaseDir + ((Utils.Is64Bit) ? @"\Audio\BASS\X64" : @"\Audio\BASS\X86");
+
+            //Kopieren der BASS.DLL 32bit oder 64bit Variante ins Hauptverzeichnis von MG
+            try
+            {
+                File.Copy(sourcePath + @"\bass.dll", appBaseDir + @"\bass.dll", true);
+
+            }
+            finally
+            {
+                int i = Bass.BASS_PluginLoad("basswma.dll");
+                if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+                {
+                    BASS_INFO info = new BASS_INFO();
+                    Bass.BASS_GetInfo(info);
+                    Console.WriteLine(info.ToString());
+                    Dictionary<int, string> lst = Bass.BASS_PluginLoadDirectory(Environment.CurrentDirectory + @"\Audio\BASS\Plugin\");
+                }
+            }
+        }
+
 
     }
 }

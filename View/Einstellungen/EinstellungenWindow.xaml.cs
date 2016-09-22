@@ -17,6 +17,7 @@ using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.View.AudioPlayer;
 using MeisterGeister.View.Windows;
 using MeisterGeister.ViewModel.Settings;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.View.Settings
 {
@@ -26,6 +27,7 @@ namespace MeisterGeister.View.Settings
     public partial class EinstellungenWindow : Window
     {
         public List<string> stdPfad = new List<string>();
+        private bool stdPfadChanged = false;
 
         public EinstellungenWindow()
         {
@@ -37,7 +39,7 @@ namespace MeisterGeister.View.Settings
             _listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
 
             // AudioPlayer Standard-Pfade auflisten
-            setStdPfad();
+            setStdPfad(); 
             CreateStandardPfadItems();
             // CheckBox & Slider aktualisieren
             _checkboxSpieldauerBerechnen.IsChecked = Einstellungen.AudioSpieldauerBerechnen;
@@ -90,6 +92,7 @@ namespace MeisterGeister.View.Settings
         {
             if (stdPfad.Count > 0) stdPfad.RemoveRange(0, stdPfad.Count);
             stdPfad.AddRange(MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }));
+                        
         }
         
         private void CreateStandardPfadItems()
@@ -137,6 +140,8 @@ namespace MeisterGeister.View.Settings
                 Logic.Einstellung.Einstellungen.UpdateEinstellungen();
                 ((Button)sender).Tag = null;
                 setStdPfad();
+                ViewHelper.Popup("Die Änderungen können erst beim nächten Starten des Audio-Tools übernommen werden." + Environment.NewLine +
+                    "Falls das Audio-Tool geöffnet ist, schließen Sie es und öffnen es erneut, um die Standard-Pfad entsprechend zu setzen.");
             }
         }
 
@@ -157,6 +162,8 @@ namespace MeisterGeister.View.Settings
 
             ((ListBox)lbiBtn.Parent).Items.Remove(lbiBtn);
             setStdPfad();
+            ViewHelper.Popup("Die Änderungen können erst beim nächten Starten des Audio-Tools übernommen werden." + Environment.NewLine +
+                "Falls das Audio-Tool geöffnet ist, schließen Sie es und öffnen es erneut, um die Standard-Pfad entsprechend zu setzen.");
         }
 
         public void _sldFading_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

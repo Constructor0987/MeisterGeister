@@ -18,11 +18,163 @@ using System.Windows.Media;
 using System.Threading;
 using MeisterGeister.Logic.Einstellung;
 using VM = MeisterGeister.ViewModel.AudioPlayer;
+using Un4seen.Bass;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
     public class btnHotkeyVM : Base.ToolViewModelBase
     {
+
+        #region //---- Klassen ----
+        public class AudioData
+        {
+            public int audioStream = 0;
+
+            public void Stop()
+            {
+                if (audioStream != 0)
+                    Bass.BASS_ChannelStop(audioStream);
+            }
+
+            public bool isStopped()
+            {
+                return Bass.BASS_ChannelIsActive(audioStream) == BASSActive.BASS_ACTIVE_STOPPED;
+            }
+            public bool isPlaying()
+            {
+                return Bass.BASS_ChannelIsActive(audioStream) == BASSActive.BASS_ACTIVE_PLAYING;
+            }
+            public bool isPaused()
+            {
+                return Bass.BASS_ChannelIsActive(audioStream) == BASSActive.BASS_ACTIVE_PAUSED;
+            }
+
+            private SYNCPROC _mySync;
+            public void Play()
+            {
+                if (_mySync == null)
+                    _mySync = new SYNCPROC(EndSync);
+                Bass.BASS_ChannelSetSync(audioStream, BASSSync.BASS_SYNC_END | BASSSync.BASS_SYNC_MIXTIME, 0, _mySync, IntPtr.Zero);
+
+                Bass.BASS_ChannelPlay(audioStream, false);
+            }
+            private void EndSync(int handle, int channel, int data, IntPtr user)
+            {
+                //     Stop();
+                //     Close();
+            }
+
+            public void Pause()
+            {
+                Bass.BASS_ChannelPause(audioStream);
+            }
+            public void Close()
+            {
+                if (!Bass.BASS_StreamFree(audioStream))
+                {
+                    BASSError berr = Bass.BASS_ErrorGetCode();
+                    if (berr != 0)
+                    { }
+                }
+            }
+
+            public void setSpeed(double speed)
+            {
+                Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_MUSIC_SPEED, Convert.ToSingle(speed));
+            }
+
+            private float lastVolume = 0;
+            private bool muted;
+            /// <summary>
+            /// Setzt den Song auf MUTE oder setzt das MUTING des Songs zurück
+            /// </summary>
+            /// <param name="mute"></param>
+            /// <returns></returns>
+            public bool mute(bool mute)
+            {
+                if (mute == muted)
+                    return true;
+
+                bool rtn; // returnvalue
+
+                if (mute) // mute
+                {
+                    lastVolume = getVolume(); // save current volume
+                    rtn = setVolume(0.0f); // set volume to 0.0f (= mute)
+                    muted = true; // set mute-state
+                }
+                else // unmute
+                {
+                    rtn = setVolume(lastVolume); // restore volume
+                    muted = false; // set mute-state
+                }
+
+                return rtn; // returnvalue
+            }
+
+            /// <summary>
+            /// Gibt das aktuelle Volume zurück
+            /// </summary>
+            /// <returns></returns>
+            public float getVolume()
+            {
+                float vol = 0f;
+                return (Bass.BASS_ChannelGetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_VOL, ref vol)) ? vol : 0f;
+            }
+            /// <summary>
+            /// Setzt das Volume des Songs
+            /// </summary>
+            /// <param name="vol"></param>
+            /// <returns></returns>
+            public bool setVolume(double vol)
+            {
+                return Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_VOL, Convert.ToSingle(vol));
+            }
+            /// <summary>
+            /// Gibt die Länge des Songs in Millisekunden zurück
+            /// </summary>
+            /// <returns></returns>
+            public double getLength()
+            {
+                return Bass.BASS_ChannelBytes2Seconds(audioStream, Bass.BASS_ChannelGetLength(audioStream) * 1000);
+            }
+            /// <summary>
+            /// Gibt die aktuelle Position in Millisekunden im Song zurück
+            /// </summary>
+            /// <returns></returns>
+            public double getPosition()
+            {
+                return Bass.BASS_ChannelBytes2Seconds(audioStream, Bass.BASS_ChannelGetPosition(audioStream) * 1000);
+            }
+            /// <summary>
+            /// Setzt die aktuelle Position des Songs
+            /// </summary>
+            /// <param name="milliSec"></param>
+            /// <returns></returns>
+            public bool setPosition(double milliSec)
+            {
+                return Bass.BASS_ChannelSetPosition(audioStream, milliSec / 1000);
+            }
+            /// <summary>
+            /// Gibt den Absoluten Dateinamen des Songs zurück
+            /// </summary>
+            /// <returns></returns>
+            public string getFilename()
+            {
+                return (audioStream != 0) ? Bass.BASS_ChannelGetInfo(audioStream).filename : null;
+            }
+
+            public bool setFilename(string file)
+            {
+                audioStream = Bass.BASS_StreamCreateFile(file, 0, 0, BASSFlag.BASS_DEFAULT);
+
+                return (audioStream != 0);
+            }
+
+        }
+        #endregion
+
+
         //INotifyPropertyChanged
         #region //---- FELDER ----
 
@@ -74,9 +226,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 OnChanged();
             }
         }
-        
-        private List<MediaPlayer> _mpList = new List<MediaPlayer>();
-        public List<MediaPlayer> mpList
+
+        private List<AudioData> _mpList = new List<AudioData>();
+        public List<AudioData> mpList
         {
             get { return _mpList; }
             set
@@ -131,11 +283,25 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public btnHotkeyVM() 
         {
             // Event-Handler zur DependentProperty-Notification
-            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;                                
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+
+         //   InitBASS();    
         }
         #endregion
 
         #region //---- INSTANZMETHODEN ----
+
+        public void InitBASS()
+        {
+            int i = Bass.BASS_PluginLoad("basswma.dll");
+            if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+            {
+                BASS_INFO info = new BASS_INFO();
+                Bass.BASS_GetInfo(info);
+                Console.WriteLine(info.ToString());
+                Dictionary<int, string> lst = Bass.BASS_PluginLoadDirectory(Environment.CurrentDirectory + @"\Audio\BASS\Plugin\");
+            }
+        }
         public List<DispatcherTimer> _timerTeilAbspielenList = new  List<DispatcherTimer>();
 
         private bool checkTitel(Audio_Titel titel)
@@ -158,7 +324,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public List<TitelPlay> TitelPlayList = new List<TitelPlay>();
         public class TitelPlay
         {
-            public MediaPlayer mp;
+            public AudioData mp;
             public DispatcherTimer dis;
         }
 
@@ -192,10 +358,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     zuspielen = (new Random()).Next(0, PlayableTitelList.Count);
                     aPlayTitel = PlayableTitelList.ToList().ElementAt(zuspielen);
                 }
-                
-                MediaPlayer mp = new MediaPlayer();
-                mp.MediaEnded += mp_failed_ended;
-                mp.MediaFailed += mp_failed_ended;
+
+                AudioData mp = new AudioData();
+               // mp.MediaEnded += mp_failed_ended;
+               // mp.MediaFailed += mp_failed_ended;
 
                 TitelPlay titelPlay = new TitelPlay();
                 TitelPlayList.Add(titelPlay);
@@ -203,35 +369,40 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
                 mpList.Add(mp);
                 
-                mp.Open(new Uri(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei));
-                mp.Volume = (double)(volume / 100);
+                mp.setFilename(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei);
+                mp.setVolume((double)(volume / 100));
                 if (aPlayTitel.TeilAbspielen)
                 {
-                    mp.Position = TimeSpan.FromMilliseconds(0); 
-                    MyTimer.start_timer();
-                    // Bis zu 1000ms warten um die Musikdatei auszulesen und die Laufzeit zu ermitteln
-                    if (SpinWait.SpinUntil(() => { return mp.NaturalDuration.HasTimeSpan; }, 1000))
-                        mp.Position = TimeSpan.FromMilliseconds(aPlayTitel.TeilStart.Value);
-                    MyTimer.stop_timer("Hotkey_OnBtnClick");
+                    mp.setPosition(aPlayTitel.TeilStart.Value);
+                    //mp.setPosition(0); 
+                    //MyTimer.start_timer();
+                    //// Bis zu 1000ms warten um die Musikdatei auszulesen und die Laufzeit zu ermitteln
+                    //if (SpinWait.SpinUntil(() => { return mp.NaturalDuration.HasTimeSpan; }, 1000))
+                    //    mp.Position = TimeSpan.FromMilliseconds(aPlayTitel.TeilStart.Value);
+                    //MyTimer.stop_timer("Hotkey_OnBtnClick");
                 }
 
                 mp.Play();
                 Aktiv = true;
-                if (aPlayTitel.TeilAbspielen)
+               // if (aPlayTitel.TeilAbspielen)
                 {
                     DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
                     _timerTeilAbspielen.Interval = TimeSpan.FromMilliseconds(20);
                     _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);       
 
                     _timerTeilAbspielenList.Add(_timerTeilAbspielen);
-                    _timerTeilAbspielen.Tag = (aPlayTitel.TeilAbspielen)? aPlayTitel.TeilEnde.Value: aPlayTitel.Länge != 0? aPlayTitel.Länge: 100000;
+                    _timerTeilAbspielen.Tag = (aPlayTitel.TeilAbspielen) ? 
+                        aPlayTitel.TeilEnde.Value : aPlayTitel.Länge != 0 ? 
+                            aPlayTitel.Länge == mp.getLength() ? 
+                                aPlayTitel.Länge : mp.getLength() : mp.getLength();
 
                     titelPlay.dis = _timerTeilAbspielen;
                     _timerTeilAbspielen.Start();
                 }                
             }
         }
-        
+
+        double lastpos = 0;
         public void _timerTeilAbspielen_Tick(object sender, EventArgs e)
         {
             double Ende = (double)(sender as DispatcherTimer).Tag;
@@ -242,27 +413,33 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 (sender as DispatcherTimer).Stop();
                 return;
             }
-
-            if (titelPlay.mp.Source == null ||
-                titelPlay.mp.Position.TotalMilliseconds >= Ende)
+            double aktPos = titelPlay.mp.getPosition();
+            if (titelPlay.mp == null ||
+                aktPos >= Ende ||
+                lastpos == aktPos && aktPos != 0)
             {
-                if (titelPlay.mp.Source != null)
+                if (titelPlay.mp != null)
+                {
                     titelPlay.mp.Stop();
+                    titelPlay.mp.Close();
+                }
                 (sender as DispatcherTimer).Stop();
                 Aktiv = false;
             }
+            else
+                lastpos = titelPlay.mp.getPosition();
         }
 
         private void mp_failed_ended(object sender, EventArgs e)
         {
             try
             {
-                TitelPlay titelPlay = TitelPlayList.FirstOrDefault(t => t.mp == (sender as MediaPlayer));
+                TitelPlay titelPlay = TitelPlayList.FirstOrDefault(t => t.mp == (sender as AudioData));
                 if (titelPlay != null)
                     TitelPlayList.Remove(titelPlay);
 
-                ((MediaPlayer)sender).Stop();
-                ((MediaPlayer)sender).Close();
+                ((AudioData)sender).Stop();
+                ((AudioData)sender).Close();
                 Aktiv = false;
             }
             catch (Exception ex)
