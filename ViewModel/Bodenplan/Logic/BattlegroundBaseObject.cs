@@ -106,7 +106,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _objectXMLColor; }
             set
             {
-                _objectXMLColor = value;
+                if(Set(ref _objectXMLColor, value))
+                    OnChanged("ObjectColor");
             }
         }
 

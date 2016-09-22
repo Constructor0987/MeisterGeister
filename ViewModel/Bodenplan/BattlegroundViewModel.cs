@@ -37,7 +37,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public List<BattlegroundBaseObject> StickyListBoxBattlegroundObjects
         {
             get { return BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); }
-            set { value = BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); OnPropertyChanged("StickyListBoxBattlegroundObjects"); }
+            set { value = BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); OnChanged("StickyListBoxBattlegroundObjects"); }
         }
 
         void _selectedListBoxBattlegroundObjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -236,7 +236,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public String CurrentlySelectedCreature
         {
             get { return _currentlySelectedCreature; }
-            set { _currentlySelectedCreature = value; OnPropertyChanged("CurrentlySelectedCreature"); }
+            set { Set(ref _currentlySelectedCreature, value); }
         }
 
         //get / set ZLevel
@@ -250,7 +250,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     SelectedObject.ZLevel = value;
                     PossibleZLevels = Ressources.GetPossibleZLevels(BattlegroundObjects);
                 }
-                OnPropertyChanged("ZLevel");
+                OnChanged("ZLevel");
             }
         }
 
@@ -260,9 +260,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _visibleZLevels; }
             set
             {
-                _visibleZLevels = value;
-                OnPropertyChanged("VisibleZLevels");
-                Ressources.SetVisibilityDependetOnZLevelSelection(ref _battlegroundObjects, VisibleZLevels, IgnorZLevel);
+               if(Set(ref _visibleZLevels, value))
+                   Ressources.SetVisibilityDependetOnZLevelSelection(ref _battlegroundObjects, VisibleZLevels, IgnorZLevel);
             }
 
         }
@@ -273,8 +272,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _selectedObjectsFromListBox; }
             set
             {
-                _selectedObjectsFromListBox = value;
-                OnPropertyChanged("SelectedObjectsFromListBox");
+                Set(ref _selectedObjectsFromListBox, value);
                 System.Diagnostics.Debug.WriteLine(_selectedObjectsFromListBox);
             }
         }
@@ -285,8 +283,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _possibleZLevels; }
             set
             {
-                _possibleZLevels = value;
-                OnPropertyChanged("PossibleZLevels");
+                Set(ref _possibleZLevels, value);
             }
         }
 
@@ -310,8 +307,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set
             {
                 PossibleZLevels = Ressources.GetPossibleZLevels(BattlegroundObjects);
-                _showZ = value;
-                OnPropertyChanged("ShowZ");
+                Set(ref _showZ, value);
             }
         }
 
@@ -321,9 +317,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _ignorZLevel; }
             set
             {
-                _ignorZLevel = value;
-                OnPropertyChanged("IgnorZLevel");
-                Ressources.SetVisibilityDependetOnZLevelSelection(ref _battlegroundObjects, VisibleZLevels, IgnorZLevel);
+                if(Set(ref _ignorZLevel, value))
+                    Ressources.SetVisibilityDependetOnZLevelSelection(ref _battlegroundObjects, VisibleZLevels, IgnorZLevel);
             }
         }
 
@@ -333,8 +328,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _showSightArea; }
             set
             {
-                _showSightArea = value;
-                OnPropertyChanged("ShowSightArea");
+                Set(ref _showSightArea, value);
             }
         }
 
@@ -344,9 +338,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _sightAreaLenght; }
             set
             {
-                _sightAreaLenght = value;
-                OnPropertyChanged("SightAreaLenght");
-                Ressources.SetNewSightAreaLength(ref _battlegroundObjects, SightAreaLenght);
+                if(Set(ref _sightAreaLenght, value))
+                    Ressources.SetNewSightAreaLength(ref _battlegroundObjects, SightAreaLenght);
             }
         }
 
@@ -367,20 +360,21 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _showCreatureName; }
             set
             {
-                _showCreatureName = value;
-                OnPropertyChanged("ShowCreatureName");
+                Set(ref _showCreatureName, value);
             }
         }
 
 
         //get / set stroke thickness
+        private double _strokeThickness = 20;
         public double StrokeThickness
         {
-            get { return SelectedObject != null ? SelectedObject.StrokeThickness : 20; }
+            get { return _strokeThickness; }
             set
             {
-                if (SelectedObject != null) SelectedObject.StrokeThickness = value;
-                OnPropertyChanged("StrokeThickness");
+                if(Set(ref _strokeThickness, value))
+                    if (SelectedObject != null)
+                        SelectedObject.StrokeThickness = value;
             }
         }
 
@@ -402,7 +396,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     if (SelectedObject is ImageObject) ((ImageObject)SelectedObject).ObjectSize = value;
                     if (SelectedObject is BattlegroundCreature) ((BattlegroundCreature)SelectedObject).ObjectSize = value;
                 }
-                OnPropertyChanged("ObjectSize");
+                OnChanged("ObjectSize");
             }
         }
 
@@ -413,11 +407,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (SelectedObject != null)
                 {
-                    Console.WriteLine("SetOpacity from: {0} to {1}", Opacity, value);
                     SelectedObject.Opacity = value;
                 }
-
-                OnPropertyChanged("Opacity");
+                OnChanged("Opacity");
             }
         }
 
@@ -426,9 +418,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _selectedColor; }
             set
             {
-                _selectedColor = value;
-                if (SelectedObject != null) SelectedObject.ObjectColor = new SolidColorBrush(value);
-                OnPropertyChanged("SelectedColor");
+                if(Set(ref _selectedColor, value))
+                    if (SelectedObject != null)
+                        SelectedObject.ObjectColor = new SolidColorBrush(value);
             }
         }
 
@@ -437,13 +429,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _selectedFillColor; }
             set
             {
-                _selectedFillColor = value;
-                Console.WriteLine(_selectedFillColor.ScA);
-                if (SelectedObject != null) SelectedObject.FillColor = value;
-                OnPropertyChanged("SelectedFillColor");
+                if(Set(ref _selectedFillColor, value))
+                    if (SelectedObject != null)
+                        SelectedObject.FillColor = value;
             }
         }
 
+        [DependentProperty("SelectedFillColor")]
         public float SelectedFillColorAlpha
         {
             get { return SelectedFillColor.ScA; }
@@ -452,21 +444,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Color c = SelectedFillColor;
                 c.ScA = value;
                 SelectedFillColor = c;
-                Console.WriteLine("Alpha: " + value + " || " + SelectedFillColor.ScA.ToString());
-                OnPropertyChanged("SelectedFillColorAlpha");
             }
         }
 
         public bool LoadWithoutPictures
         {
             get { return _loadWithoutPictures; }
-            set { _loadWithoutPictures = value; OnPropertyChanged("LoadWithoutPictures"); }
+            set { Set(ref _loadWithoutPictures, value); }
         }
 
         public bool SaveWithoutPictures
         {
             get { return _saveWithoutPictures; }
-            set { _saveWithoutPictures = value; OnPropertyChanged("SaveWithoutPictures"); }
+            set { Set(ref _saveWithoutPictures, value); }
         }
 
         public PathGeometry TilePathData
@@ -474,8 +464,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _tilePathData; }
             set
             {
-                _tilePathData = value;
-                OnPropertyChanged("TilePathData");
+                Set(ref _tilePathData, value);
             }
         }
 
@@ -484,8 +473,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _currentMousePositionX; }
             set
             {
-                _currentMousePositionX = value;
-                OnPropertyChanged("CurrentMousePositionX");
+                Set(ref _currentMousePositionX, value);
             }
         }
 
@@ -494,8 +482,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _currentMousePositionY; }
             set
             {
-                _currentMousePositionY = value;
-                OnPropertyChanged("CurrentMousePositionY");
+                Set(ref _currentMousePositionY, value);
             }
         }
 
@@ -511,7 +498,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     BattlegroundObjects.ToList().ForEach(x => x.IsHighlighted = false);
                     _selectedObject = value;
                     if (SelectedObject is BattlegroundCreature) KampfVM.SelectedKämpfer = KampfVM.Kampf.Kämpfer.First(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
-                    OnPropertyChanged("SelectedObject");
+                    if(SelectedObject != null)
+                    {
+                        SelectedFillColor = SelectedObject.FillColor;
+                        SelectedColor = SelectedObject.ObjectXMLColor;
+                        StrokeThickness = SelectedObject.StrokeThickness;
+                    }
+                    OnChanged("SelectedObject");
                 }
             }
         }
@@ -568,7 +561,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _creatingNewLine; }
             set
             {
-                _creatingNewLine = value;
+                Set(ref _creatingNewLine, value);
                 if (!_creatingNewLine) SelectedObject = null;
             }
         }
@@ -592,7 +585,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _creatingNewFilledLine; }
             set
             {
-                _creatingNewFilledLine = value;
+                Set(ref _creatingNewFilledLine, value);
                 if (!_creatingNewFilledLine) SelectedObject = null;
             }
         }
@@ -634,7 +627,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public bool IsMoving
         {
             get { return _isMoving; }
-            set { _isMoving = value; }
+            set { Set(ref _isMoving, value); }
         }
 
         public void MoveObject(double xOld, double yOld, double xNew, double yNew)
@@ -779,10 +772,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void SelectionChangedUpdateSliders()
         {
-            OnPropertyChanged("StrokeThickness");
-            OnPropertyChanged("ObjectSize");
-            OnPropertyChanged("Opacity");
-            OnPropertyChanged("ZLevel");
+            OnChanged("StrokeThickness");
+            OnChanged("ObjectSize");
+            OnChanged("Opacity");
+            OnChanged("ZLevel");
         }
 
         public void ClearBattleground()
@@ -817,16 +810,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
         }
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
 
         #region Dispose
         bool disposed = false;

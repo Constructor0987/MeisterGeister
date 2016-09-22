@@ -2626,6 +2626,7 @@
     <Resource Include="Images\Wesen\dsa5\Zant.png" />
     <Resource Include="Images\Wesen\dsa5\Zombie.png" />
     <Resource Include="Images\Wesen\dsa5\Zyklop.png" />
+    <Resource Include="Images\Icons\Zeichnen\polygon.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

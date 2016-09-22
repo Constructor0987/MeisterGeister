@@ -101,13 +101,10 @@
                                     <ColumnDefinition Width="160" />
                                     <ColumnDefinition Width="24*" />
                                 </Grid.ColumnDefinitions>
-                                <xctk:ColorPicker Grid.Column="1" Grid.Row="1" SelectedColor="{Binding SelectedColor}" HorizontalAlignment="Right" Margin="0,7,0,0" Name="colorPicker1" VerticalAlignment="Top" Width="88" Height="22" />
                                 <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_StrokeThickness" SliderValue="{Binding StrokeThickness, Mode=TwoWay}" TickFrequencyValue="1" SliderLabelTextValue="Linien Stärke" SliderMinValue="1" SliderMaxValue="30" SliderMinTextValue="1" SliderMaxTextValue="30" Margin="0,121,0,0" Width="160" Height="58" VerticalAlignment="Top" />
                                 <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,185,0,0" x:Name="sliderWithDisplayTextBox_Opacity" SliderValue="{Binding Opacity, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0.1" SliderMaxValue="1" TickFrequencyValue="0.1" SliderLabelTextValue="Transparenz" SliderMinTextValue="10%" SliderMaxTextValue="100%" Width="160" Height="58" />
                                 <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,249,0,0" x:Name="sliderWithDisplayTextBox_ObjectSize" SliderValue="{Binding ObjectSize, Mode=TwoWay}" Height="57" VerticalAlignment="Top" SliderMinValue="0.3" SliderMaxValue="3" SliderLabelTextValue="Objektgröße" SliderMinTextValue="0.3x" SliderMaxTextValue="3x" TickFrequencyValue="0.1" Width="160" />
-                                <xctk:ColorPicker HorizontalAlignment="Left" Margin="72,35,0,0" Name="colorPicker2" SelectedColor="{Binding SelectedFillColor}" VerticalAlignment="Top" Width="88" Grid.Column="1" Grid.Row="1" Height="22" />
-                                <Label Content="Line Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label1" Width="56" FontSize="10" Margin="10,7,0,273" />
-                                <Label Content="Fill Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label2" Width="56" FontSize="10" Margin="10,29,0,0" Height="28" VerticalAlignment="Top" />
+                                
                                 <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateLine, Mode=OneWay}" Content="[1] Line" Name="PathLineButton" Height="25" HorizontalAlignment="Left" Width="77" VerticalAlignment="Top" />
                                 <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateFilledLine, Mode=OneWay}" Content="[2] Fläche" Name="FilledPathLineButton" Height="25" HorizontalAlignment="Right" Width="77" VerticalAlignment="Top" />
 
@@ -123,26 +120,36 @@
                                 <Button Content="Ebene min" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="82,59,0,0" x:Name="ButtonEbeneLowerMin" VerticalAlignment="Top" Width="77" Click="ButtonEbeneLowerMin_Click" />
                                 <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_AlphaChannel" SliderValue="{Binding SelectedFillColorAlpha, Mode=TwoWay}" TickFrequencyValue="0.1" SliderLabelTextValue="Alpha Kanal" SliderMinValue="0" SliderMaxValue="1" SliderMinTextValue="0" SliderMaxTextValue="1" Margin="0,63,0,0" Width="160" Height="58" VerticalAlignment="Top" />
                             </Grid>
-                            <!-- Zeichenmodi -->
-                            <ListBox ItemsSource="{StaticResource ZeichenValues}" SelectedValue="{Binding ZeichenModus}">
-                                <ListBox.Resources>
-                                    <ViewGeneral:DictionaryValueConverter x:Key="toolImages">
-                                        <ViewGeneral:DictionaryValueConverter.Values>
-                                            <BitmapImage x:Key="Auswahl" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/auswahlpfeil.png" />
-                                            <BitmapImage x:Key="Linie" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/stift.png" />
-                                            <BitmapImage x:Key="Fläche" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/quadrat_leer.png" />
-                                            <BitmapImage x:Key="Bild" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/bild.png" />
-                                            <BitmapImage x:Key="Gegner" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/orc.png" />
-                                            <BitmapImage x:Key="None" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
-                                        </ViewGeneral:DictionaryValueConverter.Values>
-                                    </ViewGeneral:DictionaryValueConverter>
-                                </ListBox.Resources>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Image Height="30" Width="30" ToolTip="{Binding FallbackValue=None}" Source="{Binding Converter={StaticResource toolImages}}"></Image>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                            <StackPanel Orientation="Vertical">
+                                <!-- Zeichenmodi -->
+                                <ListBox ItemsSource="{StaticResource ZeichenValues}" SelectedValue="{Binding ZeichenModus}">
+                                    <ListBox.Resources>
+                                        <ViewGeneral:DictionaryValueConverter x:Key="toolImages">
+                                            <ViewGeneral:DictionaryValueConverter.Values>
+                                                <BitmapImage x:Key="Auswahl" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/auswahlpfeil.png" />
+                                                <BitmapImage x:Key="Linie" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/stift.png" />
+                                                <BitmapImage x:Key="Fläche" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/polygon.png" />
+                                                <BitmapImage x:Key="Bild" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/bild.png" />
+                                                <BitmapImage x:Key="Gegner" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/orc.png" />
+                                                <BitmapImage x:Key="None" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
+                                            </ViewGeneral:DictionaryValueConverter.Values>
+                                        </ViewGeneral:DictionaryValueConverter>
+                                    </ListBox.Resources>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Height="30" Width="30" ToolTip="{Binding FallbackValue=None}" Source="{Binding Converter={StaticResource toolImages}}"></Image>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                                    <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
+                                        <xctk:ColorPicker SelectedColor="{Binding SelectedColor}" Name="colorPicker1" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Linienfarbe"/>
+                                        <Polygon Fill="White" IsHitTestVisible="False" Points="1,19.5 1,1 20.5,1" />
+                                        <Polygon Fill="White" IsHitTestVisible="False" Points="2.5,21 22,21 22,2.5" />
+                                    </Grid>
+                                    <xctk:ColorPicker HorizontalAlignment="Left" Name="colorPicker2" SelectedColor="{Binding SelectedFillColor}" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Füllfarbe"/>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </Expander.Content>
