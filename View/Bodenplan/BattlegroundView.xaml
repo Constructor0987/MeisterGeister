@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MeisterGeister.View.Bodenplan"
              xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:xctkzb="clr-namespace:Xceed.Wpf.Toolkit.Zoombox;assembly=Xceed.Wpf.Toolkit"
              xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
              xmlns:kampflogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
@@ -72,12 +73,6 @@
                     <CheckBox Content="Sichtbereiche" IsChecked="{Binding ShowSightArea}" Height="16" HorizontalAlignment="Left" x:Name="checkBoxSichtLine" VerticalAlignment="Top" Width="108" ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Heldne und Gegnern" Margin="133,34,0,0" />
                     <Slider Height="25" VerticalAlignment="Top" Margin="133,56,1037,0" Minimum="120" Maximum="1200" Value="{Binding SightAreaLenght}"/>
                 </Grid>
-
-
-
-
-
-
 
             </DockPanel>
         </Expander>
@@ -156,7 +151,7 @@
                     </ScrollViewer>
                 </Expander.Content>
             </Expander>
-
+            <!--<xctkzb:Zoombox Grid.Column="1" Background="#FF367536" IsUsingScrollBars="True" ZoomOn="View" RelativeZoomModifiers="SHIFT">-->
             <!-- ZOOM KONTROLL & Listbox with Templates for Creatures, Lines and Pictures -->
             <wpfxc:ZoomControl Grid.Column="1" x:Name="ArenaScrollViewer" Background="#FF367536" 
                            MaxZoom="3" MinZoom="0.08" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
@@ -165,7 +160,7 @@
                            ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"  VerticalAlignment="Bottom">
 
                 <Grid Height="10000" Width="10000">
-                    <ListBox Name="ObjektGrid" ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" 
+                    <ListBox Name="ObjektGrid" ItemsSource="{Binding ObjektListe.View}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" 
                              Background="Transparent" Height="10000" Width="10000" 
                              IsEnabled="{Binding IsEditorModeEnabled}" IsHitTestVisible="{Binding IsEditorModeEnabled}" 
                              PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"  MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" 
@@ -275,7 +270,7 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <ListBox Name="KämpferGrid" ItemsSource="{Binding KämpferListe}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" 
+                    <ListBox Name="KämpferGrid" ItemsSource="{Binding KämpferListe.View}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" 
                              Height="10000" Width="10000" 
                              IsEnabled="{Binding IsEditorModeEnabled, Converter={StaticResource InverseBooleanConverter1}}" IsHitTestVisible="{Binding IsEditorModeEnabled, Converter={StaticResource InverseBooleanConverter1}}"
                              PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown" MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" 
@@ -303,15 +298,12 @@
                                                 <!--SightArea-->
                                                 <Path Visibility="{Binding DataContext.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}" 
                                                   Fill="Yellow" IsHitTestVisible="False" Stroke="Yellow" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2"/>
-                                                <!--Frame for Heroe Picture-->
+                                                <!--Frame for Hero Picture-->
                                                 <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
                                                     <Rectangle.Fill>
                                                         <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Converter={StaticResource ImagePathConverter}}" Opacity="{Binding Opacity}" Stretch="Fill"/>
                                                     </Rectangle.Fill>
                                                 </Rectangle>
-
-
-                                                <!--<Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />-->
                                                 <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
                                            Visibility="{Binding DataContext.ShowZ, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
@@ -321,10 +313,6 @@
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
                                                 <!--Kneel, Lie, Stand, Fly - Position Button-->
-                                                <!--<Button Name="PositionButton" IsHitTestVisible="True" BorderThickness="0"  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}"
-                                                    Width="80" Height="80" MouseLeftButtonDown="PositionButton_MouseLeftButtonDown" Content="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png">
-                                               <ImageBrush ImageSource="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png" Stretch="Fill" /> 
-                                            </Button>-->
                                                 <Image Width="50" Height="50" Source="{Binding Position, Converter={StaticResource positionImages}}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
                                                 <Canvas.Effect>
                                                     <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}} }" ShadowDepth="10" BlurRadius="20" />
@@ -371,7 +359,7 @@
                         </ListBox.Template>
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <Canvas IsItemsHost="True" Background="Transparent"></Canvas>
+                                <Canvas IsItemsHost="True" Background="Transparent"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
@@ -379,6 +367,7 @@
                 <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
         </local:DragScrollViewer> -->
             </wpfxc:ZoomControl>
+            <!--</xctkzb:Zoombox>-->
         </Grid>
         <!--<DockPanel Margin="220,131,12,11" Name="ArenaGridContainer" Background="Aqua"></DockPanel>-->
 
