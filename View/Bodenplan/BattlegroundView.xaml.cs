@@ -427,14 +427,6 @@ namespace MeisterGeister.View.Bodenplan
             
         }
 
-        private void checkBox5_Grid_Click(object sender, RoutedEventArgs e)
-        {
-            if (checkBox5_Grid.IsChecked.Value)
-                VM.TilePathData = BattlegroundUtilities.RechteckCellTile(100); //evtl in den setter rein?
-            else
-                VM.TilePathData = BattlegroundUtilities.HexCellTile(100); //evtl in den setter rein?
-        }
-
         private void Button_Reset_Click(object sender, RoutedEventArgs e)
         {
             var vm = DataContext as BattlegroundViewModel;

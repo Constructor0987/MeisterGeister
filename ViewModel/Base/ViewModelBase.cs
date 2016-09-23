@@ -114,17 +114,19 @@ namespace MeisterGeister.ViewModel.Base {
         /// <typeparam name="T">Type of the property.</typeparam>
         /// <param name="storage">Reference to a property with both getter and setter.</param>
         /// <param name="value">Desired value for the property.</param>
+        /// <param name="suppressCHanged">Suppress the Changed-Event (optional).</param>
         /// <param name="propertyName">Name of the property used to notify listeners.  This
         /// value is optional and can be provided automatically when invoked from compilers that
         /// support CallerMemberName.</param>
         /// <returns>True if the value was changed, false if the existing value matched the
         /// desired value.</returns>
-        protected bool Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        protected bool Set<T>(ref T storage, T value, bool suppressChanged = false, [CallerMemberName] String propertyName = null)
         {
             if (object.Equals(storage, value)) return false;
             this.OnChanging(propertyName);
             storage = value;
-            this.OnChanged(propertyName);
+            if(!suppressChanged)
+                this.OnChanged(propertyName);
             return true;
         }
 

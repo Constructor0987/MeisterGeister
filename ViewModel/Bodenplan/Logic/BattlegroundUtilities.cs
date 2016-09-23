@@ -103,7 +103,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public static PathGeometry RechteckCellTile(double hexSideLength)
         {
-            double s = hexSideLength;
+            double s = 2 * hexSideLength;
 
             double hx = s + 2 * s + s;
             double hy = s + 2 * s + s;

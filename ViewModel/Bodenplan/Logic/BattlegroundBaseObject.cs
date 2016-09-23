@@ -9,7 +9,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     [DataContract(IsReference = true)]
     [Serializable]
-    public abstract class BattlegroundBaseObject:INotifyPropertyChanged
+    public abstract class BattlegroundBaseObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private bool _isNew;
@@ -169,12 +169,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        protected bool Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        protected bool Set<T>(ref T storage, T value, bool supressChanged = false, [CallerMemberName] String propertyName = null)
         {
             if (object.Equals(storage, value)) return false;
 
             storage = value;
-            this.OnChanged(propertyName);
+            if(!supressChanged)
+                this.OnChanged(propertyName);
             return true;
         }
 

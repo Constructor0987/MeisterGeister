@@ -13,7 +13,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     [DataContract(IsReference = true)]
-    public class BattlegroundCreature:BattlegroundBaseObject
+    public class BattlegroundCreature : BattlegroundBaseObject
     {
         private string _portraitFilename;
         private double _creatureX = 1200;
@@ -26,17 +26,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public static String ICON_DIR = "/Images/Icons/General/";
 
-        public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
-        public string CreaturePosition 
-        {
-            get { return _creaturePosition; }
-            set
-            {
-                _creaturePosition = value;
-                OnChanged("CreaturePosition");
-            }
-        }
-
         public BattlegroundCreature()
         {
             r = new Random();
@@ -45,7 +34,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureY += r.Next(0, 500);
             MoveObject(0,0,false); //for initial position of ZLevel Display
             CreateSightArea();
-            UpdateCreaturePosition();
         }
 
         public double SightAreaLength
@@ -381,16 +369,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
             }
             CalculateSightArea(); //update sightarea
-        }
-
-        public void UpdateCreaturePosition()
-        {
-            if (((Wesen)this).Position == Position.Liegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
-            else if (((Wesen)this).Position == Position.Kniend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
-            else if (((Wesen)this).Position == Position.Stehend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
-            else if (((Wesen)this).Position == Position.Schwebend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
-            else if (((Wesen)this).Position == Position.Fliegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
-            else if (((Wesen)this).Position == Position.Reitend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";    
         }
     }
 }

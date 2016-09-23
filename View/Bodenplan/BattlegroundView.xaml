@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:MeisterGeister.View.Bodenplan"
              xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
+             xmlns:kampflogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:localsolution="clr-namespace:MeisterGeister"
              xmlns:dbmodel="clr-namespace:MeisterGeister.Model"
@@ -46,7 +47,8 @@
                     </Border>
                     <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,17,0,0" Name="checkBox4" VerticalAlignment="Top" Width="108" />
                     <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="683,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
-                    <CheckBox Content="RechteckRaster" Height="16" HorizontalAlignment="Left" Margin="683,27,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" Click="checkBox5_Grid_Click" />
+                    <CheckBox Content="RechteckRaster" Height="16" HorizontalAlignment="Left" Margin="683,27,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" />
+                    <xctk:ColorPicker SelectedColor="{Binding GridColor}" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Rasterfarbe" Margin="683,48,573,0"/>
                     <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="1048,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
                         <Grid Margin="0,0,9,0">
                             <Button Content="Speichern" Width="75" Margin="10,35,0,0" Height="25" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
@@ -163,7 +165,13 @@
                            ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"  VerticalAlignment="Bottom">
 
                 <Grid Height="10000" Width="10000">
-                    <ListBox ItemsSource="{Binding BattlegroundObjects}" Background="Transparent" Name="ObjektGrid" IsEnabled="{Binding IsEditorModeEnabled}" IsHitTestVisible="{Binding IsEditorModeEnabled}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"  MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Single">
+                    <ListBox Name="ObjektGrid" ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" 
+                             Background="Transparent" Height="10000" Width="10000" 
+                             IsEnabled="{Binding IsEditorModeEnabled}" IsHitTestVisible="{Binding IsEditorModeEnabled}" 
+                             PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"  MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" 
+                             MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" 
+                             MouseMove="ArenaGrid_MouseMove" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" 
+                             SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Single">
                         <ListBox.Resources>
                             <!-- Datatemplate PATHLINE -->
                             <DataTemplate DataType="{x:Type model:PathLine}">
@@ -267,8 +275,24 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <ListBox ItemsSource="{Binding KämpferListe}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="KämpferGrid" IsEnabled="{Binding IsEditorModeEnabled, Converter={StaticResource InverseBooleanConverter1}}" IsHitTestVisible="{Binding IsEditorModeEnabled, Converter={StaticResource InverseBooleanConverter1}}"  PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown" MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Single" >
+                    <ListBox Name="KämpferGrid" ItemsSource="{Binding KämpferListe}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" 
+                             Height="10000" Width="10000" 
+                             IsEnabled="{Binding IsEditorModeEnabled, Converter={StaticResource InverseBooleanConverter1}}" IsHitTestVisible="{Binding IsEditorModeEnabled, Converter={StaticResource InverseBooleanConverter1}}"
+                             PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown" MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" 
+                             MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" 
+                             MouseMove="ArenaGrid_MouseMove" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" 
+                             SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Single" >
                         <ListBox.Resources>
+                            <ViewGeneral:DictionaryValueConverter x:Key="positionImages" KeyType="{x:Type kampflogic:Position}">
+                                <ViewGeneral:DictionaryValueConverter.Values>
+                                    <BitmapImage x:Key="Fliegend"  UriSource="/DSA MeisterGeister;component/Images/Bodenplan/FlyingCreature.png" />
+                                    <BitmapImage x:Key="Schwebend" UriSource="/DSA MeisterGeister;component/Images/Bodenplan/FloatingCreature.png" />
+                                    <BitmapImage x:Key="Stehend"   UriSource="/DSA MeisterGeister;component/Images/Bodenplan/StandingCreature.png" />
+                                    <BitmapImage x:Key="Kniend"    UriSource="/DSA MeisterGeister;component/Images/Bodenplan/KneelingCreature.png" />
+                                    <BitmapImage x:Key="Liegend"   UriSource="/DSA MeisterGeister;component/Images/Bodenplan/OnTheGroundCreature.png" />
+                                    <BitmapImage x:Key="Reitend"   UriSource="/DSA MeisterGeister;component/Images/Bodenplan/RidingCreature.png" />
+                                </ViewGeneral:DictionaryValueConverter.Values>
+                            </ViewGeneral:DictionaryValueConverter>
                             <!--Datatemplate BattlegroundCreature (Hero & Enemy)-->
                             <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
                                 <Thumb DragDelta="Thumb_Drag" 
@@ -301,7 +325,7 @@
                                                     Width="80" Height="80" MouseLeftButtonDown="PositionButton_MouseLeftButtonDown" Content="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png">
                                                <ImageBrush ImageSource="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png" Stretch="Fill" /> 
                                             </Button>-->
-                                                <Image Width="50" Height="50" Source="{Binding CreaturePosition}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
+                                                <Image Width="50" Height="50" Source="{Binding Position, Converter={StaticResource positionImages}}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
                                                 <Canvas.Effect>
                                                     <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}} }" ShadowDepth="10" BlurRadius="20" />
                                                 </Canvas.Effect>
@@ -328,10 +352,13 @@
                                         </LinearGradientBrush>
                                     </Border.Background>-->
                             <!-- Hexgrid -->
-                            <VisualBrush TileMode="Tile" Viewport="0,0,200,200" ViewportUnits="Absolute">
+                            <VisualBrush TileMode="Tile" Viewport="{Binding TileViewPort}" ViewportUnits="Absolute">
                                 <VisualBrush.Visual>
-                                    <!--<Rectangle Stroke="Darkgray" StrokeThickness="1" Height="50" Width="50" StrokeDashArray="5 3" />-->
-                                    <Path Stroke="White" StrokeThickness="3" StrokeDashArray="5 3" Data="{Binding TilePathData}" />
+                                    <Path StrokeThickness="3" StrokeDashArray="5 3" Data="{Binding TilePathData}">
+                                        <Path.Stroke>
+                                            <SolidColorBrush Color="{Binding GridColor}" />
+                                        </Path.Stroke>
+                                    </Path>
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </ListBox.Background>

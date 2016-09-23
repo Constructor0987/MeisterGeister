@@ -22,10 +22,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         //  *Bilder Fixen!
         //  *Größe Kreaturen
 
+        PathGeometry rechteckPath, hextilePath;
+
         public BattlegroundViewModel() : base()
         {
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-            TilePathData = BattlegroundUtilities.HexCellTile(100);
+            hextilePath = BattlegroundUtilities.HexCellTile(100);
+            rechteckPath = BattlegroundUtilities.RechteckCellTile(100);
         }
 
         private double _currentMousePositionX, _currentMousePositionY;
@@ -51,10 +54,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _battlegroundObjects ?? (_battlegroundObjects = new ObservableCollection<BattlegroundBaseObject>()); }
             set
             {
-                if (Set(ref _battlegroundObjects, value))
+                if (Set(ref _battlegroundObjects, value, true))
                 {
                     kämpferliste = null;
                     objektliste = null;
+                    OnChanged();
                 }
             }
         }
@@ -70,6 +74,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         private CollectionViewSource kämpferliste = null;
+        [DependentProperty("BattlegroundObjects")]
         public CollectionViewSource KämpferListe
         {
             get
@@ -84,6 +89,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         private CollectionViewSource objektliste = null;
+        [DependentProperty("BattlegroundObjects")]
         public CollectionViewSource ObjektListe
         {
             get
@@ -103,40 +109,21 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _kampfVM; }
             set
             {
+                if (object.Equals(_kampfVM, value)) return;
                 if (KampfVM != null)
                 {
                     _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
                     //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
+                    RemoveCreatureAll();
                 }
                 _kampfVM = value;
-                AddAllCreatures();
                 if (KampfVM != null)
                 {
                     _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
                     //_kampfVM.PropertyChanged += OnKampfPropertyChanged;
+                    AddAllCreatures();
                 }
-                UpdateCreaturesFromChangedKampferlist();
             }
-        }
-
-        public void UpdateCreaturesFromChangedKampferlist()
-        {
-            foreach (var k in KampfVM.Kampf.Kämpfer)
-            {
-                ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
-            }
-            foreach (var k in KampfVM.Kampf.Kämpfer)
-            {
-                ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged += OnWesenPropertyChanged;
-            }
-
-        }
-
-
-        //Event gets fired when Wesen.PropertyChanged event fires...
-        private void OnWesenPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Position") ((BattlegroundCreature)sender).UpdateCreaturePosition();
         }
 
         private void OnKämpferListeChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -196,6 +183,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
             }
+            //kämpfer.PropertyChanged += OnWesenPropertyChanged;
         }
 
         public void AddAllCreatures()
@@ -208,8 +196,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void RemoveCreature(IKämpfer creature)
         {
-
             BattlegroundObjects.Remove((Wesen)creature);
+            //creature.PropertyChanged -= OnWesenPropertyChanged;
         }
 
         public void RemoveCreatureAll()
@@ -218,6 +206,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (BattlegroundObjects[i] is BattlegroundCreature)
                 {
                     BattlegroundObjects.Remove(BattlegroundObjects[i]);
+                    //(BattlegroundObjects[i] as BattlegroundCreature).PropertyChanged += OnWesenPropertyChanged;
                 }
 
         }
@@ -250,7 +239,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     SelectedObject.ZLevel = value;
                     PossibleZLevels = Ressources.GetPossibleZLevels(BattlegroundObjects);
                 }
-                OnChanged("ZLevel");
+                OnChanged();
             }
         }
 
@@ -459,13 +448,44 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _saveWithoutPictures, value); }
         }
 
+        [DependentProperty("RechteckGrid")]
         public PathGeometry TilePathData
         {
-            get { return _tilePathData; }
-            set
-            {
-                Set(ref _tilePathData, value);
+            get {
+                if (RechteckGrid)
+                    return rechteckPath;
+                else
+                    return hextilePath;
             }
+        }
+
+        [DependentProperty("RechteckGrid")]
+        public Rect TileViewPort
+        {
+            get {
+                double scale = 57.735;
+                if (RechteckGrid)
+                    return new Rect(0, 0, 3.4641016151377545870548926830117 * scale, 3.4641016151377545870548926830117 * scale);
+                else
+                    return new Rect(0, 0, 3 * scale, 3.4641016151377545870548926830117 * scale);
+            }
+        }
+
+        private Color gridColor = Color.FromRgb(255, 255, 255);
+        /// <summary>
+        /// Farbe des HexGrids bzw des RechteckGrids
+        /// </summary>
+        public Color GridColor
+        {
+            get { return gridColor; }
+            set { Set(ref gridColor, value); }
+        }
+
+        private bool rechteckGrid = false;
+        public bool RechteckGrid
+        {
+            get { return rechteckGrid; }
+            set { Set(ref rechteckGrid, value); }
         }
 
         public double CurrentMousePositionX
@@ -834,10 +854,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
                     //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
-                    foreach (var k in KampfVM.Kampf.Kämpfer)
-                    {
-                        ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
-                    }
                 }
             }
 
