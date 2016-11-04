@@ -10,9 +10,22 @@
              mc:Ignorable="d" Width="600" Height="500"
              d:DesignHeight="600" d:DesignWidth="500" 
              Background="{StaticResource Background1}" Title="Audio Speed-Buttons zuweisen" WindowStartupLocation="CenterScreen" >
+
+    <Window.Resources>
+        <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
+    </Window.Resources>
     <Grid Background="{StaticResource Background1}">
         <TabControl Background="{StaticResource Background1}">
-            <TabItem Header="Playlist orientiert">
+            <TabItem Header="Playlist orientiert" IsSelected="{Binding WesenOrientiertSelected,Converter={StaticResource InverseBooleanConverter1},UpdateSourceTrigger=PropertyChanged}">
+                <TabItem.Style>
+                    <Style TargetType="TabItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding WesenOrientiertSelected}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -132,7 +145,7 @@
                                     </Button>
                                 </Grid>
 
-                                <Label Content="Geräusche des Helden" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
+                                <Label Content="Helden, mit dem Geräusch" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
                                 <ScrollViewer Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                     <ListView ItemsSource="{Binding HeldenPlaylistListe, UpdateSourceTrigger=PropertyChanged}" 
                                               SelectedItem="{Binding CurrentHeldenPlaylist, UpdateSourceTrigger=PropertyChanged}"
@@ -140,6 +153,7 @@
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Name="spnlHeldenPlaylist" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
+                                                    <Image Source="{Binding Path=Held.Bild}" Width="20" Height="20" />
                                                     <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
                                                             Command="{Binding VM.OnDeleteWesenPlaylist, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
                                                             Visibility="{Binding Path=IsMouseOver, ElementName=spnlHeldenPlaylist, Converter={StaticResource BooleanToVisibilityConverter1} }" >
@@ -205,13 +219,14 @@
                                         </Button>
                                     </Grid>
                                     
-                                    <Label Content="Geräusche des Gegners" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
+                                    <Label Content="Gegner, mit dem Geräusch" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,5,0,-3" Padding="0" FontWeight="Bold" HorizontalAlignment="Center"  />
                                     <ListView Grid.Row="3" ItemsSource="{Binding GegnerPlaylistListe, UpdateSourceTrigger=PropertyChanged}" 
                                               SelectedItem="{Binding CurrentGegnerPlaylist, UpdateSourceTrigger=PropertyChanged}"
                                               Margin="5" Background="{x:Null}" Tag="{Binding}" >
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Name="spnlGegenerPlaylist" Orientation="Horizontal" ToolTip="{Binding Kategorie}">
+                                                    <Image Source="{Binding Path=GegnerBase.Bild}" Width="20" Height="20" />
                                                     <Button Tag="{Binding}" HorizontalAlignment="Right" Width="20" Padding="0"
                                                             Command="{Binding VM.OnDeleteWesenPlaylist, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"
                                                             Visibility="{Binding Path=IsMouseOver, ElementName=spnlGegenerPlaylist, Converter={StaticResource BooleanToVisibilityConverter1} }" >
@@ -230,7 +245,16 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Wesen orientiert" IsSelected="{Binding WesenOrientiertSelected,UpdateSourceTrigger=PropertyChanged}">
+            <TabItem Header="Wesen orientiert" IsSelected="{Binding WesenOrientiertSelected,UpdateSourceTrigger=PropertyChanged}" >
+                <TabItem.Style>
+                    <Style TargetType="TabItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding WesenOrientiertSelected}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="105" />
@@ -243,8 +267,8 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TabControl Background="{StaticResource Background1}" Grid.ColumnSpan="3" Margin="30,0,30,10" >
-                        <TabItem  Selector.IsSelected="{Binding Held2Aktiv, UpdateSourceTrigger=PropertyChanged}">
+                    <TabControl Background="{StaticResource Background1}" Grid.ColumnSpan="2" Margin="30,0,0,10" >
+                        <TabItem Selector.IsSelected="{Binding Held2Aktiv, UpdateSourceTrigger=PropertyChanged}">
                             <TabItem.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                     <Image Source="/Images/Icons/helden.png" Height="15" />
@@ -320,6 +344,23 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
+
+                    <Image Grid.Column="2" Margin="5,20,5,10">
+                        <Image.Source>
+                            <Binding Path="SelectedWesenBild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                <Binding.FallbackValue>
+                                    <ImageSource>
+                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                    </ImageSource>
+                                </Binding.FallbackValue>
+                                <Binding.TargetNullValue>
+                                    <ImageSource>
+                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                    </ImageSource>
+                                </Binding.TargetNullValue>
+                            </Binding>
+                        </Image.Source>
+                    </Image>
 
                     <Expander Grid.Row="1" Grid.ColumnSpan="2" IsExpanded="True" Margin="5,5,5,0">
                         <Expander.Header>

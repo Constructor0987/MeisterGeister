@@ -122,6 +122,7 @@ namespace MeisterGeister.View.AudioPlayer
         }
     }
 
+    #region   //--- Drag n Drop ITEM ----
     public class DragAndDropListBox<T> : ListBox where T : class
     {
         private P FindVisualParent<P>(DependencyObject child)
@@ -189,9 +190,10 @@ namespace MeisterGeister.View.AudioPlayer
     }
     public class ItemDragAndDropListBox : DragAndDropListBox<Item> { }
 
+    #endregion
+
     public partial class AudioPlayerView : UserControl
     {
-
         private Point _dragStartPoint;
         TabItemControl AudioTIC = null;
         
@@ -725,7 +727,7 @@ namespace MeisterGeister.View.AudioPlayer
                     //lstItems = ((System.Collections.IList)e.Data.GetData("meineAudioZeilenListe")).Cast<AudioZeile>();
 
                     Audio_Playlist zielPlaylist = VM.DropZielPlaylist != null ?
-                        VM.DropZielPlaylist : AktKlangPlaylist;
+                        VM.DropZielPlaylist : VM.AktKlangPlaylist;
                         //(e.Data.GetData("meineAudioZeilenListe") as AudioZeile).VM.aPlayTitel.Audio_Playlist;
 
                         
@@ -756,9 +758,9 @@ namespace MeisterGeister.View.AudioPlayer
                                 else
                                     gedroppteDateien.Add(s);
                             }
-                            VM._DateienAufnehmen(gedroppteDateien, null, null, AktKlangPlaylist, 0, false);
+                            VM._DateienAufnehmen(gedroppteDateien, null, null, VM.AktKlangPlaylist, 0, false);
                         }
-                        Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
+                        Global.ContextAudio.Update<Audio_Playlist>(VM.AktKlangPlaylist);
                         Mouse.OverrideCursor = null;
                     }
                     catch (Exception ex)
@@ -852,7 +854,7 @@ namespace MeisterGeister.View.AudioPlayer
                     VM._DateienAufnehmen(gedroppteDateien, aZeile, aZeileVM, ZielPlaylist, VM.audioZeileMouseOverDropped - 1, true);
                 else
                 {
-                    if (ZielPlaylist == AktKlangPlaylist)   // Verschieben innerhalb der Playliste
+                    if (ZielPlaylist == VM.AktKlangPlaylist)   // Verschieben innerhalb der Playliste
                     {
                         int quelle = VM.FilteredLbEditorAudioZeilenListe.IndexOf(aZeileVM);
                         int ziel = VM.audioZeileMouseOverDropped;
@@ -861,14 +863,14 @@ namespace MeisterGeister.View.AudioPlayer
                     }
 
                     if (!kopieren &&
-                        ZielPlaylist != AktKlangPlaylist)   //Verschieben = Löschen in akt. Playliste
+                        ZielPlaylist != VM.AktKlangPlaylist)   //Verschieben = Löschen in akt. Playliste
                     {
                         VM._DateienAufnehmen(gedroppteDateien, aZeile, aZeileVM, ZielPlaylist, VM.audioZeileMouseOverDropped - 1, true);
                         Audio_Titel aTitel =
                             aZeile != null ?
                             Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == ((Audio_Playlist_Titel)aZeile.Tag).Audio_Titel.Audio_TitelGUID) :
                             Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == aZeileVM.aPlayTitel.Audio_TitelGUID);
-                        Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, aTitel);
+                        Global.ContextAudio.RemoveTitelFromPlaylist(VM.AktKlangPlaylist, aTitel);
 
                         if (aZeileVM != null) VM.LbEditorAudioZeilenListe.Remove(aZeileVM);
                         lbEditorItemVM lbi = VM.SelectedEditorItem;

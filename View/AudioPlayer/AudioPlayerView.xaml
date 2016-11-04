@@ -1582,7 +1582,7 @@
                                                 <Setter Property="Source" Value="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
                                             </Style.Setters>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding BGmPlayerIsPaused, UpdateSourceTrigger=PropertyChanged}" Value="False" >
+                                                <DataTrigger Binding="{Binding MusikAktivIsPaused, UpdateSourceTrigger=PropertyChanged}" Value="False" >
                                                     <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/pause.png" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -2306,7 +2306,7 @@
                                                     <Setter Property="Source" Value="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
                                                 </Style.Setters>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding BGmPlayerIsPaused}" Value="False" >
+                                                    <DataTrigger Binding="{Binding MusikAktivIsPaused}" Value="False" >
                                                         <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/pause.png" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

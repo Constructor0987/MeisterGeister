@@ -792,7 +792,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             { 
                 Set(ref _selectedHeld, value);
                 _currentGegner = null;
+                SelectedWesenBild = value != null? value.Bild: null;
             }
+        }
+
+        private string _selectedWesenBild;
+        public string SelectedWesenBild
+        {
+            get { return _selectedWesenBild; }
+            set { Set(ref _selectedWesenBild, value); }
         }
 
         private GegnerBase _selectedGegner;
@@ -806,6 +814,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             { 
                 Set(ref _selectedGegner, value);
                 _currentHeld = null;
+                SelectedWesenBild = value != null ? value.Bild : null;
             }
         }
 
@@ -821,7 +830,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private bool _gegner2Aktiv;        
+        private bool _gegner2Aktiv;
         public bool Gegner2Aktiv
         {
             get { return _gegner2Aktiv; }
