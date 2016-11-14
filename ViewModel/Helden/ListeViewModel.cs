@@ -159,6 +159,7 @@ namespace MeisterGeister.ViewModel.Helden
         private void NewHeld(object sender)
         {
             Held h = Global.ContextHeld.New<Held>();
+
             h.Regelsystem = Global.Regeledition;
             h.AddBasisTalente();
             if (Global.ContextHeld.Insert<Held>(h))

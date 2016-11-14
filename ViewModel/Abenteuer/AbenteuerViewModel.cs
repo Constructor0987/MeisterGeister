@@ -24,7 +24,7 @@ namespace MeisterGeister.ViewModel.Abenteuer
             get { return m_Nummer; }
         }
 
-        public string Name 
+        public override string Name 
         {
             get { return m_Name; }
         }

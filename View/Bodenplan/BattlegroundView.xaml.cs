@@ -160,7 +160,7 @@ namespace MeisterGeister.View.Bodenplan
                     _y1 = e.GetPosition(lb).Y;
                     vm.CreatingNewLine = true;
                     var line = vm.CreateNewPathLine(_x1, _y1);
-                    line.IsNew = true;
+                    line.IsNew = true; // TODO sollte in die Methode ^ mit rein
                     e.Handled = true;   
                 }
                 else if (vm.CreateFilledLine)
@@ -169,7 +169,7 @@ namespace MeisterGeister.View.Bodenplan
                     _y1 = e.GetPosition(lb).Y;
                     vm.CreatingNewFilledLine = true;
                     var line = vm.CreateNewFilledLine(_x1, _y1);
-                    line.IsNew = true;
+                    line.IsNew = true; // TODO sollte in die Methode ^ mit rein
                     e.Handled = true;
                 }
             }

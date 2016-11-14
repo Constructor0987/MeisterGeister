@@ -132,22 +132,25 @@
                     <SolidColorBrush />
                 </TextBox.Background>
             </TextBox>
-            <TextBox TextWrapping="Wrap" Margin="5,4,4,0" TextAlignment="Justify" Text="Es werden Icons von Benutzern der Website Freepik (http://www.flaticon.com) verwendet: Freepik, Madebyoliver, Google" IsReadOnly="True" BorderThickness="0" FontSize="11">
+            <TextBox TextWrapping="Wrap" Margin="5,4,4,0" TextAlignment="Justify" Text="Es werden Icons von Benutzern der Website Flaticon (http://www.flaticon.com) verwendet: Freepik, Madebyoliver, Google, Zlatko Najdenovski" IsReadOnly="True" BorderThickness="0" FontSize="11">
                 <TextBox.Background>
                     <SolidColorBrush />
                 </TextBox.Background>
             </TextBox>
             <Grid Margin="5,4,4,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="70*" />
+                    <ColumnDefinition Width="170*"/>
+                    <ColumnDefinition Width="275*"/>
+                    <ColumnDefinition Width="86*"/>
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox Name="_textBoxRechtliches" TextWrapping="Wrap" Margin="5,10,5,0" TextAlignment="Justify" Text="DAS SCHWARZE AUGE, AVENTURIEN, DERE, MYRANOR, THARUN, UTHURIA und RIESLAND sind eingetragene Marken der Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel Distribution GmbH ist eine Verwendung der genannten Markenzeichen nicht gestattet." BorderThickness="0" IsReadOnly="True" FontStyle="Italic" FontSize="11">
+                <TextBox Name="_textBoxRechtliches" TextWrapping="Wrap" Margin="5,10,5,78" TextAlignment="Justify" Text="DAS SCHWARZE AUGE, AVENTURIEN, DERE, MYRANOR, THARUN, UTHURIA und RIESLAND sind eingetragene Marken der Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel Distribution GmbH ist eine Verwendung der genannten Markenzeichen nicht gestattet." BorderThickness="0" IsReadOnly="True" FontStyle="Italic" FontSize="11" Grid.ColumnSpan="4">
                     <TextBox.Background>
                         <SolidColorBrush />
                     </TextBox.Background>
                 </TextBox>
-                <Image Grid.Column="1" Width="120" Margin="10,5,0,0" Source="/Images/Logos/Ulisses_Logo.png" MouseDown="ImageUlisses_MouseDown" HorizontalAlignment="Left" Cursor="Hand" ToolTip="http://www.ulisses-spiele.de/" />
+                <Image Grid.Column="4" Width="120" Margin="10,5,0,78" Source="/Images/Logos/Ulisses_Logo.png" MouseDown="ImageUlisses_MouseDown" HorizontalAlignment="Left" Cursor="Hand" ToolTip="http://www.ulisses-spiele.de/" />
             </Grid>
         </StackPanel>
     </ScrollViewer>

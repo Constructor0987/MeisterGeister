@@ -41,7 +41,7 @@ namespace MeisterGeister.View.General
             }
 
             // if dictionary contains the requested key
-            if (Values.ContainsKey(value))
+            if (value != null && Values.ContainsKey(value))
             {
                 // return the relevant value
                 return Values[value];

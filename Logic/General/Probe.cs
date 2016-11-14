@@ -500,9 +500,39 @@ namespace MeisterGeister.Logic.General
         public int Übrig { get; set; }
         public int[] Würfe { get; set; }
 
-        public static ProbenErgebnis KeinErgebnis
+        public static ProbenErgebnis KEIN_ERGEBNIS
         {
             get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.KEIN_ERGEBNIS, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
+        }
+
+        public static ProbenErgebnis MISSLUNGEN
+        {
+            get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.MISSLUNGEN, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
+        }
+        
+        public static ProbenErgebnis GELUNGEN
+        {
+            get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.GELUNGEN, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
+        }
+
+        public static ProbenErgebnis PATZER
+        {
+            get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.PATZER, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
+        }
+
+        public static ProbenErgebnis GLÜCKLICH
+        {
+            get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.GLÜCKLICH, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
+        }
+
+        public static ProbenErgebnis MEISTERHAFT
+        {
+            get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.MEISTERHAFT, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
+        }
+
+        public static ProbenErgebnis FATALER_PATZER
+        {
+            get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.FATALER_PATZER, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
         }
     }
 

@@ -115,8 +115,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _creaturePictureUrl; }
             set
             {
-                _creaturePictureUrl = value;
-                OnChanged("CreaturePictureUrl");
+                Set(ref _creaturePictureUrl, value);
             }
         }
 
@@ -164,15 +163,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public String PortraitFileName
-        {
-            get { return _portraitFilename; }
-            set { _portraitFilename = value; }
-        }
-
         public void LoadBattlegroundPortrait(string portraitFilename, bool ishero)
         {
-            CreaturePictureUrl = ICON_DIR + "fragezeichen.png";
+            //CreaturePictureUrl = ICON_DIR + "fragezeichen.png";
+            CreaturePictureUrl = portraitFilename;
             //if(!File.Exists(portraitFilename)) 
             if(portraitFilename != null ) if(portraitFilename.Length!=0) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
         }
@@ -181,6 +175,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             CreatureHeight = _imageOriginalHeigth * factor;
             CreatureWidth = _imageOriginalWidth * factor;
+        }
+
+        public override void MoveObject(double deltaX, double deltaY)
+        {
+            MoveObject(deltaX, deltaY, false);
         }
 
         public void MoveObject(double deltaX, double deltaY,bool stickAtCursor)

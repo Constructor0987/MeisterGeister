@@ -13,6 +13,7 @@
              xmlns:dbmodel="clr-namespace:MeisterGeister.Model"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              x:Name="view"
              d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource Background1}" Unloaded="view_Unloaded">
@@ -21,6 +22,9 @@
         <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
         <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF"/>
         <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
+        <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorConverter"/>
+        <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
+        <BitmapImage x:Key="FragezeichenBild" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
     </UserControl.Resources>
     <Grid>
         <Grid.Resources>
@@ -70,8 +74,40 @@
                             <Button Content="Stick Kreaturen" Margin="151,72,10,0" Height="22" VerticalAlignment="Top" Click="ButtonSticCreatues_Click"/>
                         </Grid>
                     </Border>
-                    <CheckBox Content="Sichtbereiche" IsChecked="{Binding ShowSightArea}" Height="16" HorizontalAlignment="Left" x:Name="checkBoxSichtLine" VerticalAlignment="Top" Width="108" ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Heldne und Gegnern" Margin="133,34,0,0" />
+                    <CheckBox Content="Sichtbereiche" IsChecked="{Binding ShowSightArea}" Height="16" HorizontalAlignment="Left" x:Name="checkBoxSichtLine" VerticalAlignment="Top" Width="108" ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Helden und Gegnern" Margin="133,34,0,0" />
                     <Slider Height="25" VerticalAlignment="Top" Margin="133,56,1037,0" Minimum="120" Maximum="1200" Value="{Binding SightAreaLenght}"/>
+                    <StackPanel Orientation="Horizontal" Margin="259,0,100,0">
+                        <StackPanel.Resources>
+                            <DataTemplate x:Key="StrokeTemplate">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding FallbackValue=1}" Grid.Column="0" HorizontalAlignment="Right"/>
+                                    <Border Height="{Binding FallbackValue=1}" Width="30" Background="Black" Grid.Column="1"/>
+                                </Grid>
+                            </DataTemplate>
+                        </StackPanel.Resources>
+                        <ComboBox Width="50" Height="20" SelectedValue="{Binding StrokeThickness}" 
+                                ItemTemplateSelector="{ViewGeneral:ComboBoxTemplateSelector
+                                SelectedItemTemplate={StaticResource StrokeTemplate},
+                                DropdownItemsTemplate={StaticResource StrokeTemplate}}">
+                            <ComboBox.ItemsSource>
+                                <x:Array Type="{x:Type sys:Double}">
+                                    <sys:Double>1</sys:Double>
+                                    <sys:Double>2</sys:Double>
+                                    <sys:Double>4</sys:Double>
+                                    <sys:Double>6</sys:Double>
+                                    <sys:Double>8</sys:Double>
+                                    <sys:Double>10</sys:Double>
+                                    <sys:Double>14</sys:Double>
+                                    <sys:Double>18</sys:Double>
+                                </x:Array>
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
+                        <ViewGeneral:DoubleBox Height="20" Width="20" Value="{Binding StrokeThickness}" MinValue="0" MaxValue="100" ShowButtons="False"/>
+                    </StackPanel>
                 </Grid>
 
             </DockPanel>
@@ -124,9 +160,11 @@
                                         <ViewGeneral:DictionaryValueConverter x:Key="toolImages">
                                             <ViewGeneral:DictionaryValueConverter.Values>
                                                 <BitmapImage x:Key="Auswahl" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/auswahlpfeil.png" />
-                                                <BitmapImage x:Key="Linie" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/stift.png" />
+                                                <BitmapImage x:Key="Stift" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/stift.png" />
+                                                <BitmapImage x:Key="Linie" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/linie.png" />
                                                 <BitmapImage x:Key="Fläche" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/polygon.png" />
                                                 <BitmapImage x:Key="Bild" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/bild.png" />
+                                                <BitmapImage x:Key="Licht" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/fackel.png" />
                                                 <BitmapImage x:Key="Gegner" UriSource="/DSA MeisterGeister;component/Images/Icons/Zeichnen/orc.png" />
                                                 <BitmapImage x:Key="None" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
                                             </ViewGeneral:DictionaryValueConverter.Values>
@@ -299,10 +337,29 @@
                                                 <Path Visibility="{Binding DataContext.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}}" 
                                                   Fill="Yellow" IsHitTestVisible="False" Stroke="Yellow" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2"/>
                                                 <!--Frame for Hero Picture-->
-                                                <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
+                                                <Rectangle x:Name="PictureFrame"  RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
                                                     <Rectangle.Fill>
-                                                        <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Converter={StaticResource ImagePathConverter}}" Opacity="{Binding Opacity}" Stretch="Fill"/>
+                                                        <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Converter={StaticResource ImagePathConverter}, FallbackValue={StaticResource FragezeichenBild}, TargetNullValue={StaticResource FragezeichenBild}}" Opacity="{Binding Opacity}" Stretch="Fill"/>
                                                     </Rectangle.Fill>
+                                                    <!-- TODO Trigger-Bindings funktionieren nicht: 
+                                                    <Rectangle.Style>
+                                                        <Style TargetType="{x:Type Rectangle}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding CreaturePictureUrl, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
+                                                                    <Setter Property="Fill">
+                                                                        <Setter.Value>
+                                                                            <VisualBrush AutoLayoutContent="True">
+                                                                                <VisualBrush.Visual>
+                                                                                    <TextBlock FontWeight="ExtraBold" Text="{Binding Initialen}" Foreground="{Binding Farbmarkierung, Converter={StaticResource ColorConverter}}" Background="Red"/>
+                                                                                </VisualBrush.Visual>
+                                                                            </VisualBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Rectangle.Style>
+                                                    -->
                                                 </Rectangle>
                                                 <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
                                            Visibility="{Binding DataContext.ShowZ, 
@@ -319,6 +376,7 @@
                                                 </Canvas.Effect>
                                             </Canvas>
                                             <ControlTemplate.Triggers>
+                                                
                                                 <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                     <Setter Property="Effect">
                                                         <Setter.Value>

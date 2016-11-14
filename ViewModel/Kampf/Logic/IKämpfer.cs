@@ -12,6 +12,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
     {
         //Allgemein
         string Name { get; }
+        string Initialen { get; }
         string Spieler { get; }
 
         #region Bodenplan

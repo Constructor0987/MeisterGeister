@@ -7,7 +7,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class TodVonLinks : Attacke
     {
-        public static new bool BeherrschtManöver(KämpferInfo ausführender)
+        public static bool BeherrschtManöver(KämpferInfo ausführender)
         {
             if (ausführender == null)
                 return false;

@@ -2146,6 +2146,21 @@ namespace MeisterGeister.Model {
         #endregion
 
         #region IKämpfer
+        public string Initialen
+        {
+            get
+            {
+                string initialen = String.Empty;
+                var worte = Name.Split(new char[] { ' ', '\'', '-', '\t', '\n' });
+                if (worte.Length <= 0)
+                    return null;
+                initialen += worte[0][0];
+                if (worte.Length > 1)
+                    initialen += worte[worte.Length - 1][0];
+                return initialen;
+            }
+        }
+
         private int _initiativeWurf = 0;
         public int InitiativeWurf {
             get { return _initiativeWurf; }

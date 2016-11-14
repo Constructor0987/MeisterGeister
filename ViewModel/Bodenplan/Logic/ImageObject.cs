@@ -115,7 +115,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public void MoveObject(double deltaX, double deltaY)
+        public override void MoveObject(double deltaX, double deltaY)
         {
             ImagePositionX = ImagePositionX + deltaX;
             ImagePositionY = ImagePositionY + deltaY;

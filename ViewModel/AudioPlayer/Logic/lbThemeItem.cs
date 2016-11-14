@@ -196,7 +196,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return APlaylist == null ? null : APlaylist.GetType(); }
         }
 
-        public string Name
+        public override string Name
         {
             get { return APlaylist == null || APlaylist.Name == null ? string.Empty : APlaylist.Name; }
         }

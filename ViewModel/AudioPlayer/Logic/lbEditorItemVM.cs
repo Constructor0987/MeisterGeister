@@ -241,7 +241,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
         private string _name = string.Empty;
-        public string Name
+        public override string Name
         {
             get { return _name; }
             set { Set(ref _name, value); }

@@ -766,6 +766,7 @@
     <Compile Include="View\AudioPlayer\lbEditorThemeItem.xaml.cs">
       <DependentUpon>lbEditorThemeItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
     <Compile Include="View\General\EnumToBooleanConverter.cs" />
@@ -2627,6 +2628,10 @@
     <Resource Include="Images\Wesen\dsa5\Zombie.png" />
     <Resource Include="Images\Wesen\dsa5\Zyklop.png" />
     <Resource Include="Images\Icons\Zeichnen\polygon.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0124.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0125.sql" />
+    <Resource Include="Images\Icons\Zeichnen\linie.png" />
+    <Resource Include="Images\Icons\Zeichnen\fackel.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
