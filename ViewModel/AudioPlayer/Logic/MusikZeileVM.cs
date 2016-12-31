@@ -304,7 +304,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return aPlaylist == null ? null : aPlaylist.GetType(); }
         }
 
-        public override string Name
+        public string Name
         {
             get { return aPlaylist == null || aPlaylist.Name == null ? string.Empty : aPlaylist.Name; }
         }
@@ -492,17 +492,26 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     aPlayerVM.FadingOutGeräusch(true, true, grpobj);
                 else
                     if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
-                    {                        
-                        grpobj.mZeileVM.grpobj._listZeile.All(t => t.istPause = true);
-                        grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Pause());
-                        grpobj.mZeileVM.grpobj._listZeile.All(t => t.istStandby = false); //true ?
-                        grpobj.mZeileVM.grpobj._listZeile.All(t => t.istLaufend = false);
-                        grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Stop());
-                        grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Close());
-                        grpobj.mZeileVM.Min1SongWirdGespielt = null;
-                        aPlayerVM._GrpObjecte.Remove(grpobj);                       
-                        return;
-                    }
+                {
+                    grpobj.mZeileVM.grpobj._listZeile.ForEach(delegate (AudioPlayerViewModel.KlangZeile kZeile)
+                    {
+                        if (kZeile.istLaufend)
+                        {
+                            kZeile.istPause = true;
+                            kZeile.istStandby = false;
+                            kZeile.istLaufend = false;
+                            if (kZeile.aData != null)
+                            {
+                                kZeile.aData.Pause();
+                                kZeile.aData.Stop();
+                                kZeile.aData.Close();
+                            }
+                        }
+                    });
+                    grpobj.mZeileVM.Min1SongWirdGespielt = null;
+                    aPlayerVM._GrpObjecte.Remove(grpobj);                       
+                    return;
+                }
                 for (int i = 0; i < grpobj._listZeile.Count; i++)
                 {
                     if (!grpobj.aPlaylist.Hintergrundmusik)
@@ -767,20 +776,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             try
             {
                 string datei = ViewHelper.ChooseFile("Playliste exportieren", "Playlist_" + this.aPlaylist.Name.Replace("/", "_") + ".xml", true, "xml");
-                if (datei != null)
-                {
-                    Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
+                if (string.IsNullOrEmpty(datei)) return;
 
-                    datei = datei.Replace("--", "-");
-                    while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
-                        datei = datei.Substring(0, datei.Length - 5) + ".xml";
+                Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
 
-                    File.Delete(datei);
-                    this.aPlaylist.Export(datei, this.aPlaylist.Audio_PlaylistGUID);
+                datei = datei.Replace("--", "-");
+                while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
+                    datei = datei.Substring(0, datei.Length - 5) + ".xml";
 
-                    Global.SetIsBusy(false);
-                    ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
-                }
+                File.Delete(datei);
+                this.aPlaylist.Export(datei, this.aPlaylist.Audio_PlaylistGUID);
+
+                Global.SetIsBusy(false);
+                ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
             }
             catch (Exception ex)
             {

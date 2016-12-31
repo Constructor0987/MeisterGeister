@@ -241,7 +241,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
         private string _name = string.Empty;
-        public override string Name
+        public string Name
         {
             get { return _name; }
             set { Set(ref _name, value); }
@@ -333,20 +333,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             try
             {
                 string datei = ViewHelper.ChooseFile("Playliste exportieren", "Playlist_" + ViewHelper.GetValidFilename(this.APlaylist.Name) + ".xml", true, "xml");
-                if (datei != null)
-                {
-                    Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
-                    string pfad = Path.GetDirectoryName(datei);                    
-                    string ext = Path.GetExtension(datei);
-                    datei = ViewHelper.GetValidFilename(Path.GetFileNameWithoutExtension(datei));
-                    datei = pfad + @"\" + datei + ext;
+                if (string.IsNullOrEmpty(datei)) return;
+                
+                Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
+                string pfad = Path.GetDirectoryName(datei);                    
+                string ext = Path.GetExtension(datei);
+                datei = ViewHelper.GetValidFilename(Path.GetFileNameWithoutExtension(datei));
+                datei = pfad + @"\" + datei + ext;
 
-                    File.Delete(datei);
-                    this.APlaylist.Export(datei, this.APlaylist.Audio_PlaylistGUID);
+                File.Delete(datei);
+                this.APlaylist.Export(datei, this.APlaylist.Audio_PlaylistGUID);
 
-                    Global.SetIsBusy(false);
-                    ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
-                }
+                Global.SetIsBusy(false);
+                ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
             }
             catch (Exception ex)
             {

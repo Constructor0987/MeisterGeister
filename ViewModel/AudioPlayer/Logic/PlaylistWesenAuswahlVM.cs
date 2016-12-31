@@ -168,7 +168,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         private void IconAdd(object obj)
         {
             string datei = ViewHelper.ChooseFile("Neues Icon zur Datenbank hinzufügen","",false,false,false,new string[3] { "jpg", "png", "bmp" });
-            if (datei == null) return;
+            if (string.IsNullOrEmpty(datei)) return;
 
             Audio_WesenIcon aWesenIcon = new Audio_WesenIcon();
             aWesenIcon.Pfad = datei;

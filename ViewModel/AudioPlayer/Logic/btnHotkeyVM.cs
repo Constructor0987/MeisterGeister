@@ -19,6 +19,7 @@ using System.Threading;
 using MeisterGeister.Logic.Einstellung;
 using VM = MeisterGeister.ViewModel.AudioPlayer;
 using Un4seen.Bass;
+using Un4seen.Bass.AddOn.Fx;
 
 namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 {
@@ -81,6 +82,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             public void setSpeed(double speed)
             {
                 Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_MUSIC_SPEED, Convert.ToSingle(speed));
+            }
+
+            public void setEcho(int Echo)
+            {
+                if (Echo == 0) return;
+                BASS_BFX_ECHO4 echo = new BASS_BFX_ECHO4();
+                if (Echo == 1) echo.Preset_SmallEcho();
+                if (Echo == 2) echo.Preset_LongEcho();
+                int fxEchoHandle = Bass.BASS_ChannelSetFX(audioStream, BASSFXType.BASS_FX_BFX_ECHO4, 1);
+                Bass.BASS_FXSetParameters(fxEchoHandle, echo);
+            }
+
+            public void setPitch(double pitch)
+            {
+                Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_TEMPO_PITCH, Convert.ToInt32(Math.Round(pitch)));
             }
 
             private float lastVolume = 0;
@@ -371,6 +387,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 
                 mp.setFilename(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei);
                 mp.setVolume((double)(volume / 100));
+                if (aPlayTitel.Speed != 0) mp.setSpeed(aPlayTitel.Speed);
+                if (aPlayTitel.Pitch != 0) mp.setPitch(aPlayTitel.Pitch);
+                if (aPlayTitel.Echo != 0) mp.setEcho(aPlayTitel.Echo);
                 if (aPlayTitel.TeilAbspielen)
                 {
                     mp.setPosition(aPlayTitel.TeilStart.Value);

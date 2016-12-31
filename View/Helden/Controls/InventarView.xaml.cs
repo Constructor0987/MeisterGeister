@@ -31,5 +31,20 @@ namespace MeisterGeister.View.Helden.Controls {
         }
 
         #endregion
+
+        #region Ereignisse
+
+        private void SelectedAusrüstung_Click(object sender, RoutedEventArgs e)
+        {
+            if (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung == 0 || MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung == 3)
+                (DataContext as MeisterGeister.ViewModel.Inventar.InventarViewModel).SelectedHeld.BerechneRüstungswerte();
+            if (MeisterGeister.Logic.Einstellung.Einstellungen.BEBerechnung == 0)
+                (DataContext as MeisterGeister.ViewModel.Inventar.InventarViewModel).SelectedHeld.BerechneBehinderung();
+
+            (DataContext as MeisterGeister.ViewModel.Inventar.InventarViewModel).SelectedHeld.BerechneAusruestungsGewicht();
+        }
+        
+        #endregion
+
     }
 }

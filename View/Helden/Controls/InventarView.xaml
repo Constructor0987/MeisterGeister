@@ -196,7 +196,7 @@
 
                     <TextBlock Margin="4,0,0,0" Text="{Binding SelectedHeld.Tragkraft}" Grid.Column="1" VerticalAlignment="Center"/>
                     <TextBlock Margin="4,0,0,0" Text="{Binding SelectedHeld.Gewicht}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
-                    <ViewGeneral:IntBox VerticalAlignment="Center" Margin="4,0,0,0" Grid.Column="1" Grid.Row="2" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsBehinderungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsBehinderungEingeben}" NoBackground="{Binding IsBehinderungEingeben}" Style="{DynamicResource ReadOnlyStyle}" HorizontalAlignment="Left"/>
+                    <ViewGeneral:IntBox VerticalAlignment="Center" Margin="4,0,0,0" Grid.Column="1" Grid.Row="2" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsBehinderungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsBehinderungEingeben}" NoBackground="{Binding IsBehinderungEingeben}" Style="{DynamicResource ReadOnlyStyle}" HorizontalAlignment="Left"/>
                     <StackPanel VerticalAlignment="Center" Margin="4,0,0,0" Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
                         <ViewGeneral:IntBox MinValue="0" MinWidth="20" HorizontalAlignment="Left" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsUeberlastungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Überlastung" Value="{Binding SelectedHeld.Ueberlastung}" IsReadOnly="{Binding IsUeberlastungEingeben}" NoBackground="{Binding IsUeberlastungEingeben}" Style="{DynamicResource ReadOnlyStyle}"/>
                         <TextBlock VerticalAlignment="Center">/<Run Text="{Binding SelectedHeld.GewichtZuTragkraftProzent,Mode=OneWay}"/>%</TextBlock>
@@ -370,7 +370,7 @@
                                   ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False" Margin="0,5,0,0">
                             <!--Talent-->
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}" HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}" HeaderTemplate="{StaticResource angelegtTemplate}" />
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
@@ -608,7 +608,7 @@
                         <ComboBox Grid.Column="1" ItemsSource="{Binding RuestungListe}" SelectedItem="{Binding SelectedRuestung}" Margin="5,0,0,0" DisplayMemberPath="Name" IsEditable="True">
                             <ComboBox.InputBindings>
                                 <KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
-                            </ComboBox.InputBindings>
+                            </ComboBox.InputBindings>                            
                         </ComboBox>
                         <Button Grid.Column="2" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddRuestung}" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
@@ -616,7 +616,13 @@
                         <DataGrid ItemsSource="{Binding HeldRuestungImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" Grid.Row="1" Grid.ColumnSpan="3"
                                   ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False" Margin="0,5,0,0">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}" HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                                <DataGridTemplateColumn Width="30" HeaderTemplate="{StaticResource angelegtTemplate}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding Angelegt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="SelectedAusrüstung_Click"  />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>

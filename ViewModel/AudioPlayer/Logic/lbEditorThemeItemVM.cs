@@ -112,7 +112,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
         private string _name = string.Empty;
-        public override string Name
+        public string Name
         {
             get { return _name; }
             set { Set(ref _name, value); }
@@ -203,20 +203,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             try
             {
                 string datei = ViewHelper.ChooseFile("Playliste exportieren", "Playlist_" + this.APlaylist.Name.Replace("/", "_") + ".xml", true, "xml");
-                if (datei != null)
-                {
-                    Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
+                if (string.IsNullOrEmpty(datei)) return;
 
-                    datei = datei.Replace("--", "-");
-                    while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
-                        datei = datei.Substring(0, datei.Length - 5) + ".xml";
+                Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
 
-                    File.Delete(datei);
-                    this.APlaylist.Export(datei, this.APlaylist.Audio_PlaylistGUID);
+                datei = datei.Replace("--", "-");
+                while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
+                    datei = datei.Substring(0, datei.Length - 5) + ".xml";
 
-                    Global.SetIsBusy(false);
-                    ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
-                }
+                File.Delete(datei);
+                this.APlaylist.Export(datei, this.APlaylist.Audio_PlaylistGUID);
+
+                Global.SetIsBusy(false);
+                ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
             }
             catch (Exception ex)
             {
@@ -385,9 +384,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 if (ATheme != null)
                 {
                     string pfaddatei = ViewHelper.ChooseFile("Theme exportieren", "Theme_" + ATheme.Name.Replace("/", "_") + ".xml", true, "xml");
+                    if (string.IsNullOrEmpty(pfaddatei)) return;
 
                     pfaddatei = validateString(pfaddatei);
-
                     ExportTheme(ATheme, pfaddatei);
                     ViewHelper.Popup("Die Themeliste wurde erfolgreich gesichert." + Environment.NewLine + Environment.NewLine +
                         "!!! Bitte beachten Sie, dass Die PLAYLISTEN SEPARAT gesichert werden müssen !!!");

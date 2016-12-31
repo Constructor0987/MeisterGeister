@@ -44,9 +44,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             AZeile = this;
         }
         #endregion
-        
-        #region //---- calcualtions ----
 
+        #region //---- calcualtions ----
+        
         public double UpdateVolSmallChgBeimVerringern(double volumeBezug, double volumeSmallChg)
         {
             return (volumeBezug - 3 >= 1) ? 3 :                                              // Änderung im höherem Bereich: Step 3
@@ -147,9 +147,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         //        PlayerVM.pointerZeileDragDrop = null;
         //    }
         //}
-
         
-
         private AudioZeileVM _aZeile = null;
         public AudioZeileVM AZeile
         {
@@ -325,7 +323,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
 
 
-        private double _aPlayTitelSpeed = 1;
+        private double _aPlayTitelSpeed = 0;
         public double aPlayTitelSpeed
         {
             get { return _aPlayTitelSpeed; }
@@ -339,6 +337,34 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
+        private double _aPlayTitelPitch = 0;
+        public double aPlayTitelPitch
+        {
+            get { return _aPlayTitelPitch; }
+            set
+            {
+                _aPlayTitelPitch = value;
+                aPlayTitel.Pitch = value;
+                Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
+                OnChanged();
+                OnChanged("ToolTipPlayPitch");
+            }
+        }
+
+
+        private int _aPlayTitelEcho = 0;
+        public int aPlayTitelEcho
+        {
+            get { return _aPlayTitelEcho; }
+            set
+            {
+                _aPlayTitelEcho = value;
+                aPlayTitel.Echo = value;
+                Global.ContextAudio.Update<Audio_Playlist_Titel>(aPlayTitel);
+                OnChanged();
+                OnChanged("ToolTipEcho");
+            }
+        }
         private bool _fileNotExist = false;
         public bool FileNotExist
         {
@@ -359,6 +385,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 _filePlayable = value;
                 OnChanged();
             }
+        }
+
+        private bool _isNew = false;
+        public bool IsNew
+        {
+            get { return _isNew; }
+            set { Set(ref _isNew, value); }
         }
 
         public double aPlayTitelVolume
@@ -439,34 +472,50 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         {
             get
             {
-                return (   (aPlayTitel.Speed == .1 ? "Sehr langsame" :
-                            aPlayTitel.Speed == .5 ? "Langsame" :
-                            aPlayTitel.Speed == .75 ? "Gedrosselte" :
-                            aPlayTitel.Speed == 1 ? "Normale" :
-                            aPlayTitel.Speed == 2 ? "Erhöhte" :
-                            aPlayTitel.Speed == 3 ? "Schnelle" :
-                            aPlayTitel.Speed == 4 ? "Sehr schnelle" :
-                            aPlayTitel.Speed == 5 ? "Ultra schnelle" : "Nicht definierte") + 
-                            " Abspielgeschwindigkeit");
+                return (   (aPlayTitel.Speed < -239 ? "Schrecklich langsam" : 
+                            aPlayTitel.Speed < -149 ? "Sehr langsam" :
+                            aPlayTitel.Speed <-109 ? "Langsam" :
+                            aPlayTitel.Speed <  0 ? "Gedrosselt" :
+                            aPlayTitel.Speed == 0 ? "Normal" :
+                            aPlayTitel.Speed >239 ? "Lichtgeschwindigkeit":
+                            aPlayTitel.Speed >149? "Sehr schnell" : 
+                            aPlayTitel.Speed >109 ? "Schnell" :
+                            aPlayTitel.Speed >  0 ? "Erhöht": "Nicht definiert") +
+                            (" (Speed " + aPlayTitelSpeed + ")"));
+            }
+        }
+        
+        public string ToolTipPlayPitch
+        {
+            get
+            {
+                return (   (aPlayTitel.Pitch < -49 ? "Ultra dumpf" : 
+                            aPlayTitel.Pitch < -39 ? "Sehr dumpf" :
+                            aPlayTitel.Pitch < -19 ? "Dumpf" :
+                            aPlayTitel.Pitch <  0 ? "Gedrosselt" :
+                            aPlayTitel.Pitch == 0 ? "Normal" :
+                            aPlayTitel.Pitch > 49 ? "Mickey Maus":
+                            aPlayTitel.Pitch > 39? "Sehr hell" : 
+                            aPlayTitel.Pitch > 19 ? "Hell" :
+                            aPlayTitel.Pitch >  0 ? "Erhöht": "Nicht definiert") +
+                            (" (Tonhöhe " + aPlayTitel.Pitch + ")"));
             }
         }
 
-        bool _checked = true;
-        public bool Checked
+        public string ToolTipPlayEcho
         {
-            get { return _checked; }
-            set { _checked = value; }
+            get
+            {
+                return (   (aPlayTitel.Echo == 0 ? "Kein Echo" :
+                            aPlayTitel.Echo == 1 ? "Kleines Echo" :
+                            aPlayTitel.Echo == 2 ? "Großes Echo":""));
+            }
         }
-
         private double _titelMinimum = 0;
         public double TitelMinimum
         {
             get { return _titelMinimum; }
-            set 
-            { 
-                _titelMinimum = value;
-                OnChanged();
-            }
+            set { Set(ref _titelMinimum, value); }
         }
 
         private double _titelMaximum = 10000000;
@@ -476,7 +525,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set 
             {
                 _titelMaximum = (value == 0)? 10000000: value;
-                OnChanged();
+                Set(ref _titelMaximum, value);
             }
         }
 
@@ -484,33 +533,26 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public double Progress
         {
             get { return _progress; }
-            set 
-            {
-                _progress = value;
-                OnChanged();
-            }
+            set { Set(ref _progress, value); }
         }
 
+        private double _aPlayTitelLänge = 10000000;
         [DependentProperty("aPlayTitel")]
         public double aPlayTitelLänge
         {
             get
             {
-                return (_aPlayTitel.Audio_Titel != null && (_aPlayTitel.Audio_Titel.Länge != null && _aPlayTitel.Audio_Titel.Länge.Value != 0) ? 
-                _aPlayTitel.Audio_Titel.Länge.Value : 10000000); }
-            set
-            {
-                aPlayTitel.Länge = value;
-                OnChanged();
+                _aPlayTitelLänge = (_aPlayTitel.Audio_Titel != null && (_aPlayTitel.Audio_Titel.Länge != null && _aPlayTitel.Audio_Titel.Länge.Value != 0) ? _aPlayTitel.Audio_Titel.Länge.Value : 10000000);            
+                return (_aPlayTitelLänge);
             }
+            set { Set(ref _aPlayTitelLänge, value); }
         }
 
         [DependentProperty("aPlayTitel")]
         public Nullable<double> aPlayTitelTeilStart
         {
             get { return (_aPlayTitel.TeilStart != null ? _aPlayTitel.TeilStart.Value: 0);}
-            set
-            {
+            set { 
                 aPlayTitel.TeilStart = value; 
                 OnChanged();
             }        
@@ -538,6 +580,18 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
+        [DependentProperty("aPlayTitel")]
+        public Nullable<short> aPlayTitelWiederholungen
+        {
+            get { return _aPlayTitel.Wiederholungen!=null?_aPlayTitel.Wiederholungen:1; }
+            set
+            {
+                aPlayTitel.Wiederholungen = value;
+                OnChanged();
+                OnChanged("Audio_Playlist");
+            }
+        }
+
 
         public Audio_Playlist_Titel aPlayTitel
         {
@@ -545,12 +599,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             set
             {
                 Set(ref _aPlayTitel, value);
-                //_aPlayTitel = value;
 
                 _aPlayTitelPauseMin = (int)aPlayTitel.PauseMin;
                 _aPlayTitelPauseMax = (int)aPlayTitel.PauseMax;
                 _aPlayTitelSpeed = aPlayTitel.Speed;
-                //OnChanged();
+                _aPlayTitelPitch = aPlayTitel.Pitch;
+                _aPlayTitelEcho = aPlayTitel.Echo;
             }
         }
 
@@ -610,17 +664,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             Environment.CurrentDirectory = fi.DirectoryName;
             string datei = ViewHelper.ChooseFile("Datei auswählen", fi.Name, false, PlayerVM.validExt);
             Environment.CurrentDirectory = aktDir;
+            if (string.IsNullOrEmpty(datei)) return;
 
-            if (datei != null)
-            {
-                aTitel.Pfad = System.IO.Path.GetDirectoryName(datei);
-                aTitel.Datei = System.IO.Path.GetFileName(datei);
+            aTitel.Pfad = System.IO.Path.GetDirectoryName(datei);
+            aTitel.Datei = System.IO.Path.GetFileName(datei);
 
-                string s = System.IO.Path.GetFileNameWithoutExtension(datei);
-                aTitel.Name = s.Length > 100 ? s.Substring(0, 99) : s;
-                aPlayTitel.Audio_Titel = PlayerVM.setTitelStdPfad(aTitel);
-                Global.ContextAudio.Update<Audio_Titel>(aPlayTitel.Audio_Titel);
-            }
+            string s = System.IO.Path.GetFileNameWithoutExtension(datei);
+            aTitel.Name = s.Length > 100 ? s.Substring(0, 99) : s;
+            aPlayTitel.Audio_Titel = PlayerVM.setTitelStdPfad(aTitel);
+            Global.ContextAudio.Update<Audio_Titel>(aPlayTitel.Audio_Titel);
         }
 
 
@@ -706,7 +758,20 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             if (aPlayTitel.TeilAbspielen)
             {
                 aPlayTitelTeilStart = 0;
-                aPlayTitelTeilEnde = aPlayTitel.Audio_Titel.Länge.Value;                
+                if (aPlayTitel.Audio_Titel.Länge == null || aPlayTitelLänge == 10000000)
+                    aPlayTitel.Audio_Titel.Länge = PlayerVM.getTitelLänge(aPlayTitel.Audio_Titel);
+                aPlayTitelLänge = aPlayTitel.Audio_Titel.Länge.Value;
+
+                aPlayTitel.TeilStart = 0;
+                aPlayTitelTeilStart = aPlayTitel.TeilStart;
+
+                aPlayTitel.TeilEnde = aPlayTitel.Audio_Titel.Länge.Value;
+                aPlayTitelTeilEnde = aPlayTitel.Audio_Titel.Länge.Value;
+
+                TitelMaximum = aPlayTitel.Audio_Titel.Länge.Value;
+                OnChanged("aPlayTitel");
+                OnChanged("aPlayTitelTeilStart");
+                OnChanged("aPlayTitelTeilEnde");
             }
             aPlayTitelTeilAbspielen = aPlayTitel.TeilAbspielen;
         }

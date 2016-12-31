@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:MeisterGeister.View.AudioPlayer"
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             d:DesignWidth="900" 
+              
              Tag="{Binding aPlayTitel}" DragOver="AudioZeile_DragOver" >
 
     <UserControl.Resources>
@@ -21,7 +21,8 @@
         <vm:MultiBooleanODERToVisibilityConverter x:Key="MultiBooleanODERToVisibilityConverter1" />
         <vm:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
         <vm:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
-        <vm:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>        
+        <vm:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <vm:IsEqualOrLowerThanConverter x:Key="IsEqualOrLowerThanConverter1"/>
         <vm:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>
         <vm:BooleanInverseToVisibilityHiddenConverter x:Key="BooleanInverseToVisibilityHiddenConverter1"/>
         <vm:DoubleToTimespanHHMMSSConverter x:Key="DoubleToTimespanHHMMSSConverter1" />
@@ -32,6 +33,17 @@
             <Style TargetType="ListBoxItem">
                 <Setter Property="Background" Value="{x:Null}" />
                 <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsNew}" Value="true">
+                        <Setter Property="Background" Value="#643AFF00" />
+                        <Setter Property="ToolTip" >
+                            <Setter.Value>
+                                <StackPanel>
+                                    <TextBlock Text="Datei wurde neu in die Playliste eingefügt." />
+                                    <TextBlock Text="Die Markierung der Zeile wird beim nächsten Laden der Liste aufgehoben." />
+                                </StackPanel>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
                     <DataTrigger Binding="{Binding FileNotExist}" Value="True">
                         <Setter Property="Background" Value="#64FF0000" />
                         <Setter Property="ToolTip" >
@@ -57,7 +69,7 @@
                                     <TextBlock Text="Vermeiden Sie Sonderzeichen( # &amp; ' ! ) im Zusammenhang mit Netzlaufwerken." />
                                 </StackPanel>
                             </Setter.Value>
-                        </Setter> 
+                        </Setter>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -102,16 +114,16 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                    <MenuItem Header="Dateipfad ändern" Command="{Binding OnDateiPfadÄndern}">
-                        <MenuItem.Icon>
+                <MenuItem Header="Dateipfad ändern" Command="{Binding OnDateiPfadÄndern}">
+                    <MenuItem.Icon>
                         <Image Source="/Images/Icons/General/feder.png" Height="20" Margin="-1,-2"  />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Dateipfad öffnen" Command="{Binding OnDateiPfadÖffnen}">
-                        <MenuItem.Icon>
-                            <Image Source="/Images/Icons/General/oeffnen.png" Height="20" Margin="-1,-2" />
-                        </MenuItem.Icon>
-                    </MenuItem>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Dateipfad öffnen" Command="{Binding OnDateiPfadÖffnen}">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Icons/General/oeffnen.png" Height="20" Margin="-1,-2" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </ContextMenu>
         </ListBoxItem.ContextMenu>
 
@@ -153,10 +165,10 @@
                                     </MultiBinding>
                                 </DataTrigger.Binding>
                                 <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>                            
-                        </Style.Triggers>                        
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
-                </Grid.Style>                
+                </Grid.Style>
                 <Button Grid.Row="0" Padding="0" Margin="0,1" Height="22" Command="{Binding OnReihenfolgeMoveUp, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" />
@@ -171,9 +183,9 @@
                   Visibility="{Binding AktKlangPlaylist.Hintergrundmusik, Converter={StaticResource BooleanToVisibilityConverter1}}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Padding="2,2,0,2" VerticalAlignment="Center" 
-                        Text="{Binding aPlayTitel.Wiederholungen, FallbackValue=1, UpdateSourceTrigger=PropertyChanged}"/>
+                        Text="{Binding aPlayTitelWiederholungen, FallbackValue='1', UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Padding="0,2" VerticalAlignment="Center"  Text="x" />
-                
+
                     <StackPanel.Style>
                         <Style TargetType="StackPanel" >
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -182,7 +194,7 @@
                                     <DataTrigger.Binding>
                                         <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" >
                                             <Binding ElementName="_audioZeile" Path="IsMouseOver" Converter="{StaticResource InvertedBoolenConverter1}" />
-                                            <Binding Path="aPlayTitel.Wiederholungen" FallbackValue="1" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter="2" />
+                                            <Binding Path="aPlayTitelWiederholungen" FallbackValue="1" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter="2" />
                                         </MultiBinding>
                                     </DataTrigger.Binding>
                                     <Setter Property="Visibility" Value="Visible" />
@@ -191,24 +203,24 @@
                         </Style>
                     </StackPanel.Style>
                 </StackPanel>
-                    
+
                 <ViewGeneral:IntBoxVertical NoBackground="True" Padding="2" 
                     MinValue="1" MaxValue="99" ShowButtons="True" Focusable="False"                    
                     ToolTip="Anzahl der Wiederholungen des Titels"
-                    Value="{Binding aPlayTitel.Wiederholungen, FallbackValue=1}" 
+                    Value="{Binding aPlayTitelWiederholungen, FallbackValue='1', UpdateSourceTrigger=PropertyChanged}" 
                     Visibility="{Binding ElementName=_audioZeile, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                 </ViewGeneral:IntBoxVertical>
             </Grid>
-            
+
             <Grid Name="grdDnD" Grid.Column="3" Grid.RowSpan="2" VerticalAlignment="Stretch" Height="20" MinWidth="200" >
-                <ProgressBar Name="pbarTitel" Height="18" Margin="15,1,0,1"  ToolTip="Rechte Maustaste für mehr Einstellungen" 
-                                Value="{Binding Progress, UpdateSourceTrigger=PropertyChanged}"
-                                Minimum="{Binding TitelMinimum}"
+                <ProgressBar Name="pbarTitel" Height="18" Margin="15,1,0,1" ToolTip="Rechte Maustaste für mehr Einstellungen" 
+                                Value="{Binding Progress, UpdateSourceTrigger=PropertyChanged}" ValueChanged="pbarTitel_ValueChanged"
+                                Minimum="{Binding TitelMinimum, UpdateSourceTrigger=PropertyChanged}"
                                 Maximum="{Binding TitelMaximum, UpdateSourceTrigger=PropertyChanged}" />
 
                 <CheckBox Name="chkTitel" HorizontalAlignment="Left" VerticalAlignment="Center" IsTabStop="False" Margin="0,2" Content="" 
                         Command="{Binding OnBtnAktiv}"
-                        IsChecked="{Binding aPlayTitel.Aktiv}" >
+                        IsChecked="{Binding aPlayTitel.Aktiv, UpdateSourceTrigger=PropertyChanged}" >
                 </CheckBox>
                 <Label Content="{Binding aPlayTitel.Audio_Titel.Name}" Margin="17,0,0,0" Padding="5,0" VerticalContentAlignment="Center"  >
                     <Label.ToolTip>
@@ -220,14 +232,14 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                    </Label.ToolTip>                    
+                    </Label.ToolTip>
                 </Label>
 
                 <local:SliderRange x:Name="rsldTeilSong"  VerticalAlignment="Center" Margin="17,1,0,0" 
                     Minimum="0" 
                     Maximum="{Binding aPlayTitelLänge, UpdateSourceTrigger=PropertyChanged}" 
-                    UpperValue="{Binding aPlayTitelTeilEnde, UpdateSourceTrigger=PropertyChanged}"    
-                    LowerValue="{Binding aPlayTitelTeilStart, UpdateSourceTrigger=PropertyChanged}"               
+                    UpperValue="{Binding aPlayTitelTeilEnde, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"    
+                    LowerValue="{Binding aPlayTitelTeilStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"               
                     Visibility="{Binding aPlayTitelTeilAbspielen, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" 
                     PlayTitel="{Binding aPlayTitel, UpdateSourceTrigger=PropertyChanged}" >
 
@@ -282,11 +294,11 @@
                         <Image Visibility="{Binding aPlayTitel.Rating, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=4}" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Margin="21,-3,-3,-3" />
                     </Grid>
                 </Button>
-            </StackPanel>   
-            
+            </StackPanel>
+
             <!-- Geräusche-Spalten 2 Zeilig -->
             <StackPanel Grid.Column="5" Grid.RowSpan="2" VerticalAlignment="Bottom" >
-                        <!--Visibility="{Binding Geräusch2Zeilig, Converter={StaticResource BooleanToVisibilityConverter1}}">-->
+                <!--Visibility="{Binding Geräusch2Zeilig, Converter={StaticResource BooleanToVisibilityConverter1}}">-->
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -305,7 +317,7 @@
                             </DataTrigger>-->
                             <DataTrigger Value="True">
                                 <DataTrigger.Binding>
-                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">                                        
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
                                         <Binding ElementName="lbiEditorRow" Path="IsMouseOver" />
                                         <Binding Path="aPlayTitel.Audio_Playlist.Hintergrundmusik" Converter="{StaticResource InvertedBoolenConverter1}" />
                                     </MultiBinding>
@@ -336,10 +348,12 @@
                         <ColumnDefinition Width="56" />
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="0" /> <!--"110"-->
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="50" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.RowSpan="2" Grid.ColumnSpan="7" />
+                    <Label Grid.RowSpan="2" Grid.ColumnSpan="8" />
 
                     <Image Margin="1,0,87,0" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Grid.ColumnSpan="2" />
                     <Image Margin="1,0,87,0" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" Grid.ColumnSpan="2" />
@@ -351,7 +365,7 @@
                             <TextBlock Text="{Binding aPlayTitelVolume, StringFormat='{}{0:#,0.0}%'}" />
                         </Slider.ToolTip>
                     </Slider>
-                    
+
                     <Image Grid.Column="2" Grid.Row="1" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Margin="0,3,15,3" HorizontalAlignment="Right" Stretch="Fill" Width="11" Height="20"  />
                     <Image Grid.Column="2" Grid.Row="1" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="0,9,18,3" HorizontalAlignment="Right" Width="14" />
 
@@ -373,7 +387,7 @@
                             </StackPanel>
                         </ViewGeneral:IntBox.ToolTip>
                     </ViewGeneral:IntBox>
-                                        
+
                     <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
                         Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" 
                         vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
@@ -410,15 +424,42 @@
                             vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" 
                             ToolTip="{Binding ZeigePauseMax, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="6,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
-                    <Slider Name="sldPlaySpeed" Maximum="5" Value="{Binding aPlayTitelSpeed}" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" 
-                            IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" Foreground="DarkSlateGray" Margin="32,14,32,15"
-                            MouseWheel="SpeedWert_MouseWheel">
-                        <Slider.ToolTip>
-                            <TextBlock Text="{Binding ToolTipPlaySpeed}" />
-                        </Slider.ToolTip>
-                    </Slider>
-                    <Image Source="/Images/Icons/General/hase.png" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Right" Margin="0,5,5,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp_1" />
+                    <StackPanel Grid.Column="5" Grid.RowSpan="2" Orientation="Horizontal">
+                        <Grid Margin="2,0,0,0">
+                            <Image Source="/Images/Icons/General/hase.png" Grid.Column="5" Grid.RowSpan="2" Width="20" Cursor="Hand" MouseUp="Image_MouseUp_1" VerticalAlignment="Top" />
+                            <Image Source="/Images/Icons/General/schildkröte.png" Width="20" Cursor="Hand" MouseUp="Image_MouseUp" VerticalAlignment="Bottom" />
+                            <Slider Name="sldPlaySpeed" Minimum="-150" Maximum="150" Value="{Binding aPlayTitelSpeed}" Height="33" TickFrequency="10" Orientation="Vertical"
+                            IsTabStop="False" Focusable="False" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Foreground="DarkSlateGray" 
+                            MouseWheel="SpeedWert_MouseWheel" ToolTipService.ShowDuration="12000" >
+                                <Slider.ToolTip>
+                                    <TextBlock Text="{Binding ToolTipPlaySpeed, UpdateSourceTrigger=PropertyChanged}" />
+                                </Slider.ToolTip>
+                            </Slider>
+                        </Grid>
+                        
+                        <Grid Margin="2,0,0,0">
+                            <Image Source="/Images/Icons/Audio/Silhouette_fee.png" Width="20" Height="20" Cursor="Hand" MouseUp="Image_MouseUp_1" VerticalAlignment="Top" Margin="2,0,0,0"/>
+                            <Image Source="/Images/Icons/Audio/Silhouette_drache.png" Width="20" Height="20" Cursor="Hand" MouseUp="Image_MouseUp" Margin="0,0,2,0" VerticalAlignment="Bottom" />
+                            <Slider Name="sldPlayPitch" Orientation="Vertical" Maximum="60" Minimum="-60" Value="{Binding aPlayTitelPitch}" TickFrequency="3" Height="33" 
+                            IsTabStop="False" Focusable="False" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Foreground="DarkSlateGray" 
+                            MouseWheel="SpeedWert_MouseWheel" ToolTipService.ShowDuration="12000" >
+                                <Slider.ToolTip>
+                                    <TextBlock Text="{Binding ToolTipPlayPitch, UpdateSourceTrigger=PropertyChanged}" />
+                                </Slider.ToolTip>
+                            </Slider>
+                        </Grid>
+
+                        <Grid Margin="2,0,0,0">
+                            <Image Source="/Images/Icons/echo.png" Width="20" Height="20" Cursor="Hand" Margin="0,0,2,0" MouseUp="Image_MouseUp_1" VerticalAlignment="Top" />
+                            <Slider Name="sldPlayEcho" Orientation="Vertical" Maximum="2" Minimum="0" Value="{Binding aPlayTitelEcho}" TickFrequency="1"  Height="33" 
+                                IsTabStop="False" Focusable="False" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Foreground="DarkSlateGray" 
+                                MouseWheel="SpeedWert_MouseWheel" ToolTipService.ShowDuration="12000" >
+                                <Slider.ToolTip>
+                                    <TextBlock Text="{Binding ToolTipPlayEcho, UpdateSourceTrigger=PropertyChanged}" />
+                                </Slider.ToolTip>
+                            </Slider>
+                        </Grid>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
 
@@ -496,6 +537,7 @@
                         <ColumnDefinition Width="60" />
                         <ColumnDefinition Width="*" MinWidth="115" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Margin="0,-1,-1,0"/>
@@ -531,14 +573,14 @@
                             </Style>
                         </CheckBox.Style>
                     </CheckBox>
-                    
+
                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Column="3" Margin="5,-1,-1,0" />
 
                     <Label Grid.Column="4" Content="{Binding ZeigeAPlayTitelPause}" />
 
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/undo.png" Width="12" Margin="-3,3,0,3" HorizontalAlignment="Left" Stretch="Fill"  />
                     <Image Grid.Column="5" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Margin="-7,9,15,3" HorizontalAlignment="Left" />
-                    
+
                     <CheckBox Grid.Column="5" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"
                               IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}" >
                         <CheckBox.Style>
@@ -560,10 +602,106 @@
                             </Style>
                         </CheckBox.Style>
                     </CheckBox>
-                    <Label Grid.Column="6" Content="{Binding ToolTipPlaySpeed}" />
+
+                    <StackPanel Grid.Column="6" Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Width="60" >
+                            <Image Name="_imgHase" Source="/Images/Icons/General/hase.png" HorizontalAlignment="Left" Width="25" >
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding aPlayTitelSpeed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=2}" Value="True" >
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Source="/Images/Icons/General/schildkröte.png" HorizontalAlignment="Left"  Width="25" Height="20" >
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding aPlayTitelSpeed, Converter={StaticResource IsEqualOrLowerThanConverter1}, ConverterParameter=-0}" Value="True" >
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Label Content="{Binding aPlayTitelSpeed, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="-4,0,0,0" >
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding aPlayTitelSpeed, UpdateSourceTrigger=PropertyChanged}" Value="1" >
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Width="50">
+                            <Image Source="/Images/Icons/Audio/Silhouette_fee.png" HorizontalAlignment="Left"  Width="25" Height="25" >
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding aPlayTitelPitch, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Image Source="/Images/Icons/Audio/Silhouette_drache.png" HorizontalAlignment="Left" Width="25" Height="25" >
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding aPlayTitelPitch, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrLowerThanConverter1}, ConverterParameter=-1}" Value="True" >
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <Label Content="{Binding aPlayTitelPitch, UpdateSourceTrigger=PropertyChanged}" Margin="-5,0,0,0" >
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding aPlayTitelPitch, UpdateSourceTrigger=PropertyChanged}" Value="0" >
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Width="26" >
+                            <Image Source="/Images/Icons/echo.png" Width="25" Cursor="Hand" >
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding aPlayTitelEcho, UpdateSourceTrigger=PropertyChanged}" Value="1" >
+                                                <Setter Property="Height" Value="15" />
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding aPlayTitelEcho, UpdateSourceTrigger=PropertyChanged}" Value="2" >
+                                                <Setter Property="Height" Value="25" />
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </StackPanel>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </Grid>
     </ListBoxItem>
-
 </UserControl>

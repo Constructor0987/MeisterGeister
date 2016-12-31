@@ -331,6 +331,12 @@ namespace MeisterGeister.ViewModel.Helden
 #endif
                 Held h = ImportHeld(pfad);
                 SelectedHeld = h;
+               
+                // Liste aktualisieren!                
+                heldListe = null;
+                OnChanged("HeldListe");
+
+                MainViewModel.Instance.InvalidateHelden();
 #if !DEBUG
                 }
                 catch (Exception ex)

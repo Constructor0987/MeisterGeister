@@ -196,7 +196,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             get { return APlaylist == null ? null : APlaylist.GetType(); }
         }
 
-        public override string Name
+        public string Name
         {
             get { return APlaylist == null || APlaylist.Name == null ? string.Empty : APlaylist.Name; }
         }
@@ -272,20 +272,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             try
             {
                 string datei = ViewHelper.ChooseFile("Playliste exportieren", "Playlist_" + this.APlaylist.Name.Replace("/", "_") + ".xml", true, "xml");
-                if (datei != null)
-                {
-                    Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
+                if (string.IsNullOrEmpty(datei)) return;
 
-                    datei = datei.Replace("--", "-");
-                    while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
-                        datei = datei.Substring(0, datei.Length - 5) + ".xml";
+                Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
 
-                    File.Delete(datei);
-                    this.APlaylist.Export(datei, this.APlaylist.Audio_PlaylistGUID);
+                datei = datei.Replace("--", "-");
+                while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
+                    datei = datei.Substring(0, datei.Length - 5) + ".xml";
 
-                    Global.SetIsBusy(false);
-                    ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
-                }
+                File.Delete(datei);
+                this.APlaylist.Export(datei, this.APlaylist.Audio_PlaylistGUID);
+
+                Global.SetIsBusy(false);
+                ViewHelper.Popup("Die Playlist-Daten wurden erfolgreich gesichert.");
             }
             catch (Exception ex)
             {

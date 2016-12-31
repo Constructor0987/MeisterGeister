@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
+using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Bodenplan;
 using System.IO;

@@ -203,10 +203,10 @@
                                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,5,0,0">
                                                 <Image Margin="5,0,0,0" Source="/Images/Icons/helden.png" Width="24"/>
                                                 <Grid Margin="5,0,5,0" Width="200" VerticalAlignment="Center">
-                                                    <ViewGeneral:NullItemSelectorAdapter ItemsSource="{Binding HeldenGruppe}" NullItem="{Binding NSC}">
+                                                    <ViewGeneral:NullItemSelectorAdapter ItemsSource="{Binding HeldenGruppe, UpdateSourceTrigger=PropertyChanged}" NullItem="{Binding NSC}">
                                                         <ComboBox x:Name="comboBox"
                                                                   FontWeight="Bold" Focusable="False"
-                                                                  SelectedItem="{Binding SelectedHeld}">
+                                                                  SelectedItem="{Binding SelectedHeld, UpdateSourceTrigger=PropertyChanged}">
                                                             <ComboBox.Resources>
                                                                 <DataTemplate DataType="{x:Type model:Held}">
                                                                     <TextBlock Text="{Binding Name}" />

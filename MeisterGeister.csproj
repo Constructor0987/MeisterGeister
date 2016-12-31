@@ -2373,7 +2373,13 @@
     <Content Include="Audio\BASS\X64\bass.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Audio\BASS\X64\bass_fx.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Audio\BASS\X86\bass.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audio\BASS\X86\bass_fx.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Daten\Bodenplan\DoorHorizontalClosed.png">
@@ -2632,6 +2638,9 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0125.sql" />
     <Resource Include="Images\Icons\Zeichnen\linie.png" />
     <Resource Include="Images\Icons\Zeichnen\fackel.png" />
+    <Resource Include="Images\Icons\Audio\Silhouette_drache.png" />
+    <Resource Include="Images\Icons\Audio\Silhouette_fee.png" />
+    <Resource Include="Images\Icons\echo.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

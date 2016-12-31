@@ -677,6 +677,7 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void lbEditor_Drop(object sender, DragEventArgs e)
         {
+            if (sender == null) return;
             if (sender is lbEditorItem)
             {
                 if (VM.lbiPlaylistMouseOverDropped == -1)
@@ -704,7 +705,8 @@ namespace MeisterGeister.View.AudioPlayer
                     //Prozess beenden wenn unglütige Ablage oder ViewModel bereits entfernt
                     Audio_Playlist zielPlaylist = VM.DropZielPlaylist != null ?
                         VM.DropZielPlaylist :
-                        (e.Data.GetData("meineAudioZeile") as AudioZeile).VM.aPlayTitel.Audio_Playlist;
+                        (e.Data.GetData("meineAudioZeile") as AudioZeile).VM == null? null:
+                            (e.Data.GetData("meineAudioZeile") as AudioZeile).VM.aPlayTitel.Audio_Playlist;
 
                     if (VM.audioZeileMouseOverDropped == -1 ||
                         (e.Data.GetData("meineAudioZeile") as AudioZeile).VM == null)
@@ -720,7 +722,6 @@ namespace MeisterGeister.View.AudioPlayer
                     if (e.Data.GetDataPresent("meineAudioZeilenListe"))
                 {
                     //Prozess beenden wenn unglütige Ablage oder ViewModel bereits entfernt
-
                     System.Collections.IList lstItems = (System.Collections.IList)e.Data.GetData("meineAudioZeilenListe");
                     
                         //var coll = lstItems.Cast<List<AudioZeile>>();
@@ -1205,7 +1206,7 @@ namespace MeisterGeister.View.AudioPlayer
             {
                 e.Handled = true;
             }
-        }        
+        }
     }
 }
 

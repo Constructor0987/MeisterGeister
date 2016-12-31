@@ -322,6 +322,30 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<short> _wiederholungen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual double Pitch
+        {
+            get { return _pitch; }
+            set
+    		{ 
+    			Set(ref _pitch, value);
+    		}
+    
+        }
+        private double _pitch;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Echo
+        {
+            get { return _echo; }
+            set
+    		{ 
+    			Set(ref _echo, value);
+    		}
+    
+        }
+        private int _echo;
 
         #endregion
 

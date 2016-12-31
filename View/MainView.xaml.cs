@@ -451,11 +451,11 @@ namespace MeisterGeister.View
             string appBaseDir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             string sourcePath = appBaseDir + ((Utils.Is64Bit) ? @"\Audio\BASS\X64" : @"\Audio\BASS\X86");
 
-            //Kopieren der BASS.DLL 32bit oder 64bit Variante ins Hauptverzeichnis von MG
+            //Kopieren der BASS.DLL & BASS_FX.DLL 32bit oder 64bit Variante ins Hauptverzeichnis von MG
             try
             {
                 File.Copy(sourcePath + @"\bass.dll", appBaseDir + @"\bass.dll", true);
-
+                File.Copy(sourcePath + @"\bass_fx.dll", appBaseDir + @"\bass_fx.dll", true);
             }
             finally
             {

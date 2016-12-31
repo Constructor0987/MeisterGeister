@@ -16,26 +16,32 @@
                 PreviewMouseLeftButtonDown="lbiEditorTheme_PreviewMouseLeftButtonDown" 
                 Width="{Binding Path=ActualWidth, ElementName=lbEditorTheme}">
         <Grid Name="grd" Width="{Binding ElementName=spnllbiIcon, Path=Width}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25" />
-                <ColumnDefinition Width="40*" MinWidth="40" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-            </Grid.RowDefinitions>
-            <Image Source="/Images/Icons/General/copy.png" Stretch="Fill" />
-            <Label Content="{ Binding Path=ATheme.Name}" Grid.Column="1" FontSize="14" Padding="5,2,5,5" />
-        </Grid>
-        <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Exportieren des Themes" 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="40*" MinWidth="40" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <Image Source="/Images/Icons/General/copy.png" Stretch="Fill" />
+                <Label Content="{ Binding Path=ATheme.Name}" Grid.Column="1" FontSize="14" Padding="5,2,5,5" />
+            </Grid>
+
+            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,25,0" >
+                <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Exportieren des Themes" 
                     Visibility="{Binding Path=IsMouseOver, ElementName=spnllbiIcon, Converter={StaticResource BooleanToVisibilityConverter1}}" 
                     Command="{Binding OnBtnExportLbEditorTheme}" >
-            <Image Source="/Images/Icons/General/export.png"/>
-        </Button>
-        <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Löschen des Themes" 
+                    <Image Source="/Images/Icons/General/export.png"/>
+                </Button>
+                <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Löschen des Themes" 
                     Visibility="{Binding Path=IsMouseOver, ElementName=spnllbiIcon, Converter={StaticResource BooleanToVisibilityConverter1}}" 
                     Command="{Binding OnBtnLöschenLbEditorTheme}" >
-            <Image Source="/Images/Icons/General/entf_01.png" />
-        </Button>
+                    <Image Source="/Images/Icons/General/entf_01.png" />
+                </Button>
+            </StackPanel>
+
+        </Grid>
     </StackPanel>
 
 </ListViewItem>

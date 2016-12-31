@@ -113,13 +113,13 @@ namespace MeisterGeister.View.AudioPlayer
 
             if (e.Delta < 0)
             {
-                if (aktWert > ((Slider)sender).Ticks.Min())
-                    ((Slider)sender).Value = ((Slider)sender).Ticks[((Slider)sender).Ticks.IndexOf(aktWert) - 1]; 
+                if (aktWert - ((Slider)sender).TickFrequency > ((Slider)sender).Minimum)
+                    ((Slider)sender).Value = aktWert - ((Slider)sender).TickFrequency;
             }
             else
             {
-                if (aktWert < ((Slider)sender).Ticks.Max())
-                    ((Slider)sender).Value = ((Slider)sender).Ticks[((Slider)sender).Ticks.IndexOf(aktWert) + 1];
+                if (aktWert + ((Slider)sender).TickFrequency < ((Slider)sender).Maximum)
+                    ((Slider)sender).Value = aktWert + ((Slider)sender).TickFrequency;
             }
         }
                 
@@ -149,6 +149,11 @@ namespace MeisterGeister.View.AudioPlayer
                 VM.aPlayTitelVolume = 0;
             else
                 if (e.OldValue < e.NewValue && e.NewValue < .5) VM.aPlayTitelVolume = .5;
+        }
+
+        private void pbarTitel_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if ((sender as ProgressBar).Maximum != VM.TitelMaximum) (sender as ProgressBar).Maximum = VM.TitelMaximum;
         }
     }
 }

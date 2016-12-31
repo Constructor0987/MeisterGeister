@@ -168,7 +168,7 @@
                     </Image.ToolTip>
                 </Image>
             </Grid>
-            <ListBox Grid.Row="1" x:Name="_listBoxHelden"  Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" ItemContainerStyle="{StaticResource HeldenListItemStyle}"
+            <ListBox Grid.Row="1" x:Name="_listBoxHelden"  Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource HeldListTemplate}" ItemContainerStyle="{StaticResource HeldenListItemStyle}"
 				     MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000" VerticalContentAlignment="Center">
                 <ListBox.InputBindings>
                     <KeyBinding Key="Delete" Command="{Binding OnDeleteHeld}" />

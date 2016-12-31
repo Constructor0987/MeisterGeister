@@ -289,10 +289,39 @@ namespace MeisterGeister.ViewModel.Inventar
             }
         }
 
+        void AngelegtOnChecked(object sender, RoutedEventArgs e)
+        {
+            // throw new NotImplementedException();
+            //if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+            //    SelectedHeld.BerechneRüstungswerte();
+            //if (E.BEBerechnung == 0)
+            //    SelectedHeld.BerechneBehinderung();
+
+            //SelectedHeld.BerechneAusruestungsGewicht();
+        }
+        void AngelegtOnUnChecked(object sender, RoutedEventArgs e)
+        {
+            // throw new NotImplementedException();
+            //if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+            //    SelectedHeld.BerechneRüstungswerte();
+            //if (E.BEBerechnung == 0)
+            //    SelectedHeld.BerechneBehinderung();
+
+            //SelectedHeld.BerechneAusruestungsGewicht();
+        }
+
         public Model.Held_Ausrüstung SelectedAusrüstung
         {
             get { return selectedAusrüstung; }
-            set { Set(ref selectedAusrüstung, value); }
+            set { Set(ref selectedAusrüstung, value);
+                if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                    SelectedHeld.BerechneRüstungswerte();
+                if (E.BEBerechnung == 0)
+                    SelectedHeld.BerechneBehinderung();
+
+                SelectedHeld.BerechneAusruestungsGewicht();
+                //  SelectedAusrüstung_Angelegt = value.Angelegt;
+            }
         }
 
         //public double AktuelleTragkraft {
@@ -459,12 +488,13 @@ namespace MeisterGeister.ViewModel.Inventar
             equipAllSets = new Base.CommandBase(o => AlleSetsAnlegen(), null);
             unequipAllSets = new Base.CommandBase(o => AlleSetsAblegen(), null);
             allesAblegen = new Base.CommandBase(o => AlleAusrüstungAblegen(), null);
+            
 
             SelectedFilterIndex = 0;
 
             LoadDaten();
         }
-
+        
         #endregion
 
         #region // Private Methoden
