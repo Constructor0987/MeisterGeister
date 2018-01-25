@@ -2638,7 +2638,8 @@ namespace MeisterGeister.Model {
         public double BerechneAusruestungsGewicht() {
             double g = 0.0;
             foreach (Held_Ausrüstung ha in Held_Ausrüstung) {
-                double effGewicht = ha.Trageort.TragkraftFaktor * ha.Ausrüstung.Gewicht;
+                if (ha.SpezGewicht != null && ha.SpezGewicht.Value == 0) ha.SpezGewicht = null;
+                double effGewicht = ha.Trageort.TragkraftFaktor * (ha.SpezGewicht == null? ha.Ausrüstung.Gewicht: ha.SpezGewicht.Value);
                 if (ha.Ausrüstung.Rüstung != null && ha.Angelegt)
                     effGewicht /= 2.0;
                 g += effGewicht;

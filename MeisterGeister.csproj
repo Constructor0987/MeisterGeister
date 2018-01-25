@@ -392,6 +392,9 @@
     <Compile Include="Model\GegnerBase_Audio_Playlist_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GegnerBase_Zauber_Poco.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Held_Audio_Playlist.cs" />
     <Compile Include="Model\Held_Audio_Playlist_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -410,6 +413,7 @@
     <Compile Include="Model\Held_Waffe_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GegnerBase_Zauber.cs" />
     <Compile Include="Model\Kreatur_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -737,6 +741,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Finte.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\GezielterStich.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\GezieltesAusweichen.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IGegner.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\KampfManöver.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\ManöverModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\NahkampfManöver.cs" />
@@ -2641,6 +2646,12 @@
     <Resource Include="Images\Icons\Audio\Silhouette_drache.png" />
     <Resource Include="Images\Icons\Audio\Silhouette_fee.png" />
     <Resource Include="Images\Icons\echo.png" />
+    <Resource Include="Images\Icons\dungeon.png" />
+    <Resource Include="Images\Icons\General\size.png" />
+    <Resource Include="Images\Icons\General\x-offset.png" />
+    <Resource Include="Images\Icons\General\y-offset.png" />
+    <Resource Include="Images\Bodenplan\FogOfWar.png" />
+    <Content Include="Daten\Updateskripte\UpdateTo_V0126.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

@@ -481,43 +481,60 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             if (grpobj.wartezeitTimer.IsEnabled)
                 grpobj.wartezeitTimer.Stop();
             grpobj.wartezeitTimer.Tag = null;
-
-            if (grpobj != null && grpobj.wirdAbgespielt)
+            System.Diagnostics.Debug.WriteLine("1");
+            if (grpobj != null)// && grpobj.wirdAbgespielt)
             {
                 if (grpobj == null)
                     return;
+                System.Diagnostics.Debug.WriteLine("2");
                 grpobj.wirdAbgespielt = false;
 
                 if (!grpobj.aPlaylist.Hintergrundmusik && grpobj.aPlaylist.Fading)
-                    aPlayerVM.FadingOutGeräusch(true, true, grpobj);
-                else
-                    if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
                 {
-                    grpobj.mZeileVM.grpobj._listZeile.ForEach(delegate (AudioPlayerViewModel.KlangZeile kZeile)
+                    System.Diagnostics.Debug.WriteLine("3");
+                    aPlayerVM.FadingOutGeräusch(true, true, grpobj);
+
+                    System.Diagnostics.Debug.WriteLine("4");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("5");
+                    if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
                     {
-                        if (kZeile.istLaufend)
+                        System.Diagnostics.Debug.WriteLine("6");
+                        for (int i = 0; i < grpobj.mZeileVM.grpobj._listZeile.Count; i++)
                         {
-                            kZeile.istPause = true;
-                            kZeile.istStandby = false;
-                            kZeile.istLaufend = false;
-                            if (kZeile.aData != null)
-                            {
-                                kZeile.aData.Pause();
-                                kZeile.aData.Stop();
-                                kZeile.aData.Close();
-                            }
+                            grpobj.mZeileVM.grpobj._listZeile[i].istPause = true;
+                            grpobj.mZeileVM.grpobj._listZeile[i].aData.Pause();
+                            grpobj.mZeileVM.grpobj._listZeile[i].istStandby = false;
+                            grpobj.mZeileVM.grpobj._listZeile[i].istLaufend = false;
+                            grpobj.mZeileVM.grpobj._listZeile[i].aData.Stop();
+                            grpobj.mZeileVM.grpobj._listZeile[i].aData.Close();
                         }
-                    });
-                    grpobj.mZeileVM.Min1SongWirdGespielt = null;
-                    aPlayerVM._GrpObjecte.Remove(grpobj);                       
-                    return;
+                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.istPause = true);
+                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Pause());
+                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.istStandby = true); //true ?
+                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.istLaufend = false);
+                        //aPlayerVM.CheckPlayStandbySongs(grpobj);
+                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Stop());
+                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Close());
+                        grpobj.mZeileVM.Min1SongWirdGespielt = null;
+                        aPlayerVM._GrpObjecte.Remove(grpobj);
+                        System.Diagnostics.Debug.WriteLine("7");
+                        aPlayerVM.CheckPlayStandbySongs(grpobj);
+                        System.Diagnostics.Debug.WriteLine("7.1");
+                        return;
+                    }
+                    System.Diagnostics.Debug.WriteLine("8");
                 }
                 for (int i = 0; i < grpobj._listZeile.Count; i++)
                 {
                     if (!grpobj.aPlaylist.Hintergrundmusik)
                     {
+                        System.Diagnostics.Debug.WriteLine("9_"+ i.ToString());
                         if (grpobj._listZeile[i].aData != null && !grpobj.aPlaylist.Fading)
                         {
+                            System.Diagnostics.Debug.WriteLine("10_" + i.ToString());
                             grpobj._listZeile[i].istPause = true;
                             grpobj._listZeile[i].aData.Pause();
                             grpobj._listZeile[i].istStandby = false;
@@ -526,21 +543,26 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     }
                     else
                     {
+                        System.Diagnostics.Debug.WriteLine("11_" + i.ToString());
                         grpobj._listZeile[i].istPause = true;
                         if (!grpobj._listZeile[i].FadingOutStarted && grpobj._listZeile[i].istLaufend)
                         {
+                            System.Diagnostics.Debug.WriteLine("12_" + i.ToString());
                             grpobj._listZeile[i].FadingOutStarted = true;
                             aPlayerVM.FadingOut(grpobj._listZeile[i], grpobj, true, true);
 
                             grpobj._listZeile[i].istLaufend = false;
                             if (grpobj._listZeile[i].audioZeileVM != null) grpobj._listZeile[i].audioZeileVM.Progress = 0;
                             grpobj._listZeile[i].istStandby = true;
+                            System.Diagnostics.Debug.WriteLine("13_" + i.ToString());
                         }
                     }
                 }
+                System.Diagnostics.Debug.WriteLine("14");
                 aPlayerVM.CheckPlayStandbySongs(grpobj);
                 grpobj.totalTimePlylist = -1;
             }
+            System.Diagnostics.Debug.WriteLine("15");
             aPlayerVM.ErwPlayerGeräuscheAktiv = aPlayerVM.ErwPlayerGeräuscheAktiv;
         }
 

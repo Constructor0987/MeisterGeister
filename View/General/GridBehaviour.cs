@@ -44,9 +44,12 @@ namespace MeisterGeister.View.General
             grid.RowDefinitions.Clear();
 
             for (int i = 0; i < (int)e.NewValue; i++)
-                grid.RowDefinitions.Add(
-                    new RowDefinition() { Height = new GridLength(GetRowLength(obj)) });
+            {
+                double d = GetRowLength(obj);
 
+                grid.RowDefinitions.Add(
+                    new RowDefinition() { Height = new GridLength(d >= 0 ? d : 30) });
+            }
             //SetStarRows(grid);
         }
 
@@ -86,9 +89,11 @@ namespace MeisterGeister.View.General
             grid.ColumnDefinitions.Clear();
 
             for (int i = 0; i < (int)e.NewValue; i++)
+            {
+                double gl = GetColumnLength(obj);
                 grid.ColumnDefinitions.Add(
-                    new ColumnDefinition() { Width = new GridLength(GetColumnLength(obj)) });
-
+                    new ColumnDefinition(){ Width = new GridLength(gl >= 0? gl : 30) });
+            }
             //SetStarColumns(grid);
         }
 
@@ -114,7 +119,7 @@ namespace MeisterGeister.View.General
 
         public static double GetRowLength(DependencyObject obj)
         {
-            return (double)obj.GetValue(RowLengthProperty);
+            return (double)obj.GetValue(RowLengthProperty); 
         }
 
         public static void SetRowLength(DependencyObject obj, double value)

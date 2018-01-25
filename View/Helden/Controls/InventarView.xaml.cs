@@ -20,7 +20,7 @@ using System.Windows.Media.Animation;
 namespace MeisterGeister.View.Helden.Controls {
     public partial class InventarView : UserControl {
 
-
+        
         #region Konstruktor
 
         /// <summary>

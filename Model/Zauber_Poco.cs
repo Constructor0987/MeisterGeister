@@ -302,6 +302,39 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
+        public virtual ICollection<GegnerBase_Zauber> GegnerBase_Zauber
+        {
+            get
+            {
+                if (_gegnerBase_Zauber == null)
+                {
+                    var newCollection = new FixupCollection<GegnerBase_Zauber>();
+                    newCollection.CollectionChanged += FixupGegnerBase_Zauber;
+                    _gegnerBase_Zauber = newCollection;
+                }
+                return _gegnerBase_Zauber;
+            }
+            set
+            {
+                if (!ReferenceEquals(_gegnerBase_Zauber, value))
+                {
+                    var previousValue = _gegnerBase_Zauber as FixupCollection<GegnerBase_Zauber>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupGegnerBase_Zauber;
+                    }
+                    _gegnerBase_Zauber = value;
+                    var newValue = value as FixupCollection<GegnerBase_Zauber>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupGegnerBase_Zauber;
+                    }
+                }
+            }
+        }
+        private ICollection<GegnerBase_Zauber> _gegnerBase_Zauber;
+    
+    	[DataMember]
         public virtual ICollection<Held_Zauber> Held_Zauber
         {
             get
@@ -403,6 +436,29 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private void FixupGegnerBase_Zauber(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("GegnerBase_Zauber");
+            if (e.NewItems != null)
+            {
+                foreach (GegnerBase_Zauber item in e.NewItems)
+                {
+                    item.Zauber = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (GegnerBase_Zauber item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Zauber, this))
+                    {
+                        item.Zauber = null;
+                    }
+                }
+            }
+        }
     
         private void FixupHeld_Zauber(object sender, NotifyCollectionChangedEventArgs e)
         {

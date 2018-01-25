@@ -41,6 +41,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             if (o is Held_Zauber)
                 Manöver = new Manöver.Zauber(Manöver.Ausführender, (Held_Zauber)o);
+            if (o is GegnerBase_Zauber)
+                Manöver = new Manöver.Zauber(Manöver.Ausführender, (GegnerBase_Zauber)o);
         }
 
         private Base.CommandBase umwandelnFernkampf;

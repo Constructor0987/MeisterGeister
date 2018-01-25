@@ -76,5 +76,19 @@ namespace MeisterGeister.View.Kampf.Controls
             SpeedbtnAudio.aPlaylist = ((sender as Button).Tag as IWesenPlaylist).Audio_Playlist;
             SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
         }
+
+        // TODO MT: Auf MVVM umstellen; evtl. mit CanExecute im Command
+        private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)
+        {
+            _menuItemZauberLöschen.IsEnabled = _listBoxGegnerBaseZauber.SelectedItem != null;
+            _menuItemZauberWiki.IsEnabled = _listBoxGegnerBaseZauber.SelectedItem != null;
+            _menuItemZauberGruppenProbe.IsEnabled = _listBoxGegnerBaseZauber.SelectedItem != null;// && !VM.IsReadOnly;
+            _menuItemZauberProbe.IsEnabled = _listBoxGegnerBaseZauber.SelectedItem != null;
+        }
+
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+        }
     }
 }

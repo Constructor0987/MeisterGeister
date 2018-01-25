@@ -1,4 +1,5 @@
 ﻿using MeisterGeister.Model.Extensions;
+using MeisterGeister.View.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,9 +56,9 @@ namespace MeisterGeister.Model
         #region Import Export
 
         public static Audio_Playlist Import(string pfad, string soll, bool batch = false)
-        { 
+        {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            
+              
             Guid audio_playlistGuid = serialization.ImportAudio(pfad, soll);
             if (audio_playlistGuid == Guid.Empty)
                 return null;
@@ -76,12 +77,11 @@ namespace MeisterGeister.Model
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             serialization.DeleteAudioData(a);
         }
-
-
+                
         public void Export(string pfad, Guid g, bool batch = false)
         {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            serialization.ExportAudioPlaylist(g, pfad); //Audio_PlaylistGUID
+            serialization.ExportAudioPlaylist(g, pfad);
         }
 
 
@@ -94,13 +94,10 @@ namespace MeisterGeister.Model
                 Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
                 //////////////////////////////////////////////////////////////////////
 
-                Global.SetIsBusy(true, string.Format("Playliste '" + aPlaylist.Name.Replace("/", "_") + "' wird exportiert"));
-                string datei = pfad + "\\Playlist_" + aPlaylist.Name.Replace("/", "_") + ".xml";
+                Global.SetIsBusy(true, string.Format("Playliste '" + aPlaylist.Name + "' wird exportiert"));
 
-                datei = datei.Replace("--", "-");
-                while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
-                    datei = datei.Substring(0, datei.Length - 5) + ".xml";
-
+                string datei = pfad + "\\Playlist_" + ViewHelper.GetValidFilename(aPlaylist.Name) + ".xml";
+                
                 System.IO.File.Delete(datei);
                 serialization.ExportAudioPlaylist(aPlaylist.Audio_PlaylistGUID, datei);
             }

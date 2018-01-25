@@ -44,7 +44,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public static string GetFullApplicationPath()
         {
-            return Environment.CurrentDirectory;
+            return System.AppDomain.CurrentDomain.BaseDirectory;
+            // Environment.CurrentDirectory;
         }
 
         public static string GetFullApplicationPathForPictures()

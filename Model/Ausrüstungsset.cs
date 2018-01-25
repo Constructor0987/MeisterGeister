@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using E = MeisterGeister.Logic.Einstellung.Einstellungen;
+
 using MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.Model
@@ -91,12 +93,26 @@ namespace MeisterGeister.Model
         {
             foreach (Held_Ausrüstung ha in Held_Ausrüstung)
                 ha.Angelegt = true;
+
+            if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                Held.BerechneRüstungswerte();
+            if (E.BEBerechnung == 0)
+                Held.BerechneBehinderung();
+
+            Held.BerechneAusruestungsGewicht();
         }
 
         public void Ablegen()
         {
             foreach (Held_Ausrüstung ha in Held_Ausrüstung)
                 ha.Angelegt = false;
+
+            if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                Held.BerechneRüstungswerte();
+            if (E.BEBerechnung == 0)
+                Held.BerechneBehinderung();
+
+            Held.BerechneAusruestungsGewicht();
         }
     }
 }

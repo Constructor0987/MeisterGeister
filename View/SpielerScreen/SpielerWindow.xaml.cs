@@ -1,4 +1,7 @@
 ﻿using MeisterGeister.View.General;
+using MeisterGeister.ViewModel.Bodenplan;
+using MeisterGeister.ViewModel.Bodenplan.Logic;
+using MeisterGeister.ViewModel.Kampf;
 using MeisterGeister.ViewModel.SpielerScreen;
 using System;
 using System.Collections.Generic;
@@ -6,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -35,7 +39,51 @@ namespace MeisterGeister.View.SpielerScreen
             WindowStartupLocation = WindowStartupLocation.Manual;
             Left = Convert.ToDouble(xPoint);
             Top = Convert.ToDouble(yPoint);
+
+            if (Global.CurrentKampf != null &&
+                Global.CurrentKampf.BodenplanViewModel != null &&
+                Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive)
+            {
+                VMBoden = Global.CurrentKampf.BodenplanViewModel;
+                grdStandard.Visibility = Visibility.Collapsed;
+                grdBodenplan.Visibility = Visibility.Visible;
+                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow = this;
+            }
         }
+
+        //////////////////////////////////////////////////////////////
+
+
+        private void Thumb_Drag(object sender, DragDeltaEventArgs e)
+        {
+            var thumb = sender as Thumb;
+            if (thumb == null)
+                return;
+
+            var pathline = thumb.DataContext as PathLine;
+            if (pathline == null)
+                return;
+        }
+
+        public BattlegroundViewModel VMBoden
+        {
+            get { return DataContext as BattlegroundViewModel; }
+            set { DataContext = value; }
+        }
+
+
+        private static bool _bodenplanActive = false;
+        public static bool BodenplanActive
+        {
+            get
+            {
+                if (_bodenplanActive == false && _instance != null)
+                    _bodenplanActive = true;
+                return _bodenplanActive;
+            }
+        }
+        
+        //////////////////////////////////////////////////////////////
 
         public static SpielerWindow Instance
         {
@@ -104,6 +152,9 @@ namespace MeisterGeister.View.SpielerScreen
                 _visualBrush = null;
                 if (SpielerWindowClosed != null)
                     SpielerWindowClosed(null, new EventArgs());
+                if (Global.CurrentKampf != null &&
+                    Global.CurrentKampf.BodenplanWindow != null)
+                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive = false;
             }
         }
 
@@ -214,7 +265,6 @@ namespace MeisterGeister.View.SpielerScreen
             {
                 Image img = new Image();
 
-
                 Binding myBinding = new Binding("CurrentSlideShowImage");
                 myBinding.Source = vm;
                 img.SetBinding(Image.SourceProperty, myBinding);
@@ -235,31 +285,49 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        //public static void SetBodenplanView()
-        //{
-        //    if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanWindow != null)
-        //    {
-        //        System.Windows.Media.VisualBrush vb = new VisualBrush(Global.CurrentKampf.BodenplanWindow);
-        //        Rectangle rect = new Rectangle();
-        //        rect.Fill = vb;
+        public static void SetBodenplanView()
+        {
+                
+        }
 
-        //        SetContent(rect);
-        //    }
-        //}
+        private static void btn_Click(object sender, RoutedEventArgs e)
+        {
+            Rectangle rec =  Instance.FindName("rectGrid") as Rectangle;
+            rec.Margin = new Thickness(100, 0, -100, 0);
+        }
+
+        private static void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Rectangle rec = ((sender) as Rectangle);
+            double x = rec.Margin.Left;
+            rec.Margin = new Thickness(x+100, 0, -x-100, 0);
+        }
 
         public bool IsKampfInfoModus { get; set; }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (VM != null && VM.ScreenList.Count > 1)
+            if (System.Windows.Forms.Screen.AllScreens.Length > 0)// Global.CurrentKampf.Left < System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
             {
-                WindowState = System.Windows.WindowState.Maximized;
-                WindowStyle = System.Windows.WindowStyle.None;
-            }
+                this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                this.Left = System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width;
+                if (Global.CurrentKampf.BodenplanViewModel.KampfWindow != null)
+                {
+                    this.WindowState = System.Windows.WindowState.Normal;
+                    this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                    this.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Global.CurrentKampf.BodenplanViewModel.KampfWindow.ActualWidth;
+                    this.Height = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height;
+                }
+                else
+                {
+                    this.WindowState = System.Windows.WindowState.Maximized;
+                    this.WindowStyle = System.Windows.WindowStyle.None;
+                }
+            } 
             else
-            { // bei nur einem Screen nicht im Vollbildmodus starten
-                WindowState = System.Windows.WindowState.Normal;
-                WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+            {
+                this.WindowState = System.Windows.WindowState.Normal;
+                this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             }
         }
 
@@ -278,6 +346,13 @@ namespace MeisterGeister.View.SpielerScreen
             _visualBrush = null;
             if (SpielerWindowClosed != null)
                 SpielerWindowClosed(null, new EventArgs());
+            if (VMBoden != null && //= Global.CurrentKampf.BodenplanViewModel
+                grdStandard.Visibility == Visibility.Collapsed &&
+                grdBodenplan.Visibility == Visibility.Visible)
+            {
+                Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive = false;
+                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow = null;
+            }
         }
 
         private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)

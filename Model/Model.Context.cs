@@ -252,6 +252,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<GegnerBase_Kampfregel> _gegnerBase_Kampfregel;
     
+        public ObjectSet<GegnerBase_Zauber> GegnerBase_Zauber
+        {
+            get { return _gegnerBase_Zauber  ?? (_gegnerBase_Zauber = CreateObjectSet<GegnerBase_Zauber>("GegnerBase_Zauber")); }
+        }
+        private ObjectSet<GegnerBase_Zauber> _gegnerBase_Zauber;
+    
         public ObjectSet<Handelsgut> Handelsgut
         {
             get { return _handelsgut  ?? (_handelsgut = CreateObjectSet<Handelsgut>("Handelsgut")); }
@@ -683,6 +689,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)GegnerBase_Audio_Playlist;
     		if(typeof(T) == typeof(GegnerBase_Kampfregel))
     				return (ObjectSet<T>)(Object)GegnerBase_Kampfregel;
+    		if(typeof(T) == typeof(GegnerBase_Zauber))
+    				return (ObjectSet<T>)(Object)GegnerBase_Zauber;
     		if(typeof(T) == typeof(Handelsgut))
     				return (ObjectSet<T>)(Object)Handelsgut;
     		if(typeof(T) == typeof(Handelsgut_Setting))
@@ -870,6 +878,8 @@ namespace MeisterGeister.Model
     				return GegnerBase_Audio_Playlist;
     		if(t == typeof(GegnerBase_Kampfregel))
     				return GegnerBase_Kampfregel;
+    		if(t == typeof(GegnerBase_Zauber))
+    				return GegnerBase_Zauber;
     		if(t == typeof(Handelsgut))
     				return Handelsgut;
     		if(t == typeof(Handelsgut_Setting))

@@ -58,6 +58,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private Model.Schild selectedSchild;
         private Model.Rüstung selectedRuestung;
         private Model.Held_Ausrüstung selectedAusrüstung;
+        private InventarItem selectedSonstiges;
 
         //Entitylisten
         private List<Model.Talent> nahkampfWaffeTalentListe = new List<Model.Talent>();
@@ -324,6 +325,25 @@ namespace MeisterGeister.ViewModel.Inventar
             }
         }
 
+        private Nullable<double> _ausrüstungGewicht = null;
+        public Nullable<double> AusrüstungGewicht
+        {
+            get { return _ausrüstungGewicht; }
+            set { Set(ref value, AusrüstungGewicht);}
+        }
+
+        public InventarItem SelectedSonstiges
+        {
+            get { return selectedSonstiges; }
+            set { Set(ref selectedSonstiges, value);
+                if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                    SelectedHeld.BerechneRüstungswerte();
+                if (E.BEBerechnung == 0)
+                    SelectedHeld.BerechneBehinderung();
+
+                SelectedHeld.BerechneAusruestungsGewicht();
+            }
+        }
         //public double AktuelleTragkraft {
         //    get { return aktuelleTragkraft; }
         //    set {
@@ -820,18 +840,39 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             foreach (Model.Ausrüstungsset set in HeldAusrüstungssets)
                 set.Anlegen();
+
+            if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                SelectedHeld.BerechneRüstungswerte();
+            if (E.BEBerechnung == 0)
+                SelectedHeld.BerechneBehinderung();
+
+            SelectedHeld.BerechneAusruestungsGewicht();
         }
 
         private void AlleSetsAblegen()
         {
             foreach (Model.Ausrüstungsset set in HeldAusrüstungssets)
                 set.Ablegen();
+
+            if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                SelectedHeld.BerechneRüstungswerte();
+            if (E.BEBerechnung == 0)
+                SelectedHeld.BerechneBehinderung();
+
+            SelectedHeld.BerechneAusruestungsGewicht();
         }
 
         private void AlleAusrüstungAblegen()
         {
             foreach (Model.Held_Ausrüstung ha in HeldAusrüstungen)
                 ha.Angelegt = false;
+
+            if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                SelectedHeld.BerechneRüstungswerte();
+            if (E.BEBerechnung == 0)
+                SelectedHeld.BerechneBehinderung();
+
+            SelectedHeld.BerechneAusruestungsGewicht();
         }
 
 

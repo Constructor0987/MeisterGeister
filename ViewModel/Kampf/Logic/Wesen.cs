@@ -32,11 +32,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Position Position
         {
             get { return _position; }
-            set
-            {
-                _position = value;
-                OnChanged("Position");
-            }
+            set { Set(ref _position, value); }
         }
 
         #region Modifikatoren

@@ -12,6 +12,11 @@ using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.Model.Extensions;
 using System.Windows.Data;
+using MeisterGeister.View.General;
+using System.IO;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
@@ -24,13 +29,295 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public BattlegroundViewModel() : base()
         {
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-            
+
+            foreach (string s in Directory.GetFiles(Ressources.GetFullApplicationPathForPictures()).ToList()
+                .FindAll(t => t.StartsWith(Ressources.GetFullApplicationPathForPictures() + "Fog-of-War")))
+            {
+                try
+                { File.Delete(s); }
+                catch
+                { }
+
+            }
         }
 
         void _selectedListBoxBattlegroundObjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine(String.Format("CollectionChanged: {0} {1}", e.Action, e.NewItems));
         }
+
+        #region Fog
+
+        private Grid _arenaGrid = new Grid();
+        public Grid AreanGrid
+        {
+            get { return _arenaGrid; }
+            set { Set(ref _arenaGrid, value); }
+        }
+
+        private int _fogFreeSize = 1;
+        public int FogFreeSize
+        {
+            get { return _fogFreeSize; }
+            set { Set(ref _fogFreeSize, value); }
+        }
+
+        private int[] _fogPixelData;
+        public int[] FogPixelData
+        {
+            get { return _fogPixelData; }
+            set { Set(ref _fogPixelData, value); }
+        }
+
+        private bool _isShowIniKampf = false;
+        public bool IsShowIniKampf
+        {
+            get { return _isShowIniKampf; }
+            set { Set(ref _isShowIniKampf, value); }
+        }
+
+        //private bool _isShowSpielerScreenWindow = false;
+        //public bool IsShowSpielerScreenWindow
+        //{
+        //    get { return _isShowSpielerScreenWindow; }
+        //    set { Set(ref _isShowSpielerScreenWindow, value); }
+        //}
+
+        private bool _spielerScreenActive = false;
+        public bool SpielerScreenActive
+        {
+            get { return _spielerScreenActive; }
+            set { Set(ref _spielerScreenActive, value); }
+        }
+
+        private bool _useFog = false;
+        public bool useFog
+        {
+            get { return _useFog; }
+            set
+            {
+                Set(ref _useFog, value);
+                if (value && FogPixelData == null)
+                    CreateFogOfWar();
+            }
+        }
+
+        private bool _fogFreimachen = false;
+        public bool FogFreimachen
+        {
+            get { return _fogFreimachen; }
+            set { Set(ref _fogFreimachen, value); }
+        }
+
+        private string _backgroundImage;
+        public string BackgroundImage
+        {
+            get { return _backgroundImage; }
+            set
+            {
+                Set(ref _backgroundImage, value);
+                BackgroundFilename = value ?? System.IO.Path.GetFileNameWithoutExtension(value);
+            }
+        }
+
+        private WriteableBitmap _fogImage;
+        public WriteableBitmap FogImage
+        {
+            get { return _fogImage; }
+            set
+            {
+                Set(ref _fogImage, value);
+            }
+        }
+        private string _fogImageFilename;
+        public string FogImageFilename
+        {
+            get { return _fogImageFilename; }
+            set
+            {
+                Set(ref _fogImageFilename, value);
+            }
+        }
+        private string _backgroundFilename;
+        public string BackgroundFilename
+        {
+            get { return _backgroundFilename; }
+            set
+            {
+                Set(ref _backgroundFilename, value);
+            }
+        }
+
+        private double _gridOffsetX = 0;
+        public double GridOffsetX
+        {
+            get { return _gridOffsetX; }
+            set
+            {
+                Set(ref _gridOffsetX, value);
+                OffsetGridMargin = new Thickness(-_gridOffsetX, _gridOffsetY, 0, 0);
+            }
+        }
+
+        private double _gridOffsetY = 0;
+        public double GridOffsetY
+        {
+            get { return _gridOffsetY; }
+            set
+            {
+                Set(ref _gridOffsetY, value);
+                OffsetGridMargin = new Thickness(-_gridOffsetX, _gridOffsetY, 0, 0);
+            }
+        }
+
+        private Window _spielerScreenWindow = null;
+        public Window SpielerScreenWindow
+        {
+            get { return _spielerScreenWindow; }
+            set { Set(ref _spielerScreenWindow, value); }
+        }
+
+
+        private Window _kampfWindow = null;
+        public Window KampfWindow
+        {
+            get { return _kampfWindow; }
+            set { Set(ref _kampfWindow, value); }
+        }
+
+        private double _scaleKampfGrid = 1;
+        public double ScaleKampfGrid
+        {
+            get { return _scaleKampfGrid; }
+            set { Set(ref _scaleKampfGrid, Math.Round(value, 2)); }
+        }
+
+        private double _scaleSpielerGrid = 1;
+        public double ScaleSpielerGrid
+        {
+            get { return _scaleSpielerGrid; }
+            set { Set(ref _scaleSpielerGrid, Math.Round(value, 2)); }
+        }
+
+        private double _fogOffsetX = 0;
+        public double FogOffsetX
+        {
+            get { return _fogOffsetX; }
+            set
+            {
+                Set(ref _fogOffsetX, value);
+                OffsetBackgroudMargin = new Thickness(_fogOffsetX, _fogOffsetY, -_fogOffsetX - 20000, -_fogOffsetY - 20000);
+            }
+        }
+
+        private double _fogOffsetY = 0;
+        public double FogOffsetY
+        {
+            get { return _fogOffsetY; }
+            set
+            {
+                Set(ref _fogOffsetY, value);
+                OffsetBackgroudMargin = new Thickness(_fogOffsetX, _fogOffsetY, -_fogOffsetX - 20000, -_fogOffsetY - 20000);
+            }
+        }
+
+        private double _backgroundOffsetX = 0;
+        public double BackgroundOffsetX
+        {
+            get { return _backgroundOffsetX; }
+            set
+            {
+                Set(ref _backgroundOffsetX, value);
+                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX, _backgroundOffsetY, -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
+            }
+        }
+
+        private double _backgroundOffsetY = 0;
+        public double BackgroundOffsetY
+        {
+            get { return _backgroundOffsetY; }
+            set
+            {
+                Set(ref _backgroundOffsetY, value);
+                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX, _backgroundOffsetY, -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
+
+            }
+        }
+
+        private double _invBackgroundOffsetY = 0;
+        public double InvBackgroundOffsetY
+        {
+            get { return _invBackgroundOffsetY; }
+            set
+            {
+                Set(ref _invBackgroundOffsetY, value);
+                BackgroundOffsetY = value * -1;
+            }
+        }
+        private double _backgroundOffsetSize = 10000;
+        public double BackgroundOffsetSize
+        {
+            get { return _backgroundOffsetSize; }
+            set
+            {
+                Set(ref _backgroundOffsetSize, value);
+                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX, _backgroundOffsetY, -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
+                //FogOffsetSize = value;
+            }
+        }
+        private double _fogOffsetSize = 10000;
+        public double FogOffsetSize
+        {
+            get { return _fogOffsetSize; }
+            set
+            {
+                Set(ref _fogOffsetSize, value);
+                OffsetFogMargin = new Thickness(_fogOffsetX, _fogOffsetY, -_fogOffsetX, -_fogOffsetY - 20000);
+            }
+        }
+
+        private Thickness _offsetFogMargin = new Thickness(0, 0, 0, 0);
+        public Thickness OffsetFogMargin
+        {
+            get { return _offsetFogMargin; }
+            set
+            {
+                Set(ref _offsetFogMargin, value);
+                BattlegroundBaseObject bgO = BattlegroundObjects.Where(t => t is ImageObject).Where(t => (t as ImageObject).IsBackgroundPicture).FirstOrDefault();
+                if (bgO != null)
+                {
+                    bgO.ZDisplayX = FogOffsetX;
+                    bgO.ZDisplayY = FogOffsetY;
+                    (bgO as ImageObject).ObjectSize = FogOffsetSize;
+                }
+            }
+        }
+
+        private Thickness _offsetGridMargin = new Thickness(0, 0, 0, 0);
+        public Thickness OffsetGridMargin
+        {
+            get { return _offsetGridMargin; }
+            set { Set(ref _offsetGridMargin, value); }
+        }
+
+        private Thickness _offsetBackgroudMargin = new Thickness(0, 0, 0, 0);
+        public Thickness OffsetBackgroudMargin
+        {
+            get { return _offsetBackgroudMargin; }
+            set
+            {
+                Set(ref _offsetBackgroudMargin, value);
+                BattlegroundBaseObject bgO = BattlegroundObjects.Where(t => t is ImageObject).Where(t => (t as ImageObject).IsBackgroundPicture).FirstOrDefault();
+                if (bgO != null)
+                {
+                    bgO.ZDisplayX = BackgroundOffsetX;
+                    bgO.ZDisplayY = BackgroundOffsetY;
+                    (bgO as ImageObject).ObjectSize = BackgroundOffsetSize;
+                }
+            }
+        }
+
+        #endregion
 
         #region Objektlisten/-ViewSources
 
@@ -113,7 +400,26 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     //_kampfVM.PropertyChanged += OnKampfPropertyChanged;
                     AddAllCreatures();
                 }
+                UpdateCreaturesFromChangedKampferlist();
             }
+        }
+
+        public void UpdateCreaturesFromChangedKampferlist()
+        {
+            foreach (var k in KampfVM.Kampf.Kämpfer)
+            {
+                ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
+            }
+            foreach (var k in KampfVM.Kampf.Kämpfer)
+            {
+                ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged += OnWesenPropertyChanged;
+            }
+        }
+
+        //Event gets fired when Wesen.PropertyChanged event fires...
+        private void OnWesenPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Position") ((BattlegroundCreature)sender).UpdateCreaturePosition();
         }
 
         private void OnKämpferListeChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -272,6 +578,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #endregion
+        
+        private bool _leftShiftPressed = false;
+        public bool LeftShiftPressed
+        {
+            get { return _leftShiftPressed; }
+            set { Set(ref _leftShiftPressed, value); }
+        }
 
         #region Überflüssig?
 
@@ -404,13 +717,46 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get { return _deleteCommand ?? (_deleteCommand = new BattlegroundCommand(Delete)); }
         }
-
         public void Delete()
         {
             if (SelectedObject != null)
                 if (SelectedObject is BattlegroundCreature) KampfVM.DeleteKämpfer();
                 else BattlegroundObjects.Remove(SelectedObject);
         }
+
+
+        private BattlegroundCommand _playerScreenLeftCommand;
+        public BattlegroundCommand PlayerScreenLeftCommand
+        {
+            get { return _playerScreenLeftCommand ?? (_playerScreenLeftCommand = new BattlegroundCommand(Left)); }
+        }
+        public void Left()
+        { GridOffsetX = GridOffsetX - 80 > 0 ? GridOffsetX - 80 : 0; }
+
+        private BattlegroundCommand _playerScreenRightCommand;
+        public BattlegroundCommand PlayerScreenRightCommand
+        {
+            get { return _playerScreenRightCommand ?? (_playerScreenRightCommand = new BattlegroundCommand(Right)); }
+        }
+        public void Right()
+        { GridOffsetX = GridOffsetX + 80 <= 10000 ? GridOffsetX + 80 : 10000; }
+
+        private BattlegroundCommand _playerScreenUpCommand;
+        public BattlegroundCommand PlayerScreenUpCommand
+        {
+            get { return _playerScreenUpCommand ?? (_playerScreenUpCommand = new BattlegroundCommand(Up)); }
+        }
+        public void Up()
+        { GridOffsetY = GridOffsetY + 80 <= 0 ? GridOffsetY + 80 : 0; }
+
+        private BattlegroundCommand _playerScreenDownCommand;
+        public BattlegroundCommand PlayerScreenDownCommand
+        {
+            get { return _playerScreenDownCommand ?? (_playerScreenDownCommand = new BattlegroundCommand(Down)); }
+        }
+        public void Down()
+        { GridOffsetY = GridOffsetY - 80 > -10000 ? GridOffsetY - 80 : -10000; }
+
 
         //get / set stroke thickness
         private double _strokeThickness = 20;
@@ -514,8 +860,40 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void SaveBattlegroundToXML(String filename)
         {
+            List<double> lstSettings = new List<double>();
+            lstSettings.Add(BackgroundOffsetSize);
+            lstSettings.Add(BackgroundOffsetX);
+            lstSettings.Add(InvBackgroundOffsetY);
+
+            if (useFog)
+            {
+                for (int i = BattlegroundObjects.Count - 1; i >= 0; i--)
+                {
+                    if (BattlegroundObjects[i] is ImageObject && ((ImageObject)BattlegroundObjects[i]).IsFogPicture)
+                    {
+                        BattlegroundObjects.Remove(BattlegroundObjects[i]);
+
+                        string olfile = FogImageFilename;
+                        Nullable<int> x = null;
+                        while (File.Exists(Ressources.GetFullApplicationPathForPictures() + "Fog-of-War_" + DateTime.Today.ToShortDateString() + x + ".png")) if (x == null) x = 0; else x++;
+                        FogImageFilename = Ressources.GetFullApplicationPathForPictures() + "Fog-of-War_" + DateTime.Today.ToShortDateString() + x + ".png";
+                        CreateThumbnail(FogImageFilename, FogImage.Clone());
+                        //File.Delete(olfile);
+                        ImageObject io = CreateImageObject(FogImageFilename, new Point(FogOffsetX, FogOffsetY));
+                        io.IsFogPicture = true;
+                        io.IsVisible = false;
+                    }
+                }
+                lstSettings.Add(GridOffsetX);
+                lstSettings.Add(GridOffsetY);
+                lstSettings.Add(ScaleSpielerGrid);
+            }
+            else
+                lstSettings.AddRange(new List<double>() { 0, 0, 0 });
+            lstSettings.Add(ScaleKampfGrid);
+            lstSettings.Add(RechteckGrid? 1 : 0);
             BattlegroundXMLLoadSave bg = new BattlegroundXMLLoadSave();
-            bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures);
+            bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings);
         }
 
         public void LoadBattlegroundFromXML(String filename)
@@ -535,6 +913,75 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             PossibleZLevels = Ressources.GetPossibleZLevels(BattlegroundObjects);
 
+
+            //Sichtbereich auf Creature setzen
+            foreach (BattlegroundBaseObject bgOb in BattlegroundObjects)
+            {
+                if (bgOb is BattlegroundCreature)
+                {
+                    (bgOb as BattlegroundCreature).CreatureX = (bgOb as BattlegroundCreature).CreatureX;
+                    (bgOb as BattlegroundCreature).CreatureY = (bgOb as BattlegroundCreature).CreatureY;
+                    if ((bgOb as BattlegroundCreature) is Held)
+                    {
+                        (bgOb as BattlegroundCreature).PortraitFileName = ((bgOb as BattlegroundCreature) as Held).Bild;
+                        ((bgOb as BattlegroundCreature) as Held).LoadBattlegroundPortrait((bgOb as BattlegroundCreature).PortraitFileName, true);
+                    }
+                    else
+                    {
+                        (bgOb as BattlegroundCreature).PortraitFileName = ((bgOb as BattlegroundCreature) as Gegner).Bild;
+                        ((bgOb as BattlegroundCreature) as Gegner).LoadBattlegroundPortrait((bgOb as BattlegroundCreature).PortraitFileName, false);
+                    }
+                }
+            }
+
+            BattlegroundBaseObject bgO = BattlegroundObjects.Where(t => t is ImageObject).Where(t => (t as ImageObject).IsBackgroundPicture).FirstOrDefault();
+            if (bgO != null)
+            {
+                BackgroundImage = (bgO as ImageObject).PictureUrl;
+                BackgroundOffsetX = bgO.ZDisplayX;
+                BackgroundOffsetY = bgO.ZDisplayY;
+                BackgroundOffsetSize = (bgO as ImageObject).ObjectSize;
+            }
+
+            BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is ImageObject).Where(t => (t as ImageObject).IsFogPicture).FirstOrDefault();
+            if (bg1 != null)
+            {
+                FogImageFilename = (bg1 as ImageObject).PictureUrl;
+                FogOffsetX = bg1.ZDisplayX;
+                FogOffsetY = bg1.ZDisplayY;
+                FogOffsetSize = (bg1 as ImageObject).ObjectSize;
+
+                // Load Fog-of-War //
+                BitmapImage originalImage = new BitmapImage();
+                originalImage.BeginInit();
+                originalImage.UriSource = new Uri(FogImageFilename, UriKind.Absolute);
+                originalImage.EndInit();
+                BitmapSource bitmapSource = new FormatConvertedBitmap(originalImage, PixelFormats.Bgra32, null, 0);
+                WriteableBitmap wbmap = new WriteableBitmap(bitmapSource);
+
+                int h = wbmap.PixelHeight;
+                int w = wbmap.PixelWidth;
+                FogPixelData = new int[w * h];
+                int widthInByte = 4 * w;
+
+                wbmap.CopyPixels(FogPixelData, widthInByte, 0);
+                System.Drawing.Bitmap bm = BitmapFromWriteableBitmap(wbmap);
+                System.Drawing.Image img = (System.Drawing.Image)bm;
+                FogImage = wbmap;
+                useFog = true;
+            }
+
+            ObservableCollection<double> lstFogSettings = bg.LoadSettingsFromXML(filename);
+            if (lstFogSettings.Count == 0) return;
+            BackgroundOffsetSize = lstFogSettings[0];
+            BackgroundOffsetX = lstFogSettings[1];
+            InvBackgroundOffsetY = lstFogSettings[2];
+
+            GridOffsetX = lstFogSettings[3];
+            GridOffsetY = lstFogSettings[4];
+            ScaleSpielerGrid = lstFogSettings[5];
+            ScaleKampfGrid = lstFogSettings[6];
+            RechteckGrid = lstFogSettings[7] == 1;            
         }
 
         #endregion
@@ -579,8 +1026,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         /// </summary>
         public Color GridColor
         {
-            get { return gridColor; }
-            set { Set(ref gridColor, value); }
+            get { return gridColor;}
+            set { Set(ref gridColor, value); RechteckGrid = true; }
         }
 
         private bool rechteckGrid = false;
@@ -719,7 +1166,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if (SelectedObject != null)
             {
-                SelectedObject.MoveObject(xNew - xOld, yNew - yOld);
+                SelectedObject.MoveObject(xNew - xOld, yNew - yOld, false);
             }
         }
 
@@ -814,7 +1261,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 }
             }
         }
-
+                
         public void SelectionChangedUpdateSliders()
         {
             OnChanged("StrokeThickness");
@@ -861,7 +1308,141 @@ namespace MeisterGeister.ViewModel.Bodenplan
             CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
         }
 
+
+        private void CreateFogOfWar()
+        {
+            //Fog of War
+            BitmapImage originalImage = new BitmapImage();
+            originalImage.BeginInit();
+            originalImage.UriSource = new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Bodenplan/FogOfWar.png", UriKind.Absolute);
+            originalImage.EndInit();
+            BitmapSource bitmapSource = new FormatConvertedBitmap(originalImage, PixelFormats.Bgra32, null, 0);
+            WriteableBitmap wbmap = new WriteableBitmap(bitmapSource);
+
+            int h = wbmap.PixelHeight;
+            int w = wbmap.PixelWidth;
+            FogPixelData = new int[w * h];
+            int widthInByte = 4 * w;
+
+            wbmap.CopyPixels(FogPixelData, widthInByte, 0);
+            System.Drawing.Bitmap bm = BitmapFromWriteableBitmap(wbmap);
+            System.Drawing.Image img = (System.Drawing.Image)bm;
+            FogImage = wbmap;
+            Nullable<int> i = null;
+            while (File.Exists(Ressources.GetFullApplicationPathForPictures() + "Fog-of-War" + i + ".png"))
+                if (i == null) i = 0; else i++;
+            FogImageFilename = Ressources.GetFullApplicationPathForPictures() + "Fog-of-War" + i + ".png";
+            CreateThumbnail(FogImageFilename, FogImage.Clone());
+            ImageObject io = CreateImageObject(FogImageFilename, new Point(FogOffsetX, FogOffsetY));
+            io.IsFogPicture = true;
+            io.IsVisible = false;
+        }
+
+        private System.Drawing.Bitmap BitmapFromWriteableBitmap(WriteableBitmap writeBmp)
+        {
+            System.Drawing.Bitmap bmp;
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create((BitmapSource)writeBmp));
+                enc.Save(outStream);
+                bmp = new System.Drawing.Bitmap(outStream);
+            }
+            return bmp;
+        }
+
+        private void CreateThumbnail(string filename, BitmapSource image5)
+        {
+            if (filename != string.Empty)
+            {
+                PngBitmapEncoder encoder5 = new PngBitmapEncoder();
+                encoder5.Frames.Add(BitmapFrame.Create(image5));
+                using (Stream stream = File.Create(filename))
+                {
+                    encoder5.Save(stream);
+                    stream.Dispose();
+                }
+            }
+        }
+        private BitmapImage ConvertWriteableBitmapToBitmapImage(WriteableBitmap wbm)
+        {
+            BitmapImage bmImage = new BitmapImage();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(wbm));
+                encoder.Save(stream);
+                bmImage.BeginInit();
+                bmImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmImage.StreamSource = stream;
+                bmImage.EndInit();
+                bmImage.Freeze();
+            }
+            return bmImage;
+        }
+
+
         #endregion
+
+
+        #region Commands
+
+        private Base.CommandBase _onBtnCenterPlayerView = null;
+        public Base.CommandBase OnBtnCenterPlayerView
+        {
+            get
+            {
+                if (_onBtnCenterPlayerView == null)
+                {
+                    _onBtnCenterPlayerView = new Base.CommandBase(CenterPlayerView, null);
+                }
+                return _onBtnCenterPlayerView;
+            }
+        }
+        void CenterPlayerView(object obj)
+        {
+            double x1 = 10000;
+            double y1 = 10000;
+            double x2 = 10000;
+            double y2 = 10000;
+
+            foreach (Held h in Global.ContextHeld.HeldenGruppeListe)
+            {
+                if (h.CreatureX < x1) x1 = h.CreatureX - h.CreatureWidth;
+                if (h.CreatureY < y1) y1 = h.CreatureY + h.CreatureHeight;
+                if (h.CreatureX > x2) x2 = h.CreatureX + h.CreatureWidth;
+                if (h.CreatureY < y2) y2 = h.CreatureY - h.CreatureHeight;
+            }
+            GridOffsetX = (x1);
+            GridOffsetY = (-y2);
+        }
+
+        private Base.CommandBase _onSetBackgroundClick = null;
+        public Base.CommandBase OnSetBackgroundClick
+        {
+            get
+            {
+                if (_onSetBackgroundClick == null)
+                {
+                    _onSetBackgroundClick = new Base.CommandBase(SetBackgroundClick, null);
+                }
+                return _onSetBackgroundClick;
+            }
+        }
+        void SetBackgroundClick(object obj)
+        {
+            BackgroundImage = ViewHelper.ChooseFile("Hintergrundbild setzen", "", false, new String[9] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff" });
+            if (string.IsNullOrEmpty(BackgroundImage)) return;
+
+            BackgroundFilename = new FileInfo(BackgroundImage).Name ?? "";
+            BackgroundOffsetX = 0;
+            ImageObject io = CreateImageObject(BackgroundImage, new Point(BackgroundOffsetX, BackgroundOffsetY));
+            io.IsBackgroundPicture = true;
+            io.IsVisible = false;
+        }
+
+        #endregion
+
 
         #region Dispose
         bool disposed = false;

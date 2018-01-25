@@ -33,17 +33,6 @@
             <Style TargetType="ListBoxItem">
                 <Setter Property="Background" Value="{x:Null}" />
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsNew}" Value="true">
-                        <Setter Property="Background" Value="#643AFF00" />
-                        <Setter Property="ToolTip" >
-                            <Setter.Value>
-                                <StackPanel>
-                                    <TextBlock Text="Datei wurde neu in die Playliste eingefügt." />
-                                    <TextBlock Text="Die Markierung der Zeile wird beim nächsten Laden der Liste aufgehoben." />
-                                </StackPanel>
-                            </Setter.Value>
-                        </Setter>
-                    </DataTrigger>
                     <DataTrigger Binding="{Binding FileNotExist}" Value="True">
                         <Setter Property="Background" Value="#64FF0000" />
                         <Setter Property="ToolTip" >

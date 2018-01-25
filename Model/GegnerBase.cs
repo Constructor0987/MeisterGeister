@@ -111,6 +111,36 @@ namespace MeisterGeister.Model
             }
         }
 
+        #region Zauber
+
+        public Zauber AddZauber(Zauber z, int wert, int E1, int E2, int E3)
+        {
+            if (z == null)
+                return null;
+            IEnumerable<GegnerBase_Zauber> existierendeZuordnung = GegnerBase_Zauber.Where(hza => hza.ZauberGUID == z.ZauberGUID
+                && hza.GegnerBaseGUID == GegnerBaseGUID);
+            if (existierendeZuordnung.Count() != 0)
+            {
+                //Oder eine Exception werfen?
+                return existierendeZuordnung.First().Zauber;
+            }
+
+            GegnerBase_Zauber hz = Global.ContextHeld.New<GegnerBase_Zauber>();
+            hz.GegnerBaseGUID = GegnerBaseGUID;
+            hz.GegnerBase = this;
+
+            hz.ZauberGUID = z.ZauberGUID;
+            hz.Zauber = z;
+            hz.E1TW = E1;
+            hz.E2TW = E2;
+            hz.E3TW = E3;
+            hz.ZfW = wert;
+            GegnerBase_Zauber.Add(hz);
+            return z;
+        }
+        #endregion
+
+
         public void ParseBemerkung()
         {
             var g = this;

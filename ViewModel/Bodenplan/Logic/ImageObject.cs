@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -21,6 +22,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _objectSize = 1;
         private double _rotateAngle = 0;
 
+        private bool isBackgroundPicture = false;
+        private bool isFogPicture = false;
 
         public ImageObject()
         {}
@@ -43,6 +46,26 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public override string ObjectName
         {
             get { return "Bildobjekt"; }
+        }
+
+        public bool IsBackgroundPicture
+        {
+            get { return isBackgroundPicture; }
+            set
+            {
+                isBackgroundPicture = value;
+                OnChanged("IsBackgroundPicture");
+            }
+        }
+
+        public bool IsFogPicture
+        {
+            get { return isFogPicture; }
+            set
+            {
+                isFogPicture = value;
+                OnChanged("IsFogPicture");
+            }
         }
 
         public double ObjectSize
@@ -115,7 +138,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public override void MoveObject(double deltaX, double deltaY)
+        public override void MoveObject(double deltaX, double deltaY, bool stickAtCursor)
         {
             ImagePositionX = ImagePositionX + deltaX;
             ImagePositionY = ImagePositionY + deltaY;
@@ -139,6 +162,21 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             var picname = PictureUrl.Split('\\');
             PictureUrl = Ressources.GetFullApplicationPathForPictures() + picname[picname.Length - 1];
+        }
+
+        private Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
+        {
+            // BitmapImage bitmapImage = new BitmapImage(new Uri("../Images/test.png", UriKind.Relative));
+
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                enc.Save(outStream);
+                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+
+                return new Bitmap(bitmap);
+            }
         }
 
         public String ImageToBase64()

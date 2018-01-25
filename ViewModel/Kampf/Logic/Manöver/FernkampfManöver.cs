@@ -75,7 +75,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         private int SchützenIndex(IFernkampfwaffe waffe)
         {
             Held held = Ausführender.Kämpfer as Held;
-            if (held != null && waffe.Talent != null)
+            if (held != null && waffe != null && waffe.Talent != null)
             {
                 if (held.HatSonderfertigkeitUndVoraussetzungen("Meisterschütze (" + waffe.Talent.Name + ")"))
                     return 2;

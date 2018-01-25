@@ -36,6 +36,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             InitiativListe = new InitiativListe(this);
             KampfNeuStarten();
         }
+        public BattlegroundWindow Bodenplan { get; set; }
 
         private ObservableCollection<string> _kampfLog = new ObservableCollection<string>();
         public ObservableCollection<string> KampfLog
@@ -122,11 +123,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         public void Next()
-        {
+        {            
             foreach (ManöverInfo mi in AktuelleAktionen)
             {
                 //Es werden nur aktive Manöver ausgeführt (also keine Paraden)
-                if (!mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
+                if (MeisterGeister.Logic.Einstellung.Einstellungen.AngriffAutomatischWürfeln &&  
+                    !mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
                     mi.Manöver.Aktion();
             }
 
@@ -209,6 +211,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             KampfEnde();
             AktuelleAktionszeit = default(ZeitImKampf);
             InitiativListe.Clear();
+                        
             Kampfrunde = 0;
 
             // INI neu ermitteln

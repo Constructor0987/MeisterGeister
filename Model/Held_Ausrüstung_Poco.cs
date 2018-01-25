@@ -154,6 +154,18 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _heldAusrüstungGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> SpezGewicht
+        {
+            get { return _spezGewicht; }
+            set
+    		{ 
+    			Set(ref _spezGewicht, value);
+    		}
+    
+        }
+        private Nullable<double> _spezGewicht;
 
         #endregion
 

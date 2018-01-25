@@ -406,6 +406,12 @@ namespace MeisterGeister
         /// <param name="info">Info Text.</param>
         public static void SetIsBusy(bool isBusy, string info = "Beschäftigt...")
         {
+            //if (App.Current.MainWindow != null
+            //    && App.Current.MainWindow is View.MainView && App.Current.MainWindow.IsLoaded)
+            //{
+            //    (App.Current.MainWindow as View.MainView).IsBusyInfoText = info;
+            //    (App.Current.MainWindow as View.MainView).IsBusy = isBusy;
+            //}            
         }
 
         /// <summary>

@@ -387,13 +387,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             }
         }
 
-        private bool _isNew = false;
-        public bool IsNew
-        {
-            get { return _isNew; }
-            set { Set(ref _isNew, value); }
-        }
-
         public double aPlayTitelVolume
         {
             get { return aPlayTitel.Volume; }

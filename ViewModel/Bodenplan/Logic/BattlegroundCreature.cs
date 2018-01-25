@@ -26,6 +26,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public static String ICON_DIR = "/Images/Icons/General/";
 
+        public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+        public string CreaturePosition
+        {
+            get { return _creaturePosition; }
+            set { Set(ref _creaturePosition, value); }
+        }
+
         public BattlegroundCreature()
         {
             r = new Random();
@@ -163,10 +170,16 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        public String PortraitFileName
+        {
+            get { return _portraitFilename; }
+            set { _portraitFilename = value; }
+        }
+
         public void LoadBattlegroundPortrait(string portraitFilename, bool ishero)
         {
-            //CreaturePictureUrl = ICON_DIR + "fragezeichen.png";
-            CreaturePictureUrl = portraitFilename;
+            CreaturePictureUrl = ICON_DIR + "fragezeichen.png";
+            //CreaturePictureUrl = portraitFilename;
             //if(!File.Exists(portraitFilename)) 
             if(portraitFilename != null ) if(portraitFilename.Length!=0) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
         }
@@ -177,12 +190,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureWidth = _imageOriginalWidth * factor;
         }
 
-        public override void MoveObject(double deltaX, double deltaY)
-        {
-            MoveObject(deltaX, deltaY, false);
-        }
-
-        public void MoveObject(double deltaX, double deltaY,bool stickAtCursor)
+        public override void MoveObject(double deltaX, double deltaY, bool stickAtCursor)
         {
             if (stickAtCursor)
             {
@@ -368,6 +376,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
             }
             CalculateSightArea(); //update sightarea
+        }
+
+        public void UpdateCreaturePosition()
+        {
+            if (this as Wesen == null) return;
+            if (((Wesen)this).Position == Position.Liegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
+            else if (((Wesen)this).Position == Position.Kniend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
+            else if (((Wesen)this).Position == Position.Stehend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+            else if (((Wesen)this).Position == Position.Schwebend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+            else if (((Wesen)this).Position == Position.Fliegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
+            else if (((Wesen)this).Position == Position.Reitend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";
         }
     }
 }

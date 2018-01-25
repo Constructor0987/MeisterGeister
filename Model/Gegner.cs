@@ -115,7 +115,7 @@ namespace MeisterGeister.Model
             // TODO ??: Dialog MVVM-konform aufrufen
             if (dialog)
             {
-                int wurf = View.General.ViewHelper.ShowWürfelDialog(INIZufall, "Iinitiative Würfel-Wurf");
+                int wurf = View.General.ViewHelper.ShowWürfelDialog(INIZufall, "Initiative Würfel-Wurf");
                 if (wurf != 0)
                     _initiativeWurf = wurf;
             }
@@ -143,6 +143,52 @@ namespace MeisterGeister.Model
                 return InitiativeMax();
             return null;
         }
+
+
+        /// <summary>
+        /// Gibt den Eigenschaftswert zurück.
+        /// </summary>
+        /// <param name="eigenschaft">Name oder Abkürzung der gewünschten Eigenschaft.</param>
+        /// <param name="ohneMod">'True' falls der unmodifizierte Wert gewünscht ist.</param>
+        /// <returns>Eigenschaftswert.</returns>
+        public int EigenschaftWert(string eigenschaft, bool ohneMod = false)
+        {
+            if (string.IsNullOrEmpty(eigenschaft))
+                return 0;
+            switch (eigenschaft)
+            {
+                case "MU":
+                case "Mut":
+                    return 8;
+                case "KL":
+                case "Klugheit":
+                    return 8;
+                case "IN":
+                case "Intuition":
+                    return 8;
+                case "CH":
+                case "Charisma":
+                    return 8;
+                case "FF":
+                case "Fingerfertigkeit":
+                    return 8;
+                case "GE":
+                case "Gewandtheit":
+                    return Gewandtheit;
+                case "KO":
+                case "Konstitution":
+                    return ohneMod ? KO  : Konstitution;
+                case "KK":
+                case "Körperkraft":
+                    return Körperkraft;
+                case "SO":
+                case "Sozialstatus":
+                    return 5;
+                default:
+                    return 0;
+            }
+        }
+
 
         [DependentProperty("INIBasis")]
         [DependsOnModifikator(typeof(Mod.IModINIBasis))]
@@ -253,6 +299,9 @@ namespace MeisterGeister.Model
             set
             {
                 LEAktuell = value;
+                if (LEAktuell <= 0) Farbmarkierung = System.Windows.Media.Color.FromArgb(0, 255, 0, 0);
+                else if (LEAktuell <= 5) Farbmarkierung = System.Windows.Media.Color.FromArgb(0, 255, 255, 0);
+                else if (LEAktuell > 5) Farbmarkierung = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
             }
         }
 

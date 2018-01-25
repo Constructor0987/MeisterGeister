@@ -62,7 +62,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
-
+        
         #region Initiative
 
         //private const int RANDOM_SIZE = 100000;

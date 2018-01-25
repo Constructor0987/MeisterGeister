@@ -625,6 +625,15 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
+                                <DataGridTextColumn Width="55" Header="speziell" Binding="{Binding SpezGewicht}" IsReadOnly="False" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Setters>
+                                                <Setter Property="ToolTip" Value="'0' eintragen zum Löschen"></Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
                                 <DataGridTextColumn Width="30" Header="RS" Binding="{Binding Rüstung.RS}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="30" Header="BE" Binding="{Binding Rüstung.BE}" IsReadOnly="True"/>
@@ -644,11 +653,11 @@
                         </StackPanel>
                     </Expander.Header>
 
-                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" SelectedValue="{Binding SelectedSonstiges,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
                             <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
-                            <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="False"/>
                             <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="True"/>
                             <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                         </DataGrid.Columns>

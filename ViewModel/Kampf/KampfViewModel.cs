@@ -23,6 +23,7 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             this.showGegnerView = showGegnerView;
             _kampf = new K();
+            Global.CurrentKampf = this;
         }
 
         private K _kampf = null;
@@ -40,6 +41,18 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
 
                 }
+            }
+        }
+
+        private View.Bodenplan.BattlegroundWindow _bodenplanWindow;
+        public View.Bodenplan.BattlegroundWindow BodenplanWindow
+        {
+            get { return _bodenplanWindow; }
+            set
+            {
+                _bodenplanWindow = value;
+                Kampf.Bodenplan = value ?? null;
+                OnChanged("BodenplanWindow");
             }
         }
 
@@ -107,7 +120,7 @@ namespace MeisterGeister.ViewModel.Kampf
                     SelectedManöver = null;
             }
         }
-
+        
         private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
         private btnHotkeyVM SpeedbtnAudio
         {
@@ -195,10 +208,8 @@ namespace MeisterGeister.ViewModel.Kampf
             if (Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
             {
                 Kampf.Kämpfer.Clear();
-                //if (BodenplanWindow != null)
-                //{
-                //    ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).RemoveCreatureAll();
-                //}
+                if (BodenplanViewModel != null)
+                    BodenplanViewModel.RemoveCreatureAll();
             }
         }
 
@@ -283,7 +294,7 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return showGegnerView; }
             set { showGegnerView = value; }
         }
-
+        
         private Action<KampfViewModel> showBodenplanView;
 
         public Action<KampfViewModel> ShowBodenplanViewAction
@@ -345,6 +356,7 @@ namespace MeisterGeister.ViewModel.Kampf
         private void NewKampf(object obj)
         {
             Kampf.KampfNeuStarten();
+            Global.CurrentKampf = this;
         }
 
         //private Base.CommandBase onAktionAusführen = null;

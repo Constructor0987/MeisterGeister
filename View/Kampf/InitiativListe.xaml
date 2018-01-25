@@ -7,7 +7,8 @@
              xmlns:Kampf="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-             xmlns:View="clr-namespace:MeisterGeister.View.Kampf"
+             xmlns:View="clr-namespace:MeisterGeister.View.Kampf"             
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:mg="clr-namespace:MeisterGeister"
              xmlns:model="clr-namespace:MeisterGeister.Model"
              mc:Ignorable="d" x:Name="iniListe" Background="Transparent"
@@ -115,7 +116,20 @@
         </Grid.ColumnDefinitions>
 
         <!--Buttons-->
+            
         <StackPanel Orientation="Horizontal" x:Name="buttons" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Left" Width="20" Margin="0,0,10,0">
+                <Button ToolTip="Helden einfügen" Command="{Binding OnAddHelden}">
+                    <Button.Content>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="-4" />
+                    </Button.Content>
+                </Button>
+                <Button ToolTip="Gegner einfügen" Command="{Binding OnShowGegnerView}">
+                    <Button.Content>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" Margin="-4" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
             <Button ToolTip="Weiter" Command="{Binding OnNext}">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png"/>
             </Button>
@@ -143,6 +157,11 @@
                 <Slider Grid.Row="1" Grid.Column="1" Width="100" Minimum="0" Maximum="4" Interval="1" Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}"/>
                 <Image Grid.Row="1" Grid.Column="2" Source="/DSA MeisterGeister;component/Images/Madamal/mada20.jpg"/>
             </Grid>
+            <Button Width="25" Height="25" Margin="10,0,0,0" ToolTip="Liste leeren" Command="{Binding OnDeleteAllKämpfer}">
+                <Button.Content>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="-3" />
+                </Button.Content>
+            </Button>
         </StackPanel>
 
         <!--Kämpferliste-->
@@ -221,7 +240,7 @@
                         </Grid>
                         <TextBlock Text="{Binding Kämpfer.Name}" Width="150" VerticalAlignment="Center"/>
                         <Slider VerticalAlignment="Center" Margin="6,0,6,0" Minimum="0" Maximum="{Binding Aktionen}" Value="{Binding Abwehraktionen}" IsSnapToTickEnabled="True" Width="60" ToolTip="Aktionen umwandeln" />
-                        <ItemsControl ItemsSource="{Binding AbwehrManöver}">
+                        <ItemsControl ItemsSource="{Binding AbwehrManöver}">                            
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal"/>
@@ -230,6 +249,9 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
+                                        <Grid.InputBindings>
+                                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding Aktivieren}" />
+                                        </Grid.InputBindings>
                                         <Grid.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem x:Name="menuAusführen" Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
@@ -251,7 +273,7 @@
             </ItemsControl.ItemTemplate>
         </ListBox>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" Margin="4,0,0,0">
+        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" Margin="4,0,0,0" ScrollChanged="scrViewer_ScrollChanged" >
             <Grid>
                 <Grid.Resources>
                     <CollectionViewSource Source="{Binding Kampf.InitiativListe.Aktionszeiten}" x:Key="kampfrunden">
@@ -285,7 +307,7 @@
                                             <Binding/>
                                         </MultiBinding>
                                     </DataTrigger.Binding>
-                                    <Setter TargetName="border" Property="Background" Value="#FFF7CC86"/>
+                                    <Setter TargetName="border" Property="Background" Value="#FFF7CC86"/> 
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
@@ -419,7 +441,7 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
                                         <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
-                                            <Border.ContextMenu>
+                                           <Border.ContextMenu>
                                                 <ContextMenu>
                                                     <ContextMenu.Resources>
                                                         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -443,7 +465,19 @@
                                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" MaxWidth="24"/>
                                                         </MenuItem.Icon>
                                                     </MenuItem>
-                                                    <MenuItem Header="Zaubern" ItemsSource="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}" IsEnabled="{Binding Manöver.Ausführender.Kämpfer.Magiebegabt}">
+                                                    <MenuItem Header="Zaubern" IsEnabled="{Binding Manöver.Ausführender.Kämpfer.Magiebegabt}">
+                                                        <MenuItem.Style>
+                                                            <Style TargetType="MenuItem">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}" Value="{x:Null}">
+                                                                        <Setter Property="ItemsSource" Value="{Binding Manöver.Ausführender.Kämpfer.GegnerBase.GegnerBase_Zauber}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.GegnerBase.GegnerBase_Zauber}" Value="{x:Null}">
+                                                                        <Setter Property="ItemsSource" Value="{Binding Manöver.Ausführender.Kämpfer.Held_Zauber}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </MenuItem.Style>
                                                         <MenuItem.Icon>
                                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" MaxWidth="24"/>
                                                         </MenuItem.Icon>
@@ -459,6 +493,7 @@
                                                             </DataTemplate>
                                                         </MenuItem.ItemTemplate>
                                                     </MenuItem>
+                                                    
                                                     <MenuItem Header="Sonstiges" Command="{Binding UmwandelnSonstiges}">
                                                         <MenuItem.Icon>
                                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" MaxWidth="24"/>
@@ -474,7 +509,8 @@
                                             </Border.ContextMenu>
                                             <ContentPresenter/>
                                         </Border>
-                                        <ControlTemplate.Triggers>
+
+                                        <ControlTemplate.Triggers>                                            
                                             <Trigger Property="IsSelected" Value="True">
                                                 <Setter Property="Background" Value="Orange"/>
                                             </Trigger>

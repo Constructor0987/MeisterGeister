@@ -198,7 +198,7 @@
             </Border>
         </Grid>
 
-        <Gegner:GegnerDetailView Grid.Column="1" Width="Auto" IsEnabled="{Binding SelectedGegnerBaseIsNotNull}" />
+        <Gegner:GegnerDetailView Grid.Column="1" Width="Auto" IsEnabled="{Binding SelectedGegnerBaseIsNotNull}" Tag="{Binding VM}" />
 
     </Grid>
 </UserControl>

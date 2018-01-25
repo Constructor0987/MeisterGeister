@@ -81,8 +81,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             OnChanged("PathGeometryData");
         }
 
-        
-        public override void MoveObject(double deltaX, double deltaY)
+
+        public override void MoveObject(double deltaX, double deltaY, bool stickAtCursor)
         {
             foreach (LineSegment l in _pathSegmentCollection.ToList())
             {

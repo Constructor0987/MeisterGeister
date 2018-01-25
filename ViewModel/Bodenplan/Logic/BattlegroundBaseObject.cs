@@ -169,7 +169,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public abstract void MoveObject(double deltaX, double deltaY);
+        public abstract void MoveObject(double deltaX, double deltaY, bool stickAtCursor);
 
         protected bool Set<T>(ref T storage, T value, bool supressChanged = false, [CallerMemberName] String propertyName = null)
         {

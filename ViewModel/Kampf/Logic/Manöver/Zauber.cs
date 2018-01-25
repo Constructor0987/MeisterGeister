@@ -19,6 +19,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 return held_zauber;
             }
         }
+        private GegnerBase_Zauber gegnerBase_zauber;
+        public GegnerBase_Zauber GegnerBase_Zauber
+        {
+            get
+            {
+                return gegnerBase_zauber;
+            }
+        }
 
         private int basisDauer = 1;
         public int BasisDauer
@@ -44,8 +52,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             this.held_zauber = zauber;
             Name += zauber.Zauber.Name;
+            BasisDauer = zauber.Zauber.Zauberdauer == null? 1: zauber.Zauber.Zauberdauer.Value;
             Literatur = zauber.Zauber.Literatur;
         }
+
+        public Zauber(KämpferInfo ausführender, GegnerBase_Zauber zauber)
+            : base(ausführender, 1)
+        {
+            this.gegnerBase_zauber = zauber;
+            Name += zauber.Zauber.Name;
+            BasisDauer = zauber.Zauber.Zauberdauer == null ? 1 : zauber.Zauber.Zauberdauer.Value;
+            Literatur = zauber.Zauber.Literatur;
+        }
+
         protected override void Init()
         {
             base.Init();
@@ -155,9 +174,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             if (value)
             {
-                if (held_zauber.Zauber.Magieresistenz)
-                    return 2;
-                else return 5;
+                if (held_zauber != null)
+                {
+                    if (held_zauber.Zauber.Magieresistenz)
+                        return 2;
+                    else return 5;
+                }
+                else
+                {
+                    if (gegnerBase_zauber.Zauber.Magieresistenz)
+                        return 2;
+                    else return 5;
+                }
             }
             return 0;
         }

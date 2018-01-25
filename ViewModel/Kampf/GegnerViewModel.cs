@@ -9,6 +9,7 @@ using System.ComponentModel;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.View.AudioPlayer;
 using System.Collections.ObjectModel;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
@@ -145,6 +146,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("AngriffListe");
                 OnChanged("SelectedGegnerBaseIsNotNull");
                 OnChanged("WesenPlaylist");
+                OnChanged("ZauberListe");
                 if (onDeleteGegnerBase != null)
                     onDeleteGegnerBase.Invalidate();
             }
@@ -181,7 +183,7 @@ namespace MeisterGeister.ViewModel.Kampf
         public List<string> TagListe
         {
             get { return _tagListe; }
-            set
+            set 
             {
                 _tagListe = value;
                 OnChanged("TagListe");
@@ -279,6 +281,113 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("SelectedRüstung");
             }
         }
+
+        #endregion
+
+
+        #region GegnerBase Zauber
+
+
+        Model.GegnerBase_Zauber _selectedGegnerBaseZauber = null;
+        public Model.GegnerBase_Zauber SelectedGegnerBaseZauber
+        {
+            get { return _selectedGegnerBaseZauber; }
+            set { _selectedGegnerBaseZauber = value; OnChanged("SelectedGegnerBaseZauber"); }
+        }
+
+        Model.Zauber _selectedAddZauber = null;
+        public Model.Zauber SelectedAddZauber
+        {
+            get { return _selectedAddZauber; }
+            set { _selectedAddZauber = value; OnChanged("SelectedAddZauber"); }
+        }
+
+        // Listen
+        public List<Model.GegnerBase_Zauber> ZauberListe
+        {
+            get { return SelectedGegnerBase == null ? null : SelectedGegnerBase.GegnerBase_Zauber.OrderBy(hz => hz.Zauber.Name).ToList(); }
+        }
+
+        public List<Model.Zauber> ZauberAuswahlListe
+        {
+            get { return  Global.ContextZauber.ZauberListe.OrderBy(t => t.Name).ToList(); }
+        }
+
+
+        #region //---- COMMANDS ----
+
+        
+        private Base.CommandBase _onDeleteZauber = null;
+        public Base.CommandBase OnDeleteZauber
+        {
+            get
+            {
+                if (_onDeleteZauber == null)
+                    _onDeleteZauber = new Base.CommandBase(DeleteZauber, null);
+                return _onDeleteZauber;
+            }
+        }
+
+        private Base.CommandBase _onAddZauber = null;
+        public Base.CommandBase OnAddZauber
+        {
+            get
+            {
+                if (_onAddZauber == null)
+                    _onAddZauber = new Base.CommandBase(AddZauber, null);
+                return _onAddZauber;
+            }
+        }
+
+        private Base.CommandBase _onOpenWiki = null;
+        public Base.CommandBase OnOpenWiki
+        {
+            get
+            {
+                if (_onOpenWiki == null)
+                    _onOpenWiki = new Base.CommandBase(OpenWiki, null);
+                return _onOpenWiki;
+            }
+        }
+
+        #endregion
+
+
+        #region //---- INSTANZMETHODEN ----
+
+
+        private void DeleteZauber(object sender)
+        {
+            Model.GegnerBase_Zauber h = SelectedGegnerBaseZauber;
+            if (h != null
+                && Confirm("Zauber löschen", String.Format("Soll die Zauber '{0}' wirklich vom Gegner entfernt werden?", h.Zauber.Name))
+                && Global.ContextHeld.Delete<Model.GegnerBase_Zauber>(h))
+            {
+                SelectedGegnerBaseZauber = null;
+                OnChanged("ZauberListe");
+                OnChanged("SelectedGegnerBaseZauber");
+            }
+        }
+
+        private void AddZauber(object sender)
+        {
+            if (SelectedGegnerBase != null && SelectedAddZauber != null)
+            {
+                SelectedGegnerBase.AddZauber(SelectedAddZauber, 0, 10, 10, 10);
+                OnChanged("ZauberListe");
+                OnChanged("SelectedGegnerBaseZauber");
+            }
+        }
+
+        private void OpenWiki(object sender)
+        {
+            if (SelectedGegnerBaseZauber != null)
+                WikiAventurica.OpenBrowser(SelectedGegnerBaseZauber.Zauber);
+        }
+
+        #endregion
+
+        
 
         #endregion
 

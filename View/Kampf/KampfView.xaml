@@ -242,9 +242,17 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        
+
         <!--Bodenplan kommt hier hin-->
-        <ViewBodenplan:BattlegroundView Grid.Row="1" DataContext="{Binding BodenplanViewModel}"/>
+         
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1"
+                  Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5">
+            <Expander.Header>
+                <TextBlock Text="Bodenplan" Style="{DynamicResource TextTitel}"/>
+            </Expander.Header>
+            <ViewBodenplan:BattlegroundView Grid.Row="1" DataContext="{Binding BodenplanViewModel}"/>
+        </Expander>
+        <GridSplitter Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
 
         <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
