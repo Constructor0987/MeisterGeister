@@ -8,6 +8,7 @@ using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
+using MeisterGeister.ViewModel.Bodenplan.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
@@ -117,7 +118,17 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 Set(ref _selectedKämpfer, value);
                 if (value != null)
+                {
                     SelectedManöver = null;
+                    if (BodenplanViewModel.SelectedObject == null ||
+                        ((BodenplanViewModel.SelectedObject is IKämpfer) &&
+                         (BodenplanViewModel.SelectedObject as IKämpfer).Name != value.Kämpfer.Name))
+                    BodenplanViewModel.SelectedObject = BodenplanViewModel.BattlegroundObjects
+                        .Where(t => t is IKämpfer)
+                        .FirstOrDefault(tt => tt as IKämpfer == value.Kämpfer);
+
+                        
+                    }
             }
         }
         

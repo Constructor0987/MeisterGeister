@@ -240,12 +240,12 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
 
         <!--Bodenplan kommt hier hin-->
          
-        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1"
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="2"
                   Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5">
             <Expander.Header>
                 <TextBlock Text="Bodenplan" Style="{DynamicResource TextTitel}"/>

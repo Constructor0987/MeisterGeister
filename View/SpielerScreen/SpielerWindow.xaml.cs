@@ -307,7 +307,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (System.Windows.Forms.Screen.AllScreens.Length > 0)// Global.CurrentKampf.Left < System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
+            if (System.Windows.Forms.Screen.AllScreens.Length > 1)// Global.CurrentKampf.Left < System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
             {
                 this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
                 this.Left = System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width;
