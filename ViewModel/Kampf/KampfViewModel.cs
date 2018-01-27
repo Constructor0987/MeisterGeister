@@ -22,9 +22,9 @@ namespace MeisterGeister.ViewModel.Kampf
         public KampfViewModel(Action<K> showGegnerView, Func<string, string, bool> confirm)
             : base(confirm, View.General.ViewHelper.ShowError)
         {
+            Global.CurrentKampf = this;
             this.showGegnerView = showGegnerView;
             _kampf = new K();
-            Global.CurrentKampf = this;
         }
 
         private K _kampf = null;
@@ -65,9 +65,12 @@ namespace MeisterGeister.ViewModel.Kampf
                     BodenplanViewModel = new BattlegroundViewModel();
                 return bodenplanViewModel; 
             }
-            private set {
-                if (Set(ref bodenplanViewModel, value))
-                    value.KampfVM = this;
+            private set
+            {
+                //if (
+                Set(ref bodenplanViewModel, value);
+                    //)
+                    //value.KampfVM = this;
             }
         }
 
@@ -116,6 +119,8 @@ namespace MeisterGeister.ViewModel.Kampf
             }
             set
             {
+                if (value != null && _selectedKämpfer != null &&
+                    value.Kämpfer.Name == _selectedKämpfer.Kämpfer.Name) return;
                 Set(ref _selectedKämpfer, value);
                 if (value != null)
                 {
@@ -123,12 +128,10 @@ namespace MeisterGeister.ViewModel.Kampf
                     if (BodenplanViewModel.SelectedObject == null ||
                         ((BodenplanViewModel.SelectedObject is IKämpfer) &&
                          (BodenplanViewModel.SelectedObject as IKämpfer).Name != value.Kämpfer.Name))
-                    BodenplanViewModel.SelectedObject = BodenplanViewModel.BattlegroundObjects
-                        .Where(t => t is IKämpfer)
-                        .FirstOrDefault(tt => tt as IKämpfer == value.Kämpfer);
-
-                        
-                    }
+                        BodenplanViewModel.SelectedObject = BodenplanViewModel.BattlegroundObjects
+                            .Where(t => t is IKämpfer)
+                            .FirstOrDefault(tt => tt as IKämpfer == value.Kämpfer);
+                }
             }
         }
         
@@ -140,6 +143,25 @@ namespace MeisterGeister.ViewModel.Kampf
         }
 
         #region // ---- COMMANDS ----
+
+        //private Base.CommandBase _onDeleteKämpfer = null;
+        //public Base.CommandBase OnDeleteKämpfer
+        //{
+        //    get
+        //    {
+        //        if (_onDeleteKämpfer == null)
+        //            _onDeleteKämpfer = new Base.CommandBase(DeleteKämpfer, null);
+        //        return _onDeleteKämpfer;
+        //    }
+        //}
+
+        //private void DeleteKämpfer(object obj)
+        //{
+        //    if (BodenplanViewModel != null)
+        //        BodenplanViewModel.RemoveCreature(SelectedKämpfer.Kämpfer);
+        //    Kampf.Kämpfer.Remove(SelectedKämpfer.Kämpfer);
+
+        //}
 
         private Base.CommandBase _onWesenPlaylistClick = null;
         public Base.CommandBase OnWesenPlaylistClick
@@ -181,6 +203,8 @@ namespace MeisterGeister.ViewModel.Kampf
                     Kampf.Kämpfer.Add(held);
                 }
             }
+            if (BodenplanViewModel != null)
+                BodenplanViewModel.AddAllCreatures();
         }
 
         private Base.CommandBase onDeleteKämpfer = null;
@@ -199,6 +223,8 @@ namespace MeisterGeister.ViewModel.Kampf
             if (SelectedKämpfer != null && Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", SelectedKämpfer.Kämpfer.Name)))
             {
                 IKämpfer k = SelectedKämpfer.Kämpfer;
+                if (BodenplanViewModel != null)
+                    BodenplanViewModel.RemoveCreature(k);
                 Kampf.Kämpfer.Remove(SelectedKämpfer);
             }
         }
@@ -210,7 +236,7 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 if (onDeleteAllKämpfer == null)
                     onDeleteAllKämpfer = new Base.CommandBase((o) => DeleteAllKämpfer(), null);
-                return onDeleteAllKämpfer;
+                    return onDeleteAllKämpfer;
             }
         }
 

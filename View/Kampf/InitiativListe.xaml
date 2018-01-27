@@ -118,7 +118,7 @@
         <!--Buttons-->
             
         <StackPanel Orientation="Horizontal" x:Name="buttons" VerticalAlignment="Center">
-            <StackPanel HorizontalAlignment="Left" Width="20" Margin="0,0,10,0">
+            <StackPanel HorizontalAlignment="Left" Width="20">
                 <Button ToolTip="Helden einfügen" Command="{Binding OnAddHelden}">
                     <Button.Content>
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="-4" />
@@ -130,6 +130,11 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
+            <Button Width="20" Height="20" Margin="0,0,10,0" ToolTip="Liste leeren" Command="{Binding OnDeleteAllKämpfer}">
+                <Button.Content>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="-3" />
+                </Button.Content>
+            </Button>
             <Button ToolTip="Weiter" Command="{Binding OnNext}">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png"/>
             </Button>
@@ -154,14 +159,9 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Kampf.Licht}"/>
                 <Image Grid.Row="1" Source="/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png"/>
-                <Slider Grid.Row="1" Grid.Column="1" Width="100" Minimum="0" Maximum="4" Interval="1" Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}"/>
+                <Slider Grid.Row="1" Grid.Column="1" Width="100" Minimum="0" Maximum="4" Interval="1" Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}" Grid.ColumnSpan="2" Margin="5,0,19,0"/>
                 <Image Grid.Row="1" Grid.Column="2" Source="/DSA MeisterGeister;component/Images/Madamal/mada20.jpg"/>
             </Grid>
-            <Button Width="25" Height="25" Margin="10,0,0,0" ToolTip="Liste leeren" Command="{Binding OnDeleteAllKämpfer}">
-                <Button.Content>
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="-3" />
-                </Button.Content>
-            </Button>
         </StackPanel>
 
         <!--Kämpferliste-->
@@ -176,7 +176,6 @@
                     <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-
                                 <DockPanel>
                                     <TextBlock Text="Position: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
                                     <ComboBox DockPanel.Dock="Right" ItemsSource="{StaticResource PositionenValues}"
@@ -203,7 +202,7 @@
                                     </ComboBox>
                                 </DockPanel>
 
-                                <MenuItem Header="Aus Kampf entfernen" Command="{Binding Entfernen}">
+                                <MenuItem Header="Aus Kampf entfernen" Command="{Binding   Entfernen}">
                                     <MenuItem.Icon>
                                         <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png"/>
                                     </MenuItem.Icon>

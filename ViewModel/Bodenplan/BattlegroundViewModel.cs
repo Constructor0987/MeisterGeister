@@ -380,37 +380,37 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Kampf mit Eventverbindung auf KämpferListe
 
-        private Kampf.KampfViewModel _kampfVM;
-        public Kampf.KampfViewModel KampfVM
-        {
-            get { return _kampfVM; }
-            set
-            {
-                if (object.Equals(_kampfVM, value)) return;
-                if (KampfVM != null)
-                {
-                    _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
-                    //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
-                    RemoveCreatureAll();
-                }
-                _kampfVM = value;
-                if (KampfVM != null)
-                {
-                    _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
-                    //_kampfVM.PropertyChanged += OnKampfPropertyChanged;
-                    AddAllCreatures();
-                }
-                UpdateCreaturesFromChangedKampferlist();
-            }
-        }
+        //private Kampf.KampfViewModel _kampfVM;
+        //public Kampf.KampfViewModel KampfVM
+        //{
+        //    get { return _kampfVM; }
+        //    set
+        //    {
+        //        if (object.Equals(_kampfVM, value)) return;
+        //        if (KampfVM != null)
+        //        {
+        //            _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
+        //            //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
+        //            RemoveCreatureAll();
+        //        }
+        //        _kampfVM = value;
+        //        if (KampfVM != null)
+        //        {
+        //            _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
+        //            //_kampfVM.PropertyChanged += OnKampfPropertyChanged;
+        //            AddAllCreatures();
+        //        }
+        //        UpdateCreaturesFromChangedKampferlist();
+        //    }
+        //}
 
         public void UpdateCreaturesFromChangedKampferlist()
         {
-            foreach (var k in KampfVM.Kampf.Kämpfer)
+            foreach (var k in Global.CurrentKampf.Kampf.Kämpfer)
             {
                 ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
             }
-            foreach (var k in KampfVM.Kampf.Kämpfer)
+            foreach (var k in Global.CurrentKampf.Kampf.Kämpfer)
             {
                 ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged += OnWesenPropertyChanged;
             }
@@ -488,7 +488,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void AddAllCreatures()
         {
-            foreach (var k in KampfVM.Kampf.Kämpfer)
+            foreach (var k in Global.CurrentKampf.Kampf.Kämpfer)
             {
                 AddCreature(k.Kämpfer);
             }
@@ -699,7 +699,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     BattlegroundObjects.ToList().ForEach(x => x.IsHighlighted = false);
                     _selectedObject = value;
-                    if (SelectedObject is BattlegroundCreature) KampfVM.SelectedKämpfer = KampfVM.Kampf.Kämpfer.First(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
+                    if (SelectedObject is BattlegroundCreature) Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.First(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
                     if (SelectedObject != null)
                     {
                         SelectedFillColor = SelectedObject.FillColor;
@@ -720,7 +720,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void Delete()
         {
             if (SelectedObject != null)
-                if (SelectedObject is BattlegroundCreature) KampfVM.DeleteKämpfer();
+                if (SelectedObject is BattlegroundCreature) Global.CurrentKampf.DeleteKämpfer();
                 else BattlegroundObjects.Remove(SelectedObject);
         }
 
@@ -1463,9 +1463,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             if (disposing)
             {
                 // Free any other managed objects here. 
-                if (KampfVM != null)
+                if (Global.CurrentKampf != null)
                 {
-                    _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
+                    Global.CurrentKampf.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
                     //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
                 }
             }

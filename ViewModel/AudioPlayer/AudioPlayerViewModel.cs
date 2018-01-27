@@ -1279,6 +1279,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             {
                 Set(ref _musikAktivIsPaused, value);
                 BGPlayer.isPaused = value;
+                if (MusikAktiv == null)
+                {
+                    MusikAktiv = new Musik();
+                    MusikAktiv.aPlaylist = BGPlayer.AktPlaylist;
+                }
                 MusikAktiv.isPaused = value;
             }
         }
@@ -3686,7 +3691,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 MusikAktivIsPaused = false;
 
                 //Gepausten Titel wieder anstarten
-                if (MusikAktiv.aData !=  null &&  MusikAktiv.aData.getFilename() != null) 
+                if (MusikAktiv != null && MusikAktiv.aData !=  null &&  MusikAktiv.aData.getFilename() != null) 
                 {
                     if ((!MusikAktivIsPaused || SelectedMusikTitelItem == null) &&
                         MusikAktiv.aPlaylist != BGPlayer.AktPlaylist)

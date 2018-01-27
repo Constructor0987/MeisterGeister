@@ -1748,31 +1748,43 @@ namespace MeisterGeister.Model {
                     m2 = a[1];
                 }
             }
-            List<Held_VorNachteil> hvnList = Held_VorNachteil.Where(hvn2 => hvn2.VorNachteil != null && ((exactMatch && hvn2.VorNachteil.Name == vn)
+            try
+            {
+                List<Held_VorNachteil> hvnList = Held_VorNachteil.Where(hvn2 => hvn2.VorNachteil != null && ((exactMatch && hvn2.VorNachteil.Name == vn)
                 || (
                     !exactMatch && hvn2.VorNachteil.Name.StartsWith(m1)
                     && (m2 == string.Empty || hvn2.VorNachteil.Name.EndsWith(m2))
                     )
                 )).ToList();
-            foreach (var hvn in hvnList) {
-                //Wert abprüfen
-                if (wert != null && (hvn.VorNachteil.HatWert ?? false)) {
-                    if (hvn.VorNachteil.WertTyp != null && hvn.VorNachteil.WertTyp.ToLowerInvariant() == "int") {
-                        int expected, actual;
-                        if (int.TryParse(wert, out expected) && int.TryParse(hvn.Wert, out actual)) {
-                            if (actual >= expected)
-                                return true;
-                            continue;
-                        } else {
-                            System.Diagnostics.Debug.WriteLine("Fehler beim Parsen des Wertes {0} oder {1} zu einem Integer. HatVorNachteil({2},{0})", wert, hvn.Wert, vn);
-                            continue;
+                foreach (var hvn in hvnList)
+                {
+                    //Wert abprüfen
+                    if (wert != null && (hvn.VorNachteil.HatWert ?? false))
+                    {
+                        if (hvn.VorNachteil.WertTyp != null && hvn.VorNachteil.WertTyp.ToLowerInvariant() == "int")
+                        {
+                            int expected, actual;
+                            if (int.TryParse(wert, out expected) && int.TryParse(hvn.Wert, out actual))
+                            {
+                                if (actual >= expected)
+                                    return true;
+                                continue;
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine("Fehler beim Parsen des Wertes {0} oder {1} zu einem Integer. HatVorNachteil({2},{0})", wert, hvn.Wert, vn);
+                                continue;
+                            }
                         }
-                    } else if (hvn.Wert == wert)
-                        return true;
+                        else if (hvn.Wert == wert)
+                            return true;
+                    }
+                    return true;
                 }
-                return true;
+                return false;
             }
-            return false;
+            catch (Exception ex)
+            { return false; }
         }
 
         /// <summary>

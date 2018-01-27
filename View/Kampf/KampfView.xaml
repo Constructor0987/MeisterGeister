@@ -240,7 +240,18 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition>
+                <ColumnDefinition.Style>
+                    <Style TargetType="ColumnDefinition">
+                        <Setter Property="Width" Value="440" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedKämpfer, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
+                                <Setter Property="Width" Value="360" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ColumnDefinition.Style>                
+            </ColumnDefinition> 
         </Grid.ColumnDefinitions>
 
         <!--Bodenplan kommt hier hin-->

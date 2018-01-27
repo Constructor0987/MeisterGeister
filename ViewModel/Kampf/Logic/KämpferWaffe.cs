@@ -25,7 +25,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (bestesTalent)
                 _talent = ha.Held_BFAusrüstung.Held_Waffe.BestesHeldTalent;
             else
-                _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.Held_BFAusrüstung.Held_Waffe.TalentGUID).FirstOrDefault();
+            {
+                foreach (Held_Talent ht in _held.Held_Talent)
+                {
+                    Held_Talent hht = ha.Held_BFAusrüstung.Held_Waffe.Kampftalente.FirstOrDefault(t => t.TalentGUID == ht.TalentGUID);
+                    if (hht != null)
+                    {
+                        _talent = ht;
+                        return;
+                    }
+                }
+            }
         }
 
         public KämpferNahkampfwaffe(Held held, Waffe waffe, Held_Talent ht)
