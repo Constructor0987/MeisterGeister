@@ -211,8 +211,30 @@
                         </ListBox.Template>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
-                                    <StackPanel.ContextMenu>
+                            <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding>
+                                                        <MultiBinding.Converter>
+                                                            <ViewGeneral:EqualsMultiConverter/>
+                                                        </MultiBinding.Converter>
+                                                        <Binding ElementName="kampfinfo" Path="DataContext.Kampf.AktIniKämpfer" UpdateSourceTrigger="PropertyChanged"/>
+                                                        <Binding/>
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
+                                                
+                                                <!--<Setter TargetName="border" Property="Background" Value="#FFF7CC86"/>-->
+
+                                                <Setter Property="Background" Value="#FFF7CC86" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <StackPanel.ContextMenu>
                                         <ContextMenu>
                                             <DockPanel>
                                                 <TextBlock Text="Position: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
@@ -234,49 +256,16 @@
                                                             </StackPanel>
                                                         </DataTemplate>
                                                     </ComboBox.ItemTemplate>
-                                                    <!--<ComboBox.ToolTip>
-                                                            <TextBlock Text="{Binding Kampfstil}"/>
-                                                        </ComboBox.ToolTip>-->
                                                 </ComboBox>
                                             </DockPanel>
 
-                                            <!--<MenuItem Header="Aus Kampf entfernen" Command="{Binding Entfernen}">
-                                                    <MenuItem.Icon>
-                                                        <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png"/>
-                                                    </MenuItem.Icon>
-                                                </MenuItem>-->
                                         </ContextMenu>
                                     </StackPanel.ContextMenu>
                                     <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"/>
                                         <TextBlock Text="{Binding Initiative}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
-                                        <!--<Grid.ToolTip>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" VerticalAlignment="Center" />
-                                                    <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding Kämpfer.InitiativeBasis}" VerticalAlignment="Center" />
-                                                        <TextBlock Margin="4,6,2,2" Text="- BE " />
-                                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" MaxHeight="20" MaxWidth="20"/>
-                                                        <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Kämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" VerticalAlignment="Center" />
-                                                    </StackPanel>
-                                                    <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="INI gewürfelt:" Margin="0,0,5,2" />
-                                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Kämpfer.InitiativeWurf}" />
-                                                    <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
-                                                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Initiative}" />
-                                                </Grid>
-                                            </Grid.ToolTip>-->
                                     </Grid>
                                     <TextBlock Text="{Binding Kämpfer.Name}" Width="150" VerticalAlignment="Center"/>
-                                    <!--<Slider VerticalAlignment="Center" Margin="6,0,6,0" Minimum="0" Maximum="{Binding Aktionen}" Value="{Binding Abwehraktionen}" IsSnapToTickEnabled="True" Width="60" ToolTip="Aktionen umwandeln" />-->
                                     <ItemsControl ItemsSource="{Binding AbwehrManöver}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -341,6 +330,7 @@
                                                     <Binding/>
                                                 </MultiBinding>
                                             </DataTrigger.Binding>
+                                            <!--Aktuelle INI ColumnBalken orange markieren-->
                                             <Setter TargetName="border" Property="Background" Value="#FFF7CC86"/>
                                         </DataTrigger>
                                     </DataTemplate.Triggers>

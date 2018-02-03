@@ -1,0 +1,45 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="MeisterGeister.View.Kampf.Controls.ManöverView"
+    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
+    xmlns:Gegner="clr-namespace:MeisterGeister.View.Kampf.Controls" 
+    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+    xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+	x:Name="UserControl"
+	d:DesignWidth="739.291" d:DesignHeight="543.038"
+    Loaded="UserControl_Loaded"
+    >
+    <Grid>
+        <StackPanel>
+            <ListBox/>
+            <!-- TODO JT: Manöverbindings ->
+                        <StackPanel>
+                            <!- Manöverauswahl->
+                            <ComboBox ItemsSource="{Binding MöglicheManöver}" SelectedItem="{Binding SelectedManöverInfo.Manöver}" DisplayMemberPath="Name"></ComboBox>
+                            <!- Kombination von Manövern? ->
+                            <!- Manöveroptionen? ->
+                            <!- Waffen -> Ziele ->
+                            <ComboBox ItemsSource="{Binding MöglicheZiele}" SelectedItem="{Binding SelectedZiel}" DisplayMemberPath="Name"></ComboBox>
+                            <!- Alle Kämpfer auch Freunde anzeigen - Checkbox ->
+                            <CheckBox />
+                            <!- Optional, wenn das Manöver mehrere Ziele zulässt:->
+                                <Button Command="{Binding AddSelectedZiel}">
+                                    <TextBlock Text="+" ToolTip="Ziel hinzufügen"/>
+                                </Button>
+                            <ListView ItemsSource="{Binding SelectedManöverInfo.Manöver.Ziele}">
+                            <!- für jedes Ziel->
+                                <!- Ziel entfernen (bei mehreren zielen) ->
+                                <!- Attackeprobe ->
+                                <!- Parademanöverauswahl + Paradeprobe ->
+                            </ListView>
+                            <!- Bestätigen ->
+                            <Button Command="{Binding ManöverAusführen}">
+                                <TextBlock Text="OK"/></Button>
+                        </StackPanel> -->
+        </StackPanel>
+    </Grid>
+</UserControl>

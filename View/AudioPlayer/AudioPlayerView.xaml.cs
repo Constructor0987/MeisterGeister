@@ -206,19 +206,13 @@ namespace MeisterGeister.View.AudioPlayer
         public Audio_Playlist AktKlangPlaylist
         {
             get { return VM.AktKlangPlaylist; }
-            set
-            {
-                VM.AktKlangPlaylist = value;
-            }
+            set { VM.AktKlangPlaylist = value; }
         }
 
         public Audio_Theme AktKlangTheme
         {
             get { return VM.AktKlangTheme; }
-            set
-            {
-                VM.AktKlangTheme = value;
-            }
+            set { VM.AktKlangTheme = value; }
         }
 
         delegate void UpdateUI();

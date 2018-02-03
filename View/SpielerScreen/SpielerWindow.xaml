@@ -1,12 +1,19 @@
 ﻿<Window x:Class="MeisterGeister.View.SpielerScreen.SpielerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" 
         xmlns:vmBoden="clr-namespace:MeisterGeister.ViewModel.Bodenplan"
         xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
         xmlns:kampfInfo="clr-namespace:MeisterGeister.View.Kampf"
+        xmlns:Kampf="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              
         Title="DSA MeisterGeister - Spieler Informationen" Height="559" Width="850" Background="Black" Loaded="Window_Loaded" WindowStyle="None" Topmost="True" KeyDown="Window_KeyDown" Closed="Window_Closed" MouseDoubleClick="Window_MouseDoubleClick">
+    <Window.Resources>
+        <System:Double x:Key="gridSize">30</System:Double>
+        <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type Kampf:Position}" />
+        <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -238,10 +245,14 @@
                                 </Border.Background>
                                 <Border>
                                     <Border.Background>
-                                        --><!-- Hexgrid --><!--
+                                        -->
+                    <!-- Hexgrid -->
+                    <!--
                                         <VisualBrush TileMode="Tile" Viewport="0,0,200,200" ViewportUnits="Absolute">
                                             <VisualBrush.Visual>
-                                                --><!--<Rectangle Stroke="Darkgray" StrokeThickness="1" Height="50" Width="50" StrokeDashArray="5 3" />--><!--
+                                                -->
+                    <!--<Rectangle Stroke="Darkgray" StrokeThickness="1" Height="50" Width="50" StrokeDashArray="5 3" />-->
+                    <!--
                                                 <Path StrokeThickness="3" StrokeDashArray="5 3" Data="{Binding TilePathData}" 
                                                         Stroke="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" />
                                             </VisualBrush.Visual>

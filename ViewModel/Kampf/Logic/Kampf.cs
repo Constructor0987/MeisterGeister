@@ -90,6 +90,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        private KämpferInfo _aktIniKämpfer = null;
+        public KämpferInfo AktIniKämpfer
+        {
+            get { return _aktIniKämpfer; }
+            set { Set(ref _aktIniKämpfer, value); }
+        }
+
         [DependentProperty("AktuelleAktionszeit")]
         private IEnumerable<ManöverInfo> AktuelleAktionen
         {
@@ -145,6 +152,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             AktuelleAktionszeit = next;
             if (next == default(ZeitImKampf))
                 NeueKampfrunde();
+            AktIniKämpfer = Kämpfer.FirstOrDefault(t => t.InitiativeMitKommas == AktuelleAktionszeit.InitiativPhase);
         }
 
         public void NeueKampfrunde()

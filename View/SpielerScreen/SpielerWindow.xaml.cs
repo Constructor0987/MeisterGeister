@@ -48,6 +48,10 @@ namespace MeisterGeister.View.SpielerScreen
                 grdStandard.Visibility = Visibility.Collapsed;
                 grdBodenplan.Visibility = Visibility.Visible;
                 Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow = this;
+                if (VMBoden.IsShowIniKampf)
+                {
+                    this.Topmost = false;
+                }
             }
         }
 
@@ -69,6 +73,11 @@ namespace MeisterGeister.View.SpielerScreen
         {
             get { return DataContext as BattlegroundViewModel; }
             set { DataContext = value; }
+        }
+
+        public KampfViewModel KampfVM
+        {
+            get { return (DataContext as BattlegroundViewModel).kampf; }
         }
 
 
@@ -131,6 +140,11 @@ namespace MeisterGeister.View.SpielerScreen
 
         new public static void Show()
         {
+            if (System.Windows.Forms.Screen.AllScreens.Length > 1)
+            {
+                int main = Application.Current.MainWindow.Left < System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width ? 0 : 1;
+                if (main == 0) ((Window)Instance).Left = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.X;
+            }
             ((Window)Instance).Show();
         }
 
@@ -311,18 +325,9 @@ namespace MeisterGeister.View.SpielerScreen
             {
                 this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
                 this.Left = System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width;
-                if (Global.CurrentKampf.BodenplanViewModel.KampfWindow != null)
-                {
-                    this.WindowState = System.Windows.WindowState.Normal;
-                    this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
-                    this.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Global.CurrentKampf.BodenplanViewModel.KampfWindow.ActualWidth;
-                    this.Height = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height;
-                }
-                else
-                {
-                    this.WindowState = System.Windows.WindowState.Maximized;
-                    this.WindowStyle = System.Windows.WindowStyle.None;
-                }
+                
+                this.WindowState = System.Windows.WindowState.Maximized;
+                this.WindowStyle = System.Windows.WindowStyle.None;
             } 
             else
             {

@@ -56,7 +56,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("BodenplanWindow");
             }
         }
-
+        
         private BattlegroundViewModel bodenplanViewModel = null;
         public BattlegroundViewModel BodenplanViewModel
         {
@@ -323,6 +323,8 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             if (showGegnerView != null)
                 showGegnerView(Kampf);
+            if (BodenplanViewModel != null)
+                BodenplanViewModel.AddAllCreatures();
         }
 
         private Action<K> showGegnerView;

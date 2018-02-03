@@ -800,6 +800,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         }
 
         #endregion
+
     }
 
     #region // ImageItem

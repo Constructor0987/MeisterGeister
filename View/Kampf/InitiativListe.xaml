@@ -173,7 +173,27 @@
             </ListBox.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
+                    <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" >
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+
+                                    <DataTrigger Value="True">
+                                        <DataTrigger.Binding>
+                                            <MultiBinding>
+                                                <MultiBinding.Converter>
+                                                    <ViewGeneral:EqualsMultiConverter/>
+                                                </MultiBinding.Converter>
+                                                <Binding ElementName="iniListe" Path="DataContext.Kampf.AktIniKämpfer"/>
+                                                <Binding />
+                                            </MultiBinding>
+                                        </DataTrigger.Binding>
+                                        <Setter Property="Background" Value="#FFF7CC86" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
                         <StackPanel.ContextMenu>
                             <ContextMenu>
                                 <DockPanel>

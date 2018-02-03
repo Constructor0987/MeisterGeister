@@ -17,6 +17,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
+using MeisterGeister.View.Kampf;
+using MeisterGeister.ViewModel.Kampf;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
@@ -177,6 +179,21 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _spielerScreenWindow, value); }
         }
 
+
+        private KampfInfoView _kampfIniInfoView = null;
+        public KampfInfoView KampfIniInfoView 
+        {
+            get { return _kampfIniInfoView; }
+            set { Set(ref _kampfIniInfoView, value); }            
+        }
+
+
+        private KampfViewModel _kampf = null;
+        public KampfViewModel kampf
+        {
+            get { return _kampf; }
+            set { Set(ref _kampf, value); }
+        }
 
         private Window _kampfWindow = null;
         public Window KampfWindow
@@ -579,6 +596,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #endregion
         
+
         private bool _leftShiftPressed = false;
         public bool LeftShiftPressed
         {
@@ -1053,7 +1071,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 }
             }
         }
-        
+
         [DependentProperty("ZeichenModus")]
         public bool CreateLine
         {

@@ -51,32 +51,22 @@
                         </Grid>
                     </Border>
                     <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,17,0,0" Name="checkBox4" VerticalAlignment="Top" Width="108" />
-                    <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="683,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
-                    <CheckBox Content="RechteckRaster" Height="16" HorizontalAlignment="Left" Margin="683,27,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" />
-                    <xctk:ColorPicker SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Rasterfarbe" Margin="683,48,573,0"/>
-                    <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="1048,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
-                        <Grid Margin="0,0,9,0">
-                            <Button Content="Speichern" Width="75" Margin="10,35,0,0" Height="25" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
-                            <Button Content="Laden" Width="75" Margin="10,5,0,0" Height="25" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left"/>
-                            <CheckBox IsChecked="{Binding LoadWithoutPictures}" Content="Laden ohne Bilder" Height="16" VerticalAlignment="Top" Width="118" Margin="91,11,0,0" HorizontalAlignment="Left" FontSize="10"/>
-                            <CheckBox IsChecked="{Binding SaveWithoutPictures}" Content="Speichern ohne Bilder" Height="18" VerticalAlignment="Top" Margin="90,39,1,0" FontSize="10"/>
-                            <Button Content="Reset" Width="75" Margin="10,0,124,5" Height="25" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
-                        </Grid>
-                    </Border>
+                    <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="735,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
+                    <CheckBox Content="RechteckRaster" Height="16" HorizontalAlignment="Left" Margin="735,27,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" />
+                    <StackPanel Margin="738,48,438,10" >
+                        <Label Content="Auf Bildschirm" HorizontalAlignment="Center" Padding="0,5,0,0" />
+                        <ViewGeneral:IntBox MinValue="1" MaxValue="{Binding System.Windows.Forms.Screen.AllScreens.Length}" Value="{Binding AufBildschirm, UpdateSourceTrigger=PropertyChanged}" ShowButtons="True"  Width="80">
+                            
+                        </ViewGeneral:IntBox>
+                    </StackPanel>
+
+                    <xctk:ColorPicker SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Rasterfarbe" Margin="735,48,573,0"/>
                     <!-- Kontroll hidden, cause of no future development, but maybe later -->
                     <xctk:CheckListBox Visibility="Hidden" Height="100" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="1136,7,0,0" />
                     <!-- Hidden kontroll end  -->
-                    <Border Margin="791,7,0,5" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Width="202">
+                    <Border HorizontalAlignment="Left" Margin="683,7,0,5" Width="50">
                         <Grid>
-                            <Label Content="Plazieren von Helden und Gegnern"  Margin="0,0,0,69"></Label>
-                            <Button Content="Stick Helden" Margin="10,72,0,0" Width="80" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonStickHeroes_Click"/>
-                            <TextBox Height="26" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" Margin="10,34,10,0" IsEnabled="False" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
-                            <Button Content="Stick Kreaturen" Margin="101,72,0,0" Height="22" Width="89" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonSticCreatues_Click"/>
-                        </Grid>
-                    </Border>
-                    <Border HorizontalAlignment="Left" Margin="995,7,0,5" Width="50">
-                        <Grid>
-                            <ToggleButton Margin="2,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="40" Width="45" ToolTip="Den Spielern den Bodenplan zeigen."
+                            <ToggleButton Name="tbtnSpielerScreenActive" Margin="2,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="40" Width="45" ToolTip="Den Spielern den Bodenplan zeigen."
                                  IsChecked="{Binding SpielerScreenActive, UpdateSourceTrigger=PropertyChanged}" Focusable="False" Click="tbtnSpielerScreenActive_Click" >
                                 <Grid>
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
@@ -84,15 +74,33 @@
                                 </Grid>
                             </ToggleButton>
                             <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="40" Width="45" ToolTip="Den Spielern die INI-Liste des aktuellen Kampfes zeigen."
-                                  IsChecked="{Binding IsShowIniKampf, UpdateSourceTrigger=PropertyChanged}" Margin="2,41,2,2" Focusable="False" Click="ToggleButton_Click" >
+                                  IsChecked="{Binding IsShowIniKampf, UpdateSourceTrigger=PropertyChanged}" Margin="2,41,2,2" Focusable="False" Click="tbtnSpielerIniScreen_Click" >
                                 <Grid>
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="4,6,4,14" />
                                 </Grid>
                             </ToggleButton>
                             <!--<Label Content="Scale" VerticalAlignment="Bottom" Margin="5,0,0,32"/>-->
-                            <Slider Orientation="Horizontal" Minimum=".5" Maximum="1.5" VerticalAlignment="Bottom" Margin="2,0,2,2" SmallChange=".01" LargeChange=".1"
-                                            Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MouseWheel="slSmall_MouseWheel" ValueChanged="Slider_ValueChanged"  />
+                            <Slider Orientation="Horizontal" Minimum=".5" Maximum="1.5" VerticalAlignment="Bottom" Margin="2,0,2,-2" SmallChange=".01" LargeChange=".1"
+                                            Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MouseWheel="slSmall_MouseWheel" ValueChanged="Slider_ValueChanged"  
+                                    ToolTip="Größe des Ini-Feldes anpassen" />
+                        </Grid>
+                    </Border>
+                    <Border Margin="845,7,0,5" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Width="202">
+                        <Grid>
+                            <Label Content="Plazieren von Helden und Gegnern"  Margin="0,0,0,69"></Label>
+                            <Button Content="Stick Helden" Margin="10,72,0,0" Width="80" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonStickHeroes_Click"/>
+                            <TextBox Height="26" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" Margin="10,34,10,0" IsEnabled="False" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
+                            <Button Content="Stick Kreaturen" Margin="101,72,0,0" Height="22" Width="89" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonSticCreatues_Click"/>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="1048,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
+                        <Grid Margin="0,0,9,0">
+                            <Button Content="Speichern" Width="75" Margin="10,35,0,0" Height="25" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
+                            <Button Content="Laden" Width="75" Margin="10,5,0,0" Height="25" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left"/>
+                            <CheckBox IsChecked="{Binding LoadWithoutPictures}" Content="Laden ohne Bilder" Height="16" VerticalAlignment="Top" Width="118" Margin="91,11,0,0" HorizontalAlignment="Left" FontSize="10"/>
+                            <CheckBox IsChecked="{Binding SaveWithoutPictures}" Content="Speichern ohne Bilder" Height="18" VerticalAlignment="Top" Margin="90,39,1,0" FontSize="10"/>
+                            <Button Content="Reset" Width="75" Margin="10,0,124,5" Height="25" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
                         </Grid>
                     </Border>
 
@@ -201,18 +209,26 @@
 
                             </Grid>
                             <GroupBox Header="Fog-of-War" Width="140">
-                                <StackPanel >
-                                    <CheckBox Content="Fog-of-War" IsChecked="{Binding useFog}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
-                                    <CheckBox Content="Fog entfernen" IsChecked="{Binding FogFreimachen}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
-                                    <Label Content="Größe Freifeld" HorizontalAlignment="Center" Padding="0,5,0,0" />
-                                    <ViewGeneral:IntBox MinValue="1" MaxValue="5" Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}" ShowButtons="True"  Width="80" />
+                                <StackPanel Margin="3">
+                                    <CheckBox Content="Fog-of-War" IsChecked="{Binding useFog}" HorizontalAlignment="Left" Margin="15,5,0,0"/>
+                                    <StackPanel Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                        <Label Content="Größe Freifeld" HorizontalAlignment="Center" Padding="0,5,0,0" />
+                                        <ViewGeneral:IntBox MinValue="1" MaxValue="5" Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}" ShowButtons="True"  Width="80">
+                                            <ViewGeneral:IntBox.ToolTip>
+                                                <StackPanel>
+                                                    <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" />
+                                                    <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" />
+                                                </StackPanel>
+                                            </ViewGeneral:IntBox.ToolTip>
+                                        </ViewGeneral:IntBox>
+                                    </StackPanel>
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="Player View" Width="120">
                                 <Grid>
                                     <Label Content="Feldgröße" VerticalAlignment="Bottom" Width="65" Margin="0,0,0,24"/>
                                     <Label Content="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="10,0,30,-2" VerticalAlignment="Bottom" Height="14" HorizontalAlignment="Center"  />
-                                    <Button Width="50" Height="20" Padding="0" Content="Center" Margin="0,0,10,20" Command="{Binding OnBtnCenterPlayerView}" />
+                                    <Button Width="50" Height="20" Padding="0" Content="Center" Margin="0,0,10,20" Command="{Binding OnBtnCenterPlayerView}" ToolTip="Auf Spieler zentrieren" />
                                     <Slider Minimum="-10000" Maximum="0" SmallChange="1" LargeChange="10" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"
                                         Value="{Binding GridOffsetY, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" 
                                             ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen" HorizontalAlignment="Right"
@@ -231,7 +247,8 @@
                                         ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen" />
 
                                     <Slider Orientation="Horizontal" Minimum=".2" Maximum="2.5" VerticalAlignment="Bottom" Margin="10,0,20,8" SmallChange=".01" LargeChange=".1"
-                                            Value="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" MouseWheel="slSmall_MouseWheel"  />
+                                            Value="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" MouseWheel="slSmall_MouseWheel" 
+                                            ToolTip="Größe des Spielerfeldes"/>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
@@ -412,7 +429,7 @@
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect">
                                                                 <Setter.Value>
-                                                                    <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                                    <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="35" />
                                                                 </Setter.Value>
                                                             </Setter>
                                                         </DataTrigger>
