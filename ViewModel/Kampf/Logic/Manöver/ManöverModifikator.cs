@@ -34,17 +34,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             if (typeof(T) == typeof(int))
                 GetMod = (w, v) => Convert.ToInt32(Value);
         }
-
-        private int gesamt;
-        public int GetGesamt
-        {
-            get { return this.gesamt; }
-            set
-            {
-                Set(ref this.gesamt, value);
-            }
-        }
-
+        
         private int _calcModifikator;
         public int CalcModifikator()
         {
@@ -64,12 +54,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public Func<TWaffe, T, int> GetMod
         {
             get { return getMod; }
-            set
-            {
-                Set(ref getMod, value);
-                // berechne gesamt...
-                GetGesamt = CalcModifikator();
-            }
+            set { Set(ref getMod, value); }
         }
 
         private T value;
@@ -79,6 +64,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             set
             {
                 Set(ref this.value, value);
+                // berechne gesamt...
+                base.manöver.GetGesamt = CalcModifikator();
             }
         }
     }
@@ -98,12 +85,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 return GetMod(manöver.Ausführender.Kämpfer.Angriffswaffen.FirstOrDefault(), Value);
             }
         }
-
-        public int calcModifikator()
-        {
-            int to_return = base.CalcModifikator();
-            return to_return;
-        }
     }
 
     public class NahkampfModifikator<T> : ManöverModifikator<T, INahkampfwaffe>
@@ -119,12 +100,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 return GetMod(manöver.Ausführender.Kämpfer.Angriffswaffen.FirstOrDefault(), Value);
             }
         }
-
-        public int calcModifikator()
-        {
-            int to_return = base.CalcModifikator();
-            return to_return;
-        }
     }
 
     public class FernkampfModifikator<T> : ManöverModifikator<T, IFernkampfwaffe>
@@ -139,12 +114,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             {
                 return GetMod(manöver.Ausführender.Kämpfer.Fernkampfwaffen.FirstOrDefault(), Value);
             }
-        }
-
-        public int calcModifikator()
-        {
-            int to_return = base.CalcModifikator();
-            return to_return;
         }
     }
 }

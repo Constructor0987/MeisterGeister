@@ -292,6 +292,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             get { return readonlymods; }
         }
 
+        private int _getGesamt;
+        public int GetGesamt
+        {
+            get { return _getGesamt; }
+            set { Set(ref _getGesamt, value); }
+        }
+        
 
         public IDictionary<TWaffe, KämpferInfo> WaffeZiel
         {
