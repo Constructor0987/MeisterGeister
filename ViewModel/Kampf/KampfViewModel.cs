@@ -45,6 +45,8 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+
+
         private View.Bodenplan.BattlegroundWindow _bodenplanWindow;
         public View.Bodenplan.BattlegroundWindow BodenplanWindow
         {
@@ -135,13 +137,6 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
         
-        private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
-        private btnHotkeyVM SpeedbtnAudio
-        {
-            get { return _speedbtnAudio; }
-            set { Set(ref _speedbtnAudio, value); }
-        }
-
         #region // ---- COMMANDS ----
 
         //private Base.CommandBase _onDeleteKämpfer = null;
@@ -163,23 +158,6 @@ namespace MeisterGeister.ViewModel.Kampf
 
         //}
 
-        private Base.CommandBase _onWesenPlaylistClick = null;
-        public Base.CommandBase OnWesenPlaylistClick
-        {
-            get
-            {
-                if (_onWesenPlaylistClick == null)
-                    _onWesenPlaylistClick = new Base.CommandBase(WesenPlaylistClick, null);
-                return _onWesenPlaylistClick;
-            }
-        }
-
-        private void WesenPlaylistClick(object obj)
-        {
-            SpeedbtnAudio.aPlaylistGuid = (obj as IWesenPlaylist).Audio_Playlist.Audio_PlaylistGUID;
-            SpeedbtnAudio.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
-            SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
-        }
 
         private Base.CommandBase onAddHelden = null;
         public Base.CommandBase OnAddHelden

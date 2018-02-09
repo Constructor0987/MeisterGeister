@@ -33,7 +33,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="0,8,0,0" Orientation="Vertical">
+        <StackPanel Margin="0,8,-3,0" Orientation="Vertical">
             <!-- Lebensenergie -->
             <StackPanel Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}">
                 <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
@@ -68,6 +68,71 @@
             </StackPanel>
 
             <local:SchadenMachenView Margin="0,8,0,0" DataContext="{Binding SchadenMachen}" HorizontalAlignment="Left"/>
+
+            <Grid Margin="0,5,0,0" >
+                <Border Margin="-2" ToolTip="Audio Speed-Buttons" >
+                    <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding }" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="52" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="22" Margin="0,1,0,0" />
+
+                        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >
+                            <Border ToolTip="Audio Speed-Buttons" Style="{DynamicResource ControlContentBorder}">
+                                <Grid>
+                                    <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel ItemWidth="30" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button Width="24" Tag="{Binding}" Focusable="False"
+                                                                    Command="{Binding DataContext.OnWesenPlaylistClick, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
+                                                                    ToolTip="{Binding Audio_Playlist.Name}" >
+                                                    <Button.Content>
+                                                        <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
+                                                    </Button.Content>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Border>
+                        </ScrollViewer>
+
+                        <Slider Grid.Column="2" Orientation="Vertical" Margin="1" Minimum="0" Maximum="100" Value="{Binding AudioSpeedButtonVolume}" SmallChange="1" LargeChange="5" HorizontalAlignment="Left"
+                                                MouseWheel="AudioSpeedButtonVolume_MouseWheel" >
+                            <Slider.ToolTip>
+                                <TextBlock Text="{Binding AudioSpeedButtonVolume, UpdateSourceTrigger=PropertyChanged, StringFormat=Volume {0}% }" />
+                            </Slider.ToolTip>
+                        </Slider>
+                        <Button Grid.Column="2" Height="25" ToolTip="Audio Speed-Buttons verwalten" HorizontalAlignment="Right"
+                                Command="{Binding OnBtnAudioSpeedButtonWesenZuweisenClick }" Background="{x:Null}">
+                            <Button.Content>
+                                <Grid>
+                                    <Image Source="/Images/Icons/gegner.png" Margin="-1,2,4,-1" />
+                                    <Image Source="/Images/Icons/helden.png" Margin="4,-3,-6,5" />
+                                    <Image Source="/Images/Icons/General/speaker.png" Margin="-10,0,-10,-10" Opacity=".5" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+
         </StackPanel>
         
         <DockPanel Margin="4" Grid.Row="1">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.View.AudioPlayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,15 @@ namespace MeisterGeister.View.Kampf
         {
             InitializeComponent();
         }
+
+        private void AudioSpeedButtonVolume_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 1)
+                ((Slider)sender).Value += ((((Slider)sender).Value < 98) ? 3 : ((100 - ((Slider)sender).Value)));
+            else
+                ((Slider)sender).Value += ((((Slider)sender).Value > 2) ? -3 : 0); 
+        }
     }
+
+
 }
