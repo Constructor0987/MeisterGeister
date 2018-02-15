@@ -18,5 +18,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int? TPMittel { get; }
         int? TPWeit { get; }
         int? TPSehrWeit { get; }
+
+        int? LadeZeit { get; }
     }
 }

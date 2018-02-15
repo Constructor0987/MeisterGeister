@@ -14,62 +14,12 @@ using System.Windows;
 using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
-using MeisterGeister.Model;
-using MeisterGeister.View.AudioPlayer;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     public class KämpferInfo : ViewModelBase, IDisposable
     {
         #region Commands
-
-        private Base.CommandBase _onBtnAudioSpeedButtonWesenZuweisenClick = null;
-        public Base.CommandBase OnBtnAudioSpeedButtonWesenZuweisenClick
-        {
-            get
-            {
-                if (_onBtnAudioSpeedButtonWesenZuweisenClick == null)
-                    _onBtnAudioSpeedButtonWesenZuweisenClick = new Base.CommandBase(AudioSpeedButtonWesenZuweisen, null);
-                return _onBtnAudioSpeedButtonWesenZuweisenClick;
-            }
-        }
-        private void AudioSpeedButtonWesenZuweisen(object sender)
-        {
-            MeisterGeister.Model.Held h = (Global.CurrentKampf.SelectedKämpfer.Kämpfer is MeisterGeister.Model.Held) ?
-                (Global.CurrentKampf.SelectedKämpfer.Kämpfer as MeisterGeister.Model.Held) : null;
-            MeisterGeister.Model.GegnerBase g = (Global.CurrentKampf.SelectedKämpfer.Kämpfer is MeisterGeister.Model.GegnerBase) ?
-                (Global.CurrentKampf.SelectedKämpfer.Kämpfer as MeisterGeister.Model.GegnerBase) :
-                (Global.CurrentKampf.SelectedKämpfer.Kämpfer is MeisterGeister.Model.Gegner) ?
-                (Global.CurrentKampf.SelectedKämpfer.Kämpfer as MeisterGeister.Model.Gegner).GegnerBase : null;
-            if (h != null)
-            {
-                PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(h);
-                wesenAuswahlView.ShowDialog();
-            }
-            else
-                if (g != null)
-            {
-                PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(g);
-                wesenAuswahlView.ShowDialog();
-            }
-        }
-
-        private Base.CommandBase _onWesenPlaylistClick = null;
-        public Base.CommandBase OnWesenPlaylistClick
-        {
-            get
-            {
-                if (_onWesenPlaylistClick == null)
-                    _onWesenPlaylistClick = new Base.CommandBase(WesenPlaylistClick, null);
-                return _onWesenPlaylistClick;
-            }
-        }
-        private void WesenPlaylistClick(object obj)
-        {
-            SpeedbtnAudio.aPlaylistGuid = (obj as IWesenPlaylist).Audio_Playlist.Audio_PlaylistGUID;
-            SpeedbtnAudio.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
-            SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
-        }
 
         private SchadenMachen schadenMachen;
         public SchadenMachen SchadenMachen
@@ -128,6 +78,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        private ICollection<IWesenPlaylist> _wesenplaylist;
+        private ICollection<IWesenPlaylist> Wesenplaylist
+        {
+            get { return _wesenplaylist; }
+            set { Set(ref _wesenplaylist, value); }
+        }
+
 
         private double _audioSpeedButtonVolume = MeisterGeister.Logic.Einstellung.Einstellungen.GeneralHotkeyVolume;
         public double AudioSpeedButtonVolume
@@ -137,37 +94,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 Set(ref _audioSpeedButtonVolume, value);
                 MeisterGeister.Logic.Einstellung.Einstellungen.GeneralHotkeyVolume = Convert.ToInt32(value);
-            }
-        }
-
-
-        private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
-        private btnHotkeyVM SpeedbtnAudio
-        {
-            get { return _speedbtnAudio; }
-            set { Set(ref _speedbtnAudio, value); }
-        }
-
-
-        private ICollection<IWesenPlaylist> _wesenPlaylist = null;
-        public ICollection<IWesenPlaylist> WesenPlaylist
-        {
-            get
-            {
-                return (Kämpfer is Held) ?
-                    new ObservableCollection<IWesenPlaylist>((Kämpfer as Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
-
-                    (Kämpfer is GegnerBase) ?
-                    new ObservableCollection<IWesenPlaylist>((Kämpfer as GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
-
-                    (Kämpfer is Gegner) ?
-                    new ObservableCollection<IWesenPlaylist>((Kämpfer as Gegner).GegnerBase.GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
-
-                    null;
-            }
-            set
-            {
-                Set(ref _wesenPlaylist, value);
             }
         }
 
@@ -264,6 +190,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Kampf = kampf;
             Team = 1;
             Initiative = k.Initiative();
+
+            Wesenplaylist = (k is MeisterGeister.Model.Held) ?
+                new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
+                (k is MeisterGeister.Model.GegnerBase) ?
+                    new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
+                    new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.Gegner).GegnerBase.GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>());
+            
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 

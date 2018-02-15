@@ -4,6 +4,7 @@
                     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
                     xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic">
     <ViewGeneral:EnumItemsSource x:Key="größenValues" Type="{x:Type KampfLogic:Größe}"/>
+    <ViewGeneral:EnumItemsSource x:Key="bewegungValues" Type="{x:Type KampfLogic:Bewegung}"/>
     <ViewGeneral:EnumItemsSource x:Key="wasserValues" Type="{x:Type KampfLogic:Wassertiefe}"/>
     <ViewGeneral:EnumItemsSource x:Key="positionValues" Type="{x:Type KampfLogic:Position}"/>
     <ViewGeneral:EnumItemsSource x:Key="lichtValues" Type="{x:Type KampfLogic:Lichtstufe}"/>

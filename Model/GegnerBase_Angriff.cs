@@ -73,6 +73,11 @@ namespace MeisterGeister.Model
         {
             get { return 0; }
         }
+
+        public int? LadeZeit
+        {
+            get { return 2; }
+        }
         #endregion
 
         #region INahkampfwaffe

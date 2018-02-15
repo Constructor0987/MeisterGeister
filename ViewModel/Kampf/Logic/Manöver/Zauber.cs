@@ -38,6 +38,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 calcDauer();
             }
         }
+        private bool showName = false;
+        public bool ShowName
+        {
+            get { return showName; }
+            set
+            {
+                Set(ref showName, value);
+                Name = "Zauber" + (value ? (": " + ((this.held_zauber != null) ? this.held_zauber.Zauber.Name : this.gegnerBase_zauber.Zauber.Name)) : "");
+            }
+        }
 
         private void calcDauer()
         {
@@ -51,7 +61,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public Zauber(KämpferInfo ausführender, Held_Zauber zauber) : base(ausführender, 1)
         {
             this.held_zauber = zauber;
-            Name += zauber.Zauber.Name;
             BasisDauer = zauber.Zauber.Zauberdauer == null? 1: zauber.Zauber.Zauberdauer.Value;
             Literatur = zauber.Zauber.Literatur;
         }
@@ -60,7 +69,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             : base(ausführender, 1)
         {
             this.gegnerBase_zauber = zauber;
-            Name += zauber.Zauber.Name;
             BasisDauer = zauber.Zauber.Zauberdauer == null ? 1 : zauber.Zauber.Zauberdauer.Value;
             Literatur = zauber.Zauber.Literatur;
         }
@@ -68,7 +76,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected override void Init()
         {
             base.Init();
-            Name = "Zauber: ";
+            Name = "Zauber";
             //TODO: Literatur
             Typ = ManöverTyp.Aktion;
         }

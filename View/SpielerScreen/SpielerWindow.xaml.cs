@@ -51,6 +51,15 @@ namespace MeisterGeister.View.SpielerScreen
                 if (VMBoden.IsShowIniKampf)
                 {
                     this.Topmost = false;
+                    //var vm = DataContext as BattlegroundViewModel;
+                    //Kampf.KampfInfoView infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
+                    //infoView.grdMain.LayoutTransform = new ScaleTransform(vm.ScaleKampfGrid, vm.ScaleKampfGrid);
+                    
+                    //vm.KampfIniInfoView = infoView;
+
+                   // ((SpielerWindow)Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow).grdIniBodenplan.DataContext = VM.KampfIniInfoView;
+
+                //    grdIniBodenplan.DataContext = vm.KampfIniInfoView;// VMBoden.KampfIniInfoView;
                 }
             }
         }
@@ -140,11 +149,6 @@ namespace MeisterGeister.View.SpielerScreen
 
         new public static void Show()
         {
-            if (System.Windows.Forms.Screen.AllScreens.Length > 1)
-            {
-                int main = Application.Current.MainWindow.Left < System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width ? 0 : 1;
-                if (main == 0) ((Window)Instance).Left = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.X;
-            }
             ((Window)Instance).Show();
         }
 

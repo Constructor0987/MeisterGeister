@@ -454,6 +454,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public int? LadeZeit
+        {
+            get
+            {
+                if (_gegner_angriff != null)
+                    return _gegner_angriff.Base_Angriff.LadeZeit;
+                return _waffe.LadeZeit;
+            }
+        }
+
         public string TPString
         {
             get

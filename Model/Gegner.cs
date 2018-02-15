@@ -10,6 +10,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel.Helden.Logic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using MeisterGeister.ViewModel.AudioPlayer.Logic;
 
 namespace MeisterGeister.Model
 {
@@ -56,6 +57,16 @@ namespace MeisterGeister.Model
             Bild = gegnerBase.Bild;
             Bemerkung = gegnerBase.Bemerkung;
         }
+
+
+
+        private ICollection<IWesenPlaylist> _wesenplaylist;
+        private ICollection<IWesenPlaylist> Wesenplaylist
+        {
+            get { return _wesenplaylist; }
+            set { Set(ref _wesenplaylist, value); }
+        }
+
 
         #region IInitializable
         public void Initialize()
@@ -575,7 +586,7 @@ namespace MeisterGeister.Model
         {
             get { return KarmaenergieMax > 0; }
         }
-
+        
         private System.Windows.Media.Color _farbmarkierung = System.Windows.Media.Color.FromArgb(0,0,0,0);
         public System.Windows.Media.Color Farbmarkierung
         {

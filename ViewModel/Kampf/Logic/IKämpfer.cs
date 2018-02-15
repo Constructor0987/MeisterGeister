@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 // Eigene Usings
 using System.Collections.ObjectModel;
+using MeisterGeister.ViewModel.AudioPlayer.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -19,6 +20,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         string Bild { get; }
         Position Position { get; set; }
         #endregion
+
 
         //Notwendige Eigenschaften
         int Körperkraft { get; }

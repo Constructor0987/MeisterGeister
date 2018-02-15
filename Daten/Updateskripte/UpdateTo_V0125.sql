@@ -5,7 +5,7 @@ GO
 ALTER TABLE [Audio_Playlist_Titel] Add Echo int NOT NULL default 0
 GO
 
-//Gegner können Zauber integriert werden
+--Gegner können Zauber integriert werden
 CREATE TABLE [GegnerBase_Zauber] (
 	[GegnerBaseGUID] uniqueidentifier NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000', 
 	[ZauberGUID] uniqueidentifier NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000', 

@@ -14,28 +14,45 @@
             <ColumnDefinition Width="24"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,25" Grid.RowSpan="2"/>
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="3" Text="Ansagen" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" FontWeight="Bold" TextDecorations="Underline" >
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Held_Zauber.Zauber}" Value="{x:Null}">
+                            <Setter Property="Text" Value="{Binding GegnerBase_Zauber.Zauber.Name, StringFormat=Zauber: {0:C}}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding GegnerBase_Zauber.Zauber}" Value="{x:Null}">
+                            <Setter Property="Text" Value="{Binding Held_Zauber.Zauber.Name, StringFormat=Zauber: {0:C}}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <CheckBox Content="Zeige Namen in INI" IsChecked="{Binding ShowName}" Grid.Column="1" Grid.ColumnSpan="2" Margin="-5,0,0,0" />
+        <TextBlock Grid.Row="1" Text="Zauberdauer (Basis)"/>
+        <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="1" Grid.Column="1" Value="{Binding BasisDauer}"/>
+        <TextBlock Grid.Column="3" Text="{Binding Dauer}" Grid.Row="1"/>
+        
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,25" Grid.RowSpan="2"/>        
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,25" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="3" Text="Ansagen" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
 
-        <TextBlock Grid.Row="0" Text="Zauberdauer (Basis)"/>
-        <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="0" Grid.Column="1" Value="{Binding BasisDauer}"/>
-        <TextBlock Grid.Column="3" Text="{Binding Dauer}" Grid.Row="0"/>
-
-        <TextBlock Grid.Row="2" Text="Zauberdauer"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="zauberdauer" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Zauberdauer].Value}">
+        <TextBlock Grid.Row="3" Text="Zauberdauer"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="zauberdauer" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Zauberdauer].Value}">
             <ComboBoxItem Content="Verdoppeln" DataContext="-1"/>
             <Separator/>
             <ComboBoxItem Content="Normal" IsSelected="True" DataContext="0"/>
@@ -44,10 +61,10 @@
             <ComboBoxItem Content="Vierteln" DataContext="2"/>
             <ComboBoxItem Content="Achteln" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Zauberdauer].Result}"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Zauberdauer].Result}"/>
 
-        <TextBlock Grid.Row="3" Text="Wirkungsdauer"/>
-        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="wirkungsdauer" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Wirkungsdauer].Value}">
+        <TextBlock Grid.Row="4" Text="Wirkungsdauer"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="wirkungsdauer" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Wirkungsdauer].Value}">
             <ComboBoxItem Content="÷ 8" DataContext="-3"/>
             <ComboBoxItem Content="÷ 4" DataContext="-2"/>
             <ComboBoxItem Content="÷ 2" DataContext="-1"/>
@@ -58,13 +75,13 @@
             <ComboBoxItem Content="* 4" DataContext="2"/>
             <ComboBoxItem Content="* 8" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Wirkungsdauer].Result}"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Mods[Wirkungsdauer].Result}"/>
 
-        <CheckBox Grid.Row="4" Grid.ColumnSpan="2" Content="Aufrechterhaltung in feste Dauer umwandeln" IsChecked="{Binding Mods[FesteDauer].Value}"/>
-        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Mods[FesteDauer].Result}"/>
+        <CheckBox Grid.Row="5" Grid.ColumnSpan="2" Content="Aufrechterhaltung in feste Dauer umwandeln" IsChecked="{Binding Mods[FesteDauer].Value}"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Mods[FesteDauer].Result}"/>
 
-        <TextBlock Grid.Row="5" Text="Reichweite / Radius"/>
-        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="reichweite" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Reichweite].Value}">
+        <TextBlock Grid.Row="6" Text="Reichweite / Radius"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="reichweite" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Reichweite].Value}">
             <ComboBoxItem Content="Um 3 verkleinern" DataContext="-3"/>
             <ComboBoxItem Content="Um 2 verkleinern" DataContext="-2"/>
             <ComboBoxItem Content="Um 1 verkleinern" DataContext="-1"/>
@@ -75,10 +92,10 @@
             <ComboBoxItem Content="Um 2 vergrößern" DataContext="2"/>
             <ComboBoxItem Content="Um 3 vergrößern" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Mods[Reichweite].Result}"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Mods[Reichweite].Result}"/>
 
-        <TextBlock Grid.Row="6" Text="Erzwingen / Sparen"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="kosten" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Erzwingen].Value}">
+        <TextBlock Grid.Row="7" Text="Erzwingen / Sparen"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="kosten" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Erzwingen].Value}">
             <ComboBoxItem Content="30% sparen" DataContext="3"/>
             <ComboBoxItem Content="20% sparen" DataContext="2"/>
             <ComboBoxItem Content="10% sparen" DataContext="1"/>
@@ -92,9 +109,9 @@
             <ComboBoxItem Content="Erzwingen +16 AsP" DataContext="-5"/>
             <ComboBoxItem Content="Erzwingen +32 AsP" DataContext="-6"/>
         </ComboBox>
-        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Mods[Erzwingen].Result}"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Mods[Erzwingen].Result}"/>
 
-        <CheckBox Grid.Row="7" Grid.ColumnSpan="2" Content="Unfreiwillig statt Freiwillig">
+        <CheckBox Grid.Row="8" Grid.ColumnSpan="2" Content="Unfreiwillig statt Freiwillig">
             <CheckBox.Style>
                 <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
                     <Style.Triggers>
@@ -105,25 +122,24 @@
                 </Style>
             </CheckBox.Style>
         </CheckBox>
-        <TextBlock Grid.Row="7" Grid.Column="3" Text="{Binding Mods[Zielobjekt].Result}"/>
+        <TextBlock Grid.Row="8" Grid.Column="3" Text="{Binding Mods[Zielobjekt].Result}"/>
 
-        <TextBlock Grid.Row="8" Text="Veränderte Technik"/>
-        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="technik" SelectedIndex="0" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Technik].Value}">
+        <TextBlock Grid.Row="9" Text="Veränderte Technik"/>
+        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="technik" SelectedIndex="0" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Technik].Value}">
             <ComboBoxItem Content="Nein" DataContext="0"/>
             <ComboBoxItem Content="1 Komponente" DataContext="1"/>
             <ComboBoxItem Content="2 Komponenten" DataContext="2"/>
             <ComboBoxItem Content="3 Komponenten" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Mods[Technik].Result}"/>
+        <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Mods[Technik].Result}"/>
 
-        <TextBlock Grid.Row="9" Text="Veränderte Technik (Zentral)"/>
-        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="technikzentral" SelectedIndex="0" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[TechnikZentral].Value}">
+        <TextBlock Grid.Row="10" Text="Veränderte Technik (Zentral)"/>
+        <ComboBox Grid.Row="10" Grid.Column="1" x:Name="technikzentral" SelectedIndex="0" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[TechnikZentral].Value}">
             <ComboBoxItem Content="Nein" DataContext="0"/>
             <ComboBoxItem Content="1 zentrale Komponente" DataContext="1"/>
             <ComboBoxItem Content="2 zentrale Komponenten" DataContext="2"/>
             <ComboBoxItem Content="3 zentrale Komponenten" DataContext="3"/>
         </ComboBox>
-        <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Mods[TechnikZentral].Result}"/>
-
+        <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Mods[TechnikZentral].Result}"/>
     </Grid>
 </UserControl>

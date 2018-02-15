@@ -11,23 +11,41 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class FernkampfManöver : KampfManöver<IFernkampfwaffe>
     {
-        public FernkampfManöver(KämpferInfo ausführender) : base(ausführender)
+        public FernkampfManöver(KämpferInfo ausführender, IFernkampfwaffe Fernkampfwaffe) : base(ausführender)
         {
+            this.FernkampfWaffeSelected = Fernkampfwaffe;            
         }
 
         #region Mods
 
+        public const string WIND_MOD = "Wind";
+        public const string STEILNACHUNTEN_MOD = "SteilNachUnten";
+        public const string STEILNACHOBEN_MOD = "SteilNachOben";
+        public const string BÖIGERWIND_MOD = "BöigerWind";
+        public const string STARKERBÖIGERWIND_MOD = "StarkerBöigerWind";
+
+        public const string DECKUNG_MOD = "Deckung";
+        public const string UNSICHTBAR_MOD = "Unsichtbar";
         public const string DISTANZ_MOD = "Entfernung";
         public const string TREFFERZONE_MOD = "Trefferzone";
+        public const string BEWEGUNG_MOD = "Bewegung";
         public const string NAHKAMPF_MOD = "Nahkampf";
         public const string HANDGEMENGE_MOD = "Handgemenge";
         public const string ZIELEN_MOD = "Zielen";
         public const string ANSAGE_MOD = "Ansage";
 
         protected FernkampfModifikator<Lichtstufe> licht;
+
+        protected FernkampfModifikator<bool> steilNachUnten;
+        protected FernkampfModifikator<bool> steilNachOben;
+        protected FernkampfModifikator<int> wind;
+
         protected FernkampfModifikator<Größe> größe;
+        protected FernkampfModifikator<bool> unsichtbar;
+        protected FernkampfModifikator<int> deckung;
         protected FernkampfModifikator<int> distanz;
         protected FernkampfModifikator<Trefferzone> trefferzone;
+        protected FernkampfModifikator<Bewegung> bewegung;
         protected FernkampfModifikator<int> nahkampf;
         protected FernkampfModifikator<int> handgemenge;
         protected FernkampfModifikator<int> zielen;
@@ -41,17 +59,44 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
 
+            wind = new FernkampfModifikator<int>(this);
+            wind.GetMod = WindMod;
+            mods.Add(WIND_MOD, wind);
+
+            steilNachUnten = new FernkampfModifikator<bool>(this);
+            steilNachUnten.GetMod = SteilNachUntenMod;
+            mods.Add(STEILNACHUNTEN_MOD, steilNachUnten);
+
+            steilNachOben = new FernkampfModifikator<bool>(this);
+            steilNachOben.GetMod = SteilNachObenMod;
+            mods.Add(STEILNACHOBEN_MOD, steilNachOben);
+
+            unsichtbar = new FernkampfModifikator<bool>(this);
+            unsichtbar.GetMod = UnsichtbarMod;
+            mods.Add(UNSICHTBAR_MOD, unsichtbar);
+
             größe = new FernkampfModifikator<Größe>(this);
+            größe.Value = Größe.Mittel;
             größe.GetMod = GrößeMod;
             mods.Add(GRÖSSE_MOD, größe);
 
+            FernkampfModifikator<int> deckung = new FernkampfModifikator<int>(this);
+            mods.Add(DECKUNG_MOD, deckung);
+            
             distanz = new FernkampfModifikator<int>(this);
+            distanz.Value = 1;
             distanz.GetMod = DistanzMod;
             mods.Add(DISTANZ_MOD, distanz);
 
             trefferzone = new FernkampfModifikator<Trefferzone>(this);
+            trefferzone.Value = Trefferzone.Unlokalisiert;
             trefferzone.GetMod = TrefferzoneMod;
             mods.Add(TREFFERZONE_MOD, trefferzone);
+
+            bewegung = new FernkampfModifikator<Bewegung>(this);
+            bewegung.Value = Bewegung.Leicht;
+            bewegung.GetMod = BewegungMod;
+            mods.Add(BEWEGUNG_MOD, bewegung);
 
             nahkampf = new FernkampfModifikator<int>(this);
             nahkampf.GetMod = NahkampfMod;
@@ -71,11 +116,30 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             mods.Add(ANSAGE_MOD, ansage);
         }
 
+        private IFernkampfwaffe _fernkampfWaffeSelected = null;
+        public IFernkampfwaffe FernkampfWaffeSelected
+        {
+            get { return _fernkampfWaffeSelected; }
+            set 
+            {
+                Set(ref _fernkampfWaffeSelected, value);
+                
+                OnChanged("Mods");
+                OnChanged("Mods[Ansage]");
+            }
+        }
+
+        private List<IFernkampfwaffe> _fernkampfWaffen = new List<IFernkampfwaffe>();
+        public List<IFernkampfwaffe> FernkampfWaffen
+        {
+            get { return _fernkampfWaffen; }
+            set { Set(ref _fernkampfWaffen, value); }
+        }
 
         private int SchützenIndex(IFernkampfwaffe waffe)
         {
             Held held = Ausführender.Kämpfer as Held;
-            if (held != null && waffe != null && waffe.Talent != null)
+            if (held != null && waffe != null && waffe.Talent != null && FernkampfWaffeSelected  != null && waffe.Talent == FernkampfWaffeSelected.Talent)
             {
                 if (held.HatSonderfertigkeitUndVoraussetzungen("Meisterschütze (" + waffe.Talent.Name + ")"))
                     return 2;
@@ -110,9 +174,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             return mod[SchützenIndex(waffe)];
         }
-
+                
         protected override int LichtMod(IFernkampfwaffe waffe, Lichtstufe value)
         {
+            if (mods[UNSICHTBAR_MOD].Result != 0) return 0;
             int mod;
             switch (value)
             {
@@ -148,6 +213,38 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 }
             }
             return mod;
+        }
+
+        private int WindMod(IFernkampfwaffe waffe, int value)
+        {
+            return value;
+        }
+
+        private int UnsichtbarMod(IFernkampfwaffe waffe, bool value)
+        {
+            return value? 8: 0;            
+        }
+
+        private int SteilNachUntenMod(IFernkampfwaffe waffe, bool value)
+        {
+            return value? 2: 0;            
+        }
+
+        private int SteilNachObenMod(IFernkampfwaffe waffe, bool value)
+        {
+            return !value? 0: 
+                waffe != null && waffe.Talent != null && waffe.Talent.Talentname == "Wurfwaffen" ? 
+                8 : 4;
+        }
+
+        private int BöigerWindMod(IFernkampfwaffe waffe, int value)
+        {
+            return value *4;
+        }
+
+        private int StarkerBöigerWindMod(IFernkampfwaffe waffe, int value)
+        {
+            return value *8;
         }
 
         private int DistanzMod(IFernkampfwaffe waffe, int distanz)
@@ -201,6 +298,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
+        private int BewegungMod(IFernkampfwaffe waffe, Bewegung value)
+        {
+            switch (value)
+            {
+                case Bewegung.Unbeweglich: 
+                    return -4;
+                case Bewegung.StillStehend:
+                    return -2;
+                case Bewegung.Leicht:
+                    return 0;
+                case Bewegung.Schnell:
+                    return 2;
+                case Bewegung.SehrSchnell:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
+
         private int NahkampfMod(IFernkampfwaffe waffe, int value)
         {
             return value * 2;
@@ -211,21 +327,81 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return value * 3;
         }
 
+        private int GetDauer(IFernkampfwaffe waffe, int Zielen, int Ansage)
+        {
+            Held held = Ausführender.Kämpfer as Held;
+            int d = 1;
+            if (waffe != null && waffe.Talent != null)
+            {
+                d = waffe.LadeZeit.Value + Zielen + 1;
+
+                if (held != null && FernkampfWaffeSelected != null)
+                {
+                    if (waffe.Talent == FernkampfWaffeSelected.Talent &&
+                        held.HatSonderfertigkeit("Scharfschütze (" + waffe.Talent.Name + ")"))
+                        d = waffe.LadeZeit.Value + (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1)) + 1;
+
+
+                    if (waffe.Talent == FernkampfWaffeSelected.Talent &&
+                        waffe.Talent.Talentname == "Bogen" && held.HatSonderfertigkeit("Schnellladen (Bogen)"))
+                        d = d - 1 >= 1 ? d - 1 : 1;
+                    else
+                        if (waffe.Talent == FernkampfWaffeSelected.Talent &&
+                            waffe.Talent.Talentname == "Armbrust" && held.HatSonderfertigkeit("Schnellladen (Armbrust)"))
+                            d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
+                        else
+                            if (waffe.Talent == FernkampfWaffeSelected.Talent &&
+                                waffe.Talent.Talentname == "Wurfwaffen" && held.HatSonderfertigkeit("Schnellziehen (Wurfwaffen)"))
+                                d = d - 1 >= 1 ? d - 1 : 1;
+
+                    if (Ansage > 0)
+                    d += // mit Meisterschütze nur 1 Aktion hinzu
+                         (waffe.Talent == FernkampfWaffeSelected.Talent &&
+                          (held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")")) ? 1 :
+                         // ohne Meisterschütze je Ansage 1 Aktion
+                         Ansage);
+                }
+            }
+            else
+                d = 2 + Zielen + 1;
+
+            return d;
+        }
+        
         private int ZielenMod(IFernkampfwaffe waffe, int value)
         {
             int mod = 0;
             if (value == 0)
                 mod = new int[] { 2, 1, 0 }[SchützenIndex(waffe)];
             else mod = -Math.Min(4, (int)Math.Floor(new double[] { 0.5, 1, 1 }[SchützenIndex(waffe)] * (value - 1)));
-            //TODO: Ladezeit eintragen
-            //Ladezeit + zielen + Schuss
-            Dauer = 2 + value + 1;
+
+            //Dauer = Ladezeit + zielen + Schuss
+            int d = GetDauer(waffe, value, Ansage);
+            if (d != Dauer)
+                Dauer = d;
+
             return mod;
+        }
+
+        private int maxAnsage = 10;
+        public int MaxAnsage
+        { 
+            get { return maxAnsage; }
+            set { Set(ref maxAnsage, value); }
         }
 
         private int AnsageMod(IFernkampfwaffe waffe, int value)
         {
             Held held = Ausführender.Kämpfer as Held;
+            if (held != null && waffe != null && waffe.Talent != null && FernkampfWaffeSelected != null)
+                MaxAnsage = waffe.Talent == FernkampfWaffeSelected.Talent &&
+                            held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")") ?
+                    (waffe as KämpferFernkampfwaffe).FernkampfOhneMod: held.Talentwert(waffe.Talent.Name);
+
+            int d = GetDauer(waffe, zielen.Value, value);
+            if (d != Dauer)
+                Dauer = d;
+
             if (SchützenIndex(waffe) > 0)
             {
                 return value;

@@ -390,7 +390,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 if (aPlayTitel.Speed != 0) mp.setSpeed(aPlayTitel.Speed);
                 if (aPlayTitel.Pitch != 0) mp.setPitch(aPlayTitel.Pitch);
                 if (aPlayTitel.Echo != 0) mp.setEcho(aPlayTitel.Echo);
-
                 if (aPlayTitel.TeilAbspielen)
                 {
                     mp.setPosition(aPlayTitel.TeilStart.Value);

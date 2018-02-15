@@ -18,6 +18,11 @@ namespace MeisterGeister.Model
             get { return "Fernkampfwaffe"; }
         }
 
+        public int LadeZeit
+        {
+            get { return Laden ?? 2; }
+        }
+
         // Als 'Tags' werden die möglichen Talente zurück gegeben
         string BasarLogic.IHandelsgut.Tags
         {
@@ -106,6 +111,7 @@ namespace MeisterGeister.Model
                 RWMittel = rw[2];
                 RWWeit = rw[3];
                 RWSehrWeit = rw[4];
+
             }
         }
 
@@ -162,6 +168,7 @@ namespace MeisterGeister.Model
         {
             return this.ToString(format, null);
         }
+
 
         /// <summary>
         /// Gibt die Fernkampfwaffe als String zurück

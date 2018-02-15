@@ -1,5 +1,6 @@
 ﻿using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
+using MeisterGeister.Model.Extensions;
 using MeisterGeister.View.General;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             NahkampfModifikator<Position> position_selbst = new NahkampfModifikator<Position>(this);
             position_selbst.GetMod = PositionSelbstMod;
+            position_selbst.Value = Ausführender.Kämpfer.Position;
             mods.Add(POS_SELBST_MOD, position_selbst);
 
             NahkampfModifikator<Position> position_gegner = new NahkampfModifikator<Position>(this);
@@ -81,7 +83,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             NahkampfModifikator<Größe> größe = new NahkampfModifikator<Größe>(this);
             größe.Value = Größe.Mittel;
             größe.GetMod = GrößeMod;
-            mods.Add(GRÖSSE_MOD, größe);
+            mods.Add(GRÖSSE_MOD, größe);                        
         }
 
         protected override int LichtMod(INahkampfwaffe waffe, Lichtstufe value)
@@ -151,15 +153,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         protected virtual int PositionSelbstMod(INahkampfwaffe waffe, Position value)
         {
+            Ausführender.Kämpfer.Position = value;
             switch (value)
             {
                 case Position.Liegend:
                     return 3;
                 case Position.Kniend:
                     return 1;
-                default:
+                default: 
                     return 0;
-            }
+            }            
         }
 
         protected abstract int PositionGegnerMod(INahkampfwaffe waffe, Position value);
@@ -191,6 +194,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 mod = 0;
 
             return mod;
+        }
+
+
+        //TODO:  AKTUALISIERUNG in der Combobox NICHT OKAY
+        private Position _getKämpferPosition = Position.Stehend;
+        public Position GetKämpferPosition
+        {
+            get
+            {
+                _getKämpferPosition = Ausführender.Kämpfer.Position;
+                ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = Ausführender.Kämpfer.Position;
+                return ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value;
+            }
+            set 
+            {
+                ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = value;
+                Set(ref _getKämpferPosition, value);
+            }
         }
 
         #endregion

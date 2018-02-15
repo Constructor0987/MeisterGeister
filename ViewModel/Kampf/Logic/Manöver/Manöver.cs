@@ -107,11 +107,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public virtual int Dauer
         {
             get { return dauer; }
-            set
-            {
-                dauer = value;
-                OnChanged("Dauer");
-            }
+            set { Set(ref dauer, value); }
         }
 
         private int verbleibendeDauer = 1;
@@ -297,8 +293,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             get { return _getGesamt; }
             set { Set(ref _getGesamt, value); }
-        }
-        
+        }        
 
         public IDictionary<TWaffe, KämpferInfo> WaffeZiel
         {

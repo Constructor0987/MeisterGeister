@@ -22,7 +22,7 @@ namespace MeisterGeister.View.Kampf.Manöver
     {
         public AttackeOptionenView()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

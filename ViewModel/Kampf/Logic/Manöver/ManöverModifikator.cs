@@ -34,7 +34,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             if (typeof(T) == typeof(int))
                 GetMod = (w, v) => Convert.ToInt32(Value);
         }
-        
+
         private int _calcModifikator;
         public int CalcModifikator()
         {
@@ -50,6 +50,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return to_return;
         }
 
+
+
         private Func<TWaffe, T, int> getMod;
         public Func<TWaffe, T, int> GetMod
         {
@@ -63,14 +65,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             get { return value; }
             set
             {
-                Set(ref this.value, value);
+                Set(ref this.value, value);                    
                 // berechne gesamt...
-                base.manöver.GetGesamt = CalcModifikator();
+                base.manöver.GetGesamt = CalcModifikator();            
             }
         }
     }
-
-
 
     public class ZauberModifikator<T> : ManöverModifikator<T, IWaffe>
     {
@@ -112,8 +112,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             get
             {
-                return GetMod(manöver.Ausführender.Kämpfer.Fernkampfwaffen.FirstOrDefault(), Value);
+                if ((manöver as FernkampfManöver).FernkampfWaffeSelected == null && manöver.Ausführender.Kämpfer.Fernkampfwaffen.Count > 0)
+                    (manöver as FernkampfManöver).FernkampfWaffeSelected = manöver.Ausführender.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+                return GetMod((manöver as FernkampfManöver).FernkampfWaffeSelected, Value);
             }
         }
     }
+
+    //public class SumMod
+    //{
+    //    public GetSumMod(NahkampfModifikator )
+    //    public int value = 0;
+    //}
 }

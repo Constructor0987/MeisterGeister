@@ -14,6 +14,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public event PropertyChangedEventHandler PropertyChanged;
         private bool _isNew;
         private bool _isSelected = false;
+        private bool _isAnDerReihe = false;
         private bool _isMoving = false;
         private double _strokethickness = 6;
         [NonSerialized] private SolidColorBrush _objectColor;
@@ -55,6 +56,15 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 if (Set(ref _isSelected, value))
                     OnChanged("IsSelected");
+            }
+        }
+
+        public bool IsAnDerReihe
+        {
+            get { return _isAnDerReihe; }
+            set
+            {
+                Set(ref _isAnDerReihe, value);
             }
         }
 

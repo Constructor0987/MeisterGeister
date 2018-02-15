@@ -102,6 +102,5 @@ namespace MeisterGeister.View.Kampf
         //            wesenAuswahlView.ShowDialog();
         //        }
         //}
-
     }
 }

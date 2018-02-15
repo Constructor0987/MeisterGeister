@@ -40,7 +40,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             r = new Random();
             CreatureY += r.Next(0, 500);
             MoveObject(0,0,false); //for initial position of ZLevel Display
-            CreateSightArea();
+            
+            ((Wesen)this).Position = Position.Stehend;
+            UpdateCreaturePosition();
         }
 
         public double SightAreaLength

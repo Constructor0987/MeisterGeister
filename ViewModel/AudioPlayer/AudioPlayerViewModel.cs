@@ -7205,6 +7205,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     Environment.NewLine + "In dieser Konstellation ist es nicht zulässig, den Titel abzuspielen." + Environment.NewLine +
                     "Soll der Pfad mit in die Standard-Pfade integriert werden?"))
                 {
+                    List<string> allSamePfad = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }).ToList().FindAll(t => temp_pfad_datei[0].StartsWith(t));
+                    if (allSamePfad != null)
+                    {
+                        string maxSamePfad = allSamePfad.Max();
+                        temp_pfad_datei[0] = maxSamePfad;
+                    }
+
                     MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis =
                         MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis + "|" + temp_pfad_datei[0];
                     setStdPfad();
@@ -7381,12 +7388,32 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             if (playlisttitel.PauseChange) grpobj.anzPauseChange++;
             rowErstellt++;
         }
-        
+
+        // behält die Reihenfolge bei
+        private static List<string> ohneDoppelte(List<string> stringList)
+        {
+            // Dictionary das mitzählt, wie oft ein Element bereits vorkam
+            Dictionary<string, int> stringOccurence = new Dictionary<string, int>();
+            // Mit 0 initialisieren
+            foreach (string s in stringList)
+                stringOccurence[s] = 0;
+
+            // Kopie erzeugen
+            List<string> result = new List<string>(stringList);
+            // Alle Elemente entfernen, die vorher schonmal aufgetreten sind (und dabei mitzählen, dass sie aufgetreten sind)
+            result.RemoveAll(x => (stringOccurence[x]++ > 0));
+            return result;
+        } 
+
+
         public void setStdPfad()
         {
             char[] charsToTrim = { '\\' };
             if (stdPfad.Count > 0) stdPfad.RemoveRange(0, stdPfad.Count);
             stdPfad.AddRange(MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }));
+            stdPfad = ohneDoppelte(stdPfad);
+            if (String.Join("|", stdPfad) != MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis)
+                MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis = String.Join("|", stdPfad);
         }
 
         public void UpdateHotkeyUsed()
@@ -8563,6 +8590,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         Environment.NewLine + "In dieser Konstellation ist es nicht zulässig, den Titel abzuspielen." + Environment.NewLine +
                         "Soll der Pfad mit in die Standard-Pfade integriert werden?" + Environment.NewLine + Environment.NewLine + "Neuer Pfad:     " + aTitel.Pfad))
                     {
+                        List<string> allSamePfad = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }).ToList().FindAll(t => aTitel.Pfad.StartsWith(t));
+                        if (allSamePfad != null)
+                        {
+                            string maxSamePfad = allSamePfad.Max();
+                            aTitel.Pfad = maxSamePfad;
+                            aTitel.Datei = aTitel.Pfad.Substring(maxSamePfad.Length+1) + aTitel.Datei;
+                        }
+
                         MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis =
                             MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis + "|" + aTitel.Pfad;
                         setStdPfad();

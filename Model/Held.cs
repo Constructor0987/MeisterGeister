@@ -14,6 +14,7 @@ using MeisterGeister.ViewModel.Helden.Logic;
 using E = MeisterGeister.Logic.Einstellung.Einstellungen;
 using MeisterGeister.ViewModel.Inventar.Logic;
 using MeisterGeister.ViewModel.Basar.Logic;
+using MeisterGeister.ViewModel.AudioPlayer.Logic;
 
 namespace MeisterGeister.Model {
     // Man kann Superklassen hinzufügen. Es sollten jedoch nicht die gleichen Eigenschaften, wie in der Datenbankklasse existieren.
@@ -33,6 +34,15 @@ namespace MeisterGeister.Model {
             MU = 8; KL = 8; IN = 8; CH = 8; FF = 8; GE = 8; KO = 8; KK = 8;
             LE_Aktuell = 12; AU_Aktuell = 12;
         }
+
+
+        private ICollection<IWesenPlaylist> _wesenplaylist;
+        private ICollection<IWesenPlaylist> Wesenplaylist
+        {
+            get { return _wesenplaylist; }
+            set { Set(ref _wesenplaylist, value); }
+        }
+
 
         #region IInitializable
         private bool _isInitialized = false;
@@ -2158,6 +2168,7 @@ namespace MeisterGeister.Model {
         #endregion
 
         #region IKämpfer
+        
         public string Initialen
         {
             get
@@ -2368,7 +2379,12 @@ namespace MeisterGeister.Model {
             {
                 List<IFernkampfwaffe> waffen = new List<IFernkampfwaffe>();
                 waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Angelegt && ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha, true)));
-                waffen.Sort((a, b) => ((KämpferFernkampfwaffe)a).AT.CompareTo((b)));
+                try
+                {
+                    waffen.Sort((a, b) => ((KämpferFernkampfwaffe)a).AT.CompareTo((b)));
+                }
+                catch (Exception)
+                { return waffen; }
                 return waffen;
             }
         }

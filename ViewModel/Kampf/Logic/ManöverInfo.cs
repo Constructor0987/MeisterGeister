@@ -60,7 +60,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void ExecuteUmwandelnFernkampf(object o)
         {
-            Manöver = new Manöver.FernkampfManöver(Manöver.Ausführender);
+            Manöver = new Manöver.FernkampfManöver(Manöver.Ausführender, (IFernkampfwaffe)o);
         }
 
 

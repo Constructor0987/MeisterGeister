@@ -13,6 +13,8 @@ using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 using System.Windows.Data;
 using System.Globalization;
+using MeisterGeister.ViewModel.Bodenplan.Logic;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -103,6 +105,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return InitiativListe.Where(mi => mi.Aktionszeiten.Contains(AktuelleAktionszeit)); }
         }
 
+        
         private Lichtstufe licht = Lichtstufe.Tageslicht;
         public Lichtstufe Licht
         {
@@ -152,7 +155,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             AktuelleAktionszeit = next;
             if (next == default(ZeitImKampf))
                 NeueKampfrunde();
+
+            if (AktIniKämpfer != null) ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = false;
             AktIniKämpfer = Kämpfer.FirstOrDefault(t => t.InitiativeMitKommas == AktuelleAktionszeit.InitiativPhase);
+            if (AktIniKämpfer != null) ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = true;            
         }
 
         public void NeueKampfrunde()

@@ -36,6 +36,8 @@
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Umgebung" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,25" Grid.RowSpan="2"/>
+
         <!--Dämmerungssicht / Nachtsicht-->
         <TextBlock Grid.Row="1" Text="Licht"/>
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value, Converter={StaticResource lichtValues}}"/>

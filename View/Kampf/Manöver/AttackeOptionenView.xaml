@@ -6,7 +6,7 @@
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="400">
+             d:DesignHeight="500" d:DesignWidth="400" >
     <UserControl.Resources>
         <ResourceDictionary Source="ManöverResources.xaml"/>
     </UserControl.Resources>
@@ -18,25 +18,25 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
         <!--<Expander IsExpanded="True" Grid.ColumnSpan="2" >
             <Expander.Header>
@@ -48,44 +48,51 @@
                 
             </ComboBox>
         </Expander>-->
-        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,25" Grid.RowSpan="2"/>
+        
+        <!--<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SumMod.value}" Margin="0,0,0,25.6" Grid.RowSpan="2"/>-->
 
-        <TextBlock Grid.Row="1" Text="Ansagen" HorizontalAlignment="Center" Margin="38.2,6,113.6,3.4" FontWeight="Bold" Grid.Column="1" />
+
+        <TextBlock Grid.Row="1" Text="Ansagen" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,25" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2"/>
+
         <!--Wuchtschlag-->
-        <TextBlock Grid.Row="2" Text="Wuchtschlag" Grid.ColumnSpan="2" Margin="0,0.2,200.6,25.6"  Grid.RowSpan="2"/>
-        <Slider Grid.Row="2" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Wuchtschlag].Value}" Grid.ColumnSpan="2" Margin="0.2,0.2,24.4,0.2"/>
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Wuchtschlag].Result}" Margin="0.4,0.2,-0.6,25.6" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="2" Text="Wuchtschlag" />
+        <TextBlock Grid.Row="2" Text="{Binding Mods[Wuchtschlag].Value,  StringFormat='\{0\}'}"  HorizontalAlignment="Right" Margin="3,0"/>
+        <Slider Grid.Row="2" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Wuchtschlag].Value}" />
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Wuchtschlag].Result}" />
 
         <!--Finte-->
-        <TextBlock Grid.Row="3" Text="Finte" Grid.ColumnSpan="2" Margin="0,0.2,200.6,25.6" Grid.RowSpan="2"/>
-        <Slider Grid.Row="3" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Finte].Value}" Grid.ColumnSpan="2" Margin="0.2,0.2,24.4,0.2"/>
-        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Finte].Result}" Margin="0.4,0.2,-0.6,25.6" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="3" Text="Finte" />
+        <TextBlock Grid.Row="3" Text="{Binding Mods[Finte].Value,  StringFormat='\{0\}'}"  HorizontalAlignment="Right" Margin="3,0"/>
+        <Slider Grid.Row="3" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Finte].Value}" />
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Finte].Result}"/>
 
-        <TextBlock Grid.Row="3" Text="Stumpfer Schlag" Grid.ColumnSpan="2" Margin="0,26.2,200.6,26" Grid.RowSpan="3"/>
-        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="stumpf" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Stumpf].Value}" Grid.ColumnSpan="2" Margin="0.2,26.2,24.4,26" Grid.RowSpan="3">
+        <TextBlock Grid.Row="4" Text="Stumpfer Schlag" />
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="stumpf" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Stumpf].Value}" >
             <ComboBoxItem Content="Nein" DataContext="0"/>
             <ComboBoxItem Content="Stäbe &amp; Knüppel" DataContext="2"/>
             <ComboBoxItem Content="Hiebwaffen mit flacher Seite" DataContext="4"/>
             <ComboBoxItem Content="Sonstige mögliche Waffe" DataContext="8"/>
         </ComboBox>
-        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Stumpf].Result}" Margin="0.4,26.2,-0.6,26" Grid.RowSpan="3"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Mods[Stumpf].Result}" />
 
-        <TextBlock Grid.Row="5" Text="Umgebung" HorizontalAlignment="Center" Margin="31.2,6.4,106.6,3" FontWeight="Bold" Grid.Column="1"/>
+        <TextBlock Grid.Row="5" Text="Umgebung" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2"/>
 
         <!--Dämmerungssicht / Nachtsicht-->
-        <TextBlock Grid.Row="6" Text="Licht" Grid.ColumnSpan="2" Margin="0,0,200.6,25.8" Grid.RowSpan="2"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value, Converter={StaticResource lichtValues}}" Grid.ColumnSpan="2" Margin="0.2,0,24.4,0.4"/>
-        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Mods[Licht].Result}" Margin="0.4,0,-0.6,25.8" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="6" Text="Licht" />
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value, Converter={StaticResource lichtValues}}"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Mods[Licht].Result}" />
 
-        <TextBlock Grid.Row="6" Text="Wasser" Grid.ColumnSpan="2" Margin="0,26,200.6,26.2" Grid.RowSpan="3"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="wasser" ItemsSource="{StaticResource wasserValues}" SelectedItem="{Binding Mods[Wasser].Value,Converter={StaticResource wasserValues}}" Grid.ColumnSpan="2" Margin="0.2,26,24.4,26.2" Grid.RowSpan="3"/>
-        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Mods[Wasser].Result}" Margin="0.4,26,-0.6,26.2" Grid.RowSpan="3"/>
+        <TextBlock Grid.Row="7" Text="Wasser" />
+        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="wasser" ItemsSource="{StaticResource wasserValues}" SelectedItem="{Binding Mods[Wasser].Value,Converter={StaticResource wasserValues}}" />
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Mods[Wasser].Result}"/>
 
-        <CheckBox Content="Beengte Umgebung" Grid.Row="8" Grid.ColumnSpan="3" Margin="0,0.2,24.4,0.2"/>
-        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Mods[Beengt].Result}" Margin="0.4,0.2,-0.6,24.8" Grid.RowSpan="2"/>
+        <CheckBox Content="Beengte Umgebung" IsChecked="{Binding Mods[Beengt].Value}" Grid.Row="8" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Mods[Beengt].Result}" />
 
-        <TextBlock Grid.Row="8" Text="Distanzklasse" Grid.ColumnSpan="2" Margin="0,26.2,200.6,26.2" Grid.RowSpan="3"/>
-        <ComboBox Grid.Row="8" Grid.Column="1" x:Name="distanzklasse" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Distanzklasse].Value}" Grid.ColumnSpan="2" Margin="0.2,26.2,24.4,26.2" Grid.RowSpan="3">
+        <TextBlock Grid.Row="9" Text="Distanzklasse" />
+        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="distanzklasse" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Distanzklasse].Value}" >
             <ComboBoxItem Content="Passend" DataContext="0"/>
             <ComboBoxItem Content="Um 1 zu lang oder kurz" DataContext="6"/>
             <ComboBoxItem Content="Um 2 zu lang oder kurz" IsEnabled="False" ToolTip="Angreifen nicht möglich" ToolTipService.ShowOnDisabled="True"/>
@@ -95,50 +102,53 @@
             <ComboBoxItem Content="Um 1 verkleinern (parierbar)" DataContext="0"/>
             <ComboBoxItem Content="Um 2 verkleinern (parierbar)" DataContext="8"/>
         </ComboBox>
-        <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Mods[Distanzklasse].Result}" Margin="0.4,26.2,-0.6,26.2" Grid.RowSpan="3"/>
+        <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding Mods[Distanzklasse].Result}" />
 
         <!--Taktik-Probe?-->
-        <TextBlock Grid.Row="10" Text="Überzahl" Grid.ColumnSpan="2" Margin="0,0.2,200.6,25.6" Grid.RowSpan="2"/>
-        <Slider Grid.Row="10" Grid.Column="1" Interval="1" Minimum="-5" Maximum="5" Value="{Binding Mods[Überzahl].Value}" Grid.ColumnSpan="2" Margin="0.2,0.2,24.4,0.2"/>
-        <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Mods[Überzahl].Result}" Margin="0.4,0.2,-0.6,25.6" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="10" Text="Überzahl" />
+        <TextBlock Grid.Row="10" Text="{Binding Mods[Überzahl].Value,  StringFormat='\{0\}'}"  HorizontalAlignment="Right" Margin="3,0"/>
+        <Slider Grid.Row="10" Grid.Column="1" Interval="1" Minimum="-5" Maximum="5" Value="{Binding Mods[Überzahl].Value}" />
+        <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Mods[Überzahl].Result}" />
 
-        <TextBlock Grid.Row="11" Text="Selbst" HorizontalAlignment="Center" Margin="45.2,5.8,120.6,3.6" FontWeight="Bold" Grid.Column="1"/>
+        <TextBlock Grid.Row="11" Text="Selbst" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2"/>
 
-        <TextBlock Grid.Row="12" Text="Position" Grid.ColumnSpan="2" Margin="0,0.4,200.6,25.4" Grid.RowSpan="2"/>
-        <ComboBox Grid.Row="12" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionSelbst].Value,Converter={StaticResource positionValues}}" Grid.ColumnSpan="2" Margin="0.2,0.4,24.4,0"/>
-        <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding Mods[PositionSelbst].Result}" Margin="0.4,0.4,-0.6,25.4" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="12" Text="Position" />
 
+        <ComboBox Name="currentPosition" Grid.Row="12" Grid.Column="1" ItemsSource="{StaticResource positionValues}"
+                  SelectedItem="{Binding GetKämpferPosition, UpdateSourceTrigger=PropertyChanged}" />    
+        <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding Mods[PositionSelbst].Result}" />
+        
         <!--+1-->
-        <CheckBox Grid.Row="13" Grid.ColumnSpan="3" Content="Unbewaffneter Angriff gegen Bewaffnete" IsChecked="{Binding Mods[Unbewaffnet].Value}" Margin="0,0,24.4,0.4"/>
-        <TextBlock Grid.Row="13" Grid.Column="2" Text="{Binding Mods[Unbewaffnet].Result}" Margin="0.4,0,-0.6,25.8" Grid.RowSpan="2"/>
+        <CheckBox Grid.Row="13" Grid.ColumnSpan="2" Content="Unbewaffneter Angriff gegen Bewaffnete" IsChecked="{Binding Mods[Unbewaffnet].Value}" />
+        <TextBlock Grid.Row="13" Grid.Column="2" Text="{Binding Mods[Unbewaffnet].Result}"/>
 
         <!--+9 / Linkhand / Beidhändiger Kampf I / Linkshändig / Beidhändig-->
-        <CheckBox Grid.Row="13" Grid.ColumnSpan="3" Content="Kampf mit der falschen Hand" IsChecked="{Binding Mods[FalscheHand].Value}" Margin="0,26,24.4,26.2" Grid.RowSpan="3"/>
-        <TextBlock Grid.Row="13" Grid.Column="2" Text="{Binding Mods[FalscheHand].Result}" Margin="0.4,26,-0.6,26.2" Grid.RowSpan="3"/>
+        <CheckBox Grid.Row="14" Grid.ColumnSpan="2" Content="Kampf mit der falschen Hand" IsChecked="{Binding Mods[FalscheHand].Value}" />
+        <TextBlock Grid.Row="14" Grid.Column="2" Text="{Binding Mods[FalscheHand].Result}" />
 
         <!--Gegner Aufmerksamkeit? / Ini-Mod der eigenen Waffe-->
-        <CheckBox Grid.Row="15" Grid.ColumnSpan="3" Content="Passierschlag" IsChecked="{Binding Mods[Passierschlag].Value}" Margin="0,0.2,24.4,0.2"/>
-        <TextBlock Grid.Row="15" Grid.Column="2" Text="{Binding Mods[Passierschlag].Result}" Margin="0.4,0.2,-0.6,25.6" Grid.RowSpan="2"/>
+        <CheckBox Grid.Row="15" Grid.ColumnSpan="3" Content="Passierschlag" IsChecked="{Binding Mods[Passierschlag].Value}" />
+        <TextBlock Grid.Row="15" Grid.Column="2" Text="{Binding Mods[Passierschlag].Result}" />
 
-        <TextBlock Grid.Row="16" Text="Gegner" HorizontalAlignment="Center" Margin="42.2,5.8,117.6,3.6" FontWeight="Bold" Grid.Column="1"/>
+        <TextBlock Grid.Row="16" Text="Gegner" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2"/>
 
-        <TextBlock Grid.Row="17" Text="Position" Grid.ColumnSpan="2" Margin="0,0.4,200.6,25.4" Grid.RowSpan="2"/>
-        <ComboBox Grid.Row="17" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionGegner].Value,Converter={StaticResource positionValues}}" Grid.ColumnSpan="2" Margin="0.2,0.4,24.4,0"/>
-        <TextBlock Grid.Row="17" Grid.Column="2" Text="{Binding Mods[PositionGegner].Result}" Margin="0.4,0.4,-0.6,25.4" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="17" Text="Position" Grid.ColumnSpan="2" />
+        <ComboBox Grid.Row="17" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionGegner].Value,Converter={StaticResource positionValues}}"/>
+        <TextBlock Grid.Row="17" Grid.Column="2" Text="{Binding Mods[PositionGegner].Result}" />
 
-        <TextBlock Grid.Row="18" Text="Überrascht" Grid.ColumnSpan="2" Margin="0,0,200.6,25" Grid.RowSpan="2"/>
-        <ComboBox Grid.Row="18" Grid.Column="1" x:Name="überrascht" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Überrascht].Value}" Grid.ColumnSpan="2" Margin="0.2,0,24.4,0.4">
+        <TextBlock Grid.Row="18" Text="Überrascht" />
+        <ComboBox Grid.Row="18" Grid.Column="1" x:Name="überrascht" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Überrascht].Value}" >
             <ComboBoxItem Content="Nein" DataContext="0"/>
             <ComboBoxItem Content="Überrumpelt (z.B. Angriff von Hinten)" DataContext="-5"/>
             <ComboBoxItem Content="Schlafend / Bewusstlos" DataContext="-8"/>
             <ComboBoxItem Content="Vollkommen unbeweglich" DataContext="-10"/>
         </ComboBox>
-        <TextBlock Grid.Row="18" Grid.Column="2" Text="{Binding Mods[Überrascht].Result}" Margin="0.4,0,-0.6,25" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="18" Grid.Column="2" Text="{Binding Mods[Überrascht].Result}" />
 
         <!--Zielgröße-->
-        <TextBlock Grid.Row="18" Text="Zielgröße" Grid.ColumnSpan="2" Margin="0,26,200.6,0" Grid.RowSpan="2"/>
-        <ComboBox Grid.Row="18" Grid.Column="1" ItemsSource="{StaticResource größenValues}" SelectedItem="{Binding Mods[Zielgröße].Value,Converter={StaticResource größenValues}}" Grid.ColumnSpan="2" Margin="0.2,26,24.4,0" Grid.RowSpan="2"/>
-        <TextBlock Grid.Row="18" Grid.Column="2" Text="{Binding Mods[Zielgröße].Result}" Margin="0.4,26,-0.6,0" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="19" Text="Zielgröße" />
+        <ComboBox Grid.Row="19" Grid.Column="1" ItemsSource="{StaticResource größenValues}" SelectedItem="{Binding Mods[Zielgröße].Value,Converter={StaticResource größenValues}}" />
+        <TextBlock Grid.Row="19" Grid.Column="2" Text="{Binding Mods[Zielgröße].Result}" />
 
         <!--Benötigt Finte / bei Gezielter Stich nur halber Zuschlag - 2 -->
         <!--<TextBlock Grid.Row="10" Text="Gezielter Schlag"/>

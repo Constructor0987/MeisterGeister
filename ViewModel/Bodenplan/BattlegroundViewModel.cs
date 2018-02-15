@@ -596,7 +596,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #endregion
         
-
         private bool _leftShiftPressed = false;
         public bool LeftShiftPressed
         {

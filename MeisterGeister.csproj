@@ -735,6 +735,7 @@
     <Compile Include="ViewModel\Kalender\Logic\DateList.cs" />
     <Compile Include="ViewModel\Kalender\Logic\DateProvider.cs" />
     <Compile Include="Logic\Karte\AffineTransformation.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Bewegung.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Größe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Lichtstufe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\FernkampfManöver.cs" />
@@ -1022,6 +1023,7 @@
     </Compile>
     <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\Beschwörung\DämonenListViewConverter.cs" />
+    <Compile Include="View\General\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="View\General\IsNullOrEmptyConverter.cs" />
     <Compile Include="View\General\LazyUpdate.cs" />
     <Compile Include="View\General\ListBoxBehaviour.cs" />

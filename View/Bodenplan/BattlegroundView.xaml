@@ -53,13 +53,6 @@
                     <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,17,0,0" Name="checkBox4" VerticalAlignment="Top" Width="108" />
                     <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="735,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
                     <CheckBox Content="RechteckRaster" Height="16" HorizontalAlignment="Left" Margin="735,27,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" />
-                    <StackPanel Margin="738,48,438,10" >
-                        <Label Content="Auf Bildschirm" HorizontalAlignment="Center" Padding="0,5,0,0" />
-                        <ViewGeneral:IntBox MinValue="1" MaxValue="{Binding System.Windows.Forms.Screen.AllScreens.Length}" Value="{Binding AufBildschirm, UpdateSourceTrigger=PropertyChanged}" ShowButtons="True"  Width="80">
-                            
-                        </ViewGeneral:IntBox>
-                    </StackPanel>
-
                     <xctk:ColorPicker SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Rasterfarbe" Margin="735,48,573,0"/>
                     <!-- Kontroll hidden, cause of no future development, but maybe later -->
                     <xctk:CheckListBox Visibility="Hidden" Height="100" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="1136,7,0,0" />
@@ -389,8 +382,7 @@
                                 <ListBox.Resources>
                                     <!--Datatemplate BattlegroundCreature (Hero & Enemy)-->
                                     <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
-                                        <Thumb DragDelta="Thumb_Drag" 
-                                                IsEnabled="{Binding IsSelected,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
                                             <Thumb.Template>
                                                 <ControlTemplate TargetType="Thumb">
                                                     <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -422,11 +414,17 @@
                                                         <Image Width="50" Height="50" Source="{Binding CreaturePosition, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />                                                        
                                                         <Canvas.Effect>
                                                             <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}} }" ShadowDepth="10" BlurRadius="20" />
-                                                        </Canvas.Effect>
-                                                        
+                                                        </Canvas.Effect>                                                        
                                                     </Canvas>
                                                     <ControlTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                            <Setter Property="Effect">
+                                                                <Setter.Value>
+                                                                    <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="35" />
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsAnDerReihe}" Value="True">
                                                             <Setter Property="Effect">
                                                                 <Setter.Value>
                                                                     <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="35" />
@@ -456,7 +454,7 @@
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect" TargetName="PathLine">
                                                                 <Setter.Value>
-                                                                    <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                                    <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="25" />
                                                                 </Setter.Value>
                                                             </Setter>
                                                         </DataTrigger>
@@ -485,7 +483,7 @@
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect" TargetName="FilledPathLine">
                                                                 <Setter.Value>
-                                                                    <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                                    <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="25" />
                                                                 </Setter.Value>
                                                             </Setter>
                                                         </DataTrigger>
@@ -512,14 +510,15 @@
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
 
                                                     </Canvas>
+                                                    
                                                     <ControlTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect">
                                                                 <Setter.Value>
-                                                                    <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                                    <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="25" />
                                                                 </Setter.Value>
                                                             </Setter>
-                                                        </DataTrigger>
+                                                        </DataTrigger>                                                        
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
                                             </Thumb.Template>
@@ -596,7 +595,6 @@
                                                             </Rectangle.Fill>
                                                         </Rectangle>
 
-
                                                         <Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />
                                                         <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
                                                                     Visibility="{Binding DataContext.ShowZ, 
@@ -617,7 +615,14 @@
                                                         </Canvas.Effect>
                                                     </Canvas>
                                                     <ControlTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <!--<DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                            <Setter Property="Effect">
+                                                                <Setter.Value>
+                                                                    <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>-->
+                                                        <DataTrigger Binding="{ Binding IsAnDerReihe }" Value="True">
                                                             <Setter Property="Effect">
                                                                 <Setter.Value>
                                                                     <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
@@ -645,7 +650,7 @@
                                                                 RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                 Converter={StaticResource BoolToVisibilityConverter}}"/>
                                                     </Canvas>
-                                                    <ControlTemplate.Triggers>
+                                                    <!--<ControlTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect" TargetName="PathLine">
                                                                 <Setter.Value>
@@ -653,7 +658,7 @@
                                                                 </Setter.Value>
                                                             </Setter>
                                                         </DataTrigger>
-                                                    </ControlTemplate.Triggers>
+                                                    </ControlTemplate.Triggers>-->
                                                 </ControlTemplate>
                                             </Thumb.Template>
                                         </Thumb>
@@ -674,7 +679,7 @@
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
                                                     </Canvas>
-                                                    <ControlTemplate.Triggers>
+                                                    <!--<ControlTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect" TargetName="FilledPathLine">
                                                                 <Setter.Value>
@@ -682,7 +687,7 @@
                                                                 </Setter.Value>
                                                             </Setter>
                                                         </DataTrigger>
-                                                    </ControlTemplate.Triggers>
+                                                    </ControlTemplate.Triggers>-->
                                                 </ControlTemplate>
                                             </Thumb.Template>
                                         </Thumb>
@@ -705,7 +710,7 @@
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
 
                                                     </Canvas>
-                                                    <ControlTemplate.Triggers>
+                                                    <!--<ControlTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect">
                                                                 <Setter.Value>
@@ -713,7 +718,7 @@
                                                                 </Setter.Value>
                                                             </Setter>
                                                         </DataTrigger>
-                                                    </ControlTemplate.Triggers>
+                                                    </ControlTemplate.Triggers>-->
                                                 </ControlTemplate>
                                             </Thumb.Template>
                                         </Thumb>
@@ -756,15 +761,10 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-            </TabControl>
-            
-            
+            </TabControl>                        
             <!--</xctkzb:Zoombox>-->
         </Grid>
         <!--<DockPanel Margin="220,131,12,11" Name="ArenaGridContainer" Background="Aqua"></DockPanel>-->
-
-
-
     </Grid>
     <UserControl.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
