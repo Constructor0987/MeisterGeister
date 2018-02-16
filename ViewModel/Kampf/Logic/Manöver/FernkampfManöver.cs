@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.View.General;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -127,6 +128,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 OnChanged("Mods");
                 OnChanged("Mods[Ansage]");
             }
+        }
+
+        private string _größeBeispiel;
+        
+        public string GrößeBeispiel
+        {
+            get {  return _größeBeispiel; }
+            set { Set(ref _größeBeispiel, value); }
         }
 
         private List<IFernkampfwaffe> _fernkampfWaffen = new List<IFernkampfwaffe>();
@@ -281,18 +290,36 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             switch (value)
             {
+                case Größe.Kleiner2AlsWinzig:
+                    GrößeBeispiel = "2 Größenklassen kleiner als z.B. eine Münze, Drachenauge, Maus, Kröte";
+                    return 12;
+                case Größe.Kleiner1AlsWinzig:
+                    GrößeBeispiel = "1 Größenklasse kleiner als z.B. eine Münze, Drachenauge, Maus, Kröte";
+                    return 10;
                 case Größe.Winzig:
+                    GrößeBeispiel = "Münze, Drachenauge, Maus, Kröte";
                     return 8;
                 case Größe.SehrKlein:
+                    GrößeBeispiel = "Schlange, Fasan, Katze, Rabe";
                     return 6;
                 case Größe.Klein:
+                    GrößeBeispiel = "Wolf, Reh, Schaf";
                     return 4;
                 case Größe.Mittel:
+                    GrößeBeispiel = "Mensch, Elf, Ork, Goblin, Zwerg";
                     return 2;
                 case Größe.Groß:
+                    GrößeBeispiel = "Pferd, Steppenrind, Oder, Troll";
                     return 0;
                 case Größe.SehrGroß:
+                    GrößeBeispiel = "Scheunentor, Drache, Elefant, Riese";
                     return -2;
+                case Größe.Größer1AlsSehrGroß:
+                    GrößeBeispiel = "1 Größenklasse größer als z.B. ein Scheunentor, Drache, Elefant, Riese";
+                    return -4;
+                case Größe.Größer2AlsSehrGroß:
+                    GrößeBeispiel = "2 Größenklassen größer als z.B. ein Scheunentor, Drache, Elefant, Riese";
+                    return -6;
                 default:
                     return 0;
             }
@@ -359,7 +386,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                          (waffe.Talent == FernkampfWaffeSelected.Talent &&
                           (held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")")) ? 1 :
                          // ohne Meisterschütze je Ansage 1 Aktion
-                         Ansage);
+                         (int)(Math.Round((double)Ansage/2, MidpointRounding.AwayFromZero)));
                 }
             }
             else

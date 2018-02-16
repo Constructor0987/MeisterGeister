@@ -28,7 +28,7 @@
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" FontWeight="Bold" TextDecorations="Underline" >
+        <TextBlock Grid.Row="0" FontWeight="Bold" TextDecorations="Underline" TextWrapping="Wrap" >
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Style.Triggers>
@@ -42,7 +42,7 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <CheckBox Content="Zeige Namen in INI" IsChecked="{Binding ShowName}" Grid.Column="1" Grid.ColumnSpan="2" Margin="-5,0,0,0" />
+        <CheckBox Content="Bezeichnung in INI" IsChecked="{Binding ShowName}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
         <TextBlock Grid.Row="1" Text="Zauberdauer (Basis)"/>
         <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="1" Grid.Column="1" Value="{Binding BasisDauer}"/>
         <TextBlock Grid.Column="3" Text="{Binding Dauer}" Grid.Row="1"/>
@@ -141,5 +141,8 @@
             <ComboBoxItem Content="3 zentrale Komponenten" DataContext="3"/>
         </ComboBox>
         <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Mods[TechnikZentral].Result}"/>
+
+        <!--<CheckBox Grid.Row="11" Grid.ColumnSpan="2" Content="Falsche Repräsentation" IsChecked="{Binding Mods[FalscheRepräsenation].Value}" />
+        <TextBlock Grid.Row="11" Grid.Column="2" Text="{Binding Mods[FalscheRepräsenation].Result}"/>-->
     </Grid>
 </UserControl>

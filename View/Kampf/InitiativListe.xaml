@@ -258,7 +258,19 @@
                                 </Grid>
                             </Grid.ToolTip>
                         </Grid>
-                        <TextBlock Text="{Binding Kämpfer.Name}" Width="150" VerticalAlignment="Center"/>
+                        <TextBlock Width="150" VerticalAlignment="Center">
+                            <!--Text="{Binding Kämpfer.Name}"-->
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding KämpferTempName}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding KämpferTempName}" Value="{x:Null}">
+                                            <Setter Property="Text" Value="{Binding Kämpfer.Name}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                         <Slider VerticalAlignment="Center" Margin="6,0,6,0" Minimum="0" Maximum="{Binding Aktionen}" Value="{Binding Abwehraktionen}" IsSnapToTickEnabled="True" Width="60" ToolTip="Aktionen umwandeln" />
                         <ItemsControl ItemsSource="{Binding AbwehrManöver}">                            
                             <ItemsControl.ItemsPanel>

@@ -115,7 +115,7 @@ namespace MeisterGeister.Model
         }
 
         public string Spieler { get { return "Meister"; } }
-
+        
         private int _initiativeWurf = 0;
         public int InitiativeWurf
         {

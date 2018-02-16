@@ -78,6 +78,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        private string _kämpferTempName = null;
+        public string KämpferTempName
+        {
+            get { return _kämpferTempName; }
+            set { Set(ref _kämpferTempName, value); }
+        }
+
         private ICollection<IWesenPlaylist> _wesenplaylist;
         private ICollection<IWesenPlaylist> Wesenplaylist
         {
@@ -190,6 +197,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Kampf = kampf;
             Team = 1;
             Initiative = k.Initiative();
+            if (k is IGegnerBase)
+                KämpferTempName = "Gegner " + (kampf.Kämpfer.Where(t => t.Team == 2).ToList().Count+1);
 
             Wesenplaylist = (k is MeisterGeister.Model.Held) ?
                 new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :

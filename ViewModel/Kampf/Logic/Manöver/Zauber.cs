@@ -91,8 +91,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected const string ZIELOBJEKT_MOD = "Zielobjekt";
         protected const string TECHNIK_MOD = "Technik";
         protected const string TECHNIK_ZENTRAL_MOD = "TechnikZentral";
+        protected const string FALSCHEREPRÄSENTATION_MOD = "Technik";
 
-        private ZauberModifikator<int> zauberdauer, wirkungsdauer, reichweite, erzwingen, technik, technikZentral;
+        private ZauberModifikator<int> zauberdauer, wirkungsdauer, reichweite, erzwingen, technik, technikZentral, falscheRepräsenation;
         private ZauberModifikator<bool> festeDauer, zielobjekt;
 
         protected override void InitMods()
@@ -156,6 +157,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         private int WirkungsDauerMod(IWaffe waffe, int value)
         {
+            Held h = Ausführender.Kämpfer as Held;
+            if (h != null && h.Rasse.ToLower().Contains("elf") && held_zauber.Probenname.Contains("Elf") )
+                return value * (Math.Sign(value) == 1 ? 4 : -3);
             return value * (Math.Sign(value) == 1 ? 7 : -3);
         }
 

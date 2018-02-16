@@ -119,7 +119,35 @@
 
         <TextBlock Grid.Row="11" Text="Entfernung"/>
         <DockPanel Grid.Row="11" Grid.Column="1">
-            <Slider Value="{Binding Mods[Entfernung].Value}" Minimum="0" Maximum="100" DockPanel.Dock="Left" Width="100"/>
+            <Slider Value="{Binding Mods[Entfernung].Value}" Minimum="0" DockPanel.Dock="Left" VerticalAlignment="Center" Width="130">
+                <Slider.ToolTip>
+                    <StackPanel >
+                    <TextBlock Text="Reichweite der Fernkampfwaffe " />
+                        <TextBlock >
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding FernkampfWaffeSelected.Reichweiten}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FernkampfWaffeSelected.Reichweiten}" Value="{x:Null}">
+                                            <Setter Property="Text" Value="unbekannt" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock> 
+                    </StackPanel>
+                </Slider.ToolTip>
+                <Slider.Style>
+                    <Style TargetType="Slider">
+                        <Setter Property="Maximum" Value="{Binding FernkampfWaffeSelected.RWSehrWeit}" />                        
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FernkampfWaffeSelected.RWSehrWeit}" Value="{x:Null}">
+                                <Setter Property="Maximum" Value="250" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Slider.Style>
+            </Slider>
             <ViewGeneral:IntBox DockPanel.Dock="Right" ShowButtons="True" Value="{Binding Mods[Entfernung].Value}"/>
         </DockPanel>
         
@@ -127,7 +155,10 @@
 
         <!--Zielgröße-->
         <TextBlock Grid.Row="12" Text="Zielgröße"/>
-        <ComboBox Grid.Row="12" Grid.Column="1" ItemsSource="{StaticResource größenValues}" SelectedItem="{Binding Mods[Zielgröße].Value,Converter={StaticResource größenValues}}"/>
+        <ComboBox Grid.Row="12" Grid.Column="1" ItemsSource="{StaticResource größenValues}" 
+                  SelectedItem="{Binding Mods[Zielgröße].Value,Converter={StaticResource größenValues}}"
+                  ToolTip="{Binding GrößeBeispiel}">
+        </ComboBox>
         <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding Mods[Zielgröße].Result}"/>
 
 

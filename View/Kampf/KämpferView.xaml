@@ -146,9 +146,21 @@
             <TextBlock Text="Initiative:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
             <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="50" Value="{Binding Initiative}" FontWeight="Bold" ShowButtons="True" />
         </DockPanel>
-
-        <local:KämpferZonenView Grid.Row="0" Grid.Column="1" Margin="5" DataContext="{Binding Kämpfer}"/>
-
+        <StackPanel Grid.Column="1" >
+            <TextBox Text="{Binding KämpferTempName}" Height="20" Width="100" VerticalAlignment="Top">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding KämpferTempName}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+            </TextBox>
+            <local:KämpferZonenView Margin="5" DataContext="{Binding Kämpfer}"/>
+        </StackPanel>
+        
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" DataContext="{Binding Kämpfer}">
             <StackPanel.Resources>
                 <DataTemplate DataType="{x:Type model:Held}">
@@ -263,14 +275,12 @@
                     </ListBox>
                 </DataTemplate>
             </StackPanel.Resources>
-            <TextBox Margin="4" Text="{Binding Path=Bemerkung}" ToolTip="Bemerkungen" TextWrapping="Wrap" AcceptsReturn="True">
-                <!--<TextBox.BorderBrush>
-                    <SolidColorBrush />
-                </TextBox.BorderBrush>
-                <TextBox.Background>
-                    <SolidColorBrush />
-                </TextBox.Background>-->
-            </TextBox>
+            <Expander IsExpanded="True" VerticalAlignment="Top" Background="{StaticResource Background2}" Margin="4" >
+                <Expander.Header>
+                    <TextBlock Text="Bemerkungen" Style="{DynamicResource TextTitel}"/>
+                </Expander.Header>
+                <TextBox Text="{Binding Path=Bemerkung}" ToolTip="Bemerkungen" TextWrapping="Wrap" AcceptsReturn="True"/>
+            </Expander>
             <ContentPresenter Content="{Binding}" />
             <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding Modifikatoren}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
                 <ListBox.ItemTemplate>

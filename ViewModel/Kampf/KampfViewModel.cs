@@ -317,8 +317,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("StandardColors");
             }
         }
-
-
+        
         private void ShowGegnerView(object obj)
         {
             if (showGegnerView != null)

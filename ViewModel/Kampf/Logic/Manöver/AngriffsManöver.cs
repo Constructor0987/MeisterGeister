@@ -57,7 +57,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             {
                 return value;
             }
-            else return Math.Max(0, value * 2 - 1);
+            else return Math.Max(0, value * 2);
         }
 
         protected virtual int FinteMod(INahkampfwaffe waffe, int value)
@@ -67,7 +67,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             {
                 return value;
             }
-            else return Math.Max(0, value * 2 - 1);
+            else return Math.Max(0, value * 2);
         }
 
         protected virtual int PassierschlagMod(INahkampfwaffe waffe, bool value)

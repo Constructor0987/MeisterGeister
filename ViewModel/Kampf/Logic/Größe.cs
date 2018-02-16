@@ -9,6 +9,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     public enum Größe
     {
+        [Description("2 Kleiner als Winzig")]
+        Kleiner2AlsWinzig,
+        [Description("1 Kleiner als Winzig")]
+        Kleiner1AlsWinzig,
         [Description("Winzig")]
         Winzig,
         [Description("Sehr klein")]
@@ -20,6 +24,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         [Description("Groß")]
         Groß,
         [Description("Sehr groß")]
-        SehrGroß
+        SehrGroß,
+        [Description("1 Größer als sehr groß")]
+        Größer1AlsSehrGroß,
+        [Description("2 Größer als sehr groß")]
+        Größer2AlsSehrGroß
     }
 }
