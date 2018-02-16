@@ -239,7 +239,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="1*" />
             <ColumnDefinition>
                 <ColumnDefinition.Style>
                     <Style TargetType="ColumnDefinition">
@@ -256,18 +257,20 @@
 
         <!--Bodenplan kommt hier hin-->
          
-        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="2"
-                  Background="{StaticResource Background2}" BorderThickness="3" MinWidth="130" Padding="5">
+        <Expander ExpandDirection="Right" IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2"
+                  Background="{StaticResource Background2}" BorderThickness="3" MinHeight="130" Padding="5">
             <Expander.Header>
                 <TextBlock Text="Bodenplan" Style="{DynamicResource TextTitel}"/>
             </Expander.Header>
             <ViewBodenplan:BattlegroundView Grid.Row="1" DataContext="{Binding BodenplanViewModel}"/>
         </Expander>
-        <GridSplitter Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
+        
+        <!--<GridSplitter Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="3" />-->
+        <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
 
         <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
-        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.RowSpan="2" Grid.Column="1"
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.RowSpan="2" Grid.Column="2"
                   Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5">
             <Expander.Header>
                 <TextBlock Text="{Binding SelectedKämpfer.Kämpfer.Name}" Style="{DynamicResource TextTitel}"/>
@@ -284,7 +287,7 @@
             <Kampf:KämpferView DataContext="{Binding SelectedKämpfer}"/>
         </Expander>
 
-        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.RowSpan="2" Grid.Column="1"
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.RowSpan="2" Grid.Column="2"
                   Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5">
             <Expander.Header>
                 <DockPanel HorizontalAlignment="Center">

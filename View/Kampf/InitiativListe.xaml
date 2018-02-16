@@ -305,7 +305,8 @@
             </ItemsControl.ItemTemplate>
         </ListBox>
 
-        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" Margin="4,0,0,0" ScrollChanged="scrViewer_ScrollChanged" >
+        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" Margin="4,0,0,0" 
+                      ScrollChanged="scrViewer_ScrollChanged" MouseEnter="scrViewer_MouseEnter" MouseLeave="scrViewer_MouseLeave">
             <Grid>
                 <Grid.Resources>
                     <CollectionViewSource Source="{Binding Kampf.InitiativListe.Aktionszeiten}" x:Key="kampfrunden">

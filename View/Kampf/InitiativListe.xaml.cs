@@ -24,15 +24,26 @@ namespace MeisterGeister.View.Kampf
         {
             InitializeComponent();
         }
+        bool MouseIsOverScrViewer = false;
 
         private void scrViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (((ScrollViewer)sender).ScrollableWidth > 0)
+            if (!MouseIsOverScrViewer && ((ScrollViewer)sender).ScrollableWidth > 0)
             {
                 int anzInisDavor = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count(t => t.Kampfrunde < Global.CurrentKampf.Kampf.Kampfrunde);
                 double width1Ini = ((ScrollViewer)sender).ExtentWidth / Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count();
                 ((ScrollViewer)sender).ScrollToHorizontalOffset(width1Ini * anzInisDavor);
             }
+        }
+
+        private void scrViewer_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MouseIsOverScrViewer = true;
+        }
+
+        private void scrViewer_MouseLeave(object sender, MouseEventArgs e)
+        {
+            MouseIsOverScrViewer = false;
         }
     }
 }

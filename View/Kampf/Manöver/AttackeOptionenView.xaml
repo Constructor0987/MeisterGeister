@@ -133,7 +133,8 @@
         <TextBlock Grid.Row="16" Text="Gegner" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2"/>
 
         <TextBlock Grid.Row="17" Text="Position" Grid.ColumnSpan="2" />
-        <ComboBox Grid.Row="17" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionGegner].Value,Converter={StaticResource positionValues}}"/>
+        <ComboBox Grid.Row="17" Grid.Column="1" ItemsSource="{StaticResource positionValues}" 
+                  SelectedItem="{Binding Mods[PositionGegner].Value}"/>
         <TextBlock Grid.Row="17" Grid.Column="2" Text="{Binding Mods[PositionGegner].Result}" />
 
         <TextBlock Grid.Row="18" Text="Überrascht" />

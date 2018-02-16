@@ -387,7 +387,7 @@
                                                 <ControlTemplate TargetType="Thumb">
                                                     <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                                         <!--SightArea-->
-                                                        <Path Visibility="{Binding VM.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
+                                                        <Path Visibility="{Binding DataContext.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
                                                                 Fill="Yellow" IsHitTestVisible="False" Stroke="Yellow" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2"/>
                                                         <!--Frame for Heroe Picture-->
                                                         <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY,UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureX,UpdateSourceTrigger=PropertyChanged}" Width="{Binding CreatureWidth,UpdateSourceTrigger=PropertyChanged}" Height="{Binding CreatureHeight,UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Name}">
