@@ -21,17 +21,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string WASSER_MOD = "Wasser";
         public const string BEENGT_MOD = "Beengt";
         public const string DISTANZLASSE_MOD = "Distanzklasse";
-        public const string POS_SELBST_MOD = "PositionSelbst";
         public const string POS_GEGNER_MOD = "PositionGegner";
         public const string FALSCHE_HAND_MOD = "FalscheHand";
         public const string ÜBERZAHL_MOD = "Überzahl";
         public const string UNBEWAFFNET_MOD = "Unbewaffnet";
+        public const string POS_SELBST_MOD = "PositionSelbst";
 
         protected NahkampfModifikator<Lichtstufe> licht;
+        protected NahkampfModifikator<Sichtstufe> sicht;
+        protected NahkampfModifikator<Position> positionSelbst;
         protected NahkampfModifikator<Wassertiefe> wasser;
         protected NahkampfModifikator<bool> beengt;
         protected NahkampfModifikator<int> distanzklasse;
-        protected NahkampfModifikator<Position> position_selbst;
         protected NahkampfModifikator<Position> position_gegner;
         protected NahkampfModifikator<bool> falscheHand;
         protected NahkampfModifikator<int> überzahl;
@@ -46,6 +47,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
 
+            sicht = new NahkampfModifikator<Sichtstufe>(this);
+            sicht.GetMod = SichtMod;
+            mods.Add(SICHT_MOD, sicht);
+            
             wasser = new NahkampfModifikator<Wassertiefe>(this);
             wasser.GetMod = WasserMod;
             mods.Add(WASSER_MOD, wasser);
@@ -59,10 +64,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             //----------POSITION----------
 
-            NahkampfModifikator<Position> position_selbst = new NahkampfModifikator<Position>(this);
-            position_selbst.GetMod = PositionSelbstMod;
-            position_selbst.Value = Ausführender.Kämpfer.Position;
-            mods.Add(POS_SELBST_MOD, position_selbst);
+            positionSelbst = new NahkampfModifikator<Position>(this);
+            positionSelbst.GetMod = PositionSelbstMod;
+       //     positionSelbst.Value = Ausführender.Kämpfer.Position;
+            mods.Add(POS_SELBST_MOD, positionSelbst);
 
             NahkampfModifikator<Position> position_gegner = new NahkampfModifikator<Position>(this);
             position_gegner.GetMod = PositionGegnerMod;
@@ -123,6 +128,42 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return Math.Min(8, mod);
         }
 
+
+        protected override int SichtMod(INahkampfwaffe waffe, Sichtstufe value)
+        {
+            return 0;
+        }
+
+        protected int PositionSelbstMod(INahkampfwaffe waffe, Position value)
+        {
+            if (Global.CurrentKampf.SelectedManöver != null)
+            {
+                if (Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst &&
+                   ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value != Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst)
+                {
+                    ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst.Value;
+                    value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst.Value;
+                }
+
+                IKämpfer bodenplanKämpfer = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Where(t => t is IKämpfer)
+                    .FirstOrDefault(t => ((IKämpfer)t) == Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.Kämpfer) as IKämpfer);
+
+                if (Global.CurrentKampf.Kampf.tempP == null &&
+                    bodenplanKämpfer != null && bodenplanKämpfer.Position != ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value)
+                    bodenplanKämpfer.Position = ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value;
+            }
+            Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst = false;
+            switch (value)
+            {
+                case Position.Kniend:
+                    return 1;
+                case Position.Liegend:
+                    return 3;
+                default:
+                    return 0;
+            }
+        }
+
         protected abstract int BeengtMod(INahkampfwaffe waffe, bool value);
 
         protected abstract int UnbewaffnetMod(INahkampfwaffe waffe, bool value);
@@ -151,19 +192,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             else return 0;
         }
 
-        protected virtual int PositionSelbstMod(INahkampfwaffe waffe, Position value)
-        {
-            Ausführender.Kämpfer.Position = value;
-            switch (value)
-            {
-                case Position.Liegend:
-                    return 3;
-                case Position.Kniend:
-                    return 1;
-                default: 
-                    return 0;
-            }            
-        }
 
         protected abstract int PositionGegnerMod(INahkampfwaffe waffe, Position value);
 
@@ -195,24 +223,45 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             return mod;
         }
-
-
+        
         //TODO:  AKTUALISIERUNG in der Combobox NICHT OKAY
-        private Position _getKämpferPosition = Position.Stehend;
-        public Position GetKämpferPosition
-        {
-            get
-            {
-                _getKämpferPosition = Ausführender.Kämpfer.Position;
-                ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = Ausführender.Kämpfer.Position;
-                return ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value;
-            }
-            set 
-            {
-                ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = value;
-                Set(ref _getKämpferPosition, value);
-            }
-        }
+        //private Position _getKämpferPosition = Position.Stehend;
+        //public Position GetKämpferPosition
+        //{
+        //    get
+        //    {
+        //        _getKämpferPosition = Ausführender.Kämpfer.Position;
+        //        ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = Ausführender.Kämpfer.Position;
+        //        return ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value;
+        //    }
+        //    set 
+        //    {
+        //        ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = value;
+        //        Set(ref _getKämpferPosition, value);
+        //    }
+        //}
+
+        
+
+        //private Base.CommandBase _onBtnPositionSelbstRefresh;
+        //public Base.CommandBase OnBtnPositionSelbstRefresh
+        //{
+        //    get
+        //    {
+        //        if (_onBtnPositionSelbstRefresh == null)
+        //        {
+        //            _onBtnPositionSelbstRefresh = new Base.CommandBase(PositionSelbstRefresh, null);
+        //        }
+        //        return _onBtnPositionSelbstRefresh;
+        //    }
+        //}
+
+        //private void PositionSelbstRefresh(object o)
+        //{
+        //    ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = Ausführender.Kämpfer.Position;
+
+        //}
+            
 
         #endregion
 

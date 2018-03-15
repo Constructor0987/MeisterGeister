@@ -44,12 +44,12 @@ namespace MeisterGeister.View.Bodenplan
 
         private void InitiateSpielerScaling()
         {
-            var scaler = ArenaGridTop2.LayoutTransform as ScaleTransform;
+            var scaler = PlayerArenaGridTop.LayoutTransform as ScaleTransform;
 
             if (scaler == null)
             {
                 // Currently no zoom, so go instantly to normal zoom.
-                ArenaGridTop2.LayoutTransform = new ScaleTransform(1, 1);
+                PlayerArenaGridTop.LayoutTransform = new ScaleTransform(1, 1);
             }
         }
 
@@ -720,14 +720,15 @@ namespace MeisterGeister.View.Bodenplan
 
             if (System.Windows.Forms.Screen.AllScreens.Length > 1)
                 VM.KampfWindow.Left = System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Right// + System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width
-                      - VM.KampfWindow.ActualWidth;
+                      - Math.Round(WidthStart * vm.ScaleKampfGrid);
             VM.IsShowIniKampf = true;
             if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive &&
                 Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Left >= System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
             {
                 Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = System.Windows.WindowState.Normal;
                 Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = System.Windows.WindowStyle.None;
-                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - VM.KampfWindow.Width;
+                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Math.Round(WidthStart * vm.ScaleKampfGrid);
+                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Height = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height;
             }
         }
         
@@ -741,6 +742,25 @@ namespace MeisterGeister.View.Bodenplan
                 //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
                 VM.KampfWindow.SizeToContent = SizeToContent.Manual;
                 VM.KampfWindow.Width = Math.Round(WidthStart * vm.ScaleKampfGrid);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MeisterArenaZoom_Click(object sender, RoutedEventArgs e)
+        {
+            if (Global.ContextHeld.HeldenGruppeListe.Count > 0)
+            {
+                ArenaScrollViewer.Zoom = 1;
+                double xMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureX) - Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
+                double yMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureY) - Global.ContextHeld.HeldenGruppeListe[0].CreatureHeight;
+                //double xMax = Global.ContextHeld.HeldenGruppeListe.Max(t => t.CreatureX) + Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
+                //double yMax = Global.ContextHeld.HeldenGruppeListe.Max(t => t.CreatureY) + Global.ContextHeld.HeldenGruppeListe[0].CreatureHeight;
+                ArenaScrollViewer.TranslateX = -xMin;
+                ArenaScrollViewer.TranslateY = -yMin;
             }
         }
 

@@ -167,9 +167,9 @@
     <Reference Include="NAudio">
       <HintPath>packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NVorbis">
       <HintPath>packages\NVorbis.0.8.4.0\lib\NVorbis.dll</HintPath>
@@ -178,6 +178,14 @@
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="Q42.HueApi, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Q42.HueApi.3.6.3\lib\netstandard1.1\Q42.HueApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sparrow.Chart.Wpf.40, Version=13.1.0.118, Culture=neutral, PublicKeyToken=50f33fb8697e9a92, processorArchitecture=MSIL">
+      <HintPath>packages\Sparrow.Chart.Wpf.13.1.0.118\lib\net40\Sparrow.Chart.Wpf.40.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -193,6 +201,11 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -223,6 +236,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -665,6 +679,8 @@
     <Compile Include="Net\Web\DereGlobusModule.cs" />
     <Compile Include="Net\Web\RestModule.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Sichtstufe.cs" />
+    <Compile Include="ViewModel\LampenHUE\HUELampenViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\Logic\Qualität.cs" />
     <Compile Include="ViewModel\Alchimie\Logic\Substitution.cs" />
@@ -1021,9 +1037,10 @@
     <Compile Include="View\General\IntBoxVertical.xaml.cs">
       <DependentUpon>IntBoxVertical.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\IsEqualOrGreaterThanVisibleConverter.cs" />
+    <Compile Include="View\General\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\Beschwörung\DämonenListViewConverter.cs" />
-    <Compile Include="View\General\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="View\General\IsNullOrEmptyConverter.cs" />
     <Compile Include="View\General\LazyUpdate.cs" />
     <Compile Include="View\General\ListBoxBehaviour.cs" />
@@ -1087,6 +1104,9 @@
     </Compile>
     <Compile Include="View\Helden\VorNachteilAuswahlView.xaml.cs">
       <DependentUpon>VorNachteilAuswahlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LampenHUE\HUELampenView.xaml.cs">
+      <DependentUpon>HUELampenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kalender\KalenderControl.xaml.cs">
       <DependentUpon>KalenderControl.xaml</DependentUpon>
@@ -1663,6 +1683,10 @@
     <Page Include="View\Helden\VorNachteilAuswahlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LampenHUE\HUELampenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Kalender\KalenderControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -2654,6 +2678,7 @@
     <Resource Include="Images\Icons\General\y-offset.png" />
     <Resource Include="Images\Bodenplan\FogOfWar.png" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0126.sql" />
+    <Resource Include="Images\Icons\lampen_hue.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
@@ -2778,7 +2803,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\LampenHUE\Logic\" />
+  </ItemGroup>
   <ItemGroup>
     <DesignData Include="SampleData\BasarViewModelSampleData.xaml" />
   </ItemGroup>

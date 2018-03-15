@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.ViewModel.Kampf.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

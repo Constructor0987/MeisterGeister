@@ -391,23 +391,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             InitiativeModStart = inimod;
             kampfrundeStart = kampfrunde;
             Manöver = m;
-
             Manöver.IsAusgeführt = false;
         }
-
         
-
-        //private bool isSelected = false;
-        //public bool IsSelected
-        //{
-        //    get { return isSelected; }
-        //    set
-        //    {
-        //        isSelected = value;
-        //        OnChanged("IsSelected");
-        //    }
-        //}
-
         public bool IsAktuell
         {
             get

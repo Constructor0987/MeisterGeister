@@ -104,9 +104,13 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return selectedManöver; }
             set
             {
+                if (value != null) this.BodenplanViewModel.DoChangeModPositionSelbst = true;
                 Set(ref selectedManöver, value);
                 if (value != null)
+                {
                     SelectedKämpfer = null;
+                    
+                }
             }
         }
 

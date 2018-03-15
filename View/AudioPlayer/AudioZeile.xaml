@@ -20,7 +20,7 @@
         <vm:MultiBooleanORConverter x:Key="MultiBooleanORConverter1" />
         <vm:MultiBooleanODERToVisibilityConverter x:Key="MultiBooleanODERToVisibilityConverter1" />
         <vm:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
-        <vm:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
+        <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <vm:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <vm:IsEqualOrLowerThanConverter x:Key="IsEqualOrLowerThanConverter1"/>
         <vm:BooleanInverseToVisibilityConverter x:Key="BooleanInverseToVisibilityConverter1"/>

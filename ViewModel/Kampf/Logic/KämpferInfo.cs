@@ -77,14 +77,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     _kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             }
         }
-
-        private string _kämpferTempName = null;
-        public string KämpferTempName
-        {
-            get { return _kämpferTempName; }
-            set { Set(ref _kämpferTempName, value); }
-        }
-
+        
         private ICollection<IWesenPlaylist> _wesenplaylist;
         private ICollection<IWesenPlaylist> Wesenplaylist
         {
@@ -187,6 +180,29 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref kampf, value); }
         }
 
+
+        private Nullable<Position> positionSelbst;
+        public Nullable<Position> PositionSelbst
+        {
+            get { return positionSelbst?? Position.Stehend; }
+            set
+            {
+                if (value == null)
+                {
+                    value = positionSelbst?? Position.Stehend;
+                }
+                Set(ref positionSelbst, value);
+                
+                foreach (ManöverInfo mi in Kampf.InitiativListe)
+                {
+                    KampfManöver<IWaffe> manöver = mi.Manöver as KampfManöver<IWaffe>;
+                    if (manöver != null)
+                        ((ManöverModifikator<Position, IWaffe>)manöver.Mods["PositionSelbst"]).Value = value.Value; //KampfManöver<IWaffe>.POS_SELBST_MOD
+                }
+            }
+        }
+
+
         public KämpferInfo(IKämpfer k, Kampf kampf)
         {
             if (k == null)
@@ -198,7 +214,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Team = 1;
             Initiative = k.Initiative();
             if (k is IGegnerBase)
-                KämpferTempName = "Gegner " + (kampf.Kämpfer.Where(t => t.Team == 2).ToList().Count+1);
+                (k as MeisterGeister.Model.Gegner).KämpferTempName = "Gegner " + (kampf.Kämpfer.Where(t => t.Team == 2).ToList().Count + 1);
 
             Wesenplaylist = (k is MeisterGeister.Model.Held) ?
                 new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
@@ -215,6 +231,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 Initiative = Kämpfer.InitiativeBasis + Kämpfer.InitiativeWurf;
             }
+            if (e.PropertyName == "Position")
+                PositionSelbst = Kämpfer.Position;
         }
 
         #region Aktionen

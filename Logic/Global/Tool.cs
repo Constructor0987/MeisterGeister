@@ -205,15 +205,23 @@ namespace MeisterGeister
                 ViewType = typeof(View.Karte.KarteView),
                 ViewModelType = typeof(ViewModel.Karte.KarteViewModel)
             });
+            ToolListe.Add("ZooBot", new Tool()
+            {
+                Name = "ZooBot (neu)",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png",
+                MenuGruppe = "Wege des Wanderers",
+                ViewType = typeof(View.ZooBot.ZooBotView),
+                ViewModelType = typeof(ViewModel.ZooBot.ZooBotViewModel)
+            });
             if (Global.INTERN) // im Release-Modus ausblenden
             {
-                ToolListe.Add("ZooBotNeu", new Tool()
+                ToolListe.Add("HUE Lampensteuerung", new Tool()
                 {
-                    Name = "ZooBot (neu)",
-                    Icon = "/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png",
-                    MenuGruppe = "Wege des Wanderers",
-                    ViewType = typeof(View.ZooBot.ZooBotView),
-                    ViewModelType = typeof(ViewModel.ZooBot.ZooBotViewModel)
+                    Name = "HUE Lampe",
+                    Icon = "/DSA%20MeisterGeister;component/Images/Icons/lampen_hue.png",
+                    MenuGruppe = "Wege des Meisters",
+                    ViewType = typeof(View.LampenHUE.HUELampenView),
+                    ViewModelType = typeof(ViewModel.LampenHUE.HUELampenViewModel)
                 });
                 ToolListe.Add("Abenteuer", new Tool()
                 {

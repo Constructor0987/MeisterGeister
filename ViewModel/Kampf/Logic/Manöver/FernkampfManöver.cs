@@ -7,11 +7,14 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.View.General;
 using MeisterGeister.Model.Extensions;
+using System.Windows.Data;
+using System.Windows;
+using System.Globalization;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class FernkampfManöver : KampfManöver<IFernkampfwaffe>
-    {
+    {       
         public FernkampfManöver(KämpferInfo ausführender, IFernkampfwaffe Fernkampfwaffe) : base(ausführender)
         {
             this.FernkampfWaffeSelected = Fernkampfwaffe;            
@@ -24,18 +27,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string STEILNACHOBEN_MOD = "SteilNachOben";
         public const string BÖIGERWIND_MOD = "BöigerWind";
         public const string STARKERBÖIGERWIND_MOD = "StarkerBöigerWind";
+        public const string POS_SELBST_MOD = "PositionSelbst";
 
         public const string DECKUNG_MOD = "Deckung";
         public const string UNSICHTBAR_MOD = "Unsichtbar";
         public const string DISTANZ_MOD = "Entfernung";
         public const string TREFFERZONE_MOD = "Trefferzone";
         public const string BEWEGUNG_MOD = "Bewegung";
+        public const string UNTERWASSER_MOD = "UnterWasser";
+        public const string BEWKÖRPERTEIL_MOD = "BewKörperteil";
         public const string NAHKAMPF_MOD = "Nahkampf";
         public const string HANDGEMENGE_MOD = "Handgemenge";
         public const string ZIELEN_MOD = "Zielen";
         public const string ANSAGE_MOD = "Ansage";
 
+        public const string PFERDBEWEGUNG_MOD = "PferdBewegung";
+        public const string OHNESATTEL_MOD = "OhneSattel";
+
         protected FernkampfModifikator<Lichtstufe> licht;
+        protected FernkampfModifikator<Sichtstufe> sicht;
+        protected FernkampfModifikator<Position> positionSelbst;
 
         protected FernkampfModifikator<bool> steilNachUnten;
         protected FernkampfModifikator<bool> steilNachOben;
@@ -47,19 +58,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected FernkampfModifikator<int> distanz;
         protected FernkampfModifikator<Trefferzone> trefferzone;
         protected FernkampfModifikator<Bewegung> bewegung;
+        protected FernkampfModifikator<bool> bewKörperteil;
+        protected FernkampfModifikator<bool> unterWasser;
         protected FernkampfModifikator<int> nahkampf;
         protected FernkampfModifikator<int> handgemenge;
         protected FernkampfModifikator<int> zielen;
         protected FernkampfModifikator<int> ansage;
+
+        protected FernkampfModifikator<int> pferdBewegung;
+        protected FernkampfModifikator<bool> ohneSattel;
 
         protected override void InitMods()
         {
             base.InitMods();
 
             licht = new FernkampfModifikator<Lichtstufe>(this);
+            licht.Value = Global.CurrentKampf.Kampf.Licht;
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
-
+             
             wind = new FernkampfModifikator<int>(this);
             wind.GetMod = WindMod;
             mods.Add(WIND_MOD, wind);
@@ -80,7 +97,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             größe.Value = Größe.Mittel;
             größe.GetMod = GrößeMod;
             mods.Add(GRÖSSE_MOD, größe);
-
+            
             FernkampfModifikator<int> deckung = new FernkampfModifikator<int>(this);
             mods.Add(DECKUNG_MOD, deckung);
             
@@ -94,10 +111,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             trefferzone.GetMod = TrefferzoneMod;
             mods.Add(TREFFERZONE_MOD, trefferzone);
 
-            bewegung = new FernkampfModifikator<Bewegung>(this);
-            bewegung.Value = Bewegung.Leicht;
-            bewegung.GetMod = BewegungMod;
-            mods.Add(BEWEGUNG_MOD, bewegung);
+            bewKörperteil = new FernkampfModifikator<bool>(this);
+            bewKörperteil.Value = false;
+            bewKörperteil.GetMod = BewKörperteilMod;
+            mods.Add(BEWKÖRPERTEIL_MOD, bewKörperteil);
 
             nahkampf = new FernkampfModifikator<int>(this);
             nahkampf.GetMod = NahkampfMod;
@@ -107,6 +124,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             handgemenge.GetMod = HandgemengeMod;
             mods.Add(HANDGEMENGE_MOD, handgemenge);
 
+            bewegung = new FernkampfModifikator<Bewegung>(this);
+            bewegung.Value = Bewegung.Leicht;
+            bewegung.GetMod = BewegungMod;
+            mods.Add(BEWEGUNG_MOD, bewegung);
+
             zielen = new FernkampfModifikator<int>(this);
             zielen.GetMod = ZielenMod;
             mods.Add(ZIELEN_MOD, zielen);
@@ -115,6 +137,36 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             ansage = new FernkampfModifikator<int>(this);
             ansage.GetMod = AnsageMod;
             mods.Add(ANSAGE_MOD, ansage);
+
+            sicht = new FernkampfModifikator<Sichtstufe>(this);
+            sicht.Value = Global.CurrentKampf.Kampf.Sicht;
+            sicht.GetMod = SichtMod;
+            mods.Add(SICHT_MOD, sicht);
+
+
+            ohneSattel = new FernkampfModifikator<bool>(this);
+            ohneSattel.GetMod = OhneSattelMod;
+            mods.Add(OHNESATTEL_MOD, ohneSattel);
+
+            unterWasser = new FernkampfModifikator<bool>(this);
+            unterWasser.Value = false;
+            unterWasser.GetMod = UnterWasserMod;
+            mods.Add(UNTERWASSER_MOD, unterWasser);
+            
+            //positionSelbst = new FernkampfModifikator<Position>(this);
+            //positionSelbst.Value = (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Wesen).Position;
+            //positionSelbst.GetMod = PositionSelbstMod;
+            //mods.Add(POS_SELBST_MOD, positionSelbst);
+
+            positionSelbst = new FernkampfModifikator<Position>(this);
+            positionSelbst.Value = Ausführender.Kämpfer.Position;
+            positionSelbst.GetMod = PositionSelbstMod;
+            mods.Add(POS_SELBST_MOD, positionSelbst);
+
+            pferdBewegung = new FernkampfModifikator<int>(this);
+            pferdBewegung.Value = 0;
+            pferdBewegung.GetMod = PferdBewegungMod;
+            mods.Add(PFERDBEWEGUNG_MOD, pferdBewegung);
         }
 
         private IFernkampfwaffe _fernkampfWaffeSelected = null;
@@ -157,7 +209,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
             return 0;
         }
-
+        
         private int TrefferzoneMod(IFernkampfwaffe waffe, Trefferzone value)
         {
             int[] mod;
@@ -221,9 +273,46 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     mod = Math.Min(mod, 8);
                 }
             }
+            Global.CurrentKampf.Kampf.Licht = value;
             return mod;
         }
 
+        protected override int SichtMod(IFernkampfwaffe waffe, Sichtstufe value)
+        {
+            Global.CurrentKampf.Kampf.Sicht = value;
+            switch (value)
+            {
+                case Sichtstufe.Dunst:
+                    return 2;
+                case Sichtstufe.Nebel:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
+
+
+        protected int PositionSelbstMod(IFernkampfwaffe waffe, Position value)
+        {
+            if (Global.CurrentKampf.SelectedManöver != null)
+            {
+                if (Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst &&
+                   ((ManöverModifikator<Position, IFernkampfwaffe>)Mods[POS_SELBST_MOD]).Value != Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst)
+                {
+                    ((ManöverModifikator<Position, IFernkampfwaffe>)Mods[POS_SELBST_MOD]).Value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst.Value;
+                    value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst.Value;
+                }
+                Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst = false;
+
+                IKämpfer bodenplanKämpfer = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Where(t => t is IKämpfer)
+                    .FirstOrDefault(t => ((IKämpfer)t) == Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.Kämpfer) as IKämpfer);
+
+                if (bodenplanKämpfer != null && bodenplanKämpfer.Position != ((ManöverModifikator<Position, IFernkampfwaffe>)Mods[POS_SELBST_MOD]).Value)
+                    bodenplanKämpfer.Position = ((ManöverModifikator<Position, IFernkampfwaffe>)Mods[POS_SELBST_MOD]).Value;
+            }
+            return 0;
+        }
+        
         private int WindMod(IFernkampfwaffe waffe, int value)
         {
             return value;
@@ -242,7 +331,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         private int SteilNachObenMod(IFernkampfwaffe waffe, bool value)
         {
             return !value? 0: 
-                waffe != null && waffe.Talent != null && waffe.Talent.Talentname == "Wurfwaffen" ? 
+                waffe != null && waffe.Talent != null && waffe.Talent.Talentname.Contains("Wurf")? 
                 8 : 4;
         }
 
@@ -285,9 +374,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
             return mod;
         }
-
+        
         protected override int GrößeMod(IFernkampfwaffe waffe, Größe value)
-        {
+        {            
             switch (value)
             {
                 case Größe.Kleiner2AlsWinzig:
@@ -324,9 +413,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     return 0;
             }
         }
-
+                
         private int BewegungMod(IFernkampfwaffe waffe, Bewegung value)
         {
+            if (nahkampf.Value != 0 || handgemenge.Value != 0) return 0; 
             switch (value)
             {
                 case Bewegung.Unbeweglich: 
@@ -352,6 +442,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         private int HandgemengeMod(IFernkampfwaffe waffe, int value)
         {
             return value * 3;
+        }
+
+        private int BewKörperteilMod(IFernkampfwaffe waffe, bool value)
+        {
+            return value ? 2 : 0;
         }
 
         private int GetDauer(IFernkampfwaffe waffe, int Zielen, int Ansage)
@@ -434,6 +529,29 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 return value;
             }
             else return Math.Max(0, value * 2 - 1);
+        }
+
+        private int PferdBewegungMod(IFernkampfwaffe waffe, int value)
+        {
+            if (((ManöverModifikator<Position, IFernkampfwaffe>)Mods[POS_SELBST_MOD]).Value != Position.Reitend) return 0; // positionSelbst.Value 
+            switch (value)
+            {
+                case 0: return (waffe != null && waffe.Talent != null && waffe.Talent.Talentname.Contains("Wurf") ? 1 : 2);
+                case 1: return (waffe != null && waffe.Talent != null && waffe.Talent.Talentname.Contains("Wurf") ? 2 : 4);
+                case 2: return (waffe != null && waffe.Talent != null && waffe.Talent.Talentname.Contains("Wurf") ? 4 : 8);
+            }
+            return 0;
+        }
+
+        private int UnterWasserMod(IFernkampfwaffe waffe, bool value)
+        {
+            return value ? 3 : 0;
+        }
+
+        private int OhneSattelMod(IFernkampfwaffe waffe, bool value)
+        {
+            return (!value || ((ManöverModifikator<Position, IFernkampfwaffe>)Mods[POS_SELBST_MOD]).Value != Position.Reitend) ? 0 ://positionSelbst.Value 
+                (waffe != null && waffe.Talent != null && waffe.Talent.Talentname.Contains("Wurf") ? 2 : 4);
         }
 
         #endregion

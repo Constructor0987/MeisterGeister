@@ -32,6 +32,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             {
                 UpdateLicht();
             }
+            if (e.PropertyName == "Sicht")
+            {
+                UpdateSicht();
+            }
+            if (e.PropertyName == "Handgemenge")
+            {
+
+            }
+            if (e.PropertyName == "PositionSelbst")
+            {
+                UpdatePositionSelbst();
+            }
         }
 
         private void UpdateLicht()
@@ -39,7 +51,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             ((ManöverModifikator<Lichtstufe, TWaffe>)Mods[LICHT_MOD]).Value = Ausführender.Kampf.Licht;
         }
 
+        private void UpdateSicht()
+        {
+            ((ManöverModifikator<Sichtstufe, TWaffe>)Mods[SICHT_MOD]).Value = Ausführender.Kampf.Sicht;
+        }
+
+        private void UpdatePositionSelbst()
+        {
+           // ((ManöverModifikator<Position, TWaffe>)Mods[POS_SELBST_MOD]).Value = Ausführender.Kämpfer.Position;
+        }
+
         public const string LICHT_MOD = "Licht";
+        public const string SICHT_MOD = "Sicht";
         public const string GRÖSSE_MOD = "Zielgröße";
 
         protected bool KämpftMitTalent(TWaffe waffe, params string[] talente)
@@ -57,11 +80,37 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected override void SetDefaultModValues()
         {
             base.SetDefaultModValues();
-
             UpdateLicht();
+            UpdateSicht();
+            UpdatePositionSelbst();
         }
 
         protected abstract int LichtMod(TWaffe waffe, Lichtstufe value);
+        protected abstract int SichtMod(TWaffe waffe, Sichtstufe value);
+       // protected int PositionSelbstMod(TWaffe waffe, Position value)
+       //// protected override int PositionSelbstMod(IFernkampfwaffe waffe, Position value)
+       // {
+       //     if (Global.CurrentKampf.SelectedManöver != null)
+       //     {
+       //         if (Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst &&
+       //             ((ManöverModifikator<Position, TWaffe>)Mods[POS_SELBST_MOD]).Value != Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst)
+       //         //   ((ManöverModifikator<Position, Waffe>)Mods[POS_SELBST_MOD]).Value != Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst)
+       //         {
+       //             ((ManöverModifikator<Position, TWaffe>)Mods[POS_SELBST_MOD]).Value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst.Value;
+       //             value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst.Value;
+       //         }
+
+       //         IKämpfer bodenplanKämpfer = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Where(t => t is IKämpfer)
+       //             .FirstOrDefault(t => ((IKämpfer)t) == Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.Kämpfer) as IKämpfer);
+
+       //         if (Global.CurrentKampf.Kampf.tempP == null &&
+       //             bodenplanKämpfer != null && bodenplanKämpfer.Position != ((ManöverModifikator<Position, TWaffe>)Mods[POS_SELBST_MOD]).Value)
+       //             bodenplanKämpfer.Position = ((ManöverModifikator<Position, TWaffe>)Mods[POS_SELBST_MOD]).Value;
+       //     }
+       //     Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst = false;
+
+       //     return 0;
+       // }
         protected abstract int GrößeMod(TWaffe waffe, Größe value);
     }
 }

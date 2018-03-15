@@ -280,12 +280,12 @@
                                     <TextBlock Width="150" VerticalAlignment="Center">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="Text" Value="{Binding KämpferTempName}"/>
+                                            <Setter Property="Text" Value="{Binding Kämpfer.KämpferTempName}"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding KämpferTempName}" Value="{x:Null}">
-                                                        <Setter Property="Text" Value="{Binding Kämpfer.Name}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
+                                                <DataTrigger Binding="{Binding Kämpfer.KämpferTempName}" Value="{x:Null}">
+                                                    <Setter Property="Text" Value="{Binding Kämpfer.Name}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>

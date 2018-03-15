@@ -147,11 +147,11 @@
             <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="50" Value="{Binding Initiative}" FontWeight="Bold" ShowButtons="True" />
         </DockPanel>
         <StackPanel Grid.Column="1" >
-            <TextBox Text="{Binding KämpferTempName}" Height="20" Width="100" VerticalAlignment="Top">
+            <TextBox Text="{Binding Kämpfer.KämpferTempName}" Height="20" Width="100" VerticalAlignment="Top">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding KämpferTempName}" Value="{x:Null}">
+                            <DataTrigger Binding="{Binding Kämpfer.KämpferTempName}" Value="{x:Null}">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>

@@ -78,8 +78,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Columns.Add("BackgroundOffsetX");
                     dtSettings.Columns.Add("InvBackgroundOffsetY");
 
-                    dtSettings.Columns.Add("GridOffsetX");
-                    dtSettings.Columns.Add("GridOffsetY");
+                    dtSettings.Columns.Add("PlayerGridOffsetX");
+                    dtSettings.Columns.Add("PlayerGridOffsetY");
                     dtSettings.Columns.Add("ScaleSpielerGrid");
                     dtSettings.Columns.Add("ScaleKampfGrid");
                     dtSettings.Columns.Add("IsRechteckRaster");
@@ -89,8 +89,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Rows[0]["BackgroundOffsetX"] = fogSettings[1];
                     dtSettings.Rows[0]["InvBackgroundOffsetY"] = fogSettings[2];
 
-                    dtSettings.Rows[0]["GridOffsetX"] = fogSettings[3];
-                    dtSettings.Rows[0]["GridOffsetY"] = fogSettings[4];
+                    dtSettings.Rows[0]["PlayerGridOffsetX"] = fogSettings[3];
+                    dtSettings.Rows[0]["PlayerGridOffsetY"] = fogSettings[4];
                     dtSettings.Rows[0]["ScaleSpielerGrid"] = fogSettings[5];
                     dtSettings.Rows[0]["ScaleKampfGrid"] = fogSettings[6];
                     dtSettings.Rows[0]["IsRechteckRaster"] = fogSettings[7];
@@ -119,7 +119,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["CreatureNameX"] = o.CreatureNameX;
             dt.Rows[dt.Rows.Count - 1]["CreatureNameY"] = o.CreatureNameY;
             dt.Rows[dt.Rows.Count - 1]["CreaturePictureUrl"] = o.CreaturePictureUrl;
-            dt.Rows[dt.Rows.Count - 1]["CreaturePosition"] = o.CreaturePosition;
+            dt.Rows[dt.Rows.Count - 1]["CreaturePosition"] = (o as MeisterGeister.ViewModel.Kampf.Logic.IKämpfer).Position;// .CreaturePosition;
             dt.Rows[dt.Rows.Count - 1]["CreatureWidth"] = o.CreatureWidth;
             dt.Rows[dt.Rows.Count - 1]["CreatureX"] = o.CreatureX;
             dt.Rows[dt.Rows.Count - 1]["CreatureY"] = o.CreatureY;
@@ -169,8 +169,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             back.Add(Convert.ToDouble(drow["BackgroundOffsetX"]));
                             back.Add(Convert.ToDouble(drow["InvBackgroundOffsetY"]));
 
-                            back.Add(Convert.ToDouble(drow["GridOffsetX"]));
-                            back.Add(Convert.ToDouble(drow["GridOffsetY"]));
+                            back.Add(Convert.ToDouble(drow["PlayerGridOffsetX"]));
+                            back.Add(Convert.ToDouble(drow["PlayerGridOffsetY"]));
                             back.Add(Convert.ToDouble(drow["ScaleSpielerGrid"]));
                             back.Add(Convert.ToDouble(drow["ScaleKampfGrid"]));
                             back.Add(Convert.ToDouble(drow["IsRechteckRaster"]));
@@ -264,7 +264,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             Console.WriteLine("[INFO] NO DATA FOUND?");
             return new ObservableCollection<BattlegroundBaseObject>();
         }
-
+        
         public void Base64ToImage(String PictureUrl, String base64String)
         {
             try

@@ -122,7 +122,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
-
+        private Sichtstufe sicht = 0;
+        public Sichtstufe Sicht
+        {
+            get { return sicht; }
+            set
+            {
+                Set(ref sicht, value);
+                foreach (ManöverInfo mi in InitiativListe)
+                {
+                    KampfManöver<IWaffe> manöver = mi.Manöver as KampfManöver<IWaffe>;
+                    if (manöver != null)
+                        ((ManöverModifikator<Sichtstufe, IWaffe>)manöver.Mods[KampfManöver<IWaffe>.SICHT_MOD]).Value = value;
+                }
+            }
+        }
+        
         /// <summary>
         /// Speichert einen Text im Kampf-Log.
         /// </summary>
@@ -160,7 +175,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             AktIniKämpfer = Kämpfer.FirstOrDefault(t => t.InitiativeMitKommas == AktuelleAktionszeit.InitiativPhase);
             if (AktIniKämpfer != null) ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = true;            
         }
-
+        public Nullable<Position> tempP;
         public void NeueKampfrunde()
         {
             ////Alle Manöver, die noch nicht ausgeführt wurden
@@ -197,7 +212,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ki.VerbrauchteAngriffsaktionen = 0;
                 ki.VerbrauchteFreieAktionen = 0;
 
+                //aktuelle Position des Helden notieren
+                tempP = ki.PositionSelbst.Value;
+                
                 neueManöver.AddRange(ki.StandardAktionenSetzen(Kampfrunde));
+
+                //setzen auf vorherige Position
+                Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst = true;
+                ((IKämpfer)Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.FirstOrDefault(t => t as IKämpfer == ki.Kämpfer)).Position = tempP.Value;
+                ki.Kämpfer.Position = tempP.Value;
+                tempP = null;
+                Global.CurrentKampf.SelectedManöver = null;
 
                 ki.VerbrauchteAbwehraktionen = 0;
                 ki.VerbrauchteAngriffsaktionen = 0;
@@ -285,6 +310,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 InitiativListe.RemoveAt(0);
         }
 
+    }
+
+    public class DoubleSichtConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (int)(Sichtstufe)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (Sichtstufe)(int)Math.Round((double)value);
+        }
     }
 
     public class DoubleLichtConverter : IValueConverter

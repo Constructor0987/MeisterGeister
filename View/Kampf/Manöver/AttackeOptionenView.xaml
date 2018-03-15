@@ -53,8 +53,12 @@
 
 
         <TextBlock Grid.Row="1" Text="Ansagen" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" />
-        <TextBlock Grid.Row="1" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,25" Grid.RowSpan="2"/>
-        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="2"/>
+
+        <TextBlock Grid.Row="1" Text=" Σ Zuschlag " HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Row="1" Text="‗‗‗‗‗‗‗‗‗‗‗‗‗" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,8,0,25" Grid.RowSpan="2" />
+
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,8,0,25" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.RowSpan="2"/>
 
         <!--Wuchtschlag-->
         <TextBlock Grid.Row="2" Text="Wuchtschlag" />
@@ -81,7 +85,7 @@
 
         <!--Dämmerungssicht / Nachtsicht-->
         <TextBlock Grid.Row="6" Text="Licht" />
-        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value, Converter={StaticResource lichtValues}}"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value,Mode=TwoWay, Converter={StaticResource lichtValues}}"/>
         <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Mods[Licht].Result}" />
 
         <TextBlock Grid.Row="7" Text="Wasser" />
@@ -113,9 +117,8 @@
         <TextBlock Grid.Row="11" Text="Selbst" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2"/>
 
         <TextBlock Grid.Row="12" Text="Position" />
-
         <ComboBox Name="currentPosition" Grid.Row="12" Grid.Column="1" ItemsSource="{StaticResource positionValues}"
-                  SelectedItem="{Binding GetKämpferPosition, UpdateSourceTrigger=PropertyChanged}" />    
+                  SelectedItem="{Binding Mods[PositionSelbst].Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource positionValues}}" />    
         <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding Mods[PositionSelbst].Result}" />
         
         <!--+1-->

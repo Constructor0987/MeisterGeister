@@ -28,12 +28,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
-        private Position _position = Position.Stehend;
+        private Position _position;
         public Position Position
         {
             get { return _position; }
             set { Set(ref _position, value); }
         }
+        //        if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanViewModel != null)
+        //        //{
+        //            this.UpdateCreaturePosition();
+        //            //MeisterGeister.ViewModel.Bodenplan.Logic.BattlegroundCreature bgc =
+        //            //    (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.FirstOrDefault(t => (t as Wesen) == this) as
+        //            //    MeisterGeister.ViewModel.Bodenplan.Logic.BattlegroundCreature);
+        //            //if (bgc != null) bgc.UpdateCreaturePosition();
+        //        //}
+        //    }
+        //}
 
         #region Modifikatoren
         #region ModifikatorChanged Event

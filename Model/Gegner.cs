@@ -74,6 +74,13 @@ namespace MeisterGeister.Model
             //Angriffsaktionen = Aktionen - Abwehraktionen;
         }
         #endregion
+        
+        private string _kämpferTempName = null;
+        public string KämpferTempName
+        {
+            get { return _kämpferTempName; }
+            set { Set(ref _kämpferTempName, value); }
+        }
 
         private static Regex klammern = new Regex("\\((\\d+)\\)", RegexOptions.RightToLeft);
         [DependentProperty("Name")]

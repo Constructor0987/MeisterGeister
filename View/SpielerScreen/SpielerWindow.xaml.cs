@@ -60,6 +60,8 @@ namespace MeisterGeister.View.SpielerScreen
                    // ((SpielerWindow)Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow).grdIniBodenplan.DataContext = VM.KampfIniInfoView;
 
                 //    grdIniBodenplan.DataContext = vm.KampfIniInfoView;// VMBoden.KampfIniInfoView;
+                    //Kampf.KampfInfoView infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
+                    //brdIni.DataContext = infoView;
                 }
             }
         }

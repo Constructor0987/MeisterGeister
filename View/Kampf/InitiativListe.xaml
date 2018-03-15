@@ -18,6 +18,7 @@
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <KampfLogic:DoubleSichtConverter x:Key="sichtConverter"/>
         <KampfLogic:DoubleLichtConverter x:Key="lichtConverter"/>
     </UserControl.Resources>
 
@@ -160,9 +161,27 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Kampf.Licht}"/>
                 <Image Grid.Row="1" Source="/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png"/>
-                <Slider Grid.Row="1" Grid.Column="1" Width="100" Minimum="0" Maximum="4" Interval="1" Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}"/>
+                <Slider Grid.Row="1" Grid.Column="1" Width="75" TickPlacement="BottomRight" Minimum="0" Maximum="4" Interval="1" Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}"/>
                 <Image Grid.Row="1" Grid.Column="2" Source="/DSA MeisterGeister;component/Images/Madamal/mada20.jpg"/>
             </Grid>
+            <!--<Grid Margin="4,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Kampf.Sicht}"/>
+                --><!--<Image Grid.Row="1" Source="/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png"/>--><!--
+                <Border Grid.Row="1" Height="20" Width="20" Background="LightBlue" />
+                <Slider Grid.Row="1" Grid.Column="1" Width="45" TickPlacement="BottomRight" Minimum="0" Maximum="2" Interval="1" Value="{Binding Kampf.Sicht,Converter={StaticResource sichtConverter}}"/>
+
+                <Border Grid.Row="1" Grid.Column="2" Height="20" Width="20" Background="LightGray" />
+                --><!--<Image Grid.Row="1" Grid.Column="2" Source="/DSA MeisterGeister;component/Images/Madamal/mada20.jpg"/>--><!--
+            </Grid>-->
         </StackPanel>
 
         <!--Kämpferliste-->
@@ -223,7 +242,7 @@
                                     </ComboBox>
                                 </DockPanel>
 
-                                <MenuItem Header="Aus Kampf entfernen" Command="{Binding   Entfernen}">
+                                <MenuItem Header="Aus Kampf entfernen" Command="{Binding  Entfernen}">
                                     <MenuItem.Icon>
                                         <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png"/>
                                     </MenuItem.Icon>
@@ -262,9 +281,9 @@
                             <!--Text="{Binding Kämpfer.Name}"-->
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Text" Value="{Binding KämpferTempName}"/>
+                                    <Setter Property="Text" Value="{Binding Kämpfer.KämpferTempName}"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding KämpferTempName}" Value="{x:Null}">
+                                        <DataTrigger Binding="{Binding Kämpfer.KämpferTempName}" Value="{x:Null}">
                                             <Setter Property="Text" Value="{Binding Kämpfer.Name}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -305,8 +324,8 @@
             </ItemsControl.ItemTemplate>
         </ListBox>
 
-        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" Margin="4,0,0,0" 
-                      ScrollChanged="scrViewer_ScrollChanged" MouseEnter="scrViewer_MouseEnter" MouseLeave="scrViewer_MouseLeave">
+        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" 
+                      Margin="4,0,0,-15" ScrollChanged="scrViewer_ScrollChanged" MouseEnter="scrViewer_MouseEnter" MouseLeave="scrViewer_MouseLeave">
             <Grid>
                 <Grid.Resources>
                     <CollectionViewSource Source="{Binding Kampf.InitiativListe.Aktionszeiten}" x:Key="kampfrunden">

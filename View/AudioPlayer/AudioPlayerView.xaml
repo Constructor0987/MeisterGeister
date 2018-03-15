@@ -23,7 +23,7 @@
         <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
         <vmAudioPlayer:MultiBooleanORConverter x:Key="MultiBooleanORConverter1" />
         <vmAudioPlayer:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
-        <vmAudioPlayer:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
+        <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <vmAudioPlayer:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter1"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1"/>
         <vmAudioPlayer:InvertedBoolenConverter x:Key="InvertedBoolenConverter1" />

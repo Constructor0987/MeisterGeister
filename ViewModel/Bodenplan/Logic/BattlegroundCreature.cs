@@ -9,9 +9,44 @@ using System.Windows.Media;
 using System.Windows;
 using System.IO;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.Model.Extensions;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
+    public class PositionToImageConverter : IValueConverter
+    {
+        public static readonly IValueConverter Instance = new PositionToImageConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+
+            if (((Position)value) == Position.Liegend)
+                return Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
+            if (((Position)value) == Position.Kniend)
+                return Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
+            if (((Position)value) == Position.Stehend)
+                return Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+            if (((Position)value) == Position.Schwebend)
+                return Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+            if (((Position)value) == Position.Reitend)
+                return Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";
+            if (((Position)value) == Position.Fliegend)
+                return Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
+
+            return Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
     [DataContract(IsReference = true)]
     public class BattlegroundCreature : BattlegroundBaseObject
     {
@@ -41,8 +76,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureY += r.Next(0, 500);
             MoveObject(0,0,false); //for initial position of ZLevel Display
             CreateSightArea();
-            ((Wesen)this).Position = Position.Stehend;
-            UpdateCreaturePosition();
+            //((Wesen)this).Position = Position.Stehend;
+        //    UpdateCreaturePosition();
         }
 
         public double SightAreaLength
@@ -380,15 +415,50 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CalculateSightArea(); //update sightarea
         }
 
-        public void UpdateCreaturePosition()
-        {
-            if (this as Wesen == null) return;
-            if (((Wesen)this).Position == Position.Liegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
-            else if (((Wesen)this).Position == Position.Kniend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
-            else if (((Wesen)this).Position == Position.Stehend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
-            else if (((Wesen)this).Position == Position.Schwebend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
-            else if (((Wesen)this).Position == Position.Fliegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
-            else if (((Wesen)this).Position == Position.Reitend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";
-        }
+        //public void UpdateCreaturePosition()
+        //{
+        //    if (this as IKämpfer == null) return;
+        //    //Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.Kämpfer.Position
+        //    if (((IKämpfer)this).Position == Position.Liegend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
+        //    else if (((IKämpfer)this).Position == Position.Kniend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
+        //    else if (((IKämpfer)this).Position == Position.Stehend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+        //    else if (((IKämpfer)this).Position == Position.Schwebend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+        //    else if (((IKämpfer)this).Position == Position.Fliegend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
+        //    else if (((IKämpfer)this).Position == Position.Reitend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";
+
+        //    if (Global.CurrentKampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count != 0)
+        //    {
+        //        IKämpfer k = (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer as Wesen == this).Kämpfer);
+        //    //    if (k != null && k.Position != ((Wesen)this).Position) ;
+        //    }
+        //}
+        //public void UpdateCreaturePosition(Position p)
+        //{
+        //    if (this as Wesen == null) return;
+        //    if (p != null && p == Position.Liegend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
+        //    else if (p != null && p == Position.Kniend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
+        //    else if (p != null && p == Position.Stehend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+        //    else if (p != null && p == Position.Schwebend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+        //    else if (p != null && p == Position.Fliegend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
+        //    else if (p != null && p == Position.Reitend)
+        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";
+
+        //    //if (Global.CurrentKampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count != 0)
+        //    //{
+        //    //    IKämpfer k = (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer as Wesen == this).Kämpfer);
+        //    //    if (k != null && k.Position != ((Wesen)this).Position) ;
+        //    //}
+        //}
     }
 }

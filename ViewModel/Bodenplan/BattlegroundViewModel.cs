@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using MeisterGeister.View.Kampf;
 using MeisterGeister.ViewModel.Kampf;
+using WPFExtensions.Controls;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
@@ -49,6 +50,34 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #region Fog
+
+        private ZoomControl _meisterArenaZoomControl = new ZoomControl();
+        public ZoomControl MeisterArenaZoomControl
+        {
+            get { return _meisterArenaZoomControl; }
+            set { Set(ref _meisterArenaZoomControl, value); }
+        }
+
+        private double _meisterZoom = .5;
+        public double MeisterZoom
+        {
+            get { return _meisterZoom; }
+            set { Set(ref _meisterZoom, value); }
+        }
+
+        private double _meisterZoomTransX = 0;
+        public double MeisterZoomTransX
+        {
+            get { return _meisterZoomTransX; }
+            set { Set(ref _meisterZoomTransX, value); }
+        }
+
+        private double _meisterZoomTransY = 0;
+        public double MeisterZoomTransY
+        {
+            get { return _meisterZoomTransY; }
+            set { Set(ref _meisterZoomTransY, value); }
+        }
 
         private Grid _arenaGrid = new Grid();
         public Grid AreanGrid
@@ -126,49 +155,40 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public WriteableBitmap FogImage
         {
             get { return _fogImage; }
-            set
-            {
-                Set(ref _fogImage, value);
-            }
+            set { Set(ref _fogImage, value); }
         }
         private string _fogImageFilename;
         public string FogImageFilename
         {
             get { return _fogImageFilename; }
-            set
-            {
-                Set(ref _fogImageFilename, value);
-            }
+            set { Set(ref _fogImageFilename, value); }
         }
         private string _backgroundFilename;
         public string BackgroundFilename
         {
             get { return _backgroundFilename; }
+            set { Set(ref _backgroundFilename, value); }
+        }
+        
+        private double _playerGridOffsetX = 0;
+        public double PlayerGridOffsetX
+        {
+            get { return _playerGridOffsetX; }
             set
             {
-                Set(ref _backgroundFilename, value);
+                Set(ref _playerGridOffsetX, value);
+                PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX, _playerGridOffsetY, 0, 0);
             }
         }
 
-        private double _gridOffsetX = 0;
-        public double GridOffsetX
+        private double _playerGridOffsetY = 0;
+        public double PlayerGridOffsetY
         {
-            get { return _gridOffsetX; }
+            get { return _playerGridOffsetY; }
             set
             {
-                Set(ref _gridOffsetX, value);
-                OffsetGridMargin = new Thickness(-_gridOffsetX, _gridOffsetY, 0, 0);
-            }
-        }
-
-        private double _gridOffsetY = 0;
-        public double GridOffsetY
-        {
-            get { return _gridOffsetY; }
-            set
-            {
-                Set(ref _gridOffsetY, value);
-                OffsetGridMargin = new Thickness(-_gridOffsetX, _gridOffsetY, 0, 0);
+                Set(ref _playerGridOffsetY, value);
+                PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX, _playerGridOffsetY, 0, 0);
             }
         }
 
@@ -213,7 +233,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public double ScaleSpielerGrid
         {
             get { return _scaleSpielerGrid; }
-            set { Set(ref _scaleSpielerGrid, Math.Round(value, 2)); }
+            set { Set(ref _scaleSpielerGrid, Math.Round(value<.2?.2:value, 2)); }
         }
 
         private double _fogOffsetX = 0;
@@ -309,12 +329,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 }
             }
         }
-
-        private Thickness _offsetGridMargin = new Thickness(0, 0, 0, 0);
-        public Thickness OffsetGridMargin
+        
+        private Thickness _playerOffsetGridMargin = new Thickness(0, 0, 0, 0);
+        public Thickness PlayerOffsetGridMargin
         {
-            get { return _offsetGridMargin; }
-            set { Set(ref _offsetGridMargin, value); }
+            get { return _playerOffsetGridMargin; }
+            set { Set(ref _playerOffsetGridMargin, value); }
         }
 
         private Thickness _offsetBackgroudMargin = new Thickness(0, 0, 0, 0);
@@ -436,7 +456,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         //Event gets fired when Wesen.PropertyChanged event fires...
         private void OnWesenPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Position") ((BattlegroundCreature)sender).UpdateCreaturePosition();
+            if (e.PropertyName == "Position")
+            {
+                DoChangeModPositionSelbst = true;
+                KämpferInfo ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (sender as IKämpfer));
+                //ki.PositionSelbst = (sender as Wesen).CreaturePosition;
+               // Global.CurrentKampf.Kampf.Kämpfer.First(t => t. == (sender as Wesen)).PositionSelbst = ((Wesen)SelectedObject).Position; //.SelectedManöver.Manöver.Ausführender.PositionSelbst //((BattlegroundCreature)sender).UpdateCreaturePosition();
+            }
         }
 
         private void OnKämpferListeChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -484,6 +510,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private bool _doChangeModPositionSelbst = false;
+        public bool DoChangeModPositionSelbst
+        {
+            get { return _doChangeModPositionSelbst; }
+            set { Set(ref _doChangeModPositionSelbst, value); }
+        }
+
         #endregion
 
         #region Creature Add/Remove, Clear All
@@ -509,6 +542,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 AddCreature(k.Kämpfer);
             }
+            CenterMeisterView(null);
         }
 
         public void RemoveCreature(IKämpfer creature)
@@ -748,7 +782,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _playerScreenLeftCommand ?? (_playerScreenLeftCommand = new BattlegroundCommand(Left)); }
         }
         public void Left()
-        { GridOffsetX = GridOffsetX - 80 > 0 ? GridOffsetX - 80 : 0; }
+        { PlayerGridOffsetX = PlayerGridOffsetX - 80 > 0 ? PlayerGridOffsetX - 80 : 0; }
 
         private BattlegroundCommand _playerScreenRightCommand;
         public BattlegroundCommand PlayerScreenRightCommand
@@ -756,7 +790,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _playerScreenRightCommand ?? (_playerScreenRightCommand = new BattlegroundCommand(Right)); }
         }
         public void Right()
-        { GridOffsetX = GridOffsetX + 80 <= 10000 ? GridOffsetX + 80 : 10000; }
+        { PlayerGridOffsetX = PlayerGridOffsetX + 80 <= 10000 ? PlayerGridOffsetX + 80 : 10000; }
 
         private BattlegroundCommand _playerScreenUpCommand;
         public BattlegroundCommand PlayerScreenUpCommand
@@ -764,7 +798,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _playerScreenUpCommand ?? (_playerScreenUpCommand = new BattlegroundCommand(Up)); }
         }
         public void Up()
-        { GridOffsetY = GridOffsetY + 80 <= 0 ? GridOffsetY + 80 : 0; }
+        { PlayerGridOffsetY = PlayerGridOffsetY + 80 <= 0 ? PlayerGridOffsetY + 80 : 0; }
 
         private BattlegroundCommand _playerScreenDownCommand;
         public BattlegroundCommand PlayerScreenDownCommand
@@ -772,7 +806,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _playerScreenDownCommand ?? (_playerScreenDownCommand = new BattlegroundCommand(Down)); }
         }
         public void Down()
-        { GridOffsetY = GridOffsetY - 80 > -10000 ? GridOffsetY - 80 : -10000; }
+        { PlayerGridOffsetY = PlayerGridOffsetY - 80 > -10000 ? PlayerGridOffsetY - 80 : -10000; }
 
 
         //get / set stroke thickness
@@ -901,8 +935,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         io.IsVisible = false;
                     }
                 }
-                lstSettings.Add(GridOffsetX);
-                lstSettings.Add(GridOffsetY);
+                lstSettings.Add(PlayerGridOffsetX);
+                lstSettings.Add(PlayerGridOffsetY);
                 lstSettings.Add(ScaleSpielerGrid);
             }
             else
@@ -942,12 +976,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     {
                         (bgOb as BattlegroundCreature).PortraitFileName = ((bgOb as BattlegroundCreature) as Held).Bild;
                         ((bgOb as BattlegroundCreature) as Held).LoadBattlegroundPortrait((bgOb as BattlegroundCreature).PortraitFileName, true);
+                        ((bgOb as BattlegroundCreature) as Held).Position = GetPositionFromImage((bgOb as BattlegroundCreature).CreaturePosition);    
                     }
                     else
                     {
                         (bgOb as BattlegroundCreature).PortraitFileName = ((bgOb as BattlegroundCreature) as Gegner).Bild;
                         ((bgOb as BattlegroundCreature) as Gegner).LoadBattlegroundPortrait((bgOb as BattlegroundCreature).PortraitFileName, false);
-                    }
+                        ((bgOb as BattlegroundCreature) as Gegner).Position = GetPositionFromImage((bgOb as BattlegroundCreature).CreaturePosition);    
+                    }                
+
                 }
             }
 
@@ -994,11 +1031,29 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BackgroundOffsetX = lstFogSettings[1];
             InvBackgroundOffsetY = lstFogSettings[2];
 
-            GridOffsetX = lstFogSettings[3];
-            GridOffsetY = lstFogSettings[4];
+            PlayerGridOffsetX = lstFogSettings[3];
+            PlayerGridOffsetY = lstFogSettings[4];
             ScaleSpielerGrid = lstFogSettings[5];
             ScaleKampfGrid = lstFogSettings[6];
             RechteckGrid = lstFogSettings[7] == 1;            
+        }
+
+        private Position GetPositionFromImage(string posString)
+        {
+            Position p = Kampf.Logic.Position.Stehend;
+
+            if (posString.Contains("Floating")) p = Position.Schwebend;
+            else
+                if (posString.Contains("Flying")) p = Position.Fliegend;
+                else
+                    if (posString.Contains("Kneeling")) p = Position.Kniend;
+                    else
+                        if (posString.Contains("OnTheGround")) p = Position.Liegend;
+                        else
+                            if (posString.Contains("Riding")) p = Position.Reitend;
+                            else
+                                p = Position.Stehend;
+            return p;
         }
 
         #endregion
@@ -1401,8 +1456,37 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #endregion
 
+        private Rect _meisterZoomBox = new Rect(0, 0, 10000, 10000);
+        public Rect MeisterZoomBox
+        {
+            get { return _meisterZoomBox; }
+            set { Set(ref _meisterZoomBox, value); }
+        }
 
         #region Commands
+
+        private Base.CommandBase _onBtnCenterMeisterView = null;
+        public Base.CommandBase OnBtnCenterMeisterView
+        {
+            get
+            {
+                if (_onBtnCenterMeisterView == null)
+                {
+                    _onBtnCenterMeisterView = new Base.CommandBase(CenterMeisterView, null);
+                }
+                return _onBtnCenterMeisterView;
+            }
+        }
+        void CenterMeisterView(object obj)
+        {
+            MeisterZoom = 1;
+            double xMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureX) - Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
+            double yMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureY) - Global.ContextHeld.HeldenGruppeListe[0].CreatureHeight;
+            //double xMax = Global.ContextHeld.HeldenGruppeListe.Max(t => t.CreatureX) + Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
+            //double yMax = Global.ContextHeld.HeldenGruppeListe.Max(t => t.CreatureY) + Global.ContextHeld.HeldenGruppeListe[0].CreatureHeight;
+            MeisterZoomTransX = -xMin;
+            MeisterZoomTransY = -yMin;
+        }
 
         private Base.CommandBase _onBtnCenterPlayerView = null;
         public Base.CommandBase OnBtnCenterPlayerView
@@ -1430,8 +1514,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (h.CreatureX > x2) x2 = h.CreatureX + h.CreatureWidth;
                 if (h.CreatureY < y2) y2 = h.CreatureY - h.CreatureHeight;
             }
-            GridOffsetX = (x1);
-            GridOffsetY = (-y2);
+            PlayerGridOffsetX = (x1);
+            PlayerGridOffsetY = (-y2);
         }
 
         private Base.CommandBase _onSetBackgroundClick = null;

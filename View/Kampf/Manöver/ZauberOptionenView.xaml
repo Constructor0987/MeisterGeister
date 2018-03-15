@@ -42,12 +42,15 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <CheckBox Content="Bezeichnung in INI" IsChecked="{Binding ShowName}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
+        <CheckBox Content="Zauber anzeigen" IsChecked="{Binding ShowName}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
         <TextBlock Grid.Row="1" Text="Zauberdauer (Basis)"/>
         <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="1" Grid.Column="1" Value="{Binding BasisDauer}"/>
         <TextBlock Grid.Column="3" Text="{Binding Dauer}" Grid.Row="1"/>
-        
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,25" Grid.RowSpan="2"/>        
+
+        <TextBlock Grid.Row="2" Text=" Σ Zuschlag " HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Row="2" Text="‗‗‗‗‗‗‗‗‗‗‗‗‗" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,8,0,25" Grid.RowSpan="2" />
+
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,8,0,25" Grid.RowSpan="2"/>
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,25" Grid.RowSpan="2"/>
         <TextBlock Grid.Row="2" Grid.ColumnSpan="3" Text="Ansagen" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
 

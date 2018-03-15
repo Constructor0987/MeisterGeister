@@ -13,6 +13,7 @@
         <System:Double x:Key="gridSize">30</System:Double>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type Kampf:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
+        <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
     </Window.Resources>
     <Grid>
         <Grid.Resources>
@@ -55,8 +56,8 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Grid.Style>
-            <Grid Name="ArenaGridTop2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding OffsetGridMargin, UpdateSourceTrigger=PropertyChanged}">
+            </Grid.Style> 
+            <Grid Name="PlayerArenaGridTop" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding PlayerOffsetGridMargin, UpdateSourceTrigger=PropertyChanged}">
                 <Image Name="imgbtnBGStoppen2" Source="{Binding BackgroundImage}" VerticalAlignment="Top" HorizontalAlignment="Left" 
                                Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}" 
                                Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}" />
@@ -87,17 +88,29 @@
                                            Visibility="{Binding DataContext.ShowZ, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                            <TextBlock  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" Text="{Binding Kurzname}" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" 
+                                            <TextBlock  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" 
                                                         Visibility="{Binding DataContext.ShowCreatureName, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
                                                                     Converter={StaticResource BoolToVisibilityConverter},
-                                                                    UpdateSourceTrigger=PropertyChanged}"/>
+                                                                    UpdateSourceTrigger=PropertyChanged}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding KämpferTempName}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsHeld}" Value="True">
+                                                                <Setter Property="Text" Value="{Binding Kurzname}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
                                             <!--Kneel, Lie, Stand, Fly - Position Button-->
                                             <!--<Button Name="PositionButton" IsHitTestVisible="True" BorderThickness="0"  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}"
                                                     Width="80" Height="80" MouseLeftButtonDown="PositionButton_MouseLeftButtonDown" Content="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png">
                                                <ImageBrush ImageSource="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png" Stretch="Fill" /> 
                                             </Button>-->
-                                            <Image Width="50" Height="50" Source="{Binding CreaturePosition}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
+                                            <Image Width="50" Height="50" Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}" 
+                                                   Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
                                             <Canvas.Effect>
                                                 <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, UpdateSourceTrigger=PropertyChanged}" ShadowDepth="10" BlurRadius="20" />
                                             </Canvas.Effect>
@@ -271,8 +284,9 @@
                 </ListBox>
                 <Image Name="imgFog2" Source="{Binding FogImage}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10000" Height="10000"
                                 Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
-
-            </Grid>
+            </Grid>            
         </Grid>
+        
+        
     </Grid>
 </Window>

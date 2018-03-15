@@ -276,11 +276,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             mods = new Dictionary<string, ManöverModifikator<TWaffe>>();
             readonlymods = new ReadOnlyDictionary<string, ManöverModifikator<TWaffe>>(mods);
+           
         }
 
         protected virtual void SetDefaultModValues()
         {
-
         }
 
         public ReadOnlyDictionary<string, ManöverModifikator<TWaffe>> Mods

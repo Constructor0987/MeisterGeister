@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MeisterGeister.View.Kampf.Manöver"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500">
+             d:DesignHeight="500" d:DesignWidth="350">
     <UserControl.Resources>
         <ResourceDictionary Source="ManöverResources.xaml"/>
     </UserControl.Resources>
@@ -36,6 +36,10 @@
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Umgebung" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
+        <TextBlock Grid.Row="0" Text=" Σ Zuschlag " HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Row="0" Text="‗‗‗‗‗‗‗‗‗‗‗‗‗" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,8,0,25" Grid.RowSpan="2" />
+        
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,8,0,25" Grid.RowSpan="2"/>
         <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,25" Grid.RowSpan="2"/>
 
         <!--Dämmerungssicht / Nachtsicht-->

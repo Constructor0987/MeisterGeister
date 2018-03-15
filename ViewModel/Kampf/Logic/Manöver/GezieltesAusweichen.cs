@@ -26,18 +26,32 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             mods.Add(FERNKAMPFWAFFE_MOD, fernkampfwaffe);
         }
 
-        protected override int PositionSelbstMod(INahkampfwaffe waffe, Position value)
-        {
-            switch(value)
-            {
-                case Position.Kniend:
-                    return 4;
-                case Position.Liegend:
-                    return 100;
-                default:
-                    return 0;
-            }
-        }
+        //protected override int PositionSelbstMod(INahkampfwaffe waffe, Position value)
+        //{        
+            //if (Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst &&
+            //   ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value != Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst)
+            //{
+            //    ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst;
+            //    value = Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.PositionSelbst;
+            //}
+            //Global.CurrentKampf.BodenplanViewModel.DoChangeModPositionSelbst = false;
+
+            //IKämpfer bodenplanKämpfer = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Where(t => t is IKämpfer)
+            //    .FirstOrDefault(t => ((IKämpfer)t) == Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.Kämpfer) as IKämpfer);
+
+            //if (bodenplanKämpfer != null && bodenplanKämpfer.Position != ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value)
+            //    bodenplanKämpfer.Position = ((ManöverModifikator<Position, INahkampfwaffe>)Mods[POS_SELBST_MOD]).Value;
+        //
+        //    switch (value)
+        //    {
+        //        case Position.Kniend:
+        //            return 4;
+        //        case Position.Liegend:
+        //            return 100;
+        //        default:
+        //            return 0;
+        //    }
+        //}
 
         protected override int PositionGegnerMod(INahkampfwaffe waffe, Position value)
         {
