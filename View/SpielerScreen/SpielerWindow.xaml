@@ -116,10 +116,11 @@
                                             </Canvas.Effect>
                                         </Canvas>
                                         <ControlTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                            <DataTrigger Binding="{Binding IsAnDerReihe }" Value="True">
+                                                <!--IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}-->
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                        <DropShadowEffect Color="#FFC0FCFF" ShadowDepth="10" BlurRadius="35" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -145,10 +146,11 @@
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
                                         </Canvas>
                                         <ControlTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                            <DataTrigger Binding="{Binding IsAnDerReihe }" Value="True">
+                                                <!--IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}-->
                                                 <Setter Property="Effect" TargetName="PathLine">
                                                     <Setter.Value>
-                                                        <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                        <DropShadowEffect Color="#FFC0FCFF" ShadowDepth="10" BlurRadius="35" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -174,10 +176,11 @@
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
                                         </Canvas>
                                         <ControlTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                            <DataTrigger Binding="{Binding IsAnDerReihe }" Value="True">
+                                                <!--IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}-->
                                                 <Setter Property="Effect" TargetName="FilledPathLine">
                                                     <Setter.Value>
-                                                        <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                        <DropShadowEffect Color="#FFC0FCFF" ShadowDepth="10" BlurRadius="35" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -205,10 +208,11 @@
 
                                         </Canvas>
                                         <ControlTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                            <DataTrigger Binding="{Binding IsAnDerReihe }" Value="True">
+                                                <!--IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}-->
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect Color="Pink" ShadowDepth="10" BlurRadius="25" />
+                                                        <DropShadowEffect Color="#FFC0FCFF" ShadowDepth="10" BlurRadius="35" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
