@@ -18,6 +18,47 @@
         <vm:HUELampenViewModel />
     </UserControl.DataContext>
 
+    <UserControl.Resources>
+        <DataTemplate x:Key="ThemeTemplate" >
+            <Border Margin="5" Padding="4" CornerRadius="5">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.3" StartPoint="0,0.5">
+                        <GradientStop Color="WhiteSmoke" Offset="0" />
+                        <GradientStop Color="#FFFFFFC7" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="257*" />
+                        <ColumnDefinition Width="591*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBox Margin="100,2,0,2" Text="{Binding ThemeName}" />
+
+                    <ComboBox Grid.Row="1" ItemsSource="{Binding DataContext.lstHUELights, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Width="180" 
+                              SelectedValue="{Binding light}"/>
+
+                    <DataGrid Grid.Row="2" ItemsSource="{Binding lstLightProcess}" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Phase" Width="55" Binding="{Binding Phase}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Dauer [ms]" Width="100" Binding="{Binding Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Farbe" Width="100" Binding="{Binding Color}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="2" Grid.Column="1">
+                        <CheckBox Content="Wiederholen" IsChecked="{Binding doLoop}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90"/>
@@ -29,7 +70,7 @@
         </Grid.RowDefinitions>
 
         <CheckBox Content="Suche HUE Gateway" Grid.ColumnSpan="2" Checked="CheckBox_Checked" />
-       
+
 
         <TabControl Background="Transparent" Grid.Row="1" Grid.Column="1">
             <TabItem Header="L1" >
@@ -346,6 +387,85 @@
                 </Expander>
             </Grid>
         </TabItem>-->
+
+            <TabItem x:Name="tbiHUELampen">
+
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/lampen_hue.png" />
+                        <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="HUE Lampen" Style="{DynamicResource TextTitel}" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <Grid>
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="257*" />
+                                <ColumnDefinition Width="591*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>-->
+
+                            <!--<Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
+                                <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" >
+                                    <ItemsControl ItemsSource="{Binding lstHUELights}" >
+                                        <ItemContainerTemplate>
+                                            <CheckBox Content="{Binding LightSeletected}"
+                                        </ItemContainerTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Name="wpnlLightThemes" ItemWidth="130" Height="30" >
+                                                    --><!--<WrapPanel.Style>
+                                                        <Style TargetType="WrapPanel">
+                                                            <Setter Property="ItemHeight" Value="50" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ThemeGroßeAnsicht}" Value="False" >
+                                                                    <Setter Property="ItemHeight" Value="25" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </WrapPanel.Style>--><!--
+                                                </WrapPanel>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>-->
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="257*" />
+                                    <ColumnDefinition Width="591*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Theme Name" />
+                                <TextBox Margin="100,2,0,2" Text="{Binding ThemeName}" />
+
+                                <ComboBox Grid.Row="1" ItemsSource="{Binding DataContext.lstHUELights, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Width="180" Height="25" VerticalAlignment="Top" SelectedValue="{Binding AddLightToTheme}"/>
+                                <ListBox Grid.Row="1" ItemsSource="{Binding lstLights}" DisplayMemberPath="Name" Margin="5,30,5,5" Background="Transparent" MaxHeight="200" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                                <CheckBox Grid.Row="2" Content="Wiederholen" IsChecked="{Binding doLoop}" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                                <Button Grid.Row="2" Content="+" Width="30" Height="25" HorizontalAlignment="Left" />
+                                <DataGrid Grid.Row="3" ItemsSource="{Binding lstLightProcess}" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Phase" Width="55" Binding="{Binding Phase}" IsReadOnly="True"/>
+                                        <DataGridTextColumn Header="Dauer [ms]" Width="100" Binding="{Binding Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <DataGridTextColumn Header="Farbe" Width="100" Binding="{Binding Color}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Border>
+            </TabItem>
+
 
         </TabControl>
 

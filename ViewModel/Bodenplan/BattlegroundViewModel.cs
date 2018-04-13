@@ -33,6 +33,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
 
+            //alte Fog-of-War Bilder löschen
             foreach (string s in Directory.GetFiles(Ressources.GetFullApplicationPathForPictures()).ToList()
                 .FindAll(t => t.StartsWith(Ressources.GetFullApplicationPathForPictures() + "Fog-of-War")))
             {
@@ -40,8 +41,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 { File.Delete(s); }
                 catch
                 { }
-
             }
+
         }
 
         void _selectedListBoxBattlegroundObjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -213,6 +214,16 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get { return _kampf; }
             set { Set(ref _kampf, value); }
+        }
+
+        public Kampf.Logic.Kampf CurrKampf
+        {
+            get { return Global.CurrentKampf.Kampf; }
+        }
+
+        public Kampf.Logic.ManöverInfo SelManöver
+        {
+            get { return Global.CurrentKampf.SelectedManöver; }
         }
 
         private Window _kampfWindow = null;
@@ -417,29 +428,31 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Kampf mit Eventverbindung auf KämpferListe
 
-        //private Kampf.KampfViewModel _kampfVM;
-        //public Kampf.KampfViewModel KampfVM
-        //{
-        //    get { return _kampfVM; }
-        //    set
-        //    {
-        //        if (object.Equals(_kampfVM, value)) return;
-        //        if (KampfVM != null)
-        //        {
-        //            _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
-        //            //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
-        //            RemoveCreatureAll();
-        //        }
-        //        _kampfVM = value;
-        //        if (KampfVM != null)
-        //        {
-        //            _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
-        //            //_kampfVM.PropertyChanged += OnKampfPropertyChanged;
-        //            AddAllCreatures();
-        //        }
-        //        UpdateCreaturesFromChangedKampferlist();
-        //    }
-        //}
+
+        private KampfViewModel _kampfVM;
+        public KampfViewModel KampfVM
+        {
+            get { return _kampfVM; }
+            set
+            {
+                if (object.Equals(_kampfVM, value)) return;
+               
+                if (KampfVM != null)
+                {
+                    _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
+                    //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
+                    RemoveCreatureAll();
+                }
+                _kampfVM = value;
+                if (KampfVM != null)
+                {
+                    _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
+                    //_kampfVM.PropertyChanged += OnKampfPropertyChanged;
+                    AddAllCreatures();
+                }
+                UpdateCreaturesFromChangedKampferlist();
+            }
+        }
 
         public void UpdateCreaturesFromChangedKampferlist()
         {
@@ -448,7 +461,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
             }
             foreach (var k in Global.CurrentKampf.Kampf.Kämpfer)
-            {
+            { 
                 ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged += OnWesenPropertyChanged;
             }
         }
@@ -460,8 +473,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 DoChangeModPositionSelbst = true;
                 KämpferInfo ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (sender as IKämpfer));
-                //ki.PositionSelbst = (sender as Wesen).CreaturePosition;
-               // Global.CurrentKampf.Kampf.Kämpfer.First(t => t. == (sender as Wesen)).PositionSelbst = ((Wesen)SelectedObject).Position; //.SelectedManöver.Manöver.Ausführender.PositionSelbst //((BattlegroundCreature)sender).UpdateCreaturePosition();
             }
         }
 
@@ -516,7 +527,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _doChangeModPositionSelbst; }
             set { Set(ref _doChangeModPositionSelbst, value); }
         }
-
         #endregion
 
         #region Creature Add/Remove, Clear All
@@ -533,11 +543,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
             }
-            //kämpfer.PropertyChanged += OnWesenPropertyChanged;
         }
 
         public void AddAllCreatures()
         {
+
             foreach (var k in Global.CurrentKampf.Kampf.Kämpfer)
             {
                 AddCreature(k.Kämpfer);
@@ -629,7 +639,16 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #endregion
-        
+
+        //public Thickness PosMarginTh
+        //{
+        //    get { return new Thickness(
+        //        SelectedObject != null && SelectedObject is BattlegroundCreature ? (SelectedObject as BattlegroundCreature).CreatureX : 0 + 90,                 
+        //        SelectedObject != null && SelectedObject is BattlegroundCreature ? (SelectedObject as BattlegroundCreature).CreatureY - 27: -27, 
+        //        0, 0);
+        //    }
+        //}
+
         private bool _leftShiftPressed = false;
         public bool LeftShiftPressed
         {
@@ -750,16 +769,25 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     BattlegroundObjects.ToList().ForEach(x => x.IsHighlighted = false);
                     _selectedObject = value;
-                    if (SelectedObject is BattlegroundCreature) Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.First(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
+                    if (SelectedObject is BattlegroundCreature) Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
                     if (SelectedObject != null)
                     {
                         SelectedFillColor = SelectedObject.FillColor;
                         SelectedColor = SelectedObject.ObjectXMLColor;
                         StrokeThickness = SelectedObject.StrokeThickness;
+
+                        SelectedObject.IsSelected = true;
                     }
                     OnChanged("SelectedObject");
                 }
             }
+        }
+
+        private KämpferInfo _selectectedKämpferInfo;
+        public KämpferInfo SelectectedKämpferInfo
+        {
+            get { return _selectectedKämpferInfo; }
+            set { Set(ref _selectectedKämpferInfo, value); }
         }
 
         //get / set delete Command 
@@ -822,6 +850,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private double _objectSize = 1;
         public double ObjectSize
         {
             get
@@ -831,7 +860,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     if (SelectedObject is ImageObject) return ((ImageObject)SelectedObject).ObjectSize;
                     if (SelectedObject is BattlegroundCreature) return ((BattlegroundCreature)SelectedObject).ObjectSize;
                 }
-                return 1;
+                return _objectSize;
             }
             set
             {
@@ -840,7 +869,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     if (SelectedObject is ImageObject) ((ImageObject)SelectedObject).ObjectSize = value;
                     if (SelectedObject is BattlegroundCreature) ((BattlegroundCreature)SelectedObject).ObjectSize = value;
                 }
-                OnChanged("ObjectSize");
+                Set(ref _objectSize, value);
             }
         }
 
@@ -1220,8 +1249,24 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public ImageObject CreateImageObject(string picurl, Point p)
         {
+            var brush = new ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri(picurl, UriKind.Relative));
+
             var imageobject =
                 new ImageObject(picurl, p.X, p.Y);
+            if (brush.ImageSource.Width >= brush.ImageSource.Height)
+            {
+                imageobject.ImageWidth = 100;
+                imageobject.ImageHeight = 100* (brush.ImageSource.Height / brush.ImageSource.Width);
+            }
+            else
+            {
+                imageobject.ImageHeight = 100;
+                imageobject.ImageWidth = 100 * (brush.ImageSource.Width / brush.ImageSource.Height);
+            }
+            imageobject._imageOriginalWidth = imageobject.ImageWidth;
+            imageobject._imageOriginalHeigth = imageobject.ImageHeight;
+            imageobject.ObjectSize = ObjectSize;
             BattlegroundObjects.Add(imageobject);
             return imageobject;
         }
@@ -1464,6 +1509,24 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #region Commands
+        private Base.CommandBase _onBtnUmwandelnFernkampf = null;
+        public Base.CommandBase OnBtnUmwandelnFernkampf            
+        {
+            get
+            {
+                if (_onBtnUmwandelnFernkampf == null)
+                {
+                    _onBtnUmwandelnFernkampf = new Base.CommandBase(UmwandelnFernkampf, null);
+                }
+                return _onBtnUmwandelnFernkampf;
+            }
+        }
+        void UmwandelnFernkampf(object obj)
+        {
+            ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
+            if (mi == null) return;
+            mi.UmwandelnFernkampf.Execute(null);
+        }
 
         private Base.CommandBase _onBtnCenterMeisterView = null;
         public Base.CommandBase OnBtnCenterMeisterView
@@ -1482,10 +1545,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
             MeisterZoom = 1;
             double xMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureX) - Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
             double yMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureY) - Global.ContextHeld.HeldenGruppeListe[0].CreatureHeight;
-            //double xMax = Global.ContextHeld.HeldenGruppeListe.Max(t => t.CreatureX) + Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
-            //double yMax = Global.ContextHeld.HeldenGruppeListe.Max(t => t.CreatureY) + Global.ContextHeld.HeldenGruppeListe[0].CreatureHeight;
             MeisterZoomTransX = -xMin;
             MeisterZoomTransY = -yMin;
+            MeisterZoom = .5;
+            CenterPlayerView(null);
         }
 
         private Base.CommandBase _onBtnCenterPlayerView = null;

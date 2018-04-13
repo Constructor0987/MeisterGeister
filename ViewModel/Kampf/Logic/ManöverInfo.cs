@@ -15,13 +15,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region Umwandeln
 
         private bool CanExecuteUmwandelnAktion(object o)
-        {
+        { 
             return Manöver.Typ == Logic.Manöver.ManöverTyp.Aktion;
         }
 
         private bool CanExecuteUmwandelnReaktion(object o)
         {
             return Manöver.Typ == Logic.Manöver.ManöverTyp.Reaktion;
+        }
+
+        private int aktKampfrunde;
+        public int AktKampfrunde
+        { 
+            get { return aktKampfrunde; }
+            set { Set(ref aktKampfrunde, value); }
         }
 
         private Base.CommandBase umwandelnZauber;
@@ -392,6 +399,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             kampfrundeStart = kampfrunde;
             Manöver = m;
             Manöver.IsAusgeführt = false;
+            AktKampfrunde = kampfrunde;
         }
         
         public bool IsAktuell

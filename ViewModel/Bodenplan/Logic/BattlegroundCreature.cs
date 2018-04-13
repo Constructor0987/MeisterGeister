@@ -50,6 +50,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     [DataContract(IsReference = true)]
     public class BattlegroundCreature : BattlegroundBaseObject
     {
+        public KämpferInfo ki
+        {
+            get { return Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen)); }
+        }
+
         private string _portraitFilename;
         private double _creatureX = 1200;
         private double _creatureY = 600;
@@ -60,6 +65,14 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _sightAreaLength = 120;
 
         public static String ICON_DIR = "/Images/Icons/General/";
+        
+        private ManöverInfo _selectedManöver = null;
+        public ManöverInfo SelectedManöver
+        {
+            get { return _selectedManöver; }
+            set { Set(ref _selectedManöver, value); }
+        }
+
 
         public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
         public string CreaturePosition
@@ -460,5 +473,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         //    //    if (k != null && k.Position != ((Wesen)this).Position) ;
         //    //}
         //}
+
     }
 }

@@ -17,8 +17,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _imageHeight = 100;
         private double _imagePositionX = 50;
         private double _imagePositionY = 50;
-        private double _imageOriginalWidth = 100;
-        private double _imageOriginalHeigth = 100;
+        public double _imageOriginalWidth = 100;
+        public double _imageOriginalHeigth = 100;
         private double _objectSize = 1;
         private double _rotateAngle = 0;
 

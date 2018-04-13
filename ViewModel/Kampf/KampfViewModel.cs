@@ -12,9 +12,11 @@ using MeisterGeister.ViewModel.Bodenplan.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
+    
+
     public class KampfViewModel : Base.ToolViewModelBase
     {
-
+        
         public KampfViewModel() : this((k => new MeisterGeister.View.Kampf.GegnerWindow(k).ShowDialog()), View.General.ViewHelper.Confirm)
         {
         }
@@ -108,9 +110,17 @@ namespace MeisterGeister.ViewModel.Kampf
                 Set(ref selectedManöver, value);
                 if (value != null)
                 {
-                    SelectedKämpfer = null;
-                    
+                    SelectedKämpfer = null;                    
                 }
+            }
+        }
+
+        private ManöverInfo _selectedManöverInfo;
+        public ManöverInfo SelectedManöverInfo 
+        {
+            get { return _selectedManöverInfo; }
+            set { Set(ref _selectedManöverInfo, value); 
+                SelectedKämpfer = value != null? value.Manöver.Ausführender: null;
             }
         }
 
@@ -208,7 +218,10 @@ namespace MeisterGeister.ViewModel.Kampf
                 }
             }
             if (BodenplanViewModel != null)
+            {
+                //BodenplanViewModel.KampfVM = this;
                 BodenplanViewModel.AddAllCreatures();
+            }
         }
 
         private Base.CommandBase onDeleteKämpfer = null;

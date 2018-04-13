@@ -182,6 +182,10 @@
       <HintPath>packages\Q42.HueApi.3.6.3\lib\netstandard1.1\Q42.HueApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Q42.HueApi.ColorConverters, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Q42.HueApi.ColorConverters.3.6.0\lib\netstandard1.1\Q42.HueApi.ColorConverters.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sparrow.Chart.Wpf.40, Version=13.1.0.118, Culture=neutral, PublicKeyToken=50f33fb8697e9a92, processorArchitecture=MSIL">
       <HintPath>packages\Sparrow.Chart.Wpf.13.1.0.118\lib\net40\Sparrow.Chart.Wpf.40.dll</HintPath>
       <Private>True</Private>
@@ -344,6 +348,7 @@
     <Compile Include="Model\Alchimierezept_Setting_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\HUELight.cs" />
     <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Audio_Playlist_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -788,6 +793,15 @@
     <Compile Include="View\AudioPlayer\lbEditorThemeItem.xaml.cs">
       <DependentUpon>lbEditorThemeItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Bodenplan\BattlegroundTopMenuView.xaml.cs">
+      <DependentUpon>BattlegroundTopMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Einstellungen\HUEColorDialog.xaml.cs">
+      <DependentUpon>HUEColorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Einstellungen\ColorPicker.xaml.cs">
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
@@ -1037,6 +1051,7 @@
     <Compile Include="View\General\IntBoxVertical.xaml.cs">
       <DependentUpon>IntBoxVertical.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="View\General\IsEqualOrGreaterThanVisibleConverter.cs" />
     <Compile Include="View\General\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="View\General\InverseBooleanConverter.cs" />
@@ -1576,6 +1591,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Bodenplan\BattlegroundTopMenuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Bodenplan\BattlegroundView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1585,6 +1604,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Bodenplan\SliderWithDisplayTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Einstellungen\HUEColorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Einstellungen\ColorPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2679,6 +2706,7 @@
     <Resource Include="Images\Bodenplan\FogOfWar.png" />
     <Content Include="Daten\Updateskripte\UpdateTo_V0126.sql" />
     <Resource Include="Images\Icons\lampen_hue.png" />
+    <Resource Include="Images\Icons\HUEColorSwatchCircle.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

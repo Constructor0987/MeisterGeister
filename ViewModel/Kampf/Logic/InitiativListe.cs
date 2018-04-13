@@ -17,6 +17,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             _kampf = kampf;
             CollectionChangedExtended += InitiativListe_CollectionChangedExtended;
+            
         }
 
         public IEnumerable<ZeitImKampf> Aktionszeiten

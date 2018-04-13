@@ -232,23 +232,24 @@
         </Style>
 
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="{DynamicResource Background1}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="500" MinWidth="450" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition>
                 <ColumnDefinition.Style>
                     <Style TargetType="ColumnDefinition">
                         <!--Kämpfer Fensterbreite-->
-                        <Setter Property="Width" Value="440" />
+                        <Setter Property="Width" Value="440*" />
+                        <Setter Property="MaxWidth" Value="1060" />
                         <Style.Triggers>
                             <!--Manaöver Fensterbreite-->
                             <DataTrigger Binding="{Binding SelectedKämpfer, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
-                                <Setter Property="Width" Value="385" />
+                                <Setter Property="Width" Value="385*" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -256,23 +257,32 @@
             </ColumnDefinition> 
         </Grid.ColumnDefinitions>
 
-        <!--Bodenplan kommt hier hin-->
-         
-        <Expander x:Name="expBodenplan" ExpandDirection="Right" IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2"
+        <!--Bodenplan-->         
+        <!--<Expander x:Name="expBodenplan" ExpandDirection="Right" IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
                   Background="{StaticResource Background2}" BorderThickness="3" MinHeight="130" Padding="5">
             <Expander.Header>
                 <TextBlock Text="Bodenplan" Style="{DynamicResource TextTitel}"/>
-            </Expander.Header>
-            <ViewBodenplan:BattlegroundView Grid.Row="1" DataContext="{Binding BodenplanViewModel}"/>
-        </Expander>
+            </Expander.Header>-->
+        <ViewBodenplan:BattlegroundView Grid.Row="1" Grid.ColumnSpan="3" DataContext="{Binding BodenplanViewModel}"/>
+        <ViewBodenplan:BattlegroundTopMenuView Grid.ColumnSpan="1" Grid.Column="2" DataContext="{Binding BodenplanViewModel}" Margin="0,-3,60,-30" HorizontalAlignment="Right" />
+       <GridSplitter Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
+        <!-- </Expander>-->
         
-        <!--<GridSplitter Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="3" />-->
-        <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
+        <!--<GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />-->
 
-        <Expander IsExpanded="True" VerticalAlignment="Bottom" HorizontalAlignment="Left" ExpandDirection="Right" Grid.Row="1" 
-                  Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5">
+
+        <TextBlock HorizontalAlignment="Right" FontSize="12" Height="35" VerticalAlignment="Top" FontWeight="Bold" Grid.Column="3" >
+                                    Ini: <Run Text="{Binding Kampf.AktuelleAktionszeit.InitiativPhase,StringFormat={}{0},Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/><LineBreak/>
+                                    KR: <Run Text="{Binding Kampf.AktuelleAktionszeit.Kampfrunde,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </TextBlock>
+
+        <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="1"/>
+
+        <!-- Helden Fenster -->
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.Row="1" Grid.Column="2"
+                  Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5" Margin="0,20,0,0">
             <Expander.Header>
-                <!--VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.RowSpan="2" Grid.Column="2"-->
+                <!--VerticalAlignment="Bottom" HorizontalAlignment="Left" ExpandDirection="Right" Grid.Row="1" -->
                 <TextBlock Text="{Binding SelectedKämpfer.Kämpfer.Name}" Style="{DynamicResource TextTitel}"/>
             </Expander.Header>
             <Expander.Style>
@@ -284,16 +294,15 @@
                     </Style.Triggers>
                 </Style>
             </Expander.Style>
-
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <Kampf:KämpferView DataContext="{Binding SelectedKämpfer}"/>
             </ScrollViewer>
         </Expander>
 
         <!-- Manöver Fenster -->
-        <Expander IsExpanded="True" VerticalAlignment="Bottom" HorizontalAlignment="Left" ExpandDirection="Right" Grid.Row="1" 
-                  Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5" >
-            <!--VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.RowSpan="2" Grid.Column="2"-->
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.Row="1" Grid.Column="2"
+                  Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5" Margin="0,20,0,0">
+            <!--VerticalAlignment="Bottom" HorizontalAlignment="Left" ExpandDirection="Right" Grid.Row="1" -->
             <Expander.Header>
                 <DockPanel HorizontalAlignment="Center">
                     <ViewGeneral:LiteraturControl DockPanel.Dock="Left" Literaturangabe="{Binding SelectedManöver.Manöver.Literatur}" LiteraturAnzeigeArt="NurIcon"/>
@@ -304,23 +313,15 @@
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <ViewManöver:ManöverOptionenView/>
             </ScrollViewer>
-
             <Expander.Style>
                 <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding SelectedManöver}" Value="{x:Null}">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
-                        
-                        <!--<DataTrigger Binding="{Binding ElementName=expBodenplan, Path=IsExpanded}" Value="True">
-                            <Setter Property="MaxHeight" Value="200" />
-                        </DataTrigger>-->
                     </Style.Triggers>
                 </Style>
             </Expander.Style>
-        </Expander>
-        
-        <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left"/>
-
+        </Expander>        
     </Grid>
 </UserControl>

@@ -40,6 +40,7 @@ namespace MeisterGeister.View.Bodenplan
             AddPictureButtons();
             AddFogOfWar();
             InitiateSpielerScaling();
+            VM.KampfVM = Global.CurrentKampf;
         }
 
         private void InitiateSpielerScaling()
@@ -160,11 +161,10 @@ namespace MeisterGeister.View.Bodenplan
                     VM.FogImage = wbmap;
                     return;
                 }
-                if (vm.SelectedObject == null) return;
-
+                if (vm.SelectedObject == null) return;                
                 if (vm.SelectedObject is ViewModel.Kampf.Logic.Wesen)
                 {
-                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y), checkBox5_Grid.IsChecked.Value);
+                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y), VM.RechteckGrid);
                 }
                 else if (vm.SelectedObject is ImageObject)
                 {
@@ -207,7 +207,7 @@ namespace MeisterGeister.View.Bodenplan
                     VM.FogImage = wbmap;
                 }
                 else
-                {
+                {                    
                     if (vm.SelectedObject != null) vm.SelectionChangedUpdateSliders();
 
                     if (vm.CreateLine)
@@ -240,6 +240,7 @@ namespace MeisterGeister.View.Bodenplan
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
+                vm.IsMoving = false;
                 //handling different possibilities based on Objects (like Pathline or different BattlegroundBaseObject)
                 if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
                 {
@@ -389,14 +390,44 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
+        MenuItem miOpen = null;
+        public static RoutedCommand ThemeCommandCheck = new RoutedCommand();
         private void ArenaGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //ListBox lb = sender as ListBox;
-            //if (lb == null)
-            //    return;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
+                var menuitem = ((DependencyObject)e.OriginalSource).FindAnchestor<MenuItem>();
+                if (menuitem != null)
+                {
+                    if (menuitem.HasItems)
+                    {
+                        menuitem.IsSubmenuOpen = !menuitem.IsSubmenuOpen;
+                        miOpen = menuitem.IsSubmenuOpen? menuitem: null;
+                    }
+                    else
+                    {
+                        ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+
+                        if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
+                            mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
+                        if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
+                            mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
+
+                        if (miOpen != null && miOpen.IsSubmenuOpen)
+                            miOpen.IsSubmenuOpen = false;
+                        miOpen =  null;
+                    }
+                    return;
+                }
+
+                if (miOpen != null && miOpen.IsSubmenuOpen)
+                    miOpen.IsSubmenuOpen = false;
+                miOpen = null;
+                
+                var slider = ((DependencyObject)e.OriginalSource).FindAnchestor<Slider>();
+                if (slider != null) return;                
+
                 var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
                 if (listboxItem != null)
                 {
@@ -404,6 +435,24 @@ namespace MeisterGeister.View.Bodenplan
                     vm.SelectedObject = o; //TODO: Zugriff muss aus dem anderen Thread ausgeführt werden.
                     vm.IsMoving = true;
                     e.Handled = true;
+                }
+
+                var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
+                if (button != null)             
+                {
+                    ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                    if (mi == null) return;
+                    if (button.Name == "UmwandelnAttacke")
+                        mi.UmwandelnAttacke.Execute(null);
+                    if (button.Name == "UmwandelnFernkampf")
+                        mi.UmwandelnFernkampf.Execute(null);
+                    if (button.Name == "UmwandelnZauber")
+                        mi.UmwandelnZauber.Execute(null);
+                    if (button.Name == "UmwandelnSonstiges")
+                        mi.UmwandelnSonstiges.Execute(null);
+
+                    Global.CurrentKampf.SelectedManöver = mi;
+                    return;
                 }
             }
         }
@@ -617,31 +666,11 @@ namespace MeisterGeister.View.Bodenplan
 
             }
         }
-
-        private void tbtnSpielerScreenActive_Click(object sender, RoutedEventArgs e)
-        {
-            if (((ToggleButton)e.OriginalSource).IsChecked == true)
-            {
-                if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanViewModel != null)
-                {
-                    SpielerWindow.Close();
-                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive = true;
-                    SpielerWindow.Show();
-                }
-            }
-            else
-            {
-                if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanViewModel != null)
-                {
-                    if (VM.SpielerScreenActive) tbtnSpielerScreenActive.RaiseEvent(new RoutedEventArgs(ToggleButton.ClickEvent)); 
-                    SpielerWindow.Close();
-                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive = false;
-                }
-            }
-        }
-
+        
         private double WidthStart = 0;
         private bool MouseIsOverScrViewer = false;
+
+
         private void CreateKampfWindow()
         {
             var vm = DataContext as BattlegroundViewModel;
@@ -763,7 +792,6 @@ namespace MeisterGeister.View.Bodenplan
                 ArenaScrollViewer.TranslateY = -yMin;
             }
         }
-
     }
 }
 

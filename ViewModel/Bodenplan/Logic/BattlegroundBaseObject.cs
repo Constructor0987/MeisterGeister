@@ -26,7 +26,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private bool _isVisible = true;
 
         public abstract string ObjectName { get; }
-   
+        
         //is sticked?
         private bool _isSticked = false;
         public bool IsSticked

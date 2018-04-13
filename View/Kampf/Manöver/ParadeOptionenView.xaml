@@ -17,41 +17,41 @@
             <ColumnDefinition Width="24"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Umgebung" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
         <!--Dämmerungssicht / Nachtsicht-->
         <TextBlock Grid.Row="1" Text="Licht"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value, Converter={StaticResource lichtValues}}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="licht" ItemsSource="{StaticResource lichtValues}" SelectedItem="{Binding Mods[Licht].Value, Converter={StaticResource lichtValues}}" Height="21"/>
         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Mods[Licht].Result}"/>
 
         <!--Kampf im Wasser / Unterwasserkampf-->
         <TextBlock Grid.Row="2" Text="Wasser"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="wasser" ItemsSource="{StaticResource wasserValues}" SelectedItem="{Binding Mods[Wasser].Value,Converter={StaticResource wasserValues}}"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="wasser" ItemsSource="{StaticResource wasserValues}" SelectedItem="{Binding Mods[Wasser].Value,Converter={StaticResource wasserValues}}" Height="21"/>
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Wasser].Result}"/>
 
         <CheckBox Content="Beengte Umgebung" Grid.Row="3" Grid.ColumnSpan="2"/>
         <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Beengt].Result}"/>
 
         <TextBlock Grid.Row="4" Text="Distanzklasse"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="distanzklasse" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Distanzklasse].Value}">
+        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="distanzklasse" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Distanzklasse].Value}" Height="21">
             <ComboBoxItem Content="Passend oder zu kurz" DataContext="0"/>
             <ComboBoxItem Content="Um 1 zu lang" DataContext="6"/>
             <ComboBoxItem Content="Um 2 zu lang" IsEnabled="False" ToolTip="Parieren nicht möglich" ToolTipService.ShowOnDisabled="True"/>
@@ -59,13 +59,13 @@
         <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Mods[Distanzklasse].Result}"/>
 
         <TextBlock Grid.Row="5" Text="Überzahl"/>
-        <Slider Grid.Row="5" Grid.Column="1" Interval="1" Minimum="-5" Maximum="5" Value="{Binding Mods[Überzahl].Value}" AutoToolTipPlacement="BottomRight"/>
+        <Slider Grid.Row="5" Grid.Column="1" Interval="1" Minimum="-5" Maximum="5" Value="{Binding Mods[Überzahl].Value}" AutoToolTipPlacement="BottomRight" Style="{StaticResource SmallHorizontalSlider}" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Mods[Überzahl].Result}"/>
 
         <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Text="Selbst" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
         <TextBlock Grid.Row="7" Text="Position"/>
-        <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionSelbst].Value,Converter={StaticResource positionValues}}"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionSelbst].Value,Converter={StaticResource positionValues}}" Height="21"/>
         <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Mods[PositionSelbst].Result}"/>
 
         <!--+1-->
@@ -79,12 +79,12 @@
         <TextBlock Grid.Row="10" Grid.ColumnSpan="3" Text="Gegner" HorizontalAlignment="Center" Margin="0,6,0,4" FontWeight="Bold"/>
 
         <TextBlock Grid.Row="11" Text="Position"/>
-        <ComboBox Grid.Row="11" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionGegner].Value,Converter={StaticResource positionValues}}"/>
+        <ComboBox Grid.Row="11" Grid.Column="1" ItemsSource="{StaticResource positionValues}" SelectedItem="{Binding Mods[PositionGegner].Value,Converter={StaticResource positionValues}}" Height="21"/>
         <TextBlock Grid.Row="11" Grid.Column="2" Text="{Binding Mods[PositionGegner].Result}"/>
 
         <!--Finte-->
         <TextBlock Grid.Row="12" Text="Finte"/>
-        <Slider Grid.Row="12" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Finte].Value}"/>
+        <Slider Grid.Row="12" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Finte].Value}" Style="{StaticResource SmallHorizontalSlider}" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="12" Grid.Column="2" Text="{Binding Mods[Finte].Result}"/>
 
         <CheckBox Grid.Row="13" Grid.ColumnSpan="2" Content="Glücklicher / Kritischer Treffer" IsChecked="{Binding Mods[Glücklich].Value}"/>
@@ -95,7 +95,7 @@
 
         <!--Zielgröße-->
         <TextBlock Grid.Row="15" Text="Zielgröße"/>
-        <ComboBox Grid.Row="15" Grid.Column="1" ItemsSource="{StaticResource größenValues}" SelectedItem="{Binding Mods[Zielgröße].Value,Converter={StaticResource größenValues}}"/>
+        <ComboBox Grid.Row="15" Grid.Column="1" ItemsSource="{StaticResource größenValues}" SelectedItem="{Binding Mods[Zielgröße].Value,Converter={StaticResource größenValues}}" Height="21"/>
         <TextBlock Grid.Row="15" Grid.Column="2" Text="{Binding Mods[Zielgröße].Result}"/>
 
     </Grid>

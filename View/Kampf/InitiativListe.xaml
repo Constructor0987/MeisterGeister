@@ -9,15 +9,18 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:View="clr-namespace:MeisterGeister.View.Kampf"             
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:mg="clr-namespace:MeisterGeister"
+             xmlns:mg="clr-namespace:MeisterGeister"	
+	         xmlns:General="clr-namespace:MeisterGeister.View.General"  	
              xmlns:model="clr-namespace:MeisterGeister.Model"
              mc:Ignorable="d" x:Name="iniListe" Background="Transparent"
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
+        <General:ImagePathConverter x:Key="ImagePathConverter" />
         <System:Double x:Key="gridSize">30</System:Double>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <KampfLogic:DoubleToIntConverter x:Key="DoubleToIntConverter1"/>
         <KampfLogic:DoubleSichtConverter x:Key="sichtConverter"/>
         <KampfLogic:DoubleLichtConverter x:Key="lichtConverter"/>
     </UserControl.Resources>
@@ -109,17 +112,17 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="65"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!--Buttons-->
-            
-        <StackPanel Orientation="Horizontal" x:Name="buttons" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal" x:Name="buttons" VerticalAlignment="Top" Height="40" >
             <StackPanel HorizontalAlignment="Left" Width="20">
                 <Button ToolTip="Helden einfügen" Command="{Binding OnAddHelden}">
                     <Button.Content>
@@ -132,7 +135,7 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
-            <Button Width="20" Height="20" Margin="0,0,10,0" ToolTip="Liste leeren" Command="{Binding OnDeleteAllKämpfer}">
+            <Button Width="20" Height="20" Margin="0,0,9,0" ToolTip="Liste leeren" Command="{Binding OnDeleteAllKämpfer}">
                 <Button.Content>
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="-3" />
                 </Button.Content>
@@ -185,7 +188,7 @@
         </StackPanel>
 
         <!--Kämpferliste-->
-        <ListBox x:Name="kämpferListe" ItemsSource="{Binding Kampf.Kämpfer}" SelectedItem="{Binding SelectedKämpfer}" Grid.Row="1" VerticalAlignment="Top">
+        <!--<ListBox x:Name="kämpferListe" ItemsSource="{Binding Kampf.Kämpfer}" SelectedItem="{Binding SelectedKämpfer}" Grid.Row="1" VerticalAlignment="Top">
             <ListBox.Template>
                 <ControlTemplate TargetType="ListBox">
                     <ItemsPresenter/>
@@ -278,7 +281,7 @@
                             </Grid.ToolTip>
                         </Grid>
                         <TextBlock Width="150" VerticalAlignment="Center">
-                            <!--Text="{Binding Kämpfer.Name}"-->
+                            --><!--Text="{Binding Kämpfer.Name}"--><!--
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Text" Value="{Binding Kämpfer.KämpferTempName}"/>
@@ -322,9 +325,9 @@
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
 
-        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" 
+        <!--<ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.RowSpan="2" 
                       Margin="4,0,0,-15" ScrollChanged="scrViewer_ScrollChanged" MouseEnter="scrViewer_MouseEnter" MouseLeave="scrViewer_MouseLeave">
             <Grid>
                 <Grid.Resources>
@@ -394,14 +397,14 @@
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                 <GradientStop Color="#FFFFFFFF" Offset="0"/>
-                                                <!--<GradientStop Color="#FFA6895C" Offset="1"/>-->
+                                                --><!--<GradientStop Color="#FFA6895C" Offset="1"/>--><!--
                                                 <GradientStop Color="Orange" Offset="1"/>
                                             </LinearGradientBrush>
                                         </Border.Background>
                                         <TextBlock x:Name="txt" Text="{Binding Name,StringFormat={}KR {0}}" HorizontalAlignment="Center"/>
                                     </Border>
                                     <DataTemplate.Triggers>
-                                        <!--AnsagePhase bei aktiver Kampfrunde anzeigen-->
+                                        --><!--AnsagePhase bei aktiver Kampfrunde anzeigen--><!--
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Value="True">
@@ -453,7 +456,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!--ManöverListe-->
+                --><!--ManöverListe--><!--
                 <ListBox Height="{Binding ElementName=kämpferListe,Path=ActualHeight}" ItemsSource="{Binding Kampf.InitiativListe}"
                       Grid.Row="1" ViewGeneral:ListBoxBehaviour.DeselectOnClick="True" SelectedItem="{Binding SelectedManöver}">
                     <ListBox.Template>
@@ -513,7 +516,7 @@
                                                         </MenuItem.Icon>
                                                     </MenuItem>
                                                     <MenuItem Header="Fernkampf" >
-                                                        <!--Command="{Binding UmwandelnFernkampf}" >-->
+                                                        --><!--Command="{Binding UmwandelnFernkampf}" >--><!--
                                                         <MenuItem.Style>
                                                             <Style TargetType="MenuItem">
                                                                 <Setter Property="ItemsSource" Value="{x:Null}" />
@@ -626,6 +629,184 @@
                                     <Setter TargetName="panel" Property="HorizontalAlignment" Value="Center"/>
                                 </DataTrigger>
                             </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </ScrollViewer>-->
+
+        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.ColumnSpan="2" 
+                      Margin="4,0,5,0" ScrollChanged="scrViewer_ScrollChanged" MouseEnter="scrViewer_MouseEnter" MouseLeave="scrViewer_MouseLeave">
+            <Grid>
+                <Grid.Resources>
+                    <CollectionViewSource Source="{Binding Kampf.InitiativListe.Aktionszeiten}" x:Key="kampfrunden">
+                        <CollectionViewSource.GroupDescriptions>
+                            <PropertyGroupDescription PropertyName="Kampfrunde"/>
+                        </CollectionViewSource.GroupDescriptions>
+                    </CollectionViewSource>
+                </Grid.Resources>
+
+                <ListBox x:Name="kämpferHorizListe" ItemsSource="{Binding Kampf.SortedInitiativListe, UpdateSourceTrigger=PropertyChanged}" 
+                         SelectedItem="{Binding SelectedManöverInfo}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="ListBox">
+                            <!--<ItemsPresenter />-->
+                            <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="30" Margin="2,0" >
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding>
+                                                        <MultiBinding.Converter>
+                                                            <ViewGeneral:EqualsMultiConverter/>
+                                                        </MultiBinding.Converter>
+                                                        <Binding Path="Kampf.AktIniKämpfer" UpdateSourceTrigger="PropertyChanged"/>
+                                                        <Binding Path="Manöver.Ausführender.Kämpfer" />
+                                                    </MultiBinding>
+                                                    <!--#FFF7CC86-->
+                                                    
+                                                </DataTrigger.Binding>
+                                                    <Setter Property="Background" Value="#FF0CD8E2" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <DockPanel>
+                                            <TextBlock Text="Position: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                            <ComboBox DockPanel.Dock="Right" ItemsSource="{StaticResource PositionenValues}"
+                                                      SelectedValue="{Binding Path=Manöver.Ausführender.Kämpfer.Position, Converter={StaticResource PositionenValues}}"/>
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <TextBlock Text="Kampfstil: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                            <ComboBox DockPanel.Dock="Right" SelectedValuePath="Stil" SelectedValue="{Binding Kampfstil}">
+                                                <ComboBox.ItemsSource>
+                                                    <Kampf:KampfstilListe/>
+                                                </ComboBox.ItemsSource>
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="{Binding Manöver.Ausführender.Bild}" MaxWidth="24"/>
+                                                            <TextBlock Text="{Binding Manöver.Ausführender.Name}" Margin="2,0,0,0" VerticalAlignment="Center"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                                <ComboBox.ToolTip>
+                                                    <TextBlock Text="{Binding Manöver.Ausführender.Kampfstil}"/>
+                                                </ComboBox.ToolTip>
+                                            </ComboBox>
+                                        </DockPanel>
+
+                                        <MenuItem Header="Aus Kampf entfernen" Command="{Binding  Entfernen}">
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
+
+                                <!-- Initiative -->
+                                <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="15" Height="15" >
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png" Margin="-3"/>
+                                    <TextBlock Text="{Binding Start.InitiativPhase, Converter={StaticResource DoubleToIntConverter1}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    <Grid.ToolTip>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" VerticalAlignment="Center" />
+                                            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Manöver.Ausführender.Kämpfer.InitiativeBasis}" VerticalAlignment="Center" />
+                                                <TextBlock Margin="4,6,2,2" Text="- BE " />
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" MaxHeight="20" MaxWidth="20"/>
+                                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Manöver.Ausführender.Kämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="INI gewürfelt:" Margin="0,0,5,2" />
+                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Manöver.Ausführender.Kämpfer.InitiativeWurf}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
+                                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Manöver.Ausführender.Initiative}" />
+                                        </Grid>
+                                    </Grid.ToolTip>
+                                </Grid>
+
+                                <!--Kämpfer Icon-->
+                                <Image Margin="-2,0">
+                                    <Image.Source>
+                                        <Binding Path="Manöver.Ausführender.Kämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                            <Binding.FallbackValue>
+                                                <ImageSource>
+                                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                </ImageSource>
+                                            </Binding.FallbackValue>
+                                            <Binding.TargetNullValue>
+                                                <ImageSource>
+                                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                </ImageSource>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+
+                                <!--Kämpfername-->
+                                <TextBlock VerticalAlignment="Center" Margin="0,-2" FontSize="8">
+                            <!--Text="{Binding Kämpfer.Name}"-->
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{Binding Manöver.Ausführender.Kämpfer.KämpferTempName}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.KämpferTempName}" Value="{x:Null}">
+                                                    <Setter Property="Text" Value="{Binding Manöver.Ausführender.Kämpfer.Name}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <!--<Slider VerticalAlignment="Center" Margin="6,0,6,0" Minimum="0" Maximum="{Binding Aktionen}" Value="{Binding Abwehraktionen}" IsSnapToTickEnabled="True" Width="60" ToolTip="Aktionen umwandeln" />
+                        <ItemsControl ItemsSource="{Binding AbwehrManöver}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.InputBindings>
+                                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding Aktivieren}" />
+                                        </Grid.InputBindings>
+                                        <Grid.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem x:Name="menuAusführen" Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
+                                                <MenuItem Header="Aktivieren" Command="{Binding Aktivieren}"/>
+                                            </ContextMenu>
+                                        </Grid.ContextMenu>
+                                        <View:ManöverSymbol/>
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Manöver.IsAusgeführt}" Value="False">
+                                            <Setter TargetName="menuAusführen" Property="Header" Value="Aktion ausführen"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>-->
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ListBox>

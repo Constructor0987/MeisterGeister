@@ -16,7 +16,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              x:Name="view"
-             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource Background1}" Unloaded="view_Unloaded">
+             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Unloaded="view_Unloaded">
     <UserControl.Resources>
         <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
         <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
@@ -24,6 +24,7 @@
         <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
         <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorConverter"/>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
+        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
         <BitmapImage x:Key="FragezeichenBild" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
     </UserControl.Resources>
@@ -34,218 +35,177 @@
             <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
             <ViewGeneral:EnumItemsSource x:Key="ZeichenValues" Type="{x:Type model:ZeichenModus}"/>
         </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Expander Grid.Row="0" IsExpanded="True">
-            <Expander.Header>
-                <TextBlock Text="Oben" Style="{DynamicResource TextTitel}" />
-            </Expander.Header>
-            <DockPanel Margin="-1,0" Name="dockPanel1" Background="#0F000000" Height="125" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,3,0">
-                    <Grid Name="grid2" Width="1278" HorizontalAlignment="Left" Height="112" VerticalAlignment="Bottom" Margin="0,0,0,1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="350"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="110"/>
-                            <ColumnDefinition Width="175"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <!--<Slider x:Name="uiScaleSlider" Value="1" Minimum="0.1" Maximum="4" Height="34" Width="200" Margin="443,36,613,43" />-->
-                        <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="5" Name="border1" VerticalAlignment="Top" Width="110">
-                            <Grid Margin="0,0,-1,0">
-                                <xctk:CheckListBox Height="73" Margin="0,25,0,0" Name="checkListBox1" VerticalAlignment="Top" SelectedValue="{Binding VisibleZLevels}" ItemsSource="{Binding PossibleZLevels}" ToolTip="Wähle aus welche Z Level sichtbar sein sollen." />
-                                <CheckBox Content="Alle Z Anzeigen" IsChecked="{Binding IgnorZLevel}" Height="16" HorizontalAlignment="Left" Margin="3,5,0,0" Name="checkBox2" VerticalAlignment="Top" Width="93" ToolTip="Ignoriert die Z Level Auswahl und zeigt alle Elemente an." />
-                            </Grid>
-                        </Border>
-                        <Border Grid.Column="1" >
-                            <StackPanel>
-                                <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="10,10,0,0" Name="checkBox4" VerticalAlignment="Top" Width="108" Grid.Column="1" />
-                                <CheckBox Content="Sichtbereiche" IsChecked="{Binding ShowSightArea}" Height="16" HorizontalAlignment="Left" Margin="10,00,0,0" x:Name="checkBoxSichtLine" VerticalAlignment="Top" Width="108" ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Helden und Gegnern" />
-                                <Slider Height="25" VerticalAlignment="Top" Margin="10,0" Minimum="100" Maximum="1200" Value="{Binding SightAreaLenght}" TickFrequency="50" SmallChange="50" LargeChange="50" 
-                             Ticks="100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200" TickPlacement="BottomRight" Grid.Column="1" />
+        
+        <!--<DockPanel Visibility="Hidden" Margin="-1,0" Name="dockPanel1" Background="#0F000000" Height="75" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,3,0">
+                <Grid Name="grid2" HorizontalAlignment="Right" Height="75" VerticalAlignment="Top" Margin="0,0,0,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="91*" MinWidth="500"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="135"/>
+                        <ColumnDefinition Width="350"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="120"/>
+                    </Grid.ColumnDefinitions>
+                    --><!--<Slider x:Name="uiScaleSlider" Value="1" Minimum="0.1" Maximum="4" Height="34" Width="200" Margin="443,36,613,43" />--><!--
 
-                                <StackPanel Orientation="Horizontal" Margin="10,0" Width="100" HorizontalAlignment="Left" Grid.Column="1" >
-                                    <StackPanel.Resources>
-                                        <DataTemplate x:Key="StrokeTemplate">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{Binding FallbackValue=1}" Grid.Column="0" HorizontalAlignment="Right"/>
-                                                <Border Height="{Binding FallbackValue=1}" Width="30" Background="Black" Grid.Column="1"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </StackPanel.Resources>
-                                    <ComboBox Width="50" Height="20" SelectedValue="{Binding StrokeThickness}" ItemTemplateSelector="{ViewGeneral:ComboBoxTemplateSelector
+                    <Border Grid.Column="2" Margin="10,0,0,0" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18" />
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="26" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen" Height="16" HorizontalAlignment="Left" Margin="2,0,0,0" Name="checkBox4" VerticalAlignment="Top" />
+                            <CheckBox Content="Sicht" IsChecked="{Binding ShowSightArea}" Height="16" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="checkBoxSichtLine" VerticalAlignment="Top" 
+                                      Grid.Column="1" ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Helden und Gegnern" />
+
+                            <Slider Grid.Column="1" Grid.Row="1" Height="25" VerticalAlignment="Top" Margin="10,0" Minimum="100" Maximum="1200" Value="{Binding SightAreaLenght}" TickFrequency="50" 
+                                    SmallChange="50" LargeChange="50" Ticks="100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200" 
+                                    TickPlacement="BottomRight" Style="{StaticResource SmallHorizontalSlider}" />
+
+                            <StackPanel Orientation="Horizontal" Width="70" HorizontalAlignment="Left" Grid.Row="1" >
+                                <StackPanel.Resources>
+                                    <DataTemplate x:Key="StrokeTemplate">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding FallbackValue=1}" Grid.Column="0" HorizontalAlignment="Right"/>
+                                            <Border Height="{Binding FallbackValue=1}" Width="30" Background="Black" Grid.Column="1"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </StackPanel.Resources>
+                                <ComboBox Width="40" Height="20" SelectedValue="{Binding StrokeThickness}" ItemTemplateSelector="{ViewGeneral:ComboBoxTemplateSelector
                                     SelectedItemTemplate={StaticResource StrokeTemplate}, DropdownItemsTemplate={StaticResource StrokeTemplate}}">
-                                        <ComboBox.ItemsSource>
-                                            <x:Array Type="{x:Type sys:Double}">
-                                                <sys:Double>1</sys:Double>
-                                                <sys:Double>2</sys:Double>
-                                                <sys:Double>4</sys:Double>
-                                                <sys:Double>6</sys:Double>
-                                                <sys:Double>8</sys:Double>
-                                                <sys:Double>10</sys:Double>
-                                                <sys:Double>14</sys:Double>
-                                                <sys:Double>18</sys:Double>
-                                            </x:Array>
-                                        </ComboBox.ItemsSource>
-                                    </ComboBox>
-                                    <ViewGeneral:DoubleBox Height="20" Width="20" Value="{Binding StrokeThickness}" MinValue="0" MaxValue="100" ShowButtons="False"/>
-                                </StackPanel>
-                                <Button Width="120" Height="20" Padding="0" Content="Meister Screen Center" Margin="0,3" HorizontalAlignment="Center" 
+                                    <ComboBox.ItemsSource>
+                                        <x:Array Type="{x:Type sys:Double}">
+                                            <sys:Double>1</sys:Double>
+                                            <sys:Double>2</sys:Double>
+                                            <sys:Double>4</sys:Double>
+                                            <sys:Double>6</sys:Double>
+                                            <sys:Double>8</sys:Double>
+                                            <sys:Double>10</sys:Double>
+                                            <sys:Double>14</sys:Double>
+                                            <sys:Double>18</sys:Double>
+                                        </x:Array>
+                                    </ComboBox.ItemsSource>
+                                </ComboBox>
+                                <ViewGeneral:DoubleBox Height="20" Width="20" Value="{Binding StrokeThickness}" MinValue="0" MaxValue="100" ShowButtons="False"/>
+                            </StackPanel>
+
+                            <Button Width="120" Height="20" Padding="0" Content="Meister Screen Center" Margin="0,3" HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2"
                                     Command="{Binding OnBtnCenterMeisterView}" ToolTip="Auf Spieler zentrieren" />
 
-                            </StackPanel>
-                        </Border>
-                        <StackPanel Grid.Column="4">
-                            <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="5,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" Grid.Column="5" />
-                            <CheckBox Content="RechteckRaster" Height="16" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" Grid.Column="5" />
-                            <xctk:ColorPicker SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Rasterfarbe" Margin="0,10" />
-                        </StackPanel>
+                        </Grid>
+                    </Border>
+                    <StackPanel Grid.Column="5">
+                        <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="5,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" Grid.Column="5" />
+                        <CheckBox Content="Rechteck" Height="16" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" Grid.Column="5" />
+                        <xctk:ColorPicker Margin="0,-10,5,0" HorizontalAlignment="Right" SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="22" Height="22" 
+                            ShowDropDownButton="False" ToolTip="Rasterfarbe" />
+                    </StackPanel>
 
-                        <!-- Kontroll hidden, cause of no future development, but maybe later -->
-                        <xctk:CheckListBox Visibility="Hidden" Height="100" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="88,7,0,0" Grid.Column="7" />
-                        <!-- Hidden kontroll end  -->
-                        <Border HorizontalAlignment="Left" Margin="0,5" Width="50" Grid.Column="3">
-                            <Grid>
-                                <ToggleButton Name="tbtnSpielerScreenActive" Margin="2,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="40" Width="45" ToolTip="Den Spielern den Bodenplan zeigen."
+                    --><!-- Kontroll hidden, cause of no future development, but maybe later --><!--
+                    <xctk:CheckListBox Visibility="Hidden" Height="100" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" 
+                                       ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" 
+                                       SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="88,7,-78,-32" 
+                                       Grid.Column="8" />
+                    --><!-- Hidden kontroll end  --><!--
+                    <Border HorizontalAlignment="Left" Margin="0,5" Width="80" Grid.Column="4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton Name="tbtnSpielerScreenActive" Margin="2,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="30" Width="35" ToolTip="Den Spielern den Bodenplan zeigen."
                                  IsChecked="{Binding SpielerScreenActive, UpdateSourceTrigger=PropertyChanged}" Focusable="False" Click="tbtnSpielerScreenActive_Click" >
-                                    <Grid>
-                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
-                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Margin="0,4,0,10" />
-                                    </Grid>
-                                </ToggleButton>
-                                <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="40" Width="45" ToolTip="Kleine INI-Liste des aktuellen Kampfes zeigen."
-                                  IsChecked="{Binding IsShowIniKampf, UpdateSourceTrigger=PropertyChanged}" Margin="2,41,2,2" Focusable="False" Click="tbtnSpielerIniScreen_Click" >
-                                    <Grid>
-                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
-                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="17,4,2,18" />
-                                    </Grid>
-                                </ToggleButton>
-                                <!--<Label Content="Scale" VerticalAlignment="Bottom" Margin="5,0,0,32"/>-->
-                                <Slider Orientation="Horizontal" Minimum=".5" Maximum="1.5" VerticalAlignment="Bottom" Margin="2,0,2,-2" SmallChange=".01" LargeChange=".1"
+                                <Grid>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Margin="0,4,0,10" />
+                                </Grid>
+                            </ToggleButton>
+                            <ToggleButton HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="30" Width="35" ToolTip="Kleine INI-Liste des aktuellen Kampfes zeigen."
+                                  IsChecked="{Binding IsShowIniKampf, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,0,0" Focusable="False" Click="tbtnSpielerIniScreen_Click" Grid.Column="1" >
+                                <Grid>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="17,4,2,18" />
+                                </Grid>
+                            </ToggleButton>
+                            --><!--<Label Content="Scale" VerticalAlignment="Bottom" Margin="5,0,0,32"/>--><!--
+                            <Slider Orientation="Horizontal" Minimum=".5" Maximum="1.5" VerticalAlignment="Top" Margin="2,32,2,-2" SmallChange=".01" LargeChange=".1"
                                             Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MouseWheel="slSmall_MouseWheel" ValueChanged="Slider_ValueChanged"  
-                                    ToolTip="Größe des INI-Feldes anpassen" />
-                            </Grid>
-                        </Border>
-                        <Border Margin="5,7" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Grid.Column="5">
-                            <Grid>
-                                <Label Content="Kämpfer Plazieren" />
-                                <TextBox Height="26" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" Margin="5,25" IsEnabled="False" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
-                                <Button Content="Stick Helden" Margin="5,60,0,0" Width="75" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonStickHeroes_Click"/>
-                                <Button Content="Stick Gegner" Margin="85,60,0,0" Height="22" Width="75" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonSticCreatues_Click"/>
-                            </Grid>
-                        </Border>
-                        <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="0,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Grid.Column="6">
-                            <Grid Margin="0,0,9,0">
-                                <Button Content="Laden" Width="75" Margin="10,5,0,0" Height="22" Padding="0" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left"/>
-                                <Button Content="Speichern" Width="75" Margin="10,30,0,0" Height="22" Padding="0" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
-                                <!--<CheckBox IsChecked="{Binding LoadWithoutPictures}" Content="Laden ohne Bilder" Height="16" VerticalAlignment="Top" Width="118" Margin="91,11,0,0" HorizontalAlignment="Left" FontSize="10"/>
-                            <CheckBox IsChecked="{Binding SaveWithoutPictures}" Content="Speichern ohne Bilder" Height="18" VerticalAlignment="Top" Margin="90,39,1,0" FontSize="10"/>-->
-                                <CheckBox IsChecked="{Binding LSWithoutPictures}" Content="ohne Bilder" Height="16" VerticalAlignment="Top" Margin="13,55,0,0" HorizontalAlignment="Left" FontSize="10"/>
-                                <Button Content="Reset" Width="75" Margin="10,0,0,0" Height="22" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
-                            </Grid>
-                        </Border>
-
-
-                        <Border Margin="2,2,0,0" HorizontalAlignment="Left" BorderBrush="Silver" BorderThickness="1" Grid.Column="2" Grid.ColumnSpan="3" >
+                                    ToolTip="Größe des INI-Feldes anpassen" Grid.Column="1" Style="{StaticResource SmallHorizontalSlider}" />
+                        </Grid>
+                    </Border>
+                    <Border Margin="5,0,0,0" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Grid.Column="6">
+                        <Grid>
+                            <Label Content="Neuplazierung" />
+                            <TextBox Height="22" Padding="0" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" Margin="2,25" IsEnabled="False" FontSize="12" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
+                            <Button Margin="5,50,0,0" Width="22" Height="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonStickHeroes_Click">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Helden.png"/>
+                            </Button>
+                            <Button Margin="35,50,0,0" Height="22" Width="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonSticCreatues_Click">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Gegner.png"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="0,0,0,-25" x:Name="border1_Copy" VerticalAlignment="Top" Grid.Column="7">
+                        <Grid Margin="0,0,9,0">
                             <StackPanel Orientation="Horizontal">
-                                <Grid Width="116" >
-                                    <GroupBox Grid.RowSpan="3" Header="Battlemap" Grid.ColumnSpan="2" >
-                                        <Grid>
-                                            <Grid.Style>
-                                                <Style TargetType="Grid">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding BackgroundImage}" Value="{x:Null}" >
-                                                            <Setter Property="Visibility" Value="Hidden" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Grid.Style>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="23"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="23"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="23"/>
-                                            </Grid.ColumnDefinitions>
+                                <Button Width="22" Margin="10,5,0,0" Height="22" Padding="0" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png"/>
+                                </Button>
+                                <Button  Width="22" Margin="10,5,0,0" Height="22" Padding="0" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/speichern.png"/>
+                                </Button>
+                            </StackPanel><CheckBox IsChecked="{Binding LSWithoutPictures}" Content="ohne Bilder" Height="16" VerticalAlignment="Top" Margin="13,28,0,0" HorizontalAlignment="Left" FontSize="10"/>
+                            <Button Content="Reset" Width="75" Height="22" VerticalAlignment="Top" Margin="10,45,0,0" Click="Button_Reset_Click"/>
+                        </Grid>
+                    </Border>
 
-                                            <Image Source="/Images/Icons/General/size.png" Height="15" Margin="5,0,0,0" HorizontalAlignment="Left" />
-                                            <Slider Height="25" VerticalAlignment="Top" Minimum="0" Maximum="20000" SmallChange="1" LargeChange="10" Margin="20,0,0,0"
+
+                    <Border Margin="2,2,0,0" HorizontalAlignment="Left" BorderBrush="Silver" BorderThickness="1" Grid.Column="3" >
+                        <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
+                            <Grid Width="116" >
+                                <GroupBox Grid.RowSpan="3" Header="Battlemap" Grid.ColumnSpan="2" >
+                                    <Grid>
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding BackgroundImage}" Value="{x:Null}" >
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="23"/>
+                                            <RowDefinition Height="23"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="23"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Source="/Images/Icons/General/size.png" Height="15" Margin="25,-5,0,0" HorizontalAlignment="Left" />
+                                        <Slider  VerticalAlignment="Top" Minimum="0" Maximum="20000" SmallChange="1" LargeChange="10" Margin="40,0,0,0"  Style="{StaticResource SmallHorizontalSlider}"
                                             Value="{Binding BackgroundOffsetSize}" MouseWheel="sl_MouseWheel" ToolTip="Größe -  Mausrad drehen um Feinjustierung durchzuführen" />
 
-                                            <Image Source="/Images/Icons/General/y-offset.png" Height="25" Margin="-8,0,0,0" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" />
-                                            <Slider Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"
-                                        Value="{Binding InvBackgroundOffsetY}" MouseWheel="sl_MouseWheel" 
+                                        <Image Source="/Images/Icons/General/y-offset.png" Height="25" Margin="-4,0,0,0" Grid.RowSpan="2" Grid.Column="1"  HorizontalAlignment="Left" />
+                                        <Slider Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10"  Grid.Column="1" Grid.RowSpan="2"
+                                            Value="{Binding InvBackgroundOffsetY}" MouseWheel="sl_MouseWheel"  Style="{StaticResource SmallVerticalSlider}"
                                             ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen" 
-                                            Orientation="Vertical" RenderTransformOrigin="0.5,0.5"  >
-                                                <Slider.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform ScaleX="-1"/>
-                                                        <SkewTransform/>
-                                                        <RotateTransform/>
-                                                        <TranslateTransform/>
-                                                    </TransformGroup>
-                                                </Slider.RenderTransform>
-                                            </Slider>
-
-                                            <Image Source="/Images/Icons/General/x-offset.png" Height="25" Margin="0,-5,0,5" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="2" />
-                                            <Slider Grid.Row="2" Height="25" VerticalAlignment="Top" Margin="0" Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10" 
-                                        Value="{Binding BackgroundOffsetX}" MouseWheel="sl_MouseWheel" 
-                                        ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen" />
-                                        </Grid>
-                                    </GroupBox>
-                                    <Button  Width="35" Height="35" Grid.RowSpan="2" Margin="-23,12,0,0" Command="{Binding OnSetBackgroundClick}" ToolTip="Hintergrundbild festlegen" >
-                                        <Button.Content>
-                                            <Image Source="/Images/Icons/dungeon.png" />
-                                        </Button.Content>
-                                    </Button>
-
-                                    <!--<ViewGeneral:IntBox Value="{Binding BackgroundOffsetX, UpdateSourceTrigger=PropertyChanged}" MinValue="-10000" MaxValue="10000" IncWheel="5" DecWheel="5" ShowButtons="True" 
-                                Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="2,1" Width="110" />-->
-
-                                    <!--<ViewGeneral:IntBox Value="{Binding BackgroundOffsetY, UpdateSourceTrigger=PropertyChanged}" MinValue="-10000" MaxValue="10000" IncWheel="5" DecWheel="5" ShowButtons="True" 
-                                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="2,1" Width="110" />-->
-
-                                    <!--<Label Content="Größe" Grid.Row="3"  />-->
-
-                                    <!--<ViewGeneral:IntBox Value="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}" MinValue="-10000" MaxValue="10000" IncWheel="5" DecWheel="5" ShowButtons="True" 
-                                Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="2,1" Width="110" />-->
-
-                                </Grid>
-                                <GroupBox Header="Fog-of-War" Width="110">
-                                    <StackPanel Margin="3">
-                                        <CheckBox Content="Fog-of-War" IsChecked="{Binding useFog}" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                                        <StackPanel Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                            <Label Content="Größe Freifeld" HorizontalAlignment="Center" Padding="0,5,0,0" />
-                                            <ViewGeneral:IntBox MinValue="1" MaxValue="5" Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}" ShowButtons="True"  Width="80">
-                                                <ViewGeneral:IntBox.ToolTip>
-                                                    <StackPanel>
-                                                        <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" />
-                                                        <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" />
-                                                    </StackPanel>
-                                                </ViewGeneral:IntBox.ToolTip>
-                                            </ViewGeneral:IntBox>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Header="Spieler Screen" Width="120">
-                                    <Grid>
-                                        <Label Content="Feldgröße" VerticalAlignment="Bottom" Width="65" Margin="0,0,0,24"/>
-                                        <Label Content="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="10,0,30,-2" VerticalAlignment="Bottom" Height="14" HorizontalAlignment="Center"  />
-                                        <Button Width="50" Height="20" Padding="0" Content="Center" Margin="0,0,10,20" Command="{Binding OnBtnCenterPlayerView}" ToolTip="Auf Spieler zentrieren" />
-                                        <Slider Minimum="-10000" Maximum="0" SmallChange="1" LargeChange="10" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1"
-                                        Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" 
-                                            ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen" HorizontalAlignment="Right"
                                             Orientation="Vertical" RenderTransformOrigin="0.5,0.5"  >
                                             <Slider.RenderTransform>
                                                 <TransformGroup>
@@ -256,27 +216,95 @@
                                                 </TransformGroup>
                                             </Slider.RenderTransform>
                                         </Slider>
-                                        <Slider Height="25" VerticalAlignment="Top" Margin="0,0,20,0" Minimum="0" Maximum="10000" SmallChange="1" LargeChange="10" 
-                                        Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" 
-                                        ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen" />
 
-                                        <Slider Orientation="Horizontal" Minimum=".2" Maximum="2.5" VerticalAlignment="Bottom" Margin="10,0,20,8" SmallChange=".01" LargeChange=".1"
-                                            Value="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" MouseWheel="slSmall_MouseWheel" 
-                                            ToolTip="Größe des Spielerfeldes"/>
+                                        <Image Source="/Images/Icons/General/x-offset.png" Height="25" Margin="0,-5,0,5" Grid.Row="0" VerticalAlignment="Bottom" Grid.RowSpan="2" />
+                                        <Slider Grid.Row="1"  VerticalAlignment="Top" Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10" Margin="0,10,0,0"
+                                            Value="{Binding BackgroundOffsetX}" MouseWheel="sl_MouseWheel"  Style="{StaticResource SmallHorizontalSlider}"
+                                            ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen" />
                                     </Grid>
                                 </GroupBox>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </ScrollViewer>
-            </DockPanel>
-        </Expander>
+                                <Button  Width="25" Height="25" Margin="3,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{Binding OnSetBackgroundClick}" ToolTip="Hintergrundbild festlegen" >
+                                    <Button.Content>
+                                        <Image Source="/Images/Icons/dungeon.png" Margin="-2" />
+                                    </Button.Content>
+                                </Button>
+
+                                --><!--<ViewGeneral:IntBox Value="{Binding BackgroundOffsetX, UpdateSourceTrigger=PropertyChanged}" MinValue="-10000" MaxValue="10000" IncWheel="5" DecWheel="5" ShowButtons="True" 
+                                Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="2,1" Width="110" />-->
+
+                                <!--<ViewGeneral:IntBox Value="{Binding BackgroundOffsetY, UpdateSourceTrigger=PropertyChanged}" MinValue="-10000" MaxValue="10000" IncWheel="5" DecWheel="5" ShowButtons="True" 
+                                Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="2,1" Width="110" />-->
+
+                                <!--<Label Content="Größe" Grid.Row="3"  />-->
+
+                                <!--<ViewGeneral:IntBox Value="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}" MinValue="-10000" MaxValue="10000" IncWheel="5" DecWheel="5" ShowButtons="True" 
+                                Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="2,1" Width="110" />--><!--
+
+                            </Grid>
+                            <GroupBox Header="Fog-of-War" Width="110">
+                                <StackPanel Orientation="Horizontal" Margin="3">
+                                    <CheckBox Margin="0,5,5,0" IsChecked="{Binding useFog}" HorizontalAlignment="Left" />
+                                    <StackPanel Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                        <Label Content="Größe Freifeld" HorizontalAlignment="Center" Padding="0,2,0,0" />
+                                        <ViewGeneral:IntBox MinValue="1" MaxValue="5" Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}" ShowButtons="True" Width="60" Height="19">
+                                            <ViewGeneral:IntBox.ToolTip>
+                                                <StackPanel>
+                                                    <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" />
+                                                    <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" />
+                                                </StackPanel>
+                                            </ViewGeneral:IntBox.ToolTip>
+                                        </ViewGeneral:IntBox>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Spieler Screen" Width="120">
+                                <Grid>
+                                    <Label Content="Feldgröße" VerticalAlignment="Top" Padding="0" Width="65" Margin="0,30,0,24"/>
+                                    <Label Content="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="10,0,30,-2" VerticalAlignment="Bottom" Height="14" HorizontalAlignment="Center"  />
+                                    <Button Width="50" Height="20" Padding="0" Content="Center" VerticalAlignment="Top" Margin="0,10,10,20" Command="{Binding OnBtnCenterPlayerView}" ToolTip="Auf Spieler zentrieren" />
+                                    <Slider Minimum="-10000" Maximum="0" SmallChange="1" LargeChange="10" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1" Style="{StaticResource SmallVerticalSlider}"
+                                        Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" 
+                                            ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen" HorizontalAlignment="Right"
+                                            Orientation="Vertical" RenderTransformOrigin="0.5,0.5"  >
+                                        <Slider.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="-1"/>
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Slider.RenderTransform>
+                                    </Slider>
+                                    <Slider Height="12" VerticalAlignment="Top" Margin="0,0,20,0" Minimum="0" Maximum="10000" SmallChange="1" LargeChange="10" MinHeight="5"
+                                        Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" Style="{StaticResource SmallHorizontalSlider}"
+                                        ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"/>
+
+                                    <Slider Orientation="Horizontal" Minimum=".2" Maximum="2.5" VerticalAlignment="Top" Margin="10,48,20,8" SmallChange=".01" LargeChange=".1"
+                                            Value="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" MouseWheel="slSmall_MouseWheel"  Style="{StaticResource SmallHorizontalSlider}"
+                                            ToolTip="Größe des Spielerfeldes"/>
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="8" BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="5,0,0,-25" Name="border1" VerticalAlignment="Top" Width="110">
+                        <Grid Margin="0,0,-1,0">
+                            <xctk:CheckListBox Height="50" Margin="0,18,0,0" Name="checkListBox1" VerticalAlignment="Top" SelectedValue="{Binding VisibleZLevels}" ItemsSource="{Binding PossibleZLevels}" ToolTip="Wähle aus welche Z Level sichtbar sein sollen." />
+                            <CheckBox Content="Alle Z Anzeigen" IsChecked="{Binding IgnorZLevel}" Height="16" HorizontalAlignment="Left" Margin="3,0,0,0" Name="checkBox2" VerticalAlignment="Top" Width="93" ToolTip="Ignoriert die Z Level Auswahl und zeigt alle Elemente an." />
+                        </Grid>
+                    </Border>
+
+                    <GridSplitter Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
+                </Grid>
+            </ScrollViewer>
+        </DockPanel>-->
+
+        <!--</Expander>-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Expander Grid.Column="0" IsExpanded="True" ExpandDirection="Right" HorizontalAlignment="Left">
+            <Expander Grid.Column="0" IsExpanded="False" ExpandDirection="Right" HorizontalAlignment="Left">
                 <Expander.Content>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -290,7 +318,7 @@
                                         <Grid Name="grid1" Width="200" ClipToBounds="True" IsManipulationEnabled="False" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="34" />
-                                                <RowDefinition Height="316" />
+                                                <RowDefinition Height="256" />
                                                 <RowDefinition Height="87" />
                                                 <RowDefinition Height="89" />
                                                 <RowDefinition Height="378*" />
@@ -300,9 +328,9 @@
                                                 <ColumnDefinition Width="160" />
                                                 <ColumnDefinition Width="24*" />
                                             </Grid.ColumnDefinitions>
-                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_StrokeThickness" SliderValue="{Binding StrokeThickness, Mode=TwoWay}" TickFrequencyValue="1" SliderLabelTextValue="Linien Stärke" SliderMinValue="1" SliderMaxValue="30" SliderMinTextValue="1" SliderMaxTextValue="30" Margin="0,121,0,0" Width="160" Height="58" VerticalAlignment="Top" />
-                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,185,0,0" x:Name="sliderWithDisplayTextBox_Opacity" SliderValue="{Binding Opacity, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0.1" SliderMaxValue="1" TickFrequencyValue="0.1" SliderLabelTextValue="Transparenz" SliderMinTextValue="10%" SliderMaxTextValue="100%" Width="160" Height="58" />
-                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,249,0,0" x:Name="sliderWithDisplayTextBox_ObjectSize" SliderValue="{Binding ObjectSize, Mode=TwoWay}" Height="57" VerticalAlignment="Top" SliderMinValue="0.3" SliderMaxValue="20" SliderLabelTextValue="Objektgröße" SliderMinTextValue="0.3x" SliderMaxTextValue="3x" TickFrequencyValue="0.1" Width="160" />
+                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_StrokeThickness" SliderValue="{Binding StrokeThickness, Mode=TwoWay}" TickFrequencyValue="1" SliderLabelTextValue="Linien Stärke" SliderMinValue="1" SliderMaxValue="30" SliderMinTextValue="1" SliderMaxTextValue="30" Margin="0,69.4,0,0" Width="160" Height="56" VerticalAlignment="Top" />
+                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,130.4,0,0" x:Name="sliderWithDisplayTextBox_Opacity" SliderValue="{Binding Opacity, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0.1" SliderMaxValue="1" TickFrequencyValue="0.1" SliderLabelTextValue="Transparenz" SliderMinTextValue="10%" SliderMaxTextValue="100%" Width="160" Height="58" />
+                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,193.4,0,0" x:Name="sliderWithDisplayTextBox_ObjectSize" SliderValue="{Binding ObjectSize, Mode=TwoWay}" Height="57" VerticalAlignment="Top" SliderMinValue="0.3" SliderMaxValue="20" SliderLabelTextValue="Objektgröße" SliderMinTextValue="0.3x" SliderMaxTextValue="3x" TickFrequencyValue="0.1" Width="160" />
 
                                             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateLine, Mode=OneWay}" Content="[1] Line" Name="PathLineButton" Height="25" HorizontalAlignment="Left" Width="77" VerticalAlignment="Top" />
                                             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateFilledLine, Mode=OneWay}" Content="[2] Fläche" Name="FilledPathLineButton" Height="25" HorizontalAlignment="Right" Width="77" VerticalAlignment="Top" />
@@ -314,7 +342,7 @@
                                             <CheckBox Content="Editor Modus" IsChecked="{Binding IsEditorModeEnabled}" Height="20" HorizontalAlignment="Left" Margin="25,14,0,0" Name="checkBox3" VerticalAlignment="Top" Width="113" FontSize="14" FontStyle="Normal" FontWeight="SemiBold" ToolTip="Wenn deaktiviert, können nur noch Helden und Monster bewegt werden" Checked="checkBox3_Checked" Grid.Column="1" />
                                             <Button Content="Ebene max" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="0,59,0,0" x:Name="ButtonEbeneHigherMax" VerticalAlignment="Top" Width="77" Click="ButtonEbeneHigherMax_Click" />
                                             <Button Content="Ebene min" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="82,59,0,0" x:Name="ButtonEbeneLowerMin" VerticalAlignment="Top" Width="77" Click="ButtonEbeneLowerMin_Click" />
-                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_AlphaChannel" SliderValue="{Binding SelectedFillColorAlpha, Mode=TwoWay}" TickFrequencyValue="0.1" SliderLabelTextValue="Alpha Kanal" SliderMinValue="0" SliderMaxValue="1" SliderMinTextValue="0" SliderMaxTextValue="1" Margin="0,63,0,0" Width="160" Height="58" VerticalAlignment="Top" />
+                                            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_AlphaChannel" SliderValue="{Binding SelectedFillColorAlpha, Mode=TwoWay}" TickFrequencyValue="0.1" SliderLabelTextValue="Alpha Kanal" SliderMinValue="0" SliderMaxValue="1" SliderMinTextValue="0" SliderMaxTextValue="1" Margin="0,6,0,0" Width="160" Height="58" VerticalAlignment="Top" />
                                         </Grid>
                                         <StackPanel Orientation="Vertical">
                                             <!-- Zeichenmodi -->
@@ -418,7 +446,6 @@
                                                             </Rectangle.Fill>
                                                         </Rectangle>
 
-                                                        <!--<Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />-->
                                                         <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
                                                                     Visibility="{Binding DataContext.ShowZ, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
@@ -441,11 +468,114 @@
 
                                                         <Image Width="50" Height="50" Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}" 
                                                                Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
-                                                        <!--Source="{Binding CreaturePosition, UpdateSourceTrigger=PropertyChanged}"-->
+
+                                                        <!--<Label Background="White"  HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                               Content="{Binding DataContext.KampfVM.Manöver.Ausführender.Kämpfer.HinweisText, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"  />-->
+
+                                                        <!--Angriff-Abwehraktionen-->
+                                                        <Slider VerticalAlignment="Bottom" Canvas.Top="{Binding CreatureY,UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureX,UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="-5,80,6,0" Minimum="0" IsSnapToTickEnabled="True" Width="50" ToolTip="Aktionen umwandeln"
+                                                                Maximum="{Binding ki.Aktionen, UpdateSourceTrigger=PropertyChanged}" 
+                                                                Value="{Binding ki.Abwehraktionen, UpdateSourceTrigger=PropertyChanged}"/>
+                                                        <StackPanel Orientation="Horizontal" Canvas.Top="{Binding CreatureY,UpdateSourceTrigger=PropertyChanged}" 
+                                                                    Canvas.Left="{Binding CreatureX,UpdateSourceTrigger=PropertyChanged}"
+                                                                    Margin="35,80,3,0" >
+                                                            <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.VerbrauchteAngriffsaktionen, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
+                                                            <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.AngriffsaktionenÜbrig, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+
+                                                            <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.VerbrauchteAbwehraktionen, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
+                                                            <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                                                        </StackPanel>
+
+                                                        <!--Aktionsbuttons rechts-->
+                                                        <StackPanel Margin="90,-27,0,0" Canvas.Top="{Binding CreatureY,UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureX,UpdateSourceTrigger=PropertyChanged}"
+                                                                    Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}" Background="Transparent">
+                                                            <Button Name="UmwandelnAttacke" Height="27" Width="27" Margin="0,3" BorderBrush="Transparent" >
+                                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="-4" />
+                                                            </Button>
+                                                            <!--<Button Name="UmwandelnFernkampf" Height="27" Width="27" Margin="0,3" >
+                                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/fernkampf.png" Stretch="Fill" Margin="-4" />
+                                                            </Button>-->
+
+                                                            <MenuItem Name="miKämpferFernkampf" Height="27" Width="27" BorderThickness="1" HorizontalAlignment="Center">
+                                                                <MenuItem.Style>
+                                                                    <Style TargetType="MenuItem">
+                                                                        <Setter Property="ItemsSource" Value="{x:Null}" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='2'}" Value="false">
+                                                                                <Setter Property="Command" Value="{Binding UmwandelnFernkampf}" />
+                                                                            </DataTrigger>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='2'}" Value="true" />
+                                                                                    <Condition Binding="{Binding ki.Kämpfer.GegnerBase}" Value="{x:Null}" />
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Fernkampfwaffen}" />
+                                                                            </MultiDataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </MenuItem.Style>
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" MaxWidth="24" Margin="-1,-3,-3,-3" />
+                                                                </MenuItem.Icon>
+                                                                <MenuItem.ItemContainerStyle>
+                                                                    <!--BasedOn="{StaticResource {x:Type MenuItem}}"-->
+                                                                    <Style TargetType="MenuItem" >
+                                                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=MenuItem},Path=DataContext.UmwandelnFernkampf}"/>
+                                                                        <Setter Property="CommandParameter" Value="{Binding}"/>
+                                                                    </Style>
+                                                                </MenuItem.ItemContainerStyle>
+                                                                <MenuItem.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Name}"/>
+                                                                    </DataTemplate>
+                                                                </MenuItem.ItemTemplate>
+                                                            </MenuItem>
+
+                                                            <MenuItem Name="miKämpferZauber" Height="27" Width="27" BorderThickness="1" HorizontalAlignment="Center"
+                                                                      Visibility="{Binding ki.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                                                                <MenuItem.Style>
+                                                                    <Style TargetType="MenuItem">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding ki.Kämpfer.Held_Zauber}" Value="{x:Null}">
+                                                                                <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" Value="{x:Null}">
+                                                                                <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Held_Zauber}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </MenuItem.Style>
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" MaxWidth="24" Margin="-1,-3,-3,-3" />
+                                                                </MenuItem.Icon>
+                                                                <MenuItem.ItemContainerStyle>
+                                                                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}" >
+                                                                        <Setter Property="Command" 
+                                                                                Value="{Binding DataContext.SelManöver.UmwandelnZauber, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
+                                                                        <!--Value="{Binding mi.UmwandelnZauber, RelativeSource={RelativeSource}}"/>-->
+                                                                        <Setter Property="CommandParameter" Value="{Binding}"/>
+                                                                    </Style>
+                                                                </MenuItem.ItemContainerStyle>
+                                                                <MenuItem.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Zauber.Name}"/>
+                                                                    </DataTemplate>
+                                                                </MenuItem.ItemTemplate>
+                                                            </MenuItem>
+                                                            <!--<Button Name="UmwandelnZauber" Height="27" Width="27" Margin="0,3" Visibility="{Binding DataContext.KampfVM.Manöver.Ausführender.Kämpfer.Magiebegabt, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
+                                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/magie.png" Stretch="Fill" Margin="-4" />
+                                                            </Button>-->
+
+                                                            <Button Name="UmwandelnSonstiges" Height="27" Width="27" Margin="0,3" BorderBrush="Transparent" >
+                                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/kalender.png" Stretch="Fill" Margin="-4" />
+                                                            </Button>
+                                                        </StackPanel>
                                                         <Canvas.Effect>
                                                             <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}} }" ShadowDepth="10" BlurRadius="20" />
                                                         </Canvas.Effect>
                                                     </Canvas>
+
                                                     <ControlTemplate.Triggers>
                                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                             <Setter Property="Effect">
@@ -590,6 +720,9 @@
                                     </ItemsPanelTemplate>
                                 </ListBox.ItemsPanel>
                             </ListBox>
+
+
+
                         </Grid>
                         <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
         </local:DragScrollViewer> -->
@@ -654,8 +787,8 @@
                                                         </Button>-->
                                                         <Image Width="50" Height="50" Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}"
                                                             Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
-                                                            <!--CreaturePosition}"-->
-                                                            <Canvas.Effect>
+                                                        <!--CreaturePosition}"-->
+                                                        <Canvas.Effect>
                                                             <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}} }" ShadowDepth="10" BlurRadius="20" />
                                                         </Canvas.Effect>
                                                     </Canvas>

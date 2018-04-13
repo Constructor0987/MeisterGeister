@@ -202,9 +202,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
-
         public KämpferInfo(IKämpfer k, Kampf kampf)
-        {
+        {            
             if (k == null)
                 throw new ArgumentNullException("IKämpfer k darf nicht null sein.");
             if (kampf == null)
@@ -234,7 +233,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (e.PropertyName == "Position")
                 PositionSelbst = Kämpfer.Position;
         }
-
+        
         #region Aktionen
         private int _aktionen = 2;
         [DependentProperty("Initiative")]
@@ -289,6 +288,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 _angriffsaktionen = value;
                 _abwehraktionen = Aktionen - _angriffsaktionen;
                 AktionenNeuSetzen();
+                Kampf.SortedInitiativListe = Kampf.InitiativListe != null ?
+                    (this.Kampf.Kampfrunde == 0 ? //.AktuelleAktionszeit.Kampfrunde
+                    Kampf.InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
+                    Kampf.InitiativListe.Where(t => t.Start.Kampfrunde == this.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                    )
+                    : null;
             }
         }
 
@@ -306,6 +311,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 _abwehraktionen = value;
                 _angriffsaktionen = Aktionen - _abwehraktionen;
                 AktionenNeuSetzen();
+                Kampf.SortedInitiativListe = Kampf.InitiativListe != null ?
+                    (this.Kampf.Kampfrunde == 0?
+                    Kampf.InitiativListe.OrderByDescending(t => t.Start.InitiativPhase):
+                    Kampf.InitiativListe.Where(t => t.Start.Kampfrunde == this.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase) 
+                    )
+                    : null;            // .Kampf.Kampfrunde
             }
         }
 
@@ -656,6 +667,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             AbwehrManöver.Clear();
             for (int i = 0; i < Abwehraktionen; i++)
                 AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));
+
+            
         }
         #endregion
 

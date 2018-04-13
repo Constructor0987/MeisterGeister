@@ -6,14 +6,511 @@ using System.Text;
 using ImpromptuInterface;
 using MeisterGeister.Model.Extensions;
 
+
+using Q42.HueApi;
+using Q42.HueApi.Interfaces;
+using Q42.HueApi.ColorConverters.Original;
+using Q42.HueApi.ColorConverters.OriginalWithModel;
+using Q42.HueApi.ColorConverters.HSB;
+using Q42.HueApi.ColorConverters;
+using Q42.HueApi.Models.Bridge;
+using System.Windows.Threading;
+using MeisterGeister.View.Settings;
+using System.Windows.Media;
+using System.Windows.Controls.Primitives;
+using System.Windows;
+
 namespace MeisterGeister.ViewModel.Settings
 {
 
     public class EinstellungenViewModel : Base.ViewModelBase
     {
+        //public class LightCommand
+        //{
+        //    public Light Light { get; set; }
+        //    public LightCommand LightCmd { get; set; }
+        //}
+
+        public class LightProcess
+        {
+            public bool IsSelected { get; set; }
+            public int Phase { get; set; }
+            public double Dauer { get; set; }
+            public Color Color { get; set; }
+            public int? Brightness { get; set; }
+        }
+
+        public class HUETheme
+        {
+            public string Name { get; set; }
+            public LightProcess LightProcessSelected { get; set; } 
+            public List<LightProcess> lstLightProcess { get; set; }
+            public List<Light> lstLights { get; set; } 
+            public bool doLoop { get; set; }
+
+            public bool isRunning { get; set; }
+            public int? actLightProcess { get; set; }
+            public int StartTime { get; set; }
+
+            public DispatcherTimer _timer = new DispatcherTimer();
+            public bool InitDone = false;
+
+            public EinstellungenViewModel vm;
+            //LightCommand command = new LightCommand();
+            
+            public LightCommand command { get; set; }
+
+            private async void regHUE()
+            {
+                vm.appKey = await vm.Client.RegisterAsync("MGmeetsHUE", "PC");
+            }
+
+            private Light _addLightToTheme = null;
+            public Light AddLightToTheme
+            {
+                get { return _addLightToTheme; }
+                set
+                {
+                    _addLightToTheme = value;
+                    List<Light> lst = new List<Light>();
+                    if (lstLights != null) lst.AddRange(lstLights);
+                    if (!lst.Contains(value))
+                        lst.Add(value);
+                    else
+                        lst.Remove(value);
+                    lstLights = lst;
+                }
+            }
+            
+
+            public void _timer_Tick(object sender, EventArgs e)
+            {
+                if (actLightProcess == null)
+                {
+                    actLightProcess = 0;
+                    StartTime = Environment.TickCount;
+
+                    //Control the lights
+                    command = new LightCommand();
+                    //command.On = true;
+                    
+                    //Turn the light on and set a Hex color for the command (see the section about Color Converters)
+                    command.TurnOn().SetColor(new RGBColor(
+                        lstLightProcess[actLightProcess.Value].Color.R, 
+                        lstLightProcess[actLightProcess.Value].Color.G,
+                        lstLightProcess[actLightProcess.Value].Color.B));
+                    //Helligkeit ?
+                    command.TurnOn().Brightness = (byte)this.lstLightProcess[actLightProcess.Value].Brightness;                    
+                    //Or start a colorloop
+                    //command.Effect = Q42.HueApi.Effect.ColorLoop;
+                    command.Effect = Q42.HueApi.Effect.None;
+                    //Once you have composed your command, send it to one or more lights
+                    vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+
+                    return;
+                }
+                
+
+                int tDelta = Environment.TickCount - StartTime;
+                if (tDelta > lstLightProcess[actLightProcess.Value].Dauer)
+                {
+                    StartTime = Environment.TickCount;
+                    if (actLightProcess.Value +1 < lstLightProcess.Count)
+                    { actLightProcess++; }
+                    else
+                        if (doLoop)
+                    { actLightProcess = 0; }
+                    else
+                    { _timer.Stop(); return; }
+                                    
+                    //Control the lights
+                    command = new LightCommand();
+                    command.On = true;
+                    //Turn the light on and set a Hex color for the command (see the section about Color Converters)
+                    command.TurnOn().SetColor(new RGBColor(
+                        lstLightProcess[actLightProcess.Value].Color.R,
+                        lstLightProcess[actLightProcess.Value].Color.G,
+                        lstLightProcess[actLightProcess.Value].Color.B));
+                    //Helligkeit ?
+                    command.TurnOn().Brightness = (byte)lstLightProcess[actLightProcess.Value].Brightness;
+                    //Or start a colorloop
+                    //command.Effect = Q42.HueApi.Effect.ColorLoop;
+                    command.Effect = Q42.HueApi.Effect.None;
+                    //Once you have composed your command, send it to one or more lights
+                    vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                }
+
+                return;
+                    //    if (!InitDone)
+                    //        DoInit();
+
+                    //Or send it to all lights
+                    //  vm.Client.SendCommandAsync(command);
+
+                    //List<string> deviceIds = new List<string>();
+                    ////Search for new lights
+                    //await vm.Client.SearchNewLightsAsync(vm.deviceIds);
+
+                    ////Get all lights
+                    //var resultLights = await vm.Client.GetLightsAsync();
+
+                    //Control the lights
+                    command = new LightCommand();
+                command.On = true;
+
+                //Turn the light on and set a Hex color for the command (see the section about Color Converters)
+                command.TurnOn().SetColor(new RGBColor(
+                        this.lstLightProcess[this.actLightProcess.Value].Color.R,
+                        this.lstLightProcess[this.actLightProcess.Value].Color.G,
+                        this.lstLightProcess[this.actLightProcess.Value].Color.B));
+                
+                //Helligkeit ?
+                command.TurnOn().Brightness = (byte) lstLightProcess[0].Brightness;
+
+                //Blink once
+                //   command.Alert = Alert.Once;
+
+                //Or start a colorloop
+                //command.Effect = Q42.HueApi.Effect.ColorLoop;
+                command.Effect = Q42.HueApi.Effect.None;
+
+                //Once you have composed your command, send it to one or more lights
+                vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+
+                //ToAll();
+
+                _timer.Stop();     
+            }
+            
+            private async void ToAll()
+            {
+                //Or send it to all lights
+                var result = await vm.Client.SendCommandAsync(command);
+            }
+
+            public HUETheme()
+            {
+                _timer.Tick += new EventHandler(_timer_Tick);
+                _timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            }
+        }
+
+        private HUETheme _HUEThemeSelected;
+        public HUETheme HUEThemeSelected
+        {
+            get { return _HUEThemeSelected; }
+            set { Set(ref _HUEThemeSelected, value); }
+        }
+
+        private List<HUETheme> _lstHUEThemes = new List<HUETheme>();
+
+      //  [DependentProperty("HUEThemeSelected")]
+        public List<HUETheme> lstHUEThemes
+        {
+            get { return _lstHUEThemes; }
+            set { Set(ref _lstHUEThemes, value); }
+        }
+
+        private string _HUEProgress = "";
+        public string HUEProgress
+        {
+            get { return _HUEProgress; }
+            set { Set(ref _HUEProgress, value); }
+        }
+
+        private LocatedBridge _HUEGWSelected = null;
+        public LocatedBridge HUEGWSelected
+        {
+            get { return _HUEGWSelected; }
+            set { Set(ref _HUEGWSelected, value); }
+        }
+
+        private List<LocatedBridge> _lstHUEGaterways = new List<LocatedBridge>();
+        public List<LocatedBridge> lstHUEGateways
+        {
+            get { return _lstHUEGaterways; }
+            set { Set(ref _lstHUEGaterways, value); }
+        }
+
+        
+        public LocalHueClient Client = null;
+        string appKey = "H3ZWpfbrmLp3-Fx3AuMT-sqhyt51Q2a1IYFdKefQ";
+
+        private async void _Init()
+        {
+            try
+            {
+                //m_Initialized = false;
+                HUEProgress = "Q42Hue attempting to initialize ..";
+
+                IBridgeLocator locator = new HttpBridgeLocator();
+
+                var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
+
+                List<LocatedBridge> lstGW = new List<LocatedBridge>();
+                foreach (var bridgeIp in bridgeIPs)
+                {
+                    lstGW.Add(bridgeIp);
+                    HUEProgress = bridgeIp + ": " + bridgeIp.IpAddress;
+                }
+                lstHUEGateways = lstGW;
+                if (bridgeIPs.Count() > 0)
+                {
+                    HUEProgress = bridgeIPs.Count() + " Gateway" + (bridgeIPs.Count() == 1 ? "s" : "") + " gefunden";
+                    HUEGWSelected = lstHUEGateways[0];                    
+                }
+                else
+                {
+                    HUEProgress = "Q42Hue Error: Could not find bridge!";
+                }
+            }
+            catch (Exception ex)
+            {
+                View.General.ViewHelper.ShowError(string.Format("Die Suche der HUE-Gateways über das Netzwerk konnte nicht durchgeführt werden"), ex);
+            }
+        }
+
+        private List<string> _lstDeviceID = new List<string>();
+        public List<string> lstDeviceID
+        {
+            get { return _lstDeviceID; }
+            set { Set(ref _lstDeviceID, value); }
+        }
+
+        private List<LightCommand> _lstHUELightCmd = new List<LightCommand>();
+        public List<LightCommand> lstHUELightCmd
+        {
+            get { return _lstHUELightCmd; }
+            set { Set(ref _lstHUELightCmd, value); }
+        }
+
+        private List<Light> _lstHUELights = new List<Light>();
+        public List<Light> lstHUELights
+        {
+            get { return _lstHUELights; }
+            set
+            {
+                Set(ref _lstHUELights, value);
+                if (value.Count > 0)
+                    SelectedHUELight = value[0];
+                List<LightCommand> lstLightCmd = new List<LightCommand>();
+                //lstHUELights.ForEach(q => lstLightCmd.Add(new LightCommand() { Light = q, LightCmd = new LightCommand() }));
+                lstHUELightCmd = lstLightCmd;
+            }
+        }
+
+        private Light _selectedHUELight = new Light();
+        public Light SelectedHUELight
+        {
+            get { return _selectedHUELight; }
+            set { Set(ref _selectedHUELight, value); }
+        }
+
+        private async void _ActivateHUE()
+        {
+            string ip = HUEGWSelected.IpAddress.ToString();
+
+            Client = new LocalHueClient(ip);
+            if (appKey == null)
+            {
+                //Register your application
+                //Link button drücken zum Registrieren !!!
+                appKey = await Client.RegisterAsync("MGmeetsHUE", "PC");
+                // "H3ZWpfbrmLp3-Fx3AuMT-sqhyt51Q2a1IYFdKefQ"
+                //Save the app key for later use
+            }
+            else
+            {
+                //If you already registered an appname, you can initialize the HueClient with the app's key:
+                Client.Initialize(appKey);
+            }
+
+            //Search for new lights
+            await Client.SearchNewLightsAsync(lstDeviceID);
+
+            //Get all lights
+            var resultLights = await Client.GetLightsAsync();
+
+
+            lstHUELights = resultLights as List<Light>;
+        }
 
         #region Property
-                
+
+        private Base.CommandBase _onBtnSelectHUEColor = null;
+        public Base.CommandBase onBtnSelectHUEColor
+        {
+            get
+            {
+                if (_onBtnSelectHUEColor == null)
+                    _onBtnSelectHUEColor = new Base.CommandBase(SelectHUEColor, null);
+                return _onBtnSelectHUEColor;
+            }
+        }
+        
+        private void SelectHUEColor(object obj)
+        {
+            if (HUEThemeSelected == null)
+                HUEThemeSelected = lstHUEThemes[0];
+
+            HUEColorDialog colorDialog = new HUEColorDialog();
+            colorDialog.colorPicker.Client = Client;
+            colorDialog.SelectedColor = HUEThemeSelected.LightProcessSelected.Color;
+         //   colorDialog.SelectedColor = (SolidColorBrush)HUEThemeSelected.LightProcessSelected.Color);//, HUEThemeSelected.LightProcessSelected.Color.G, HUEThemeSelected.LightProcessSelected.Color.B);//((SolidColorBrush))// HUEThemeSelected.lstLightProcess[0].Color.ToString();// this.RectColorPicked.Fill).Color;
+            //colorDialog.Owner =  this;
+            if ((bool)colorDialog.ShowDialog())
+            {
+                HUETheme aktTheme = new Settings.EinstellungenViewModel.HUETheme();
+                aktTheme = HUEThemeSelected;
+                HUEThemeSelected.LightProcessSelected.Color = colorDialog.SelectedColor;
+
+                List<HUETheme> lst = new List<Settings.EinstellungenViewModel.HUETheme>();
+                lst.AddRange(lstHUEThemes);
+                lstHUEThemes = lst;
+                //RectColorPicked.Fill = new SolidColorBrush(colorDialog.SelectedColor);
+                //SendColorToLamps(colorDialog.SelectedColor);
+            }
+
+        }
+
+        private Base.CommandBase _onBtnDoTheme = null;
+        public Base.CommandBase onBtnDoTheme
+        {
+            get
+            {
+                if (_onBtnDoTheme == null)
+                    _onBtnDoTheme = new Base.CommandBase(DoTheme, null);
+                return _onBtnDoTheme;
+            }
+        }
+
+        List<HUETheme> RunningThemes = new List<HUETheme>();
+
+        private void DoTheme(object obj)
+        {
+            HUETheme ThemeToDo = obj as HUETheme;
+            if (obj == null) return;
+
+            if (!ThemeToDo.isRunning)
+            {
+                ThemeToDo.vm = this;
+                ThemeToDo.actLightProcess = null;
+                ThemeToDo.StartTime = 0;
+
+                ThemeToDo._timer.Start();
+            }
+            else
+            {
+                ThemeToDo._timer.Stop();
+            }            
+        }
+
+
+        private Base.CommandBase _onbtnNeuesHUETheme = null;
+        public Base.CommandBase onbtnNeuesHUETheme
+        {
+            get
+            {
+                if (_onbtnNeuesHUETheme == null)
+                    _onbtnNeuesHUETheme = new Base.CommandBase(NeuesHUETheme, null);
+                return _onbtnNeuesHUETheme;
+            }
+        }
+
+        private void NeuesHUETheme(object obj)
+        {
+            List<HUETheme> lst = new List<HUETheme>();
+            lst.AddRange(lstHUEThemes);
+            lst.Add(new HUETheme()
+            {
+                Name = "Neues_HUE",
+                doLoop = true,
+                lstLightProcess = new List<LightProcess>() {
+                    new LightProcess() { Brightness= 100, Color = Colors.Red, Dauer= 2000, Phase=0 },
+                    new LightProcess() { Brightness= 100, Color = Colors.Yellow, Dauer= 2000, Phase=1 },
+                    new LightProcess() { Brightness= 100, Color = Colors.Green, Dauer= 2000, Phase=2 } }
+            });
+            lstHUEThemes = lst;
+        }
+
+        private Base.CommandBase _onTBtnThemeProcessColor = null;
+        public Base.CommandBase onTBtnThemeProcessColor
+        {
+            get
+            {
+                if (_onTBtnThemeProcessColor == null)
+                    _onTBtnThemeProcessColor = new Base.CommandBase(TBtnThemeProcessColor, null);
+                return _onTBtnThemeProcessColor;
+            }
+        }
+
+        private void TBtnThemeProcessColor(object obj)
+        {
+            if (((LightProcess)obj).IsSelected)
+            {
+                HUEThemeSelected.LightProcessSelected = (LightProcess)obj;
+                //lstHUEThemes.ForEach(delegate(HUETheme ht) { ht.lstLightProcess.ForEach(delegate (LightProcess lp) { if (lp != obj) lp.IsSelected = false; }); });
+            }
+        }
+
+        private Base.CommandBase _onbtnAddHUEProcess = null;
+        public Base.CommandBase onbtnAddHUEProcess
+        {
+            get
+            {
+                if (_onbtnAddHUEProcess == null)
+                    _onbtnAddHUEProcess = new Base.CommandBase(AddHUEProcess, null);
+                return _onbtnAddHUEProcess;
+            }
+        }
+
+        private void AddHUEProcess(object obj)
+        {
+            List<HUETheme> lstThemes = new List<HUETheme>();
+            lstThemes.AddRange(lstHUEThemes);
+
+            List<LightProcess> lst = new List<LightProcess>();
+            HUEThemeSelected = lstHUEThemes[lstHUEThemes.Count-1];
+            if (HUEThemeSelected.lstLightProcess != null) lst.AddRange(HUEThemeSelected.lstLightProcess);
+            lst.Add(new LightProcess() { Phase = lst.Count, Dauer = 5000, Color = Colors.AliceBlue, Brightness =255 });
+
+            ((HUETheme)obj).lstLightProcess = lst;
+            lstHUEThemes = lstThemes;
+        }
+
+        private Base.CommandBase _onBtnHUEGWsuchen = null;
+        public Base.CommandBase onBtnHUEGWsuchen
+        {
+            get
+            {
+                if (_onBtnHUEGWsuchen == null)
+                    _onBtnHUEGWsuchen = new Base.CommandBase(HUEGWsuchen, null);
+                return _onBtnHUEGWsuchen;
+            }
+        }
+
+        private void HUEGWsuchen(object obj)
+        {
+            _Init();
+        }
+
+        private Base.CommandBase _onBtnActivateHUEGW = null;
+        public Base.CommandBase onBtnActivateHUEGW
+        {
+            get
+            {
+                if (_onBtnActivateHUEGW == null)
+                    _onBtnActivateHUEGW = new Base.CommandBase(ActivateHUEGW, null);
+                return _onBtnActivateHUEGW;
+            }
+        }
+
+        private void ActivateHUEGW(object obj)
+        {
+            _ActivateHUE();            
+        }
+
+
         public string Regeledition
         {
             get { return Global.Regeledition; }
