@@ -124,371 +124,7 @@ namespace MeisterGeister.View.Bodenplan
             get { return _visualisationHeight; }
             private set { _visualisationHeight = value; }
         }
-
-        //Zoom Funktion
-        private void ArenaGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e) 
-        {
-
-        }
-
-        void ArenaGrid_PreviewRightMouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            //ListBox lb = sender as ListBox;
-            //if (lb == null)
-            //    return;
-            e.Handled = true;
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                if (vm.FogFreimachen && VM.FogPixelData != null)
-                {
-                    WriteableBitmap wbmap = VM.FogImage;
-                    int newX = (int)vm.CurrentMousePositionX / 10;// (int)Mouse.GetPosition((IInputElement)sender).X;
-                    int newY = (int)vm.CurrentMousePositionY / 10;// (int)Mouse.GetPosition((IInputElement)sender).Y;
-
-
-                    for (int i = 0; i < 10 * vm.FogFreeSize + 1; i++)
-                    {
-                        for (int y = 0; y < (10 * vm.FogFreeSize + 1) * 10; y++)
-                            VM.FogPixelData[i + 1000 * y] = -0x01000000; //w*h
-                    }
-
-                    wbmap.WritePixels(new Int32Rect(newX, newY,
-                        newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
-                        newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                        VM.FogPixelData, 40000, 0); // widthInByte
-
-                    VM.FogImage = wbmap;
-                    return;
-                }
-                if (vm.SelectedObject == null) return;                
-                if (vm.SelectedObject is ViewModel.Kampf.Logic.Wesen)
-                {
-                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y), VM.RechteckGrid);
-                }
-                else if (vm.SelectedObject is ImageObject)
-                {
-                    ((ImageObject)vm.SelectedObject).CalculateNewDirection(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
-                }
-            }
-        }
-
-        private void ArenaGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            //ListBox lb = sender as ListBox;
-            //if (lb == null)
-            //    return;
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                if (vm.FogFreimachen && VM.FogPixelData != null)
-                {
-                    vm.SelectedObject = null;
-                    WriteableBitmap wbmap = VM.FogImage;
-                    int newX = (int)vm.CurrentMousePositionX / 10;// (int)Mouse.GetPosition((IInputElement)sender).X;
-                    int newY = (int)vm.CurrentMousePositionY / 10;// (int)Mouse.GetPosition((IInputElement)sender).Y;
-
-
-                    for (int i = 0; i < 10 * vm.FogFreeSize + 1; i++)
-                    {
-                        for (int y = 0; y < (10 * vm.FogFreeSize + 1) * 10; y++)
-                            vm.FogPixelData[i + 1000 * y] = 0x00000000; //w*h
-                    }
-                    wbmap.WritePixels(new Int32Rect(newX, newY,
-                        newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
-                        newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                        VM.FogPixelData, 40000, 0); // widthInByte
-
-                    VM.FogImage = wbmap;
-                }
-                else
-                {                    
-                    if (vm.SelectedObject != null) vm.SelectionChangedUpdateSliders();
-
-                    if (vm.CreateLine)
-                    {
-                        _x1 = e.GetPosition(ArenaGrid).X;
-                        _y1 = e.GetPosition(ArenaGrid).Y;
-                        vm.CreatingNewLine = true;
-                        var line = vm.CreateNewPathLine(_x1, _y1);
-                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
-                        e.Handled = true;
-                    }
-                    else if (vm.CreateFilledLine)
-                    {
-                        _x1 = e.GetPosition(ArenaGrid).X;
-                        _y1 = e.GetPosition(ArenaGrid).Y;
-                        vm.CreatingNewFilledLine = true;
-                        var line = vm.CreateNewFilledLine(_x1, _y1);
-                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
-                        e.Handled = true;
-                    }
-                }
-            }
-        }
-
-        private void ArenaGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //ListBox lb = sender as ListBox;
-            //if (lb == null)
-            //    return;
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                vm.IsMoving = false;
-                //handling different possibilities based on Objects (like Pathline or different BattlegroundBaseObject)
-                if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
-                {
-                    vm.FinishCurrentPathLine();
-                    e.Handled = true;
-                    vm.CreatingNewLine = false;
-                    vm.CreatingNewFilledLine = false;
-                    vm.UpdateCreatureLevelToTop();
-                }
-                else if (vm.SelectedObject != null)
-                {
-                    if (vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
-                    {
-                        var currentcreature = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
-                        currentcreature.IsSticked = false;
-
-                        if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
-                        {
-                            vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
-                        }
-                        else if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
-                        {
-                            vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
-                        }
-                        else
-                        {
-                            vm.CurrentlySelectedCreature = "";
-                        }
-
-                    }else if (vm.SelectedObject is Wesen)
-                    {
-                        double deltaX = vm.CurrentMousePositionX - ((Wesen)vm.SelectedObject).CreatureNameX;
-                        double deltaY = vm.CurrentMousePositionY - ((Wesen)vm.SelectedObject).CreatureNameY;
-                        deltaX = deltaX < 0 ? deltaX * -1 : deltaX;
-                        deltaY = deltaY < 0 ? deltaY * -1 : deltaY;
-                        if (deltaX <= 50 && deltaY <= 50)
-                        {
-                            if (((Wesen)vm.SelectedObject).Position == Position.Stehend) ((Wesen)vm.SelectedObject).Position = Position.Kniend;
-                            else if (((Wesen)vm.SelectedObject).Position == Position.Kniend) ((Wesen)vm.SelectedObject).Position = Position.Liegend;
-                            else if (((Wesen)vm.SelectedObject).Position == Position.Liegend) ((Wesen)vm.SelectedObject).Position = Position.Reitend;
-                            else if (((Wesen)vm.SelectedObject).Position == Position.Reitend) ((Wesen)vm.SelectedObject).Position = Position.Fliegend;
-                            else if (((Wesen)vm.SelectedObject).Position == Position.Fliegend) ((Wesen)vm.SelectedObject).Position = Position.Schwebend;
-                                else ((Wesen)vm.SelectedObject).Position = Position.Stehend;
-                        }
-                        VM.UpdateCreaturesFromChangedKampferlist();
-                    }
-                    ArenaGrid.Cursor = Cursors.Arrow;
-                }
-            }
-        }
-
-        private void ArenaGrid_MouseMove(object sender, MouseEventArgs e)
-        {
-            //ListBox lb = sender as ListBox;
-            //if (lb == null)
-            //    return;
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                if (vm.useFog && Keyboard.IsKeyDown(Key.LeftCtrl))
-                    vm.FogFreimachen = true;
-                if (vm.FogFreimachen && VM.FogPixelData != null)
-                {
-                    vm.SelectedObject = null;
-                    vm.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
-                    vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
-                    if (e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
-                    {
-                        WriteableBitmap wbmap = VM.FogImage;
-                        int newX = (int)vm.CurrentMousePositionX / 10;
-                        int newY = (int)vm.CurrentMousePositionY / 10;
-
-
-                        for (int i = 0; i < 10 * vm.FogFreeSize + 1; i++)
-                        {
-                            for (int y = 0; y < (10 * vm.FogFreeSize + 1) * 10; y++)
-                                VM.FogPixelData[i + 1000 * y] =
-                                    e.LeftButton == MouseButtonState.Pressed ? 0x00000000 : -0x01000000;
-                        }
-                        try
-                        {
-                            wbmap.WritePixels(new Int32Rect(newX, newY,
-                                newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
-                                newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                                VM.FogPixelData, 40000, 0);
-                            VM.FogImage = wbmap;
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    return;
-                }
-                //cursor pixelchange?
-                if (Math.Round(e.GetPosition(ArenaGrid).X, 0) != vm.CurrentMousePositionX ||
-                    Math.Round(e.GetPosition(ArenaGrid).Y, 0) != vm.CurrentMousePositionY)
-                {
-                    vm.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
-                    vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
-                    var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
-                    //handling different possibilities based on Objects (like MoveObject or Hero, Create Line..)
-                    var tempstick = vm.BattlegroundObjects.Where(x=>x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).ToList();
-                    foreach (var wesen in tempstick)
-                    {
-                        ((BattlegroundCreature)wesen).MoveObject(vm.CurrentMousePositionX, vm.CurrentMousePositionY,true);
-                    }
-                    if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
-                    {
-                        _x2 = e.GetPosition(ArenaGrid).X;
-                        _y2 = e.GetPosition(ArenaGrid).Y;
-                        vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
-                    }
-                    else if (e.LeftButton == MouseButtonState.Pressed && vm.SelectedObject != null && vm.IsMoving)
-                    {
-                        ArenaGrid.Cursor = Cursors.Hand;
-                        vm.MoveObject(_xMovingOld, _yMovingOld, vm.CurrentMousePositionX, vm.CurrentMousePositionY);
-                    }
-                    _xMovingOld = vm.CurrentMousePositionX;
-                    _yMovingOld = vm.CurrentMousePositionY;
-                }
-            }
-        }
-
-        private void ArenaScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            //ListBox lb = sender as ListBox;
-            //if (lb == null)
-            //    return;
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                if (_zoomChanged)
-                {
-                    _zoomChanged = false;
-                    vm.CurrentMousePositionX = Mouse.GetPosition(ArenaGrid).X;
-                    vm.CurrentMousePositionY = Mouse.GetPosition(ArenaGrid).Y;
-                }
-            }
-        }
-
-        private void ArenaGrid_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                vm.IsMoving = false;
-            }
-        }
-
-        MenuItem miOpen = null;
-        public static RoutedCommand ThemeCommandCheck = new RoutedCommand();
-        private void ArenaGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                var menuitem = ((DependencyObject)e.OriginalSource).FindAnchestor<MenuItem>();
-                if (menuitem != null)
-                {
-                    if (menuitem.HasItems)
-                    {
-                        menuitem.IsSubmenuOpen = !menuitem.IsSubmenuOpen;
-                        miOpen = menuitem.IsSubmenuOpen? menuitem: null;
-                    }
-                    else
-                    {
-                        ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
-
-                        if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
-                            mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
-                        if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
-                            mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
-
-                        if (miOpen != null && miOpen.IsSubmenuOpen)
-                            miOpen.IsSubmenuOpen = false;
-                        miOpen =  null;
-                    }
-                    return;
-                }
-
-                if (miOpen != null && miOpen.IsSubmenuOpen)
-                    miOpen.IsSubmenuOpen = false;
-                miOpen = null;
-                
-                var slider = ((DependencyObject)e.OriginalSource).FindAnchestor<Slider>();
-                if (slider != null) return;                
-
-                var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
-                if (listboxItem != null)
-                {
-                    BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
-                    vm.SelectedObject = o; //TODO: Zugriff muss aus dem anderen Thread ausgeführt werden.
-                    vm.IsMoving = true;
-                    e.Handled = true;
-                }
-
-                var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
-                if (button != null)             
-                {
-                    ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
-                    if (mi == null) return;
-                    if (button.Name == "UmwandelnAttacke")
-                        mi.UmwandelnAttacke.Execute(null);
-                    if (button.Name == "UmwandelnFernkampf")
-                        mi.UmwandelnFernkampf.Execute(null);
-                    if (button.Name == "UmwandelnZauber")
-                        mi.UmwandelnZauber.Execute(null);
-                    if (button.Name == "UmwandelnSonstiges")
-                        mi.UmwandelnSonstiges.Execute(null);
-
-                    Global.CurrentKampf.SelectedManöver = mi;
-                    return;
-                }
-            }
-        }
-
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                vm.Freizeichnen = (e.Key == Key.LeftShift);
-                if (e.Key == Key.Delete && vm.SelectedObject != null) vm.Delete(); 
-                if (vm.Freizeichnen && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
-                {
-                    _x2 = _xMovingOld;
-                    _y2 = _yMovingOld;
-                    vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
-                }
-            }
-            if (e.Key == Key.Escape) UnselectObjects();
-            if (e.Key == Key.D1) ToggleLinePathButton();
-            if (e.Key == Key.D2) ToggleFilledLinePathButton();
-
-        }
-
-        private void UserControl_KeyUp(object sender, KeyEventArgs e)
-        {
-             var vm = DataContext as BattlegroundViewModel;
-             if (vm != null)
-             {
-                 if (e.Key == Key.LeftCtrl && Keyboard.IsKeyUp(Key.LeftCtrl))
-                     VM.FogFreimachen = false;
-                 if (e.Key == Key.LeftShift) { vm.Freizeichnen = !vm.Freizeichnen; vm.LeftShiftPressed = !vm.LeftShiftPressed; }
-             }
-        }
-
+        
         //Set SelectedObject = null 
         private void UnselectObjects()
         {
@@ -533,9 +169,21 @@ namespace MeisterGeister.View.Bodenplan
             if(vm!=null) vm.SelectionChangedUpdateSliders();
         }
 
-        private void checkBox3_Checked(object sender, RoutedEventArgs e)
+        private void ArenaScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            
+            //ListBox lb = sender as ListBox;
+            //if (lb == null)
+            //    return;
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                if (_zoomChanged)
+                {
+                    _zoomChanged = false;
+                    vm.CurrentMousePositionX = Mouse.GetPosition(ArenaGrid).X;
+                    vm.CurrentMousePositionY = Mouse.GetPosition(ArenaGrid).Y;
+                }
+            }
         }
 
         private void ButtonEbeneHigherMax_Click(object sender, RoutedEventArgs e)
@@ -773,11 +421,7 @@ namespace MeisterGeister.View.Bodenplan
                 VM.KampfWindow.Width = Math.Round(WidthStart * vm.ScaleKampfGrid);
             }
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void MeisterArenaZoom_Click(object sender, RoutedEventArgs e)
         {
@@ -792,6 +436,358 @@ namespace MeisterGeister.View.Bodenplan
                 ArenaScrollViewer.TranslateY = -yMin;
             }
         }
+
+
+
+
+
+        #region --- Tastatur abfragen ---
+
+        MenuItem miOpen = null;
+        public static RoutedCommand ThemeCommandCheck = new RoutedCommand();
+        private void ArenaGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //STRG - Abfragen um return zu setzen
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)) return;
+
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                var menuitem = ((DependencyObject)e.OriginalSource).FindAnchestor<MenuItem>();
+                if (menuitem != null)
+                {
+                    if (menuitem.HasItems)
+                    {
+                        menuitem.IsSubmenuOpen = !menuitem.IsSubmenuOpen;
+                        miOpen = menuitem.IsSubmenuOpen ? menuitem : null;
+                    }
+                    else
+                    {
+                        ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+
+                        if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
+                            mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
+                        if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
+                            mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
+
+                        if (miOpen != null && miOpen.IsSubmenuOpen)
+                            miOpen.IsSubmenuOpen = false;
+                        miOpen = null;
+                    }
+                    return;
+                }
+
+                if (miOpen != null && miOpen.IsSubmenuOpen)
+                    miOpen.IsSubmenuOpen = false;
+                miOpen = null;
+
+                var slider = ((DependencyObject)e.OriginalSource).FindAnchestor<Slider>();
+                if (slider != null) return;
+
+                var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
+                if (listboxItem != null)
+                {
+                    BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
+                    vm.SelectedObject = o; //TODO: Zugriff muss aus dem anderen Thread ausgeführt werden.
+                    vm.IsMoving = true;
+                    e.Handled = true;
+                }
+
+                var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
+                if (button != null)
+                {
+                    ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                    if (mi == null) return;
+                    if (button.Name == "UmwandelnAttacke")
+                        mi.UmwandelnAttacke.Execute(null);
+                    if (button.Name == "UmwandelnFernkampf")
+                        mi.UmwandelnFernkampf.Execute(null);
+                    if (button.Name == "UmwandelnZauber")
+                        mi.UmwandelnZauber.Execute(null);
+                    if (button.Name == "UmwandelnSonstiges")
+                        mi.UmwandelnSonstiges.Execute(null);
+
+                    Global.CurrentKampf.SelectedManöver = mi;
+                    return;
+                }
+            }
+        }
+
+        private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                if (vm.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
+                {
+                    vm.SelectedObject = null;
+                    WriteableBitmap wbmap = VM.FogImage;
+                    int newX = (int)vm.CurrentMousePositionX / 10;// (int)Mouse.GetPosition((IInputElement)sender).X;
+                    int newY = (int)vm.CurrentMousePositionY / 10;// (int)Mouse.GetPosition((IInputElement)sender).Y;
+
+                    int w = 10 * vm.FogFreeSize+1;
+                    int h = (10 * vm.FogFreeSize +1) * 10-1;
+                    int[] leererBereich = new int[w * h];
+
+                    for (int i = 0; i < 100 * vm.FogFreeSize + 1; i++)
+                        Array.ConstrainedCopy(leererBereich, 0, vm.FogPixelData, i * 1000, w * h);
+                    
+                    //Bei vm.FogFreeSize = 1
+                    // i = 0        0, 1000, 2000, 3000, 4000, ... 110*1000
+                    // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
+                    // ...
+                    // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11
+
+                    wbmap.WritePixels(new Int32Rect(newX, newY,
+                        newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
+                        newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
+                        VM.FogPixelData, 40000, 0); // widthInByte
+
+                    VM.FogImage = wbmap;
+                }
+                else
+                {
+                    if (vm.SelectedObject != null) vm.SelectionChangedUpdateSliders();
+
+                    if (vm.CreateLine)
+                    {
+                        _x1 = e.GetPosition(ArenaGrid).X;
+                        _y1 = e.GetPosition(ArenaGrid).Y;
+                        vm.CreatingNewLine = true;
+                        var line = vm.CreateNewPathLine(_x1, _y1);
+                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
+                        e.Handled = true;
+                    }
+                    else if (vm.CreateFilledLine)
+                    {
+                        _x1 = e.GetPosition(ArenaGrid).X;
+                        _y1 = e.GetPosition(ArenaGrid).Y;
+                        vm.CreatingNewFilledLine = true;
+                        var line = vm.CreateNewFilledLine(_x1, _y1);
+                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
+                        e.Handled = true;
+                    }
+                }
+            }
+        }
+        
+        private void ArenaGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                vm.IsMoving = false;
+                //handling different possibilities based on Objects (like Pathline or different BattlegroundBaseObject)
+                if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
+                {
+                    vm.FinishCurrentPathLine();
+                    e.Handled = true;
+                    vm.CreatingNewLine = false;
+                    vm.CreatingNewFilledLine = false;
+                    vm.UpdateCreatureLevelToTop();
+                }
+                else if (vm.SelectedObject != null)
+                {
+                    if (vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
+                    {
+                        var currentcreature = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
+                        currentcreature.IsSticked = false;
+
+                        if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
+                        {
+                            vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
+                        }
+                        else if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
+                        {
+                            vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
+                        }
+                        else
+                        {
+                            vm.CurrentlySelectedCreature = "";
+                        }
+
+                    }
+                    else if (vm.SelectedObject is Wesen)
+                    {
+                        double deltaX = vm.CurrentMousePositionX - ((Wesen)vm.SelectedObject).CreatureNameX;
+                        double deltaY = vm.CurrentMousePositionY - ((Wesen)vm.SelectedObject).CreatureNameY;
+                        deltaX = deltaX < 0 ? deltaX * -1 : deltaX;
+                        deltaY = deltaY < 0 ? deltaY * -1 : deltaY;
+                        if (deltaX <= 50 && deltaY <= 50)
+                        {
+                            if (((Wesen)vm.SelectedObject).Position == Position.Stehend) ((Wesen)vm.SelectedObject).Position = Position.Kniend;
+                            else if (((Wesen)vm.SelectedObject).Position == Position.Kniend) ((Wesen)vm.SelectedObject).Position = Position.Liegend;
+                            else if (((Wesen)vm.SelectedObject).Position == Position.Liegend) ((Wesen)vm.SelectedObject).Position = Position.Reitend;
+                            else if (((Wesen)vm.SelectedObject).Position == Position.Reitend) ((Wesen)vm.SelectedObject).Position = Position.Fliegend;
+                            else if (((Wesen)vm.SelectedObject).Position == Position.Fliegend) ((Wesen)vm.SelectedObject).Position = Position.Schwebend;
+                            else ((Wesen)vm.SelectedObject).Position = Position.Stehend;
+                        }
+                        VM.UpdateCreaturesFromChangedKampferlist();
+                    }
+                    ArenaGrid.Cursor = Cursors.Arrow;
+                }
+            }
+        }
+
+        private void ArenaGrid_MouseMove(object sender, MouseEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                if (vm.useFog && Keyboard.IsKeyDown(Key.LeftCtrl))
+                    vm.FogFreimachen = true;
+                else
+                    vm.FogFreimachen = false;
+                if (vm.FogFreimachen && vm.FogPixelData != null)
+                {
+                    vm.SelectedObject = null;
+                    vm.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
+                    vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+                    if (e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
+                    {
+                        WriteableBitmap wbmap = VM.FogImage;
+                        int newX = (int)vm.CurrentMousePositionX / 10;
+                        int newY = (int)vm.CurrentMousePositionY / 10;
+                        int w = 10 * vm.FogFreeSize+1;
+                        int h = (10 * vm.FogFreeSize+1)*10;
+                        int[] leererBereich = new int[w * h];
+                        if (e.RightButton == MouseButtonState.Pressed)
+                            leererBereich  = Enumerable.Repeat(-0x01000000, w * h).ToArray();
+
+                        for (int i = 0; i < 100 * vm.FogFreeSize + 1; i++)
+                            Array.ConstrainedCopy(leererBereich, 0, vm.FogPixelData, i * 1000, w * h);// 100 * vm.FogFreeSize + 1);// w * h);
+                        
+                        //Bei vm.FogFreeSize = 1
+                        // i = 0        0, 1000, 2000, 3000, 4000, ... 110*1000
+                        // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
+                        //...
+                        // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11                        
+
+                        wbmap.WritePixels(new Int32Rect(newX, newY,
+                                newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
+                                newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
+                                VM.FogPixelData, 40000, 0);
+                            VM.FogImage = wbmap;                        
+                    }
+                    return;
+                }
+
+                //cursor pixelchange?
+                if (Math.Round(e.GetPosition(ArenaGrid).X, 0) != vm.CurrentMousePositionX ||
+                    Math.Round(e.GetPosition(ArenaGrid).Y, 0) != vm.CurrentMousePositionY)
+                {
+                    vm.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
+                    vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+                    var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
+                    //handling different possibilities based on Objects (like MoveObject or Hero, Create Line..)
+                    var tempstick = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).ToList();
+                    foreach (var wesen in tempstick)
+                    {
+                        ((BattlegroundCreature)wesen).MoveObject(vm.CurrentMousePositionX, vm.CurrentMousePositionY, true);
+                    }
+                    if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
+                    {
+                        _x2 = e.GetPosition(ArenaGrid).X;
+                        _y2 = e.GetPosition(ArenaGrid).Y;
+                        vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
+                    }
+                    else if (e.LeftButton == MouseButtonState.Pressed && vm.SelectedObject != null && vm.IsMoving)
+                    {
+                        ArenaGrid.Cursor = Cursors.Hand;
+                        vm.MoveObject(_xMovingOld, _yMovingOld, vm.CurrentMousePositionX, vm.CurrentMousePositionY);
+                    }
+                    _xMovingOld = vm.CurrentMousePositionX;
+                    _yMovingOld = vm.CurrentMousePositionY;
+                }
+            }
+        }
+
+        private void ArenaGrid_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                vm.IsMoving = false;
+            }
+        }
+        
+
+        private void ArenaGrid_PreviewRightMouseButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //ListBox lb = sender as ListBox;
+            //if (lb == null)
+            //    return;
+            e.Handled = true;
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                if (vm.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
+                {
+                    WriteableBitmap wbmap = VM.FogImage;
+                    int newX = (int)vm.CurrentMousePositionX / 10;// (int)Mouse.GetPosition((IInputElement)sender).X;
+                    int newY = (int)vm.CurrentMousePositionY / 10;// (int)Mouse.GetPosition((IInputElement)sender).Y;
+
+
+                    for (int i = 0; i < 10 * vm.FogFreeSize + 1; i++)
+                    {
+                        for (int y = 0; y < (10 * vm.FogFreeSize + 1) * 10; y++)
+                            VM.FogPixelData[i + 1000 * y] = -0x01000000; //w*h
+                    }
+
+                    wbmap.WritePixels(new Int32Rect(newX, newY,
+                        newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
+                        newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
+                        VM.FogPixelData, 40000, 0); // widthInByte
+
+                    VM.FogImage = wbmap;
+                    return;
+                }
+
+
+                if (vm.SelectedObject == null) return;
+                if (vm.SelectedObject is ViewModel.Kampf.Logic.Wesen)
+                {
+                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y), VM.RechteckGrid);
+                }
+                else if (vm.SelectedObject is ImageObject)
+                {
+                    ((ImageObject)vm.SelectedObject).CalculateNewDirection(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
+                }
+            }
+        }
+
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                vm.Freizeichnen = (e.Key == Key.LeftShift);
+                if (e.Key == Key.Delete && vm.SelectedObject != null) vm.Delete();
+                if (vm.Freizeichnen && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
+                {
+                    _x2 = _xMovingOld;
+                    _y2 = _yMovingOld;
+                    vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
+                }
+            }
+            if (e.Key == Key.Escape) UnselectObjects();
+            if (e.Key == Key.D1) ToggleLinePathButton();
+            if (e.Key == Key.D2) ToggleFilledLinePathButton();
+
+        }
+
+        private void UserControl_KeyUp(object sender, KeyEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                if (e.Key == Key.LeftCtrl && Keyboard.IsKeyUp(Key.LeftCtrl))
+                    VM.FogFreimachen = false;
+                if (e.Key == Key.LeftShift) { vm.Freizeichnen = !vm.Freizeichnen; vm.LeftShiftPressed = !vm.LeftShiftPressed; }
+            }
+        }
+
+        #endregion
     }
 }
 

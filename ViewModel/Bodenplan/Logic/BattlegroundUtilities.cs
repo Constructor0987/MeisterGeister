@@ -174,8 +174,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             hexPath.StrokeThickness = 1;
 
             var doublecollection = new DoubleCollection();
-            doublecollection.Add(5);
-            doublecollection.Add(3);
+            doublecollection.Add(7);
+            doublecollection.Add(1);
 
             hexPath.StrokeDashArray = doublecollection;
             hexPath.Data = hexPathGeometry;

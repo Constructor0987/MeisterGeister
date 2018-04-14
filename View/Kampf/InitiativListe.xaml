@@ -668,7 +668,7 @@
                                                             <ViewGeneral:EqualsMultiConverter/>
                                                         </MultiBinding.Converter>
                                                         <Binding Path="Kampf.AktIniKämpfer" UpdateSourceTrigger="PropertyChanged"/>
-                                                        <Binding Path="Manöver.Ausführender.Kämpfer" />
+                                                        <Binding Path="Manöver.Ausführender" />
                                                     </MultiBinding>
                                                     <!--#FFF7CC86-->
                                                     
