@@ -420,7 +420,7 @@
                             <Image Name="imgFog" Source="{Binding FogImage}" Opacity="0.5" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10000" Height="10000" 
                                 Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                             <!--ObjektListe.View-->
-                            <ListBox ItemsSource="{Binding BattlegroundObjects }" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" 
+                            <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" 
                                  PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"  
                                  MouseMove="ArenaGrid_MouseMove"
                                  MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" 

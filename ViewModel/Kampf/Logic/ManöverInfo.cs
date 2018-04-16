@@ -387,6 +387,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _ausführen; }
         }
 
+        private bool _isAnDerReihe;
+        public bool IsAnDerReihe
+        {
+            get { return _isAnDerReihe; }
+            set { Set(ref _isAnDerReihe, value); }
+        }
+
         public ManöverInfo(Manöver.Manöver m, int inimod, int kampfrunde)
         {
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
@@ -401,7 +408,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Manöver.IsAusgeführt = false;
             AktKampfrunde = kampfrunde;
         }
-        
+
+        [DependentProperty("Start")]
+        [DependentProperty("End")]
+        [DependentProperty("Initiative")]
         public bool IsAktuell
         {
             get

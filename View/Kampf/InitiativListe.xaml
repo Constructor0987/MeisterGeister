@@ -661,18 +661,18 @@
                                     <Style TargetType="StackPanel">
                                         <Setter Property="Background" Value="Transparent"/>
                                         <Style.Triggers>
-                                            <DataTrigger Value="True">
-                                                <DataTrigger.Binding>
+                                            <DataTrigger Binding="{Binding IsAnDerReihe, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                <!--<DataTrigger.Binding>
                                                     <MultiBinding>
                                                         <MultiBinding.Converter>
                                                             <ViewGeneral:EqualsMultiConverter/>
                                                         </MultiBinding.Converter>
                                                         <Binding Path="Kampf.AktIniKämpfer" UpdateSourceTrigger="PropertyChanged"/>
                                                         <Binding Path="Manöver.Ausführender" />
-                                                    </MultiBinding>
+                                                    </MultiBinding>-->
                                                     <!--#FFF7CC86-->
                                                     
-                                                </DataTrigger.Binding>
+                                                <!--</DataTrigger.Binding>-->
                                                     <Setter Property="Background" Value="#FF0CD8E2" />
                                             </DataTrigger>
                                         </Style.Triggers>
