@@ -2785,6 +2785,12 @@
     <Resource Include="Images\Logos\Rakshazar_Favicon.png" />
     <Resource Include="Images\Logos\DereGlobus_Favicon.png" />
     <Resource Include="Images\Texturen\pergament.png" />
+    <Content Include="Q42.HueApi.ColorConverters.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Q42.HueApi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="README.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2938,6 +2944,9 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)System.Windows.Interactivity.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)WPFExtensions.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Xceed.Wpf.Toolkit.dll" "$(ProjectDir)publish\$(TargetName)"
+
+   copy "$(TargetDir)Q42.HueApi.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Q42.HueApi.ColorConverters.dll" "$(ProjectDir)publish\$(TargetName)"
    
    call "C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetName).zip" "$(ProjectDir)publish\$(TargetName)" -mx
    move  "$(TargetDir)$(TargetName).zip" "$(ProjectDir)publish"

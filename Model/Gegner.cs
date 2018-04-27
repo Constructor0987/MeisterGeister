@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         }
 
         public Gegner(GegnerBase gegnerBase) : this()
-        {
+        { 
             GegnerBaseGUID = gegnerBase.GegnerBaseGUID;
             GegnerBase = gegnerBase;
             AE = gegnerBase.AE;

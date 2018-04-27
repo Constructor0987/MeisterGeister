@@ -171,28 +171,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _backgroundFilename, value); }
         }
         
-        private double _playerGridOffsetX = 0;
-        public double PlayerGridOffsetX
-        {
-            get { return _playerGridOffsetX; }
-            set
-            {
-                Set(ref _playerGridOffsetX, value);
-                PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX, _playerGridOffsetY, 0, 0);
-            }
-        }
-
-        private double _playerGridOffsetY = 0;
-        public double PlayerGridOffsetY
-        {
-            get { return _playerGridOffsetY; }
-            set
-            {
-                Set(ref _playerGridOffsetY, value);
-                PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX, _playerGridOffsetY, 0, 0);
-            }
-        }
-
         private Window _spielerScreenWindow = null;
         public Window SpielerScreenWindow
         {
@@ -268,6 +246,29 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 OffsetBackgroudMargin = new Thickness(_fogOffsetX, _fogOffsetY, -_fogOffsetX - 20000, -_fogOffsetY - 20000);
             }
         }
+        
+        private double _playerGridOffsetX = 0;
+        public double PlayerGridOffsetX
+        {
+            get { return _playerGridOffsetX; }
+            set
+            {
+                Set(ref _playerGridOffsetX, value);
+                PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX , _playerGridOffsetY, 0, 0);
+           //     PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX - 10000, _playerGridOffsetY - 10000, _playerGridOffsetX - 10000, -_playerGridOffsetY - 10000);
+            }
+        }
+        private double _playerGridOffsetY = 0;
+        public double PlayerGridOffsetY
+        {
+            get { return _playerGridOffsetY; }
+            set
+            {
+                Set(ref _playerGridOffsetY, value);
+                PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX, _playerGridOffsetY, 0, 0);
+           //     PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX - 10000, _playerGridOffsetY - 10000, _playerGridOffsetX - 10000, -_playerGridOffsetY - 10000);
+            }
+        }
 
         private double _backgroundOffsetX = 0;
         public double BackgroundOffsetX
@@ -276,7 +277,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set
             {
                 Set(ref _backgroundOffsetX, value);
-                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX, _backgroundOffsetY, -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
+                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX , _backgroundOffsetY , -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
             }
         }
 
@@ -287,8 +288,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set
             {
                 Set(ref _backgroundOffsetY, value);
-                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX, _backgroundOffsetY, -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
-
+                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX , _backgroundOffsetY , -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
+            }
+        }
+        private double _backgroundOffsetSize = 10000;
+        public double BackgroundOffsetSize
+        {
+            get { return _backgroundOffsetSize; }
+            set
+            {
+                Set(ref _backgroundOffsetSize, value);
+                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX , _backgroundOffsetY , -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
+                //FogOffsetSize = value;
             }
         }
 
@@ -300,17 +311,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 Set(ref _invBackgroundOffsetY, value);
                 BackgroundOffsetY = value * -1;
-            }
-        }
-        private double _backgroundOffsetSize = 10000;
-        public double BackgroundOffsetSize
-        {
-            get { return _backgroundOffsetSize; }
-            set
-            {
-                Set(ref _backgroundOffsetSize, value);
-                OffsetBackgroudMargin = new Thickness(_backgroundOffsetX, _backgroundOffsetY, -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
-                //FogOffsetSize = value;
             }
         }
         private double _fogOffsetSize = 10000;
@@ -779,6 +779,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         SelectedObject.IsSelected = true;
                     }
                     OnChanged("SelectedObject");
+                    if (SelectedObject is BattlegroundCreature)
+                    {
+                        if (BattlegroundObjects.IndexOf(SelectedObject) != BattlegroundObjects.Count - 1)
+                            BattlegroundObjects.Move(BattlegroundObjects.IndexOf(SelectedObject), BattlegroundObjects.Count-1);
+                    }
                 }
             }
         }
@@ -1090,7 +1095,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         #region Grid
 
         PathGeometry rechteckPath = null, hextilePath = null;
-        [DependentProperty("RechteckGrid")]
+        [DependentProperty("RechteckGrid"), DependentProperty("HexGrid")]
         public PathGeometry TilePathData
         {
             get {
@@ -1101,15 +1106,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     return rechteckPath;
                 }
                 else
-                {
-                    if(hextilePath == null)
-                        hextilePath = BattlegroundUtilities.HexCellTile(100);
-                    return hextilePath;
-                }
+                    if (HexGrid)
+                    {
+                        if (hextilePath == null)
+                            hextilePath = BattlegroundUtilities.HexCellTile(100);
+                        return hextilePath;
+                    }
+                    else
+                    {
+                        return null;
+                    }
             }
         }
 
-        [DependentProperty("RechteckGrid")]
+        [DependentProperty("RechteckGrid"), DependentProperty("HexGrid")]
         public Rect TileViewPort
         {
             get {
@@ -1131,11 +1141,27 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref gridColor, value); RechteckGrid = true; }
         }
 
-        private bool rechteckGrid = false;
+        private bool rechteckGrid = true;
         public bool RechteckGrid
         {
             get { return rechteckGrid; }
-            set { Set(ref rechteckGrid, value); }
+            set 
+            {
+                if (value)
+                    HexGrid = false;
+                Set(ref rechteckGrid, value); 
+            }
+        }
+        private bool hexGrid = false;
+        public bool HexGrid
+        {
+            get { return hexGrid; }
+            set
+            {
+                if (value)
+                    RechteckGrid = false;
+                Set(ref hexGrid, value); 
+            }
         }
 
         #endregion
@@ -1350,6 +1376,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         //keeps heroes and monsters always on top
         public void UpdateCreatureLevelToTop()
         {
+            BattlegroundBaseObject bbo = SelectedObject;
             for (int i = BattlegroundObjects.Count - 1; i >= 0; i--)
             {
                 if (BattlegroundObjects[i] is BattlegroundCreature)
@@ -1543,6 +1570,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         void CenterMeisterView(object obj)
         {
             MeisterZoom = 1;
+            if (Global.ContextHeld.HeldenGruppeListe.Count == 0) return;
             double xMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureX) - Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
             double yMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureY) - Global.ContextHeld.HeldenGruppeListe[0].CreatureHeight;
             MeisterZoomTransX = -xMin;

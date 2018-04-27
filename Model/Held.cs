@@ -2410,9 +2410,15 @@ namespace MeisterGeister.Model {
         }
 
         private string _hinweisText = string.Empty;
-        public string HinweisText {
+        public string HinweisText
+        {
             get { return _hinweisText; }
-            set { _hinweisText = value; OnChanged("HinweisText"); }
+            set
+            {
+                _hinweisText = value; OnChanged("HinweisText");
+            //    if (Global.CurrentKampf.BodenplanViewModel.SelectedObject is Wesen)
+            //    { (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Wesen).ki.Kämpfer.HinweisText = "TEST"; }
+            }
         }
 
         #endregion

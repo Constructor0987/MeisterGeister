@@ -28,6 +28,41 @@ namespace MeisterGeister.View.Kampf
             InitializeComponent();
         }
 
+        private void userControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            var vm = DataContext as VM.KampfViewModel;
+            
+            if (vm != null && vm.BodenplanViewModel != null)
+            {
+                vm.BodenplanViewModel.Freizeichnen = (e.Key == Key.LeftShift);
+                if (e.Key == Key.Delete && vm.BodenplanViewModel.SelectedObject != null) vm.BodenplanViewModel.Delete();
+                if (vm.BodenplanViewModel.Freizeichnen && (vm.BodenplanViewModel.CreatingNewLine || vm.BodenplanViewModel.CreatingNewFilledLine))
+                {
+                    double _x2 = vm.BodenplanViewModel.CurrentMousePositionX;
+                    double _y2 = vm.BodenplanViewModel.CurrentMousePositionY;
+                    vm.BodenplanViewModel.MoveWhileDrawing(_x2, _y2, vm.BodenplanViewModel.Freizeichnen);
+                }
+            }
+            if (e.Key == Key.Escape) vm.BodenplanViewModel.SelectedObject = null;
+            //if (e.Key == Key.D1) vm.BodenplanViewModel.CreateLine = (!Convert.ToBoolean(vm.BodenplanViewModel.CreateLine));
+            //if (e.Key == Key.D2) vm.BodenplanViewModel.ToggleFilledLinePathButton();
+        }
+
+        private void UserControl_KeyUp(object sender, KeyEventArgs e)
+        {
+            var vm = DataContext as VM.KampfViewModel;
+            if (vm != null && vm.BodenplanViewModel != null)
+            {
+                if (e.Key == Key.LeftCtrl && Keyboard.IsKeyUp(Key.LeftCtrl))
+                    vm.BodenplanViewModel.FogFreimachen = false;
+                if (e.Key == Key.LeftShift) 
+                { 
+                    vm.BodenplanViewModel.Freizeichnen = !vm.BodenplanViewModel.Freizeichnen;
+                    vm.BodenplanViewModel.LeftShiftPressed = !vm.BodenplanViewModel.LeftShiftPressed;
+                }
+            }
+        }
+
         //private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         //{
         //    if (_treeInitiative.SelectedItem == null)

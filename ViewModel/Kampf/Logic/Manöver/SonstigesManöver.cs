@@ -13,6 +13,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
         }
 
+        private int _sonstigeDauer = 1;
+        public int SonstigeDauer
+        {
+            get { return _sonstigeDauer; }
+            set 
+            {
+                Set(ref _sonstigeDauer, value);
+                Dauer = value;
+                VerbleibendeDauer = Dauer;
+            }
+        }
+
         public override IEnumerable<KämpferInfo> Ziele
         {
             get

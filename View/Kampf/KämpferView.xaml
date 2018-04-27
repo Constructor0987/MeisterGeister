@@ -139,7 +139,7 @@
         
         <DockPanel Margin="4" Grid.Row="1">
             <TextBlock Text="Hinweis-Text:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
-            <TextBox Margin="4,0,0,0" Text="{Binding HinweisText}" DockPanel.Dock="Right"/>
+            <TextBox Margin="4,0,0,0" Text="{Binding Kämpfer.HinweisText, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right"/>
         </DockPanel>
 
         <DockPanel Margin="4" Grid.Row="1" Grid.Column="1">

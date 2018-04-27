@@ -56,6 +56,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 Dauer = dauer * (1 << -zauberdauer.Value);
             else
                 Dauer = Math.Max(1, (int)Math.Round(dauer / (double)(1 << zauberdauer.Value), MidpointRounding.AwayFromZero));
+            
+            VerbleibendeDauer = Dauer;
         }
 
         public Zauber(KämpferInfo ausführender, Held_Zauber zauber) : base(ausführender, 1)

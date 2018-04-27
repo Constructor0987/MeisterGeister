@@ -110,7 +110,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 Set(ref selectedManöver, value);
                 if (value != null)
                 {
-                    SelectedKämpfer = null;                    
+                    SelectedKämpfer = null;
                 }
             }
         }

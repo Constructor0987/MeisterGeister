@@ -49,13 +49,29 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             IKämpfer kämpfer = Global.CurrentKampf.SelectedKämpfer.Kämpfer;
             if (kämpfer != null && ViewHelper.Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", kämpfer.Name)))
-            {
-                
+            {                
                 if (Global.CurrentKampf.BodenplanViewModel != null)
                     Global.CurrentKampf.BodenplanViewModel.RemoveCreature(kämpfer);
                 Global.CurrentKampf.Kampf.Kämpfer.Remove(kämpfer);
                // Kampf.Kämpfer.Remove(kämpfer);
             }
+        }
+
+        private CommandBase passiv;
+        public CommandBase Passiv
+        {
+            get
+            {
+                if (passiv == null)
+                    passiv = new CommandBase((o) => PassivKämpfer(), null); //Kampf.Kämpfer.Remove(this), null);
+
+                return passiv;                
+            }
+        }
+
+        public void PassivKämpfer()
+        {
+            Abwehraktionen = Aktionen;
         }
 
         #endregion
@@ -659,6 +675,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     else
                         yield return new ManöverInfo(new Attacke(this), Math.Max(i * 4, 8), kampfrunde);
                 }
+            }
+
+            var längerfristig = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
+            if (längerfristig != null)
+            {
+                //    yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
             }
 
             //Debug.WriteLine(String.Format("KR {1}: Manöver erstellen: {0}", DateTime.Now - dtstart, kampfrunde));

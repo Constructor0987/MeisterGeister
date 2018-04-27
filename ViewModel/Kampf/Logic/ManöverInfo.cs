@@ -45,7 +45,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         private void ExecuteUmwandelnZauber(object o)
-        {
+        {         
             if (o is Held_Zauber)
                 Manöver = new Manöver.Zauber(Manöver.Ausführender, (Held_Zauber)o);
             if (o is GegnerBase_Zauber)
@@ -211,10 +211,23 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 return dauer;
             }
         }
+        [DependentProperty("Start")]
+        [DependentProperty("End")]
+        public int RestDauerInKampfaktionen
+        {
+            get
+            {
+                if (Kampf.AktIniKämpfer == null) return 0;
+                var aktionszeiten = Kampf.AktIniKämpfer.Aktionszeiten.Distinct();
+                int dauer = aktionszeiten.Count(zeit => zeit >= Global.CurrentKampf.Kampf.AktuelleAktionszeit && zeit <= End);
+                return dauer;
+            }
+        }
 
         public void NotifyKampfaktionenChanged()
         {
             OnChanged("DauerInKampfaktionen");
+            OnChanged("RestDauerInKampfaktionen");
             OnChanged("IndexInKampfaktionen");
         }
 
@@ -366,6 +379,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     {
                         BerechneStart();
                         BerechneEnd();
+                        //Manöver.Ausführender.Abwehraktionen = 0;
+                        //Manöver.Ausführender.AngriffsManöver.Where(t => Aktionszeiten.Contains(t)).ToList().ForEach(delegate (ManöverInfo mi) { mi = ManöverInfo:Zauber});
                     }
                 }
 

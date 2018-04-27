@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using MeisterGeister.View.Bodenplan;
-using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.Model.Extensions;
-using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 using System.Windows.Data;
 using System.Globalization;
+
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.Model;
+using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -56,8 +57,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 SortedInitiativListe = InitiativListe != null ?
                     (Kampfrunde == 0 ?
                     InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
-                    InitiativListe.Where(t => t.Start.Kampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
-                    )
+                    InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                    )                   //.Start.Kampfrunde
                     : null;
                 //SortedInitiativListe = value.Where(t => t.Kampf.Kampfrunde == AktuelleAktionszeit.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase); 
             }
@@ -96,7 +97,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 SortedInitiativListe = InitiativListe != null ?
                     (Kampfrunde == 0 ?
                     InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
-                    InitiativListe.Where(t => t.Start.Kampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                    InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
                     )
                     : null; //InitiativListe != null ? InitiativListe.Where(t => t.Kampf.Kampfrunde == AktuelleAktionszeit.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase) : null;
             }
@@ -190,16 +191,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
         
         List<KämpferInfo> lstKämpferGleicheIni = new List<KämpferInfo>();
+
+        List<ManöverInfo> lstMI = new List<Logic.ManöverInfo>();
         public void Next()
         {
+            OnChanged("SortedInitiativListe");
             List<ManöverInfo> Smi = new List<Logic.ManöverInfo>();
             Smi.AddRange(SortedInitiativListe);
             foreach (ManöverInfo mi in AktuelleAktionen)
             {
                 //Es werden nur aktive Manöver ausgeführt (also keine Paraden)
-                if (MeisterGeister.Logic.Einstellung.Einstellungen.AngriffAutomatischWürfeln &&  
-                    !mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
-                    mi.Manöver.Aktion();
+                if (!mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
+                     mi.Manöver.Aktion();
             }
 
             ZeitImKampf next = default(ZeitImKampf);
@@ -221,18 +224,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             else
                 next = InitiativListe.Aktionszeiten.Where(zeit => zeit.Kampfrunde == Kampfrunde).FirstOrDefault();
 
-            List<ManöverInfo> lstMI = new List<Logic.ManöverInfo>();
             if (next != default(ZeitImKampf) && lstKämpferGleicheIni.Count == 0)
             {                   
-               // lstMI = (List<ManöverInfo>)InitiativListe.Where(k => k.AktKampfrunde == next.Kampfrunde).ToList().FindAll(t => t.Start.InitiativPhase == next.InitiativPhase);
                 lstMI = (List<ManöverInfo>)Smi.Where(k => k.AktKampfrunde == next.Kampfrunde).ToList().FindAll(t => t.Start.InitiativPhase == next.InitiativPhase);
                 List<KämpferInfo> lstK = lstMI.Select(t => t.Manöver.Ausführender).ToList();   
                 
+                //Längerfristige Handlung von Kämpfer
+                //Dieser wird nicht in der INI angezeigt, soll aber abgefragt werden, ob er weiter die Handlung durchführen will
+                if (lstMI.Count == 0 && lstK.Count == 0)
+                {
+                    List<ManöverInfo> lstLängerKämpfer = new List<ManöverInfo>();
+                    lstLängerKämpfer.AddRange(InitiativListe.Where(t => t.Aktionszeiten.Contains(next)));
+
+                    lstK = lstLängerKämpfer.Select(t => t.Manöver.Ausführender).ToList();
+                    AktiverManöverInfo = lstLängerKämpfer[0]; 
+                }
+
                 if (lstK.Count > 0)
                     lstKämpferGleicheIni = lstK;
 
                 if (lstMI.Count == 1)
                     AktiverManöverInfo = lstMI[0];
+
             }
             AktuelleAktionszeit = next;
             if (next == default(ZeitImKampf))
@@ -241,11 +254,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (AktIniKämpfer != null)
             {
                 ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = false;
-                //lstMI[0].IsAnDerReihe = false;
             }
+
+            ManöverInfo nextManöver = null;
+            if (lstMI.Count > 1)
+                nextManöver = lstMI[lstMI.IndexOf(lstMI.FirstOrDefault(t => t.IsAnDerReihe)) + 1];
+
             Smi.ToList().ForEach(delegate (ManöverInfo mi) { mi.IsAnDerReihe = false; });
 
-            var ini = InitiativListe.Aktionszeiten.Select(t => t.Kampfrunde).Where(kr => kr == Kampfrunde);
+            //var ini = InitiativListe.Aktionszeiten.Select(t => t.Kampfrunde).Where(kr => kr == Kampfrunde);
             
             if (lstKämpferGleicheIni.Count != 0)
                 AktIniKämpfer = lstKämpferGleicheIni[0];
@@ -253,27 +270,37 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 AktIniKämpfer = null;
             
             if (AktIniKämpfer != null) 
-            {
                 ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = true;
-                //ManöverInfo aktmit = lstMI.FirstOrDefault(t => t.Start.InitiativPhase == AktuelleAktionszeit.InitiativPhase);                //List<ManöverInfo> lstMIAll = InitiativListe.Where(t => t.IsAktuell).ToList();
-                //lstMIAll[0].IsAnDerReihe = true;
-                //List<ManöverInfo> lstmi = SortedInitiativListe.Where(k => k.Manöver.Ausführender.ToList().FindAll(t => t.Manöver.Ausführender.Kämpfer as Wesen ==
-                // Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.FirstOrDefault(z => z.IsAnDerReihe) as Wesen);
-                //ManöverInfo mi = lstmi.FirstOrDefault(t => t.IsAktuell);
-                //if (mi != null) mi.IsAnDerReihe = true;
-                //if (aktmit !=null) aktmit.IsAnDerReihe = true;
-            }
-            ManöverInfo aktmit = lstMI.FirstOrDefault(t => t.Start.InitiativPhase == AktuelleAktionszeit.InitiativPhase);                //List<ManöverInfo> lstMIAll = InitiativListe.Where(t => t.IsAktuell).ToList();
-            if (aktmit != null) aktmit.IsAnDerReihe = true;
-            //SortedInitiativListe = SortedInitiativListe;
-            //List<ManöverInfo> lstSmi = new List<Logic.ManöverInfo>();
-            //lstSmi.AddRange(SortedInitiativListe);
-            //lstSmi.ForEach(delegate (ManöverInfo mi) { mi.IsAnDerReihe = mi.IsAktuell; });
 
-            //SortedInitiativListe = lstSmi;
-            //AktuelleAktionszeit.InitiativPhase
-            //Start.InitiativPhase
+            if (lstMI.Count > 1)
+            //Nächsten Kämpfer in der Reihe der Aktuellen INI selektieren
+            {
+                nextManöver.IsAnDerReihe = true;
+                if (lstMI.Count > 0) lstMI.RemoveAt(0);
+            }
+            else
+            //Nächsten Kämpfer der nächsten INI selektieren
+            { 
+                AktIniLängereHandlung = null;
+                ManöverInfo aktmit = lstMI.FirstOrDefault(t => t.Start.InitiativPhase == AktuelleAktionszeit.InitiativPhase);
+                if (aktmit != null)
+                    aktmit.IsAnDerReihe = true;
+                else
+                {
+                    if (AktuelleAktionszeit.Kampfrunde != 0)
+                    //Temporär werden alle Kämpfer -aus mit längerfristigen Handlungen- übersprungen
+                        Next();
+                }
+            }                
         }
+
+        private string _aktIniLängereHandlung = null;
+        public string AktIniLängereHandlung
+        {
+            get { return _aktIniLängereHandlung; }
+            set { Set(ref _aktIniLängereHandlung, value); }
+        }
+
         public Nullable<Position> tempP;
         public void NeueKampfrunde()
         {
@@ -327,9 +354,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ki.VerbrauchteAngriffsaktionen = 0;
                 ki.VerbrauchteFreieAktionen = 0;
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
-                //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)
-
-                
+                //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)                
             }
 
             if (neueManöver.Count > 0)
@@ -338,7 +363,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 SortedInitiativListe = InitiativListe != null ?
                     (Kampfrunde == 0 ?
                     InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
-                    InitiativListe.Where(t => t.Start.Kampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                    InitiativListe.Where(a => a.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
                     )
                     : null;
             }
@@ -405,7 +430,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             SortedInitiativListe  = InitiativListe != null ?
                     (Kampfrunde == 0 ?
                     InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
-                    InitiativListe.Where(t => t.Start.Kampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                    InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
                     )
                     : null;
             //= InitiativListe.Where(t => t.Kampf.Kampfrunde == AktuelleAktionszeit.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase); 
@@ -427,6 +452,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 InitiativListe.RemoveAt(0);
         }
 
+    }
+
+    public class DataTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter,
+          CultureInfo culture)
+        {
+            return value != null? value.GetType(): null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+          CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DoubleToIntConverter : IValueConverter

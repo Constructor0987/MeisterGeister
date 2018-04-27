@@ -142,7 +142,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 if (isAusgeführt == value)
                     return;
                 isAusgeführt = value;
-                if (isAusgeführt)
+                if (isAusgeführt && MeisterGeister.Logic.Einstellung.Einstellungen.AngriffAutomatischWürfeln)
                     AktionAusführen();
                 OnChanged("IsAusgeführt");
             }

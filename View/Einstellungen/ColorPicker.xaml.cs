@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
@@ -22,7 +23,7 @@ namespace MeisterGeister.View.Settings
     private Color selectedColor = Colors.Transparent;
     private Boolean IsMouseDown = false;
 
-    public LocalHueClient Client = null;
+    public LocalHueClient hueClient = null;
         #endregion
 
         #region Constructors
@@ -111,14 +112,14 @@ namespace MeisterGeister.View.Settings
     {
       IsMouseDown = true;
       UpdateColor();
-        if (chbxUpdateLamp.IsChecked.Value && Client != null)
+        if (chbxUpdateLamp.IsChecked.Value && hueClient != null)
         {
             //Control the lights                
             LightCommand command = new LightCommand();
             command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                 command.Brightness = (byte)BrightnessSlider.Value;
             //Or send it to all lights
-            Client.SendCommandAsync(command);
+                hueClient.SendCommandAsync(command);
         }
 }
 
@@ -246,14 +247,14 @@ namespace MeisterGeister.View.Settings
 
         private void BrightnessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (chbxUpdateLamp.IsChecked.Value && Client != null)
+            if (chbxUpdateLamp.IsChecked.Value && hueClient != null)
             {
                 //Control the lights                
                 LightCommand command = new LightCommand();
                 command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                 command.Brightness = (byte)BrightnessSlider.Value;
                 //Or send it to all lights
-                Client.SendCommandAsync(command);
+                hueClient.SendCommandAsync(command);
             }
         }
 

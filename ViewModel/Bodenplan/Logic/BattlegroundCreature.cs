@@ -50,14 +50,21 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     [DataContract(IsReference = true)]
     public class BattlegroundCreature : BattlegroundBaseObject
     {
+        private KämpferInfo _ki = null;
         public KämpferInfo ki
         {
-            get { return Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen)); }
+            get 
+            { 
+                if (_ki == null && Global.CurrentKampf != null && Global.CurrentKampf.Kampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count > 0)                
+                    _ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
+                return _ki; 
+            }
+            set{ Set(ref _ki, value);}            
         }
 
         private string _portraitFilename;
-        private double _creatureX = 1200;
-        private double _creatureY = 600;
+        private double _creatureX = 5000; //1200;
+        private double _creatureY = 5000; //600;
         private Random r;
         private double _imageOriginalWidth = 80;
         private double _imageOriginalHeigth = 80;
@@ -91,6 +98,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreateSightArea();
             //((Wesen)this).Position = Position.Stehend;
         //    UpdateCreaturePosition();
+            //if (ki == null && ki = (Global.CurrentKampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count > 0)
+            //        Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
         }
 
         public double SightAreaLength

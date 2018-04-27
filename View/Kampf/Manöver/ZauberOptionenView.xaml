@@ -46,7 +46,7 @@
         <CheckBox Content="Zauber anzeigen" IsChecked="{Binding ShowName}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" />
         <TextBlock Grid.Row="1" Text="Zauberdauer (Basis)"/>
         <General:IntBox MinValue="1" ShowButtons="True" Grid.Row="1" Grid.Column="1" Value="{Binding BasisDauer}" Height="21"/>
-        <TextBlock Grid.Column="3" Text="{Binding Dauer}" Grid.Row="1"/>
+        <TextBlock Grid.Column="3" Text="{Binding Dauer}" Grid.Row="1"  />
 
         <TextBlock Grid.Row="2" Text=" Σ Zuschlag " HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold" Grid.ColumnSpan="2" />
         <TextBlock Grid.Row="2" Text="‗‗‗‗‗‗‗‗‗‗‗‗‗" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,3,0,25" Grid.RowSpan="2" />

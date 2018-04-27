@@ -228,7 +228,8 @@
                     <StackPanel Grid.Column="3">
                         <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="5,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" Grid.Column="5" />
                         <CheckBox Content="Rechteck" Height="16" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" Grid.Column="5" />
-                        <xctk:ColorPicker Margin="0,-10,5,0" HorizontalAlignment="Right" SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="22" Height="22" 
+                        <CheckBox Content="Hex" Height="16" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" IsChecked="{Binding HexGrid}" Grid.Column="5" />
+                        <xctk:ColorPicker Margin="0,-25,10,0" HorizontalAlignment="Right" SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="22" Height="22" 
                             ShowDropDownButton="False" ToolTip="Rasterfarbe" />
                     </StackPanel>
 
@@ -238,7 +239,7 @@
                                        SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="88,7,-78,-32" 
                                        Grid.Column="6" />
                     <!-- Hidden kontroll end  -->
-                    
+
                     <Border HorizontalAlignment="Left" Margin="0,5" Width="80" Grid.Column="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -265,19 +266,7 @@
                                     ToolTip="Größe des INI-Feldes anpassen" Grid.Column="1" Style="{StaticResource SmallHorizontalSlider}" />
                         </Grid>
                     </Border>
-                    <Border Margin="5,0,0,0" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Grid.Column="4">
-                        <Grid>
-                            <Label Content="Neuplazierung" />
-                            <TextBox Height="22" Padding="0" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" Margin="2,25" IsEnabled="False" FontSize="12" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
-                            <Button Margin="5,50,0,0" Width="22" Height="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonStickHeroes_Click">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Helden.png"/>
-                            </Button>
-                            <Button Margin="35,50,0,0" Height="22" Width="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonSticCreatues_Click">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Gegner.png"/>
-                            </Button>
-                        </Grid>
-                    </Border>
-                    <Border BorderBrush="Silver" BorderThickness="1"  HorizontalAlignment="Left" Margin="0,0,0,-25" x:Name="border1_Copy" VerticalAlignment="Top" Grid.Column="5">
+                    <Border BorderBrush="Silver" BorderThickness="1"  HorizontalAlignment="Left" Margin="0,0,0,-25" x:Name="border1_Copy" VerticalAlignment="Top" Grid.Column="4">
                         <Grid Margin="0,0,9,0">
                             <StackPanel Orientation="Horizontal">
                                 <Button Width="22" Margin="10,5,0,0" Height="22" Padding="0" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left">
@@ -289,6 +278,18 @@
                             </StackPanel>
                             <CheckBox IsChecked="{Binding LSWithoutPictures}" Content="ohne Bilder" Height="16" VerticalAlignment="Top" Margin="13,28,0,0" HorizontalAlignment="Left" FontSize="10"/>
                             <Button Content="Reset" Width="75" Height="22" VerticalAlignment="Top" Margin="10,45,0,0" Click="Button_Reset_Click"/>
+                        </Grid>
+                    </Border>
+                    <Border Margin="5,0,0,0" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Grid.Column="5">
+                        <Grid>
+                            <Label Content="Neuplazierung" Margin="0,-5,0,0" />
+                            <TextBox Margin="2,18" Height="22" Padding="0" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" IsEnabled="False" FontSize="12" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
+                            <Button Margin="20,43,0,0" Width="22" Height="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonStickHeroes_Click">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Helden.png"/>
+                            </Button>
+                            <Button Margin="50,43,0,0" Height="22" Width="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonSticCreatues_Click">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Gegner.png"/>
+                            </Button>
                         </Grid>
                     </Border>
 
@@ -391,10 +392,10 @@
                                             </Grid>
                                         </Button.Content>
                                     </Button>
-                                    <Slider Minimum="-10000" Maximum="0" SmallChange="1" LargeChange="10" Style="{StaticResource SmallVerticalSlider}"
+                                    <Slider Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10" Style="{StaticResource SmallVerticalSlider}"
                                         Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" 
-                                            ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen" HorizontalAlignment="Right"
-                                            Orientation="Vertical" RenderTransformOrigin="0.5,0.5" Margin="0,15,0,0" >
+                                            ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                            Orientation="Vertical" RenderTransformOrigin="0.5,0.5" Margin="88,15,0,0" >
                                         <Slider.RenderTransform>
                                             <TransformGroup>
                                                 <ScaleTransform ScaleX="-1"/>
@@ -404,8 +405,8 @@
                                             </TransformGroup>
                                         </Slider.RenderTransform>
                                     </Slider>
-                                    
-                                    <Slider Height="12" VerticalAlignment="Top" Margin="0,35,20,0" Minimum="0" Maximum="10000" SmallChange="1" LargeChange="10" MinHeight="5"
+
+                                    <Slider Height="12" VerticalAlignment="Top" Margin="0,35,20,0" Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10" MinHeight="5"
                                         Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" Style="{StaticResource SmallHorizontalSlider}"
                                         ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"/>
 

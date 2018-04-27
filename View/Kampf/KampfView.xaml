@@ -15,9 +15,10 @@
              xmlns:model="clr-namespace:MeisterGeister.Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="964">
+             mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="964" KeyDown="userControl_KeyDown">
     <UserControl.Resources>
         <VM:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
+        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
         <!--<ViewGeneral:EnumItemsSource x:Key="KampfstilValueConverter" Type="{x:Type KampfLogic:Kampfstil}" />-->
@@ -263,23 +264,69 @@
             <Expander.Header>
                 <TextBlock Text="Bodenplan" Style="{DynamicResource TextTitel}"/>
             </Expander.Header>-->
+        
+        <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="0,0,0,-28" />
+
+        <TextBlock HorizontalAlignment="Left" FontSize="16" Foreground="#FF5B646C" Margin="55,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Column="0" >
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Kampf.AktuelleAktionszeit.InitiativPhase}" Value="0" />
+                                <Condition Binding="{Binding Kampf.AktuelleAktionszeit.Kampfrunde}" Value="0" />
+                                <Condition Binding="{Binding Kampf.SortedInitiativListe.Count, FallbackValue=0, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='2'}" Value="true" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Text" Value="Ansagephase" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>                    
+        </TextBlock>
+
+        <TextBlock HorizontalAlignment="Left" FontSize="16" Foreground="#FF5B646C" Margin="55,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Column="0" >
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{ Binding Kampf.AktuelleAktionszeit.Kampfrunde}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+                Ini:
+                <Run Text="{Binding Kampf.AktuelleAktionszeit.InitiativPhase,StringFormat={}{0},Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Run Text="     "/>
+                KR:
+                <Run Text="{Binding Kampf.AktuelleAktionszeit.Kampfrunde, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" FontSize="14" Foreground="#FF5B646C" Margin="5,0,0,-20" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Column="0" >
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{ Binding Kampf.AktIniLängereHandlung}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+                Längerfristige Handlung:
+                <Run Text="{Binding Kampf.AktIniLängereHandlung,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                bis KR
+                <Run Text="{Binding Kampf.AktiverManöverInfo.End.Kampfrunde,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                , INI
+                <Run Text="{Binding Kampf.AktiverManöverInfo.End.InitiativPhase,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>           
+        </TextBlock>
+        
         <ViewBodenplan:BattlegroundView Grid.Row="1" Grid.ColumnSpan="3" DataContext="{Binding BodenplanViewModel}"/>
-        <ViewBodenplan:BattlegroundTopMenuView Grid.ColumnSpan="1" Grid.Column="2" DataContext="{Binding BodenplanViewModel}" Margin="0,-3,60,-30" HorizontalAlignment="Right" />
-       <GridSplitter Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
+        <ViewBodenplan:BattlegroundTopMenuView Grid.ColumnSpan="1" Grid.Column="2" DataContext="{Binding BodenplanViewModel}" Margin="0,-3,5,-30" HorizontalAlignment="Right" />
+        <GridSplitter Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
         <!-- </Expander>-->
         
         <!--<GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />-->
 
-
-        <TextBlock HorizontalAlignment="Right" FontSize="12" Height="35" VerticalAlignment="Top" FontWeight="Bold" Grid.Column="3" >
-                                    Ini: <Run Text="{Binding Kampf.AktuelleAktionszeit.InitiativPhase,StringFormat={}{0},Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/><LineBreak/>
-                                    KR: <Run Text="{Binding Kampf.AktuelleAktionszeit.Kampfrunde,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-        </TextBlock>
-
-        <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="1"/>
-
         <!-- Helden Fenster -->
-        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.Row="1" Grid.Column="2"
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Down" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                   Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5" Margin="0,20,0,0">
             <Expander.Header>
                 <!--VerticalAlignment="Bottom" HorizontalAlignment="Left" ExpandDirection="Right" Grid.Row="1" -->
@@ -300,7 +347,7 @@
         </Expander>
 
         <!-- Manöver Fenster -->
-        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Right" Grid.Row="1" Grid.Column="2"
+        <Expander IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" ExpandDirection="Down" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                   Background="{StaticResource Background2}" BorderThickness="3" MinWidth="100" Padding="5" Margin="0,20,0,0">
             <!--VerticalAlignment="Bottom" HorizontalAlignment="Left" ExpandDirection="Right" Grid.Row="1" -->
             <Expander.Header>

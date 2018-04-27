@@ -13,6 +13,7 @@
         <System:Double x:Key="gridSize">30</System:Double>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type Kampf:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
+        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
     </Window.Resources>
     <Grid>
@@ -84,10 +85,66 @@
 
 
                                             <Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />
+
+                                            <!--Wunden - Icon-->
+                                            <Image Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="40" Height="40" Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png"  >
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Wunden, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[Unlokalisiert], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[Kopf], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[Brust], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[ArmR], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[ArmL], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[Bauch], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[BeinR], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WundenByZone[BeinL], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+
                                             <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
-                                           Visibility="{Binding DataContext.ShowZ, 
-                                                                    RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
-                                                                    Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                Visibility="{Binding DataContext.ShowZ, 
+                                                            RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
+                                                            Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                                            <!--HinweisText-->
+                                            <TextBlock TextAlignment="Center" FontSize="14" FontStyle="Italic" Background="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="140"
+                                                               Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Margin="0,-14,0,0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HinweisText}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <!--Kämpfer-Name-->
                                             <TextBlock  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" 
                                                         Visibility="{Binding DataContext.ShowCreatureName, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
@@ -104,6 +161,7 @@
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
+                                            
                                             <!--Kneel, Lie, Stand, Fly - Position Button-->
                                             <!--<Button Name="PositionButton" IsHitTestVisible="True" BorderThickness="0"  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}"
                                                     Width="80" Height="80" MouseLeftButtonDown="PositionButton_MouseLeftButtonDown" Content="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png">
@@ -290,7 +348,5 @@
                                 Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
             </Grid>            
         </Grid>
-        
-        
     </Grid>
 </Window>

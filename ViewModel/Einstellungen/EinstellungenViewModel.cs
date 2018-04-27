@@ -354,7 +354,7 @@ namespace MeisterGeister.ViewModel.Settings
                 HUEThemeSelected = lstHUEThemes[0];
 
             HUEColorDialog colorDialog = new HUEColorDialog();
-            colorDialog.colorPicker.Client = Client;
+            colorDialog.colorPicker.hueClient = Client;
             colorDialog.SelectedColor = HUEThemeSelected.LightProcessSelected.Color;
          //   colorDialog.SelectedColor = (SolidColorBrush)HUEThemeSelected.LightProcessSelected.Color);//, HUEThemeSelected.LightProcessSelected.Color.G, HUEThemeSelected.LightProcessSelected.Color.B);//((SolidColorBrush))// HUEThemeSelected.lstLightProcess[0].Color.ToString();// this.RectColorPicked.Fill).Color;
             //colorDialog.Owner =  this;

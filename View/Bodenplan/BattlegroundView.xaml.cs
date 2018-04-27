@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -28,7 +29,7 @@ namespace MeisterGeister.View.Bodenplan
     {
 
         private double _x1, _y1, _x2, _y2;
-        private double _xMovingOld, _yMovingOld;
+        public double _xMovingOld, _yMovingOld;
         private bool _zoomChanged = false;
 
         public BattlegroundView()
@@ -39,20 +40,19 @@ namespace MeisterGeister.View.Bodenplan
             ArenaGrid.Cursor = Cursors.Arrow;
             AddPictureButtons();
             AddFogOfWar();
-            InitiateSpielerScaling();
+        //    InitiateSpielerScaling();
             VM.KampfVM = Global.CurrentKampf;
         }
 
-        private void InitiateSpielerScaling()
-        {
-            var scaler = PlayerArenaGridTop.LayoutTransform as ScaleTransform;
-
-            if (scaler == null)
-            {
-                // Currently no zoom, so go instantly to normal zoom.
-                PlayerArenaGridTop.LayoutTransform = new ScaleTransform(1, 1);
-            }
-        }
+        //private void InitiateSpielerScaling()
+        //{
+        //    var scaler = PlayerArenaGridTop.LayoutTransform as ScaleTransform;
+        //    if (scaler == null)
+        //    {
+        //        // Currently no zoom, so go instantly to normal zoom.
+        //        PlayerArenaGridTop.LayoutTransform = new ScaleTransform(1, 1);
+        //    }
+        //}
 
         private void AddFogOfWar()
         {
@@ -96,6 +96,7 @@ namespace MeisterGeister.View.Bodenplan
 
                 Grid.SetRow(b,Convert.ToInt32(i/3));
                 Grid.SetColumn(b,i%3);
+
                 PictureButtonWrapPanel.Children.Add(b);
             }            
         }
@@ -463,16 +464,20 @@ namespace MeisterGeister.View.Bodenplan
                     }
                     else
                     {
-                        ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
-
-                        if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
-                            mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
-                        if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
-                            mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
-
+                        ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
+                            .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde) 
+                            .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                        if (mi != null)
+                        {
+                            if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
+                                mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
+                            if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
+                                mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
+                        }
                         if (miOpen != null && miOpen.IsSubmenuOpen)
                             miOpen.IsSubmenuOpen = false;
                         miOpen = null;
+                        Global.CurrentKampf.SelectedManöver = mi;
                     }
                     return;
                 }
@@ -496,8 +501,24 @@ namespace MeisterGeister.View.Bodenplan
                 var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
                 if (button != null)
                 {
-                    ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
-                    if (mi == null) return;
+                    ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
+                            .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
+                            .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                    if (mi == null)
+                    {
+                        mi = Global.CurrentKampf.Kampf.InitiativListe
+                               .LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                        ZeitImKampf zik = Global.CurrentKampf.Kampf.AktuelleAktionszeit;
+                        zik.InitiativPhase = zik.InitiativPhase - 1;
+
+                        mi.Manöver.VerbleibendeDauer = 0; 
+                        //mi.Manöver.Dauer = mi.Start  .Aktionszeiten.Last(). .End = zik;
+                    //(vm.SelectedObject as Wesen).ki.AngriffsManöver.Last().DauerInKampfaktionen
+                     //   (vm.SelectedObject as Wesen).ki. = 1;
+                       // (vm.SelectedObject as Wesen).ki.StandardAktionenSetzen(Global.CurrentKampf.Kampf.Kampfrunde);
+                        Global.CurrentKampf.Kampf.SortedInitiativListe =
+                            Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase);
+                    }
                     if (button.Name == "UmwandelnAttacke")
                         mi.UmwandelnAttacke.Execute(null);
                     if (button.Name == "UmwandelnFernkampf")
@@ -537,11 +558,11 @@ namespace MeisterGeister.View.Bodenplan
                     // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
                     // ...
                     // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11
-
+                    int ber = 1000;
                     wbmap.WritePixels(new Int32Rect(newX, newY,
                         newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
                         newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                        VM.FogPixelData, 40000, 0); // widthInByte
+                        VM.FogPixelData, ber, 0); // widthInByte
 
                     VM.FogImage = wbmap;
                 }
@@ -662,11 +683,11 @@ namespace MeisterGeister.View.Bodenplan
                         // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
                         //...
                         // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11                        
-
+                        int ber = 1000;
                         wbmap.WritePixels(new Int32Rect(newX, newY,
                                 newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
                                 newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                                VM.FogPixelData, 40000, 0);
+                                VM.FogPixelData, ber, 0);
                             VM.FogImage = wbmap;                        
                     }
                     return;
@@ -728,16 +749,18 @@ namespace MeisterGeister.View.Bodenplan
                     int newY = (int)vm.CurrentMousePositionY / 10;// (int)Mouse.GetPosition((IInputElement)sender).Y;
 
 
-                    for (int i = 0; i < 10 * vm.FogFreeSize + 1; i++)
-                    {
-                        for (int y = 0; y < (10 * vm.FogFreeSize + 1) * 10; y++)
-                            VM.FogPixelData[i + 1000 * y] = -0x01000000; //w*h
-                    }
+                    int w = 10 * vm.FogFreeSize + 1;
+                    int h = (10 * vm.FogFreeSize + 1) * 10 - 1;
+                    int[] leererBereich = Enumerable.Repeat(-0x01000000, w * h).ToArray();
 
+                    for (int i = 0; i < 100 * vm.FogFreeSize + 1; i++)
+                        Array.ConstrainedCopy(leererBereich, 0, vm.FogPixelData, i * 1000, w * h);
+                        
+                    int ber = 1000;
                     wbmap.WritePixels(new Int32Rect(newX, newY,
                         newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
                         newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                        VM.FogPixelData, 40000, 0); // widthInByte
+                        VM.FogPixelData, ber, 0); // widthInByte
 
                     VM.FogImage = wbmap;
                     return;
@@ -756,36 +779,37 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                vm.Freizeichnen = (e.Key == Key.LeftShift);
-                if (e.Key == Key.Delete && vm.SelectedObject != null) vm.Delete();
-                if (vm.Freizeichnen && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
-                {
-                    _x2 = _xMovingOld;
-                    _y2 = _yMovingOld;
-                    vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
-                }
-            }
-            if (e.Key == Key.Escape) UnselectObjects();
-            if (e.Key == Key.D1) ToggleLinePathButton();
-            if (e.Key == Key.D2) ToggleFilledLinePathButton();
+        //private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    var vm = DataContext as BattlegroundViewModel;
+        //    if (vm != null)
+        //    {
+        //        vm.Freizeichnen = (e.Key == Key.LeftShift);
+        //        if (e.Key == Key.Delete && vm.SelectedObject != null) vm.Delete();
+        //        if (vm.Freizeichnen && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
+        //        {
+        //            _x2 = _xMovingOld;
+        //            _y2 = _yMovingOld;
+        //            vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
+        //        }
+        //    }
+        //    if (e.Key == Key.Escape) UnselectObjects();
+        //    if (e.Key == Key.D1) ToggleLinePathButton();
+        //    if (e.Key == Key.D2) ToggleFilledLinePathButton();
 
-        }
 
-        private void UserControl_KeyUp(object sender, KeyEventArgs e)
-        {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
-            {
-                if (e.Key == Key.LeftCtrl && Keyboard.IsKeyUp(Key.LeftCtrl))
-                    VM.FogFreimachen = false;
-                if (e.Key == Key.LeftShift) { vm.Freizeichnen = !vm.Freizeichnen; vm.LeftShiftPressed = !vm.LeftShiftPressed; }
-            }
-        }
+        //}
+
+        //private void UserControl_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    var vm = DataContext as BattlegroundViewModel;
+        //    if (vm != null)
+        //    {
+        //        if (e.Key == Key.LeftCtrl && Keyboard.IsKeyUp(Key.LeftCtrl))
+        //            VM.FogFreimachen = false;
+        //        if (e.Key == Key.LeftShift) { vm.Freizeichnen = !vm.Freizeichnen; vm.LeftShiftPressed = !vm.LeftShiftPressed; }
+        //    }
+        //}
 
         #endregion
     }

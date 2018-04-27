@@ -501,6 +501,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             int d = GetDauer(waffe, value, Ansage);
             if (d != Dauer)
                 Dauer = d;
+            VerbleibendeDauer = Dauer;
 
             return mod;
         }
@@ -523,6 +524,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             int d = GetDauer(waffe, zielen.Value, value);
             if (d != Dauer)
                 Dauer = d;
+            VerbleibendeDauer = Dauer;
 
             if (SchützenIndex(waffe) > 0)
             {
