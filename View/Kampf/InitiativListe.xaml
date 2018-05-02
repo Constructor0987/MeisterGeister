@@ -24,6 +24,7 @@
         <KampfLogic:DoubleToIntConverter x:Key="DoubleToIntConverter1"/>
         <KampfLogic:DoubleSichtConverter x:Key="sichtConverter"/>
         <KampfLogic:DoubleLichtConverter x:Key="lichtConverter"/>
+        <KampfLogic:IsIntToBoolConverter x:Key="IsIntToBoolConverter1"/>
         <KampfLogic:DataTypeConverter x:Key="DataTypeConverter1"/>
     </UserControl.Resources>
 
@@ -252,6 +253,62 @@
                                             <MenuItem.Icon>
                                                 <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png"/>
                                             </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Ist Unsichtbar" IsCheckable="True" Command="{Binding Manöver.Ausführender.Unsichtbar}"  >
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Meisterperson.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Ist Anführer" IsCheckable="True" Command="{Binding Manöver.Ausführender.Anführer}"  >
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Hat Lichtquelle" >
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wetter/Sonne.png"/>
+                                            </MenuItem.Icon>
+
+                                            <MenuItem Header="Keine" IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='0'}" />
+                                            
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='4'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kerze.png"/>
+                                                        <TextBlock Text="Kerze [4m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='8'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png"/>
+                                                        <TextBlock Text="Fackel [8m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='10'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Lagerfeuer.png"/>
+                                                        <TextBlock Text="Lagerfeuer [10m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+
+                                            <DockPanel>
+                                                <TextBlock Text="Selbst " DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                                <ViewGeneral:IntBox IncWheel="1" DecWheel="1" DockPanel.Dock="Right" ShowButtons="True" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" 
+                                                    Value="{Binding Manöver.Ausführender.LichtquelleMeter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IncValue="1" DecValue="1" MinValue="0" MaxValue="20" />
+                                            </DockPanel>
                                         </MenuItem>
 
                                         <MenuItem Header="Aus Kampf entfernen" Command="{Binding Manöver.Ausführender.Entfernen}">

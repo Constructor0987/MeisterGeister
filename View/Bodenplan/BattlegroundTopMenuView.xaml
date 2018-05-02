@@ -392,7 +392,7 @@
                                             </Grid>
                                         </Button.Content>
                                     </Button>
-                                    <Slider Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10" Style="{StaticResource SmallVerticalSlider}"
+                                    <Slider Maximum="1000" Minimum="-9000" SmallChange="1" LargeChange="10" Style="{StaticResource SmallVerticalSlider}"
                                         Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" 
                                             ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
                                             Orientation="Vertical" RenderTransformOrigin="0.5,0.5" Margin="88,15,0,0" >
@@ -406,7 +406,7 @@
                                         </Slider.RenderTransform>
                                     </Slider>
 
-                                    <Slider Height="12" VerticalAlignment="Top" Margin="0,35,20,0" Minimum="-10000" Maximum="10000" SmallChange="1" LargeChange="10" MinHeight="5"
+                                    <Slider Height="12" VerticalAlignment="Top" Margin="0,35,20,0" Minimum="-1000" Maximum="9000" SmallChange="1" LargeChange="10" MinHeight="5"
                                         Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" Style="{StaticResource SmallHorizontalSlider}"
                                         ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"/>
 

@@ -454,6 +454,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
     }
 
+    public class IsIntToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter,
+          CultureInfo culture)
+        {
+            return value != null? (double)value == System.Convert.ToDouble(parameter): false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+          CultureInfo culture)
+        {
+            return (bool)value ? parameter : 0;
+        }
+    }
     public class DataTypeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter,

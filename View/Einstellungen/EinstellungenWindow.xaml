@@ -588,7 +588,7 @@
                                 </Grid>
                             </Border>
                         </TabItem>
-                        <TabItem Header="Themes" IsEnabled="False">
+                        <TabItem Header="Themes" >
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
                                     <Grid.RowDefinitions>

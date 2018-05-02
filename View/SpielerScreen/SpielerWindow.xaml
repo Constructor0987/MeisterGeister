@@ -15,6 +15,41 @@
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
+        <model:AdditionDoubleConverter x:Key="AdditionDoubleConverter1"/>
+        <model:GetMidCreatureValueConverter x:Key="GetMidCreatureValueConverter1"/>
+
+        <Style TargetType="ProgressBar">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar" >
+                        <Grid x:Name="Root">
+                            <Border Name="PART_Track" CornerRadius="2" Background="LightGray" BorderBrush="Gray" BorderThickness="1" />
+                            <Border Name="PART_Indicator" CornerRadius="1" Background="#FF1FF31F" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Left" >
+                                <!--<Border.Background>
+                                    <LinearGradientBrush  >
+                                        <GradientStop Color="Red" Offset="0"/>
+                                        <GradientStop Color="Yellow" Offset="0.2"/>
+                                        <GradientStop Color="#FF1FF31F" Offset="0.867"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>-->
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Getting vertical style working using technique described here: http://stackoverflow.com/a/6849237/7532 -->
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter TargetName="Root" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="270" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="Root" Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}" />
+                                <Setter TargetName="Root" Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.Resources>
@@ -74,8 +109,70 @@
                                     <ControlTemplate TargetType="Thumb">
                                         <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                             <!--SightArea-->
-                                            <Path Visibility="{Binding DataContext.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
-                                                            Fill="Yellow" IsHitTestVisible="False" Stroke="Yellow" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2"/>
+                                            <Path Fill="Yellow" IsHitTestVisible="False" Stroke="Yellow" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2">
+                                                <!--Visibility="{Binding , Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"-->
+                                                <Path.Style>
+                                                    <Style TargetType="Path">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding DataContext.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="True" />
+                                                                    <Condition Binding="{Binding ki.IstUnsichtbar}" Value="False" />
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Path.Style>
+                                            
+                                            </Path>
+
+                                            <!--Lichtquelle-->
+                                            <Ellipse Opacity="0.4" Stroke="#FFF0FC00" StrokeThickness="2" >
+                                                <Ellipse.Width>
+                                                    <MultiBinding Converter="{StaticResource AdditionDoubleConverter1}">
+                                                        <Binding Path="ki.HatLichtquelle"  />
+                                                        <Binding Path="ki.HatLichtquelle" />
+                                                        <Binding Path="CreatureWidth" />
+                                                    </MultiBinding>
+                                                </Ellipse.Width>
+                                                <Ellipse.Height>
+                                                    <MultiBinding Converter="{StaticResource AdditionDoubleConverter1}">
+                                                        <Binding Path="ki.HatLichtquelle" />
+                                                        <Binding Path="ki.HatLichtquelle" />
+                                                        <Binding Path="CreatureHeight" />
+                                                    </MultiBinding>
+                                                </Ellipse.Height>
+                                                <Canvas.Left>
+                                                    <MultiBinding Converter="{StaticResource GetMidCreatureValueConverter1}">
+                                                        <Binding Path="CreatureX" />
+                                                        <Binding Path="ki.HatLichtquelle" />
+                                                    </MultiBinding>
+                                                </Canvas.Left>
+                                                <Canvas.Top>
+                                                    <MultiBinding Converter="{StaticResource GetMidCreatureValueConverter1}">
+                                                        <Binding Path="CreatureY" />
+                                                        <Binding Path="ki.HatLichtquelle" />
+                                                    </MultiBinding>
+                                                </Canvas.Top>
+                                                <Ellipse.Fill>
+                                                    <RadialGradientBrush >
+                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                        <GradientStop Color="#FFF0FC00" Offset=".8"/>
+                                                    </RadialGradientBrush>
+                                                </Ellipse.Fill>
+                                                <Ellipse.Style>
+                                                    <Style TargetType="{x:Type Ellipse}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ki.HatLichtquelle}" Value="0">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Ellipse.Style>
+                                            </Ellipse>
+
                                             <!--Frame for Heroe Picture-->
                                             <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
                                                 <Rectangle.Fill>
@@ -83,11 +180,61 @@
                                                 </Rectangle.Fill>
                                             </Rectangle>
 
-
                                             <Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />
 
+                                            <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
+                                                Visibility="{Binding DataContext.ShowZ, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                                            <!--HinweisText-->
+                                            <TextBlock TextAlignment="Center" FontSize="14" FontStyle="Italic" Background="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="140"
+                                                       Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Margin="0,-14,0,0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HinweisText}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <!--Kämpfer-Name-->
+                                            <TextBlock Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" 
+                                                Visibility="{Binding DataContext.ShowCreatureName, RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
+                                                            Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                Opacity="{Binding Opacity}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding KämpferTempName}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsHeld}" Value="True">
+                                                                <Setter Property="Text" Value="{Binding Kurzname}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            
+                                            <!--Lebensbalken-->
+                                            <ProgressBar Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Opacity="{Binding Opacity}"
+                                                        Height="{Binding CreatureHeight}" Width="10" HorizontalAlignment="Left" Margin="-12,0,0,0"
+                                                        Maximum="{Binding LebensenergieMax}" Minimum="0" VerticalAlignment="Top" 
+                                                        Value="{Binding LebensenergieAktuell}" Orientation="Vertical" Background="#FF3DD81A" />
+
+                                            <!--Anführer-Krone-->
+                                            <Image Width="40" Height="40" Margin="0,-32,0, 0" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
+                                                    Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"
+                                                    Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
+
+                                            <!--Position-->
+                                            <Image Width="50" Height="50" Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}" 
+                                                   Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
+
                                             <!--Wunden - Icon-->
-                                            <Image Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="40" Height="40" Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png"  >
+                                            <Image Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="40" Height="40" Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png"
+                                                  Opacity="{Binding Opacity}" Margin="-35,30,0,0" >
                                                 <Image.Style>
                                                     <Style TargetType="Image">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -123,59 +270,13 @@
                                                     </Style>
                                                 </Image.Style>
                                             </Image>
-
-                                            <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
-                                                Visibility="{Binding DataContext.ShowZ, 
-                                                            RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
-                                                            Converter={StaticResource BoolToVisibilityConverter}}"/>
-
-                                            <!--HinweisText-->
-                                            <TextBlock TextAlignment="Center" FontSize="14" FontStyle="Italic" Background="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="140"
-                                                               Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Margin="0,-14,0,0">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding HinweisText}" Value="">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-
-                                            <!--Kämpfer-Name-->
-                                            <TextBlock  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" 
-                                                        Visibility="{Binding DataContext.ShowCreatureName, 
-                                                                    RelativeSource={RelativeSource FindAncestor, AncestorType=Window},
-                                                                    Converter={StaticResource BoolToVisibilityConverter},
-                                                                    UpdateSourceTrigger=PropertyChanged}">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="{Binding KämpferTempName}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsHeld}" Value="True">
-                                                                <Setter Property="Text" Value="{Binding Kurzname}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
                                             
-                                            <!--Kneel, Lie, Stand, Fly - Position Button-->
-                                            <!--<Button Name="PositionButton" IsHitTestVisible="True" BorderThickness="0"  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}"
-                                                    Width="80" Height="80" MouseLeftButtonDown="PositionButton_MouseLeftButtonDown" Content="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png">
-                                               <ImageBrush ImageSource="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png" Stretch="Fill" /> 
-                                            </Button>-->
-                                            <Image Width="50" Height="50" Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}" 
-                                                   Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
                                             <Canvas.Effect>
                                                 <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, UpdateSourceTrigger=PropertyChanged}" ShadowDepth="10" BlurRadius="20" />
                                             </Canvas.Effect>
                                         </Canvas>
                                         <ControlTemplate.Triggers>
                                             <DataTrigger Binding="{Binding IsAnDerReihe }" Value="True">
-                                                <!--IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}-->
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
                                                         <DropShadowEffect Color="#FFC0FCFF" ShadowDepth="10" BlurRadius="35" />

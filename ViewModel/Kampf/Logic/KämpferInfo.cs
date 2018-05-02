@@ -63,8 +63,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (passiv == null)
-                    passiv = new CommandBase((o) => PassivKämpfer(), null); //Kampf.Kämpfer.Remove(this), null);
-
+                    passiv = new CommandBase((o) => PassivKämpfer(), null);
                 return passiv;                
             }
         }
@@ -72,6 +71,39 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public void PassivKämpfer()
         {
             Abwehraktionen = Aktionen;
+        }
+
+        private CommandBase unsichtbar;
+        public CommandBase Unsichtbar
+        {
+            get
+            {
+                if (unsichtbar == null)
+                    unsichtbar = new CommandBase((o) => UnsichtbarKämpfer(), null);
+                return unsichtbar;                
+            }
+        }
+
+        public void UnsichtbarKämpfer()
+        {
+            IstUnsichtbar = !IstUnsichtbar;
+        }
+
+        private CommandBase anführer;
+        public CommandBase Anführer
+        {
+            get
+            {
+                if (anführer == null)
+                    anführer = new CommandBase((o) => AnführerKämpfer(), null); 
+
+                return anführer;                
+            }
+        }
+
+        public void AnführerKämpfer()
+        {
+            IstAnführer = !IstAnführer;
         }
 
         #endregion
@@ -196,6 +228,40 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref kampf, value); }
         }
 
+
+        private bool _istUnsichtbar = false;
+        public bool IstUnsichtbar
+        {
+            get { return _istUnsichtbar; }
+            set { Set(ref _istUnsichtbar, value); (Kämpfer as Wesen).Opacity = value ? .1 : 1;   }
+        }
+
+        private double _lichtquelleMeter = 0;
+        public double LichtquelleMeter
+        {
+            get { return _lichtquelleMeter; }
+            set
+            {
+                Set(ref _lichtquelleMeter, value);
+                _hatLichtquelle = value*100;
+                OnChanged("HatLichtquelle");
+            }
+        }
+
+        private double _hatLichtquelle = 0;
+        public double HatLichtquelle
+        {
+            get { return _hatLichtquelle; }
+            set { Set(ref _hatLichtquelle, value*100);
+                LichtquelleMeter = value; }
+        }
+
+        private bool _istAnführer = false;
+        public bool IstAnführer
+        {
+            get { return _istAnführer; }
+            set { Set(ref _istAnführer, value); }
+        }
 
         private Nullable<Position> positionSelbst;
         public Nullable<Position> PositionSelbst

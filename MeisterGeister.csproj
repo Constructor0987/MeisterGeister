@@ -2707,6 +2707,10 @@
     <Content Include="Daten\Updateskripte\UpdateTo_V0126.sql" />
     <Resource Include="Images\Icons\lampen_hue.png" />
     <Resource Include="Images\Icons\HUEColorSwatchCircle.png" />
+    <Resource Include="Images\Icons\krone.png" />
+    <Resource Include="Images\Icons\Fackel.png" />
+    <Resource Include="Images\Icons\kerze.png" />
+    <Resource Include="Images\Icons\Lagerfeuer.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

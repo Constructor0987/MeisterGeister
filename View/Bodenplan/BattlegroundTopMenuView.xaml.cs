@@ -136,7 +136,7 @@ namespace MeisterGeister.View.Bodenplan
             if (e.Delta > 1)
                 ((Slider)sender).Value += ((((Slider)sender).Value < ((Slider)sender).Maximum - 4) ? 5 : ((((Slider)sender).Maximum - ((Slider)sender).Value)));
             else
-                ((Slider)sender).Value += ((((Slider)sender).Value > ((Slider)sender).Minimum + 4) ? -5 : ((Slider)sender).Minimum);
+                ((Slider)sender).Value = ((((Slider)sender).Value >= ((Slider)sender).Minimum + 4) ? ((Slider)sender).Value -5 : ((Slider)sender).Minimum);
         }
 
         public void slSmall_MouseWheel(object sender, MouseWheelEventArgs e)

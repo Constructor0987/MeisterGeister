@@ -46,6 +46,75 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         }
     }
 
+    public class AdditionDoubleConverter : IMultiValueConverter
+    {
+        #region IMultiValueConverter Members
+
+        public object Convert(object[] values,
+                              Type targetType,
+                              object parameter,
+                              CultureInfo culture)
+        {
+            if (values == null)
+            {
+                throw new ArgumentException(
+                    "GetMidCreatureValueConverter minimum 1 value to be passed");
+            }
+            double summary = 10;
+            int i = 0;
+            while (i < values.Length)
+            {
+                summary = summary + (double)values[i];
+                i++;
+            }
+            return summary;
+        }
+
+        public object[] ConvertBack(object value,
+                                    Type[] targetTypes,
+                                    object parameter,
+                                    CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    public class GetMidCreatureValueConverter : IMultiValueConverter
+    {
+        #region IMultiValueConverter Members
+
+        public object Convert(object[] values,
+                              Type targetType,
+                              object parameter,
+                              CultureInfo culture)
+        {
+            if (values == null || values.Length < 2)
+            {
+                throw new ArgumentException(
+                    "GetMidCreatureValueConverter expects 2 double values to be passed" +
+                    " in this order -> init, width",
+                    "values");
+            }
+            if (values[1] == DependencyProperty.UnsetValue || values[1] == DependencyProperty.UnsetValue) return (double)values[0];
+
+            double init = (double)values[0];
+            double width = (double)values[1];
+            
+            return (object)(init - width );
+        }
+
+        public object[] ConvertBack(object value,
+                                    Type[] targetTypes,
+                                    object parameter,
+                                    CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
 
     [DataContract(IsReference = true)]
     public class BattlegroundCreature : BattlegroundBaseObject
@@ -229,6 +298,39 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        private double _creatureAktionsbuttonsPos = 140;
+        public double CreatureAktionsbuttonsPos
+        {
+            get { return _creatureAktionsbuttonsPos; }
+            set
+            {
+                _creatureAktionsbuttonsPos = value;
+                OnChanged("CreatureAktionsbuttonsPos");
+            }
+        }
+
+        private Thickness _marginCreatureAktionsbuttons = new Thickness() { Left= 80, Top= -31, Right= 0, Bottom= 0 };
+        public Thickness MarginCreatureAktionsbuttons
+        {
+            get { return _marginCreatureAktionsbuttons; }
+            set
+            {
+                _marginCreatureAktionsbuttons = value;
+                OnChanged("MarginCreatureAktionsbuttons");
+            }
+        }
+
+        private Thickness _marginCreatureATPAaktionen = new Thickness() { Left= -5, Top= 80, Right= 6, Bottom= 0 };
+        public Thickness MarginCreatureATPAaktionen
+        {
+            get { return _marginCreatureATPAaktionen; }
+            set
+            {
+                _marginCreatureATPAaktionen = value;
+                OnChanged("MarginCreatureATPAaktionen");
+            }
+        }
+
         public String PortraitFileName
         {
             get { return _portraitFilename; }
@@ -247,6 +349,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             CreatureHeight = _imageOriginalHeigth * factor;
             CreatureWidth = _imageOriginalWidth * factor;
+            MarginCreatureAktionsbuttons = new Thickness() { Left = CreatureWidth, Top = -31, Right = 0, Bottom = 0 };
+            CreatureAktionsbuttonsPos = Math.Max(130, 30 + CreatureHeight + 30 + 2*factor);
+
+            MarginCreatureATPAaktionen = new Thickness() { Left = -5, Top = CreatureWidth, Right = 6, Bottom = 0 };
+            SightAreaLength = CreatureWidth + 40;
         }
 
         public override void MoveObject(double deltaX, double deltaY, bool stickAtCursor)
@@ -297,7 +404,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private void CalculateSightArea() 
         {
             if (SightAreaGeometryData.Figures.Count == 0) return;
-
 
             double d = Math.Cos(45 * Math.PI / 180) * _sightAreaLength;
             double c = Math.Sin(45 * Math.PI / 180) * _sightAreaLength;
