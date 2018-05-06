@@ -120,6 +120,7 @@
                                     </StackPanel>
                                 </TextBox.ToolTip>
                             </TextBox>
+                            <ViewGeneral:WikiLinkControl Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" Width="24" Height="24" Tag="{Binding SelectedGegnerBase.Name, UpdateSourceTrigger=PropertyChanged}" />
                             <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
                             <!-- TODO AutoComplete für Tags -->
                             <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" ToolTip="Einzelne Stichwörter sollten mit Komma (,) getrennt werden." />
