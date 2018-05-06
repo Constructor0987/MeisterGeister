@@ -19,6 +19,7 @@
                     <DockPanel Margin="0,2,0,0">
                         <TextBlock Margin="2,2,0,0" Width="300" FontWeight="Bold" Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" />
                         <TextBlock Margin="2,2,0,0" Width="260" Text="{Binding Path=Kategorie}" ToolTip="Kategorie" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
+                        <ViewGeneral:WikiLinkControl Width="24" Height="24" Tag="{Binding Name}" ToolTip="Im WikiAventurica nachschlagen..." />
                         <ViewGeneral:LiteraturControl DockPanel.Dock="Right" Height="32" Padding="2" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="TextLang" />
                     </DockPanel>
                 </StackPanel>
