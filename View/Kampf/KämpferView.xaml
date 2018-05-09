@@ -147,7 +147,7 @@
             <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="50" Value="{Binding Initiative}" FontWeight="Bold" ShowButtons="True" />
         </DockPanel>
         <StackPanel Grid.Column="1" >
-            <TextBox Text="{Binding Kämpfer.KämpferTempName}" Height="20" Width="100" VerticalAlignment="Top">
+            <TextBox Text="{Binding Kämpfer.KämpferTempName,FallbackValue={x:Null}}" Height="20" Width="100" VerticalAlignment="Top">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Style.Triggers>
@@ -160,6 +160,7 @@
             </TextBox>
             <local:KämpferZonenView Margin="5" DataContext="{Binding Kämpfer}"/>
         </StackPanel>
+        
         
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" DataContext="{Binding Kämpfer}">
             <StackPanel.Resources>
@@ -318,5 +319,17 @@
                 <TextBlock Text="{Binding Path=MRGeist, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Geist)" />
                 <ComboBox SelectedValue="{Binding Path=Position, Converter={StaticResource PositionenValues}}" ItemsSource="{StaticResource PositionenValues}" Width="100" ToolTip="Position"/>
             </StackPanel>-->
+
+        <!--<ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Margin="0,0,22,0"
+                  Text="{Binding AngriffAddName}" SelectedItem="{Binding SelectedWaffe}" SelectedValuePath="Name" DisplayMemberPath="Name" 
+                  ItemsSource="{Binding WaffenListe}" 
+                  ToolTip="Name eines neuen Angriffs eingeben..." IsEditable="True">
+            --><!--<ComboBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding OnNewAngriff}" />
+            </ComboBox.InputBindings>--><!--
+        </ComboBox>
+        <Button Grid.Row="2" Grid.Column="1" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Click="Button_Click" >
+            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
+        </Button>-->
     </Grid>
 </UserControl>

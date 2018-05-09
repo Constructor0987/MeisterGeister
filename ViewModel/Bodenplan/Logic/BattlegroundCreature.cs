@@ -45,77 +45,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             throw new NotImplementedException();
         }
     }
-
-    public class AdditionDoubleConverter : IMultiValueConverter
-    {
-        #region IMultiValueConverter Members
-
-        public object Convert(object[] values,
-                              Type targetType,
-                              object parameter,
-                              CultureInfo culture)
-        {
-            if (values == null)
-            {
-                throw new ArgumentException(
-                    "GetMidCreatureValueConverter minimum 1 value to be passed");
-            }
-            double summary = 10;
-            int i = 0;
-            while (i < values.Length)
-            {
-                summary = summary + (double)values[i];
-                i++;
-            }
-            return summary;
-        }
-
-        public object[] ConvertBack(object value,
-                                    Type[] targetTypes,
-                                    object parameter,
-                                    CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-    }
-
-    public class GetMidCreatureValueConverter : IMultiValueConverter
-    {
-        #region IMultiValueConverter Members
-
-        public object Convert(object[] values,
-                              Type targetType,
-                              object parameter,
-                              CultureInfo culture)
-        {
-            if (values == null || values.Length < 2)
-            {
-                throw new ArgumentException(
-                    "GetMidCreatureValueConverter expects 2 double values to be passed" +
-                    " in this order -> init, width",
-                    "values");
-            }
-            if (values[1] == DependencyProperty.UnsetValue || values[1] == DependencyProperty.UnsetValue) return (double)values[0];
-
-            double init = (double)values[0];
-            double width = (double)values[1];
-            
-            return (object)(init - width );
-        }
-
-        public object[] ConvertBack(object value,
-                                    Type[] targetTypes,
-                                    object parameter,
-                                    CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-    }
-
+    
     [DataContract(IsReference = true)]
     public class BattlegroundCreature : BattlegroundBaseObject
     {
@@ -254,6 +184,21 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        private double _midCreatureX = 0;
+        public double MidCreatureX
+        {
+            get { return _midCreatureX; }
+            set { Set(ref _midCreatureX, value); }
+        }
+
+        private double _midCreatureY = 0;
+        public double MidCreatureY
+        {
+            get { return _midCreatureY; }
+            set { Set(ref _midCreatureY, value); }
+        }
+
+
         private double _creatureNameY = 90;
         public double CreatureNameY
         {
@@ -372,6 +317,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             ZDisplayY = CreatureY - 10;
             CreatureNameX = CreatureX - 40;
             CreatureNameY = CreatureY - 25;
+            MidCreatureX = CreatureX - (ki != null ? ki.LichtquellePixel : 0);
+            MidCreatureY = CreatureY - (ki != null ? ki.LichtquellePixel : 0);
         }
 
         public override void RunBeforeXMLSerialization()

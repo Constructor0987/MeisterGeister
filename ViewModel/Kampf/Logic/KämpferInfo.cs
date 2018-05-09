@@ -243,17 +243,31 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 Set(ref _lichtquelleMeter, value);
-                _hatLichtquelle = value*100;
-                OnChanged("HatLichtquelle");
+                LichtquellePixel = value * 100;
             }
         }
 
-        private double _hatLichtquelle = 0;
-        public double HatLichtquelle
+        private double _lichtquellePixel = 0;
+        public double LichtquellePixel
         {
-            get { return _hatLichtquelle; }
-            set { Set(ref _hatLichtquelle, value*100);
-                LichtquelleMeter = value; }
+            get { return _lichtquellePixel; }
+            set
+            {
+                Set(ref _lichtquellePixel, value);
+                LichtquellePixelRadius = 10 + value + value + 
+                    (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).CreatureWidth;
+                (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).MidCreatureX = (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).CreatureX - LichtquellePixel;
+                (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).MidCreatureY = (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).CreatureY - LichtquellePixel;
+
+                if (LichtquelleMeter != value / 100) LichtquelleMeter = value / 100;
+            }
+        }
+
+        private double _lichtquellePixelRadius = 0;
+        public double LichtquellePixelRadius
+        {
+            get { return _lichtquellePixelRadius; }
+            set { Set(ref _lichtquellePixelRadius, value); }
         }
 
         private bool _istAnführer = false;
@@ -619,7 +633,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public ObservableCollection<ManöverInfo> AbwehrManöver
         {
             get
-            {
+            { 
                 return _abwehrManöver;
             }
         }

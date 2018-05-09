@@ -24,5 +24,10 @@ namespace MeisterGeister.View.Kampf
             InitializeComponent();
             this.DataContext = kampfVM;
         }
+        public KampfInfoView()
+        {
+            InitializeComponent();
+            this.DataContext = Global.CurrentKampf;
+        }
     }
 }

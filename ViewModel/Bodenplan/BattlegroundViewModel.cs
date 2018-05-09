@@ -215,7 +215,40 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public double ScaleKampfGrid
         {
             get { return _scaleKampfGrid; }
-            set { Set(ref _scaleKampfGrid, Math.Round(value, 2)); }
+            set 
+            { 
+                Set(ref _scaleKampfGrid, Math.Round(value, 2));
+                if (IsShowIniKampf)
+                {
+                    ((KampfInfoView)KampfWindow.Content).grdMain.LayoutTransform = new ScaleTransform(value, value);
+                    KampfWindow.SizeToContent = SizeToContent.Height;
+                    //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
+                    KampfWindow.SizeToContent = SizeToContent.Manual;
+                    SetIniWindowPosition();
+                }
+            }
+        }
+
+
+        private int _posIniWindow = 1;
+        public int PosIniWindow
+        {
+            get { return _posIniWindow; }
+            set { Set(ref _posIniWindow, value); }
+        }
+
+        private double _iniHeightStart = 0;
+        public double IniHeightStart
+        {
+            get { return _iniHeightStart; }
+            set { Set(ref _iniHeightStart, value); }
+        }
+
+        private double _iniWidthStart = 0;
+        public double IniWidthStart
+        {
+            get { return _iniWidthStart; }
+            set { Set(ref _iniWidthStart, value); }
         }
 
         private double _scaleSpielerGrid = 1;
@@ -777,6 +810,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         StrokeThickness = SelectedObject.StrokeThickness;
 
                         SelectedObject.IsSelected = true;
+                        if (SelectedObject is BattlegroundCreature)
+                            Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe.FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
                     OnChanged("SelectedObject");
                     if (SelectedObject is BattlegroundCreature)
@@ -1199,19 +1234,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public double CurrentMousePositionX
         {
             get { return _currentMousePositionX; }
-            set
-            {
-                Set(ref _currentMousePositionX, value);
-            }
+            set { Set(ref _currentMousePositionX, value); }
         }
 
         public double CurrentMousePositionY
         {
             get { return _currentMousePositionY; }
-            set
-            {
-                Set(ref _currentMousePositionY, value);
-            }
+            set { Set(ref _currentMousePositionY, value); }
         }
 
         private bool _creatingNewLine;
@@ -1347,6 +1376,56 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BattlegroundObjects.Where(x => x.IsNew).ToList().ForEach(x => BattlegroundObjects.Remove(x));
         }
 
+
+        public void SetIniWindowPosition()
+        {
+            System.Windows.HorizontalAlignment h = System.Windows.HorizontalAlignment.Right;
+            VerticalAlignment v = VerticalAlignment.Top;
+
+            switch (PosIniWindow)
+            {
+                case 1: {  
+                    h = System.Windows.HorizontalAlignment.Right; 
+                    v = VerticalAlignment.Top;
+                    break; 
+                }
+                case 2:{
+                    h = System.Windows.HorizontalAlignment.Right; 
+                    v = VerticalAlignment.Bottom;
+                    break; 
+                }
+                case 3:{
+                    h = System.Windows.HorizontalAlignment.Left; 
+                    v = VerticalAlignment.Bottom;
+                    break; 
+                }
+                case 4:{
+                    h = System.Windows.HorizontalAlignment.Left; 
+                    v = VerticalAlignment.Top;
+                    break; 
+                }
+            }
+            int maxRight = Math.Max(
+                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Right,
+                System.Windows.Forms.Screen.AllScreens.Length > 1 ?
+                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Right : 0);
+
+            int minRight = System.Windows.Forms.Screen.AllScreens.Length == 1 ? 0 : System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Left;
+
+            int maxBottom = Math.Max(
+                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Bottom,
+                System.Windows.Forms.Screen.AllScreens.Length > 1 ?
+                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Bottom : 0);
+
+            if (KampfWindow == null) return;
+            KampfWindow.SizeToContent = SizeToContent.Width;
+            KampfWindow.SizeToContent = SizeToContent.Manual;
+            KampfWindow.Left = (h == System.Windows.HorizontalAlignment.Left) ? minRight : maxRight - ((KampfWindow.MinWidth > KampfWindow.Width) ? KampfWindow.MinWidth : KampfWindow.Width);
+            KampfWindow.Top = (v == System.Windows.VerticalAlignment.Top) ? 0 : maxBottom - KampfWindow.ActualHeight;
+
+        }
+
+
         public void ChangeEbeneHeight(bool raise)
         {
             if (SelectedObject == null) return;
@@ -1373,10 +1452,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        public void MoveLastObjectBehindCreatures()
+        {
+            BattlegroundBaseObject bbo = BattlegroundObjects[BattlegroundObjects.Count - 1];
+
+            int x = BattlegroundObjects.IndexOf(BattlegroundObjects.FirstOrDefault(t => t is BattlegroundCreature));
+            if (x != 0) BattlegroundObjects.Move(BattlegroundObjects.Count - 1, x);
+        }
+
         //keeps heroes and monsters always on top
         public void UpdateCreatureLevelToTop()
         {
-            BattlegroundBaseObject bbo = SelectedObject;
             for (int i = BattlegroundObjects.Count - 1; i >= 0; i--)
             {
                 if (BattlegroundObjects[i] is BattlegroundCreature)
@@ -1536,6 +1622,27 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #region Commands
+
+        private Base.CommandBase _onBtnPosIniWindow = null;
+        public Base.CommandBase onBtnPosIniWindow            
+        {
+            get
+            {
+                if (_onBtnPosIniWindow == null)
+                {
+                    _onBtnPosIniWindow = new Base.CommandBase(BtnPosIniWindow, null);
+                }
+                return _onBtnPosIniWindow;
+            }
+        }
+        void BtnPosIniWindow(object obj)
+        {            
+            PosIniWindow++;
+            if (PosIniWindow == 5) PosIniWindow = 1;
+            SetIniWindowPosition();
+        }
+
+
         private Base.CommandBase _onBtnUmwandelnFernkampf = null;
         public Base.CommandBase OnBtnUmwandelnFernkampf            
         {

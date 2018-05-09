@@ -15,8 +15,6 @@
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
-        <model:AdditionDoubleConverter x:Key="AdditionDoubleConverter1"/>
-        <model:GetMidCreatureValueConverter x:Key="GetMidCreatureValueConverter1"/>
 
         <Style TargetType="ProgressBar">
             <Setter Property="Template">
@@ -92,7 +90,7 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Grid.Style> 
+            </Grid.Style>
             <Grid Name="PlayerArenaGridTop" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="{Binding PlayerOffsetGridMargin, UpdateSourceTrigger=PropertyChanged}">
                 <Image Name="imgbtnBGStoppen2" Source="{Binding BackgroundImage}" VerticalAlignment="Top" HorizontalAlignment="Left" 
                                Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}" 
@@ -109,11 +107,13 @@
                                     <ControlTemplate TargetType="Thumb">
                                         <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                             <!--SightArea-->
-                                            <Path Fill="Yellow" IsHitTestVisible="False" Stroke="Yellow" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2">
+                                            <Path IsHitTestVisible="False" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2">
                                                 <!--Visibility="{Binding , Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"-->
                                                 <Path.Style>
                                                     <Style TargetType="Path">
                                                         <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Setter Property="Fill" Value="Yellow"/>
+                                                        <Setter Property="Stroke" Value="Yellow" />
                                                         <Style.Triggers>
                                                             <MultiDataTrigger>
                                                                 <MultiDataTrigger.Conditions>
@@ -122,40 +122,19 @@
                                                                 </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </MultiDataTrigger>
+                                                            <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="False">
+                                                                <Setter Property="Fill" Value="DarkOrange"/>
+                                                                <Setter Property="Stroke" Value="DarkOrange" />
+                                                            </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Path.Style>
-                                            
                                             </Path>
 
                                             <!--Lichtquelle-->
-                                            <Ellipse Opacity="0.4" Stroke="#FFF0FC00" StrokeThickness="2" >
-                                                <Ellipse.Width>
-                                                    <MultiBinding Converter="{StaticResource AdditionDoubleConverter1}">
-                                                        <Binding Path="ki.HatLichtquelle"  />
-                                                        <Binding Path="ki.HatLichtquelle" />
-                                                        <Binding Path="CreatureWidth" />
-                                                    </MultiBinding>
-                                                </Ellipse.Width>
-                                                <Ellipse.Height>
-                                                    <MultiBinding Converter="{StaticResource AdditionDoubleConverter1}">
-                                                        <Binding Path="ki.HatLichtquelle" />
-                                                        <Binding Path="ki.HatLichtquelle" />
-                                                        <Binding Path="CreatureHeight" />
-                                                    </MultiBinding>
-                                                </Ellipse.Height>
-                                                <Canvas.Left>
-                                                    <MultiBinding Converter="{StaticResource GetMidCreatureValueConverter1}">
-                                                        <Binding Path="CreatureX" />
-                                                        <Binding Path="ki.HatLichtquelle" />
-                                                    </MultiBinding>
-                                                </Canvas.Left>
-                                                <Canvas.Top>
-                                                    <MultiBinding Converter="{StaticResource GetMidCreatureValueConverter1}">
-                                                        <Binding Path="CreatureY" />
-                                                        <Binding Path="ki.HatLichtquelle" />
-                                                    </MultiBinding>
-                                                </Canvas.Top>
+                                            <Ellipse Opacity="0.4" Stroke="#FFF0FC00" StrokeThickness="2" 
+                                                Width="{Binding ki.LichtquellePixelRadius}" Height="{Binding ki.LichtquellePixelRadius}"
+                                                Canvas.Left="{Binding ki.MidCreatureX}" Canvas.Top="{Binding ki.MidCreatureY}">
                                                 <Ellipse.Fill>
                                                     <RadialGradientBrush >
                                                         <GradientStop Color="Transparent" Offset="1"/>
@@ -165,7 +144,7 @@
                                                 <Ellipse.Style>
                                                     <Style TargetType="{x:Type Ellipse}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ki.HatLichtquelle}" Value="0">
+                                                            <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -186,10 +165,10 @@
                                                 Visibility="{Binding DataContext.ShowZ, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
                                             <!--HinweisText-->
-                                            <TextBlock TextAlignment="Center" FontSize="14" FontStyle="Italic" Background="White" HorizontalAlignment="Center" VerticalAlignment="Top" Width="140"
-                                                       Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Margin="0,-14,0,0">
+                                            <TextBlock TextAlignment="Center" FontSize="14" TextWrapping="Wrap" FontStyle="Italic" Background="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="140"
+                                                               Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}"  Margin="0,-220,0,0">
                                                 <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
+                                                    <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding HinweisText}" Value="">
@@ -216,7 +195,7 @@
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
-                                            
+
                                             <!--Lebensbalken-->
                                             <ProgressBar Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Opacity="{Binding Opacity}"
                                                         Height="{Binding CreatureHeight}" Width="10" HorizontalAlignment="Left" Margin="-12,0,0,0"
@@ -270,7 +249,7 @@
                                                     </Style>
                                                 </Image.Style>
                                             </Image>
-                                            
+
                                             <Canvas.Effect>
                                                 <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, UpdateSourceTrigger=PropertyChanged}" ShadowDepth="10" BlurRadius="20" />
                                             </Canvas.Effect>
@@ -447,7 +426,7 @@
                 </ListBox>
                 <Image Name="imgFog2" Source="{Binding FogImage}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10000" Height="10000"
                                 Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
-            </Grid>            
+            </Grid>
         </Grid>
     </Grid>
 </Window>

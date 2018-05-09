@@ -220,9 +220,8 @@
                                 <ViewGeneral:DoubleBox Height="20" Width="20" Value="{Binding StrokeThickness}" MinValue="0" MaxValue="100" ShowButtons="False"/>
                             </StackPanel>
 
-                            <Button Width="120" Height="20" Padding="0" Content="Meister Screen Center" Margin="0,3" HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2"
+                            <Button Width="120" Height="20" Padding="0" Content="Meister Screen Center" Margin="0,0" HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2"
                                     Command="{Binding OnBtnCenterMeisterView}" ToolTip="Auf Spieler zentrieren" />
-
                         </Grid>
                     </Border>
                     <StackPanel Grid.Column="3">
@@ -260,10 +259,50 @@
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="9,4,2,10" />
                                 </Grid>
                             </ToggleButton>
+
+                            <!--<Button Margin="2,36,-22,-22" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="30" Width="35" ToolTip="Sicht Meister auf Spielern Bodenplan übertragen."
+                                 Focusable="False" Click="Button_Click">
+                                <Grid>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" Margin="-12,-4,0,2"/>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/dungeon.png" Margin="-12,-10,0,0" Width="12"/>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" Margin="10,0,-6,-6"/>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Margin="8,5,-6,2" />
+                                </Grid>
+                            </Button>-->
+
                             <!--<Label Content="Scale" VerticalAlignment="Bottom" Margin="5,0,0,32"/>-->
                             <Slider Orientation="Horizontal" Minimum=".5" Maximum="1.5" VerticalAlignment="Top" Margin="2,32,2,-2" SmallChange=".01" LargeChange=".1"
                                             Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MouseWheel="slSmall_MouseWheel" ValueChanged="Slider_ValueChanged"  
                                     ToolTip="Größe des INI-Feldes anpassen" Grid.Column="1" Style="{StaticResource SmallHorizontalSlider}" />
+                            <Button Name="btnPosIniWindow" Grid.Column="1" Width="22" Height="17" Margin="2,45,2,0" Padding="1" Tag="{Binding PosIniWindow}" Command="{Binding onBtnPosIniWindow}" >
+                                <Grid Width="20" Height="15" Background="#FF494949" >
+                                    <Rectangle Name="rectIniPos" Width="7" Height="7" Fill="White" Stroke="Black" 
+                                               ToolTip="Klicken um die Ini-Anzeige in andere Ecke zu verschieben" >
+                                        <Rectangle.Style>
+                                            <Style TargetType="Rectangle">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=btnPosIniWindow, Path=Tag}" Value="1">
+                                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                                        <Setter Property="VerticalAlignment" Value="Top"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=btnPosIniWindow, Path=Tag}" Value="2">
+                                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=btnPosIniWindow, Path=Tag}" Value="3">
+                                                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                                                        <Setter Property="VerticalAlignment" Value="Bottom"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=btnPosIniWindow, Path=Tag}" Value="4">
+                                                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                                                        <Setter Property="VerticalAlignment" Value="Top"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </Grid>
+                            </Button>
                         </Grid>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="1"  HorizontalAlignment="Left" Margin="0,0,0,-25" x:Name="border1_Copy" VerticalAlignment="Top" Grid.Column="4">
@@ -303,7 +342,7 @@
                                             <Style TargetType="Grid">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding BackgroundImage}" Value="{x:Null}" >
-                                                        <Setter Property="Visibility" Value="Hidden" />
+                                                        <Setter Property="Visibility" Value="Visible" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

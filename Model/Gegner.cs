@@ -578,8 +578,12 @@ namespace MeisterGeister.Model
                 if (FK != 0)
                     angriffe.Add(new Gegner_Angriff("Basis-Fernkampf", FK, 0, this));
 
+           //     Angriffswaffen.Add(Global.ContextInventar.WaffeListe[1] as KampfLogic.INahkampfwaffe);
+
                 foreach (var item in GegnerBase.GegnerBase_Angriff)
                     angriffe.Add(new Gegner_Angriff(item, this));
+
+                
                 return angriffe;
             }
         }

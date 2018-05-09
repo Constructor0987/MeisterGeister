@@ -211,7 +211,8 @@
                         </ListBox.Template>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent">
+                                <StackPanel Orientation="Horizontal" Height="{StaticResource gridSize}" Background="Transparent" x:Name="stackpanel">
+                               
                                     <StackPanel.ContextMenu>
                                         <ContextMenu>
                                             <DockPanel>
@@ -291,33 +292,49 @@
                                     </TextBlock>
 
                                 <!--<Slider VerticalAlignment="Center" Margin="6,0,6,0" Minimum="0" Maximum="{Binding Aktionen}" Value="{Binding Abwehraktionen}" IsSnapToTickEnabled="True" Width="60" ToolTip="Aktionen umwandeln" />-->
-                                    <ItemsControl ItemsSource="{Binding AbwehrManöver}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <Grid.ContextMenu>
-                                                        <ContextMenu>
-                                                            <MenuItem x:Name="menuAusführen" Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
-                                                            <MenuItem Header="Aktivieren" Command="{Binding Aktivieren}"/>
-                                                        </ContextMenu>
-                                                    </Grid.ContextMenu>
-                                                    <View:ManöverSymbol/>
-                                                </Grid>
-                                                <DataTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding Manöver.IsAusgeführt}" Value="False">
-                                                        <Setter TargetName="menuAusführen" Property="Header" Value="Aktion ausführen"/>
-                                                    </DataTrigger>
-                                                </DataTemplate.Triggers>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </DataTemplate>
+                                <ItemsControl ItemsSource="{Binding AbwehrManöver}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem x:Name="menuAusführen" Header="Aktion wieder aktivieren" Command="{Binding Ausführen}"/>
+                                                        <MenuItem Header="Aktivieren" Command="{Binding Aktivieren}"/>
+                                                    </ContextMenu>
+                                                </Grid.ContextMenu>
+                                                <View:ManöverSymbol/>
+                                            </Grid>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding Manöver.IsAusgeführt}" Value="False">
+                                                    <Setter TargetName="menuAusführen" Property="Header" Value="Aktion ausführen"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            
+                                <DataTemplate.Triggers>
+                                <DataTrigger Value="True">
+                                    <DataTrigger.Binding>
+                                        <MultiBinding>
+                                            <MultiBinding.Converter>
+                                                <ViewGeneral:EqualsMultiConverter/>
+                                            </MultiBinding.Converter>
+                                            <Binding ElementName="kampfinfo" Path="DataContext.Kampf.AktIniKämpfer" UpdateSourceTrigger="PropertyChanged"/>
+                                            <Binding/>
+                                        </MultiBinding>
+                                    </DataTrigger.Binding>
+                                    <!--Aktuellen Kämpfer INI RowBalken orange markieren-->
+                                    <Setter TargetName="stackpanel" Property="Background" Value="#FFF7CC86"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ListBox>
 
@@ -474,11 +491,11 @@
                                     <Setter Property="BorderThickness" Value="1"/>
                                     <Setter Property="BorderBrush" Value="Black"/>
                                     <Setter Property="Background">
-                                        <Setter.Value>
+                                        <Setter.Value>                                            
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                 <GradientStop Offset="0" Color="#00000000"/>
                                                 <GradientStop Offset="1" Color="#50202020"/>
-                                            </LinearGradientBrush>
+                                            </LinearGradientBrush>                                            
                                         </Setter.Value>
                                     </Setter>
                                     <Setter Property="Template">

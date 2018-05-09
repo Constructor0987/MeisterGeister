@@ -59,5 +59,39 @@ namespace MeisterGeister.View.Kampf
                     wesenAuswahlView.ShowDialog();
                 }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Kampf.Logic.KämpferInfo ki = Global.CurrentKampf.SelectedKämpfer;
+            Model.Gegner g = ki.Kämpfer as MeisterGeister.Model.Gegner;
+            Model.GegnerBase SelectedGegnerBase = (Global.CurrentKampf.SelectedKämpfer.Kämpfer as MeisterGeister.Model.Gegner).GegnerBase;
+            var ausr = Global.ContextInventar.WaffeListe[10].Ausrüstung;
+
+            if (ausr == null)
+                return;
+            if (ausr.Waffe != null)
+                AddAngriff(SelectedGegnerBase, Model.GegnerBase_Angriff.FromWaffe(ausr.Waffe, SelectedGegnerBase));
+            if (ausr.Fernkampfwaffe != null)
+                AddAngriff(SelectedGegnerBase, Model.GegnerBase_Angriff.FromFernkampfwaffe(ausr.Fernkampfwaffe, SelectedGegnerBase));
+        }
+
+        private Model.GegnerBase_Angriff AddAngriff(Model.GegnerBase SelectedGegnerBase, Model.GegnerBase_Angriff ga)
+        {
+            if (SelectedGegnerBase == null || ga == null)
+                return null;
+            var g = SelectedGegnerBase;
+            string name = ga.Name; int i = 0;
+            while (g.GegnerBase_Angriff.Any(gba => gba.Name == name))
+                name = String.Format("{0} ({1})", ga.Name, ++i);
+            ga.Name = name;
+            ga.GegnerBaseGUID = g.GegnerBaseGUID;
+            ga.GegnerBase = g;
+            SelectedGegnerBase.GegnerBase_Angriff.Add(ga);
+            //SaveGegner();
+            //OnChanged("AngriffListe");
+            return ga;
+        }
+
+
     }
 }

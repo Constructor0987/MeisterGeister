@@ -273,19 +273,64 @@
                                             </MenuItem.Icon>
 
                                             <MenuItem Header="Keine" IsCheckable="True" 
-                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='0'}" />
-                                            
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='0'}" />
+
                                             <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='4'}">
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='1.5'}">
                                                 <MenuItem.Header>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kerze.png"/>
-                                                        <TextBlock Text="Kerze [4m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kienspan.png"/>
+                                                        <TextBlock Text="Kienspäne [1-2m]" VerticalAlignment="Center" Margin="5,0,0,0" />
                                                     </StackPanel>
                                                 </MenuItem.Header>
                                             </MenuItem>
                                             <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='8'}">
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='2'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Binsenlicht.png"/>
+                                                        <TextBlock Text="Binsenlichter [3m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='3'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kerze.png"/>
+                                                        <TextBlock Text="Kerze [3m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='3.5'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png"/>
+                                                        <TextBlock Text="Laterne [3-4]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='5'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png"/>
+                                                        <TextBlock Text="Pechfackel [4-6m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='8'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png"/>
+                                                        <TextBlock Text="Bend-/Sturmlaterne [2-8m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='8'}">
                                                 <MenuItem.Header>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png"/>
@@ -294,7 +339,7 @@
                                                 </MenuItem.Header>
                                             </MenuItem>
                                             <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding Manöver.Ausführender.HatLichtquelle, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='10'}">
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='10'}">
                                                 <MenuItem.Header>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Lagerfeuer.png"/>

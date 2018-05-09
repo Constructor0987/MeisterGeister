@@ -2711,6 +2711,11 @@
     <Resource Include="Images\Icons\Fackel.png" />
     <Resource Include="Images\Icons\kerze.png" />
     <Resource Include="Images\Icons\Lagerfeuer.png" />
+    <Resource Include="Images\Icons\laterne.png" />
+    <Resource Include="Images\Binsenlicht.png" />
+    <Resource Include="Images\Kienspan.png" />
+    <Resource Include="Images\Icons\Kienspan.png" />
+    <Resource Include="Images\Icons\Binsenlicht.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

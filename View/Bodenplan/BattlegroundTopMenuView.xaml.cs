@@ -179,6 +179,7 @@ namespace MeisterGeister.View.Bodenplan
 
             infoView.grdMain.LayoutTransform = new ScaleTransform(vm.ScaleKampfGrid, vm.ScaleKampfGrid);
             VM.KampfWindow = new Window();
+
             //SizeToContent auf Width setzt den Screen auf minimale Breite
             VM.KampfWindow.SizeToContent = SizeToContent.Width;
             VM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
@@ -230,8 +231,8 @@ namespace MeisterGeister.View.Bodenplan
                         infoView.scrViewer.ScrollToHorizontalOffset(width1Ini * anzInisDavor);
                     }
 
-                    if (WidthStart != Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid))
-                        WidthStart = Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid);
+                    if (VM.IniWidthStart != Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid))
+                        VM.IniWidthStart = Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid);
                 }
             };
 
@@ -243,25 +244,30 @@ namespace MeisterGeister.View.Bodenplan
             VM.KampfWindow.SizeToContent = SizeToContent.Height;
             //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
             VM.KampfWindow.SizeToContent = SizeToContent.Manual;
-            VM.KampfWindow.MinWidth = 460;
-            WidthStart = VM.KampfWindow.Width;
-            VM.KampfWindow.Width = Math.Round(WidthStart * vm.ScaleKampfGrid);
-            VM.KampfWindow.Top = 0;
+            VM.KampfWindow.WindowStyle = WindowStyle.None;
+            //WidthStart =  VM.KampfWindow.Width;
 
-            if (System.Windows.Forms.Screen.AllScreens.Length > 1)
-                VM.KampfWindow.Left = System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Right// + System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width
-                      - Math.Round(WidthStart * vm.ScaleKampfGrid);
+          //  VM.KampfWindow.Width = Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
+
+            VM.SetIniWindowPosition();
+            
+            //VM.KampfWindow.Top = 0;            
+            //int maxRight = Math.Max(
+            //    System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Right,
+            //    System.Windows.Forms.Screen.AllScreens.Length > 1 ?
+            //        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Right : 0);
+            //VM.KampfWindow.Left = maxRight - Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
+
             VM.IsShowIniKampf = true;
-            if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive &&
-                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Left >= System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
-            {
-                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = System.Windows.WindowState.Normal;
-                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = System.Windows.WindowStyle.None;
-                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Math.Round(WidthStart * vm.ScaleKampfGrid);
-                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Height = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height;
-            }
+            //if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive &&
+            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Left >= System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
+            //{
+            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = System.Windows.WindowState.Normal;
+            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = System.Windows.WindowStyle.None;
+            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Math.Round(VM.IniWidthStart * vm.ScaleKampfGrid);
+            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Height = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height;
+            //}
         }
-        
 
         private void tbtnSpielerScreenActive_Click(object sender, RoutedEventArgs e)
         {
@@ -285,21 +291,35 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private double WidthStart = 0;
         private bool MouseIsOverScrViewer = false;
         
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null && vm.KampfWindow != null)
-            {
-                ((Kampf.KampfInfoView)vm.KampfWindow.Content).grdMain.LayoutTransform = new ScaleTransform(vm.ScaleKampfGrid, vm.ScaleKampfGrid);
-                VM.KampfWindow.SizeToContent = SizeToContent.Height;
-                //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
-                VM.KampfWindow.SizeToContent = SizeToContent.Manual;
-                VM.KampfWindow.Width = Math.Round(WidthStart * vm.ScaleKampfGrid);
-            }
+            //var vm = DataContext as BattlegroundViewModel;
+            //if (vm != null && vm.KampfWindow != null)
+            //{
+            //    ((Kampf.KampfInfoView)vm.KampfWindow.Content).grdMain.LayoutTransform = new ScaleTransform(vm.ScaleKampfGrid, vm.ScaleKampfGrid);
+            //    VM.KampfWindow.SizeToContent = SizeToContent.Height;
+            //    //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
+            //    VM.KampfWindow.SizeToContent = SizeToContent.Manual;
+            ////    VM.KampfWindow.Width = Math.Round(VM.IniWidthStart * vm.ScaleKampfGrid);
+            //    VM.SetIniWindowPosition(VM.KampfWindow);
+            //}
         }
+
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //    VM.PlayerGridOffsetX = VM.MeisterZoomTransX;
+        //    VM.PlayerGridOffsetY = VM.MeisterZoomTransY;
+        //    Thickness MasterMargin = VM.OffsetBackgroudMargin;
+        //    VM.PlayerOffsetGridMargin = new Thickness(MasterMargin.Left - 4925, MasterMargin.Top - 4925, MasterMargin.Right, MasterMargin.Bottom);
+
+        //    VM.ScaleSpielerGrid = VM.MeisterZoom;
+        //    //VM.PlayerGridOffsetX = VM.BackgroundOffsetX;
+        //    //VM.PlayerGridOffsetY = VM.BackgroundOffsetY;
+
+        //}
 
     }
 }
