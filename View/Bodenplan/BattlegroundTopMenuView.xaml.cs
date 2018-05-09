@@ -153,22 +153,9 @@ namespace MeisterGeister.View.Bodenplan
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
         {
             if (((ToggleButton)e.OriginalSource).IsChecked == true)
-            {
                 CreateKampfWindow();  
-            }
             else
-            {
                 if (VM.KampfWindow != null) VM.KampfWindow.Close();
-                if (VM.SpielerScreenWindow != null) VM.SpielerScreenWindow.Topmost = false;
-
-                if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive &&
-                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Left >= System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
-                {
-                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = System.Windows.WindowState.Maximized;
-                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = System.Windows.WindowStyle.None;
-                }
-
-            }
         }
 
 

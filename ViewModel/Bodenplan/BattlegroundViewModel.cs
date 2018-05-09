@@ -1405,24 +1405,24 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     break; 
                 }
             }
-            int maxRight = Math.Max(
-                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Right,
+            double maxRight = Math.Max(
+                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width, //Right
                 System.Windows.Forms.Screen.AllScreens.Length > 1 ?
-                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Right : 0);
+                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width + 
+                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width : 0);
 
-            int minRight = System.Windows.Forms.Screen.AllScreens.Length == 1 ? 0 : System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Left;
+            double minRight = System.Windows.Forms.Screen.AllScreens.Length == 1 ? 0 : System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width+1;// Left;
 
-            int maxBottom = Math.Max(
-                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Bottom,
+            double maxBottom = Math.Max(
+                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Height,// .Bottom,
                 System.Windows.Forms.Screen.AllScreens.Length > 1 ?
-                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Bottom : 0);
+                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height : 0);
 
             if (KampfWindow == null) return;
             KampfWindow.SizeToContent = SizeToContent.Width;
             KampfWindow.SizeToContent = SizeToContent.Manual;
-            KampfWindow.Left = (h == System.Windows.HorizontalAlignment.Left) ? minRight : maxRight - ((KampfWindow.MinWidth > KampfWindow.Width) ? KampfWindow.MinWidth : KampfWindow.Width);
-            KampfWindow.Top = (v == System.Windows.VerticalAlignment.Top) ? 0 : maxBottom - KampfWindow.ActualHeight;
-
+            KampfWindow.Left = (((h == System.Windows.HorizontalAlignment.Left) ? minRight : maxRight - ((KampfWindow.MinWidth > KampfWindow.Width) ? KampfWindow.MinWidth : KampfWindow.Width)));
+            KampfWindow.Top = (((v == System.Windows.VerticalAlignment.Top) ? 0 : maxBottom - KampfWindow.ActualHeight));
         }
 
 
