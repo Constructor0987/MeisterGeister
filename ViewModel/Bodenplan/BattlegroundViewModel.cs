@@ -20,6 +20,7 @@ using System.Windows.Controls;
 using MeisterGeister.View.Kampf;
 using MeisterGeister.ViewModel.Kampf;
 using WPFExtensions.Controls;
+using Application = System.Windows.Application;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
@@ -1379,6 +1380,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void SetIniWindowPosition()
         {
+            //Get DPI Scaling from MainProgramm
+            Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
+            double dx = m.M11;
+            double dy = m.M22;
+
             System.Windows.HorizontalAlignment h = System.Windows.HorizontalAlignment.Right;
             VerticalAlignment v = VerticalAlignment.Top;
 
@@ -1404,25 +1410,26 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     v = VerticalAlignment.Top;
                     break; 
                 }
-            }
-            double maxRight = Math.Max(
-                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width, //Right
-                System.Windows.Forms.Screen.AllScreens.Length > 1 ?
-                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width + 
-                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width : 0);
+            }            
+           double maxRight = Math.Max(
+                Screen.AllScreens[0].WorkingArea.Width/dx, 
+                Screen.AllScreens.Length > 1 ?
+                    Screen.AllScreens[1].WorkingArea.Right / dx : 0);
 
-            double minRight = System.Windows.Forms.Screen.AllScreens.Length == 1 ? 0 : System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width+1;// Left;
-
-            double maxBottom = Math.Max(
-                System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Height,// .Bottom,
-                System.Windows.Forms.Screen.AllScreens.Length > 1 ?
-                    System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height : 0);
-
+            double minRight = Screen.AllScreens.Length == 1 ? 0 : Screen.AllScreens[1].WorkingArea.Left/dx;
+            
             if (KampfWindow == null) return;
+            
             KampfWindow.SizeToContent = SizeToContent.Width;
             KampfWindow.SizeToContent = SizeToContent.Manual;
-            KampfWindow.Left = (((h == System.Windows.HorizontalAlignment.Left) ? minRight : maxRight - ((KampfWindow.MinWidth > KampfWindow.Width) ? KampfWindow.MinWidth : KampfWindow.Width)));
-            KampfWindow.Top = (((v == System.Windows.VerticalAlignment.Top) ? 0 : maxBottom - KampfWindow.ActualHeight));
+
+            KampfWindow.Left = (((h == System.Windows.HorizontalAlignment.Left) ? minRight : 
+                maxRight - ((KampfWindow.MinWidth > KampfWindow.Width) ? KampfWindow.MinWidth : KampfWindow.Width)));
+
+            KampfWindow.Top = (((v == System.Windows.VerticalAlignment.Top) ? 0 :
+                (Screen.AllScreens.Length == 1 ? 
+                    Screen.AllScreens[0].WorkingArea.Height / dy :
+                    Screen.AllScreens[1].WorkingArea.Height / dy) - KampfWindow.ActualHeight));
         }
 
 
