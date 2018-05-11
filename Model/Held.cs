@@ -987,6 +987,20 @@ namespace MeisterGeister.Model {
 
         #endregion
 
+        #region Regeneration
+
+        string RegenerationAstralenergie
+        {
+            get
+            {
+                string reg = "1W6"; // Grundwert
+                // TODO: Regenerations-Modifikatoren
+                return reg;
+            }
+        }
+
+        #endregion
+
         #region Magieresistenz
 
         public int MagieresistenzBasis {
