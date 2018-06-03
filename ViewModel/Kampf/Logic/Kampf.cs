@@ -39,7 +39,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             InitiativListe = new InitiativListe(this);
             KampfNeuStarten();
         }
-        public BattlegroundWindow Bodenplan { get; set; }
+        public View.Bodenplan.BattlegroundView Bodenplan { get; set; }
 
         private ObservableCollection<string> _kampfLog = new ObservableCollection<string>();
         public ObservableCollection<string> KampfLog

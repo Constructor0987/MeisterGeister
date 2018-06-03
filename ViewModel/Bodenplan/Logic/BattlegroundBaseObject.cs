@@ -171,19 +171,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public double ZDisplayX
         {
             get { return _zDisplayX; }
-            set
-            {
-                Set(ref _zDisplayX, value);
-            }
+            set{Set(ref _zDisplayX, value);}
         }
 
         public double ZDisplayY
         {
             get { return _zDisplayY; }
-            set
-            {
-                Set(ref _zDisplayY, value);
-            }
+            set{Set(ref _zDisplayY, value);}
         }
 
         public abstract void MoveObject(double deltaX, double deltaY, bool stickAtCursor);

@@ -173,7 +173,7 @@ namespace MeisterGeister.View.SpielerScreen
                 if (SpielerWindowClosed != null)
                     SpielerWindowClosed(null, new EventArgs());
                 if (Global.CurrentKampf != null &&
-                    Global.CurrentKampf.BodenplanWindow != null)
+                    Global.CurrentKampf.BodenplanView != null)
                     Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive = false;
             }
         }

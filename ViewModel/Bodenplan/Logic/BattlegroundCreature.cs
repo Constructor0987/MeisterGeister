@@ -141,6 +141,27 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        int _sightLineSektor = 4;
+        public int SightLineSektor
+        {
+            get { return _sightLineSektor; }
+            set
+            {
+                _sightLineSektor = value;
+                OnChanged("SightLineSektor");
+            }
+        }
+
+        private string _creaturePictureUrl;
+        public string CreaturePictureUrl
+        {
+            get { return _creaturePictureUrl; }
+            set
+            {
+                Set(ref _creaturePictureUrl, value);
+            }
+        }
+
         public double CreatureX
         {
             get { return _creatureX; }
@@ -163,27 +184,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        int _sightLineSektor = 4;
-        public int SightLineSektor
-        {
-            get { return _sightLineSektor; }
-            set
-            {
-                _sightLineSektor = value;
-                OnChanged("SightLineSektor");
-            }
-        }
-
-        private string _creaturePictureUrl;
-        public string CreaturePictureUrl
-        {
-            get { return _creaturePictureUrl; }
-            set
-            {
-                Set(ref _creaturePictureUrl, value);
-            }
-        }
-
         private double _midCreatureX = 0;
         public double MidCreatureX
         {
@@ -197,8 +197,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _midCreatureY; }
             set { Set(ref _midCreatureY, value); }
         }
-
-
+        
         private double _creatureNameY = 90;
         public double CreatureNameY
         {
@@ -220,6 +219,62 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 OnChanged("CreatureNameX");
             }
         }
+
+
+        // --- Spielerscreen ---
+
+        //public double SpielerCreatureX
+        //{ get { return IsMoving ? Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionX : CreatureX; } }
+
+        //public double SpielerCreatureY
+        //{ get { return IsMoving ? Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionY : CreatureY; } }
+
+        //public double SpielerMidCreatureX
+        //{
+        //    get
+        //    {
+        //        return IsMoving ?
+        //            MidCreatureX - CreatureX + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionX
+        //            : MidCreatureX;
+        //    }
+        //}
+
+        //public double SpielerMidCreatureY
+        //{
+        //    get
+        //    {
+        //        return IsMoving ?
+        //            MidCreatureY - CreatureY + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionY
+        //            : MidCreatureY;
+        //    }
+        //}
+        
+        //public double SpielerCreatureNameX
+        //{
+        //    get
+        //    {
+        //        return IsMoving ?
+        //            CreatureNameX - CreatureX + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionX
+        //            : CreatureNameX;
+        //    }
+        //}
+
+        //public double SpielerCreatureNameY
+        //{
+        //    get
+        //    {
+        //        return IsMoving ?
+        //            CreatureNameY - CreatureY + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionY
+        //            : CreatureNameY;
+        //    }
+        //}
+
+
+
+
+        // --- ENDE Spielerscreen ---
+
+
 
         private double _creatureWidth = 80;
         public double CreatureWidth
@@ -288,6 +343,16 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             //CreaturePictureUrl = portraitFilename;
             //if(!File.Exists(portraitFilename)) 
             if(portraitFilename != null ) if(portraitFilename.Length!=0) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
+
+            //string datei;
+            //try
+            //{
+            //    datei = LoadImage(new Uri(@portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty), UriKind.RelativeOrAbsolute));
+            //}
+            //catch
+            //{
+            //    datei = LoadImage(new Uri(@ArenaWindow.ICON_DIR + "fragezeichen.png", UriKind.Relative));
+            //}
         }
 
         public void ScalePicture(double factor)
@@ -348,7 +413,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             SightAreaGeometryData.Figures = _pathFigureCollection;
         }
 
-        private void CalculateSightArea() 
+        public void CalculateSightArea() 
         {
             if (SightAreaGeometryData.Figures.Count == 0) return;
 

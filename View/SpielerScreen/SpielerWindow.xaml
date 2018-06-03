@@ -107,13 +107,11 @@
                                     <ControlTemplate TargetType="Thumb">
                                         <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                             <!--SightArea-->
-                                            <Path IsHitTestVisible="False" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2">
+                                            <Path Fill="Yellow" IsHitTestVisible="False" Stroke="Yellow" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2">
                                                 <!--Visibility="{Binding , Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"-->
                                                 <Path.Style>
                                                     <Style TargetType="Path">
                                                         <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Setter Property="Fill" Value="Yellow"/>
-                                                        <Setter Property="Stroke" Value="Yellow" />
                                                         <Style.Triggers>
                                                             <MultiDataTrigger>
                                                                 <MultiDataTrigger.Conditions>
@@ -122,13 +120,10 @@
                                                                 </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </MultiDataTrigger>
-                                                            <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="False">
-                                                                <Setter Property="Fill" Value="DarkOrange"/>
-                                                                <Setter Property="Stroke" Value="DarkOrange" />
-                                                            </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Path.Style>
+
                                             </Path>
 
                                             <!--Lichtquelle-->
@@ -427,6 +422,14 @@
                 <Image Name="imgFog2" Source="{Binding FogImage}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10000" Height="10000"
                                 Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
             </Grid>
+            <Label >
+                <Label.Content>
+                    <StackPanel>
+                        <TextBlock Text="{Binding CurrentMousePositionX, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="{Binding CurrentMousePositionY, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Label.Content>
+            </Label>
         </Grid>
     </Grid>
 </Window>

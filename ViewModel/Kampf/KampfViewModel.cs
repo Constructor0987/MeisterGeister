@@ -47,15 +47,15 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private View.Bodenplan.BattlegroundWindow _bodenplanWindow;
-        public View.Bodenplan.BattlegroundWindow BodenplanWindow
+        private View.Bodenplan.BattlegroundView _bodenplanView;
+        public View.Bodenplan.BattlegroundView BodenplanView
         {
-            get { return _bodenplanWindow; }
+            get { return _bodenplanView; }
             set
             {
-                _bodenplanWindow = value;
+                _bodenplanView = value;
                 Kampf.Bodenplan = value ?? null;
-                OnChanged("BodenplanWindow");
+                OnChanged("BodenplanView");
             }
         }
         

@@ -60,6 +60,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _meisterArenaZoomControl, value); }
         }
 
+        private Point _kämpferDnDTempPos = new Point(0, 0);
+        public Point KämpferDnDTempPos 
+        {
+            get { return _kämpferDnDTempPos; }
+            set { Set(ref _kämpferDnDTempPos, value); }
+        }
+
         private double _meisterZoom = .5;
         public double MeisterZoom
         {
@@ -799,8 +806,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _selectedObject; }
             set
             {
-                if (!IsMoving)
-                {
+                if (_selectedObject != null && _selectedObject.IsMoving) return;
+                
                     BattlegroundObjects.ToList().ForEach(x => x.IsHighlighted = false);
                     _selectedObject = value;
                     if (SelectedObject is BattlegroundCreature) Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
@@ -815,12 +822,24 @@ namespace MeisterGeister.ViewModel.Bodenplan
                             Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe.FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
                     OnChanged("SelectedObject");
-                    if (SelectedObject is BattlegroundCreature)
+                    try
                     {
-                        if (BattlegroundObjects.IndexOf(SelectedObject) != BattlegroundObjects.Count - 1)
-                            BattlegroundObjects.Move(BattlegroundObjects.IndexOf(SelectedObject), BattlegroundObjects.Count-1);
+                        if (SelectedObject is BattlegroundCreature)
+                        {
+                            if (BattlegroundObjects.IndexOf(SelectedObject) != BattlegroundObjects.Count - 1)
+                            {
+                                int indexObj = BattlegroundObjects.IndexOf(SelectedObject);
+                                int lastPos = BattlegroundObjects.Count - 1;
+                                if (lastPos -1 != indexObj)
+                                    BattlegroundObjects.Move(indexObj, lastPos);
+                                else
+                                { }
+                            }
+                        }
                     }
-                }
+                    catch (Exception ex)
+                        { ViewHelper.ShowError("BattlegroundObjects.Move Befehel generierte einen Fehler", ex); }
+                
             }
         }
 
@@ -1108,19 +1127,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
             RechteckGrid = lstFogSettings[7] == 1;            
         }
 
-        private Position GetPositionFromImage(string posString)
+        public Position GetPositionFromImage(string posString)
         {
             Position p = Kampf.Logic.Position.Stehend;
 
-            if (posString.Contains("Floating")) p = Position.Schwebend;
+            if (posString.Contains("Floating") || posString == "Schwebend") p = Position.Schwebend;
             else
-                if (posString.Contains("Flying")) p = Position.Fliegend;
+                if (posString.Contains("Flying") || posString == "Fliegend") p = Position.Fliegend;
                 else
-                    if (posString.Contains("Kneeling")) p = Position.Kniend;
+                    if (posString.Contains("Kneeling") || posString == "Kniend") p = Position.Kniend;
                     else
-                        if (posString.Contains("OnTheGround")) p = Position.Liegend;
+                        if (posString.Contains("OnTheGround") || posString == "Liegend") p = Position.Liegend;
                         else
-                            if (posString.Contains("Riding")) p = Position.Reitend;
+                            if (posString.Contains("Riding") || posString == "Reitend") p = Position.Reitend;
                             else
                                 p = Position.Stehend;
             return p;
@@ -1309,7 +1328,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             brush.ImageSource = new BitmapImage(new Uri(picurl, UriKind.Relative));
 
             var imageobject =
-                new ImageObject(picurl, p.X, p.Y);
+                new ImageObject(picurl, ((-1) * MeisterZoomTransX+200) / MeisterZoom, ((-1) * MeisterZoomTransY+200) / MeisterZoom );
+//                new ImageObject(picurl, p.X, p.Y);
             if (brush.ImageSource.Width >= brush.ImageSource.Height)
             {
                 imageobject.ImageWidth = 100;
@@ -1464,7 +1484,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BattlegroundBaseObject bbo = BattlegroundObjects[BattlegroundObjects.Count - 1];
 
             int x = BattlegroundObjects.IndexOf(BattlegroundObjects.FirstOrDefault(t => t is BattlegroundCreature));
-            if (x != 0) BattlegroundObjects.Move(BattlegroundObjects.Count - 1, x);
+            if (x > 0) BattlegroundObjects.Move(BattlegroundObjects.Count - 1, x);
         }
 
         //keeps heroes and monsters always on top
@@ -1707,6 +1727,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
         void CenterPlayerView(object obj)
         {
+//NEUUUU
+//            double M_Left = (-1) * MeisterZoomTransX * MeisterZoom;
+//           double M_Top = (-1) * MeisterZoomTransY * MeisterZoom;
+//            double M_Width = (-1) * M_Left + (Global.CurrentKampf.BodenplanView.ActualWidth - 30) / MeisterZoom;
+//            double M_Height = (-1) * M_Top + (Global.CurrentKampf.BodenplanView.ActualHeight  - 30) / MeisterZoom;
+            
+//            double M_anzFelderWidth = M_Width / 100;
+//            double M_anzFelderHeight = M_Height / 100;
+
             double x1 = 10000;
             double y1 = 10000;
             double x2 = 10000;
@@ -1721,7 +1750,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             PlayerGridOffsetX = (x1);
             PlayerGridOffsetY = (-y2);
+
+//            PlayerGridOffsetX = M_Left;
+//            PlayerGridOffsetY = M_Top;
+
+//            if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow != null)
+//            {
+//                double ScaleSpielerWidth = Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.ActualWidth / M_anzFelderWidth / 100;
+//                double ScaleSpielerHeight = Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.ActualHeight / M_anzFelderHeight / 100;
+
+
+//                ScaleSpielerGrid = Math.Min(ScaleSpielerWidth, ScaleSpielerHeight);// ScaleSpielerGrid;
+//            }
         }
+
 
         private Base.CommandBase _onSetBackgroundClick = null;
         public Base.CommandBase OnSetBackgroundClick

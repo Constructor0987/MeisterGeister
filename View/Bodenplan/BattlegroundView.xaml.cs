@@ -19,6 +19,8 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.View.General;
 using System.IO;
 using MeisterGeister.View.SpielerScreen;
+using Microsoft.Win32.SafeHandles;
+using System.Windows.Interop;
 
 namespace MeisterGeister.View.Bodenplan
 {
@@ -63,6 +65,7 @@ namespace MeisterGeister.View.Bodenplan
         public BattlegroundView()
         {
             InitializeComponent();
+            Global.CurrentKampf.BodenplanView = this;
             VM = new BattlegroundViewModel();
             
             ArenaGrid.Cursor = Cursors.Arrow;
@@ -94,39 +97,72 @@ namespace MeisterGeister.View.Bodenplan
             set { DataContext = value; }
         }
 
+        private ImageSource GetImageSource(string s)
+        {
+            ImageSource imgS = null;
+            try
+            {
+                imgS = new BitmapImage(new Uri(s));
+                return imgS;
+            }
+            catch 
+            {
+                return null;
+            }
+        }
         //Adds dynamicly created Picturebuttons for each picture in folder "Pictures".
         private void AddPictureButtons()
         {
-            PictureButtonWrapPanel.Children.Clear(); // alte Bilder entfernen
-
-            String[] picurls = Ressources.GetPictureUrls();
-            for (int i = 0; i < picurls.Count(); i++)
+try
             {
-                String _buttonPrefix = "picbutton";
-                var brush = new ImageBrush();
-                brush.ImageSource = new BitmapImage(new Uri(picurls[i], UriKind.Relative));
-                String[] pathsplit = picurls[i].Split('\\');
-                Button b = new Button() { Width = 50, Height = 50, Name = _buttonPrefix+i, ToolTip = picurls[i]};
-                //b.Content = brush;
-                b.Background = brush;
-                b.Tag = picurls[i];
-                b.Click += (object sender, RoutedEventArgs e) =>
-                    {
-                        var vm = DataContext as BattlegroundViewModel;
-                        if (vm != null)
+                PictureButtonWrapPanel.Children.Clear(); // alte Bilder entfernen
+                string appPath = Ressources.GetFullApplicationPath();
+                String[] picurls = Ressources.GetPictureUrls();
+                for (int i = 0; i < picurls.Count(); i++)
+                {
+                    if (!File.Exists(appPath + picurls[i])) continue;
+                    String _buttonPrefix = "picbutton";
+                    var brush = new ImageBrush();
+                    ImageSource isource = GetImageSource(appPath + picurls[i]);
+                    if (isource == null) continue;
+                    brush.ImageSource = isource; //new BitmapImage(new Uri(appPath + picurls[i]));
+                    String[] pathsplit = picurls[i].Split('\\');
+                    Button b = new Button() { Width = 50, Height = 50, Name = _buttonPrefix + i, ToolTip = picurls[i] };
+                    //b.Content = brush;
+                    b.Background = brush;
+                    b.Tag = Ressources.GetFullApplicationPath() + picurls[i];
+                    b.Click += (object sender, RoutedEventArgs e) =>
                         {
-                            int strlength = b.Name.Length-1;
-                            int buttonNr = Convert.ToInt32(b.Name.Substring(_buttonPrefix.Length, b.Name.Length - _buttonPrefix.Length));
-                            var newpic = vm.CreateImageObject(Ressources.Decoder(Ressources.GetFullApplicationPath() + (string)b.Tag), new Point(_xMovingOld >= -500 ? _xMovingOld + 500 : 0, _yMovingOld >=500? _yMovingOld - 500: 0));
-                            vm.UpdateCreatureLevelToTop();
-                        }
-                    };
+                            try
+                            {
+                                var vm = DataContext as BattlegroundViewModel;
+                                if (vm != null)
+                                {
+                                    int strlength = b.Name.Length - 1;
+                                    int buttonNr = Convert.ToInt32(b.Name.Substring(_buttonPrefix.Length, b.Name.Length - _buttonPrefix.Length));
+                                    var newpic = vm.CreateImageObject(Ressources.Decoder((string)b.Tag), new Point(_xMovingOld >= -500 ? _xMovingOld + 500 : 0, _yMovingOld >= 500 ? _yMovingOld - 500 : 0));
+                                    vm.MoveLastObjectBehindCreatures();
+                                    //vm.UpdateCreatureLevelToTop();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                ViewHelper.ShowError("Fehler beim Generieren der Bilddatei." + Environment.NewLine + "Bitte überprüfen, ob die Datei existiert:" + Environment.NewLine +
+                                  Ressources.Decoder(Ressources.GetFullApplicationPath() + (string)b.Tag), ex);
+                            }
+                        };
 
-                Grid.SetRow(b,Convert.ToInt32(i/3));
-                Grid.SetColumn(b,i%3);
+                    Grid.SetRow(b, Convert.ToInt32(i / 3));
+                    Grid.SetColumn(b, i % 3);
 
-                PictureButtonWrapPanel.Children.Add(b);
-            }            
+                    PictureButtonWrapPanel.Children.Add(b);
+                }
+            }
+            catch (Exception ex)
+            {
+                //ViewHelper.ShowError("Fehler beim Laden der Bilddatei." + Environment.NewLine + "Bitte überprüfen, ob alle Bilddateien existieren und lesbar sind:" + Environment.NewLine +
+                //  Ressources.GetFullApplicationPath() , ex);
+            }
         }
 
         private void Thumb_Drag(object sender, DragDeltaEventArgs e)
@@ -312,7 +348,7 @@ namespace MeisterGeister.View.Bodenplan
                 AddPictureButtons();
             }
             catch (Exception ex)
-            { ViewHelper.ShowError("Fehler beim Hinzufügen eines Bildes", ex); }
+            { ViewHelper.ShowError("Fehler beim Hinzufügen eines neuen Bildes", ex); }
         }
 
         public void sl_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -484,7 +520,7 @@ namespace MeisterGeister.View.Bodenplan
 
 
         #region --- Tastatur abfragen ---
-
+        Nullable<Point> pKämpfer = null;
         MenuItem miOpen = null;
         public static RoutedCommand ThemeCommandCheck = new RoutedCommand();
         private void ArenaGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -493,9 +529,8 @@ namespace MeisterGeister.View.Bodenplan
             {
                 //STRG - Abfragen um return zu setzen
                 if (Keyboard.IsKeyDown(Key.LeftCtrl)) return;
-
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                
+                if (VM != null)
                 {
                     var menuitem = ((DependencyObject)e.OriginalSource).FindAnchestor<MenuItem>();
                     if (menuitem != null)
@@ -509,7 +544,7 @@ namespace MeisterGeister.View.Bodenplan
                         {
                             ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
                                 .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
-                                .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                                .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
                             if (mi != null)
                             {
                                 if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
@@ -536,11 +571,11 @@ namespace MeisterGeister.View.Bodenplan
                     var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
                     if (listboxItem != null)
                     {
+                        if (VM.SelectedObject != null)
+                            VM.SelectedObject.IsMoving = false;
                         BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
-                        vm.SelectedObject = o; //TODO: Zugriff muss aus dem anderen Thread ausgeführt werden.
-                        vm.IsMoving = true;
+                        VM.SelectedObject = o; 
                         e.Handled = true;
-
                     }
 
                     var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
@@ -548,11 +583,11 @@ namespace MeisterGeister.View.Bodenplan
                     {
                         ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
                                 .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
-                                .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                                .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
                         if (mi == null)
                         {
                             mi = Global.CurrentKampf.Kampf.InitiativListe
-                                   .LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == vm.SelectedObject as IKämpfer);
+                                   .LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
                             ZeitImKampf zik = Global.CurrentKampf.Kampf.AktuelleAktionszeit;
                             zik.InitiativPhase = zik.InitiativPhase - 1;
 
@@ -644,7 +679,7 @@ namespace MeisterGeister.View.Bodenplan
             catch (Exception ex)
             { ViewHelper.ShowError("Fehler beim Drücken der Linken Maustaste", ex); }
         }
-        
+
         private void ArenaGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             try
@@ -710,85 +745,306 @@ namespace MeisterGeister.View.Bodenplan
             { ViewHelper.ShowError("Fehler beim Loslassen der Linken Maustaste", ex); }
         }
 
+        bool InitDnD = false;
+
         private void ArenaGrid_MouseMove(object sender, MouseEventArgs e)
         {
             try
             {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                
+                if (VM.useFog && Keyboard.IsKeyDown(Key.LeftCtrl))
+                    VM.FogFreimachen = true;
+                else
+                    VM.FogFreimachen = false;
+                if (VM.FogFreimachen && VM.FogPixelData != null)
                 {
-                    if (vm.useFog && Keyboard.IsKeyDown(Key.LeftCtrl))
-                        vm.FogFreimachen = true;
-                    else
-                        vm.FogFreimachen = false;
-                    if (vm.FogFreimachen && vm.FogPixelData != null)
+                    VM.SelectedObject = null;
+                    VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
+                    VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+                    if (e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
                     {
-                        vm.SelectedObject = null;
-                        vm.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
-                        vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
-                        if (e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
-                        {
-                            WriteableBitmap wbmap = VM.FogImage;
-                            int newX = (int)vm.CurrentMousePositionX / 10;
-                            int newY = (int)vm.CurrentMousePositionY / 10;
-                            int w = 10 * vm.FogFreeSize + 1;
-                            int h = (10 * vm.FogFreeSize + 1) * 10;
-                            int[] leererBereich = new int[w * h];
-                            if (e.RightButton == MouseButtonState.Pressed)
-                                leererBereich = Enumerable.Repeat(-0x01000000, w * h).ToArray();
+                        WriteableBitmap wbmap = VM.FogImage;
+                        int newX = (int)VM.CurrentMousePositionX / 10;
+                        int newY = (int)VM.CurrentMousePositionY / 10;
+                        int w = 10 * VM.FogFreeSize + 1;
+                        int h = (10 * VM.FogFreeSize + 1) * 10;
+                        int[] leererBereich = new int[w * h];
+                        if (e.RightButton == MouseButtonState.Pressed)
+                            leererBereich = Enumerable.Repeat(-0x01000000, w * h).ToArray();
 
-                            for (int i = 0; i < 100 * vm.FogFreeSize + 1; i++)
-                                Array.ConstrainedCopy(leererBereich, 0, vm.FogPixelData, i * 1000, w * h);// 100 * vm.FogFreeSize + 1);// w * h);
+                        for (int i = 0; i < 100 * VM.FogFreeSize + 1; i++)
+                            Array.ConstrainedCopy(leererBereich, 0, VM.FogPixelData, i * 1000, w * h);// 100 * VM.FogFreeSize + 1);// w * h);
 
-                            //Bei vm.FogFreeSize = 1
-                            // i = 0        0, 1000, 2000, 3000, 4000, ... 110*1000
-                            // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
-                            //...
-                            // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11                        
-                            int ber = 1000;
-                            wbmap.WritePixels(new Int32Rect(newX, newY,
-                                    newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
-                                    newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                                    VM.FogPixelData, ber, 0);
-                            VM.FogImage = wbmap;
-                        }
-                        return;
+                        //Bei VM.FogFreeSize = 1
+                        // i = 0        0, 1000, 2000, 3000, 4000, ... 110*1000
+                        // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
+                        //...
+                        // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11                        
+                        int ber = 1000;
+                        wbmap.WritePixels(new Int32Rect(newX, newY,
+                                newX + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * VM.FogFreeSize + 1,
+                                newY + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * VM.FogFreeSize + 1),
+                                VM.FogPixelData, ber, 0);
+                        VM.FogImage = wbmap;
+                    }
+                    return;
+                }
+
+                //cursor pixelchange?
+                if (Math.Abs(e.GetPosition(ArenaGrid).X - VM.CurrentMousePositionX) > 2 ||
+                    Math.Abs(e.GetPosition(ArenaGrid).Y - VM.CurrentMousePositionY) > 2)
+                {
+                    VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
+                    VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+
+                    if (VM.CreatingNewLine || VM.CreatingNewFilledLine)
+                    {
+                        _x2 = e.GetPosition(ArenaGrid).X;
+                        _y2 = e.GetPosition(ArenaGrid).Y;
+                        VM.MoveWhileDrawing(_x2, _y2, VM.Freizeichnen);
+                    }
+                    else if (e.LeftButton == MouseButtonState.Pressed && VM.SelectedObject != null)
+                    {
+                        ///////////////////////////////
+
+                        
+                        //Point curMousePosScreen = GetMousePosition();   
+
+                        //double factorX = (VM.CurrentMousePositionX - (VM.SelectedObject as BattlegroundCreature).CreatureX) / (VM.SelectedObject as BattlegroundCreature).CreatureWidth;
+                        //int minusX = (int)((VM.SelectedObject as BattlegroundCreature).CreatureWidth * factorX);
+
+                        //double factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureY) / (VM.SelectedObject as BattlegroundCreature).CreatureHeight;
+                        //int minusY = (int)((VM.SelectedObject as BattlegroundCreature).CreatureHeight * factorY);
+
+                        //SetCursorPos((int)curMousePosScreen.X - minusX, (int)curMousePosScreen.Y - minusY);
+
+                        InitDnD = true;
+                        VM.IsMoving = true;
+                        VM.SelectedObject.IsMoving = true;
+
+
+                        //    if (curMousePos.Y > (VM.SelectedObject as BattlegroundCreature).CreatureY)
+                        //        SetCursorPos((int)curMousePosScreen.X, (int)curMousePosScreen.Y - 2);
+                        //    else
+                        //        SetCursorPos((int)curMousePosScreen.X, (int)curMousePosScreen.Y + 1);
+
+                        //}
+
+                        //Point curKämpferPos = new Point((VM.SelectedObject as BattlegroundCreature).CreatureX, (VM.SelectedObject as BattlegroundCreature).CreatureY);
+                        //Point curKämpferPosScreen = new Point(Mouse.GetPosition((IInputElement)sender).X, Mouse.GetPosition((IInputElement)sender).Y);
+
+                        //double KämpferXpos = curMousePosScreen.X / curMousePos.X * curKämpferPos.X;
+                        //double KämpferYpos = curMousePosScreen.Y / curMousePos.Y * curKämpferPos.Y;
+                        //SetCursorPos(
+                        //    (int)(KämpferXpos + pp.X),
+                        //    (int)(KämpferYpos + pp.Y));
+                        //pKämpfer = new Point(KämpferXpos, KämpferYpos);
+
+                        //VM.CurrentMousePositionX = (VM.SelectedObject as BattlegroundCreature).CreatureX;
+                        //VM.CurrentMousePositionY = (VM.SelectedObject as BattlegroundCreature).CreatureY;
+                    }
+                    if (InitDnD)
+                    {
+                        VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
+                        VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+                        pKämpfer = e.GetPosition(null);
+                        InitDnD = false;
+                        //////////////////////////////
+                        ArenaGrid.Cursor = Cursors.Hand;                            
+                        //   VM.MoveObject(_xMovingOld, _yMovingOld, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+
+                        // Initialisiere drag & drop Operation
+                        DataObject dragData = new DataObject("BMKämpfer", VM.SelectedObject);
+                        DragDrop.DoDragDrop(ArenaGrid, dragData, DragDropEffects.Move);
+                        pKämpfer = null;
                     }
 
-                    //cursor pixelchange?
-                    if (Math.Round(e.GetPosition(ArenaGrid).X, 0) != vm.CurrentMousePositionX ||
-                        Math.Round(e.GetPosition(ArenaGrid).Y, 0) != vm.CurrentMousePositionY)
-                    {
-                        vm.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
-                        vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
-                        var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
-
-                        //handling different possibilities based on Objects (like MoveObject or Hero, Create Line..)
-                        var tempstick = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).ToList();
-                        foreach (var wesen in tempstick)
-                        {
-                            ((BattlegroundCreature)wesen).MoveObject(vm.CurrentMousePositionX, vm.CurrentMousePositionY, true);
-                        }
-                        if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
-                        {
-                            _x2 = e.GetPosition(ArenaGrid).X;
-                            _y2 = e.GetPosition(ArenaGrid).Y;
-                            vm.MoveWhileDrawing(_x2, _y2, vm.Freizeichnen);
-                        }
-                        else if (e.LeftButton == MouseButtonState.Pressed && vm.SelectedObject != null && vm.IsMoving)
-                        {
-                            vm.SelectedObject.IsMoving = true;
-                            ArenaGrid.Cursor = Cursors.Hand;
-                            vm.MoveObject(_xMovingOld, _yMovingOld, vm.CurrentMousePositionX, vm.CurrentMousePositionY);
-                        }
-                        _xMovingOld = vm.CurrentMousePositionX;
-                        _yMovingOld = vm.CurrentMousePositionY;
-                    }
+                    _xMovingOld = VM.CurrentMousePositionX;
+                    _yMovingOld = VM.CurrentMousePositionY;
                 }
             }
             catch (Exception ex)
             { ViewHelper.ShowError("Fehler beim Bewegen der Maus", ex); }
         }
+
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
+
+        [DllImport("User32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public Int32 X;
+            public Int32 Y;
+        };
+        public static Point GetMousePosition()
+        {
+            Win32Point w32Mouse = new Win32Point();
+            GetCursorPos(ref w32Mouse);
+            return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+        
+        Cursor cKämpfer = null;
+        private void ArenaGrid_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            try
+            {                
+                if (e.Effects == DragDropEffects.Copy || e.Effects == DragDropEffects.Move)
+                {
+                    if (cKämpfer == null && pKämpfer != null)
+                    {
+                        Point curMousePosScreen = GetMousePosition();
+
+                        double factorX = (VM.CurrentMousePositionX - (VM.SelectedObject as BattlegroundCreature).CreatureX) / (VM.SelectedObject as BattlegroundCreature).CreatureWidth;
+                        int minusX = (int)((VM.SelectedObject as BattlegroundCreature).CreatureWidth * (factorX * ArenaScrollViewer.Zoom));
+
+                        double factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureY) / (VM.SelectedObject as BattlegroundCreature).CreatureHeight;
+                        int minusY = (int)((VM.SelectedObject as BattlegroundCreature).CreatureHeight * (factorY * ArenaScrollViewer.Zoom));
+
+                        SetCursorPos((int)curMousePosScreen.X - minusX, (int)curMousePosScreen.Y - minusY);
+
+                        VM.SelectedObject.MoveObject( VM.CurrentMousePositionX, VM.CurrentMousePositionY,true);
+                        _xMovingOld = VM.CurrentMousePositionX;
+                        _yMovingOld = VM.CurrentMousePositionY;
+                        
+                        Image img = new Image();
+
+                        img.Width = (VM.SelectedObject as BattlegroundCreature).CreatureWidth * ArenaScrollViewer.Zoom;
+                        img.Height = (VM.SelectedObject as BattlegroundCreature).CreatureHeight * ArenaScrollViewer.Zoom;
+                        img.Source = new BitmapImage(new Uri("pack://application:,,," + (ArenaGrid.SelectedItem as IKämpfer).Bild));
+                        cKämpfer = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                    }
+
+                    if (cKämpfer != null)
+                    {
+                        e.UseDefaultCursors = false;
+                        Mouse.SetCursor(cKämpfer);
+                        VM.KämpferDnDTempPos = new Point (VM.CurrentMousePositionX, VM.CurrentMousePositionY );
+                                                
+                        VM.MoveObject(_xMovingOld, _yMovingOld, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                        _xMovingOld = VM.CurrentMousePositionX;
+                        _yMovingOld = VM.CurrentMousePositionY;
+                    }
+                }
+                else
+                    e.UseDefaultCursors = true;
+
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                ViewHelper.ShowError("Feedback Fehler" + Environment.NewLine + "Beim Starten des Drag'n'Drop-Vorgangs ist ein Fehler aufgetreten.", ex);
+                e.UseDefaultCursors = true;
+            }
+        }
+
+
+        #region -- CURSOR DRAG & DROP --
+        public static Cursor CreateCursor(UIElement element, double dX, double dY)
+        {
+            element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            element.Arrange(new Rect(new Point(), element.DesiredSize));
+
+            RenderTargetBitmap rtb =
+              new RenderTargetBitmap(
+               (int)element.DesiredSize.Width,
+               (int)element.DesiredSize.Height,
+                96, 96, PixelFormats.Pbgra32);
+            
+            rtb.Render(element);
+
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(rtb));
+
+            using (var ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                using (var bmp = new System.Drawing.Bitmap(ms))
+                {
+                    //string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+                  //  BitmapImage bmpi1 = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/mouse_cursornormal.png"));
+
+                    //System.Drawing.Bitmap bmpMouseNormal = new System.Drawing.Bitmap(bmp.Width, bmp.Height);
+                    //using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bmp))// bmpMouseNormal))
+                    //{
+                    //    //using (MemoryStream outStream = new MemoryStream())
+                    //    //{
+                    //    //    PngBitmapEncoder enc = new PngBitmapEncoder();
+                    //    //    enc.Frames.Add(BitmapFrame.Create(bmpi1));
+                    //    //    enc.Save(outStream);
+                    //    //    g.DrawImage(new System.Drawing.Bitmap(outStream), 0, 0);
+                    //    //}
+                    //    g.DrawImage(bmp, Convert.ToInt32(bmp.Width), Convert.ToInt32(bmp.Height));
+                    //}
+                    return InternalCreateCursor(bmp);                    
+                }
+            }
+        }
+        private static class NativeMethods
+        {
+            public struct IconInfo
+            {
+                public bool fIcon;
+                public int xHotspot;
+                public int yHotspot;
+                public IntPtr hbmMask;
+                public IntPtr hbmColor;
+            }
+
+            [DllImport("user32.dll")]
+            public static extern SafeIconHandle CreateIconIndirect(ref IconInfo icon);
+
+            [DllImport("user32.dll")]
+            public static extern bool DestroyIcon(IntPtr hIcon);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
+        }
+
+        private void ArenaGrid_Drop(object sender, DragEventArgs e)
+        {            
+            VM.SelectedObject.IsMoving = false;
+            ((BattlegroundCreature)VM.SelectedObject).CalculateSightArea();
+            cKämpfer = null;
+
+        }
+
+        private void ArenaGrid_DragOver(object sender, DragEventArgs e)
+        {
+            VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
+            VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+        }
+
+        private class SafeIconHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            public SafeIconHandle()
+                : base(true)
+            {
+            }
+            override protected bool ReleaseHandle()
+            {
+                return NativeMethods.DestroyIcon(handle);
+            }
+        }
+        private static Cursor InternalCreateCursor(System.Drawing.Bitmap bmp)
+        {
+            var iconInfo = new NativeMethods.IconInfo();
+            NativeMethods.GetIconInfo(bmp.GetHicon(), ref iconInfo);
+
+            iconInfo.xHotspot = 0;
+            iconInfo.yHotspot = 0;
+            iconInfo.fIcon = false;
+
+            SafeIconHandle cursorHandle = NativeMethods.CreateIconIndirect(ref iconInfo);
+            return CursorInteropHelper.Create(cursorHandle);
+        }
+        
+        #endregion
 
         private void ArenaGrid_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {

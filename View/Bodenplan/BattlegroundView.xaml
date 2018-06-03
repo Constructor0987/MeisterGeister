@@ -81,7 +81,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="{Binding MeisterBGWidth, UpdateSourceTrigger=PropertyChanged}" />
             </Grid.ColumnDefinitions>
             <Expander Grid.Column="0" IsExpanded="False" ExpandDirection="Right" HorizontalAlignment="Left" Margin="0,24,0,0">
                 <Grid>
@@ -196,68 +196,35 @@
                         <!--ObjektListe.View-->
                         <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" x:Name="ArenaGrid" 
                                  PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"  
-                                 MouseMove="ArenaGrid_MouseMove"
+                                 MouseMove="ArenaGrid_MouseMove" DragOver="ArenaGrid_DragOver"
                                  MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" 
                                  MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" 
                                  PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" 
                                  PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown"
                                  SelectionChanged="ArenaGrid_SelectionChanged" 
-                                 Height="10000" Width="10000" SelectionMode="Single" >
+                                 GiveFeedback="ArenaGrid_GiveFeedback"
+                                 Drop="ArenaGrid_Drop"
+                                 Height="10000" Width="10000" SelectionMode="Single" AllowDrop="True" >
                             <ListBox.Resources>
                                 <!--Datatemplate BattlegroundCreature (Hero & Enemy)-->
                                 <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
                                         <Thumb.Template>
                                             <ControlTemplate TargetType="{x:Type Thumb}">
-                                                <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-
-                                                    <!--<Label Background="White"  HorizontalAlignment="Center" VerticalAlignment="Top"
-                                                               Content="{Binding DataContext.KampfVM.Manöver.Ausführender.Kämpfer.HinweisText, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"  />-->
-
-
-                                                    <!-- Längerfristige Handlungen -->
-                                                    <!--<Grid Margin="80,50,0,0" Canvas.Top="{Binding CreatureNameY, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureNameX, UpdateSourceTrigger=PropertyChanged}"
-                                                            Background="#FFE0E07C" >
-                                                        <Grid.Style>
-                                                            <Style TargetType="Grid">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding DataContext.KampfVM.Manöver.Ausführender.Kämpfer.Manöver, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
-                                                                        Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged}" Value="{x:Type KampfManöver:FernkampfManöver}">
-                                                                        <Setter Property="Visibility" Value="Visible" />
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding DataContext.KampfVM.Manöver.Ausführender.Kämpfer.Manöver, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
-                                                                        Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged}" Value="{x:Type KampfManöver:Zauber}">
-                                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding DataContext.KampfVM.Manöver.Ausführender.Kämpfer.Manöver, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
-                                                                        Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged}" Value="{x:Type KampfManöver:SonstigesManöver}">
-                                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Grid.Style> 
-                                                        <Image Margin="-1" HorizontalAlignment="Left">
-                                                            <Image.Style>
-                                                                <Style TargetType="Image">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding DataContext.SelectedManöver.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
-                                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Fernkampf.png" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding DataContext.SelectedManöver.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
-                                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Magie.png" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding DataContext.SelectedManöver.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
-                                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Kalender.png" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Image.Style>
-                                                        </Image>
-
-                                                        <TextBlock Margin="10,0,0,0" Text="{Binding DataContext.SelectedManöver.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="14" FontSize="9" FontWeight="Bold"  />
-                                                    </Grid>-->
-
+                                                <Canvas >
+                                                    <!--Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">-->
+                                                    <Canvas.Style>
+                                                        <Style TargetType="Canvas">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Canvas.Style>
                                                     <Canvas.Effect>
                                                         <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, UpdateSourceTrigger=PropertyChanged}" ShadowDepth="10" BlurRadius="20" />
                                                     </Canvas.Effect>
@@ -278,9 +245,9 @@
                                                                     <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <!--<DataTrigger Binding="{Binding IsMoving}" Value="True">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    </DataTrigger>
+                                                                    </DataTrigger>-->
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Ellipse.Style>
@@ -298,9 +265,9 @@
                                                                     <DataTrigger Binding="{Binding VM.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                                                         <Setter Property="Visibility" Value="Visible" />
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <!--<DataTrigger Binding="{Binding IsMoving}" Value="True">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    </DataTrigger>
+                                                                    </DataTrigger>-->
                                                                     <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="False">
                                                                         <Setter Property="Fill" Value="DarkOrange"/>
                                                                         <Setter Property="Stroke" Value="DarkOrange" />
@@ -311,12 +278,16 @@
                                                     </Path>
 
                                                     <!--Frame for Heroe Picture-->
-                                                    <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}" Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}" Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Name}">
+                                                    <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}" 
+                                                               Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}" 
+                                                               Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}" 
+                                                               Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Name}" Stroke="#FF5D5757">
                                                         <Rectangle.Fill>
                                                             <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, Converter={StaticResource ImagePathConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Opacity="{Binding Opacity}" Stretch="Fill"/>
                                                         </Rectangle.Fill>
                                                     </Rectangle>
 
+                                                    <!---Z-Level-->
                                                     <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
                                                                     Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
 
@@ -354,9 +325,9 @@
                                                                     <DataTrigger Binding="{Binding WundenByZone[BeinL], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
                                                                         <Setter Property="Visibility" Value="Visible"/>
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <!--<DataTrigger Binding="{Binding IsMoving}" Value="True">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    </DataTrigger>
+                                                                    </DataTrigger>-->
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Image.Style>
@@ -372,39 +343,34 @@
                                                                     <DataTrigger Binding="{Binding HinweisText}" Value="">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <!--<DataTrigger Binding="{Binding IsMoving}" Value="True">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    </DataTrigger>
+                                                                    </DataTrigger>-->
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </TextBlock.Style>
                                                     </TextBlock>
 
-                                                    <!--<Label Visibility="{Binding DataContext.SelManöver.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, 
-                                                        Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" 
-                                                        Background="White"  HorizontalAlignment="Center" VerticalAlignment="Top"
-                                                        Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Margin="0,34,0,0"
-                                                        Content="{Binding DataContext.SelManöver.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"  />-->
-
-
+                                                    <!---CreatureName-->
                                                     <TextBlock  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" >
                                                         <!--Visibility="{Binding DataContext.ShowCreatureName, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">-->
                                                         <TextBlock.Style>
                                                             <Style TargetType="{x:Type TextBlock}">
                                                                 <Setter Property="Text" Value="{Binding KämpferTempName, FallbackValue=''}" />
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="True">
+                                                                <DataTrigger Binding="{Binding IsHeld}" Value="False">
+                                                                    <Setter Property="Text" Value="{Binding KämpferTempName}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsHeld}" Value="True">
                                                                         <Setter Property="Text" Value="{Binding Kurzname}" />
-                                                                    </DataTrigger>
-
-                                                                    <DataTrigger Binding="{Binding DataContext.ShowCreatureName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                                                </DataTrigger>
+                                                                    <!--<DataTrigger Binding="{Binding DataContext.ShowCreatureName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
                                                                         <Setter Property="Visibility" Value="Visible"/>
-                                                                    </DataTrigger>
+                                                                    </DataTrigger>-->
 
-                                                                    <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <!--<DataTrigger Binding="{Binding IsMoving}" Value="True">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    </DataTrigger>
+                                                                    </DataTrigger>-->
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </TextBlock.Style>
@@ -420,7 +386,7 @@
                                                     <Image Width="40" Height="40" Margin="0,-32,0, 0" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
                                                            Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"
                                                            Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" >
-                                                        <Image.Style>
+                                                        <!--<Image.Style>
                                                             <Style TargetType="Image">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding IsMoving}" Value="True">
@@ -428,13 +394,13 @@
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
-                                                        </Image.Style>
+                                                        </Image.Style>-->
                                                     </Image>
 
                                                     <!--Position-->
                                                     <Image Width="50" Height="50" Source="{Binding Position, Converter={StaticResource PositionToImageConverter1}, UpdateSourceTrigger=PropertyChanged}" 
                                                                Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" >
-                                                        <Image.Style>
+                                                        <!--<Image.Style>
                                                             <Style TargetType="Image">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding IsMoving}" Value="True">
@@ -442,13 +408,13 @@
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
-                                                        </Image.Style>
+                                                        </Image.Style>-->
                                                     </Image>
 
                                                     <!--Angriff-Abwehraktionen-->
                                                     <Grid Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}" 
                                                           Margin="{Binding MarginCreatureATPAaktionen}" HorizontalAlignment="Left" >
-                                                        <Grid.Style>
+                                                        <!--<Grid.Style>
                                                             <Style TargetType="Grid">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding IsMoving}" Value="True">
@@ -456,7 +422,7 @@
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
-                                                        </Grid.Style>
+                                                        </Grid.Style>-->
                                                         <Slider VerticalAlignment="Bottom" Margin="-50,0,0,0"
                                                             Minimum="0" IsSnapToTickEnabled="True" Width="50" ToolTip="Aktionen umwandeln"
                                                             Maximum="{Binding ki.Aktionen, UpdateSourceTrigger=PropertyChanged}" 
@@ -481,9 +447,9 @@
                                                                     <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                                                         <Setter Property="Visibility" Value="Visible"/>
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <!--<DataTrigger Binding="{Binding IsMoving}" Value="True">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    </DataTrigger>
+                                                                    </DataTrigger>-->
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Grid.Style>
@@ -509,12 +475,12 @@
                                                                     <Setter Property="ItemsSource" Value="{x:Null}" />
                                                                     <Style.Triggers>
                                                                         <DataTrigger Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, ConverterParameter=2, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="false">
-                                                                            <Setter Property="Command" Value="{Binding UmwandelnFernkampf}" />
+                                                                            <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnFernkampf, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                                         </DataTrigger>
                                                                         <MultiDataTrigger>
                                                                             <MultiDataTrigger.Conditions>
                                                                                 <Condition Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, ConverterParameter=2, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="true" />
-                                                                                <Condition Binding="{Binding ki.Kämpfer.GegnerBase}" Value="{x:Null}" />
+                                                                                <Condition Binding="{Binding IsHeld }" Value="True" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Fernkampfwaffen}" />
                                                                         </MultiDataTrigger>
@@ -527,7 +493,7 @@
                                                             <MenuItem.ItemContainerStyle>
                                                                 <!--BasedOn="{StaticResource {x:Type MenuItem}}"-->
                                                                 <Style TargetType="{x:Type MenuItem}" >
-                                                                    <Setter Property="Command" Value="{Binding DataContext.UmwandelnFernkampf, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type MenuItem}}}"/>
+                                                                <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnFernkampf, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
                                                                     <Setter Property="CommandParameter" Value="{Binding}"/>
                                                                 </Style>
                                                             </MenuItem.ItemContainerStyle>
@@ -543,10 +509,10 @@
                                                             <MenuItem.Style>
                                                                 <Style TargetType="{x:Type MenuItem}">
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding ki.Kämpfer.Held_Zauber}" Value="{x:Null}">
+                                                                        <DataTrigger Binding="{Binding IsHeld }" Value="False">
                                                                             <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" />
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" Value="{x:Null}">
+                                                                        <DataTrigger Binding="{Binding IsHeld }" Value="True">
                                                                             <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Held_Zauber}" />
                                                                         </DataTrigger>
                                                                     </Style.Triggers>
@@ -626,6 +592,7 @@
                                     </Thumb>
                                 </DataTemplate>
 
+                                <!-- Datatemplate FILLED PATHLINE -->
                                 <DataTemplate DataType="{x:Type model:FilledPathLine}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
                                         <Thumb.Template>
@@ -714,7 +681,8 @@
 
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <Canvas IsItemsHost="True" Background="Transparent"/>
+                                    <Canvas IsItemsHost="True" Background="Transparent" 
+                                 GiveFeedback="ArenaGrid_GiveFeedback" />
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListBox>

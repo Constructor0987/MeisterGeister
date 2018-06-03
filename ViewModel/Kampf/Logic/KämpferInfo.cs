@@ -467,7 +467,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
 
             //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann hat man maximal 2 Aktionen während die Abwehraktionen verfallen
-            var längerfristig = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
+            var längerfristig = AngriffsManöver.Where(mi => mi.AktKampfrunde == mi.Kampf.Kampfrunde)
+                .Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
             if (längerfristig != null)
             {
                 if (längerfristig.InitiativeModStart == 0)
