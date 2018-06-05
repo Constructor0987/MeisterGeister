@@ -16,6 +16,7 @@
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:s="clr-namespace:MeisterGeister.View.Bodenplan"
              xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Class="MeisterGeister.View.Bodenplan.BattlegroundView"
              mc:Ignorable="d" 
              x:Name="view"
@@ -178,7 +179,7 @@
                 </Grid>
             </Expander>
 
-            <Grid Grid.Column="1" Margin="0,24,0,0">
+            <Grid x:Name="grdSpielfeld" Grid.Column="1" Margin="0,24,0,0">
                 <wpfxc:ZoomControl Grid.Column="1" x:Name="ArenaScrollViewer" Background="#FF367536" 
                         MaxZoom="2" MinZoom="0.05" MaxZoomDelta="2" ZoomDeltaMultiplier="50" Mode="Original" 
                         TranslateX="{Binding MeisterZoomTransX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -186,7 +187,6 @@
                         Zoom="{Binding MeisterZoom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
                         ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"  VerticalAlignment="Bottom">
-
                     <Grid x:Name="ArenaGridTop" >
                         <Image x:Name="imgbtnBGStoppen" Source="{Binding BackgroundImage}" VerticalAlignment="Top" HorizontalAlignment="Left" 
                                Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}" 
@@ -202,9 +202,18 @@
                                  PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" 
                                  PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown"
                                  SelectionChanged="ArenaGrid_SelectionChanged" 
+                                 Drop="ArenaGrid_Drop" 
                                  GiveFeedback="ArenaGrid_GiveFeedback"
-                                 Drop="ArenaGrid_Drop"
                                  Height="10000" Width="10000" SelectionMode="Single" AllowDrop="True" >
+                            <ListBox.Style>
+                                <Style TargetType="ListBox">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsPointerVisible}" Value="True">
+                                            <Setter Property="Cursor" Value="Pen" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.Style>
                             <ListBox.Resources>
                                 <!--Datatemplate BattlegroundCreature (Hero & Enemy)-->
                                 <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
@@ -283,7 +292,22 @@
                                                                Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}" 
                                                                Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Name}" Stroke="#FF5D5757">
                                                         <Rectangle.Fill>
-                                                            <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, Converter={StaticResource ImagePathConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Opacity="{Binding Opacity}" Stretch="Fill"/>
+                                                            <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill">
+                                                                <ImageBrush.ImageSource>
+                                                                    <Binding Path="Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                                                        <Binding.FallbackValue>
+                                                                            <ImageSource>
+                                                                                /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                            </ImageSource>
+                                                                        </Binding.FallbackValue>
+                                                                        <Binding.TargetNullValue>
+                                                                            <ImageSource>
+                                                                                /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                            </ImageSource>
+                                                                        </Binding.TargetNullValue>
+                                                                    </Binding>
+                                                                </ImageBrush.ImageSource>
+                                                            </ImageBrush>
                                                         </Rectangle.Fill>
                                                     </Rectangle>
 
@@ -426,7 +450,7 @@
                                                         <Slider VerticalAlignment="Bottom" Margin="-50,0,0,0"
                                                             Minimum="0" IsSnapToTickEnabled="True" Width="50" ToolTip="Aktionen umwandeln"
                                                             Maximum="{Binding ki.Aktionen, UpdateSourceTrigger=PropertyChanged}" 
-                                                            Value="{Binding ki.Abwehraktionen, UpdateSourceTrigger=PropertyChanged}"/>
+                                                            Value="{Binding ki.Angriffsaktionen, UpdateSourceTrigger=PropertyChanged}"/>
                                                         <StackPanel Orientation="Horizontal" Margin="35,0,-3,0" >
                                                             <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.VerbrauchteAngriffsaktionen, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
                                                             <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.AngriffsaktionenÜbrig, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
@@ -434,6 +458,8 @@
                                                             <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.VerbrauchteAbwehraktionen, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
                                                             <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
                                                         </StackPanel>
+
+                                                        <TextBlock Margin="-60,0,0,0" Text="{Binding ki.AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="14" FontSize="9" FontWeight="Bold"  />
                                                     </Grid>
 
                                                     <!--Aktionsbuttons rechts-->
@@ -686,6 +712,8 @@
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListBox>
+
+                        <s:SpielerPointer Margin="{Binding PointerMargin,UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                     <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
         </local:DragScrollViewer> -->

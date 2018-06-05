@@ -68,7 +68,7 @@ namespace MeisterGeister.View.Bodenplan
             Global.CurrentKampf.BodenplanView = this;
             VM = new BattlegroundViewModel();
             
-            ArenaGrid.Cursor = Cursors.Arrow;
+    //        ArenaGrid.Cursor = Cursors.Arrow;
             AddPictureButtons();
             AddFogOfWar();
         //    InitiateSpielerScaling();
@@ -532,6 +532,12 @@ try
                 
                 if (VM != null)
                 {
+                    if (VM.IsPointerVisible)
+                    {
+                        VM.SetPointer(ArenaGridTop);
+                        e.Handled = true;
+                        return;
+                    }
                     var menuitem = ((DependencyObject)e.OriginalSource).FindAnchestor<MenuItem>();
                     if (menuitem != null)
                     {
@@ -591,6 +597,7 @@ try
                             ZeitImKampf zik = Global.CurrentKampf.Kampf.AktuelleAktionszeit;
                             zik.InitiativPhase = zik.InitiativPhase - 1;
 
+                            if (mi == null) return;
                             mi.Manöver.VerbleibendeDauer = 0;
                             //mi.Manöver.Dauer = mi.Start  .Aktionszeiten.Last(). .End = zik;
                             //(vm.SelectedObject as Wesen).ki.AngriffsManöver.Last().DauerInKampfaktionen
@@ -737,21 +744,18 @@ try
                             }
                             VM.UpdateCreaturesFromChangedKampferlist();
                         }
-                        ArenaGrid.Cursor = Cursors.Arrow;
+               //         ArenaGrid.Cursor = Cursors.Arrow;
                     }
                 }
             }
             catch (Exception ex)
             { ViewHelper.ShowError("Fehler beim Loslassen der Linken Maustaste", ex); }
         }
-
-        bool InitDnD = false;
-
+        
         private void ArenaGrid_MouseMove(object sender, MouseEventArgs e)
         {
             try
-            {
-                
+            {                
                 if (VM.useFog && Keyboard.IsKeyDown(Key.LeftCtrl))
                     VM.FogFreimachen = true;
                 else
@@ -796,7 +800,17 @@ try
                 {
                     VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
                     VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
-
+                    
+                    //Set new Position for sticked Wesen
+                    var tempstick = VM.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).ToList();
+                    if (tempstick.Count > 0)
+                    {
+                        foreach (var wesen in tempstick)
+                        {
+                            ((BattlegroundCreature)wesen).MoveObject(VM.CurrentMousePositionX, VM.CurrentMousePositionY, true);
+                        }
+                    }
+                    else
                     if (VM.CreatingNewLine || VM.CreatingNewFilledLine)
                     {
                         _x2 = e.GetPosition(ArenaGrid).X;
@@ -805,53 +819,21 @@ try
                     }
                     else if (e.LeftButton == MouseButtonState.Pressed && VM.SelectedObject != null)
                     {
-                        ///////////////////////////////
-
-                        
-                        //Point curMousePosScreen = GetMousePosition();   
-
-                        //double factorX = (VM.CurrentMousePositionX - (VM.SelectedObject as BattlegroundCreature).CreatureX) / (VM.SelectedObject as BattlegroundCreature).CreatureWidth;
-                        //int minusX = (int)((VM.SelectedObject as BattlegroundCreature).CreatureWidth * factorX);
-
-                        //double factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureY) / (VM.SelectedObject as BattlegroundCreature).CreatureHeight;
-                        //int minusY = (int)((VM.SelectedObject as BattlegroundCreature).CreatureHeight * factorY);
-
-                        //SetCursorPos((int)curMousePosScreen.X - minusX, (int)curMousePosScreen.Y - minusY);
-
-                        InitDnD = true;
                         VM.IsMoving = true;
                         VM.SelectedObject.IsMoving = true;
-
-
-                        //    if (curMousePos.Y > (VM.SelectedObject as BattlegroundCreature).CreatureY)
-                        //        SetCursorPos((int)curMousePosScreen.X, (int)curMousePosScreen.Y - 2);
-                        //    else
-                        //        SetCursorPos((int)curMousePosScreen.X, (int)curMousePosScreen.Y + 1);
-
-                        //}
-
-                        //Point curKämpferPos = new Point((VM.SelectedObject as BattlegroundCreature).CreatureX, (VM.SelectedObject as BattlegroundCreature).CreatureY);
-                        //Point curKämpferPosScreen = new Point(Mouse.GetPosition((IInputElement)sender).X, Mouse.GetPosition((IInputElement)sender).Y);
-
-                        //double KämpferXpos = curMousePosScreen.X / curMousePos.X * curKämpferPos.X;
-                        //double KämpferYpos = curMousePosScreen.Y / curMousePos.Y * curKämpferPos.Y;
-                        //SetCursorPos(
-                        //    (int)(KämpferXpos + pp.X),
-                        //    (int)(KämpferYpos + pp.Y));
-                        //pKämpfer = new Point(KämpferXpos, KämpferYpos);
-
-                        //VM.CurrentMousePositionX = (VM.SelectedObject as BattlegroundCreature).CreatureX;
-                        //VM.CurrentMousePositionY = (VM.SelectedObject as BattlegroundCreature).CreatureY;
+                        if (VM.SelectedObject is BattlegroundCreature) 
+                            VM.InitDnD = true;
+                        else
+                            VM.MoveObject(_xMovingOld, _yMovingOld, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
                     }
-                    if (InitDnD)
+                    if (VM.InitDnD)
                     {
                         VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
                         VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
                         pKämpfer = e.GetPosition(null);
-                        InitDnD = false;
-                        //////////////////////////////
-                        ArenaGrid.Cursor = Cursors.Hand;                            
-                        //   VM.MoveObject(_xMovingOld, _yMovingOld, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                        VM.InitDnD = false;
+
+                      //  ArenaGrid.Cursor = Cursors.Hand;
 
                         // Initialisiere drag & drop Operation
                         DataObject dragData = new DataObject("BMKämpfer", VM.SelectedObject);
@@ -909,15 +891,23 @@ try
                         VM.SelectedObject.MoveObject( VM.CurrentMousePositionX, VM.CurrentMousePositionY,true);
                         _xMovingOld = VM.CurrentMousePositionX;
                         _yMovingOld = VM.CurrentMousePositionY;
-                        
-                        Image img = new Image();
 
-                        img.Width = (VM.SelectedObject as BattlegroundCreature).CreatureWidth * ArenaScrollViewer.Zoom;
-                        img.Height = (VM.SelectedObject as BattlegroundCreature).CreatureHeight * ArenaScrollViewer.Zoom;
-                        img.Source = new BitmapImage(new Uri("pack://application:,,," + (ArenaGrid.SelectedItem as IKämpfer).Bild));
+                        //Get DPI Scaling from MainProgramm
+                        Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
+                        double dx = m.M11;
+                        double dy = m.M22;
+
+                        Image img = new Image();
+                        img.Width = (VM.SelectedObject as BattlegroundCreature).CreatureWidth * ArenaScrollViewer.Zoom * dx;
+                        img.Height = (VM.SelectedObject as BattlegroundCreature).CreatureHeight * ArenaScrollViewer.Zoom * dy;
+                        img.Stretch = Stretch.Fill;
+                        string pic = (ArenaGrid.SelectedItem as IKämpfer).Bild ?? "pack://application:,,," + "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                        
+                        if (!pic.StartsWith("/") && !File.Exists(pic))
+                            pic = "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                        img.Source = new BitmapImage(new Uri(pic.StartsWith("/")? "pack://application:,,," + pic: pic)); 
                         cKämpfer = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
                     }
-
                     if (cKämpfer != null)
                     {
                         e.UseDefaultCursors = false;
@@ -931,7 +921,6 @@ try
                 }
                 else
                     e.UseDefaultCursors = true;
-
                 e.Handled = true;
             }
             catch (Exception ex)
@@ -1011,7 +1000,7 @@ try
             VM.SelectedObject.IsMoving = false;
             ((BattlegroundCreature)VM.SelectedObject).CalculateSightArea();
             cKämpfer = null;
-
+            pKämpfer = null;
         }
 
         private void ArenaGrid_DragOver(object sender, DragEventArgs e)

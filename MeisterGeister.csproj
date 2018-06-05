@@ -796,6 +796,9 @@
     <Compile Include="View\Bodenplan\BattlegroundTopMenuView.xaml.cs">
       <DependentUpon>BattlegroundTopMenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Bodenplan\SpielerPointer.xaml.cs">
+      <DependentUpon>SpielerPointer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Einstellungen\HUEColorDialog.xaml.cs">
       <DependentUpon>HUEColorDialog.xaml</DependentUpon>
     </Compile>
@@ -1605,6 +1608,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Bodenplan\SliderWithDisplayTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Bodenplan\SpielerPointer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2717,6 +2724,8 @@
     <Resource Include="Images\Kienspan.png" />
     <Resource Include="Images\Icons\Kienspan.png" />
     <Resource Include="Images\Icons\Binsenlicht.png" />
+    <Resource Include="Images\Icons\rechteckig.png" />
+    <Resource Include="Images\Icons\hex.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

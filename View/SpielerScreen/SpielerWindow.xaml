@@ -5,6 +5,7 @@
         xmlns:vmBoden="clr-namespace:MeisterGeister.ViewModel.Bodenplan"
         xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
         xmlns:kampfInfo="clr-namespace:MeisterGeister.View.Kampf"
+        xmlns:s="clr-namespace:MeisterGeister.View.SpielerScreen"
         xmlns:Kampf="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              
@@ -150,7 +151,22 @@
                                             <!--Frame for Heroe Picture-->
                                             <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
                                                 <Rectangle.Fill>
-                                                    <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Converter={StaticResource ImagePathConverter}}" Opacity="{Binding Opacity}" Stretch="Fill"/>
+                                                    <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill">
+                                                        <ImageBrush.ImageSource>
+                                                            <Binding Path="Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                                                <Binding.FallbackValue>
+                                                                    <ImageSource>
+                                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                    </ImageSource>
+                                                                </Binding.FallbackValue>
+                                                                <Binding.TargetNullValue>
+                                                                    <ImageSource>
+                                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                    </ImageSource>
+                                                                </Binding.TargetNullValue>
+                                                            </Binding>
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
                                                 </Rectangle.Fill>
                                             </Rectangle>
 
@@ -420,16 +436,17 @@
                     </ListBox.ItemsPanel>
                 </ListBox>
                 <Image Name="imgFog2" Source="{Binding FogImage}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10000" Height="10000"
-                                Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
+                     Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
+                <s:SpielerPointer Margin="{Binding PointerMargin}" Visibility="{Binding IsPointerVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
             </Grid>
-            <Label >
+            <!--<Label >
                 <Label.Content>
                     <StackPanel>
                         <TextBlock Text="{Binding CurrentMousePositionX, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock Text="{Binding CurrentMousePositionY, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </Label.Content>
-            </Label>
+            </Label>-->
         </Grid>
     </Grid>
 </Window>

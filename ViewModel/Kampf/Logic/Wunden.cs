@@ -123,7 +123,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Type modTyp = Mod.WundenModifikator.TypByZone(zone);
                 int changes = w.SetModifikatorCount(modTyp, value);
 
-                k.AusdauerAktuell -= AusdauerSchaden(this[zone], value); //WdS 83
+                if (!k.keineWeiterenAuswirkungenBeiWunden)
+                    k.AusdauerAktuell -= AusdauerSchaden(this[zone], value); //WdS 83
 
                 bool dreiWundenOderMehr = (this[zone] < 3 && value >= 3);
 
@@ -135,9 +136,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             if (dreiWundenOderMehr)
                             {
                                 // TODO ??: bewusstlos + blutverlust
-                                
+
                                 // TODO ??: Dialog MVVM-konform aufrufen
-                                k.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog("2W6",
+                                if (!k.keineWeiterenAuswirkungenBeiWunden)
+                                    k.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog("2W6",
                                     string.Format("SP durch {0}. Kopf-Wunde.", value));
                             }
                         }
@@ -151,7 +153,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             string wundeText = count > 1 ? "Wunden" : "Wunde";
 
                             // TODO ??: Dialog MVVM-konform aufrufen
-                            k.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog( count + "W6",
+                            if (!k.keineWeiterenAuswirkungenBeiWunden)
+                                k.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog( count + "W6",
                                 string.Format("SP durch {0} Brust-{1}.", count, wundeText));
                             if (dreiWundenOderMehr)
                             {
@@ -187,7 +190,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             string wundeText = count > 1 ? "Wunden" : "Wunde";
 
                             // TODO ??: Dialog MVVM-konform aufrufen
-                            k.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog(count + "W6",
+                            if (!k.keineWeiterenAuswirkungenBeiWunden)
+                                k.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog(count + "W6",
                                 string.Format("SP durch {0} Bauch-{1}.", count, wundeText));
                             if (dreiWundenOderMehr)
                             {

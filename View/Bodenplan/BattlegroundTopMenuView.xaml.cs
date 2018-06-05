@@ -109,7 +109,13 @@ namespace MeisterGeister.View.Bodenplan
             if (result == true)
             {
                 var vm = DataContext as BattlegroundViewModel;
-                if (vm != null) vm.LoadBattlegroundFromXML(dlg.FileName);
+                if (vm != null)
+                {
+                    Global.CurrentKampf.Kampf.Kämpfer.Clear();
+                    Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
+                    vm.LoadBattlegroundFromXML(dlg.FileName);
+                    vm.UpdateCreatureLevelToTop();
+                }
             }
         }
 

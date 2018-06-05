@@ -370,6 +370,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        [DependentProperty("Angriffsaktionen")]
+        public int MaxAngriffsaktionen
+        {
+            get 
+            { return Angriffsaktionen >= 2? Angriffsaktionen: 2; }
+        }
+
         private int _angriffsaktionen = 1;
         [DependentProperty("Initiative")]
         public int Angriffsaktionen
@@ -377,6 +384,37 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _angriffsaktionen; }
             set
             {
+                //Check Längerfristige Handlung ist aktiv und Umwandeln in Attacke-Aktion
+                ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
+                                .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
+                                .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == this.Kämpfer);
+                if (mi == null)
+                {
+                    mi = Global.CurrentKampf.Kampf.InitiativListe.LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == this.Kämpfer);
+                }
+                if (mi != null && mi.Manöver.GetType() != typeof(Manöver.Attacke))
+                {
+                    if (ViewHelper.ConfirmYesNoCancel("Längerfristige Handlung unterbrechen", "Durch die Änderung der Aktionen wird die längerfristige Handlung unterbrochen." + Environment.NewLine + Environment.NewLine +
+                        this.Kämpfer.Name + " will ein " + (
+                        mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver) ? "Fernkampf '(" + 
+                        ((mi.Manöver as Manöver.FernkampfManöver).FernkampfWaffeSelected != null?
+                            (mi.Manöver as Manöver.FernkampfManöver).FernkampfWaffeSelected.Name:
+                            "unbekannt" ) + ")":
+                        mi.Manöver.GetType() == typeof(Manöver.Zauber) ? "Zauber: '" +
+                            ((mi.Manöver as Manöver.Zauber).Held_Zauber != null? (mi.Manöver as Manöver.Zauber).Held_Zauber.Zauber.Name :
+                            (mi.Manöver as Manöver.Zauber).GegnerBase_Zauber != null? (mi.Manöver as Manöver.Zauber).GegnerBase_Zauber.Zauber.Name : ""):
+                        mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) ? "sonstiges Manöver: '" +
+                        (mi.Manöver as Manöver.SonstigesManöver).Name :
+                        " unbekanntes Manöver" ) + "' durchfürhen." + Environment.NewLine + Environment.NewLine +
+                        "Diese Handlung würde noch " + mi.Manöver.VerbleibendeDauer + " Aktionen dauern." + Environment.NewLine + Environment.NewLine +
+                        "Soll die Handlung unterbrochen werden?") != 2) return;
+
+                    mi.Manöver.VerbleibendeDauer = 0;
+                    Global.CurrentKampf.Kampf.SortedInitiativListe =
+                        Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase);
+                    mi.UmwandelnAttacke.Execute(null);
+                }
+
                 if (value < 0)
                     value = 0;
                 if (value > Aktionen)
@@ -455,6 +493,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return FreieAktionen - VerbrauchteFreieAktionen; }
         }
 
+        private ManöverInfo _aktManöverInfo = null;
+        public ManöverInfo AktManöverInfo
+        {
+            get { return _aktManöverInfo; }
+            set { Set(ref _aktManöverInfo, value); }
+        }
+
         private void AktionenBerechnen()
         {
             int aktionen = 2;
@@ -471,6 +516,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 .Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
             if (längerfristig != null)
             {
+                AktManöverInfo = längerfristig;
                 if (längerfristig.InitiativeModStart == 0)
                 {
                     Aktionen = aktionen;

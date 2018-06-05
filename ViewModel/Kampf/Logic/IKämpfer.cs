@@ -72,7 +72,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int Wundschwelle3 { get; }
         new IWunden Wunden { get; }
         IWunden WundenByZone { get; }
-        
+
+        //Laden der Battlemap
+        bool keineWeiterenAuswirkungenBeiWunden { get; set; }
+
         //int Aktionen { get; } //maximale anzahl an Aktionen, die aufgeteilt werden können
         //int FreieAktionen { get; set; }
         ////Zuteilung der Aktionen in Angriffsaktionen und Abwehraktionen
@@ -82,7 +85,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //int VerbrauchteAngriffsaktionen { get; set; }
         //int VerbrauchteAbwehraktionen { get; set; }
         //int VerbrauchteFreieAktionen { get; set; }
-        
+
         ////Aktuellen Kampfstil abbilden. Halbschwert, Beidhändiger Kampf, Schildkampf, ...
         //Kampfstil Kampfstil { get; set; }
 

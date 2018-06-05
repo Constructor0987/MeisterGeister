@@ -57,7 +57,14 @@ namespace MeisterGeister.Model
             Bild = gegnerBase.Bild;
             Bemerkung = gegnerBase.Bemerkung;
         }
+        
 
+        private bool _keineWeiterenAuswirkungenBeiWunden = false;
+        public bool keineWeiterenAuswirkungenBeiWunden
+        {
+            get { return _keineWeiterenAuswirkungenBeiWunden; }
+            set { Set(ref _keineWeiterenAuswirkungenBeiWunden, value); }
+        }
 
 
         private ICollection<IWesenPlaylist> _wesenplaylist;
@@ -139,6 +146,12 @@ namespace MeisterGeister.Model
             }
             else
                 _initiativeWurf = Logic.General.Würfel.Parse(INIZufall);
+            return INIBasis - BE.GetValueOrDefault() + InitiativeWurf;
+        }
+
+        public int Initiative(int INImanuell)
+        {
+            _initiativeWurf = INImanuell;
             return INIBasis - BE.GetValueOrDefault() + InitiativeWurf;
         }
 

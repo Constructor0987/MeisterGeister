@@ -21,6 +21,8 @@ using MeisterGeister.View.Kampf;
 using MeisterGeister.ViewModel.Kampf;
 using WPFExtensions.Controls;
 using Application = System.Windows.Application;
+using MeisterGeister.View.Bodenplan;
+using MeisterGeister.View.SpielerScreen;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
@@ -680,16 +682,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #endregion
-
-        //public Thickness PosMarginTh
-        //{
-        //    get { return new Thickness(
-        //        SelectedObject != null && SelectedObject is BattlegroundCreature ? (SelectedObject as BattlegroundCreature).CreatureX : 0 + 90,                 
-        //        SelectedObject != null && SelectedObject is BattlegroundCreature ? (SelectedObject as BattlegroundCreature).CreatureY - 27: -27, 
-        //        0, 0);
-        //    }
-        //}
-
+        
         private bool _leftShiftPressed = false;
         public bool LeftShiftPressed
         {
@@ -1193,7 +1186,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public Color GridColor
         {
             get { return gridColor;}
-            set { Set(ref gridColor, value); RechteckGrid = true; }
+            set { Set(ref gridColor, value); if (RechteckGrid) RechteckGrid = true; else HexGrid = true; }
         }
 
         private bool rechteckGrid = true;
@@ -1329,7 +1322,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
             var imageobject =
                 new ImageObject(picurl, ((-1) * MeisterZoomTransX+200) / MeisterZoom, ((-1) * MeisterZoomTransY+200) / MeisterZoom );
-//                new ImageObject(picurl, p.X, p.Y);
             if (brush.ImageSource.Width >= brush.ImageSource.Height)
             {
                 imageobject.ImageWidth = 100;
@@ -1353,6 +1345,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get { return _isMoving; }
             set { Set(ref _isMoving, value); }
+        }
+
+        private bool _initDnD;
+        public bool InitDnD
+        {
+            get { return _initDnD; }
+            set { Set(ref _initDnD, value); }
         }
 
         public void MoveObject(double xOld, double yOld, double xNew, double yNew)
@@ -1484,7 +1483,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BattlegroundBaseObject bbo = BattlegroundObjects[BattlegroundObjects.Count - 1];
 
             int x = BattlegroundObjects.IndexOf(BattlegroundObjects.FirstOrDefault(t => t is BattlegroundCreature));
-            if (x > 0) BattlegroundObjects.Move(BattlegroundObjects.Count - 1, x);
+            if (x >= 0) BattlegroundObjects.Move(BattlegroundObjects.Count - 1, x);
         }
 
         //keeps heroes and monsters always on top
@@ -1526,6 +1525,58 @@ namespace MeisterGeister.ViewModel.Bodenplan
             OnChanged("Opacity");
             OnChanged("ZLevel");
         }
+
+        #region -- Screen Pointer --
+
+        private bool _isPointerVisible = false;
+        public bool IsPointerVisible
+        {
+            get { return _isPointerVisible; }
+            set
+            {
+                SelectedObject = null;
+                _isPointerVisible = value;
+                PointerVisibility = value? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;                
+                OnChanged("IsPointerVisible");
+            }
+        }
+
+        private System.Windows.Visibility _pointerVisibility = System.Windows.Visibility.Collapsed;
+        public System.Windows.Visibility PointerVisibility
+        {
+            get { return _pointerVisibility; }
+            set { Set(ref _pointerVisibility, value); }
+        }
+
+        private double _pointerDurchmesser = 25.0;
+        public double PointerDurchmesser
+        {
+            get { return _pointerDurchmesser; }
+            set { Set(ref _pointerDurchmesser, value); }
+        }
+        
+        public void SetPointer(object parameter)
+        {
+            if (parameter == null || !(parameter is Grid))
+                return;
+            Grid grid = (Grid)parameter;
+            System.Windows.Point mousePos = System.Windows.Input.Mouse.GetPosition(grid);
+            _xScale = mousePos.X / grid.ActualWidth;
+            _yScale = mousePos.Y / grid.ActualHeight;
+            PointerMargin = new System.Windows.Thickness(mousePos.X - PointerDurchmesser / 2, mousePos.Y - PointerDurchmesser / 2, 0, 0);
+        }
+
+        private double _xScale = 1;
+        private double _yScale = 1;
+
+        private System.Windows.Thickness _pointerMargin = new System.Windows.Thickness();
+        public System.Windows.Thickness PointerMargin
+        {
+            get { return _pointerMargin; }
+            set { Set(ref _pointerMargin, value); }
+        }
+
+        #endregion
 
         //TODO fixme or replace me
         #region Sticky Stuff, der gerade nicht richtig funktioniert
@@ -1640,14 +1691,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
 
         #endregion
-
-        private Rect _meisterZoomBox = new Rect(0, 0, 10000, 10000);
-        public Rect MeisterZoomBox
-        {
-            get { return _meisterZoomBox; }
-            set { Set(ref _meisterZoomBox, value); }
-        }
-
+        
         #region Commands
 
         private Base.CommandBase _onBtnPosIniWindow = null;
@@ -1790,8 +1834,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #endregion
-
-
+        
         #region Dispose
         bool disposed = false;
 

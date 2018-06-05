@@ -29,5 +29,33 @@ namespace MeisterGeister.View.Bodenplan
             get { return battlegroundView1.VM; }
             set { battlegroundView1.VM = value; }
         }
+
+        private static VisualBrush _visualBrush = null;
+        public static VisualBrush VisualBrush
+        {
+            get
+            {
+                if (_visualBrush == null && _instance != null)
+                    _visualBrush = new VisualBrush(BattlegroundWindow.Instance);
+                return _visualBrush;
+            }
+        }
+
+        public static event EventHandler BattlegroundWindowInstantiated;
+        private static BattlegroundWindow _instance;
+        public static BattlegroundWindow Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new BattlegroundWindow();
+                    _visualBrush = new VisualBrush(_instance);
+                    if (BattlegroundWindowInstantiated != null)
+                        BattlegroundWindowInstantiated(_instance, new EventArgs());
+                }
+                return _instance;
+            }
+        }
     }
 }

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="MeisterGeister.View.Bodenplan.SpielerPointer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Visibility="{Binding PointerVisibility}">
+    <Grid>
+        <Ellipse Name="ellipsePointer" Fill="Yellow" Stroke="Red" Height="{Binding PointerDurchmesser, FallbackValue=25, TargetNullValue=25}" Width="{Binding PointerDurchmesser, FallbackValue=25, TargetNullValue=25}" StrokeThickness="1" Opacity="0.5" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Ellipse.Triggers>
+                <EventTrigger RoutedEvent="Ellipse.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                                                    Storyboard.TargetName="ellipsePointer">
+                            <ColorAnimation From="Yellow" To="Red" Duration="0:0:1" AutoReverse="True"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                    <!--<BeginStoryboard>
+                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="Height"
+                    Storyboard.TargetName="ellipsePointer">
+                    <DoubleAnimation From="25" To="50" Duration="0:0:1" AutoReverse="True"/>
+                </Storyboard>
+            </BeginStoryboard>
+            <BeginStoryboard>
+                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="Width"
+                    Storyboard.TargetName="ellipsePointer">
+                    <DoubleAnimation From="25" To="50" Duration="0:0:1" AutoReverse="True"/>
+                </Storyboard>
+            </BeginStoryboard>-->
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+    </Grid>
+</UserControl>

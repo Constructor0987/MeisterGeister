@@ -12,6 +12,9 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Drawing;
 using System.Data;
+using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -127,6 +130,30 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["ZDisplayX"] = o.ZDisplayX;
             dt.Rows[dt.Rows.Count - 1]["ZDisplayY"] = o.ZDisplayY;
             dt.Rows[dt.Rows.Count - 1]["ZLevel"] = o.ZLevel;
+            dt.Rows[dt.Rows.Count - 1]["SightLineSektor"] = o.SightLineSektor;
+            dt.Rows[dt.Rows.Count - 1]["HinweisText"] = (o as IKämpfer).HinweisText;
+            dt.Rows[dt.Rows.Count - 1]["ObjectSize"] = o.ObjectSize;
+
+            dt.Rows[dt.Rows.Count - 1]["LebensenergieAktuell"] = (o is Gegner) ? (o as Gegner).LebensenergieAktuell : (o as Held).LebensenergieAktuell;
+            dt.Rows[dt.Rows.Count - 1]["KarmaenergieAktuell"] = (o is Gegner) ? (o as Gegner).KarmaenergieAktuell : (o as Held).KarmaenergieAktuell;
+            dt.Rows[dt.Rows.Count - 1]["AusdauerAktuell"] = (o is Gegner) ? (o as Gegner).AusdauerAktuell : (o as Held).AusdauerAktuell;
+            dt.Rows[dt.Rows.Count - 1]["AstralenergieAktuell"] = (o is Gegner) ? (o as Gegner).AstralenergieAktuell : (o as Held).AstralenergieAktuell;
+            dt.Rows[dt.Rows.Count - 1]["IstAnführer"] = (o as Wesen).ki.IstAnführer;
+
+            dt.Rows[dt.Rows.Count - 1]["Wunden"] = (o is Gegner) ? (o as Gegner).Wunden : (o as Held).Wunden;
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneUnlokalisiert"] = (o as IKämpfer).WundenByZone[Trefferzone.Unlokalisiert];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneArmL"] = (o as IKämpfer).WundenByZone[Trefferzone.ArmL];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneArmR"] = (o as IKämpfer).WundenByZone[Trefferzone.ArmR];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneBauch"] = (o as IKämpfer).WundenByZone[Trefferzone.Bauch];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneBeinL"] = (o as IKämpfer).WundenByZone[Trefferzone.BeinL];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneBeinR"] = (o as IKämpfer).WundenByZone[Trefferzone.BeinR];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneBrust"] = (o as IKämpfer).WundenByZone[Trefferzone.Brust];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneGesamt"] = (o as IKämpfer).WundenByZone[Trefferzone.Gesamt];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneKopf"] = (o as IKämpfer).WundenByZone[Trefferzone.Kopf];
+            dt.Rows[dt.Rows.Count - 1]["WundenByZoneRücken"] = (o as IKämpfer).WundenByZone[Trefferzone.Rücken];
+
+            dt.Rows[dt.Rows.Count - 1]["Initiative"] = (o as Wesen).ki.Initiative;
+            dt.Rows[dt.Rows.Count - 1]["GUID"] = (o is Gegner) ? (o as Gegner).GegnerBaseGUID : (o as Held).HeldGUID; 
             return dt;
         }
 
@@ -146,6 +173,30 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Columns.Add("ZDisplayX");
             dt.Columns.Add("ZDisplayY");
             dt.Columns.Add("ZLevel");
+            dt.Columns.Add("SightLineSektor");
+            dt.Columns.Add("HinweisText");
+            dt.Columns.Add("ObjectSize");
+
+            dt.Columns.Add("LebensenergieAktuell");
+            dt.Columns.Add("KarmaenergieAktuell");
+            dt.Columns.Add("AusdauerAktuell");
+            dt.Columns.Add("AstralenergieAktuell");
+
+            dt.Columns.Add("IstAnführer");
+            dt.Columns.Add("Wunden");
+            dt.Columns.Add("WundenByZoneUnlokalisiert");
+            dt.Columns.Add("WundenByZoneArmL");
+            dt.Columns.Add("WundenByZoneArmR");;
+            dt.Columns.Add("WundenByZoneBauch");
+            dt.Columns.Add("WundenByZoneBeinL");
+            dt.Columns.Add("WundenByZoneBeinR");
+            dt.Columns.Add("WundenByZoneBrust");
+            dt.Columns.Add("WundenByZoneGesamt");
+            dt.Columns.Add("WundenByZoneKopf");
+            dt.Columns.Add("WundenByZoneRücken");
+
+            dt.Columns.Add("Initiative");
+            dt.Columns.Add("GUID");
             return dt;
         }
 
@@ -222,14 +273,32 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                         element.RunAfterXMLDeserialization();
                     }
 
+                    Nullable<bool> HeldWerteAnpassen = null;
                     foreach (var dt in loadedFile.ObsDT)
                     {
                         if (dt.TableName == "Settings") continue;
+                        DataRow drow = dt.Rows[0];
 
                         BattlegroundBaseObject bObj = Global.ContextHeld.HeldenGruppeListe.FirstOrDefault(t => t.ToString() == dt.TableName);
+                        if (bObj != null && Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer) == null)
+                        {
+                            Global.ContextHeld.Insert<Model.Held>(bObj as Held);
+                            Global.CurrentKampf.Kampf.Kämpfer.Add(bObj as Held, 1);
+                        }
+                        if (bObj == null && drow.ItemArray.Length > 12)
+                        {
+                            GegnerBase gb = Global.ContextHeld.Liste<GegnerBase>().FirstOrDefault(t => t.GegnerBaseGUID.ToString() == drow["GUID"].ToString());
+                            if (gb != null)
+                            {
+                                Gegner gegner = new Model.Gegner(gb);
+                                bObj = gegner;
+
+                                Global.ContextHeld.Insert<Model.Gegner>(gegner);
+                                Global.CurrentKampf.Kampf.Kämpfer.Add(gegner, 2);
+                            }                            
+                        }
                         if (bObj != null)
                         {
-                            DataRow drow = dt.Rows[0];
                             (bObj as BattlegroundCreature).CreatureHeight = Convert.ToDouble(drow["CreatureHeight"]);
                             (bObj as BattlegroundCreature).CreatureNameX = Convert.ToDouble(drow["CreatureNameX"]);
                             (bObj as BattlegroundCreature).CreatureNameY = Convert.ToDouble(drow["CreatureNameY"]);
@@ -243,9 +312,71 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             (bObj as BattlegroundCreature).ZDisplayX = Convert.ToDouble(drow["ZDisplayX"]);
                             (bObj as BattlegroundCreature).ZDisplayY = Convert.ToDouble(drow["ZDisplayY"]);
                             (bObj as BattlegroundCreature).ZLevel = Convert.ToDouble(drow["ZLevel"]);
+                            if (drow.ItemArray.Length > 12)
+                            {
+                                (bObj as BattlegroundCreature).SightLineSektor = Convert.ToInt32(drow["SightLineSektor"]);
+                                (bObj as IKämpfer).HinweisText = drow["HinweisText"].ToString();
+                                (bObj as BattlegroundCreature).ObjectSize = Convert.ToDouble(drow["ObjectSize"]);
+
+                                if (bObj is Gegner)
+                                {
+                                    (bObj as Gegner).LebensenergieAktuell = Convert.ToInt32(drow["LebensenergieAktuell"]);
+                                    (bObj as Gegner).KarmaenergieAktuell = Convert.ToInt32(drow["KarmaenergieAktuell"]);
+                                    (bObj as Gegner).AusdauerAktuell = Convert.ToInt32(drow["AusdauerAktuell"]);
+                                    (bObj as Gegner).AstralenergieAktuell = Convert.ToInt32(drow["AstralenergieAktuell"]);
+                                    (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
+
+                                    (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = true;
+                                    (bObj as Gegner).Wunden = Convert.ToInt32(drow["Wunden"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.Unlokalisiert] = Convert.ToInt32(drow["WundenByZoneUnlokalisiert"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.ArmL] = Convert.ToInt32(drow["WundenByZoneArmL"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.ArmR] = Convert.ToInt32(drow["WundenByZoneArmR"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.Bauch] = Convert.ToInt32(drow["WundenByZoneBauch"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.BeinL] = Convert.ToInt32(drow["WundenByZoneBeinL"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.BeinR] = Convert.ToInt32(drow["WundenByZoneBeinR"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.Brust] = Convert.ToInt32(drow["WundenByZoneBrust"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.Gesamt] = Convert.ToInt32(drow["WundenByZoneGesamt"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
+                                    (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
+                                    (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                }
+                                else
+                                {
+                                    if (!HeldWerteAnpassen.HasValue)
+                                        HeldWerteAnpassen = ViewHelper.Confirm("Heldenwerte abpassen", "Die Battlemap-Datei enthält Werte der Helden." + Environment.NewLine + Environment.NewLine +
+                                            "Sollen die Werte der Battlemap-Datei benutzt werden?" + Environment.NewLine + Environment.NewLine + 
+                                            "ACHTUNG!  Diese überschreiben die aktuellen Heldenwerte der enthaltenen Helden");
+                                    if (HeldWerteAnpassen.Value)
+                                    {
+                                        (bObj as Held).LebensenergieAktuell = Convert.ToInt32(drow["LebensenergieAktuell"]);
+                                        (bObj as Held).KarmaenergieAktuell = Convert.ToInt32(drow["KarmaenergieAktuell"]);
+                                        (bObj as Held).AusdauerAktuell = Convert.ToInt32(drow["AusdauerAktuell"]);
+                                        //(bObj as Held).AusdauerAktuell = Convert.ToInt32(drow["AusdauerMax"]);
+                                        (bObj as Held).AstralenergieAktuell = Convert.ToInt32(drow["AstralenergieAktuell"]);
+                                        (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
+
+                                        (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = true;
+                                        if (drow["Wunden"].ToString() != "")
+                                            (bObj as Held).Wunden = Convert.ToInt32(drow["Wunden"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.Unlokalisiert] = Convert.ToInt32(drow["WundenByZoneUnlokalisiert"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.ArmL] = Convert.ToInt32(drow["WundenByZoneArmL"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.ArmR] = Convert.ToInt32(drow["WundenByZoneArmR"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.Bauch] = Convert.ToInt32(drow["WundenByZoneBauch"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.BeinL] = Convert.ToInt32(drow["WundenByZoneBeinL"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.BeinR] = Convert.ToInt32(drow["WundenByZoneBeinR"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.Brust] = Convert.ToInt32(drow["WundenByZoneBrust"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.Gesamt] = Convert.ToInt32(drow["WundenByZoneGesamt"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
+                                        (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
+                                        (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                    }
+                                }
+                                (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+                            }
                         }
                     }
                     stream.Close();
+                    Global.CurrentKampf.BodenplanViewModel.AddAllCreatures();
                     return loadedFile.ObsColl;
                 }
             }

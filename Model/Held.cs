@@ -35,6 +35,12 @@ namespace MeisterGeister.Model {
             LE_Aktuell = 12; AU_Aktuell = 12;
         }
 
+        private bool _keineWeiterenAuswirkungenBeiWunden = false;
+        public bool keineWeiterenAuswirkungenBeiWunden
+        {
+            get { return _keineWeiterenAuswirkungenBeiWunden; }
+            set { Set(ref _keineWeiterenAuswirkungenBeiWunden, value); }
+        }
 
         private ICollection<IWesenPlaylist> _wesenplaylist;
         private ICollection<IWesenPlaylist> Wesenplaylist
@@ -541,6 +547,9 @@ namespace MeisterGeister.Model {
             }
             set {
                 LE_Aktuell = value;
+                if (LE_Aktuell <= 0) Farbmarkierung = System.Windows.Media.Color.FromArgb(0, 255, 0, 0);
+                else if (LE_Aktuell <= 5) Farbmarkierung = System.Windows.Media.Color.FromArgb(0, 255, 255, 0);
+                else if (LE_Aktuell > 5) Farbmarkierung = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
             }
         }
         [DependentProperty("LebensenergieBasis"), DependentProperty("LebensenergieMod")]
@@ -2215,6 +2224,16 @@ namespace MeisterGeister.Model {
             if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III")) //WdS 76
                 be = (int)Math.Round(be / 2.0, MidpointRounding.AwayFromZero);
             
+            return InitiativeBasis - be + InitiativeWurf + InitiativeWaffen;
+        }
+
+        public int Initiative(int INImanuell)
+        {
+            _initiativeWurf = INImanuell;
+            
+            int be = Behinderung;
+            if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III")) //WdS 76
+                be = (int)Math.Round(be / 2.0, MidpointRounding.AwayFromZero);
             return InitiativeBasis - be + InitiativeWurf + InitiativeWaffen;
         }
 

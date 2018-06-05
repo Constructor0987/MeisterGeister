@@ -396,7 +396,7 @@
 
                                 <Grid>
                                     <!--Kämpfer Icon-->
-                                    <Image Margin="-2,0">
+                                    <Image Margin="-2,0" Stretch="Fill" Width="40" Height="40">
                                         <Image.Source>
                                             <Binding Path="Manöver.Ausführender.Kämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
                                                 <Binding.FallbackValue>
