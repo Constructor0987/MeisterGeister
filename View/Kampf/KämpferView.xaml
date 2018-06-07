@@ -93,19 +93,17 @@
                                     <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <WrapPanel ItemWidth="60" />
+                                                <WrapPanel ItemWidth="26" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Button Width="54" Tag="{Binding}" Focusable="False" Height="24"
-                                                        Content="{Binding Audio_Playlist.Name}"
-                                                                    Command="{Binding VM.OnWesenPlaylistClick, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
-                                                                    ToolTip="{Binding Audio_Playlist.Name}" >
-                                                    <!--<Button.Content>
-                                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Margin="-3" />
-                                                               --><!--Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}"--><!-- 
-                                                    </Button.Content>-->
+                                                <Button Width="24" Tag="{Binding}" Focusable="False" Height="24" ToolTip="{Binding Audio_Playlist.Name}"
+                                                        Command="{Binding VM.OnWesenPlaylistClick, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                        CommandParameter="{Binding}" >
+                                                    <Button.Content>
+                                                        <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />                                                               
+                                                    </Button.Content>
                                                 </Button>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

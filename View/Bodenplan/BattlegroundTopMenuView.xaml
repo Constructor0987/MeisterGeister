@@ -281,7 +281,7 @@
                                 </ToggleButton>
 
                                 <Slider Orientation="Horizontal" Minimum=".5" Maximum="1.5" VerticalAlignment="Top" Margin="2,32,2,-2" SmallChange=".01" LargeChange=".1"
-                                                Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MouseWheel="slSmall_MouseWheel" ValueChanged="Slider_ValueChanged"  
+                                                Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MouseWheel="slSmall_MouseWheel" 
                                                 ToolTip="Größe des INI-Feldes anpassen" Grid.Column="1" Style="{StaticResource SmallHorizontalSlider}" />
                                 <Button Name="btnPosIniWindow" Grid.Column="1" Width="22" Height="17" Margin="2,42,2,-2" Padding="1" Tag="{Binding PosIniWindow}" Command="{Binding onBtnPosIniWindow}" >
                                     <Grid Width="20" Height="15" Background="#FF494949" >
@@ -318,7 +318,7 @@
 
                             <Grid Width="90" Grid.Column="1" Margin="3,0" >
                                 <Image Source="/Images/Icons/General/y-offset.png" Height="25" Margin="0,10,4,0" Grid.RowSpan="2" Grid.Column="1"  HorizontalAlignment="Right" />
-                                <Image Source="/Images/Icons/General/x-offset.png" Height="25" Margin="20,20,0,0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2" />
+                                <Image Source="/Images/Icons/General/x-offset.png" Height="25" Margin="20,17,0,0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2" />
                                 <Button Width="27" Height="27" Padding="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,10,20" Command="{Binding OnBtnCenterPlayerView}" 
                                                 ToolTip="Ansicht des Meister-Bildschirms auf den Spieler-Bildschirm übertragen" >
                                     <Button.Content>
@@ -329,7 +329,7 @@
                                         </Grid>
                                     </Button.Content>
                                 </Button>
-                                <Slider Maximum="1000" Minimum="-9000" SmallChange="1" LargeChange="10" Style="{StaticResource SmallVerticalSlider}"
+                                <Slider Maximum="1000" Minimum="-9000" SmallChange="1" LargeChange="10" Style="{StaticResource SmallVerticalSlider}" 
                                             Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" 
                                                 ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
                                                 Orientation="Vertical" RenderTransformOrigin="0.5,0.5" Margin="68,15,2,0" >
@@ -343,10 +343,18 @@
                                     </Slider.RenderTransform>
                                 </Slider>
 
-                                <Slider Height="12" VerticalAlignment="Top" Margin="0,35,20,0" Minimum="-1000" Maximum="9000" SmallChange="1" LargeChange="10" MinHeight="5"
-                                            Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" Style="{StaticResource SmallHorizontalSlider}"
-                                            ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"/>
+                                <Slider Height="12" VerticalAlignment="Top" Margin="0,32,20,0"  SmallChange="1" LargeChange="10" MinHeight="5" IsDirectionReversed="{Binding InvertPlayerScrolling}"
+                                        Minimum="-1000" Maximum="9000"
+                                        Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" MouseWheel="sl_MouseWheel" Style="{StaticResource SmallHorizontalSlider}"
+                                        ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen">                                    
+                                </Slider>
 
+                                <CheckBox x:Name="chbxPlayerScreenInv" Margin="5,0,20,-1" Content="Invert" IsChecked="{Binding InvertPlayerScrolling}" Padding="1,0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" >
+                                    <CheckBox.ToolTip>
+                                        <TextBlock TextWrapping="Wrap" Text="Invertiert den X/Y-Slider für den Spieler-Bildschirm" />
+                                    </CheckBox.ToolTip>                                    
+                                </CheckBox>
+                                
                                 <StackPanel Orientation="Horizontal" Margin="30,0,-4,-5" VerticalAlignment="Top" >
                                     <!--<Label Content="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" Padding="0" Height="14" Width="15" HorizontalAlignment="Left"  />-->
                                     <Image Source="/Images/Icons/General/size.png" Height="15" HorizontalAlignment="Left" />
@@ -356,7 +364,7 @@
                                 </StackPanel>
 
                             </Grid>
-                            <CheckBox Grid.Row="1" Margin="5,0,0,5" IsChecked="{Binding IsPointerVisible}" Padding="1,0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" >
+                            <CheckBox Margin="5,0,58,5" IsChecked="{Binding IsPointerVisible}" Padding="1,0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" >
                                 <CheckBox.ToolTip>
                                     <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Auf dem Bild einen Zeiger anzeigen." />
                                 </CheckBox.ToolTip>
@@ -403,7 +411,8 @@
                                 </Grid>
                             </ToggleButton>
 
-                            --><!--<Button Margin="2,36,-22,-22" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="30" Width="35" ToolTip="Sicht Meister auf Spielern Bodenplan übertragen."
+                            -->
+                    <!--<Button Margin="2,36,-22,-22" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Height="30" Width="35" ToolTip="Sicht Meister auf Spielern Bodenplan übertragen."
                                  Focusable="False" Click="Button_Click">
                                 <Grid>
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" Margin="-12,-4,0,2"/>
@@ -413,7 +422,8 @@
                                 </Grid>
                             </Button>-->
 
-                            <!--<Label Content="Scale" VerticalAlignment="Bottom" Margin="5,0,0,32"/>--><!--
+                    <!--<Label Content="Scale" VerticalAlignment="Bottom" Margin="5,0,0,32"/>-->
+                    <!--
                             <Slider Orientation="Horizontal" Minimum=".5" Maximum="1.5" VerticalAlignment="Top" Margin="2,32,2,-2" SmallChange=".01" LargeChange=".1"
                                             Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MouseWheel="slSmall_MouseWheel" ValueChanged="Slider_ValueChanged"  
                                     ToolTip="Größe des INI-Feldes anpassen" Grid.Column="1" Style="{StaticResource SmallHorizontalSlider}" />
@@ -448,11 +458,11 @@
                             </Button>-->
 
 
-                            
-                        <!--</Grid>
+
+                    <!--</Grid>
                     </Border>-->
-                    
-                    
+
+
                     <Border BorderBrush="Silver" BorderThickness="1"  HorizontalAlignment="Left" Margin="0,0,0,-25" x:Name="border1_Copy" VerticalAlignment="Top" Grid.Column="5">
                         <Grid Margin="0,0,9,0">
                             <StackPanel Orientation="Horizontal">
@@ -467,7 +477,7 @@
                             <Button Content="Reset" Width="75" Height="22" VerticalAlignment="Top" Margin="10,45,0,0" Click="Button_Reset_Click"/>
                         </Grid>
                     </Border>
-                    
+
 
 
                     <Border Margin="2,2,0,0" HorizontalAlignment="Left" BorderBrush="Silver" BorderThickness="1" Grid.Column="1" >
@@ -560,7 +570,7 @@
                                             ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen" />
                                     </Grid>
                                 </GroupBox>-->
-                                
+
                                 <Button  Width="27" Height="27" Margin="5,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{Binding OnSetBackgroundClick}" ToolTip="Hintergrundbild festlegen" >
                                     <Button.Content>
                                         <Image Source="/Images/Icons/dungeon.png" Margin="-1" />
@@ -599,7 +609,9 @@
                                 <Grid>
                                     <Image Source="/Images/Icons/General/y-offset.png" Height="25" Margin="0,10,2,0" Grid.RowSpan="2" Grid.Column="1"  HorizontalAlignment="Right" />
                                     <Image Source="/Images/Icons/General/x-offset.png" Height="25" Margin="0,-5,20,7" Grid.Row="0" VerticalAlignment="Bottom" Grid.RowSpan="2" />
-                                    --><!--<Label Content="Feldgröße" VerticalAlignment="Top" Padding="0" Width="65" Margin="0,30,0,24"/>--><!--
+                                    -->
+                            <!--<Label Content="Feldgröße" VerticalAlignment="Top" Padding="0" Width="65" Margin="0,30,0,24"/>-->
+                            <!--
                                     <Button Width="27" Height="27" Padding="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,10,20" Command="{Binding OnBtnCenterPlayerView}" 
                                             ToolTip="Auf Spieler zentrieren" >
                                         <Button.Content>
@@ -629,7 +641,9 @@
                                         ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"/>
 
                                     <StackPanel Orientation="Horizontal" Margin="30,0,4,-2" VerticalAlignment="Top" >
-                                        --><!--<Label Content="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" Padding="0" Height="14" Width="15" HorizontalAlignment="Left"  />--><!--
+                                        -->
+                            <!--<Label Content="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" Padding="0" Height="14" Width="15" HorizontalAlignment="Left"  />-->
+                            <!--
                                         <Image Source="/Images/Icons/General/size.png" Height="15" HorizontalAlignment="Left" />
                                         <Slider Orientation="Horizontal" Minimum=".2" Maximum="2.5" VerticalAlignment="Top" SmallChange=".01" LargeChange=".1" Width="50" Margin="0,2"
                                             Value="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" MouseWheel="slSmall_MouseWheel"  Style="{StaticResource SmallHorizontalSlider}"

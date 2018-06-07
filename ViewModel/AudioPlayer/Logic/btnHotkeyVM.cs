@@ -30,20 +30,29 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         public class AudioData
         {
             public int audioStream = 0;
+            public int tempostream = 0;
 
-            public void Stop()
+            public bool Stop()
             {
-                if (audioStream != 0)
+                if (tempostream != 0)
                     Bass.BASS_ChannelStop(audioStream);
+                if (audioStream != 0)
+                    return Bass.BASS_ChannelStop(audioStream);
+                else
+                    return false;
             }
 
             public bool isStopped()
             {
-                return Bass.BASS_ChannelIsActive(audioStream) == BASSActive.BASS_ACTIVE_STOPPED;
+                return (tempostream == 0) ?
+                    Bass.BASS_ChannelIsActive(audioStream) == BASSActive.BASS_ACTIVE_STOPPED :
+                    Bass.BASS_ChannelIsActive(tempostream) == BASSActive.BASS_ACTIVE_STOPPED;
             }
             public bool isPlaying()
             {
-                return Bass.BASS_ChannelIsActive(audioStream) == BASSActive.BASS_ACTIVE_PLAYING;
+                return (tempostream == 0) ?
+                    Bass.BASS_ChannelIsActive(audioStream) == BASSActive.BASS_ACTIVE_PLAYING :
+                    Bass.BASS_ChannelIsActive(tempostream) == BASSActive.BASS_ACTIVE_PLAYING;
             }
             public bool isPaused()
             {
@@ -57,7 +66,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     _mySync = new SYNCPROC(EndSync);
                 Bass.BASS_ChannelSetSync(audioStream, BASSSync.BASS_SYNC_END | BASSSync.BASS_SYNC_MIXTIME, 0, _mySync, IntPtr.Zero);
 
-                Bass.BASS_ChannelPlay(audioStream, false);
+                if (tempostream == 0)
+                    Bass.BASS_ChannelPlay(audioStream, false);
+                else
+                    Bass.BASS_ChannelPlay(tempostream, false);
             }
             private void EndSync(int handle, int channel, int data, IntPtr user)
             {
@@ -65,23 +77,42 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 //     Close();
             }
 
-            public void Pause()
+            public bool Pause()
             {
-                Bass.BASS_ChannelPause(audioStream);
+                return (tempostream == 0) ?
+                    Bass.BASS_ChannelPause(audioStream) :
+                    Bass.BASS_ChannelPause(tempostream);
             }
-            public void Close()
+            public bool Close()
             {
+                if (tempostream != 0)
+                {
+                    if (!Bass.BASS_StreamFree(tempostream))
+                    {
+                        BASSError berr = Bass.BASS_ErrorGetCode();
+                        if (berr != 0)
+                        { }
+                    }
+                    tempostream = 0;
+                }
                 if (!Bass.BASS_StreamFree(audioStream))
                 {
                     BASSError berr = Bass.BASS_ErrorGetCode();
                     if (berr != 0)
                     { }
+                    audioStream = 0;
+                    return false;
+                }
+                else
+                {
+                    audioStream = 0;
+                    return true;
                 }
             }
 
             public void setSpeed(double speed)
             {
-                Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_MUSIC_SPEED, Convert.ToSingle(speed));
+                Bass.BASS_ChannelSetAttribute(tempostream, BASSAttribute.BASS_ATTRIB_TEMPO, Convert.ToInt32(Math.Round(speed))); 
             }
 
             public void setEcho(int Echo)
@@ -90,13 +121,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 BASS_BFX_ECHO4 echo = new BASS_BFX_ECHO4();
                 if (Echo == 1) echo.Preset_SmallEcho();
                 if (Echo == 2) echo.Preset_LongEcho();
-                int fxEchoHandle = Bass.BASS_ChannelSetFX(audioStream, BASSFXType.BASS_FX_BFX_ECHO4, 1);
+                int fxEchoHandle = Bass.BASS_ChannelSetFX(tempostream, BASSFXType.BASS_FX_BFX_ECHO4, 1);
                 Bass.BASS_FXSetParameters(fxEchoHandle, echo);
             }
 
             public void setPitch(double pitch)
             {
-                Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_TEMPO_PITCH, Convert.ToInt32(Math.Round(pitch)));
+                Bass.BASS_ChannelSetAttribute(tempostream, BASSAttribute.BASS_ATTRIB_TEMPO_PITCH, Convert.ToInt32(Math.Round(pitch))); 
             }
 
             private float lastVolume = 0;
@@ -135,7 +166,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             public float getVolume()
             {
                 float vol = 0f;
-                return (Bass.BASS_ChannelGetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_VOL, ref vol)) ? vol : 0f;
+                return (tempostream == 0) ?
+                    (Bass.BASS_ChannelGetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_VOL, ref vol)) ? vol : 0f :
+                    (Bass.BASS_ChannelGetAttribute(tempostream, BASSAttribute.BASS_ATTRIB_VOL, ref vol)) ? vol : 0f;
             }
             /// <summary>
             /// Setzt das Volume des Songs
@@ -144,7 +177,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             /// <returns></returns>
             public bool setVolume(double vol)
             {
-                return Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_VOL, Convert.ToSingle(vol));
+                return (tempostream == 0) ?
+                    Bass.BASS_ChannelSetAttribute(audioStream, BASSAttribute.BASS_ATTRIB_VOL, Convert.ToSingle(vol)) :
+                    Bass.BASS_ChannelSetAttribute(tempostream, BASSAttribute.BASS_ATTRIB_VOL, Convert.ToSingle(vol));
             }
             /// <summary>
             /// Gibt die Länge des Songs in Millisekunden zurück
@@ -152,7 +187,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             /// <returns></returns>
             public double getLength()
             {
-                return Bass.BASS_ChannelBytes2Seconds(audioStream, Bass.BASS_ChannelGetLength(audioStream) * 1000);
+                return (tempostream == 0) ?
+                    Bass.BASS_ChannelBytes2Seconds(audioStream, Bass.BASS_ChannelGetLength(audioStream) * 1000) :
+                    Bass.BASS_ChannelBytes2Seconds(tempostream, Bass.BASS_ChannelGetLength(tempostream) * 1000);
             }
             /// <summary>
             /// Gibt die aktuelle Position in Millisekunden im Song zurück
@@ -160,7 +197,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             /// <returns></returns>
             public double getPosition()
             {
-                return Bass.BASS_ChannelBytes2Seconds(audioStream, Bass.BASS_ChannelGetPosition(audioStream) * 1000);
+                return (tempostream == 0) ?
+                    Bass.BASS_ChannelBytes2Seconds(audioStream, Bass.BASS_ChannelGetPosition(audioStream) * 1000):
+                    Bass.BASS_ChannelBytes2Seconds(tempostream, Bass.BASS_ChannelGetPosition(tempostream) * 1000);
             }
             /// <summary>
             /// Setzt die aktuelle Position des Songs
@@ -169,7 +208,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             /// <returns></returns>
             public bool setPosition(double milliSec)
             {
-                return Bass.BASS_ChannelSetPosition(audioStream, milliSec / 1000);
+                return (tempostream == 0) ?
+                    Bass.BASS_ChannelSetPosition(audioStream, milliSec / 1000):
+                    Bass.BASS_ChannelSetPosition(tempostream, milliSec / 1000);
             }
             /// <summary>
             /// Gibt den Absoluten Dateinamen des Songs zurück
@@ -180,9 +221,24 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 return (audioStream != 0) ? Bass.BASS_ChannelGetInfo(audioStream).filename : null;
             }
 
-            public bool setFilename(string file)
+            public bool setFilename(string file, bool musik)
             {
-                audioStream = Bass.BASS_StreamCreateFile(file, 0, 0, BASSFlag.BASS_DEFAULT);
+                if (musik)
+                    audioStream = Bass.BASS_StreamCreateFile(file, 0, 0, BASSFlag.BASS_DEFAULT);// BASS_DEFAULT);
+                else
+                    audioStream = Bass.BASS_StreamCreateFile(file, 0, 0, BASSFlag.BASS_STREAM_DECODE);// BASS_DEFAULT);
+
+                //  audioStream = Bass.BASS_MusicLoad(file, 0, 0, BASSFlag.BASS_MUSIC_RAMP | BASSFlag.BASS_MUSIC_PRESCAN | BASSFlag.BASS_STREAM_DECODE, 0);
+
+                //audioStream = Bass.BASS_StreamCreateFile(FALSE, filename, 0, 0, BASSFlag.BASS_STREAM_DECODE); // create a "decoding channel" for a file
+                if (!musik && tempostream == 0)
+                    tempostream = BassFx.BASS_FX_TempoCreate(audioStream, BASSFlag.BASS_FX_FREESOURCE);
+
+                // int tempostream = Bass.BASS_FXSetParameters(audioStream, BassFx.BASS_FX_TempoCreate( BASS_ATTRIB_MUSIC_SPEED);// .BASS_FX_TempoCreate(audioStream, BASS_FX_FREESOURCE); // create a tempo stream from it
+
+                //BASS_ChannelSetAttribute(tempostream, BASS_ATTRIB_TEMPO, 10); // increase the tempo/speed by 10%
+                //BASS_ChannelPlay(tempostream, FALSE); // start playing
+
 
                 return (audioStream != 0);
             }
@@ -385,39 +441,31 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
                 mpList.Add(mp);
                 
-                mp.setFilename(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei);
+                mp.setFilename(aPlayTitel.Audio_Titel.Pfad + "\\" + aPlayTitel.Audio_Titel.Datei, false);
                 mp.setVolume((double)(volume / 100));
                 if (aPlayTitel.Speed != 0) mp.setSpeed(aPlayTitel.Speed);
                 if (aPlayTitel.Pitch != 0) mp.setPitch(aPlayTitel.Pitch);
                 if (aPlayTitel.Echo != 0) mp.setEcho(aPlayTitel.Echo);
                 if (aPlayTitel.TeilAbspielen)
-                {
                     mp.setPosition(aPlayTitel.TeilStart.Value);
-                    //mp.setPosition(0); 
-                    //MyTimer.start_timer();
-                    //// Bis zu 1000ms warten um die Musikdatei auszulesen und die Laufzeit zu ermitteln
-                    //if (SpinWait.SpinUntil(() => { return mp.NaturalDuration.HasTimeSpan; }, 1000))
-                    //    mp.Position = TimeSpan.FromMilliseconds(aPlayTitel.TeilStart.Value);
-                    //MyTimer.stop_timer("Hotkey_OnBtnClick");
-                }
 
                 mp.Play();
+                aPlayTitel.Länge = mp.getLength();
                 Aktiv = true;
-               // if (aPlayTitel.TeilAbspielen)
-                {
-                    DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
-                    _timerTeilAbspielen.Interval = TimeSpan.FromMilliseconds(20);
-                    _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);       
 
-                    _timerTeilAbspielenList.Add(_timerTeilAbspielen);
-                    _timerTeilAbspielen.Tag = (aPlayTitel.TeilAbspielen) ? 
-                        aPlayTitel.TeilEnde.Value : aPlayTitel.Länge != 0 ? 
-                            aPlayTitel.Länge == mp.getLength() ? 
-                                aPlayTitel.Länge : mp.getLength() : mp.getLength();
+                DispatcherTimer _timerTeilAbspielen = new DispatcherTimer();
+                _timerTeilAbspielen.Interval = TimeSpan.FromMilliseconds(20);
+                _timerTeilAbspielen.Tick += new EventHandler(_timerTeilAbspielen_Tick);       
 
-                    titelPlay.dis = _timerTeilAbspielen;
-                    _timerTeilAbspielen.Start();
-                }                
+                _timerTeilAbspielenList.Add(_timerTeilAbspielen);
+                _timerTeilAbspielen.Tag = (aPlayTitel.TeilAbspielen) ? 
+                    aPlayTitel.TeilEnde.Value : aPlayTitel.Länge != 0 ? 
+                        aPlayTitel.Länge == mp.getLength() ? 
+                            aPlayTitel.Länge : mp.getLength() : mp.getLength();
+
+                titelPlay.dis = _timerTeilAbspielen;
+                _timerTeilAbspielen.Start();
+
             }
         }
 

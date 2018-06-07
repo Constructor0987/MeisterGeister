@@ -154,6 +154,8 @@ namespace MeisterGeister.View.Bodenplan
                 ((Slider)sender).Value = Math.Round(((((Slider)sender).Value + .01 > ((Slider)sender).Maximum) ? ((Slider)sender).Maximum : ((Slider)sender).Value + .01), 2);
             else
                 ((Slider)sender).Value = Math.Round(((((Slider)sender).Value - .01 > ((Slider)sender).Minimum) ? ((Slider)sender).Value - .01 : ((Slider)sender).Minimum), 2);
+            
+
         }
 
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
@@ -284,35 +286,7 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private bool MouseIsOverScrViewer = false;
-        
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            //var vm = DataContext as BattlegroundViewModel;
-            //if (vm != null && vm.KampfWindow != null)
-            //{
-            //    ((Kampf.KampfInfoView)vm.KampfWindow.Content).grdMain.LayoutTransform = new ScaleTransform(vm.ScaleKampfGrid, vm.ScaleKampfGrid);
-            //    VM.KampfWindow.SizeToContent = SizeToContent.Height;
-            //    //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
-            //    VM.KampfWindow.SizeToContent = SizeToContent.Manual;
-            ////    VM.KampfWindow.Width = Math.Round(VM.IniWidthStart * vm.ScaleKampfGrid);
-            //    VM.SetIniWindowPosition(VM.KampfWindow);
-            //}
-        }
-
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //    VM.PlayerGridOffsetX = VM.MeisterZoomTransX;
-        //    VM.PlayerGridOffsetY = VM.MeisterZoomTransY;
-        //    Thickness MasterMargin = VM.OffsetBackgroudMargin;
-        //    VM.PlayerOffsetGridMargin = new Thickness(MasterMargin.Left - 4925, MasterMargin.Top - 4925, MasterMargin.Right, MasterMargin.Bottom);
-
-        //    VM.ScaleSpielerGrid = VM.MeisterZoom;
-        //    //VM.PlayerGridOffsetX = VM.BackgroundOffsetX;
-        //    //VM.PlayerGridOffsetY = VM.BackgroundOffsetY;
-
-        //}
+        private bool MouseIsOverScrViewer = false;        
 
     }
 }

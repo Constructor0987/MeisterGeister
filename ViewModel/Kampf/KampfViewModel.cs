@@ -12,11 +12,8 @@ using MeisterGeister.ViewModel.Bodenplan.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
-    
-
     public class KampfViewModel : Base.ToolViewModelBase
-    {
-        
+    {        
         public KampfViewModel() : this((k => new MeisterGeister.View.Kampf.GegnerWindow(k).ShowDialog()), View.General.ViewHelper.Confirm)
         {
         }
@@ -149,12 +146,12 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
         
-        private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
-        private btnHotkeyVM SpeedbtnAudio
-        {
-            get { return _speedbtnAudio; }
-            set { Set(ref _speedbtnAudio, value); }
-        }
+        //private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
+        //private btnHotkeyVM SpeedbtnAudio
+        //{
+        //    get { return _speedbtnAudio; }
+        //    set { Set(ref _speedbtnAudio, value); }
+        //}
 
         #region // ---- COMMANDS ----
 
@@ -177,23 +174,23 @@ namespace MeisterGeister.ViewModel.Kampf
 
         //}
 
-        private Base.CommandBase _onWesenPlaylistClick = null;
-        public Base.CommandBase OnWesenPlaylistClick
-        {
-            get
-            {
-                if (_onWesenPlaylistClick == null)
-                    _onWesenPlaylistClick = new Base.CommandBase(WesenPlaylistClick, null);
-                return _onWesenPlaylistClick;
-            }
-        }
+        //private Base.CommandBase _onWesenPlaylistClick = null;
+        //public Base.CommandBase OnWesenPlaylistClick
+        //{
+        //    get
+        //    {
+        //        if (_onWesenPlaylistClick == null)
+        //            _onWesenPlaylistClick = new Base.CommandBase(WesenPlaylistClick, null);
+        //        return _onWesenPlaylistClick;
+        //    }
+        //}
 
-        private void WesenPlaylistClick(object obj)
-        {
-            SpeedbtnAudio.aPlaylistGuid = (obj as IWesenPlaylist).Audio_Playlist.Audio_PlaylistGUID;
-            SpeedbtnAudio.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
-            SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
-        }
+        //private void WesenPlaylistClick(object obj)
+        //{
+        //    SpeedbtnAudio.aPlaylistGuid = (obj as IWesenPlaylist).Audio_Playlist.Audio_PlaylistGUID;
+        //    SpeedbtnAudio.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
+        //    SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
+        //}
 
         private Base.CommandBase onAddHelden = null;
         public Base.CommandBase OnAddHelden
@@ -237,12 +234,17 @@ namespace MeisterGeister.ViewModel.Kampf
 
         public void DeleteKämpfer()
         {
+            
             if (SelectedKämpfer != null && Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", SelectedKämpfer.Kämpfer.Name)))
             {
                 IKämpfer k = SelectedKämpfer.Kämpfer;
-                if (BodenplanViewModel != null)
-                    BodenplanViewModel.RemoveCreature(k);
-                Kampf.Kämpfer.Remove(SelectedKämpfer);
+                //if (BodenplanViewModel != null)
+                //    BodenplanViewModel.RemoveCreature(k);
+                //Kampf.Kämpfer.Remove(SelectedKämpfer);
+
+                if (Global.CurrentKampf.BodenplanViewModel != null)
+                    Global.CurrentKampf.BodenplanViewModel.RemoveCreature(k);
+                Global.CurrentKampf.Kampf.Kämpfer.Remove(k);
             }
         }
 

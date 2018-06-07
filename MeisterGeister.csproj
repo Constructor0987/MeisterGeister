@@ -2724,8 +2724,8 @@
     <Resource Include="Images\Kienspan.png" />
     <Resource Include="Images\Icons\Kienspan.png" />
     <Resource Include="Images\Icons\Binsenlicht.png" />
-    <Resource Include="Images\Icons\rechteckig.png" />
     <Resource Include="Images\Icons\hex.png" />
+    <Resource Include="Images\Icons\rechteckig.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

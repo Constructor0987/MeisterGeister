@@ -21,6 +21,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
     {
         #region Commands
 
+        private Base.CommandBase _onWesenPlaylistClick = null;
+        public Base.CommandBase OnWesenPlaylistClick
+        {
+            get
+            {
+                if (_onWesenPlaylistClick == null)
+                    _onWesenPlaylistClick = new Base.CommandBase(WesenPlaylistClick, null);
+                return _onWesenPlaylistClick;
+            }
+        }
+
+        private void WesenPlaylistClick(object obj)
+        {
+            SpeedbtnAudio.aPlaylistGuid = (obj as IWesenPlaylist).Audio_Playlist.Audio_PlaylistGUID;
+            SpeedbtnAudio.aPlaylist = (obj as IWesenPlaylist).Audio_Playlist;
+            SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
+        }
+
         private SchadenMachen schadenMachen;
         public SchadenMachen SchadenMachen
         {
@@ -126,11 +144,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
         
-        private ICollection<IWesenPlaylist> _wesenplaylist;
-        private ICollection<IWesenPlaylist> Wesenplaylist
+        private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
+        public btnHotkeyVM SpeedbtnAudio
         {
-            get { return _wesenplaylist; }
-            set { Set(ref _wesenplaylist, value); }
+            get { return _speedbtnAudio; }
+            set { Set(ref _speedbtnAudio, value); }
+        }
+
+        private ICollection<IWesenPlaylist> _wesenPlaylist;
+        public ICollection<IWesenPlaylist> WesenPlaylist
+        {
+            get { return _wesenPlaylist; }
+            set { Set(ref _wesenPlaylist, value); }
         }
 
 
@@ -311,7 +336,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (k is IGegnerBase)
                 (k as MeisterGeister.Model.Gegner).KämpferTempName = "Gegner " + (kampf.Kämpfer.Where(t => t.Team == 2).ToList().Count + 1);
 
-            Wesenplaylist = (k is MeisterGeister.Model.Held) ?
+            WesenPlaylist = (k is MeisterGeister.Model.Held) ?
                 new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
                 (k is MeisterGeister.Model.GegnerBase) ?
                     new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.GegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :

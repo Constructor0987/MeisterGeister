@@ -110,26 +110,86 @@ namespace MeisterGeister.View.Bodenplan
                 return null;
             }
         }
+
+         
+     /// <summary> 
+     /// The image resizing method. 
+     /// </summary> 
+     /// <param name="bitmapFrame"></param> 
+     /// <param name="width"></param> 
+     /// <param name="height"></param> 
+     /// <returns></returns> 
+     private static BitmapFrame Resize(BitmapFrame bitmapFrame, int width, int height) 
+     { 
+         double scaleWidth, scaleHeight; 
+ 
+         // Resize proportionally to the width 
+         if (height == 0) 
+         { 
+             scaleWidth = width; 
+             scaleHeight = (((double)width / bitmapFrame.PixelWidth) * bitmapFrame.PixelHeight); 
+         } 
+         // Resize proportionally to the height 
+         else if (width == 0) 
+         { 
+             scaleHeight = height; 
+             scaleWidth = (((double)height / bitmapFrame.PixelHeight) * bitmapFrame.PixelWidth); 
+         } 
+         // Resize using the supplied width and height 
+         else 
+         { 
+             scaleWidth = width; 
+             scaleHeight = height; 
+         } 
+         // Create the scale transform 
+         var scaleTransform = new ScaleTransform(scaleWidth/bitmapFrame.PixelWidth, scaleHeight/bitmapFrame.PixelHeight, 0, 0); 
+ 
+ 
+         // Transform the bitmap frame 
+         var transformedBitmap = new TransformedBitmap(bitmapFrame, scaleTransform); 
+ 
+ 
+         return BitmapFrame.Create(transformedBitmap); 
+     } 
+
+
         //Adds dynamicly created Picturebuttons for each picture in folder "Pictures".
         private void AddPictureButtons()
         {
-try
+            try
             {
-                PictureButtonWrapPanel.Children.Clear(); // alte Bilder entfernen
+                lstbxPictureButton.Items.Clear();
+                //PictureButtonWrapPanel.Children.Clear(); // alte Bilder entfernen
                 string appPath = Ressources.GetFullApplicationPath();
                 String[] picurls = Ressources.GetPictureUrls();
                 for (int i = 0; i < picurls.Count(); i++)
                 {
                     if (!File.Exists(appPath + picurls[i])) continue;
                     String _buttonPrefix = "picbutton";
-                    var brush = new ImageBrush();
-                    ImageSource isource = GetImageSource(appPath + picurls[i]);
-                    if (isource == null) continue;
-                    brush.ImageSource = isource; //new BitmapImage(new Uri(appPath + picurls[i]));
+                    //var brush = new ImageBrush();
+                    if (!File.Exists(appPath + picurls[i]) || GetImageSource(appPath + picurls[i]) == null) continue;
+
+                    //BitmapImage bImg = new BitmapImage(new Uri(appPath + picurls[i]));
+
+                    //var bitmap = BitmapFrame.Create(bImg);
+                    //var resizedBitmapFrame = Resize(bitmap, 48, 48);
+                    //Image img = new Image();
+                    //img.Source = resizedBitmapFrame;
+                    
+                    //brush.ImageSource = isource; //new BitmapImage(new Uri(appPath + picurls[i]));
                     String[] pathsplit = picurls[i].Split('\\');
-                    Button b = new Button() { Width = 50, Height = 50, Name = _buttonPrefix + i, ToolTip = picurls[i] };
+                    Button b = new Button() { Name = _buttonPrefix + i, ToolTip = picurls[i], Width=140, HorizontalContentAlignment= System.Windows.HorizontalAlignment.Left };
+                    //Image img = new Image();
+                    //img.Width = 48;
+                    //img.Height= 48;
+                    //img.Stretch = Stretch.Fill;
+                    //img.Source = new BitmapImage(new Uri(appPath + picurls[i]));
+                    b.Content = System.IO.Path.GetFileNameWithoutExtension(appPath + picurls[i]);
+                    // resizedBitmapFrame;// bImg;// new Image() { Width = 48, Height = 48, Source = new BitmapImage(new Uri(appPath + picurls[i])) };
+                   // b.Content = new TextBox() { Text = picurls[i] };// img;
                     //b.Content = brush;
-                    b.Background = brush;
+                   // b.Background = new ImageBrush(new ImageSource( new Uri(appPath + picurls[i]));
+
                     b.Tag = Ressources.GetFullApplicationPath() + picurls[i];
                     b.Click += (object sender, RoutedEventArgs e) =>
                         {
@@ -152,10 +212,10 @@ try
                             }
                         };
 
-                    Grid.SetRow(b, Convert.ToInt32(i / 3));
-                    Grid.SetColumn(b, i % 3);
-
-                    PictureButtonWrapPanel.Children.Add(b);
+                    //Grid.SetRow(b, Convert.ToInt32(i / 3));
+                    //Grid.SetColumn(b, i % 3);
+                    lstbxPictureButton.Items.Add(b);
+                   // PictureButtonWrapPanel.Children.Add(b);
                 }
             }
             catch (Exception ex)
@@ -557,7 +617,15 @@ try
                                     mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
                                 if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
                                     mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
+
+                                if (menuitem.Name == "miKämpferAttacke" || (miOpen != null && miOpen.Name == "miKämpferAttacke"))
+                                    mi.UmwandelnAttacke.Execute(menuitem.CommandParameter);
+
+                                if (menuitem.Name == "miKämpferSonstiges" || (miOpen != null && miOpen.Name == "miKämpferSonstiges"))
+                                    mi.UmwandelnSonstiges.Execute(menuitem.CommandParameter);
                             }
+                            else
+                            { }
                             if (miOpen != null && miOpen.IsSubmenuOpen)
                                 miOpen.IsSubmenuOpen = false;
                             miOpen = null;
@@ -577,47 +645,49 @@ try
                     var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
                     if (listboxItem != null)
                     {
+                        listboxItem.Refresh();
                         if (VM.SelectedObject != null)
                             VM.SelectedObject.IsMoving = false;
                         BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
-                        VM.SelectedObject = o; 
+                        VM.SelectedObject = o;
+
                         e.Handled = true;
                     }
 
-                    var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
-                    if (button != null)
-                    {
-                        ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
-                                .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
-                                .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
-                        if (mi == null)
-                        {
-                            mi = Global.CurrentKampf.Kampf.InitiativListe
-                                   .LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
-                            ZeitImKampf zik = Global.CurrentKampf.Kampf.AktuelleAktionszeit;
-                            zik.InitiativPhase = zik.InitiativPhase - 1;
+                    //var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
+                    //if (button != null)
+                    //{
+                    //    ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
+                    //            .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
+                    //            .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
+                    //    if (mi == null)
+                    //    {
+                    //        mi = Global.CurrentKampf.Kampf.InitiativListe
+                    //               .LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
+                    //        ZeitImKampf zik = Global.CurrentKampf.Kampf.AktuelleAktionszeit;
+                    //        zik.InitiativPhase = zik.InitiativPhase - 1;
 
-                            if (mi == null) return;
-                            mi.Manöver.VerbleibendeDauer = 0;
-                            //mi.Manöver.Dauer = mi.Start  .Aktionszeiten.Last(). .End = zik;
-                            //(vm.SelectedObject as Wesen).ki.AngriffsManöver.Last().DauerInKampfaktionen
-                            //   (vm.SelectedObject as Wesen).ki. = 1;
-                            // (vm.SelectedObject as Wesen).ki.StandardAktionenSetzen(Global.CurrentKampf.Kampf.Kampfrunde);
-                            Global.CurrentKampf.Kampf.SortedInitiativListe =
-                                Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase);
-                        }
-                        if (button.Name == "UmwandelnAttacke")
-                            mi.UmwandelnAttacke.Execute(null);
-                        if (button.Name == "UmwandelnFernkampf")
-                            mi.UmwandelnFernkampf.Execute(null);
-                        if (button.Name == "UmwandelnZauber")
-                            mi.UmwandelnZauber.Execute(null);
-                        if (button.Name == "UmwandelnSonstiges")
-                            mi.UmwandelnSonstiges.Execute(null);
+                    //        if (mi == null) return;
+                    //        mi.Manöver.VerbleibendeDauer = 0;
+                    //        //mi.Manöver.Dauer = mi.Start  .Aktionszeiten.Last(). .End = zik;
+                    //        //(vm.SelectedObject as Wesen).ki.AngriffsManöver.Last().DauerInKampfaktionen
+                    //        //   (vm.SelectedObject as Wesen).ki. = 1;
+                    //        // (vm.SelectedObject as Wesen).ki.StandardAktionenSetzen(Global.CurrentKampf.Kampf.Kampfrunde);
+                    //        Global.CurrentKampf.Kampf.SortedInitiativListe =
+                    //            Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase);
+                    //    }
+                    //    if (button.Name == "UmwandelnAttacke")
+                    //        mi.UmwandelnAttacke.Execute(null);
+                    //    if (button.Name == "UmwandelnFernkampf")
+                    //        mi.UmwandelnFernkampf.Execute(null);
+                    //    if (button.Name == "UmwandelnZauber")
+                    //        mi.UmwandelnZauber.Execute(null);
+                    //    if (button.Name == "UmwandelnSonstiges")
+                    //        mi.UmwandelnSonstiges.Execute(null);
 
-                        Global.CurrentKampf.SelectedManöver = mi;
-                        return;
-                    }
+                    //    Global.CurrentKampf.SelectedManöver = mi;
+                    //    return;
+                    //}
                 }
             }
             catch (Exception ex)
@@ -628,58 +698,119 @@ try
         {
             try
             {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                //if (!Keyboard.IsKeyDown(Key.LeftCtrl))
+                //{
+                //    if (VM.IsPointerVisible)
+                //    {
+                //        VM.SetPointer(ArenaGridTop);
+                //        e.Handled = true;
+                //    }
+                //    else
+                //    {
+                //        var menuitem = ((DependencyObject)e.OriginalSource).FindAnchestor<MenuItem>();
+                //        if (menuitem != null)
+                //        {
+                //            if (menuitem.HasItems)
+                //            {
+                //                menuitem.IsSubmenuOpen = !menuitem.IsSubmenuOpen;
+                //                miOpen = menuitem.IsSubmenuOpen ? menuitem : null;
+                //            }
+                //            else
+                //            {
+                //                ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
+                //                    .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
+                //                    .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
+                //                if (mi != null)
+                //                {
+                //                    if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
+                //                        mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
+                //                    if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
+                //                        mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
+
+                //                    if (menuitem.Name == "miKämpferAttacke" || (miOpen != null && miOpen.Name == "miKämpferAttacke"))
+                //                        mi.UmwandelnAttacke.Execute(menuitem.CommandParameter);
+
+                //                    if (menuitem.Name == "miKämpferSonstiges" || (miOpen != null && miOpen.Name == "miKämpferSonstiges"))
+                //                        mi.UmwandelnSonstiges.Execute(menuitem.CommandParameter);
+                //                }
+                //                else
+                //                { }
+                //                if (miOpen != null && miOpen.IsSubmenuOpen)
+                //                    miOpen.IsSubmenuOpen = false;
+                //                miOpen = null;
+                //                Global.CurrentKampf.SelectedManöver = mi;
+                //                Global.CurrentKampf.Kampf.SelectedManöverInfo = mi;
+                //            }
+                //            return;
+                //        }
+
+                //        if (miOpen != null && miOpen.IsSubmenuOpen)
+                //            miOpen.IsSubmenuOpen = false;
+                //        miOpen = null;
+
+                //        var slider = ((DependencyObject)e.OriginalSource).FindAnchestor<Slider>();
+                //        if (slider != null) return;
+
+                //        var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
+                //        if (listboxItem != null)
+                //        {
+                //            if (VM.SelectedObject != null)
+                //                VM.SelectedObject.IsMoving = false;
+                //            BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
+                //            VM.SelectedObject = o;
+                //            e.Handled = true;
+                //        }                    
+                //    }
+                //}
+
+                if (VM.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
                 {
-                    if (vm.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
+                    VM.SelectedObject = null;
+                    WriteableBitmap wbmap = VM.FogImage;
+                    int newX = (int)VM.CurrentMousePositionX / 10;// (int)Mouse.GetPosition((IInputElement)sender).X;
+                    int newY = (int)VM.CurrentMousePositionY / 10;// (int)Mouse.GetPosition((IInputElement)sender).Y;
+
+                    int w = 10 * VM.FogFreeSize + 1;
+                    int h = (10 * VM.FogFreeSize + 1) * 10 - 1;
+                    int[] leererBereich = new int[w * h];
+
+                    for (int i = 0; i < 100 * VM.FogFreeSize + 1; i++)
+                        Array.ConstrainedCopy(leererBereich, 0, VM.FogPixelData, i * 1000, w * h);
+
+                    //Bei VM.FogFreeSize = 1
+                    // i = 0        0, 1000, 2000, 3000, 4000, ... 110*1000
+                    // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
+                    // ...
+                    // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11
+                    int ber = 1000;
+                    wbmap.WritePixels(new Int32Rect(newX, newY,
+                        newX + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * VM.FogFreeSize + 1,
+                        newY + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * VM.FogFreeSize + 1),
+                        VM.FogPixelData, ber, 0); // widthInByte
+
+                    VM.FogImage = wbmap;
+                }
+                else
+                {
+                    if (VM.SelectedObject != null) VM.SelectionChangedUpdateSliders();
+
+                    if (VM.CreateLine)
                     {
-                        vm.SelectedObject = null;
-                        WriteableBitmap wbmap = VM.FogImage;
-                        int newX = (int)vm.CurrentMousePositionX / 10;// (int)Mouse.GetPosition((IInputElement)sender).X;
-                        int newY = (int)vm.CurrentMousePositionY / 10;// (int)Mouse.GetPosition((IInputElement)sender).Y;
-
-                        int w = 10 * vm.FogFreeSize + 1;
-                        int h = (10 * vm.FogFreeSize + 1) * 10 - 1;
-                        int[] leererBereich = new int[w * h];
-
-                        for (int i = 0; i < 100 * vm.FogFreeSize + 1; i++)
-                            Array.ConstrainedCopy(leererBereich, 0, vm.FogPixelData, i * 1000, w * h);
-
-                        //Bei vm.FogFreeSize = 1
-                        // i = 0        0, 1000, 2000, 3000, 4000, ... 110*1000
-                        // i = 1        1, 1001, 2001, 3001, 4001, ... 110*1000+1
-                        // ...
-                        // i = 11      11, 1011, 2011, 3011, 4011, ... 110*1000+11
-                        int ber = 1000;
-                        wbmap.WritePixels(new Int32Rect(newX, newY,
-                            newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
-                            newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
-                            VM.FogPixelData, ber, 0); // widthInByte
-
-                        VM.FogImage = wbmap;
+                        _x1 = e.GetPosition(ArenaGrid).X;
+                        _y1 = e.GetPosition(ArenaGrid).Y;
+                        VM.CreatingNewLine = true;
+                        var line = VM.CreateNewPathLine(_x1, _y1);
+                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
+                        e.Handled = true;
                     }
-                    else
+                    else if (VM.CreateFilledLine)
                     {
-                        if (vm.SelectedObject != null) vm.SelectionChangedUpdateSliders();
-
-                        if (vm.CreateLine)
-                        {
-                            _x1 = e.GetPosition(ArenaGrid).X;
-                            _y1 = e.GetPosition(ArenaGrid).Y;
-                            vm.CreatingNewLine = true;
-                            var line = vm.CreateNewPathLine(_x1, _y1);
-                            line.IsNew = true; // TODO sollte in die Methode ^ mit rein
-                            e.Handled = true;
-                        }
-                        else if (vm.CreateFilledLine)
-                        {
-                            _x1 = e.GetPosition(ArenaGrid).X;
-                            _y1 = e.GetPosition(ArenaGrid).Y;
-                            vm.CreatingNewFilledLine = true;
-                            var line = vm.CreateNewFilledLine(_x1, _y1);
-                            line.IsNew = true; // TODO sollte in die Methode ^ mit rein
-                            e.Handled = true;
-                        }
+                        _x1 = e.GetPosition(ArenaGrid).X;
+                        _y1 = e.GetPosition(ArenaGrid).Y;
+                        VM.CreatingNewFilledLine = true;
+                        var line = VM.CreateNewFilledLine(_x1, _y1);
+                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
+                        e.Handled = true;
                     }
                 }
             }
@@ -996,11 +1127,13 @@ try
         }
 
         private void ArenaGrid_Drop(object sender, DragEventArgs e)
-        {            
+        {
             VM.SelectedObject.IsMoving = false;
+            VM.IsMoving = false;
             ((BattlegroundCreature)VM.SelectedObject).CalculateSightArea();
             cKämpfer = null;
-            pKämpfer = null;
+            //pKämpfer = null;
+            
         }
 
         private void ArenaGrid_DragOver(object sender, DragEventArgs e)

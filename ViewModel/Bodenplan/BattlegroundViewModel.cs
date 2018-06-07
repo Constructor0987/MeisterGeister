@@ -197,6 +197,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
 
+        private bool _invertPlayerScrolling = false;
+        public bool InvertPlayerScrolling
+        {
+            get { return _invertPlayerScrolling; }
+            set { Set(ref _invertPlayerScrolling, value); }
+        }
+
         private KampfViewModel _kampf = null;
         public KampfViewModel kampf
         {
@@ -298,7 +305,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 Set(ref _playerGridOffsetX, value);
                 PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX , _playerGridOffsetY, 0, 0);
-           //     PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX - 10000, _playerGridOffsetY - 10000, _playerGridOffsetX - 10000, -_playerGridOffsetY - 10000);
             }
         }
         private double _playerGridOffsetY = 0;
@@ -309,7 +315,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 Set(ref _playerGridOffsetY, value);
                 PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX, _playerGridOffsetY, 0, 0);
-           //     PlayerOffsetGridMargin = new Thickness(-_playerGridOffsetX - 10000, _playerGridOffsetY - 10000, _playerGridOffsetX - 10000, -_playerGridOffsetY - 10000);
             }
         }
 
@@ -1731,6 +1736,48 @@ namespace MeisterGeister.ViewModel.Bodenplan
             ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
             if (mi == null) return;
             mi.UmwandelnFernkampf.Execute(null);
+        }
+
+        private Base.CommandBase _onBtnUmwandelnSonstiges = null;
+        public Base.CommandBase OnBtnUmwandelnSonstiges            
+        {
+            get
+            {
+                if (_onBtnUmwandelnSonstiges == null)
+                {
+                    _onBtnUmwandelnSonstiges = new Base.CommandBase(UmwandelnSonstiges, null);
+                }
+                return _onBtnUmwandelnSonstiges;
+            }
+        }
+        void UmwandelnSonstiges(object obj)
+        {
+            ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
+            if (mi == null) return;
+            mi.Manöver.VerbleibendeDauer = 0;
+            mi.UmwandelnSonstiges.Execute(null);
+        }
+
+        private Base.CommandBase _onBtnUmwandelnAttacke = null;
+        public Base.CommandBase OnBtnUmwandelnAttacke        
+        {
+            get
+            {
+                if (_onBtnUmwandelnAttacke == null)
+                {
+                    _onBtnUmwandelnAttacke = new Base.CommandBase(UmwandelnAttacke, null);
+                }
+                return _onBtnUmwandelnAttacke;
+            }
+        }
+        void UmwandelnAttacke(object obj)
+        {
+            ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
+            if (mi == null) return;
+            mi.Manöver.VerbleibendeDauer = 0;
+            mi.UmwandelnAttacke.Execute(obj); 
+            Global.CurrentKampf.SelectedManöver = mi;
+            Global.CurrentKampf.Kampf.SelectedManöverInfo = mi;
         }
 
         private Base.CommandBase _onBtnCenterMeisterView = null;
