@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:MeisterGeister.View.Kampf"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+             xmlns:Einstellungen="clr-namespace:MeisterGeister.Logic.Einstellung"
+            xmlns:Evm="clr-namespace:MeisterGeister.ViewModel.Settings"
              xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
              xmlns:model="clr-namespace:MeisterGeister.Model"
              mc:Ignorable="d" Width="400"
@@ -42,6 +44,17 @@
                 <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=LebensenergieAktuell}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" ShowButtons="True" />
                 <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding}" />
             </StackPanel>
+            <CheckBox IsChecked="{Binding Kämpfer.ShowLebensbalken}" Content="Lebensbalken" Height="16" HorizontalAlignment="Center" Margin="2,-2,0,0" VerticalAlignment="Center" >
+                <CheckBox.Style>
+                    <Style TargetType="CheckBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding LebensbalkenImmerAnzeigen }" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </CheckBox.Style>
+            </CheckBox>
             <!-- Ausdauer -->
             <StackPanel Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}">
                 <TextBlock Text="AU:" Margin="2,6,2,2" Width="25" />

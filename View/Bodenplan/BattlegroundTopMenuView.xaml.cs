@@ -176,7 +176,11 @@ namespace MeisterGeister.View.Bodenplan
             VM.KampfWindow = new Window();
 
             //SizeToContent auf Width setzt den Screen auf minimale Breite
-            VM.KampfWindow.SizeToContent = SizeToContent.Width;
+            if (Global.CurrentKampf.Kampf.Kampfrunde <= 1)
+                VM.KampfWindow.SizeToContent = SizeToContent.Width;
+            else
+                VM.KampfWindow.Width = VM.IniWidthStart != 0 ? VM.IniWidthStart : 426 * vm.ScaleKampfGrid;
+            
             VM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
             {
                 var vm2 = DataContext as BattlegroundViewModel;
@@ -186,20 +190,14 @@ namespace MeisterGeister.View.Bodenplan
             };
             infoView.scrViewer.MouseEnter += (object sender, MouseEventArgs e) => { MouseIsOverScrViewer = true; };
             infoView.scrViewer.MouseLeave += (object sender, MouseEventArgs e) => { MouseIsOverScrViewer = false; };
-            infoView.scrViewer.ScrollChanged += (object sender, ScrollChangedEventArgs e) =>
-            {
-                if (!MouseIsOverScrViewer)
-                {
-                    if (((ScrollViewer)sender).ScrollableWidth > 0)
-                    {
-                        int anzInisDavor = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count(t => t.Kampfrunde < Global.CurrentKampf.Kampf.Kampfrunde);
-                        double width1Ini = ((ScrollViewer)sender).ExtentWidth / Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count();
-                        ((ScrollViewer)sender).ScrollToHorizontalOffset(width1Ini * anzInisDavor);
-                    }
-                }
-            };
+            //infoView.scrViewer.ScrollChanged += (object sender, ScrollChangedEventArgs e) =>
+            //{
+            //};
             VM.KampfWindow.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
+
+                //VM.KampfWindow.MinWidth = 430 * vm.ScaleKampfGrid;
+                VM.SetIniWindowWidth();
                 if ((System.Windows.Forms.Screen.AllScreens.Length > 1 &&
                      VM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
                         System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width * .5) ||
@@ -218,50 +216,38 @@ namespace MeisterGeister.View.Bodenplan
                         Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width =
                             System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - VM.KampfWindow.Width;
                     }
-
-                    if (infoView.scrViewer.ScrollableWidth > 0)
-                    {
-                        int anzInisDavor = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count(t => t.Kampfrunde < Global.CurrentKampf.Kampf.Kampfrunde);
-                        double width1Ini = infoView.scrViewer.ExtentWidth / Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count();
-                        infoView.scrViewer.ScrollToHorizontalOffset(width1Ini * anzInisDavor);
-                    }
-
-                    if (VM.IniWidthStart != Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid))
-                        VM.IniWidthStart = Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid);
                 }
+                //int anzInisInKR = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).Count();
+                //double width1Ini = (infoView.scrViewer.ExtentWidth /
+                //    Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= Global.CurrentKampf.Kampf.Kampfrunde).Count())* vm.ScaleKampfGrid;
+                //VM.KampfWindow.Width = width1Ini * anzInisInKR + 246 * vm.ScaleKampfGrid;                
+                //infoView.scrViewer.ScrollToRightEnd();
+                
+                if (VM.IniWidthStart != Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid))
+                    VM.IniWidthStart = Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid);               
             };
-
+            //246
             if (VM.SpielerScreenWindow != null) VM.SpielerScreenWindow.Topmost = false;
             VM.KampfWindow.Topmost = true;
             VM.KampfWindow.Content = infoView;
             VM.KampfWindow.Show();
             //SizeToContent muss auf Height gestellt werden, damit die Höhe an die Anz. Kämpfer angepasst wird
             VM.KampfWindow.SizeToContent = SizeToContent.Height;
+
             //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
             VM.KampfWindow.SizeToContent = SizeToContent.Manual;
             VM.KampfWindow.WindowStyle = WindowStyle.None;
-            //WidthStart =  VM.KampfWindow.Width;
 
-          //  VM.KampfWindow.Width = Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
 
+            //int anzAktInKR = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).Count();
+            //double Twidth1Ini = (infoView.scrViewer.ExtentWidth /
+            //    Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= Global.CurrentKampf.Kampf.Kampfrunde).Count()) * vm.ScaleKampfGrid;
+            //VM.KampfWindow.MinWidth = 430 * vm.ScaleKampfGrid;
+            //VM.KampfWindow.Width = Twidth1Ini * anzAktInKR + 246 * vm.ScaleKampfGrid;
+            //infoView.scrViewer.ScrollToRightEnd();
             VM.SetIniWindowPosition();
             
-            //VM.KampfWindow.Top = 0;            
-            //int maxRight = Math.Max(
-            //    System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Right,
-            //    System.Windows.Forms.Screen.AllScreens.Length > 1 ?
-            //        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Right : 0);
-            //VM.KampfWindow.Left = maxRight - Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
-
             VM.IsShowIniKampf = true;
-            //if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive &&
-            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Left >= System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
-            //{
-            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = System.Windows.WindowState.Normal;
-            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = System.Windows.WindowStyle.None;
-            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Math.Round(VM.IniWidthStart * vm.ScaleKampfGrid);
-            //    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Height = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height;
-            //}
         }
 
         private void tbtnSpielerScreenActive_Click(object sender, RoutedEventArgs e)

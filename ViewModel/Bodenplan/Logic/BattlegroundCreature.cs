@@ -78,7 +78,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _selectedManöver; }
             set { Set(ref _selectedManöver, value); }
         }
-
+        
+        private bool _showLebensbalken = false;
+        public bool ShowLebensbalken
+        {
+            get { return _showLebensbalken; }
+            set { Set(ref _showLebensbalken, value); }
+        }
 
         public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
         public string CreaturePosition
@@ -95,10 +101,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureY += r.Next(0, 500);
             MoveObject(0,0,false); //for initial position of ZLevel Display
             CreateSightArea();
-            //((Wesen)this).Position = Position.Stehend;
-        //    UpdateCreaturePosition();
-            //if (ki == null && ki = (Global.CurrentKampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count > 0)
-            //        Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
+            ShowLebensbalken = MeisterGeister.Logic.Einstellung.Einstellungen.LebensbalkenImmerAnzeigen || (this as Wesen).IsHeld;
         }
 
         public double SightAreaLength

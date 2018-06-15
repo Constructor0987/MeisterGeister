@@ -121,6 +121,9 @@
                                                                 </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </MultiDataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Path.Style>
@@ -142,6 +145,9 @@
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -185,6 +191,9 @@
                                                             <DataTrigger Binding="{Binding HinweisText}" Value="">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style>
@@ -202,25 +211,54 @@
                                                             <DataTrigger Binding="{Binding IsHeld}" Value="True">
                                                                 <Setter Property="Text" Value="{Binding Kurzname}" />
                                                             </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
 
                                             <!--Lebensbalken-->
-                                            <ProgressBar Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Opacity="{Binding Opacity}"
+                                            <ProgressBar Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" 
                                                         Height="{Binding CreatureHeight}" Width="10" HorizontalAlignment="Left" Margin="-12,0,0,0"
                                                         Maximum="{Binding LebensenergieMax}" Minimum="0" VerticalAlignment="Top" 
-                                                        Value="{Binding LebensenergieAktuell}" Orientation="Vertical" Background="#FF3DD81A" />
-
+                                                        Value="{Binding LebensenergieAktuell}" Orientation="Vertical" Background="#FF3DD81A"
+                                                        Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" />
+                                           
                                             <!--Anführer-Krone-->
                                             <Image Width="40" Height="40" Margin="0,-32,0, 0" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
                                                     Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"
-                                                    Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
+                                                    Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" >
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding ki.IstAnführer}" Value="True" />
+                                                                    <Condition Binding="{Binding IsMoving}" Value="False" />
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
 
                                             <!--Position-->
                                             <Image Width="50" Height="50" Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}" 
-                                                   Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
+                                                   Opacity="{Binding Opacity}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" >
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
 
                                             <!--Wunden - Icon-->
                                             <Image Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="40" Height="40" Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png"
@@ -255,6 +293,9 @@
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding WundenByZone[BeinL], Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" Value="True" >
                                                                 <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True" >
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>

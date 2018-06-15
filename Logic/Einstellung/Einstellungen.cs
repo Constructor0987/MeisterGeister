@@ -54,9 +54,10 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "WundenVerändernWundschwelle", Kontext = "Kampf", Kategorie = "Unklarheit", Typ = "Boolean", Beschreibung = "Veränderungen der KO durch Wunden beinflussen die Wundschwellen", Wert = "True" },
                 
                 new Model.Einstellung() { Name = "AngriffAutomatischWürfeln", Kontext = "Kampf", Kategorie = null, Typ = "Boolean", Beschreibung = "Automatisches Würfeln der Angriffe (wenn Ini-Position erreicht)", Wert = "True" },
-                
+                new Model.Einstellung() { Name = "LebensbalkenImmerAnzeigen", Kontext = "Kampf", Kategorie = null, Typ = "Boolean", Beschreibung = "Lebensbalken immer anzeigen", Wert = "False" },
 
-                
+
+
                 new Model.Einstellung() { Name = "EigenschaftenProbePatzerGlück", Kontext = "Proben", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Patzer und Glückswürfe bei Eigenschafts-Proben (WdS 7)", Wert = "True" },
                 new Model.Einstellung() { Name = "WuerfelSoundAbspielen", Kontext = "Proben", Kategorie = null, Typ = "Boolean", Beschreibung = "Würfelsound abspielen", Wert = "True" },
                                 
@@ -250,6 +251,18 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("AngriffAutomatischWürfeln", value);
+            }
+        }
+
+        public static bool LebensbalkenImmerAnzeigen
+        {
+            get
+            {
+                return GetEinstellung<bool>("LebensbalkenImmerAnzeigen");
+            }
+            set
+            {
+                SetEinstellung<bool>("LebensbalkenImmerAnzeigen", value);
             }
         }
 

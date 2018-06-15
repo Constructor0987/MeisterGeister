@@ -384,7 +384,8 @@
                                                     <ProgressBar Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" 
                                                         Height="{Binding CreatureHeight}" Width="10" HorizontalAlignment="Left" Margin="-12,0,0,0"
                                                         Maximum="{Binding LebensenergieMax}" Minimum="0" VerticalAlignment="Top" 
-                                                        Value="{Binding LebensenergieAktuell}" Orientation="Vertical" Background="#FF3DD81A" />
+                                                        Value="{Binding LebensenergieAktuell}" Orientation="Vertical" Background="#FF3DD81A"
+                                                        Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" />
 
                                                     <!--Anführer-Krone-->
                                                     <Image Width="40" Height="40" Margin="0,-32,0, 0" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"

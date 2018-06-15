@@ -580,6 +580,7 @@ namespace MeisterGeister.View.Bodenplan
 
 
         #region --- Tastatur abfragen ---
+        bool MouseClickedOnCreature = false;
         Nullable<Point> pKämpfer = null;
         MenuItem miOpen = null;
         public static RoutedCommand ThemeCommandCheck = new RoutedCommand();
@@ -587,6 +588,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
+                MouseClickedOnCreature = false;
                 //STRG - Abfragen um return zu setzen
                 if (Keyboard.IsKeyDown(Key.LeftCtrl)) return;
                 
@@ -650,44 +652,9 @@ namespace MeisterGeister.View.Bodenplan
                             VM.SelectedObject.IsMoving = false;
                         BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
                         VM.SelectedObject = o;
-
+                        MouseClickedOnCreature = true;
                         e.Handled = true;
                     }
-
-                    //var button = ((DependencyObject)e.OriginalSource).FindAnchestor<Button>();
-                    //if (button != null)
-                    //{
-                    //    ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
-                    //            .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
-                    //            .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
-                    //    if (mi == null)
-                    //    {
-                    //        mi = Global.CurrentKampf.Kampf.InitiativListe
-                    //               .LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
-                    //        ZeitImKampf zik = Global.CurrentKampf.Kampf.AktuelleAktionszeit;
-                    //        zik.InitiativPhase = zik.InitiativPhase - 1;
-
-                    //        if (mi == null) return;
-                    //        mi.Manöver.VerbleibendeDauer = 0;
-                    //        //mi.Manöver.Dauer = mi.Start  .Aktionszeiten.Last(). .End = zik;
-                    //        //(vm.SelectedObject as Wesen).ki.AngriffsManöver.Last().DauerInKampfaktionen
-                    //        //   (vm.SelectedObject as Wesen).ki. = 1;
-                    //        // (vm.SelectedObject as Wesen).ki.StandardAktionenSetzen(Global.CurrentKampf.Kampf.Kampfrunde);
-                    //        Global.CurrentKampf.Kampf.SortedInitiativListe =
-                    //            Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase);
-                    //    }
-                    //    if (button.Name == "UmwandelnAttacke")
-                    //        mi.UmwandelnAttacke.Execute(null);
-                    //    if (button.Name == "UmwandelnFernkampf")
-                    //        mi.UmwandelnFernkampf.Execute(null);
-                    //    if (button.Name == "UmwandelnZauber")
-                    //        mi.UmwandelnZauber.Execute(null);
-                    //    if (button.Name == "UmwandelnSonstiges")
-                    //        mi.UmwandelnSonstiges.Execute(null);
-
-                    //    Global.CurrentKampf.SelectedManöver = mi;
-                    //    return;
-                    //}
                 }
             }
             catch (Exception ex)
@@ -948,7 +915,7 @@ namespace MeisterGeister.View.Bodenplan
                         _y2 = e.GetPosition(ArenaGrid).Y;
                         VM.MoveWhileDrawing(_x2, _y2, VM.Freizeichnen);
                     }
-                    else if (e.LeftButton == MouseButtonState.Pressed && VM.SelectedObject != null)
+                    else if (MouseClickedOnCreature && e.LeftButton == MouseButtonState.Pressed && VM.SelectedObject != null)
                     {
                         VM.IsMoving = true;
                         VM.SelectedObject.IsMoving = true;
@@ -1172,12 +1139,9 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
-                {
-                    vm.IsMoving = false;
-                    if (vm.SelectedObject != null) vm.SelectedObject.IsMoving = false;
-                }
+                VM.IsMoving = false;
+                if (VM.SelectedObject != null) VM.SelectedObject.IsMoving = false;
+                MouseClickedOnCreature = false;
             }
             catch (Exception ex)
             { ViewHelper.ShowError("Fehler beim Pre-Loslassen der Linken Maustaste", ex); }

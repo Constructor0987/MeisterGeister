@@ -170,6 +170,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public bool LebensbalkenImmerAnzeigen
+        { get { return MeisterGeister.Logic.Einstellung.Einstellungen.LebensbalkenImmerAnzeigen; } }
+
         #region Initiative
 
         //private const int RANDOM_SIZE = 100000;
@@ -211,6 +214,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
                 //Dazwischen sollen die Aktionen allerdings neu berechnet werden
                 OnChanged("Initiative");
+                
+                if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
+                    Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
             }
         }
         #endregion
@@ -453,6 +459,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     Kampf.InitiativListe.Where(t => t.Start.Kampfrunde == this.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
                     )
                     : null;
+                if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.KampfWindow != null)                
+                {
+                    Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
+                }
+                //.RaiseEvent(new RoutedEventArgs(si))
+                //VM.KampfWindow.SizeChanged
             }
         }
 

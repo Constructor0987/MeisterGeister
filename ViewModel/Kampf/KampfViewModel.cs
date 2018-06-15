@@ -9,6 +9,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
+using MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.ViewModel.Kampf
 {
@@ -94,8 +95,6 @@ namespace MeisterGeister.ViewModel.Kampf
                 Set(ref _wesenPlaylist, value);
             }
         }
-
-
 
         private ManöverInfo selectedManöver;
         public ManöverInfo SelectedManöver

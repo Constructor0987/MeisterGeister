@@ -241,7 +241,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     KampfWindow.SizeToContent = SizeToContent.Height;
                     //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
                     KampfWindow.SizeToContent = SizeToContent.Manual;
-                    SetIniWindowPosition();
+                  //  SetIniWindowPosition();
                 }
             }
         }
@@ -1444,7 +1444,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             
             if (KampfWindow == null) return;
             
-            KampfWindow.SizeToContent = SizeToContent.Width;
+        //    KampfWindow.SizeToContent = SizeToContent.Width;
             KampfWindow.SizeToContent = SizeToContent.Manual;
 
             KampfWindow.Left = (((h == System.Windows.HorizontalAlignment.Left) ? minRight : 
@@ -1456,6 +1456,22 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     Screen.AllScreens[1].WorkingArea.Height / dy) - KampfWindow.ActualHeight));
         }
 
+        public void SetIniWindowWidth(bool doWindowMove = false)
+        {
+            if (doWindowMove)
+            {
+                Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height = Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height + 1;
+                Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height = Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height - 1;
+            }
+            
+            KampfWindow.MinWidth = 430 * ScaleKampfGrid;
+
+            int anzInisInKR = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).Count();
+            double width1Ini = (((KampfInfoView)KampfWindow.Content).scrViewer.ExtentWidth /
+                Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= Global.CurrentKampf.Kampf.Kampfrunde).Count()) * ScaleKampfGrid;
+            KampfWindow.Width = width1Ini * anzInisInKR + 248 * ScaleKampfGrid; //246
+            ((KampfInfoView)KampfWindow.Content).scrViewer.ScrollToRightEnd();
+        }
 
         public void ChangeEbeneHeight(bool raise)
         {
