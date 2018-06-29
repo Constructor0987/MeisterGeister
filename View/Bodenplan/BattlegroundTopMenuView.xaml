@@ -364,7 +364,7 @@
                                 </StackPanel>
 
                             </Grid>
-                            <CheckBox Margin="2,0,58,5" IsChecked="{Binding IsPointerVisible}" Padding="1,0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" >
+                            <CheckBox Margin="5,0,58,5" IsChecked="{Binding IsPointerVisible}" Padding="1,0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" >
                                 <CheckBox.ToolTip>
                                     <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Auf dem Bild einen Zeiger anzeigen." />
                                 </CheckBox.ToolTip>
@@ -388,6 +388,9 @@
                             <Button Margin="50,43,0,0" Height="22" Width="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonSticCreatues_Click">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Gegner.png"/>
                             </Button>
+                            <!--<Button Margin="0,43,0,0" Width="22" Height="22" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonTest_Click">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Helden.png"/>
+                            </Button>-->
                         </Grid>
                     </Border>
                     <!--<Border HorizontalAlignment="Left" Margin="0,5" Width="80" Grid.Column="2">
@@ -591,8 +594,8 @@
                             </Grid>
                             <GroupBox Header="Fog-of-War" Width="110">
                                 <StackPanel Orientation="Horizontal" Margin="3">
-                                    <CheckBox Margin="0,3,5,0" IsChecked="{Binding useFog}" HorizontalAlignment="Left" />
-                                    <StackPanel Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}" Margin="-2,0,0,0" >
+                                    <CheckBox Margin="0,5,5,0" IsChecked="{Binding useFog}" HorizontalAlignment="Left" />
+                                    <StackPanel Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                         <Label Content="Größe Freifeld" HorizontalAlignment="Center" Padding="0,2,0,0" Margin="-2,0,0,0" />
                                         <ViewGeneral:IntBox MinValue="1" MaxValue="5" Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}" ShowButtons="True" Width="60" Height="19">
                                             <ViewGeneral:IntBox.ToolTip>

@@ -145,7 +145,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("SelectedGegnerBase");
                 OnChanged("AngriffListe");
                 OnChanged("SelectedGegnerBaseIsNotNull");
-                OnChanged("WesenPlaylist");
+                //OnChanged("WesenPlaylist");
                 OnChanged("ZauberListe");
                 if (onDeleteGegnerBase != null)
                     onDeleteGegnerBase.Invalidate();
@@ -1058,19 +1058,19 @@ namespace MeisterGeister.ViewModel.Kampf
 
         #region Audio Properties/Commands
 
-        private ICollection<IWesenPlaylist> _wesenPlaylist = null;
-        public ICollection<IWesenPlaylist> WesenPlaylist
-        {
-            get
-            {
-                return (SelectedGegnerBase == null) ? null :
-                    new ObservableCollection<IWesenPlaylist>((SelectedGegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>());
-            }
-            set
-            {
-                Set(ref _wesenPlaylist, value);
-            }
-        }
+        //private ICollection<IWesenPlaylist> _wesenPlaylist = null;
+        //public ICollection<IWesenPlaylist> WesenPlaylist
+        //{
+        //    get
+        //    {
+        //        return (SelectedGegnerBase == null) ? null :
+        //            new ObservableCollection<IWesenPlaylist>((SelectedGegnerBase).GegnerBase_Audio_Playlist.AsEnumerable<IWesenPlaylist>());
+        //    }
+        //    set
+        //    {
+        //        Set(ref _wesenPlaylist, value);
+        //    }
+        //}
 
         private Base.CommandBase onAudioSpeedButtonWesenZuweisen = null;
         public Base.CommandBase OnAudioSpeedButtonWesenZuweisen
@@ -1086,7 +1086,7 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(SelectedGegnerBase);
             wesenAuswahlView.ShowDialog();
-            OnChanged("WesenPlaylist");
+            //OnChanged("WesenPlaylist");
         }
 
         #endregion

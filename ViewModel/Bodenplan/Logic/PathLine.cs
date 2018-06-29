@@ -44,17 +44,26 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        private Point _getStartPoint = new Point();
+        public Point GetStartPoint
+        {
+            get { return _getStartPoint;}
+            set { Set(ref _getStartPoint, value); }
+        }
+
         //Creates new path with p at start and endpoint
         public void CreateNewPath(Point p)
         {
             ZDisplayX = p.X + 10;
             ZDisplayY = p.Y + 10;
+            GetStartPoint = p;
             _pathFigure.StartPoint = p;
-            _pathSegmentCollection.Add(new LineSegment(p,true));
+            _pathSegmentCollection.Add(new LineSegment(p, true));
             _pathFigure.Segments = _pathSegmentCollection;
             _pathFigureCollection.Add(_pathFigure);
             PathGeometryData.Figures = _pathFigureCollection;
         }
+
          
         
         public void AddNewPointToSeries(Point p)

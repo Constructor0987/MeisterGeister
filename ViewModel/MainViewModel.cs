@@ -17,6 +17,7 @@ using System.Windows.Data;
 
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.Logic.Kalender;
 
 namespace MeisterGeister.ViewModel
 {
@@ -495,6 +496,16 @@ namespace MeisterGeister.ViewModel
                 Global.ContextAudio.Update<MeisterGeister.Model.Audio_Theme>(aTheme);
             }
             UpdateFavorites();
+        }
+
+        #endregion
+
+        #region Kalender
+        private string _aktuellesDatum = null;
+        public string AktuellesDatum
+        {
+            get { return _aktuellesDatum; }
+            set { Set(ref _aktuellesDatum, value); }
         }
 
         #endregion

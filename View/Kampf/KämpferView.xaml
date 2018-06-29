@@ -112,7 +112,7 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Button Width="24" Tag="{Binding}" Focusable="False" Height="24" ToolTip="{Binding Audio_Playlist.Name}"
-                                                        Command="{Binding VM.OnWesenPlaylistClick, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                        Command="{Binding DataContext.OnWesenPlaylistClick, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                                                         CommandParameter="{Binding}" >
                                                     <Button.Content>
                                                         <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />                                                               

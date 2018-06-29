@@ -195,9 +195,6 @@ namespace MeisterGeister.View.Bodenplan
             //};
             VM.KampfWindow.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
-
-                //VM.KampfWindow.MinWidth = 430 * vm.ScaleKampfGrid;
-                VM.SetIniWindowWidth();
                 if ((System.Windows.Forms.Screen.AllScreens.Length > 1 &&
                      VM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
                         System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width * .5) ||
@@ -217,6 +214,8 @@ namespace MeisterGeister.View.Bodenplan
                             System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - VM.KampfWindow.Width;
                     }
                 }
+                //VM.KampfWindow.MinWidth = 430 * vm.ScaleKampfGrid;
+                VM.SetIniWindowWidth();   
                 //int anzInisInKR = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).Count();
                 //double width1Ini = (infoView.scrViewer.ExtentWidth /
                 //    Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= Global.CurrentKampf.Kampf.Kampfrunde).Count())* vm.ScaleKampfGrid;
@@ -272,8 +271,18 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private bool MouseIsOverScrViewer = false;        
+        private bool MouseIsOverScrViewer = false;
 
+        private void ButtonTest_Click(object sender, RoutedEventArgs e)
+        {
+             //Microsoft-WindowsAPICodePack-Shell
+            //using Microsoft.WindowsAPICodePack.Shell;
+
+            //Microsoft.WindowsAPICodePack.Shell.dll
+            //Image img = new Image();
+            //img.Source = ShellFile.FromFilePath(@"C:\Temp\_LE_D\einer jedem Frau Recht.png").Thumbnail.BitmapSource;
+
+        }
     }
 }
 

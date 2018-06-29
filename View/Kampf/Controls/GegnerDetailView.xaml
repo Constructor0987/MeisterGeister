@@ -604,7 +604,8 @@
                         <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Margin="25,0,35,0" >
                             <Border ToolTip="Audio Speed-Buttons" Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
-                                    <ItemsControl ItemsSource="{Binding WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                    <ItemsControl ItemsSource="{Binding SelectedGegnerBase.GegnerBase_Audio_Playlist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                        <!--WesenPlaylist-->
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <WrapPanel ItemWidth="30" />

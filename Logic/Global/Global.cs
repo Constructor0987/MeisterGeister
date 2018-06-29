@@ -203,6 +203,18 @@ namespace MeisterGeister
             }
         }
 
+        private static string aktuellesDatum;
+        public static string AktuellesDatum
+        {
+            get { return Global.aktuellesDatum; }
+            set
+            {
+                Global.aktuellesDatum = value;
+                OnDatumChanged();
+                MainViewModel.Instance.AktuellesDatum = value;
+            }
+        }
+
         private static DgSuche.Ortsmarke standort = null;
         public static DgSuche.Ortsmarke Standort
         {
@@ -355,6 +367,8 @@ namespace MeisterGeister
             Standort = new DgSuche.Ortsmarke(sarr[0], sarr[1], sarr[2]);
             Logger.PerformanceLogEnd(log);
 
+            AktuellesDatum = Logic.Kalender.Datum.Aktuell.ToStringShort();
+                         
             //webserver
             WebServer = new Server();
 
@@ -439,6 +453,7 @@ namespace MeisterGeister
         public static event EventHandler HeldSelectionChanged;
         public static event EventHandler HeldSelectionChanging;
         public static event EventHandler StandortChanged;
+        public static event EventHandler DatumChanged;
 
         static void OnStandortChanged()
         {
@@ -448,10 +463,17 @@ namespace MeisterGeister
                 StandortChanged(null, new EventArgs());
         }
 
+        static void OnDatumChanged()
+        {
+        //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+            
+            if (DatumChanged != null)
+                DatumChanged(null, new EventArgs());
+        }
         static void OnZeitpunktChanged()
         {
-            //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
-
+        //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+           
             if (ZeitpunktChanged != null)
                 ZeitpunktChanged(null, new EventArgs());
         }

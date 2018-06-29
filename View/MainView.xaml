@@ -438,7 +438,8 @@
                                                 </Menu>
                                             </StackPanel>
 
-                                            <TextBlock DockPanel.Dock="Left" Text="3. Rondra 1023 BF" Style="{StaticResource TextTitel}" VerticalAlignment="Center"/>
+                                            <TextBlock DockPanel.Dock="Left" Text="{Binding AktuellesDatum, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextTitel}" VerticalAlignment="Center"/>
+
                                         </DockPanel>
 
                                         <TabPanel Grid.Column="1" DockPanel.Dock="Left" x:Name="HeaderPanel" IsItemsHost="true" Margin="2,2,2,0" KeyboardNavigation.TabIndex="1" VerticalAlignment="Bottom" Panel.ZIndex="1"/>

@@ -24,6 +24,7 @@ namespace MeisterGeister.Logic.Kalender
             {
                 _aktuell = value;
                 Einstellungen.DatumAktuell = value.ToString();
+                Global.AktuellesDatum = value.ToStringShort();
             }
         }
 

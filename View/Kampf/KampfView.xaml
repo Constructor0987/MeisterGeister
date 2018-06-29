@@ -15,7 +15,7 @@
              xmlns:model="clr-namespace:MeisterGeister.Model"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="964" KeyDown="userControl_KeyDown">
+             mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="964" KeyDown="userControl_KeyDown" KeyUp="UserControl_KeyUp">
     <UserControl.Resources>
         <VM:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
@@ -238,6 +238,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500" MinWidth="450" />
             <ColumnDefinition Width="1*" />

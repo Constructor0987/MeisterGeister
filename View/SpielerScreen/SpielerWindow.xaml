@@ -225,7 +225,7 @@
                                                         Maximum="{Binding LebensenergieMax}" Minimum="0" VerticalAlignment="Top" 
                                                         Value="{Binding LebensenergieAktuell}" Orientation="Vertical" Background="#FF3DD81A"
                                                         Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" />
-                                           
+
                                             <!--Anführer-Krone-->
                                             <Image Width="40" Height="40" Margin="0,-32,0, 0" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
                                                     Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"
@@ -480,14 +480,7 @@
                      Visibility="{Binding useFog, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                 <s:SpielerPointer Margin="{Binding PointerMargin}" Visibility="{Binding IsPointerVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
             </Grid>
-            <!--<Label >
-                <Label.Content>
-                    <StackPanel>
-                        <TextBlock Text="{Binding CurrentMousePositionX, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBlock Text="{Binding CurrentMousePositionY, UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel>
-                </Label.Content>
-            </Label>-->
+            <Label Content="{Binding Bewegungslaenge, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="17" FontSize="14" FontWeight="Bold" />
         </Grid>
     </Grid>
 </Window>

@@ -9,10 +9,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     public enum ZeichenModus
     {
         Auswahl,
-        Stift,
+       // Stift,
         Linie,
         Fläche,
-        Bild,
-        Gegner
+      //  Bild,
+      //  Gegner
     }
 }

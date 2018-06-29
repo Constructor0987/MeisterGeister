@@ -214,7 +214,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
                 //Dazwischen sollen die Aktionen allerdings neu berechnet werden
                 OnChanged("Initiative");
-                
+                // ????? notwendig                
                 if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
                     Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
             }

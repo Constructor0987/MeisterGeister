@@ -796,6 +796,9 @@
     <Compile Include="View\Bodenplan\BattlegroundTopMenuView.xaml.cs">
       <DependentUpon>BattlegroundTopMenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Bodenplan\SmallSliderHorizontal.xaml.cs">
+      <DependentUpon>SmallSliderHorizontal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Bodenplan\SpielerPointer.xaml.cs">
       <DependentUpon>SpielerPointer.xaml</DependentUpon>
     </Compile>
@@ -1608,6 +1611,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Bodenplan\SliderWithDisplayTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Bodenplan\SmallSliderHorizontal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

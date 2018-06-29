@@ -3,19 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeisterGeister.View.Bodenplan"
              mc:Ignorable="d" 
-             d:DesignHeight="59" d:DesignWidth="150"
+             d:DesignHeight="38" d:DesignWidth="150"
              Name="_SliderWithDisplayTextBox">
-    <Grid Height="58" Width="150">
+    <Grid Height="37" Width="150">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="78*" />
             <ColumnDefinition Width="69*" />
         </Grid.ColumnDefinitions>
-        <Slider IsSnapToTickEnabled="True" Height="34" Margin="12,21,49,0" x:Name="UIStrokeThicknessSlider" VerticalAlignment="Top" Minimum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMinValue}" Maximum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMaxValue}" Grid.ColumnSpan="2" Value="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderValue, Mode=TwoWay}" TickFrequency="{Binding ElementName=_SliderWithDisplayTextBox, Path=TickFrequencyValue}"/>
-        <Label Content="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderLabelTextValue}" Margin="30,0,31,0" Name="label1" FontSize="10" Grid.ColumnSpan="2" Height="28" VerticalAlignment="Top" />
-        <TextBox  Height="23" Margin="0,21,12,0" x:Name="UIStrokeThicknessTextBox"  VerticalAlignment="Top" HorizontalAlignment="Right" Width="31" Grid.Column="1" Text="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderValue}" LostFocus="UIStrokeThicknessTextBox_LostFocus" KeyUp="UIStrokeThicknessTextBox_KeyUp" TextChanged="UIStrokeThicknessTextBox_TextChanged" GotFocus="UIStrokeThicknessTextBox_GotFocus" />
-        <Label Content="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMinTextValue}"  Height="21" Margin="0,37,0,0" Name="SliderMinTextLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="35" FontSize="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ClipToBounds="False"   />
-        <Label ClipToBounds="False" Content="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMaxTextValue}"  FontSize="8" Height="21" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="77,37,0,0" Name="SliderMaxTextLabel" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="35" Grid.ColumnSpan="2" />
+        <!--<Slider IsSnapToTickEnabled="True" Height="34" Margin="12,14,49,0" x:Name="UIStrokeThicknessSlider" VerticalAlignment="Top" Minimum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMinValue}" Maximum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMaxValue}" Grid.ColumnSpan="2" Value="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderValue, Mode=TwoWay}" TickFrequency="{Binding ElementName=_SliderWithDisplayTextBox, Path=TickFrequencyValue}"/>-->
+
+        <local:SmallSliderHorizontal Height="14" Margin="12,14,49,0" x:Name="UIStrokeThicknessSlider" VerticalAlignment="Top" Grid.ColumnSpan="2"
+            SliderMinimum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMinValue}" 
+            SliderMaximum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMaxValue}"  
+            SliderValue="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderValue, Mode=TwoWay}" 
+            SliderTickFrequency="{Binding ElementName=_SliderWithDisplayTextBox, Path=TickFrequencyValue}" />
+        <!--SliderIsSnapToTickEnabled="True"-->
+
+        <Label Content="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderLabelTextValue}" Margin="10,0,45,0" Padding="0" Name="label1" FontSize="10" Grid.ColumnSpan="2" Height="18" VerticalAlignment="Top" />
+        <TextBox Height="23" Margin="0,8,12,0" x:Name="UIStrokeThicknessTextBox"  VerticalAlignment="Top" HorizontalAlignment="Right" Width="31" Grid.Column="1" Text="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderValue}" LostFocus="UIStrokeThicknessTextBox_LostFocus" KeyUp="UIStrokeThicknessTextBox_KeyUp" TextChanged="UIStrokeThicknessTextBox_TextChanged" GotFocus="UIStrokeThicknessTextBox_GotFocus" />
+        <Label Content="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMinTextValue}"  Height="14" Margin="0,22,0,0" Padding="0" Name="SliderMinTextLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="35" FontSize="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ClipToBounds="False"   />
+        <Label ClipToBounds="False" Content="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMaxTextValue}" Margin="77,22,0,0" Padding="0" FontSize="8" Height="14" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Name="SliderMaxTextLabel" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="35" Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>
 

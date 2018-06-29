@@ -665,71 +665,6 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                //if (!Keyboard.IsKeyDown(Key.LeftCtrl))
-                //{
-                //    if (VM.IsPointerVisible)
-                //    {
-                //        VM.SetPointer(ArenaGridTop);
-                //        e.Handled = true;
-                //    }
-                //    else
-                //    {
-                //        var menuitem = ((DependencyObject)e.OriginalSource).FindAnchestor<MenuItem>();
-                //        if (menuitem != null)
-                //        {
-                //            if (menuitem.HasItems)
-                //            {
-                //                menuitem.IsSubmenuOpen = !menuitem.IsSubmenuOpen;
-                //                miOpen = menuitem.IsSubmenuOpen ? menuitem : null;
-                //            }
-                //            else
-                //            {
-                //                ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
-                //                    .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
-                //                    .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
-                //                if (mi != null)
-                //                {
-                //                    if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
-                //                        mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
-                //                    if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
-                //                        mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
-
-                //                    if (menuitem.Name == "miKämpferAttacke" || (miOpen != null && miOpen.Name == "miKämpferAttacke"))
-                //                        mi.UmwandelnAttacke.Execute(menuitem.CommandParameter);
-
-                //                    if (menuitem.Name == "miKämpferSonstiges" || (miOpen != null && miOpen.Name == "miKämpferSonstiges"))
-                //                        mi.UmwandelnSonstiges.Execute(menuitem.CommandParameter);
-                //                }
-                //                else
-                //                { }
-                //                if (miOpen != null && miOpen.IsSubmenuOpen)
-                //                    miOpen.IsSubmenuOpen = false;
-                //                miOpen = null;
-                //                Global.CurrentKampf.SelectedManöver = mi;
-                //                Global.CurrentKampf.Kampf.SelectedManöverInfo = mi;
-                //            }
-                //            return;
-                //        }
-
-                //        if (miOpen != null && miOpen.IsSubmenuOpen)
-                //            miOpen.IsSubmenuOpen = false;
-                //        miOpen = null;
-
-                //        var slider = ((DependencyObject)e.OriginalSource).FindAnchestor<Slider>();
-                //        if (slider != null) return;
-
-                //        var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
-                //        if (listboxItem != null)
-                //        {
-                //            if (VM.SelectedObject != null)
-                //                VM.SelectedObject.IsMoving = false;
-                //            BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
-                //            VM.SelectedObject = o;
-                //            e.Handled = true;
-                //        }                    
-                //    }
-                //}
-
                 if (VM.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
                 {
                     VM.SelectedObject = null;
@@ -761,7 +696,16 @@ namespace MeisterGeister.View.Bodenplan
                 {
                     if (VM.SelectedObject != null) VM.SelectionChangedUpdateSliders();
 
-                    if (VM.CreateLine)
+                    if (VM.SelectedObject != null && VM.SelectedObject.IsMoving)
+                    {
+                        _x1 = e.GetPosition(ArenaGrid).X;
+                        _y1 = e.GetPosition(ArenaGrid).Y;
+                        //VM.CreatingNewLine = true;
+                        var line = VM.CreateNewTempPathLine(_x1, _y1);
+                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
+                        e.Handled = true;
+                    }
+                    else if (VM.CreateLine)
                     {
                         _x1 = e.GetPosition(ArenaGrid).X;
                         _y1 = e.GetPosition(ArenaGrid).Y;
@@ -789,61 +733,66 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                MouseClickedOnCreature = false;
+
+
+                VM.IsMoving = false;
+                if (VM.SelectedObject != null) VM.SelectedObject.IsMoving = false;
+                //handling different possibilities based on Objects (like Pathline or different BattlegroundBaseObject)
+                if (VM.CreatingNewLine || VM.CreatingNewFilledLine)
                 {
-                    vm.IsMoving = false;
-                    if (vm.SelectedObject != null) vm.SelectedObject.IsMoving = false;
-                    //handling different possibilities based on Objects (like Pathline or different BattlegroundBaseObject)
-                    if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
+                    VM.FinishCurrentPathLine();
+                    e.Handled = true;
+                    VM.CreatingNewLine = false;
+                    VM.CreatingNewFilledLine = false;
+                    VM.MoveLastObjectBehindCreatures();
+                    //VM.UpdateCreatureLevelToTop();
+                }
+                else if (VM.SelectedObject != null)
+                {
+                    if (VM.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
                     {
-                        vm.FinishCurrentPathLine();
+                        var currentcreature = VM.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
+                        currentcreature.IsSticked = false;
+
+                        if (VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
+                        {
+                            VM.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
+                        }
+                        else if (VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
+                        {
+                            VM.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
+                        }
+                        else
+                        {
+                            VM.CurrentlySelectedCreature = "";
+                        }
+
+                    }
+                    else if (VM.SelectedObject is Wesen)
+                    {
+                        double deltaX = VM.CurrentMousePositionX - ((Wesen)VM.SelectedObject).CreatureNameX;
+                        double deltaY = VM.CurrentMousePositionY - ((Wesen)VM.SelectedObject).CreatureNameY;
+                        deltaX = deltaX < 0 ? deltaX * -1 : deltaX;
+                        deltaY = deltaY < 0 ? deltaY * -1 : deltaY;
+                        if (deltaX <= 50 && deltaY <= 50)
+                        {
+                            if (((Wesen)VM.SelectedObject).Position == Position.Stehend) ((Wesen)VM.SelectedObject).Position = Position.Kniend;
+                            else if (((Wesen)VM.SelectedObject).Position == Position.Kniend) ((Wesen)VM.SelectedObject).Position = Position.Liegend;
+                            else if (((Wesen)VM.SelectedObject).Position == Position.Liegend) ((Wesen)VM.SelectedObject).Position = Position.Reitend;
+                            else if (((Wesen)VM.SelectedObject).Position == Position.Reitend) ((Wesen)VM.SelectedObject).Position = Position.Fliegend;
+                            else if (((Wesen)VM.SelectedObject).Position == Position.Fliegend) ((Wesen)VM.SelectedObject).Position = Position.Schwebend;
+                            else ((Wesen)VM.SelectedObject).Position = Position.Stehend;
+                        }
+                        VM.UpdateCreaturesFromChangedKampferlist();
+
+
+                        VM.FinishCurrentTempPathLine();
                         e.Handled = true;
-                        vm.CreatingNewLine = false;
-                        vm.CreatingNewFilledLine = false;
-                        vm.MoveLastObjectBehindCreatures();
-                        //vm.UpdateCreatureLevelToTop();
+                        //VM.CreatingNewLine = false;
+                        //VM.CreatingNewFilledLine = false;
                     }
-                    else if (vm.SelectedObject != null)
-                    {
-                        if (vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
-                        {
-                            var currentcreature = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
-                            currentcreature.IsSticked = false;
-
-                            if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
-                            {
-                                vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
-                            }
-                            else if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
-                            {
-                                vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
-                            }
-                            else
-                            {
-                                vm.CurrentlySelectedCreature = "";
-                            }
-
-                        }
-                        else if (vm.SelectedObject is Wesen)
-                        {
-                            double deltaX = vm.CurrentMousePositionX - ((Wesen)vm.SelectedObject).CreatureNameX;
-                            double deltaY = vm.CurrentMousePositionY - ((Wesen)vm.SelectedObject).CreatureNameY;
-                            deltaX = deltaX < 0 ? deltaX * -1 : deltaX;
-                            deltaY = deltaY < 0 ? deltaY * -1 : deltaY;
-                            if (deltaX <= 50 && deltaY <= 50)
-                            {
-                                if (((Wesen)vm.SelectedObject).Position == Position.Stehend) ((Wesen)vm.SelectedObject).Position = Position.Kniend;
-                                else if (((Wesen)vm.SelectedObject).Position == Position.Kniend) ((Wesen)vm.SelectedObject).Position = Position.Liegend;
-                                else if (((Wesen)vm.SelectedObject).Position == Position.Liegend) ((Wesen)vm.SelectedObject).Position = Position.Reitend;
-                                else if (((Wesen)vm.SelectedObject).Position == Position.Reitend) ((Wesen)vm.SelectedObject).Position = Position.Fliegend;
-                                else if (((Wesen)vm.SelectedObject).Position == Position.Fliegend) ((Wesen)vm.SelectedObject).Position = Position.Schwebend;
-                                else ((Wesen)vm.SelectedObject).Position = Position.Stehend;
-                            }
-                            VM.UpdateCreaturesFromChangedKampferlist();
-                        }
-               //         ArenaGrid.Cursor = Cursors.Arrow;
-                    }
+            //         ArenaGrid.Cursor = Cursors.Arrow;
                 }
             }
             catch (Exception ex)
@@ -909,29 +858,35 @@ namespace MeisterGeister.View.Bodenplan
                         }
                     }
                     else
-                    if (VM.CreatingNewLine || VM.CreatingNewFilledLine)
+                        if (VM.CreatingNewLine || VM.CreatingNewFilledLine)
                     {
-                        _x2 = e.GetPosition(ArenaGrid).X;
-                        _y2 = e.GetPosition(ArenaGrid).Y;
-                        VM.MoveWhileDrawing(_x2, _y2, VM.Freizeichnen);
+                        //_x2 = e.GetPosition(ArenaGrid).X;
+                        //_y2 = e.GetPosition(ArenaGrid).Y;
+                        VM.MoveWhileDrawing(VM.CurrentMousePositionX, VM.CurrentMousePositionY, VM.Freizeichnen);
                     }
                     else if (MouseClickedOnCreature && e.LeftButton == MouseButtonState.Pressed && VM.SelectedObject != null)
                     {
                         VM.IsMoving = true;
                         VM.SelectedObject.IsMoving = true;
-                        if (VM.SelectedObject is BattlegroundCreature) 
+                        if (VM.SelectedObject is BattlegroundCreature)
+                        {
                             VM.InitDnD = true;
+
+                        }
                         else
                             VM.MoveObject(_xMovingOld, _yMovingOld, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
                     }
                     if (VM.InitDnD)
                     {
-                        VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
-                        VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+                        var line = VM.CreateNewTempPathLine(
+                            (VM.SelectedObject as BattlegroundCreature).MidCreatureX + (VM.SelectedObject as BattlegroundCreature).CreatureWidth / 2,
+                            (VM.SelectedObject as BattlegroundCreature).MidCreatureY + (VM.SelectedObject as BattlegroundCreature).CreatureHeight / 2);
+                        line.IsNew = true; // TODO sollte in die Methode ^ mit rein
+                        e.Handled = true;
+                        VM.Bewegungslaenge = "0 Schritt";
+
                         pKämpfer = e.GetPosition(null);
                         VM.InitDnD = false;
-
-                      //  ArenaGrid.Cursor = Cursors.Hand;
 
                         // Initialisiere drag & drop Operation
                         DataObject dragData = new DataObject("BMKämpfer", VM.SelectedObject);
@@ -941,6 +896,13 @@ namespace MeisterGeister.View.Bodenplan
 
                     _xMovingOld = VM.CurrentMousePositionX;
                     _yMovingOld = VM.CurrentMousePositionY;
+
+                    if (MouseClickedOnCreature && e.LeftButton == MouseButtonState.Released && VM.SelectedObject != null)
+                    {
+                        MouseClickedOnCreature = false;
+                        VM.FinishCurrentTempPathLine();
+                        VM.Bewegungslaenge = null;
+                    }
                 }
             }
             catch (Exception ex)
@@ -986,7 +948,7 @@ namespace MeisterGeister.View.Bodenplan
 
                         SetCursorPos((int)curMousePosScreen.X - minusX, (int)curMousePosScreen.Y - minusY);
 
-                        VM.SelectedObject.MoveObject( VM.CurrentMousePositionX, VM.CurrentMousePositionY,true);
+                        VM.SelectedObject.MoveObject(VM.CurrentMousePositionX, VM.CurrentMousePositionY, true);
                         _xMovingOld = VM.CurrentMousePositionX;
                         _yMovingOld = VM.CurrentMousePositionY;
 
@@ -1010,7 +972,13 @@ namespace MeisterGeister.View.Bodenplan
                     {
                         e.UseDefaultCursors = false;
                         Mouse.SetCursor(cKämpfer);
-                        VM.KämpferDnDTempPos = new Point (VM.CurrentMousePositionX, VM.CurrentMousePositionY );
+                        VM.KämpferDnDTempPos = new Point(VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+
+                        //Maßstab Endposition setzen
+                        VM.MoveWhileDrawing(
+                            (VM.SelectedObject as BattlegroundCreature).MidCreatureX + (VM.SelectedObject as BattlegroundCreature).CreatureWidth / 2,
+                            (VM.SelectedObject as BattlegroundCreature).MidCreatureY + (VM.SelectedObject as BattlegroundCreature).CreatureHeight / 2, false);
+                        
                                                 
                         VM.MoveObject(_xMovingOld, _yMovingOld, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
                         _xMovingOld = VM.CurrentMousePositionX;
