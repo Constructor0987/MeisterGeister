@@ -7172,7 +7172,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
             foreach (string pfad in stdPfad)
             {
-                if (pfad_max.ToLower().StartsWith(pfad.ToLower()))
+                if (pfad != "" && pfad_max.ToLower().StartsWith(pfad.ToLower()))
                 {
                     if (pfad_max != pfad)
                         temp_pfad_datei[1] = pfad_max.Substring(pfad.EndsWith(@"\") ? pfad.Length : pfad.Length + 1) + "\\" + temp_pfad_datei[1];
@@ -7422,13 +7422,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         {
             List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(aPlaylist);
             if (titelliste.Count > 0 && 
-                System.IO.Path.IsPathRooted(System.IO.Path.GetDirectoryName(titelliste[0].Pfad + "\\" + titelliste[0].Datei)))
+                System.IO.Path.IsPathRooted(System.IO.Path.GetDirectoryName(titelliste[0].Pfad + (titelliste[0].Pfad !=""?"\\":"") + titelliste[0].Datei)))
             {
-                string titelRef = System.IO.Path.GetDirectoryName(titelliste[0].Pfad + "\\" + titelliste[0].Datei);
+                string titelRef = System.IO.Path.GetDirectoryName(titelliste[0].Pfad + (titelliste[0].Pfad != "" ? "\\" : "") + titelliste[0].Datei);
 
                 titelliste.ForEach(delegate(Audio_Titel aTitel)
                 {
-                    string vergleich = System.IO.Path.GetDirectoryName(aTitel.Pfad + "\\" + aTitel.Datei);
+                    string vergleich = System.IO.Path.GetDirectoryName(aTitel.Pfad + (aTitel.Pfad != "" ? "\\" : "") + aTitel.Datei);
 
                     while (!vergleich.StartsWith(titelRef))
                     {

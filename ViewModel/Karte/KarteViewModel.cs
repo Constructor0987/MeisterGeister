@@ -230,6 +230,7 @@ namespace MeisterGeister.ViewModel.Karte
                 SetGlobusPositionFromHeldenPosition();
                 OnChanged("HeldenX");
                 OnChanged("HeldenY");
+                OnChanged("HeldenYMinusPinHeight");
             }
         }
 
@@ -245,10 +246,21 @@ namespace MeisterGeister.ViewModel.Karte
         public int HeldenY
         {
             get { return (int)Math.Round(HeldenPosition.Y, MidpointRounding.AwayFromZero); }
-            set { 
+            set
+            {
                 heldenPosition.Y = value;
                 HeldenPosition = heldenPosition;
-                }
+                OnChanged("HeldenYMinusPinHeight");
+            }
+        }
+        public int HeldenYMinusPinHeight
+        {
+            get { return (int)Math.Round(HeldenPosition.Y- 25.0 /Zoom , MidpointRounding.AwayFromZero); }
+            set
+            {
+                heldenPosition.Y = value + 25.0 / Zoom;
+                HeldenPosition = heldenPosition;
+            }
         }
 
         private Point heldenGlobusPosition = new Point();
@@ -295,7 +307,8 @@ namespace MeisterGeister.ViewModel.Karte
             heldenPosition = (Point)dgConverter.Convert(heldenGlobusPosition, typeof(Point), null, null);
             OnChanged("HeldenPosition");
             OnChanged("HeldenX");
-            OnChanged("HeldenY");
+            OnChanged("HeldenY"); 
+            OnChanged("HeldenYMinusPinHeight"); 
         }
 
         private void SetGlobusPositionFromHeldenPosition()
@@ -817,7 +830,9 @@ namespace MeisterGeister.ViewModel.Karte
         public double Zoom
         {
             get { return zoom; }
-            set { Set(ref zoom, value); }
+            set { Set(ref zoom, value);
+                OnChanged("HeldenYMinusPinHeight");
+            }
         }
 
         public Point Center

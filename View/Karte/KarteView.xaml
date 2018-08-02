@@ -34,7 +34,7 @@
             <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
                                MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
                                Mode="Custom" TranslateX="{Binding TranslateX, Mode=TwoWay}" TranslateY="{Binding TranslateY, Mode=TwoWay}"
-                               Zoom="{Binding Zoom, Mode=TwoWay}"
+                               Zoom="{Binding Zoom, Mode=TwoWay}" 
                                LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
                                ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"
                                VerticalAlignment="Bottom" Loaded="UserControl_Loaded">
@@ -51,7 +51,7 @@
                             </MenuItem>
                             <MenuItem Header="Position setzen" ToolTip="Die Heldenposition festlegen" Command="{Binding Path=PlacementTarget.DataContext.OnHeldenPositionSetzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                 <MenuItem.Icon>
-                                    <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="25"/>
+                                    <Image Source="pack://application:,,,/Images/Logos/pinnadel.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="Was ist hier?" ToolTip="Gebiete anzeigen in denen dieser Punkt liegt" Command="{Binding Path=PlacementTarget.DataContext.OnShowGebiete, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
@@ -67,7 +67,11 @@
                         </ContextMenu>
                     </Canvas.ContextMenu>
                     <Image Source="{Binding SelectedKarte.Bildpfad}" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
-                    <Image Source="pack://application:,,,/Images/Logos/MG_Icon_mit_Zeiger_oben_links.png" Width="{Binding Zoom,ElementName=MapScrollViewer,Converter={StaticResource MGIconZoomConverter} }" Canvas.Left="{Binding HeldenX}" Canvas.Top="{Binding HeldenY}"  />
+                    <Image Source="pack://application:,,,/Images/Logos/pinnadel.png" Width="{Binding Zoom,ElementName=MapScrollViewer,Converter={StaticResource MGIconZoomConverter} }" 
+                           Canvas.Left="{Binding HeldenX}" Canvas.Top="{Binding HeldenYMinusPinHeight}" >
+                    </Image>
+
+
                     <ItemsControl ItemsSource="{Binding Path=Lines}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -363,6 +367,13 @@
                     <Karte:PflanzenMitLandschaftControl General:UIElementBehavior.ViewModel="{Binding}" Width="600"/>
                 </Grid>
             </Expander>
+            <!--<Expander ExpandDirection="Right" HorizontalAlignment="Right" Margin="-1,50,20,50">
+                <Expander.Header>
+                    <TextBlock Style="{StaticResource TextTitel}" Text="Jagen, Pirsch, Fischen" HorizontalAlignment="Center"/>
+                </Expander.Header>
+                <Grid Background="{StaticResource Background1}">
+                </Grid>
+            </Expander>-->
         </Grid>
     </Border>
 </UserControl>

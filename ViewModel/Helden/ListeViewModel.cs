@@ -412,6 +412,7 @@ namespace MeisterGeister.ViewModel.Helden
                 importHeld.Spieler = existing.Spieler;
                 importHeld.Notizen = existing.Notizen;
                 importHeld.Kampfwerte = existing.Kampfwerte;
+                importHeld.Held_Pflanze = existing.Held_Pflanze;
                 if (importHeld.CheckEnergieständeAbwechend(existing) 
                     && ConfirmYesNoCancel("Energiestände & Wunden", "Sollen die aktuellen Energiestände und Wunden beibehalten werden?") == 2)
                 {
