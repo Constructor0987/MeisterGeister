@@ -2719,7 +2719,7 @@
     <Resource Include="Images\Icons\General\x-offset.png" />
     <Resource Include="Images\Icons\General\y-offset.png" />
     <Resource Include="Images\Bodenplan\FogOfWar.png" />
-    <Content Include="Daten\Updateskripte\UpdateTo_V0126.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0126.sql" />
     <Resource Include="Images\Icons\lampen_hue.png" />
     <Resource Include="Images\Icons\HUEColorSwatchCircle.png" />
     <Resource Include="Images\Icons\krone.png" />
@@ -2734,6 +2734,7 @@
     <Resource Include="Images\Icons\hex.png" />
     <Resource Include="Images\Icons\rechteckig.png" />
     <Resource Include="Images\Logos\pinnadel.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0127.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

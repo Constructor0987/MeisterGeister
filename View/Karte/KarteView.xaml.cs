@@ -122,6 +122,7 @@ namespace MeisterGeister.View.Karte
             //    default:
             //        break;
             //}
-        }        
+        }
+        
     }
 }
