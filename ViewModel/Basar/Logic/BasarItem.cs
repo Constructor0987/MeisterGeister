@@ -177,7 +177,30 @@ namespace MeisterGeister.ViewModel.Basar.Logic
                 _währungsText = value;
             }
         }
-        
+
+        private bool _imGebietVorhanden;
+        public bool ImGebietVorhanden
+        {
+            get { return _imGebietVorhanden; }
+            set
+            {
+                _imGebietVorhanden = value;
+                OnChanged("ImGebietVorhanden");
+            }
+        }
+
+        public string VerbreitungsRegion
+        {
+            get
+            {
+                return  (Item is Model.Waffe)? (Item as Model.Waffe).Verbreitung ?? "nicht definiert" :
+                        (Item is Model.Fernkampfwaffe) ? (Item as Model.Fernkampfwaffe).Verbreitung ?? "nicht definiert" :
+                        (Item is Model.Rüstung) ? (Item as Model.Rüstung).Verbreitung?? "nicht definiert" :
+                        (Item is Model.Schild) ? (Item as Model.Schild).Verbreitung ?? "nicht definiert" : 
+                        "Überregional";                
+            }
+        }
+
         [DependentProperty("Preis"), DependentProperty("RabattAufschlag")]
         public Preis PreisMod
         {

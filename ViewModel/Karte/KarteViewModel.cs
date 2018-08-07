@@ -230,7 +230,7 @@ namespace MeisterGeister.ViewModel.Karte
                 SetGlobusPositionFromHeldenPosition();
                 OnChanged("HeldenX");
                 OnChanged("HeldenY");
-                OnChanged("HeldenYMinusPinHeight");
+                OnChanged("HeldenYMinusPinHeight");                                
             }
         }
 
@@ -796,8 +796,11 @@ namespace MeisterGeister.ViewModel.Karte
                     var s = "Der Punkt liegt in den folgenden Gebieten:";
                     foreach (var g in gebiete)
                         s += "\n" + g.Name;
+                    s += "\n";
+                    s += "\n" + "Der Punkt liegt in den folgenden Regionen: \n" + string.Join(Environment.NewLine, Global.ContextZooBot.GetRegion(p, 0));
                     PopUp(s);
                 }
+                
             }
         }
 

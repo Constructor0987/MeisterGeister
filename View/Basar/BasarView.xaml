@@ -58,6 +58,32 @@
                         </Button>
                     </StackPanel>
                     <StackPanel Margin="20,2,0,0" Orientation="Horizontal">
+                        <Image Margin="-22,0,0,0" >
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Height" Value="20" />
+                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Logos/pinnadel.png" />   
+                                    <Setter Property="ToolTip">
+                                        <Setter.Value>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="In folgenden Gebieten vorhanden: " />
+                                                <TextBlock Text="{Binding VerbreitungsRegion}" />
+                                            </StackPanel>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding VerbreitungsRegion}" Value="Überregional">
+                                            <Setter Property="Height" Value="28" />    
+                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Aventurien_icon.png" />
+                                            <Setter Property="ToolTip" Value="In ganz Aventurien verfügbar" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <!--</Image> Source="/DSA MeisterGeister;component/Images/Icons/Aventurien_icon.png" Height="20" Margin="-22,0,0,0" ToolTip="Kann in dem Gebiet erworben werden" />
+                        <Image Source="/DSA MeisterGeister;component/Images/Logos/pinnadel.png" Height="20" Margin="-22,0,0,0" ToolTip="Kann NICHT in dem Gebiet erworben werden"
+                               Visibility="{Binding Path=ImGebietVorhanden, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanToVisibilityConverter1}}"/>-->
                         <TextBlock Margin="2,2,0,0" Width="Auto" FontSize="11" FontStyle="Italic" MinWidth="230" Text="{Binding Path=Gewicht, StringFormat='{}Gewicht: {0} Unzen'}" ToolTip="Gewicht" VerticalAlignment="Center" />
                         <TextBlock Margin="2,2,0,0" Width="250" FontSize="11" FontStyle="Italic" Text="{Binding Path=Tags, StringFormat='{}{0}'}" TextWrapping="WrapWithOverflow" ToolTip="Stichworte" VerticalAlignment="Center" />
                         <ViewGeneral:LiteraturControl Height="32" Padding="2" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="TextLang" />
@@ -105,6 +131,40 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchfilter" />
+                    <ToggleButton Width="25" Margin="0,2,0,0" IsChecked="{Binding NurVorhandeneWaren}" >
+                        <ToggleButton.Content>
+                            <Grid>
+                                <Image Margin="-2">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="/Images/Icons/Aventurien_icon.png"/>
+                                            <Setter Property="ToolTip" Value="Suchfilter: ALLE Waren anzeigen" />
+                                            <Setter Property="Height" Value="25" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding NurVorhandeneWaren}" Value="True">
+                                                    <Setter Property="Height" Value="20" />
+                                                    <Setter Property="Source" Value="/Images/Logos/pinnadel.png"/>
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="Suchfilter: NUR Waren auf die Helden-Region begrenzt (" />
+                                                                <TextBlock Text="{Binding Regionen}" />
+                                                                <TextBlock Text=")" />
+                                                            </StackPanel>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+
+                                </Image>
+                            </Grid>
+
+
+                        </ToggleButton.Content>
+                    </ToggleButton>
+
                     <TextBox Margin="5,10" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchfilter" />
                     <TextBlock Margin="5" Text="Anzahl:" VerticalAlignment="Center" />
                     <ViewGeneral:DoubleBox Height="23" Margin="5" Width="75" MinValue="0" ShowButtons="True" Value="{Binding Anzahl}" VerticalAlignment="Center" />

@@ -69,7 +69,24 @@ namespace MeisterGeister.ViewModel.Kampf
                 }
             }
 
+            // bei Tieren und wenn nur noch 1/3 der LeP -> Meisterhinweis "Flüchtet im Normalfall"
+            if (kämpfer.LebensenergieAktuell > 0 && kämpfer.LebensenergieMax != 0 &&
+                kämpfer.LebensenergieAktuell <= kämpfer.LebensenergieMax /3 && 
+                kämpfer is IGegnerBase && (kämpfer as IGegnerBase).Tags.Contains("Tier"))
+            {
+                if (!Fliehen)
+                    View.General.ViewHelper.Popup("Meister-Hinweis:" + Environment.NewLine + Environment.NewLine + "Das Tier flieht im Normalfall, da die LeP unter 1/3 der Gesamt-LeP liegen.");
+                Fliehen = true;
+            }
+
             LetzteTrefferzone = zone;
+        }
+
+        private bool fliehen = false;
+        public bool Fliehen
+        {
+            get { return fliehen; }
+            set { Set(ref fliehen, value); }
         }
 
         private int schaden = 5;

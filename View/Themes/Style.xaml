@@ -20,6 +20,7 @@
 
     <!-- CombplexTpye -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
+    <mg:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter1" />
     <mg:InverseBooleanConverter x:Key="InverseBooleanConverter1" />
     <mg:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
 

@@ -36,7 +36,7 @@
         <RadioButton Grid.Row="1" Grid.Column="1" GroupName="Wundschwelle" VerticalAlignment="Center" Content="Verletzend" ToolTip="Wundschwelle um 2 gesenkt (Pfeil, Bolzen, Gezielter Stich, Todesstoß, etc.)" Margin="4,0,0,0" IsChecked="{Binding Verletzend}"/>
         <RadioButton Grid.Row="2" Grid.Column="1" GroupName="Wundschwelle" VerticalAlignment="Center" Content="Keine" ToolTip="Keine Wunden" Margin="4,0,0,0" IsChecked="{Binding KeineWunden}" />
 
-        <Button Grid.ColumnSpan="3" Grid.Row="4" Command="{Binding}" Margin="0,0,0,0">
+        <Button Grid.ColumnSpan="3" Grid.Row="4" Command="{Binding}" Margin="0,0,50,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -55,5 +55,8 @@
                 </TextBlock>
             </Grid>
         </Button>
+
+        <Image Grid.ColumnSpan="3" Grid.Row="4" HorizontalAlignment="Right" Margin="0,0,10,0" Source="/DSA MeisterGeister;component/Images/Icons/fliehen.png" Height="30" Width="30"
+               ToolTip="Das Tier flieht im Normalfall, da die LeP unterhalb 1/3 der Max-LeP liegen" Visibility="{Binding Fliehen, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
     </Grid>
 </UserControl>

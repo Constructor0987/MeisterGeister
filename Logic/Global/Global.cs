@@ -286,6 +286,26 @@ namespace MeisterGeister
                 standort.Latitude = heldenPosition.Y;
                 standort.Name = "";
                 OnStandortChanged();
+
+                List<string> altR = MomentaneRegion;
+                MomentaneRegion = Global.ContextZooBot.GetRegion(value, 0);
+                                
+                if ((!altR.SequenceEqual(MomentaneRegion) || altR.Count == 0) &&
+                    MainViewModel.Instance.OpenTools.FirstOrDefault(t => t.Name == "Basar") != null)
+                    (MainViewModel.Instance.OpenTools.FirstOrDefault(t => t.Name == "Basar") as ViewModel.Basar.BasarViewModel).FillBasarListe();
+            }
+        }
+
+        private static List<string> _momentaneRegion;
+        /// <summary>
+        /// Ruft den aktuell ausgewählten Helden ab, oder legt ihn fest.
+        /// </summary>
+        public static List<string> MomentaneRegion
+        {
+            get { return _momentaneRegion?? Global.ContextZooBot.GetRegion(HeldenPosition, 0); }
+            set {
+                _momentaneRegion = value;
+                MainViewModel.Instance.MomentaneRegion = value;
             }
         }
 

@@ -19,6 +19,7 @@ namespace MeisterGeister.ViewModel.Basar
         private double _rabattAufschlag = 0.0;
         private double _anzahl = 1.0;
         private string _suchText = string.Empty;
+        private bool _nurVorhandeneWaren;
 
         private string _währungsText = "Silbertaler";
 
@@ -115,6 +116,22 @@ namespace MeisterGeister.ViewModel.Basar
             {
                 _suchText = value;
                 OnChanged("SuchText");
+                FilterListe();
+            }
+        }
+
+        public string Regionen
+        {
+            get { return string.Join(", ", Global.MomentaneRegion); }
+        }
+        
+        public bool NurVorhandeneWaren
+        {
+            get { return _nurVorhandeneWaren; }
+            set
+            {
+                _nurVorhandeneWaren = value;
+                OnChanged("NurVorhandeneWaren");
                 FilterListe();
             }
         }
@@ -220,8 +237,9 @@ namespace MeisterGeister.ViewModel.Basar
             get { return _filteredBasarItemListe; }
             set
             {
-                _filteredBasarItemListe = value;
-                OnChanged("FilteredBasarItemListe");
+                Set(ref _filteredBasarItemListe, value);
+                //_filteredBasarItemListe = value;
+                //OnChanged("FilteredBasarItemListe");
             }
         }
 
@@ -235,6 +253,7 @@ namespace MeisterGeister.ViewModel.Basar
             }
         }
 
+        
         #endregion
 
         //Commands
@@ -287,7 +306,11 @@ namespace MeisterGeister.ViewModel.Basar
             RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.RuestungListe;
             Währungen = new Währung();
 
-            // Globale Listen der unterschiedlichen Handelsgütern in eine Gesamt-Liste zusammenführen
+            FillBasarListe();
+        }
+
+        public void FillBasarListe()
+        { 
             List<BasarItem> itemList = new List<BasarItem>();
 
             // Handelsgüter einfügen
@@ -296,30 +319,134 @@ namespace MeisterGeister.ViewModel.Basar
 
             // Waffen einfügen
             foreach (var item in WaffeListe)
-                itemList.Add(NewBasarItem(item));
+                itemList.Add(NewBasarItem(item));    //(item as Model.Waffe).Verbreitung
 
             // Fernkampfwaffen einfügen
-            foreach (var item in FernkampfwaffeListe)
+            foreach (var item in FernkampfwaffeListe)//(item as Model.Fernkampfwaffe).Verbreitung
                 itemList.Add(NewBasarItem(item));
 
             // Schilde einfügen
-            foreach (var item in SchildListe)
+            foreach (var item in SchildListe)//(item as Model.Schild).Verbreitung
                 itemList.Add(NewBasarItem(item));
 
             // Rüstungen einfügen
-            foreach (var item in RüstungListe)
+            foreach (var item in RüstungListe)//(item as Model.Rüstung).Verbreitung
                 itemList.Add(NewBasarItem(item));
 
+            // Globale Listen der unterschiedlichen Handelsgütern in eine Gesamt-Liste zusammenführen         
             BasarItemListe = itemList;
-
             Refresh();
-
             FilterListe();
         }
-
+        
         private BasarItem NewBasarItem(IHandelsgut item)
         {
             BasarItem basarItem = new BasarItem() { Item = item };
+            basarItem.ImGebietVorhanden = item is Model.Handelsgut;
+                  
+            if (item as Model.Waffe != null)
+            {
+                if ((item as Model.Waffe).Verbreitung == null)
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // überall, alle
+                if ((item as Model.Waffe).Verbreitung.Contains("überall") ||
+                    ((item as Model.Waffe).Verbreitung.Contains("alle") &&
+                     !(item as Model.Waffe).Verbreitung.Contains("ausser")))
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // alle ausser, alle außer
+                if ((item as Model.Waffe).Verbreitung.Contains("ausser") ||
+                    (item as Model.Waffe).Verbreitung.Contains("alle außer"))
+                {
+                    if (item.Name == "Beil")
+                    { }
+                    basarItem.ImGebietVorhanden = true;
+                    Global.MomentaneRegion.ForEach(delegate (string r)
+                        { if (basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = !(item as Model.Waffe).Verbreitung.Contains(r); });
+                }
+                else
+                //Eingetragene Regionen = Vorhanden
+                Global.MomentaneRegion.ForEach(delegate (string r)
+                { if (!basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = ((item as Model.Waffe).Verbreitung.Contains(r)); });
+            }
+
+            if (item as Model.Fernkampfwaffe != null)
+            {
+                if ((item as Model.Fernkampfwaffe).Verbreitung == null)
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // überall, alle
+                if ((item as Model.Fernkampfwaffe).Verbreitung.Contains("überall") ||
+                    ((item as Model.Fernkampfwaffe).Verbreitung.Contains("alle") &&
+                     !(item as Model.Fernkampfwaffe).Verbreitung.Contains("ausser")))
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // alle ausser, alle außer
+                if ((item as Model.Fernkampfwaffe).Verbreitung.Contains("ausser") ||
+                    (item as Model.Fernkampfwaffe).Verbreitung.Contains("alle außer"))
+                {
+                    basarItem.ImGebietVorhanden = true;
+                    Global.MomentaneRegion.ForEach(delegate (string r)
+                    { if (basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = !(item as Model.Fernkampfwaffe).Verbreitung.Contains(r); });
+                }
+                else
+                    //Eingetragene Regionen = Vorhanden
+                    Global.MomentaneRegion.ForEach(delegate (string r)
+                    { if (!basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = ((item as Model.Fernkampfwaffe).Verbreitung.Contains(r)); });
+            }
+
+            if (item as Model.Schild != null)
+            {
+                if ((item as Model.Schild).Verbreitung == null)
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // überall, alle
+                if ((item as Model.Schild).Verbreitung.Contains("überall") ||
+                    ((item as Model.Schild).Verbreitung.Contains("alle") &&
+                     !(item as Model.Schild).Verbreitung.Contains("ausser")))
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // alle ausser, alle außer
+                if ((item as Model.Schild).Verbreitung.Contains("ausser") ||
+                    (item as Model.Schild).Verbreitung.Contains("alle außer"))
+                {
+                    basarItem.ImGebietVorhanden = true;
+                    Global.MomentaneRegion.ForEach(delegate (string r)
+                    { if (basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = !(item as Model.Schild).Verbreitung.Contains(r); });
+                }
+                else
+                    //Eingetragene Regionen = Vorhanden
+                    Global.MomentaneRegion.ForEach(delegate (string r)
+                    { if (!basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = ((item as Model.Schild).Verbreitung.Contains(r)); });
+            }
+
+            if (item as Model.Rüstung != null)
+            {
+                if ((item as Model.Rüstung).Verbreitung == null)
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // überall, alle
+                if ((item as Model.Rüstung).Verbreitung.Contains("überall") ||
+                    ((item as Model.Rüstung).Verbreitung.Contains("alle") &&
+                     !(item as Model.Rüstung).Verbreitung.Contains("ausser")))
+                    basarItem.ImGebietVorhanden = true;
+                else
+                // ausser, alle außer
+                if ((item as Model.Rüstung).Verbreitung.Contains("ausser") ||
+                    (item as Model.Rüstung).Verbreitung.Contains("alle außer"))
+                {
+                    basarItem.ImGebietVorhanden = true;
+                    Global.MomentaneRegion.ForEach(delegate (string r)
+                    { if (basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = !(item as Model.Rüstung).Verbreitung.Contains(r); });
+                }
+                else
+                    //Eingetragene Regionen = Vorhanden
+                    Global.MomentaneRegion.ForEach(delegate (string r)
+                    { if (!basarItem.ImGebietVorhanden) basarItem.ImGebietVorhanden = ((item as Model.Rüstung).Verbreitung.Contains(r)); });
+            }
+            
+
             basarItem.InventarAddEvent += (s, e) => { AddToInventar(s); };
             basarItem.FilterKategorieEvent += (s, e) => { FilterKategorie(s); };
             return basarItem;
@@ -349,15 +476,19 @@ namespace MeisterGeister.ViewModel.Basar
         /// </summary>
         private void FilterListe()
         {
+            FilteredBasarItemListe = (NurVorhandeneWaren) ?
+                BasarItemListe.AsParallel().Where(t => t.ImGebietVorhanden).ToList():
+                BasarItemListe;
+
             string suchText = _suchText.ToLower().Trim();
             string[] suchWorte = suchText.Split(' ');
-
+            
             if (suchText == string.Empty) // kein Suchwort
-                FilteredBasarItemListe = BasarItemListe.AsParallel().OrderBy(n => n.Name).ToList();
+                FilteredBasarItemListe = FilteredBasarItemListe.OrderBy(n => n.Name).ToList(); //AsParallel().
             else if (suchWorte.Length == 1) // nur ein Suchwort
-                FilteredBasarItemListe = BasarItemListe.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
+                FilteredBasarItemListe = FilteredBasarItemListe.Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
             else // mehrere Suchwörter
-                FilteredBasarItemListe = BasarItemListe.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+                FilteredBasarItemListe = FilteredBasarItemListe.Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
         }
 
         #endregion

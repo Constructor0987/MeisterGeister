@@ -808,6 +808,7 @@
     <Compile Include="View\Einstellungen\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
@@ -2735,6 +2736,10 @@
     <Resource Include="Images\Icons\rechteckig.png" />
     <Resource Include="Images\Logos\pinnadel.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0127.sql" />
+    <Resource Include="Images\Icons\fliehen.png" />
+    <Resource Include="Images\Icons\Aventurien_icon.png" />
+    <Resource Include="Images\Icons\Myranor_icon.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0128.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

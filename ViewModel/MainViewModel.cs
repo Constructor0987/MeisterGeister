@@ -510,6 +510,15 @@ namespace MeisterGeister.ViewModel
 
         #endregion
 
+        #region Region
+        private List<string> _momentaneRegion = null;
+        public List<string> MomentaneRegion
+        {
+            get { return _momentaneRegion; }
+            set { Set(ref _momentaneRegion, value); }
+        }
+
+        #endregion
 
     }
 }
