@@ -23,7 +23,12 @@
                     <RowDefinition Height="28" />
                 </Grid.RowDefinitions>
                 <CheckBox Grid.Column="0" Margin="4" VerticalAlignment="Center" ToolTip="In Slide-Show einbeziehen" IsChecked="{Binding IsInSlideShow}" />
-                <Image Grid.Column="1" Source="{Binding Pfad, IsAsync=True, Converter={StaticResource LoadCachedImageConverter}}" />
+                <!--<Image Grid.Column="1" Source="{Binding Pfad, IsAsync=True, Converter={StaticResource LoadCachedImageConverter}}">-->
+                <Image Grid.Column="1">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Pfad}" DecodePixelWidth="32"/>
+                    </Image.Source>
+                </Image>
                 <TextBlock Grid.Column="2" Text="{Binding Name}" Margin="4,0,0,0" />
             </Grid>
         </DataTemplate>
