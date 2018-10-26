@@ -536,6 +536,102 @@ namespace MeisterGeister.Model
     
         }
         private int _fK;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> MU
+        {
+            get { return _mU; }
+            set
+    		{ 
+    			Set(ref _mU, value);
+    		}
+    
+        }
+        private Nullable<int> _mU;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> IN
+        {
+            get { return _iN; }
+            set
+    		{ 
+    			Set(ref _iN, value);
+    		}
+    
+        }
+        private Nullable<int> _iN;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> CH
+        {
+            get { return _cH; }
+            set
+    		{ 
+    			Set(ref _cH, value);
+    		}
+    
+        }
+        private Nullable<int> _cH;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> FF
+        {
+            get { return _fF; }
+            set
+    		{ 
+    			Set(ref _fF, value);
+    		}
+    
+        }
+        private Nullable<int> _fF;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> GE
+        {
+            get { return _gE; }
+            set
+    		{ 
+    			Set(ref _gE, value);
+    		}
+    
+        }
+        private Nullable<int> _gE;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> KK
+        {
+            get { return _kK; }
+            set
+    		{ 
+    			Set(ref _kK, value);
+    		}
+    
+        }
+        private Nullable<int> _kK;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> SO
+        {
+            get { return _sO; }
+            set
+    		{ 
+    			Set(ref _sO, value);
+    		}
+    
+        }
+        private Nullable<int> _sO;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> KL
+        {
+            get { return _kL; }
+            set
+    		{ 
+    			Set(ref _kL, value);
+    		}
+    
+        }
+        private Nullable<int> _kL;
 
         #endregion
 

@@ -78,7 +78,7 @@
                     <ItemsControl ItemsSource="{Binding DisplayPath}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding DisplayPath}" />
+                                <TextBlock Text="{Binding DisplayPath}" Padding="0" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

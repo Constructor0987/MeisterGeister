@@ -9,6 +9,9 @@ namespace MeisterGeister.ViewModel.Helden
 {
     public class ZauberViewModel : Base.ViewModelBase
     {
+
+
+
         #region //---- COMMANDS ----
 
         private Base.CommandBase onDeleteZauber;

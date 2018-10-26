@@ -180,10 +180,12 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="Q42.HueApi, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Q42.HueApi.3.6.3\lib\netstandard1.1\Q42.HueApi.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Q42.HueApi.ColorConverters, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Q42.HueApi.ColorConverters.3.6.0\lib\netstandard1.1\Q42.HueApi.ColorConverters.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sparrow.Chart.Wpf.40, Version=13.1.0.118, Culture=neutral, PublicKeyToken=50f33fb8697e9a92, processorArchitecture=MSIL">
@@ -684,6 +686,7 @@
     <Compile Include="Net\Web\DereGlobusModule.cs" />
     <Compile Include="Net\Web\RestModule.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\TextLabel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Sichtstufe.cs" />
     <Compile Include="ViewModel\LampenHUE\HUELampenViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
@@ -808,10 +811,12 @@
     <Compile Include="View\Einstellungen\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\General\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
+    <Compile Include="View\General\SmallSlider.xaml.cs">
+      <DependentUpon>SmallSlider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheAllgemeinViewModel.cs" />
     <Compile Include="ViewModel\Karte\PflanzenSucheGezieltViewModel.cs" />
@@ -1059,6 +1064,9 @@
       <DependentUpon>IntBoxVertical.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\ColorToSolidColorBrushConverter.cs" />
+    <Compile Include="View\General\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="View\General\MerkmalListeAnzahlToVisibleConverter.cs" />
+    <Compile Include="View\General\MerkmaleListeToBrushColor.cs" />
     <Compile Include="View\General\IsEqualOrGreaterThanVisibleConverter.cs" />
     <Compile Include="View\General\IsEqualOrGreaterThanConverter.cs" />
     <Compile Include="View\General\InverseBooleanConverter.cs" />
@@ -1611,11 +1619,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Bodenplan\SliderWithDisplayTextBox.xaml">
+    <Page Include="View\Bodenplan\SmallSliderHorizontal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Bodenplan\SmallSliderHorizontal.xaml">
+    <Page Include="View\Bodenplan\SliderWithDisplayTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1638,6 +1646,10 @@
     <Page Include="View\General\DereGlobusLinkControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\SmallSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\General\EnergieControl.xaml">
       <SubType>Designer</SubType>
@@ -2734,12 +2746,14 @@
     <Resource Include="Images\Icons\Binsenlicht.png" />
     <Resource Include="Images\Icons\hex.png" />
     <Resource Include="Images\Icons\rechteckig.png" />
-    <Resource Include="Images\Logos\pinnadel.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0127.sql" />
-    <Resource Include="Images\Icons\fliehen.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0128.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0129.sql" />
+    <Resource Include="Images\Logos\pinnadel.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0130.sql" />
     <Resource Include="Images\Icons\Aventurien_icon.png" />
     <Resource Include="Images\Icons\Myranor_icon.png" />
-    <Resource Include="Daten\Updateskripte\UpdateTo_V0128.sql" />
+    <Resource Include="Images\Icons\fliehen.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

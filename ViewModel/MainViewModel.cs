@@ -18,6 +18,7 @@ using System.Windows.Data;
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.Logic.Kalender;
+using MeisterGeister.View.AudioPlayer;
 
 namespace MeisterGeister.ViewModel
 {
@@ -31,7 +32,7 @@ namespace MeisterGeister.ViewModel
             OpenTabs();
             ShowFavPlaylist = Einstellungen.ShowPlaylistFavorite &&
                 (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null);
-
+            UpdateHotkeyUsed();
             Einstellungen.EinstellungChanged += Einstellungen_EinstellungChanged;                     
         }
 
@@ -398,6 +399,7 @@ namespace MeisterGeister.ViewModel
         //TODO Drag und Drop der Position
         #endregion
 
+        #region Audio
         #region AudioFavoriten
         private AudioPlayer.AudioPlayerViewModel _aPlayerVM = null;
         public AudioPlayer.AudioPlayerViewModel aPlayerVM
@@ -500,11 +502,69 @@ namespace MeisterGeister.ViewModel
 
         #endregion
 
+        #region Hotkeys
+
+        private List<btnHotkey> _hotkeyListUsed = new List<btnHotkey>();
+        public List<btnHotkey> hotkeyListUsed
+        {
+            get { return _hotkeyListUsed; }
+            set { Set(ref _hotkeyListUsed, value); }
+        }
+
+        private int _hotkeyVolume = Einstellungen.GeneralHotkeyVolume;
+        public int HotkeyVolume
+        {
+            get { return _hotkeyVolume; }
+            set
+            {
+                Set(ref _hotkeyVolume, value);
+                Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", _hotkeyVolume);
+            }
+        }
+
+        public void UpdateHotkeyUsed()
+        {
+            if (Global.ContextAudio.PlaylistListe == null) return;
+            List<btnHotkey> lstHotKeyUsed = new List<btnHotkey>();
+
+            foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe.FindAll(t => t.Key != null).OrderBy(tt => tt.Key))
+            {
+                btnHotkey hkey = new btnHotkey();
+                hkey.VM.aPlaylistGuid = aPlaylist.Audio_PlaylistGUID;
+                hkey.VM.taste = (char)aPlaylist.Key[0];
+                hkey.VM.aPlaylist = aPlaylist;
+                lstHotKeyUsed.Add(hkey);
+            };
+            hotkeyListUsed = lstHotKeyUsed;
+        }
+        
+        private Base.CommandBase _onAllHotkeysStop = null;
+        public Base.CommandBase OnAllHotkeysStop
+        {
+            get
+            {
+                if (_onAllHotkeysStop == null)
+                    _onAllHotkeysStop = new Base.CommandBase(AllHotkeysStop, null);
+                return _onAllHotkeysStop;
+            }
+        }
+        void AllHotkeysStop(object obj)
+        {
+            hotkeyListUsed.ForEach(delegate (btnHotkey hkey)
+            {
+                hkey.VM.TitelPlayList.FindAll(t => t.mp != null && t.mp.audioStream != 0).ForEach(delegate (AudioPlayer.Logic.btnHotkeyVM.TitelPlay titelPlay)
+                { titelPlay.mp.Stop(); });
+            });
+        }
+
+        #endregion
+        #endregion
+
         #region Kalender
         private string _aktuellesDatum = null;
         public string AktuellesDatum
         {
-            get { return _aktuellesDatum; }
+            get { return _aktuellesDatum;}
             set { Set(ref _aktuellesDatum, value); }
         }
 

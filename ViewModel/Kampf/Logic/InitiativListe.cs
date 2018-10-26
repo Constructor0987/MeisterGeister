@@ -35,12 +35,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     mi.PropertyChanged -= ManöverInfo_PropertyChanged;
             OnPropertyChanged(new PropertyChangedEventArgs("Aktionszeiten"));
             if (e.NewItems != null)
-            {
                 foreach (ManöverInfo mi in e.NewItems)
                     mi.PropertyChanged += ManöverInfo_PropertyChanged;
-                //if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
-                //    Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
-            }
         }
 
         public ManöverInfo[] this[IKämpfer k]

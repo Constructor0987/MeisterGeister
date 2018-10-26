@@ -8,6 +8,7 @@ using Service = MeisterGeister.Model.Service;
 using System.Globalization;
 using MeisterGeister.Net;
 using MeisterGeister.ViewModel;
+using MeisterGeister.Logic.Kalender;
 
 namespace MeisterGeister
 {
@@ -388,7 +389,7 @@ namespace MeisterGeister
             Logger.PerformanceLogEnd(log);
 
             AktuellesDatum = Logic.Kalender.Datum.Aktuell.ToStringShort();
-                         
+             
             //webserver
             WebServer = new Server();
 

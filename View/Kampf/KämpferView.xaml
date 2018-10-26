@@ -7,7 +7,7 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:Einstellungen="clr-namespace:MeisterGeister.Logic.Einstellung"
-            xmlns:Evm="clr-namespace:MeisterGeister.ViewModel.Settings"
+             xmlns:Evm="clr-namespace:MeisterGeister.ViewModel.Settings"
              xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
              xmlns:model="clr-namespace:MeisterGeister.Model"
              mc:Ignorable="d" Width="400"
@@ -159,17 +159,66 @@
         </DockPanel>
         <StackPanel Grid.Column="1" >
             <TextBox Text="{Binding Kämpfer.KämpferTempName,FallbackValue={x:Null}}" Height="20" Width="100" VerticalAlignment="Top">
-            <TextBox.Style>
-                <Style TargetType="TextBox">
-                    <Style.Triggers>
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
                             <DataTrigger Binding="{Binding Kämpfer.KämpferTempName}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
             </TextBox>
             <local:KämpferZonenView Margin="5" DataContext="{Binding Kämpfer}"/>
+            
+            <!--Helden MR-->
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Kämpfer.IsHeld}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <DockPanel Margin="0" >
+                    <TextBlock Margin="0,0,-3,0" Text="MR:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <Label Content="{Binding Kämpfer.MRGeist, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" VerticalAlignment="Bottom" />
+                    <TextBlock Margin="3,0" Text="Mod:" FontWeight="Bold" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <ViewGeneral:IntBox Margin="-5,0,0,0" Width="63" Value="{Binding Kämpfer.MR_Mod_Temp}" FontWeight="Bold" ShowButtons="True" />
+                </DockPanel>
+            </Grid>
+
+            <!--Gegner MR-->
+            <GroupBox Header="MR" Margin="0,-15,0,-5" FontWeight="Bold" >
+                <GroupBox.Style>
+                    <Style TargetType="GroupBox">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Kämpfer.IsHeld}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GroupBox.Style>
+                <Grid Margin="0,0,0,-5">                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DockPanel Margin="0" Grid.Column="0" ToolTip="Magieresistenz des Geistes (z.B. Einfluss, Herrschaft)" >
+                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png" Height="18" Width="18" Margin="-4,-3,-5,-3" VerticalAlignment="Center"  />
+                        <ViewGeneral:IntBox Margin="2" Value="{Binding Kämpfer.MRGeist}" MinWidth="50" FontWeight="Bold" ShowButtons="True" />
+                    </DockPanel>
+                    <DockPanel Margin="0,0,-4,0" Grid.Column="1" ToolTip="Magieresistenz des Körpers (z.B. Form, Eigenschaften)" >
+                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="18" Width="18" Margin="-4,-3,-5,-3" VerticalAlignment="Center"  />
+                        <ViewGeneral:IntBox Margin="2" MinWidth="50" Value="{Binding Kämpfer.MRKörper, FallbackValue=0}" FontWeight="Bold" ShowButtons="True" />
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
         </StackPanel>
         
         

@@ -84,6 +84,29 @@ namespace MeisterGeister.Model
             }
         }
 
+
+        
+        //public System.Windows.Media.SolidColorBrush MerkmalColor1
+        //{
+        //    get
+        //    {
+        //        List<string> lstMerkmale = new List<string>();
+        //        lstMerkmale = this.Merkmale.Trim(' ').Split(',').ToList();
+        //        return möglicheMerkmale.FirstOrDefault(t => t.b == lstMerkmale[0]) != null? möglicheMerkmale.FirstOrDefault(t => t.b == lstMerkmale[0]).c: System.Windows.Media.Brushes.Transparent;
+        //    }
+        //}
+        //public System.Windows.Media.SolidColorBrush MerkmalColor2
+        //{
+        //    get
+        //    {
+        //        List<string> lstMerkmale = new List<string>();
+        //        lstMerkmale = this.Merkmale.Split(',').ToList();
+        //        return lstMerkmale.Count >= 2? 
+        //            (möglicheMerkmale.FirstOrDefault(t => t.b.Trim(' ') == lstMerkmale[1]) != null ? möglicheMerkmale.FirstOrDefault(t => t.b == lstMerkmale[1]).c : System.Windows.Media.Brushes.Transparent):
+        //            System.Windows.Media.Brushes.Transparent;
+        //    }
+        //}
+
         //TODO DB-Feld Kosten in mehrere Werte aufspalten:
         public int LEKosten = 0;
         public int AsPKosten = 0;

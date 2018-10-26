@@ -114,6 +114,7 @@ namespace MeisterGeister.Model
         {
             try
             {
+                if (DK == null) DK = "None";
                 return (KampfLogic.Distanzklasse)Enum.Parse(typeof(KampfLogic.Distanzklasse), DK);
             }
             catch (Exception)

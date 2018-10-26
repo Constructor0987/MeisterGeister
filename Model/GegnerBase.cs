@@ -131,13 +131,11 @@ namespace MeisterGeister.Model
 
             hz.ZauberGUID = z.ZauberGUID;
             hz.Zauber = z;
-            hz.E1TW = E1;
-            hz.E2TW = E2;
-            hz.E3TW = E3;
             hz.ZfW = wert;
             GegnerBase_Zauber.Add(hz);
             return z;
         }
+
         #endregion
 
 

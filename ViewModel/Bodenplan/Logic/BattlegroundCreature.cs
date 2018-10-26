@@ -92,6 +92,20 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _creaturePosition; }
             set { Set(ref _creaturePosition, value); }
         }
+               
+        private double _creatureWidth = 80;
+        public double CreatureWidth
+        {
+            get { return _creatureWidth; }
+            set { Set(ref _creatureWidth, value); }
+        }
+
+        private double _creatureHeight = 80;
+        public double CreatureHeight
+        {
+            get { return _creatureHeight; }
+            set { Set(ref _creatureHeight, value); }
+        }
 
         public BattlegroundCreature()
         {
@@ -159,10 +173,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public string CreaturePictureUrl
         {
             get { return _creaturePictureUrl; }
-            set
-            {
-                Set(ref _creaturePictureUrl, value);
-            }
+            set { Set(ref _creaturePictureUrl, value); }
         }
 
         public double CreatureX
@@ -191,14 +202,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public double MidCreatureX
         {
             get { return _midCreatureX; }
-            set { Set(ref _midCreatureX, value); }
+            set { Set(ref _midCreatureX, value);
+                if (ki != null) ki.LightCreatureX = CreatureX - (ki != null ? ki.LichtquellePixel : 0); }
         }
 
         private double _midCreatureY = 0;
         public double MidCreatureY
         {
             get { return _midCreatureY; }
-            set { Set(ref _midCreatureY, value); }
+            set { Set(ref _midCreatureY, value);
+                if (ki != null) ki.LightCreatureY = CreatureY - (ki != null ? ki.LichtquellePixel : 0);
+            }
         }
         
         private double _creatureNameY = 90;
@@ -220,84 +234,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _creatureNameX = value;
                 OnChanged("CreatureNameX");
-            }
-        }
-
-
-        // --- Spielerscreen ---
-
-        //public double SpielerCreatureX
-        //{ get { return IsMoving ? Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionX : CreatureX; } }
-
-        //public double SpielerCreatureY
-        //{ get { return IsMoving ? Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionY : CreatureY; } }
-
-        //public double SpielerMidCreatureX
-        //{
-        //    get
-        //    {
-        //        return IsMoving ?
-        //            MidCreatureX - CreatureX + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionX
-        //            : MidCreatureX;
-        //    }
-        //}
-
-        //public double SpielerMidCreatureY
-        //{
-        //    get
-        //    {
-        //        return IsMoving ?
-        //            MidCreatureY - CreatureY + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionY
-        //            : MidCreatureY;
-        //    }
-        //}
-        
-        //public double SpielerCreatureNameX
-        //{
-        //    get
-        //    {
-        //        return IsMoving ?
-        //            CreatureNameX - CreatureX + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionX
-        //            : CreatureNameX;
-        //    }
-        //}
-
-        //public double SpielerCreatureNameY
-        //{
-        //    get
-        //    {
-        //        return IsMoving ?
-        //            CreatureNameY - CreatureY + Global.CurrentKampf.BodenplanViewModel.CurrentMousePositionY
-        //            : CreatureNameY;
-        //    }
-        //}
-
-
-
-
-        // --- ENDE Spielerscreen ---
-
-
-
-        private double _creatureWidth = 80;
-        public double CreatureWidth
-        {
-            get { return _creatureWidth; }
-            set
-            {
-                _creatureWidth = value;
-                OnChanged("CreatureWidth");
-            }
-        }
-
-        private double _creatureHeight = 80;
-        public double CreatureHeight
-        {
-            get { return _creatureHeight; }
-            set
-            {
-                _creatureHeight = value;
-                OnChanged("CreatureHeight");
             }
         }
 
@@ -366,7 +302,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureAktionsbuttonsPos = Math.Max(130, 30 + CreatureHeight + 30 + 2*factor);
 
             MarginCreatureATPAaktionen = new Thickness() { Left = -5, Top = CreatureWidth, Right = 6, Bottom = 0 };
-            SightAreaLength = CreatureWidth + 40;
+            SightAreaLength =  CreatureWidth + 40;
         }
 
         public override void MoveObject(double deltaX, double deltaY, bool stickAtCursor)
@@ -385,8 +321,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             ZDisplayY = CreatureY - 10;
             CreatureNameX = CreatureX - 40;
             CreatureNameY = CreatureY - 25;
-            MidCreatureX = CreatureX - (ki != null ? ki.LichtquellePixel : 0);
-            MidCreatureY = CreatureY - (ki != null ? ki.LichtquellePixel : 0);
+            MidCreatureX = CreatureX;
+            MidCreatureY = CreatureY;
         }
 
         public override void RunBeforeXMLSerialization()
@@ -399,8 +335,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         }
 
         private void CreateSightArea()
-        {
-            
+        {            
             PathFigureCollection _pathFigureCollection = new PathFigureCollection();
             PathFigure _pathFigure = new PathFigure();
             PathSegmentCollection _pathSegmentCollection = new PathSegmentCollection();
@@ -408,8 +343,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             // 6 possible sightline positions (hexagon)
  
             //first: 
-            _pathFigure.StartPoint = new Point(CreatureX + CreatureWidth / 2 - 120, CreatureY + CreatureHeight / 2);
-            _pathFigure.Segments.Add(new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + 120, CreatureY + CreatureHeight / 2),
+            _pathFigure.StartPoint = new Point(CreatureX + (ki != null?  CreatureWidth: 80) / 2 - 120, CreatureY + CreatureHeight/ 2);
+            _pathFigure.Segments.Add(new ArcSegment(new Point(CreatureX + (ki != null ?  CreatureWidth:80) / 2 + 120, CreatureY + CreatureHeight/ 2),
                 new Size(80, 80), 0, true, SweepDirection.Clockwise, true));
             _pathFigure.IsFilled = true;
             _pathFigureCollection.Add(_pathFigure);
@@ -428,74 +363,74 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
             if (SightLineSektor == 0)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 - b);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 + b),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 - b);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 + b),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             else if (SightLineSektor == 1)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 + _sightAreaLength, CreatureY + CreatureHeight / 2);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 - _sightAreaLength, CreatureY + CreatureHeight / 2),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 + _sightAreaLength, CreatureY + CreatureHeight / 2);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 - _sightAreaLength, CreatureY + CreatureHeight / 2),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             else if (SightLineSektor == 2)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 + b);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 - b),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 + b);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 - b),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             else if (SightLineSektor == 3)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 - b);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 + b),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 - b);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 + b),
                     new Size(80, 80), 0, true, SweepDirection.Counterclockwise, true);
             }
             else if (SightLineSektor == 4)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - _sightAreaLength, CreatureY + CreatureHeight / 2);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + _sightAreaLength, CreatureY + CreatureHeight / 2),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 - _sightAreaLength, CreatureY + CreatureHeight / 2);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 + _sightAreaLength, CreatureY + CreatureHeight / 2),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             else if (SightLineSektor == 5)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 - b);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 + b),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 - a, CreatureY + CreatureHeight / 2 - b);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 + a, CreatureY + CreatureHeight / 2 + b),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             else if (SightLineSektor == 6)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 - _sightAreaLength);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 + _sightAreaLength),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2, CreatureY + CreatureHeight / 2 - _sightAreaLength);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2, CreatureY + CreatureHeight / 2 + _sightAreaLength),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             else if (SightLineSektor == 7)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 - _sightAreaLength);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2, CreatureY + CreatureHeight / 2 + _sightAreaLength),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2, CreatureY + CreatureHeight / 2 - _sightAreaLength);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2, CreatureY + CreatureHeight / 2 + _sightAreaLength),
                     new Size(80, 80), 0, true, SweepDirection.Counterclockwise, true);
             }
             else if (SightLineSektor == 8)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 - d);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 + d),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 - d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 + d),
                     new Size(80, 80), 0, true, SweepDirection.Counterclockwise, true);
             }
             else if (SightLineSektor == 9)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 + d);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 - d),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 + d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 - d),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             else if (SightLineSektor == 10)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 - d);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 + d),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 - d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 + d),
                     new Size(80, 80), 0, true, SweepDirection.Clockwise, true);
             }
             if (SightLineSektor == 11)
             {
-                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX + CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 + d);
-                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX + CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 - d),
+                SightAreaGeometryData.Figures.First().StartPoint = new Point(CreatureX +  CreatureWidth / 2 - c, CreatureY + CreatureHeight / 2 + d);
+                SightAreaGeometryData.Figures.First().Segments[0] = new ArcSegment(new Point(CreatureX +  CreatureWidth / 2 + c, CreatureY + CreatureHeight / 2 - d),
                     new Size(80, 80), 0, true, SweepDirection.Counterclockwise, true);
             }
         }
@@ -503,7 +438,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public void CalculateNewSightLineSektor(Point currentMousePos, bool rectGrid = false)
         {
             // How the calculations and Sektores are designed...
-            double _a = currentMousePos.X - (CreatureX + CreatureWidth / 2);
+            double _a = currentMousePos.X - (CreatureX +  CreatureWidth / 2);
             double _b = currentMousePos.Y - (CreatureY + CreatureHeight / 2);
             double _alpha = Math.Atan2(_a, _b) * (180 / Math.PI);
 
@@ -557,52 +492,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
             CalculateSightArea(); //update sightarea
         }
-
-        //public void UpdateCreaturePosition()
-        //{
-        //    if (this as IKämpfer == null) return;
-        //    //Global.CurrentKampf.SelectedManöver.Manöver.Ausführender.Kämpfer.Position
-        //    if (((IKämpfer)this).Position == Position.Liegend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
-        //    else if (((IKämpfer)this).Position == Position.Kniend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
-        //    else if (((IKämpfer)this).Position == Position.Stehend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
-        //    else if (((IKämpfer)this).Position == Position.Schwebend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
-        //    else if (((IKämpfer)this).Position == Position.Fliegend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
-        //    else if (((IKämpfer)this).Position == Position.Reitend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";
-
-        //    if (Global.CurrentKampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count != 0)
-        //    {
-        //        IKämpfer k = (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer as Wesen == this).Kämpfer);
-        //    //    if (k != null && k.Position != ((Wesen)this).Position) ;
-        //    }
-        //}
-        //public void UpdateCreaturePosition(Position p)
-        //{
-        //    if (this as Wesen == null) return;
-        //    if (p != null && p == Position.Liegend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
-        //    else if (p != null && p == Position.Kniend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
-        //    else if (p != null && p == Position.Stehend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
-        //    else if (p != null && p == Position.Schwebend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
-        //    else if (p != null && p == Position.Fliegend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
-        //    else if (p != null && p == Position.Reitend)
-        //        CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";
-
-        //    //if (Global.CurrentKampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count != 0)
-        //    //{
-        //    //    IKämpfer k = (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer as Wesen == this).Kämpfer);
-        //    //    if (k != null && k.Position != ((Wesen)this).Position) ;
-        //    //}
-        //}
 
     }
 }

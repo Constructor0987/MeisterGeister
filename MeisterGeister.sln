@@ -1,19 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Express 15 for Windows Desktop
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeisterGeister", "MeisterGeister.csproj", "{C31CF4D7-A04C-4438-947E-68D1B34FF7B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeisterGeister_Tests", "MeisterGeister_Tests\MeisterGeister_Tests.csproj", "{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeisterGeister_Tests_Runner", "MeisterGeister_Tests_Runner\MeisterGeister_Tests_Runner.csproj", "{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}"
-EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -34,28 +26,15 @@ Global
 		{C31CF4D7-A04C-4438-947E-68D1B34FF7B8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C31CF4D7-A04C-4438-947E-68D1B34FF7B8}.Release|x86.ActiveCfg = Release|Any CPU
 		{C31CF4D7-A04C-4438-947E-68D1B34FF7B8}.Release|x86.Build.0 = Release|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}.Release|x86.ActiveCfg = Release|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C50E4AC4-D82D-4F58-ACD9-C0D8CB91F810}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99CD37F4-4407-4901-9C5E-CE7DBA1332FE}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

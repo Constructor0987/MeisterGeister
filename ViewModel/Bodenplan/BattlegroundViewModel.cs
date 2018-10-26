@@ -73,7 +73,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public double MeisterZoom
         {
             get { return _meisterZoom; }
-            set { Set(ref _meisterZoom, value); }
+            set
+            {
+                Set(ref _meisterZoom, value);
+                FontSize = Math.Round(14 / value, 0);
+            }
+        }
+
+        private double _fontSize = 14;
+        public double FontSize
+        {
+            get { return _fontSize; }
+            set { Set(ref _fontSize, value); }
         }
 
         private double _meisterZoomTransX = 0;
@@ -241,7 +252,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     KampfWindow.SizeToContent = SizeToContent.Height;
                     //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
                     KampfWindow.SizeToContent = SizeToContent.Manual;
-                  //  SetIniWindowPosition(); ???
                     SetIniWindowPosition();
                 }
             }
@@ -804,6 +814,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #region SelectedObject und dessen Eigenschaften und Delete
+        
+        private double _schrittX = 0;
+        public double SchrittX
+        {
+            get { return _schrittX; }
+            set { Set(ref _schrittX, value); }
+        }
+
+        private double _schrittY = 0;
+        public double SchrittY
+        {
+            get { return _schrittY; }
+            set { Set(ref _schrittY, value); }
+        }
 
         private BattlegroundBaseObject _selectedTempObject;
         public BattlegroundBaseObject SelectedTempObject
@@ -812,7 +836,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _selectedTempObject, value); }
         }
         
-
         //get / set selected Object
         private BattlegroundBaseObject _selectedObject;
         public BattlegroundBaseObject SelectedObject
@@ -849,6 +872,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                                 else
                                 { }
                             }
+                            Global.CurrentKampf.SelectedKämpfer = (SelectedObject as BattlegroundCreature).ki;
                         }
                     }
                     catch (Exception ex)
@@ -1075,6 +1099,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     (bgOb as BattlegroundCreature).CreatureX = (bgOb as BattlegroundCreature).CreatureX;
                     (bgOb as BattlegroundCreature).CreatureY = (bgOb as BattlegroundCreature).CreatureY;
+                    (bgOb as BattlegroundCreature).MidCreatureX = (bgOb as BattlegroundCreature).CreatureX;
+                    (bgOb as BattlegroundCreature).MidCreatureY = (bgOb as BattlegroundCreature).CreatureY;
                     if ((bgOb as BattlegroundCreature) is Held)
                     {
                         (bgOb as BattlegroundCreature).PortraitFileName = ((bgOb as BattlegroundCreature) as Held).Bild;
@@ -1287,6 +1313,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (!_creatingNewLine) SelectedObject = null;
             }
         }
+
         private string _bewegungslaenge = null;
         public string Bewegungslaenge // Nullable<double>
         {
@@ -1307,6 +1334,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
             };
             SelectedTempObject = pathline;
             BattlegroundObjects.Add(pathline);
+            //var textLabel = new TextLabel("Neu", x1, y1)
+            //{
+            //    ObjectColor = new SolidColorBrush(Colors.DarkBlue),
+            //    LabelWidth = 100, 
+            //    LabelHeight = 17, LabelPositionX = x1, LabelPositionY = y1,
+            //    IsNew = true
+            //};
+            //BattlegroundObjects.Add(textLabel);
+
             return pathline;
         }
 
@@ -1444,12 +1480,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 else if (SelectedTempObject is PathLine)
                 {
                     ((PathLine)SelectedTempObject).ChangeLastPoint(new Point(x2, y2));
-
-
+                    
                     //Berechnung der Länge der PathLine                    
                     Point sP = (SelectedTempObject as PathLine).GetStartPoint;
+                    SchrittX = sP.X + (x2 - sP.X) / 2;
+                    SchrittY = sP.Y + (y2 - sP.Y) / 2;
                     Bewegungslaenge = Math.Round(Math.Sqrt(Math.Pow((x2 - sP.X),2) + Math.Pow((y2 - sP.Y),2)) / 100,1).ToString() + " Schritt";
                 }
+
             }
         }
 
@@ -1517,8 +1555,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if (doWindowMove)
             {
-               // Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height = Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height + 1;
-               // Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height = Global.CurrentKampf.BodenplanViewModel.KampfWindow.Height - 1;
                 if ((System.Windows.Forms.Screen.AllScreens.Length > 1 &&
                      KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
                         System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width * .5) ||
@@ -1545,7 +1581,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             int anzInisInKR = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).Count();
             double width1Ini = (((KampfInfoView)KampfWindow.Content).scrViewer.ExtentWidth /
                 Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= Global.CurrentKampf.Kampf.Kampfrunde).Count()) * ScaleKampfGrid;
-            KampfWindow.Width = width1Ini * anzInisInKR + 248 * ScaleKampfGrid; //246
+            KampfWindow.Width = width1Ini * anzInisInKR + 248 * ScaleKampfGrid;
             ((KampfInfoView)KampfWindow.Content).scrViewer.ScrollToRightEnd();
         }
 

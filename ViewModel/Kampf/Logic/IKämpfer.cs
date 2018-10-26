@@ -60,7 +60,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int? AT { get; } //Hauptwaffe Standardattackewert
         int? PA { get; }
 
-        int MRGeist { get; }
+        int MRGeist { get; set; }
         int MR { get; }
 
         IRüstungsschutz RS { get; }

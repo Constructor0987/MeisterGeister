@@ -447,14 +447,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         
         public ObservableCollection<MenuItem> DisplayPath
         {
-            get {           
+            get {
                 ObservableCollection<MenuItem> mItemListe = new ObservableCollection<MenuItem>();
-                foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe.OrderBy(t => t.Name))
+                foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe.Where(t => t.Hintergrundmusik == PlayerVM.AktKlangPlaylist.Hintergrundmusik).OrderBy(t => t.Name))
                 {
                     MenuItem mitem = new MenuItem();
                     mitem.Header = aPlaylist.Name;
                     mitem.Tag = aPlaylist;
                     mItemListe.Add(mitem);
+                    mitem.Height = 20;
                 }
                 return mItemListe;
             }

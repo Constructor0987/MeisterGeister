@@ -67,12 +67,12 @@ namespace MeisterGeister.Model
         }
 
 
-        private ICollection<IWesenPlaylist> _wesenplaylist;
-        private ICollection<IWesenPlaylist> Wesenplaylist
-        {
-            get { return _wesenplaylist; }
-            set { Set(ref _wesenplaylist, value); }
-        }
+        //private ICollection<IWesenPlaylist> _wesenplaylist;
+        //private ICollection<IWesenPlaylist> Wesenplaylist
+        //{
+        //    get { return _wesenplaylist; }
+        //    set { Set(ref _wesenplaylist, value); }
+        //}
 
 
         #region IInitializable

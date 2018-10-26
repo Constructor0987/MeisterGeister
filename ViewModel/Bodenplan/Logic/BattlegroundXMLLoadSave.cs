@@ -104,6 +104,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     xs.Serialize(wr, xmlH);
                     wr.Close();
                 }
+                ViewHelper.Popup("Datei erfolgreich gespeichert");
             }
             catch (IOException e)
             {

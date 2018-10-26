@@ -8,7 +8,7 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:AudioLogic="clr-namespace:MeisterGeister.ViewModel.AudioPlayer.Logic"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
-             x:Name="UserControl" Background="{DynamicResource Background1}" d:DesignHeight="543.038" Width="675.291"
+             x:Name="UserControl" Background="{DynamicResource Background1}" d:DesignHeight="603.038" Width="675.291"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
@@ -52,6 +52,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -124,13 +125,35 @@
                             <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
                             <!-- TODO AutoComplete für Tags -->
                             <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" ToolTip="Einzelne Stichwörter sollten mit Komma (,) getrennt werden." />
-                            <Label   Grid.Row="2" Grid.Column="1" Content="Verbreitung:" />
-                            <TextBox Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Verbreitung, UpdateSourceTrigger=PropertyChanged}" Margin="2" AcceptsReturn="True" MaxLength="1000" />
-                            <Label   Grid.Row="2" Grid.Column="3" Content="Auftreten:" />
-                            <TextBox Grid.Row="2" Grid.Column="4" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Auftreten, UpdateSourceTrigger=PropertyChanged}" Margin="2" AcceptsReturn="True" MaxLength="1000" ToolTip="einzeln, im Rudel, etc." />
 
-                            <Label   Grid.Row="3" Grid.Column="1" Content="Bemerkung:" />
-                            <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Margin="2" AcceptsReturn="True" />
+                            <Expander Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="2" IsExpanded="True" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
+                                <Expander.Header>
+                                    <TextBlock Text="Verbreitung, Auftreten &amp; Bemerkung" Style="{DynamicResource TextTitel}" />
+                                </Expander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="60*"/>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="40*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <Label   Grid.Column="1" Content="Verbreitung:" Margin="-2,0,0,0" />
+                                    <TextBox Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Verbreitung, UpdateSourceTrigger=PropertyChanged}" Margin="2" AcceptsReturn="True" MaxLength="1000" />
+                                    <Label   Grid.Column="3" Content="Auftreten:" />
+                                    <TextBox Grid.Column="4" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Auftreten, UpdateSourceTrigger=PropertyChanged}" Margin="2" AcceptsReturn="True" MaxLength="1000" ToolTip="einzeln, im Rudel, etc." />
+
+                                    <Label   Grid.Row="1" Grid.Column="1" Content="Bemerkung:" Margin="-2,0,0,0" />
+                                    <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Margin="2" AcceptsReturn="True" />
+
+                                </Grid>
+                            </Expander>
+
                         </Grid>
                         <Grid Margin="5,0,5,5" Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -180,10 +203,11 @@
                         <Grid Margin="5,0,5,5" Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition Width="64*" />
+                                <ColumnDefinition Width="335*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition Width="35* "/>
+                                <ColumnDefinition Width="91*"/>
+                                <ColumnDefinition Width="92*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -194,20 +218,20 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
-                            <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2,2,0,2" ShowButtons="True" Height="Auto" Width="80" />
                             <Label   Grid.Row="2" Grid.Column="3" Content="INI-Zufall:" />
-                            <TextBox Grid.Row="2" Grid.Column="4" Margin="2" MinWidth="80" HorizontalAlignment="Left">
+                            <TextBox Grid.Row="2" Grid.Column="4" Margin="2,2,0,2" MinWidth="80" HorizontalAlignment="Left" Width="80">
                                 <Binding Path="SelectedGegnerBase.INIZufall">
                                     <Binding.ValidationRules>
                                         <ViewGeneral:WürfelValidationRule />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox>
-                            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" ToolTip="Globale Kampfwerte" VerticalAlignment="Center">
+                            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" ToolTip="Globale Kampfwerte" VerticalAlignment="Center" Margin="0,1,0,0" Height="26">
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_02.png" Height="16" Width="16" />
                                 <Label  Content=":" />
                             </StackPanel>
-                            <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left">
+                            <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="324">
                                 <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AT}" Margin="2" ShowButtons="True" ToolTip="Globaler AT-Wert" />
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="16" Width="16" Margin="0,0,8,0" ToolTip="Globaler AT-Wert" />
                                 <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" ToolTip="Globaler PA-Wert" />
@@ -217,7 +241,7 @@
                             </WrapPanel>
 
                             <Label   Grid.Row="3" Grid.Column="3" Content="KO:" />
-                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="4" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="4" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KO}" Margin="2,2,0,2" ShowButtons="True" Height="Auto" Width="80" />
                             <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
                             <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
                                 <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" />
@@ -246,7 +270,7 @@
                                 </Button>
                             </StackPanel>
                             <Label   Grid.Row="4" Grid.Column="3" Content="MR:" />
-                            <Grid Grid.Row="4" Grid.Column="4" >
+                            <Grid Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
@@ -267,12 +291,73 @@
                                 <ViewGeneral:DoubleBox Grid.Column="1" Value="{Binding SelectedGegnerBase.GS2}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 2"/>
                                 <ViewGeneral:DoubleBox Grid.Column="2" Value="{Binding SelectedGegnerBase.GS3}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 3"/>
                             </Grid>
-                            <Label   Grid.Row="5" Grid.Column="3" Content="Aktionen:" />
-                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="4" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
+                            <Label Grid.Row="5" Grid.Column="3" Content="Aktionen:" />
+                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="4" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2,2,0,2" ShowButtons="True" Height="Auto" Width="80" />
+
+                            <DockPanel Grid.Row="5" Grid.Column="5" >
+                                <Label Grid.Column="2" Grid.Row="7" Margin="-2,3,-2,3" Content="SO:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                <ViewGeneral:IntBox Grid.Column="3" Grid.Row="7" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Sozialstatus" Value="{Binding SelectedGegnerBase.SO}" VerticalAlignment="Center" Height="24" Style="{StaticResource ReadOnlyStyle}" />
+
+                            </DockPanel>
+                                
                         </Grid>
                     </Grid>
                 </Expander>
-                <Expander IsExpanded="True" Grid.Row="1" Name="expanderAngriffe" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+
+
+                <Expander Grid.Row="1" IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="Eigenschaften" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Grid Margin="5,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="1" Grid.Row="0" Margin="17,-2" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
+                        <Label Grid.Column="3" Grid.Row="0" Margin="17,-2" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
+                        <Label Grid.Column="5" Grid.Row="0" Margin="17,-2" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
+                        <Label Grid.Column="7" Grid.Row="0" Margin="17,-2" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
+                        <Border Grid.Column="0" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushMU}" />
+                        <Label Grid.Column="0" Grid.Row="1" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox  Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedGegnerBase.MU}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                        <Border Grid.Column="0" Grid.Row="2" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKL}" />
+                        <Label Grid.Column="0" Grid.Row="2" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding SelectedGegnerBase.KL}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />                        
+                        <Border Grid.Column="2" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushIN}" />
+                        <Label Grid.Column="2" Grid.Row="1" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox Grid.Column="3" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" Value="{Binding SelectedGegnerBase.IN}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />                        
+                        <Border Grid.Column="2" Grid.Row="2" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushCH}" />
+                        <Label Grid.Column="2" Grid.Row="2" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox Grid.Column="3" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Charisma" Value="{Binding SelectedGegnerBase.CH}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />                        
+                        <Border Grid.Column="4" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushFF}" />
+                        <Label Grid.Column="4" Grid.Row="1" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox Grid.Column="5" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" Value="{Binding SelectedGegnerBase.FF}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />                        
+                        <Border Grid.Column="4" Grid.Row="2" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushGE}" />
+                        <Label Grid.Column="4" Grid.Row="2" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox Grid.Column="5" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Gewandtheit" Value="{Binding SelectedGegnerBase.GE}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                        <Border Grid.Column="6" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKO}" />
+                        <Label Grid.Column="6" Grid.Row="1" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox Grid.Column="7" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Konstitution" Value="{Binding SelectedGegnerBase.KO}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                        <Border Grid.Column="6" Grid.Row="2" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKK}" />
+                        <Label Grid.Column="6" Grid.Row="2" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <ViewGeneral:IntBox Grid.Column="7" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Körperkraft" Value="{Binding SelectedGegnerBase.KK}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                    </Grid>
+                </Expander>
+
+                <Expander IsExpanded="True" Grid.Row="2" Name="expanderAngriffe" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Angriffe" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -388,7 +473,7 @@
                         </DataGrid>
                     </Grid>
                 </Expander>
-                <Expander IsExpanded="False" Grid.Row="2" Name="expanderZauber" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Expander IsExpanded="False" Grid.Row="3" Name="expanderZauber" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Mögliche Zauber" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -420,22 +505,10 @@
                                             <KeyBinding Key="Enter" Command="{Binding OnAddZauber}" />
                                         </ComboBox.InputBindings>
                                     </ComboBox>
-                                    <!--<ComboBox Grid.Column="1" Height="23" ItemsSource="{Binding RepräsentationAuswahlListe}" SelectedItem="{Binding SelectedRepräsentation}" DisplayMemberPath="Name" SelectedValuePath="Kürzel" ToolTip="Repräsentation" VerticalAlignment="Center" IsEditable="True">
-                                        <ComboBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel />
-                                            </ItemsPanelTemplate>
-                                        </ComboBox.ItemsPanel>
-                                    </ComboBox>-->
 
                                     <Button Padding="0" Grid.Column="1" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                     </Button>
-
-                                    <!--<StackPanel Grid.Column="3" Margin="5,0,0,0" MinWidth="150" Orientation="Horizontal" VerticalAlignment="Center" >
-                                        <Label Content="Aktivierte Zauber:" VerticalContentAlignment="Center" FontWeight="Bold" />
-                                        <Label Content="{Binding SelectedGegnerBase.GegnerBase_Zauber.Count, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" />
-                                    </StackPanel>-->
                                 </Grid>
                             </Expander>
 
@@ -450,11 +523,8 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="200" />
                                                     <ColumnDefinition Width="30" />
-                                                    <ColumnDefinition Width="60" />
                                                     <ColumnDefinition Width="30" />
-                                                    <ColumnDefinition Width="60" />
                                                     <ColumnDefinition Width="30" />
-                                                    <ColumnDefinition Width="60" />
                                                     <ColumnDefinition Width="70" />
                                                     <ColumnDefinition Width="100*" />
                                                 </Grid.ColumnDefinitions>
@@ -465,13 +535,11 @@
                                                     </Image.ToolTip>
                                                 </Image>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1TW" Grid.Column="2" Padding="0" VerticalAlignment="Center" />
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="3" />
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2TW" Grid.Column="4" Padding="0" VerticalAlignment="Center" />
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="5" />
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3TW" Grid.Column="6" Padding="0" VerticalAlignment="Center" />
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="ZfW" Grid.Column="7" />
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
+                                                <!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1TW" Grid.Column="2" Padding="0" VerticalAlignment="Center" />-->
+                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="ZfW" Grid.Column="4" />
+                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="5" />
                                             </Grid>
                                         </Border>
                                         <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding ZauberListe, IsAsync=True}" SelectedItem="{Binding SelectedGegnerBaseZauber}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -524,11 +592,8 @@
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="200" />
                                                                 <ColumnDefinition Width="30" />
-                                                                <ColumnDefinition Width="60" />
                                                                 <ColumnDefinition Width="30" />
-                                                                <ColumnDefinition Width="60" />
                                                                 <ColumnDefinition Width="30" />
-                                                                <ColumnDefinition Width="60" />
                                                                 <ColumnDefinition Width="70" />
                                                                 <ColumnDefinition Width="100*" />
                                                             </Grid.ColumnDefinitions>
@@ -537,13 +602,11 @@
                                                                 <TextBlock Text="{Binding Zauber.Name}" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" ToolTip="{Binding Zauber.Name}" />
                                                             </StackPanel>
                                                             <TextBlock Text="{Binding Zauber.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" />
-                                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding E1TW}" Grid.Column="2" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
-                                                            <TextBlock Text="{Binding Zauber.Eigenschaft2, TargetNullValue=var}" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" />
-                                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding E2TW}" Grid.Column="4" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
-                                                            <TextBlock Text="{Binding Zauber.Eigenschaft3, TargetNullValue=var}" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" />
-                                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding E3TW}" Grid.Column="6" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
-                                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" Grid.Column="7" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
-                                                            <TextBox Text="{Binding Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                            <!--<ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding E1TW}" Grid.Column="2" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />-->
+                                                            <TextBlock Text="{Binding Zauber.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" />
+                                                            <TextBlock Text="{Binding Zauber.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" />
+                                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" Grid.Column="4" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                            <TextBox Text="{Binding Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         </Grid>
                                                     </Border>
                                                 </DataTemplate>
@@ -557,7 +620,7 @@
                 </Expander>
 
 
-                <Expander IsExpanded="False" Grid.Row="3" Name="expanderJagd" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Expander IsExpanded="False" Grid.Row="4" Name="expanderJagd" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Werte für Beschwörung und Jagd" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -594,7 +657,7 @@
                     </Grid>
                 </Expander>
 
-                <Expander IsExpanded="False" Grid.Row="4" Name="expanderAudio" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Expander IsExpanded="False" Grid.Row="5" Name="expanderAudio" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Gegner Geräuschzuordnung" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>

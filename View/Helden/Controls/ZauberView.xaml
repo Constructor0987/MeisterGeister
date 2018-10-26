@@ -9,7 +9,9 @@
              d:DesignHeight="299" d:DesignWidth="677"
              ViewGeneral:UIElementBehavior.ViewModel="{Binding}">
     <UserControl.Resources>
-    	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <ViewGeneral:MerkmalListeAnzahlToVisibleConverter x:Key="MerkmalListeAnzahlToVisibleConverter1" />
+        <ViewGeneral:MerkmaleListeToBrushColor x:Key="MerkmaleListeToBrushColor1" />
         <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
@@ -175,9 +177,25 @@
                                         <TextBlock Text="{Binding Zauber.Komplex}" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding Repräsentation}" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" />
                                         <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" Grid.Column="6" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
-                                        <TextBlock Text="{Binding Zauber.Merkmale}" Grid.Column="7" TextTrimming="WordEllipsis" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="{Binding Zauber.Merkmale}" />
-                                        <TextBox Text="{Binding Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
-                                    </Grid>
+                                        <TextBlock Grid.Column="7" Text="{Binding Zauber.Merkmale}" TextTrimming="WordEllipsis" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="{Binding Zauber.Merkmale}" />
+
+                                        <!--<StackPanel Grid.Column="8" Orientation="Horizontal">
+                                            <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"
+                                                Visibility="{Binding Zauber.Merkmale, Converter={StaticResource MerkmalListeAnzahlToVisibleConverter1},ConverterParameter='0'}"
+                                                Fill="{Binding Zauber.Merkmale, Converter={StaticResource MerkmaleListeToBrushColor1}, ConverterParameter='0'}" Opacity=".8" />
+                                            <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"
+                                                Visibility="{Binding Zauber.Merkmale, Converter={StaticResource MerkmalListeAnzahlToVisibleConverter1},ConverterParameter='1'}"
+                                                Fill="{Binding Zauber.Merkmale, Converter={StaticResource MerkmaleListeToBrushColor1}, ConverterParameter='1'}" Opacity=".8" />
+                                            <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"
+                                                Visibility="{Binding Zauber.Merkmale, Converter={StaticResource MerkmalListeAnzahlToVisibleConverter1},ConverterParameter='2'}"
+                                                Fill="{Binding Zauber.Merkmale, Converter={StaticResource MerkmaleListeToBrushColor1}, ConverterParameter='2'}" Opacity=".8" />
+                                            <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"
+                                                Visibility="{Binding Zauber.Merkmale, Converter={StaticResource MerkmalListeAnzahlToVisibleConverter1},ConverterParameter='3'}"
+                                                Fill="{Binding Zauber.Merkmale, Converter={StaticResource MerkmaleListeToBrushColor1}, ConverterParameter='3'}" Opacity=".8" />
+                                            </StackPanel>-->
+                                        <TextBox Text="{Binding Bemerkung, UpdateSourceTrigger=PropertyChanged}" Grid.Column="8" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                        
+                                </Grid>
                                 </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

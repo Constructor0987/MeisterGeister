@@ -42,12 +42,12 @@ namespace MeisterGeister.Model {
             set { Set(ref _keineWeiterenAuswirkungenBeiWunden, value); }
         }
 
-        private ICollection<IWesenPlaylist> _wesenplaylist;
-        private ICollection<IWesenPlaylist> Wesenplaylist
-        {
-            get { return _wesenplaylist; }
-            set { Set(ref _wesenplaylist, value); }
-        }
+        //private ICollection<IWesenPlaylist> _wesenplaylist;
+        //public ICollection<IWesenPlaylist> Wesenplaylist
+        //{
+        //    get { return _wesenplaylist; }
+        //    set { Set(ref _wesenplaylist, value); }
+        //}
 
 
         #region IInitializable
@@ -1013,30 +1013,21 @@ namespace MeisterGeister.Model {
         #region Magieresistenz
 
         public int MagieresistenzBasis {
-            get {
-                return (int)Math.Round((BaseMU + BaseKL + BaseKO) / 5.0, 0, MidpointRounding.AwayFromZero);
-            }
+            get { return (int)Math.Round((BaseMU + BaseKL + BaseKO) / 5.0, 0, MidpointRounding.AwayFromZero); }
         }
 
-        [DependentProperty("MR_Mod")]
+        [DependentProperty("MR_Mod"), DependentProperty("MR_Mod_Temp")]
         public int MagieresistenzMod {
-            get {
-                return MR_Mod ?? 0;
-            }
-            set {
-                MR_Mod = value;
-                //OnPropertyChanged(string.Empty);
-            }
+            get { return MR_Mod ?? 0; }
+            set { MR_Mod = value; }
         }
 
-        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
+        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO"), DependentProperty("MR_Mod_Temp")]
         public int MagieresistenzOhneMod {
-            get {
-                return MagieresistenzBasis + MagieresistenzMod;
-            }
+            get { return MagieresistenzBasis + MagieresistenzMod; }
         }
 
-        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
+        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO"), DependentProperty("MR_Mod_Temp")]
         [DependsOnModifikator(typeof(Mod.IModMR))]
         public int Magieresistenz {
             get {
@@ -1044,7 +1035,22 @@ namespace MeisterGeister.Model {
                 int e = MagieresistenzOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMR).Select(m => (Mod.IModMR)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyMRMod(e));
-                return e;
+                MRGeist = e + MR_Mod_Temp;
+                return e + MR_Mod_Temp;
+
+            }
+        }
+
+        private int _MR_Mod_Temp = 0;
+        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
+        public int MR_Mod_Temp
+        {
+            get { return _MR_Mod_Temp; }
+            set
+            {
+                Set(ref _MR_Mod_Temp, value);
+                MRGeist = Magieresistenz;
+                OnChanged("MRGeist");
             }
         }
 
@@ -1053,9 +1059,7 @@ namespace MeisterGeister.Model {
         #region Wundschwellen
         [DependentProperty("Wundschwelle"), DependentProperty("Wundschwelle2"), DependentProperty("Wundschwelle3")]
         public string Wundschwellen {
-            get {
-                return string.Format("{0} / {1} / {2}", Wundschwelle, Wundschwelle2, Wundschwelle3);
-            }
+            get { return string.Format("{0} / {1} / {2}", Wundschwelle, Wundschwelle2, Wundschwelle3); }
         }
 
         [DependentProperty("Konstitution")]
@@ -2291,9 +2295,13 @@ namespace MeisterGeister.Model {
             get { return Magieresistenz; }
         }
 
+        private int _mrGeist = -99;
+        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO"), DependentProperty("MR_Mod_Temp")]
         public int MRGeist {
             //TODO ??: verschiedene Sonderfertigkeiten verändern die Geistmagieresistenz.
-            get { return Magieresistenz; }
+            //  get { return Magieresistenz; }
+            get { return _mrGeist == -99? Magieresistenz: _mrGeist; }
+            set { Set(ref _mrGeist, value); }
         }
 
         private Rüstungsschutz _rs = null;

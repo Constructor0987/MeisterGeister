@@ -5,1462 +5,1473 @@
   </assembly>
   <members>
     <member name="T:System.Net.AuthenticationSchemes">
-      <summary>指定用于身份验证的协议。</summary>
+      <summary>指定驗證的通訊協定。</summary>
     </member>
     <member name="F:System.Net.AuthenticationSchemes.Anonymous">
-      <summary>指定匿名身份验证。</summary>
+      <summary>指定匿名驗證。</summary>
     </member>
     <member name="F:System.Net.AuthenticationSchemes.Basic">
-      <summary>指定基本身份验证。</summary>
+      <summary>指定基本驗證。</summary>
     </member>
     <member name="F:System.Net.AuthenticationSchemes.Digest">
-      <summary>指定摘要式身份验证。</summary>
+      <summary>指定摘要式驗證。</summary>
     </member>
     <member name="F:System.Net.AuthenticationSchemes.IntegratedWindowsAuthentication">
-      <summary>指定 Windows 身份验证。</summary>
+      <summary>指定 Windows 驗證。</summary>
     </member>
     <member name="F:System.Net.AuthenticationSchemes.Negotiate">
-      <summary>和客户端协商以确定身份验证方案。如果客户端和服务器均支持 Kerberos，则使用 Kerberos；否则使用 NTLM。</summary>
+      <summary>與用戶端交涉，以決定驗證配置。如果用戶端和伺服器都支援 Kerberos，就使用它，否則使用 NTLM。</summary>
     </member>
     <member name="F:System.Net.AuthenticationSchemes.None">
-      <summary>不允许进行任何身份验证。设置了此标志并请求 <see cref="T:System.Net.HttpListener" /> 对象的客户端将始终会接收 403 Forbidden 状态。当资源决不应该用于客户端时，请使用此标志。</summary>
+      <summary>不允許驗證。用戶端要求的 <see cref="T:System.Net.HttpListener" /> 物件已設定這個旗標時，一定會收到 403 禁止狀態。當資源絕對不可提供給用戶端時，請使用這個旗標。</summary>
     </member>
     <member name="F:System.Net.AuthenticationSchemes.Ntlm">
-      <summary>指定 NTLM 身份验证。</summary>
+      <summary>指定 NTLM 驗證。</summary>
     </member>
     <member name="T:System.Net.Cookie">
-      <summary>提供一组用于管理 Cookie 的属性和方法。此类不能被继承。</summary>
+      <summary>提供用來管理 Cookie 的屬性和方法集合。此類別無法被繼承。</summary>
     </member>
     <member name="M:System.Net.Cookie.#ctor">
-      <summary>初始化 <see cref="T:System.Net.Cookie" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Net.Cookie" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.Cookie.#ctor(System.String,System.String)">
-      <summary>使用指定的 <see cref="P:System.Net.Cookie.Name" /> 和 <see cref="P:System.Net.Cookie.Value" /> 初始化 <see cref="T:System.Net.Cookie" /> 类的新实例。</summary>
+      <summary>使用指定的 <see cref="P:System.Net.Cookie.Name" /> 和 <see cref="P:System.Net.Cookie.Value" />，初始化 <see cref="T:System.Net.Cookie" /> 類別的新執行個體。</summary>
       <param name="name">
-        <see cref="T:System.Net.Cookie" /> 的名称。不能在 <paramref name="name" /> 中使用下列字符：等号、分号、逗号、换行符 (\n)、回车符 (\r)、制表符 (\t) 和空格字符。美元符号 ("$") 不能作为第一个字符。</param>
+        <see cref="T:System.Net.Cookie" /> 的名稱。<paramref name="name" /> 內不可使用下列的字元：等號、分號、逗號、新行字元 (\n)、換行字元 (\r)、定位鍵 (\t) 及空格。第一個字元不能是貨幣符號 ($) 字元。</param>
       <param name="value">
-        <see cref="T:System.Net.Cookie" /> 的值。下列字符不得用在 <paramref name="value" /> 中：分号、逗号。</param>
+        <see cref="T:System.Net.Cookie" /> 的值。<paramref name="value" /> 內不可使用下列的字元：分號 (;)、逗號 (,)。</param>
       <exception cref="T:System.Net.CookieException">
-        <paramref name="name" /> 参数为 null。- 或 -<paramref name="name" /> 参数的长度为零。- 或 -<paramref name="name" /> 参数包含无效字符。- 或 -<paramref name="value" /> 参数为 null。- 或 -<paramref name="value" /> 参数包含一个未使用引号引起来的字符串，且该字符串中包含无效字符。</exception>
+        <paramref name="name" /> 參數為 null。-或-<paramref name="name" /> 參數的長度為零。-或-<paramref name="name" /> 參數包含無效的字元。-或-<paramref name="value" /> 參數為 null。-或-<paramref name="value" /> 參數含有不是以引號括住、包含無效字元的字串。</exception>
     </member>
     <member name="M:System.Net.Cookie.#ctor(System.String,System.String,System.String)">
-      <summary>使用指定的 <see cref="P:System.Net.Cookie.Name" />、<see cref="P:System.Net.Cookie.Value" /> 和 <see cref="P:System.Net.Cookie.Path" /> 初始化 <see cref="T:System.Net.Cookie" /> 类的新实例。</summary>
+      <summary>使用指定的 <see cref="P:System.Net.Cookie.Name" />、<see cref="P:System.Net.Cookie.Value" /> 和 <see cref="P:System.Net.Cookie.Path" />，初始化 <see cref="T:System.Net.Cookie" /> 類別的新執行個體。</summary>
       <param name="name">
-        <see cref="T:System.Net.Cookie" /> 的名称。不能在 <paramref name="name" /> 中使用下列字符：等号、分号、逗号、换行符 (\n)、回车符 (\r)、制表符 (\t) 和空格字符。美元符号 ("$") 不能作为第一个字符。</param>
+        <see cref="T:System.Net.Cookie" /> 的名稱。<paramref name="name" /> 內不可使用下列的字元：等號、分號、逗號、新行字元 (\n)、換行字元 (\r)、定位鍵 (\t) 及空格。第一個字元不能是貨幣符號 ($) 字元。</param>
       <param name="value">
-        <see cref="T:System.Net.Cookie" /> 的值。下列字符不得用在 <paramref name="value" /> 中：分号、逗号。</param>
-      <param name="path">此 <see cref="T:System.Net.Cookie" /> 适用于的源服务器上的 URI 的子集。默认值为 "/"。</param>
+        <see cref="T:System.Net.Cookie" /> 的值。<paramref name="value" /> 內不可使用下列的字元：分號 (;)、逗號 (,)。</param>
+      <param name="path">原始伺服器上這個 <see cref="T:System.Net.Cookie" /> 要套用的 URI 子集。預設值為 "/"。</param>
       <exception cref="T:System.Net.CookieException">
-        <paramref name="name" /> 参数为 null。- 或 -<paramref name="name" /> 参数的长度为零。- 或 -<paramref name="name" /> 参数包含无效字符。- 或 -<paramref name="value" /> 参数为 null。- 或 -<paramref name="value" /> 参数包含一个未使用引号引起来的字符串，且该字符串中包含无效字符。</exception>
+        <paramref name="name" /> 參數為 null。-或-<paramref name="name" /> 參數的長度為零。-或-<paramref name="name" /> 參數包含無效的字元。-或-<paramref name="value" /> 參數為 null。-或-<paramref name="value" /> 參數含有不是以引號括住、包含無效字元的字串。</exception>
     </member>
     <member name="M:System.Net.Cookie.#ctor(System.String,System.String,System.String,System.String)">
-      <summary>使用指定的 <see cref="P:System.Net.Cookie.Name" />、<see cref="P:System.Net.Cookie.Value" />、<see cref="P:System.Net.Cookie.Path" /> 和 <see cref="P:System.Net.Cookie.Domain" /> 初始化 <see cref="T:System.Net.Cookie" /> 类的新实例。</summary>
+      <summary>使用指定的 <see cref="P:System.Net.Cookie.Name" />、<see cref="P:System.Net.Cookie.Value" />、<see cref="P:System.Net.Cookie.Path" /> 和 <see cref="P:System.Net.Cookie.Domain" />，初始化 <see cref="T:System.Net.Cookie" /> 類別的新執行個體。</summary>
       <param name="name">
-        <see cref="T:System.Net.Cookie" /> 的名称。不能在 <paramref name="name" /> 中使用下列字符：等号、分号、逗号、换行符 (\n)、回车符 (\r)、制表符 (\t) 和空格字符。美元符号 ("$") 不能作为第一个字符。</param>
+        <see cref="T:System.Net.Cookie" /> 的名稱。<paramref name="name" /> 內不可使用下列的字元：等號、分號、逗號、新行字元 (\n)、換行字元 (\r)、定位鍵 (\t) 及空格。第一個字元不能是貨幣符號 ($) 字元。</param>
       <param name="value">
-        <see cref="T:System.Net.Cookie" /> 对象的值。下列字符不得用在 <paramref name="value" /> 中：分号、逗号。</param>
-      <param name="path">此 <see cref="T:System.Net.Cookie" /> 适用于的源服务器上的 URI 的子集。默认值为 "/"。</param>
-      <param name="domain">此 <see cref="T:System.Net.Cookie" /> 对其有效的可选 Internet 域。默认值为已从其中接收到此 <see cref="T:System.Net.Cookie" /> 的主机。</param>
+        <see cref="T:System.Net.Cookie" /> 物件的值。<paramref name="value" /> 內不可使用下列的字元：分號 (;)、逗號 (,)。</param>
+      <param name="path">原始伺服器上這個 <see cref="T:System.Net.Cookie" /> 要套用的 URI 子集。預設值為 "/"。</param>
+      <param name="domain">這個 <see cref="T:System.Net.Cookie" /> 有效的選擇性網際網路網域。預設值是發出這個 <see cref="T:System.Net.Cookie" /> 的主機。</param>
       <exception cref="T:System.Net.CookieException">
-        <paramref name="name" /> 参数为 null。- 或 -<paramref name="name" /> 参数的长度为零。- 或 -<paramref name="name" /> 参数包含无效字符。- 或 -<paramref name="value" /> 参数为 null。- 或 -<paramref name="value" /> 参数包含一个未使用引号引起来的字符串，且该字符串中包含无效字符。</exception>
+        <paramref name="name" /> 參數為 null。-或-<paramref name="name" /> 參數的長度為零。-或-<paramref name="name" /> 參數包含無效的字元。-或-<paramref name="value" /> 參數為 null。-或-<paramref name="value" /> 參數含有不是以引號括住、包含無效字元的字串。</exception>
     </member>
     <member name="P:System.Net.Cookie.Comment">
-      <summary>获取或设置服务器可添加到 <see cref="T:System.Net.Cookie" /> 中的注释。</summary>
-      <returns>用于记录此 <see cref="T:System.Net.Cookie" /> 预定用途的可选注释。</returns>
+      <summary>取得或設定伺服器可加入至 <see cref="T:System.Net.Cookie" /> 的註解。</summary>
+      <returns>這個 <see cref="T:System.Net.Cookie" /> 使用說明文件的選擇性註解。</returns>
     </member>
     <member name="P:System.Net.Cookie.CommentUri">
-      <summary>获取或设置服务器可通过 <see cref="T:System.Net.Cookie" /> 来提供的 URI 注释。</summary>
-      <returns>一个可选注释，它表示此 <see cref="T:System.Net.Cookie" /> 的 URI 引用的预定用途。该值必须符合 URI 格式。</returns>
+      <summary>取得或設定伺服器以 <see cref="T:System.Net.Cookie" /> 提供的 URI 註解。</summary>
+      <returns>選擇性註解，表示這個 <see cref="T:System.Net.Cookie" /> 之 URI 參考的預期用法。這個值必須符合 URI 格式。</returns>
     </member>
     <member name="P:System.Net.Cookie.Discard">
-      <summary>获取或设置由服务器设置的丢弃标志。</summary>
-      <returns>如果客户端将在当前会话结束时丢弃 <see cref="T:System.Net.Cookie" />，则为 true；否则为 false。默认值为 false。</returns>
+      <summary>取得或設定由伺服器設定的捨棄旗標。</summary>
+      <returns>如果用戶端在目前工作階段 (Session) 尾端捨棄 <see cref="T:System.Net.Cookie" />，則為 true，否則為 false。預設為 false。</returns>
     </member>
     <member name="P:System.Net.Cookie.Domain">
-      <summary>获取或设置 <see cref="T:System.Net.Cookie" /> 对其有效的 URI。</summary>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 為有效的 URI。</summary>
       <returns>
-        <see cref="T:System.Net.Cookie" /> 对其有效的 URI。</returns>
+        <see cref="T:System.Net.Cookie" /> 為有效的 URI。</returns>
     </member>
     <member name="M:System.Net.Cookie.Equals(System.Object)">
-      <summary>重写 <see cref="M:System.Object.Equals(System.Object)" /> 方法。</summary>
-      <returns>如果 <see cref="T:System.Net.Cookie" /> 等于 <paramref name="comparand" />，则返回 true。两个 <see cref="T:System.Net.Cookie" /> 实例相等的条件是它们的 <see cref="P:System.Net.Cookie.Name" />、<see cref="P:System.Net.Cookie.Value" />、<see cref="P:System.Net.Cookie.Path" />、<see cref="P:System.Net.Cookie.Domain" /> 和 <see cref="P:System.Net.Cookie.Version" /> 属性相等。<see cref="P:System.Net.Cookie.Name" /> 和 <see cref="P:System.Net.Cookie.Domain" /> 字符串比较不区分大小写。</returns>
-      <param name="comparand">对 <see cref="T:System.Net.Cookie" /> 的引用。</param>
+      <summary>覆寫 <see cref="M:System.Object.Equals(System.Object)" /> 方法。</summary>
+      <returns>當 <see cref="T:System.Net.Cookie" /> 等於 <paramref name="comparand" /> 時，傳回 true。若兩個 <see cref="T:System.Net.Cookie" /> 執行個體的 <see cref="P:System.Net.Cookie.Name" />、<see cref="P:System.Net.Cookie.Value" />、<see cref="P:System.Net.Cookie.Path" />、<see cref="P:System.Net.Cookie.Domain" /> 和 <see cref="P:System.Net.Cookie.Version" /> 屬性相等，則這兩個執行個體即相等。<see cref="P:System.Net.Cookie.Name" /> 和 <see cref="P:System.Net.Cookie.Domain" /> 字串比較不區分大小寫。</returns>
+      <param name="comparand">對 <see cref="T:System.Net.Cookie" /> 的參考。</param>
     </member>
     <member name="P:System.Net.Cookie.Expired">
-      <summary>获取或设置 <see cref="T:System.Net.Cookie" /> 的当前状态。</summary>
-      <returns>如果 <see cref="T:System.Net.Cookie" /> 已过期，则为 true；否则为 false。默认值为 false。</returns>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 的目前狀態。</summary>
+      <returns>如果 <see cref="T:System.Net.Cookie" /> 已經到期，則為 true，否則為 false。預設為 false。</returns>
     </member>
     <member name="P:System.Net.Cookie.Expires">
-      <summary>获取或设置作为 <see cref="T:System.DateTime" /> 的 <see cref="T:System.Net.Cookie" /> 过期日期和时间。</summary>
-      <returns>作为 <see cref="T:System.DateTime" /> 实例的 <see cref="T:System.Net.Cookie" /> 过期日期和时间。</returns>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 的到期日和時間為 <see cref="T:System.DateTime" />。</summary>
+      <returns>
+        <see cref="T:System.Net.Cookie" /> 的到期日和時間為 <see cref="T:System.DateTime" /> 執行個體。</returns>
     </member>
     <member name="M:System.Net.Cookie.GetHashCode">
-      <summary>重写 <see cref="M:System.Object.GetHashCode" /> 方法。</summary>
-      <returns>此实例的 32 位带符号整数哈希代码。</returns>
+      <summary>覆寫 <see cref="M:System.Object.GetHashCode" /> 方法。</summary>
+      <returns>這個執行個體的 32 位元簽章整數雜湊程式碼。</returns>
     </member>
     <member name="P:System.Net.Cookie.HttpOnly">
-      <summary>确定页脚本或其他活动内容是否可访问此 Cookie。</summary>
-      <returns>确定页脚本或其他活动内容是否可访问此 Cookie 的布尔值。</returns>
+      <summary>決定頁面指令碼或其他主動式內容是否可以存取這個 Cookie。</summary>
+      <returns>布林值，決定頁面指令碼或其他主動式內容是否可以存取這個 Cookie。</returns>
     </member>
     <member name="P:System.Net.Cookie.Name">
-      <summary>获取或设置 <see cref="T:System.Net.Cookie" /> 的名称。</summary>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 的名稱。</summary>
       <returns>
-        <see cref="T:System.Net.Cookie" /> 的名称。</returns>
-      <exception cref="T:System.Net.CookieException">为 Set 操作指定的值为 null 或是空字符串- 或 -为 Set 操作指定的值包含非法字符。不能在 <see cref="P:System.Net.Cookie.Name" /> 属性中使用下列字符：等号、分号、逗号、换行符 (\n)、回车符 (\r)、制表符 (\t) 和空格字符。美元符号 ("$") 不能作为第一个字符。</exception>
+        <see cref="T:System.Net.Cookie" /> 的名稱。</returns>
+      <exception cref="T:System.Net.CookieException">為設定作業所指定的值為 null 或空字串。-或-為設定作業所指定的值包含不合法的字元。<see cref="P:System.Net.Cookie.Name" /> 屬性內不可使用下列的字元：等號、分號、逗號、新行字元 (\n)、換行字元 (\r)、定位鍵 (\t) 及空格。第一個字元不能是貨幣符號 ($) 字元。</exception>
     </member>
     <member name="P:System.Net.Cookie.Path">
-      <summary>获取或设置此 <see cref="T:System.Net.Cookie" /> 适用于的 URI。</summary>
-      <returns>此 <see cref="T:System.Net.Cookie" /> 适用于的 URI。</returns>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 要套用的 URI。</summary>
+      <returns>
+        <see cref="T:System.Net.Cookie" /> 要套用的 URI。</returns>
     </member>
     <member name="P:System.Net.Cookie.Port">
-      <summary>获取或设置此 <see cref="T:System.Net.Cookie" /> 适用于的 TCP 端口的列表。</summary>
-      <returns>此 <see cref="T:System.Net.Cookie" /> 适用于的 TCP 端口的列表。</returns>
-      <exception cref="T:System.Net.CookieException">未能分析为 Set 操作指定的值或者该值没有用双引号括起来。</exception>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 可以套用的 TCP 連接埠清單。</summary>
+      <returns>
+        <see cref="T:System.Net.Cookie" /> 可以套用的 TCP 連接埠清單。</returns>
+      <exception cref="T:System.Net.CookieException">無法剖析為設定作業所指定的值，或是該值並未包含於雙引號中。</exception>
     </member>
     <member name="P:System.Net.Cookie.Secure">
-      <summary>获取或设置 <see cref="T:System.Net.Cookie" /> 的安全级别。</summary>
-      <returns>如果客户端仅在使用安全超文本传输协议 (HTTPS) 的后继请求中返回 Cookie，则为 true；否则为 false。默认值为 false。</returns>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 的安全層級。</summary>
+      <returns>如果要求使用的是 HTTPS (Secure Hypertext Transfer Protocol)，且用戶端在後續的要求中只需傳回 Cookie，則為 true，否則，即為 false。預設為 false。</returns>
     </member>
     <member name="P:System.Net.Cookie.TimeStamp">
-      <summary>获取此 Cookie 作为 <see cref="T:System.DateTime" /> 发出的时间。</summary>
-      <returns>此 Cookie 作为 <see cref="T:System.DateTime" /> 发出的时间。</returns>
+      <summary>取得以 <see cref="T:System.DateTime" /> 發出 Cookie 的時間。</summary>
+      <returns>以 <see cref="T:System.DateTime" /> 發出 Cookie 的時間。</returns>
     </member>
     <member name="M:System.Net.Cookie.ToString">
-      <summary>重写 <see cref="M:System.Object.ToString" /> 方法。</summary>
-      <returns>返回此 <see cref="T:System.Net.Cookie" /> 对象的一个字符串表示形式，该表示形式适合包含在 HTTP Cookie: 请求标头中。</returns>
+      <summary>覆寫 <see cref="M:System.Object.ToString" /> 方法。</summary>
+      <returns>傳回這個 <see cref="T:System.Net.Cookie" /> 物件的字串表示，以用來含入 HTTP Cookie: request 標頭。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
       </PermissionSet>
     </member>
     <member name="P:System.Net.Cookie.Value">
-      <summary>获取或设置 <see cref="T:System.Net.Cookie" /> 的 <see cref="P:System.Net.Cookie.Value" />。</summary>
+      <summary>取得或設定 <see cref="T:System.Net.Cookie" /> 的 <see cref="P:System.Net.Cookie.Value" />。</summary>
       <returns>
         <see cref="T:System.Net.Cookie" /> 的 <see cref="P:System.Net.Cookie.Value" />。</returns>
     </member>
     <member name="P:System.Net.Cookie.Version">
-      <summary>获取或设置此 Cookie 符合的 HTTP 状态维护版本。</summary>
-      <returns>此 Cookie 符合的 HTTP 状态维护版本。</returns>
-      <exception cref="T:System.ArgumentOutOfRangeException">不允许使用为版本指定的值。</exception>
+      <summary>取得或設定 Cookie 依據的 HTTP 狀態維護版本。</summary>
+      <returns>Cookie 依據的 HTTP 狀態維護版本。</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">不允許指定給版本的值。</exception>
     </member>
     <member name="T:System.Net.CookieCollection">
-      <summary>为 <see cref="T:System.Net.Cookie" /> 类的实例提供集合容器。</summary>
+      <summary>提供 <see cref="T:System.Net.Cookie" /> 類別的執行個體 (Instance) 其集合容器 (Container)。</summary>
     </member>
     <member name="M:System.Net.CookieCollection.#ctor">
-      <summary>初始化 <see cref="T:System.Net.CookieCollection" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Net.CookieCollection" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.CookieCollection.Add(System.Net.Cookie)">
-      <summary>将 <see cref="T:System.Net.Cookie" /> 添加到 <see cref="T:System.Net.CookieCollection" />。</summary>
-      <param name="cookie">要添加到 <see cref="T:System.Net.CookieCollection" /> 中的 <see cref="T:System.Net.Cookie" />。</param>
+      <summary>將 <see cref="T:System.Net.Cookie" /> 加入至 <see cref="T:System.Net.CookieCollection" />。</summary>
+      <param name="cookie">要加入至 <see cref="T:System.Net.CookieCollection" /> 的 <see cref="T:System.Net.Cookie" />。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="cookie" /> 为 null。</exception>
+        <paramref name="cookie" /> 為 null。</exception>
     </member>
     <member name="M:System.Net.CookieCollection.Add(System.Net.CookieCollection)">
-      <summary>将 <see cref="T:System.Net.CookieCollection" /> 的内容添加到当前实例中。</summary>
-      <param name="cookies">要添加的 <see cref="T:System.Net.CookieCollection" />。</param>
+      <summary>將 <see cref="T:System.Net.CookieCollection" /> 的內容加入至目前的執行個體。</summary>
+      <param name="cookies">要加入的 <see cref="T:System.Net.CookieCollection" />。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="cookies" /> 为 null。</exception>
+        <paramref name="cookies" /> 為 null。</exception>
     </member>
     <member name="P:System.Net.CookieCollection.Count">
-      <summary>获取 <see cref="T:System.Net.CookieCollection" /> 中包含的 Cookie 的数目。</summary>
-      <returns>
-        <see cref="T:System.Net.CookieCollection" /> 中包含的 Cookie 的数目。</returns>
+      <summary>取得在 <see cref="T:System.Net.CookieCollection" /> 中所包含的 Cookie 數。</summary>
+      <returns>在 <see cref="T:System.Net.CookieCollection" /> 中所包含的 Cookie 數。</returns>
     </member>
     <member name="M:System.Net.CookieCollection.GetEnumerator">
-      <summary>获取一个枚举数，该枚举数可以循环访问 <see cref="T:System.Net.CookieCollection" />。</summary>
-      <returns>
-        <see cref="T:System.Collections.IEnumerator" /> 接口实现的实例，该接口可以循环访问 <see cref="T:System.Net.CookieCollection" />。</returns>
+      <summary>傳回可以逐一查看 <see cref="T:System.Net.CookieCollection" /> 的列舉程式。</summary>
+      <returns>可以逐一查看 <see cref="T:System.Net.CookieCollection" /> 的 <see cref="T:System.Collections.IEnumerator" /> 介面實作執行個體。</returns>
     </member>
     <member name="P:System.Net.CookieCollection.Item(System.String)">
-      <summary>从 <see cref="T:System.Net.CookieCollection" /> 中获取具有特定名称的 <see cref="T:System.Net.Cookie" />。</summary>
-      <returns>
-        <see cref="T:System.Net.CookieCollection" /> 中具有特定名称的 <see cref="T:System.Net.Cookie" />。</returns>
-      <param name="name">要查找的 <see cref="T:System.Net.Cookie" /> 的名称。</param>
+      <summary>從 <see cref="T:System.Net.CookieCollection" /> 中以特定的名稱取得 <see cref="T:System.Net.Cookie" />。</summary>
+      <returns>在 <see cref="T:System.Net.CookieCollection" /> 中具有特定名稱的 <see cref="T:System.Net.Cookie" />。</returns>
+      <param name="name">要尋找的 <see cref="T:System.Net.Cookie" /> 名稱。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="name" /> 为 null。</exception>
+        <paramref name="name" /> 為 null。</exception>
     </member>
     <member name="M:System.Net.CookieCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
-      <summary>[支持 .NET Framework 中 4.5.1 和最新版本"有关此成员的说明，请参见 <see cref="M:System.Collections.ICollection.CopyTo(System.Array,System.Int32)" />。</summary>
-      <param name="array">作为集合中元素的复制目标位置的一维数组。该数组的索引必须从零开始。</param>
+      <summary>[支援 .NET Framework 4.5.1 (含) 以後版本]如需這個成員的說明，請參閱 <see cref="M:System.Collections.ICollection.CopyTo(System.Array,System.Int32)" />。</summary>
+      <param name="array">從集合複製元素之目的端一維陣列。陣列必須有以零起始的索引。</param>
       <param name="index">
-        <paramref name="array" /> 中从零开始的索引，从此索引处开始进行复制。</param>
+        <paramref name="array" /> 中以零起始的索引，是複製開始的位置。</param>
     </member>
     <member name="P:System.Net.CookieCollection.System#Collections#ICollection#IsSynchronized">
-      <summary>[支持 .NET Framework 中 4.5.1 和最新版本"有关此成员的说明，请参见 <see cref="P:System.Collections.ICollection.IsSynchronized" />。</summary>
-      <returns>如果对该集合的访问是同步的（线程安全），则为 true；否则，为 false。</returns>
+      <summary>[支援 .NET Framework 4.5.1 (含) 以後版本]如需這個成員的說明，請參閱 <see cref="P:System.Collections.ICollection.IsSynchronized" />。</summary>
+      <returns>如果對集合的存取是同步處理的 (安全執行緒)，則為 true，否則為 false。</returns>
     </member>
     <member name="P:System.Net.CookieCollection.System#Collections#ICollection#SyncRoot">
-      <summary>[支持 .NET Framework 中 4.5.1 和最新版本"有关此成员的说明，请参见 <see cref="P:System.Collections.ICollection.SyncRoot" />。</summary>
-      <returns>可用于同步集合访问的对象。</returns>
+      <summary>[支援 .NET Framework 4.5.1 (含) 以後版本]如需這個成員的說明，請參閱 <see cref="P:System.Collections.ICollection.SyncRoot" />。</summary>
+      <returns>Object，可用來對集合同步存取。</returns>
     </member>
     <member name="T:System.Net.CookieContainer">
-      <summary>为 <see cref="T:System.Net.CookieCollection" /> 对象的集合提供容器。</summary>
+      <summary>提供 <see cref="T:System.Net.CookieCollection" /> 物件集合的容器 (Container)。</summary>
     </member>
     <member name="M:System.Net.CookieContainer.#ctor">
-      <summary>初始化 <see cref="T:System.Net.CookieContainer" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Net.CookieContainer" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.CookieContainer.Add(System.Uri,System.Net.Cookie)">
-      <summary>将 <see cref="T:System.Net.Cookie" /> 添加到特定 URI 的 <see cref="T:System.Net.CookieContainer" /> 中。</summary>
-      <param name="uri">要添加到 <see cref="T:System.Net.CookieContainer" /> 的 <see cref="T:System.Net.Cookie" /> 的 URI。</param>
-      <param name="cookie">要添加到 <see cref="T:System.Net.CookieContainer" /> 的 <see cref="T:System.Net.Cookie" />。</param>
+      <summary>將 <see cref="T:System.Net.Cookie" /> 加入至特定 URI 的 <see cref="T:System.Net.CookieContainer" />。</summary>
+      <param name="uri">要加入至 <see cref="T:System.Net.CookieContainer" /> 之 <see cref="T:System.Net.Cookie" /> 的 URI。</param>
+      <param name="cookie">要加入至 <see cref="T:System.Net.CookieContainer" /> 的 <see cref="T:System.Net.Cookie" />。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="uri" /> 为 null 或 <paramref name="cookie" /> 为 null。</exception>
+        <paramref name="uri" /> 是 null，或 <paramref name="cookie" /> 是 null。</exception>
       <exception cref="T:System.Net.CookieException">
-        <paramref name="cookie" /> 大于 <paramref name="maxCookieSize" />。- 或 -<paramref name="cookie" /> 的域不是有效的 URI。</exception>
+        <paramref name="cookie" /> 大於 <paramref name="maxCookieSize" />。-或-<paramref name="cookie" /> 的網域不是有效的 URI。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.CookieContainer.Add(System.Uri,System.Net.CookieCollection)">
-      <summary>将 <see cref="T:System.Net.CookieCollection" /> 的内容添加到特定 URI 的 <see cref="T:System.Net.CookieContainer" /> 中。</summary>
-      <param name="uri">要添加到 <see cref="T:System.Net.CookieContainer" /> 的 <see cref="T:System.Net.CookieCollection" /> 的 URI。</param>
-      <param name="cookies">要添加到 <see cref="T:System.Net.CookieContainer" /> 的 <see cref="T:System.Net.CookieCollection" />。</param>
+      <summary>將 <see cref="T:System.Net.CookieCollection" /> 的內容加入至特定 URI 的 <see cref="T:System.Net.CookieContainer" />。</summary>
+      <param name="uri">要加入至 <see cref="T:System.Net.CookieContainer" /> 之 <see cref="T:System.Net.CookieCollection" /> 的 URI。</param>
+      <param name="cookies">要加入至 <see cref="T:System.Net.CookieContainer" /> 的 <see cref="T:System.Net.CookieCollection" />。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="cookies" /> 为 null。</exception>
+        <paramref name="cookies" /> 為 null。</exception>
       <exception cref="T:System.ArgumentException">
-        <paramref name="cookies" /> 中的某一个 Cookie 的域是 null。</exception>
+        <paramref name="cookies" /> 內其中一個 Cookie 的網域是 null。</exception>
       <exception cref="T:System.Net.CookieException">
-        <paramref name="cookies" /> 中的某一个 Cookie 包含无效的域。</exception>
+        <paramref name="cookies" /> 內其中一個 Cookie 包含無效的網域。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="P:System.Net.CookieContainer.Capacity">
-      <summary>获取和设置 <see cref="T:System.Net.CookieContainer" /> 可以包含的 <see cref="T:System.Net.Cookie" /> 实例数。</summary>
+      <summary>取得或設定 <see cref="T:System.Net.CookieContainer" /> 可以保留的 <see cref="T:System.Net.Cookie" /> 執行個體數目。</summary>
       <returns>
-        <see cref="T:System.Net.CookieContainer" /> 可以包含的 <see cref="T:System.Net.Cookie" /> 实例数。这是硬性限制，不能通过添加 <see cref="T:System.Net.Cookie" /> 超过此限制。</returns>
+        <see cref="T:System.Net.CookieContainer" /> 可以保留的 <see cref="T:System.Net.Cookie" /> 執行個體數目。這是一種硬式限制且不可以利用加入 <see cref="T:System.Net.Cookie" /> 的方式超過。</returns>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="Capacity" /> 小于或等于零，或者（值小于 <see cref="P:System.Net.CookieContainer.PerDomainCapacity" /> 且 <see cref="P:System.Net.CookieContainer.PerDomainCapacity" /> 不等于 <see cref="F:System.Int32.MaxValue" />）。</exception>
+        <paramref name="Capacity" /> 小於或等於零，或 (值小於 <see cref="P:System.Net.CookieContainer.PerDomainCapacity" /> 且 <see cref="P:System.Net.CookieContainer.PerDomainCapacity" /> 不等於 <see cref="F:System.Int32.MaxValue" />)。</exception>
     </member>
     <member name="P:System.Net.CookieContainer.Count">
-      <summary>获取 <see cref="T:System.Net.CookieContainer" /> 当前包含的 <see cref="T:System.Net.Cookie" /> 实例数。</summary>
+      <summary>取得 <see cref="T:System.Net.CookieContainer" /> 目前保留的 <see cref="T:System.Net.Cookie" /> 執行個體數目。</summary>
       <returns>
-        <see cref="T:System.Net.CookieContainer" /> 当前包含的 <see cref="T:System.Net.Cookie" /> 实例数。这是所有域中 <see cref="T:System.Net.Cookie" /> 实例的总数。</returns>
+        <see cref="T:System.Net.CookieContainer" /> 目前保留的 <see cref="T:System.Net.Cookie" /> 執行個體數目。這是所有網域中 <see cref="T:System.Net.Cookie" /> 執行個體的總和。</returns>
     </member>
     <member name="F:System.Net.CookieContainer.DefaultCookieLengthLimit">
-      <summary>表示 <see cref="T:System.Net.CookieContainer" /> 可以包含的 <see cref="T:System.Net.Cookie" /> 实例的默认最大大小（以字节为单位）。此字段为常数。</summary>
+      <summary>以位元組為單位表示 <see cref="T:System.Net.CookieContainer" /> 可以保留之 <see cref="T:System.Net.Cookie" /> 執行個體的預設大小最大值。這個欄位是常數。</summary>
     </member>
     <member name="F:System.Net.CookieContainer.DefaultCookieLimit">
-      <summary>表示 <see cref="T:System.Net.CookieContainer" /> 可以包含的 <see cref="T:System.Net.Cookie" /> 实例的默认最大数目。此字段为常数。</summary>
+      <summary>表示 <see cref="T:System.Net.CookieContainer" /> 可以保留之 <see cref="T:System.Net.Cookie" /> 執行個體的預設最大數目。這個欄位是常數。</summary>
     </member>
     <member name="F:System.Net.CookieContainer.DefaultPerDomainCookieLimit">
-      <summary>表示 <see cref="T:System.Net.CookieContainer" /> 可以在每个域引用的 <see cref="T:System.Net.Cookie" /> 实例的默认最大数目。此字段为常数。</summary>
+      <summary>表示 <see cref="T:System.Net.CookieContainer" /> 在每一個網域可以參考之 <see cref="T:System.Net.Cookie" /> 執行個體的預設最大數目。這個欄位是常數。</summary>
     </member>
     <member name="M:System.Net.CookieContainer.GetCookieHeader(System.Uri)">
-      <summary>获取 HTTP Cookie 标头，该标头包含表示与特定 URI 关联的 <see cref="T:System.Net.Cookie" /> 实例的 HTTP Cookie。</summary>
-      <returns>一个 HTTP Cookie 标头，其中包含表示由分号分隔的 <see cref="T:System.Net.Cookie" /> 实例的字符串。</returns>
-      <param name="uri">所需的 <see cref="T:System.Net.Cookie" /> 实例的 URI。</param>
+      <summary>取得 HTTP Cookie 標頭，包含表示與特定 URI 關聯之 <see cref="T:System.Net.Cookie" /> 執行個體的 HTTP Cookie。</summary>
+      <returns>HTTP Cookie 標頭，其中含有表示 <see cref="T:System.Net.Cookie" /> 執行個體 (以分號分隔) 的字串。</returns>
+      <param name="uri">所需的 <see cref="T:System.Net.Cookie" /> 執行個體 URI。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="uri" /> 为 null。</exception>
+        <paramref name="uri" /> 為 null。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.CookieContainer.GetCookies(System.Uri)">
-      <summary>获取包含与特定 URI 关联的 <see cref="T:System.Net.Cookie" /> 实例的 <see cref="T:System.Net.CookieCollection" />。</summary>
-      <returns>包含与特定 URI 关联的 <see cref="T:System.Net.Cookie" /> 实例的 <see cref="T:System.Net.CookieCollection" />。</returns>
-      <param name="uri">所需的 <see cref="T:System.Net.Cookie" /> 实例的 URI。</param>
+      <summary>取得 <see cref="T:System.Net.CookieCollection" />，包含與特定 URI 關聯的 <see cref="T:System.Net.Cookie" /> 執行個體。</summary>
+      <returns>
+        <see cref="T:System.Net.CookieCollection" />，包含與特定 URI 關聯的 <see cref="T:System.Net.Cookie" /> 執行個體。</returns>
+      <param name="uri">所需的 <see cref="T:System.Net.Cookie" /> 執行個體 URI。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="uri" /> 为 null。</exception>
+        <paramref name="uri" /> 為 null。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="P:System.Net.CookieContainer.MaxCookieSize">
-      <summary>表示 <see cref="T:System.Net.Cookie" /> 的最大允许长度。</summary>
-      <returns>
-        <see cref="T:System.Net.Cookie" /> 的最大允许长度（以字节为单位）。</returns>
+      <summary>表示 <see cref="T:System.Net.Cookie" /> 允許的最大長度。</summary>
+      <returns>以位元組為單位表示的 <see cref="T:System.Net.Cookie" /> 允許的最大長度。</returns>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="MaxCookieSize" /> 小于或等于零。</exception>
+        <paramref name="MaxCookieSize" /> 小於或等於零值。</exception>
     </member>
     <member name="P:System.Net.CookieContainer.PerDomainCapacity">
-      <summary>获取和设置 <see cref="T:System.Net.CookieContainer" /> 可以在每个域包含的 <see cref="T:System.Net.Cookie" /> 实例数。</summary>
-      <returns>每个域允许的 <see cref="T:System.Net.Cookie" /> 实例数。</returns>
+      <summary>取得或設定 <see cref="T:System.Net.CookieContainer" /> 在每一個網域可以保留的 <see cref="T:System.Net.Cookie" /> 執行個體數目。</summary>
+      <returns>每一個網域允許的 <see cref="T:System.Net.Cookie" /> 執行個體數目。</returns>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="PerDomainCapacity" /> 小于或等于零。- 或 -<paramref name="(PerDomainCapacity" /> 大于允许的最大 Cookie 实例数 300 且不等于 <see cref="F:System.Int32.MaxValue" />）。</exception>
+        <paramref name="PerDomainCapacity" /> 小於或等於零值。-或-<paramref name="(PerDomainCapacity" /> 大於 Cookie 執行個體允許的最大數目 300 且不等於 <see cref="F:System.Int32.MaxValue" />)。</exception>
     </member>
     <member name="M:System.Net.CookieContainer.SetCookies(System.Uri,System.String)">
-      <summary>将 HTTP Cookie 标头中的一个或多个 Cookie 的 <see cref="T:System.Net.Cookie" /> 实例添加到特定 URI 的 <see cref="T:System.Net.CookieContainer" /> 中。</summary>
+      <summary>將 HTTP Cookie 標頭中一或多個 Cookie 的 <see cref="T:System.Net.Cookie" /> 執行個體加入至特定 URI 的 <see cref="T:System.Net.CookieContainer" />。</summary>
       <param name="uri">
         <see cref="T:System.Net.CookieCollection" /> 的 URI。</param>
-      <param name="cookieHeader">HTTP 服务器所返回的 HTTP Set-Cookie 标头的内容，其中的 <see cref="T:System.Net.Cookie" /> 实例用逗号分隔。</param>
+      <param name="cookieHeader">使用以逗號分隔的 <see cref="T:System.Net.Cookie" /> 執行個體，由 HTTP 伺服器傳回的 HTTP Set-Cookie 標頭的內容。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="uri" /> 为 null。</exception>
+        <paramref name="uri" /> 為 null。</exception>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="cookieHeader" /> 为 null。</exception>
-      <exception cref="T:System.Net.CookieException">某一个 Cookie 是无效的。- 或 -当将某一个 Cookie 添加到容器中时发生错误。</exception>
+        <paramref name="cookieHeader" /> 為 null。</exception>
+      <exception cref="T:System.Net.CookieException">其中一個 Cookie 無效。-或-將其中一個 Cookie 加入容器時發生錯誤。</exception>
     </member>
     <member name="T:System.Net.CookieException">
-      <summary>向 <see cref="T:System.Net.CookieContainer" /> 添加 <see cref="T:System.Net.Cookie" /> 出错时引发的异常。</summary>
+      <summary>將 <see cref="T:System.Net.Cookie" /> 加入至 <see cref="T:System.Net.CookieContainer" /> 時產生錯誤所擲回的例外狀況。</summary>
     </member>
     <member name="M:System.Net.CookieException.#ctor">
-      <summary>初始化 <see cref="T:System.Net.CookieException" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Net.CookieException" /> 類別的新執行個體。</summary>
     </member>
     <member name="T:System.Net.CredentialCache">
-      <summary>为多个凭据提供存储。</summary>
+      <summary>提供多個認證的儲存區。</summary>
     </member>
     <member name="M:System.Net.CredentialCache.#ctor">
-      <summary>创建 <see cref="T:System.Net.CredentialCache" /> 类的新实例。</summary>
+      <summary>建立 <see cref="T:System.Net.CredentialCache" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.CredentialCache.Add(System.String,System.Int32,System.String,System.Net.NetworkCredential)">
-      <summary>向凭据缓存添加要与 SMTP 一起使用的 <see cref="T:System.Net.NetworkCredential" /> 实例，并将其与主机、端口和身份验证协议关联。使用此方法添加的凭据仅对 SMTP 有效。此方法对 HTTP 或 FTP 请求无效。</summary>
-      <param name="host">标识主机的 <see cref="T:System.String" />。</param>
-      <param name="port">指定要连接到 <paramref name="host" /> 的端口的 <see cref="T:System.Int32" />。</param>
+      <summary>將要搭配 Simple Mail Transfer Protocol (SMTP) 使用的 <see cref="T:System.Net.NetworkCredential" /> 執行個體加入至認證快取，並使其與主機電腦、連接埠和驗證通訊協定產生關聯。使用此方法加入的認證只適用於 SMTP。這個方法不適用於 HTTP 或 FTP 要求。</summary>
+      <param name="host">識別主機電腦的 <see cref="T:System.String" />。</param>
+      <param name="port">
+        <see cref="T:System.Int32" />，指定 <paramref name="host" /> 上的連接埠。</param>
       <param name="authenticationType">
-        <see cref="T:System.String" />，它标识使用 <paramref name="cred" /> 连接到 <paramref name="host" /> 时使用的身份验证方案。请参阅“备注”。</param>
-      <param name="credential">要添加到凭据缓存中的 <see cref="T:System.Net.NetworkCredential" />。</param>
+        <see cref="T:System.String" />，識別使用 <paramref name="cred" /> 連接到 <paramref name="host" /> 時，所使用的驗證配置。請參閱＜備註＞。</param>
+      <param name="credential">
+        <see cref="T:System.Net.NetworkCredential" />，要加入至認證快取。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="host" /> 为 null。- 或 -<paramref name="authType" /> 为 null。</exception>
+        <paramref name="host" /> 為 null。-或-<paramref name="authType" /> 為 null。</exception>
       <exception cref="T:System.ArgumentException">
-        <paramref name="authType" /> 不是一个接受的值。请参阅“备注”。</exception>
+        <paramref name="authType" /> 不是接受的值。請參閱＜備註＞。</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="port" /> 小于零。</exception>
+        <paramref name="port" /> 小於零。</exception>
     </member>
     <member name="M:System.Net.CredentialCache.Add(System.Uri,System.String,System.Net.NetworkCredential)">
-      <summary>向凭据缓存添加一个要与 SMTP 以外的协议一起使用的 <see cref="T:System.Net.NetworkCredential" /> 实例，并将其与统一资源标识符 (URI) 前缀和身份验证协议关联。</summary>
-      <param name="uriPrefix">一个 <see cref="T:System.Uri" />，它指定资源的 URI 前缀，该资源由凭据授予访问权。</param>
-      <param name="authType">在 <paramref name="uriPrefix" /> 中命名的资源所使用的身份验证方案。</param>
-      <param name="cred">要添加到凭据缓存中的 <see cref="T:System.Net.NetworkCredential" />。</param>
+      <summary>將要搭配 SMTP 以外其他通訊協定使用的 <see cref="T:System.Net.NetworkCredential" /> 執行個體加入至認證快取，並使其與統一資源識別元 (URI) 和驗證通訊協定產生關聯。</summary>
+      <param name="uriPrefix">
+        <see cref="T:System.Uri" />，指定認證允許存取之資源的 URI 前置詞。</param>
+      <param name="authType">驗證配置，由在 <paramref name="uriPrefix" /> 中指名的資源所使用。</param>
+      <param name="cred">
+        <see cref="T:System.Net.NetworkCredential" />，要加入至認證快取。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="uriPrefix" /> 为 null。- 或 -<paramref name="authType" /> 为 null。</exception>
-      <exception cref="T:System.ArgumentException">相同的凭据被添加多次。</exception>
+        <paramref name="uriPrefix" /> 為 null。-或-<paramref name="authType" /> 為 null。</exception>
+      <exception cref="T:System.ArgumentException">相同的認證會加入多次</exception>
     </member>
     <member name="P:System.Net.CredentialCache.DefaultCredentials">
-      <summary>获取应用程序的系统凭据。</summary>
-      <returns>表示应用程序的系统凭据的 <see cref="T:System.Net.ICredentials" />。</returns>
+      <summary>取得應用程式的系統認證。</summary>
+      <returns>
+        <see cref="T:System.Net.ICredentials" />，表示應用程式的系統認證。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Read="USERNAME" />
       </PermissionSet>
     </member>
     <member name="P:System.Net.CredentialCache.DefaultNetworkCredentials">
-      <summary>获取当前安全上下文的网络凭据。</summary>
-      <returns>表示当前用户或应用程序的网络凭据的 <see cref="T:System.Net.NetworkCredential" />。</returns>
+      <summary>取得目前安全性內容的網路認證。</summary>
+      <returns>
+        <see cref="T:System.Net.NetworkCredential" />，表示目前使用者或應用程式的網路認證。</returns>
     </member>
     <member name="M:System.Net.CredentialCache.GetCredential(System.String,System.Int32,System.String)">
-      <summary>返回与指定的主机、端口和身份验证协议关联的 <see cref="T:System.Net.NetworkCredential" /> 实例。</summary>
+      <summary>傳回與指定主機、連接埠和驗證通訊協定關聯的 <see cref="T:System.Net.NetworkCredential" /> 執行個體。</summary>
       <returns>
-        <see cref="T:System.Net.NetworkCredential" />；如果缓存中没有匹配的凭据，则为 null。</returns>
-      <param name="host">标识主机的 <see cref="T:System.String" />。</param>
-      <param name="port">指定要连接到 <paramref name="host" /> 的端口的 <see cref="T:System.Int32" />。</param>
+        <see cref="T:System.Net.NetworkCredential" />，或 null (如果在快取中沒有相符的認證)。</returns>
+      <param name="host">識別主機電腦的 <see cref="T:System.String" />。</param>
+      <param name="port">
+        <see cref="T:System.Int32" />，指定 <paramref name="host" /> 上的連接埠。</param>
       <param name="authenticationType">
-        <see cref="T:System.String" />，它标识连接到 <paramref name="host" /> 时使用的身份验证方案。请参阅“备注”。</param>
+        <see cref="T:System.String" />，識別連接到 <paramref name="host" /> 時，所使用的驗證配置。請參閱＜備註＞。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="host" /> 为 null。- 或 -<paramref name="authType" /> 为 null。</exception>
+        <paramref name="host" /> 為 null。-或-<paramref name="authType" /> 為 null。</exception>
       <exception cref="T:System.ArgumentException">
-        <paramref name="authType" /> 不是一个接受的值。请参阅“备注”。- 或 -<paramref name="host" /> 是空字符串 ("")。</exception>
+        <paramref name="authType" /> 不是接受的值。請參閱＜備註＞。-或-<paramref name="host" /> 等於空字串 ("")。</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="port" /> 小于零。</exception>
+        <paramref name="port" /> 小於零。</exception>
     </member>
     <member name="M:System.Net.CredentialCache.GetCredential(System.Uri,System.String)">
-      <summary>返回与指定的统一资源标识符 (URI) 和身份验证类型相关联的 <see cref="T:System.Net.NetworkCredential" /> 实例。</summary>
+      <summary>傳回與所指定之統一資源識別項 (URI) 和驗證類型關聯的 <see cref="T:System.Net.NetworkCredential" /> 執行個體。</summary>
       <returns>
-        <see cref="T:System.Net.NetworkCredential" />；如果缓存中没有匹配的凭据，则为 null。</returns>
-      <param name="uriPrefix">一个 <see cref="T:System.Uri" />，它指定资源的 URI 前缀，该资源由凭据授予访问权。</param>
-      <param name="authType">在 <paramref name="uriPrefix" /> 中命名的资源所使用的身份验证方案。</param>
+        <see cref="T:System.Net.NetworkCredential" />，或 null (如果在快取中沒有相符的認證)。</returns>
+      <param name="uriPrefix">
+        <see cref="T:System.Uri" />，指定認證允許存取之資源的 URI 前置詞。</param>
+      <param name="authType">驗證配置，由在 <paramref name="uriPrefix" /> 中指名的資源所使用。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="uriPrefix" /> 或 <paramref name="authType" /> 为 null。</exception>
+        <paramref name="uriPrefix" /> 或 <paramref name="authType" /> 是 null。</exception>
     </member>
     <member name="M:System.Net.CredentialCache.GetEnumerator">
-      <summary>返回可循环访问 <see cref="T:System.Net.CredentialCache" /> 实例的枚举数。</summary>
-      <returns>用于 <see cref="T:System.Net.CredentialCache" /> 的 <see cref="T:System.Collections.IEnumerator" />。</returns>
+      <summary>傳回可以逐一查看 <see cref="T:System.Net.CredentialCache" /> 執行個體的列舉值。</summary>
+      <returns>
+        <see cref="T:System.Net.CredentialCache" /> 的 <see cref="T:System.Collections.IEnumerator" />。</returns>
     </member>
     <member name="M:System.Net.CredentialCache.Remove(System.String,System.Int32,System.String)">
-      <summary>如果 <see cref="T:System.Net.NetworkCredential" /> 实例与指定的主机、端口和身份验证协议相关联，则将其从缓存中删除。</summary>
-      <param name="host">标识主机的 <see cref="T:System.String" />。</param>
-      <param name="port">指定要连接到 <paramref name="host" /> 的端口的 <see cref="T:System.Int32" />。</param>
+      <summary>從快取刪除 <see cref="T:System.Net.NetworkCredential" /> 執行個體，如果它與所指定之主機、連接埠和驗證通訊協定關聯。</summary>
+      <param name="host">識別主機電腦的 <see cref="T:System.String" />。</param>
+      <param name="port">
+        <see cref="T:System.Int32" />，指定 <paramref name="host" /> 上的連接埠。</param>
       <param name="authenticationType">
-        <see cref="T:System.String" />，它标识连接到 <paramref name="host" /> 时使用的身份验证方案。请参阅“备注”。</param>
+        <see cref="T:System.String" />，識別連接到 <paramref name="host" /> 時，所使用的驗證配置。請參閱＜備註＞。</param>
     </member>
     <member name="M:System.Net.CredentialCache.Remove(System.Uri,System.String)">
-      <summary>如果 <see cref="T:System.Net.NetworkCredential" /> 实例与指定的统一资源标识符 (URI) 前缀和身份验证协议相关联，则将其从缓存中删除。</summary>
+      <summary>從快取刪除 <see cref="T:System.Net.NetworkCredential" /> 執行個體，如果它與所指定之統一資源識別元 (URI) 和驗證通訊協定關聯。</summary>
       <param name="uriPrefix">
-        <see cref="T:System.Uri" />，它指定该凭据所用于的资源的 URI 前缀。</param>
-      <param name="authType">
-        <paramref name="uriPrefix" /> 中命名的主机所使用的身份验证方案。</param>
+        <see cref="T:System.Uri" />，指定認證使用之資源的 URI 前置詞。</param>
+      <param name="authType">由在 <paramref name="uriPrefix" /> 中命名的主機所使用的驗證配置。</param>
     </member>
     <member name="T:System.Net.DecompressionMethods">
-      <summary>表示文件压缩和解压缩编码格式，该格式将用来压缩在 <see cref="T:System.Net.HttpWebRequest" /> 的响应中收到的数据。</summary>
+      <summary>表示為回應 <see cref="T:System.Net.HttpWebRequest" />，用來壓縮所收到之資料的檔案壓縮和解壓縮編碼格式。</summary>
     </member>
     <member name="F:System.Net.DecompressionMethods.Deflate">
-      <summary>使用 Deflate 压缩/解压缩算法。</summary>
+      <summary>使用結實壓縮-解壓縮演算法。</summary>
     </member>
     <member name="F:System.Net.DecompressionMethods.GZip">
-      <summary>使用 gZip 压缩/解压缩算法。</summary>
+      <summary>使用 gZip 壓縮-解壓縮演算法。</summary>
     </member>
     <member name="F:System.Net.DecompressionMethods.None">
-      <summary>不使用压缩。</summary>
+      <summary>不要使用壓縮。</summary>
     </member>
     <member name="T:System.Net.DnsEndPoint">
-      <summary>将网络终结点表示为主机名或 IP 地址和端口号的字符串表示形式。</summary>
+      <summary>將網路端點表示成主機名稱或 IP 位址的字串表示以及通訊埠編號。</summary>
     </member>
     <member name="M:System.Net.DnsEndPoint.#ctor(System.String,System.Int32)">
-      <summary>用主机名或 IP 地址和端口号的字符串表示形式初始化 <see cref="T:System.Net.DnsEndPoint" /> 类的新实例。</summary>
-      <param name="host">主机名或 IP 地址的字符串表示形式。</param>
-      <param name="port">与 address 关联的端口号，或为 0 以指定任何可用端口。<paramref name="port" /> 以主机顺序排列。</param>
+      <summary>使用主機名稱或 IP 位址的字串表示以及通訊埠編號，初始化 <see cref="T:System.Net.DnsEndPoint" /> 類別的新執行個體。</summary>
+      <param name="host">主機名稱或 IP 位址的字串表示。</param>
+      <param name="port">與位址關聯的通訊埠編號，或 0 指定任何可用的通訊埠。<paramref name="port" /> 依主機順序顯示。</param>
       <exception cref="T:System.ArgumentException">
-        <paramref name="host" /> 参数包含空字符串。</exception>
+        <paramref name="host" /> 參數包含空字串。</exception>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="host" /> 参数为 null。</exception>
+        <paramref name="host" /> 參數為 null。</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="port" /> 小于 <see cref="F:System.Net.IPEndPoint.MinPort" />。- 或 -<paramref name="port" /> 大于 <see cref="F:System.Net.IPEndPoint.MaxPort" />。</exception>
+        <paramref name="port" /> 小於 <see cref="F:System.Net.IPEndPoint.MinPort" />。-或-<paramref name="port" /> 大於 <see cref="F:System.Net.IPEndPoint.MaxPort" />。</exception>
     </member>
     <member name="M:System.Net.DnsEndPoint.#ctor(System.String,System.Int32,System.Net.Sockets.AddressFamily)">
-      <summary>用主机名或 IP 地址、端口号和地址族的字符串表示形式初始化 <see cref="T:System.Net.DnsEndPoint" /> 类的新实例。</summary>
-      <param name="host">主机名或 IP 地址的字符串表示形式。</param>
-      <param name="port">与 address 关联的端口号，或为 0 以指定任何可用端口。<paramref name="port" /> 以主机顺序排列。</param>
-      <param name="addressFamily">
-        <see cref="T:System.Net.Sockets.AddressFamily" /> 值之一。</param>
+      <summary>使用主機名稱或 IP 位址的字串表示、通訊埠編號和位址家族，初始化 <see cref="T:System.Net.DnsEndPoint" /> 類別的新執行個體。</summary>
+      <param name="host">主機名稱或 IP 位址的字串表示。</param>
+      <param name="port">與位址關聯的通訊埠編號，或 0 指定任何可用的通訊埠。<paramref name="port" /> 依主機順序顯示。</param>
+      <param name="addressFamily">一個 <see cref="T:System.Net.Sockets.AddressFamily" /> 值。</param>
       <exception cref="T:System.ArgumentException">
-        <paramref name="host" /> 参数包含空字符串。- 或 -<paramref name="addressFamily" /> 为 <see cref="F:System.Net.Sockets.AddressFamily.Unknown" />。</exception>
+        <paramref name="host" /> 參數包含空字串。-或-<paramref name="addressFamily" /> 為 <see cref="F:System.Net.Sockets.AddressFamily.Unknown" />。</exception>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="host" /> 参数为 null。</exception>
+        <paramref name="host" /> 參數為 null。</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="port" /> 小于 <see cref="F:System.Net.IPEndPoint.MinPort" />。- 或 -<paramref name="port" /> 大于 <see cref="F:System.Net.IPEndPoint.MaxPort" />。</exception>
+        <paramref name="port" /> 小於 <see cref="F:System.Net.IPEndPoint.MinPort" />。-或-<paramref name="port" /> 大於 <see cref="F:System.Net.IPEndPoint.MaxPort" />。</exception>
     </member>
     <member name="P:System.Net.DnsEndPoint.AddressFamily">
-      <summary>获取网际协议 (IP) 地址族。</summary>
-      <returns>
-        <see cref="T:System.Net.Sockets.AddressFamily" /> 值之一。</returns>
+      <summary>取得網際網路通訊協定 (IP) 位址家族。</summary>
+      <returns>一個 <see cref="T:System.Net.Sockets.AddressFamily" /> 值。</returns>
     </member>
     <member name="M:System.Net.DnsEndPoint.Equals(System.Object)">
-      <summary>比较两个 <see cref="T:System.Net.DnsEndPoint" /> 对象。</summary>
-      <returns>如果两个 <see cref="T:System.Net.DnsEndPoint" /> 实例相等，则为 true；否则为 false。</returns>
-      <param name="comparand">与当前实例比较的 <see cref="T:System.Net.DnsEndPoint" /> 实例。</param>
+      <summary>比較兩個 <see cref="T:System.Net.DnsEndPoint" /> 物件。</summary>
+      <returns>如果兩個 <see cref="T:System.Net.DnsEndPoint" /> 執行個體相等，則為 true，否則為 false。</returns>
+      <param name="comparand">要與目前執行個體比較的 <see cref="T:System.Net.DnsEndPoint" /> 執行個體。</param>
     </member>
     <member name="M:System.Net.DnsEndPoint.GetHashCode">
-      <summary>返回 <see cref="T:System.Net.DnsEndPoint" /> 的哈希值。</summary>
+      <summary>傳回 <see cref="T:System.Net.DnsEndPoint" /> 的雜湊值。</summary>
       <returns>
-        <see cref="T:System.Net.DnsEndPoint" /> 的整数哈希值。</returns>
+        <see cref="T:System.Net.DnsEndPoint" /> 的整數雜湊值。</returns>
     </member>
     <member name="P:System.Net.DnsEndPoint.Host">
-      <summary>获取主机的主机名或 Internet 协议 (IP) 地址的字符串表示形式。</summary>
-      <returns>主机名或 IP 地址的字符串表示形式。</returns>
+      <summary>取得主機的主機名稱或網際網路通訊協定 (IP) 位址的字串表示。</summary>
+      <returns>主機名稱或 IP 位址的字串表示。</returns>
     </member>
     <member name="P:System.Net.DnsEndPoint.Port">
-      <summary>获取 <see cref="T:System.Net.DnsEndPoint" /> 的端口号。</summary>
-      <returns>介于 0 到 0xffff 之间的整数值，指示 <see cref="T:System.Net.DnsEndPoint" /> 的端口号。</returns>
+      <summary>取得 <see cref="T:System.Net.DnsEndPoint" /> 的通訊埠編號。</summary>
+      <returns>範圍在 0 到 0xffff 之內的整數值，表示 <see cref="T:System.Net.DnsEndPoint" /> 的通訊埠編號。</returns>
     </member>
     <member name="M:System.Net.DnsEndPoint.ToString">
-      <summary>返回 <see cref="T:System.Net.DnsEndPoint" /> 的主机名或 IP 地址和端口号的字符串表示形式。</summary>
-      <returns>一个字符串，包含指定 <see cref="T:System.Net.DnsEndPoint" /> 的地址族、主机名或 IP 地址字符串和端口号。</returns>
+      <summary>傳回 <see cref="T:System.Net.DnsEndPoint" /> 的主機名稱或 IP 位址的字串表示以及通訊埠編號。</summary>
+      <returns>字串，包含指定之 <see cref="T:System.Net.DnsEndPoint" /> 的位址家族、主機名稱或 IP 位址，以及通訊埠編號。</returns>
     </member>
     <member name="T:System.Net.EndPoint">
-      <summary>标识网络地址。这是一个 abstract 类。</summary>
+      <summary>識別網路位址。這是 abstract 類別。</summary>
     </member>
     <member name="M:System.Net.EndPoint.#ctor">
-      <summary>初始化 <see cref="T:System.Net.EndPoint" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Net.EndPoint" /> 類別的新執行個體。</summary>
     </member>
     <member name="P:System.Net.EndPoint.AddressFamily">
-      <summary>获取终结点所属的地址族。</summary>
-      <returns>
-        <see cref="T:System.Net.Sockets.AddressFamily" /> 值之一。</returns>
-      <exception cref="T:System.NotImplementedException">当未在子类中重写该属性时，试图获取或设置该属性。</exception>
+      <summary>取得端點所屬的通訊協定家族 (Family)。</summary>
+      <returns>一個 <see cref="T:System.Net.Sockets.AddressFamily" /> 值。</returns>
+      <exception cref="T:System.NotImplementedException">當屬性在子代類別中未覆寫時，會嘗試取得或設定該屬性。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.EndPoint.Create(System.Net.SocketAddress)">
-      <summary>通过 <see cref="T:System.Net.SocketAddress" /> 实例创建 <see cref="T:System.Net.EndPoint" /> 实例。</summary>
-      <returns>从指定的 <see cref="T:System.Net.SocketAddress" /> 实例初始化的新 <see cref="T:System.Net.EndPoint" /> 实例。</returns>
-      <param name="socketAddress">用作连接终结点的套接字地址。</param>
-      <exception cref="T:System.NotImplementedException">当未在子类中重写该方法时，试图对该方法进行访问。</exception>
+      <summary>從 <see cref="T:System.Net.SocketAddress" /> 執行個體 (Instance) 建立 <see cref="T:System.Net.EndPoint" /> 執行個體。</summary>
+      <returns>新的 <see cref="T:System.Net.EndPoint" /> 執行個體，初始化自指定的 <see cref="T:System.Net.SocketAddress" /> 執行個體。</returns>
+      <param name="socketAddress">做為連接端點的通訊端位址。</param>
+      <exception cref="T:System.NotImplementedException">當方法在子代類別中未覆寫時，會嘗試存取該方法。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.EndPoint.Serialize">
-      <summary>将终结点信息序列化为 <see cref="T:System.Net.SocketAddress" /> 实例。</summary>
-      <returns>包含终结点信息的 <see cref="T:System.Net.SocketAddress" /> 实例。</returns>
-      <exception cref="T:System.NotImplementedException">当未在子类中重写该方法时，试图对该方法进行访问。</exception>
+      <summary>將端點資訊序列化為 <see cref="T:System.Net.SocketAddress" /> 執行個體。</summary>
+      <returns>
+        <see cref="T:System.Net.SocketAddress" /> 執行個體，包含端點資訊。</returns>
+      <exception cref="T:System.NotImplementedException">當方法在子代類別中未覆寫時，會嘗試存取該方法。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
       </PermissionSet>
     </member>
     <member name="T:System.Net.HttpStatusCode">
-      <summary>包含为 HTTP 定义的状态代码的值。</summary>
+      <summary>包含針對 HTTP 所定義的狀態碼值。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Accepted">
-      <summary>等效于 HTTP 状态 202。<see cref="F:System.Net.HttpStatusCode.Accepted" /> 指示请求已被接受做进一步处理。</summary>
+      <summary>相當於 HTTP 狀態 202。<see cref="F:System.Net.HttpStatusCode.Accepted" /> 表示已接受要求進行進一步處理。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Ambiguous">
-      <summary>等效于 HTTP 状态 300。<see cref="F:System.Net.HttpStatusCode.Ambiguous" /> 指示请求的信息有多种表示形式。默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 标头的内容。</summary>
+      <summary>相當於 HTTP 狀態 300。<see cref="F:System.Net.HttpStatusCode.Ambiguous" /> 指示要求的資訊有多種表示法。預設動作是將這個狀態視為重新導向並跟隨在與這個回應相關的 Location 標頭內容之後。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.BadGateway">
-      <summary>等效于 HTTP 状态 502。<see cref="F:System.Net.HttpStatusCode.BadGateway" /> 指示中间代理服务器从另一代理或原始服务器接收到错误响应。</summary>
+      <summary>相當於 HTTP 狀態 502。<see cref="F:System.Net.HttpStatusCode.BadGateway" /> 表示中繼 Proxy 伺服器收到其他 Proxy 或原始伺服器的錯誤回應。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.BadRequest">
-      <summary>等效于 HTTP 状态 400。<see cref="F:System.Net.HttpStatusCode.BadRequest" /> 指示服务器未能识别请求。如果没有其他适用的错误，或者不知道准确的错误或错误没有自己的错误代码，则发送 <see cref="F:System.Net.HttpStatusCode.BadRequest" />。</summary>
+      <summary>相當於 HTTP 狀態 400。<see cref="F:System.Net.HttpStatusCode.BadRequest" /> 指示伺服器無法了解要求。當沒有其他適用的錯誤，或者如果確實的錯誤是未知的或沒有自己的錯誤碼時，傳送 <see cref="F:System.Net.HttpStatusCode.BadRequest" />。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Conflict">
-      <summary>等效于 HTTP 状态 409。<see cref="F:System.Net.HttpStatusCode.Conflict" /> 指示由于服务器上的冲突而未能执行请求。</summary>
+      <summary>相當於 HTTP 狀態 409。<see cref="F:System.Net.HttpStatusCode.Conflict" /> 指示因為伺服器上的衝突而無法完成要求。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Continue">
-      <summary>等效于 HTTP 状态 100。<see cref="F:System.Net.HttpStatusCode.Continue" /> 指示客户端可能继续其请求。</summary>
+      <summary>相當於 HTTP 狀態 100。<see cref="F:System.Net.HttpStatusCode.Continue" /> 指示用戶端可以繼續它的要求。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Created">
-      <summary>等效于 HTTP 状态 201。<see cref="F:System.Net.HttpStatusCode.Created" /> 指示请求导致在响应被发送前创建新资源。</summary>
+      <summary>相當於 HTTP 狀態 201。<see cref="F:System.Net.HttpStatusCode.Created" /> 指示在傳送回應之前，要求導致新資源的建立。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.ExpectationFailed">
-      <summary>等效于 HTTP 状态 417。<see cref="F:System.Net.HttpStatusCode.ExpectationFailed" /> 指示服务器未能符合 Expect 头中给定的预期值。</summary>
+      <summary>相當於 HTTP 狀態 417。<see cref="F:System.Net.HttpStatusCode.ExpectationFailed" /> 指示在 Expect 標頭中所指定的預期項目不符合伺服器的要求。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Forbidden">
-      <summary>等效于 HTTP 状态 403。<see cref="F:System.Net.HttpStatusCode.Forbidden" /> 指示服务器拒绝满足请求。</summary>
+      <summary>相當於 HTTP 狀態 403。<see cref="F:System.Net.HttpStatusCode.Forbidden" /> 指示伺服器拒絕處理要求。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Found">
-      <summary>等效于 HTTP 状态 302。<see cref="F:System.Net.HttpStatusCode.Found" /> 指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</summary>
+      <summary>相當於 HTTP 狀態 302。<see cref="F:System.Net.HttpStatusCode.Found" /> 指示要求的資訊位於 Location 標頭中所指定的 URI。在接收這個狀態時，預設動作會跟隨與回應相關的 Location 標頭。當原始的要求方法是 POST 時，重新導向的要求將使用 GET 方法。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.GatewayTimeout">
-      <summary>等效于 HTTP 状态 504。<see cref="F:System.Net.HttpStatusCode.GatewayTimeout" /> 指示中间代理服务器在等待来自另一个代理或原始服务器的响应时已超时。</summary>
+      <summary>相當於 HTTP 狀態 504。<see cref="F:System.Net.HttpStatusCode.GatewayTimeout" /> 指示中繼 Proxy 伺服器在等候來自其他 Proxy 或原始伺服器的回應時已逾時。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Gone">
-      <summary>等效于 HTTP 状态 410。<see cref="F:System.Net.HttpStatusCode.Gone" /> 指示请求的资源不再可用。</summary>
+      <summary>相當於 HTTP 狀態 410。<see cref="F:System.Net.HttpStatusCode.Gone" /> 指示要求的資源已不能再使用。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.HttpVersionNotSupported">
-      <summary>等效于 HTTP 状态 505。<see cref="F:System.Net.HttpStatusCode.HttpVersionNotSupported" /> 指示服务器不支持请求的 HTTP 版本。</summary>
+      <summary>相當於 HTTP 狀態 505。<see cref="F:System.Net.HttpStatusCode.HttpVersionNotSupported" /> 指示伺服器不支援要求的 HTTP 版本。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.InternalServerError">
-      <summary>等效于 HTTP 状态 500。<see cref="F:System.Net.HttpStatusCode.InternalServerError" /> 指示服务器上发生了一般错误。</summary>
+      <summary>相當於 HTTP 狀態 500。<see cref="F:System.Net.HttpStatusCode.InternalServerError" /> 指示伺服器上已經發生泛用錯誤。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.LengthRequired">
-      <summary>等效于 HTTP 状态 411。<see cref="F:System.Net.HttpStatusCode.LengthRequired" /> 指示缺少必需的 Content-length 头。</summary>
+      <summary>相當於 HTTP 狀態 411。<see cref="F:System.Net.HttpStatusCode.LengthRequired" /> 指示遺漏要求的 Content-Length 標頭。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.MethodNotAllowed">
-      <summary>等效于 HTTP 状态 405。<see cref="F:System.Net.HttpStatusCode.MethodNotAllowed" /> 指示请求的资源上不允许请求方法（POST 或 GET）。</summary>
+      <summary>相當於 HTTP 狀態 405。<see cref="F:System.Net.HttpStatusCode.MethodNotAllowed" /> 指示在要求的資源上不允許該要求方法 (POST 或 GET)。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Moved">
-      <summary>等效于 HTTP 状态 301。<see cref="F:System.Net.HttpStatusCode.Moved" /> 指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</summary>
+      <summary>相當於 HTTP 狀態 301。<see cref="F:System.Net.HttpStatusCode.Moved" /> 指示要求的資訊已經移至 Location 標頭中指定的 URI。在接收這個狀態時，預設動作會跟隨與回應相關的 Location 標頭。當原始的要求方法是 POST 時，重新導向的要求將使用 GET 方法。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.MovedPermanently">
-      <summary>等效于 HTTP 状态 301。<see cref="F:System.Net.HttpStatusCode.MovedPermanently" /> 指示请求的信息已移到 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。</summary>
+      <summary>相當於 HTTP 狀態 301。<see cref="F:System.Net.HttpStatusCode.MovedPermanently" /> 指示要求的資訊已經移至 Location 標頭中指定的 URI。在接收這個狀態時，預設動作會跟隨與回應相關的 Location 標頭。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.MultipleChoices">
-      <summary>等效于 HTTP 状态 300。<see cref="F:System.Net.HttpStatusCode.MultipleChoices" /> 指示请求的信息有多种表示形式。默认操作是将此状态视为重定向，并遵循与此响应关联的 Location 标头的内容。</summary>
+      <summary>相當於 HTTP 狀態 300。<see cref="F:System.Net.HttpStatusCode.MultipleChoices" /> 指示要求的資訊有多種表示法。預設動作是將這個狀態視為重新導向並跟隨在與這個回應相關的 Location 標頭內容之後。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.NoContent">
-      <summary>等效于 HTTP 状态 204。<see cref="F:System.Net.HttpStatusCode.NoContent" /> 指示已成功处理请求并且响应已被设定为无内容。</summary>
+      <summary>相當於 HTTP 狀態 204。<see cref="F:System.Net.HttpStatusCode.NoContent" /> 表示已成功處理要求，並且回應預設為空白。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.NonAuthoritativeInformation">
-      <summary>等效于 HTTP 状态 203。<see cref="F:System.Net.HttpStatusCode.NonAuthoritativeInformation" /> 指示返回的元信息来自缓存副本而不是原始服务器，因此可能不正确。</summary>
+      <summary>相當於 HTTP 狀態 203。<see cref="F:System.Net.HttpStatusCode.NonAuthoritativeInformation" /> 指示傳回的中繼資訊來自快取備份而非原始伺服器，因此可能不正確。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.NotAcceptable">
-      <summary>等效于 HTTP 状态 406。<see cref="F:System.Net.HttpStatusCode.NotAcceptable" /> 指示客户端已用 Accept 头指示将不接受资源的任何可用表示形式。</summary>
+      <summary>相當於 HTTP 狀態 406。<see cref="F:System.Net.HttpStatusCode.NotAcceptable" /> 指示用戶端已經指示將不接受任何可用資源表示的 Accept 標頭。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.NotFound">
-      <summary>等效于 HTTP 状态 404。<see cref="F:System.Net.HttpStatusCode.NotFound" /> 指示请求的资源不在服务器上。</summary>
+      <summary>相當於 HTTP 狀態 404。<see cref="F:System.Net.HttpStatusCode.NotFound" /> 指示要求的資源不存在於伺服器。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.NotImplemented">
-      <summary>等效于 HTTP 状态 501。<see cref="F:System.Net.HttpStatusCode.NotImplemented" /> 指示服务器不支持请求的函数。</summary>
+      <summary>相當於 HTTP 狀態 501。<see cref="F:System.Net.HttpStatusCode.NotImplemented" /> 指示伺服器不支援要求的功能。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.NotModified">
-      <summary>等效于 HTTP 状态 304。<see cref="F:System.Net.HttpStatusCode.NotModified" /> 指示客户端的缓存副本是最新的。未传输此资源的内容。</summary>
+      <summary>相當於 HTTP 狀態 304。<see cref="F:System.Net.HttpStatusCode.NotModified" /> 指示用戶端的快取備份已經是最新的。不傳輸資源的內容。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.OK">
-      <summary>等效于 HTTP 状态 200。<see cref="F:System.Net.HttpStatusCode.OK" /> 指示请求成功，且请求的信息包含在响应中。这是最常接收的状态代码。</summary>
+      <summary>相當於 HTTP 狀態 200。<see cref="F:System.Net.HttpStatusCode.OK" /> 指示要求成功，並且要求的資訊在回應中。這是要接收的最通用狀態碼。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.PartialContent">
-      <summary>等效于 HTTP 状态 206。<see cref="F:System.Net.HttpStatusCode.PartialContent" /> 指示响应是包括字节范围的 GET 请求所请求的部分响应。</summary>
+      <summary>相當於 HTTP 狀態 206。<see cref="F:System.Net.HttpStatusCode.PartialContent" /> 表示回應是包括位元組範圍之 GET 要求的部分回應。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.PaymentRequired">
-      <summary>等效于 HTTP 状态 402。保留 <see cref="F:System.Net.HttpStatusCode.PaymentRequired" /> 以供将来使用。</summary>
+      <summary>相當於 HTTP 狀態 402。<see cref="F:System.Net.HttpStatusCode.PaymentRequired" /> 保留供日後使用。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.PreconditionFailed">
-      <summary>等效于 HTTP 状态 412。<see cref="F:System.Net.HttpStatusCode.PreconditionFailed" /> 指示为此请求设置的条件失败，且无法执行此请求。条件是用条件请求标头（如 If-Match、If-None-Match 或 If-Unmodified-Since）设置的。</summary>
+      <summary>相當於 HTTP 狀態 412。<see cref="F:System.Net.HttpStatusCode.PreconditionFailed" /> 指示這個要求的條件設定失敗，並且無法執行要求。使用條件式要求標頭 (例如 If-Match、If-None-Match 或 If-Unmodified-Since) 設定條件。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.ProxyAuthenticationRequired">
-      <summary>等效于 HTTP 状态 407。<see cref="F:System.Net.HttpStatusCode.ProxyAuthenticationRequired" /> 指示请求的代理要求身份验证。Proxy-authenticate 头包含如何执行身份验证的详细信息。</summary>
+      <summary>相當於 HTTP 狀態 407。<see cref="F:System.Net.HttpStatusCode.ProxyAuthenticationRequired" /> 指示要求的 Proxy 需要驗證。Proxy 驗證標頭包含如何執行驗證的詳細資料。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Redirect">
-      <summary>等效于 HTTP 状态 302。<see cref="F:System.Net.HttpStatusCode.Redirect" /> 指示请求的信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求将使用 GET 方法。</summary>
+      <summary>相當於 HTTP 狀態 302。<see cref="F:System.Net.HttpStatusCode.Redirect" /> 指示要求的資訊位於 Location 標頭中所指定的 URI。在接收這個狀態時，預設動作會跟隨與回應相關的 Location 標頭。當原始的要求方法是 POST 時，重新導向的要求將使用 GET 方法。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.RedirectKeepVerb">
-      <summary>等效于 HTTP 状态 307。<see cref="F:System.Net.HttpStatusCode.RedirectKeepVerb" /> 指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</summary>
+      <summary>相當於 HTTP 狀態 307。<see cref="F:System.Net.HttpStatusCode.RedirectKeepVerb" /> 表示要求資訊位於 Location 標頭中所指定的 URI。在接收這個狀態時，預設動作會跟隨與回應相關的 Location 標頭。當原始的要求方法是 POST 時，重新導向的要求也將使用 POST 方法。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.RedirectMethod">
-      <summary>等效于 HTTP 状态 303。作为 POST 的结果，<see cref="F:System.Net.HttpStatusCode.RedirectMethod" /> 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 标头所指定的资源的请求。</summary>
+      <summary>相當於 HTTP 狀態 303。<see cref="F:System.Net.HttpStatusCode.RedirectMethod" /> 自動將用戶端重新導向至 Location 標頭中指定的 URI，做為 POST 的結果。Location 標頭所指定的資源要求，將使用 GET 進行處理。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.RequestedRangeNotSatisfiable">
-      <summary>等效于 HTTP 状态 416。<see cref="F:System.Net.HttpStatusCode.RequestedRangeNotSatisfiable" /> 指示无法返回从资源请求的数据范围，因为范围的开头在资源的开头之前，或因为范围的结尾在资源的结尾之后。</summary>
+      <summary>相當於 HTTP 狀態 416。<see cref="F:System.Net.HttpStatusCode.RequestedRangeNotSatisfiable" /> 表示無法傳回資源所要求的資料範圍，可能是因為範圍的開頭在資源的開頭之前，或是範圍的結尾在資源的結尾之後。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.RequestEntityTooLarge">
-      <summary>等效于 HTTP 状态 413。<see cref="F:System.Net.HttpStatusCode.RequestEntityTooLarge" /> 指示请求太大，服务器无法处理。</summary>
+      <summary>相當於 HTTP 狀態 413。<see cref="F:System.Net.HttpStatusCode.RequestEntityTooLarge" /> 指示要求太大，伺服器無法處理。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.RequestTimeout">
-      <summary>等效于 HTTP 状态 408。<see cref="F:System.Net.HttpStatusCode.RequestTimeout" /> 指示客户端没有在服务器期望请求的时间内发送请求。</summary>
+      <summary>相當於 HTTP 狀態 408。<see cref="F:System.Net.HttpStatusCode.RequestTimeout" /> 指示用戶端的要求未在伺服器期待要求時傳送。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.RequestUriTooLong">
-      <summary>等效于 HTTP 状态 414。<see cref="F:System.Net.HttpStatusCode.RequestUriTooLong" /> 指示 URI 太长。</summary>
+      <summary>相當於 HTTP 狀態 414。<see cref="F:System.Net.HttpStatusCode.RequestUriTooLong" /> 指示 URI 過長。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.ResetContent">
-      <summary>等效于 HTTP 状态 205。<see cref="F:System.Net.HttpStatusCode.ResetContent" /> 指示客户端应重置（或重新加载）当前资源。</summary>
+      <summary>相當於 HTTP 狀態 205。<see cref="F:System.Net.HttpStatusCode.ResetContent" /> 指示用戶端應該重新設定 (非重新載入) 目前的資源。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.SeeOther">
-      <summary>等效于 HTTP 状态 303。作为 POST 的结果，<see cref="F:System.Net.HttpStatusCode.SeeOther" /> 将客户端自动重定向到 Location 头中指定的 URI。用 GET 生成对 Location 标头所指定的资源的请求。</summary>
+      <summary>相當於 HTTP 狀態 303。<see cref="F:System.Net.HttpStatusCode.SeeOther" /> 自動將用戶端重新導向至 Location 標頭中指定的 URI，做為 POST 的結果。Location 標頭所指定的資源要求，將使用 GET 進行處理。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.ServiceUnavailable">
-      <summary>等效于 HTTP 状态 503。<see cref="F:System.Net.HttpStatusCode.ServiceUnavailable" /> 指示服务器暂时不可用，通常是由于过多加载或维护。</summary>
+      <summary>相當於 HTTP 狀態 503。<see cref="F:System.Net.HttpStatusCode.ServiceUnavailable" /> 表示伺服器暫時無法使用，通常是因為高負載或維護的緣故。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.SwitchingProtocols">
-      <summary>等效于 HTTP 状态 101。<see cref="F:System.Net.HttpStatusCode.SwitchingProtocols" /> 指示正在更改协议版本或协议。</summary>
+      <summary>相當於 HTTP 狀態 101。<see cref="F:System.Net.HttpStatusCode.SwitchingProtocols" /> 指示正在變更通訊協定版本或通訊協定。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.TemporaryRedirect">
-      <summary>等效于 HTTP 状态 307。<see cref="F:System.Net.HttpStatusCode.TemporaryRedirect" /> 指示请求信息位于 Location 头中指定的 URI 处。接收到此状态时的默认操作为遵循与响应关联的 Location 头。原始请求方法为 POST 时，重定向的请求还将使用 POST 方法。</summary>
+      <summary>相當於 HTTP 狀態 307。<see cref="F:System.Net.HttpStatusCode.TemporaryRedirect" /> 指示要求資訊位於 Location 標頭中所指定的 URI。在接收這個狀態時，預設動作會跟隨與回應相關的 Location 標頭。當原始的要求方法是 POST 時，重新導向的要求也將使用 POST 方法。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Unauthorized">
-      <summary>等效于 HTTP 状态 401。<see cref="F:System.Net.HttpStatusCode.Unauthorized" /> 指示请求的资源要求身份验证。WWW-Authenticate 头包含如何执行身份验证的详细信息。</summary>
+      <summary>相當於 HTTP 狀態 401。<see cref="F:System.Net.HttpStatusCode.Unauthorized" /> 指示要求的資源需要驗證。WWW-Authenticate 標頭包含如何執行驗證的詳細資料。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.UnsupportedMediaType">
-      <summary>等效于 HTTP 状态 415。<see cref="F:System.Net.HttpStatusCode.UnsupportedMediaType" /> 指示请求是不支持的类型。</summary>
+      <summary>相當於 HTTP 狀態 415。<see cref="F:System.Net.HttpStatusCode.UnsupportedMediaType" /> 指示要求是不支援的類型。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.Unused">
-      <summary>等效于 HTTP 状态 306。<see cref="F:System.Net.HttpStatusCode.Unused" /> 是未完全指定的 HTTP/1.1 规范的建议扩展。</summary>
+      <summary>相當於 HTTP 狀態 306。<see cref="F:System.Net.HttpStatusCode.Unused" /> 是 HTTP/1.1 規格未完全指定的建議擴充。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.UpgradeRequired">
-      <summary>等效于 HTTP 状态 426。<see cref="F:System.Net.HttpStatusCode.UpgradeRequired" /> 指示客户端应切换为诸如 TLS/1.0 之类的其他协议。</summary>
+      <summary>相當於 HTTP 狀態 426。<see cref="F:System.Net.HttpStatusCode.UpgradeRequired" /> 指示用戶端應該切換至不同的通訊協定，例如 TLS/1.0。</summary>
     </member>
     <member name="F:System.Net.HttpStatusCode.UseProxy">
-      <summary>等效于 HTTP 状态 305。<see cref="F:System.Net.HttpStatusCode.UseProxy" /> 指示请求应使用位于 Location 头中指定的 URI 的代理服务器。</summary>
+      <summary>相當於 HTTP 狀態 305。<see cref="F:System.Net.HttpStatusCode.UseProxy" /> 指示要求應該使用位於 Location 標題中所指定 URI 的 Proxy 伺服器。</summary>
     </member>
     <member name="T:System.Net.ICredentials">
-      <summary>提供用于为 Web 客户端身份验证检索凭据的基身份验证接口。</summary>
+      <summary>提供擷取 Web 用戶端驗證 (Authentication) 認證的基底驗證介面。</summary>
     </member>
     <member name="M:System.Net.ICredentials.GetCredential(System.Uri,System.String)">
-      <summary>返回与指定的 URI 关联的 <see cref="T:System.Net.NetworkCredential" /> 对象，以及身份验证类型。</summary>
-      <returns>与指定的 URI 和身份验证类型关联的 <see cref="T:System.Net.NetworkCredential" />；如果没有可用的凭据，则为 null。</returns>
-      <param name="uri">客户端为其提供身份验证的 <see cref="T:System.Uri" />。</param>
-      <param name="authType">
-        <see cref="P:System.Net.IAuthenticationModule.AuthenticationType" /> 属性中定义的身份验证类型。</param>
+      <summary>傳回 <see cref="T:System.Net.NetworkCredential" /> 物件，這個物件與所指定的 URI 和驗證型別相關聯。</summary>
+      <returns>
+        <see cref="T:System.Net.NetworkCredential" />，與指定的 URI 和驗證類型相關聯，如果沒有可用的認證，則為 null。</returns>
+      <param name="uri">
+        <see cref="T:System.Uri" />，用戶端提供驗證給它。</param>
+      <param name="authType">驗證的型別，如同在 <see cref="P:System.Net.IAuthenticationModule.AuthenticationType" /> 屬性中所定義的。</param>
     </member>
     <member name="T:System.Net.ICredentialsByHost">
-      <summary>提供用于检索主机、端口或身份验证类型的凭据的接口。</summary>
+      <summary>提供用來擷取主機、連接埠和驗證類別之認證的介面。</summary>
     </member>
     <member name="M:System.Net.ICredentialsByHost.GetCredential(System.String,System.Int32,System.String)">
-      <summary>返回指定的主机、端口和身份验证协议的凭据。</summary>
-      <returns>指定的主机、端口和身份验证协议的 <see cref="T:System.Net.NetworkCredential" />；如果指定的主机、端口和身份验证协议没有可用的凭据，则为 null。</returns>
-      <param name="host">对客户端进行身份验证的主机。</param>
-      <param name="port">客户端与之通信的 <paramref name="host " /> 上的端口。</param>
-      <param name="authenticationType">身份验证协议。</param>
+      <summary>傳回指定主機、連接埠和驗證通訊協定的認證。</summary>
+      <returns>指定主機、連接埠和驗證通訊協定的 <see cref="T:System.Net.NetworkCredential" />，如果指定主機、連接埠和驗證通訊協定沒有認證，則為 null。</returns>
+      <param name="host">驗證用戶端的主機電腦。</param>
+      <param name="port">用戶端將與之通訊的 <paramref name="host " />連接埠。</param>
+      <param name="authenticationType">驗證通訊協定。</param>
     </member>
     <member name="T:System.Net.IPAddress">
-      <summary>提供网际协议 (IP) 地址。</summary>
+      <summary>提供網際網路通訊協定 (IP) 位址。</summary>
     </member>
     <member name="M:System.Net.IPAddress.#ctor(System.Byte[])">
-      <summary>用指定为 <see cref="T:System.Byte" /> 数组的地址初始化 <see cref="T:System.Net.IPAddress" /> 类的新实例。</summary>
-      <param name="address">IP 地址的字节数组值。</param>
+      <summary>使用指定為 <see cref="T:System.Byte" /> 陣列的位址，初始化 <see cref="T:System.Net.IPAddress" /> 類別的新執行個體。</summary>
+      <param name="address">IP 位址的位元組陣列值。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="address" /> 为 null。</exception>
+        <paramref name="address" /> 為 null。</exception>
       <exception cref="T:System.ArgumentException">
-        <paramref name="address" /> 包含错误的 IP 地址。</exception>
+        <paramref name="address" /> 包含錯誤的 IP 位址。</exception>
     </member>
     <member name="M:System.Net.IPAddress.#ctor(System.Byte[],System.Int64)">
-      <summary>用指定为 <see cref="T:System.Byte" /> 数组的地址和指定的范围标识符初始化 <see cref="T:System.Net.IPAddress" /> 类的一个新实例。</summary>
-      <param name="address">IP 地址的字节数组值。</param>
-      <param name="scopeid">范围标识符的长值。</param>
+      <summary>使用指定為 <see cref="T:System.Byte" /> 陣列且具有指定之範圍識別項的位址，初始化 <see cref="T:System.Net.IPAddress" /> 類別的新執行個體。</summary>
+      <param name="address">IP 位址的位元組陣列值。</param>
+      <param name="scopeid">範圍識別項的長整數值。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="address" /> 为 null。</exception>
+        <paramref name="address" /> 為 null。</exception>
       <exception cref="T:System.ArgumentException">
-        <paramref name="address" /> 包含错误的 IP 地址。</exception>
+        <paramref name="address" /> 包含錯誤的 IP 位址。</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="scopeid" /> 小于 0 或<paramref name="scopeid" /> 大于 0x00000000FFFFFFFF</exception>
+        <paramref name="scopeid" /> &lt; 0 或<paramref name="scopeid" /> &gt; 0x00000000FFFFFFFF</exception>
     </member>
     <member name="M:System.Net.IPAddress.#ctor(System.Int64)">
-      <summary>用指定为 <see cref="T:System.Int64" /> 的地址初始化 <see cref="T:System.Net.IPAddress" /> 类的新实例。</summary>
-      <param name="newAddress">IP 地址的长值。例如，Big-Endian 格式的值 0x2414188f 可能为 IP 地址"143.24.20.36"。</param>
+      <summary>使用指定為 <see cref="T:System.Int64" /> 的位址，初始化 <see cref="T:System.Net.IPAddress" /> 類別的新執行個體。</summary>
+      <param name="newAddress">IP 位址的長整數值。例如，位元組由大到小格式的 0x2414188f 值將為 IP 位址 "143.24.20.36"。</param>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="newAddress" /> 小于 0 或<paramref name="newAddress" /> 大于 0x00000000FFFFFFFF</exception>
+        <paramref name="newAddress" /> &lt; 0 或<paramref name="newAddress" /> &gt; 0x00000000FFFFFFFF</exception>
     </member>
     <member name="P:System.Net.IPAddress.AddressFamily">
-      <summary>获取 IP 地址的地址族。</summary>
-      <returns>对于 IPv4，返回 <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" />；对于 IPv6，返回 <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" />。</returns>
+      <summary>取得 IP 位址的位址家族。</summary>
+      <returns>傳回 IPv4 的 <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" />，或傳回 IPv6 的 <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" />。</returns>
     </member>
     <member name="F:System.Net.IPAddress.Any">
-      <summary>提供一个 IP 地址，指示服务器应侦听所有网络接口上的客户端活动。此字段为只读。</summary>
+      <summary>提供指示伺服器必須在所有網路介面上接聽用戶端活動的 IP 位址。這個欄位是唯讀的。</summary>
     </member>
     <member name="F:System.Net.IPAddress.Broadcast">
-      <summary>提供 IP 广播地址。此字段为只读。</summary>
+      <summary>提供 IP 廣播位址。這個欄位是唯讀的。</summary>
     </member>
     <member name="M:System.Net.IPAddress.Equals(System.Object)">
-      <summary>比较两个 IP 地址。</summary>
-      <returns>如果两个地址相等，则为 true；否则为 false。</returns>
-      <param name="comparand">要与当前实例比较的 <see cref="T:System.Net.IPAddress" /> 实例。</param>
+      <summary>比較兩個 IP 位址。</summary>
+      <returns>如果兩個位址相等，則為 true，否則為 false。</returns>
+      <param name="comparand">要與目前執行個體比較的 <see cref="T:System.Net.IPAddress" /> 執行個體。</param>
     </member>
     <member name="M:System.Net.IPAddress.GetAddressBytes">
-      <summary>以字节数组形式提供 <see cref="T:System.Net.IPAddress" /> 的副本。</summary>
+      <summary>提供做為位元組陣列之 <see cref="T:System.Net.IPAddress" /> 的複本。</summary>
       <returns>
-        <see cref="T:System.Byte" /> 数组。</returns>
+        <see cref="T:System.Byte" /> 陣列。</returns>
     </member>
     <member name="M:System.Net.IPAddress.GetHashCode">
-      <summary>返回 IP 地址的哈希值。</summary>
-      <returns>整数哈希值。</returns>
+      <summary>傳回 IP 位址的雜湊值 (Hash Value)。</summary>
+      <returns>整數雜湊值。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.IPAddress.HostToNetworkOrder(System.Int16)">
-      <summary>将短值由主机字节顺序转换为网络字节顺序。</summary>
-      <returns>以网络字节顺序表示的短值。</returns>
-      <param name="host">以主机字节顺序表示的要转换的数字。</param>
+      <summary>將短整數 (Short) 值從主機位元組順序轉換為網路位元組順序。</summary>
+      <returns>以網路位元組順序表示的短整數值。</returns>
+      <param name="host">以主機位元組順序表示之要轉換的數字。</param>
     </member>
     <member name="M:System.Net.IPAddress.HostToNetworkOrder(System.Int32)">
-      <summary>将整数值由主机字节顺序转换为网络字节顺序。</summary>
-      <returns>以网络字节顺序表示的整数值。</returns>
-      <param name="host">以主机字节顺序表示的要转换的数字。</param>
+      <summary>將整數值從主機位元組順序轉換為網路位元組順序。</summary>
+      <returns>以網路位元組順序表示的整數值。</returns>
+      <param name="host">以主機位元組順序表示之要轉換的數字。</param>
     </member>
     <member name="M:System.Net.IPAddress.HostToNetworkOrder(System.Int64)">
-      <summary>将长值由主机字节顺序转换为网络字节顺序。</summary>
-      <returns>以网络字节顺序表示的长值。</returns>
-      <param name="host">以主机字节顺序表示的要转换的数字。</param>
+      <summary>將長整數 (Long) 值從主機位元組順序轉換為網路位元組順序。</summary>
+      <returns>以網路位元組順序表示的長整數值。</returns>
+      <param name="host">以主機位元組順序表示之要轉換的數字。</param>
     </member>
     <member name="F:System.Net.IPAddress.IPv6Any">
       <summary>
-        <see cref="M:System.Net.Sockets.Socket.Bind(System.Net.EndPoint)" /> 方法使用 <see cref="F:System.Net.IPAddress.IPv6Any" /> 字段指示 <see cref="T:System.Net.Sockets.Socket" /> 必须侦听所有网络接口上的客户端活动。</summary>
+        <see cref="M:System.Net.Sockets.Socket.Bind(System.Net.EndPoint)" /> 方法使用 <see cref="F:System.Net.IPAddress.IPv6Any" /> 欄位來表示 <see cref="T:System.Net.Sockets.Socket" /> 必須在所有網路介面上接聽用戶端活動。</summary>
     </member>
     <member name="F:System.Net.IPAddress.IPv6Loopback">
-      <summary>提供 IP 环回地址。此属性是只读的。</summary>
+      <summary>提供 IP 回送位址。這是唯讀的屬性。</summary>
     </member>
     <member name="F:System.Net.IPAddress.IPv6None">
-      <summary>提供指示不应使用任何网络接口的 IP 地址。此属性是只读的。</summary>
+      <summary>提供 IP 位址，表示不可使用網路介面。這是唯讀的屬性。</summary>
     </member>
     <member name="P:System.Net.IPAddress.IsIPv4MappedToIPv6">
-      <summary>了解 IP 地址是否为 IPv4 映射的 IPv6 地址。</summary>
-      <returns>返回 <see cref="T:System.Boolean" />。如果 IP 地址为 IPv4 映射的 IPv6 地址，则为 true；否则为 false。</returns>
+      <summary>取得 IP 位址是否為對應 IPv4 的 IPv6 位址。</summary>
+      <returns>傳回 <see cref="T:System.Boolean" />。如果 IP 位址是對應 IPv4 的 IPv6 位址，則為 true，否則為 false。</returns>
     </member>
     <member name="P:System.Net.IPAddress.IsIPv6LinkLocal">
-      <summary>获取地址是否为 IPv6 链接本地地址。</summary>
-      <returns>如果 IP 地址为 IPv6 链接本地地址，则为 true；否则为 false。</returns>
+      <summary>取得位址是否為 IPv6 連結本機位址的資訊。</summary>
+      <returns>如果 IP 位址是 IPv6 連結本機位址，則為 true，否則為 false。</returns>
     </member>
     <member name="P:System.Net.IPAddress.IsIPv6Multicast">
-      <summary>获取地址是否为 IPv6 多路广播全局地址。</summary>
-      <returns>如果 IP 地址为 IPv6 多路广播全局地址，则为 true；否则为 false。</returns>
+      <summary>取得位址是否為 IPv6 多點傳送全域位址的資訊。</summary>
+      <returns>如果 IP 位址是 IPv6 多點傳送全域位址，則為 true，否則為 false。</returns>
     </member>
     <member name="P:System.Net.IPAddress.IsIPv6SiteLocal">
-      <summary>获取地址是否为 IPv6 站点本地地址。</summary>
-      <returns>如果 IP 地址为 IPv6 站点本地地址，则为 true；否则为 false。</returns>
+      <summary>取得位址是否為 IPv6 站台本機位址的資訊。</summary>
+      <returns>如果 IP 位址是 IPv6 站台本機位址，則為 true，否則為 false。</returns>
     </member>
     <member name="P:System.Net.IPAddress.IsIPv6Teredo">
-      <summary>获取地址是否为 IPv6 Teredo 地址。</summary>
-      <returns>如果 IP 地址为 IPv6 Teredo 地址，则为 true；否则为 false。</returns>
+      <summary>取得值，這個值指出位址是否為 IPv6 Teredo 位址。</summary>
+      <returns>如果 IP 位址為 IPv6 Teredo 位址則為 true，否則為 false。</returns>
     </member>
     <member name="M:System.Net.IPAddress.IsLoopback(System.Net.IPAddress)">
-      <summary>指示指定的 IP 地址是否是环回地址。</summary>
-      <returns>如果 <paramref name="address" /> 是环回地址，则为 true；否则为 false。</returns>
-      <param name="address">IP 地址。</param>
+      <summary>指示指定的 IP 位址是否為回送位址。</summary>
+      <returns>如果 <paramref name="address" /> 是回送位址，則為 true，否則為 false。</returns>
+      <param name="address">IP 位址。</param>
     </member>
     <member name="F:System.Net.IPAddress.Loopback">
-      <summary>提供 IP 环回地址。此字段为只读。</summary>
+      <summary>提供 IP 回送位址。這個欄位是唯讀的。</summary>
     </member>
     <member name="M:System.Net.IPAddress.MapToIPv4">
-      <summary>将 <see cref="T:System.Net.IPAddress" /> 对象映射到 IPv4 地址。</summary>
-      <returns>返回 <see cref="T:System.Net.IPAddress" />。IPv4 地址。</returns>
+      <summary>將 <see cref="T:System.Net.IPAddress" /> 物件對應至 IPv4 位址。</summary>
+      <returns>傳回 <see cref="T:System.Net.IPAddress" />。IPv4 位址。</returns>
     </member>
     <member name="M:System.Net.IPAddress.MapToIPv6">
-      <summary>将 <see cref="T:System.Net.IPAddress" /> 对象映射到 IPv6 地址。</summary>
-      <returns>返回 <see cref="T:System.Net.IPAddress" />。IPv6 地址。</returns>
+      <summary>將 <see cref="T:System.Net.IPAddress" /> 物件對應至 IPv6 位址。</summary>
+      <returns>傳回 <see cref="T:System.Net.IPAddress" />。IPv6 位址。</returns>
     </member>
     <member name="M:System.Net.IPAddress.NetworkToHostOrder(System.Int16)">
-      <summary>将短值由网络字节顺序转换为主机字节顺序。</summary>
-      <returns>以主机字节顺序表示的短值。</returns>
-      <param name="network">以网络字节顺序表示的要转换的数字。</param>
+      <summary>將短整數值從網路位元組順序轉換為主機位元組順序。</summary>
+      <returns>以主機位元組順序表示的短整數值。</returns>
+      <param name="network">以網路位元組順序表示之要轉換的數字。</param>
     </member>
     <member name="M:System.Net.IPAddress.NetworkToHostOrder(System.Int32)">
-      <summary>将整数值由网络字节顺序转换为主机字节顺序。</summary>
-      <returns>以主机字节顺序表示的整数值。</returns>
-      <param name="network">以网络字节顺序表示的要转换的数字。</param>
+      <summary>將整數值從網路位元組順序轉換為主機位元組順序。</summary>
+      <returns>以主機位元組順序表示的整數值。</returns>
+      <param name="network">以網路位元組順序表示之要轉換的數字。</param>
     </member>
     <member name="M:System.Net.IPAddress.NetworkToHostOrder(System.Int64)">
-      <summary>将长值由网络字节顺序转换为主机字节顺序。</summary>
-      <returns>以主机字节顺序表示的长值。</returns>
-      <param name="network">以网络字节顺序表示的要转换的数字。</param>
+      <summary>將長整數值從網路位元組順序轉換為主機位元組順序。</summary>
+      <returns>以主機位元組順序表示的長整數值。</returns>
+      <param name="network">以網路位元組順序表示之要轉換的數字。</param>
     </member>
     <member name="F:System.Net.IPAddress.None">
-      <summary>提供指示不应使用任何网络接口的 IP 地址。此字段为只读。</summary>
+      <summary>提供 IP 位址，表示不可使用網路介面。這個欄位是唯讀的。</summary>
     </member>
     <member name="M:System.Net.IPAddress.Parse(System.String)">
-      <summary>将 IP 地址字符串转换为 <see cref="T:System.Net.IPAddress" /> 实例。</summary>
-      <returns>一个 <see cref="T:System.Net.IPAddress" /> 实例。</returns>
-      <param name="ipString">包含 IP 地址（IPv4 使用以点分隔的四部分表示法，IPv6 使用冒号十六进制表示法）的字符串。</param>
+      <summary>將 IP 位址字串轉換為 <see cref="T:System.Net.IPAddress" /> 執行個體。</summary>
+      <returns>
+        <see cref="T:System.Net.IPAddress" /> 執行個體。</returns>
+      <param name="ipString">字串，包含使用 IPv4 點分隔四組數字標記法和 IPv6 冒號分隔十六進位標記法的 IP 位址。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="ipString" /> 为 null。</exception>
+        <paramref name="ipString" /> 為 null。</exception>
       <exception cref="T:System.FormatException">
-        <paramref name="ipString" /> 不是有效的 IP 地址。</exception>
+        <paramref name="ipString" /> 不是有效的 IP 位址。</exception>
     </member>
     <member name="P:System.Net.IPAddress.ScopeId">
-      <summary>获取或设置 IPv6 地址范围标识符。</summary>
-      <returns>指定地址范围的长整数。</returns>
+      <summary>取得或設定 IPv6 位址範圍識別項。</summary>
+      <returns>指定位址範圍的長整數。</returns>
       <exception cref="T:System.Net.Sockets.SocketException">AddressFamily = InterNetwork.</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="scopeId" /> &lt; 0- 或 -<paramref name="scopeId" /> 大于 0x00000000FFFFFFFF</exception>
+        <paramref name="scopeId" /> &lt; 0-或-<paramref name="scopeId" /> &gt; 0x00000000FFFFFFFF</exception>
     </member>
     <member name="M:System.Net.IPAddress.ToString">
-      <summary>将 Internet 地址转换为标准表示法。</summary>
-      <returns>包含该 IP 地址（IPv4 使用的以点分隔的四部分表示法，IPv6 使用的冒号十六进制表示法）的字符串。</returns>
-      <exception cref="T:System.Net.Sockets.SocketException">该地址族为 <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" />，而且该地址是错误的。</exception>
+      <summary>將網際網路位址轉換為其標準標記法。</summary>
+      <returns>字串，包含使用 IPv4 點分隔四組數字和 IPv6 冒號分隔十六進位之其中一種標記法的 IP 位址。</returns>
+      <exception cref="T:System.Net.Sockets.SocketException">位址家族是 <see cref="F:System.Net.Sockets.AddressFamily.InterNetworkV6" />，而且位址是錯誤的。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.IPAddress.TryParse(System.String,System.Net.IPAddress@)">
-      <summary>确定字符串是否为有效的 IP 地址。</summary>
-      <returns>如果 <paramref name="ipString" /> 是有效 IP 地址，则为 true；否则为 false。</returns>
-      <param name="ipString">要验证的字符串。</param>
-      <param name="address">字符串的 <see cref="T:System.Net.IPAddress" /> 版本。</param>
+      <summary>判斷字串是否為有效的 IP 位址。</summary>
+      <returns>如果 <paramref name="ipString" /> 是有效的 IP 位址，則為 true，否則為 false。</returns>
+      <param name="ipString">要驗證的字串。</param>
+      <param name="address">字串的 <see cref="T:System.Net.IPAddress" /> 版本。</param>
     </member>
     <member name="T:System.Net.IPEndPoint">
-      <summary>将网络端点表示为 IP 地址和端口号。</summary>
+      <summary>將網路端點表示成 IP 位址和通訊埠編號。</summary>
     </member>
     <member name="M:System.Net.IPEndPoint.#ctor(System.Int64,System.Int32)">
-      <summary>用指定的地址和端口号初始化 <see cref="T:System.Net.IPEndPoint" /> 类的新实例。</summary>
-      <param name="address">Internet 主机的 IP 地址。</param>
-      <param name="port">与 <paramref name="address" /> 关联的端口号，或为 0 以指定任何可用端口。<paramref name="port" /> 以主机顺序排列。</param>
+      <summary>使用指定的位址和通訊埠編號來初始化 <see cref="T:System.Net.IPEndPoint" /> 類別的新執行個體。</summary>
+      <param name="address">網際網路主機的 IP 位址。</param>
+      <param name="port">與 <paramref name="address" /> 相關聯的通訊埠編號，或 0 指定任何可用的通訊埠。<paramref name="port" /> 依主機順序顯示。</param>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="port" /> 小于 <see cref="F:System.Net.IPEndPoint.MinPort" />。- 或 -<paramref name="port" /> 大于 <see cref="F:System.Net.IPEndPoint.MaxPort" />。- 或 -<paramref name="address" /> 小于 0 或大于 0x00000000FFFFFFFF。</exception>
+        <paramref name="port" /> 小於 <see cref="F:System.Net.IPEndPoint.MinPort" />。-或-<paramref name="port" /> 大於 <see cref="F:System.Net.IPEndPoint.MaxPort" />。-或-<paramref name="address" /> 小於 0 或大於 0x00000000FFFFFFFF。</exception>
     </member>
     <member name="M:System.Net.IPEndPoint.#ctor(System.Net.IPAddress,System.Int32)">
-      <summary>用指定的地址和端口号初始化 <see cref="T:System.Net.IPEndPoint" /> 类的新实例。</summary>
-      <param name="address">一个 <see cref="T:System.Net.IPAddress" />。</param>
-      <param name="port">与 <paramref name="address" /> 关联的端口号，或为 0 以指定任何可用端口。<paramref name="port" /> 以主机顺序排列。</param>
+      <summary>使用指定的位址和通訊埠編號來初始化 <see cref="T:System.Net.IPEndPoint" /> 類別的新執行個體。</summary>
+      <param name="address">
+        <see cref="T:System.Net.IPAddress" />。</param>
+      <param name="port">與 <paramref name="address" /> 相關聯的通訊埠編號，或 0 指定任何可用的通訊埠。<paramref name="port" /> 依主機順序顯示。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="address" /> 为 null。</exception>
+        <paramref name="address" /> 為 null。</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="port" /> 小于 <see cref="F:System.Net.IPEndPoint.MinPort" />。- 或 -<paramref name="port" /> 大于 <see cref="F:System.Net.IPEndPoint.MaxPort" />。- 或 -<paramref name="address" /> 小于 0 或大于 0x00000000FFFFFFFF。</exception>
+        <paramref name="port" /> 小於 <see cref="F:System.Net.IPEndPoint.MinPort" />。-或-<paramref name="port" /> 大於 <see cref="F:System.Net.IPEndPoint.MaxPort" />。-或-<paramref name="address" /> 小於 0 或大於 0x00000000FFFFFFFF。</exception>
     </member>
     <member name="P:System.Net.IPEndPoint.Address">
-      <summary>获取或设置终结点的 IP 地址。</summary>
-      <returns>包含终结点的 IP 地址的 <see cref="T:System.Net.IPAddress" /> 实例。</returns>
+      <summary>取得或設定端點的 IP 位址。</summary>
+      <returns>
+        <see cref="T:System.Net.IPAddress" /> 執行個體，含有端點的 IP 位址。</returns>
     </member>
     <member name="P:System.Net.IPEndPoint.AddressFamily">
-      <summary>获取网际协议 (IP) 地址族。</summary>
-      <returns>返回 <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" />。</returns>
+      <summary>取得網際網路通訊協定 (IP) 位址家族。</summary>
+      <returns>傳回 <see cref="F:System.Net.Sockets.AddressFamily.InterNetwork" />。</returns>
     </member>
     <member name="M:System.Net.IPEndPoint.Create(System.Net.SocketAddress)">
-      <summary>从套接字地址创建终结点。</summary>
-      <returns>使用指定套接字地址的 <see cref="T:System.Net.EndPoint" /> 实例。</returns>
-      <param name="socketAddress">用于终结点的 <see cref="T:System.Net.SocketAddress" />。</param>
+      <summary>從通訊端 (Socket) 位址建立端點。</summary>
+      <returns>
+        <see cref="T:System.Net.EndPoint" /> 的執行個體，使用指定的通訊端位址。</returns>
+      <param name="socketAddress">端點使用的 <see cref="T:System.Net.SocketAddress" />。</param>
       <exception cref="T:System.ArgumentException">
-        <paramref name="socketAddress" /> 的 AddressFamily 与当前实例的 AddressFamily 不相等。- 或 -<paramref name="socketAddress" />.Size 小于 8。</exception>
+        <paramref name="socketAddress" /> 的 AddressFamily 不等於目前執行個體的 AddressFamily。-或-<paramref name="socketAddress" />.Size &lt; 8。</exception>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.IPEndPoint.Equals(System.Object)">
-      <summary>确定指定的 <see cref="T:System.Object" /> 是否等同于当前的 <see cref="T:System.Net.IPEndPoint" /> 实例。</summary>
-      <returns>如果指定的对象等于当前的对象，则为 true；否则为 false。</returns>
-      <param name="comparand">与当前的 <see cref="T:System.Net.IPEndPoint" /> 实例进行比较的指定 <see cref="T:System.Object" />。</param>
+      <summary>判斷指定的 <see cref="T:System.Object" /> 和目前的 <see cref="T:System.Net.IPEndPoint" /> 執行個體是否相等。</summary>
+      <returns>如果指定的物件等於目前的物件，則為 true，否則為 false。</returns>
+      <param name="comparand">要與目前 <see cref="T:System.Net.IPEndPoint" /> 執行個體比較的指定 <see cref="T:System.Object" />。</param>
     </member>
     <member name="M:System.Net.IPEndPoint.GetHashCode">
-      <summary>返回 <see cref="T:System.Net.IPEndPoint" /> 实例的哈希值。</summary>
-      <returns>整数哈希值。</returns>
+      <summary>傳回 <see cref="T:System.Net.IPEndPoint" /> 執行個體的雜湊值。</summary>
+      <returns>整數雜湊值。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="F:System.Net.IPEndPoint.MaxPort">
-      <summary>指定可以分配给 <see cref="P:System.Net.IPEndPoint.Port" /> 属性的最大值。MaxPort 值设置为 0x0000FFFF。此字段为只读。</summary>
+      <summary>指定可指派給 <see cref="P:System.Net.IPEndPoint.Port" /> 屬性的最大值。MaxPort 值設為 0x0000FFFF。這個欄位是唯讀的。</summary>
     </member>
     <member name="F:System.Net.IPEndPoint.MinPort">
-      <summary>指定可以分配给 <see cref="P:System.Net.IPEndPoint.Port" /> 属性的最小值。此字段为只读。</summary>
+      <summary>指定可指派給 <see cref="P:System.Net.IPEndPoint.Port" /> 屬性的最小值。這個欄位是唯讀的。</summary>
     </member>
     <member name="P:System.Net.IPEndPoint.Port">
-      <summary>获取或设置终结点的端口号。</summary>
-      <returns>介于 <see cref="F:System.Net.IPEndPoint.MinPort" /> 到 <see cref="F:System.Net.IPEndPoint.MaxPort" /> 之间的整数值，指示终结点的端口号。</returns>
-      <exception cref="T:System.ArgumentOutOfRangeException">为设置操作指定的值小于 <see cref="F:System.Net.IPEndPoint.MinPort" /> 或大于 <see cref="F:System.Net.IPEndPoint.MaxPort" />。</exception>
+      <summary>取得或設定端點的通訊埠編號。</summary>
+      <returns>範圍在 <see cref="F:System.Net.IPEndPoint.MinPort" /> 到 <see cref="F:System.Net.IPEndPoint.MaxPort" /> 之內的整數值，表示端點的通訊埠編號。</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">指定給設定作業的值小於 <see cref="F:System.Net.IPEndPoint.MinPort" /> 或大於 <see cref="F:System.Net.IPEndPoint.MaxPort" />。</exception>
     </member>
     <member name="M:System.Net.IPEndPoint.Serialize">
-      <summary>将终结点信息序列化为 <see cref="T:System.Net.SocketAddress" /> 实例。</summary>
-      <returns>一个 <see cref="T:System.Net.SocketAddress" /> 实例，包含终结点的套接字地址。</returns>
+      <summary>將端點資訊序列化為 <see cref="T:System.Net.SocketAddress" /> 執行個體。</summary>
+      <returns>
+        <see cref="T:System.Net.SocketAddress" /> 的執行個體，含有端點的通訊端位址。</returns>
     </member>
     <member name="M:System.Net.IPEndPoint.ToString">
-      <summary>返回指定终结点的 IP 地址和端口号。</summary>
-      <returns>包含指定终结点（例如，192.168.1.2:80）的 IP 地址和端口号的字符串。</returns>
+      <summary>傳回指定端點的 IP 位址和通訊埠編號。</summary>
+      <returns>字串，含有以點分隔四組數字標記法表示的 IP 位址，和指定端點的通訊埠編號 (例如，192.168.1.2:80)。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="T:System.Net.IWebProxy">
-      <summary>提供基接口以实现对 <see cref="T:System.Net.WebRequest" /> 类的代理访问。</summary>
+      <summary>提供 <see cref="T:System.Net.WebRequest" /> 類別 Proxy 存取實作 (Implementation) 的基底介面。</summary>
     </member>
     <member name="P:System.Net.IWebProxy.Credentials">
-      <summary>要提交给代理服务器进行身份验证的凭据。</summary>
+      <summary>認證，要送出至 Proxy 伺服器進行驗證。</summary>
       <returns>
-        <see cref="T:System.Net.ICredentials" /> 实例，它包含对代理服务器请求进行身份验证所需的凭据。</returns>
+        <see cref="T:System.Net.ICredentials" /> 執行個體 (Instance)，包含要驗證 Proxy 伺服器要求所需的認證。</returns>
     </member>
     <member name="M:System.Net.IWebProxy.GetProxy(System.Uri)">
-      <summary>返回代理的 URI。</summary>
+      <summary>傳回 Proxy 的 URI。</summary>
       <returns>
-        <see cref="T:System.Uri" /> 实例，它包含用于与 <paramref name="destination" /> 联系的代理的 URI。</returns>
+        <see cref="T:System.Uri" /> 執行個體，包含用來聯繫 <paramref name="destination" /> 之 Proxy 的 URI。</returns>
       <param name="destination">
-        <see cref="T:System.Uri" />，指定请求的 Internet 资源。</param>
+        <see cref="T:System.Uri" />，指定所要求的網際網路資源。</param>
     </member>
     <member name="M:System.Net.IWebProxy.IsBypassed(System.Uri)">
-      <summary>指示代理不应用于指定的主机。</summary>
-      <returns>如果代理服务器不应用于 <paramref name="host" />，则为 true；否则，为 false。</returns>
-      <param name="host">要检查代理使用情况的主机的 <see cref="T:System.Uri" />。</param>
+      <summary>指示不應該為指定的主機使用 Proxy。</summary>
+      <returns>如果不應該為 <paramref name="host" /> 使用 Proxy 伺服器，則為 true，否則為 false。</returns>
+      <param name="host">要檢查 Proxy 使用的主機 <see cref="T:System.Uri" />。</param>
     </member>
     <member name="T:System.Net.NetworkCredential">
-      <summary>为基于密码的身份验证方案（如基本、简要、NTLM 和 Kerberos 身份验证）提供凭据。</summary>
+      <summary>提供密碼架構的驗證 (Authentication) 機制 (例如基本、摘要、NTLM 和 Kerberos 驗證) 的認證。</summary>
     </member>
     <member name="M:System.Net.NetworkCredential.#ctor">
-      <summary>初始化 <see cref="T:System.Net.NetworkCredential" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Net.NetworkCredential" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.NetworkCredential.#ctor(System.String,System.String)">
-      <summary>用指定的用户名和密码初始化 <see cref="T:System.Net.NetworkCredential" /> 类的新实例。</summary>
-      <param name="userName">与凭据关联的用户名。</param>
-      <param name="password">与凭据关联的用户名的密码。</param>
+      <summary>使用指定的使用者名稱和密碼來初始化 <see cref="T:System.Net.NetworkCredential" /> 類別的新執行個體。</summary>
+      <param name="userName">與認證相關的使用者名稱。</param>
+      <param name="password">與認證相關的使用者名稱的密碼。</param>
     </member>
     <member name="M:System.Net.NetworkCredential.#ctor(System.String,System.String,System.String)">
-      <summary>用指定的用户名、密码和域初始化 <see cref="T:System.Net.NetworkCredential" /> 类的新实例。</summary>
-      <param name="userName">与凭据关联的用户名。</param>
-      <param name="password">与凭据关联的用户名的密码。</param>
-      <param name="domain">与这些凭据关联的域。</param>
+      <summary>使用指定的使用者名稱、密碼和網域來初始化 <see cref="T:System.Net.NetworkCredential" /> 類別的新執行個體。</summary>
+      <param name="userName">與認證相關的使用者名稱。</param>
+      <param name="password">與認證相關的使用者名稱的密碼。</param>
+      <param name="domain">與這些認證相關的網域。</param>
     </member>
     <member name="P:System.Net.NetworkCredential.Domain">
-      <summary>获取或设置验证凭据的域名或计算机名。</summary>
-      <returns>与凭据关联的域名。</returns>
+      <summary>取得或設定驗證認證的網域或電腦名稱。</summary>
+      <returns>與認證相關的網域名稱。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="M:System.Net.NetworkCredential.GetCredential(System.String,System.Int32,System.String)">
-      <summary>针对指定的主机、端口和身份验证类型返回 <see cref="T:System.Net.NetworkCredential" /> 类的实例。</summary>
-      <returns>指定的主机、端口和身份验证协议的 <see cref="T:System.Net.NetworkCredential" />；如果指定的主机、端口和身份验证协议没有可用的凭据，则为 null。</returns>
-      <param name="host">对该客户端进行身份验证的主机。</param>
-      <param name="port">与客户端通信的 <paramref name="host" /> 上的端口。</param>
-      <param name="authenticationType">
-        <see cref="P:System.Net.IAuthenticationModule.AuthenticationType" /> 属性中定义的所请求的身份验证类型。</param>
+      <summary>傳回指定主機、連接埠和驗證類型之 <see cref="T:System.Net.NetworkCredential" /> 類別的執行個體。</summary>
+      <returns>指定主機、連接埠和驗證通訊協定的 <see cref="T:System.Net.NetworkCredential" />，如果指定主機、連接埠和驗證通訊協定沒有認證，則為 null。</returns>
+      <param name="host">驗證用戶端的主機電腦。</param>
+      <param name="port">用戶端將與之通訊的 <paramref name="host" /> 連接埠。</param>
+      <param name="authenticationType">要求驗證的類型，如同在 <see cref="P:System.Net.IAuthenticationModule.AuthenticationType" /> 屬性中的定義。</param>
     </member>
     <member name="M:System.Net.NetworkCredential.GetCredential(System.Uri,System.String)">
-      <summary>针对指定的统一资源标识符 (URI) 和身份验证类型返回 <see cref="T:System.Net.NetworkCredential" /> 类的实例。</summary>
-      <returns>一个 <see cref="T:System.Net.NetworkCredential" /> 对象。</returns>
-      <param name="uri">客户端为其提供身份验证的 URI。</param>
-      <param name="authType">
-        <see cref="P:System.Net.IAuthenticationModule.AuthenticationType" /> 属性中定义的所请求的身份验证类型。</param>
+      <summary>傳回指定統一資源識別元 (URI) 和驗證類型之 <see cref="T:System.Net.NetworkCredential" /> 類別的執行個體。</summary>
+      <returns>
+        <see cref="T:System.Net.NetworkCredential" /> 物件。</returns>
+      <param name="uri">用戶端為其提供驗證的 URI。</param>
+      <param name="authType">要求驗證的類型，如同在 <see cref="P:System.Net.IAuthenticationModule.AuthenticationType" /> 屬性中的定義。</param>
     </member>
     <member name="P:System.Net.NetworkCredential.Password">
-      <summary>获取或设置与凭据关联的用户名的密码。</summary>
-      <returns>与该凭据关联的密码。如果已通过设置为 null 的 <paramref name="password" /> 参数初始化此 <see cref="T:System.Net.NetworkCredential" /> 实例，则 <see cref="P:System.Net.NetworkCredential.Password" /> 属性将返回空字符串。</returns>
+      <summary>取得或設定與認證相關的使用者名稱的密碼。</summary>
+      <returns>與認證關聯的密碼。若此 <see cref="T:System.Net.NetworkCredential" /> 執行個體由 <paramref name="password" /> 參數初始化設定為  null，則 <see cref="P:System.Net.NetworkCredential.Password" /> 屬性會傳回空字串。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="P:System.Net.NetworkCredential.UserName">
-      <summary>获取或设置与凭据关联的用户名。</summary>
-      <returns>与凭据关联的用户名。</returns>
+      <summary>取得或設定與認證相關的使用者名稱。</summary>
+      <returns>與認證相關的使用者名稱。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
       </PermissionSet>
     </member>
     <member name="T:System.Net.SocketAddress">
-      <summary>存储 <see cref="T:System.Net.EndPoint" /> 派生类的序列化信息。</summary>
+      <summary>儲存 <see cref="T:System.Net.EndPoint" /> 衍生類別的已序列化資訊。</summary>
     </member>
     <member name="M:System.Net.SocketAddress.#ctor(System.Net.Sockets.AddressFamily)">
-      <summary>为给定的地址族创建 <see cref="T:System.Net.SocketAddress" /> 类的新实例。</summary>
+      <summary>為指定的通訊協定家族 (Address Family) 建立 <see cref="T:System.Net.SocketAddress" /> 類別的新執行個體。</summary>
       <param name="family">
-        <see cref="T:System.Net.Sockets.AddressFamily" /> 枚举值。</param>
+        <see cref="T:System.Net.Sockets.AddressFamily" /> 列舉值。</param>
     </member>
     <member name="M:System.Net.SocketAddress.#ctor(System.Net.Sockets.AddressFamily,System.Int32)">
-      <summary>使用指定的地址族和缓冲区大小创建 <see cref="T:System.Net.SocketAddress" /> 类的新实例。</summary>
+      <summary>使用指定的通訊協定家族和緩衝區大小來初始化 <see cref="T:System.Net.SocketAddress" /> 類別的新執行個體。</summary>
       <param name="family">
-        <see cref="T:System.Net.Sockets.AddressFamily" /> 枚举值。</param>
-      <param name="size">要为基础缓冲区分配的字节数。</param>
+        <see cref="T:System.Net.Sockets.AddressFamily" /> 列舉值。</param>
+      <param name="size">要配置的基礎緩衝區位元組大小。</param>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="size" /> 小于 2。这两字节需要存储 <paramref name="family" />。</exception>
+        <paramref name="size" /> 小於 2。需要這些 2 位元組，才能儲存 <paramref name="family" />。</exception>
     </member>
     <member name="M:System.Net.SocketAddress.Equals(System.Object)">
-      <summary>确定指定的 <see cref="T:System.Object" /> 是否等同于当前的 <see cref="T:System.Net.SocketAddress" /> 实例。</summary>
-      <returns>如果指定的对象等于当前的对象，则为 true；否则为 false。</returns>
-      <param name="comparand">与当前的 <see cref="T:System.Net.SocketAddress" /> 实例进行比较的指定 <see cref="T:System.Object" />。</param>
+      <summary>判斷指定的 <see cref="T:System.Object" /> 和目前的 <see cref="T:System.Net.SocketAddress" /> 執行個體是否相等。</summary>
+      <returns>如果指定的物件等於目前的物件，則為 true，否則為 false。</returns>
+      <param name="comparand">要與目前 <see cref="T:System.Net.SocketAddress" /> 執行個體比較的指定 <see cref="T:System.Object" />。</param>
     </member>
     <member name="P:System.Net.SocketAddress.Family">
-      <summary>获取当前 <see cref="T:System.Net.SocketAddress" /> 的 <see cref="T:System.Net.Sockets.AddressFamily" /> 枚举值。</summary>
-      <returns>
-        <see cref="T:System.Net.Sockets.AddressFamily" /> 枚举值之一。</returns>
+      <summary>取得目前 <see cref="T:System.Net.SocketAddress" /> 的 <see cref="T:System.Net.Sockets.AddressFamily" /> 列舉值。</summary>
+      <returns>一個 <see cref="T:System.Net.Sockets.AddressFamily" /> 列舉值。</returns>
     </member>
     <member name="M:System.Net.SocketAddress.GetHashCode">
-      <summary>用作特定类型的哈希函数，适合在哈希算法和数据结构（如哈希表）中使用。</summary>
-      <returns>当前对象的哈希代码。</returns>
+      <summary>做為特定型別的雜湊函式，適用於雜湊演算法和資料結構中，例如雜湊表。</summary>
+      <returns>目前物件的雜湊碼。</returns>
     </member>
     <member name="P:System.Net.SocketAddress.Item(System.Int32)">
-      <summary>获取或设置基础缓冲区中指定的索引元素。</summary>
-      <returns>基础缓冲区中指定的索引元素的值。</returns>
-      <param name="offset">所需信息的数组索引元素。</param>
-      <exception cref="T:System.IndexOutOfRangeException">缓冲区中不存在指定的索引。</exception>
+      <summary>取得或設定基礎緩衝區中的指定索引項目。</summary>
+      <returns>基礎緩衝區中指定索引項目的值。</returns>
+      <param name="offset">所需資訊的陣列索引項目</param>
+      <exception cref="T:System.IndexOutOfRangeException">指定的索引不存在於緩衝區中</exception>
     </member>
     <member name="P:System.Net.SocketAddress.Size">
-      <summary>获取 <see cref="T:System.Net.SocketAddress" /> 的基础缓冲区大小。</summary>
+      <summary>取得 <see cref="T:System.Net.SocketAddress" /> 的基礎緩衝區大小。</summary>
       <returns>
-        <see cref="T:System.Net.SocketAddress" /> 的基础缓冲区大小。</returns>
+        <see cref="T:System.Net.SocketAddress" /> 的基礎緩衝區大小。</returns>
     </member>
     <member name="M:System.Net.SocketAddress.ToString">
-      <summary>返回有关套接字地址的信息。</summary>
-      <returns>一个字符串，包含有关 <see cref="T:System.Net.SocketAddress" /> 的信息。</returns>
+      <summary>傳回通訊端 (Socket) 位址的相關資訊。</summary>
+      <returns>字串，包含 <see cref="T:System.Net.SocketAddress" /> 的相關資訊。</returns>
       <PermissionSet>
         <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
       </PermissionSet>
     </member>
     <member name="T:System.Net.TransportContext">
       <summary>
-        <see cref="T:System.Net.TransportContext" /> 类提供有关基础传输层的附加上下文。</summary>
+        <see cref="T:System.Net.TransportContext" /> 類別，提供有關基礎傳輸層的其他內容。</summary>
     </member>
     <member name="M:System.Net.TransportContext.#ctor">
-      <summary>创建 <see cref="T:System.Net.TransportContext" /> 类的新实例</summary>
+      <summary>建立 <see cref="T:System.Net.TransportContext" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.TransportContext.GetChannelBinding(System.Security.Authentication.ExtendedProtection.ChannelBindingKind)">
-      <summary>检索请求的通道绑定。</summary>
-      <returns>请求的 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" />，如果当前传输或操作系统不支持通道绑定，则为 null。</returns>
-      <param name="kind">要检索的通道绑定类型。</param>
+      <summary>擷取要求的通道繫結。</summary>
+      <returns>要求的 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" />，如果目前的傳輸或作業系統不支援通道繫結，則為 null。</returns>
+      <param name="kind">要擷取之通道繫結的型別。</param>
       <exception cref="T:System.NotSupportedException">
-        <paramref name="kind" /> 必须是用于从 <see cref="P:System.Net.HttpListenerRequest.TransportContext" /> 属性检索的 <see cref="T:System.Net.TransportContext" /> 的 <see cref="F:System.Security.Authentication.ExtendedProtection.ChannelBindingKind.Endpoint" />。</exception>
+        <paramref name="kind" /> 必須是 <see cref="F:System.Security.Authentication.ExtendedProtection.ChannelBindingKind.Endpoint" /> 以搭配擷取自 <see cref="P:System.Net.HttpListenerRequest.TransportContext" /> 屬性的 <see cref="T:System.Net.TransportContext" /> 使用。</exception>
     </member>
     <member name="T:System.Net.NetworkInformation.IPAddressCollection">
-      <summary>存储一组 <see cref="T:System.Net.IPAddress" /> 类型。</summary>
+      <summary>儲存一組 <see cref="T:System.Net.IPAddress" /> 型別。</summary>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.#ctor">
-      <summary>初始化 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.Add(System.Net.IPAddress)">
-      <summary>由于该集合不支持此操作，因此引发 <see cref="T:System.NotSupportedException" />。</summary>
-      <param name="address">要添加到集合中的对象。</param>
+      <summary>擲回 <see cref="T:System.NotSupportedException" />，因為在這個集合中不支援這項作業。</summary>
+      <param name="address">要加入至集合的物件。</param>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.Clear">
-      <summary>由于该集合不支持此操作，因此引发 <see cref="T:System.NotSupportedException" />。</summary>
+      <summary>擲回 <see cref="T:System.NotSupportedException" />，因為在這個集合中不支援這項作業。</summary>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.Contains(System.Net.IPAddress)">
-      <summary>检查集合中是否包含指定的 <see cref="T:System.Net.IPAddress" /> 对象。</summary>
-      <returns>如果集合中存在 <see cref="T:System.Net.IPAddress" /> 对象，则为 true；否则为 false。</returns>
-      <param name="address">要在集合中搜索的 <see cref="T:System.Net.IPAddress" /> 对象。</param>
+      <summary>檢查集合是否包含指定的 <see cref="T:System.Net.IPAddress" /> 物件。</summary>
+      <returns>如果集合中存在 <see cref="T:System.Net.IPAddress" /> 物件，則為 true，否則為 false。</returns>
+      <param name="address">要在集合中搜尋的 <see cref="T:System.Net.IPAddress" /> 物件。</param>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.CopyTo(System.Net.IPAddress[],System.Int32)">
-      <summary>将此集合中的元素复制到 <see cref="T:System.Net.IPAddress" /> 类型的一维数组中。</summary>
-      <param name="array">接收该集合副本的一维数组。</param>
+      <summary>將此集合中的項目複製到型別 <see cref="T:System.Net.IPAddress" /> 的一維陣列中。</summary>
+      <param name="array">接收集合之複本的一維陣列。</param>
       <param name="offset">
-        <paramref name="array" /> 中从零开始的索引，在此处开始复制。</param>
+        <paramref name="array" /> 中以零起始的索引，會從這個位置開始複製。</param>
       <exception cref="T:System.ArgumentNullException">
-        <paramref name="array" /> 为 null。</exception>
+        <paramref name="array" /> 為 null。</exception>
       <exception cref="T:System.ArgumentOutOfRangeException">
-        <paramref name="offset" /> 小于零。</exception>
+        <paramref name="offset" /> 小於零。</exception>
       <exception cref="T:System.ArgumentException">
-        <paramref name="array" /> 是多维的。- 或 -此 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 中的元素数大于从 <paramref name="offset" /> 到目标 <paramref name="array" /> 末尾之间的可用空间。</exception>
-      <exception cref="T:System.InvalidCastException">该 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 中的元素不能自动被强制转换为目标 <paramref name="array" /> 的类型。</exception>
+        <paramref name="array" /> 為多維。-或-這個 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 中的項目數大於從 <paramref name="offset" /> 至目的 <paramref name="array" /> 結尾處的可用空間。</exception>
+      <exception cref="T:System.InvalidCastException">此 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 中的項目無法自動轉換成目的 <paramref name="array" /> 型別。</exception>
     </member>
     <member name="P:System.Net.NetworkInformation.IPAddressCollection.Count">
-      <summary>获取此集合中的 <see cref="T:System.Net.IPAddress" /> 类型的数目。</summary>
-      <returns>一个 <see cref="T:System.Int32" /> 值，该值包含此集合中的 <see cref="T:System.Net.IPAddress" /> 类型的数目。</returns>
+      <summary>取得這個集合中的 <see cref="T:System.Net.IPAddress" /> 型別數目。</summary>
+      <returns>
+        <see cref="T:System.Int32" /> 值，包含此集合中 <see cref="T:System.Net.IPAddress" /> 型別的數目。</returns>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.GetEnumerator">
-      <summary>返回一个可用于循环访问此集合的对象。</summary>
-      <returns>实现 <see cref="T:System.Collections.IEnumerator" /> 接口并提供对此集合中 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 类型的访问的对象。</returns>
+      <summary>傳回物件，可用來逐一查看這個集合。</summary>
+      <returns>實作 <see cref="T:System.Collections.IEnumerator" /> 介面並提供此集合中 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 型別的存取權之物件。</returns>
     </member>
     <member name="P:System.Net.NetworkInformation.IPAddressCollection.IsReadOnly">
-      <summary>获取一个值，该值指示对该集合的访问是否为只读。</summary>
-      <returns>任何情况下都为 true。</returns>
+      <summary>取得值，指出此集合的存取是否為唯讀。</summary>
+      <returns>所有情況下都是 true。</returns>
     </member>
     <member name="P:System.Net.NetworkInformation.IPAddressCollection.Item(System.Int32)">
-      <summary>获取集合中指定索引处的 <see cref="T:System.Net.IPAddress" />。</summary>
-      <returns>位于集合中指定索引处的 <see cref="T:System.Net.IPAddress" />。</returns>
-      <param name="index">相关索引。</param>
+      <summary>取得集合特定索引處的 <see cref="T:System.Net.IPAddress" />。</summary>
+      <returns>集合中特定索引處的 <see cref="T:System.Net.IPAddress" />。</returns>
+      <param name="index">想要的索引。</param>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.Remove(System.Net.IPAddress)">
-      <summary>由于该集合不支持此操作，因此引发 <see cref="T:System.NotSupportedException" />。</summary>
-      <returns>总是引发 <see cref="T:System.NotSupportedException" />。</returns>
-      <param name="address">要移除的对象。</param>
+      <summary>擲回 <see cref="T:System.NotSupportedException" />，因為在這個集合中不支援這項作業。</summary>
+      <returns>永遠擲回 <see cref="T:System.NotSupportedException" />。</returns>
+      <param name="address">要移除的物件。</param>
     </member>
     <member name="M:System.Net.NetworkInformation.IPAddressCollection.System#Collections#IEnumerable#GetEnumerator">
-      <summary>返回一个可用于循环访问此集合的对象。</summary>
-      <returns>实现 <see cref="T:System.Collections.IEnumerator" /> 接口并提供对此集合中 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 类型的访问的对象。</returns>
+      <summary>傳回物件，可用來逐一查看這個集合。</summary>
+      <returns>實作 <see cref="T:System.Collections.IEnumerator" /> 介面並提供此集合中 <see cref="T:System.Net.NetworkInformation.IPAddressCollection" /> 型別的存取權之物件。</returns>
     </member>
     <member name="T:System.Net.Security.AuthenticationLevel">
-      <summary>指定使用 <see cref="T:System.Net.WebRequest" /> 类和派生类请求资源时，客户端对身份验证和模拟的要求。</summary>
+      <summary>當使用 <see cref="T:System.Net.WebRequest" /> 類別和衍生類別以要求資源時，指定用戶端的驗證和模擬需求。</summary>
     </member>
     <member name="F:System.Net.Security.AuthenticationLevel.MutualAuthRequested">
-      <summary>应对客户端和服务器进行身份验证。如果未对服务器进行身份验证，请求不会失败。若要确定是否已进行相互身份验证，请检查 <see cref="P:System.Net.WebResponse.IsMutuallyAuthenticated" /> 属性的值。</summary>
+      <summary>用戶端和伺服器都應該驗證。如果伺服器未加以驗證，要求也不會失敗。若要判斷是否發生相互驗證，請檢查 <see cref="P:System.Net.WebResponse.IsMutuallyAuthenticated" /> 屬性的值。</summary>
     </member>
     <member name="F:System.Net.Security.AuthenticationLevel.MutualAuthRequired">
-      <summary>应对客户端和服务器进行身份验证。如果服务器未进行身份验证，您的应用程序将收到一个 <see cref="T:System.IO.IOException" />，它具有一个指示相互身份验证已失败的 <see cref="T:System.Net.ProtocolViolationException" /> 内部异常</summary>
+      <summary>用戶端和伺服器都應該驗證。如果伺服器未經驗證，您的應用程式就會收到具有 <see cref="T:System.Net.ProtocolViolationException" /> 內部例外狀況 (Exception) (表示相互驗證失敗) 的 <see cref="T:System.IO.IOException" />。</summary>
     </member>
     <member name="F:System.Net.Security.AuthenticationLevel.None">
-      <summary>不要求对客户端和服务器进行身份验证。</summary>
+      <summary>用戶端和伺服器都不需要驗證。</summary>
     </member>
     <member name="T:System.Net.Security.SslPolicyErrors">
-      <summary>枚举安全套接字层 (SSL) 策略错误。</summary>
+      <summary>列舉 Secure Socket Layer (SSL) 原則錯誤。</summary>
     </member>
     <member name="F:System.Net.Security.SslPolicyErrors.None">
-      <summary>无 SSL 策略错误。</summary>
+      <summary>無 SSL 原則錯誤。</summary>
     </member>
     <member name="F:System.Net.Security.SslPolicyErrors.RemoteCertificateChainErrors">
       <summary>
-        <see cref="P:System.Security.Cryptography.X509Certificates.X509Chain.ChainStatus" /> 已返回非空数组。</summary>
+        <see cref="P:System.Security.Cryptography.X509Certificates.X509Chain.ChainStatus" /> 已傳回非空白陣列。</summary>
     </member>
     <member name="F:System.Net.Security.SslPolicyErrors.RemoteCertificateNameMismatch">
-      <summary>证书名不匹配。</summary>
+      <summary>憑證名稱不符。</summary>
     </member>
     <member name="F:System.Net.Security.SslPolicyErrors.RemoteCertificateNotAvailable">
-      <summary>证书不可用。</summary>
+      <summary>憑證無法使用。</summary>
     </member>
     <member name="T:System.Net.Sockets.AddressFamily">
-      <summary>指定 <see cref="T:System.Net.Sockets.Socket" /> 类的实例可以使用的寻址方案。</summary>
+      <summary>指定 <see cref="T:System.Net.Sockets.Socket" /> 類別的執行個體 (Instance) 可以使用的位址配置。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.AppleTalk">
-      <summary>AppleTalk 地址。</summary>
+      <summary>AppleTalk 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Atm">
-      <summary>本机 ATM 服务地址。</summary>
+      <summary>原生 (Native) ATM 服務位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Banyan">
-      <summary>Banyan 地址。</summary>
+      <summary>Banyan 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Ccitt">
-      <summary>CCITT 协议（如 X.25）的地址。</summary>
+      <summary>CCITT 通訊協定位址，例如 X.25。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Chaos">
-      <summary>MIT CHAOS 协议的地址。</summary>
+      <summary>MIT CHAOS 通訊協定位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Cluster">
-      <summary>Microsoft 群集产品的地址。</summary>
+      <summary>Microsoft 叢集產品位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.DataKit">
-      <summary>Datakit 协议的地址。</summary>
+      <summary>Datakit 通訊協定位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.DataLink">
-      <summary>直接数据链接接口地址。</summary>
+      <summary>直接資料連結介面位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.DecNet">
-      <summary>DECnet 地址。</summary>
+      <summary>DECnet 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Ecma">
-      <summary>欧洲计算机制造商协会 (ECMA) 地址。</summary>
+      <summary>歐洲電腦製造商協會 (ECMA) 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.FireFox">
-      <summary>FireFox 地址。</summary>
+      <summary>FireFox 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.HyperChannel">
-      <summary>NSC Hyperchannel 地址。</summary>
+      <summary>NSC Hyperchannel 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Ieee12844">
-      <summary>IEEE 1284.4 工作组地址。</summary>
+      <summary>IEEE 1284.4 工作群組位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.ImpLink">
-      <summary>ARPANET IMP 地址。</summary>
+      <summary>ARPANET IMP 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.InterNetwork">
-      <summary>IP 版本 4 的地址。</summary>
+      <summary>IP 第 4 版位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.InterNetworkV6">
-      <summary>IP 版本 6 的地址。</summary>
+      <summary>IP 第 6 版位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Ipx">
-      <summary>IPX 或 SPX 地址。</summary>
+      <summary>IPX 或 SPX 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Irda">
-      <summary>IrDA 地址。</summary>
+      <summary>IrDA 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Iso">
-      <summary>ISO 协议的地址。</summary>
+      <summary>ISO 通訊協定的位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Lat">
-      <summary>LAT 地址。</summary>
+      <summary>LAT 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.NetBios">
-      <summary>NetBios 地址。</summary>
+      <summary>NetBios 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.NetworkDesigners">
-      <summary>支持网络设计器 OSI 网关的协议的地址。</summary>
+      <summary>Network Designers OSI 閘道器啟用通訊協定位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.NS">
-      <summary>Xerox NS 协议的地址。</summary>
+      <summary>Xerox NS 通訊協定位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Osi">
-      <summary>OSI 协议的地址。</summary>
+      <summary>OSI 通訊協定的位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Pup">
-      <summary>PUP 协议的地址。</summary>
+      <summary>PUP 通訊協定的位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Sna">
-      <summary>IBM SNA 地址。</summary>
+      <summary>IBM SNA 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Unix">
-      <summary>Unix 本地到主机地址。</summary>
+      <summary>Unix 本機對主機位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Unknown">
-      <summary>未知的地址族。</summary>
+      <summary>不明的通訊協定家族 (Family)。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.Unspecified">
-      <summary>未指定的地址族。</summary>
+      <summary>未指定的通訊協定家族。</summary>
     </member>
     <member name="F:System.Net.Sockets.AddressFamily.VoiceView">
-      <summary>VoiceView 地址。</summary>
+      <summary>VoiceView 位址。</summary>
     </member>
     <member name="T:System.Net.Sockets.SocketError">
-      <summary>定义 <see cref="T:System.Net.Sockets.Socket" /> 类的错误代码。</summary>
+      <summary>定義 <see cref="T:System.Net.Sockets.Socket" /> 類別的錯誤碼。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.AccessDenied">
-      <summary>已试图通过被其访问权限禁止的方式访问 <see cref="T:System.Net.Sockets.Socket" />。</summary>
+      <summary>嘗試以其存取權限所禁止的方式存取 <see cref="T:System.Net.Sockets.Socket" />。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.AddressAlreadyInUse">
-      <summary>通常，只允许使用地址一次。</summary>
+      <summary>通常只允許使用位址一次。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.AddressFamilyNotSupported">
-      <summary>不支持指定的地址族。如果指定了 IPv6 地址族而未在本地计算机上安装 IPv6 堆栈，则会返回此错误。如果指定了 IPv4 地址族而未在本地计算机上安装 IPv4 堆栈，则会返回此错误。</summary>
+      <summary>不支援指定的通訊協定家族 (Family)。如果指定 IPv6 通訊協定家族而本機電腦上未安裝 IPv6 堆疊，就會傳回這個錯誤。如果指定 IPv4 通訊協定家族而本機電腦上未安裝 IPv4 堆疊，就會傳回這個錯誤。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.AddressNotAvailable">
-      <summary>选定的 IP 地址在此上下文中无效。</summary>
+      <summary>選取的 IP 位址在這個內容中無效。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.AlreadyInProgress">
-      <summary>非阻止性 <see cref="T:System.Net.Sockets.Socket" /> 已有一个操作正在进行中。</summary>
+      <summary>未封鎖的 <see cref="T:System.Net.Sockets.Socket" /> 中有一個作業尚未完成。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ConnectionAborted">
-      <summary>此连接由 .NET Framework 或基础套接字提供程序中止。</summary>
+      <summary>連接已由 .NET Framework 或基礎通訊端提供者中止。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ConnectionRefused">
-      <summary>远程主机正在主动拒绝连接。</summary>
+      <summary>遠端主機正在拒絕連接。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ConnectionReset">
-      <summary>此连接由远程对等计算机重置。</summary>
+      <summary>連接已由遠端對等個體重設。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.DestinationAddressRequired">
-      <summary>在对 <see cref="T:System.Net.Sockets.Socket" /> 的操作中省略了必需的地址。</summary>
+      <summary>所需位址已從 <see cref="T:System.Net.Sockets.Socket" /> 上的作業中省略。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.Disconnecting">
-      <summary>正常关机正在进行中。</summary>
+      <summary>非失誤性的關機尚未完成。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.Fault">
-      <summary>基础套接字提供程序检测到无效的指针地址。</summary>
+      <summary>基礎通訊端提供者偵測到無效的指標位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.HostDown">
-      <summary>由于远程主机被关闭，操作失败。</summary>
+      <summary>作業失敗，因為遠端主機已關閉。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.HostNotFound">
-      <summary>无法识别这种主机。该名称不是正式的主机名或别名。</summary>
+      <summary>沒有已知的此類主機。名稱不是正式主機名稱或別名。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.HostUnreachable">
-      <summary>没有到指定主机的网络路由。</summary>
+      <summary>沒有至指定主機的網路路由。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.InProgress">
-      <summary>阻止操作正在进行中。</summary>
+      <summary>封鎖作業尚未完成。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.Interrupted">
-      <summary>已取消阻止 <see cref="T:System.Net.Sockets.Socket" /> 调用的操作。</summary>
+      <summary>已取消封鎖 <see cref="T:System.Net.Sockets.Socket" /> 呼叫。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.InvalidArgument">
-      <summary>给 <see cref="T:System.Net.Sockets.Socket" /> 成员提供了一个无效参数。</summary>
+      <summary>向 <see cref="T:System.Net.Sockets.Socket" /> 成員提供的引數無效。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.IOPending">
-      <summary>应用程序已启动一个无法立即完成的重叠操作。</summary>
+      <summary>應用程式初始化了無法立即完成的重疊作業。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.IsConnected">
-      <summary>
-        <see cref="T:System.Net.Sockets.Socket" /> 已连接。</summary>
+      <summary>已連接 <see cref="T:System.Net.Sockets.Socket" />。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.MessageSize">
-      <summary>数据报太长。</summary>
+      <summary>資料包太長。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NetworkDown">
-      <summary>网络不可用。</summary>
+      <summary>網路無法使用。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NetworkReset">
-      <summary>应用程序尝试在已超时的连接上设置 <see cref="F:System.Net.Sockets.SocketOptionName.KeepAlive" />。</summary>
+      <summary>應用程式嘗試在已逾時的連接上設定 <see cref="F:System.Net.Sockets.SocketOptionName.KeepAlive" />。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NetworkUnreachable">
-      <summary>不存在到远程主机的路由。</summary>
+      <summary>不存在至遠端主機的路由。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NoBufferSpaceAvailable">
-      <summary>没有可用于 <see cref="T:System.Net.Sockets.Socket" /> 操作的可用缓冲区空间。</summary>
+      <summary>沒有可用於 <see cref="T:System.Net.Sockets.Socket" /> 作業的可用緩衝區空間。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NoData">
-      <summary>在名称服务器上找不到请求的名称或 IP 地址。</summary>
+      <summary>名稱伺服器上找不到所要求的名稱或 IP 位址。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NoRecovery">
-      <summary>错误不可恢复或找不到请求的数据库。</summary>
+      <summary>錯誤無法復原，或找不到所要求的資料庫。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NotConnected">
-      <summary>应用程序试图发送或接收数据，但是 <see cref="T:System.Net.Sockets.Socket" /> 未连接。</summary>
+      <summary>應用程式嘗試傳送或接收資料，而 <see cref="T:System.Net.Sockets.Socket" /> 未連接。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NotInitialized">
-      <summary>尚未初始化基础套接字提供程序。</summary>
+      <summary>基礎通訊端提供者尚未初始化。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.NotSocket">
-      <summary>对非套接字尝试 <see cref="T:System.Net.Sockets.Socket" /> 操作。</summary>
+      <summary>在非通訊端上嘗試 <see cref="T:System.Net.Sockets.Socket" /> 作業。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.OperationAborted">
-      <summary>由于 <see cref="T:System.Net.Sockets.Socket" /> 已关闭，重叠的操作被中止。</summary>
+      <summary>重疊作業因 <see cref="T:System.Net.Sockets.Socket" /> 的關閉而中止。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.OperationNotSupported">
-      <summary>协议族不支持地址族。</summary>
+      <summary>通訊協定家族不支援位址家族。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ProcessLimit">
-      <summary>正在使用基础套接字提供程序的进程过多。</summary>
+      <summary>使用基礎通訊端提供者的處理序過多。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ProtocolFamilyNotSupported">
-      <summary>未实现或未配置协议族。</summary>
+      <summary>未實作或尚未設定通訊協定家族。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ProtocolNotSupported">
-      <summary>未实现或未配置协议。</summary>
+      <summary>未實作或尚未設定通訊協定。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ProtocolOption">
-      <summary>对 <see cref="T:System.Net.Sockets.Socket" /> 使用了未知、无效或不受支持的选项或级别。</summary>
+      <summary>與 <see cref="T:System.Net.Sockets.Socket" /> 搭配使用了未知、無效或不受支援的選項或層級。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.ProtocolType">
-      <summary>此 <see cref="T:System.Net.Sockets.Socket" /> 的协议类型不正确。</summary>
+      <summary>這個 <see cref="T:System.Net.Sockets.Socket" /> 的通訊協定類型不正確。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.Shutdown">
-      <summary>发送或接收数据的请求未得到允许，因为 <see cref="T:System.Net.Sockets.Socket" /> 已被关闭。</summary>
+      <summary>不允許要求傳送或接收資料，因為 <see cref="T:System.Net.Sockets.Socket" /> 已關閉。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.SocketError">
-      <summary>发生了未指定的 <see cref="T:System.Net.Sockets.Socket" /> 错误。</summary>
+      <summary>發生未指定的 <see cref="T:System.Net.Sockets.Socket" /> 錯誤。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.SocketNotSupported">
-      <summary>在此地址族中不存在对指定的套接字类型的支持。</summary>
+      <summary>這個地址家族中不存在對指定通訊端類型的支援。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.Success">
       <summary>
-        <see cref="T:System.Net.Sockets.Socket" /> 操作成功。</summary>
+        <see cref="T:System.Net.Sockets.Socket" /> 作業已成功。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.SystemNotReady">
-      <summary>网络子系统不可用。</summary>
+      <summary>網路子系統無法使用。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.TimedOut">
-      <summary>连接尝试超时，或者连接的主机没有响应。</summary>
+      <summary>連接嘗試逾時，或連接的主機無法回應。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.TooManyOpenSockets">
-      <summary>基础套接字提供程序中打开的套接字太多。</summary>
+      <summary>基礎通訊端提供者中開啟的通訊端過多。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.TryAgain">
-      <summary>无法解析主机名。请稍后再试。</summary>
+      <summary>無法解析主機的名稱。請稍後再試。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.TypeNotFound">
-      <summary>未找到指定的类。</summary>
+      <summary>找不到指定的類別。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.VersionNotSupported">
-      <summary>基础套接字提供程序的版本超出范围。</summary>
+      <summary>基礎通訊端提供者的版本超出範圍。</summary>
     </member>
     <member name="F:System.Net.Sockets.SocketError.WouldBlock">
-      <summary>对非阻止性套接字的操作不能立即完成。</summary>
+      <summary>無法立即完成未封鎖通訊端上的作業。</summary>
     </member>
     <member name="T:System.Net.Sockets.SocketException">
-      <summary>发生套接字错误时引发的异常。</summary>
+      <summary>發生通訊端錯誤時所擲回的例外狀況。</summary>
     </member>
     <member name="M:System.Net.Sockets.SocketException.#ctor">
-      <summary>用最后一个操作系统错误代码初始化 <see cref="T:System.Net.Sockets.SocketException" /> 类的新实例。</summary>
+      <summary>使用最後一個作業系統錯誤碼，初始化 <see cref="T:System.Net.Sockets.SocketException" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Net.Sockets.SocketException.#ctor(System.Int32)">
-      <summary>用指定的错误代码初始化 <see cref="T:System.Net.Sockets.SocketException" /> 类的新实例。</summary>
-      <param name="errorCode">指示发生的错误的错误代码。</param>
+      <summary>使用指定的錯誤碼，初始化 <see cref="T:System.Net.Sockets.SocketException" /> 類別的新執行個體。</summary>
+      <param name="errorCode">錯誤碼，表示發生的錯誤。</param>
     </member>
     <member name="P:System.Net.Sockets.SocketException.Message">
-      <summary>获取与此异常相关联的错误消息。</summary>
-      <returns>包含错误消息的字符串。</returns>
+      <summary>取得與這個例外狀況關聯的錯誤訊息。</summary>
+      <returns>包含錯誤訊息的字串。</returns>
     </member>
     <member name="P:System.Net.Sockets.SocketException.SocketErrorCode">
-      <summary>获取与此异常关联的错误代码。</summary>
-      <returns>与此异常关联的整数错误代码。</returns>
+      <summary>取得與這個例外狀況關聯的錯誤碼。</summary>
+      <returns>與這個例外狀況關聯的整數錯誤碼。</returns>
     </member>
     <member name="T:System.Security.Authentication.CipherAlgorithmType">
-      <summary>为 <see cref="T:System.Net.Security.SslStream" /> 类定义可能的密码算法。</summary>
+      <summary>定義 <see cref="T:System.Net.Security.SslStream" /> 類別可能的 Cipher 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Aes">
-      <summary>高级加密标准 (AES) 算法。</summary>
+      <summary>先進加密標準 (Advanced Encryption Standard，AES) 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Aes128">
-      <summary>具有 128 位密钥的高级加密标准 (AES) 算法。</summary>
+      <summary>使用 128 位元金鑰的先進加密標準 (AES) 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Aes192">
-      <summary>具有 192 位密钥的高级加密标准 (AES) 算法。</summary>
+      <summary>使用 192 位元金鑰的先進加密標準 (AES) 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Aes256">
-      <summary>具有 256 位密钥的高级加密标准 (AES) 算法。</summary>
+      <summary>使用 256 位元金鑰的先進加密標準 (AES) 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Des">
-      <summary>数据加密标准 (DES) 算法。</summary>
+      <summary>資料加密標準 (Data Encryption Standard，DES) 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.None">
-      <summary>未使用加密算法。</summary>
+      <summary>未使用加密演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Null">
-      <summary>没有哪种加密是使用的 Null 密码算法。</summary>
+      <summary>Null Cipher 演算法未使用任何加密。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Rc2">
-      <summary>Rivest 代码 2 (RC2) 算法。</summary>
+      <summary>Rivest's Code 2 (RC2) 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.Rc4">
-      <summary>Rivest 代码 4 (RC4) 算法。</summary>
+      <summary>Rivest's Code 4 (RC4) 演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.CipherAlgorithmType.TripleDes">
-      <summary>三重数据加密标准 (3DES) 算法。</summary>
+      <summary>三重資料加密標準 (Triple Data Encryption Standard，3DES) 演算法。</summary>
     </member>
     <member name="T:System.Security.Authentication.ExchangeAlgorithmType">
-      <summary>指定算法，该算法用于创建客户端和服务器的共享密钥。</summary>
+      <summary>指定用來建立由用戶端和伺服器端共用之金鑰的演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.ExchangeAlgorithmType.DiffieHellman">
-      <summary>Diffie Hellman 短周期密钥交换算法。</summary>
+      <summary>Diffie Hellman 短暫金鑰交換演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.ExchangeAlgorithmType.None">
-      <summary>未使用密钥交换算法。</summary>
+      <summary>未使用金鑰交換演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.ExchangeAlgorithmType.RsaKeyX">
-      <summary>RSA 公钥交换算法。</summary>
+      <summary>RSA 公開金鑰交換演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.ExchangeAlgorithmType.RsaSign">
-      <summary>RSA 公钥签名算法。</summary>
+      <summary>RSA 公開金鑰簽章演算法。</summary>
     </member>
     <member name="T:System.Security.Authentication.HashAlgorithmType">
-      <summary>指定用于生成消息身份验证代码 (MAC) 的算法。</summary>
+      <summary>指定用於產生訊息驗證碼 (MAC) 的演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.HashAlgorithmType.Md5">
-      <summary>消息摘要 5 (MD5) 哈希算法。</summary>
+      <summary>訊息摘要 5 (Message Digest 5，MD5) 雜湊演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.HashAlgorithmType.None">
-      <summary>未使用哈希算法。</summary>
+      <summary>未使用雜湊演算法。</summary>
     </member>
     <member name="F:System.Security.Authentication.HashAlgorithmType.Sha1">
-      <summary>安全哈希算法 (SHA1)。</summary>
+      <summary>安全雜湊演算法 (Secure Hashing Algorithm，SHA1)。</summary>
     </member>
     <member name="T:System.Security.Authentication.SslProtocols">
-      <summary>定义 <see cref="T:System.Security.Authentication.SslProtocols" /> 的可能版本。</summary>
+      <summary>定義 <see cref="T:System.Security.Authentication.SslProtocols" /> 的可能版本。</summary>
     </member>
     <member name="F:System.Security.Authentication.SslProtocols.None">
-      <summary>未指定 SSL 协议。</summary>
+      <summary>沒有指定的 SSL 通訊協定。</summary>
     </member>
     <member name="F:System.Security.Authentication.SslProtocols.Ssl2">
-      <summary>指定 SSL 2.0 协议。SSL 2.0 已由 TLS 协议取代，之所以仍然提供这个方法，只是为了向后兼容。</summary>
+      <summary>指定 SSL 2.0 通訊協定。SSL 2.0 已被 TLS 通訊協定取代，且只提供做為回溯相容性之用。</summary>
     </member>
     <member name="F:System.Security.Authentication.SslProtocols.Ssl3">
-      <summary>指定 SSL 3.0 协议。SSL 3.0 已由 TLS 协议取代，之所以仍然提供这个方法，只是为了向后兼容。</summary>
+      <summary>指定 SSL 3.0 通訊協定。SSL 3.0 已被 TLS 通訊協定取代，且只提供做為回溯相容性之用。</summary>
     </member>
     <member name="F:System.Security.Authentication.SslProtocols.Tls">
-      <summary>指定 TLS 1.0 安全协议。TLS 协议在 IETF RFC 2246 中定义。</summary>
+      <summary>指定 TLS 1.0 安全通訊協定。TLS 通訊協定是在 IETF RFC 2246 中定義。</summary>
     </member>
     <member name="F:System.Security.Authentication.SslProtocols.Tls11">
-      <summary>指定 TLS 1.1 安全协议。TLS 协议在 IETF RFC 4346 中定义。</summary>
+      <summary>指定 TLS 1.1 安全通訊協定。TLS 通訊協定是在 IETF RFC 4346 中定義。</summary>
     </member>
     <member name="F:System.Security.Authentication.SslProtocols.Tls12">
-      <summary>指定 TLS 1.2 安全协议。TLS 协议在 IETF RFC 5246 中定义。</summary>
+      <summary>指定 TLS 1.2 安全通訊協定。TLS 通訊協定是在 IETF RFC 5246 中定義。</summary>
     </member>
     <member name="T:System.Security.Authentication.ExtendedProtection.ChannelBinding">
       <summary>
-        <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 类，该类封装指向用于将经过身份验证的事务绑定到安全通道的不透明数据的指针。</summary>
+        <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 類別會封裝不透明資料的指標，此資料用來將已驗證的交易繫結至安全的通道。</summary>
     </member>
     <member name="M:System.Security.Authentication.ExtendedProtection.ChannelBinding.#ctor">
-      <summary>初始化 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 类的新实例。</summary>
+      <summary>初始化 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 類別的新執行個體。</summary>
     </member>
     <member name="M:System.Security.Authentication.ExtendedProtection.ChannelBinding.#ctor(System.Boolean)">
-      <summary>初始化 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 类的新实例。</summary>
-      <param name="ownsHandle">一个布尔值，该值指示应用程序是否拥有本机内存区域的安全句柄，此内存区域包含将传递给本机调用的字节数据，而这些本机调用可为集成 Windows 身份验证提供扩展保护。</param>
+      <summary>初始化 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 類別的新執行個體。</summary>
+      <param name="ownsHandle">一種布林值，表示應用程式是否擁有包含位元組資料之原生記憶體區域的安全控制代碼。該位元組資料會傳遞至提供整合式 Windows 驗證延伸保護的原生呼叫。</param>
     </member>
     <member name="P:System.Security.Authentication.ExtendedProtection.ChannelBinding.Size">
       <summary>
-        <see cref="P:System.Security.Authentication.ExtendedProtection.ChannelBinding.Size" /> 属性获取与 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 实例关联的通道绑定令牌的大小（以字节为单位）。</summary>
+        <see cref="P:System.Security.Authentication.ExtendedProtection.ChannelBinding.Size" /> 屬性會取得與 <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 執行個體相關聯之通道繫結語彙基元的大小 (以位元組為單位)。</summary>
       <returns>
-        <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 实例中的通道绑定令牌的大小（以字节为单位）。</returns>
+        <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBinding" /> 執行個體中之通道繫結語彙基元的大小 (以位元組為單位)。</returns>
     </member>
     <member name="T:System.Security.Authentication.ExtendedProtection.ChannelBindingKind">
       <summary>
-        <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBindingKind" /> 枚举，它表示可从安全通道查询的通道绑定的类型。</summary>
+        <see cref="T:System.Security.Authentication.ExtendedProtection.ChannelBindingKind" /> 列舉，代表可透過安全通道加以查詢的通道繫結種類。</summary>
     </member>
     <member name="F:System.Security.Authentication.ExtendedProtection.ChannelBindingKind.Endpoint">
-      <summary>给定终结点的唯一通道绑定（如 TLS 服务器证书）。</summary>
+      <summary>指定端點的專屬通道繫結 (例如 TLS 伺服器憑證)。</summary>
     </member>
     <member name="F:System.Security.Authentication.ExtendedProtection.ChannelBindingKind.Unique">
-      <summary>给定通道的完全唯一通道绑定（如 TLS 会话密钥）。</summary>
+      <summary>完全僅供指定通道使用的通道繫結 (例如 TLS 工作階段金鑰)。</summary>
     </member>
     <member name="F:System.Security.Authentication.ExtendedProtection.ChannelBindingKind.Unknown">
-      <summary>未知的通道绑定类型。</summary>
+      <summary>未知的通道繫結型別。</summary>
     </member>
   </members>
 </doc>

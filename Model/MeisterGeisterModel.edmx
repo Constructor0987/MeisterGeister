@@ -958,6 +958,14 @@
     <Property Name="Auftreten" Type="nvarchar" MaxLength="1000" />
     <Property Name="AT" Type="int" Nullable="false" />
     <Property Name="FK" Type="int" Nullable="false" />
+    <Property Name="MU" Type="int" />
+    <Property Name="IN" Type="int" />
+    <Property Name="CH" Type="int" />
+    <Property Name="FF" Type="int" />
+    <Property Name="GE" Type="int" />
+    <Property Name="KK" Type="int" />
+    <Property Name="SO" Type="int" />
+    <Property Name="KL" Type="int" />
   </EntityType>
   <EntityType Name="GegnerBase_Angriff">
     <Key>
@@ -4332,6 +4340,14 @@
     <Property Name="Auftreten" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
     <Property Name="AT" Type="Int32" Nullable="false" />
     <Property Name="FK" Type="Int32" Nullable="false" />
+    <Property Name="MU" Type="Int32" />
+    <Property Name="IN" Type="Int32" />
+    <Property Name="CH" Type="Int32" />
+    <Property Name="FF" Type="Int32" />
+    <Property Name="GE" Type="Int32" />
+    <Property Name="KK" Type="Int32" />
+    <Property Name="SO" Type="Int32" />
+    <Property Name="KL" Type="Int32" />
     <NavigationProperty Name="Beschwörbares" Relationship="DatabaseDSAModel.FK__Beschwörbares__0000000000000B97" FromRole="GegnerBase" ToRole="Beschwörbares" />
     <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="GegnerBase" ToRole="Gegner" />
     <NavigationProperty Name="GegnerBase_Zauber" Relationship="DatabaseDSAModel.FK__GegnerBase_Zauber__0000000000000FC4" FromRole="GegnerBase" ToRole="GegnerBase_Zauber" />
@@ -7066,6 +7082,14 @@
           <ScalarProperty Name="Auftreten" ColumnName="Auftreten" />
           <ScalarProperty Name="AT" ColumnName="AT" />
           <ScalarProperty Name="FK" ColumnName="FK" />
+          <ScalarProperty Name="MU" ColumnName="MU" />
+          <ScalarProperty Name="IN" ColumnName="IN" />
+          <ScalarProperty Name="CH" ColumnName="CH" />
+          <ScalarProperty Name="FF" ColumnName="FF" />
+          <ScalarProperty Name="GE" ColumnName="GE" />
+          <ScalarProperty Name="KK" ColumnName="KK" />
+          <ScalarProperty Name="SO" ColumnName="SO" />
+          <ScalarProperty Name="KL" ColumnName="KL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -8054,7 +8078,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="596c2d9837d0479ca3f44fbb93eceb29" Name="Diagram1" ZoomLevel="92">
+      <Diagram DiagramId="9f32997909f94fbf961e3093cce9a91d" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="2.75" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="7.25" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="5" PointY="11.75" IsExpanded="true" />
@@ -8081,11 +8105,11 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="62.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="21" PointY="35.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="23.25" PointY="46.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="18.75" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="18.75" PointY="32.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="21" PointY="45.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="21" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="21" PointY="23.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="24" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Zauber" Width="1.5" PointX="24" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Zauber" Width="1.5" PointX="24" PointY="23.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="13.75" PointY="12.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="16" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="22.875" IsExpanded="true" />

@@ -18,7 +18,7 @@
             SliderMinimum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMinValue}" 
             SliderMaximum="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderMaxValue}"  
             SliderValue="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderValue, Mode=TwoWay}" 
-            SliderTickFrequency="{Binding ElementName=_SliderWithDisplayTextBox, Path=TickFrequencyValue}" />
+            SliderTickFrequency="{Binding ElementName=_SliderWithDisplayTextBox, Path=TickFrequencyValue}"/>
         <!--SliderIsSnapToTickEnabled="True"-->
 
         <Label Content="{Binding ElementName=_SliderWithDisplayTextBox, Path=SliderLabelTextValue}" Margin="10,0,45,0" Padding="0" Name="label1" FontSize="10" Grid.ColumnSpan="2" Height="18" VerticalAlignment="Top" />

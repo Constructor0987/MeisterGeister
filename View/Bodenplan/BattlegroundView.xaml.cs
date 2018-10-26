@@ -357,7 +357,7 @@ namespace MeisterGeister.View.Bodenplan
                 if (vm != null) vm.LoadBattlegroundFromXML(dlg.FileName);
             }
             AddPictureButtons(); //reload new pictures
-            
+            VM.SelectedObject = null;
         }
 
         private void Button_Reset_Click(object sender, RoutedEventArgs e)
@@ -658,7 +658,10 @@ namespace MeisterGeister.View.Bodenplan
                 }
             }
             catch (Exception ex)
-            { ViewHelper.ShowError("Fehler beim Pre-Loslassen der Linken Maustaste", ex); }
+            { ViewHelper.ShowError("Fehler beim Pre-Loslassen der Linken Maustaste", ex);
+                MouseClickedOnCreature = true;
+                e.Handled = true;
+            }
         }
 
         private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -785,8 +788,7 @@ namespace MeisterGeister.View.Bodenplan
                             else ((Wesen)VM.SelectedObject).Position = Position.Stehend;
                         }
                         VM.UpdateCreaturesFromChangedKampferlist();
-
-
+                        
                         VM.FinishCurrentTempPathLine();
                         e.Handled = true;
                         //VM.CreatingNewLine = false;
@@ -961,12 +963,23 @@ namespace MeisterGeister.View.Bodenplan
                         img.Width = (VM.SelectedObject as BattlegroundCreature).CreatureWidth * ArenaScrollViewer.Zoom * dx;
                         img.Height = (VM.SelectedObject as BattlegroundCreature).CreatureHeight * ArenaScrollViewer.Zoom * dy;
                         img.Stretch = Stretch.Fill;
-                        string pic = (ArenaGrid.SelectedItem as IKämpfer).Bild ?? "pack://application:,,," + "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
-                        
-                        if (!pic.StartsWith("/") && !File.Exists(pic))
-                            pic = "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
-                        img.Source = new BitmapImage(new Uri(pic.StartsWith("/")? "pack://application:,,," + pic: pic)); 
-                        cKämpfer = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                        try
+                        {
+                            string pic = (ArenaGrid.SelectedItem as IKämpfer).Bild ?? "pack://application:,,," + "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+
+                            if (!pic.StartsWith("/") && !File.Exists(pic))
+                                pic = "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                            //= new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Bodenplan/FogOfWar.png", UriKind.Absolute);
+                            img.Source = new BitmapImage(new Uri(pic.StartsWith("/") ? "pack://application:,,," + pic : pic));
+                            cKämpfer = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                        }
+                        catch (Exception ex)
+                        {
+                            ViewHelper.ShowError("IMAGE Fehler" + Environment.NewLine + "Beim Creieren des Icons von " + (VM.SelectedObject as BattlegroundCreature).ki.Kämpfer.Name  + 
+                                " ist ein Fehler aufgetreten." + Environment.NewLine + "pic: " + (ArenaGrid.SelectedItem as IKämpfer).Bild, ex);
+                            img.Source = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png", UriKind.Absolute));
+                            cKämpfer = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                        }
                     }
                     if (cKämpfer != null)
                     {

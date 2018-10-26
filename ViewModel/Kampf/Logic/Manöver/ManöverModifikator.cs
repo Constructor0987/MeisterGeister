@@ -65,9 +65,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             get { return value; }
             set
             {
-                Set(ref this.value, value);                    
+                T oldValue = value;
+                Set(ref this.value, value);
                 // berechne gesamt...
-                base.manöver.GetGesamt = CalcModifikator();            
+                if ((manöver.Ausführender.Kämpfer as Bodenplan.Logic.BattlegroundCreature).IsSelected)
+                    base.manöver.GetGesamt = CalcModifikator();
             }
         }
     }

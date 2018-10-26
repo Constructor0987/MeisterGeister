@@ -260,6 +260,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
 
+
         private bool _istUnsichtbar = false;
         public bool IstUnsichtbar
         {
@@ -278,6 +279,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        private double _lightCreatureX = 0;
+        public double LightCreatureX
+        {
+            get { return _lightCreatureX; }
+            set { Set(ref _lightCreatureX, value); }
+        }
+        private double _lightCreatureY = 0;
+        public double LightCreatureY
+        {
+            get { return _lightCreatureY; }
+            set { Set(ref _lightCreatureY, value); }
+        }
+
         private double _lichtquellePixel = 0;
         public double LichtquellePixel
         {
@@ -285,12 +299,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 Set(ref _lichtquellePixel, value);
-                LichtquellePixelRadius = 10 + value + value + 
-                    (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).CreatureWidth;
-                (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).MidCreatureX = (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).CreatureX - LichtquellePixel;
-                (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).MidCreatureY = (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Bodenplan.Logic.BattlegroundCreature).CreatureY - LichtquellePixel;
+                Bodenplan.Logic.BattlegroundCreature bgC = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
+                    .Where(t => t is Bodenplan.Logic.BattlegroundCreature)
+                    .FirstOrDefault(s => (s as Bodenplan.Logic.BattlegroundCreature).ki == this) as Bodenplan.Logic.BattlegroundCreature);
 
-                if (LichtquelleMeter != value / 100) LichtquelleMeter = value / 100;
+                LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
+                LightCreatureX = bgC.CreatureX - LichtquellePixel;
+                LightCreatureY = bgC.CreatureY - LichtquellePixel;
+
+                if (LichtquelleMeter != value / 100) LichtquelleMeter = value / 100;                
             }
         }
 

@@ -11,10 +11,27 @@ namespace MeisterGeister.Model
     {
         #region //---- PROBE ----
 
+        private int GetEigenschaft(string E)
+        {
+            return
+                E == "MU" ? GegnerBase.MU ?? 10 :
+                E == "KL" ? GegnerBase.KL ?? 10 :
+                E == "IN" ? GegnerBase.IN ?? 10 :
+                E == "CH" ? GegnerBase.CH ?? 10 :
+                E == "FF" ? GegnerBase.FF ?? 10 :
+                E == "GE" ? GegnerBase.GE ?? 10 :
+                E == "KO" ? GegnerBase.KO :
+                E == "KK" ? GegnerBase.KK ?? 10 : 10;
+
+        }
+
         [DependentProperty("Zauber")]
         override public string Probenname
         {
-            get { return Zauber != null ? string.Format("{0} [{1}|{2}|{3}]", Zauber.Name, E1TW, E2TW, E3TW) : string.Empty; }
+            get { return Zauber != null ? string.Format("{0} [{1}|{2}|{3}]", Zauber.Name, 
+                GetEigenschaft(Zauber.Eigenschaft1), 
+                GetEigenschaft(Zauber.Eigenschaft2), 
+                GetEigenschaft(Zauber.Eigenschaft3)) : string.Empty; }
             set
             {
                 if (Zauber != null)
@@ -31,9 +48,9 @@ namespace MeisterGeister.Model
                     _werte = new int[3];
                 if (GegnerBase != null && Zauber != null)
                 {
-                    _werte[0] = E1TW ?? 10;
-                    _werte[1] = E2TW ?? 10;
-                    _werte[2] = E3TW ?? 10;
+                    _werte[0] = GetEigenschaft(Zauber.Eigenschaft1);
+                    _werte[1] = GetEigenschaft(Zauber.Eigenschaft2);
+                    _werte[2] = GetEigenschaft(Zauber.Eigenschaft3);
                 }
                 return _werte;
             }

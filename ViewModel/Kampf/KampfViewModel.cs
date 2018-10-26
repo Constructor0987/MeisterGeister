@@ -115,7 +115,9 @@ namespace MeisterGeister.ViewModel.Kampf
         public ManöverInfo SelectedManöverInfo 
         {
             get { return _selectedManöverInfo; }
-            set { Set(ref _selectedManöverInfo, value); 
+            set
+            {
+                Set(ref _selectedManöverInfo, value); 
                 SelectedKämpfer = value != null? value.Manöver.Ausführender: null;
             }
         }

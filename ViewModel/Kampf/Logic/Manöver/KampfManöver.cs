@@ -48,12 +48,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         private void UpdateLicht()
         {
-            ((ManöverModifikator<Lichtstufe, TWaffe>)Mods[LICHT_MOD]).Value = Ausführender.Kampf.Licht;
+            if (((ManöverModifikator<Lichtstufe, TWaffe>)Mods[LICHT_MOD]).Value != Ausführender.Kampf.Licht)
+                ((ManöverModifikator<Lichtstufe, TWaffe>)Mods[LICHT_MOD]).Value = Ausführender.Kampf.Licht;
         }
 
         private void UpdateSicht()
         {
-            ((ManöverModifikator<Sichtstufe, TWaffe>)Mods[SICHT_MOD]).Value = Ausführender.Kampf.Sicht;
+            if (((ManöverModifikator<Sichtstufe, TWaffe>)Mods[SICHT_MOD]).Value != Ausführender.Kampf.Sicht)
+                ((ManöverModifikator<Sichtstufe, TWaffe>)Mods[SICHT_MOD]).Value = Ausführender.Kampf.Sicht;
         }
 
         private void UpdatePositionSelbst()

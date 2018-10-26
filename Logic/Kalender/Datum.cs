@@ -28,6 +28,13 @@ namespace MeisterGeister.Logic.Kalender
             }
         }
 
+        private string shortDatum = null;
+        public  string ShortDatum
+        {
+            get { return shortDatum; }
+            set { shortDatum = value; }
+        }
+
         private int _jahr = 993;
         /// <summary>
         /// Jahr in BF.

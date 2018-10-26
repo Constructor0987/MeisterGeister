@@ -1084,6 +1084,7 @@ namespace MeisterGeister.ViewModel.Kampf
         }
         private void AudioSpeedButtonWesenZuweisen(object args)
         {
+            
             PlaylistWesenAuswahlView wesenAuswahlView = new PlaylistWesenAuswahlView(SelectedGegnerBase);
             wesenAuswahlView.ShowDialog();
             //OnChanged("WesenPlaylist");

@@ -14,7 +14,7 @@ Lederharnisch (Rüstung)',NULL,NULL,NULL,NULL,NULL,NULL,0,0);
 GO
 INSERT INTO [GegnerBase] ([GegnerBaseGUID],[Name],[Typ],[Bild],[INIBasis],[INIZufall],[Aktionen],[PA],[LE],[AU],[AE],[KE],[KO],[MRGeist],[MRKörper],[GS],[GS2],[GS3],[RSKopf],[RSBrust],[RSRücken],[RSArmL],[RSArmR],[RSBauch],[RSBeinL],[RSBeinR],[GW],[Jagd],[Tags],[Bemerkung],[Literatur],[Setting],[Verbreitung],[Jagdreaktion],[Beute],[Auftreten],[AT],[FK]) VALUES (N'00000000-0000-0000-006e-000000100176',N'Höhlenbär',NULL,N'/DSA MeisterGeister;component/Images/Wesen/baer.png',6,N'1W6',2,0,70,30,0,0,20,4,6,8,NULL,NULL,3,3,3,3,3,3,3,3,NULL,NULL,N'Bär',N'AT 11
 Doppelangriff (Tatzen), Niederwerfen (Tatze, 5), großer Gegner, Gelände (Höhle)
-* Den Biss setzt der Bär nur nach einem gelungenen Doppelangriff oder gegen am Boden liegende Gegner ein.',NULL,NULL,NULL,NULL,NULL,NULL,0,0);;
+* Den Biss setzt der Bär nur nach einem gelungenen Doppelangriff oder gegen am Boden liegende Gegner ein.',NULL,NULL,NULL,NULL,NULL,NULL,0,0);
 GO
 INSERT INTO [GegnerBase] ([GegnerBaseGUID],[Name],[Typ],[Bild],[INIBasis],[INIZufall],[Aktionen],[PA],[LE],[AU],[AE],[KE],[KO],[MRGeist],[MRKörper],[GS],[GS2],[GS3],[RSKopf],[RSBrust],[RSRücken],[RSArmL],[RSArmR],[RSBauch],[RSBeinL],[RSBeinR],[GW],[Jagd],[Tags],[Bemerkung],[Literatur],[Setting],[Verbreitung],[Jagdreaktion],[Beute],[Auftreten],[AT],[FK]) VALUES (N'00000000-0000-0000-006e-000000100226',N'Wolf',NULL,N'/DSA MeisterGeister;component/Images/Wesen/wolf.png',9,N'1W6',2,0,23,100,0,0,11,1,NULL,12,NULL,NULL,2,2,2,2,2,2,2,2,NULL,NULL,NULL,N'Auftreten: 1W6+2 Tiere, im Winter bis zu 1W20+10 Tiere
 Gezielter Angriff / Verbeißen / Niederwerfen (4), Niederwerfen (0)

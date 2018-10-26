@@ -873,6 +873,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             /// Start- bzw. Ziel-Volume beim Starten des Fadings zum Check des Offsets
             /// </summary>
             public double lookupVol;
+
+            public double fadingTime = 0;
             /// <summary>
             /// Falls das Volume während des Fadings geändert wird
             /// </summary>
@@ -1222,7 +1224,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
 
         private bool _showHotkeyPanel = false;
-        [DependentProperty("hotkeyListUsed")]//, DependentProperty("hotkeyListUsed")]
+        [DependentProperty("hotkeyListUsed")]
         public bool ShowHotkeyPanel
         {
             get { return _showHotkeyPanel; }
@@ -1287,7 +1289,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 Set(ref _hotkeyListUsed, value);
                 ShowHotkeyPanel = ShowHotkeyPanel;                
             }
-
         }
         private bool _setHintergrundmusik;
         public bool SetHintergrundmusik
@@ -5106,7 +5107,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 fadInfo.lookupVol = BGPlayerVolume;
                 fadInfo.fadingOutSofort = sofort;
                 fadInfo.mPlayerStoppen = playerStoppen;
-
                 if (BG.aData.isPlaying() && BG.aData == FadingIn_Started)
                 {
                     fadInfo.startVol = FadingIn_Started.getVolume();
@@ -5114,6 +5114,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }
                 else
                     fadInfo.startVol = BG.aData.getVolume();
+
+                fadInfo.fadingTime = (BG.aData.getLength() * 1/3 < fadingTime * 10) ? BG.aData.getLength() * 1 / 30 : fadingTime;
 
                 dtimer.Tag = fadInfo;
                 dtimer.Start();
@@ -5165,7 +5167,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 if (fadInfo.aData != null)
                 {
                     double aktVol = fadInfo.Offset/100 +
-                        (fadingTime != 0? fadInfo.startVol - fadInfo.startVol * (_vergangeneZeit / (fadingTime * fadingIntervall)) : 0);
+                        (fadInfo.fadingTime != 0? fadInfo.startVol - fadInfo.startVol * (_vergangeneZeit / (fadInfo.fadingTime * fadingIntervall)) : 0);
                     
                     aktVol = aktVol < 0 ? 0 : aktVol;
 
@@ -5245,8 +5247,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             else
             {
                 aData.setVolume(0);
-            }
-            
+            }                   
+            fadInInfo.fadingTime = (aData.getLength() * 1 / 3 < fadingTime * 10) ? aData.getLength() * 1 / 30 : fadingTime;              // Fading auf 1/3 der Liedlänge kürzen
+
             if (!(fadOut != null && fadOut.IsEnabled))
                 aData.Play();
 
@@ -5282,7 +5285,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             double _vergangeneZeit = DateTime.Now.Subtract(fadInfo.Start).TotalMilliseconds;
 
             double aktVol = fadInfo.Offset/100 + 
-                (fadingTime != 0? fadInfo.zielVol * ((_vergangeneZeit / (fadingTime * fadingIntervall)) + fadInfo.startVol) : fadInfo.zielVol);
+                (fadInfo.fadingTime != 0? fadInfo.zielVol * ((_vergangeneZeit / (fadInInfo.fadingTime * fadingIntervall)) + fadInfo.startVol) : fadInfo.zielVol);
 
             if (fadInfo.lookupVol != BGPlayerVolume)
             {
@@ -5341,6 +5344,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 fadInfo.lookupVol = klZeile.aPlaylistTitel.Audio_Playlist.Hintergrundmusik ? BGPlayerVolume : klZeile.aData.getVolume();
                 if (!klZeile.aPlaylistTitel.Audio_Playlist.Hintergrundmusik)
                     fadInfo.lookupVol = klZeile.aData.getVolume();
+                
+                fadInfo.fadingTime = (fadInfo.aData.getLength() * 1 / 3 < fadingTime * 10) ? fadInfo.aData.getLength() * 1 / 30 : fadingTime;               // Fading auf 1/3 der Liedlänge kürzen
 
                 _timerFadingOut.Tag = fadInfo;
                 _timerFadingOut.Start();
@@ -5569,7 +5574,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 if (fadInfo.aData != null)
                 {
                     double aktVol = fadInfo.Offset/100 +
-                        (fadingTime != 0 ? fadInfo.startVol - fadInfo.startVol * (_vergangeneZeit / (fadingTime * fadingIntervall)) : 0);
+                        (fadInfo.fadingTime != 0 ? fadInfo.startVol - fadInfo.startVol * (_vergangeneZeit / (fadInfo.fadingTime * fadingIntervall)) : 0);
                     aktVol = aktVol < 0 ? 0 : aktVol;
 
                     if (fadInfo.lookupVol != BGPlayerVolume)
@@ -5587,8 +5592,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         {                            
                             fadInfo.aData.Stop();
                             Player_Ended(fadInfo.aData, null);
-                            fadInfo.aData.setPosition(0);                                                      
-                            fadInfo.klZeile.audioZeileVM.Progress = 0;
+                            fadInfo.aData.setPosition(0);
+                            if (fadInfo.klZeile.audioZeileVM != null) fadInfo.klZeile.audioZeileVM.Progress = 0;
                             fadInfo.aData.Close();
                         }
                         if (!fadInfo.mPlayerStoppen && fadInfo.klZeile.FadingOutStarted)
@@ -5642,9 +5647,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 };                
                 
                 //Bei Musikplaylists die Endposition vor Fading überprüfen
-                if ((MusikAktiv.aData.getPosition() + TimeSpan.FromMilliseconds(fadingTime * fadingIntervall).TotalMilliseconds >= MusikAktiv.aData.getLength()) ||
+                if ((MusikAktiv.aData.getPosition() + TimeSpan.FromMilliseconds(fadInInfo.fadingTime * fadingIntervall).TotalMilliseconds >= MusikAktiv.aData.getLength()) ||
                     (BGPlayer.AktPlaylistTitel != null && BGPlayer.AktPlaylistTitel.TeilAbspielen && MusikAktiv.aData.getPosition() +
-                    TimeSpan.FromMilliseconds(fadingTime * fadingIntervall).TotalMilliseconds >= BGPlayer.AktPlaylistTitel.TeilEnde))
+                    TimeSpan.FromMilliseconds(fadInInfo.fadingTime * fadingIntervall).TotalMilliseconds >= BGPlayer.AktPlaylistTitel.TeilEnde))
                 {
                     Info_BGTitel = null;
                     SelectedMusikTitelItem = GetNextMusikTitel();
@@ -7333,7 +7338,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
             if (grpobj.visuell)
             {
-                klZeile.audioZeileVM = LbEditorAudioZeilenListe.First(t => t.aPlayTitel == playlisttitel);
+                klZeile.audioZeileVM = LbEditorAudioZeilenListe.First(t => t.aPlayTitel.Audio_Titel.Datei == playlisttitel.Audio_Titel.Datei);//aPlayTitel == playlisttitel);
                 klZeile.audioZeileVM.grpobj = grpobj;
                 if (AudioInAnderemPfadSuchen &&
                     !File.Exists(klZeile.aPlaylistTitel.Audio_Titel.Pfad + "\\" + (klZeile.aPlaylistTitel.Audio_Titel.Datei == null ? "" : klZeile.aPlaylistTitel.Audio_Titel.Datei)))

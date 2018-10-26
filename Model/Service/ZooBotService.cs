@@ -67,8 +67,6 @@ namespace MeisterGeister.Model.Service
             var l2 = l.Where(p => p.Contains(dgCoords, tolerance)).SelectMany(p => p.Gebiet).Distinct();
             return l2;
         }
-        
-
 
         public List<Landschaftsgruppe> GetLandschaftsgruppen()
         {
@@ -105,4 +103,3 @@ namespace MeisterGeister.Model.Service
 
 }
 }
-
