@@ -14,7 +14,7 @@
     x:Name="view"
     d:DesignHeight="1100"
     d:DesignWidth="1280"
-    Unloaded="view_Unloaded"
+    Unloaded="View_Unloaded"
     mc:Ignorable="d">
     <!--  KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp"  -->
     <UserControl.Resources>

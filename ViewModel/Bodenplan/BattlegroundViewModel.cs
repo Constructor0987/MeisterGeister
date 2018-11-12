@@ -25,6 +25,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 {
     public class BattlegroundViewModel : Base.ViewModelBase, IDisposable
     {
+        public const int ARENA_GRID_RESOLUTION = 10000;
         private bool _creatingNewFilledLine;
 
         private bool _creatingNewLine;
@@ -38,7 +39,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         //Vielleicht als Enum, wenn mehr als zwei Modi gebraucht werden? JO
         private bool _isEditorModeEnabled = true;
 
-        //Move Objects
         private bool _isMoving;
 
         private bool _leftShiftPressed = false;
@@ -125,7 +125,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set
             {
                 Set(ref _isEditorModeEnabled, value);
-                //Ressources.SetEditorMode(ref _battlegroundObjects, _isEditorModeEnabled);
             }
         }
 
@@ -196,7 +195,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             return imageobject;
         }
 
-        public PathLine CreateNewTempPathLine(double x1, double y1)
+        public void CreateNewTempPathLine(double x1, double y1)
         {
             var th = (SelectedObject as BattlegroundCreature).CreatureHeight <= (SelectedObject as BattlegroundCreature).CreatureWidth ?
                 (SelectedObject as BattlegroundCreature).CreatureHeight : (SelectedObject as BattlegroundCreature).CreatureWidth;
@@ -210,11 +209,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             };
             SelectedTempObject = pathline;
             BattlegroundObjects.Add(pathline);
-
-            return pathline;
         }
 
-        public TextLabel CreateNewTempTextLabel(double x1, double y1)
+        public void CreateNewTempTextLabel(double x1, double y1)
         {
             var label = new TextLabel("0 Schritt", x1, y1)
             {
@@ -222,8 +219,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 LabelWidth = 200
             };
             BattlegroundObjects.Add(label);
-
-            return label;
         }
 
         public void FinishCurrentPathLine()
@@ -266,7 +261,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        //brings selected Object to Top and calls UpdateCreatureLevelToTop
+        /// <summary>
+        /// brings selected Object to Top and calls UpdateCreatureLevelToTop
+        /// </summary>
+        /// <param name="toTop"></param>
         public void MoveSelectedObjectToTop(bool toTop)
         {
             if (SelectedObject == null)
@@ -321,7 +319,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
                     pathLine.ChangeLastPoint(endPoint);
 
-                    CalculateBewegungslaenge(startPoint, endPoint);
+                    SetBewegungslaenge(startPoint, endPoint);
                 }
             }
         }
@@ -333,10 +331,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void SelectionChangedUpdateSliders()
         {
-            OnChanged("StrokeThickness");
-            OnChanged("ObjectSize");
-            OnChanged("Opacity");
-            OnChanged("ZLevel");
+            OnChanged(nameof(StrokeThickness));
+            OnChanged(nameof(ObjectSize));
+            OnChanged(nameof(Opacity));
+            OnChanged(nameof(ZLevel));
         }
 
         public void SetIniWindowPosition()
@@ -388,7 +386,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 return;
             }
 
-            // KampfWindow.SizeToContent = SizeToContent.Width;
             KampfWindow.SizeToContent = SizeToContent.Manual;
 
             KampfWindow.Left = (((h == System.Windows.HorizontalAlignment.Left) ? minRight :
@@ -404,23 +401,23 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if (doWindowMove)
             {
-                if ((System.Windows.Forms.Screen.AllScreens.Length > 1 &&
-                     KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
-                        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width * .5) ||
-                    (System.Windows.Forms.Screen.AllScreens.Length == 1 &&
-                     KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width * .5))
+                if ((Screen.AllScreens.Length > 1 &&
+                     KampfWindow.Left > Screen.AllScreens[0].WorkingArea.Width +
+                        Screen.AllScreens[1].WorkingArea.Width * .5) ||
+                    (Screen.AllScreens.Length == 1 &&
+                     KampfWindow.Left > Screen.AllScreens[0].WorkingArea.Width * .5))
                 {
-                    KampfWindow.Left = (System.Windows.Forms.Screen.AllScreens.Length > 1) ?
-                        System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
-                        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - KampfWindow.Width
-                         : // +(e.PreviousSize.Width - e.NewSize.Width)
+                    KampfWindow.Left = (Screen.AllScreens.Length > 1) ?
+                        Screen.AllScreens[0].WorkingArea.Width +
+                        Screen.AllScreens[1].WorkingArea.Width - KampfWindow.Width
+                         :
 
-                        System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width - KampfWindow.Width;
-                    if (System.Windows.Forms.Screen.AllScreens.Length > 1 &&
+                        Screen.AllScreens[0].WorkingArea.Width - KampfWindow.Width;
+                    if (Screen.AllScreens.Length > 1 &&
                         Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive)
                     {
                         Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width =
-                            System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - KampfWindow.Width;
+                            Screen.AllScreens[1].WorkingArea.Width - KampfWindow.Width;
                     }
                 }
             }
@@ -434,7 +431,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             ((KampfInfoView)KampfWindow.Content).scrViewer.ScrollToRightEnd();
         }
 
-        //keeps heroes and monsters always on top
+        /// <summary>
+        /// keeps heroes and monsters always on top
+        /// </summary>
         public void UpdateCreatureLevelToTop()
         {
             for (var i = BattlegroundObjects.Count - 1; i >= 0; i--)
@@ -454,7 +453,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             System.Diagnostics.Debug.WriteLine(string.Format("CollectionChanged: {0} {1}", e.Action, e.NewItems));
         }
 
-        private void CalculateBewegungslaenge(Point startPoint, Point endPoint)
+        private void SetBewegungslaenge(Point startPoint, Point endPoint)
         {
             var label = BattlegroundObjects.Last(x => x.GetType() == typeof(TextLabel)) as TextLabel;
             label.LabelPositionX = (startPoint.X + endPoint.X - label.LabelWidth) / 2;
@@ -467,14 +466,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private Grid _arenaGrid = new Grid();
         private string _backgroundFilename;
         private string _backgroundImage;
-        private double _backgroundOffsetSize = 10000;
+        private double _backgroundOffsetSize = ARENA_GRID_RESOLUTION;
         private double _backgroundOffsetX = 0;
         private double _backgroundOffsetY = 0;
         private int _fogFreeSize = 1;
         private bool _fogFreimachen = false;
         private WriteableBitmap _fogImage;
         private string _fogImageFilename;
-        private double _fogOffsetSize = 10000;
+        private double _fogOffsetSize = ARENA_GRID_RESOLUTION;
         private double _fogOffsetX = 0;
         private double _fogOffsetY = 0;
         private int[] _fogPixelData;
@@ -537,7 +536,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set
             {
                 Set(ref _backgroundImage, value);
-                BackgroundFilename = value ?? System.IO.Path.GetFileNameWithoutExtension(value);
+                BackgroundFilename = value ?? Path.GetFileNameWithoutExtension(value);
             }
         }
 
@@ -549,7 +548,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 Set(ref _backgroundOffsetSize, value);
                 OffsetBackgroudMargin = new Thickness(_backgroundOffsetX, _backgroundOffsetY, -_backgroundOffsetX - 20000, -_backgroundOffsetY - 20000);
-                //FogOffsetSize = value;
             }
         }
 
@@ -822,7 +820,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     ((KampfInfoView)KampfWindow.Content).grdMain.LayoutTransform = new ScaleTransform(value, value);
                     KampfWindow.SizeToContent = SizeToContent.Height;
-                    //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
+                    // SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer
+                    // größer wird
                     KampfWindow.SizeToContent = SizeToContent.Manual;
                     SetIniWindowPosition();
                 }
@@ -840,12 +839,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return Global.CurrentKampf.SelectedManöver; }
         }
 
-        //private bool _isShowSpielerScreenWindow = false;
-        //public bool IsShowSpielerScreenWindow
-        //{
-        //    get { return _isShowSpielerScreenWindow; }
-        //    set { Set(ref _isShowSpielerScreenWindow, value); }
-        //}
         public bool SpielerScreenActive
         {
             get { return _spielerScreenActive; }
@@ -896,7 +889,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        [DependentProperty("BattlegroundObjects")]
+        [DependentProperty(nameof(BattlegroundObjects))]
         public CollectionViewSource KämpferListe
         {
             get
@@ -910,7 +903,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        [DependentProperty("BattlegroundObjects")]
+        [DependentProperty(nameof(BattlegroundObjects))]
         public CollectionViewSource ObjektListe
         {
             get
@@ -961,14 +954,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (KampfVM != null)
                 {
                     _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
-                    //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
                     RemoveCreatureAll();
                 }
                 _kampfVM = value;
                 if (KampfVM != null)
                 {
                     _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
-                    //_kampfVM.PropertyChanged += OnKampfPropertyChanged;
                     AddAllCreatures();
                 }
                 UpdateCreaturesFromChangedKampferlist();
@@ -992,7 +983,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    //e.NewItems
                     System.Collections.IList l1 = e.NewItems;
                     foreach (var item in l1)
                     {
@@ -1001,7 +991,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    //e.OldItems
                     System.Collections.IList l2 = e.OldItems;
                     foreach (var item in l2)
                     {
@@ -1037,7 +1026,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        //Event gets fired when Wesen.PropertyChanged event fires...
+        /// <summary>
+        /// Event gets fired when Wesen.PropertyChanged event fires...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnWesenPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Position")
@@ -1082,7 +1075,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void RemoveCreature(IKämpfer creature)
         {
             BattlegroundObjects.Remove((Wesen)creature);
-            //creature.PropertyChanged -= OnWesenPropertyChanged;
         }
 
         public void RemoveCreatureAll()
@@ -1092,7 +1084,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (BattlegroundObjects[i] is BattlegroundCreature)
                 {
                     BattlegroundObjects.RemoveAt(i);
-                    //(BattlegroundObjects[i] as BattlegroundCreature).PropertyChanged += OnWesenPropertyChanged;
                 }
             }
         }
@@ -1156,7 +1147,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        //get / set ZLevel
         public double ZLevel
         {
             get { return SelectedObject != null ? SelectedObject.ZLevel : 10; }
@@ -1176,42 +1166,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Überflüssig?
 
-        //TODO Vermutlich überflüssig. JO
-        private readonly List<string> _paintedObjects = new List<string>();
-
         //TODO Die getrennte Speicherung von SelectedCreature UND SelectedObject misfällt mir, da beides eigentlich Objekte sind. JO
         private string _currentlySelectedCreature = "";
-
-        //TODO Vermutlich überflüssig. JO
-        private string _selectedObjectsFromListBox = "";
 
         public string CurrentlySelectedCreature
         {
             get { return _currentlySelectedCreature; }
             set { Set(ref _currentlySelectedCreature, value); }
-        }
-
-        public List<string> PaintedObjects
-        {
-            get { return _paintedObjects; }
-
-            set
-            {
-                foreach (BattlegroundBaseObject o in BattlegroundObjects)
-                {
-                }
-            }
-        }
-
-        public string SelectedObjectsFromListBox
-        {
-            get { return _selectedObjectsFromListBox; }
-
-            set
-            {
-                Set(ref _selectedObjectsFromListBox, value);
-                System.Diagnostics.Debug.WriteLine(_selectedObjectsFromListBox);
-            }
         }
 
         #endregion Überflüssig?
@@ -1264,7 +1225,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region SelectedObject und dessen Eigenschaften und Delete
 
-        //get / set delete Command
         private BattlegroundCommand _deleteCommand;
 
         private double _objectSize = 1;
@@ -1277,12 +1237,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private Color _selectedColor = Colors.DarkGray, _selectedFillColor = Colors.LightGray;
 
-        //get / set selected Object
         private BattlegroundBaseObject _selectedObject;
 
         private BattlegroundBaseObject _selectedTempObject;
 
-        //get / set stroke thickness
         private double _strokeThickness = 20;
 
         public BattlegroundCommand DeleteCommand
@@ -1337,7 +1295,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     SelectedObject.Opacity = value;
                 }
-                OnChanged("Opacity");
+                OnChanged(nameof(Opacity));
             }
         }
 
@@ -1399,7 +1357,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        [DependentProperty("SelectedFillColor")]
+        [DependentProperty(nameof(SelectedFillColor))]
         public float SelectedFillColorAlpha
         {
             get { return SelectedFillColor.ScA; }
@@ -1439,10 +1397,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     SelectedObject.IsSelected = true;
                     if (SelectedObject is BattlegroundCreature)
                     {
-                        Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe.FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
+                        Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe
+                            .FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
                 }
-                OnChanged("SelectedObject");
+                OnChanged(nameof(SelectedObject));
                 try
                 {
                     if (SelectedObject is BattlegroundCreature)
@@ -1455,14 +1414,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
                             {
                                 BattlegroundObjects.Move(indexObj, lastPos);
                             }
-                            else
-                            { }
                         }
                         Global.CurrentKampf.SelectedKämpfer = (SelectedObject as BattlegroundCreature).ki;
                     }
                 }
                 catch (Exception ex)
-                { ViewHelper.ShowError("BattlegroundObjects.Move Befehel generierte einen Fehler", ex); }
+                { ViewHelper.ShowError("BattlegroundObjects.Move Befehl generierte einen Fehler", ex); }
             }
         }
 
@@ -1504,13 +1461,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         public void Down()
-        { PlayerGridOffsetY = PlayerGridOffsetY - 80 > -10000 ? PlayerGridOffsetY - 80 : -10000; }
+        { PlayerGridOffsetY = PlayerGridOffsetY - 80 > -ARENA_GRID_RESOLUTION ? PlayerGridOffsetY - 80 : -ARENA_GRID_RESOLUTION; }
 
         public void Left()
         { PlayerGridOffsetX = PlayerGridOffsetX - 80 > 0 ? PlayerGridOffsetX - 80 : 0; }
 
         public void Right()
-        { PlayerGridOffsetX = PlayerGridOffsetX + 80 <= 10000 ? PlayerGridOffsetX + 80 : 10000; }
+        { PlayerGridOffsetX = PlayerGridOffsetX + 80 <= ARENA_GRID_RESOLUTION ? PlayerGridOffsetX + 80 : ARENA_GRID_RESOLUTION; }
 
         public void Up()
         { PlayerGridOffsetY = PlayerGridOffsetY + 80 <= 0 ? PlayerGridOffsetY + 80 : 0; }
@@ -1722,6 +1679,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Grid
 
+        private const double HEXAGON_PERIMETER = 3.4641016151377545870548926830117;
         private Color gridColor = Color.FromRgb(255, 255, 255);
         private bool hexGrid = false;
         private bool rechteckGrid = true;
@@ -1778,7 +1736,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        [DependentProperty("RechteckGrid"), DependentProperty("HexGrid")]
+        [DependentProperty(nameof(RechteckGrid)), DependentProperty(nameof(HexGrid))]
         public PathGeometry TilePathData
         {
             get
@@ -1809,7 +1767,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        [DependentProperty("RechteckGrid"), DependentProperty("HexGrid")]
+        [DependentProperty(nameof(RechteckGrid)), DependentProperty(nameof(HexGrid))]
         public Rect TileViewPort
         {
             get
@@ -1817,11 +1775,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 var scale = 57.735;
                 if (RechteckGrid)
                 {
-                    return new Rect(0, 0, 3.4641016151377545870548926830117 * scale, 3.4641016151377545870548926830117 * scale);
+                    return new Rect(0, 0, HEXAGON_PERIMETER * scale, HEXAGON_PERIMETER * scale);
                 }
                 else
                 {
-                    return new Rect(0, 0, 3 * scale, 3.4641016151377545870548926830117 * scale);
+                    return new Rect(0, 0, 3 * scale, HEXAGON_PERIMETER * scale);
                 }
             }
         }
@@ -1830,27 +1788,27 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region ZeichenModi
 
-        private ZeichenModus zeichenModus;
+        private ZeichenModus _zeichenModus;
 
-        [DependentProperty("ZeichenModus")]
+        [DependentProperty(nameof(ZeichenModus))]
         public bool CreateFilledLine
         {
-            get { return ZeichenModus == Logic.ZeichenModus.Fläche; }
+            get { return ZeichenModus == ZeichenModus.Fläche; }
         }
 
-        [DependentProperty("ZeichenModus")]
+        [DependentProperty(nameof(ZeichenModus))]
         public bool CreateLine
         {
-            get { return ZeichenModus == Logic.ZeichenModus.Linie; }
+            get { return ZeichenModus == ZeichenModus.Linie; }
         }
 
         public ZeichenModus ZeichenModus
         {
-            get { return zeichenModus; }
+            get { return _zeichenModus; }
 
             set
             {
-                if (Set(ref zeichenModus, value))
+                if (Set(ref _zeichenModus, value))
                 {
                     //eventuell aktionen ausführen, wie Bild platzieren
                     //oder Properties auf dem model umsetzen wie CreateLine = true
@@ -1865,9 +1823,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private bool _isPointerVisible = false;
         private double _pointerDurchmesser = 25.0;
 
-        private System.Windows.Thickness _pointerMargin = new System.Windows.Thickness();
+        private System.Windows.Thickness _pointerMargin = new Thickness();
 
-        private System.Windows.Visibility _pointerVisibility = System.Windows.Visibility.Collapsed;
+        private System.Windows.Visibility _pointerVisibility = Visibility.Collapsed;
 
         private double _xScale = 1;
 
@@ -1881,8 +1839,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 SelectedObject = null;
                 _isPointerVisible = value;
-                PointerVisibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-                OnChanged("IsPointerVisible");
+                PointerVisibility = value ? Visibility.Visible : Visibility.Collapsed;
+                OnChanged(nameof(IsPointerVisible));
             }
         }
 
@@ -1912,10 +1870,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
 
             var grid = (Grid)parameter;
-            System.Windows.Point mousePos = System.Windows.Input.Mouse.GetPosition(grid);
+            Point mousePos = System.Windows.Input.Mouse.GetPosition(grid);
             _xScale = mousePos.X / grid.ActualWidth;
             _yScale = mousePos.Y / grid.ActualHeight;
-            PointerMargin = new System.Windows.Thickness(mousePos.X - PointerDurchmesser / 2, mousePos.Y - PointerDurchmesser / 2, 0, 0);
+            PointerMargin = new Thickness(mousePos.X - PointerDurchmesser / 2, mousePos.Y - PointerDurchmesser / 2, 0, 0);
         }
 
         #endregion -- Screen Pointer --
@@ -1929,17 +1887,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public List<BattlegroundBaseObject> StickyListBoxBattlegroundObjects
         {
             get { return BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); }
-            set { value = BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); OnChanged("StickyListBoxBattlegroundObjects"); }
+            set { value = BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); OnChanged(nameof(StickyListBoxBattlegroundObjects)); }
         }
 
         public void StickEnemies()
         {
-            if (BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
+            if (BattlegroundObjects.Where(x => x is Held && x.IsSticked).Any())
             {
                 return;
             }
 
-            if (!BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner).Any())
+            if (!BattlegroundObjects.Where(x => x is Gegner).Any())
             {
                 return;
             }
@@ -1951,17 +1909,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     h.IsSticked = true;
                 }
             }
-            CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
+            CurrentlySelectedCreature = ((Gegner)BattlegroundObjects.Where(x => x is Gegner && x.IsSticked).First()).Name;
         }
 
         public void StickHeroes()
         {
-            if (BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
+            if (BattlegroundObjects.Where(x => x is Gegner && x.IsSticked).Any())
             {
                 return;
             }
 
-            if (!BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held).Any())
+            if (!BattlegroundObjects.Where(x => x is Held).Any())
             {
                 return;
             }
@@ -1973,7 +1931,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     h.IsSticked = true;
                 }
             }
-            CurrentlySelectedCreature = ((MeisterGeister.Model.Held)BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
+            CurrentlySelectedCreature = ((Held)BattlegroundObjects.Where(x => x is Held && x.IsSticked).First()).Name;
         }
 
         private System.Drawing.Bitmap BitmapFromWriteableBitmap(WriteableBitmap writeBmp)
@@ -2187,18 +2145,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private void CenterPlayerView(object obj)
         {
-            //NEUUUU
-            //            double M_Left = (-1) * MeisterZoomTransX * MeisterZoom;
-            //           double M_Top = (-1) * MeisterZoomTransY * MeisterZoom;
-            //            double M_Width = (-1) * M_Left + (Global.CurrentKampf.BodenplanView.ActualWidth - 30) / MeisterZoom;
-            //            double M_Height = (-1) * M_Top + (Global.CurrentKampf.BodenplanView.ActualHeight  - 30) / MeisterZoom;
-
-            // double M_anzFelderWidth = M_Width / 100; double M_anzFelderHeight = M_Height / 100;
-
-            double x1 = 10000;
-            double y1 = 10000;
-            double x2 = 10000;
-            double y2 = 10000;
+            double x1 = ARENA_GRID_RESOLUTION;
+            double y1 = ARENA_GRID_RESOLUTION;
+            double x2 = ARENA_GRID_RESOLUTION;
+            double y2 = ARENA_GRID_RESOLUTION;
 
             foreach (Held h in Global.ContextHeld.HeldenGruppeListe)
             {
@@ -2224,18 +2174,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             PlayerGridOffsetX = (x1);
             PlayerGridOffsetY = (-y2);
-
-            // PlayerGridOffsetX = M_Left; PlayerGridOffsetY = M_Top;
-
-            // if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow != null) { double
-            // ScaleSpielerWidth =
-            // Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.ActualWidth /
-            // M_anzFelderWidth / 100; double ScaleSpielerHeight =
-            // Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.ActualHeight /
-            // M_anzFelderHeight / 100;
-
-            // ScaleSpielerGrid = Math.Min(ScaleSpielerWidth, ScaleSpielerHeight);//
-            // ScaleSpielerGrid; }
         }
 
         private void SetBackgroundClick(object obj)
@@ -2301,14 +2239,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
             Dispose(false);
         }
 
-        // Public implementation of Dispose pattern callable by consumers.
+        /// <summary>
+        /// Public implementation of Dispose pattern callable by consumers.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        // Protected implementation of Dispose pattern.
+        /// <summary>
+        /// Protected implementation of Dispose pattern.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposed)
@@ -2322,7 +2265,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (Global.CurrentKampf != null)
                 {
                     Global.CurrentKampf.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
-                    //_kampfVM.PropertyChanged -= OnKampfPropertyChanged;
                 }
             }
 
