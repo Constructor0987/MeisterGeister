@@ -1,54 +1,67 @@
 ﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:MeisterGeister.View.Bodenplan"
-             xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
-             xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
-             xmlns:kampflogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
-             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-             xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
-             xmlns:s="clr-namespace:MeisterGeister.View.Bodenplan"
-              x:Class="MeisterGeister.View.Bodenplan.BattlegroundView"
-             mc:Ignorable="d" 
-             x:Name="view"
-             d:DesignHeight="1100" d:DesignWidth="1280" Unloaded="view_Unloaded">
-    <!--KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp"-->
+    x:Class="MeisterGeister.View.Bodenplan.BattlegroundView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:kampflogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+    xmlns:local="clr-namespace:MeisterGeister.View.Bodenplan"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
+    xmlns:s="clr-namespace:MeisterGeister.View.Bodenplan"
+    xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+    xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+    x:Name="view"
+    d:DesignHeight="1100"
+    d:DesignWidth="1280"
+    Unloaded="view_Unloaded"
+    mc:Ignorable="d">
+    <!--  KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp"  -->
     <UserControl.Resources>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type kampflogic:Position}" />
-        <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
-        <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
-        <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorConverter"/>
-        <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
-        <kampflogic:IsIntToBoolConverter x:Key="IsIntToBoolConverter1"/>
-        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
-        <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
+        <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF" />
+        <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3" />
+        <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF" />
+        <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9" />
+        <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorConverter" />
+        <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter" />
+        <kampflogic:IsIntToBoolConverter x:Key="IsIntToBoolConverter1" />
+        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1" />
+        <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1" />
         <ViewGeneral:MerkmalListeAnzahlToVisibleConverter x:Key="MerkmalListeAnzahlToVisibleConverter1" />
-        <ViewGeneral:MerkmaleListeToBrushColor x:Key="MerkmaleListeToBrushColor1"/>
+        <ViewGeneral:MerkmaleListeToBrushColor x:Key="MerkmaleListeToBrushColor1" />
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
         <BitmapImage x:Key="FragezeichenBild" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
 
         <Style TargetType="ProgressBar">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ProgressBar" >
+                    <ControlTemplate TargetType="ProgressBar">
                         <Grid x:Name="Root">
-                            <Border Name="PART_Track" CornerRadius="2" Background="LightGray" BorderBrush="Gray" BorderThickness="1" />
-                            <Border Name="PART_Indicator" CornerRadius="1" Background="#FF1FF31F" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Left" >
+                            <Border
+                                Name="PART_Track"
+                                Background="LightGray"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                CornerRadius="2" />
+                            <Border
+                                Name="PART_Indicator"
+                                HorizontalAlignment="Left"
+                                Background="#FF1FF31F"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                CornerRadius="1">
                                 <!--<Border.Background>
-                                    <LinearGradientBrush  >
-                                        <GradientStop Color="Red" Offset="0"/>
-                                        <GradientStop Color="Yellow" Offset="0.2"/>
-                                        <GradientStop Color="#FF1FF31F" Offset="0.867"/>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="Red" Offset="0" />
+                                        <GradientStop Color="Yellow" Offset="0.2" />
+                                        <GradientStop Color="#FF1FF31F" Offset="0.867" />
                                     </LinearGradientBrush>
                                 </Border.Background>-->
                             </Border>
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <!-- Getting vertical style working using technique described here: http://stackoverflow.com/a/6849237/7532 -->
+                            <!--  Getting vertical style working using technique described here: http://stackoverflow.com/a/6849237/7532  -->
                             <Trigger Property="Orientation" Value="Vertical">
                                 <Setter TargetName="Root" Property="LayoutTransform">
                                     <Setter.Value>
@@ -70,26 +83,41 @@
     <Grid>
         <Grid.Resources>
             <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
-            <kampflogic:DataTypeConverter x:Key="DataTypeConverter1"/>
-            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <kampflogic:DataTypeConverter x:Key="DataTypeConverter1" />
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
-            <ViewGeneral:EnumItemsSource x:Key="ZeichenValues" Type="{x:Type model:ZeichenModus}"/>
+            <ViewGeneral:EnumItemsSource x:Key="ZeichenValues" Type="{x:Type model:ZeichenModus}" />
         </Grid.Resources>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="{Binding MeisterBGWidth, UpdateSourceTrigger=PropertyChanged}" />
             </Grid.ColumnDefinitions>
-            <Expander Grid.Column="0" IsExpanded="False" ExpandDirection="Right" HorizontalAlignment="Left" Margin="0,24,0,0">
+            <Expander
+                Grid.Column="0"
+                Margin="0,24,0,0"
+                HorizontalAlignment="Left"
+                ExpandDirection="Right"
+                IsExpanded="False">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Expander Grid.Column="0" IsExpanded="True" >
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" >
+                    <Expander Grid.Column="0" IsExpanded="True">
+                        <ScrollViewer
+                            VerticalAlignment="Top"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
                             <StackPanel Orientation="Horizontal">
-                                <Grid x:Name="grid1" Width="200" ClipToBounds="True" IsManipulationEnabled="False" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Grid
+                                    x:Name="grid1"
+                                    Width="200"
+                                    Margin="12,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    ClipToBounds="True"
+                                    IsManipulationEnabled="False">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="24" />
                                         <RowDefinition Height="225" />
@@ -100,27 +128,159 @@
                                         <ColumnDefinition Width="160" />
                                         <ColumnDefinition Width="24*" />
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox Content="Editor Modus" IsChecked="{Binding IsEditorModeEnabled}" Height="20" HorizontalAlignment="Left" Margin="25,5,0,0" x:Name="checkBox3" VerticalAlignment="Top" Width="113" FontSize="14" FontStyle="Normal" FontWeight="SemiBold" ToolTip="Wenn deaktiviert, können nur noch Helden und Monster bewegt werden" Grid.Column="1" />
-                                    <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
-                                        <local:SliderWithDisplayTextBox x:Name="sliderWithDisplayTextBox_AlphaChannel" SliderValue="{Binding SelectedFillColorAlpha, Mode=TwoWay}" TickFrequencyValue="0.1" SliderLabelTextValue="Alpha Kanal" SliderMinValue="0" SliderMaxValue="1" SliderMinTextValue="0" SliderMaxTextValue="1" Width="160" />
-                                        <local:SliderWithDisplayTextBox x:Name="sliderWithDisplayTextBox_StrokeThickness" SliderValue="{Binding StrokeThickness, Mode=TwoWay}" TickFrequencyValue="1" SliderLabelTextValue="Linien Stärke" SliderMinValue="1" SliderMaxValue="30" SliderMinTextValue="1" SliderMaxTextValue="30" Width="160" />
-                                        <local:SliderWithDisplayTextBox x:Name="sliderWithDisplayTextBox_Opacity" SliderValue="{Binding Opacity, Mode=TwoWay}" SliderMinValue="0.1" SliderMaxValue="1" TickFrequencyValue="0.1" SliderLabelTextValue="Transparenz" SliderMinTextValue="10%" SliderMaxTextValue="100%" Width="160" />
-                                        <local:SliderWithDisplayTextBox x:Name="sliderWithDisplayTextBox_ObjectSize" SliderValue="{Binding ObjectSize, Mode=TwoWay}" SliderMinValue="0.3" SliderMaxValue="20" SliderLabelTextValue="Objektgröße" SliderMinTextValue="0.3x" SliderMaxTextValue="20x" TickFrequencyValue="0.1" Width="160" />
+                                    <CheckBox
+                                        x:Name="checkBox3"
+                                        Grid.Column="1"
+                                        Width="113"
+                                        Height="20"
+                                        Margin="25,5,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Content="Editor Modus"
+                                        FontSize="14"
+                                        FontStyle="Normal"
+                                        FontWeight="SemiBold"
+                                        IsChecked="{Binding IsEditorModeEnabled}"
+                                        ToolTip="Wenn deaktiviert, können nur noch Helden und Monster bewegt werden" />
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left">
+                                        <s:SliderWithDisplayTextBox
+                                            x:Name="sliderWithDisplayTextBox_AlphaChannel"
+                                            Width="160"
+                                            SliderLabelTextValue="Alpha Kanal"
+                                            SliderMaxTextValue="1"
+                                            SliderMaxValue="1"
+                                            SliderMinTextValue="0"
+                                            SliderMinValue="0"
+                                            SliderValue="{Binding SelectedFillColorAlpha, Mode=TwoWay}"
+                                            TickFrequencyValue="0.1" />
+                                        <s:SliderWithDisplayTextBox
+                                            x:Name="sliderWithDisplayTextBox_StrokeThickness"
+                                            Width="160"
+                                            SliderLabelTextValue="Linien Stärke"
+                                            SliderMaxTextValue="30"
+                                            SliderMaxValue="30"
+                                            SliderMinTextValue="1"
+                                            SliderMinValue="1"
+                                            SliderValue="{Binding StrokeThickness, Mode=TwoWay}"
+                                            TickFrequencyValue="1" />
+                                        <s:SliderWithDisplayTextBox
+                                            x:Name="sliderWithDisplayTextBox_Opacity"
+                                            Width="160"
+                                            SliderLabelTextValue="Transparenz"
+                                            SliderMaxTextValue="100%"
+                                            SliderMaxValue="1"
+                                            SliderMinTextValue="10%"
+                                            SliderMinValue="0.1"
+                                            SliderValue="{Binding Opacity, Mode=TwoWay}"
+                                            TickFrequencyValue="0.1" />
+                                        <s:SliderWithDisplayTextBox
+                                            x:Name="sliderWithDisplayTextBox_ObjectSize"
+                                            Width="160"
+                                            SliderLabelTextValue="Objektgröße"
+                                            SliderMaxTextValue="20x"
+                                            SliderMaxValue="20"
+                                            SliderMinTextValue="0.3x"
+                                            SliderMinValue="0.3"
+                                            SliderValue="{Binding ObjectSize, Mode=TwoWay}"
+                                            TickFrequencyValue="0.1" />
 
-                                        <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,10,0,0" x:Name="sliderWithDisplayTextBox_ZLevel" SliderValue="{Binding ZLevel, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0" SliderMaxValue="20" SliderLabelTextValue="Z-Level" SliderMinTextValue="0" SliderMaxTextValue="20" TickFrequencyValue="1" Width="160" />
-                                        <CheckBox Content="Z-Level Anzeigen" IsChecked="{Binding ShowZ}" Grid.Column="1" Grid.Row="2" Height="18" x:Name="checkBox1" VerticalAlignment="Top" Width="113" />
+                                        <s:SliderWithDisplayTextBox
+                                            x:Name="sliderWithDisplayTextBox_ZLevel"
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Width="160"
+                                            Margin="0,10,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            SliderLabelTextValue="Z-Level"
+                                            SliderMaxTextValue="20"
+                                            SliderMaxValue="20"
+                                            SliderMinTextValue="0"
+                                            SliderMinValue="0"
+                                            SliderValue="{Binding ZLevel, Mode=TwoWay}"
+                                            TickFrequencyValue="1" />
+                                        <CheckBox
+                                            x:Name="checkBox1"
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Width="113"
+                                            Height="18"
+                                            VerticalAlignment="Top"
+                                            Content="Z-Level Anzeigen"
+                                            IsChecked="{Binding ShowZ}" />
                                     </StackPanel>
 
-                                    <ToggleButton Grid.Column="1" Grid.Row="2" IsChecked="{Binding CreateLine, Mode=OneWay}" Content="[1] Line" x:Name="PathLineButton" Height="25" HorizontalAlignment="Left" Width="77" VerticalAlignment="Top" />
-                                    <ToggleButton Grid.Column="1" Grid.Row="2" IsChecked="{Binding CreateFilledLine, Mode=OneWay}" Content="[2] Fläche" x:Name="FilledPathLineButton" Height="25" HorizontalAlignment="Right" Width="77" VerticalAlignment="Top" />
+                                    <ToggleButton
+                                        x:Name="PathLineButton"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Width="77"
+                                        Height="25"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Content="[1] Line"
+                                        IsChecked="{Binding CreateLine, Mode=OneWay}" />
+                                    <ToggleButton
+                                        x:Name="FilledPathLineButton"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Width="77"
+                                        Height="25"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Content="[2] Fläche"
+                                        IsChecked="{Binding CreateFilledLine, Mode=OneWay}" />
 
-                                    <Button Content="Ebene +" Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="0,27,0,0" x:Name="ButtonEbeneHigher" VerticalAlignment="Top" Width="77" Click="ButtonEbeneHigher_Click" />
-                                    <Button Content="Ebene -" Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="83,27,0,0" x:Name="ButtonEbeneLower" VerticalAlignment="Top" Width="77" Click="ButtonEbeneLower_Click" />
-                                    <Button Content="Ebene max" Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="0,53,0,0" x:Name="ButtonEbeneHigherMax" VerticalAlignment="Top" Width="77" Click="ButtonEbeneHigherMax_Click" />
-                                    <Button Content="Ebene min" Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="82,53,0,0" x:Name="ButtonEbeneLowerMin" VerticalAlignment="Top" Width="77" Click="ButtonEbeneLowerMin_Click" />
+                                    <Button
+                                        x:Name="ButtonEbeneHigher"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Width="77"
+                                        Height="23"
+                                        Margin="0,27,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Click="ButtonEbeneHigher_Click"
+                                        Content="Ebene +" />
+                                    <Button
+                                        x:Name="ButtonEbeneLower"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Width="77"
+                                        Height="23"
+                                        Margin="83,27,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Click="ButtonEbeneLower_Click"
+                                        Content="Ebene -" />
+                                    <Button
+                                        x:Name="ButtonEbeneHigherMax"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Width="77"
+                                        Height="23"
+                                        Margin="0,53,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Click="ButtonEbeneHigherMax_Click"
+                                        Content="Ebene max" />
+                                    <Button
+                                        x:Name="ButtonEbeneLowerMin"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Width="77"
+                                        Height="23"
+                                        Margin="82,53,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Click="ButtonEbeneLowerMin_Click"
+                                        Content="Ebene min" />
                                 </Grid>
                                 <StackPanel Orientation="Vertical">
-                                    <!-- Zeichenmodi -->
+                                    <!--  Zeichenmodi  -->
                                     <ListBox SelectedValue="{Binding ZeichenModus}">
                                         <ListBox.Resources>
                                             <ViewGeneral:DictionaryValueConverter x:Key="toolImages">
@@ -137,21 +297,52 @@
                                             </ViewGeneral:DictionaryValueConverter>
                                         </ListBox.Resources>
                                         <ListBox.ItemsSource>
-                                            <StaticResource ResourceKey="ZeichenValues"/>
+                                            <StaticResource ResourceKey="ZeichenValues" />
                                         </ListBox.ItemsSource>
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <Image Height="30" Width="30" ToolTip="{Binding FallbackValue=None}" Source="{Binding Converter={StaticResource toolImages}}"/>
+                                                <Image
+                                                    Width="30"
+                                                    Height="30"
+                                                    Source="{Binding Converter={StaticResource toolImages}}"
+                                                    ToolTip="{Binding FallbackValue=None}" />
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-                                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
-                                            <xctk:ColorPicker SelectedColor="{Binding SelectedColor}" x:Name="colorPicker1" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Linienfarbe"/>
-                                            <Polygon Fill="White" IsHitTestVisible="False" Points="1,19.5 1,1 20.5,1" />
-                                            <Polygon Fill="White" IsHitTestVisible="False" Points="2.5,21 22,21 22,2.5" />
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Orientation="Horizontal">
+                                        <Grid
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Left">
+                                            <xctk:ColorPicker
+                                                x:Name="colorPicker1"
+                                                Width="22"
+                                                Height="22"
+                                                VerticalAlignment="Top"
+                                                SelectedColor="{Binding SelectedColor}"
+                                                ShowDropDownButton="False"
+                                                ToolTip="Linienfarbe" />
+                                            <Polygon
+                                                Fill="White"
+                                                IsHitTestVisible="False"
+                                                Points="1,19.5 1,1 20.5,1" />
+                                            <Polygon
+                                                Fill="White"
+                                                IsHitTestVisible="False"
+                                                Points="2.5,21 22,21 22,2.5" />
                                         </Grid>
-                                        <xctk:ColorPicker HorizontalAlignment="Left" x:Name="colorPicker2" SelectedColor="{Binding SelectedFillColor}" VerticalAlignment="Top" Width="22" Height="22" ShowDropDownButton="False" ToolTip="Füllfarbe"/>
+                                        <xctk:ColorPicker
+                                            x:Name="colorPicker2"
+                                            Width="22"
+                                            Height="22"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            SelectedColor="{Binding SelectedFillColor}"
+                                            ShowDropDownButton="False"
+                                            ToolTip="Füllfarbe" />
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
@@ -159,49 +350,104 @@
                     </Expander>
 
                     <Expander Grid.Row="1" IsExpanded="True">
-                        <Grid Width="200" ClipToBounds="True" IsManipulationEnabled="False" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Grid
+                            Width="200"
+                            Margin="12,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            ClipToBounds="True"
+                            IsManipulationEnabled="False">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Button Content="Bild hinzu" Height="23" HorizontalAlignment="Left" x:Name="ButtonBildhinzu" VerticalAlignment="Top" Width="77" Click="ButtonBildhinzun_Click" />
+                            <Button
+                                x:Name="ButtonBildhinzu"
+                                Width="77"
+                                Height="23"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Click="ButtonBildhinzun_Click"
+                                Content="Bild hinzu" />
 
                             <!--<ScrollViewer x:Name="MyScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,3,0">-->
-                            <ListBox Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,3,0" Width="165" x:Name="lstbxPictureButton" MinHeight="200" ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                            <!--WrapPanel x:Name="PictureButtonWrapPanel" Width="165" VerticalAlignment="Stretch" MinHeight="200" Margin="0,0,1,0"/>-->
+                            <ListBox
+                                x:Name="lstbxPictureButton"
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                Width="165"
+                                MinHeight="200"
+                                Margin="0,0,3,0"
+                                VerticalAlignment="Top"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                            <!--  WrapPanel x:Name="PictureButtonWrapPanel" Width="165" VerticalAlignment="Stretch" MinHeight="200" Margin="0,0,1,0" />  -->
                             <!--</ScrollViewer>-->
                         </Grid>
                     </Expander>
                 </Grid>
             </Expander>
 
-            <Grid x:Name="grdSpielfeld" Grid.Column="1" Margin="0,24,0,0">
-                <wpfxc:ZoomControl Grid.Column="1" x:Name="ArenaScrollViewer" Background="#FF367536" 
-                        MaxZoom="2" MinZoom="0.05" MaxZoomDelta="2" ZoomDeltaMultiplier="50" Mode="Original" 
-                        TranslateX="{Binding MeisterZoomTransX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                        TranslateY="{Binding MeisterZoomTransY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                        Zoom="{Binding MeisterZoom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
-                        ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"  VerticalAlignment="Bottom">
-                    <Grid x:Name="ArenaGridTop" >
-                        <Image x:Name="imgbtnBGStoppen" Source="{Binding BackgroundImage}" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                               Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}" 
-                               Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}" />
-                        <Image x:Name="imgFog" Source="{Binding FogImage}" Opacity="0.5" VerticalAlignment="Top" HorizontalAlignment="Left" Width="10000" Height="10000" 
-                                Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"/>
-                        <!--ObjektListe.View-->
-                        <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" x:Name="ArenaGrid" 
-                                 PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"  
-                                 MouseMove="ArenaGrid_MouseMove" DragOver="ArenaGrid_DragOver"
-                                 MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" 
-                                 MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" 
-                                 PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" 
-                                 SelectionChanged="ArenaGrid_SelectionChanged" 
-                                 Drop="ArenaGrid_Drop" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown"
-                                 GiveFeedback="ArenaGrid_GiveFeedback"
-                                 Height="10000" Width="10000" SelectionMode="Single" AllowDrop="True" >
-                            <!---->
+            <Grid
+                x:Name="grdSpielfeld"
+                Grid.Column="1"
+                Margin="0,24,0,0">
+                <wpfxc:ZoomControl
+                    x:Name="ArenaScrollViewer"
+                    Grid.Column="1"
+                    VerticalAlignment="Bottom"
+                    Background="#FF367536"
+                    LimitToContent="True"
+                    MaxZoom="2"
+                    MaxZoomDelta="2"
+                    MinZoom="0.05"
+                    Mode="Original"
+                    ModifierKeyPan="Shift"
+                    ModifierKeyZoom="Control"
+                    ModifierKeyZoomBox="Alt"
+                    PanWithoutModifier="True"
+                    TranslateX="{Binding MeisterZoomTransX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TranslateY="{Binding MeisterZoomTransY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    WheelZoomsAlone="True"
+                    Zoom="{Binding MeisterZoom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ZoomDeltaMultiplier="50">
+                    <Grid x:Name="ArenaGridTop">
+                        <Image
+                            x:Name="imgbtnBGStoppen"
+                            Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Source="{Binding BackgroundImage}" />
+                        <Image
+                            x:Name="imgFog"
+                            Width="10000"
+                            Height="10000"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Opacity="0.5"
+                            Source="{Binding FogImage}"
+                            Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" />
+                        <!--  ObjektListe.View  -->
+                        <ListBox
+                            x:Name="ArenaGrid"
+                            Width="10000"
+                            Height="10000"
+                            AllowDrop="True"
+                            DragOver="ArenaGrid_DragOver"
+                            Drop="ArenaGrid_Drop"
+                            GiveFeedback="ArenaGrid_GiveFeedback"
+                            ItemsSource="{Binding BattlegroundObjects}"
+                            MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown"
+                            MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp"
+                            MouseMove="ArenaGrid_MouseMove"
+                            PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown"
+                            PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp"
+                            PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"
+                            SelectedItem="{Binding SelectedObject, Mode=TwoWay}"
+                            SelectionChanged="ArenaGrid_SelectionChanged"
+                            SelectionMode="Single">
+                            <!--    -->
                             <ListBox.Style>
                                 <Style TargetType="ListBox">
                                     <Style.Triggers>
@@ -212,457 +458,659 @@
                                 </Style>
                             </ListBox.Style>
                             <ListBox.Resources>
-                                
-                                <!--Datatemplate BattlegroundCreature (Hero & Enemy)-->
-                            <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
-                                <Thumb DragDelta="Thumb_Drag">
-                                    <!--IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">-->
-                                    <Thumb.Template>
-                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                            <Canvas x:Name="canvasCreature">
-                                                <Canvas.ContextMenu>
-                                                    <ContextMenu>
+
+                                <!--  Datatemplate BattlegroundCreature (Hero & Enemy)  -->
+                                <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
+                                    <Thumb DragDelta="Thumb_Drag">
+                                        <!--  IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">  -->
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas x:Name="canvasCreature">
+                                                    <Canvas.ContextMenu>
+                                                        <ContextMenu>
                                                             <DockPanel>
-                                                                <TextBlock Text="Position: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                                                                <ComboBox DockPanel.Dock="Right" ItemsSource="{StaticResource PositionenValues}" 
-                                                                          SelectedValue="{Binding Path=Position, Converter={StaticResource PositionenValues}}"/>
-                                                                
+                                                                <TextBlock
+                                                                    VerticalAlignment="Center"
+                                                                    DockPanel.Dock="Left"
+                                                                    Text="Position: " />
+                                                                <ComboBox
+                                                                    DockPanel.Dock="Right"
+                                                                    ItemsSource="{StaticResource PositionenValues}"
+                                                                    SelectedValue="{Binding Path=Position, Converter={StaticResource PositionenValues}}" />
                                                             </DockPanel>
 
                                                             <DockPanel>
-                                                                <TextBlock Text="Kampfstil: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                                                                <ComboBox DockPanel.Dock="Right" SelectedValuePath="Stil" SelectedValue="{Binding Kampfstil}">
+                                                                <TextBlock
+                                                                    VerticalAlignment="Center"
+                                                                    DockPanel.Dock="Left"
+                                                                    Text="Kampfstil: " />
+                                                                <ComboBox
+                                                                    DockPanel.Dock="Right"
+                                                                    SelectedValue="{Binding Kampfstil}"
+                                                                    SelectedValuePath="Stil">
                                                                     <ComboBox.ItemsSource>
-                                                                        <kampflogic:KampfstilListe/>
+                                                                        <kampflogic:KampfstilListe />
                                                                     </ComboBox.ItemsSource>
                                                                     <ComboBox.ItemTemplate>
                                                                         <DataTemplate>
                                                                             <StackPanel Orientation="Horizontal">
-                                                                                <Image Source="{Binding Bild}" MaxWidth="24"/>
-                                                                                <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center"/>
+                                                                                <Image MaxWidth="24" Source="{Binding Bild}" />
+                                                                                <TextBlock
+                                                                                    Margin="2,0,0,0"
+                                                                                    VerticalAlignment="Center"
+                                                                                    Text="{Binding Name}" />
                                                                             </StackPanel>
                                                                         </DataTemplate>
                                                                     </ComboBox.ItemTemplate>
                                                                     <ComboBox.ToolTip>
-                                                                        <TextBlock Text="{Binding Kampfstil}"/>
+                                                                        <TextBlock Text="{Binding Kampfstil}" />
                                                                     </ComboBox.ToolTip>
                                                                 </ComboBox>
                                                             </DockPanel>
 
-                                                            <MenuItem Header="Passiv im Kampf" Command="{Binding ki.Passiv}">
+                                                            <MenuItem Command="{Binding ki.Passiv}" Header="Passiv im Kampf">
                                                                 <MenuItem.Icon>
-                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png"/>
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png" />
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
 
-                                                            <MenuItem Header="Ist Unsichtbar" IsCheckable="True" Command="{Binding ki.Unsichtbar}"  >
+                                                            <MenuItem
+                                                                Command="{Binding ki.Unsichtbar}"
+                                                                Header="Ist Unsichtbar"
+                                                                IsCheckable="True">
                                                                 <MenuItem.Icon>
-                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Meisterperson.png"/>
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Meisterperson.png" />
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
 
-                                                            <MenuItem Header="Ist Anführer" IsCheckable="True" Command="{Binding ki.Anführer}"  >
+                                                            <MenuItem
+                                                                Command="{Binding ki.Anführer}"
+                                                                Header="Ist Anführer"
+                                                                IsCheckable="True">
                                                                 <MenuItem.Icon>
-                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"/>
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png" />
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
 
-                                                            <MenuItem Header="Hat Lichtquelle" >
+                                                            <MenuItem Header="Hat Lichtquelle">
                                                                 <MenuItem.Icon>
-                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wetter/Sonne.png"/>
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wetter/Sonne.png" />
                                                                 </MenuItem.Icon>
 
-                                                                <MenuItem Header="Keine" IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='0'}" />
+                                                                <MenuItem
+                                                                    Header="Keine"
+                                                                    IsCheckable="True"
+                                                                    IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='0'}" />
 
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='1'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='1'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kienspan.png"/>
-                                                                            <TextBlock Text="Kienspäne [1-2m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Kienspan.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Kienspäne [1-2m]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='2'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='2'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Binsenlicht.png"/>
-                                                                            <TextBlock Text="Binsenlichter [2-3m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Binsenlicht.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Binsenlichter [2-3m]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='3'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='3'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kerze.png"/>
-                                                                            <TextBlock Text="Kerze [3m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Kerze.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Kerze [3m]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='4'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='4'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png"/>
-                                                                            <TextBlock Text="Laterne [3-4]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Laterne [3-4]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='6'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='6'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png"/>
-                                                                            <TextBlock Text="Pechfackel [4-6m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Pechfackel [4-6m]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='7'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='7'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png"/>
-                                                                            <TextBlock Text="Bend-/Sturmlaterne [2-8m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Bend-/Sturmlaterne [2-8m]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='8'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='8'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png"/>
-                                                                            <TextBlock Text="Fackel [8m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Fackel [8m]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                <MenuItem IsCheckable="True" 
-                                                IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='10'}">
+                                                                <MenuItem IsCheckable="True" IsChecked="{Binding ki.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='10'}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
-                                                                            <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Lagerfeuer.png"/>
-                                                                            <TextBlock Text="Lagerfeuer [10m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                                            <Image
+                                                                                Width="25"
+                                                                                MaxHeight="25"
+                                                                                Source="/DSA%20MeisterGeister;component/Images/Icons/Lagerfeuer.png" />
+                                                                            <TextBlock
+                                                                                Margin="5,0,0,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Text="Lagerfeuer [10m]" />
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
 
                                                                 <DockPanel>
-                                                                    <TextBlock Text="Selbst " DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                                                                    <ViewGeneral:IntBox IncWheel="1" DecWheel="1" DockPanel.Dock="Right" ShowButtons="True" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" 
-                                                    Value="{Binding ki.LichtquelleMeter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                    IncValue="1" DecValue="1" MinValue="0" MaxValue="20" />
+                                                                    <TextBlock
+                                                                        VerticalAlignment="Center"
+                                                                        DockPanel.Dock="Left"
+                                                                        Text="Selbst " />
+                                                                    <ViewGeneral:IntBox
+                                                                        Margin="2,0,0,0"
+                                                                        HorizontalContentAlignment="Stretch"
+                                                                        DecValue="1"
+                                                                        DecWheel="1"
+                                                                        DockPanel.Dock="Right"
+                                                                        IncValue="1"
+                                                                        IncWheel="1"
+                                                                        MaxValue="20"
+                                                                        MinValue="0"
+                                                                        ShowButtons="True"
+                                                                        Value="{Binding ki.LichtquelleMeter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                                 </DockPanel>
                                                             </MenuItem>
 
-                                                            <MenuItem Header="Aus Kampf entfernen" Command="{Binding ki.Entfernen}">
+                                                            <MenuItem Command="{Binding ki.Entfernen}" Header="Aus Kampf entfernen">
                                                                 <MenuItem.Icon>
-                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png"/>
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" />
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
-                                                    </ContextMenu>
-                                                </Canvas.ContextMenu>
-                                                <Canvas.Style>
-                                                    <Style TargetType="Canvas">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                        </ContextMenu>
+                                                    </Canvas.ContextMenu>
+                                                    <Canvas.Style>
+                                                        <Style TargetType="Canvas">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Canvas.Style>
+                                                    <Canvas.Effect>
+                                                        <DropShadowEffect
+                                                            BlurRadius="20"
+                                                            ShadowDepth="10"
+                                                            Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </Canvas.Effect>
+
+                                                    <!--  Lichtquelle  -->
+                                                    <Ellipse
+                                                        Canvas.Left="{Binding ki.LightCreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding ki.LichtquellePixelRadius}"
+                                                        Height="{Binding ki.LichtquellePixelRadius}"
+                                                        Opacity="0.4"
+                                                        Stroke="#FFF0FC00"
+                                                        StrokeThickness="2">
+                                                        <Ellipse.Fill>
+                                                            <RadialGradientBrush>
+                                                                <GradientStop Offset="1" Color="Transparent" />
+                                                                <GradientStop Offset=".8" Color="#FFF0FC00" />
+                                                            </RadialGradientBrush>
+                                                        </Ellipse.Fill>
+                                                        <Ellipse.Style>
+                                                            <Style TargetType="{x:Type Ellipse}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Ellipse.Style>
+                                                    </Ellipse>
+
+                                                    <!--  SightArea  -->
+                                                    <Path
+                                                        Data="{Binding SightAreaGeometryData}"
+                                                        IsHitTestVisible="False"
+                                                        Opacity="0.2"
+                                                        StrokeThickness="1">
+                                                        <Path.Style>
+                                                            <Style TargetType="Path">
                                                                 <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                                                                <Setter Property="Fill" Value="Yellow" />
+                                                                <Setter Property="Stroke" Value="Yellow" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding VM.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="False">
+                                                                        <Setter Property="Fill" Value="DarkOrange" />
+                                                                        <Setter Property="Stroke" Value="DarkOrange" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Path.Style>
+                                                    </Path>
+
+                                                    <!--  Frame for Heroe Picture  -->
+                                                    <Rectangle
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                        RadiusX="12"
+                                                        RadiusY="12"
+                                                        Stroke="#FF5D5757"
+                                                        ToolTip="{Binding Name}">
+                                                        <Rectangle.Fill>
+                                                            <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill">
+                                                                <ImageBrush.ImageSource>
+                                                                    <Binding
+                                                                        Converter="{StaticResource ImagePathConverter}"
+                                                                        IsAsync="True"
+                                                                        Mode="OneWay"
+                                                                        Path="Bild">
+                                                                        <Binding.FallbackValue>
+                                                                            <ImageSource>
+                                                                                /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                            </ImageSource>
+                                                                        </Binding.FallbackValue>
+                                                                        <Binding.TargetNullValue>
+                                                                            <ImageSource>
+                                                                                /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                            </ImageSource>
+                                                                        </Binding.TargetNullValue>
+                                                                    </Binding>
+                                                                </ImageBrush.ImageSource>
+                                                            </ImageBrush>
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>
+
+                                                    <!--  -Z-Level  -->
+                                                    <TextBlock
+                                                        Canvas.Left="{Binding ZDisplayX}"
+                                                        Canvas.Top="{Binding ZDisplayY}"
+                                                        Width="60"
+                                                        FontSize="10"
+                                                        FontWeight="Bold"
+                                                        IsHitTestVisible="False"
+                                                        Text="{Binding ZLevel}"
+                                                        TextAlignment="Center"
+                                                        Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+
+                                                    <!--  Wunden  -->
+                                                    <Image
+                                                        Canvas.Left="{Binding ZDisplayX}"
+                                                        Canvas.Top="{Binding ZDisplayY}"
+                                                        Width="40"
+                                                        Height="40"
+                                                        Margin="-35,30,0,0"
+                                                        Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png">
+                                                        <Image.Style>
+                                                            <Style TargetType="{x:Type Image}">
                                                                 <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Canvas.Style>
-                                                <Canvas.Effect>
-                                                    <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, UpdateSourceTrigger=PropertyChanged}" ShadowDepth="10" BlurRadius="20" />
-                                                </Canvas.Effect>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Wunden, ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[Unlokalisiert], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[Kopf], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[Brust], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[ArmR], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[ArmL], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[Bauch], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[BeinR], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding WundenByZone[BeinL], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Image.Style>
+                                                    </Image>
 
-                                                <!--Lichtquelle-->
-                                                <Ellipse Opacity="0.4" Stroke="#FFF0FC00" StrokeThickness="2" 
-                                                        Width="{Binding ki.LichtquellePixelRadius}" Height="{Binding ki.LichtquellePixelRadius}"
-                                                        Canvas.Left="{Binding ki.LightCreatureX, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}">
-                                                    <Ellipse.Fill>
-                                                        <RadialGradientBrush >
-                                                            <GradientStop Color="Transparent" Offset="1"/>
-                                                            <GradientStop Color="#FFF0FC00" Offset=".8"/>
-                                                        </RadialGradientBrush>
-                                                    </Ellipse.Fill>
-                                                    <Ellipse.Style>
-                                                        <Style TargetType="{x:Type Ellipse}">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Ellipse.Style>
-                                                </Ellipse>
+                                                    <!--  HinweisText  -->
+                                                    <TextBlock
+                                                        Canvas.Left="{Binding CreatureNameX}"
+                                                        Canvas.Top="{Binding CreatureNameY}"
+                                                        Width="140"
+                                                        Margin="0,-220,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Bottom"
+                                                        Background="White"
+                                                        FontSize="14"
+                                                        FontStyle="Italic"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding HinweisText}" Value="">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
 
-                                                <!--SightArea-->
-                                                <Path IsHitTestVisible="False" StrokeThickness="1" Data="{Binding SightAreaGeometryData}" Opacity="0.2">
-                                                    <Path.Style>
-                                                        <Style TargetType="Path">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                            <Setter Property="Fill" Value="Yellow"/>
-                                                            <Setter Property="Stroke" Value="Yellow" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding VM.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                                                    <Setter Property="Visibility" Value="Visible" />
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="False">
-                                                                    <Setter Property="Fill" Value="DarkOrange"/>
-                                                                    <Setter Property="Stroke" Value="DarkOrange" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Path.Style>
-                                                </Path>
+                                                    <!--  -CreatureName  -->
+                                                    <TextBlock
+                                                        Canvas.Left="{Binding CreatureNameX}"
+                                                        Canvas.Top="{Binding CreatureNameY}"
+                                                        Width="160"
+                                                        FontSize="17"
+                                                        FontWeight="Normal"
+                                                        IsHitTestVisible="False"
+                                                        TextAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Text" Value="{Binding KämpferTempName, FallbackValue=''}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsHeld}" Value="False">
+                                                                        <Setter Property="Text" Value="{Binding KämpferTempName}" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding IsHeld}" Value="True">
+                                                                        <Setter Property="Text" Value="{Binding Kurzname}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
 
-                                                <!--Frame for Heroe Picture-->
-                                                <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}" 
-                                                               Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}" 
-                                                               Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}" 
-                                                               Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Name}" Stroke="#FF5D5757">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill">
-                                                            <ImageBrush.ImageSource>
-                                                                <Binding Path="Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
-                                                                    <Binding.FallbackValue>
-                                                                        <ImageSource>
-                                                                            /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
-                                                                        </ImageSource>
-                                                                    </Binding.FallbackValue>
-                                                                    <Binding.TargetNullValue>
-                                                                        <ImageSource>
-                                                                            /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
-                                                                        </ImageSource>
-                                                                    </Binding.TargetNullValue>
-                                                                </Binding>
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
+                                                    <!--  Lebensbalken  -->
+                                                    <ProgressBar
+                                                        Canvas.Left="{Binding CreatureX}"
+                                                        Canvas.Top="{Binding CreatureY}"
+                                                        Width="10"
+                                                        Height="{Binding CreatureHeight}"
+                                                        Margin="-12,0,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
+                                                        Background="#FF3DD81A"
+                                                        Maximum="{Binding LebensenergieMax}"
+                                                        Minimum="0"
+                                                        Orientation="Vertical"
+                                                        Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"
+                                                        Value="{Binding LebensenergieAktuell}" />
 
-                                                <!---Z-Level-->
-                                                <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
-                                                        Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                                                    <!--  Anführer-Krone  -->
+                                                    <Image
+                                                        Canvas.Left="{Binding CreatureNameX}"
+                                                        Canvas.Top="{Binding CreatureNameY}"
+                                                        Width="40"
+                                                        Height="40"
+                                                        Margin="0,-32,0,0"
+                                                        Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
+                                                        Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}" />
 
-                                                <!--Wunden-->
-                                                <Image Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="40" Height="40" Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png" 
-                                                            Margin="-35,30,0,0" >
-                                                    <Image.Style>
-                                                        <Style TargetType="{x:Type Image}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Wunden, ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[Unlokalisiert], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[Kopf], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[Brust], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[ArmR], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[ArmL], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[Bauch], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[BeinR], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WundenByZone[BeinL], ConverterParameter=1, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="True" >
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
+                                                    <!--  Position  -->
+                                                    <Image
+                                                        Canvas.Left="{Binding CreatureNameX}"
+                                                        Canvas.Top="{Binding CreatureNameY}"
+                                                        Width="50"
+                                                        Height="50"
+                                                        Source="{Binding Position, Converter={StaticResource PositionToImageConverter1}, UpdateSourceTrigger=PropertyChanged}" />
 
-                                                <!--HinweisText-->
-                                                <TextBlock TextAlignment="Center" FontSize="14" TextWrapping="Wrap" FontStyle="Italic" Background="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="140"
-                                                               Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}"  Margin="0,-220,0,0">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="{x:Type TextBlock}">
-                                                            <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding HinweisText}" Value="">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
+                                                    <!--  Angriff-Abwehraktionen  -->
+                                                    <Grid
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Margin="{Binding MarginCreatureATPAaktionen}"
+                                                        HorizontalAlignment="Left">
+                                                        <Slider
+                                                            Width="50"
+                                                            Margin="-50,0,0,0"
+                                                            VerticalAlignment="Bottom"
+                                                            IsSnapToTickEnabled="True"
+                                                            Maximum="{Binding ki.Aktionen, UpdateSourceTrigger=PropertyChanged}"
+                                                            Minimum="0"
+                                                            ToolTip="Aktionen umwandeln"
+                                                            Value="{Binding ki.Angriffsaktionen, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <StackPanel Margin="35,0,-3,0" Orientation="Horizontal">
+                                                            <ViewGeneral:ImageDuplicator
+                                                                Padding="0"
+                                                                VerticalAlignment="Top"
+                                                                Anzahl="{Binding ki.VerbrauchteAngriffsaktionen, UpdateSourceTrigger=PropertyChanged}"
+                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
+                                                            <ViewGeneral:ImageDuplicator
+                                                                Padding="0"
+                                                                VerticalAlignment="Top"
+                                                                Anzahl="{Binding ki.AngriffsaktionenÜbrig, UpdateSourceTrigger=PropertyChanged}"
+                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
 
-                                                <!---CreatureName-->
-                                                <TextBlock Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" >
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="{x:Type TextBlock}">
-                                                            <Setter Property="Text" Value="{Binding KämpferTempName, FallbackValue=''}" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsHeld}" Value="False">
-                                                                    <Setter Property="Text" Value="{Binding KämpferTempName}" />
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding IsHeld}" Value="True">
-                                                                    <Setter Property="Text" Value="{Binding Kurzname}" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
+                                                            <ViewGeneral:ImageDuplicator
+                                                                Padding="0"
+                                                                VerticalAlignment="Top"
+                                                                Anzahl="{Binding ki.VerbrauchteAbwehraktionen, UpdateSourceTrigger=PropertyChanged}"
+                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
+                                                            <ViewGeneral:ImageDuplicator
+                                                                Padding="0"
+                                                                VerticalAlignment="Top"
+                                                                Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}"
+                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                                                        </StackPanel>
 
-                                                <!--Lebensbalken-->
-                                                <ProgressBar Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" 
-                                                        Height="{Binding CreatureHeight}" Width="10" HorizontalAlignment="Left" Margin="-12,0,0,0"
-                                                        Maximum="{Binding LebensenergieMax}" Minimum="0" VerticalAlignment="Top" 
-                                                        Value="{Binding LebensenergieAktuell}" Orientation="Vertical" Background="#FF3DD81A"
-                                                        Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <TextBlock
+                                                            Width="14"
+                                                            Margin="-60,0,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="9"
+                                                            FontWeight="Bold"
+                                                            Text="{Binding ki.AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </Grid>
 
-                                                <!--Anführer-Krone-->
-                                                <Image Width="40" Height="40" Margin="0,-32,0, 0" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
-                                                           Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}"
-                                                           Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
+                                                    <!--  Aktionsbuttons rechts  -->
+                                                    <Grid
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureAktionsbuttonsPos}"
+                                                        Margin="{Binding MarginCreatureAktionsbuttons}"
+                                                        Background="Transparent">
+                                                        <!--  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}"  -->
+                                                        <Grid.Style>
+                                                            <Style TargetType="Grid">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Grid.Style>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                        </Grid.RowDefinitions>
 
-                                                <!--Position-->
-                                                <Image Width="50" Height="50" Source="{Binding Position, Converter={StaticResource PositionToImageConverter1}, UpdateSourceTrigger=PropertyChanged}" 
-                                                               Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
-
-                                                <!--Angriff-Abwehraktionen-->
-                                                <Grid Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}" 
-                                                          Margin="{Binding MarginCreatureATPAaktionen}" HorizontalAlignment="Left" >
-                                                    <Slider VerticalAlignment="Bottom" Margin="-50,0,0,0"
-                                                            Minimum="0" IsSnapToTickEnabled="True" Width="50" ToolTip="Aktionen umwandeln"
-                                                            Maximum="{Binding ki.Aktionen, UpdateSourceTrigger=PropertyChanged}" 
-                                                            Value="{Binding ki.Angriffsaktionen, UpdateSourceTrigger=PropertyChanged}"/>
-                                                    <StackPanel Orientation="Horizontal" Margin="35,0,-3,0" >
-                                                        <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.VerbrauchteAngriffsaktionen, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
-                                                        <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.AngriffsaktionenÜbrig, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
-
-                                                        <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.VerbrauchteAbwehraktionen, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
-                                                        <ViewGeneral:ImageDuplicator VerticalAlignment="Top" Padding="0" Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
-                                                    </StackPanel>
-
-                                                    <TextBlock Margin="-60,0,0,0" Text="{Binding ki.AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="14" FontSize="9" FontWeight="Bold"  />
-                                                </Grid>
-
-                                                <!--Aktionsbuttons rechts-->
-                                                <Grid Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                          Height="{Binding CreatureAktionsbuttonsPos}" Margin="{Binding MarginCreatureAktionsbuttons}" Background="Transparent" >
-                                                    <!--Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}"-->
-                                                    <Grid.Style>
-                                                        <Style TargetType="Grid">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Grid.Style>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                    </Grid.RowDefinitions>
-
-                                                    <MenuItem Grid.Row="0" x:Name="miKämpferAttacke" Height="27" Width="27" BorderThickness="1" HorizontalAlignment="Center" 
-                                                              Command="{Binding DataContext.OnBtnUmwandelnAttacke, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
-                                                              CommandParameter="{Binding}"
-                                                              >
-                                                        <!--PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown"-->
-                                                        <MenuItem.Icon>
-                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" MaxWidth="24" Margin="-1,-3,-3,-3" />
-                                                        </MenuItem.Icon>
-                                                        <!--<MenuItem.ItemContainerStyle>
-                                                                <Style TargetType="{x:Type MenuItem}" >
-                                                                    <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnAttacke, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                                                    <Setter Property="CommandParameter" Value="{Binding}"/>
+                                                        <MenuItem
+                                                            x:Name="miKämpferAttacke"
+                                                            Grid.Row="0"
+                                                            Width="27"
+                                                            Height="27"
+                                                            HorizontalAlignment="Center"
+                                                            BorderThickness="1"
+                                                            Command="{Binding DataContext.OnBtnUmwandelnAttacke, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                            CommandParameter="{Binding}">
+                                                            <!--  PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown"  -->
+                                                            <MenuItem.Icon>
+                                                                <Image
+                                                                    MaxWidth="24"
+                                                                    Margin="-1,-3,-3,-3"
+                                                                    Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                                                            </MenuItem.Icon>
+                                                            <!--<MenuItem.ItemContainerStyle>
+                                                                <Style TargetType="{x:Type MenuItem}">
+                                                                    <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnAttacke, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                                    <Setter Property="CommandParameter" Value="{Binding}" />
                                                                 </Style>
                                                             </MenuItem.ItemContainerStyle>-->
-                                                        <MenuItem.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding Name}"/>
-                                                            </DataTemplate>
-                                                        </MenuItem.ItemTemplate>
-                                                    </MenuItem>
+                                                            <MenuItem.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock Text="{Binding Name}" />
+                                                                </DataTemplate>
+                                                            </MenuItem.ItemTemplate>
+                                                        </MenuItem>
 
-                                                    <MenuItem Grid.Row="1" x:Name="miKämpferFernkampf" Height="27" Width="27" BorderThickness="1" HorizontalAlignment="Center">
-                                                        <MenuItem.Style>
-                                                            <Style TargetType="{x:Type MenuItem}">
-                                                                <Setter Property="ItemsSource" Value="{x:Null}" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, ConverterParameter=2, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="false">
-                                                                        <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnFernkampf, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
-                                                                    </DataTrigger>
-                                                                    <MultiDataTrigger>
-                                                                        <MultiDataTrigger.Conditions>
-                                                                            <Condition Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, ConverterParameter=2, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="true" />
-                                                                            <Condition Binding="{Binding IsHeld }" Value="True" />
-                                                                        </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Fernkampfwaffen}" />
-                                                                    </MultiDataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </MenuItem.Style>
-                                                        <MenuItem.Icon>
-                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" MaxWidth="24" Margin="-1,-3,-3,-3" />
-                                                        </MenuItem.Icon>
-                                                        <MenuItem.ItemContainerStyle>
-                                                            <!--BasedOn="{StaticResource {x:Type MenuItem}}"-->
-                                                            <Style TargetType="{x:Type MenuItem}" >
-                                                                <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnFernkampf, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                                                <Setter Property="CommandParameter" Value="{Binding}"/>
-                                                            </Style>
-                                                        </MenuItem.ItemContainerStyle>
-                                                        <MenuItem.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding Name}"/>
-                                                            </DataTemplate>
-                                                        </MenuItem.ItemTemplate>
-                                                    </MenuItem>
+                                                        <MenuItem
+                                                            x:Name="miKämpferFernkampf"
+                                                            Grid.Row="1"
+                                                            Width="27"
+                                                            Height="27"
+                                                            HorizontalAlignment="Center"
+                                                            BorderThickness="1">
+                                                            <MenuItem.Style>
+                                                                <Style TargetType="{x:Type MenuItem}">
+                                                                    <Setter Property="ItemsSource" Value="{x:Null}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, ConverterParameter=2, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="false">
+                                                                            <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnFernkampf, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                                        </DataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding ki.Kämpfer.Fernkampfwaffen.Count, ConverterParameter=2, Converter={StaticResource IsEqualOrGreaterThanConverter1}}" Value="true" />
+                                                                                <Condition Binding="{Binding IsHeld}" Value="True" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Fernkampfwaffen}" />
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </MenuItem.Style>
+                                                            <MenuItem.Icon>
+                                                                <Image
+                                                                    MaxWidth="24"
+                                                                    Margin="-1,-3,-3,-3"
+                                                                    Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" />
+                                                            </MenuItem.Icon>
+                                                            <MenuItem.ItemContainerStyle>
+                                                                <!--  BasedOn="{StaticResource {x:Type MenuItem}}"  -->
+                                                                <Style TargetType="{x:Type MenuItem}">
+                                                                    <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnFernkampf, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                                    <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                </Style>
+                                                            </MenuItem.ItemContainerStyle>
+                                                            <MenuItem.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock Text="{Binding Name}" />
+                                                                </DataTemplate>
+                                                            </MenuItem.ItemTemplate>
+                                                        </MenuItem>
 
-                                                    <MenuItem Grid.Row="2" x:Name="miKämpferZauber" Height="27" Width="27" BorderThickness="1" HorizontalAlignment="Center"
-                                                                      Visibility="{Binding ki.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" Background="Transparent" >
-                                                        <MenuItem.Style>
-                                                            <Style TargetType="{x:Type MenuItem}">
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsHeld }" Value="False">
-                                                                        <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" />
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding IsHeld }" Value="True">
-                                                                        <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Held_Zauber}" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </MenuItem.Style>
-                                                        <MenuItem.Icon>
-                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" MaxWidth="24" Margin="-1,-3,-3,-3" />
-                                                        </MenuItem.Icon>
-                                                        <MenuItem.ItemContainerStyle>
-                                                            <Style TargetType="{x:Type MenuItem}"  >
-                                                                <Setter Property="Command" 
-                                                                                Value="{Binding DataContext.SelManöver.UmwandelnZauber, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                                                <!--Value="{Binding mi.UmwandelnZauber, RelativeSource={RelativeSource}}"/>-->
-                                                                <Setter Property="CommandParameter" Value="{Binding}"/>
-                                                                <Setter Property="Icon" Value="{x:Null}" />
-                                                            </Style>
-                                                        </MenuItem.ItemContainerStyle>
+                                                        <MenuItem
+                                                            x:Name="miKämpferZauber"
+                                                            Grid.Row="2"
+                                                            Width="27"
+                                                            Height="27"
+                                                            HorizontalAlignment="Center"
+                                                            Background="Transparent"
+                                                            BorderThickness="1"
+                                                            Visibility="{Binding ki.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <MenuItem.Style>
+                                                                <Style TargetType="{x:Type MenuItem}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsHeld}" Value="False">
+                                                                            <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding IsHeld}" Value="True">
+                                                                            <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Held_Zauber}" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </MenuItem.Style>
+                                                            <MenuItem.Icon>
+                                                                <Image
+                                                                    MaxWidth="24"
+                                                                    Margin="-1,-3,-3,-3"
+                                                                    Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" />
+                                                            </MenuItem.Icon>
+                                                            <MenuItem.ItemContainerStyle>
+                                                                <Style TargetType="{x:Type MenuItem}">
+                                                                    <Setter Property="Command" Value="{Binding DataContext.SelManöver.UmwandelnZauber, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                                    <!--  Value="{Binding mi.UmwandelnZauber, RelativeSource={RelativeSource}}" />  -->
+                                                                    <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                    <Setter Property="Icon" Value="{x:Null}" />
+                                                                </Style>
+                                                            </MenuItem.ItemContainerStyle>
 
-                                                        <MenuItem.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="-25,-2,0,-2" Background="WhiteSmoke" Opacity="1">
-                                                                    <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"                                                                                
+                                                            <MenuItem.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="-25,-2,0,-2" Background="WhiteSmoke" Opacity="1">
+                                                                    <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"
                                                                                 Fill="{Binding Zauber.Merkmale, Converter={StaticResource MerkmaleListeToBrushColor1}, ConverterParameter='0'}" Opacity=".8" />
                                                                     <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"
                                                                                 Fill="{Binding Zauber.Merkmale, Converter={StaticResource MerkmaleListeToBrushColor1}, ConverterParameter='1'}" Opacity=".8" />
@@ -671,174 +1119,251 @@
                                                                     <Ellipse Margin="1,0,0,0" HorizontalAlignment="Left" Width="14" Height="14" ToolTip="{Binding Zauber.Merkmale}"
                                                                                 Fill="{Binding Zauber.Merkmale, Converter={StaticResource MerkmaleListeToBrushColor1}, ConverterParameter='3'}" Opacity=".8" />-->
 
-                                                                <TextBlock Text="{Binding Zauber.Name}" FontSize="{Binding DataContext.FontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                                                <!--</StackPanel>-->
-                                                            </DataTemplate>
-                                                        </MenuItem.ItemTemplate>
-                                                    </MenuItem>
+                                                                    <TextBlock FontSize="{Binding DataContext.FontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Text="{Binding Zauber.Name}" />
+                                                                    <!--</StackPanel>-->
+                                                                </DataTemplate>
+                                                            </MenuItem.ItemTemplate>
+                                                        </MenuItem>
 
-                                                    <MenuItem Grid.Row="3" x:Name="miKämpferSonstiges" Height="27" Width="27" BorderThickness="1" HorizontalAlignment="Center">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" MaxWidth="24" Margin="-1,-3,-3,-3" />
-                                                        </MenuItem.Icon>
-                                                        <MenuItem.ItemContainerStyle>
-                                                            <Style TargetType="{x:Type MenuItem}" >
-                                                                <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnSonstiges, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                                                <Setter Property="CommandParameter" Value="{Binding}"/>
-                                                            </Style>
-                                                        </MenuItem.ItemContainerStyle>
-                                                        <MenuItem.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding Name}"/>
-                                                            </DataTemplate>
-                                                        </MenuItem.ItemTemplate>
-                                                    </MenuItem>
-                                                </Grid>
-                                            </Canvas>
+                                                        <MenuItem
+                                                            x:Name="miKämpferSonstiges"
+                                                            Grid.Row="3"
+                                                            Width="27"
+                                                            Height="27"
+                                                            HorizontalAlignment="Center"
+                                                            BorderThickness="1">
+                                                            <MenuItem.Icon>
+                                                                <Image
+                                                                    MaxWidth="24"
+                                                                    Margin="-1,-3,-3,-3"
+                                                                    Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" />
+                                                            </MenuItem.Icon>
+                                                            <MenuItem.ItemContainerStyle>
+                                                                <Style TargetType="{x:Type MenuItem}">
+                                                                    <Setter Property="Command" Value="{Binding DataContext.OnBtnUmwandelnSonstiges, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                                    <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                </Style>
+                                                            </MenuItem.ItemContainerStyle>
+                                                            <MenuItem.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock Text="{Binding Name}" />
+                                                                </DataTemplate>
+                                                            </MenuItem.ItemTemplate>
+                                                        </MenuItem>
+                                                    </Grid>
+                                                </Canvas>
 
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                                                    <Setter Property="Effect">
-                                                        <Setter.Value>
-                                                            <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="35" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding IsAnDerReihe}" Value="True">
-                                                    <Setter Property="Effect">
-                                                        <Setter.Value>
-                                                            <DropShadowEffect Color="#FFC0FCFF" ShadowDepth="10" BlurRadius="35" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Thumb.Template>
-                                </Thumb>
-                            </DataTemplate>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="35"
+                                                                    ShadowDepth="10"
+                                                                    Color="Yellow" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsAnDerReihe}" Value="True">
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="35"
+                                                                    ShadowDepth="10"
+                                                                    Color="#FFC0FCFF" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
 
-                            <!-- Datatemplate PATHLINE -->
-                            <DataTemplate DataType="{x:Type model:PathLine}">
-                                <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
-                                    <Thumb.Template>
-                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                            <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-                                                <Path Stroke="{Binding ObjectColor}" StrokeThickness="{Binding StrokeThickness}" Data="{Binding PathGeometryData}" x:Name="PathLine" Opacity="{Binding Opacity}" />
-                                                <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" FontSize="10" 
-                                                            IsHitTestVisible="False" 
-                                                            Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                            </Canvas>
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                                                    <Setter Property="Effect" TargetName="PathLine">
-                                                        <Setter.Value>
-                                                            <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="25" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Thumb.Template>
-                                </Thumb>
-                            </DataTemplate>
+                                <!--  Datatemplate PATHLINE  -->
+                                <DataTemplate DataType="{x:Type model:PathLine}">
+                                    <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                    <Path
+                                                        x:Name="PathLine"
+                                                        Data="{Binding PathGeometryData}"
+                                                        Opacity="{Binding Opacity}"
+                                                        Stroke="{Binding ObjectColor}"
+                                                        StrokeThickness="{Binding StrokeThickness}" />
+                                                    <TextBlock
+                                                        Canvas.Left="{Binding ZDisplayX}"
+                                                        Canvas.Top="{Binding ZDisplayY}"
+                                                        Width="60"
+                                                        FontSize="10"
+                                                        FontWeight="Bold"
+                                                        IsHitTestVisible="False"
+                                                        Text="{Binding ZLevel}"
+                                                        TextAlignment="Center"
+                                                        Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                </Canvas>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <Setter TargetName="PathLine" Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="25"
+                                                                    ShadowDepth="10"
+                                                                    Color="Yellow" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
 
-                            <!-- Datatemplate FILLED PATHLINE -->
-                            <DataTemplate DataType="{x:Type model:FilledPathLine}">
-                                <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
-                                    <Thumb.Template>
-                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                            <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-                                                <Path Stroke="{Binding ObjectColor}" StrokeThickness="{Binding StrokeThickness}" Data="{Binding FilledPathGeometryData}" x:Name="FilledPathLine" Opacity="{Binding Opacity}">
-                                                    <Path.Fill>
-                                                        <SolidColorBrush Color="{Binding FillColor}" />
-                                                    </Path.Fill>
-                                                </Path>
-                                                <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
-                                                            Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                            </Canvas>
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                                                    <Setter Property="Effect" TargetName="FilledPathLine">
-                                                        <Setter.Value>
-                                                            <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="25" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Thumb.Template>
-                                </Thumb>
-                            </DataTemplate>
+                                <!--  Datatemplate FILLED PATHLINE  -->
+                                <DataTemplate DataType="{x:Type model:FilledPathLine}">
+                                    <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                    <Path
+                                                        x:Name="FilledPathLine"
+                                                        Data="{Binding FilledPathGeometryData}"
+                                                        Opacity="{Binding Opacity}"
+                                                        Stroke="{Binding ObjectColor}"
+                                                        StrokeThickness="{Binding StrokeThickness}">
+                                                        <Path.Fill>
+                                                            <SolidColorBrush Color="{Binding FillColor}" />
+                                                        </Path.Fill>
+                                                    </Path>
+                                                    <TextBlock
+                                                        Canvas.Left="{Binding ZDisplayX}"
+                                                        Canvas.Top="{Binding ZDisplayY}"
+                                                        Width="60"
+                                                        FontSize="10"
+                                                        FontWeight="Bold"
+                                                        IsHitTestVisible="False"
+                                                        Text="{Binding ZLevel}"
+                                                        TextAlignment="Center"
+                                                        Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                </Canvas>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <Setter TargetName="FilledPathLine" Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="25"
+                                                                    ShadowDepth="10"
+                                                                    Color="Yellow" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
 
-                            <!-- Datatemplate IMAGEOBJECT -->
-                            <DataTemplate DataType="{x:Type model:ImageObject}">
-                                <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
-                                    <Thumb.Template>
-                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                            <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-                                                <Image RenderTransformOrigin="0.5,0.5" Source="{Binding PictureUrl}" Opacity="{Binding Opacity}" x:Name="ImageObject1" Canvas.Top="{Binding ImagePositionY}" Canvas.Left="{Binding ImagePositionX}" Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" Stretch="Fill" VerticalAlignment="Top" >
-                                                    <Image.RenderTransform>
-                                                        <RotateTransform Angle="{Binding RotateAngle}" />
-                                                    </Image.RenderTransform>
-                                                </Image>
-                                                <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
-                                                                    Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                                            </Canvas>
+                                <!--  Datatemplate IMAGEOBJECT  -->
+                                <DataTemplate DataType="{x:Type model:ImageObject}">
+                                    <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                    <Image
+                                                        x:Name="ImageObject1"
+                                                        Canvas.Left="{Binding ImagePositionX}"
+                                                        Canvas.Top="{Binding ImagePositionY}"
+                                                        Width="{Binding ImageWidth}"
+                                                        Height="{Binding ImageHeight}"
+                                                        VerticalAlignment="Top"
+                                                        Opacity="{Binding Opacity}"
+                                                        RenderTransformOrigin="0.5,0.5"
+                                                        Source="{Binding PictureUrl}"
+                                                        Stretch="Fill">
+                                                        <Image.RenderTransform>
+                                                            <RotateTransform Angle="{Binding RotateAngle}" />
+                                                        </Image.RenderTransform>
+                                                    </Image>
+                                                    <TextBlock
+                                                        Canvas.Left="{Binding ZDisplayX}"
+                                                        Canvas.Top="{Binding ZDisplayY}"
+                                                        Width="60"
+                                                        FontSize="10"
+                                                        FontWeight="Bold"
+                                                        IsHitTestVisible="False"
+                                                        Text="{Binding ZLevel}"
+                                                        TextAlignment="Center"
+                                                        Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                </Canvas>
 
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                                                    <Setter Property="Effect">
-                                                        <Setter.Value>
-                                                            <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="25" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Thumb.Template>
-                                </Thumb>
-                            </DataTemplate>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="25"
+                                                                    ShadowDepth="10"
+                                                                    Color="Yellow" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
 
+                                <!--  Datatemplate TextLabel Bewegungslänge  -->
+                                <DataTemplate DataType="{x:Type model:TextLabel}">
+                                    <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                    <Label
+                                                        Canvas.Left="{Binding LabelPositionX}"
+                                                        Canvas.Top="{Binding LabelPositionY}"
+                                                        Width="{Binding LabelWidth}"
+                                                        Height="{Binding LabelHeight}"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalContentAlignment="Center"
+                                                        VerticalContentAlignment="Center"
+                                                        Background="Transparent"
+                                                        Content="{Binding TextInLabel, UpdateSourceTrigger=PropertyChanged}"
+                                                        FontSize="30"
+                                                        Foreground="White" />
+                                                </Canvas>
 
-                            <!-- Datatemplate LabelText Abstandsmessung -->
-                            <DataTemplate DataType="{x:Type model:TextLabel}">
-                                <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
-                                    <Thumb.Template>
-                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                            <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-                                                <TextBox Text="Binding Bewegungslaenge, UpdateSourceTrigger=PropertyChanged}"  Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" 
-                                                     Canvas.Top="{Binding DataContext.SchrittY, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
-                                                     Canvas.Left="{Binding DataContext.SchrittX, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-                                                </TextBox>
-                                            </Canvas>
-
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                                                    <Setter Property="Effect">
-                                                        <Setter.Value>
-                                                            <DropShadowEffect Color="Yellow" ShadowDepth="10" BlurRadius="25" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Thumb.Template>
-                                </Thumb>
-                            </DataTemplate>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="25"
+                                                                    ShadowDepth="10"
+                                                                    Color="Yellow" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
                             </ListBox.Resources>
 
                             <ListBox.Background>
-                                <!--<Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" Opacity=".3">
-                                            <GradientStop Color="White" Offset="0" />
-                                            <GradientStop Color="GhostWhite" Offset="1" />
-                                        </LinearGradientBrush>
-                                    </Border.Background>-->
-
-                                <!-- Hexgrid -->
-                                <VisualBrush TileMode="Tile" Viewport="{Binding TileViewPort}" ViewportUnits="Absolute">
+                                <!--  Hexgrid  -->
+                                <VisualBrush
+                                    TileMode="Tile"
+                                    Viewport="{Binding TileViewPort}"
+                                    ViewportUnits="Absolute">
                                     <VisualBrush.Visual>
-                                        <Path StrokeThickness="3" StrokeDashArray="5 3" Data="{Binding TilePathData}">
+                                        <Path
+                                            Data="{Binding TilePathData}"
+                                            StrokeDashArray="5 3"
+                                            StrokeThickness="3">
                                             <Path.Stroke>
                                                 <SolidColorBrush Color="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" />
                                             </Path.Stroke>
@@ -850,25 +1375,25 @@
                             <ListBox.Template>
                                 <ControlTemplate TargetType="{x:Type ListBox}">
                                     <Border Background="{TemplateBinding Background}">
-                                        <ItemsPresenter/>
+                                        <ItemsPresenter />
                                     </Border>
                                 </ControlTemplate>
                             </ListBox.Template>
 
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <Canvas IsItemsHost="True" Background="Transparent" 
-                                 GiveFeedback="ArenaGrid_GiveFeedback" />
+                                    <Canvas
+                                        Background="Transparent"
+                                        GiveFeedback="ArenaGrid_GiveFeedback"
+                                        IsItemsHost="True" />
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                         </ListBox>
 
-                        <s:SpielerPointer Margin="{Binding PointerMargin,UpdateSourceTrigger=PropertyChanged}" />
+                        <s:SpielerPointer Margin="{Binding PointerMargin, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </wpfxc:ZoomControl>
-                <Label Content="{Binding Bewegungslaenge, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="17" />
             </Grid>
-
         </Grid>
     </Grid>
 </UserControl>
