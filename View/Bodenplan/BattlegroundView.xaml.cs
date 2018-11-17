@@ -769,18 +769,18 @@ namespace MeisterGeister.View.Bodenplan
                 }
                 else if (VM.SelectedObject != null)
                 {
-                    if (VM.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
+                    if (VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).Any())
                     {
-                        BattlegroundBaseObject currentcreature = VM.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
+                        BattlegroundBaseObject currentcreature = VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).First();
                         currentcreature.IsSticked = false;
 
-                        if (VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
+                        if (VM.BattlegroundObjects.Where(x => x is Model.Held && x.IsSticked).Any())
                         {
-                            VM.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
+                            VM.CurrentlySelectedCreature = ((Model.Held)VM.BattlegroundObjects.Where(x => x is Model.Held && x.IsSticked).First()).Name;
                         }
-                        else if (VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
+                        else if (VM.BattlegroundObjects.Where(x => x is Model.Gegner && x.IsSticked).Any())
                         {
-                            VM.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)VM.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
+                            VM.CurrentlySelectedCreature = ((Model.Gegner)VM.BattlegroundObjects.Where(x => x is Model.Gegner && x.IsSticked).First()).Name;
                         }
                         else
                         {
@@ -835,14 +835,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                if (VM.useFog && Keyboard.IsKeyDown(Key.LeftCtrl))
-                {
-                    VM.FogFreimachen = true;
-                }
-                else
-                {
-                    VM.FogFreimachen = false;
-                }
+                VM.FogFreimachen = (VM.useFog && Keyboard.IsKeyDown(Key.LeftCtrl));
 
                 if (VM.FogFreimachen && VM.FogPixelData != null)
                 {
@@ -885,8 +878,8 @@ namespace MeisterGeister.View.Bodenplan
                     VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
 
                     //Set new Position for sticked Wesen
-                    var tempstick = VM.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).ToList();
-                    if (tempstick.Count > 0)
+                    var tempstick = VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).ToList();
+                    if (tempstick.Any())
                     {
                         foreach (BattlegroundBaseObject wesen in tempstick)
                         {
@@ -997,8 +990,6 @@ namespace MeisterGeister.View.Bodenplan
                                     mi.UmwandelnSonstiges.Execute(menuitem.CommandParameter);
                                 }
                             }
-                            else
-                            { }
                             if (miOpen != null && miOpen.IsSubmenuOpen)
                             {
                                 miOpen.IsSubmenuOpen = false;
