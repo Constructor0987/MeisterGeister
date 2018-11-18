@@ -597,10 +597,10 @@ namespace MeisterGeister.View.Bodenplan
         #region --- Tastatur abfragen ---
 
         public static RoutedCommand ThemeCommandCheck = new RoutedCommand();
-        private Cursor cKämpfer = null;
-        private MenuItem miOpen = null;
-        private bool MouseClickedOnCreature = false;
-        private Point? pKämpfer = null;
+        private Cursor _kämpferCursor = null;
+        private Point? _kämpferPoint = null;
+        private bool _mouseClickedOnCreature = false;
+        private MenuItem _openMenuItem = null;
 
         public static Point GetMousePosition()
         {
@@ -622,7 +622,7 @@ namespace MeisterGeister.View.Bodenplan
             {
                 if (e.Effects == DragDropEffects.Copy || e.Effects == DragDropEffects.Move)
                 {
-                    if (cKämpfer == null && pKämpfer != null)
+                    if (_kämpferCursor == null && _kämpferPoint != null)
                     {
                         Point curMousePosScreen = GetMousePosition();
 
@@ -658,20 +658,20 @@ namespace MeisterGeister.View.Bodenplan
                                 pic = "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
                             }
                             img.Source = new BitmapImage(new Uri(pic.StartsWith("/") ? "pack://application:,,," + pic : pic));
-                            cKämpfer = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                            _kämpferCursor = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
                         }
                         catch (Exception ex)
                         {
                             ViewHelper.ShowError("IMAGE Fehler" + Environment.NewLine + "Beim Creieren des Icons von " + (VM.SelectedObject as BattlegroundCreature).ki.Kämpfer.Name +
                                 " ist ein Fehler aufgetreten." + Environment.NewLine + "pic: " + (ArenaGrid.SelectedItem as IKämpfer).Bild, ex);
                             img.Source = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png", UriKind.Absolute));
-                            cKämpfer = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                            _kämpferCursor = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
                         }
                     }
-                    if (cKämpfer != null)
+                    if (_kämpferCursor != null)
                     {
                         e.UseDefaultCursors = false;
-                        Mouse.SetCursor(cKämpfer);
+                        Mouse.SetCursor(_kämpferCursor);
                         VM.KämpferDnDTempPos = new Point(VM.CurrentMousePositionX, VM.CurrentMousePositionY);
 
                         //Maßstab Endposition setzen
@@ -751,7 +751,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                MouseClickedOnCreature = false;
+                _mouseClickedOnCreature = false;
 
                 VM.IsMoving = false;
                 if (VM.SelectedObject != null)
@@ -891,7 +891,7 @@ namespace MeisterGeister.View.Bodenplan
                     {
                         VM.MoveWhileDrawing(VM.CurrentMousePositionX, VM.CurrentMousePositionY, VM.Freizeichnen);
                     }
-                    else if (MouseClickedOnCreature && e.LeftButton == MouseButtonState.Pressed && VM.SelectedObject != null)
+                    else if (_mouseClickedOnCreature && e.LeftButton == MouseButtonState.Pressed && VM.SelectedObject != null)
                     {
                         VM.IsMoving = true;
                         VM.SelectedObject.IsMoving = true;
@@ -913,21 +913,21 @@ namespace MeisterGeister.View.Bodenplan
 
                         e.Handled = true;
 
-                        pKämpfer = e.GetPosition(null);
+                        _kämpferPoint = e.GetPosition(null);
                         VM.InitDnD = false;
 
                         // Initialisiere drag & drop Operation
                         var dragData = new DataObject("BMKämpfer", VM.SelectedObject);
                         DragDrop.DoDragDrop(ArenaGrid, dragData, DragDropEffects.Move);
-                        pKämpfer = null;
+                        _kämpferPoint = null;
                     }
 
                     _xMovingOld = VM.CurrentMousePositionX;
                     _yMovingOld = VM.CurrentMousePositionY;
 
-                    if (MouseClickedOnCreature && e.LeftButton == MouseButtonState.Released && VM.SelectedObject != null)
+                    if (_mouseClickedOnCreature && e.LeftButton == MouseButtonState.Released && VM.SelectedObject != null)
                     {
-                        MouseClickedOnCreature = false;
+                        _mouseClickedOnCreature = false;
                         VM.FinishCurrentTempPathLine();
                     }
                 }
@@ -940,7 +940,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                MouseClickedOnCreature = false;
+                _mouseClickedOnCreature = false;
                 //STRG - Abfragen um return zu setzen
                 if (Keyboard.IsKeyDown(Key.LeftCtrl))
                 {
@@ -961,7 +961,7 @@ namespace MeisterGeister.View.Bodenplan
                         if (menuitem.HasItems)
                         {
                             menuitem.IsSubmenuOpen = !menuitem.IsSubmenuOpen;
-                            miOpen = menuitem.IsSubmenuOpen ? menuitem : null;
+                            _openMenuItem = menuitem.IsSubmenuOpen ? menuitem : null;
                         }
                         else
                         {
@@ -970,44 +970,44 @@ namespace MeisterGeister.View.Bodenplan
                                 .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
                             if (mi != null)
                             {
-                                if (menuitem.Name == "miKämpferZauber" || (miOpen != null && miOpen.Name == "miKämpferZauber"))
+                                if (menuitem.Name == "miKämpferZauber" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferZauber"))
                                 {
                                     mi.UmwandelnZauber.Execute(menuitem.CommandParameter);
                                 }
 
-                                if (menuitem.Name == "miKämpferFernkampf" || (miOpen != null && miOpen.Name == "miKämpferFernkampf"))
+                                if (menuitem.Name == "miKämpferFernkampf" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferFernkampf"))
                                 {
                                     mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
                                 }
 
-                                if (menuitem.Name == "miKämpferAttacke" || (miOpen != null && miOpen.Name == "miKämpferAttacke"))
+                                if (menuitem.Name == "miKämpferAttacke" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferAttacke"))
                                 {
                                     mi.UmwandelnAttacke.Execute(menuitem.CommandParameter);
                                 }
 
-                                if (menuitem.Name == "miKämpferSonstiges" || (miOpen != null && miOpen.Name == "miKämpferSonstiges"))
+                                if (menuitem.Name == "miKämpferSonstiges" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferSonstiges"))
                                 {
                                     mi.UmwandelnSonstiges.Execute(menuitem.CommandParameter);
                                 }
                             }
-                            if (miOpen != null && miOpen.IsSubmenuOpen)
+                            if (_openMenuItem != null && _openMenuItem.IsSubmenuOpen)
                             {
-                                miOpen.IsSubmenuOpen = false;
+                                _openMenuItem.IsSubmenuOpen = false;
                             }
 
-                            miOpen = null;
+                            _openMenuItem = null;
                             Global.CurrentKampf.SelectedManöver = mi;
                             Global.CurrentKampf.Kampf.SelectedManöverInfo = mi;
                         }
                         return;
                     }
 
-                    if (miOpen != null && miOpen.IsSubmenuOpen)
+                    if (_openMenuItem != null && _openMenuItem.IsSubmenuOpen)
                     {
-                        miOpen.IsSubmenuOpen = false;
+                        _openMenuItem.IsSubmenuOpen = false;
                     }
 
-                    miOpen = null;
+                    _openMenuItem = null;
 
                     Slider slider = ((DependencyObject)e.OriginalSource).FindAnchestor<Slider>();
                     if (slider != null)
@@ -1026,7 +1026,7 @@ namespace MeisterGeister.View.Bodenplan
 
                         var o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
                         VM.SelectedObject = o;
-                        MouseClickedOnCreature = true;
+                        _mouseClickedOnCreature = true;
                         e.Handled = true;
                     }
                 }
@@ -1034,7 +1034,7 @@ namespace MeisterGeister.View.Bodenplan
             catch (Exception ex)
             {
                 ViewHelper.ShowError("Fehler beim Pre-Loslassen der Linken Maustaste", ex);
-                MouseClickedOnCreature = true;
+                _mouseClickedOnCreature = true;
                 e.Handled = true;
             }
         }
@@ -1049,7 +1049,7 @@ namespace MeisterGeister.View.Bodenplan
                     VM.SelectedObject.IsMoving = false;
                 }
 
-                MouseClickedOnCreature = false;
+                _mouseClickedOnCreature = false;
             }
             catch (Exception ex)
             { ViewHelper.ShowError("Fehler beim Pre-Loslassen der Linken Maustaste", ex); }
@@ -1170,7 +1170,7 @@ namespace MeisterGeister.View.Bodenplan
             VM.SelectedObject.IsMoving = false;
             VM.IsMoving = false;
             ((BattlegroundCreature)VM.SelectedObject).CalculateSightArea();
-            cKämpfer = null;
+            _kämpferCursor = null;
         }
 
         private static class NativeMethods
