@@ -686,6 +686,7 @@
     <Compile Include="Net\Web\DereGlobusModule.cs" />
     <Compile Include="Net\Web\RestModule.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\PositionToImageConverter.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\TextLabel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Sichtstufe.cs" />
     <Compile Include="ViewModel\LampenHUE\HUELampenViewModel.cs" />
