@@ -25,16 +25,6 @@ namespace MeisterGeister.View.Bodenplan
     {
         public double _xMovingOld, _yMovingOld;
 
-        private double _visualisationHeight = 100;
-
-        private double _visualisationWidth = 100;
-
-        private double _x1, _y1;
-
-        private bool _zoomChanged = false;
-
-        private bool MouseIsOverScrViewer = false;
-
         public BattlegroundView()
         {
             InitializeComponent();
@@ -90,6 +80,16 @@ namespace MeisterGeister.View.Bodenplan
                 ((Slider)sender).Value = Math.Round(((((Slider)sender).Value - .01 > ((Slider)sender).Minimum) ? ((Slider)sender).Value - .01 : ((Slider)sender).Minimum), 2);
             }
         }
+
+        private double _visualisationHeight = 100;
+
+        private double _visualisationWidth = 100;
+
+        private double _x1, _y1;
+
+        private bool _zoomChanged = false;
+
+        private bool MouseIsOverScrViewer = false;
 
         /// <summary>
         /// The image resizing method.
@@ -162,10 +162,16 @@ namespace MeisterGeister.View.Bodenplan
                     }
 
                     var pathsplit = picurls[i].Split('\\');
-                    var b = new Button() { Name = _buttonPrefix + i, ToolTip = picurls[i], Width = 140, HorizontalContentAlignment = HorizontalAlignment.Left };
-                    b.Content = Path.GetFileNameWithoutExtension(appPath + picurls[i]);
+                    var b = new Button()
+                    {
+                        Name = _buttonPrefix + i,
+                        ToolTip = picurls[i],
+                        Width = 140,
+                        HorizontalContentAlignment = HorizontalAlignment.Left,
+                        Content = System.IO.Path.GetFileNameWithoutExtension(appPath + picurls[i]),
+                        Tag = Ressources.GetFullApplicationPath() + picurls[i]
+                    };
 
-                    b.Tag = Ressources.GetFullApplicationPath() + picurls[i];
                     b.Click += (object sender, RoutedEventArgs e) =>
                         {
                             try
@@ -198,10 +204,9 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                if (VM != null)
                 {
-                    vm.SelectionChangedUpdateSliders();
+                    VM.SelectionChangedUpdateSliders();
                 }
             }
             catch
@@ -210,14 +215,13 @@ namespace MeisterGeister.View.Bodenplan
 
         private void ArenaScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
+            if (VM != null)
             {
                 if (_zoomChanged)
                 {
                     _zoomChanged = false;
-                    vm.CurrentMousePositionX = Mouse.GetPosition(ArenaGrid).X;
-                    vm.CurrentMousePositionY = Mouse.GetPosition(ArenaGrid).Y;
+                    VM.CurrentMousePositionX = Mouse.GetPosition(ArenaGrid).X;
+                    VM.CurrentMousePositionY = Mouse.GetPosition(ArenaGrid).Y;
                 }
             }
         }
@@ -233,10 +237,9 @@ namespace MeisterGeister.View.Bodenplan
 
             if (result == true)
             {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                if (VM != null)
                 {
-                    vm.LoadBattlegroundFromXML(dlg.FileName);
+                    VM.LoadBattlegroundFromXML(dlg.FileName);
                 }
             }
             AddPictureButtons(); //reload new pictures
@@ -245,10 +248,9 @@ namespace MeisterGeister.View.Bodenplan
 
         private void Button_Reset_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
+            if (VM != null)
             {
-                vm.ClearBattleground();
+                VM.ClearBattleground();
             }
         }
 
@@ -256,7 +258,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             var dlg = new Microsoft.Win32.SaveFileDialog
             {
-                FileName = "Battleground_" + System.DateTime.Now.ToShortDateString(), // Default file name
+                FileName = "Battleground_" + DateTime.Now.ToShortDateString(), // Default file name
                 DefaultExt = ".xml",
                 Filter = "XML Files (.xml)|*.xml"
             };
@@ -264,10 +266,9 @@ namespace MeisterGeister.View.Bodenplan
 
             if (result == true)
             {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                if (VM != null)
                 {
-                    vm.SaveBattlegroundToXML(dlg.FileName);
+                    VM.SaveBattlegroundToXML(dlg.FileName);
                 }
             }
         }
@@ -277,8 +278,8 @@ namespace MeisterGeister.View.Bodenplan
             try
             {
                 var dir = "Daten\\Bodenplan";
-                var allowedExtensions = new HashSet<string>(MeisterGeister.Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES, StringComparer.OrdinalIgnoreCase);
-                var aktDir = System.IO.Directory.GetCurrentDirectory();
+                var allowedExtensions = new HashSet<string>(Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES, StringComparer.OrdinalIgnoreCase);
+                var aktDir = Directory.GetCurrentDirectory();
                 var exeDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
                 var dateien = new List<string>();
                 dateien = ViewHelper.ChooseFiles("Bilder hinzufügen", "", true, new string[9] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff" });
@@ -289,18 +290,14 @@ namespace MeisterGeister.View.Bodenplan
 
                 foreach (var datei in dateien)
                 {
-                    var s = exeDirectory + "\\" + dir + "\\" + Path.GetFileName(datei);
+                    var s = exeDirectory + "\\" + dir + "\\" + System.IO.Path.GetFileName(datei);
                     if (File.Exists(s))
                     {
                         File.Delete(s);
                     }
-
-                    if (!File.Exists(s))
-                    {
-                        File.Copy(datei, s);
-                    }
+                    File.Copy(datei, s);
                 }
-                System.IO.Directory.SetCurrentDirectory(aktDir);
+                Directory.SetCurrentDirectory(aktDir);
                 AddPictureButtons();
             }
             catch (Exception ex)
@@ -309,64 +306,57 @@ namespace MeisterGeister.View.Bodenplan
 
         private void ButtonEbeneHigher_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
+            if (VM != null)
             {
-                vm.ChangeEbeneHeight(true);
+                VM.ChangeEbeneHeight(true);
             }
         }
 
         private void ButtonEbeneHigherMax_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
+            if (VM != null)
             {
-                vm.MoveSelectedObjectToTop(true);
+                VM.MoveSelectedObjectToTop(true);
             }
         }
 
         private void ButtonEbeneLower_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
+            if (VM != null)
             {
-                vm.ChangeEbeneHeight(false);
+                VM.ChangeEbeneHeight(false);
             }
         }
 
         private void ButtonEbeneLowerMin_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
+            if (VM != null)
             {
-                vm.MoveSelectedObjectToTop(false);
+                VM.MoveSelectedObjectToTop(false);
             }
         }
 
         private void ButtonSticCreatues_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null)
+            if (VM != null)
             {
-                vm.StickEnemies();
+                VM.StickEnemies();
             }
         }
 
         private void ButtonStickHeroes_Click(object sender, RoutedEventArgs e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null && !vm.BattlegroundObjects.Where(x => x is Model.Gegner && x.IsSticked).Any())
+            if (VM != null && !VM.BattlegroundObjects.Where(x => x is Model.Gegner && x.IsSticked).Any())
             {
-                vm.StickHeroes();
+                VM.StickHeroes();
             }
         }
 
         private void CreateKampfWindow()
         {
-            var vm = DataContext as BattlegroundViewModel;
             var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
 
-            infoView.grdMain.LayoutTransform = new ScaleTransform(vm.ScaleKampfGrid, vm.ScaleKampfGrid);
+            infoView.grdMain.LayoutTransform = new ScaleTransform(VM.ScaleKampfGrid, VM.ScaleKampfGrid);
             VM.KampfWindow = new Window
             {
                 //SizeToContent auf Width setzt den Screen auf minimale Breite
@@ -424,9 +414,9 @@ namespace MeisterGeister.View.Bodenplan
                         infoView.scrViewer.ScrollToHorizontalOffset(width1Ini * anzInisDavor);
                     }
 
-                    if (VM.IniWidthStart != Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid))
+                    if (VM.IniWidthStart != Math.Round(VM.KampfWindow.Width / VM.ScaleKampfGrid))
                     {
-                        VM.IniWidthStart = Math.Round(VM.KampfWindow.Width / vm.ScaleKampfGrid);
+                        VM.IniWidthStart = Math.Round(VM.KampfWindow.Width / VM.ScaleKampfGrid);
                     }
                 }
             };
@@ -445,14 +435,14 @@ namespace MeisterGeister.View.Bodenplan
             VM.KampfWindow.SizeToContent = SizeToContent.Manual;
             VM.KampfWindow.MinWidth = 460;
             VM.IniWidthStart = VM.KampfWindow.Width;
-            VM.KampfWindow.Width = Math.Round(VM.IniWidthStart * vm.ScaleKampfGrid);
+            VM.KampfWindow.Width = Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
             VM.KampfWindow.Top = 0;
 
             var maxRight = Math.Max(
                 System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Right,
                 System.Windows.Forms.Screen.AllScreens.Length > 1 ?
                     System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Right : 0);
-            VM.KampfWindow.Left = maxRight - Math.Round(VM.IniWidthStart * vm.ScaleKampfGrid);
+            VM.KampfWindow.Left = maxRight - Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
 
             VM.IsShowIniKampf = true;
             if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive &&
@@ -460,7 +450,7 @@ namespace MeisterGeister.View.Bodenplan
             {
                 Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = WindowState.Normal;
                 Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = WindowStyle.None;
-                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Math.Round(VM.IniWidthStart * vm.ScaleKampfGrid);
+                Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
                 Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Height = System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Height;
             }
         }
@@ -481,7 +471,7 @@ namespace MeisterGeister.View.Bodenplan
 
         private void MeisterArenaZoom_Click(object sender, RoutedEventArgs e)
         {
-            if (Global.ContextHeld.HeldenGruppeListe.Count > 0)
+            if (Global.ContextHeld.HeldenGruppeListe.Any())
             {
                 ArenaScrollViewer.Zoom = 1;
                 var xMin = Global.ContextHeld.HeldenGruppeListe.Min(t => t.CreatureX) - Global.ContextHeld.HeldenGruppeListe[0].CreatureWidth;
@@ -493,14 +483,13 @@ namespace MeisterGeister.View.Bodenplan
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var vm = DataContext as BattlegroundViewModel;
-            if (vm != null && vm.KampfWindow != null)
+            if (VM != null && VM.KampfWindow != null)
             {
-                ((Kampf.KampfInfoView)vm.KampfWindow.Content).grdMain.LayoutTransform = new ScaleTransform(vm.ScaleKampfGrid, vm.ScaleKampfGrid);
+                ((Kampf.KampfInfoView)VM.KampfWindow.Content).grdMain.LayoutTransform = new ScaleTransform(VM.ScaleKampfGrid, VM.ScaleKampfGrid);
                 VM.KampfWindow.SizeToContent = SizeToContent.Height;
                 //SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
                 VM.KampfWindow.SizeToContent = SizeToContent.Manual;
-                VM.KampfWindow.Width = Math.Round(vm.IniWidthStart * vm.ScaleKampfGrid);
+                VM.KampfWindow.Width = Math.Round(VM.IniWidthStart * VM.ScaleKampfGrid);
             }
         }
 
@@ -525,8 +514,8 @@ namespace MeisterGeister.View.Bodenplan
                 if (Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive &&
                     Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Left >= System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width)
                 {
-                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = System.Windows.WindowState.Maximized;
-                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = System.Windows.WindowStyle.None;
+                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowState = WindowState.Maximized;
+                    Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.WindowStyle = WindowStyle.None;
                 }
             }
         }
@@ -562,45 +551,12 @@ namespace MeisterGeister.View.Bodenplan
             {
                 VM.KampfWindow.Close();
             }
-
             VM.Dispose();
-        }
-
-        public class MyTimer
-        {
-            private static int _start = 0;
-            private static int _stop = 0;
-
-            public static void start_timer()
-            {
-                _start = Environment.TickCount;
-            }
-
-            public static void stop_timer()
-            {
-                stop_timer("");
-            }
-
-            public static void stop_timer(string msg)
-            {
-                _stop = Environment.TickCount;
-                print(msg);
-            }
-
-            private static void print(string msg)
-            {
-                var output = "MyTimer(" + msg + "): " + (_stop - _start) + " Millisekunden";
-                System.Diagnostics.Debug.WriteLine(output);
-            }
         }
 
         #region --- Tastatur abfragen ---
 
         public static RoutedCommand ThemeCommandCheck = new RoutedCommand();
-        private Cursor _kämpferCursor = null;
-        private Point? _kämpferPoint = null;
-        private bool _mouseClickedOnCreature = false;
-        private MenuItem _openMenuItem = null;
 
         public static Point GetMousePosition()
         {
@@ -612,6 +568,18 @@ namespace MeisterGeister.View.Bodenplan
         [DllImport("User32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public int X;
+            public int Y;
+        };
+
+        private Cursor _kämpferCursor = null;
+        private Point? _kämpferPoint = null;
+        private bool _mouseClickedOnCreature = false;
+        private MenuItem _openMenuItem = null;
 
         [DllImport("User32.dll")]
         private static extern bool SetCursorPos(int X, int Y);
@@ -658,14 +626,14 @@ namespace MeisterGeister.View.Bodenplan
                                 pic = "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
                             }
                             img.Source = new BitmapImage(new Uri(pic.StartsWith("/") ? "pack://application:,,," + pic : pic));
-                            _kämpferCursor = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                            _kämpferCursor = CreateCursor(img);
                         }
                         catch (Exception ex)
                         {
                             ViewHelper.ShowError("IMAGE Fehler" + Environment.NewLine + "Beim Creieren des Icons von " + (VM.SelectedObject as BattlegroundCreature).ki.Kämpfer.Name +
                                 " ist ein Fehler aufgetreten." + Environment.NewLine + "pic: " + (ArenaGrid.SelectedItem as IKämpfer).Bild, ex);
                             img.Source = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png", UriKind.Absolute));
-                            _kämpferCursor = CreateCursor(img, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                            _kämpferCursor = CreateCursor(img);
                         }
                     }
                     if (_kämpferCursor != null)
@@ -733,12 +701,28 @@ namespace MeisterGeister.View.Bodenplan
                         VM.SelectionChangedUpdateSliders();
                     }
 
-                    if ((VM.SelectedObject != null && VM.SelectedObject.IsMoving) || VM.CreateLine || VM.CreateFilledLine)
+                    if (VM.SelectedObject != null && VM.SelectedObject.IsMoving)
                     {
                         _x1 = e.GetPosition(ArenaGrid).X;
                         _y1 = e.GetPosition(ArenaGrid).Y;
                         VM.CreateNewTempPathLine(_x1, _y1);
                         VM.CreateNewTempTextLabel(_x1, _y1);
+                        e.Handled = true;
+                    }
+                    else if (VM.CreateLine)
+                    {
+                        _x1 = e.GetPosition(ArenaGrid).X;
+                        _y1 = e.GetPosition(ArenaGrid).Y;
+                        VM.CreatingNewLine = true;
+                        VM.CreateNewPathLine(_x1, _y1);
+                        e.Handled = true;
+                    }
+                    else if (VM.CreateFilledLine)
+                    {
+                        _x1 = e.GetPosition(ArenaGrid).X;
+                        _y1 = e.GetPosition(ArenaGrid).Y;
+                        VM.CreatingNewFilledLine = true;
+                        VM.CreateNewFilledLine(_x1, _y1);
                         e.Handled = true;
                     }
                 }
@@ -771,8 +755,8 @@ namespace MeisterGeister.View.Bodenplan
                 {
                     if (VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).Any())
                     {
-                        BattlegroundBaseObject currentcreature = VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).First();
-                        currentcreature.IsSticked = false;
+                        BattlegroundBaseObject currentCreature = VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).First();
+                        currentCreature.IsSticked = false;
 
                         if (VM.BattlegroundObjects.Where(x => x is Model.Held && x.IsSticked).Any())
                         {
@@ -1060,48 +1044,47 @@ namespace MeisterGeister.View.Bodenplan
             try
             {
                 e.Handled = true;
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
+                if (VM != null)
                 {
-                    if (vm.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
+                    if (VM.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
                     {
                         WriteableBitmap wbmap = VM.FogImage;
-                        var newX = (int)vm.CurrentMousePositionX / 10;
-                        var newY = (int)vm.CurrentMousePositionY / 10;
+                        var newX = (int)VM.CurrentMousePositionX / 10;
+                        var newY = (int)VM.CurrentMousePositionY / 10;
 
-                        var w = 10 * vm.FogFreeSize + 1;
-                        var h = (10 * vm.FogFreeSize + 1) * 10 - 1;
+                        var w = 10 * VM.FogFreeSize + 1;
+                        var h = (10 * VM.FogFreeSize + 1) * 10 - 1;
                         var leererBereich = Enumerable.Repeat(-0x01000000, w * h).ToArray();
 
-                        for (var i = 0; i < 100 * vm.FogFreeSize + 1; i++)
+                        for (var i = 0; i < 100 * VM.FogFreeSize + 1; i++)
                         {
-                            Array.ConstrainedCopy(leererBereich, 0, vm.FogPixelData, i * 1000, w * h);
+                            Array.ConstrainedCopy(leererBereich, 0, VM.FogPixelData, i * 1000, w * h);
                         }
 
                         var ber = 1000;
                         wbmap.WritePixels(new Int32Rect(newX, newY,
-                            newX + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * vm.FogFreeSize + 1,
-                            newY + 10 * vm.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * vm.FogFreeSize + 1),
+                            newX + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * VM.FogFreeSize + 1,
+                            newY + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * VM.FogFreeSize + 1),
                             VM.FogPixelData, ber, 0); // widthInByte
 
                         VM.FogImage = wbmap;
                         return;
                     }
 
-                    if (vm.SelectedObject == null)
+                    if (VM.SelectedObject == null)
                     {
                         return;
                     }
 
-                    if (vm.SelectedObject is Wesen)
+                    if (VM.SelectedObject is Wesen)
                     {
-                        ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(
+                        ((BattlegroundCreature)VM.SelectedObject).CalculateNewSightLineSektor(
                             new Point(e.GetPosition(ArenaGrid).X,
                             e.GetPosition(ArenaGrid).Y), VM.RechteckGrid);
                     }
-                    else if (vm.SelectedObject is ImageObject)
+                    else if (VM.SelectedObject is ImageObject)
                     {
-                        ((ImageObject)vm.SelectedObject).CalculateNewDirection(
+                        ((ImageObject)VM.SelectedObject).CalculateNewDirection(
                             new Point(e.GetPosition(ArenaGrid).X,
                             e.GetPosition(ArenaGrid).Y));
                     }
@@ -1111,16 +1094,9 @@ namespace MeisterGeister.View.Bodenplan
             { ViewHelper.ShowError("Fehler beim Pre-Loslassen der Rechten Maustaste", ex); }
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32Point
-        {
-            public int X;
-            public int Y;
-        };
-
         #region -- CURSOR DRAG & DROP --
 
-        public static Cursor CreateCursor(UIElement element, double dX, double dY)
+        public static Cursor CreateCursor(UIElement element)
         {
             element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             element.Arrange(new Rect(new Point(), element.DesiredSize));
@@ -1188,10 +1164,10 @@ namespace MeisterGeister.View.Bodenplan
             public struct IconInfo
             {
                 public bool fIcon;
-                public IntPtr hbmColor;
-                public IntPtr hbmMask;
                 public int xHotspot;
                 public int yHotspot;
+                public IntPtr hbmMask;
+                public IntPtr hbmColor;
             }
         }
 

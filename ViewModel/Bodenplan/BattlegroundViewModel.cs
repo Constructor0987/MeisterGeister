@@ -195,6 +195,33 @@ namespace MeisterGeister.ViewModel.Bodenplan
             return imageobject;
         }
 
+        public void CreateNewFilledLine(double x1, double y1)
+        {
+            var filledpathline = new FilledPathLine(new Point(x1, y1))
+            {
+                ObjectColor = new SolidColorBrush(SelectedColor),
+                FillColor = SelectedFillColor,
+                StrokeThickness = StrokeThickness,
+                Opacity = Opacity,
+                IsNew = true
+            };
+            SelectedObject = filledpathline;
+            BattlegroundObjects.Add(filledpathline);
+        }
+
+        public void CreateNewPathLine(double x1, double y1)
+        {
+            var pathline = new PathLine(new Point(x1, y1))
+            {
+                ObjectColor = new SolidColorBrush(SelectedColor),
+                StrokeThickness = StrokeThickness,
+                Opacity = Opacity,
+                IsNew = true
+            };
+            SelectedObject = pathline;
+            BattlegroundObjects.Add(pathline);
+        }
+
         public void CreateNewTempPathLine(double x1, double y1)
         {
             var th = (SelectedObject as BattlegroundCreature).CreatureHeight <= (SelectedObject as BattlegroundCreature).CreatureWidth ?
