@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Windows.Input;
 using MeisterGeister.Logic.General;
+
 //Eigene Usings
 using MeisterGeister.Model;
-using Service = MeisterGeister.Model.Service;
-using System.Globalization;
 using MeisterGeister.Net;
 using MeisterGeister.ViewModel;
-using MeisterGeister.Logic.Kalender;
+using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister
 {
+    public delegate void GruppenProbeWürfelnEventHandler(Probe probe, EventArgs e);
+
     public static class Global
     {
-
         #region //CONTEXTE
 
         public static Service.AudioService ContextAudio;
@@ -33,24 +35,26 @@ namespace MeisterGeister
 
         // MenuLink
         public static Service.MenuLinkService _contextMenuLink;
+
         public static Service.MenuLinkService ContextMenuLink
         {
             get
             {
                 if (_contextMenuLink == null)
+                {
                     _contextMenuLink = new Service.MenuLinkService();
+                }
+
                 return _contextMenuLink;
             }
+
             set { _contextMenuLink = value; }
         }
 
-
-        #endregion
+        #endregion //CONTEXTE
 
         #region //EIGENSCHAFTSMETHODEN
 
-        // TODO: Einstellung wird gecached, um Absturz zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
-        private static Nullable<bool> _INTERN = null;
         /// <summary>
         /// Gibt an, ob der INTERN Modus aktiviert ist.
         /// </summary>
@@ -59,12 +63,16 @@ namespace MeisterGeister
             get
             {
                 if (_INTERN == null)
+                {
                     _INTERN = Logic.Einstellung.Einstellungen.GetEinstellung<bool>("INTERN");
+                }
+
                 return _INTERN.Value;
             }
+
             set
             {
-                string pwd = View.General.ViewHelper.InputDialog("Passwort", "Passwort für INTERN Modus eingeben.", string.Empty);
+                var pwd = View.General.ViewHelper.InputDialog("Passwort", "Passwort für INTERN Modus eingeben.", string.Empty);
                 if (Global.Intern_CheckPwd(pwd))
                 {
                     Logic.Einstellung.Einstellungen.SetEinstellung<bool>("INTERN", value);
@@ -86,13 +94,6 @@ namespace MeisterGeister
             get { return Global.INTERN ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; }
         }
 
-        private const string INTERN_PWD = "%m3ist3rg3ist3r%Intern";
-
-        public static bool Intern_CheckPwd(string pwd)
-        {
-            return INTERN_PWD == pwd;
-        }
-
         /// <summary>
         /// Die Regeledition in voller Schreibweise: 'DSA X'.
         /// </summary>
@@ -102,6 +103,7 @@ namespace MeisterGeister
             {
                 return Logic.Einstellung.Einstellungen.Regeledition;
             }
+
             set
             {
                 Logic.Einstellung.Einstellungen.Regeledition = value;
@@ -109,7 +111,6 @@ namespace MeisterGeister
             }
         }
 
-        private static string _regeleditionNummer = string.Empty;
         /// <summary>
         /// Gibt die Nummer der Regeledition an, ohne Textzusatz.
         /// </summary>
@@ -121,7 +122,6 @@ namespace MeisterGeister
             }
         }
 
-        private static bool _dsa5 = false;
         public static bool DSA5
         {
             get
@@ -130,7 +130,6 @@ namespace MeisterGeister
             }
         }
 
-        private static System.Windows.Visibility _dsa5_Visibility = System.Windows.Visibility.Collapsed;
         /// <summary>
         /// Gibt 'Visible' zurück, wenn die Regeledition DSA5 ist, sonst 'Collapsed'.
         /// </summary>
@@ -139,7 +138,6 @@ namespace MeisterGeister
             get { return _dsa5_Visibility; }
         }
 
-        private static bool _dsa4_1 = false;
         public static bool DSA4_1
         {
             get
@@ -148,7 +146,6 @@ namespace MeisterGeister
             }
         }
 
-        private static System.Windows.Visibility _dsa4_1_Visibility = System.Windows.Visibility.Collapsed;
         /// <summary>
         /// Gibt 'Visible' zurück, wenn die Regeledition DSA4.1 ist, sonst 'Collapsed'.
         /// </summary>
@@ -157,7 +154,6 @@ namespace MeisterGeister
             get { return _dsa4_1_Visibility; }
         }
 
-        private static string _text_Generierungseinheit_Abk = "GP";
         public static string Text_Generierungseinheit_Abk
         {
             get
@@ -166,7 +162,6 @@ namespace MeisterGeister
             }
         }
 
-        private static string _text_Generierungseinheit = "Gernerierungspunkte";
         public static string Text_Generierungseinheit
         {
             get
@@ -193,10 +188,10 @@ namespace MeisterGeister
             private set;
         }
 
-        private static MeisterGeister.Logic.Kalender.DsaTool.DSADateTime zeitpunkt;
         public static MeisterGeister.Logic.Kalender.DsaTool.DSADateTime Zeitpunkt
         {
             get { return Global.zeitpunkt; }
+
             set
             {
                 Global.zeitpunkt = value;
@@ -204,10 +199,10 @@ namespace MeisterGeister
             }
         }
 
-        private static string aktuellesDatum;
         public static string AktuellesDatum
         {
             get { return Global.aktuellesDatum; }
+
             set
             {
                 Global.aktuellesDatum = value;
@@ -216,15 +211,18 @@ namespace MeisterGeister
             }
         }
 
-        private static DgSuche.Ortsmarke standort = null;
         public static DgSuche.Ortsmarke Standort
         {
             get
             {
                 if (standort == null)
+                {
                     standort = new DgSuche.Ortsmarke(Logic.Einstellung.Einstellungen.Standort);
+                }
+
                 return standort;
             }
+
             set
             {
                 standort = value;
@@ -236,6 +234,7 @@ namespace MeisterGeister
         public static string HeldenRegion
         {
             get { return standort.Name; }
+
             set
             {
                 standort.Name = value;
@@ -249,6 +248,7 @@ namespace MeisterGeister
         public static double HeldenLon
         {
             get { return Global.heldenPosition.X; }
+
             set
             {
                 Global.heldenPosition.X = value;
@@ -264,6 +264,7 @@ namespace MeisterGeister
         public static double HeldenLat
         {
             get { return Global.heldenPosition.Y; }
+
             set
             {
                 Global.heldenPosition.Y = value;
@@ -273,13 +274,13 @@ namespace MeisterGeister
             }
         }
 
-        static System.Windows.Point heldenPosition = new System.Windows.Point();
         /// <summary>
         /// Position als Point (Länge, Breite)
         /// </summary>
         public static System.Windows.Point HeldenPosition
         {
             get { return heldenPosition; }
+
             set
             {
                 heldenPosition = value;
@@ -290,27 +291,29 @@ namespace MeisterGeister
 
                 List<string> altR = MomentaneRegion;
                 MomentaneRegion = Global.ContextZooBot.GetRegion(value, 0);
-                                
+
                 if ((!altR.SequenceEqual(MomentaneRegion) || altR.Count == 0) &&
                     MainViewModel.Instance.OpenTools.FirstOrDefault(t => t.Name == "Basar") != null)
+                {
                     (MainViewModel.Instance.OpenTools.FirstOrDefault(t => t.Name == "Basar") as ViewModel.Basar.BasarViewModel).FillBasarListe();
+                }
             }
         }
 
-        private static List<string> _momentaneRegion;
         /// <summary>
         /// Ruft den aktuell ausgewählten Helden ab, oder legt ihn fest.
         /// </summary>
         public static List<string> MomentaneRegion
         {
-            get { return _momentaneRegion?? Global.ContextZooBot.GetRegion(HeldenPosition, 0); }
-            set {
+            get { return _momentaneRegion ?? Global.ContextZooBot.GetRegion(HeldenPosition, 0); }
+
+            set
+            {
                 _momentaneRegion = value;
                 MainViewModel.Instance.MomentaneRegion = value;
             }
         }
 
-        private static Model.Held _selectedHeld;
         /// <summary>
         /// Ruft den aktuell ausgewählten Helden ab, oder legt ihn fest.
         /// </summary>
@@ -326,6 +329,7 @@ namespace MeisterGeister
         public static Guid SelectedHeldGUID
         {
             get { return SelectedHeld == null ? Guid.Empty : SelectedHeld.HeldGUID; }
+
             set
             {
                 SelectedHeld = ContextHeld.Liste<Held>().Where(h => h.HeldGUID == value).FirstOrDefault();
@@ -337,9 +341,33 @@ namespace MeisterGeister
         /// </summary>
         public static ViewModel.Kampf.KampfViewModel CurrentKampf { get; set; }
 
+        public static bool Intern_CheckPwd(string pwd)
+        {
+            return INTERN_PWD == pwd;
+        }
+
+        private const string INTERN_PWD = "%m3ist3rg3ist3r%Intern";
+
+        private static readonly Model.Held _selectedHeld;
+
+        // TODO: Einstellung wird gecached, um Absturz zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<bool> _INTERN = null;
+
+        private static string _regeleditionNummer = string.Empty;
+        private static bool _dsa5 = false;
+        private static System.Windows.Visibility _dsa5_Visibility = System.Windows.Visibility.Collapsed;
+        private static bool _dsa4_1 = false;
+        private static System.Windows.Visibility _dsa4_1_Visibility = System.Windows.Visibility.Collapsed;
+        private static string _text_Generierungseinheit_Abk = "GP";
+        private static string _text_Generierungseinheit = "Gernerierungspunkte";
+        private static MeisterGeister.Logic.Kalender.DsaTool.DSADateTime zeitpunkt;
+        private static string aktuellesDatum;
+        private static DgSuche.Ortsmarke standort = null;
+        private static System.Windows.Point heldenPosition = new System.Windows.Point();
+        private static List<string> _momentaneRegion;
         //public static ViewModel.SpielerScreen.SpielerScreenControlViewModel CurrentSpielerScreen { get; set; }
 
-        #endregion
+        #endregion //EIGENSCHAFTSMETHODEN
 
         #region //KONSTRUKTOR
 
@@ -348,7 +376,7 @@ namespace MeisterGeister
             IsInitialized = false;
         }
 
-        #endregion
+        #endregion //KONSTRUKTOR
 
         #region //KLASSENMETHODEN
 
@@ -380,16 +408,17 @@ namespace MeisterGeister
 
             if (Logic.Einstellung.Einstellungen.SelectedHeld != null)
             {
-                Guid heldguid;
-                if (Guid.TryParse(Logic.Einstellung.Einstellungen.SelectedHeld, out heldguid))
+                if (Guid.TryParse(Logic.Einstellung.Einstellungen.SelectedHeld, out Guid heldguid))
+                {
                     SelectedHeldGUID = heldguid;
+                }
             }
             var sarr = Logic.Einstellung.Einstellungen.Standort.Split('#');
             Standort = new DgSuche.Ortsmarke(sarr[0], sarr[1], sarr[2]);
             Logger.PerformanceLogEnd(log);
 
             AktuellesDatum = Logic.Kalender.Datum.Aktuell.ToStringShort();
-             
+
             //webserver
             WebServer = new Server();
 
@@ -398,19 +427,73 @@ namespace MeisterGeister
             //Hilfsweise Events - TODO löschen sobald alle Referenzen aufs MainViewModel umgestellt sind:
             MainViewModel.Instance.PropertyChanging += MVM_PropertyChanging;
             MainViewModel.Instance.PropertyChanged += MVM_PropertyChanged;
+        }
 
+        public static void CleanUp()
+        {
+            if (WebServer != null && WebServer.Status != Server.States.Stopped && WebServer.Status != Server.States.Stopping)
+            {
+                WebServer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// Versetzt die Anwendung in einen "Beschäftig-Status" bzw. entfernt diesen Status. Das
+        /// Hauptfenster zeigt dabei ein Busy-Overlay. (deaktiviert)
+        /// </summary>
+        /// <param name="isBusy">'True' falls Anwendung gerade arbeitet.</param>
+        /// <param name="info">Info Text.</param>
+        public static void SetIsBusy(bool isBusy, string info = "Beschäftigt...")
+        {
+            if (isBusy)
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+            }
+            else
+            {
+                Mouse.OverrideCursor = null;
+            }
+
+            //if (App.Current.MainWindow != null
+            //    && App.Current.MainWindow is View.MainView && App.Current.MainWindow.IsLoaded)
+            //{
+            //    (App.Current.MainWindow as View.MainView).IsBusyInfoText = info;
+            //    (App.Current.MainWindow as View.MainView).IsBusy = isBusy;
+            //}
+        }
+
+        /// <summary>
+        /// Wechselt ins Proben-Tool und würfelt eine Probe.
+        /// </summary>
+        /// <param name="probe">Die zu würfelnde Probe.</param>
+        public static void WürfelGruppenProbe(Probe probe)
+        {
+            if (App.Current.MainWindow == null
+                || !(App.Current.MainWindow is View.MainView))
+            {
+                return;
+            } (App.Current.MainWindow as View.MainView).StarteTab("Proben");
+
+            if (GruppenProbeWürfeln != null)
+            {
+                GruppenProbeWürfeln(probe, new EventArgs());
+            }
         }
 
         private static void MVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "SelectedHeld")
+            {
                 OnSelectedHeldChanged();
+            }
         }
 
-        static void MVM_PropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e)
+        private static void MVM_PropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e)
         {
             if (e.PropertyName == "SelectedHeld")
+            {
                 OnSelectedHeldChanging();
+            }
         }
 
         private static void RefreshRegeledition()
@@ -425,97 +508,68 @@ namespace MeisterGeister
             _text_Generierungseinheit_Abk = _dsa5 ? "AP" : "GP";
         }
 
-        public static void CleanUp()
-        {
-            if (WebServer != null && WebServer.Status != Server.States.Stopped && WebServer.Status != Server.States.Stopping)
-            {
-                WebServer.Stop();
-            }
-        }
-
-        /// <summary>
-        /// Versetzt die Anwendung in einen "Beschäftig-Status" bzw. entfernt diesen Status.
-        /// Das Hauptfenster zeigt dabei ein Busy-Overlay. (deaktiviert)
-        /// </summary>
-        /// <param name="isBusy">'True' falls Anwendung gerade arbeitet.</param>
-        /// <param name="info">Info Text.</param>
-        public static void SetIsBusy(bool isBusy, string info = "Beschäftigt...")
-        {
-            //if (App.Current.MainWindow != null
-            //    && App.Current.MainWindow is View.MainView && App.Current.MainWindow.IsLoaded)
-            //{
-            //    (App.Current.MainWindow as View.MainView).IsBusyInfoText = info;
-            //    (App.Current.MainWindow as View.MainView).IsBusy = isBusy;
-            //}            
-        }
-
-        /// <summary>
-        /// Wechselt ins Proben-Tool und würfelt eine Probe.
-        /// </summary>
-        /// <param name="probe">Die zu würfelnde Probe.</param>
-        public static void WürfelGruppenProbe(Probe probe)
-        {
-            if (App.Current.MainWindow == null
-                || !(App.Current.MainWindow is View.MainView))
-                return;
-
-            (App.Current.MainWindow as View.MainView).StarteTab("Proben");
-
-            if (GruppenProbeWürfeln != null)
-                GruppenProbeWürfeln(probe, new EventArgs());
-        }
-
-        #endregion
+        #endregion //KLASSENMETHODEN
 
         #region //EVENTS
 
-
         public static event EventHandler ZeitpunktChanged;
+
         public static event EventHandler HeldSelectionChanged;
+
         public static event EventHandler HeldSelectionChanging;
+
         public static event EventHandler StandortChanged;
+
         public static event EventHandler DatumChanged;
 
-        static void OnStandortChanged()
+        public static event GruppenProbeWürfelnEventHandler GruppenProbeWürfeln;
+
+        private static void OnStandortChanged()
         {
             Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
 
             if (StandortChanged != null)
+            {
                 StandortChanged(null, new EventArgs());
+            }
         }
 
-        static void OnDatumChanged()
+        private static void OnDatumChanged()
         {
-        //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
-            
+            //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+
             if (DatumChanged != null)
+            {
                 DatumChanged(null, new EventArgs());
-        }
-        static void OnZeitpunktChanged()
-        {
-        //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
-           
-            if (ZeitpunktChanged != null)
-                ZeitpunktChanged(null, new EventArgs());
+            }
         }
 
-        static void OnSelectedHeldChanged()
+        private static void OnZeitpunktChanged()
+        {
+            //Logic.Einstellung.Einstellungen.Standort = string.Format(CultureInfo.InvariantCulture, "{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+
+            if (ZeitpunktChanged != null)
+            {
+                ZeitpunktChanged(null, new EventArgs());
+            }
+        }
+
+        private static void OnSelectedHeldChanged()
         {
             if (HeldSelectionChanged != null)
+            {
                 HeldSelectionChanged(null, new EventArgs());
+            }
         }
 
-        static void OnSelectedHeldChanging()
+        private static void OnSelectedHeldChanging()
         {
             if (HeldSelectionChanging != null)
+            {
                 HeldSelectionChanging(null, new EventArgs());
+            }
         }
 
-        public static event GruppenProbeWürfelnEventHandler GruppenProbeWürfeln;
-
-        #endregion
+        #endregion //EVENTS
     }
-
-    public delegate void GruppenProbeWürfelnEventHandler(Probe probe, EventArgs e);
-
 }

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MeisterGeister.Model;
 using System.ComponentModel;
-
-using MeisterGeister.Logic.HeldenImport;
-using MeisterGeister.Logic.Einstellung;
-using MeisterGeister.View.Windows;
-using MeisterGeister.Logic.Extensions;
+using System.Linq;
 using System.Windows.Data;
+using MeisterGeister.Logic.Einstellung;
+using MeisterGeister.Logic.HeldenImport;
+using MeisterGeister.Model;
 using MeisterGeister.View.Helden;
+using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.ViewModel.Helden
 {
@@ -18,7 +15,6 @@ namespace MeisterGeister.ViewModel.Helden
     {
         public ListeViewModel()
         {
-
         }
 
         ///// <summary>
@@ -33,33 +29,17 @@ namespace MeisterGeister.ViewModel.Helden
         {
         }
 
-        public override void RegisterEvents()
-        {
-            base.RegisterEvents();
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
-            MainViewModel.Instance.PropertyChanged += MainViewModel_PropertyChanged;
-        }
-        public override void UnregisterEvents()
-        {
-            base.UnregisterEvents();
-            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
-            MainViewModel.Instance.PropertyChanged -= MainViewModel_PropertyChanged;
-        }
-
-        void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "SelectedHeld")
-                SelectedHeld = MainViewModel.Instance.SelectedHeld;
-        }
-
-        Held selectedHeld = null;
         public Held SelectedHeld
         {
             get { return selectedHeld; }
+
             set
             {
                 if (selectedHeld != null && !object.Equals(selectedHeld, value))
+                {
                     selectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
+                }
+
                 if (Set(ref selectedHeld, value) && value != null)
                 {
                     selectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
@@ -68,28 +48,15 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
-        private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
             get { return _isReadOnly; }
         }
 
-        private void IsReadOnlyChanged(object sender, EventArgs e)
-        {
-            _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
-            OnChanged("IsReadOnly");
-        }
-
-        private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-            //if (new string[] { "Name", "Spieler", "AktiveHeldengruppe" }.Contains(args.PropertyName))
-            //    SortList();
-        }
-
-        private CollectionViewSource heldListe = null;
         public ICollectionView HeldListe
         {
-            get {
+            get
+            {
                 if (heldListe == null)
                 {
                     heldListe = new CollectionViewSource() { Source = MainViewModel.Instance.Helden };
@@ -100,12 +67,6 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
-        private void filterHeldengruppe(object sender, FilterEventArgs f)
-        {
-            Model.Held h = (Model.Held)f.Item;
-            f.Accepted = (h.Regelsystem == Global.Regeledition) && !(h.HeldGUID.ToString("D").ToUpperInvariant().StartsWith("00000000-0000-0000-045C"));
-        }
-
         /// <summary>
         /// Gibt die Anzahl an Helden zurück, die in einer anderen Regeledition vorliegen.
         /// </summary>
@@ -114,213 +75,171 @@ namespace MeisterGeister.ViewModel.Helden
             get { return Global.ContextHeld.Liste<Held>().Where(h => h.Regelsystem != Global.Regeledition).Count(); }
         }
 
-        List<string> _sortierungListe = new List<string>() { "Held", "Spieler" };
         public List<string> SortierungListe
         {
             get { return _sortierungListe; }
-            set { _sortierungListe = value; OnChanged("SortierungListe"); }
+            set { _sortierungListe = value; OnChanged(nameof(SortierungListe)); }
         }
 
-        private SortDescription nameSort = new SortDescription("Name", ListSortDirection.Ascending);
-        private SortDescription spielerSort = new SortDescription("Spieler", ListSortDirection.Ascending);
-        private string _selectedSortierung = "Held";
         public string SelectedSortierung
         {
             get { return _selectedSortierung; }
+
             set
             {
                 _selectedSortierung = value;
-                OnChanged("SelectedSortierung");
-                //Liste umsortieren
-                if (_selectedSortierung == "Held")
-                {
-                    HeldListe.SortDescriptions.Remove(spielerSort);
-                    HeldListe.SortDescriptions.Add(nameSort);
-                }
-                else
-                {
-                    HeldListe.SortDescriptions.Remove(nameSort);
-                    HeldListe.SortDescriptions.Add(spielerSort);
-                }
+                OnChanged(nameof(SelectedSortierung));
+                SortHeldListe();
             }
         }
 
-        private Base.CommandBase onNewHeld = null;
         public Base.CommandBase OnNewHeld
         {
             get
             {
                 if (onNewHeld == null)
+                {
                     onNewHeld = new Base.CommandBase(NewHeld, null);
+                }
+
                 return onNewHeld;
             }
         }
 
-        private void NewHeld(object sender)
-        {
-            Held h = Global.ContextHeld.New<Held>();
-
-            h.Regelsystem = Global.Regeledition;
-            h.AddBasisTalente();
-            if (Global.ContextHeld.Insert<Held>(h))
-            {
-                //Liste aktualisieren
-                MainViewModel.Instance.Helden.Add(h);
-            }
-        }
-
-        private Base.CommandBase onDeleteHeld = null;
         public Base.CommandBase OnDeleteHeld
         {
             get
             {
                 if (onDeleteHeld == null)
+                {
                     onDeleteHeld = new Base.CommandBase(DeleteHeld, null);
+                }
+
                 return onDeleteHeld;
             }
         }
 
-        private void DeleteHeld(object sender)
-        {
-            Held h = SelectedHeld;
-            if (h != null && !IsReadOnly)
-            {
-                if (Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
-                    && Global.ContextHeld.Delete<Held>(h))
-                {
-                    //Liste aktualisieren
-                    MainViewModel.Instance.Helden.Remove(h);
-                    SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
-                }
-            }
-        }
-
-        private Base.CommandBase onDeleteHeldAll = null;
         public Base.CommandBase OnDeleteHeldAll
         {
             get
             {
                 if (onDeleteHeldAll == null)
+                {
                     onDeleteHeldAll = new Base.CommandBase(DeleteHeldAll, null);
+                }
+
                 return onDeleteHeldAll;
             }
         }
 
-        private void DeleteHeldAll(object sender)
-        {
-            if (!IsReadOnly && Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.SourceCollection.Cast<Held>().Count() )))
-            {
-                Global.SetIsBusy(true, "Alle Helden werden gelöscht...");
-
-                Global.ContextHeld.DeleteAll<Held>();
-                MainViewModel.Instance.Helden.Clear();
-                
-                //Liste aktualisieren
-                SelectedHeld = null;
-
-                Global.SetIsBusy(false);
-            }
-        }
-
-        private Base.CommandBase onExportHeld = null;
         public Base.CommandBase OnExportHeld
         {
             get
             {
                 if (onExportHeld == null)
+                {
                     onExportHeld = new Base.CommandBase(ExportHeld, null);
+                }
+
                 return onExportHeld;
             }
         }
-        //        public string ExportHeld(string pfad)
-        private void ExportHeld(object sender)
-        {
-            Held h = SelectedHeld;
-            if (h != null)
-            {
-                string pfad = ChooseFile("Held exportieren", h.Name, true, false, "xml");
-                if (pfad != null)
-                {
-                    try
-                    {
-                        h.Export(pfad);
-                        PopUp("Der Held wurde in \'" + pfad + "\' gespeichert.");
-                        return;
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowError("Beim Export ist ein Fehler aufgetreten.", ex);
-                    }
-                }
-            }
-            return;
-        }
 
-        private Base.CommandBase onExportDemoHelden = null;
         public Base.CommandBase OnExportDemoHelden
         {
             get
             {
                 if (onExportDemoHelden == null)
+                {
                     onExportDemoHelden = new Base.CommandBase(ExportDemoHelden, null);
+                }
+
                 return onExportDemoHelden;
             }
         }
-        private void ExportDemoHelden(object sender)
-        {
-            if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
-                System.IO.Directory.CreateDirectory("Daten\\Helden\\Demohelden");
-            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
-            foreach (Held h in HeldListe.SourceCollection.Cast<Held>())
-            {
-                string fileName = System.IO.Path.Combine("Daten\\Helden\\Demohelden", View.General.ViewHelper.GetValidFilename(System.IO.Path.ChangeExtension(h.Name, "xml")));
-                h.Export(fileName, true);
-            }
-            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
-        }
 
-        private Base.CommandBase onImportDemoHelden = null;
         public Base.CommandBase OnImportDemoHelden
         {
             get
             {
                 if (onImportDemoHelden == null)
+                {
                     onImportDemoHelden = new Base.CommandBase(ImportDemoHelden, null);
+                }
+
                 return onImportDemoHelden;
             }
         }
-        private void ImportDemoHelden(object sender)
-        {
-            if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
-                return;
 
-            Global.SetIsBusy(true, "Demo-Helden werden importiert...");
-
-            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
-            foreach (string fileName in System.IO.Directory.EnumerateFiles("Daten\\Helden\\Demohelden", "*.xml", System.IO.SearchOption.TopDirectoryOnly))
-            {
-                Held h = Held.Import(fileName, true);
-            }
-            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
-            Held.UpdateLists();
-            MainViewModel.Instance.InvalidateHelden();
-
-            Global.SetIsBusy(false);
-        }
-
-        private Base.CommandBase onImportHeld = null;
         public Base.CommandBase OnImportHeld
         {
             get
             {
                 if (onImportHeld == null)
+                {
                     onImportHeld = new Base.CommandBase(ImportHeldCommand, null);
+                }
+
                 return onImportHeld;
             }
         }
+
+        public Base.CommandBase OnCloneHeld
+        {
+            get
+            {
+                if (onCloneHeld == null)
+                {
+                    onCloneHeld = new Base.CommandBase(CloneHeld, null);
+                }
+
+                return onCloneHeld;
+            }
+        }
+
+        public Base.CommandBase OnClearUpdateHinweis
+        {
+            get
+            {
+                if (onClearUpdateHinweis == null)
+                {
+                    onClearUpdateHinweis = new Base.CommandBase(ClearUpdateHinweis, null);
+                }
+
+                return onClearUpdateHinweis;
+            }
+        }
+
+        public Base.CommandBase OnDownloadHelden
+        {
+            get
+            {
+                if (onDownloadHelden == null)
+                {
+                    onDownloadHelden = new Base.CommandBase(ShowHeldenDownloadWindow, null);
+                }
+
+                return onDownloadHelden;
+            }
+        }
+
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+            Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            MainViewModel.Instance.PropertyChanged += MainViewModel_PropertyChanged;
+        }
+
+        public override void UnregisterEvents()
+        {
+            base.UnregisterEvents();
+            Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
+            MainViewModel.Instance.PropertyChanged -= MainViewModel_PropertyChanged;
+        }
+
         public void ImportHeldCommand(object sender)
         {
-            string pfad = ChooseFile("Held importieren", "", false, false, "xml", "xls", "xlsx", "xlsb");
+            var pfad = ChooseFile("Held importieren", "", false, false, "xml", "xls", "xlsx", "xlsb");
             if (pfad != null)
             {
                 Global.SetIsBusy(true, string.Format("{0} wird importiert...", pfad));
@@ -331,10 +250,10 @@ namespace MeisterGeister.ViewModel.Helden
 #endif
                 Held h = ImportHeld(pfad);
                 SelectedHeld = h;
-               
-                // Liste aktualisieren!                
+
+                // Liste aktualisieren!
                 heldListe = null;
-                OnChanged("HeldListe");
+                OnChanged(nameof(HeldListe));
 
                 MainViewModel.Instance.InvalidateHelden();
 #if !DEBUG
@@ -347,24 +266,28 @@ namespace MeisterGeister.ViewModel.Helden
 
                 Global.SetIsBusy(false);
             }
-
         }
+
         public Held ImportHeld(string pfad)
         {
             Guid hGuid = Guid.Empty;
             Held importHeld = null;
             if (!System.IO.File.Exists(pfad))
+            {
                 throw new System.IO.FileNotFoundException("Die Datei konnte nicht gefunden werden.", pfad);
+            }
+
             try
             {
-                var fs = System.IO.File.OpenRead(pfad);
+                System.IO.FileStream fs = System.IO.File.OpenRead(pfad);
                 fs.Close();
             }
             catch
             {
-                throw new ArgumentException(String.Format("Die Datei {0} konnte nicht geöffnet werden.", pfad));
+                throw new ArgumentException(string.Format("Die Datei {0} konnte nicht geöffnet werden.", pfad));
             }
-            bool isHeldenSoftware = false; bool isHeldenblatt = false;
+            var isHeldenSoftware = false;
+            var isHeldenblatt = false;
             if (HeldenSoftwareImporter.IsHeldenSoftwareFile(pfad))
             {
                 hGuid = HeldenSoftwareImporter.GetGuidFromFile(pfad);
@@ -381,20 +304,27 @@ namespace MeisterGeister.ViewModel.Helden
                 isHeldenblatt = true;
             }
             else
-                throw new ArgumentException(String.Format("Die Datei {0} ist in keinem bekannten Format", pfad));
+            {
+                throw new ArgumentException(string.Format("Die Datei {0} ist in keinem bekannten Format", pfad));
+            }
+
             Held existing = null;
-            bool overwrite = true;
+            var overwrite = true;
             if (!isHeldenblatt && (existing = Global.ContextHeld.Liste<Held>().Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null)
             {
                 //überschreiben?
-                int result = ConfirmYesNoCancel(
+                var result = ConfirmYesNoCancel(
                     "Held importieren",
-                    String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\n\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name)
+                    string.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0}. Soll dieser überschrieben werden?\n\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name)
                 );
                 if (result == 0)
+                {
                     return null;
+                }
                 else if (result == 1)
+                {
                     overwrite = false;
+                }
             }
             if (isHeldenSoftware)
             {
@@ -403,9 +333,13 @@ namespace MeisterGeister.ViewModel.Helden
                 HeldenSoftwareImporter.ShowLogWindow(heldenImportResult);
             }
             else if (isHeldenblatt)
+            {
                 importHeld = HeldenblattImporter.ImportHeldenblattFile(pfad);
+            }
             else
+            {
                 importHeld = Held.Import(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
+            }
 
             if (existing != null && overwrite && (isHeldenblatt || isHeldenSoftware))
             { // MeisterGeister spezifische Daten beim Reimport übernehmen
@@ -413,7 +347,7 @@ namespace MeisterGeister.ViewModel.Helden
                 importHeld.Notizen = existing.Notizen;
                 importHeld.Kampfwerte = existing.Kampfwerte;
                 importHeld.Held_Pflanze = existing.Held_Pflanze;
-                if (importHeld.CheckEnergieständeAbwechend(existing) 
+                if (importHeld.CheckEnergieständeAbwechend(existing)
                     && ConfirmYesNoCancel("Energiestände & Wunden", "Sollen die aktuellen Energiestände und Wunden beibehalten werden?") == 2)
                 {
                     importHeld.LebensenergieAktuell = existing.LebensenergieAktuell;
@@ -431,63 +365,217 @@ namespace MeisterGeister.ViewModel.Helden
                 }
             }
 
-            MainViewModel.Instance.InvalidateHelden();
+            MainViewModel.Instance.Helden.Add(importHeld);
+            HeldListe.Refresh();
+            SortHeldListe();
+
             return importHeld;
         }
 
+        private Held selectedHeld = null;
+
+        private bool _isReadOnly = Einstellungen.IsReadOnly;
+
+        private CollectionViewSource heldListe = null;
+
+        private List<string> _sortierungListe = new List<string>() { "Held", "Spieler" };
+
+        private SortDescription nameSort = new SortDescription("Name", ListSortDirection.Ascending);
+
+        private SortDescription spielerSort = new SortDescription("Spieler", ListSortDirection.Ascending);
+
+        private string _selectedSortierung = "Held";
+
+        private Base.CommandBase onNewHeld = null;
+
+        private Base.CommandBase onDeleteHeld = null;
+
+        private Base.CommandBase onDeleteHeldAll = null;
+
+        private Base.CommandBase onExportHeld = null;
+
+        private Base.CommandBase onExportDemoHelden = null;
+
+        private Base.CommandBase onImportDemoHelden = null;
+
+        private Base.CommandBase onImportHeld = null;
 
         private Base.CommandBase onCloneHeld = null;
-        public Base.CommandBase OnCloneHeld
+
+        private Base.CommandBase onClearUpdateHinweis = null;
+
+        private Base.CommandBase onDownloadHelden = null;
+
+        private void SortHeldListe()
         {
-            get
+            if (SelectedSortierung == "Held")
             {
-                if (onCloneHeld == null)
-                    onCloneHeld = new Base.CommandBase(CloneHeld, null);
-                return onCloneHeld;
+                HeldListe.SortDescriptions.Remove(spielerSort);
+                HeldListe.SortDescriptions.Add(nameSort);
+            }
+            else
+            {
+                HeldListe.SortDescriptions.Remove(nameSort);
+                HeldListe.SortDescriptions.Add(spielerSort);
             }
         }
+
+        private void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SelectedHeld))
+            {
+                SelectedHeld = MainViewModel.Instance.SelectedHeld;
+            }
+        }
+
+        private void IsReadOnlyChanged(object sender, EventArgs e)
+        {
+            _isReadOnly = Einstellungen.IsReadOnly;
+            OnChanged(nameof(IsReadOnly));
+        }
+
+        private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+        }
+
+        private void filterHeldengruppe(object sender, FilterEventArgs f)
+        {
+            var h = (Held)f.Item;
+            f.Accepted = (h.Regelsystem == Global.Regeledition) && !(h.HeldGUID.ToString("D").ToUpperInvariant().StartsWith("00000000-0000-0000-045C"));
+        }
+
+        private void NewHeld(object sender)
+        {
+            Held h = Global.ContextHeld.New<Held>();
+
+            h.Regelsystem = Global.Regeledition;
+            h.AddBasisTalente();
+            if (Global.ContextHeld.Insert<Held>(h))
+            {
+                //Liste aktualisieren
+                MainViewModel.Instance.Helden.Add(h);
+                HeldListe.Refresh();
+                SortHeldListe();
+            }
+        }
+
+        private void DeleteHeld(object sender)
+        {
+            Held h = SelectedHeld;
+            if (h != null && !IsReadOnly)
+            {
+                if (Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
+                    && Global.ContextHeld.Delete<Held>(h))
+                {
+                    //Liste aktualisieren
+                    MainViewModel.Instance.Helden.Remove(h);
+                    HeldListe.Refresh();
+                    SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
+                }
+            }
+        }
+
+        private void DeleteHeldAll(object sender)
+        {
+            if (!IsReadOnly && Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.SourceCollection.Cast<Held>().Count())))
+            {
+                Global.SetIsBusy(true, "Alle Helden werden gelöscht...");
+
+                Global.ContextHeld.DeleteAll<Held>();
+                MainViewModel.Instance.Helden.Clear();
+                HeldListe.Refresh();
+
+                SelectedHeld = null;
+
+                Global.SetIsBusy(false);
+            }
+        }
+
+        // public string ExportHeld(string pfad)
+        private void ExportHeld(object sender)
+        {
+            Held h = SelectedHeld;
+            if (h != null)
+            {
+                var pfad = ChooseFile("Held exportieren", h.Name, true, false, "xml");
+                if (pfad != null)
+                {
+                    try
+                    {
+                        h.Export(pfad);
+                        PopUp("Der Held wurde in \'" + pfad + "\' gespeichert.");
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowError("Beim Export ist ein Fehler aufgetreten.", ex);
+                    }
+                }
+            }
+            return;
+        }
+
+        private void ExportDemoHelden(object sender)
+        {
+            if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
+            {
+                System.IO.Directory.CreateDirectory("Daten\\Helden\\Demohelden");
+            }
+
+            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+            foreach (Held h in HeldListe.SourceCollection.Cast<Held>())
+            {
+                var fileName = System.IO.Path.Combine("Daten\\Helden\\Demohelden", View.General.ViewHelper.GetValidFilename(System.IO.Path.ChangeExtension(h.Name, "xml")));
+                h.Export(fileName, true);
+            }
+            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+        }
+
+        private void ImportDemoHelden(object sender)
+        {
+            if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
+            {
+                return;
+            }
+
+            Global.SetIsBusy(true, "Demo-Helden werden importiert...");
+
+            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+            foreach (var fileName in System.IO.Directory.EnumerateFiles("Daten\\Helden\\Demohelden", "*.xml", System.IO.SearchOption.TopDirectoryOnly))
+            {
+                var h = Held.Import(fileName, true);
+                MainViewModel.Instance.Helden.Add(h);
+            }
+            Model.Service.SerializationService.DestroyInstance();
+            Held.UpdateLists();
+            HeldListe.Refresh();
+
+            Global.SetIsBusy(false);
+        }
+
         private void CloneHeld(object sender)
         {
             Global.SetIsBusy(true, "Held wird kopiert...");
 
             Held h = SelectedHeld.Clone();
-            MainViewModel.Instance.InvalidateHelden();
-
+            MainViewModel.Instance.Helden.Add(h);
+            HeldListe.Refresh();
+            SortHeldListe();
             Global.SetIsBusy(false);
-        }
-
-        private Base.CommandBase onClearUpdateHinweis = null;
-        public Base.CommandBase OnClearUpdateHinweis
-        {
-            get
-            {
-                if (onClearUpdateHinweis == null)
-                    onClearUpdateHinweis = new Base.CommandBase(ClearUpdateHinweis, null);
-                return onClearUpdateHinweis;
-            }
         }
 
         private void ClearUpdateHinweis(object obj)
         {
             if (SelectedHeld != null)
-                SelectedHeld.UpdateHinweis = string.Empty;
-        }
-
-        private Base.CommandBase onDownloadHelden = null;
-        public Base.CommandBase OnDownloadHelden
-        {
-            get
             {
-                if (onDownloadHelden == null)
-                    onDownloadHelden = new Base.CommandBase(ShowHeldenDownloadWindow, null);
-                return onDownloadHelden;
+                SelectedHeld.UpdateHinweis = string.Empty;
             }
         }
 
         private void ShowHeldenDownloadWindow(object obj)
         {
-            string token = Einstellungen.HeldenSoftwareOnlineToken;
-            bool isTokenValid = IsTokenValid(token);
+            var token = Einstellungen.HeldenSoftwareOnlineToken;
+            var isTokenValid = IsTokenValid(token);
 
             if (!isTokenValid)
             {
@@ -497,8 +585,10 @@ namespace MeisterGeister.ViewModel.Helden
             if (isTokenValid)
             {
                 var downloadHeldenViewModel = new DownloadHeldenViewModel(token);
-                var downloadHeldenView = new DownloadHeldenView();
-                downloadHeldenView.DataContext = downloadHeldenViewModel;
+                var downloadHeldenView = new DownloadHeldenView
+                {
+                    DataContext = downloadHeldenViewModel
+                };
                 downloadHeldenView.ShowDialog();
                 MainViewModel.Instance.InvalidateHelden();
             }
@@ -511,16 +601,20 @@ namespace MeisterGeister.ViewModel.Helden
 
         private string AddToken()
         {
-            var dialog = new InputWindow();
-            dialog.Title = "Token eingeben";
-            dialog.Beschreibung = "Bitte einen HeldenSoftware-Online-Token eingeben.";
+            var dialog = new InputWindow
+            {
+                Title = "Token eingeben",
+                Beschreibung = "Bitte einen HeldenSoftware-Online-Token eingeben."
+            };
             dialog.ShowDialog();
-            bool defined = dialog.OK_Click;
-            string tokenEntered = dialog.Wert;
+            var defined = dialog.OK_Click;
+            var tokenEntered = dialog.Wert;
 
             if (defined && !string.IsNullOrEmpty(tokenEntered))
+            {
                 Einstellungen.HeldenSoftwareOnlineToken = tokenEntered;
-            
+            }
+
             return tokenEntered;
         }
     }
