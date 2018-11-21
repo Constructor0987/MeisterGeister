@@ -2,212 +2,114 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using ImpromptuInterface;
+using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
-
-
-using Q42.HueApi;
-using Q42.HueApi.Interfaces;
-using Q42.HueApi.ColorConverters.Original;
-using Q42.HueApi.ColorConverters.OriginalWithModel;
-using Q42.HueApi.ColorConverters.HSB;
-using Q42.HueApi.ColorConverters;
-using Q42.HueApi.Models.Bridge;
-using System.Windows.Threading;
-using MeisterGeister.View.Settings;
-using System.Windows.Media;
-using System.Windows.Controls.Primitives;
-using System.Windows;
 
 namespace MeisterGeister.ViewModel.Settings
 {
-
     public class EinstellungenViewModel : Base.ViewModelBase
     {
-        private async void _Init()
-        {
-        
-        }
-
-        private List<string> _lstDeviceID = new List<string>();
         public List<string> lstDeviceID
         {
             get { return _lstDeviceID; }
             set { Set(ref _lstDeviceID, value); }
         }
 
+        private List<string> _lstDeviceID = new List<string>();
 
         #region Property
 
-        private Base.CommandBase _onBtnSelectHUEColor = null;
         public Base.CommandBase onBtnSelectHUEColor
         {
             get
             {
                 if (_onBtnSelectHUEColor == null)
+                {
                     _onBtnSelectHUEColor = new Base.CommandBase(SelectHUEColor, null);
+                }
+
                 return _onBtnSelectHUEColor;
             }
         }
-        
-        private void SelectHUEColor(object obj)
-        {
-         //   if (HUEThemeSelected == null)
-         //       HUEThemeSelected = lstHUEThemes[0];
 
-         //   HUEColorDialog colorDialog = new HUEColorDialog();
-         //  // colorDialog.colorPicker.hueClient = Client;
-         //   colorDialog.SelectedColor = HUEThemeSelected.LightProcessSelected.Color;
-         ////   colorDialog.SelectedColor = (SolidColorBrush)HUEThemeSelected.LightProcessSelected.Color);//, HUEThemeSelected.LightProcessSelected.Color.G, HUEThemeSelected.LightProcessSelected.Color.B);//((SolidColorBrush))// HUEThemeSelected.lstLightProcess[0].Color.ToString();// this.RectColorPicked.Fill).Color;
-         //   //colorDialog.Owner =  this;
-         //   if ((bool)colorDialog.ShowDialog())
-         //   {
-         //       HUETheme aktTheme = new Settings.EinstellungenViewModel.HUETheme();
-         //       aktTheme = HUEThemeSelected;
-         //       HUEThemeSelected.LightProcessSelected.Color = colorDialog.SelectedColor;
-
-         //       List<HUETheme> lst = new List<Settings.EinstellungenViewModel.HUETheme>();
-         //       lst.AddRange(lstHUEThemes);
-         //       lstHUEThemes = lst;
-         //       //RectColorPicked.Fill = new SolidColorBrush(colorDialog.SelectedColor);
-         //       //SendColorToLamps(colorDialog.SelectedColor);
-         //   }
-
-        }
-
-        private Base.CommandBase _onBtnDoTheme = null;
         public Base.CommandBase onBtnDoTheme
         {
             get
             {
                 if (_onBtnDoTheme == null)
+                {
                     _onBtnDoTheme = new Base.CommandBase(DoTheme, null);
+                }
+
                 return _onBtnDoTheme;
             }
         }
 
-    //    List<HUETheme> RunningThemes = new List<HUETheme>();
-
-        private void DoTheme(object obj)
-        {
-            //HUETheme ThemeToDo = obj as HUETheme;
-            //if (obj == null) return;
-
-            //if (!ThemeToDo.isRunning)
-            //{
-            //    ThemeToDo.vm = this;
-            //    ThemeToDo.actLightProcess = null;
-            //    ThemeToDo.StartTime = 0;
-
-            //    ThemeToDo._timer.Start();
-            //}
-            //else
-            //{
-            //    ThemeToDo._timer.Stop();
-            //}            
-        }
-
-
-        private Base.CommandBase _onbtnNeuesHUETheme = null;
         public Base.CommandBase onbtnNeuesHUETheme
         {
             get
             {
                 if (_onbtnNeuesHUETheme == null)
+                {
                     _onbtnNeuesHUETheme = new Base.CommandBase(NeuesHUETheme, null);
+                }
+
                 return _onbtnNeuesHUETheme;
             }
         }
 
-        private void NeuesHUETheme(object obj)
-        {
-            //List<HUETheme> lst = new List<HUETheme>();
-            //lst.AddRange(lstHUEThemes);
-            //lst.Add(new HUETheme()
-            //{
-            //    Name = "Neues_HUE",
-            //    doLoop = true,
-            //    lstLightProcess = new List<LightProcess>() {
-            //        new LightProcess() { Brightness= 100, Color = Colors.Red, Dauer= 2000, Phase=0 },
-            //        new LightProcess() { Brightness= 100, Color = Colors.Yellow, Dauer= 2000, Phase=1 },
-            //        new LightProcess() { Brightness= 100, Color = Colors.Green, Dauer= 2000, Phase=2 } }
-            //});
-            //lstHUEThemes = lst;
-        }
-
-        private Base.CommandBase _onTBtnThemeProcessColor = null;
         public Base.CommandBase onTBtnThemeProcessColor
         {
             get
             {
                 if (_onTBtnThemeProcessColor == null)
+                {
                     _onTBtnThemeProcessColor = new Base.CommandBase(TBtnThemeProcessColor, null);
+                }
+
                 return _onTBtnThemeProcessColor;
             }
         }
 
-        private void TBtnThemeProcessColor(object obj)
-        {
-         
-        }
-
-        private Base.CommandBase _onbtnAddHUEProcess = null;
         public Base.CommandBase onbtnAddHUEProcess
         {
             get
             {
                 if (_onbtnAddHUEProcess == null)
+                {
                     _onbtnAddHUEProcess = new Base.CommandBase(AddHUEProcess, null);
+                }
+
                 return _onbtnAddHUEProcess;
             }
         }
 
-        private void AddHUEProcess(object obj)
-        {
-            //List<HUETheme> lstThemes = new List<HUETheme>();
-            //lstThemes.AddRange(lstHUEThemes);
-
-            //List<LightProcess> lst = new List<LightProcess>();
-            //HUEThemeSelected = lstHUEThemes[lstHUEThemes.Count-1];
-            //if (HUEThemeSelected.lstLightProcess != null) lst.AddRange(HUEThemeSelected.lstLightProcess);
-            //lst.Add(new LightProcess() { Phase = lst.Count, Dauer = 5000, Color = Colors.AliceBlue, Brightness =255 });
-
-            //((HUETheme)obj).lstLightProcess = lst;
-            //lstHUEThemes = lstThemes;
-        }
-
-        private Base.CommandBase _onBtnHUEGWsuchen = null;
         public Base.CommandBase onBtnHUEGWsuchen
         {
             get
             {
                 if (_onBtnHUEGWsuchen == null)
+                {
                     _onBtnHUEGWsuchen = new Base.CommandBase(HUEGWsuchen, null);
+                }
+
                 return _onBtnHUEGWsuchen;
             }
         }
 
-        private void HUEGWsuchen(object obj)
-        {
-            _Init();
-        }
-
-        private Base.CommandBase _onBtnActivateHUEGW = null;
         public Base.CommandBase onBtnActivateHUEGW
         {
             get
             {
                 if (_onBtnActivateHUEGW == null)
+                {
                     _onBtnActivateHUEGW = new Base.CommandBase(ActivateHUEGW, null);
+                }
+
                 return _onBtnActivateHUEGW;
             }
         }
-
-        private void ActivateHUEGW(object obj)
-        {
-        }
-
 
         public string Regeledition
         {
@@ -215,238 +117,266 @@ namespace MeisterGeister.ViewModel.Settings
             set { Global.Regeledition = value; }
         }
 
-        private Base.CommandBase _onSetRegeledition = null;
         public Base.CommandBase OnSetRegeledition
         {
             get
             {
                 if (_onSetRegeledition == null)
+                {
                     _onSetRegeledition = new Base.CommandBase(SetRegeledition, null);
+                }
+
                 return _onSetRegeledition;
             }
         }
 
-        private void SetRegeledition(object obj)
+        public bool IsAudioSpieldauerBerechnen
         {
-            View.Windows.RegeleditionWindow regWin = new View.Windows.RegeleditionWindow();
-            regWin.Owner = System.Windows.Application.Current.MainWindow;
-            bool? dlgResult = regWin.ShowDialog();
-            regWin = null;
-            if (dlgResult == true)
-                System.Windows.Application.Current.Shutdown();
-        }
+            get { return Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen; }
 
-        public Boolean IsAudioSpieldauerBerechnen
-        {
-            get { return MeisterGeister.Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen; }
             set
             {
-                MeisterGeister.Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen = value;
-                OnChanged("IsAudioSpieldauerBerechnen");
+                Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen = value;
+                OnChanged(nameof(IsAudioSpieldauerBerechnen));
             }
         }
 
-        public Boolean IsInAnderemPfadSuchen
+        public bool IsInAnderemPfadSuchen
         {
-            get { return MeisterGeister.Logic.Einstellung.Einstellungen.AudioInAnderemPfadSuchen; }
+            get { return Logic.Einstellung.Einstellungen.AudioInAnderemPfadSuchen; }
+
             set
             {
-                MeisterGeister.Logic.Einstellung.Einstellungen.AudioInAnderemPfadSuchen = value;
-                OnChanged("IsInAnderemPfadSuchen");
-            }
-        }
-        
-        public Boolean IsShowPlaylistFavorite
-        {
-            get { return MeisterGeister.Logic.Einstellung.Einstellungen.ShowPlaylistFavorite; }
-            set
-            {
-                MeisterGeister.Logic.Einstellung.Einstellungen.ShowPlaylistFavorite = value;
-                OnChanged("IsShowPlaylistFavorite");
+                Logic.Einstellung.Einstellungen.AudioInAnderemPfadSuchen = value;
+                OnChanged(nameof(IsInAnderemPfadSuchen));
             }
         }
 
-        public Boolean IsMitUeberlastung
+        public bool IsShowPlaylistFavorite
         {
-            get { return MeisterGeister.Logic.Einstellung.Einstellungen.IsMitUeberlastung; }
+            get { return Logic.Einstellung.Einstellungen.ShowPlaylistFavorite; }
+
             set
             {
-                MeisterGeister.Logic.Einstellung.Einstellungen.IsMitUeberlastung = value;
-                OnChanged("IsMitUeberlastung");
+                Logic.Einstellung.Einstellungen.ShowPlaylistFavorite = value;
+                OnChanged(nameof(IsShowPlaylistFavorite));
             }
         }
 
-        private List<EinstellungItem> einstellungListe;
+        public bool IsMitUeberlastung
+        {
+            get { return Logic.Einstellung.Einstellungen.MitUeberlastung; }
+
+            set
+            {
+                Logic.Einstellung.Einstellungen.MitUeberlastung = value;
+                OnChanged(nameof(IsMitUeberlastung));
+            }
+        }
+
         public List<EinstellungItem> EinstellungListe
         {
             get { return einstellungListe; }
+
             set
             {
                 einstellungListe = value;
-                OnChanged("EinstellungListe");
+                OnChanged(nameof(EinstellungListe));
             }
         }
 
         public ermittleRuestung BerechnungRuestung
         {
-            get { return (ermittleRuestung)MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung; }
+            get { return (ermittleRuestung)Logic.Einstellung.Einstellungen.RSBerechnung; }
+
             set
-            {        
+            {
                 switch (value)
                 {
                     case ermittleRuestung.AutomatischZonen:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
                         break;
+
                     case ermittleRuestung.Einfach:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
                         break;
+
                     case ermittleRuestung.Zonen:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
                         break;
+
                     case ermittleRuestung.AutomatischEinfach:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
                         break;
+
                     default:
                         return;
                 }
-                OnChanged("BerechnungRuestung");
+                OnChanged(nameof(BerechnungRuestung));
             }
         }
 
         public ermittleBehinderung BerechnungBehinderung
         {
-            get { return (ermittleBehinderung)MeisterGeister.Logic.Einstellung.Einstellungen.BEBerechnung; }
+            get { return (ermittleBehinderung)Logic.Einstellung.Einstellungen.BEBerechnung; }
+
             set
             {
                 switch (value)
                 {
                     case ermittleBehinderung.Automatisch:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.BEBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.BEBerechnung = (int)value;
                         break;
+
                     case ermittleBehinderung.Eingabe:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.BEBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.BEBerechnung = (int)value;
                         break;
+
                     default:
                         return;
                 }
-                OnChanged("BerechnungBehinderung");
+                OnChanged(nameof(BerechnungBehinderung));
             }
         }
 
         public ermitteleUeberlastung BerechnungUeberlastung
         {
-            get { return (ermitteleUeberlastung)MeisterGeister.Logic.Einstellung.Einstellungen.UeberlastungBerechnung; }
+            get { return (ermitteleUeberlastung)Logic.Einstellung.Einstellungen.UeberlastungBerechnung; }
+
             set
             {
                 switch (value)
                 {
                     case ermitteleUeberlastung.Automatisch:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.UeberlastungBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.UeberlastungBerechnung = (int)value;
                         break;
+
                     case ermitteleUeberlastung.Eingabe:
-                        MeisterGeister.Logic.Einstellung.Einstellungen.UeberlastungBerechnung = (int)value;
+                        Logic.Einstellung.Einstellungen.UeberlastungBerechnung = (int)value;
                         break;
+
                     default:
                         return;
                 }
-                OnChanged("BerechnungUeberlastung");
+                OnChanged(nameof(BerechnungUeberlastung));
             }
-        }        
+        }
 
-
-        [DependentProperty("EinstellungListe")]
+        [DependentProperty(nameof(EinstellungListe))]
         public List<EinstellungItem> InventarListe
         {
             get
             {
                 if (EinstellungListe == null)
+                {
                     return null;
+                }
+
                 return EinstellungListe.Where(e => e.Kontext == "Inventar").ToList();
             }
         }
 
-        [DependentProperty("EinstellungListe")]
-        public List<String> KontextListe
+        [DependentProperty(nameof(EinstellungListe))]
+        public List<string> KontextListe
         {
             get
             {
                 if (EinstellungListe == null)
+                {
                     return null;
+                }
+
                 return EinstellungListe.Select(e => e.Kontext).Distinct().ToList();
             }
+
             set { KontextListe = value; }
         }
 
-        [DependentProperty("EinstellungListe")]
+        [DependentProperty(nameof(EinstellungListe))]
         public List<EinstellungItem> AllgemeinListe
         {
             get
             {
                 if (EinstellungListe == null)
+                {
                     return null;
+                }
+
                 return EinstellungListe.Where(e => e.Kontext == "Allgemein").ToList();
             }
         }
 
-        [DependentProperty("EinstellungListe")]
+        [DependentProperty(nameof(EinstellungListe))]
         public List<EinstellungItem> ProbenListe
         {
             get
             {
                 if (EinstellungListe == null)
+                {
                     return null;
+                }
+
                 return EinstellungListe.Where(e => e.Kontext == "Proben").ToList();
             }
         }
 
-        [DependentProperty("EinstellungListe")]
+        [DependentProperty(nameof(EinstellungListe))]
         public List<EinstellungItem> KampfListe
         {
             get
             {
                 if (EinstellungListe == null)
+                {
                     return null;
+                }
+
                 return EinstellungListe.Where(e => e.Kontext == "Kampf").ToList();
             }
         }
 
-        [DependentProperty("EinstellungListe")]
+        [DependentProperty(nameof(EinstellungListe))]
         public List<EinstellungItem> AudioplayerListe
         {
             get
             {
                 if (EinstellungListe == null)
+                {
                     return null;
+                }
+
                 return EinstellungListe.Where(e => e.Kontext == "Audioplayer").ToList();
             }
         }
 
-        [DependentProperty("EinstellungListe")]
+        [DependentProperty(nameof(EinstellungListe))]
         public List<EinstellungItem> AlmanachListe
         {
             get
             {
                 if (EinstellungListe == null)
+                {
                     return null;
+                }
+
                 return EinstellungListe.Where(e => e.Kontext == "Almanach").ToList();
             }
         }
 
         public List<string> PDFReaders
         {
-            get 
-            { 
-                return Logic.General.Pdf.readers.Keys.ToList<string>(); 
+            get
+            {
+                return Logic.General.Pdf.readers.Keys.ToList();
             }
         }
 
-        private string _selectedPDFReader;
         public string SelectedPDFReader
         {
             get
             {
                 return _selectedPDFReader;
             }
+
             set
             {
                 _selectedPDFReader = value;
@@ -456,14 +386,16 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
-        private List<Model.Setting> settingListe;
-        [DependentProperty("EinstellungListe")]
+        [DependentProperty(nameof(EinstellungListe))]
         public List<Model.Setting> SettingListe
         {
             get
             {
                 if (settingListe == null)
+                {
                     return null;
+                }
+
                 return settingListe;
             }
         }
@@ -473,16 +405,83 @@ namespace MeisterGeister.ViewModel.Settings
             get;
             set;
         }
-        #endregion
+
+        private Base.CommandBase _onBtnSelectHUEColor = null;
+        private Base.CommandBase _onBtnDoTheme = null;
+
+        private Base.CommandBase _onbtnNeuesHUETheme = null;
+
+        private Base.CommandBase _onTBtnThemeProcessColor = null;
+
+        private Base.CommandBase _onbtnAddHUEProcess = null;
+
+        private Base.CommandBase _onBtnHUEGWsuchen = null;
+
+        private Base.CommandBase _onBtnActivateHUEGW = null;
+
+        private Base.CommandBase _onSetRegeledition = null;
+
+        private List<EinstellungItem> einstellungListe;
+
+        private string _selectedPDFReader;
+
+        private List<Model.Setting> settingListe;
+
+        private void SelectHUEColor(object obj)
+        {
+        }
+
+        private void DoTheme(object obj)
+        {
+        }
+
+        private void NeuesHUETheme(object obj)
+        {
+        }
+
+        private void TBtnThemeProcessColor(object obj)
+        {
+        }
+
+        private void AddHUEProcess(object obj)
+        {
+        }
+
+        private void HUEGWsuchen(object obj)
+        {
+        }
+
+        private void ActivateHUEGW(object obj)
+        {
+        }
+
+        private void SetRegeledition(object obj)
+        {
+            var regWin = new View.Windows.RegeleditionWindow
+            {
+                Owner = System.Windows.Application.Current.MainWindow
+            };
+            var dlgResult = regWin.ShowDialog();
+            regWin = null;
+            if (dlgResult == true)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
+
+        #endregion Property
 
         #region Constructor
+
         public EinstellungenViewModel()
         {
             LoadDaten();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Public Methods
+
         public void LoadDaten()
         {
             if (Global.ContextHeld != null)
@@ -492,16 +491,17 @@ namespace MeisterGeister.ViewModel.Settings
                 LiteraturListe = Global.ContextHeld.Liste<Model.Literatur>().OrderBy(h => h.Name).Select(e => new LiteraturItem(e)).ToList();
             }
         }
-        #endregion
+
+        #endregion Public Methods
     }
 
     #region LiteraturItem
 
     public class LiteraturItem : INotifyPropertyChanged
     {
-        public Model.Literatur Literatur { get; set; }
-
-        public LiteraturItem() : this(new Model.Literatur()) { }
+        public LiteraturItem() : this(new Model.Literatur())
+        {
+        }
 
         public LiteraturItem(Model.Literatur l)
         {
@@ -514,74 +514,35 @@ namespace MeisterGeister.ViewModel.Settings
             onOpenPdf = new Base.CommandBase(OpenPdf, null);
         }
 
-        private void OpenPdf(object obj)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(Pfad))
-                    Logic.General.Pdf.OpenFileInReader(Pfad);
-            }
-            catch (Exception ex)
-            {
-                View.General.ViewHelper.ShowError(string.Format("Das PDF konnte nicht geöffnet werden.\nReader: {0}\nDatei: {1}\n", Logic.General.Pdf.OpenCommand, Pfad), ex);
-            }
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OpenFileDialog(object obj)
-        {
-            string file = View.General.ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", Name), string.Format("{0}.pdf", Name), false, true, "pdf");
-            if (string.IsNullOrEmpty(file))
-                return;
-            Pfad = file;
+        public Model.Literatur Literatur { get; set; }
 
-            OnChanged("IsOriginal");
-        }
-
-        private void OpenUrlPdf(object obj)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(UrlPdf))
-                    System.Diagnostics.Process.Start(UrlPdf);
-            }
-            catch (Exception) { }
-        }
-
-        private void OpenUrlPrint(object obj)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(UrlPrint))
-                    System.Diagnostics.Process.Start(UrlPrint);
-            }
-            catch (Exception) { }
-        }
-
-        public String UrlPdf
+        public string UrlPdf
         {
             get { return Literatur.UrlPdf; }
             set { Literatur.UrlPdf = value; }
         }
 
-        public String UrlPrint
+        public string UrlPrint
         {
             get { return Literatur.UrlPrint; }
             set { Literatur.UrlPrint = value; }
         }
 
-        public String Abkürzung
+        public string Abkürzung
         {
             get { return Literatur.Abkürzung; }
             set { Literatur.Abkürzung = value; }
         }
 
-        public String Name
+        public string Name
         {
             get { return Literatur.Name; }
             set { Literatur.Name = value; }
         }
 
-        public String Pfad
+        public string Pfad
         {
             get { return Literatur.Pfad; }
             set { Literatur.Pfad = value; }
@@ -593,119 +554,188 @@ namespace MeisterGeister.ViewModel.Settings
             set { Literatur.Seitenoffset = value; }
         }
 
-        public Nullable<bool> IsOriginal
+        public bool? IsOriginal
         {
             get { return Literatur.IsOriginal; }
+        }
+
+        public Base.CommandBase OnOpenPdf
+        {
+            get { return onOpenPdf; }
+        }
+
+        public Base.CommandBase OnOpenFileDialog
+        {
+            get { return onOpenFileDialog; }
+        }
+
+        public Base.CommandBase OnOpenUrlPdf
+        {
+            get { return onOpenUrlPdf; }
+        }
+
+        public Base.CommandBase OnOpenUrlPrint
+        {
+            get { return onOpenUrlPrint; }
+        }
+
+        protected void OnChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private readonly Base.CommandBase onOpenPdf;
+
+        private readonly Base.CommandBase onOpenFileDialog;
+
+        private readonly Base.CommandBase onOpenUrlPdf;
+
+        private readonly Base.CommandBase onOpenUrlPrint;
+
+        private void OpenPdf(object obj)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Pfad))
+                {
+                    Logic.General.Pdf.OpenFileInReader(Pfad);
+                }
+            }
+            catch (Exception ex)
+            {
+                View.General.ViewHelper.ShowError(string.Format("Das PDF konnte nicht geöffnet werden.\nReader: {0}\nDatei: {1}\n", Logic.General.Pdf.OpenCommand, Pfad), ex);
+            }
+        }
+
+        private void OpenFileDialog(object obj)
+        {
+            var file = View.General.ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", Name), string.Format("{0}.pdf", Name), false, true, "pdf");
+            if (string.IsNullOrEmpty(file))
+            {
+                return;
+            }
+
+            Pfad = file;
+
+            OnChanged(nameof(IsOriginal));
+        }
+
+        private void OpenUrlPdf(object obj)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(UrlPdf))
+                {
+                    System.Diagnostics.Process.Start(UrlPdf);
+                }
+            }
+            catch (Exception) { }
+        }
+
+        private void OpenUrlPrint(object obj)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(UrlPrint))
+                {
+                    System.Diagnostics.Process.Start(UrlPrint);
+                }
+            }
+            catch (Exception) { }
         }
 
         private void Literatur_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnChanged(e.PropertyName);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        private Base.CommandBase onOpenPdf;
-        public Base.CommandBase OnOpenPdf
-        {
-            get { return onOpenPdf; }
-        }
-
-        private Base.CommandBase onOpenFileDialog;
-        public Base.CommandBase OnOpenFileDialog
-        {
-            get { return onOpenFileDialog; }
-        }
-
-        private Base.CommandBase onOpenUrlPdf;
-        public Base.CommandBase OnOpenUrlPdf
-        {
-            get { return onOpenUrlPdf; }
-        }
-
-        private Base.CommandBase onOpenUrlPrint;
-        public Base.CommandBase OnOpenUrlPrint
-        {
-            get { return onOpenUrlPrint; }
-        }
     }
 
-    #endregion
+    #endregion LiteraturItem
 
     #region EinstellungItem
-    //Falls typsensitive Hilfsklassen gebraucht werden.
-    public class EinstellungItemString : EinstellungItemGeneric<String>
+
+    /// <summary>
+    /// Falls typsensitive Hilfsklassen gebraucht werden.
+    /// </summary>
+    public class EinstellungItemString : EinstellungItemGeneric<string>
     {
-        public EinstellungItemString(Model.Einstellung e) : base(e) { }
+        public EinstellungItemString(Model.Einstellung e) : base(e)
+        {
+        }
     }
 
-    public class EinstellungItemBoolean : EinstellungItemGeneric<Boolean>
+    public class EinstellungItemBoolean : EinstellungItemGeneric<bool>
     {
-        public EinstellungItemBoolean(Model.Einstellung e) : base(e) { }
+        public EinstellungItemBoolean(Model.Einstellung e) : base(e)
+        {
+        }
     }
 
     public class EinstellungItemInteger : EinstellungItemGeneric<int>
     {
-        public EinstellungItemInteger(Model.Einstellung e) : base(e) { }
+        public EinstellungItemInteger(Model.Einstellung e) : base(e)
+        {
+        }
     }
 
     public class EinstellungItemDouble : EinstellungItemGeneric<double>
     {
-        public EinstellungItemDouble(Model.Einstellung e) : base(e) { }
+        public EinstellungItemDouble(Model.Einstellung e) : base(e)
+        {
+        }
     }
 
     public class EinstellungItemGeneric<T> : EinstellungItem
     {
-        public EinstellungItemGeneric(Model.Einstellung e) : base(e) { }
+        public EinstellungItemGeneric(Model.Einstellung e) : base(e)
+        {
+        }
 
         public T Wert
         {
             get { return einstellung.Get<T>(); }
-            set { einstellung.Set<T>(value); }
+            set { einstellung.Set(value); }
         }
     }
 
     public class EinstellungItem : INotifyPropertyChanged
     {
-        protected Model.Einstellung einstellung = null;
         public EinstellungItem(Model.Einstellung e)
         {
             einstellung = e;
             einstellung.PropertyChanged += einstellung_PropertyChanged;
         }
 
-        public String Kontext
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Kontext
         {
             get { return einstellung.Kontext; }
             set { einstellung.Kontext = value; }
         }
 
-        public String Kategorie
+        public string Kategorie
         {
             get { return einstellung.Kategorie; }
             set { einstellung.Kategorie = value; }
         }
 
-        public String Name
+        public string Name
         {
             get { return einstellung.Name; }
             set { einstellung.Name = value; }
         }
 
-        public String Beschreibung
+        public string Beschreibung
         {
             get { return einstellung.Beschreibung; }
             set { einstellung.Beschreibung = value; }
         }
 
-        public String Typ
+        public string Typ
         {
             get { return einstellung.Typ; }
             set { einstellung.Typ = value; }
@@ -716,56 +746,52 @@ namespace MeisterGeister.ViewModel.Settings
             get { return einstellung.Type; }
         }
 
-        private void einstellung_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Value")
-                OnChanged("Wert");
-            else if (e.PropertyName == "Wert")
-            { }
-            else
-                OnChanged(e.PropertyName);
-
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         public static EinstellungItem GetTypedEinstellungItem(Model.Einstellung e)
         {
-            if (e.Type == typeof(Boolean))
+            if (e.Type == typeof(bool))
+            {
                 return new EinstellungItemBoolean(e);
-            if (e.Type == typeof(String))
+            }
+
+            if (e.Type == typeof(string))
+            {
                 return new EinstellungItemString(e);
+            }
+
             if (e.Type == typeof(int))
+            {
                 return new EinstellungItemInteger(e);
+            }
+
             if (e.Type == typeof(double))
+            {
                 return new EinstellungItemDouble(e);
+            }
+
             return Impromptu.InvokeConstructor(typeof(EinstellungItemGeneric<>).MakeGenericType(e.Type), e);
         }
-    }
-    #endregion
 
-    public enum ermittleRuestung
-    {        
-        AutomatischZonen,
-        Einfach,
-        Zonen,
-        AutomatischEinfach
+        protected Model.Einstellung einstellung = null;
+
+        protected void OnChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void einstellung_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Einstellung.Value))
+            {
+                OnChanged(nameof(Einstellung.Wert));
+            }
+            else if (e.PropertyName == nameof(einstellung.Wert))
+            { }
+            else
+            {
+                OnChanged(e.PropertyName);
+            }
+        }
     }
-    public enum ermittleBehinderung
-    {
-        Automatisch,
-        Eingabe
-    }
-    public enum ermitteleUeberlastung
-    {
-        Automatisch,
-        Eingabe
-    }
+
+    #endregion EinstellungItem
 }

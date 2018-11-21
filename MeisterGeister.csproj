@@ -598,6 +598,7 @@
     <Compile Include="Model\Rasse_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Regelwerke.cs" />
     <Compile Include="Model\Rüstung.cs" />
     <Compile Include="Model\Rüstung_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -625,12 +626,15 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Talent.cs" />
+    <Compile Include="Model\Talente.cs" />
     <Compile Include="Model\Talentgruppe_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Talenttypen.cs" />
     <Compile Include="Model\Talent_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Trageorte.cs" />
     <Compile Include="Model\Trageort_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -688,6 +692,9 @@
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\PositionToImageConverter.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\TextLabel.cs" />
+    <Compile Include="ViewModel\Einstellungen\ermitteleUeberlastung.cs" />
+    <Compile Include="ViewModel\Einstellungen\ermittleBehinderung.cs" />
+    <Compile Include="ViewModel\Einstellungen\ermittleRuestung.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Sichtstufe.cs" />
     <Compile Include="ViewModel\LampenHUE\HUELampenViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />

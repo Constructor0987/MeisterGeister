@@ -695,7 +695,7 @@ namespace MeisterGeister.ViewModel.Inventar
                     }
                     break;
                 case "IsMitUeberlastung":
-                    switch (E.IsMitUeberlastung)
+                    switch (E.MitUeberlastung)
                     {
                         case true:
                             EinstellungenChangedHandler(null, new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));

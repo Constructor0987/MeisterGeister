@@ -1,195 +1,182 @@
-﻿<Window x:Class="MeisterGeister.View.Settings.EinstellungenWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings"
-        xmlns:Model="clr-namespace:MeisterGeister.Model"
-        xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-        xmlns:mg="clr-namespace:MeisterGeister"
-        xmlns:local="clr-namespace:MeisterGeister.View.Settings"
-        mc:Ignorable="d"
-        Title="Einstellungen"        
-        Width="850"        
-        Height="500"
-        d:DesignHeight="800"
-        Icon="/Images/Icons/mechanik.png" 
-        Loaded="Window_Loaded" 
-        Background="{StaticResource Background1}" 
-        Closed="Window_Closed"
-        TextOptions.TextFormattingMode="Display" 
-        WindowStartupLocation="CenterOwner"
-        d:DataContext="{d:DesignData /SampleData/EinstellungenSampleData.xaml}">
+﻿<Window
+    x:Class="MeisterGeister.View.Settings.EinstellungenWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Model="clr-namespace:MeisterGeister.Model"
+    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MeisterGeister.View.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mg="clr-namespace:MeisterGeister"
+    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings"
+    Title="Einstellungen"
+    Width="850"
+    Height="500"
+    d:DataContext="{d:DesignData /SampleData/EinstellungenSampleData.xaml}"
+    d:DesignHeight="800"
+    Background="{StaticResource Background1}"
+    Closed="Window_Closed"
+    Icon="/Images/Icons/mechanik.png"
+    Loaded="Window_Loaded"
+    TextOptions.TextFormattingMode="Display"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
     <Window.Resources>
         <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
         <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1" />
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1" />
         <ViewGeneral:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter1" />
-        <DataTemplate x:Key="ThemeTemplate" >
-            <Border Margin="5" Padding="4" CornerRadius="5">
+        <DataTemplate x:Key="ThemeTemplate">
+            <Border
+                Margin="5"
+                Padding="4"
+                CornerRadius="5">
                 <Border.Background>
-                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.3" StartPoint="0,0.5">
-                        <GradientStop Color="WhiteSmoke" Offset="0" />
-                        <GradientStop Color="#FFFFFFC7" Offset="1" />
+                    <LinearGradientBrush Opacity="0.3" StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Offset="0" Color="WhiteSmoke" />
+                        <GradientStop Offset="1" Color="#FFFFFFC7" />
                     </LinearGradientBrush>
                 </Border.Background>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="279*"/>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="279*" />
                         <ColumnDefinition Width="4*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
-                        <RowDefinition Height="70"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition/>
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <!--<Grid VerticalAlignment="Center" Grid.ColumnSpan="3" Margin="0,10,0,1.5" >
+                    <Grid
+                        Grid.Row="1"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="3"
+                        Margin="0,10,0,1.5"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="105" />
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="55"/>
+                            <ColumnDefinition Width="25" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="55" />
                             <ColumnDefinition Width="0*" />
                         </Grid.ColumnDefinitions>
 
-                        <Border Margin="2" BorderThickness="1" BorderBrush="#FF97A6A6" />
-                        <ListBox x:Name="lbLightProcesses" ItemsSource="{Binding lstLightProcess, UpdateSourceTrigger=PropertyChanged}" 
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" BorderThickness="0" >
-                            <ListBox.ItemsPanel >
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"  />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <ItemContainerTemplate >
-                                    <Button Width="20" Height="25" Margin="-5"
-                                        Background="{Binding Path=Color, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ColorToSolidColorBrushConverter1}}"                                                                                                  
-                                        Command="{Binding DataContext.onTBtnThemeProcessColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}">
-                                        
-                                    </Button>
-                                </ItemContainerTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                        <Label
+                            Grid.Row="2"
+                            Grid.ColumnSpan="4"
+                            Content="Theme Name" />
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="2"
+                            Margin="0,2"
+                            Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                        <Button Padding="0" Grid.Column="1" Command="{Binding OnNeueFarbe}" Margin="1,2,2,1">
-                            <Image Source="/Images/Icons/General/add.png" />
-                        </Button>
-                        <Label Content="{Binding Name}" Grid.Column="2" Width="100" HorizontalAlignment="Left" />
-                        <CheckBox Content="Loop" IsChecked="{Binding Path=doLoop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,8" Grid.ColumnSpan="2" Height="15" />
-                    </Grid>-->
+                        <ComboBox
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="2"
+                            Width="180"
+                            Height="25"
+                            Margin="170,0,284,0"
+                            VerticalAlignment="Top"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Path=DataContext.lstHUELights, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            SelectedValue="{Binding AddLightToTheme}" />
+                        <ListBox
+                            Grid.Row="3"
+                            Grid.ColumnSpan="4"
+                            MaxHeight="200"
+                            Margin="5,30,5,0"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding lstLights, UpdateSourceTrigger=PropertyChanged}"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
 
-                    <!--<Grid VerticalAlignment="Center" Grid.ColumnSpan="3" Margin="0,10,0,1.5" Grid.Row="1" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="105" />
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="55"/>
-                            <ColumnDefinition Width="0*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Border Margin="2" BorderThickness="1" BorderBrush="#FF97A6A6" />
-
-                        <StackPanel Orientation="Horizontal" Width="100">
-                            
-                        </StackPanel>
-                        
-                        --><!--<ListBox ItemsSource="{Binding lstLightProcess, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" BorderThickness="0" >
-                            <ListBox.ItemsPanel >
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"  />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <ItemContainerTemplate >
-                                    <RadioButton Width="20" Height="25" Margin="-5" 
-                                                 Background="{Binding Path=Color, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ColorToSolidColorBrushConverter1}}"
-                                                 IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        Command="{Binding DataContext.onTBtnThemeProcessColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}">
-                                        <RadioButton.Template>
-                                            <ControlTemplate>
-                                                <ToggleButton IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                                        />
-                                            </ControlTemplate>
-                                        </RadioButton.Template>
-                                    </RadioButton>
-                                </ItemContainerTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-
-                        <Button Padding="0" Grid.Column="1" Command="{Binding OnNeueFarbe}" Margin="1,2,2,1">
-                            <Image Source="/Images/Icons/General/add.png" />
-                        </Button>
-                        <Label Content="{Binding Name}" Grid.Column="2" Width="100" HorizontalAlignment="Left" />
-                        <CheckBox Content="Loop" IsChecked="{Binding Path=doLoop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,8" Grid.ColumnSpan="2" Height="15" />--><!--
-                    </Grid>-->
-
-                    <!-- oooooooooooooooooooooooooooooo -->
-                    <Grid VerticalAlignment="Center" Grid.ColumnSpan="3" Margin="0,10,0,1.5" Grid.Row="1" Grid.RowSpan="2" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="105" />
-                            <ColumnDefinition Width="25"/>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="55"/>
-                            <ColumnDefinition Width="0*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Theme Name" Grid.Row="2" Grid.ColumnSpan="4" />
-                        <TextBox Margin="0,2" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="2" />
-
-                        <ComboBox Grid.Row="3" ItemsSource="{Binding Path=DataContext.lstHUELights, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Height="25" VerticalAlignment="Top" 
-                              DisplayMemberPath="Name" Width="180" SelectedValue="{Binding AddLightToTheme}" Margin="170,0,284,0" Grid.Column="2" Grid.ColumnSpan="2"/>
-                        <ListBox Grid.Row="3" Margin="5,30,5,0" Background="Transparent" MaxHeight="200" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                             ItemsSource="{Binding lstLights, UpdateSourceTrigger=PropertyChanged}" 
-                             DisplayMemberPath="Name" Grid.ColumnSpan="4"  />
-
-                        <CheckBox Grid.Row="4" Content="Wiederholen" IsChecked="{Binding Path=doLoop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" />
-                        <Button Grid.Row="4" Content="+" Width="30" Height="25" HorizontalAlignment="Left"
-                            Command="{Binding DataContext.onbtnAddHUEProcess, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}" />
-                        <DataGrid Grid.Row="5" VerticalScrollBarVisibility="Auto"
-                              ItemsSource="{Binding Path=lstLightProcess, UpdateSourceTrigger=PropertyChanged}" 
-                              SelectedItem="{Binding Path=LightProcessSelected}" Grid.ColumnSpan="4">
+                        <CheckBox
+                            Grid.Row="4"
+                            Grid.Column="3"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Content="Wiederholen"
+                            IsChecked="{Binding Path=doLoop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button
+                            Grid.Row="4"
+                            Width="30"
+                            Height="25"
+                            HorizontalAlignment="Left"
+                            Command="{Binding DataContext.onbtnAddHUEProcess, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            CommandParameter="{Binding}"
+                            Content="+" />
+                        <DataGrid
+                            Grid.Row="5"
+                            Grid.ColumnSpan="4"
+                            ItemsSource="{Binding Path=lstLightProcess, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding Path=LightProcessSelected}"
+                            VerticalScrollBarVisibility="Auto">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Phase" Width="55" Binding="{Binding Path=Phase}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="Dauer [ms]" Width="100" Binding="{Binding Path=Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn
+                                    Width="55"
+                                    Binding="{Binding Path=Phase}"
+                                    Header="Phase"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding Path=Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="Dauer [ms]" />
                                 <DataGridTemplateColumn>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Command="{Binding DataContext.onBtnSelectHUEColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}" Height="22" >
+                                            <Button
+                                                Height="22"
+                                                Command="{Binding DataContext.onBtnSelectHUEColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                CommandParameter="{Binding}">
                                                 <Button.Content>
-                                                    <StackPanel Orientation="Horizontal" Margin="-2" Width="75" >
-                                                        <Rectangle Height="22" Width="22" Fill="{Binding Path=Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource ColorToSolidColorBrushConverter1}}" />
-                                                        <Label Content="Auswahl" Padding="0" />
+                                                    <StackPanel
+                                                        Width="75"
+                                                        Margin="-2"
+                                                        Orientation="Horizontal">
+                                                        <Rectangle
+                                                            Width="22"
+                                                            Height="22"
+                                                            Fill="{Binding Path=Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource ColorToSolidColorBrushConverter1}}" />
+                                                        <Label Padding="0" Content="Auswahl" />
                                                     </StackPanel>
                                                 </Button.Content>
                                             </Button>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Farbe" Width="100" Binding="{Binding Path=Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding Path=Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="Farbe" />
                                 <DataGridTemplateColumn Header="Helligkeit">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <Slider Width="80" Minimum="1" Maximum="255" Value="{Binding Path=Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                <Label Content="{Binding Path=Brightness, UpdateSourceTrigger=PropertyChanged}" Padding="0" Width="25" />
+                                                <Slider
+                                                    Width="80"
+                                                    Maximum="255"
+                                                    Minimum="1"
+                                                    Value="{Binding Path=Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Label
+                                                    Width="25"
+                                                    Padding="0"
+                                                    Content="{Binding Path=Brightness, UpdateSourceTrigger=PropertyChanged}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -204,7 +191,10 @@
         <DataTemplate x:Key="RegelnListTemplate">
             <StackPanel Margin="4" Orientation="Horizontal">
                 <CheckBox Margin="2" IsChecked="{Binding Path=Anwenden}" />
-                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Typ}" FontWeight="Bold" />
+                <TextBlock
+                    Margin="4,0,0,0"
+                    FontWeight="Bold"
+                    Text="{Binding Path=Typ}" />
                 <TextBlock Text=": " />
                 <TextBlock Text="{Binding Path=Beschreibung}" TextWrapping="Wrap" />
             </StackPanel>
@@ -213,84 +203,118 @@
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        <Rectangle
+                            Margin="2"
+                            SnapsToDevicePixels="true"
+                            Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                            StrokeDashArray="1 2"
+                            StrokeThickness="1" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="RadioButton.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#FFFFFFFF" />
+        <SolidColorBrush x:Key="RadioButton.Static.Border" Color="#FF707070" />
         <Style x:Key="OptionMarkFocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        <Rectangle
+                            Margin="14,0,0,0"
+                            SnapsToDevicePixels="true"
+                            Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                            StrokeDashArray="1 2"
+                            StrokeThickness="1" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="RadioButton.MouseOver.Background" Color="#FFF3F9FF"/>
-        <SolidColorBrush x:Key="RadioButton.MouseOver.Border" Color="#FF5593FF"/>
-        <SolidColorBrush x:Key="RadioButton.MouseOver.Glyph" Color="#FF212121"/>
-        <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#FFE6E6E6"/>
-        <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#FFBCBCBC"/>
-        <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#FF707070"/>
-        <SolidColorBrush x:Key="RadioButton.Pressed.Background" Color="#FFD9ECFF"/>
-        <SolidColorBrush x:Key="RadioButton.Pressed.Border" Color="#FF3C77DD"/>
-        <SolidColorBrush x:Key="RadioButton.Pressed.Glyph" Color="#FF212121"/>
-        <SolidColorBrush x:Key="RadioButton.Static.Glyph" Color="#FF212121"/>
+        <SolidColorBrush x:Key="RadioButton.MouseOver.Background" Color="#FFF3F9FF" />
+        <SolidColorBrush x:Key="RadioButton.MouseOver.Border" Color="#FF5593FF" />
+        <SolidColorBrush x:Key="RadioButton.MouseOver.Glyph" Color="#FF212121" />
+        <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#FFE6E6E6" />
+        <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#FFBCBCBC" />
+        <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#FF707070" />
+        <SolidColorBrush x:Key="RadioButton.Pressed.Background" Color="#FFD9ECFF" />
+        <SolidColorBrush x:Key="RadioButton.Pressed.Border" Color="#FF3C77DD" />
+        <SolidColorBrush x:Key="RadioButton.Pressed.Glyph" Color="#FF212121" />
+        <SolidColorBrush x:Key="RadioButton.Static.Glyph" Color="#FF212121" />
         <Style x:Key="RadioButtonStyle_IsEnabled" TargetType="{x:Type RadioButton}">
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-            <Setter Property="Background" Value="{StaticResource RadioButton.Static.Background}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+            <Setter Property="Background" Value="{StaticResource RadioButton.Static.Background}" />
+            <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid
+                            x:Name="templateRoot"
+                            Background="Transparent"
+                            SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Border x:Name="radioButtonBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="100" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1,1,2,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Border
+                                x:Name="radioButtonBorder"
+                                Margin="1,1,2,1"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="100">
                                 <Grid x:Name="markGrid" Margin="2">
-                                    <Ellipse x:Name="optionMark" Fill="{StaticResource RadioButton.Static.Glyph}" MinWidth="6" MinHeight="6" Opacity="0"/>
+                                    <Ellipse
+                                        x:Name="optionMark"
+                                        MinWidth="6"
+                                        MinHeight="6"
+                                        Fill="{StaticResource RadioButton.Static.Glyph}"
+                                        Opacity="0" />
                                 </Grid>
                             </Border>
-                            <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter
+                                x:Name="contentPresenter"
+                                Grid.Column="1"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="Gray"/>
+                                <Setter Property="Foreground" Value="Gray" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="Silver"/>
+                                <Setter Property="Foreground" Value="Silver" />
                             </Trigger>
                             <Trigger Property="HasContent" Value="true">
-                                <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
-                                <Setter Property="Padding" Value="4,-1,0,0"/>
+                                <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}" />
+                                <Setter Property="Padding" Value="4,-1,0,0" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.MouseOver.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.MouseOver.Border}"/>
-                                <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource RadioButton.MouseOver.Glyph}"/>
+                                <Setter TargetName="radioButtonBorder" Property="Background" Value="{StaticResource RadioButton.MouseOver.Background}" />
+                                <Setter TargetName="radioButtonBorder" Property="BorderBrush" Value="{StaticResource RadioButton.MouseOver.Border}" />
+                                <Setter TargetName="optionMark" Property="Fill" Value="{StaticResource RadioButton.MouseOver.Glyph}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Border}"/>
-                                <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource RadioButton.Disabled.Glyph}"/>
+                                <Setter TargetName="radioButtonBorder" Property="Background" Value="{StaticResource RadioButton.Disabled.Background}" />
+                                <Setter TargetName="radioButtonBorder" Property="BorderBrush" Value="{StaticResource RadioButton.Disabled.Border}" />
+                                <Setter TargetName="optionMark" Property="Fill" Value="{StaticResource RadioButton.Disabled.Glyph}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Pressed.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Pressed.Border}"/>
-                                <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource RadioButton.Pressed.Glyph}"/>
+                                <Setter TargetName="radioButtonBorder" Property="Background" Value="{StaticResource RadioButton.Pressed.Background}" />
+                                <Setter TargetName="radioButtonBorder" Property="BorderBrush" Value="{StaticResource RadioButton.Pressed.Border}" />
+                                <Setter TargetName="optionMark" Property="Fill" Value="{StaticResource RadioButton.Pressed.Glyph}" />
                             </Trigger>
                             <Trigger Property="IsChecked" Value="true">
-                                <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                                <Setter TargetName="optionMark" Property="Opacity" Value="1" />
                             </Trigger>
                             <Trigger Property="IsChecked" Value="{x:Null}">
-                                <Setter Property="Opacity" TargetName="optionMark" Value="0.56"/>
+                                <Setter TargetName="optionMark" Property="Opacity" Value="0.56" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -304,49 +328,97 @@
                 <TabItem x:Name="tbiAllgemein">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Allgemein" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="Allgemein" />
                         </StackPanel>
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <StackPanel>
                             <DockPanel>
-                                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <TextBlock Text="Regeledition:" VerticalAlignment="Center" Margin="5" FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Regeledition}" Margin="5" VerticalAlignment="Center" />
-                                    <Button Content="Regeledition ändern..." Margin="5" Command="{Binding OnSetRegeledition}" />
+                                <StackPanel
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="5"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Text="Regeledition:" />
+                                    <TextBlock
+                                        Margin="5"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Regeledition}" />
+                                    <Button
+                                        Margin="5"
+                                        Command="{Binding OnSetRegeledition}"
+                                        Content="Regeledition ändern..." />
                                 </StackPanel>
-                                <StackPanel DockPanel.Dock="Right" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
-                                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
+                                <StackPanel
+                                    Margin="4"
+                                    HorizontalAlignment="Right"
+                                    DockPanel.Dock="Right"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="24"
+                                        Height="24"
+                                        Margin="10,0,0,0"
+                                        Click="ButtonPlayJingle_Click">
+                                        <Image
+                                            Width="22"
+                                            Source="/Images/Icons/General/audio.png"
+                                            Stretch="Uniform"
+                                            ToolTip="Jingle abspielen" />
                                     </Button>
-                                    <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
+                                    <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink
+                                            x:Name="_hyperlinkWeb"
+                                            NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/"
+                                            RequestNavigate="Hyperlink_RequestNavigate">
+                                            <Run Text="Mehr Infos zum Jingle." />
+                                        </Hyperlink></TextBlock>
                                 </StackPanel>
                             </DockPanel>
-                            <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding AllgemeinListe}">
+                            <ListBox
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemsSource="{Binding AllgemeinListe}">
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
-                                            <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
+                                        <StackPanel Margin="4" Orientation="Horizontal">
+                                            <CheckBox
+                                                Margin="2"
+                                                Checked="CheckBoxEinstellungItem_CheckedChanged"
+                                                IsChecked="{Binding Wert}"
+                                                Tag="{Binding Name}"
+                                                Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                             <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                        <StackPanel Margin="4" Orientation="Horizontal">
                                             <ViewGeneral:IntBox Value="{Binding Wert}" />
                                             <TextBlock Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                        <StackPanel Margin="4" Orientation="Horizontal">
                                             <ViewGeneral:DoubleBox Value="{Binding Wert}" />
                                             <TextBlock Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                        <StackPanel Orientation="Vertical" Margin="4">
+                                        <StackPanel Margin="4" Orientation="Vertical">
                                             <TextBlock Text="{Binding Beschreibung}" />
-                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                            <TextBox
+                                                MinWidth="300"
+                                                Margin="20,0,0,0"
+                                                Text="{Binding Wert}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.Resources>
@@ -357,14 +429,28 @@
                 <TabItem x:Name="tbiSetting">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/mechanik.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Settings" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/mechanik.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="Settings" />
                         </StackPanel>
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <StackPanel>
-                            <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
-                            <ListBox x:Name="_listBoxSettings" BorderThickness="0" Background="Transparent" ItemsSource="{Binding SettingListe}" >
+                            <TextBlock
+                                Margin="4"
+                                FontStyle="Italic"
+                                Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." />
+                            <ListBox
+                                x:Name="_listBoxSettings"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemsSource="{Binding SettingListe}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Margin="4" Orientation="Horizontal">
@@ -380,39 +466,94 @@
                 <TabItem x:Name="tbiInventar">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Inventar" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="Inventar" />
                         </StackPanel>
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <ListBox Background="{x:Null}">
-                            <StackPanel Margin="4" Grid.Row="0">
-                                <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Rüstung eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
+                            <StackPanel Grid.Row="0" Margin="4">
+                                <TextBlock
+                                    Margin="4"
+                                    FontWeight="Bold"
+                                    Text="Wie wird die Rüstung eines Helden ermittelt?"
+                                    TextWrapping="WrapWithOverflow" />
                                 <StackPanel>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=AutomatischZonen}" Content="Automatische Zonenrüstung (Werte werden vom Programm für Zonen ermittelt)"/>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=AutomatischEinfach}" Content="Automatische Gesamtrüstung (Werte werden vom Programm für Gesamt-RS ermittelt)"/>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Zonen}" Content="Eingegebene Zonenrüstung (Rüstung besteht aus einzelnen RS-Werten je Zone)"/>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Einfach}" Content="Eingegebene Gesamtrüstung ohne Zonen, (Ein Wert RS-Gesamt wird für den Helden eingegeben)"/>
+                                    <RadioButton
+                                        Margin="2"
+                                        Content="Automatische Zonenrüstung (Werte werden vom Programm für Zonen ermittelt)"
+                                        GroupName="RuestungSetting"
+                                        IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=AutomatischZonen}" />
+                                    <RadioButton
+                                        Margin="2"
+                                        Content="Automatische Gesamtrüstung (Werte werden vom Programm für Gesamt-RS ermittelt)"
+                                        GroupName="RuestungSetting"
+                                        IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=AutomatischEinfach}" />
+                                    <RadioButton
+                                        Margin="2"
+                                        Content="Eingegebene Zonenrüstung (Rüstung besteht aus einzelnen RS-Werten je Zone)"
+                                        GroupName="RuestungSetting"
+                                        IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Zonen}" />
+                                    <RadioButton
+                                        Margin="2"
+                                        Content="Eingegebene Gesamtrüstung ohne Zonen, (Ein Wert RS-Gesamt wird für den Helden eingegeben)"
+                                        GroupName="RuestungSetting"
+                                        IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Einfach}" />
                                 </StackPanel>
                             </StackPanel>
                             BE
-                            <StackPanel Margin="4" Grid.Row="1">
-                                <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Behinderung(BE) eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
+                            <StackPanel Grid.Row="1" Margin="4">
+                                <TextBlock
+                                    Margin="4"
+                                    FontWeight="Bold"
+                                    Text="Wie wird die Behinderung(BE) eines Helden ermittelt?"
+                                    TextWrapping="WrapWithOverflow" />
                                 <StackPanel>
-                                    <RadioButton Margin="2" GroupName="BehinderungSetting" IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
-                                    <RadioButton Margin="2" GroupName="BehinderungSetting" IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}" Content="Eingabe (Der Wert BE wird eingegeben)"/>
+                                    <RadioButton
+                                        Margin="2"
+                                        Content="Automatisch (Werte werden vom Programm ermittelt)"
+                                        GroupName="BehinderungSetting"
+                                        IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" />
+                                    <RadioButton
+                                        Margin="2"
+                                        Content="Eingabe (Der Wert BE wird eingegeben)"
+                                        GroupName="BehinderungSetting"
+                                        IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}" />
                                 </StackPanel>
                             </StackPanel>
                             Überlastung
                             <StackPanel Grid.Row="2" Margin="4">
                                 <StackPanel Orientation="Horizontal">
-                                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding IsMitUeberlastung, Mode=TwoWay}"/>
-                                    <TextBlock Margin="4" FontWeight="Bold" Text="Spielt die Gruppe mit Überlastung?" TextWrapping="WrapWithOverflow" />
+                                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding MitUeberlastung, Mode=TwoWay}" />
+                                    <TextBlock
+                                        Margin="4"
+                                        FontWeight="Bold"
+                                        Text="Spielt die Gruppe mit Überlastung?"
+                                        TextWrapping="WrapWithOverflow" />
                                 </StackPanel>
                                 <Border>
                                     <StackPanel>
-                                        <RadioButton Margin="2" GroupName="UeberlastungSetting" IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)" IsEnabled="{Binding IsMitUeberlastung}" Style="{DynamicResource RadioButtonStyle_IsEnabled}"/>
-                                        <RadioButton Margin="2" GroupName="UeberlastungSetting" IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}" Content="Eingabe (Der Wert wird eingegeben)" IsEnabled="{Binding IsMitUeberlastung}" Style="{DynamicResource RadioButtonStyle_IsEnabled}"/>
+                                        <RadioButton
+                                            Margin="2"
+                                            Content="Automatisch (Werte werden vom Programm ermittelt)"
+                                            GroupName="UeberlastungSetting"
+                                            IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}"
+                                            IsEnabled="{Binding MitUeberlastung}"
+                                            Style="{DynamicResource RadioButtonStyle_IsEnabled}" />
+                                        <RadioButton
+                                            Margin="2"
+                                            Content="Eingabe (Der Wert wird eingegeben)"
+                                            GroupName="UeberlastungSetting"
+                                            IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}"
+                                            IsEnabled="{Binding MitUeberlastung}"
+                                            Style="{DynamicResource RadioButtonStyle_IsEnabled}" />
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
@@ -422,35 +563,50 @@
                 <TabItem x:Name="tbiKampf">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Kampf" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="Kampf" />
                         </StackPanel>
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <ListBox Background="Transparent" ItemsSource="{Binding KampfListe}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
-                                        <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
+                                    <StackPanel Margin="4" Orientation="Horizontal">
+                                        <CheckBox
+                                            Margin="2"
+                                            Checked="CheckBoxEinstellungItem_CheckedChanged"
+                                            IsChecked="{Binding Wert}"
+                                            Tag="{Binding Name}"
+                                            Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                         <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Horizontal">
                                         <ViewGeneral:IntBox Value="{Binding Wert}" />
                                         <TextBlock Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Horizontal">
                                         <ViewGeneral:DoubleBox Value="{Binding Wert}" />
                                         <TextBlock Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                    <StackPanel Orientation="Vertical" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Vertical">
                                         <TextBlock Text="{Binding Beschreibung}" />
-                                        <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                        <TextBox
+                                            MinWidth="300"
+                                            Margin="20,0,0,0"
+                                            Text="{Binding Wert}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.Resources>
@@ -460,78 +616,151 @@
                 <TabItem x:Name="tbiAudioplayer">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/audio.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="AudioPlayer" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/General/audio.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="AudioPlayer" />
                         </StackPanel>
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <ListBox Background="{x:Null}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
-                                        <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
+                                    <StackPanel Margin="4" Orientation="Horizontal">
+                                        <CheckBox
+                                            Margin="2"
+                                            Checked="CheckBoxEinstellungItem_CheckedChanged"
+                                            IsChecked="{Binding Wert}"
+                                            Tag="{Binding Name}"
+                                            Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                         <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Horizontal">
                                         <ViewGeneral:IntBox Value="{Binding Wert}" />
                                         <TextBlock Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Horizontal">
                                         <ViewGeneral:DoubleBox Value="{Binding Wert}" />
                                         <TextBlock Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                    <StackPanel Orientation="Vertical" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Vertical">
                                         <TextBlock Text="{Binding Beschreibung}" />
-                                        <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                        <TextBox
+                                            MinWidth="300"
+                                            Margin="20,0,0,0"
+                                            Text="{Binding Wert}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.Resources>
                             <StackPanel Margin="4" Orientation="Horizontal">
-                                <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" IsChecked="{Binding IsAudioDirektAbspielen, Mode=TwoWay}" />
-                                <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
+                                <CheckBox
+                                    x:Name="_checkboxGleichSpielen"
+                                    Margin="2"
+                                    IsChecked="{Binding IsAudioDirektAbspielen, Mode=TwoWay}" />
+                                <TextBlock
+                                    Width="398"
+                                    Margin="4,0,0,0"
+                                    Text="Audio-Player: Beim Auswählen direkt abspielen"
+                                    TextWrapping="WrapWithOverflow" />
                             </StackPanel>
 
                             <StackPanel Margin="4,10" Orientation="Horizontal">
-                                <CheckBox x:Name="_checkboxSpieldauerBerechnen" Margin="2" IsChecked="{Binding IsAudioSpieldauerBerechnen, Mode=TwoWay}" />
-                                <TextBlock Margin="4,0,0,0" Text="Spieldauer der Titel und der Playlisten berechnen" Width="398" TextWrapping="WrapWithOverflow" />
+                                <CheckBox
+                                    x:Name="_checkboxSpieldauerBerechnen"
+                                    Margin="2"
+                                    IsChecked="{Binding IsAudioSpieldauerBerechnen, Mode=TwoWay}" />
+                                <TextBlock
+                                    Width="398"
+                                    Margin="4,0,0,0"
+                                    Text="Spieldauer der Titel und der Playlisten berechnen"
+                                    TextWrapping="WrapWithOverflow" />
                             </StackPanel>
 
                             <StackPanel Margin="4,10" Orientation="Horizontal">
-                                <CheckBox x:Name="_checkboxInAnderemPfadSuchen" Margin="2" IsChecked="{Binding IsInAnderemPfadSuchen, Mode=TwoWay}" />
-                                <TextBlock Margin="4,0,0,0" Text="Suchen nicht gefundener Dateien in allen Standard-Pfaden" Width="398" TextWrapping="WrapWithOverflow" />
+                                <CheckBox
+                                    x:Name="_checkboxInAnderemPfadSuchen"
+                                    Margin="2"
+                                    IsChecked="{Binding IsInAnderemPfadSuchen, Mode=TwoWay}" />
+                                <TextBlock
+                                    Width="398"
+                                    Margin="4,0,0,0"
+                                    Text="Suchen nicht gefundener Dateien in allen Standard-Pfaden"
+                                    TextWrapping="WrapWithOverflow" />
                             </StackPanel>
 
                             <StackPanel Margin="4,10" Orientation="Horizontal">
-                                <CheckBox x:Name="_checkboxShowPlaylistFavorite" Margin="2" IsChecked="{Binding IsShowPlaylistFavorite, Mode=TwoWay}" />
-                                <TextBlock Margin="4,0,0,0" Text="Favoriten-Playlisten in separatem Fenster zeigen" Width="398" TextWrapping="WrapWithOverflow" />
+                                <CheckBox
+                                    x:Name="_checkboxShowPlaylistFavorite"
+                                    Margin="2"
+                                    IsChecked="{Binding IsShowPlaylistFavorite, Mode=TwoWay}" />
+                                <TextBlock
+                                    Width="398"
+                                    Margin="4,0,0,0"
+                                    Text="Favoriten-Playlisten in separatem Fenster zeigen"
+                                    TextWrapping="WrapWithOverflow" />
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
-                                <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                            <StackPanel
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                                <Label
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="Audio-Player Crossfading" />
+                                <Slider
+                                    x:Name="_sldFading"
+                                    Width="100"
+                                    Height="23"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    IsSnapToTickEnabled="True"
+                                    LargeChange="100"
+                                    Maximum="1500"
+                                    Minimum="0"
+                                    SmallChange="100"
+                                    TickFrequency="100"
+                                    TickPlacement="BottomRight"
+                                    ToolTip="6 Sekunden Fading"
+                                    ValueChanged="_sldFading_ValueChanged"
+                                    Value="600" />
                             </StackPanel>
 
-                            <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal" >
+                            <StackPanel
+                                x:Name="spStdPfad"
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" MinHeight="60"/>
-                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*" MinHeight="60" />
+                                        <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="130" />
                                         <ColumnDefinition Width="280" />
                                         <ColumnDefinition Width="200*" />
-                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
 
                                     <Label Content="Standard-Verzeichnis" />
-                                    <ListBox Name="lbStandardPfade" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,1" Background="Transparent" />
+                                    <ListBox
+                                        Name="lbStandardPfade"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,1"
+                                        Background="Transparent" />
                                 </Grid>
                             </StackPanel>
                         </ListBox>
@@ -541,8 +770,15 @@
                 <TabItem x:Name="tbiHUELampen">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/lampen_hue.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="HUE Lampen" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/lampen_hue.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="HUE Lampen" />
                         </StackPanel>
                     </TabItem.Header>
                     <TabControl>
@@ -554,17 +790,39 @@
                                         <ColumnDefinition Width="591*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <Button Content="Gateway suchen..." Width="120" HorizontalAlignment="Left" Margin="5,2,0,2" Command="{Binding onBtnHUEGWsuchen}" />
-                                    <Label Content="{Binding HUEProgress, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Right" Width="10" />
+                                    <Button
+                                        Width="120"
+                                        Margin="5,2,0,2"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding onBtnHUEGWsuchen}"
+                                        Content="Gateway suchen..." />
+                                    <Label
+                                        Grid.Column="1"
+                                        Width="10"
+                                        HorizontalAlignment="Right"
+                                        Content="{Binding HUEProgress, UpdateSourceTrigger=PropertyChanged}" />
 
-                                    <ComboBox ItemsSource="{Binding lstHUEGateways}" SelectedItem="{Binding HUEGWSelected}" HorizontalAlignment="Left" Width="150" DisplayMemberPath="IpAddress" Grid.Column="1" IsEditable="False" 
-                                        IsEnabled="{Binding lstHUEGateways.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}" />
+                                    <ComboBox
+                                        Grid.Column="1"
+                                        Width="150"
+                                        HorizontalAlignment="Left"
+                                        DisplayMemberPath="IpAddress"
+                                        IsEditable="False"
+                                        IsEnabled="{Binding lstHUEGateways.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}"
+                                        ItemsSource="{Binding lstHUEGateways}"
+                                        SelectedItem="{Binding HUEGWSelected}" />
 
-                                    <Button Grid.Column="1" Width="100" Content="Aktivieren" Command="{Binding onBtnActivateHUEGW}" HorizontalAlignment="Left" Margin="175,2,0,2" >
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="100"
+                                        Margin="175,2,0,2"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding onBtnActivateHUEGW}"
+                                        Content="Aktivieren">
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
@@ -576,53 +834,90 @@
                                         </Button.Style>
                                     </Button>
 
-                                    <DataGrid Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding lstHUELights, UpdateSourceTrigger=PropertyChanged}" RowHeight="33"
-                                        ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                                    <DataGrid
+                                        Grid.Row="2"
+                                        Grid.ColumnSpan="2"
+                                        ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}"
+                                        ItemsSource="{Binding lstHUELights, UpdateSourceTrigger=PropertyChanged}"
+                                        RowHeight="33">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="ID" Width="55" Binding="{Binding Id}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Name" Width="150" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="ManufacturerName" Width="100" Binding="{Binding ManufacturerName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Type" Width="150" Binding="{Binding Type}" IsReadOnly="True"/>
+                                            <DataGridTextColumn
+                                                Width="55"
+                                                Binding="{Binding Id}"
+                                                Header="ID"
+                                                IsReadOnly="True" />
+                                            <DataGridTextColumn
+                                                Width="150"
+                                                Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Header="Name"
+                                                IsReadOnly="True" />
+                                            <DataGridTextColumn
+                                                Width="100"
+                                                Binding="{Binding ManufacturerName}"
+                                                Header="ManufacturerName"
+                                                IsReadOnly="True" />
+                                            <DataGridTextColumn
+                                                Width="150"
+                                                Binding="{Binding Type}"
+                                                Header="Type"
+                                                IsReadOnly="True" />
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Grid>
                             </Border>
                         </TabItem>
-                        <TabItem Header="Themes" >
+                        <TabItem Header="Themes">
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30*"/>
-                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="30*" />
+                                        <RowDefinition Height="30" />
                                     </Grid.RowDefinitions>
-                                    <ListBox ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"  
-                                             SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" >
+                                    <ListBox ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}">
                                         <ListBox.Template>
                                             <ControlTemplate TargetType="ListBox">
-                                                <WrapPanel ItemWidth="30" MinHeight="25" >
+                                                <WrapPanel MinHeight="25" ItemWidth="30">
                                                     <Label Content="{Binding Name}" />
                                                 </WrapPanel>
                                             </ControlTemplate>
                                         </ListBox.Template>
                                     </ListBox>
-                                    <Button Content="Neues Theme" Command="{Binding onbtnNeuesHUETheme}" Grid.Row="1" HorizontalAlignment="Left" Width="110" Height="28" Margin="0,1" />
-                                    <ListBox Grid.Row="2" Margin="10,0,0,10" Background="Transparent" FontSize="14" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                            ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}" 
-                                            SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" 
-                                            ItemTemplate="{StaticResource ThemeTemplate}" Name="_listBoxThemes" 
-                                             >
+                                    <Button
+                                        Grid.Row="1"
+                                        Width="110"
+                                        Height="28"
+                                        Margin="0,1"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding onbtnNeuesHUETheme}"
+                                        Content="Neues Theme" />
+                                    <ListBox
+                                        Name="_listBoxThemes"
+                                        Grid.Row="2"
+                                        Margin="10,0,0,10"
+                                        Background="Transparent"
+                                        FontSize="14"
+                                        ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                        ItemTemplate="{StaticResource ThemeTemplate}"
+                                        ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}">
                                         <!--<ListBox.BorderBrush>
                                             <SolidColorBrush />
                                         </ListBox.BorderBrush>-->
                                     </ListBox>
-                                    <Button Grid.Row="3" Content="Test Theme" Command="{Binding onBtnDoTheme}" CommandParameter="{Binding HUEThemeSelected}" Width="100" HorizontalAlignment="Left" >
+                                    <Button
+                                        Grid.Row="3"
+                                        Width="100"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding onBtnDoTheme}"
+                                        CommandParameter="{Binding HUEThemeSelected}"
+                                        Content="Test Theme">
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding HUEThemeSelected}" Value="{x:Null}">
-                                                        <Setter Property="Visibility" Value="Hidden"/>
+                                                        <Setter Property="Visibility" Value="Hidden" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -637,35 +932,50 @@
                 <TabItem x:Name="tbiProben">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Proben" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="Proben" />
                         </StackPanel>
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <ListBox Background="{x:Null}" ItemsSource="{Binding ProbenListe}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
-                                        <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
+                                    <StackPanel Margin="4" Orientation="Horizontal">
+                                        <CheckBox
+                                            Margin="2"
+                                            Checked="CheckBoxEinstellungItem_CheckedChanged"
+                                            IsChecked="{Binding Wert}"
+                                            Tag="{Binding Name}"
+                                            Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                         <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Horizontal">
                                         <ViewGeneral:IntBox Value="{Binding Wert}" />
                                         <TextBlock Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
-                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Horizontal">
                                         <ViewGeneral:DoubleBox Value="{Binding Wert}" />
                                         <TextBlock Text="{Binding Beschreibung}" />
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                    <StackPanel Orientation="Vertical" Margin="4">
+                                    <StackPanel Margin="4" Orientation="Vertical">
                                         <TextBlock Text="{Binding Beschreibung}" />
-                                        <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                        <TextBox
+                                            MinWidth="300"
+                                            Margin="20,0,0,0"
+                                            Text="{Binding Wert}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.Resources>
@@ -675,8 +985,15 @@
                 <TabItem x:Name="tbiAlmanach">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
-                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Almanach (PDF)" Style="{DynamicResource TextTitel}" />
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="Almanach (PDF)" />
                         </StackPanel>
                     </TabItem.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
@@ -688,14 +1005,27 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <DockPanel Grid.Row="0">
-                                <TextBlock Text="Hier werden die PDF-Funktionen von MeisterGeister konfiguriert." Margin="4" FontStyle="Italic" />
-                                <Image Height="45" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
+                                <TextBlock
+                                    Margin="4"
+                                    FontStyle="Italic"
+                                    Text="Hier werden die PDF-Funktionen von MeisterGeister konfiguriert." />
+                                <Image
+                                    Height="45"
+                                    HorizontalAlignment="Right"
+                                    Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
                             </DockPanel>
                             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                <TextBlock Text="PDF-Reader aus Liste auswählen oder unten selbst definieren." Margin="4" />
-                                <ComboBox Width="150" Margin="10,0" ItemsSource="{Binding PDFReaders}" SelectedItem="{Binding SelectedPDFReader}" />
+                                <TextBlock Margin="4" Text="PDF-Reader aus Liste auswählen oder unten selbst definieren." />
+                                <ComboBox
+                                    Width="150"
+                                    Margin="10,0"
+                                    ItemsSource="{Binding PDFReaders}"
+                                    SelectedItem="{Binding SelectedPDFReader}" />
                             </StackPanel>
-                            <ListBox Grid.Row="2" Background="{x:Null}" ItemsSource="{Binding AlmanachListe}">
+                            <ListBox
+                                Grid.Row="2"
+                                Background="{x:Null}"
+                                ItemsSource="{Binding AlmanachListe}">
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal">
@@ -716,18 +1046,32 @@
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                        <StackPanel Orientation="Vertical" Margin="4">
+                                        <StackPanel Margin="4" Orientation="Vertical">
                                             <TextBlock Text="{Binding Beschreibung}" />
-                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                            <TextBox
+                                                MinWidth="300"
+                                                Margin="20,0,0,0"
+                                                Text="{Binding Wert}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.Resources>
                             </ListBox>
-                            <ListBox Grid.Row="3" Background="{x:Null}" Margin="0,20,0,0" ItemsSource="{Binding LiteraturListe}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
+                            <ListBox
+                                Grid.Row="3"
+                                Margin="0,20,0,0"
+                                Background="{x:Null}"
+                                ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                ItemsSource="{Binding LiteraturListe}">
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:LiteraturItem}">
-                                        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" LastChildFill="False">
-                                            <Button Height="20" Cursor="Hand" Command="{Binding OnOpenUrlPdf}">
+                                        <DockPanel
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            LastChildFill="False">
+                                            <Button
+                                                Height="20"
+                                                Command="{Binding OnOpenUrlPdf}"
+                                                Cursor="Hand">
                                                 <Button.ToolTip>
                                                     <StackPanel>
                                                         <TextBlock Text="PDF online beziehen..." />
@@ -749,7 +1093,10 @@
                                                     </Style>
                                                 </Button.Style>
                                             </Button>
-                                            <Button Height="18" Cursor="Hand" Command="{Binding OnOpenUrlPrint}">
+                                            <Button
+                                                Height="18"
+                                                Command="{Binding OnOpenUrlPrint}"
+                                                Cursor="Hand">
                                                 <Button.ToolTip>
                                                     <StackPanel>
                                                         <TextBlock Text="Print-Ausgabe online beziehen..." />
@@ -793,19 +1140,47 @@
                                                     </Style>
                                                 </Image.Style>
                                             </Image>
-                                            <TextBlock Margin="4,0,0,0" FontWeight="Bold" MaxWidth="350" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" ToolTip="Doppelklick öffnet das PDF">
+                                            <TextBlock
+                                                MaxWidth="350"
+                                                Margin="4,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontWeight="Bold"
+                                                Text="{Binding Name}"
+                                                TextWrapping="Wrap"
+                                                ToolTip="Doppelklick öffnet das PDF">
                                                 <TextBlock.InputBindings>
                                                     <MouseBinding Command="{Binding OnOpenPdf}" MouseAction="LeftDoubleClick" />
                                                 </TextBlock.InputBindings>
                                             </TextBlock>
-                                            <TextBlock Margin="14,0,0,0" FontStyle="Italic" Text="{Binding Abkürzung, StringFormat=(\{0\})}" VerticalAlignment="Center" ToolTip="Doppelklick öffnet das PDF">
+                                            <TextBlock
+                                                Margin="14,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontStyle="Italic"
+                                                Text="{Binding Abkürzung, StringFormat=(\{0\})}"
+                                                ToolTip="Doppelklick öffnet das PDF">
                                                 <TextBlock.InputBindings>
                                                     <MouseBinding Command="{Binding OnOpenPdf}" MouseAction="LeftDoubleClick" />
                                                 </TextBlock.InputBindings>
                                             </TextBlock>
-                                            <Button Content="..." Height="21" Width="20" Command="{Binding OnOpenFileDialog}" DockPanel.Dock="Right" ToolTip="PDF auswählen..." />
-                                            <TextBox Height="23" Text="{Binding Pfad}" Width="360" ToolTip="Pfad zur PDF-Datei" DockPanel.Dock="Right" />
-                                            <ViewGeneral:IntBox Margin="5,0" Value="{Binding Seitenoffset}" ToolTip="Seitenoffset" DockPanel.Dock="Right" Width="25" />
+                                            <Button
+                                                Width="20"
+                                                Height="21"
+                                                Command="{Binding OnOpenFileDialog}"
+                                                Content="..."
+                                                DockPanel.Dock="Right"
+                                                ToolTip="PDF auswählen..." />
+                                            <TextBox
+                                                Width="360"
+                                                Height="23"
+                                                DockPanel.Dock="Right"
+                                                Text="{Binding Pfad}"
+                                                ToolTip="Pfad zur PDF-Datei" />
+                                            <ViewGeneral:IntBox
+                                                Width="25"
+                                                Margin="5,0"
+                                                DockPanel.Dock="Right"
+                                                ToolTip="Seitenoffset"
+                                                Value="{Binding Seitenoffset}" />
                                         </DockPanel>
                                     </DataTemplate>
                                 </ListBox.Resources>
@@ -817,11 +1192,17 @@
                 <TabItem Visibility="{Binding Source={x:Static mg:Global.INTERN_Visibility}}">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Image Height="18" HorizontalAlignment="Left" Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" />
-                            <TextBlock Text="Netzwerk" Style="{DynamicResource TextTitel}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                            <Image
+                                Height="18"
+                                HorizontalAlignment="Left"
+                                Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource TextTitel}"
+                                Text="Netzwerk" />
                         </StackPanel>
                     </TabItem.Header>
-                    <!--<local:NetzwerkeinstellungenView/>-->
                 </TabItem>
             </TabControl>
         </Grid>
