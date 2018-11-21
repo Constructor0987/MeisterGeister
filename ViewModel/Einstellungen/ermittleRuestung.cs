@@ -7,6 +7,4 @@
         Zonen,
         AutomatischEinfach
     }
-
-    #endregion EinstellungItem
 }

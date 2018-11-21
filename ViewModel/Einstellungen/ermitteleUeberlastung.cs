@@ -5,6 +5,4 @@
         Automatisch,
         Eingabe
     }
-
-    #endregion EinstellungItem
 }
