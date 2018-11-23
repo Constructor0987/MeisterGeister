@@ -21,7 +21,7 @@ namespace MeisterGeister.View.General
             try
             {
                 //Packet-URI or Web
-                if (path.StartsWith("/") || path.StartsWith("http"))
+                if (path.StartsWith("/") || path.ToLower().StartsWith("http"))
                     return path;
 
                 //ABSOLUTE

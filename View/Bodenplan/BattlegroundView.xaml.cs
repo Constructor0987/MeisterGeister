@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -619,13 +620,37 @@ namespace MeisterGeister.View.Bodenplan
                         };
                         try
                         {
-                            var pic = (ArenaGrid.SelectedItem as IKämpfer).Bild ?? "pack://application:,,," + "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                            var pic = (ArenaGrid.SelectedItem as IKämpfer).Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
 
-                            if (!pic.StartsWith("/") && !File.Exists(pic))
+                            if (!pic.ToLower().StartsWith("http"))
                             {
-                                pic = "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                                if (!pic.StartsWith("/") && !File.Exists(pic))
+                                {
+                                    pic = "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";// pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                                }
+
+                                var src = new ImagePathConverter().Convert(pic, typeof(Image), null, null);
+
+                                img.Source = src.ToString().StartsWith("/DSA MeisterGeister;") ?
+                                    new BitmapImage(new Uri("pack://application:,,," + src.ToString())) : src as ImageSource;
                             }
-                            img.Source = new BitmapImage(new Uri(pic.StartsWith("/") ? "pack://application:,,," + pic : pic));
+                            else
+                            {
+                                var bitmap = new BitmapImage();
+                                if (pic.ToLower().StartsWith("http"))
+                                {
+                                    var buffer = new WebClient().DownloadData(pic);
+
+                                    using (var stream = new MemoryStream(buffer))
+                                    {
+                                        bitmap.BeginInit();
+                                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                                        bitmap.StreamSource = stream;
+                                        bitmap.EndInit();
+                                    }
+                                }
+                                img.Source = bitmap;
+                            }
                             _kämpferCursor = CreateCursor(img);
                         }
                         catch (Exception ex)
