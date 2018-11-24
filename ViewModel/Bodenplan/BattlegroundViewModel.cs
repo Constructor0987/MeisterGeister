@@ -2227,7 +2227,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 return;
             }
 
-            mi.Manöver.VerblfeibendeDauer = 0;
+            mi.Manöver.VerbleibendeDauer = 0;
             mi.UmwandelnAttacke.Execute(obj);
             Global.CurrentKampf.SelectedManöver = mi;
             Global.CurrentKampf.Kampf.SelectedManöverInfo = mi;
