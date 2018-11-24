@@ -695,6 +695,7 @@
     <Compile Include="ViewModel\Einstellungen\ermitteleUeberlastung.cs" />
     <Compile Include="ViewModel\Einstellungen\ermittleBehinderung.cs" />
     <Compile Include="ViewModel\Einstellungen\ermittleRuestung.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\ManöverTyp.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Sichtstufe.cs" />
     <Compile Include="ViewModel\LampenHUE\HUELampenViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />

@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Linq;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -24,14 +13,15 @@ namespace MeisterGeister.View.Kampf
         {
             InitializeComponent();
         }
-        bool MouseIsOverScrViewer = false;
+
+        private bool MouseIsOverScrViewer = false;
 
         private void scrViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             if (!MouseIsOverScrViewer && ((ScrollViewer)sender).ScrollableWidth > 0)
             {
-                int anzInisDavor = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count(t => t.Kampfrunde < Global.CurrentKampf.Kampf.Kampfrunde);
-                double width1Ini = ((ScrollViewer)sender).ExtentWidth / Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count();
+                var anzInisDavor = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count(t => t.Kampfrunde < Global.CurrentKampf.Kampf.Kampfrunde);
+                var width1Ini = ((ScrollViewer)sender).ExtentWidth / Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Count();
                 ((ScrollViewer)sender).ScrollToHorizontalOffset(width1Ini * anzInisDavor);
             }
         }

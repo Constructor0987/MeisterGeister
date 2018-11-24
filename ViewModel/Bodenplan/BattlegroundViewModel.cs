@@ -26,22 +26,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
     public class BattlegroundViewModel : Base.ViewModelBase, IDisposable
     {
         public const int ARENA_GRID_RESOLUTION = 10000;
-        private bool _creatingNewFilledLine;
-
-        private bool _creatingNewLine;
-
-        private double _currentMousePositionX, _currentMousePositionY;
-
-        private bool _freizeichnen = false;
-
-        private bool _initDnD;
-
-        //Vielleicht als Enum, wenn mehr als zwei Modi gebraucht werden? JO
-        private bool _isEditorModeEnabled = true;
-
-        private bool _isMoving;
-
-        private bool _leftShiftPressed = false;
 
         // *Hintergrundfarbe
         // *ZLevel bei initialisierung fix
@@ -475,6 +459,23 @@ namespace MeisterGeister.ViewModel.Bodenplan
             SelectedObject = null;
         }
 
+        private bool _creatingNewFilledLine;
+
+        private bool _creatingNewLine;
+
+        private double _currentMousePositionX, _currentMousePositionY;
+
+        private bool _freizeichnen = false;
+
+        private bool _initDnD;
+
+        //Vielleicht als Enum, wenn mehr als zwei Modi gebraucht werden? JO
+        private bool _isEditorModeEnabled = true;
+
+        private bool _isMoving;
+
+        private bool _leftShiftPressed = false;
+
         private void _selectedListBoxBattlegroundObjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine(string.Format("CollectionChanged: {0} {1}", e.Action, e.NewItems));
@@ -489,60 +490,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         #region Fog
-
-        private Grid _arenaGrid = new Grid();
-        private string _backgroundFilename;
-        private string _backgroundImage;
-        private double _backgroundOffsetSize = ARENA_GRID_RESOLUTION;
-        private double _backgroundOffsetX = 0;
-        private double _backgroundOffsetY = 0;
-        private int _fogFreeSize = 1;
-        private bool _fogFreimachen = false;
-        private WriteableBitmap _fogImage;
-        private string _fogImageFilename;
-        private double _fogOffsetSize = ARENA_GRID_RESOLUTION;
-        private double _fogOffsetX = 0;
-        private double _fogOffsetY = 0;
-        private int[] _fogPixelData;
-        private double _fontSize = 14;
-        private string _infoText = null;
-        private double _iniHeightStart = 0;
-        private double _iniWidthStart = 0;
-        private double _invBackgroundOffsetY = 0;
-        private bool _invertPlayerScrolling = false;
-        private bool _isShowIniKampf = false;
-        private KampfViewModel _kampf = null;
-        private Point _kämpferDnDTempPos = new Point(0, 0);
-        private KampfInfoView _kampfIniInfoView = null;
-        private Window _kampfWindow = null;
-        private ZoomControl _meisterArenaZoomControl = new ZoomControl();
-        private double _meisterZoom = .5;
-
-        private double _meisterZoomTransX = 0;
-
-        private double _meisterZoomTransY = 0;
-
-        private Thickness _offsetBackgroudMargin = new Thickness(0, 0, 0, 0);
-
-        private Thickness _offsetFogMargin = new Thickness(0, 0, 0, 0);
-
-        private double _playerGridOffsetX = 0;
-
-        private double _playerGridOffsetY = 0;
-
-        private Thickness _playerOffsetGridMargin = new Thickness(0, 0, 0, 0);
-
-        private int _posIniWindow = 1;
-
-        private double _scaleKampfGrid = 1;
-
-        private double _scaleSpielerGrid = 1;
-
-        private bool _spielerScreenActive = false;
-
-        private Window _spielerScreenWindow = null;
-
-        private bool _useFog = false;
 
         public Grid AreanGrid
         {
@@ -892,14 +839,63 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private Grid _arenaGrid = new Grid();
+        private string _backgroundFilename;
+        private string _backgroundImage;
+        private double _backgroundOffsetSize = ARENA_GRID_RESOLUTION;
+        private double _backgroundOffsetX = 0;
+        private double _backgroundOffsetY = 0;
+        private int _fogFreeSize = 1;
+        private bool _fogFreimachen = false;
+        private WriteableBitmap _fogImage;
+        private string _fogImageFilename;
+        private double _fogOffsetSize = ARENA_GRID_RESOLUTION;
+        private double _fogOffsetX = 0;
+        private double _fogOffsetY = 0;
+        private int[] _fogPixelData;
+        private double _fontSize = 14;
+        private string _infoText = null;
+        private double _iniHeightStart = 0;
+        private double _iniWidthStart = 0;
+        private double _invBackgroundOffsetY = 0;
+        private bool _invertPlayerScrolling = false;
+        private bool _isShowIniKampf = false;
+        private KampfViewModel _kampf = null;
+        private Point _kämpferDnDTempPos = new Point(0, 0);
+        private KampfInfoView _kampfIniInfoView = null;
+        private Window _kampfWindow = null;
+        private ZoomControl _meisterArenaZoomControl = new ZoomControl();
+        private double _meisterZoom = .5;
+
+        private double _meisterZoomTransX = 0;
+
+        private double _meisterZoomTransY = 0;
+
+        private Thickness _offsetBackgroudMargin = new Thickness(0, 0, 0, 0);
+
+        private Thickness _offsetFogMargin = new Thickness(0, 0, 0, 0);
+
+        private double _playerGridOffsetX = 0;
+
+        private double _playerGridOffsetY = 0;
+
+        private Thickness _playerOffsetGridMargin = new Thickness(0, 0, 0, 0);
+
+        private int _posIniWindow = 1;
+
+        private double _scaleKampfGrid = 1;
+
+        private double _scaleSpielerGrid = 1;
+
+        private bool _spielerScreenActive = false;
+
+        private Window _spielerScreenWindow = null;
+
+        private bool _useFog = false;
+
         #endregion Fog
 
         #region Objektlisten/-ViewSources
-
-        private ObservableCollection<BattlegroundBaseObject> _battlegroundObjects;
-        private CollectionViewSource kämpferliste = null;
-
-        private CollectionViewSource objektliste = null;
 
         public ObservableCollection<BattlegroundBaseObject> BattlegroundObjects
         {
@@ -944,6 +940,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private ObservableCollection<BattlegroundBaseObject> _battlegroundObjects;
+        private CollectionViewSource kämpferliste = null;
+
+        private CollectionViewSource objektliste = null;
+
         private void filterKämpfer(object sender, FilterEventArgs f)
         {
             f.Accepted = f.Item is IKämpfer;
@@ -957,9 +958,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         #endregion Objektlisten/-ViewSources
 
         #region Kampf mit Eventverbindung auf KämpferListe
-
-        private bool _doChangeModPositionSelbst = false;
-        private KampfViewModel _kampfVM;
 
         public bool DoChangeModPositionSelbst
         {
@@ -1004,6 +1002,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 ((Wesen)k.Kämpfer).PropertyChanged += OnWesenPropertyChanged;
             }
         }
+
+        private bool _doChangeModPositionSelbst = false;
+        private KampfViewModel _kampfVM;
 
         private void OnKämpferListeChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -1119,14 +1120,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Z-Level
 
-        private bool _ignorZLevel = true;
-
-        private List<string> _possibleZLevels = new List<string>();
-
-        private bool _showZ;
-
-        private string _visibleZLevels = "10";
-
         public bool IgnorZLevel
         {
             get { return _ignorZLevel; }
@@ -1189,12 +1182,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private bool _ignorZLevel = true;
+
+        private List<string> _possibleZLevels = new List<string>();
+
+        private bool _showZ;
+
+        private string _visibleZLevels = "10";
+
         #endregion Z-Level
 
         #region Überflüssig?
-
-        //TODO Die getrennte Speicherung von SelectedCreature UND SelectedObject misfällt mir, da beides eigentlich Objekte sind. JO
-        private string _currentlySelectedCreature = "";
 
         public string CurrentlySelectedCreature
         {
@@ -1202,12 +1200,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _currentlySelectedCreature, value); }
         }
 
+        //TODO Die getrennte Speicherung von SelectedCreature UND SelectedObject misfällt mir, da beides eigentlich Objekte sind. JO
+        private string _currentlySelectedCreature = "";
+
         #endregion Überflüssig?
 
         #region Sichtbereich-Optionen
-
-        private bool _showSightArea = true;
-        private double _sightAreaLenght = 120;
 
         public bool ShowSightArea
         {
@@ -1232,11 +1230,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private bool _showSightArea = true;
+        private double _sightAreaLenght = 120;
+
         #endregion Sichtbereich-Optionen
 
         #region Anzeigeoptionen
-
-        private bool _showCreatureName = true;
 
         public bool ShowCreatureName
         {
@@ -1248,27 +1247,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private bool _showCreatureName = true;
+
         #endregion Anzeigeoptionen
 
         #region SelectedObject und dessen Eigenschaften und Delete
-
-        private BattlegroundCommand _deleteCommand;
-
-        private double _objectSize = 1;
-        private BattlegroundCommand _playerScreenDownCommand;
-        private BattlegroundCommand _playerScreenLeftCommand;
-        private BattlegroundCommand _playerScreenRightCommand;
-        private BattlegroundCommand _playerScreenUpCommand;
-
-        private KämpferInfo _selectectedKämpferInfo;
-
-        private Color _selectedColor = Colors.DarkGray, _selectedFillColor = Colors.LightGray;
-
-        private BattlegroundBaseObject _selectedObject;
-
-        private BattlegroundBaseObject _selectedTempObject;
-
-        private double _strokeThickness = 20;
 
         public BattlegroundCommand DeleteCommand
         {
@@ -1499,11 +1482,27 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void Up()
         { PlayerGridOffsetY = PlayerGridOffsetY + 80 <= 0 ? PlayerGridOffsetY + 80 : 0; }
 
+        private BattlegroundCommand _deleteCommand;
+
+        private double _objectSize = 1;
+        private BattlegroundCommand _playerScreenDownCommand;
+        private BattlegroundCommand _playerScreenLeftCommand;
+        private BattlegroundCommand _playerScreenRightCommand;
+        private BattlegroundCommand _playerScreenUpCommand;
+
+        private KämpferInfo _selectectedKämpferInfo;
+
+        private Color _selectedColor = Colors.DarkGray, _selectedFillColor = Colors.LightGray;
+
+        private BattlegroundBaseObject _selectedObject;
+
+        private BattlegroundBaseObject _selectedTempObject;
+
+        private double _strokeThickness = 20;
+
         #endregion SelectedObject und dessen Eigenschaften und Delete
 
         #region Laden/Speichern
-
-        private bool _loadWithoutPictures = false, _saveWithoutPictures = false;
 
         public bool LoadWithoutPictures
         {
@@ -1702,15 +1701,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
             bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings);
         }
 
+        private bool _loadWithoutPictures = false, _saveWithoutPictures = false;
+
         #endregion Laden/Speichern
 
         #region Grid
-
-        private const double HEXAGON_PERIMETER = 3.4641016151377545870548926830117;
-        private Color gridColor = Color.FromRgb(255, 255, 255);
-        private bool hexGrid = false;
-        private bool rechteckGrid = true;
-        private PathGeometry rechteckPath = null, hextilePath = null;
 
         /// <summary>
         /// Farbe des HexGrids bzw des RechteckGrids
@@ -1811,11 +1806,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private const double HEXAGON_PERIMETER = 3.4641016151377545870548926830117;
+        private Color gridColor = Color.FromRgb(255, 255, 255);
+        private bool hexGrid = false;
+        private bool rechteckGrid = true;
+        private PathGeometry rechteckPath = null, hextilePath = null;
+
         #endregion Grid
 
         #region ZeichenModi
-
-        private ZeichenModus _zeichenModus;
 
         [DependentProperty(nameof(ZeichenModus))]
         public bool CreateFilledLine
@@ -1843,20 +1842,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private ZeichenModus _zeichenModus;
+
         #endregion ZeichenModi
 
         #region -- Screen Pointer --
-
-        private bool _isPointerVisible = false;
-        private double _pointerDurchmesser = 25.0;
-
-        private System.Windows.Thickness _pointerMargin = new Thickness();
-
-        private System.Windows.Visibility _pointerVisibility = Visibility.Collapsed;
-
-        private double _xScale = 1;
-
-        private double _yScale = 1;
 
         public bool IsPointerVisible
         {
@@ -1903,13 +1893,22 @@ namespace MeisterGeister.ViewModel.Bodenplan
             PointerMargin = new Thickness(mousePos.X - PointerDurchmesser / 2, mousePos.Y - PointerDurchmesser / 2, 0, 0);
         }
 
+        private bool _isPointerVisible = false;
+        private double _pointerDurchmesser = 25.0;
+
+        private System.Windows.Thickness _pointerMargin = new Thickness();
+
+        private System.Windows.Visibility _pointerVisibility = Visibility.Collapsed;
+
+        private double _xScale = 1;
+
+        private double _yScale = 1;
+
         #endregion -- Screen Pointer --
 
         //TODO fixme or replace me
 
         #region Sticky Stuff, der gerade nicht richtig funktioniert
-
-        private readonly List<BattlegroundBaseObject> stickyHeroesTempList = new List<BattlegroundBaseObject>();
 
         public List<BattlegroundBaseObject> StickyListBoxBattlegroundObjects
         {
@@ -1960,6 +1959,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             CurrentlySelectedCreature = ((Held)BattlegroundObjects.Where(x => x is Held && x.IsSticked).First()).Name;
         }
+
+        private readonly List<BattlegroundBaseObject> stickyHeroesTempList = new List<BattlegroundBaseObject>();
 
         private System.Drawing.Bitmap BitmapFromWriteableBitmap(WriteableBitmap writeBmp)
         {
@@ -2048,17 +2049,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Commands
 
-        private Base.CommandBase _onBtnCenterMeisterView = null;
-        private Base.CommandBase _onBtnCenterPlayerView = null;
-        private Base.CommandBase _onBtnPosIniWindow = null;
-        private Base.CommandBase _onBtnUmwandelnAttacke = null;
-
-        private Base.CommandBase _onBtnUmwandelnFernkampf = null;
-
-        private Base.CommandBase _onBtnUmwandelnSonstiges = null;
-
-        private Base.CommandBase _onSetBackgroundClick = null;
-
         public Base.CommandBase OnBtnCenterMeisterView
         {
             get
@@ -2143,6 +2133,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private Base.CommandBase _onBtnCenterMeisterView = null;
+        private Base.CommandBase _onBtnCenterPlayerView = null;
+        private Base.CommandBase _onBtnPosIniWindow = null;
+        private Base.CommandBase _onBtnUmwandelnAttacke = null;
+
+        private Base.CommandBase _onBtnUmwandelnFernkampf = null;
+
+        private Base.CommandBase _onBtnUmwandelnSonstiges = null;
+
+        private Base.CommandBase _onSetBackgroundClick = null;
+
         private void BtnPosIniWindow(object obj)
         {
             PosIniWindow++;
@@ -2226,7 +2227,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 return;
             }
 
-            mi.Manöver.VerbleibendeDauer = 0;
+            mi.Manöver.VerblfeibendeDauer = 0;
             mi.UmwandelnAttacke.Execute(obj);
             Global.CurrentKampf.SelectedManöver = mi;
             Global.CurrentKampf.Kampf.SelectedManöverInfo = mi;
@@ -2259,13 +2260,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Dispose
 
-        private bool disposed = false;
-
-        ~BattlegroundViewModel()
-        {
-            Dispose(false);
-        }
-
         /// <summary>
         /// Public implementation of Dispose pattern callable by consumers.
         /// </summary>
@@ -2297,6 +2291,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
             // Free any unmanaged objects here.
             disposed = true;
+        }
+
+        private bool disposed = false;
+
+        ~BattlegroundViewModel()
+        {
+            Dispose(false);
         }
 
         #endregion Dispose
