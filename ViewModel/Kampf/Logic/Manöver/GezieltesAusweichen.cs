@@ -18,9 +18,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         protected NahkampfModifikator<int> fernkampfwaffe;
 
-        protected override void InitMods()
+        protected override void InitMods(IWaffe waffe)
         {
-            base.InitMods();
+            base.InitMods(waffe);
 
             fernkampfwaffe = new NahkampfModifikator<int>(this);
             mods.Add(FERNKAMPFWAFFE_MOD, fernkampfwaffe);

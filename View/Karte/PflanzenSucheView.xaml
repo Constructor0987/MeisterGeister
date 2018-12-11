@@ -4,13 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Karte"
-             xmlns:ZooBot="clr-namespace:MeisterGeister.View.ZooBot"
-             xmlns:General="clr-namespace:MeisterGeister.View.General"
-             xmlns:mg="clr-namespace:MeisterGeister"
-             xmlns:Model="clr-namespace:MeisterGeister.Model"
-             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
-             xmlns:Kalender="clr-namespace:MeisterGeister.Logic.Kalender"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>

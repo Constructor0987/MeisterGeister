@@ -309,6 +309,19 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        public static bool PflanzenwissenIntegrieren
+        {
+            get
+            {
+                return GetEinstellung<bool>(nameof(PflanzenwissenIntegrieren));
+            }
+
+            set
+            {
+                SetEinstellung(nameof(PflanzenwissenIntegrieren), value);
+            }
+        }
+
         public static string AudioVerzeichnis
         {
             get
@@ -848,6 +861,8 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "ShowChangeLog", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "ChangeLog beim Start anzeigen", Wert = "True" },
                 new Model.Einstellung() { Name = "Regeledition", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "Regeledition", Wert = "" },
 
+                new Model.Einstellung() { Name = "PflanzenwissenIntegrieren", Kontext = "Held", Kategorie = "Hausregel", Typ = "Boolean", Beschreibung = "Held kennt nur bestimmte Pflanzen", Wert = "False" },
+                
                 new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
                 new Model.Einstellung() { Name = "AudioInAnderemPfadSuchen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
                 new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },

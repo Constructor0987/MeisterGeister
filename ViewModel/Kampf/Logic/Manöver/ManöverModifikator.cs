@@ -46,7 +46,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             catch (Exception ex)
             {
                 ViewHelper.ShowError("Fehler bei Berechnung", ex);
-            }
+            }            
             return to_return;
         }
 
@@ -69,7 +69,38 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 Set(ref this.value, value);
                 // berechne gesamt...
                 if ((manöver.Ausführender.Kämpfer as Bodenplan.Logic.BattlegroundCreature).IsSelected)
+                {
                     base.manöver.GetGesamt = CalcModifikator();
+
+                    if (!manöver.InitPase)
+                    {
+                        if (manöver.GetType().Name == "Attacke")
+                        {
+                            manöver.Ausführender.PreAngriffsMods = new Dictionary<string, ManöverModifikator<INahkampfwaffe>>();
+                            for (var i = 0; i < base.manöver.Mods.Values.Count; i++)
+                            {
+                                manöver.Ausführender.PreAngriffsMods.Add(base.manöver.Mods.Keys.ElementAt(i), base.manöver.Mods.Values.ElementAt(i) as ManöverModifikator<INahkampfwaffe>);
+                            }
+                        }
+                        if (manöver.GetType().Name == "FernkampfManöver")
+                        {
+                            manöver.Ausführender.PreFernkampfMods = new Dictionary<string, ManöverModifikator<IFernkampfwaffe>>();
+                            manöver.Ausführender.PreFernkampfWaffe = (manöver as FernkampfManöver).FernkampfWaffeSelected;
+                            for (var i = 0; i < base.manöver.Mods.Values.Count; i++)
+                            {
+                                manöver.Ausführender.PreFernkampfMods.Add(base.manöver.Mods.Keys.ElementAt(i), base.manöver.Mods.Values.ElementAt(i) as ManöverModifikator<IFernkampfwaffe>);
+                            }
+                        }
+                        if (manöver.GetType().Name == "AbwehrManöver")
+                        {
+                            manöver.Ausführender.PreAbwehrMods = new Dictionary<string, ManöverModifikator<INahkampfwaffe>>();
+                            for (var i = 0; i < base.manöver.Mods.Values.Count; i++)
+                            {
+                                manöver.Ausführender.PreAbwehrMods.Add(base.manöver.Mods.Keys.ElementAt(i), base.manöver.Mods.Values.ElementAt(i) as ManöverModifikator<INahkampfwaffe>);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:MeisterGeister.View.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mg="clr-namespace:MeisterGeister"
+    xmlns:Einstellungen="clr--namespace:MeisterGeister.ViewModel.Einstellungen"
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings"
     Title="Einstellungen"
     Width="850"
@@ -460,7 +461,16 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                        </StackPanel>
+
+                            <StackPanel Margin="4,10">
+                                <TextBlock
+                                    Margin="4"
+                                    FontWeight="Bold"
+                                    Text="Optionale HAUSREGEL"
+                                    TextWrapping="WrapWithOverflow" />
+                                <CheckBox Margin="5" Content="Pflanzenwissen (Held kennt nur bestimmte Pflanzen)" IsChecked="{Binding IsPflanzenwissen}" />                                
+                            </StackPanel>
+                        </StackPanel>                        
                     </Border>
                 </TabItem>
                 <TabItem x:Name="tbiInventar">

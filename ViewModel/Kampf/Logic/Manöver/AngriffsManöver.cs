@@ -23,30 +23,40 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string ÜBERRASCHT_MOD = "Überrascht";
         public const string PASSIERSCHLAG_MOD = "Passierschlag";
 
-        protected override void InitMods()
+        protected override void InitMods(IWaffe waffe)
         {
-            base.InitMods();
+            base.InitMods(waffe);
 
             //----------ANSAGEN----------
 
             NahkampfModifikator<int> wuchtschlag = new NahkampfModifikator<int>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                wuchtschlag.Value = ((NahkampfModifikator<int>)Ausführender.PreAngriffsMods[WUCHTSCHLAG_MOD]).Value;
             wuchtschlag.GetMod = WuchtschlagMod;
             mods.Add(WUCHTSCHLAG_MOD, wuchtschlag);
 
             NahkampfModifikator<int> finte = new NahkampfModifikator<int>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                finte.Value = ((NahkampfModifikator<int>)Ausführender.PreAngriffsMods[FINTE_MOD]).Value;
             finte.GetMod = FinteMod;
             mods.Add(FINTE_MOD, finte);
 
             NahkampfModifikator<int> stumpf = new NahkampfModifikator<int>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                stumpf.Value = ((NahkampfModifikator<int>)Ausführender.PreAngriffsMods[STUMPF_MOD]).Value;
             mods.Add(STUMPF_MOD, stumpf);
 
             //----------POSITION UND SITUATION----------
 
             NahkampfModifikator<bool> passierschlag = new NahkampfModifikator<bool>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                passierschlag.Value = ((NahkampfModifikator<bool>)Ausführender.PreAngriffsMods[PASSIERSCHLAG_MOD]).Value;
             passierschlag.GetMod = PassierschlagMod;
             mods.Add(PASSIERSCHLAG_MOD, passierschlag);
 
             NahkampfModifikator<int> überrascht = new NahkampfModifikator<int>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                überrascht.Value = ((NahkampfModifikator<int>)Ausführender.PreAngriffsMods[ÜBERRASCHT_MOD]).Value;
             mods.Add(ÜBERRASCHT_MOD, überrascht);
         }
 

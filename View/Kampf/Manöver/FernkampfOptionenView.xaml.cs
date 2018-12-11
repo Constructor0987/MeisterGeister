@@ -47,6 +47,7 @@ namespace MeisterGeister.View.Kampf.Manöver
 
                 ((ManöverModifikator<Position, IFernkampfwaffe>)
                     (Global.CurrentKampf.SelectedManöver.Manöver as FernkampfManöver).Mods["PositionSelbst"]).Value = bodenplanKämpfer.Position;
+
             
         }
     }

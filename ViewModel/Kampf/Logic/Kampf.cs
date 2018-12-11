@@ -356,6 +356,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)                
             }
+            List<ManöverInfo> lstToRemove = InitiativListe.Where(t => t.End.Kampfrunde < Kampfrunde).ToList();
+            if (lstToRemove.Count > 0)
+                InitiativListe.RemoveRange(lstToRemove);
+
+            ZeitImKampf zik = new ZeitImKampf(Kampfrunde, 
+                neueManöver.Count > 0 ? neueManöver[0].Start.InitiativPhase:99
+                );
+            List<ManöverInfo> lstLangeHandlungen = InitiativListe.Where(t => t.Start.Kampfrunde < Kampfrunde).ToList();
+
+            lstLangeHandlungen.ForEach(delegate (ManöverInfo mi) { mi.Start = zik; });
+
+
+
+            //InitiativListe =(List<ManöverInfo>) InitiativListe.Where(t => t.End.Kampfrunde >= Kampfrunde).ToList();
+            //InitiativListe.RemoveAll(((ExtendedObservableCollection < ManöverInfo >)InitiativListe.Where(t => t.AktKampfrunde < Kampfrunde)));// .Where(t => t.End.Kampfrunde < t.AktKampfrunde).ToList());
 
             if (neueManöver.Count > 0)
             {

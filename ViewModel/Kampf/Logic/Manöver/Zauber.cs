@@ -98,9 +98,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         private ZauberModifikator<int> zauberdauer, wirkungsdauer, reichweite, erzwingen, technik, technikZentral, falscheRepräsenation;
         private ZauberModifikator<bool> festeDauer, zielobjekt;
 
-        protected override void InitMods()
+        protected override void InitMods(IWaffe waffe)
         {
-            base.InitMods();
+            base.InitMods(waffe);
 
             zauberdauer = new ZauberModifikator<int>(this);
             zauberdauer.GetMod = ZauberDauerMod;

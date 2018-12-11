@@ -78,6 +78,10 @@
                 <!--<TabItem Header="Ausrüstung" >
                     <Held:AusrüstungView />
                 </TabItem>-->
+                <TabItem Header="Pflanzenwissen" x:Name="_tabItemPflanzen" 
+                         Visibility="{Binding ShowPflanzenwissen, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" >
+                    <!--<Held:InventarView x:Name="_inventarControl" />-->
+                </TabItem>
             </TabControl>
         </Grid>
         <Grid x:Name="Schreibschutz" Grid.Column="2" Margin="-150,2,5,0" HorizontalAlignment="Right">

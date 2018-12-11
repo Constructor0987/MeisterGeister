@@ -46,15 +46,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}" Margin="5,4,0,0"/>
-        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">            
-            <Button Width="20" HorizontalAlignment="Right" Background="{x:Null}" Focusable="False" Click="BtnBekanntePflanzenForm_Click">
-                <Grid ToolTip="Bekannte Pflanzen editieren">
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png"  Margin="-3" />
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/feder.png"  Margin="-1,-3,-5,-3" />
-                </Grid>
-            </Button>
-        </StackPanel>
+        <CheckBox Content="Ortskenntnis" IsChecked="{Binding Ortskenntnis}" Margin="5,4,0,0"/>        
         <ListBox Style="{StaticResource RadioListBoxStyle}" BorderThickness="0" SelectedItem="{Binding LangeSuchen}" Grid.Row="1">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>

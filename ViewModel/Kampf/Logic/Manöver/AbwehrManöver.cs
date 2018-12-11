@@ -24,19 +24,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected NahkampfModifikator<bool> glücklich;
         protected NahkampfModifikator<int> finte;
 
-        protected override void InitMods()
+        protected override void InitMods(IWaffe waffe)
         {
-            base.InitMods();
+            base.InitMods(waffe);
 
             linkshänder = new NahkampfModifikator<bool>(this);
+            linkshänder.Value = Ausführender.PreAbwehrMods == null ? false :
+                ((NahkampfModifikator<bool>)Ausführender.PreAbwehrMods[LINKSHÄNDER_MOD]).Value;
             linkshänder.GetMod = LinkshänderMod;
             mods.Add(LINKSHÄNDER_MOD, linkshänder);
 
             glücklich = new NahkampfModifikator<bool>(this);
+            glücklich.Value = Ausführender.PreAbwehrMods == null ? false :
+                ((NahkampfModifikator<bool>)Ausführender.PreAbwehrMods[GLÜCKLICH_MOD]).Value;
             glücklich.GetMod = GlücklichMod;
             mods.Add(GLÜCKLICH_MOD, glücklich);
 
             finte = new NahkampfModifikator<int>(this);
+            finte.Value = Ausführender.PreAbwehrMods == null ? 0 :
+                ((NahkampfModifikator<int>)Ausführender.PreAbwehrMods[FINTE_MOD]).Value;
             mods.Add(FINTE_MOD, finte);
         }
 

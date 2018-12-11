@@ -1,4 +1,5 @@
-﻿using MeisterGeister.Logic.General;
+﻿using MeisterGeister.Logic.Einstellung;
+using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.View.General;
@@ -88,6 +89,12 @@ namespace MeisterGeister.ViewModel.Karte
                 else
                     return 1 + TaP / (int)Math.Round(Suche.Suchschwierigkeit / 2.0, MidpointRounding.AwayFromZero);
             }
+        }
+
+
+        public bool PflanzenwissenIntegration
+        {
+            get { return Einstellungen.PflanzenwissenIntegrieren; }
         }
 
         private void checkGeländekunde()

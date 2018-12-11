@@ -67,6 +67,8 @@ namespace MeisterGeister.View.Helden
                         tab.Content = new Helden.Controls.ZauberView();
                     else if (tab == _tabItemInventar)
                         tab.Content = new Helden.Controls.InventarView();
+                    else if (tab == _tabItemPflanzen)
+                        tab.Content = new Helden.Controls.BekanntePflanzenView();
                 }
             }
         }

@@ -25,6 +25,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 return this.SelectMany(ki => ki.Aktionszeiten).OrderBy(zeit => zeit).Distinct();
+                
             }
         }
 

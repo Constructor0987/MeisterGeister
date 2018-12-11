@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
@@ -29,6 +30,11 @@ namespace MeisterGeister.ViewModel.Helden
         public bool SelectedHeldIsNotNull
         {
             get { return SelectedHeld != null; }
+        }
+
+        public bool ShowPflanzenwissen
+        {
+            get { return Einstellungen.PflanzenwissenIntegrieren; }
         }
 
         private System.Windows.Controls.TabItem _selectedTabItem = null;

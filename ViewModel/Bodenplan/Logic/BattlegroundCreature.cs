@@ -1,8 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
@@ -11,6 +16,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     public class BattlegroundCreature : BattlegroundBaseObject
     {
         public static string ICON_DIR = "/Images/Icons/General/";
+        private Image _creatureImage = null;
+        public Image CreatureImage
+        {
+            get { return _creatureImage; }
+            set { Set(ref _creatureImage, value); }
+        }
+
         public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
         public double _objectSize = 1;
         private double _creatureAktionsbuttonsPos = 140;
@@ -58,6 +70,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             MoveObject(0, 0, false); //for initial position of ZLevel Display
             CreateSightArea();
             ShowLebensbalken = MeisterGeister.Logic.Einstellung.Einstellungen.LebensbalkenImmerAnzeigen || (this as Wesen).IsHeld;
+
+
         }
 
         public double CreatureAktionsbuttonsPos
@@ -153,7 +167,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 return _ki;
             }
 
-            set { Set(ref _ki, value); }
+            set
+            {
+                Set(ref _ki, value);
+            }
         }
 
         public Thickness MarginCreatureAktionsbuttons
@@ -474,6 +491,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
                 }
             }
+            var img = new Image
+            {
+                Width = CreatureWidth,
+                Height = CreatureHeight,
+                Stretch = Stretch.Fill
+            };
+            CreatureImage = SetCreatrueImage(img);
 
             //string datei;
             //try
@@ -514,6 +538,50 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public override void RunBeforeXMLSerialization()
         {
             //nothing special to take care of...
+        }
+
+        public Image SetCreatrueImage(Image img)
+        {
+            var pic = ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+            try
+            {
+                if (!pic.ToLower().StartsWith("http"))
+                {
+                    if (!pic.StartsWith("/") && !File.Exists(pic))
+                    {
+                        pic = "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                    }
+
+                    var src = new ImagePathConverter().Convert(pic, typeof(Image), null, null);
+                    img.Source = src.ToString().StartsWith("/DSA MeisterGeister;") ?
+                        new BitmapImage(new Uri("pack://application:,,," + src.ToString())) : src as ImageSource;
+                }
+                else
+                {
+                    var bitmap = new BitmapImage();
+                    if (pic.ToLower().StartsWith("http"))
+                    {
+                        var buffer = new WebClient().DownloadData(pic);
+
+                        using (var stream = new MemoryStream(buffer))
+                        {
+                            bitmap.BeginInit();
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.StreamSource = stream;
+                            bitmap.EndInit();
+                        }
+                    }
+                    img.Source = bitmap;
+                }
+                img.Tag = pic;
+                return img;
+            }
+            catch
+            {
+                img.Source = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png"));
+                img.Tag = "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                return img;
+            }
         }
 
         public void ScalePicture(double factor)

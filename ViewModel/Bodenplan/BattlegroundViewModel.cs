@@ -46,6 +46,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private IWaffe _miWaffeSelected = null;
+        public IWaffe miWaffeSelected
+        {
+            get { return _miWaffeSelected; }
+            set { Set(ref _miWaffeSelected, value); }
+        }
+
         public bool CreatingNewFilledLine
         {
             get { return _creatingNewFilledLine; }

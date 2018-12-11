@@ -271,6 +271,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
+        public bool InitPase { get; set; } = false;
+
+
         public IEnumerable<TWaffe> Waffen
         {
             get
@@ -286,11 +289,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         protected Manöver(KämpferInfo ausführender, int dauer) : base(ausführender)
-        {
+        {            
+            InitPase = true;
             Dauer = VerbleibendeDauer = dauer;
             Init();
-            InitMods();
+            InitMods(Global.CurrentKampf.BodenplanViewModel.miWaffeSelected);
             SetDefaultModValues();
+            InitPase = false;
         }
 
         protected virtual void Init()
@@ -301,9 +306,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Ansage = Grunderschwernis = 0;
         }
 
-        protected virtual void InitMods()
+        protected virtual void InitMods(IWaffe waffe)
         {
-            mods = new Dictionary<string, ManöverModifikator<TWaffe>>();
+            mods = new Dictionary<string, ManöverModifikator<TWaffe>>();            
             readonlymods = new ReadOnlyDictionary<string, ManöverModifikator<TWaffe>>(mods);
         }
 

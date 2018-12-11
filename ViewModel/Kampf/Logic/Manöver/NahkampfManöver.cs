@@ -39,27 +39,37 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected NahkampfModifikator<bool> unbewaffnet;
         protected NahkampfModifikator<Größe> größe;
 
-        protected override void InitMods()
+        protected override void InitMods(IWaffe waffe)
         {
-            base.InitMods();
+            base.InitMods(waffe);
 
             licht = new NahkampfModifikator<Lichtstufe>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                licht.Value = ((NahkampfModifikator<Lichtstufe>)Ausführender.PreAngriffsMods[LICHT_MOD]).Value;
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
 
             sicht = new NahkampfModifikator<Sichtstufe>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                sicht.Value = ((NahkampfModifikator<Sichtstufe>)Ausführender.PreAngriffsMods[SICHT_MOD]).Value;
             sicht.GetMod = SichtMod;
             mods.Add(SICHT_MOD, sicht);
             
             wasser = new NahkampfModifikator<Wassertiefe>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                wasser.Value = ((NahkampfModifikator<Wassertiefe>)Ausführender.PreAngriffsMods[WASSER_MOD]).Value;
             wasser.GetMod = WasserMod;
             mods.Add(WASSER_MOD, wasser);
 
             beengt = new NahkampfModifikator<bool>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                beengt.Value = ((NahkampfModifikator<bool>)Ausführender.PreAngriffsMods[BEENGT_MOD]).Value;
             beengt.GetMod = BeengtMod;
             mods.Add(BEENGT_MOD, beengt);
 
             distanzklasse = new NahkampfModifikator<int>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                distanzklasse.Value = ((NahkampfModifikator<int>)Ausführender.PreAngriffsMods[DISTANZLASSE_MOD]).Value;
             mods.Add(DISTANZLASSE_MOD, distanzklasse);
 
             //----------POSITION----------
@@ -70,23 +80,32 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             mods.Add(POS_SELBST_MOD, positionSelbst);
 
             NahkampfModifikator<Position> position_gegner = new NahkampfModifikator<Position>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                position_gegner.Value = ((NahkampfModifikator<Position>)Ausführender.PreAngriffsMods[POS_GEGNER_MOD]).Value;
             position_gegner.GetMod = PositionGegnerMod;
             mods.Add(POS_GEGNER_MOD, position_gegner);
 
             NahkampfModifikator<bool> falscheHand = new NahkampfModifikator<bool>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                falscheHand.Value = ((NahkampfModifikator<bool>)Ausführender.PreAngriffsMods[FALSCHE_HAND_MOD]).Value;
             falscheHand.GetMod = FalscheHandMod;
             mods.Add(FALSCHE_HAND_MOD, falscheHand);
 
             NahkampfModifikator<int> überzahl = new NahkampfModifikator<int>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                überzahl.Value = ((NahkampfModifikator<int>)Ausführender.PreAngriffsMods[ÜBERZAHL_MOD]).Value;
             überzahl.GetMod = ÜberzahlMod;
             mods.Add(ÜBERZAHL_MOD, überzahl);
 
             NahkampfModifikator<bool> unbewaffnet = new NahkampfModifikator<bool>(this);
+            if (Ausführender.PreAngriffsMods != null)
+                unbewaffnet.Value = ((NahkampfModifikator<bool>)Ausführender.PreAngriffsMods[UNBEWAFFNET_MOD]).Value;
             unbewaffnet.GetMod = UnbewaffnetMod;
             mods.Add(UNBEWAFFNET_MOD, unbewaffnet);
 
             NahkampfModifikator<Größe> größe = new NahkampfModifikator<Größe>(this);
-            größe.Value = Größe.Mittel;
+            größe.Value = Ausführender.PreAngriffsMods == null ? Größe.Mittel :
+                ((NahkampfModifikator<Größe>)Ausführender.PreAngriffsMods[GRÖSSE_MOD]).Value;
             größe.GetMod = GrößeMod;
             mods.Add(GRÖSSE_MOD, größe);                        
         }

@@ -74,9 +74,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return talente.Contains(waffe.Talent.Name);
         }
 
-        protected override void InitMods()
+        protected override void InitMods(IWaffe waffe)
         {
-            base.InitMods();
+            base.InitMods(waffe);
         }
 
         protected override void SetDefaultModValues()

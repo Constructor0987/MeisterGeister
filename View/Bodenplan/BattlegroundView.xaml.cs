@@ -620,37 +620,9 @@ namespace MeisterGeister.View.Bodenplan
                         };
                         try
                         {
-                            var pic = (ArenaGrid.SelectedItem as IKämpfer).Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
-
-                            if (!pic.ToLower().StartsWith("http"))
-                            {
-                                if (!pic.StartsWith("/") && !File.Exists(pic))
-                                {
-                                    pic = "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";// pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
-                                }
-
-                                var src = new ImagePathConverter().Convert(pic, typeof(Image), null, null);
-
-                                img.Source = src.ToString().StartsWith("/DSA MeisterGeister;") ?
-                                    new BitmapImage(new Uri("pack://application:,,," + src.ToString())) : src as ImageSource;
-                            }
-                            else
-                            {
-                                var bitmap = new BitmapImage();
-                                if (pic.ToLower().StartsWith("http"))
-                                {
-                                    var buffer = new WebClient().DownloadData(pic);
-
-                                    using (var stream = new MemoryStream(buffer))
-                                    {
-                                        bitmap.BeginInit();
-                                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                                        bitmap.StreamSource = stream;
-                                        bitmap.EndInit();
-                                    }
-                                }
-                                img.Source = bitmap;
-                            }
+                            if ((VM.SelectedObject as BattlegroundCreature).ki.Kämpfer.Bild != (VM.SelectedObject as BattlegroundCreature).CreatureImage.Tag.ToString())
+                                (VM.SelectedObject as BattlegroundCreature).CreatureImage = (VM.SelectedObject as BattlegroundCreature).SetCreatrueImage(img);
+                            img.Source = (VM.SelectedObject as BattlegroundCreature).CreatureImage.Source;// GetCreatrueImageSource();
                             _kämpferCursor = CreateCursor(img);
                         }
                         catch (Exception ex)
@@ -690,6 +662,7 @@ namespace MeisterGeister.View.Bodenplan
                 e.UseDefaultCursors = true;
             }
         }
+
 
         private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -979,6 +952,7 @@ namespace MeisterGeister.View.Bodenplan
                                 .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
                             if (mi != null)
                             {
+                                VM.miWaffeSelected = menuitem.CommandParameter as IWaffe;
                                 if (menuitem.Name == "miKämpferZauber" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferZauber"))
                                 {
                                     mi.UmwandelnZauber.Execute(menuitem.CommandParameter);

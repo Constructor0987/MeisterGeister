@@ -10,10 +10,7 @@
              xmlns:Karte="clr-namespace:MeisterGeister.View.Karte"
              xmlns:Reise="clr-namespace:MeisterGeister.View.Reise"
              xmlns:AStar="clr-namespace:MeisterGeister.Logic.General.AStar"
-             xmlns:LogicKarte="clr-namespace:MeisterGeister.Logic.Karte"
-             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
-             xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="1000"
@@ -59,11 +56,6 @@
                                     <Image Source="pack://application:,,,/Images/Icons/General/info.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <!--<MenuItem Header="Vorhandene Pflanzen" ToolTip="Pflanzen anzeigen die hier zu finden sind" Command="{Binding Path=PlacementTarget.DataContext.OnShowPflanzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
-                                <MenuItem.Icon>
-                                    <Image Source="pack://application:,,,/Images/Icons/pflanzenschriftrolle.png" Width="25"/>
-                                </MenuItem.Icon>
-                            </MenuItem>-->
                         </ContextMenu>
                     </Canvas.ContextMenu>
                     <Image Source="{Binding SelectedKarte.Bildpfad}" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />

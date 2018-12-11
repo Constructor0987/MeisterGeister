@@ -130,6 +130,17 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
+        public bool IsPflanzenwissen
+        {
+            get { return Logic.Einstellung.Einstellungen.PflanzenwissenIntegrieren; }
+
+            set
+            {
+                Logic.Einstellung.Einstellungen.PflanzenwissenIntegrieren = value;
+                OnChanged(nameof(IsPflanzenwissen));
+            }
+        }
+
         public bool IsAudioSpieldauerBerechnen
         {
             get { return Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen; }

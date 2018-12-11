@@ -158,6 +158,32 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref _wesenPlaylist, value); }
         }
 
+        private Dictionary<string, ManöverModifikator<INahkampfwaffe>> _preAngriffsMods = null;
+        public Dictionary<string, ManöverModifikator<INahkampfwaffe>> PreAngriffsMods
+        {
+            get { return _preAngriffsMods; }
+            set { Set(ref _preAngriffsMods, value); }
+        }
+
+        private IFernkampfwaffe _preFernkampfWaffe = null;
+        public IFernkampfwaffe PreFernkampfWaffe
+        {
+            get { return _preFernkampfWaffe; }
+            set { Set(ref _preFernkampfWaffe, value); }
+        }
+        private Dictionary<string, ManöverModifikator<IFernkampfwaffe>> _preFernkampfMods = null;
+        public Dictionary<string, ManöverModifikator<IFernkampfwaffe>> PreFernkampfMods
+        {
+            get { return _preFernkampfMods; }
+            set { Set(ref _preFernkampfMods, value); }
+        }
+
+        private Dictionary<string, ManöverModifikator<INahkampfwaffe>> _preAbwehrMods = null;
+        public Dictionary<string, ManöverModifikator<INahkampfwaffe>> PreAbwehrMods
+        {
+            get { return _preAbwehrMods; }
+            set { Set(ref _preAbwehrMods, value); }
+        }
 
         private double _audioSpeedButtonVolume = MeisterGeister.Logic.Einstellung.Einstellungen.GeneralHotkeyVolume;
         public double AudioSpeedButtonVolume

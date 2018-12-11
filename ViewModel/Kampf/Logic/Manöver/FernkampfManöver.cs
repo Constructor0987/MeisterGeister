@@ -17,7 +17,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
     {       
         public FernkampfManöver(KämpferInfo ausführender, IFernkampfwaffe Fernkampfwaffe) : base(ausführender)
         {
-            this.FernkampfWaffeSelected = Fernkampfwaffe;            
+            this.FernkampfWaffeSelected = Fernkampfwaffe;
+
+            //Values sollten/müssen nach dem Hinzufügen gesetzt werden
+
+
+            if (deckung != null)
+                deckung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DECKUNG_MOD]).Value;
+
         }
 
         #region Mods
@@ -68,12 +75,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected FernkampfModifikator<int> pferdBewegung;
         protected FernkampfModifikator<bool> ohneSattel;
 
-        protected override void InitMods()
+        protected override void InitMods(IWaffe waffe)
         {
-            base.InitMods();
+            base.InitMods(waffe);
+            bool loadStd = Ausführender.PreFernkampfMods == null || Ausführender.PreFernkampfWaffe != waffe as IFernkampfwaffe;
+            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe == waffe as IFernkampfwaffe;
 
             licht = new FernkampfModifikator<Lichtstufe>(this);
-            licht.Value = Global.CurrentKampf.Kampf.Licht;
+            if (loadStd)
+                licht.Value = Global.CurrentKampf.Kampf.Licht;
+            if (loadPre)
+                licht.Value = ((FernkampfModifikator<Lichtstufe>)Ausführender.PreFernkampfMods[LICHT_MOD]).Value;
             licht.GetMod = LichtMod;
             mods.Add(LICHT_MOD, licht);
              
@@ -94,79 +106,113 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             mods.Add(UNSICHTBAR_MOD, unsichtbar);
 
             größe = new FernkampfModifikator<Größe>(this);
-            größe.Value = Größe.Mittel;
+            if (loadStd)
+                größe.Value = Größe.Mittel;
+            if (loadPre)
+                größe.Value = ((FernkampfModifikator<Größe>)Ausführender.PreFernkampfMods[GRÖSSE_MOD]).Value;
             größe.GetMod = GrößeMod;
             mods.Add(GRÖSSE_MOD, größe);
             
             FernkampfModifikator<int> deckung = new FernkampfModifikator<int>(this);
             mods.Add(DECKUNG_MOD, deckung);
-            
             distanz = new FernkampfModifikator<int>(this);
-            distanz.Value = 1;
+            if (loadStd)
+                distanz.Value = 1;
+            if (loadPre)
+                distanz.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DISTANZ_MOD]).Value;
             distanz.GetMod = DistanzMod;
             mods.Add(DISTANZ_MOD, distanz);
 
             trefferzone = new FernkampfModifikator<Trefferzone>(this);
-            trefferzone.Value = Trefferzone.Unlokalisiert;
+            if (loadStd)
+                trefferzone.Value = Trefferzone.Unlokalisiert;
+            if (loadPre)
+                trefferzone.Value = ((FernkampfModifikator<Trefferzone>)Ausführender.PreFernkampfMods[TREFFERZONE_MOD]).Value;
             trefferzone.GetMod = TrefferzoneMod;
             mods.Add(TREFFERZONE_MOD, trefferzone);
 
             bewKörperteil = new FernkampfModifikator<bool>(this);
-            bewKörperteil.Value = false;
+            if (loadPre)
+                bewKörperteil.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[BEWKÖRPERTEIL_MOD]).Value;
             bewKörperteil.GetMod = BewKörperteilMod;
             mods.Add(BEWKÖRPERTEIL_MOD, bewKörperteil);
 
             nahkampf = new FernkampfModifikator<int>(this);
+            if (loadPre)
+                nahkampf.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[NAHKAMPF_MOD]).Value;
             nahkampf.GetMod = NahkampfMod;
             mods.Add(NAHKAMPF_MOD, nahkampf);
 
             handgemenge = new FernkampfModifikator<int>(this);
+            if (loadPre)
+                handgemenge.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[HANDGEMENGE_MOD]).Value;
             handgemenge.GetMod = HandgemengeMod;
             mods.Add(HANDGEMENGE_MOD, handgemenge);
 
             bewegung = new FernkampfModifikator<Bewegung>(this);
-            bewegung.Value = Bewegung.Leicht;
+            if (loadStd)
+                bewegung.Value = Bewegung.Leicht;
+            if (loadPre)
+                bewegung.Value = ((FernkampfModifikator<Bewegung>)Ausführender.PreFernkampfMods[BEWEGUNG_MOD]).Value;
             bewegung.GetMod = BewegungMod;
             mods.Add(BEWEGUNG_MOD, bewegung);
 
             zielen = new FernkampfModifikator<int>(this);
             zielen.GetMod = ZielenMod;
             mods.Add(ZIELEN_MOD, zielen);
-            zielen.Value = 1;
+            if (loadStd)
+                zielen.Value = 1;
+            if (loadPre)
+                zielen.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[ZIELEN_MOD]).Value;
 
             ansage = new FernkampfModifikator<int>(this);
+            if (loadPre)
+                ansage.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[ANSAGE_MOD]).Value;
             ansage.GetMod = AnsageMod;
             mods.Add(ANSAGE_MOD, ansage);
 
             sicht = new FernkampfModifikator<Sichtstufe>(this);
-            sicht.Value = Global.CurrentKampf.Kampf.Sicht;
+            if (loadStd)
+                sicht.Value = Global.CurrentKampf.Kampf.Sicht;
+            if (loadPre)
+                sicht.Value = ((FernkampfModifikator<Sichtstufe>)Ausführender.PreFernkampfMods[SICHT_MOD]).Value;
             sicht.GetMod = SichtMod;
             mods.Add(SICHT_MOD, sicht);
-
-
+            
             ohneSattel = new FernkampfModifikator<bool>(this);
+            if (loadPre)
+                ohneSattel.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[OHNESATTEL_MOD]).Value;
             ohneSattel.GetMod = OhneSattelMod;
             mods.Add(OHNESATTEL_MOD, ohneSattel);
 
             unterWasser = new FernkampfModifikator<bool>(this);
-            unterWasser.Value = false;
+            if (loadPre)
+                unterWasser.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[UNTERWASSER_MOD]).Value;
             unterWasser.GetMod = UnterWasserMod;
             mods.Add(UNTERWASSER_MOD, unterWasser);
             
-            //positionSelbst = new FernkampfModifikator<Position>(this);
-            //positionSelbst.Value = (Global.CurrentKampf.BodenplanViewModel.SelectedObject as Wesen).Position;
-            //positionSelbst.GetMod = PositionSelbstMod;
-            //mods.Add(POS_SELBST_MOD, positionSelbst);
-
             positionSelbst = new FernkampfModifikator<Position>(this);
-            positionSelbst.Value = Ausführender.Kämpfer.Position;
+            if (loadStd)
+                positionSelbst.Value = Ausführender.Kämpfer.Position;
+            if (loadPre)
+                positionSelbst.Value = ((FernkampfModifikator<Position>)Ausführender.PreFernkampfMods[POS_SELBST_MOD]).Value;
             positionSelbst.GetMod = PositionSelbstMod;
             mods.Add(POS_SELBST_MOD, positionSelbst);
 
             pferdBewegung = new FernkampfModifikator<int>(this);
-            pferdBewegung.Value = 0;
+            if (loadPre)
+                pferdBewegung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[PFERDBEWEGUNG_MOD]).Value;
             pferdBewegung.GetMod = PferdBewegungMod;
             mods.Add(PFERDBEWEGUNG_MOD, pferdBewegung);
+
+
+            if (loadPre)
+            {
+                wind.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[WIND_MOD]).Value;
+                steilNachUnten.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[STEILNACHUNTEN_MOD]).Value;
+                steilNachOben.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[STEILNACHOBEN_MOD]).Value;
+                unsichtbar.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[UNSICHTBAR_MOD]).Value;
+            }
         }
 
         private IFernkampfwaffe _fernkampfWaffeSelected = null;

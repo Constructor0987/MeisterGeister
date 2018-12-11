@@ -695,6 +695,7 @@
     <Compile Include="ViewModel\Einstellungen\ermitteleUeberlastung.cs" />
     <Compile Include="ViewModel\Einstellungen\ermittleBehinderung.cs" />
     <Compile Include="ViewModel\Einstellungen\ermittleRuestung.cs" />
+    <Compile Include="ViewModel\Helden\BekanntePflanzenVM.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\ManöverTyp.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Sichtstufe.cs" />
     <Compile Include="ViewModel\LampenHUE\HUELampenViewModel.cs" />
@@ -785,7 +786,6 @@
     <Compile Include="ViewModel\Kampf\Logic\Wassertiefe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\ZeitImKampf.cs" />
     <Compile Include="ViewModel\Kampf\SchadenMachen.cs" />
-    <Compile Include="ViewModel\Karte\BekanntePflanzenVM.cs" />
     <Compile Include="ViewModel\Karte\LandschaftsGruppeViewModel.cs" />
     <Compile Include="ViewModel\Karte\Logic\Karte.cs" />
     <Compile Include="ViewModel\Karte\KarteViewModel.cs" />
@@ -1118,6 +1118,9 @@
     <Compile Include="View\Helden\Controls\AusrüstungView.xaml.cs">
       <DependentUpon>AusrüstungView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Helden\Controls\BekanntePflanzenView.xaml.cs">
+      <DependentUpon>BekanntePflanzenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Helden\Controls\EigenschaftenView.xaml.cs">
       <DependentUpon>EigenschaftenView.xaml</DependentUpon>
     </Compile>
@@ -1200,9 +1203,6 @@
     </Compile>
     <Compile Include="View\Kampf\SchadenMachenView.xaml.cs">
       <DependentUpon>SchadenMachenView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Karte\BekanntePflanzenView.xaml.cs">
-      <DependentUpon>BekanntePflanzenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\KoordinatenControl.xaml.cs">
       <DependentUpon>KoordinatenControl.xaml</DependentUpon>
@@ -1712,6 +1712,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Helden\Controls\BekanntePflanzenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Helden\Controls\EigenschaftenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1823,10 +1827,6 @@
     <Page Include="View\Kampf\SchadenMachenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Karte\BekanntePflanzenView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Karte\KoordinatenControl.xaml">
       <Generator>MSBuild:Compile</Generator>
