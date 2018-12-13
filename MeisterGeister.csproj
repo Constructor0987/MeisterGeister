@@ -2847,9 +2847,6 @@
     <Content Include="Q42.HueApi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="README.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Images\Icons\General\info.png" />
     <Resource Include="Images\Logos\WikiAventurica_Logo.png" />
     <Resource Include="Images\Koerperzonen\hosen.png" />
