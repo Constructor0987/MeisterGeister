@@ -1,215 +1,220 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MeisterGeister.Logic.General;
+﻿using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using NUnit.Framework;
 
 namespace MeisterGeister_Tests
 {
     [TestFixture]
-    class Probe_Tests
+    internal class Probe_Tests
     {
         [TestFixtureSetUp]
         public void SetupMethods()
         {
-
         }
 
         [Test]
         public void TalentProbenTests()
         {
-            Held_Talent ht = new Held_Talent();
-            ht.Talent = new Talent();
+            var ht = new Held_Talent
+            {
+                Talent = new Talent()
+            };
             ProbenErgebnis pe = null;
 
-            // Ohne Modifikator
-            // ---------------------------------------
+            // Ohne Modifikator ---------------------------------------
 
-            // TaW 0    Mod 0
-            // 10   10  10
-            // 10   10  10
-            //  0    0   0
-            // TaP* 1   Qualität 0
+            // TaW 0 Mod 0 10 10 10 10 10 10 0 0 0 TaP* 1 Qualität 0
             ht.TaW = 0;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 10;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 10;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(0, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 0    Mod 0
-            // 10   10  10
-            // 10   10   8
-            //  0    0   2
-            // TaP* 1   Qualität 0
+            // TaW 0 Mod 0 10 10 10 10 10 8 0 0 2 TaP* 1 Qualität 0
             ht.TaW = 0;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 8;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(0, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 0    Mod 0
-            // 10   10  10
-            //  6    8   8
-            //  4    2   2
-            // TaP* 1   Qualität 2
+            // TaW 0 Mod 0 10 10 10 6 8 8 4 2 2 TaP* 1 Qualität 2
             ht.TaW = 0;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 6; ht.Ergebnis.Würfe[1] = 8; ht.Ergebnis.Würfe[2] = 8;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 6;
+            ht.Ergebnis.Würfe[1] = 8;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 4    Mod 0
-            // 10   10  10
-            //  4   12   8
-            //  6   -2   2
-            // TaP* 2   Qualität 2
+            // TaW 4 Mod 0 10 10 10 4 12 8 6 -2 2 TaP* 2 Qualität 2
             ht.TaW = 4;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 4; ht.Ergebnis.Würfe[1] = 12; ht.Ergebnis.Würfe[2] = 8;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 4;
+            ht.Ergebnis.Würfe[1] = 12;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(2, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 4    Mod 0
-            // 10   10  10
-            //  4   10   8
-            //  6    0   2
-            // TaP* 4   Qualität 4
+            // TaW 4 Mod 0 10 10 10 4 10 8 6 0 2 TaP* 4 Qualität 4
             ht.TaW = 4;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 4; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 8;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 4;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(4, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(4, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW -2    Mod 0
-            // 10(8)    10(8)    10(8)
-            // 10       10       10
-            // -2       -2       -2
-            // TaP* 0   Qualität -2
+            // TaW -2 Mod 0 10(8) 10(8) 10(8) 10 10 10
+            // -2 -2 -2 TaP* 0 Qualität -2
             ht.TaW = -2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 10;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 10;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.MISSLUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW -2    Mod 0
-            // 10(8)    10(8)    10(8)
-            // 7        7        6
-            // 1        1        2
-            // TaP* 1   Qualität 1
+            // TaW -2 Mod 0 10(8) 10(8) 10(8) 7 7 6 1 1 2 TaP* 1 Qualität 1
             ht.TaW = -2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 7; ht.Ergebnis.Würfe[1] = 7; ht.Ergebnis.Würfe[2] = 6;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 7;
+            ht.Ergebnis.Würfe[1] = 7;
+            ht.Ergebnis.Würfe[2] = 6;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(1, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // Mit Erschwernis
-            // ---------------------------------------
+            // Mit Erschwernis ---------------------------------------
 
-            // TaW 0    Mod +2
-            // 10(8)   10(8)  10(8)
-            // 10      10     10
-            // -2      -2     -2
-            // TaP* 0   Qualität -2
-            ht.TaW = 0; ht.Modifikator = 2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 10;
+            // TaW 0 Mod +2 10(8) 10(8) 10(8) 10 10 10
+            // -2 -2 -2 TaP* 0 Qualität -2
+            ht.TaW = 0;
+            ht.Modifikator = 2;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 10;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.MISSLUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 0    Mod +2
-            // 10(8)   10(8)  10(8)
-            // 10      10     8
-            // -2      -2     0
-            // TaP* 0   Qualität -2
-            ht.TaW = 0; ht.Modifikator = 2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 8;
+            // TaW 0 Mod +2 10(8) 10(8) 10(8) 10 10 8
+            // -2 -2 0 TaP* 0 Qualität -2
+            ht.TaW = 0;
+            ht.Modifikator = 2;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.MISSLUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 0    Mod +2
-            // 10(8)   10(8)  10(8)
-            // 6       8      8
-            // 2       0      0
-            // TaP* 1   Qualität 0
-            ht.TaW = 0; ht.Modifikator = 2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 6; ht.Ergebnis.Würfe[1] = 8; ht.Ergebnis.Würfe[2] = 8;
+            // TaW 0 Mod +2 10(8) 10(8) 10(8) 6 8 8 2 0 0 TaP* 1 Qualität 0
+            ht.TaW = 0;
+            ht.Modifikator = 2;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 6;
+            ht.Ergebnis.Würfe[1] = 8;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(0, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // Mit Erleichterung
-            // ---------------------------------------
+            // Mit Erleichterung ---------------------------------------
 
-            // TaW 0    Mod -2
-            // 10      10     10
-            // 10      10     10
-            // 0       0      0
-            // TaP* 1   Qualität 2
-            ht.TaW = 0; ht.Modifikator = -2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 10;
+            // TaW 0 Mod -2 10 10 10 10 10 10 0 0 0 TaP* 1 Qualität 2
+            ht.TaW = 0;
+            ht.Modifikator = -2;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 10;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 0    Mod -2
-            // 10      10     10
-            // 10      10     8
-            // 0       0      2
-            // TaP* 1   Qualität 2
-            ht.TaW = 0; ht.Modifikator = -2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 8;
+            // TaW 0 Mod -2 10 10 10 10 10 8 0 0 2 TaP* 1 Qualität 2
+            ht.TaW = 0;
+            ht.Modifikator = -2;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10;
+            ht.Ergebnis.Würfe[1] = 10;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 0    Mod -2
-            // 10      10     10
-            // 6       8      8
-            // 4       2      2
-            // TaP* 1   Qualität 4
-            ht.TaW = 0; ht.Modifikator = -2;
-            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 6; ht.Ergebnis.Würfe[1] = 8; ht.Ergebnis.Würfe[2] = 8;
+            // TaW 0 Mod -2 10 10 10 6 8 8 4 2 2 TaP* 1 Qualität 4
+            ht.TaW = 0;
+            ht.Modifikator = -2;
+            ht.Werte[0] = 10;
+            ht.Werte[1] = 10;
+            ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 6;
+            ht.Ergebnis.Würfe[1] = 8;
+            ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(4, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
-            // TaW 7    Mod -56
-            // 16      12     11
-            // 19       1      1
-            // -3      11     10
-            // TaP* 7   Qualität 60
-            ht.TaW = 7; ht.Modifikator = -56;
-            ht.Werte[0] = 16; ht.Werte[1] = 12; ht.Werte[2] = 11;
-            ht.Ergebnis.Würfe[0] = 19; ht.Ergebnis.Würfe[1] = 1; ht.Ergebnis.Würfe[2] = 1;
+            // TaW 7 Mod -56 16 12 11 19 1 1
+            // -3 11 10 TaP* 7 Qualität 60
+            ht.TaW = 7;
+            ht.Modifikator = -56;
+            ht.Werte[0] = 16;
+            ht.Werte[1] = 12;
+            ht.Werte[2] = 11;
+            ht.Ergebnis.Würfe[0] = 19;
+            ht.Ergebnis.Würfe[1] = 1;
+            ht.Ergebnis.Würfe[2] = 1;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(7, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(60, pe.Qualität, "Qualität\n" + InfoText(ht));
@@ -223,6 +228,5 @@ namespace MeisterGeister_Tests
                 probe.Ergebnis.Würfe[0], probe.Ergebnis.Würfe[1], probe.Ergebnis.Würfe[2],
                 probe.Ergebnis.Übrig, probe.Ergebnis.Qualität);
         }
-
     }
 }

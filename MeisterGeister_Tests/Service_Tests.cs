@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
-
 using MeisterGeister.Model;
-using MeisterGeister.Model.Service;
+using NUnit.Framework;
 using Global = MeisterGeister.Global;
 
 namespace MeisterGeister_Tests
@@ -17,7 +13,7 @@ namespace MeisterGeister_Tests
         [TestFixtureSetUp]
         public void SetupMethods()
         {
-            MeisterGeister.Global.Init();
+            Global.Init();
         }
 
         [TestFixtureTearDown]
@@ -30,14 +26,6 @@ namespace MeisterGeister_Tests
         {
             //leere Datenbank vor dem Test
             //DeleteHelden();
-        }
-
-        private void DeleteHelden()
-        {
-            List<Held> deleteMe = new List<Held>();
-            deleteMe.AddRange(MeisterGeister.Global.ContextHeld.Liste<Held>().AsEnumerable());
-            foreach (Held h in deleteMe)
-                Assert.IsTrue(MeisterGeister.Global.ContextHeld.Delete<Held>(h), "Held gelöscht");
         }
 
         [TearDown]
@@ -53,16 +41,10 @@ namespace MeisterGeister_Tests
             Assert.DoesNotThrow(LoadListen);
         }
 
-        void LoadListen()
-        {
-            var zauber = Global.ContextHeld.Liste<Zauber>();
-            var gegnerBase = Global.ContextHeld.Liste<GegnerBase>();
-        }
-
         [Test]
         public void CloneTest()
         {
-            int a = Global.ContextHeld.Liste<Held>().Count;
+            var a = Global.ContextHeld.Liste<Held>().Count;
             Held h = Global.ContextHeld.New<Held>();
             h.Name = "Karl Ranseier der Zweite";
             Held h2 = Global.ContextHeld.Clone<Held>(h);
@@ -75,7 +57,7 @@ namespace MeisterGeister_Tests
             DeleteHelden();
             //Keine Helden
             Assert.AreEqual(0, Global.ContextHeld.Liste<Held>().Count, "Keine Helden in der Datenbank");
-            //Neuen Held erstellen            
+            //Neuen Held erstellen
             Held h = Global.ContextHeld.New<Held>();
             h.Name = "Karl Ranseier der Zweite";
             Held h2 = Global.ContextHeld.New<Held>();
@@ -90,7 +72,7 @@ namespace MeisterGeister_Tests
             Assert.IsTrue(Global.ContextHeld.Insert<Held>(h2));
             //Zwei Helden
             Assert.AreEqual(2, Global.ContextHeld.Liste<Held>().Count, "Zwei Helden in der Datenbank");
-            
+
             //Sonderfertigkeit laden
             Sonderfertigkeit eisernerWille = Global.ContextHeld.LoadSonderfertigkeitByName("Eiserner Wille I");
             //erfolgreich geladen
@@ -109,7 +91,6 @@ namespace MeisterGeister_Tests
             //Speichern
             Global.ContextHeld.Save();
             //sollte nun in der Datenbank sein mit der Sonderfertigkeit in Held_Sonderfertigkeit und einem Beil als Waffe
-
         }
 
         // leider werden IDs nicht aktualisiert. Es funktioniert nur als Export/Import, wie im Helden umgesetzt.
@@ -128,5 +109,20 @@ namespace MeisterGeister_Tests
             Global.ContextHeld.DiscardChanges();
         }
 
+        private void DeleteHelden()
+        {
+            var deleteMe = new List<Held>();
+            deleteMe.AddRange(MeisterGeister.Global.ContextHeld.Liste<Held>().AsEnumerable());
+            foreach (Held h in deleteMe)
+            {
+                Assert.IsTrue(MeisterGeister.Global.ContextHeld.Delete<Held>(h), "Held gelöscht");
+            }
+        }
+
+        private void LoadListen()
+        {
+            List<Zauber> zauber = Global.ContextHeld.Liste<Zauber>();
+            List<GegnerBase> gegnerBase = Global.ContextHeld.Liste<GegnerBase>();
+        }
     }
 }

@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using NUnit.Framework;
-
 using MeisterGeister.Model;
-using MeisterGeister.Model.Service;
-
 using MeisterGeister.ViewModel.Kampf.Logic;
-using Global = MeisterGeister.Global;
-using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 using MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
-using System.Diagnostics;
+using NUnit.Framework;
+using Global = MeisterGeister.Global;
 
 namespace MeisterGeister_Tests
 {
@@ -24,11 +17,16 @@ namespace MeisterGeister_Tests
         {
             Global.Init();
             //Helden importieren.
-            if(Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").Count() == 0)
+            if (Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").Count() == 0)
+            {
                 Held.Import("Daten\\Helden\\Gero Kalai von Rodaschquell.xml");
+            }
             //Gegner importieren
             if (Global.ContextKampf.Liste<GegnerBase>().Where(g => g.Name == "Zant").Count() == 0)
+            {
                 GegnerBase.Import("Daten\\Gegner\\Zant.xml");
+            }
+
             Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();
             if (zant == null)
             {
@@ -55,11 +53,15 @@ namespace MeisterGeister_Tests
         [Test]
         public void TPKKTests()
         {
-            Held h1 = new Held();
-            h1.KK = 10;
-            Waffe w1 = new Waffe();
-            w1.TPKKSchwelle = 13;
-            w1.TPKKSchritt = 3;
+            var h1 = new Held
+            {
+                KK = 10
+            };
+            var w1 = new Waffe
+            {
+                TPKKSchwelle = 13,
+                TPKKSchritt = 3
+            };
             Assert.AreEqual(-1, w1.TPKKBonus(h1));
             h1.KK = 12;
             Assert.AreEqual(0, w1.TPKKBonus(h1));
@@ -79,7 +81,7 @@ namespace MeisterGeister_Tests
             Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
             Assert.IsNotNull(gero);
             //einen Kampf anlegen
-            Kampf kampf = new Kampf();
+            var kampf = new Kampf();
             //beide hinzufügen
             kampf.Kämpfer.Add(gero); // Implizit Team 1
             kampf.Kämpfer.Add(zant, 2);
@@ -102,7 +104,7 @@ namespace MeisterGeister_Tests
             Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
             Assert.IsNotNull(gero);
             //einen Kampf anlegen
-            Kampf kampf = new Kampf();
+            var kampf = new Kampf();
             //beide hinzufügen
             kampf.Kämpfer.Add(gero); // Implizit Team 1
             kampf.Kämpfer[gero].Initiative = 21;
@@ -211,12 +213,12 @@ namespace MeisterGeister_Tests
             Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
             Assert.IsNotNull(gero);
             //einen Kampf anlegen
-            Kampf kampf = new Kampf();
+            var kampf = new Kampf();
             //gero hinzufügen
             kampf.Kämpfer.Add(gero); // Implizit Team 1
             kampf.Kämpfer[gero].Initiative = 21;
             kampf.Kämpfer[gero].Kampfstil = Kampfstil.Parierwaffenstil;
-            var ki = kampf.Kämpfer[gero];
+            KämpferInfo ki = kampf.Kämpfer[gero];
         }
 
         [Test]
@@ -254,17 +256,19 @@ namespace MeisterGeister_Tests
         [Test]
         public void CustomModifikatorTest()
         {
-            CustomModifikatorFactory cf = new CustomModifikatorFactory();
-            cf.Name = "CMTest";
-            string auswirkungen = "";
+            var cf = new CustomModifikatorFactory
+            {
+                Name = "CMTest"
+            };
+            var auswirkungen = "";
 
             Type t = typeof(IModTalentprobe);
             cf.AddModifikator(t); //neuen Modifikator von Typ t (IModTalentProbe)
-            var d = cf[t];
+            IDictionary<string, object> d = cf[t];
             Assert.IsTrue(d.ContainsKey("ApplyTalentprobeMod"));
             Assert.IsTrue(d.ContainsKey("Talentname"));
             Assert.AreEqual(2, d.Count);
-            d["Talentname"] = new SortedSet<string>() {"Reiten", "Schleichen"};
+            d["Talentname"] = new SortedSet<string>() { "Reiten", "Schleichen" };
             auswirkungen += "Reiten-Probe +5, Schleichen-Probe +5";
             cf.SetModifikator("ApplyTalentprobeMod", "+", 5);
             Assert.AreEqual(0, cf.Errors.Count);
@@ -316,7 +320,7 @@ namespace MeisterGeister_Tests
 
             Assert.AreEqual(auswirkungen, result.Auswirkung);
 
-            string serialized = CustomModifikatorFactory.Serialize(result);
+            var serialized = CustomModifikatorFactory.Serialize(result);
             ICustomModifikator deserialized = CustomModifikatorFactory.Deserialize(serialized);
 
             Assert.IsTrue(deserialized is IModTalentprobe);

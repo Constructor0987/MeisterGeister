@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace MeisterGeister_Tests
 {
     /// <summary>
     /// von http://mkamoski1.wordpress.com/2009/12/01/reflection-for-information-on-constants/
     /// </summary>
-    static class ReflectionHelper
+    internal static class ReflectionHelper
     {
         #region HelperMethods
 
@@ -21,8 +18,7 @@ namespace MeisterGeister_Tests
         /// <param name="targetType">This is the type to use.</param>
         /// <returns>This is an array of FieldInfo objects.</returns>
         /// <remarks>
-        /// Note that this code was refactored from code found on 20091201 at the following link...
-        /// http://weblogs.asp.net/whaggard/archive/2003/02/20/2708.aspx
+        /// Note that this code was refactored from code found on 20091201 at the following link... http://weblogs.asp.net/whaggard/archive/2003/02/20/2708.aspx
         /// </remarks>
         public static FieldInfo[] GetConstantFieldInfoArray(System.Type targetType)
         {
@@ -31,15 +27,15 @@ namespace MeisterGeister_Tests
             //The "BindingFlags.FlattenHierarchy" gets fields from all base types.
             FieldInfo[] myFields = targetType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
 
-            ArrayList myConstants = new ArrayList();
+            var myConstants = new ArrayList();
 
             //Go through the list and only pick out the constants.
             foreach (FieldInfo myFieldInfoTemp in myFields)
             {
                 // IsLiteral determines if its value is written at compile time and not changeable.
-                // IsInitOnly determine if the field can be set in the body of the constructor.
-                // For C#, a field with the readonly keyword would have IsLiteral=true and IsInitOnly=true.
-                // For C#, a const field would have IsLiteral=true and IsInitOnly=false.
+                // IsInitOnly determine if the field can be set in the body of the constructor. For
+                // C#, a field with the readonly keyword would have IsLiteral=true and
+                // IsInitOnly=true. For C#, a const field would have IsLiteral=true and IsInitOnly=false.
                 if ((myFieldInfoTemp.IsLiteral) && (!myFieldInfoTemp.IsInitOnly))
                 {
                     myConstants.Add(myFieldInfoTemp);
@@ -54,20 +50,22 @@ namespace MeisterGeister_Tests
         /// This will get the values of all the constants in the given type.
         /// </summary>
         /// <param name="targetType">This is the type to use.</param>
-        /// <param name="convertToLowercase">This is a flag indicating if the values should be converted to lowercase or not.</param>
-        /// <param name="trimWhitespace">This is a flag indicating if the values should be whitespace-trimmed or not.</param>
+        /// <param name="convertToLowercase">
+        /// This is a flag indicating if the values should be converted to lowercase or not.
+        /// </param>
+        /// <param name="trimWhitespace">
+        /// This is a flag indicating if the values should be whitespace-trimmed or not.
+        /// </param>
         /// <returns>This a collection of the values.</returns>
-        /// <remarks>
-        /// Note this will only work if the underlying type for the constants is "string".
-        /// </remarks>
+        /// <remarks>Note this will only work if the underlying type for the constants is "string".</remarks>
         public static StringCollection GetConstantValueStringCollection(System.Type targetType, bool convertToLowercase, bool trimWhitespace)
         {
             StringCollection myCollection = null;
 
             FieldInfo[] myFieldInfoArray = MeisterGeister_Tests.ReflectionHelper.GetConstantFieldInfoArray(targetType);
-            string myValueStringTemp = "";
+            var myValueStringTemp = "";
             object myValueObjectTemp = null;
-            int myLoopIndex = 0;
+            var myLoopIndex = 0;
             myCollection = new StringCollection();
 
             foreach (FieldInfo myFieldInfoTemp in myFieldInfoArray)
@@ -114,6 +112,6 @@ namespace MeisterGeister_Tests
             return myCollection;
         }
 
-        #endregion //HelperMethods
+        #endregion HelperMethods
     }
 }

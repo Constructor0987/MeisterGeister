@@ -1,23 +1,15 @@
-﻿using Global = MeisterGeister.Global;
+﻿using System.Linq;
 using MeisterGeister.Logic.HeldenImport;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MeisterGeister.Model;
 
 namespace MeisterGeister_Tests
 {
     [TestFixture]
     public class HeldenSoftwareOnline_Tests
     {
-        string _token;
-
         [TestFixtureSetUp]
         public void SetupMethods()
-        {    
+        {
             MeisterGeister.Global.Init();
         }
 
@@ -51,7 +43,7 @@ namespace MeisterGeister_Tests
         {
             var syncer = new HeldenSoftwareOnlineService(_token);
             HeldenListe heldenListe = syncer.GetHeldenListe();
-            string heldXml = syncer.GetHeldXml(heldenListe.Helden.First());
+            var heldXml = syncer.GetHeldXml(heldenListe.Helden.First());
             Assert.IsTrue(heldXml != null);
             Assert.IsTrue(heldXml.Length > 0);
         }
@@ -66,5 +58,7 @@ namespace MeisterGeister_Tests
             Assert.IsTrue(held != null);
             Assert.IsTrue(held.Held.Name.Contains("Rethis"));
         }
+
+        private string _token;
     }
 }

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 
 namespace MeisterGeister_Tests
 {
     [TestFixture]
-    class Generator_Tests
+    internal class Generator_Tests
     {
-        private StringCollection _namenstypen;
-
         [TestFixtureSetUp]
         public void SetupMethods()
         {
@@ -38,9 +33,9 @@ namespace MeisterGeister_Tests
         [Test]
         public void GeneratorNamenFactoriesTest()
         {
-            foreach (String namenstyp in _namenstypen)
+            foreach (var namenstyp in _namenstypen)
             {
-                Assert.NotNull( MeisterGeister.ViewModel.Generator.Factorys.NamenFactoryHelper.GetFactory(namenstyp), "Die NamenFactory "+namenstyp+" existiert nicht." );
+                Assert.NotNull(MeisterGeister.ViewModel.Generator.Factorys.NamenFactoryHelper.GetFactory(namenstyp), "Die NamenFactory " + namenstyp + " existiert nicht.");
             }
         }
 
@@ -48,7 +43,7 @@ namespace MeisterGeister_Tests
         public void GeneratorNamenLeereNamenTest()
         {
             MeisterGeister.ViewModel.Generator.Factorys.NamenFactory aktuelleNamenFactory;
-            foreach (String namenstyp in _namenstypen)
+            foreach (var namenstyp in _namenstypen)
             {
                 aktuelleNamenFactory = MeisterGeister.ViewModel.Generator.Factorys.NamenFactoryHelper.GetFactory(namenstyp);
                 if (aktuelleNamenFactory != null)
@@ -56,17 +51,19 @@ namespace MeisterGeister_Tests
                     foreach (MeisterGeister.ViewModel.Generator.Container.Geschlecht geschlecht in Enum.GetValues(typeof(MeisterGeister.ViewModel.Generator.Container.Geschlecht)))
                     {
                         foreach (MeisterGeister.ViewModel.Generator.Container.Stand stand in Enum.GetValues(typeof(MeisterGeister.ViewModel.Generator.Container.Stand)))
+                        {
                             Assert.IsNotEmpty(aktuelleNamenFactory.GetName(geschlecht, stand), "Leerer Name bei Factory " + namenstyp + " generiert (Parameter geschlecht=" + geschlecht.ToString() + ", stand=" + stand.ToString() + ").");
+                        }
                     }
                 }
             }
         }
-        
+
         [Test]
         public void GeneratorOrtsnamenLeereNamenTest()
         {
             MeisterGeister.ViewModel.Generator.Factorys.NamenFactory aktuelleNamenFactory;
-            foreach (String namenstyp in _namenstypen)
+            foreach (var namenstyp in _namenstypen)
             {
                 aktuelleNamenFactory = MeisterGeister.ViewModel.Generator.Factorys.NamenFactoryHelper.GetFactory(namenstyp);
                 if (aktuelleNamenFactory != null && aktuelleNamenFactory.GeneriertOrtsnamen)
@@ -75,5 +72,7 @@ namespace MeisterGeister_Tests
                 }
             }
         }
+
+        private StringCollection _namenstypen;
     }
 }

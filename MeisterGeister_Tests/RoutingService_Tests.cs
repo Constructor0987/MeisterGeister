@@ -1,14 +1,11 @@
-﻿using MeisterGeister;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using MeisterGeister;
 using MeisterGeister.Logic.Karte;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Karte.Logic;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace MeisterGeister_Tests
 {
@@ -40,8 +37,8 @@ namespace MeisterGeister_Tests
         public void RoutingServicePerformanceZorganBeilunkTest()
         {
             var routingService = new RoutingService();
-            var searchParameters = CreateSearchParameters("Zorgan", "Beilunk", TravelType.Afoot);
-            var result = routingService.GetShortestPath(searchParameters);
+            SearchParametersRouting searchParameters = CreateSearchParameters("Zorgan", "Beilunk", TravelType.Afoot);
+            IEnumerable<Ort> result = routingService.GetShortestPath(searchParameters);
             Assert.IsNotNull(result);
         }
 
@@ -49,15 +46,15 @@ namespace MeisterGeister_Tests
         public void RoutingServicePerformanceTest()
         {
             var routingService = new RoutingService();
-            var searchParameters = CreateSearchParameters("Al'Anfa", "Gerasim", TravelType.Afoot);
-            var result = routingService.GetShortestPath(searchParameters);
+            SearchParametersRouting searchParameters = CreateSearchParameters("Al'Anfa", "Gerasim", TravelType.Afoot);
+            IEnumerable<Ort> result = routingService.GetShortestPath(searchParameters);
             Assert.IsNotNull(result);
         }
 
         private SearchParametersRouting CreateSearchParameters(string startNodeName, string endNodeName, TravelType travelType)
         {
-            var startNode = Global.ContextGeo.Liste<Ort>().Single(o => o.Name == startNodeName);
-            var endNode = Global.ContextGeo.Liste<Ort>().Single(o => o.Name == endNodeName);
+            Ort startNode = Global.ContextGeo.Liste<Ort>().Single(o => o.Name == startNodeName);
+            Ort endNode = Global.ContextGeo.Liste<Ort>().Single(o => o.Name == endNodeName);
             return new SearchParametersRouting(new Size(10000, 10000), startNode, endNode, travelType,
                 true, true, false, true);
         }

@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Reflection;
 using System.IO;
-using System.Text;
+using System.Reflection;
 
 namespace MeisterGeister_Tests_Runner
 {
-    class Program
+    internal class Program
     {
-        static string nunitpath = @"C:\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\nunit-console.exe";
-        static void Main(string[] args)
+        private static string nunitpath = @"C:\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\nunit-console.exe";
+
+        private static void Main(string[] args)
         {
             ReadNunitPath();
             AppDomain.CurrentDomain.ExecuteAssembly(
@@ -17,11 +17,14 @@ namespace MeisterGeister_Tests_Runner
             );
         }
 
-        static void ReadNunitPath()
+        private static void ReadNunitPath()
         {
-            string nunitini = @"..\..\nunit.ini";
+            var nunitini = @"..\..\nunit.ini";
             if (!File.Exists(nunitini))
-                throw new FileNotFoundException(String.Format("Die Datei nunit.ini fehlt im MeisterGeister_Tests_Runner-Verzeichnis ({0}). In ihr muss der Pfad zu nunit-console.exe eingetragen werden.", Path.GetFullPath(nunitini)));
+            {
+                throw new FileNotFoundException(string.Format("Die Datei nunit.ini fehlt im MeisterGeister_Tests_Runner-Verzeichnis ({0}). In ihr muss der Pfad zu nunit-console.exe eingetragen werden.", Path.GetFullPath(nunitini)));
+            }
+
             nunitpath = System.IO.File.ReadAllText(nunitini);
         }
     }

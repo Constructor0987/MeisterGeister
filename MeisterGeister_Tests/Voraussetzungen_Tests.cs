@@ -1,9 +1,7 @@
-﻿using System;
+﻿using MeisterGeister.Logic.Voraussetzungen;
 using MeisterGeister.Model;
 using NUnit.Framework;
 using Global = MeisterGeister.Global;
-using MeisterGeister.Logic.Voraussetzungen;
-
 
 namespace MeisterGeister_Tests
 {
@@ -57,7 +55,7 @@ namespace MeisterGeister_Tests
             Assert.IsFalse(kr.CheckVoraussetzungen(h), "Zuwenig INI");
             h.AddSonderfertigkeit(kr, null);
             h.AddSonderfertigkeit(auf, null);
-            
+
             h.IN = 8;
             h.MU = 8;
             h.GE = 8;
@@ -72,7 +70,7 @@ namespace MeisterGeister_Tests
             Assert.IsTrue(h.HatSonderfertigkeitUndVoraussetzungen(kr), "Hat Kampfreflexe und die Voraussetzungen");
             Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzungen(kg), "Hat kein Kampfgespür");
             Assert.IsTrue(h.HatSonderfertigkeitUndVoraussetzungen(auf), "Hat Aufmerksamkeit und die Voraussetzungen");
-            
+
             Assert.IsTrue(kg.CheckVoraussetzungen(h), "Alle Voraussetzungen von Kampfgespür erfüllt");
 
             h.IN = 15;
@@ -82,7 +80,7 @@ namespace MeisterGeister_Tests
             Assert.IsFalse(kg.CheckVoraussetzungen(h), "Alle Voraussetzungen von Kampfgespür erfüllt, aber nicht die von Kampfreflexe");
             Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzungen(kr), "Zu wenig INI für Kampfgespür");
             Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzungen(kg), "Alle Voraussetzungen von Kampfgespür erfüllt, aber nicht die von Kampfreflexe");
-            
+
             h.IN = 15;
             h.MU = 15;
             h.GE = 15;
@@ -94,10 +92,10 @@ namespace MeisterGeister_Tests
         [Test]
         public void ParseSomeExpressions()
         {
-            Scanner scanner = new Scanner();
-            Parser parser = new Parser(scanner);
+            var scanner = new Scanner();
+            var parser = new Parser(scanner);
             ParseTree tree;
-            string[] expressions = new string[]
+            var expressions = new string[]
             {
                 "",
                 "SF Schlangenring-Zauber: Wasserbann",
@@ -119,10 +117,10 @@ namespace MeisterGeister_Tests
                 "IN 15, SF Ritualkenntnis (Gildenmagie) \"7\", !(SF Ritualkenntnis (Alchmie) | !Alchemie 21)",
                 "KL 15, IN 15, Magiekunde 12, V Begabung für Merkmal (Elementar (gesamt)) | V Begabung für Merkmal (Elementar (Humus)) | V Begabung für Merkmal (Elementar (Erz)) | V Begabung für Merkmal (Elementar (Eis)) | V Begabung für Merkmal (Elementar (Feuer)) | V Begabung für Merkmal (Elementar (Luft)) | V Begabung für Merkmal (Elementar (Wasser)) | SF Merkmalskenntnis (Elementar (Eis)) | SF Merkmalskenntnis (Elementar (Erz)) | SF Merkmalskenntnis (Elementar (Feuer)) | SF Merkmalskenntnis (Elementar (gesamt)) | SF Merkmalskenntnis (Elementar (Humus)) | SF Merkmalskenntnis (Elementar (Luft)) | SF Merkmalskenntnis (Elementar (Wasser)), !(V Begabung für Merkmal (Dämonisch (gesamt)) | V Begabung für Merkmal (Dämonisch (Blakharaz)) | V Begabung für Merkmal (Dämonisch (Belhalhar)) | V Begabung für Merkmal (Dämonisch (Charyptoroth)) | V Begabung für Merkmal (Dämonisch (Lolgramoth)) | V Begabung für Merkmal (Dämonisch (Thargunitoth)) | V Begabung für Merkmal (Dämonisch (Amazeroth)) | V Begabung für Merkmal (Dämonisch (Belshirash)) | V Begabung für Merkmal (Dämonisch (Asfaloth)) | V Begabung für Merkmal (Dämonisch (Tasfarelel)) | V Begabung für Merkmal (Dämonisch (Belzhorash)) | V Begabung für Merkmal (Dämonisch (Agrimoth)) | V Begabung für Merkmal (Dämonisch (Belkelel)) | N Affinität zu Dämonen | N Animalische Magie | N Arkanophobie | N Astraler Block | N Schwache Ausstmhlung | N Schwacher Astralkörper | N Unstet | SF Merkmalskenntnis (Dämonisch (Agrimoth)) | SF Merkmalskenntnis (Dämonisch (Amazeroth)) | SF Merkmalskenntnis (Dämonisch (Asfaloth)) | SF Merkmalskenntnis (Dämonisch (Belhalhar)) | SF Merkmalskenntnis (Dämonisch (Belkelel)) | SF Merkmalskenntnis (Dämonisch (Belshirash)) | SF Merkmalskenntnis (Dämonisch (Belzhorash)) | SF Merkmalskenntnis (Dämonisch (Blakharaz)) | SF Merkmalskenntnis (Dämonisch (Charyptoroth)) | SF Merkmalskenntnis (Dämonisch (gesamt)) | SF Merkmalskenntnis (Dämonisch (Lolgramoth)) | SF Merkmalskenntnis (Dämonisch (Tasfarelel)) | SF Merkmalskenntnis (Dämonisch (Thargunitoth)))" //Elementarharmonisierte Aura
             };
-            foreach (string input in expressions)
+            foreach (var input in expressions)
             {
                 tree = parser.Parse(input);
-                Assert.AreEqual(0, tree.Errors.Count, String.Format("ParseError bei der Expression {0}", input) );
+                Assert.AreEqual(0, tree.Errors.Count, string.Format("ParseError bei der Expression {0}", input));
             }
         }
     }

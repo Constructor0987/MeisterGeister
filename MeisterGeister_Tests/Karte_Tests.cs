@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Collections.Generic;
-
-using NUnit.Framework;
+﻿using System.Windows;
 using MeisterGeister.Logic.Karte;
+using NUnit.Framework;
 
 namespace MeisterGeister_Tests
 {
     [TestFixture]
-    class Karte_Tests
+    internal class Karte_Tests
     {
         [TestFixtureSetUp]
         public void SetupMethods()
@@ -48,7 +42,7 @@ namespace MeisterGeister_Tests
             var l3 = new Point(3.735098459, 29.79180236);
 
             var c = new DereGlobusToMapConverter();
-            Point r = new Point();
+            var r = new Point();
             double diff = 0;
             r = (Point)c.Convert(l1, typeof(Point), null, null);
             diff = r.X - p1.X;
@@ -82,7 +76,5 @@ namespace MeisterGeister_Tests
             diff = r.Y - l3.Y;
             Assert.LessOrEqual(diff, 0.1);
         }
-
-
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MeisterGeister.Model;
 using MeisterGeister.Model.Service;
 using NUnit.Framework;
 using Global = MeisterGeister.Global;
-using System.Linq;
-
 
 namespace MeisterGeister_Tests
 {
@@ -37,12 +36,14 @@ namespace MeisterGeister_Tests
         [Test]
         public void ImportManualCreatedHeld()
         {
-            SerializationService serializer = SerializationService.GetInstance(true);
-            Held h1 = new Held();
+            var serializer = SerializationService.GetInstance(true);
+            var h1 = new Held();
             Guid heldGuid = h1.HeldGUID;
-            Held_Sonderfertigkeit hs = new Held_Sonderfertigkeit();
-            hs.HeldGUID = h1.HeldGUID;
-            hs.SonderfertigkeitGUID = Global.ContextHeld.LoadSonderfertigkeitByName("Kampfreflexe").SonderfertigkeitGUID;
+            var hs = new Held_Sonderfertigkeit
+            {
+                HeldGUID = h1.HeldGUID,
+                SonderfertigkeitGUID = Global.ContextHeld.LoadSonderfertigkeitByName("Kampfreflexe").SonderfertigkeitGUID
+            };
             h1.Held_Sonderfertigkeit.Add(hs);
             Assert.IsTrue(serializer.InsertOrUpdateHeld(h1));
             Assert.IsFalse(heldGuid == Guid.Empty);
@@ -56,11 +57,14 @@ namespace MeisterGeister_Tests
         [Test]
         public void ListSerialization()
         {
-            List<int> a = new List<int>();
-            for(int i=0; i<10; i++)
+            var a = new List<int>();
+            for (var i = 0; i < 10; i++)
+            {
                 a.Add(i);
+            }
+
             var s = SerializationService.SerializeObject<List<int>>(a);
-            var o = SerializationService.DeserializeObject<List<int>>(s);
+            List<int> o = SerializationService.DeserializeObject<List<int>>(s);
             Assert.AreEqual(a, o);
         }
 
@@ -80,12 +84,15 @@ namespace MeisterGeister_Tests
         [Test]
         public void ExportGegner()
         {
-            string exportPfad = "Daten\\Gegner\\Export";
+            var exportPfad = "Daten\\Gegner\\Export";
             if (!Directory.Exists(exportPfad))
+            {
                 Directory.CreateDirectory(exportPfad);
+            }
+
             GegnerBase g1 = Global.ContextKampf.Liste<GegnerBase>().Where(g => g.Name == "Zant").First();
             Assert.IsNotNull(g1);
-            string fileName = Path.Combine(exportPfad, Path.ChangeExtension(g1.Name, "xml"));
+            var fileName = Path.Combine(exportPfad, Path.ChangeExtension(g1.Name, "xml"));
             g1.Export(fileName);
             Assert.IsTrue(File.Exists(fileName));
         }
@@ -93,7 +100,7 @@ namespace MeisterGeister_Tests
         [Test]
         public void LoadAndSaveHeld()
         {
-            string exportPfad = "Daten\\Helden\\Export";
+            var exportPfad = "Daten\\Helden\\Export";
             Held h1 = Global.ContextHeld.New<Held>();
             h1.Name = "Phexian der Exporteur";
             Sonderfertigkeit s1 = Global.ContextHeld.LoadSonderfertigkeitByName("Kampfreflexe");
@@ -101,17 +108,20 @@ namespace MeisterGeister_Tests
             Global.ContextHeld.Insert<Held>(h1);
 
             if (!Directory.Exists(exportPfad))
+            {
                 Directory.CreateDirectory(exportPfad);
-            string fileName = Path.Combine(exportPfad, Path.ChangeExtension(h1.Name , "xml"));
+            }
+
+            var fileName = Path.Combine(exportPfad, Path.ChangeExtension(h1.Name, "xml"));
             h1.Export(fileName);
             Assert.IsTrue(File.Exists(fileName));
 
-            Held h2 = Held.Import(fileName);
+            var h2 = Held.Import(fileName);
             Assert.IsNotNull(h2);
             Assert.AreEqual(h1.HeldGUID, h2.HeldGUID);
             Assert.IsNotNull(h2.Held_Sonderfertigkeit);
             Assert.AreEqual(s1.SonderfertigkeitGUID, h2.Held_Sonderfertigkeit.First().Sonderfertigkeit.SonderfertigkeitGUID);
-            
+
             /*
             //Wie Demo-Helden
             SerializationService context = new SerializationService();
