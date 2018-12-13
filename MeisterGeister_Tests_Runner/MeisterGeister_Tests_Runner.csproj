@@ -62,10 +62,6 @@
       <Project>{C31CF4D7-A04C-4438-947E-68D1B34FF7B8}</Project>
       <Name>MeisterGeister</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MeisterGeister_Tests\MeisterGeister_Tests.csproj">
-      <Project>{42E59A72-DA3C-43E4-ACFB-B6BCBB44CC73}</Project>
-      <Name>MeisterGeister_Tests</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
