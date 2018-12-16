@@ -15,9 +15,9 @@
     <!--xmlns:charting="clr-namespace:Microsoft.Windows.Controls.DataVisualization.Charting;assembly=Microsoft.Windows.Controls.DataVisualization"
              xmlns:datavis="clr-namespace:Microsoft.Windows.Controls.DataVisualization; assembly=Microsoft.Windows.Controls.DataVisualization"-->
     <UserControl.DataContext>
-        <vm:HUELampenViewModel />
+        <vm:HUELampenViewModel />     
     </UserControl.DataContext>
-
+<!--ÄNDERUNG-->
     <UserControl.Resources>
         <DataTemplate x:Key="ThemeTemplate" >
             <Border Margin="5" Padding="4" CornerRadius="5">
