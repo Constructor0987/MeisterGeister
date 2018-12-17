@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MeisterGeister.View.Karte.KarteView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,6 +12,7 @@
              xmlns:AStar="clr-namespace:MeisterGeister.Logic.General.AStar"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+             xmlns:Converters="clr-namespace:WPFExtensions.Converters;assembly=WPFExtensions" x:Class="MeisterGeister.View.Karte.KarteView"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="1000"
              SizeChanged="UserControl_SizeChanged" x:Name="view">
@@ -27,31 +28,183 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Border BorderThickness="0" BorderBrush="Gray" Background="White">
-        <Grid Background="Transparent">
+        <Grid Background="Transparent" >
             <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
                                MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
                                Mode="Custom" TranslateX="{Binding TranslateX, Mode=TwoWay}" TranslateY="{Binding TranslateY, Mode=TwoWay}"
                                Zoom="{Binding Zoom, Mode=TwoWay}" 
                                LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
                                ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"
-                               VerticalAlignment="Bottom" Loaded="UserControl_Loaded">
-                <Canvas x:Name="mapCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}">
+                               VerticalAlignment="Bottom" Loaded="UserControl_Loaded" Style="{DynamicResource ZoomControlStyle1}">
+                <wpfxc:ZoomControl.Resources>
+                    <Style x:Key="ZoomControlStyle1" TargetType="{x:Type wpfxc:ZoomControl}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type wpfxc:ZoomControl}">
+                                    <Grid>
+                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" ClipToBounds="{TemplateBinding ClipToBounds}">
+                                            <wpfxc:ZoomContentPresenter x:Name="PART_Presenter" ClipToBounds="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
+                                        </Border>
+                                        <Canvas>
+                                            <Border Background="#88C0C0C0" CornerRadius="5" ToolTipService.InitialShowDelay="0" Canvas.Left="20" Padding="5" Canvas.Top="20" Visibility="{Binding HideZoom, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type wpfxc:ZoomControl}}}">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding WheelZoomsAlone, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type wpfxc:ZoomControl}}}" Value="True">
+                                                                <Setter Property="ToolTip">
+                                                                    <Setter.Value>
+                                                                        <StackPanel Orientation="Vertical">
+                                                                            <TextBlock><Run FontWeight="Bold" Text="Wheel:"/><Run Text=" "/><InlineUIContainer>
+                                                                                    <TextBlock><Run Text="Zoom In / Out"/></TextBlock>
+                                                                                </InlineUIContainer></TextBlock>
+                                                                            <TextBlock><Run FontWeight="Bold" Text="ALT + Drag:"/><Run Text=" "/><InlineUIContainer>
+                                                                                    <TextBlock><Run Text="ZoomBox"/></TextBlock>
+                                                                                </InlineUIContainer></TextBlock>
+                                                                            <TextBlock><Run FontWeight="Bold" Text="[SHIFT +] Drag:"/><Run Text=" "/><InlineUIContainer>
+                                                                                    <TextBlock><Run Text="Pan"/></TextBlock>
+                                                                                </InlineUIContainer></TextBlock>
+                                                                        </StackPanel>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WheelZoomsAlone, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type wpfxc:ZoomControl}}}" Value="False">
+                                                                <Setter Property="ToolTip">
+                                                                    <Setter.Value>
+                                                                        <StackPanel Orientation="Vertical">
+                                                                            <TextBlock><Run FontWeight="Bold" Text="CTRL + Wheel:"/><Run Text=" "/><InlineUIContainer>
+                                                                                    <TextBlock><Run Text="Zoom In / Out"/></TextBlock>
+                                                                                </InlineUIContainer></TextBlock>
+                                                                            <TextBlock><Run FontWeight="Bold" Text="ALT + Drag:"/><Run Text=" "/><InlineUIContainer>
+                                                                                    <TextBlock><Run Text="ZoomBox"/></TextBlock>
+                                                                                </InlineUIContainer></TextBlock>
+                                                                            <TextBlock><Run FontWeight="Bold" Text="[SHIFT +] Drag:"/><Run Text=" "/><InlineUIContainer>
+                                                                                    <TextBlock><Run Text="Pan"/></TextBlock>
+                                                                                </InlineUIContainer></TextBlock>
+                                                                        </StackPanel>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel.Resources>
+                                                        <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                                                                        <Border x:Name="border" BorderBrush="Black" BorderThickness="1" Background="Silver" CornerRadius="5" HorizontalAlignment="Center" Height="40" Margin="2" VerticalAlignment="Center" Width="40">
+                                                                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter Property="Background" TargetName="border" Value="WhiteSmoke"/>
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsChecked" Value="True">
+                                                                                <Setter Property="Background" TargetName="border" Value="DarkGray"/>
+                                                                                <Setter Property="TextElement.FontWeight" TargetName="border" Value="Bold"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </StackPanel.Resources>
+                                                    <Slider AutoToolTipPrecision="1" AutoToolTipPlacement="BottomRight" HorizontalAlignment="Center" Height="150" LargeChange="1" Orientation="Vertical" SmallChange="0.1" Ticks="0.1 0.25 0.5 0.75 1 1.25 1.5 2" TickPlacement="BottomRight" TickFrequency="1" ValueChanged="Slider_ValueChanged" >
+                                                        <Slider.Maximum>
+                                                            <TemplateBinding Property="MaxZoom">
+                                                                <TemplateBinding.Converter>
+                                                                    <Converters:DoubleToLog10Converter/>
+                                                                </TemplateBinding.Converter>
+                                                            </TemplateBinding>
+                                                        </Slider.Maximum>
+                                                        <Slider.Minimum>
+                                                            <TemplateBinding Property="MinZoom">
+                                                                <TemplateBinding.Converter>
+                                                                    <Converters:DoubleToLog10Converter/>
+                                                                </TemplateBinding.Converter>
+                                                            </TemplateBinding>
+                                                        </Slider.Minimum>
+                                                        <Slider.Value>
+                                                            <Binding Mode="TwoWay" Path="Zoom" RelativeSource="{RelativeSource TemplatedParent}">
+                                                                <Binding.Converter>
+                                                                    <Converters:DoubleToLog10Converter/>
+                                                                </Binding.Converter>
+                                                            </Binding>
+                                                        </Slider.Value>
+                                                    </Slider>
+                                                    <TextBlock FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:F2\}x}" />
+                                                    <RadioButton Content="1:1" GroupName="rbgZoomMode">
+                                                        <RadioButton.IsChecked>
+                                                            <Binding Path="Mode" RelativeSource="{RelativeSource TemplatedParent}">
+                                                                <Binding.ConverterParameter>
+                                                                    <wpfxc:ZoomControlModes>Original</wpfxc:ZoomControlModes>
+                                                                </Binding.ConverterParameter>
+                                                                <Binding.Converter>
+                                                                    <Converters:EqualityToBooleanConverter/>
+                                                                </Binding.Converter>
+                                                            </Binding>
+                                                        </RadioButton.IsChecked>
+                                                    </RadioButton>
+                                                    <RadioButton Content="Fill" GroupName="rbgZoomMode">
+                                                        <RadioButton.IsChecked>
+                                                            <Binding Path="Mode" RelativeSource="{RelativeSource TemplatedParent}">
+                                                                <Binding.ConverterParameter>
+                                                                    <wpfxc:ZoomControlModes>Fill</wpfxc:ZoomControlModes>
+                                                                </Binding.ConverterParameter>
+                                                                <Binding.Converter>
+                                                                    <Converters:EqualityToBooleanConverter/>
+                                                                </Binding.Converter>
+                                                            </Binding>
+                                                        </RadioButton.IsChecked>
+                                                    </RadioButton>
+                                                </StackPanel>
+                                            </Border>
+                                            <Border BorderBrush="{TemplateBinding ZoomBoxBorderBrush}" BorderThickness="{TemplateBinding ZoomBoxBorderThickness}" Background="{TemplateBinding ZoomBoxBackground}" Height="{Binding ZoomBox.Height, RelativeSource={RelativeSource TemplatedParent}}" Canvas.Left="{Binding ZoomBox.X, RelativeSource={RelativeSource TemplatedParent}}" Opacity="{TemplateBinding ZoomBoxOpacity}" Canvas.Top="{Binding ZoomBox.Y, RelativeSource={RelativeSource TemplatedParent}}" Width="{Binding ZoomBox.Width, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        </Canvas>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="ZoomBoxBackground">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                                    <GradientStop Color="Silver" Offset="0"/>
+                                    <GradientStop Color="DarkGray" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ZoomBoxBorderBrush" Value="Black"/>
+                        <Setter Property="ZoomBoxBorderThickness" Value="1"/>
+                        <Setter Property="ClipToBounds" Value="True"/>
+                        <Style.Triggers>
+                            <Trigger Property="ModifierMode" Value="Pan">
+                                <Setter Property="Cursor" Value="SizeAll"/>
+                            </Trigger>
+                            <Trigger Property="ModifierMode" Value="ZoomBox">
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </wpfxc:ZoomControl.Resources>
+                <Canvas x:Name="mapCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" >
                     <Canvas.ContextMenu>
-                        <ContextMenu Name="contextMenu" General:TrackBehavior.TrackOpenLocation="True">
-                            <MenuItem ToolTip="In DereGlobus öffnen"  Command="{Binding Path=PlacementTarget.DataContext.OnDereGlobusÖffnen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                        <ContextMenu x:Name="contextMenu" General:TrackBehavior.TrackOpenLocation="True">
+                            <MenuItem ToolTip="In DereGlobus öffnen"  Command="{Binding PlacementTarget.DataContext.OnDereGlobusÖffnen, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" CommandParameter="{Binding (General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}">
                                 <MenuItem.Header>
-                                    <Karte:KoordinatenControl Value="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource MapToDereGlobusConverter}}" Format="Dezimalminuten" />
+                                    <Karte:KoordinatenControl Value="{Binding (General:TrackBehavior.OpenLocation), Converter={StaticResource MapToDereGlobusConverter}, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" Format="Dezimalminuten" />
                                 </MenuItem.Header>
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Logos/DereGlobus_Icon2.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Position setzen" ToolTip="Die Heldenposition festlegen" Command="{Binding Path=PlacementTarget.DataContext.OnHeldenPositionSetzen, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                            <MenuItem Header="Position setzen" ToolTip="Die Heldenposition festlegen" Command="{Binding PlacementTarget.DataContext.OnHeldenPositionSetzen, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" CommandParameter="{Binding (General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}">
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Logos/pinnadel.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Was ist hier?" ToolTip="Gebiete anzeigen in denen dieser Punkt liegt" Command="{Binding Path=PlacementTarget.DataContext.OnShowGebiete, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding Path=(General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                            <MenuItem Header="Was ist hier?" ToolTip="Gebiete anzeigen in denen dieser Punkt liegt" Command="{Binding PlacementTarget.DataContext.OnShowGebiete, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" CommandParameter="{Binding (General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}">
                                 <MenuItem.Icon>
                                     <Image Source="pack://application:,,,/Images/Icons/General/info.png" Width="25"/>
                                 </MenuItem.Icon>
@@ -59,41 +212,31 @@
                         </ContextMenu>
                     </Canvas.ContextMenu>
                     <Image Source="{Binding SelectedKarte.Bildpfad}" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
-                    <Image Source="pack://application:,,,/Images/Logos/pinnadel.png" Width="{Binding Zoom,ElementName=MapScrollViewer,Converter={StaticResource MGIconZoomConverter} }" 
-                           Canvas.Left="{Binding HeldenX}" Canvas.Top="{Binding HeldenYMinusPinHeight}" >
-                    </Image>
+                    <Image Source="pack://application:,,,/Images/Logos/pinnadel.png" 
+                           Visibility="{Binding notZooming, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           Width="{Binding Zoom, Converter={StaticResource MGIconZoomConverter}, ElementName=MapScrollViewer}" 
+                           Canvas.Left="{Binding HeldenX}" 
+                           Canvas.Top="{Binding HeldenYMinusPinHeight}" />
 
 
-                    <ItemsControl ItemsSource="{Binding Path=Lines}">
+                    <ItemsControl ItemsSource="{Binding Lines}">
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type vmlogic:RoutingLine}">
+                                <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding LineType.Color}" StrokeThickness="4"/>
+                            </DataTemplate>
+                        </ItemsControl.Resources>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas x:Name="routingCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.ZIndex" Value="1" />
+                            <Style TargetType="{x:Type ContentPresenter}">
+                                <Setter Property="Panel.ZIndex" Value="1" />
                             </Style>
                         </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.Resources>
-                            <DataTemplate DataType="{x:Type vmlogic:RoutingLine}">
-                                <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding LineType.Color}" StrokeThickness="4"></Line>
-                            </DataTemplate>
-                        </ItemsControl.Resources>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding Path=Points}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas x:Name="pointingCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.Left" Value="{Binding X}" />
-                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
-                                <Setter Property="Canvas.ZIndex" Value="2" />
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
+                    <ItemsControl ItemsSource="{Binding Points}">
                         <ItemsControl.Resources>
                             <DataTemplate DataType="{x:Type vmlogic:RoutingPoint}">
                                 <Image Source="{Binding Image}" Width="40" Height="40" RenderTransformOrigin="0.5, 0.5" Stretch="Fill" >
@@ -129,20 +272,20 @@
                                 </Image>
                             </DataTemplate>
                         </ItemsControl.Resources>
-                    </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding Path=AllNodes}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <Canvas x:Name="testPoints" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
+                                <Canvas x:Name="pointingCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
-                                <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
-                                <Setter Property="Canvas.ZIndex" Value="2" />
+                            <Style TargetType="{x:Type ContentPresenter}">
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                <Setter Property="Panel.ZIndex" Value="2" />
                             </Style>
                         </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding AllNodes}">
                         <ItemsControl.Resources>
                             <DataTemplate DataType="{x:Type AStar:Node}">
                                 <Grid>
@@ -156,14 +299,26 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="0" Text="{Binding LengthFromStartToEnd, StringFormat={}{0:0000.00}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="0" Text="{Binding LengthFromStartToEnd, StringFormat=\{0:0000.00\}}"/>
                                     <TextBlock Foreground="Red" Grid.Row="0" Grid.Column="2" Text="{Binding ID}"/>
                                     <Border Background="Red" BorderBrush="Red" BorderThickness="3" Grid.Row="1" Grid.Column="1" CornerRadius="3"/>
-                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="0" Text="{Binding LengthFromStart, StringFormat={}{0:0000.00}}"/>
-                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="2" Text="{Binding LengthToEnd, StringFormat={}{0:0000.00}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="0" Text="{Binding LengthFromStart, StringFormat=\{0:0000.00\}}"/>
+                                    <TextBlock Foreground="Red" Grid.Row="2" Grid.Column="2" Text="{Binding LengthToEnd, StringFormat=\{0:0000.00\}}"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.Resources>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas x:Name="testPoints" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="{x:Type ContentPresenter}">
+                                <Setter Property="Canvas.Left" Value="{Binding Location.X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Location.Y}" />
+                                <Setter Property="Panel.ZIndex" Value="2" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
                 </Canvas>
             </wpfxc:ZoomControl>
@@ -173,7 +328,7 @@
                     Margin="95,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <DockPanel DockPanel.Dock="Top" MaxWidth="300">
                     <DockPanel DockPanel.Dock="Top">
-                        <Button MinWidth="145" Padding="5" HorizontalAlignment="Left" Cursor="Hand" Command="{Binding OnCenterOnHelden}" ToolTip="Heldenposition&#x0a;Auf die Helden zentrieren.">
+                        <Button MinWidth="145" Padding="5" HorizontalAlignment="Left" Cursor="Hand" Command="{Binding OnCenterOnHelden}" ToolTip="Heldenposition&#xA;Auf die Helden zentrieren.">
                             <Karte:KoordinatenControl Value="{Binding HeldenGlobusPosition}" Format="Dezimalminuten" />
                         </Button>
                         <Button Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="26" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=MapScrollViewer}" ToolTip="Kartenausschnitt im Spieler-Fenster anzeigen.">
@@ -199,13 +354,11 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Orientation="Vertical" Grid.Column="0">
                                     <toolkit:AutoCompleteBox ItemsSource="{Binding Orte}" SelectedItem="{Binding RouteStarting, Mode=TwoWay}" 
-                                                        ValueMemberPath="Name" ItemTemplate="{StaticResource AutoCompleteBoxStartingItemTemplate}">
-                                    </toolkit:AutoCompleteBox>
+                                                        ValueMemberPath="Name" ItemTemplate="{StaticResource AutoCompleteBoxStartingItemTemplate}"/>
                                     <toolkit:AutoCompleteBox ItemsSource="{Binding Orte}" SelectedItem="{Binding RouteEnding, Mode=TwoWay}"  
-                                                            ValueMemberPath="Name" ItemTemplate="{StaticResource AutoCompleteBoxEndingItemTemplate}">
-                                    </toolkit:AutoCompleteBox>
+                                                            ValueMemberPath="Name" ItemTemplate="{StaticResource AutoCompleteBoxEndingItemTemplate}"/>
                                     <GroupBox Header="Optionen" >
-                                        <WrapPanel MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
+                                        <WrapPanel MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}}">
                                             <CheckBox Content="Flüsse meiden" IsChecked="{Binding IsAvoidRivers}" />
                                             <CheckBox Content="Meere meiden" IsChecked="{Binding IsAvoidSeas}" Margin="5,0,0,0" />
                                             <CheckBox Content="Gebirge meiden" IsChecked="{Binding IsAvoidMountains}" />
@@ -218,23 +371,20 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
                                     <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Afoot" 
-                                    IsChecked="{Binding Path=SelectedTravelType, Mode=TwoWay, Converter={StaticResource enumConverter},
-                                    ConverterParameter=Afoot}" >
+                                    IsChecked="{Binding SelectedTravelType, ConverterParameter=Afoot, Converter={StaticResource enumConverter}, Mode=TwoWay}" >
                                         <Image Source="/Images/Icons/Karte/man-silhouette1.png" Height="24"/>
                                     </RadioButton>
                                     <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Horse" Margin="0,7,0,0"
-                                    IsChecked="{Binding Path=SelectedTravelType, Mode=TwoWay, Converter={StaticResource enumConverter},
-                                    ConverterParameter=Horse}">
+                                    IsChecked="{Binding SelectedTravelType, ConverterParameter=Horse, Converter={StaticResource enumConverter}, Mode=TwoWay}">
                                         <Image Source="/Images/Icons/Karte/horse123.png" Height="24"/>
                                     </RadioButton>
                                     <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Carriage" Margin="0,7,0,0" 
-                                    IsChecked="{Binding Path=SelectedTravelType, Mode=TwoWay, Converter={StaticResource enumConverter},
-                                    ConverterParameter=Carriage}">
+                                    IsChecked="{Binding SelectedTravelType, ConverterParameter=Carriage, Converter={StaticResource enumConverter}, Mode=TwoWay}">
                                         <Image Source="/Images/Icons/Karte/transport460.png" Height="24"/>
                                     </RadioButton>
                                 </StackPanel>
                             </Grid>
-                            <Button VerticalAlignment="Top" Height="25" Command="{Binding FindRouteCommand}" ToolTip="Route suchen." Name="btnFindRoute">
+                            <Button VerticalAlignment="Top" Height="25" Command="{Binding FindRouteCommand}" ToolTip="Route suchen." x:Name="btnFindRoute">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/Icons/Karte/way2.png" />
                                     <TextBlock Text="Route suchen" Margin="5,0,0,0"/>
@@ -242,7 +392,7 @@
                             </Button>
                             <StackPanel Orientation="Vertical" Background="White">
                                 <StackPanel.Style>
-                                    <Style TargetType="StackPanel">
+                                    <Style TargetType="{x:Type StackPanel}">
                                         <Setter Property="Visibility" Value="Visible" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Lines.Count}" Value="0">
@@ -252,21 +402,12 @@
                                     </Style>
                                 </StackPanel.Style>
                                 <Separator Margin="5,5,5,0"/>
-                                <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Padding="5" FontSize="12">
-                                    <Run Text="Strecke: " FontWeight="Bold" /><Run Text="{Binding RoutingSummary.TotalDistance, Mode=OneWay}" /><Run Text=" Meilen"/><LineBreak />
-                                    <Run Text="Reisedauer: " FontWeight="Bold"/><Run Text="{Binding RoutingSummary.Duration, Mode=OneWay}"/><Run Text=" Tage"/><LineBreak />
-                                    <Run Text="Fortbewegung: " FontWeight="Bold"/><Run Text="{Binding RoutingSummary.TravelType, Mode=OneWay}" />
-                                </TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Padding="5" FontSize="12"><Run Text="Strecke: " FontWeight="Bold" /><Run Text="{Binding RoutingSummary.TotalDistance, Mode=OneWay}" /><Run Text=" Meilen"/><LineBreak /><Run Text="Reisedauer: " FontWeight="Bold"/><Run Text="{Binding RoutingSummary.Duration, Mode=OneWay}"/><Run Text=" Tage"/><LineBreak /><Run Text="Fortbewegung: " FontWeight="Bold"/><Run Text="{Binding RoutingSummary.TravelType, Mode=OneWay}" /></TextBlock>
                                 <Separator Margin="5,0,5,5"/>
                             </StackPanel>
                             <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" 
-                                          MaxHeight="250" CanContentScroll="True" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}">
+                                          MaxHeight="250" CanContentScroll="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}}">
                                 <ItemsControl ItemsSource="{Binding WayPoints}" x:Name="WayPointItems">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Vertical" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
                                     <ItemsControl.Resources>
                                         <DataTemplate DataType="{x:Type vmlogic:RoutingStage}">
                                             <Grid General:MouseOverBehaviour.MouseOver="{Binding DataContext.SelectedRoutingPoint, ElementName=view}">
@@ -294,9 +435,7 @@
                                                     </Grid.Style>
                                                     <Image Grid.Row="0" Source="{Binding Image}" Grid.Column="0" Width="40" Height="40"/>
                                                     <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap" Padding="0,0,5,0"
-                                                               MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}, Path=ActualWidth}">
-                                                        Test
-                                                    </TextBlock>
+                                                               MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}}"><Run Text="Test"/></TextBlock>
                                                 </Grid>
                                                 <Separator Grid.Row="1"/>
                                             </Grid>
@@ -307,7 +446,7 @@
                                                     <RowDefinition />
                                                     <RowDefinition />
                                                 </Grid.RowDefinitions>
-                                            
+
                                                 <Grid x:Name="WayPointItem" Grid.Row="0" >
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="1*"/>
@@ -328,17 +467,17 @@
                                                     </Grid.Style>
                                                     <Image Grid.Row="0" Source="{Binding Image}" Grid.Column="0" Width="40" Height="40"/>
                                                     <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap" Padding="0,0,5,0"
-                                                               MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}, Path=ActualWidth}">
-                                                        <Run Text="{Binding Wegtyp, Mode=OneWay}" /><Run Text=" für" />
-                                                        <Run Text="{Binding Strecke, Mode=OneWay}" /><Run Text=" Meilen bis " />
-                                                        <Run Text="{Binding Name, Mode=OneWay}" FontWeight="Bold"/><Run FontSize="10" Foreground="Gray" Text=" (" />
-                                                        <Run Text="{Binding Duration, Mode=OneWay}" FontSize="10" Foreground="Gray"/><Run Text=" Stunden )" FontSize="10" Foreground="Gray"/>
-                                                    </TextBlock>
+                                                               MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}}"><Run Text="{Binding Wegtyp, Mode=OneWay}" /><Run Text=" für" /><Run Text=" "/><Run Text="{Binding Strecke, Mode=OneWay}" /><Run Text=" Meilen bis " /><Run Text=" "/><Run Text="{Binding Name, Mode=OneWay}" FontWeight="Bold"/><Run FontSize="10" Foreground="Gray" Text=" (" /><Run Text=" "/><Run Text="{Binding Duration, Mode=OneWay}" FontSize="10" Foreground="Gray"/><Run Text=" Stunden )" FontSize="10" Foreground="Gray"/></TextBlock>
                                                 </Grid>
                                                 <Separator Grid.Row="1"/>
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.Resources>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Vertical" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
                                 </ItemsControl>
                             </ScrollViewer>
                         </StackPanel>

@@ -184,6 +184,13 @@ namespace MeisterGeister.ViewModel.Karte
         #region Properties
 
         #region Karten und Konverter
+        private bool _notZooming = true;
+        public bool notZooming
+        {
+            get { return _notZooming; }
+            set { Set(ref _notZooming, value); }
+        }
+
         private List<Logic.Karte> karten = null;
         public List<Logic.Karte> Karten
         {
@@ -230,7 +237,7 @@ namespace MeisterGeister.ViewModel.Karte
                 SetGlobusPositionFromHeldenPosition();
                 OnChanged("HeldenX");
                 OnChanged("HeldenY");
-                OnChanged("HeldenYMinusPinHeight");                                
+                OnChanged("HeldenYMinusPinHeight");
             }
         }
 
