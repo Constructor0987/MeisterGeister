@@ -147,9 +147,12 @@
                                     </StackPanel>
                                     <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                         <TextBlock Margin="0,3,5,0" Text="Talent:" FontWeight="Bold" />
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Talentname" SelectedItem="{Binding SelectedTalentHerstellung}" />
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Talentname" SelectedItem="{Binding SelectedTalentHerstellung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock Text="TaW" VerticalAlignment="Center" />
-                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaWTalent}" />
+                                        <Button Margin="10,0,0,0" Command="{Binding OnBtnResetHerstellung}" Height="23" ToolTip="Wert zurücksetzen" >
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" Stretch="Fill" Margin="-2" />
+                                        </Button>
+                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaWTalent, UpdateSourceTrigger=PropertyChanged}" />
                                         <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeHerstellung}"/>
                                     </StackPanel>
 
@@ -429,6 +432,9 @@
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
                                     <TextBlock Margin="0,3,5,0" Text="{Binding AnalyseProbeIB}" FontWeight="Bold" />
+                                    <Button Margin="10,0,0,0" Command="{Binding OnBtnResetAnalyseIB}" Height="23" ToolTip="Wert zurücksetzen" >
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" Stretch="Fill" Margin="-2" />
+                                    </Button>
                                     <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertIBAnalyse}" />
                                     <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeIBAnalyse}"/>
                                 </StackPanel>
@@ -444,6 +450,9 @@
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
                                     <TextBlock Margin="0,3,5,0" Text="{Binding AnalyseProbeSA}" FontWeight="Bold" />
+                                    <Button Margin="10,0,0,0" Command="{Binding OnBtnResetAnalyseSA}" Height="23" ToolTip="Wert zurücksetzen" >
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" Stretch="Fill" Margin="-2" />
+                                    </Button>
                                     <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertSAAnalyse}" />
                                     <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeSAAnalyse}"/>
                                 </StackPanel>
@@ -653,6 +662,9 @@
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
                                     <TextBlock Margin="0,3,5,0" Text="{Binding VerdünnungProbe}" FontWeight="Bold" />
+                                    <Button Margin="10,0,0,0" Command="{Binding OnBtnResetVerdünnung}" Height="23" ToolTip="Wert zurücksetzen" >
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" Stretch="Fill" Margin="-2" />
+                                    </Button>
                                     <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertProbeVerdünnung}" />
                                     <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeVerdünnung}"/>
                                 </StackPanel>
@@ -809,6 +821,9 @@
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
                                     <TextBlock Margin="0,3,5,0" Text="{Binding HaltbarkeitProbe}" FontWeight="Bold" />
+                                    <Button Margin="10,0,0,0" Command="{Binding OnBtnResetHaltbarkeit}" Height="23" ToolTip="Wert zurücksetzen" >
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" Stretch="Fill" Margin="-2" />
+                                    </Button>
                                     <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertProbeHaltbarkeit}" />
                                     <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeHaltbarkeit}"/>
                                 </StackPanel>

@@ -250,6 +250,11 @@ namespace MeisterGeister.ViewModel.Alchimie
                 TalentListeHerstellung = Global.ContextHeld.LoadAlchimieHerstellungTalenteByHeld(value);
                 //TODO Talent wählen/Wert aktualisieren
                 checkAufladen(value);
+                if (SelectedTalentHerstellung != null &&
+                    SelectedTalentHerstellung.Probenname != null)
+                    WertTaWTalent = value.Talentwert(SelectedTalentHerstellung.Probenname);
+
+
             }
             else IsEnabledAufladen = true;
             OnChanged("SelectedHeld");
@@ -1366,6 +1371,82 @@ namespace MeisterGeister.ViewModel.Alchimie
         #endregion
 
         #region //---- EVENTS ----
+
+        private Base.CommandBase _onBtnResetHerstellung = null;
+        public Base.CommandBase OnBtnResetHerstellung
+        {
+            get
+            {
+                if (_onBtnResetHerstellung == null)
+                    _onBtnResetHerstellung = new Base.CommandBase(BtnResetHerstellung, null);
+                return _onBtnResetHerstellung;
+            }
+        }
+        void BtnResetHerstellung(object obj)
+        {
+            WertTaWTalent = (SelectedHeld != null) ? SelectedHeld.Talentwert(SelectedTalentHerstellung.Probenname): 0;
+        }
+
+        private Base.CommandBase _onBtnResetAnalyseIB = null;
+        public Base.CommandBase OnBtnResetAnalyseIB
+        {
+            get
+            {
+                if (_onBtnResetAnalyseIB == null)
+                    _onBtnResetAnalyseIB = new Base.CommandBase(BtnResetAnalyseIB, null);
+                return _onBtnResetAnalyseIB;
+            }
+        }
+        void BtnResetAnalyseIB(object obj)
+        {
+            WertIBAnalyse = (SelectedHeld != null) ? getIBFertigkeitswert(SelectedIntensitätsbestimmungAnalyse) : 0;
+        }
+
+        private Base.CommandBase _onBtnResetAnalyseSA = null;
+        public Base.CommandBase OnBtnResetAnalyseSA
+        {
+            get
+            {
+                if (_onBtnResetAnalyseSA == null)
+                    _onBtnResetAnalyseSA = new Base.CommandBase(BtnResetAnalyseSA, null);
+                return _onBtnResetAnalyseSA;
+            }
+        }
+        void BtnResetAnalyseSA(object obj)
+        {
+            WertSAAnalyse = (SelectedHeld != null) ? getSAFertigkeitswert(SelectedStrukturanalyseAnalyse) : 0;
+        }
+
+        private Base.CommandBase _onBtnResetVerdünnung = null;
+        public Base.CommandBase OnBtnResetVerdünnung
+        {
+            get
+            {
+                if (_onBtnResetVerdünnung == null)
+                    _onBtnResetVerdünnung = new Base.CommandBase(BtnResetVerdünnung, null);
+                return _onBtnResetVerdünnung;
+            }
+        }
+        void BtnResetVerdünnung(object obj)
+        {
+            WertProbeVerdünnung = (SelectedHeld != null) ? SelectedHeld.Talentwert("Alchimie"): 0;
+        }
+
+        private Base.CommandBase _onBtnResetHaltbarkeit = null;
+        public Base.CommandBase OnBtnResetHaltbarkeit
+        {
+            get
+            {
+                if (_onBtnResetHaltbarkeit == null)
+                    _onBtnResetHaltbarkeit = new Base.CommandBase(BtnResetHaltbarkeit, null);
+                return _onBtnResetHaltbarkeit;
+            }
+        }
+        void BtnResetHaltbarkeit(object obj)
+        {
+            WertProbeHaltbarkeit = (SelectedHeld != null) ? SelectedHeld.Talentwert("Alchimie"): 0;
+        }
+
         private void ClearSelectedHeld(object obj)
         {
             SelectedHeld = null;
@@ -1437,7 +1518,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Odem Arcanum (Grundversion)":
                         Model.Zauber oag = Global.ContextHeld.LoadZauberByName("Odem Arcanum");
                         oag.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        oag.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
+                        oag.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
                         var ergebnisOAG = ShowProbeDialog(oag, SelectedHeld);
                         if (ergebnisOAG != null && ergebnisOAG.Gelungen)
                         {
@@ -1451,7 +1532,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Odem Arcanum (Sichtbereich)": 
                         Model.Zauber oas = Global.ContextHeld.LoadZauberByName("Odem Arcanum");
                         oas.Modifikator = SelectedRezept.Analyseschwierigkeit+2;
-                        oas.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
+                        oas.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
                         var ergebnisOAS = ShowProbeDialog(oas, SelectedHeld);
                         if (ergebnisOAS != null && ergebnisOAS.Gelungen)
                         {
@@ -1465,7 +1546,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Odem Arcanum (Umgebung)": 
                         Model.Zauber oau = Global.ContextHeld.LoadZauberByName("Odem Arcanum");
                         oau.Modifikator = SelectedRezept.Analyseschwierigkeit + 7;
-                        oau.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
+                        oau.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
                         var ergebnisOAU = ShowProbeDialog(oau, SelectedHeld);
                         if (ergebnisOAU != null && ergebnisOAU.Gelungen)
                         {
@@ -1479,7 +1560,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Oculus Astralis":
                         Model.Zauber oa = Global.ContextHeld.LoadZauberByName("Oculus Astralis");
                         oa.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        oa.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");
+                        oa.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");
                         var ergebnisOA = ShowProbeDialog(oa, SelectedHeld);
                         if (ergebnisOA != null && ergebnisOA.Gelungen)
                         {
@@ -1494,7 +1575,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         int taw;
                         Model.Held_Talent samw=SelectedHeld.GetHeldTalent("Liturgiekenntnis", true, out taw,false);
                         samw.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        samw.Fertigkeitswert = taw;
+                        samw.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= taw;
                         var ergebnisSAMW = ShowProbeDialog(samw, SelectedHeld);
                         if (ergebnisSAMW != null && ergebnisSAMW.Gelungen)
                         {
@@ -1508,7 +1589,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Magiegespür (gezielte Anwendung)":
                         Model.Talent mg = Global.ContextHeld.LoadTalentByName("Magiegespür");
                         mg.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        mg.Fertigkeitswert = SelectedHeld.Talentwert("Magiegespür");
+                        mg.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Talentwert("Magiegespür");
                         var ergebnisMG = ShowProbeDialog(mg, SelectedHeld);
                         if (ergebnisMG != null && ergebnisMG.Gelungen)
                         {
@@ -1522,7 +1603,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Magiegespür (ungezielte Anwendung)": 
                         Model.Talent mu = Global.ContextHeld.LoadTalentByName("Magiegespür");
                         mu.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        mu.Fertigkeitswert = SelectedHeld.Talentwert("Magiegespür");
+                        mu.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Talentwert("Magiegespür");
                         var ergebnisMU = ShowProbeDialog(mu, SelectedHeld);
                         if (ergebnisMU != null && ergebnisMU.Gelungen)
                         {
@@ -1536,7 +1617,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Blutblatt": 
                         Model.Talent p = Global.ContextHeld.LoadTalentByName("Pflanzenkunde");
                         p.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        p.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Pflanzenkunde");
+                        p.Fertigkeitswert = WertIBAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Zauberfertigkeitswert("Pflanzenkunde");
                         var ergebnisP = ShowProbeDialog(p, SelectedHeld);
                         if (ergebnisP != null && ergebnisP.Gelungen)
                         {
@@ -1571,7 +1652,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         ana.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modANA;
-                        ana.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                        ana.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Talentwert("Alchimie");
                         var ergebnisANA = ShowProbeDialog(ana, SelectedHeld);
                         if (ergebnisANA != null && ergebnisANA.Gelungen)
                         {
@@ -1594,7 +1675,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         la.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modLA + getModLab("Archaisches Labor");
-                        la.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                        la.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Talentwert("Alchimie");
                         var ergebnisLA = ShowProbeDialog(la, SelectedHeld);
                         if (ergebnisLA != null && ergebnisLA.Gelungen)
                         {
@@ -1619,7 +1700,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                             modida = modida - (int)Math.Floor((double)(maxT - 7) / 3.0);
                         }
                         ida.Modifikator =  modida;
-                        ida.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                        ida.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Talentwert("Alchimie");
                         var ergebnisIDA = ShowProbeDialog(ida, SelectedHeld);
                         if (ergebnisIDA != null && ergebnisIDA.Gelungen)
                         {
@@ -1640,7 +1721,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         aa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modAA;
-                        aa.Fertigkeitswert = SelectedHeld.Talentwert("Ritualkenntnis");
+                        aa.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Talentwert("Ritualkenntnis");
                         var ergebnisAA = ShowProbeDialog(aa, SelectedHeld);
                         if (ergebnisAA != null && ergebnisAA.Gelungen)
                         {
@@ -1665,7 +1746,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         zaa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modZAA;
-                        zaa.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Analys Arcanstruktur");
+                        zaa.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Zauberfertigkeitswert("Analys Arcanstruktur");
                         var ergebnisZAA = ShowProbeDialog(zaa, SelectedHeld);
                         if (ergebnisZAA != null && ergebnisZAA.Gelungen)
                         {
@@ -1689,7 +1770,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                             modZOA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Alchimie") - 7) / 3.0);
                         }
                         toa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modZOA;
-                        toa.Fertigkeitswert = SelectedHeld.Talentwert("Sinnenschärfe");
+                        toa.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= SelectedHeld.Talentwert("Sinnenschärfe");
                         var ergebnisZOA = ShowProbeDialog(toa, SelectedHeld);
                         if (ergebnisZOA != null && ergebnisZOA.Gelungen)
                         {
@@ -1717,7 +1798,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         bdw.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modBDW;
-                        bdw.Fertigkeitswert = taw;
+                        bdw.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= taw;
                         var ergebnisBDW = ShowProbeDialog(bdw, SelectedHeld);
                         if (ergebnisBDW != null && ergebnisBDW.Gelungen)
                         {
@@ -1745,7 +1826,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         bdta.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modBDTA;
-                        bdta.Fertigkeitswert = tawbdta;
+                        bdta.Fertigkeitswert = WertSAAnalyse; // Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD= tawbdta;
                         var ergebnisBDTA = ShowProbeDialog(bdta, SelectedHeld);
                         if (ergebnisBDTA != null && ergebnisBDTA.Gelungen)
                         {
@@ -1773,7 +1854,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 int vq = Convert.ToByte(Convert.ToChar(SelectedVerdünnungQualitätVerdünnung));
                 int diff = q - vq;
                 alchimie.Modifikator = (diff * SelectedRezept.Brauschwierigkeit) - (int)Math.Ceiling(((double)(WertTaPVerdünnung + WertZfPVerdünnung)) / 2) + getModLab("Archaisches Labor");
-                alchimie.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                alchimie.Fertigkeitswert = WertProbeVerdünnung;// Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD=SelectedHeld.Talentwert("Alchimie");
                 var ergebnis = ShowProbeDialog(alchimie, SelectedHeld);
                 if (ergebnis != null && ergebnis.Gelungen)
                 {
@@ -1799,7 +1880,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 Model.Talent alchimie = Global.ContextHeld.LoadTalentByName("Alchimie");
                 alchimie.Modifikator = +9 + getModLab("Archaisches Labor");
-                alchimie.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                alchimie.Fertigkeitswert = WertProbeHaltbarkeit;// Benutze gesetzten Wert  - nicht den Wert des Helden ... OLD=SelectedHeld.Talentwert("Alchimie");
                 var ergebnis = ShowProbeDialog(alchimie, SelectedHeld);
                 if (ergebnis != null && ergebnis.Gelungen)
                 {
