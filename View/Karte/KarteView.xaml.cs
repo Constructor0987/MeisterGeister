@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MeisterGeister.ViewModel.Karte;
 using DgSuche;
+using System.Windows.Threading;
 
 namespace MeisterGeister.View.Karte
 {
@@ -34,6 +35,9 @@ namespace MeisterGeister.View.Karte
             InitializeComponent();
             //VM = new KarteViewModel();
             DataContextChanged += KarteView_DataContextChanged;
+
+            dTmr.Tick += new EventHandler(dTmr_Tick);
+            dTmr.Interval = new TimeSpan(0, 0, 0, 0, 50);
         }
 
         void KarteView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -123,6 +127,19 @@ namespace MeisterGeister.View.Karte
             //        break;
             //}
         }
-        
+
+        DispatcherTimer dTmr = new DispatcherTimer();
+        private void dTmr_Tick(object sender, EventArgs e)
+        {
+            VM.notZooming = true;
+            dTmr.Stop();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            dTmr.IsEnabled = false;
+            dTmr.Start();
+            VM.notZooming = false;
+        }
     }
 }
