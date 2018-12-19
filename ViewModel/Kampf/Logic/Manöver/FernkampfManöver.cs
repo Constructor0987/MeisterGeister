@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.View.General;
-using MeisterGeister.Model.Extensions;
-using System.Windows.Data;
-using System.Windows;
-using System.Globalization;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -18,13 +12,42 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public FernkampfManöver(KämpferInfo ausführender, IFernkampfwaffe Fernkampfwaffe) : base(ausführender)
         {
             this.FernkampfWaffeSelected = Fernkampfwaffe;
-
-            //Values sollten/müssen nach dem Hinzufügen gesetzt werden
-
-
+            
             if (deckung != null)
                 deckung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DECKUNG_MOD]).Value;
+        }
 
+        public bool HatSchnellladenBogen
+        {
+            get { return (Ausführender.Kämpfer is Held && (Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Bogen)", null, false)); }
+        }
+
+        public bool HatSchnellladenArmbrust
+        {
+            get { return (Ausführender.Kämpfer is Held && (Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Armbrust)", null, false)); }
+        }
+        public bool HatSchnellziehen
+        {
+            get { return (Ausführender.Kämpfer is Held && (Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellziehen", null, false)); }
+        }
+
+        public int SchussDauer
+        {
+            get { return FernkampfWaffeSelected == null? 1: (FernkampfWaffeSelected.Name == "Kurzbogen"? 0: 1); }
+        }
+
+        private int _zielenDauer = 0;
+        public int ZielenDauer
+        {
+            get { return _zielenDauer; }
+            set { Set(ref _zielenDauer, value); }
+        }
+
+        private int _ansageDauer = 0;
+        public int AnsageDauer
+        {
+            get { return _ansageDauer; }
+            set { Set(ref _ansageDauer, value); }
         }
 
         #region Mods
@@ -32,6 +55,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string WIND_MOD = "Wind";
         public const string STEILNACHUNTEN_MOD = "SteilNachUnten";
         public const string STEILNACHOBEN_MOD = "SteilNachOben";
+        //public const string MUNITION_MOD = "MunitionsPfeil";
         public const string BÖIGERWIND_MOD = "BöigerWind";
         public const string STARKERBÖIGERWIND_MOD = "StarkerBöigerWind";
         public const string POS_SELBST_MOD = "PositionSelbst";
@@ -57,6 +81,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         protected FernkampfModifikator<bool> steilNachUnten;
         protected FernkampfModifikator<bool> steilNachOben;
+        //protected FernkampfModifikator<Munition> munition;
         protected FernkampfModifikator<int> wind;
 
         protected FernkampfModifikator<Größe> größe;
@@ -79,7 +104,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             base.InitMods(waffe);
             bool loadStd = Ausführender.PreFernkampfMods == null || Ausführender.PreFernkampfWaffe != waffe as IFernkampfwaffe;
-            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe == waffe as IFernkampfwaffe;
+            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;// as IFernkampfwaffe;
 
             licht = new FernkampfModifikator<Lichtstufe>(this);
             if (loadStd)
@@ -92,6 +117,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             wind = new FernkampfModifikator<int>(this);
             wind.GetMod = WindMod;
             mods.Add(WIND_MOD, wind);
+
+            //munition = new FernkampfModifikator<Munition>(this);
+            //if (loadStd)
+            //    munition.Value = 0;//Munition.Kettenbrecher;
+            //if (loadPre)
+            //    munition.Value = ((FernkampfModifikator<Munition>)Ausführender.PreFernkampfMods[MUNITION_MOD]).Value;
+            //munition.GetMod = MunitionMod;
+            //mods.Add(MUNITION_MOD, munition);
 
             steilNachUnten = new FernkampfModifikator<bool>(this);
             steilNachUnten.GetMod = SteilNachUntenMod;
@@ -114,6 +147,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             mods.Add(GRÖSSE_MOD, größe);
             
             FernkampfModifikator<int> deckung = new FernkampfModifikator<int>(this);
+            if (loadPre)
+                deckung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DECKUNG_MOD]).Value;
             mods.Add(DECKUNG_MOD, deckung);
             distanz = new FernkampfModifikator<int>(this);
             if (loadStd)
@@ -369,6 +404,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return value? 8: 0;            
         }
 
+        private int MunitionMod(IFernkampfwaffe waffe, Munition value)
+        {
+            return 0;
+        }
+
         private int SteilNachUntenMod(IFernkampfwaffe waffe, bool value)
         {
             return value? 2: 0;            
@@ -499,16 +539,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             Held held = Ausführender.Kämpfer as Held;
             int d = 1;
+            ZielenDauer = Zielen;
+            AnsageDauer = waffe == null || waffe.Talent == null? Ansage :
+                 // mit Meisterschütze nur 1 Aktion hinzu
+                 (waffe.Talent == FernkampfWaffeSelected.Talent &&
+                  (held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")")) ? 1 :
+                 // ohne Meisterschütze je Ansage 1 Aktion
+                 (int)(Math.Round((double)Ansage / 2, MidpointRounding.AwayFromZero)));
+
             if (waffe != null && waffe.Talent != null)
             {
-                d = waffe.LadeZeit.Value + Zielen + 1;
-
+                d = waffe.LadeZeit.Value + ZielenDauer + SchussDauer;
+                
                 if (held != null && FernkampfWaffeSelected != null)
                 {
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                         held.HatSonderfertigkeit("Scharfschütze (" + waffe.Talent.Name + ")"))
-                        d = waffe.LadeZeit.Value + (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1)) + 1;
-
+                    {
+                        ZielenDauer = (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1));
+                        d = waffe.LadeZeit.Value + ZielenDauer + SchussDauer;
+                    }
 
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                         waffe.Talent.Talentname == "Bogen" && held.HatSonderfertigkeit("Schnellladen (Bogen)"))
@@ -519,19 +569,23 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                             d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
                         else
                             if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                                waffe.Talent.Talentname == "Wurfwaffen" && held.HatSonderfertigkeit("Schnellziehen (Wurfwaffen)"))
+                                held.HatSonderfertigkeit("Schnellziehen") &&
+                                (waffe.Talent.Talentname == "Wurfbeile" ||
+                                 waffe.Talent.Talentname == "Wurfmesser" ||
+                                 waffe.Talent.Talentname == "Wurfspeere" ||
+                                 waffe.Talent.Talentname == "Wurfwaffen" ))
                                 d = d - 1 >= 1 ? d - 1 : 1;
 
                     if (Ansage > 0)
-                    d += // mit Meisterschütze nur 1 Aktion hinzu
-                         (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                          (held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")")) ? 1 :
-                         // ohne Meisterschütze je Ansage 1 Aktion
-                         (int)(Math.Round((double)Ansage/2, MidpointRounding.AwayFromZero)));
-                }
+                    {
+                        d += AnsageDauer;
+                    }
+                    else
+                        AnsageDauer = 0;
+                }                
             }
             else
-                d = 2 + Zielen + 1;
+                d = 3 + Ansage + ZielenDauer + SchussDauer;
 
             return d;
         }
@@ -544,7 +598,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             else mod = -Math.Min(4, (int)Math.Floor(new double[] { 0.5, 1, 1 }[SchützenIndex(waffe)] * (value - 1)));
 
             //Dauer = Ladezeit + zielen + Schuss
-            int d = GetDauer(waffe, value, Ansage);
+            int d = GetDauer(waffe, value, ansage != null? ansage.Value: Ansage);
             if (d != Dauer)
                 Dauer = d;
             VerbleibendeDauer = Dauer;
@@ -603,6 +657,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         #endregion
+
+        private int _anzAkt = 0;
+        public int anzAkt
+        {
+            get { return _anzAkt; }
+            set{ Set(ref _anzAkt, value);}
+        }
 
         protected override void Init()
         {

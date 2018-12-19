@@ -11,10 +11,12 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MeisterGeister.Model;
 using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 using Microsoft.Win32.SafeHandles;
 
 namespace MeisterGeister.View.Bodenplan
@@ -960,12 +962,20 @@ namespace MeisterGeister.View.Bodenplan
 
                                 if (menuitem.Name == "miKämpferFernkampf" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferFernkampf"))
                                 {
-                                    mi.UmwandelnFernkampf.Execute(menuitem.CommandParameter);
+                                    
+                                    if (VM.miWaffeSelected == null)
+                                        if (((ListBox)sender).SelectedItem as Held != null)
+                                            VM.miWaffeSelected = (((ListBox)sender).SelectedItem as Held).Fernkampfwaffen.FirstOrDefault();
+                                        else
+                                            VM.miWaffeSelected = Global.CurrentKampf.SelectedKämpfer.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+                                    mi.UmwandelnFernkampf.Execute(VM.miWaffeSelected);
                                 }
 
                                 if (menuitem.Name == "miKämpferAttacke" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferAttacke"))
                                 {
-                                    mi.UmwandelnAttacke.Execute(menuitem.CommandParameter);
+                                    if (VM.miWaffeSelected == null)
+                                        VM.miWaffeSelected = (((ListBox)sender).SelectedItem as Held).Nahkampfwaffen.FirstOrDefault();
+                                    mi.UmwandelnAttacke.Execute(VM.miWaffeSelected);
                                 }
 
                                 if (menuitem.Name == "miKämpferSonstiges" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferSonstiges"))
