@@ -12,11 +12,12 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="24"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -312,7 +313,10 @@
         <CheckBox Grid.Row="23" Grid.ColumnSpan="2" Content="Steilschuss/-wurf nach oben" IsChecked="{Binding Mods[SteilNachOben].Value}"/>
         <TextBlock Grid.Row="23" Grid.Column="2" Text="{Binding Mods[SteilNachOben].Result}"/>
 
-        <Grid Grid.Row="24" Grid.ColumnSpan="3" Visibility="{Binding Mods[PositionSelbst].Value, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=3}" >
+        <CheckBox Grid.Row="24" Grid.ColumnSpan="2" Content="Zauber: AXXELERATUS BLITZGESCHWIND aktiv" IsChecked="{Binding Mods[AxxeleratusAktiv].Value}"/>        
+        <!--<TextBlock Grid.Row="24" Grid.Column="2" Text="{Binding Mods[AxxeleratusAktiv].Result}"/>-->
+
+        <Grid Grid.Row="25" Grid.ColumnSpan="3" Visibility="{Binding Mods[PositionSelbst].Value, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=3}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="200"/>

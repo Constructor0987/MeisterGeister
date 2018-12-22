@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
+using MeisterGeister.Model.Extensions;
 using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
@@ -15,20 +16,34 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             
             if (deckung != null)
                 deckung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DECKUNG_MOD]).Value;
+            if (axxeleratusAktiv != null && Ausführender.PreFernkampfMods != null)
+                axxeleratusAktiv.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[AXXELERATUSAKTIV_MOD]).Value;
         }
 
+        public bool IstAxxeleratusAktiv
+        {
+            get { return (bool)((FernkampfModifikator<bool>)mods[AXXELERATUSAKTIV_MOD]).Value; }
+        }
+
+        [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellladenBogen
         {
-            get { return (Ausführender.Kämpfer is Held && (Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Bogen)", null, false)); }
+            get { return (Ausführender.Kämpfer is Held && 
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Bogen)", null, false) || IstAxxeleratusAktiv)); }
         }
 
+        [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellladenArmbrust
         {
-            get { return (Ausführender.Kämpfer is Held && (Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Armbrust)", null, false)); }
+            get { return (Ausführender.Kämpfer is Held && 
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Armbrust)", null, false) || IstAxxeleratusAktiv)); }
         }
+
+        [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellziehen
         {
-            get { return (Ausführender.Kämpfer is Held && (Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellziehen", null, false)); }
+            get { return (Ausführender.Kämpfer is Held && 
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellziehen", null, false) || IstAxxeleratusAktiv)); }
         }
 
         public int SchussDauer
@@ -53,6 +68,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         #region Mods
 
         public const string WIND_MOD = "Wind";
+        public const string AXXELERATUSAKTIV_MOD = "AxxeleratusAktiv";
         public const string STEILNACHUNTEN_MOD = "SteilNachUnten";
         public const string STEILNACHOBEN_MOD = "SteilNachOben";
         //public const string MUNITION_MOD = "MunitionsPfeil";
@@ -79,6 +95,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected FernkampfModifikator<Sichtstufe> sicht;
         protected FernkampfModifikator<Position> positionSelbst;
 
+        protected FernkampfModifikator<bool> axxeleratusAktiv;
         protected FernkampfModifikator<bool> steilNachUnten;
         protected FernkampfModifikator<bool> steilNachOben;
         //protected FernkampfModifikator<Munition> munition;
@@ -104,7 +121,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             base.InitMods(waffe);
             bool loadStd = Ausführender.PreFernkampfMods == null || Ausführender.PreFernkampfWaffe != waffe as IFernkampfwaffe;
-            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;// as IFernkampfwaffe;
+            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;// as IFernkampfwaffe;
 
             licht = new FernkampfModifikator<Lichtstufe>(this);
             if (loadStd)
@@ -125,6 +142,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             //    munition.Value = ((FernkampfModifikator<Munition>)Ausführender.PreFernkampfMods[MUNITION_MOD]).Value;
             //munition.GetMod = MunitionMod;
             //mods.Add(MUNITION_MOD, munition);
+
+            axxeleratusAktiv = new FernkampfModifikator<bool>(this);
+            axxeleratusAktiv.GetMod = AxxeleratusAktivMod;
+            mods.Add(AXXELERATUSAKTIV_MOD, axxeleratusAktiv);
 
             steilNachUnten = new FernkampfModifikator<bool>(this);
             steilNachUnten.GetMod = SteilNachUntenMod;
@@ -409,6 +430,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return 0;
         }
 
+        private int AxxeleratusAktivMod(IFernkampfwaffe waffe, bool value)
+        {
+            OnChanged("HatSchnellladenBogen");
+            OnChanged("HatSchnellladenArmbrust");
+            OnChanged("HatSchnellziehen");
+            return 0;
+        }
+
         private int SteilNachUntenMod(IFernkampfwaffe waffe, bool value)
         {
             return value? 2: 0;            
@@ -561,11 +590,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     }
 
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                        waffe.Talent.Talentname == "Bogen" && held.HatSonderfertigkeit("Schnellladen (Bogen)"))
+                        waffe.Talent.Talentname == "Bogen" && 
+                        (held.HatSonderfertigkeit("Schnellladen (Bogen)") || IstAxxeleratusAktiv))
                         d = d - 1 >= 1 ? d - 1 : 1;
                     else
                         if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                            waffe.Talent.Talentname == "Armbrust" && held.HatSonderfertigkeit("Schnellladen (Armbrust)"))
+                            waffe.Talent.Talentname == "Armbrust" && 
+                            (held.HatSonderfertigkeit("Schnellladen (Armbrust)") || IstAxxeleratusAktiv))
                             d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
                         else
                             if (waffe.Talent == FernkampfWaffeSelected.Talent &&
