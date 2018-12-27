@@ -12,7 +12,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="24"/>
         </Grid.ColumnDefinitions>
@@ -41,12 +41,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="{Binding FernkampfWaffeSelected.Name, FallbackValue='Fernkampfwaffe?'}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4" FontWeight="Bold" TextDecorations="Underline"/>
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Ansagen" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,0,0,4"/>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,4" >
+            <TextBlock Text="{Binding FernkampfWaffeSelected.Name, FallbackValue='Fernkampfwaffe?'}" FontWeight="Bold" TextDecorations="Underline"/>
+            <TextBlock Text="{Binding FernkampfWaffeSelected.LadeZeit, StringFormat='(\{0\}Akt)'}" Margin="0" />
+        </StackPanel>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Ansagen" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="-20,0,20,4"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Dauer, StringFormat='=\{0\}Akt'}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,75,4"
+                   ToolTip="Dauer des Fernkampfmanövers incl. Schuß" />
 
         <TextBlock Grid.Row="0" Text=" Σ Zuschlag " HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold" Grid.ColumnSpan="2" />
         <TextBlock Grid.Row="0" Text="‗‗‗‗‗‗‗‗‗‗‗‗‗" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,3,0,25" Grid.RowSpan="2" />
@@ -54,9 +61,99 @@
         <TextBlock Grid.Row="0" Grid.Column="2" Text="‗‗‗‗‗" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,3,0,25" Grid.RowSpan="2"/>
         <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding GetGesamt, FallbackValue='---'}" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,0,25" Grid.RowSpan="2"/>
 
+        <StackPanel VerticalAlignment="Bottom" Grid.ColumnSpan="3" Margin="0,15,0,0">
+            <TextBlock HorizontalAlignment="Left" Margin="8,0" >
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Bogen">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="{Binding SchussDauer,  StringFormat='Schuss       +\{0\}Akt'}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfbeile">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="{Binding SchussDauer,  StringFormat='Werfen       +\{0\}Akt'}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfmesser">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="{Binding SchussDauer,  StringFormat='Werfen       +\{0\}Akt'}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfspeere">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="{Binding SchussDauer,  StringFormat='Werfen       +\{0\}Akt'}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfwaffen">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="{Binding SchussDauer,  StringFormat='Werfen       +\{0\}Akt'}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <TextBlock Margin="68,0,0,0" >
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding HatSchnellladenBogen}" Value="True" />
+                                    <Condition Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Bogen"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="-1Akt SF Schnellladen (Bogen)" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding HatSchnellladenArmbrust}" Value="True" />
+                                    <Condition Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Armbrust"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="-1Akt SF Schnellladen (Armbrust)" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding HatSchnellziehen}" Value="True" />
+                                    <Condition Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfbeile"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="-1Akt SF Schnellziehen (Wurfbeile)" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding HatSchnellziehen}" Value="True" />
+                                    <Condition Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfmesser"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="-1Akt SF Schnellziehen (Wurfmesser)" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding HatSchnellziehen}" Value="True" />
+                                    <Condition Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfspeere"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="-1Akt SF Schnellziehen (Wurfspeere)" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding HatSchnellziehen}" Value="True" />
+                                    <Condition Binding="{Binding FernkampfWaffeSelected.Talent.Talentname}" Value="Wurfwaffen"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Text" Value="-1Akt SF Schnellziehen (Wurfwaffen)" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+
         <!--Wuchtschlag-->
         <TextBlock Grid.Row="1" Text="Ansage"/>
-        <TextBlock Grid.Row="1" Text="{Binding Mods[Ansage].Value,  StringFormat='+\{0\}'}"  HorizontalAlignment="Right" Margin="3,0" />
+        <TextBlock Grid.Row="1" Text="{Binding AnsageDauer,  StringFormat='+\{0\}Akt'}"  HorizontalAlignment="Right" Margin="3,0" />
         <Slider Grid.Row="1" Grid.Column="1" Interval="1" Minimum="0" Maximum="{Binding MaxAnsage, UpdateSourceTrigger=PropertyChanged}" Value="{Binding Mods[Ansage].Value}" Style="{StaticResource SmallHorizontalSlider}" VerticalAlignment="Center" />
         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Mods[Ansage].Result}" />
 
@@ -65,7 +162,7 @@
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Mods[Trefferzone].Result}"/>
 
         <TextBlock Grid.Row="3" Text="Zielen"/>
-        <TextBlock Grid.Row="3" Text="{Binding Mods[Zielen].Value, StringFormat='+\{0\}Akt'}"  HorizontalAlignment="Right" Margin="3,0"/>
+        <TextBlock Grid.Row="3" Text="{Binding ZielenDauer, StringFormat='+\{0\}Akt'}"  HorizontalAlignment="Right" Margin="3,0"/>
         <Slider Grid.Row="3" Grid.Column="1" Interval="1" Minimum="0" Maximum="10" Value="{Binding Mods[Zielen].Value}" Style="{StaticResource SmallHorizontalSlider}" VerticalAlignment="Center" />
         <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Mods[Zielen].Result}"/>
 
@@ -199,13 +296,14 @@
 
 
         <TextBlock Grid.Row="21" Text="Munition"/>
-        <ComboBox Grid.Row="21" Grid.Column="1" SelectedValuePath="DataContext" SelectedValue="{Binding Mods[Munition].Value}" SelectedIndex="0" Height="21" >
-            <ComboBoxItem Content="Jagdpfeil/-bolzen" DataContext="0" />
+        <ComboBox Grid.Row="21" Grid.Column="1" ItemsSource="{StaticResource munitionValues}" Height="21"
+                  SelectedItem="{Binding Mods[Munition].Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource munitionValues}}"  >
+            <!--   SelectedValuePath="DataContext"    <ComboBoxItem Content="Jagdpfeil/-bolzen" DataContext="0" />
             <ComboBoxItem Content="Kriegspfeil/-bolzen" DataContext="0"/>
             <ComboBoxItem Content="Kettenbrecher" DataContext="0"/>
             <ComboBoxItem Content="Stumpfer Pfeil/Bolzen" DataContext="0"/>
             <ComboBoxItem Content="Sehnen-/Seilschneider" DataContext="0"/>
-            <ComboBoxItem Content="Brandpfeil/-bolzen" DataContext="0"/>
+            <ComboBoxItem Content="Brandpfeil/-bolzen" DataContext="0"/>-->
         </ComboBox>
         <TextBlock Grid.Row="21" Grid.Column="2" Text="{Binding Mods[Munition].Result}"/>
 
@@ -215,7 +313,10 @@
         <CheckBox Grid.Row="23" Grid.ColumnSpan="2" Content="Steilschuss/-wurf nach oben" IsChecked="{Binding Mods[SteilNachOben].Value}"/>
         <TextBlock Grid.Row="23" Grid.Column="2" Text="{Binding Mods[SteilNachOben].Result}"/>
 
-        <Grid Grid.Row="24" Grid.ColumnSpan="3" Visibility="{Binding Mods[PositionSelbst].Value, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=3}" >
+        <CheckBox Grid.Row="24" Grid.ColumnSpan="2" Content="Zauber: AXXELERATUS BLITZGESCHWIND aktiv" IsChecked="{Binding Mods[AxxeleratusAktiv].Value}"/>        
+        <!--<TextBlock Grid.Row="24" Grid.Column="2" Text="{Binding Mods[AxxeleratusAktiv].Result}"/>-->
+
+        <Grid Grid.Row="25" Grid.ColumnSpan="3" Visibility="{Binding Mods[PositionSelbst].Value, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=3}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="200"/>

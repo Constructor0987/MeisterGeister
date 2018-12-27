@@ -24,7 +24,7 @@ namespace MeisterGeister.View.Kampf.Manöver
     {
         public FernkampfOptionenView()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         private void CheckBox_Click(object sender, RoutedEventArgs e)

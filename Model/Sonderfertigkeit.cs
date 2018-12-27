@@ -38,6 +38,22 @@ namespace MeisterGeister.Model
         public const string RüstungsgewöhnungII = "Rüstungsgewöhnung II";
         public const string RüstungsgewöhnungI = "Rüstungsgewöhnung I";
 
+        // Fernkampf
+        public const string BerittenerSchütze = "Berittener Schütze";
+
+        public const string Eisenhagel = "Eisenhagel";
+
+        public const string Meisterschütze = "Meisterschütze";
+
+        public const string Scharfschütze = "Scharfschütze";
+
+        public const string SchnellladenBogen = "Schnellladen (Bogen)";
+
+        public const string SchnellladenArmbrust = "Schnellladen (Armbrust)";
+
+        public const string Schnellziehen = "Schnellziehen";
+
+
         // Ritualkenntnis (Schamanen)
         public const string RitualkenntnisSchamaneAchaz = "Ritualkenntnis (Achaz-Schamane)";
 

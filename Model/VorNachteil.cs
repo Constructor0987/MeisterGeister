@@ -60,6 +60,12 @@
         public const string Kleinwüchsig = "Kleinwüchsig";
         public const string Behäbig = "Behäbig";
 
+        public const string Entfernungssinn = "Entfernungssinn";
+        public const string Dämmerungssicht = "Dämmerungssicht";
+        public const string Nachtsicht = "Nachtsicht";
+        public const string Nachtblind = "Nachtblind";
+        public const string Einäugig = "Einäugig";
+        public const string Farbenblind = "Farbenblind";
         // Geweiht
         public const string GeweihtZwölfgöttlicheKirche = "Geweiht [zwölfgöttliche Kirche]";
 

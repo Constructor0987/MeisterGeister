@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
-using MeisterGeister.View.General;
 using MeisterGeister.Model.Extensions;
-using System.Windows.Data;
-using System.Windows;
-using System.Globalization;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -18,18 +13,62 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public FernkampfManöver(KämpferInfo ausführender, IFernkampfwaffe Fernkampfwaffe) : base(ausführender)
         {
             this.FernkampfWaffeSelected = Fernkampfwaffe;
+            
+            if (_deckung != null)
+                _deckung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DECKUNG_MOD]).Value;
+            if (_axxeleratusAktiv != null && Ausführender.PreFernkampfMods != null)
+                _axxeleratusAktiv.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[AXXELERATUSAKTIV_MOD]).Value;
+        }
 
-            //Values sollten/müssen nach dem Hinzufügen gesetzt werden
+        public bool IstAxxeleratusAktiv
+        {
+            get { return (bool)((FernkampfModifikator<bool>)mods[AXXELERATUSAKTIV_MOD]).Value; }
+        }
 
+        [DependentProperty("IstAxxeleratusAktiv")]
+        public bool HatSchnellladenBogen
+        {
+            get { return (Ausführender.Kämpfer is Held && 
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenBogen, null, false) || IstAxxeleratusAktiv)); }
+        }
 
-            if (deckung != null)
-                deckung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DECKUNG_MOD]).Value;
+        [DependentProperty("IstAxxeleratusAktiv")]
+        public bool HatSchnellladenArmbrust
+        {
+            get { return (Ausführender.Kämpfer is Held && 
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust, null, false) || IstAxxeleratusAktiv)); }
+        }
 
+        [DependentProperty("IstAxxeleratusAktiv")]
+        public bool HatSchnellziehen
+        {
+            get { return (Ausführender.Kämpfer is Held && 
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen, null, false) || IstAxxeleratusAktiv)); }
+        }
+
+        public int SchussDauer
+        {
+            get { return FernkampfWaffeSelected == null? 1: (FernkampfWaffeSelected.Name == "Kurzbogen"? 0: 1); }
+        }
+
+        private int _zielenDauer = 0;
+        public int ZielenDauer
+        {
+            get { return _zielenDauer; }
+            set { Set(ref _zielenDauer, value); }
+        }
+
+        private int _ansageDauer = 0;
+        public int AnsageDauer
+        {
+            get { return _ansageDauer; }
+            set { Set(ref _ansageDauer, value); }
         }
 
         #region Mods
 
         public const string WIND_MOD = "Wind";
+        public const string AXXELERATUSAKTIV_MOD = "AxxeleratusAktiv";
         public const string STEILNACHUNTEN_MOD = "SteilNachUnten";
         public const string STEILNACHOBEN_MOD = "SteilNachOben";
         public const string BÖIGERWIND_MOD = "BöigerWind";
@@ -51,167 +90,174 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string PFERDBEWEGUNG_MOD = "PferdBewegung";
         public const string OHNESATTEL_MOD = "OhneSattel";
 
-        protected FernkampfModifikator<Lichtstufe> licht;
-        protected FernkampfModifikator<Sichtstufe> sicht;
-        protected FernkampfModifikator<Position> positionSelbst;
+        protected FernkampfModifikator<Lichtstufe> _licht;
+        protected FernkampfModifikator<Sichtstufe> _sicht;
+        protected FernkampfModifikator<Position> _positionSelbst;
 
-        protected FernkampfModifikator<bool> steilNachUnten;
-        protected FernkampfModifikator<bool> steilNachOben;
-        protected FernkampfModifikator<int> wind;
+        protected FernkampfModifikator<bool> _axxeleratusAktiv;
+        protected FernkampfModifikator<bool> _steilNachUnten;
+        protected FernkampfModifikator<bool> _steilNachOben;
+        protected FernkampfModifikator<int> _wind;
 
-        protected FernkampfModifikator<Größe> größe;
-        protected FernkampfModifikator<bool> unsichtbar;
-        protected FernkampfModifikator<int> deckung;
-        protected FernkampfModifikator<int> distanz;
-        protected FernkampfModifikator<Trefferzone> trefferzone;
-        protected FernkampfModifikator<Bewegung> bewegung;
-        protected FernkampfModifikator<bool> bewKörperteil;
-        protected FernkampfModifikator<bool> unterWasser;
-        protected FernkampfModifikator<int> nahkampf;
-        protected FernkampfModifikator<int> handgemenge;
-        protected FernkampfModifikator<int> zielen;
-        protected FernkampfModifikator<int> ansage;
+        protected FernkampfModifikator<Größe> _größe;
+        protected FernkampfModifikator<bool> _unsichtbar;
+        protected FernkampfModifikator<int> _deckung;
+        protected FernkampfModifikator<int> _distanz;
+        protected FernkampfModifikator<Trefferzone> _trefferzone;
+        protected FernkampfModifikator<Bewegung> _bewegung;
+        protected FernkampfModifikator<bool> _bewKörperteil;
+        protected FernkampfModifikator<bool> _unterWasser;
+        protected FernkampfModifikator<int> _nahkampf;
+        protected FernkampfModifikator<int> _handgemenge;
+        protected FernkampfModifikator<int> _zielen;
+        protected FernkampfModifikator<int> _ansage;
 
-        protected FernkampfModifikator<int> pferdBewegung;
-        protected FernkampfModifikator<bool> ohneSattel;
+        protected FernkampfModifikator<int> _pferdBewegung;
+        protected FernkampfModifikator<bool> _ohneSattel;
 
         protected override void InitMods(IWaffe waffe)
         {
             base.InitMods(waffe);
             bool loadStd = Ausführender.PreFernkampfMods == null || Ausführender.PreFernkampfWaffe != waffe as IFernkampfwaffe;
-            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe == waffe as IFernkampfwaffe;
+            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;
 
-            licht = new FernkampfModifikator<Lichtstufe>(this);
+            _licht = new FernkampfModifikator<Lichtstufe>(this);
             if (loadStd)
-                licht.Value = Global.CurrentKampf.Kampf.Licht;
+                _licht.Value = Global.CurrentKampf.Kampf.Licht;
             if (loadPre)
-                licht.Value = ((FernkampfModifikator<Lichtstufe>)Ausführender.PreFernkampfMods[LICHT_MOD]).Value;
-            licht.GetMod = LichtMod;
-            mods.Add(LICHT_MOD, licht);
-             
-            wind = new FernkampfModifikator<int>(this);
-            wind.GetMod = WindMod;
-            mods.Add(WIND_MOD, wind);
+                _licht.Value = ((FernkampfModifikator<Lichtstufe>)Ausführender.PreFernkampfMods[LICHT_MOD]).Value;
+            _licht.GetMod = LichtMod;
+            mods.Add(LICHT_MOD, _licht);
 
-            steilNachUnten = new FernkampfModifikator<bool>(this);
-            steilNachUnten.GetMod = SteilNachUntenMod;
-            mods.Add(STEILNACHUNTEN_MOD, steilNachUnten);
+            _wind = new FernkampfModifikator<int>(this);
+            _wind.GetMod = WindMod;
+            mods.Add(WIND_MOD, _wind);
 
-            steilNachOben = new FernkampfModifikator<bool>(this);
-            steilNachOben.GetMod = SteilNachObenMod;
-            mods.Add(STEILNACHOBEN_MOD, steilNachOben);
+            _axxeleratusAktiv = new FernkampfModifikator<bool>(this);
+            _axxeleratusAktiv.GetMod = AxxeleratusAktivMod;
+            mods.Add(AXXELERATUSAKTIV_MOD, _axxeleratusAktiv);
 
-            unsichtbar = new FernkampfModifikator<bool>(this);
-            unsichtbar.GetMod = UnsichtbarMod;
-            mods.Add(UNSICHTBAR_MOD, unsichtbar);
+            _steilNachUnten = new FernkampfModifikator<bool>(this);
+            _steilNachUnten.GetMod = SteilNachUntenMod;
+            mods.Add(STEILNACHUNTEN_MOD, _steilNachUnten);
 
-            größe = new FernkampfModifikator<Größe>(this);
+            _steilNachOben = new FernkampfModifikator<bool>(this);
+            _steilNachOben.GetMod = SteilNachObenMod;
+            mods.Add(STEILNACHOBEN_MOD, _steilNachOben);
+
+            _unsichtbar = new FernkampfModifikator<bool>(this);
+            _unsichtbar.GetMod = UnsichtbarMod;
+            mods.Add(UNSICHTBAR_MOD, _unsichtbar);
+
+            _größe = new FernkampfModifikator<Größe>(this);
             if (loadStd)
-                größe.Value = Größe.Mittel;
+                _größe.Value = Größe.Mittel;
             if (loadPre)
-                größe.Value = ((FernkampfModifikator<Größe>)Ausführender.PreFernkampfMods[GRÖSSE_MOD]).Value;
-            größe.GetMod = GrößeMod;
-            mods.Add(GRÖSSE_MOD, größe);
+                _größe.Value = ((FernkampfModifikator<Größe>)Ausführender.PreFernkampfMods[GRÖSSE_MOD]).Value;
+            _größe.GetMod = GrößeMod;
+            mods.Add(GRÖSSE_MOD, _größe);
             
             FernkampfModifikator<int> deckung = new FernkampfModifikator<int>(this);
+            if (loadPre)
+                deckung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DECKUNG_MOD]).Value;
             mods.Add(DECKUNG_MOD, deckung);
-            distanz = new FernkampfModifikator<int>(this);
+            _distanz = new FernkampfModifikator<int>(this);
             if (loadStd)
-                distanz.Value = 1;
+                _distanz.Value = 1;
             if (loadPre)
-                distanz.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DISTANZ_MOD]).Value;
-            distanz.GetMod = DistanzMod;
-            mods.Add(DISTANZ_MOD, distanz);
+                _distanz.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[DISTANZ_MOD]).Value;
+            _distanz.GetMod = DistanzMod;
+            mods.Add(DISTANZ_MOD, _distanz);
 
-            trefferzone = new FernkampfModifikator<Trefferzone>(this);
+            _trefferzone = new FernkampfModifikator<Trefferzone>(this);
             if (loadStd)
-                trefferzone.Value = Trefferzone.Unlokalisiert;
+                _trefferzone.Value = Trefferzone.Unlokalisiert;
             if (loadPre)
-                trefferzone.Value = ((FernkampfModifikator<Trefferzone>)Ausführender.PreFernkampfMods[TREFFERZONE_MOD]).Value;
-            trefferzone.GetMod = TrefferzoneMod;
-            mods.Add(TREFFERZONE_MOD, trefferzone);
+                _trefferzone.Value = ((FernkampfModifikator<Trefferzone>)Ausführender.PreFernkampfMods[TREFFERZONE_MOD]).Value;
+            _trefferzone.GetMod = TrefferzoneMod;
+            mods.Add(TREFFERZONE_MOD, _trefferzone);
 
-            bewKörperteil = new FernkampfModifikator<bool>(this);
+            _bewKörperteil = new FernkampfModifikator<bool>(this);
             if (loadPre)
-                bewKörperteil.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[BEWKÖRPERTEIL_MOD]).Value;
-            bewKörperteil.GetMod = BewKörperteilMod;
-            mods.Add(BEWKÖRPERTEIL_MOD, bewKörperteil);
+                _bewKörperteil.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[BEWKÖRPERTEIL_MOD]).Value;
+            _bewKörperteil.GetMod = BewKörperteilMod;
+            mods.Add(BEWKÖRPERTEIL_MOD, _bewKörperteil);
 
-            nahkampf = new FernkampfModifikator<int>(this);
+            _nahkampf = new FernkampfModifikator<int>(this);
             if (loadPre)
-                nahkampf.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[NAHKAMPF_MOD]).Value;
-            nahkampf.GetMod = NahkampfMod;
-            mods.Add(NAHKAMPF_MOD, nahkampf);
+                _nahkampf.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[NAHKAMPF_MOD]).Value;
+            _nahkampf.GetMod = NahkampfMod;
+            mods.Add(NAHKAMPF_MOD, _nahkampf);
 
-            handgemenge = new FernkampfModifikator<int>(this);
+            _handgemenge = new FernkampfModifikator<int>(this);
             if (loadPre)
-                handgemenge.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[HANDGEMENGE_MOD]).Value;
-            handgemenge.GetMod = HandgemengeMod;
-            mods.Add(HANDGEMENGE_MOD, handgemenge);
+                _handgemenge.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[HANDGEMENGE_MOD]).Value;
+            _handgemenge.GetMod = HandgemengeMod;
+            mods.Add(HANDGEMENGE_MOD, _handgemenge);
 
-            bewegung = new FernkampfModifikator<Bewegung>(this);
+            _bewegung = new FernkampfModifikator<Bewegung>(this);
             if (loadStd)
-                bewegung.Value = Bewegung.Leicht;
+                _bewegung.Value = Bewegung.Leicht;
             if (loadPre)
-                bewegung.Value = ((FernkampfModifikator<Bewegung>)Ausführender.PreFernkampfMods[BEWEGUNG_MOD]).Value;
-            bewegung.GetMod = BewegungMod;
-            mods.Add(BEWEGUNG_MOD, bewegung);
+                _bewegung.Value = ((FernkampfModifikator<Bewegung>)Ausführender.PreFernkampfMods[BEWEGUNG_MOD]).Value;
+            _bewegung.GetMod = BewegungMod;
+            mods.Add(BEWEGUNG_MOD, _bewegung);
 
-            zielen = new FernkampfModifikator<int>(this);
-            zielen.GetMod = ZielenMod;
-            mods.Add(ZIELEN_MOD, zielen);
+            _zielen = new FernkampfModifikator<int>(this);
+            _zielen.GetMod = ZielenMod;
+            mods.Add(ZIELEN_MOD, _zielen);
             if (loadStd)
-                zielen.Value = 1;
+                _zielen.Value = 1;
             if (loadPre)
-                zielen.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[ZIELEN_MOD]).Value;
+                _zielen.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[ZIELEN_MOD]).Value;
 
-            ansage = new FernkampfModifikator<int>(this);
+            _ansage = new FernkampfModifikator<int>(this);
             if (loadPre)
-                ansage.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[ANSAGE_MOD]).Value;
-            ansage.GetMod = AnsageMod;
-            mods.Add(ANSAGE_MOD, ansage);
+                _ansage.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[ANSAGE_MOD]).Value;
+            _ansage.GetMod = AnsageMod;
+            mods.Add(ANSAGE_MOD, _ansage);
 
-            sicht = new FernkampfModifikator<Sichtstufe>(this);
+            _sicht = new FernkampfModifikator<Sichtstufe>(this);
             if (loadStd)
-                sicht.Value = Global.CurrentKampf.Kampf.Sicht;
+                _sicht.Value = Global.CurrentKampf.Kampf.Sicht;
             if (loadPre)
-                sicht.Value = ((FernkampfModifikator<Sichtstufe>)Ausführender.PreFernkampfMods[SICHT_MOD]).Value;
-            sicht.GetMod = SichtMod;
-            mods.Add(SICHT_MOD, sicht);
-            
-            ohneSattel = new FernkampfModifikator<bool>(this);
-            if (loadPre)
-                ohneSattel.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[OHNESATTEL_MOD]).Value;
-            ohneSattel.GetMod = OhneSattelMod;
-            mods.Add(OHNESATTEL_MOD, ohneSattel);
+                _sicht.Value = ((FernkampfModifikator<Sichtstufe>)Ausführender.PreFernkampfMods[SICHT_MOD]).Value;
+            _sicht.GetMod = SichtMod;
+            mods.Add(SICHT_MOD, _sicht);
 
-            unterWasser = new FernkampfModifikator<bool>(this);
+            _ohneSattel = new FernkampfModifikator<bool>(this);
             if (loadPre)
-                unterWasser.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[UNTERWASSER_MOD]).Value;
-            unterWasser.GetMod = UnterWasserMod;
-            mods.Add(UNTERWASSER_MOD, unterWasser);
-            
-            positionSelbst = new FernkampfModifikator<Position>(this);
+                _ohneSattel.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[OHNESATTEL_MOD]).Value;
+            _ohneSattel.GetMod = OhneSattelMod;
+            mods.Add(OHNESATTEL_MOD, _ohneSattel);
+
+            _unterWasser = new FernkampfModifikator<bool>(this);
+            if (loadPre)
+                _unterWasser.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[UNTERWASSER_MOD]).Value;
+            _unterWasser.GetMod = UnterWasserMod;
+            mods.Add(UNTERWASSER_MOD, _unterWasser);
+
+            _positionSelbst = new FernkampfModifikator<Position>(this);
             if (loadStd)
-                positionSelbst.Value = Ausführender.Kämpfer.Position;
+                _positionSelbst.Value = Ausführender.Kämpfer.Position;
             if (loadPre)
-                positionSelbst.Value = ((FernkampfModifikator<Position>)Ausführender.PreFernkampfMods[POS_SELBST_MOD]).Value;
-            positionSelbst.GetMod = PositionSelbstMod;
-            mods.Add(POS_SELBST_MOD, positionSelbst);
+                _positionSelbst.Value = ((FernkampfModifikator<Position>)Ausführender.PreFernkampfMods[POS_SELBST_MOD]).Value;
+            _positionSelbst.GetMod = PositionSelbstMod;
+            mods.Add(POS_SELBST_MOD, _positionSelbst);
 
-            pferdBewegung = new FernkampfModifikator<int>(this);
+            _pferdBewegung = new FernkampfModifikator<int>(this);
             if (loadPre)
-                pferdBewegung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[PFERDBEWEGUNG_MOD]).Value;
-            pferdBewegung.GetMod = PferdBewegungMod;
-            mods.Add(PFERDBEWEGUNG_MOD, pferdBewegung);
+                _pferdBewegung.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[PFERDBEWEGUNG_MOD]).Value;
+            _pferdBewegung.GetMod = PferdBewegungMod;
+            mods.Add(PFERDBEWEGUNG_MOD, _pferdBewegung);
 
 
             if (loadPre)
             {
-                wind.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[WIND_MOD]).Value;
-                steilNachUnten.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[STEILNACHUNTEN_MOD]).Value;
-                steilNachOben.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[STEILNACHOBEN_MOD]).Value;
-                unsichtbar.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[UNSICHTBAR_MOD]).Value;
+                _wind.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[WIND_MOD]).Value;
+                _steilNachUnten.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[STEILNACHUNTEN_MOD]).Value;
+                _steilNachOben.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[STEILNACHOBEN_MOD]).Value;
+                _unsichtbar.Value = ((FernkampfModifikator<bool>)Ausführender.PreFernkampfMods[UNSICHTBAR_MOD]).Value;
             }
         }
 
@@ -248,9 +294,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null && waffe != null && waffe.Talent != null && FernkampfWaffeSelected  != null && waffe.Talent == FernkampfWaffeSelected.Talent)
             {
-                if (held.HatSonderfertigkeitUndVoraussetzungen("Meisterschütze (" + waffe.Talent.Name + ")"))
+                if (held.HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Meisterschütze + " (" + waffe.Talent.Name + ")"))
                     return 2;
-                else if (held.HatSonderfertigkeitUndVoraussetzungen("Scharfschütze (" + waffe.Talent.Name + ")"))
+                else if (held.HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Scharfschütze + " (" + waffe.Talent.Name + ")"))
                     return 1;
             }
             return 0;
@@ -307,13 +353,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null)
             {
-                if (held.HatVorNachteil("Dämmerungssicht") || held.HatVorNachteil("Nachtsicht"))
+                if (held.HatVorNachteil(VorNachteil.Dämmerungssicht) || held.HatVorNachteil(VorNachteil.Nachtsicht))
                     mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
                 //TODO: Hier prüfen auf was sich die max. +5 bezieht. Nachtsicht beinhaltet ja Dämmerungssicht, was den Abzug halbiert.
                 //Da die Maximalen Abzüge für Dunkelheit 8 sind macht das so keinen Sinn
-                if (held.HatVorNachteil("Nachtsicht"))
+                if (held.HatVorNachteil(VorNachteil.Nachtsicht))
                     mod = Math.Min(mod, 5);
-                if (held.HatVorNachteil("Nachtblind"))
+                if (held.HatVorNachteil(VorNachteil.Nachtblind))
                 {
                     mod *= 2;
                     mod = Math.Min(mod, 8);
@@ -369,6 +415,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             return value? 8: 0;            
         }
 
+        private int MunitionMod(IFernkampfwaffe waffe, Munition value)
+        {
+            return 0;
+        }
+
+        private int AxxeleratusAktivMod(IFernkampfwaffe waffe, bool value)
+        {
+            OnChanged("HatSchnellladenBogen");
+            OnChanged("HatSchnellladenArmbrust");
+            OnChanged("HatSchnellziehen");
+            return 0;
+        }
+
         private int SteilNachUntenMod(IFernkampfwaffe waffe, bool value)
         {
             return value? 2: 0;            
@@ -411,11 +470,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null)
             {
-                if (held.HatVorNachteil("Entfernungssinn"))
+                if (held.HatVorNachteil(VorNachteil.Entfernungssinn))
                     mod -= 2;
-                if (held.HatVorNachteil("Einäugig") && distanz < 10)
+                if (held.HatVorNachteil(VorNachteil.Einäugig) && distanz < 10)
                     mod += 4;
-                if (held.HatVorNachteil("Farbenblind") && distanz > 50)
+                if (held.HatVorNachteil(VorNachteil.Farbenblind) && distanz > 50)
                     mod += 4;
             }
             return mod;
@@ -462,7 +521,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 
         private int BewegungMod(IFernkampfwaffe waffe, Bewegung value)
         {
-            if (nahkampf.Value != 0 || handgemenge.Value != 0) return 0; 
+            if (_nahkampf.Value != 0 || _handgemenge.Value != 0) return 0; 
             switch (value)
             {
                 case Bewegung.Unbeweglich: 
@@ -499,39 +558,55 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             Held held = Ausführender.Kämpfer as Held;
             int d = 1;
+            ZielenDauer = Zielen;
+            AnsageDauer = waffe == null || waffe.Talent == null? Ansage :
+                 // mit Meisterschütze nur 1 Aktion hinzu
+                 (waffe.Talent == FernkampfWaffeSelected.Talent &&
+                  (held.HatSonderfertigkeit(Sonderfertigkeit.Meisterschütze + " (" + waffe.Talent.Name + ")")) ? 1 :
+                 // ohne Meisterschütze je Ansage 1 Aktion
+                 (int)(Math.Round((double)Ansage / 2, MidpointRounding.AwayFromZero)));
+
             if (waffe != null && waffe.Talent != null)
             {
-                d = waffe.LadeZeit.Value + Zielen + 1;
-
+                d = waffe.LadeZeit.Value + ZielenDauer + SchussDauer;
+                
                 if (held != null && FernkampfWaffeSelected != null)
                 {
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                        held.HatSonderfertigkeit("Scharfschütze (" + waffe.Talent.Name + ")"))
-                        d = waffe.LadeZeit.Value + (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1)) + 1;
-
+                        held.HatSonderfertigkeit(Sonderfertigkeit.Scharfschütze + " (" + waffe.Talent.Name + ")"))
+                    {
+                        ZielenDauer = (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1));
+                        d = waffe.LadeZeit.Value + ZielenDauer + SchussDauer;
+                    }
 
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                        waffe.Talent.Talentname == "Bogen" && held.HatSonderfertigkeit("Schnellladen (Bogen)"))
+                        waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024" && //"Bogen" 
+                        (held.HatSonderfertigkeit(Sonderfertigkeit.SchnellladenBogen) || IstAxxeleratusAktiv))
                         d = d - 1 >= 1 ? d - 1 : 1;
                     else
                         if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                            waffe.Talent.Talentname == "Armbrust" && held.HatSonderfertigkeit("Schnellladen (Armbrust)"))
+                            waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000015" && //"Armbrust" 
+                            (held.HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust) || IstAxxeleratusAktiv))
                             d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
                         else
                             if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                                waffe.Talent.Talentname == "Wurfwaffen" && held.HatSonderfertigkeit("Schnellziehen (Wurfwaffen)"))
+                                held.HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen) &&
+                                (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000379" || //"Wurfbeile" 
+                                 waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000380" || //"Wurfmesser"
+                                 waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000381" || //"Wurfspeere"
+                                 waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000382"))  //"Wurfwaffen" 
                                 d = d - 1 >= 1 ? d - 1 : 1;
 
                     if (Ansage > 0)
-                    d += // mit Meisterschütze nur 1 Aktion hinzu
-                         (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                          (held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")")) ? 1 :
-                         // ohne Meisterschütze je Ansage 1 Aktion
-                         (int)(Math.Round((double)Ansage/2, MidpointRounding.AwayFromZero)));
-                }
+                    {
+                        d += AnsageDauer;
+                    }
+                    else
+                        AnsageDauer = 0;
+                }                
             }
             else
-                d = 2 + Zielen + 1;
+                d = 3 + Ansage + ZielenDauer + SchussDauer;
 
             return d;
         }
@@ -544,7 +619,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             else mod = -Math.Min(4, (int)Math.Floor(new double[] { 0.5, 1, 1 }[SchützenIndex(waffe)] * (value - 1)));
 
             //Dauer = Ladezeit + zielen + Schuss
-            int d = GetDauer(waffe, value, Ansage);
+            int d = GetDauer(waffe, value, _ansage != null? _ansage.Value: Ansage);
             if (d != Dauer)
                 Dauer = d;
             VerbleibendeDauer = Dauer;
@@ -564,10 +639,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null && waffe != null && waffe.Talent != null && FernkampfWaffeSelected != null)
                 MaxAnsage = waffe.Talent == FernkampfWaffeSelected.Talent &&
-                            held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")") ?
+                            held.HatSonderfertigkeit(Sonderfertigkeit.Meisterschütze + " (" + waffe.Talent.Name + ")") ?
                     (waffe as KämpferFernkampfwaffe).FernkampfOhneMod: held.Talentwert(waffe.Talent.Name);
 
-            int d = GetDauer(waffe, zielen.Value, value);
+            int d = GetDauer(waffe, _zielen.Value, value);
             if (d != Dauer)
                 Dauer = d;
             VerbleibendeDauer = Dauer;
@@ -603,6 +678,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         #endregion
+
+        private int _anzAkt = 0;
+        public int anzAkt
+        {
+            get { return _anzAkt; }
+            set{ Set(ref _anzAkt, value);}
+        }
 
         protected override void Init()
         {
