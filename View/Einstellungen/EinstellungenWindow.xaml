@@ -1,14 +1,11 @@
-﻿<Window
+﻿<Window Name="EinstellungWnd"
     x:Class="MeisterGeister.View.Settings.EinstellungenWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Model="clr-namespace:MeisterGeister.Model"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:MeisterGeister.View.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mg="clr-namespace:MeisterGeister"
-    xmlns:Einstellungen="clr--namespace:MeisterGeister.ViewModel.Einstellungen"
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings"
     Title="Einstellungen"
     Width="850"
@@ -41,28 +38,28 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="30" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="279*" />
-                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="196" />
+                        <ColumnDefinition Width="46" />
+                        <ColumnDefinition Width="275" />
+                        <ColumnDefinition Width="61*" />
+                        <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70" />
-                        <RowDefinition Height="70" />
+                        <RowDefinition Height="18" />
+                        <RowDefinition Height="122" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="25" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition />
+                        <RowDefinition Height="0*" />
+                        <RowDefinition Height="0*" />
                     </Grid.RowDefinitions>
 
                     <Grid
                         Grid.Row="1"
-                        Grid.RowSpan="2"
+                        Grid.RowSpan="1"
                         Grid.ColumnSpan="3"
-                        Margin="0,10,0,1.5"
-                        VerticalAlignment="Center">
+                        Margin="0,33,0,1"
+                        VerticalAlignment="Center" Height="88">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -468,9 +465,9 @@
                                     FontWeight="Bold"
                                     Text="Optionale HAUSREGEL"
                                     TextWrapping="WrapWithOverflow" />
-                                <CheckBox Margin="5" Content="Pflanzenwissen (Held kennt nur bestimmte Pflanzen)" IsChecked="{Binding IsPflanzenwissen}" />                                
+                                <CheckBox Margin="5" Content="Pflanzenwissen (Held kennt nur bestimmte Pflanzen)" IsChecked="{Binding IsPflanzenwissen}" />
                             </StackPanel>
-                        </StackPanel>                        
+                        </StackPanel>
                     </Border>
                 </TabItem>
                 <TabItem x:Name="tbiInventar">
@@ -909,10 +906,106 @@
                                         Background="Transparent"
                                         FontSize="14"
                                         ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                        ItemTemplate="{StaticResource ThemeTemplate}"
+                                        
                                         ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
                                         SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}">
-                                        <!--<ListBox.BorderBrush>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="130"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <Button Grid.Row="0" Grid.Column="1" Width="27" Height="27" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                        Command="{Binding DataContext.onbtnAddHUEProcess, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                        CommandParameter="{Binding}" Margin="0" >
+                                                        <Button.Template>
+                                                            <ControlTemplate>
+                                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                    </Button>
+                                                    <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="Wiederholen" Margin="0,0,30,0"
+                                                        IsChecked="{Binding Path=doLoop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="18" />
+                                                    
+                                                    <Grid Grid.RowSpan="2" Margin="0" VerticalAlignment="Center" Height="140">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="28" />
+                                                            <RowDefinition Height="*" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="157" />
+                                                            <ColumnDefinition Width="85" />
+                                                            <ColumnDefinition Width="126" />
+                                                            <ColumnDefinition Width="284" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Label Grid.Row="0" Content="Theme Name" />
+                                                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,2" 
+                                                                 Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <ComboBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="1" Width="Auto" Height="25" Margin="50,0,75,0"
+                                                            VerticalAlignment="Top" DisplayMemberPath="Name" 
+                                                                  ItemsSource="{Binding Path=DataContext.lstHUELights, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                            SelectedValue="{Binding AddLightToTheme}" />
+                                                        <!--<ListBox
+                                                            Grid.Row="0"
+                                                            Grid.ColumnSpan="4"
+                                                            MaxHeight="200"
+                                                            Margin="5,30,5,0"
+                                                            VerticalAlignment="Top"
+                                                            Background="Transparent"
+                                                            DisplayMemberPath="Name"
+                                                            ItemsSource="{Binding lstLights, UpdateSourceTrigger=PropertyChanged}"
+                                                            ScrollViewer.VerticalScrollBarVisibility="Auto" Height="58" />-->
+
+                                                        <DataGrid Grid.Row="1" Grid.ColumnSpan="4"
+                                                            ItemsSource="{Binding Path=lstLightProcess, UpdateSourceTrigger=PropertyChanged}"
+                                                            SelectedItem="{Binding Path=LightProcessSelected}"
+                                                            VerticalScrollBarVisibility="Auto">
+                                                            <DataGrid.Columns>
+                                                                <DataGridTextColumn Width="55" Binding="{Binding Path=Phase}" Header="Phase" IsReadOnly="True" />
+                                                                <DataGridTextColumn Width="100" Binding="{Binding Path=Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Dauer [ms]" />
+                                                                <DataGridTemplateColumn>
+                                                                    <DataGridTemplateColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <Button Height="22" 
+                                                                                    Command="{Binding DataContext.onBtnSelectHUEColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                                    CommandParameter="{Binding ElementName=EinstellungWnd}">
+                                                                                <Button.Content>
+                                                                                    <StackPanel Width="75" Margin="-2" Orientation="Horizontal">
+                                                                                        <Rectangle Width="22" Height="22" 
+                                                                                                   Fill="{Binding Path=Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource ColorToSolidColorBrushConverter1}}" />
+                                                                                        <Label Padding="0" Content="Auswahl" />
+                                                                                    </StackPanel>
+                                                                                </Button.Content>
+                                                                            </Button>
+                                                                        </DataTemplate>
+                                                                    </DataGridTemplateColumn.CellTemplate>
+                                                                </DataGridTemplateColumn>
+                                                                <DataGridTextColumn Width="100" Binding="{Binding Path=Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Farbe" />
+                                                                <DataGridTemplateColumn Header="Helligkeit">
+                                                                    <DataGridTemplateColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <Slider Width="80" Maximum="255" Minimum="1"
+                                                                                    Value="{Binding Path=Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                                                <Label Width="25" Padding="0" Content="{Binding Path=Brightness, UpdateSourceTrigger=PropertyChanged}" />
+                                                                            </StackPanel>
+                                                                        </DataTemplate>
+                                                                    </DataGridTemplateColumn.CellTemplate>
+                                                                </DataGridTemplateColumn>
+                                                            </DataGrid.Columns>
+                                                        </DataGrid>
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                        <!--<ListBox.BorderBrush>ItemTemplate="{StaticResource ThemeTemplate}"
                                             <SolidColorBrush />
                                         </ListBox.BorderBrush>-->
                                     </ListBox>
