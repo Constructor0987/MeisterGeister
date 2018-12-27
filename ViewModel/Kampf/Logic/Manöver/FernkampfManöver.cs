@@ -590,7 +590,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                             d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
                         else
                             if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                                held.HatSonderfertigkeit("Schnellziehen") &&
+                                held.HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen) &&
                                 (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000379" || //"Wurfbeile" 
                                  waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000380" || //"Wurfmesser"
                                  waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000381" || //"Wurfspeere"
