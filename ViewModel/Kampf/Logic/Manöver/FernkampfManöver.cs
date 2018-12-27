@@ -29,21 +29,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public bool HatSchnellladenBogen
         {
             get { return (Ausführender.Kämpfer is Held && 
-                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Bogen)", null, false) || IstAxxeleratusAktiv)); }
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenBogen, null, false) || IstAxxeleratusAktiv)); }
         }
 
         [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellladenArmbrust
         {
             get { return (Ausführender.Kämpfer is Held && 
-                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellladen (Armbrust)", null, false) || IstAxxeleratusAktiv)); }
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust, null, false) || IstAxxeleratusAktiv)); }
         }
 
         [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellziehen
         {
             get { return (Ausführender.Kämpfer is Held && 
-                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit("Schnellziehen", null, false) || IstAxxeleratusAktiv)); }
+                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen, null, false) || IstAxxeleratusAktiv)); }
         }
 
         public int SchussDauer
@@ -119,7 +119,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             base.InitMods(waffe);
             bool loadStd = Ausführender.PreFernkampfMods == null || Ausführender.PreFernkampfWaffe != waffe as IFernkampfwaffe;
-            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;// as IFernkampfwaffe;
+            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;
 
             _licht = new FernkampfModifikator<Lichtstufe>(this);
             if (loadStd)
@@ -294,9 +294,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null && waffe != null && waffe.Talent != null && FernkampfWaffeSelected  != null && waffe.Talent == FernkampfWaffeSelected.Talent)
             {
-                if (held.HatSonderfertigkeitUndVoraussetzungen("Meisterschütze (" + waffe.Talent.Name + ")"))
+                if (held.HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Meisterschütze + " (" + waffe.Talent.Name + ")"))
                     return 2;
-                else if (held.HatSonderfertigkeitUndVoraussetzungen("Scharfschütze (" + waffe.Talent.Name + ")"))
+                else if (held.HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Scharfschütze + " (" + waffe.Talent.Name + ")"))
                     return 1;
             }
             return 0;
@@ -353,13 +353,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null)
             {
-                if (held.HatVorNachteil("Dämmerungssicht") || held.HatVorNachteil("Nachtsicht"))
+                if (held.HatVorNachteil(VorNachteil.Dämmerungssicht) || held.HatVorNachteil(VorNachteil.Nachtsicht))
                     mod = (int)Math.Round(mod * 0.5, MidpointRounding.AwayFromZero);
                 //TODO: Hier prüfen auf was sich die max. +5 bezieht. Nachtsicht beinhaltet ja Dämmerungssicht, was den Abzug halbiert.
                 //Da die Maximalen Abzüge für Dunkelheit 8 sind macht das so keinen Sinn
-                if (held.HatVorNachteil("Nachtsicht"))
+                if (held.HatVorNachteil(VorNachteil.Nachtsicht))
                     mod = Math.Min(mod, 5);
-                if (held.HatVorNachteil("Nachtblind"))
+                if (held.HatVorNachteil(VorNachteil.Nachtblind))
                 {
                     mod *= 2;
                     mod = Math.Min(mod, 8);
@@ -470,11 +470,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null)
             {
-                if (held.HatVorNachteil("Entfernungssinn"))
+                if (held.HatVorNachteil(VorNachteil.Entfernungssinn))
                     mod -= 2;
-                if (held.HatVorNachteil("Einäugig") && distanz < 10)
+                if (held.HatVorNachteil(VorNachteil.Einäugig) && distanz < 10)
                     mod += 4;
-                if (held.HatVorNachteil("Farbenblind") && distanz > 50)
+                if (held.HatVorNachteil(VorNachteil.Farbenblind) && distanz > 50)
                     mod += 4;
             }
             return mod;
@@ -562,7 +562,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             AnsageDauer = waffe == null || waffe.Talent == null? Ansage :
                  // mit Meisterschütze nur 1 Aktion hinzu
                  (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                  (held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")")) ? 1 :
+                  (held.HatSonderfertigkeit(Sonderfertigkeit.Meisterschütze + " (" + waffe.Talent.Name + ")")) ? 1 :
                  // ohne Meisterschütze je Ansage 1 Aktion
                  (int)(Math.Round((double)Ansage / 2, MidpointRounding.AwayFromZero)));
 
@@ -573,7 +573,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 if (held != null && FernkampfWaffeSelected != null)
                 {
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                        held.HatSonderfertigkeit("Scharfschütze (" + waffe.Talent.Name + ")"))
+                        held.HatSonderfertigkeit(Sonderfertigkeit.Scharfschütze + " (" + waffe.Talent.Name + ")"))
                     {
                         ZielenDauer = (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1));
                         d = waffe.LadeZeit.Value + ZielenDauer + SchussDauer;
@@ -581,12 +581,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                         waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024" && //"Bogen" 
-                        (held.HatSonderfertigkeit("Schnellladen (Bogen)") || IstAxxeleratusAktiv))
+                        (held.HatSonderfertigkeit(Sonderfertigkeit.SchnellladenBogen) || IstAxxeleratusAktiv))
                         d = d - 1 >= 1 ? d - 1 : 1;
                     else
                         if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                             waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000015" && //"Armbrust" 
-                            (held.HatSonderfertigkeit("Schnellladen (Armbrust)") || IstAxxeleratusAktiv))
+                            (held.HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust) || IstAxxeleratusAktiv))
                             d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
                         else
                             if (waffe.Talent == FernkampfWaffeSelected.Talent &&
@@ -639,7 +639,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Held held = Ausführender.Kämpfer as Held;
             if (held != null && waffe != null && waffe.Talent != null && FernkampfWaffeSelected != null)
                 MaxAnsage = waffe.Talent == FernkampfWaffeSelected.Talent &&
-                            held.HatSonderfertigkeit("Meisterschütze (" + waffe.Talent.Name + ")") ?
+                            held.HatSonderfertigkeit(Sonderfertigkeit.Meisterschütze + " (" + waffe.Talent.Name + ")") ?
                     (waffe as KämpferFernkampfwaffe).FernkampfOhneMod: held.Talentwert(waffe.Talent.Name);
 
             int d = GetDauer(waffe, _zielen.Value, value);
