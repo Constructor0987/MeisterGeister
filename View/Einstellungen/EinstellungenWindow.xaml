@@ -899,6 +899,11 @@
                                         HorizontalAlignment="Left"
                                         Command="{Binding onbtnNeuesHUETheme}"
                                         Content="Neues Theme" />
+
+                                    <ViewGeneral:DoubleThumbSlider Width="300" />
+
+                                    <Slider HorizontalAlignment="Left" Width="300" Value="33" Maximum="100" TickPlacement="BottomRight" />
+
                                     <ListBox
                                         Name="_listBoxThemes"
                                         Grid.Row="2"
@@ -931,7 +936,8 @@
                                                     </Button>
                                                     <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="Wiederholen" Margin="0,0,30,0"
                                                         IsChecked="{Binding Path=doLoop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="18" />
-                                                    
+                                                    <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="Stobe" IsChecked="{ Binding doStrobe}" Margin="0,20" />
+
                                                     <Grid Grid.RowSpan="2" Margin="0" VerticalAlignment="Center" Height="140">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="28" />

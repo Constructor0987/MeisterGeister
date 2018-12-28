@@ -608,6 +608,7 @@ namespace MeisterGeister.ViewModel.Settings
             public List<LightProcess> lstLightProcess { get; set; }
             public List<Light> lstLights { get; set; }
             public bool doLoop { get; set; }
+            public bool doStrobe { get; set; }
 
             public bool isRunning { get; set; }
             public int? actLightProcess { get; set; }
@@ -655,7 +656,9 @@ namespace MeisterGeister.ViewModel.Settings
                     //Control the lights
                     command = new LightCommand();
                     //command.On = true;
-
+                    if (doStrobe)
+                    command.Alert = Alert.Once;
+                    
                     //Turn the light on and set a Hex color for the command (see the section about Color Converters)
                     command.TurnOn().SetColor(new RGBColor(
                         lstLightProcess[actLightProcess.Value].Color.R,
@@ -674,7 +677,7 @@ namespace MeisterGeister.ViewModel.Settings
 
 
                 int tDelta = Environment.TickCount - StartTime;
-                if (tDelta > lstLightProcess[actLightProcess.Value].Dauer)
+                if (tDelta > lstLightProcess[actLightProcess.Value].Dauer || doStrobe)
                 {
                     StartTime = Environment.TickCount;
                     if (actLightProcess.Value + 1 < lstLightProcess.Count)
@@ -688,6 +691,7 @@ namespace MeisterGeister.ViewModel.Settings
                     //Control the lights
                     command = new LightCommand();
                     command.On = true;
+                    command.Alert = Alert.Once;
                     //Turn the light on and set a Hex color for the command (see the section about Color Converters)
                     command.TurnOn().SetColor(new RGBColor(
                         lstLightProcess[actLightProcess.Value].Color.R,
