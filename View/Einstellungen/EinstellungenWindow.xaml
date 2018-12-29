@@ -900,9 +900,7 @@
                                         Command="{Binding onbtnNeuesHUETheme}"
                                         Content="Neues Theme" />
 
-                                    <ViewGeneral:DoubleThumbSlider Width="300" />
-
-                                    <Slider HorizontalAlignment="Left" Width="300" Value="33" Maximum="100" TickPlacement="BottomRight" />
+                                    <ViewGeneral:DoubleThumbSlider Width="300" Minimum="0" Maximum="1" StartColor="White" FirstColor="Green" SecondColor="Yellow"  />
 
                                     <ListBox
                                         Name="_listBoxThemes"

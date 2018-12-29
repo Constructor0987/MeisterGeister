@@ -32,6 +32,24 @@ namespace MeisterGeister.View.General
         }
 
         #region //---- EIGENSCHAFTEN ----
+        public Color StartColor
+        {
+            get { return (Color)GetValue(StartColorProperty); }
+            set { SetValue(StartColorProperty, value); }
+        }
+
+        public Color FirstColor
+        {
+            get { return (Color)GetValue(FirstColorProperty); }
+            set { SetValue(FirstColorProperty, value); }
+        }
+
+        public Color SecondColor
+        {
+            get { return (Color)GetValue(SecondColorProperty); }
+            set { SetValue(SecondColorProperty, value); }
+        }
+
         public double Minimum
         {
             get { return (double)GetValue(MinimumProperty); }
@@ -80,6 +98,7 @@ namespace MeisterGeister.View.General
             set { SetValue(TicksProperty, value); }
         }
 
+        #endregion
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register("Minimum", typeof(double), typeof(DoubleThumbSlider), new UIPropertyMetadata(0d));
         public static readonly DependencyProperty LowerValueProperty =
@@ -93,14 +112,19 @@ namespace MeisterGeister.View.General
         public static readonly DependencyProperty TickFrequencyProperty =
             DependencyProperty.Register("TickFrequency", typeof(double), typeof(DoubleThumbSlider), new UIPropertyMetadata(0.1d));
         public static readonly DependencyProperty TickPlacementProperty =
-            DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(DoubleThumbSlider), new UIPropertyMetadata(TickPlacement.None));
+            DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(DoubleThumbSlider), new UIPropertyMetadata(TickPlacement.BottomRight));
         public static readonly DependencyProperty TicksProperty =
             DependencyProperty.Register("Ticks", typeof(DoubleCollection), typeof(DoubleThumbSlider), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty StartColorProperty =
+            DependencyProperty.Register("StartColor", typeof(Color), typeof(DoubleThumbSlider), new UIPropertyMetadata(Colors.White));
+        public static readonly DependencyProperty FirstColorProperty =
+            DependencyProperty.Register("FirstColor", typeof(Color), typeof(DoubleThumbSlider), new UIPropertyMetadata(Colors.White));
+        public static readonly DependencyProperty SecondColorProperty =
+            DependencyProperty.Register("SecondColor", typeof(Color), typeof(DoubleThumbSlider), new UIPropertyMetadata(Colors.White));
 
-        #endregion
 
         #region --- Fuctions ---
-        
+
 
         #endregion
 

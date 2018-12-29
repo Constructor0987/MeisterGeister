@@ -6,7 +6,6 @@
              mc:Ignorable="d" Height="Auto" Width="300" Name="_doubleThumbSliderControl" >
 
     <UserControl.Resources>
-
         <SolidColorBrush x:Key="SliderThumb.Static.Foreground" Color="#FFE5E5E5"/>
         <SolidColorBrush x:Key="SliderThumb.MouseOver.Background" Color="#FFDCECFC"/>
         <SolidColorBrush x:Key="SliderThumb.MouseOver.Border" Color="#FF7Eb4EA"/>
@@ -105,7 +104,7 @@
                     </Border>
                     <Track x:Name="PART_Track" Grid.Row="1">
                         <Track.Thumb>
-                            <Thumb x:Name="Thumb" Focusable="False" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalDefault}" VerticalAlignment="Center" Width="11"/>
+                            <Thumb x:Name="Thumb" Focusable="False" Margin="0,0,0,5" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="11" />
                         </Track.Thumb>
                     </Track>
                 </Grid>
@@ -235,7 +234,7 @@
 
     </UserControl.Resources>
     <Grid>
-        <Slider x:Name="lowerSlider"
+        <Slider x:Name="lowerSlider" 
           VerticalAlignment="Center"
           Minimum="{Binding ElementName=_doubleThumbSliderControl, Path=Minimum}"
           Maximum="{Binding ElementName=_doubleThumbSliderControl, Path=Maximum}"
@@ -244,7 +243,19 @@
           TickFrequency="{Binding ElementName=_doubleThumbSliderControl, Path=TickFrequency}"
           TickPlacement="{Binding ElementName=_doubleThumbSliderControl, Path=TickPlacement}"
           Ticks="{Binding ElementName=_doubleThumbSliderControl, Path=Ticks}"
-          />
+          IsSelectionRangeEnabled="True" 
+          SelectionStart="0" SelectionEnd="1"
+          >
+            <Slider.Resources>
+                <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="1,0.5" StartPoint="0,0.5" >
+                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=StartColor}" Offset="0"/>
+                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_doubleThumbSliderControl, Path=LowerValue}"/>
+                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=SecondColor}" Offset="{Binding ElementName=_doubleThumbSliderControl, Path=UpperValue}"/>
+                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=StartColor}" Offset="1"/>
+                </LinearGradientBrush>
+            </Slider.Resources>
+        </Slider>
+        
         <Slider x:Name="upperSlider"
           VerticalAlignment="Center"
           Minimum="{Binding ElementName=_doubleThumbSliderControl, Path=Minimum}"
@@ -254,6 +265,16 @@
           TickFrequency="{Binding ElementName=_doubleThumbSliderControl, Path=TickFrequency}"
           TickPlacement="{Binding ElementName=_doubleThumbSliderControl, Path=TickPlacement}"
           Ticks="{Binding ElementName=_doubleThumbSliderControl, Path=Ticks}" Style="{DynamicResource SliderStyle1}"
-          />
+          >
+            <Slider.Resources>
+                <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop Color="Blue" Offset="1"/>
+                    <GradientStop Color="Cyan" Offset="0.75"/>
+                    <GradientStop Color="Green" Offset="0.5"/>
+                    <GradientStop Color="Yellow" Offset="0.25"/>
+                    <GradientStop Color="Red" Offset="0"/>
+                </LinearGradientBrush>
+            </Slider.Resources>
+        </Slider>
     </Grid>
 </UserControl>
