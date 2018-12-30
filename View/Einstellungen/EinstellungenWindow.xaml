@@ -900,7 +900,14 @@
                                         Command="{Binding onbtnNeuesHUETheme}"
                                         Content="Neues Theme" />
 
-                                    <ViewGeneral:DoubleThumbSlider Width="300" Minimum="0" Maximum="1" StartColor="White" FirstColor="Green" SecondColor="Yellow"  />
+                                    <StackPanel Orientation="Horizontal">
+                                    <ViewGeneral:IntBox x:Name="intSlider" Width="30" HorizontalAlignment="Left" MinValue="2" MaxValue="5" Value="2" />
+                                    
+                                    </StackPanel>
+
+                                    <ViewGeneral:MultipleColorSlider Width="300" Minimum="0" Maximum="1"
+                                        ColorWechsel="{Binding ElementName=intSlider, Path=Value}"
+                                        StartColor="White" FirstColor="Green" SecondColor="Yellow" EndColor="Black"  />
 
                                     <ListBox
                                         Name="_listBoxThemes"

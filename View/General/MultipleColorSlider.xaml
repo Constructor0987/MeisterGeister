@@ -1,11 +1,14 @@
-﻿<UserControl x:Class="MeisterGeister.View.General.DoubleThumbSlider"
+﻿<UserControl x:Class="MeisterGeister.View.General.MultipleColorSlider"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Height="Auto" Width="300" Name="_doubleThumbSliderControl" >
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  
+             mc:Ignorable="d" Height="Auto" Width="300" Name="_multipleColorSliderControl" >
 
     <UserControl.Resources>
+        <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
+
         <SolidColorBrush x:Key="SliderThumb.Static.Foreground" Color="#FFE5E5E5"/>
         <SolidColorBrush x:Key="SliderThumb.MouseOver.Background" Color="#FFDCECFC"/>
         <SolidColorBrush x:Key="SliderThumb.MouseOver.Border" Color="#FF7Eb4EA"/>
@@ -55,6 +58,7 @@
         </ControlTemplate>
         <SolidColorBrush x:Key="SliderThumb.Track.Border" Color="#FFD6D6D6"/>
         <SolidColorBrush x:Key="SliderThumb.Track.Background" Color="#FFE7EAEA"/>
+        
         <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
             <Setter Property="OverridesDefaultStyle" Value="true"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -232,49 +236,164 @@
             </Style.Triggers>
         </Style>
 
+        <ControlTemplate x:Key="SliderHorizontalBig" TargetType="{x:Type Slider}">
+            <Border >
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
+                    <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
+                    <Border x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="1" Background="{StaticResource SliderThumb.Track.Background}" 
+                            Height="14.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                        <Canvas Margin="-6,-1">
+                            <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="4.0" Visibility="Hidden"/>
+                        </Canvas>
+                    </Border>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+
     </UserControl.Resources>
     <Grid>
-        <Slider x:Name="lowerSlider" 
-          VerticalAlignment="Center"
-          Minimum="{Binding ElementName=_doubleThumbSliderControl, Path=Minimum}"
-          Maximum="{Binding ElementName=_doubleThumbSliderControl, Path=Maximum}"
-          Value="{Binding ElementName=_doubleThumbSliderControl, Path=LowerValue, Mode=TwoWay}"
-          IsSnapToTickEnabled="{Binding ElementName=_doubleThumbSliderControl, Path=IsSnapToTickEnabled}"
-          TickFrequency="{Binding ElementName=_doubleThumbSliderControl, Path=TickFrequency}"
-          TickPlacement="{Binding ElementName=_doubleThumbSliderControl, Path=TickPlacement}"
-          Ticks="{Binding ElementName=_doubleThumbSliderControl, Path=Ticks}"
-          IsSelectionRangeEnabled="True" 
-          SelectionStart="0" SelectionEnd="1"
-          >
+        <!--Mainslider for 5, 4, 3, 2 ColorWechsel-->
+        <Slider 
+            VerticalAlignment="Center"
+            Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
+            Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
+            Value="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue, Mode=TwoWay}"
+            IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
+            TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
+            TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"
+            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}"
+            IsSelectionRangeEnabled="True" 
+            SelectionStart="0" SelectionEnd="1" >
+            <Slider.Style>
+                <Style TargetType="Slider">
+                    <!--<Setter Property="Template" Value="{StaticResource SliderHorizontalBig}"/>-->
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="5" >
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Slider.Style>
+            <Slider.Resources>                
+                <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="1,0.5" StartPoint="0,0.5" >
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue}"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1Value}"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=ThirdColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper2Value}"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
+                </LinearGradientBrush>
+            </Slider.Resources>
+        </Slider>
+
+        <Slider 
+            VerticalAlignment="Center"
+            Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
+            Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
+            Value="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue, Mode=TwoWay}"
+            IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
+            TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
+            TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"
+            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}" 
+            IsSelectionRangeEnabled="True" 
+            SelectionStart="0" SelectionEnd="1" >            
+            <Slider.Style>
+                <Style TargetType="Slider">
+                    <!--<Setter Property="Template" Value="{StaticResource SliderHorizontalBig}"/>-->
+                    <Setter Property="Visibility" Value="Collapsed" />                    
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="4" >
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Slider.Style>
             <Slider.Resources>
                 <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="1,0.5" StartPoint="0,0.5" >
-                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=StartColor}" Offset="0"/>
-                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_doubleThumbSliderControl, Path=LowerValue}"/>
-                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=SecondColor}" Offset="{Binding ElementName=_doubleThumbSliderControl, Path=UpperValue}"/>
-                    <GradientStop Color="{Binding ElementName=_doubleThumbSliderControl, Path=StartColor}" Offset="1"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue}"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1Value}"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                 </LinearGradientBrush>
             </Slider.Resources>
         </Slider>
-        
-        <Slider x:Name="upperSlider"
-          VerticalAlignment="Center"
-          Minimum="{Binding ElementName=_doubleThumbSliderControl, Path=Minimum}"
-          Maximum="{Binding ElementName=_doubleThumbSliderControl, Path=Maximum}"
-          Value="{Binding ElementName=_doubleThumbSliderControl, Path=UpperValue, Mode=TwoWay}"
-          IsSnapToTickEnabled="{Binding ElementName=_doubleThumbSliderControl, Path=IsSnapToTickEnabled}"
-          TickFrequency="{Binding ElementName=_doubleThumbSliderControl, Path=TickFrequency}"
-          TickPlacement="{Binding ElementName=_doubleThumbSliderControl, Path=TickPlacement}"
-          Ticks="{Binding ElementName=_doubleThumbSliderControl, Path=Ticks}" Style="{DynamicResource SliderStyle1}"
-          >
+
+        <Slider 
+            VerticalAlignment="Center"
+            Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
+            Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
+            Value="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue, Mode=TwoWay}"
+            IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
+            TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
+            TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"
+            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}"
+            IsSelectionRangeEnabled="True" 
+            SelectionStart="0" SelectionEnd="1" >
+            <Slider.Style>
+                <Style TargetType="Slider">
+                    <!--<Setter Property="Template" Value="{StaticResource SliderHorizontalBig}"/>-->
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="3" >
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Slider.Style>
             <Slider.Resources>
-                <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="1,0.5" StartPoint="0,0.5">
-                    <GradientStop Color="Blue" Offset="1"/>
-                    <GradientStop Color="Cyan" Offset="0.75"/>
-                    <GradientStop Color="Green" Offset="0.5"/>
-                    <GradientStop Color="Yellow" Offset="0.25"/>
-                    <GradientStop Color="Red" Offset="0"/>
+                <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="1,0.5" StartPoint="0,0.5" >
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue}"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                 </LinearGradientBrush>
             </Slider.Resources>
         </Slider>
+
+        <Border Height="20" Width="{Binding ElementName=_multipleColorSliderControl, Path=ActualWidth}">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
+                    <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="2" >
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Slider 
+            Visibility="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=4}"
+            VerticalAlignment="Center"
+            Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
+            Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
+            Value="{Binding ElementName=_multipleColorSliderControl, Path=Upper1Value, Mode=TwoWay}"
+            IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
+            TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
+            TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"
+            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}" Style="{DynamicResource SliderStyle1}"  />
+
+        <Slider 
+            Visibility="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=5}"
+            VerticalAlignment="Center"
+            Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
+            Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
+            Value="{Binding ElementName=_multipleColorSliderControl, Path=Upper2Value, Mode=TwoWay}"
+            IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
+            TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
+            TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"
+            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}" Style="{DynamicResource SliderStyle1}"  />
     </Grid>
 </UserControl>

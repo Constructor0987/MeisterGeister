@@ -823,8 +823,8 @@
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
-    <Compile Include="View\General\DoubleThumbSlider.xaml.cs">
-      <DependentUpon>DoubleThumbSlider.xaml</DependentUpon>
+    <Compile Include="View\General\MultipleColorSlider.xaml.cs">
+      <DependentUpon>MultipleColorSlider.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\SmallSlider.xaml.cs">
       <DependentUpon>SmallSlider.xaml</DependentUpon>
@@ -1659,7 +1659,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\General\DoubleThumbSlider.xaml">
+    <Page Include="View\General\MultipleColorSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
