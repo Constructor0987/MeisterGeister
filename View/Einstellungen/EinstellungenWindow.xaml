@@ -905,8 +905,7 @@
                                     
                                     </StackPanel>
 
-                                    <ViewGeneral:MultipleColorSlider Width="300" Minimum="0" Maximum="1"
-                                        ColorWechsel="{Binding ElementName=intSlider, Path=Value}"
+                                    <ViewGeneral:MultipleColorSlider Width="300" Minimum="0" Maximum="1" ColorWechsel="{Binding ElementName=intSlider, Path=Value}"
                                         StartColor="White" FirstColor="Green" SecondColor="Yellow" EndColor="Black"  />
 
                                     <ListBox
@@ -1012,6 +1011,18 @@
                                                                 </DataGridTemplateColumn>
                                                             </DataGrid.Columns>
                                                         </DataGrid>
+                                                        
+                                                        <ViewGeneral:MultipleColorSlider Grid.Row="1" Grid.Column="3" Width="80" Height="24" Minimum="0" Maximum="1" 
+                                                            ColorWechsel="{Binding lstLightProcess.Count}"
+                                                            StartColor="{Binding lstLightProcess[0].Color}"
+                                                            FirstColor="{Binding lstLightProcess[1].Color}"
+                                                            SecondColor="{Binding lstLightProcess[2].Color}"
+                                                            EndColor="{Binding lstLightProcess[3].Color}"
+                                                                                         />
+                                                        <!--StartColor="{Binding lstLightProcess[0].Color, FallbackValue={x:Null}}" 
+                                                            FirstColor="{Binding lstLightProcess[1].Color, FallbackValue={x:Null}}"  
+                                                            SecondColor="{Binding lstLightProcess[2].Color, FallbackValue={x:Null}}" 
+                                                            EndColor="{Binding lstLightProcess[3].Color, FallbackValue={x:Null}}" />-->
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>

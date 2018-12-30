@@ -118,11 +118,11 @@ namespace MeisterGeister.View.General
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register("Minimum", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(0d));
         public static readonly DependencyProperty LowerValueProperty =
-            DependencyProperty.Register("LowerValue", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(0d, null, LowerValueCoerceValueCallback));
+            DependencyProperty.Register("LowerValue", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.1d, null, LowerValueCoerceValueCallback));
         public static readonly DependencyProperty Upper1ValueProperty =
             DependencyProperty.Register("Upper1Value", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.5d, null, Upper1ValueCoerceValueCallback));
         public static readonly DependencyProperty Upper2ValueProperty =
-            DependencyProperty.Register("Upper2Value", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(1d, null, Upper2ValueCoerceValueCallback));
+            DependencyProperty.Register("Upper2Value", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.9d, null, Upper2ValueCoerceValueCallback));
         public static readonly DependencyProperty MaximumProperty =
             DependencyProperty.Register("Maximum", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(1d));
         public static readonly DependencyProperty IsSnapToTickEnabledProperty =
