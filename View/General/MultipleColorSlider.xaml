@@ -76,7 +76,7 @@
             <Setter Property="Template" Value="{StaticResource SliderHorizontal}"/>
         </Style>
 
-        <ControlTemplate x:Key="SliderHorizontal5" TargetType="{x:Type Slider}">
+        <ControlTemplate x:Key="SliderHorizontal5" x:Name="sldTemplate" TargetType="{x:Type Slider}">
             <Border>
                 <Grid >
                     <Grid.RowDefinitions>
@@ -91,9 +91,12 @@
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
-                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue}"/>
-                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1Value}"/>
-                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=ThirdColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper2Value}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValueProcent}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1ValueProcent}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=ThirdColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper2ValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -125,8 +128,10 @@
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
-                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue}"/>
-                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1Value}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValueProcent}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1ValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -157,7 +162,8 @@
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
-                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValue}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>

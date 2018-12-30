@@ -1012,12 +1012,13 @@
                                                             </DataGrid.Columns>
                                                         </DataGrid>
                                                         
-                                                        <ViewGeneral:MultipleColorSlider Grid.Row="1" Grid.Column="3" Width="80" Height="24" Minimum="0" Maximum="1" 
+                                                        <ViewGeneral:MultipleColorSlider Grid.Row="1" Grid.Column="3" Width="80" Height="24" Minimum="0" Maximum="10000" 
                                                             ColorWechsel="{Binding lstLightProcess.Count}"
                                                             StartColor="{Binding lstLightProcess[0].Color}"
                                                             FirstColor="{Binding lstLightProcess[1].Color}"
                                                             SecondColor="{Binding lstLightProcess[2].Color}"
-                                                            EndColor="{Binding lstLightProcess[3].Color}"
+                                                            EndColor="{Binding lstLightProcess[3].Color}" 
+                                                            LowerValue="{Binding lstLightProcess[1].Dauer}"
                                                                                          />
                                                         <!--StartColor="{Binding lstLightProcess[0].Color, FallbackValue={x:Null}}" 
                                                             FirstColor="{Binding lstLightProcess[1].Color, FallbackValue={x:Null}}"  
