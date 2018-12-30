@@ -605,7 +605,12 @@ namespace MeisterGeister.ViewModel.Settings
         {
             public string Name { get; set; }
             public LightProcess LightProcessSelected { get; set; }
-            public List<LightProcess> lstLightProcess { get; set; }
+            private List<LightProcess> _lstLightProcess;
+            public List<LightProcess> lstLightProcess
+            {
+                get { return _lstLightProcess; }
+                set { _lstLightProcess = value; }
+            }
             public List<Light> lstLights { get; set; }
             public bool doLoop { get; set; }
             public bool doStrobe { get; set; }

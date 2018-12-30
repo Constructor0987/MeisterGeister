@@ -76,7 +76,7 @@
             <Setter Property="Template" Value="{StaticResource SliderHorizontal}"/>
         </Style>
 
-        <ControlTemplate x:Key="SliderHorizontal5" x:Name="sldTemplate" TargetType="{x:Type Slider}">
+        <ControlTemplate x:Key="SliderHorizontal5" TargetType="{x:Type Slider}">
             <Border>
                 <Grid >
                     <Grid.RowDefinitions>
@@ -97,6 +97,8 @@
                                               Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1ValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=ThirdColor}" 
                                               Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper2ValueProcent}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FourthColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper3ValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -112,7 +114,7 @@
                     </Track>
                 </Grid>
             </Border>
-        </ControlTemplate>
+        </ControlTemplate>        
         <ControlTemplate x:Key="SliderHorizontal4" TargetType="{x:Type Slider}">
             <Border>
                 <Grid >
@@ -132,6 +134,8 @@
                                               Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" 
                                               Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1ValueProcent}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=ThirdColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper2ValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -164,6 +168,8 @@
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" 
                                               Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValueProcent}"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=SecondColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=Upper1ValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -194,6 +200,8 @@
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
+                                <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=FirstColor}" 
+                                              Offset="{Binding ElementName=_multipleColorSliderControl, Path=LowerValueProcent}"/>
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=EndColor}" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -201,6 +209,11 @@
                             <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="4.0" Visibility="Hidden"/>
                         </Canvas>
                     </Border>
+                    <Track x:Name="PART_Track" Grid.Row="1">
+                        <Track.Thumb>
+                            <Thumb x:Name="Thumb" Focusable="False" Margin="0,0,0,5" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="11" />
+                        </Track.Thumb>
+                    </Track>
                 </Grid>
             </Border>
         </ControlTemplate>
@@ -208,7 +221,7 @@
 
     </UserControl.Resources>
     <Grid>
-        <!--Mainslider for 5, 4, 3, 2 ColorWechsel-->
+        <!--Mainslider for 6, 5, 4, 3, 2 ColorWechsel-->
         <Slider 
             VerticalAlignment="Center"
             Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
@@ -224,6 +237,10 @@
                 <Style TargetType="Slider">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
+                        <!--<DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="6" >
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="Template" Value="{StaticResource SliderHorizontal6}"/>
+                        </DataTrigger>-->
                         <DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="5" >
                             <Setter Property="Visibility" Value="Visible" />
                             <Setter Property="Template" Value="{StaticResource SliderHorizontal5}"/>
@@ -247,7 +264,7 @@
 
         <Slider 
             Visibility="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel, UpdateSourceTrigger=PropertyChanged, 
-                Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=4}"
+                Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=3}"
             VerticalAlignment="Center"
             Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
             Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
@@ -259,11 +276,23 @@
 
         <Slider 
             Visibility="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel, UpdateSourceTrigger=PropertyChanged, 
-                Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=5}"
+                Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=4}"
             VerticalAlignment="Center"
             Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
             Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
             Value="{Binding ElementName=_multipleColorSliderControl, Path=Upper2Value, Mode=TwoWay}"
+            IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
+            TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
+            TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"
+            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}" Style="{DynamicResource SliderStyle1}"  />
+
+        <Slider 
+            Visibility="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel, UpdateSourceTrigger=PropertyChanged, 
+                Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter=5}"
+            VerticalAlignment="Center"
+            Minimum="{Binding ElementName=_multipleColorSliderControl, Path=Minimum}"
+            Maximum="{Binding ElementName=_multipleColorSliderControl, Path=Maximum}"
+            Value="{Binding ElementName=_multipleColorSliderControl, Path=Upper3Value, Mode=TwoWay}"
             IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
             TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
             TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"

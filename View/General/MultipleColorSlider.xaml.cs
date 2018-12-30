@@ -31,12 +31,6 @@ namespace MeisterGeister.View.General
             set { SetValue(StartColorProperty, value); }
         }
 
-        public Color EndColor
-        {
-            get { return (Color)GetValue(EndColorProperty); }
-            set { SetValue(EndColorProperty, value); }
-        }
-
         public Color FirstColor
         {
             get { return (Color)GetValue(FirstColorProperty); }
@@ -54,6 +48,17 @@ namespace MeisterGeister.View.General
             get { return (Color)GetValue(ThirdColorProperty); }
             set { SetValue(ThirdColorProperty, value); }
         }
+        public Color FourthColor
+        {
+            get { return (Color)GetValue(FourthColorProperty); }
+            set { SetValue(FourthColorProperty, value); }
+        }
+
+        public Color EndColor
+        {
+            get { return (Color)GetValue(EndColorProperty); }
+            set { SetValue(EndColorProperty, value); }
+        }
 
         public double Minimum
         {
@@ -64,11 +69,7 @@ namespace MeisterGeister.View.General
         public double LowerValue
         {
             get { return (double)GetValue(LowerValueProperty); }
-            set
-            {
-                SetValue(LowerValueProperty, value);
-                LowerValueProcent = value / Maximum;
-            }
+            set { SetValue(LowerValueProperty, value); }
         }
 
         public double LowerValueProcent
@@ -88,8 +89,7 @@ namespace MeisterGeister.View.General
             get { return (double)GetValue(Upper1ValueProcentProperty); }
             set { SetValue(Upper1ValueProcentProperty, value); }
         }
-
-
+        
         public double Upper2Value
         {
             get { return (double)GetValue(Upper2ValueProperty); }
@@ -102,6 +102,17 @@ namespace MeisterGeister.View.General
             set { SetValue(Upper2ValueProcentProperty, value); }
         }
 
+        public double Upper3Value
+        {
+            get { return (double)GetValue(Upper3ValueProperty); }
+            set { SetValue(Upper3ValueProperty, value); }
+        }
+
+        public double Upper3ValueProcent
+        {
+            get { return (double)GetValue(Upper3ValueProcentProperty); }
+            set { SetValue(Upper3ValueProcentProperty, value); }
+        }
 
         public double Maximum
         {
@@ -150,9 +161,13 @@ namespace MeisterGeister.View.General
         public static DependencyProperty Upper1ValueProcentProperty =
             DependencyProperty.Register("Upper1ValueProcent", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.5d));
         public static DependencyProperty Upper2ValueProperty =
-            DependencyProperty.Register("Upper2Value", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.9d, null, Upper2ValueCoerceValueCallback));
+            DependencyProperty.Register("Upper2Value", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.7d, null, Upper2ValueCoerceValueCallback));
         public static DependencyProperty Upper2ValueProcentProperty =
-            DependencyProperty.Register("Upper2ValueProcent", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.9d));
+            DependencyProperty.Register("Upper2ValueProcent", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.7d));
+        public static DependencyProperty Upper3ValueProperty =
+            DependencyProperty.Register("Upper3Value", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.9d, null, Upper3ValueCoerceValueCallback));
+        public static DependencyProperty Upper3ValueProcentProperty =
+            DependencyProperty.Register("Upper3ValueProcent", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.9d));
         public static DependencyProperty MaximumProperty =
             DependencyProperty.Register("Maximum", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(1d));
         public static DependencyProperty IsSnapToTickEnabledProperty =
@@ -165,14 +180,16 @@ namespace MeisterGeister.View.General
             DependencyProperty.Register("Ticks", typeof(DoubleCollection), typeof(MultipleColorSlider), new UIPropertyMetadata(null));
         public static DependencyProperty StartColorProperty =
             DependencyProperty.Register("StartColor", typeof(Color), typeof(MultipleColorSlider), new UIPropertyMetadata(Colors.White));
-        public static DependencyProperty EndColorProperty =
-            DependencyProperty.Register("EndColor", typeof(Color), typeof(MultipleColorSlider), new UIPropertyMetadata(Colors.White));
         public static DependencyProperty FirstColorProperty =
             DependencyProperty.Register("FirstColor", typeof(Color), typeof(MultipleColorSlider), new UIPropertyMetadata(Colors.White));
         public static DependencyProperty SecondColorProperty =
             DependencyProperty.Register("SecondColor", typeof(Color), typeof(MultipleColorSlider), new UIPropertyMetadata(Colors.White));
         public static DependencyProperty ThirdColorProperty =
             DependencyProperty.Register("ThirdColor", typeof(Color), typeof(MultipleColorSlider), new UIPropertyMetadata(Colors.White));
+        public static DependencyProperty FourthColorProperty =
+            DependencyProperty.Register("FourthColor", typeof(Color), typeof(MultipleColorSlider), new UIPropertyMetadata(Colors.White));
+        public static DependencyProperty EndColorProperty =
+            DependencyProperty.Register("EndColor", typeof(Color), typeof(MultipleColorSlider), new UIPropertyMetadata(Colors.White));
 
         #endregion
 
@@ -187,10 +204,13 @@ namespace MeisterGeister.View.General
             MultipleColorSlider targetSlider = (MultipleColorSlider)target;
             double value = (double)valueObject;
 
-            double valReturn = (targetSlider.ColorWechsel >= 4) ?
+            double valReturn = (targetSlider.ColorWechsel >= 3) ?
                 Math.Min(value, targetSlider.Upper1Value * .99) :
                 value;
-            targetSlider.LowerValueProcent = valReturn / targetSlider.Maximum;
+            targetSlider.LowerValueProcent =
+                (targetSlider.ColorWechsel >= 3) ?
+                (valReturn + (targetSlider.Upper1Value- valReturn )/ 2) / targetSlider.Maximum:
+                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
             
             return valReturn;
         }
@@ -201,10 +221,19 @@ namespace MeisterGeister.View.General
             double value = (double)valueObject;
 
             double valReturn =
-                (targetSlider.ColorWechsel >= 5)?
+                (targetSlider.ColorWechsel >= 4)?
                 Math.Min(Math.Max(value, targetSlider.LowerValue * 1.01), targetSlider.Upper2Value * .99):
                 Math.Max(value, targetSlider.LowerValue * 1.01);
-            targetSlider.Upper1ValueProcent = valReturn / targetSlider.Maximum;
+
+            targetSlider.LowerValueProcent =
+                (targetSlider.ColorWechsel >= 3) ?
+                (targetSlider.LowerValue + (valReturn - targetSlider.LowerValue) / 2) / targetSlider.Maximum :
+                (targetSlider.LowerValue + (targetSlider.Maximum - targetSlider.LowerValue) / 2) / targetSlider.Maximum;
+
+            targetSlider.Upper1ValueProcent =
+                (targetSlider.ColorWechsel >= 4) ?
+                (valReturn + (targetSlider.Upper2Value - valReturn) / 2) / targetSlider.Maximum :
+                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
 
             return valReturn;
 
@@ -215,7 +244,33 @@ namespace MeisterGeister.View.General
             MultipleColorSlider targetSlider = (MultipleColorSlider)target;
             double value = (double)valueObject;
             double valReturn = Math.Max(value, targetSlider.Upper1Value * 1.01);
-            targetSlider.Upper2ValueProcent = valReturn / targetSlider.Maximum;
+            
+            targetSlider.Upper1ValueProcent =
+                (targetSlider.ColorWechsel >= 4) ?
+                (targetSlider.Upper1Value + (valReturn - targetSlider.Upper1Value) / 2) / targetSlider.Maximum :
+                (targetSlider.Upper1Value + (targetSlider.Maximum - targetSlider.Upper1Value) / 2) / targetSlider.Maximum;
+            
+            targetSlider.Upper2ValueProcent =
+                (targetSlider.ColorWechsel >= 5) ?
+                (valReturn + (targetSlider.Upper3Value - valReturn) / 2) / targetSlider.Maximum :
+                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
+
+            return valReturn;
+        }
+
+        private static object Upper3ValueCoerceValueCallback(DependencyObject target, object valueObject)
+        {
+            MultipleColorSlider targetSlider = (MultipleColorSlider)target;
+            double value = (double)valueObject;
+            double valReturn = Math.Max(value, targetSlider.Upper1Value * 1.01);
+            
+            targetSlider.Upper2ValueProcent =
+                (targetSlider.ColorWechsel >= 5) ?
+                (targetSlider.Upper2Value + (valReturn - targetSlider.Upper2Value) / 2) / targetSlider.Maximum :
+                (targetSlider.Upper2Value + (targetSlider.Maximum - targetSlider.Upper2Value) / 2) / targetSlider.Maximum;
+            
+            targetSlider.Upper3ValueProcent =
+                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
 
             return valReturn;
         }

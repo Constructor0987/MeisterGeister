@@ -1011,26 +1011,44 @@
                                                                 </DataGridTemplateColumn>
                                                             </DataGrid.Columns>
                                                         </DataGrid>
-                                                        
+
                                                         <ViewGeneral:MultipleColorSlider Grid.Row="1" Grid.Column="3" Width="80" Height="24" Minimum="0" Maximum="10000" 
                                                             ColorWechsel="{Binding lstLightProcess.Count}"
                                                             StartColor="{Binding lstLightProcess[0].Color}"
                                                             FirstColor="{Binding lstLightProcess[1].Color}"
                                                             SecondColor="{Binding lstLightProcess[2].Color}"
-                                                            EndColor="{Binding lstLightProcess[3].Color}" 
-                                                            LowerValue="{Binding lstLightProcess[1].Dauer}"
-                                                                                         />
-                                                        <!--StartColor="{Binding lstLightProcess[0].Color, FallbackValue={x:Null}}" 
-                                                            FirstColor="{Binding lstLightProcess[1].Color, FallbackValue={x:Null}}"  
-                                                            SecondColor="{Binding lstLightProcess[2].Color, FallbackValue={x:Null}}" 
-                                                            EndColor="{Binding lstLightProcess[3].Color, FallbackValue={x:Null}}" />-->
+                                                            ThirdColor="{Binding lstLightProcess[3].Color}"
+                                                            FourthColor="{Binding lstLightProcess[4].Color}"
+                                                            LowerValue="{Binding lstLightProcess[0].Dauer, Mode=TwoWay}"
+                                                            Upper1Value="{Binding lstLightProcess[1].Dauer, Mode=TwoWay}"
+                                                            Upper2Value="{Binding lstLightProcess[2].Dauer, Mode=TwoWay}"
+                                                            Upper3Value="{Binding lstLightProcess[3].Dauer, Mode=TwoWay}"  >
+                                                            <ViewGeneral:MultipleColorSlider.Style>
+                                                                <Style TargetType="ViewGeneral:MultipleColorSlider">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="4">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="5">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ViewGeneral:MultipleColorSlider.Style>
+                                                        </ViewGeneral:MultipleColorSlider>
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
-                                        <!--<ListBox.BorderBrush>ItemTemplate="{StaticResource ThemeTemplate}"
-                                            <SolidColorBrush />
-                                        </ListBox.BorderBrush>-->
                                     </ListBox>
                                     <Button
                                         Grid.Row="3"
