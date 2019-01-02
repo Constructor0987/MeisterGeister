@@ -490,12 +490,13 @@ namespace MeisterGeister.ViewModel.Settings
                 ThemeToDo.vm = this;
                 ThemeToDo.actLightProcess = null;
                 ThemeToDo.StartTime = 0;
-
+                ThemeToDo.isRunning = true;
                 ThemeToDo._timer.Start();
             }
             else
             {
                 ThemeToDo._timer.Stop();
+                ThemeToDo.isRunning = false;
             }
         }
 
@@ -506,11 +507,12 @@ namespace MeisterGeister.ViewModel.Settings
             lst.Add(new HUETheme()
             {
                 Name = "Neues_HUE",
+                KomplettDauer = 8000,
                 doLoop = true,
                 lstLightProcess = new List<LightProcess>() {
-                    new LightProcess() { Brightness= 100, Color = Colors.Red, Dauer= 2000, Phase=0 },
-                    new LightProcess() { Brightness= 100, Color = Colors.Yellow, Dauer= 2000, Phase=1 },
-                    new LightProcess() { Brightness= 100, Color = Colors.Green, Dauer= 2000, Phase=2 } }
+                    new LightProcess() { Brightness= 100, Color = Colors.Red, DauerProzent= .25, Phase=0 },
+                    new LightProcess() { Brightness= 100, Color = Colors.Yellow, DauerProzent= .5, Phase=1 },
+                    new LightProcess() { Brightness= 100, Color = Colors.Green, DauerProzent= .75, Phase=2 } }                
             });
             lstHUEThemes = lst;
         }
@@ -533,9 +535,15 @@ namespace MeisterGeister.ViewModel.Settings
             HUEThemeSelected = lstHUEThemes[lstHUEThemes.Count - 1];
             if (HUEThemeSelected.lstLightProcess != null)
                 lst.AddRange(HUEThemeSelected.lstLightProcess);
-            lst.Add(new LightProcess() { Phase = lst.Count, Dauer = 5000, Color = Colors.AliceBlue, Brightness = 255 });
+            lst.Add(new LightProcess() { Phase = lst.Count,
+                DauerProzent = lst.Count == 0? .5: (lst[lst.Count-1].DauerProzent + 1) /2,
+                Dauer = HUEThemeSelected.KomplettDauer * (lst.Count == 0 ? .5 : (lst[lst.Count - 1].DauerProzent + 1) / 2),
+                KomplettDauer = HUEThemeSelected.KomplettDauer,
+                Color = Colors.AliceBlue,
+                Brightness = 255 });
 
-            ((HUETheme)obj).lstLightProcess = lst;
+            //((HUETheme)obj).lstLightProcess = lst;
+            HUEThemeSelected.lstLightProcess = lst;
             lstHUEThemes = lstThemes;
         }
 
@@ -594,9 +602,36 @@ namespace MeisterGeister.ViewModel.Settings
 
         public class LightProcess
         {
+            private int _komplettDauer;
+            public int KomplettDauer
+            {
+                get { return _komplettDauer; }
+                set
+                {
+                    _komplettDauer = value;
+                    Dauer = value * DauerProzent;
+                }
+            }
+
             public bool IsSelected { get; set; }
             public int Phase { get; set; }
-            public double Dauer { get; set; }
+            private double _dauerProzent;
+            public double DauerProzent
+            {
+                get { return _dauerProzent; }
+                set { _dauerProzent = value; }
+            }
+            private double _dauer;
+            public double Dauer
+            {
+                get { return _dauer; }
+                set
+                {
+                    _dauer = value;
+
+                    DauerProzent = value / KomplettDauer;
+                }
+            }
             public Color Color { get; set; }
             public int? Brightness { get; set; }
         }
@@ -604,12 +639,37 @@ namespace MeisterGeister.ViewModel.Settings
         public class HUETheme
         {
             public string Name { get; set; }
-            public LightProcess LightProcessSelected { get; set; }
+
+            private int _komplettDauer;
+            public int KomplettDauer
+            {
+                get { return _komplettDauer; }
+                set { _komplettDauer = value;
+                    if (lstLightProcess != null)
+                        foreach (LightProcess lPro in lstLightProcess)
+                    { lPro.KomplettDauer = value; }
+                }
+            }
+
+            private LightProcess _lightProcessSelected;
+            public LightProcess LightProcessSelected
+            {
+                get { return _lightProcessSelected; }
+                set { _lightProcessSelected = value;
+                }
+            }
+
             private List<LightProcess> _lstLightProcess;
             public List<LightProcess> lstLightProcess
             {
                 get { return _lstLightProcess; }
-                set { _lstLightProcess = value; }
+                set
+                {
+                    _lstLightProcess = value;
+                    if (value !=null)
+                        foreach (LightProcess lPro in value)
+                    { lPro.KomplettDauer = KomplettDauer; }
+                }
             }
             public List<Light> lstLights { get; set; }
             public bool doLoop { get; set; }
@@ -674,16 +734,25 @@ namespace MeisterGeister.ViewModel.Settings
                     //Or start a colorloop
                     //command.Effect = Q42.HueApi.Effect.ColorLoop;
                     command.Effect = Q42.HueApi.Effect.None;
+
+                    Console.WriteLine(StartTime + ":  START    " +lstLightProcess[actLightProcess.Value].Color.R + " " +
+                        lstLightProcess[actLightProcess.Value].Color.G + " " +
+                        lstLightProcess[actLightProcess.Value].Color.B + "    "  );
                     //Once you have composed your command, send it to one or more lights
                     vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                                    
+                    _timer.Interval = new TimeSpan(0, 0, 0, 0, (int)lstLightProcess[actLightProcess.Value].Dauer);
 
                     return;
                 }
 
-
-                int tDelta = Environment.TickCount - StartTime;
-                if (tDelta > lstLightProcess[actLightProcess.Value].Dauer || doStrobe)
-                {
+                //int tDelta = Environment.TickCount - StartTime;
+                //if (tDelta > KomplettDauer ||
+                //    (tDelta > KomplettDauer * lstLightProcess[actLightProcess.Value].DauerProzent &&
+                //    lstLightProcess.Count < actLightProcess.Value + 1 &&
+                //    tDelta < KomplettDauer * lstLightProcess[actLightProcess.Value].DauerProzent))
+                // || doStrobe)
+          //      {
                     StartTime = Environment.TickCount;
                     if (actLightProcess.Value + 1 < lstLightProcess.Count)
                     { actLightProcess++; }
@@ -707,9 +776,18 @@ namespace MeisterGeister.ViewModel.Settings
                     //Or start a colorloop
                     //command.Effect = Q42.HueApi.Effect.ColorLoop;
                     command.Effect = Q42.HueApi.Effect.None;
+
+
+                    Console.WriteLine(StartTime + ": CYCLE " + actLightProcess.Value + "   " + lstLightProcess[actLightProcess.Value].Color.R + " " +
+                        lstLightProcess[actLightProcess.Value].Color.G + " " +
+                        lstLightProcess[actLightProcess.Value].Color.B + "    " +
+                        lstLightProcess[actLightProcess.Value].Brightness);
+
                     //Once you have composed your command, send it to one or more lights
                     vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
-                }
+
+                    _timer.Interval = new TimeSpan(0, 0, 0, 0, (int)lstLightProcess[actLightProcess.Value].Dauer);
+       //         }
 
                 return;
                 //    if (!InitDone)

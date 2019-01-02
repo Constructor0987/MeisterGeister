@@ -15,7 +15,7 @@ namespace MeisterGeister.View.General
     {
         public MultipleColorSlider()
         {
-             InitializeComponent();
+            InitializeComponent();
         }
 
         #region //---- EIGENSCHAFTEN ----
@@ -169,7 +169,7 @@ namespace MeisterGeister.View.General
         public static DependencyProperty Upper3ValueProcentProperty =
             DependencyProperty.Register("Upper3ValueProcent", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(.9d));
         public static DependencyProperty MaximumProperty =
-            DependencyProperty.Register("Maximum", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(1d));
+            DependencyProperty.Register("Maximum", typeof(double), typeof(MultipleColorSlider), new UIPropertyMetadata(1d, null, MaximumCoerceValueCallback));
         public static DependencyProperty IsSnapToTickEnabledProperty =
             DependencyProperty.Register("IsSnapToTickEnabled", typeof(bool), typeof(MultipleColorSlider), new UIPropertyMetadata(false));
         public static DependencyProperty TickFrequencyProperty =
@@ -194,10 +194,22 @@ namespace MeisterGeister.View.General
         #endregion
 
         #region --- Fuctions ---
-        
+
         #endregion
 
         #region --- Events ---
+
+        private static object MaximumCoerceValueCallback(DependencyObject target, object valueObject)
+        {
+            MultipleColorSlider targetSlider = (MultipleColorSlider)target;
+            double value = (double)valueObject;
+
+            targetSlider.LowerValue = .1d * value;
+            targetSlider.Upper1Value = .5 * value;
+            targetSlider.Upper2Value = .7 * value;
+            targetSlider.Upper3Value = .9 * value;
+            return value;
+        }
 
         private static object LowerValueCoerceValueCallback(DependencyObject target, object valueObject)
         {

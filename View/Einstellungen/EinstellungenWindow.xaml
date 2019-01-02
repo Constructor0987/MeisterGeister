@@ -876,13 +876,17 @@
                         <TabItem Header="Themes">
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="400" />
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="30" />
                                         <RowDefinition Height="30*" />
                                         <RowDefinition Height="30" />
                                     </Grid.RowDefinitions>
-                                    <ListBox ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}">
+                                    <!--<ListBox ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                                         <ListBox.Template>
                                             <ControlTemplate TargetType="ListBox">
                                                 <WrapPanel MinHeight="25" ItemWidth="30">
@@ -890,7 +894,7 @@
                                                 </WrapPanel>
                                             </ControlTemplate>
                                         </ListBox.Template>
-                                    </ListBox>
+                                    </ListBox>-->
                                     <Button
                                         Grid.Row="1"
                                         Width="110"
@@ -899,14 +903,6 @@
                                         HorizontalAlignment="Left"
                                         Command="{Binding onbtnNeuesHUETheme}"
                                         Content="Neues Theme" />
-
-                                    <StackPanel Orientation="Horizontal">
-                                    <ViewGeneral:IntBox x:Name="intSlider" Width="30" HorizontalAlignment="Left" MinValue="2" MaxValue="5" Value="2" />
-                                    
-                                    </StackPanel>
-
-                                    <ViewGeneral:MultipleColorSlider Width="300" Minimum="0" Maximum="1" ColorWechsel="{Binding ElementName=intSlider, Path=Value}"
-                                        StartColor="White" FirstColor="Green" SecondColor="Yellow" EndColor="Black"  />
 
                                     <ListBox
                                         Name="_listBoxThemes"
@@ -917,139 +913,150 @@
                                         ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
                                         
                                         ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}">
+                                        SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" >
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="1*"/>
-                                                        <ColumnDefinition Width="130"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition />
-                                                        <RowDefinition />
-                                                    </Grid.RowDefinitions>
-                                                    <Button Grid.Row="0" Grid.Column="1" Width="27" Height="27" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                                        Command="{Binding DataContext.onbtnAddHUEProcess, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                                                        CommandParameter="{Binding}" Margin="0" >
-                                                        <Button.Template>
-                                                            <ControlTemplate>
-                                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                                                            </ControlTemplate>
-                                                        </Button.Template>
-                                                    </Button>
-                                                    <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="Wiederholen" Margin="0,0,30,0"
-                                                        IsChecked="{Binding Path=doLoop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="18" />
-                                                    <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Content="Stobe" IsChecked="{ Binding doStrobe}" Margin="0,20" />
-
-                                                    <Grid Grid.RowSpan="2" Margin="0" VerticalAlignment="Center" Height="140">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="28" />
-                                                            <RowDefinition Height="*" />
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="157" />
-                                                            <ColumnDefinition Width="85" />
-                                                            <ColumnDefinition Width="126" />
-                                                            <ColumnDefinition Width="284" />
-                                                            <ColumnDefinition Width="*" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <Label Grid.Row="0" Content="Theme Name" />
-                                                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,2" 
-                                                                 Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                        <ComboBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="1" Width="Auto" Height="25" Margin="50,0,75,0"
-                                                            VerticalAlignment="Top" DisplayMemberPath="Name" 
-                                                                  ItemsSource="{Binding Path=DataContext.lstHUELights, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                                                            SelectedValue="{Binding AddLightToTheme}" />
-                                                        <!--<ListBox
-                                                            Grid.Row="0"
-                                                            Grid.ColumnSpan="4"
-                                                            MaxHeight="200"
-                                                            Margin="5,30,5,0"
-                                                            VerticalAlignment="Top"
-                                                            Background="Transparent"
-                                                            DisplayMemberPath="Name"
-                                                            ItemsSource="{Binding lstLights, UpdateSourceTrigger=PropertyChanged}"
-                                                            ScrollViewer.VerticalScrollBarVisibility="Auto" Height="58" />-->
-
-                                                        <DataGrid Grid.Row="1" Grid.ColumnSpan="4"
-                                                            ItemsSource="{Binding Path=lstLightProcess, UpdateSourceTrigger=PropertyChanged}"
-                                                            SelectedItem="{Binding Path=LightProcessSelected}"
-                                                            VerticalScrollBarVisibility="Auto">
-                                                            <DataGrid.Columns>
-                                                                <DataGridTextColumn Width="55" Binding="{Binding Path=Phase}" Header="Phase" IsReadOnly="True" />
-                                                                <DataGridTextColumn Width="100" Binding="{Binding Path=Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Dauer [ms]" />
-                                                                <DataGridTemplateColumn>
-                                                                    <DataGridTemplateColumn.CellTemplate>
-                                                                        <DataTemplate>
-                                                                            <Button Height="22" 
-                                                                                    Command="{Binding DataContext.onBtnSelectHUEColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                                                                                    CommandParameter="{Binding ElementName=EinstellungWnd}">
-                                                                                <Button.Content>
-                                                                                    <StackPanel Width="75" Margin="-2" Orientation="Horizontal">
-                                                                                        <Rectangle Width="22" Height="22" 
-                                                                                                   Fill="{Binding Path=Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource ColorToSolidColorBrushConverter1}}" />
-                                                                                        <Label Padding="0" Content="Auswahl" />
-                                                                                    </StackPanel>
-                                                                                </Button.Content>
-                                                                            </Button>
-                                                                        </DataTemplate>
-                                                                    </DataGridTemplateColumn.CellTemplate>
-                                                                </DataGridTemplateColumn>
-                                                                <DataGridTextColumn Width="100" Binding="{Binding Path=Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Farbe" />
-                                                                <DataGridTemplateColumn Header="Helligkeit">
-                                                                    <DataGridTemplateColumn.CellTemplate>
-                                                                        <DataTemplate>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <Slider Width="80" Maximum="255" Minimum="1"
-                                                                                    Value="{Binding Path=Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                                                <Label Width="25" Padding="0" Content="{Binding Path=Brightness, UpdateSourceTrigger=PropertyChanged}" />
-                                                                            </StackPanel>
-                                                                        </DataTemplate>
-                                                                    </DataGridTemplateColumn.CellTemplate>
-                                                                </DataGridTemplateColumn>
-                                                            </DataGrid.Columns>
-                                                        </DataGrid>
-
-                                                        <ViewGeneral:MultipleColorSlider Grid.Row="1" Grid.Column="3" Width="80" Height="24" Minimum="0" Maximum="10000" 
-                                                            ColorWechsel="{Binding lstLightProcess.Count}"
-                                                            StartColor="{Binding lstLightProcess[0].Color}"
-                                                            FirstColor="{Binding lstLightProcess[1].Color}"
-                                                            SecondColor="{Binding lstLightProcess[2].Color}"
-                                                            ThirdColor="{Binding lstLightProcess[3].Color}"
-                                                            FourthColor="{Binding lstLightProcess[4].Color}"
-                                                            LowerValue="{Binding lstLightProcess[0].Dauer, Mode=TwoWay}"
-                                                            Upper1Value="{Binding lstLightProcess[1].Dauer, Mode=TwoWay}"
-                                                            Upper2Value="{Binding lstLightProcess[2].Dauer, Mode=TwoWay}"
-                                                            Upper3Value="{Binding lstLightProcess[3].Dauer, Mode=TwoWay}"  >
-                                                            <ViewGeneral:MultipleColorSlider.Style>
-                                                                <Style TargetType="ViewGeneral:MultipleColorSlider">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
-                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
-                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="4">
-                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="5">
-                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
-                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </ViewGeneral:MultipleColorSlider.Style>
-                                                        </ViewGeneral:MultipleColorSlider>
+                                                    <Grid>
+                                                        <StackPanel Orientation="Horizontal" >
+                                                            <ViewGeneral:MultipleColorSlider Grid.Row="1" Grid.Column="3" Width="140" Height="24" Minimum="0" 
+                                                                Maximum="{Binding KomplettDauer}" 
+                                                                ColorWechsel="{Binding lstLightProcess.Count, UpdateSourceTrigger=PropertyChanged}"
+                                                                StartColor="{Binding lstLightProcess[0].Color}"
+                                                                FirstColor="{Binding lstLightProcess[1].Color}"
+                                                                SecondColor="{Binding lstLightProcess[2].Color}"
+                                                                ThirdColor="{Binding lstLightProcess[3].Color}"
+                                                                FourthColor="{Binding lstLightProcess[4].Color}"
+                                                                LowerValue="{Binding lstLightProcess[0].Dauer, Mode=TwoWay}"
+                                                                Upper1Value="{Binding lstLightProcess[1].Dauer, Mode=TwoWay}"
+                                                                Upper2Value="{Binding lstLightProcess[2].Dauer, Mode=TwoWay}"
+                                                                Upper3Value="{Binding lstLightProcess[3].Dauer, Mode=TwoWay}"  >
+                                                                <ViewGeneral:MultipleColorSlider.Style>
+                                                                    <Style TargetType="ViewGeneral:MultipleColorSlider">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="4">
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="5">
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </ViewGeneral:MultipleColorSlider.Style>
+                                                            </ViewGeneral:MultipleColorSlider>
+                                                            <TextBox MinWidth="150" Margin="5,0" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </StackPanel>
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
+
+                                    
+                                    <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="130"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Button Grid.Row="0" Grid.Column="1" Width="27" Height="27" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                        Command="{Binding DataContext.onbtnAddHUEProcess, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding}" >
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="5">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Grid.Row="0" Grid.Column="1" Width="27" Height="27" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,0,0,0"
+                                                Command="{Binding DataContext.onbtnRemoveHUEProcess, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                CommandParameter="{Binding}" >
+                                                    <Style TargetType="Button">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding lstLightProcess.Count }" Value="1">
+                                                                <Setter Property="IsEnabled" Value="False" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                    <Button.Template>
+                                                        <ControlTemplate>
+                                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                </Button>
+
+                                        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" >
+                                            <CheckBox Content="Wiederholen" IsChecked="{Binding HUEThemeSelected.doLoop}"  />
+                                            <CheckBox Content="Stobe" IsChecked="{Binding HUEThemeSelected.doStrobe}"  />
+                                            <ViewGeneral:IntBox MinValue="500" MaxValue="30000" 
+                                                Value="{Binding HUEThemeSelected.KomplettDauer}" ShowButtons="True" IncValue="100" DecValue="100" />
+                                        </StackPanel>
+                                        <Grid VerticalAlignment="Top" Grid.Row="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="157" />
+                                                <ColumnDefinition Width="85*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                                <Label Content="Theme Name" />
+                                                <TextBox MinWidth="150"
+                                                        Text="{Binding HUEThemeSelected.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                <ComboBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="1" Width="Auto" Height="25" Margin="20,0,0,0"
+                                                VerticalAlignment="Top" DisplayMemberPath="Name"
+                                                MinWidth="10"
+                                                ItemsSource="{Binding lstHUELights}"
+                                                SelectedValue="{Binding HUEThemeSelected.AddLightToTheme}" />
+                                            </StackPanel>
+                                            <DataGrid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                                                ItemsSource="{Binding HUEThemeSelected.lstLightProcess, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedItem="{Binding HUEThemeSelected.LightProcessSelected}"
+                                                VerticalScrollBarVisibility="Auto">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Width="55" Binding="{Binding Path=Phase}" Header="Phase" IsReadOnly="True" />
+                                                    <DataGridTemplateColumn Width="140">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <Button Height="26" 
+                                                                            Command="{Binding DataContext.onBtnSelectHUEColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                            CommandParameter="{Binding ElementName=EinstellungWnd}">
+                                                                    <Button.Content>
+                                                                        <Border Padding="0" Height="22" Margin="-2" CornerRadius="3" Width="50" Background="{Binding Path=Color, Converter={StaticResource ColorToSolidColorBrushConverter1}}" >
+                                                                            <Label Content="Farbe" Padding="0" HorizontalAlignment="Center" />
+                                                                        </Border>
+                                                                    </Button.Content>
+                                                                </Button>
+                                                            </DataTemplate>                                                            
+                                                        </DataGridTemplateColumn.CellTemplate>                                                        
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTextColumn Width="100" Binding="{Binding Path=Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Dauer [ms]" />
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                            
                                     <Button
                                         Grid.Row="3"
                                         Width="100"

@@ -23,7 +23,7 @@
 
         <ControlTemplate x:Key="SliderThumbHorizontalBottom" TargetType="{x:Type Thumb}">
             <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
-                <Path x:Name="grip" Data="M 1,1 C1,1 1,14 1,14 z"                     
+                <Path x:Name="grip" Data="M 1,1 C1,1 2,1 2,1 2,18 2,18 2,18 1,18 1,18 1,18 1,18 1,1 1,1 z"                     
                       Fill="{StaticResource SliderThumb.Static.Background}" 
                       Stretch="Fill" SnapsToDevicePixels="True" Stroke="{StaticResource SliderThumb.Static.Border}" StrokeThickness="2" UseLayoutRounding="True" VerticalAlignment="Center"/>
             </Grid>
@@ -60,7 +60,7 @@
                     </Border>
                     <Track x:Name="PART_Track" Grid.Row="1">
                         <Track.Thumb>
-                            <Thumb x:Name="Thumb" Focusable="False" Margin="0,0,0,5" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="11" />
+                            <Thumb x:Name="Thumb" Focusable="False" Margin="5,0" Height="24" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="4" />
                         </Track.Thumb>
                     </Track>
                 </Grid>
@@ -87,7 +87,7 @@
                     <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
                     <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
                     <Border x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="1" 
-                            Height="14.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                            Height="20.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center" CornerRadius="3"  >
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
@@ -108,8 +108,8 @@
                     </Border>
                     <Track x:Name="PART_Track" Grid.Row="1">
                         <Track.Thumb>
-                            <Thumb x:Name="Thumb" Focusable="False" Margin="0,0,0,5" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" 
-                                   VerticalAlignment="Center" Width="11" />
+                            <Thumb x:Name="Thumb" Focusable="False" Margin="5,0" Height="24" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" 
+                                   VerticalAlignment="Center" Width="4" />
                         </Track.Thumb>
                     </Track>
                 </Grid>
@@ -126,7 +126,7 @@
                     <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
                     <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
                     <Border x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="1" 
-                            Height="14.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                            Height="20.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center" CornerRadius="3"  >
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
@@ -145,7 +145,7 @@
                     </Border>
                     <Track x:Name="PART_Track" Grid.Row="1">
                         <Track.Thumb>
-                            <Thumb x:Name="Thumb" Focusable="False" Margin="0,0,0,5" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="11" />
+                            <Thumb x:Name="Thumb" Focusable="False" Margin="5,0" Height="24" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="4" />
                         </Track.Thumb>
                     </Track>
                 </Grid>
@@ -162,7 +162,7 @@
                     <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
                     <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
                     <Border x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="1" 
-                            Height="14.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                            Height="20.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center" CornerRadius="3"  >
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
@@ -179,7 +179,7 @@
                     </Border>
                     <Track x:Name="PART_Track" Grid.Row="1">
                         <Track.Thumb>
-                            <Thumb x:Name="Thumb" Focusable="False" Margin="0,0,0,5" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="11" />
+                            <Thumb x:Name="Thumb" Focusable="False" Margin="5,0" Height="24" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="4" />
                         </Track.Thumb>
                     </Track>
                 </Grid>
@@ -196,7 +196,7 @@
                     <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
                     <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
                     <Border x:Name="TrackBackground" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="1" 
-                            Height="14.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                            Height="20.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center" CornerRadius="3"  >
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" >
                                 <GradientStop Color="{Binding ElementName=_multipleColorSliderControl, Path=StartColor}" Offset="0"/>
@@ -211,7 +211,7 @@
                     </Border>
                     <Track x:Name="PART_Track" Grid.Row="1">
                         <Track.Thumb>
-                            <Thumb x:Name="Thumb" Focusable="False" Margin="0,0,0,5" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="11" />
+                            <Thumb x:Name="Thumb" Focusable="False" Margin="5,0" Height="24" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalBottom }" VerticalAlignment="Center" Width="4" />
                         </Track.Thumb>
                     </Track>
                 </Grid>
@@ -237,10 +237,6 @@
                 <Style TargetType="Slider">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
-                        <!--<DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="6" >
-                            <Setter Property="Visibility" Value="Visible" />
-                            <Setter Property="Template" Value="{StaticResource SliderHorizontal6}"/>
-                        </DataTrigger>-->
                         <DataTrigger Binding="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel}" Value="5" >
                             <Setter Property="Visibility" Value="Visible" />
                             <Setter Property="Template" Value="{StaticResource SliderHorizontal5}"/>
