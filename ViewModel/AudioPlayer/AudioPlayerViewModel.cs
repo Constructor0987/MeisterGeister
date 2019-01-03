@@ -1874,7 +1874,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
         void AllVol0(object obj)
         {
-            FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM) { aZeileVM.aPlayTitel.Volume = 0; });
+            FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM) { aZeileVM.aPlayTitelVolume = 0; });
         }
 
         private Base.CommandBase _allVol100 = null;
@@ -1889,7 +1889,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
         void AllVol100(object obj)
         {
-            FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM) { aZeileVM.aPlayTitel.Volume = 100; });
+            FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM) { aZeileVM.aPlayTitelVolume = 100; });
         }
 
         private Base.CommandBase _allVolDown = null;
@@ -1905,7 +1905,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void AllVolDown(object obj)
         {
             FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
-            { aZeileVM.aPlayTitel.Volume = aZeileVM.aPlayTitel.Volume - 3 >= 0 ? aZeileVM.aPlayTitel.Volume - 3 : 0; });
+            { aZeileVM.aPlayTitelVolume = aZeileVM.aPlayTitel.Volume - 3 >= 0 ? aZeileVM.aPlayTitel.Volume - 3 : 0; });
+
+            OnChanged("AktKlangPlaylist");
         }
 
         private Base.CommandBase _allVolUp = null;
@@ -1921,7 +1923,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void AllVolUp(object obj)
         {
             FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
-            { aZeileVM.aPlayTitel.Volume = aZeileVM.aPlayTitel.Volume + 3 <= 100 ? aZeileVM.aPlayTitel.Volume + 3 : 100; });
+            { aZeileVM.aPlayTitelVolume = aZeileVM.aPlayTitel.Volume + 3 <= 100 ? aZeileVM.aPlayTitel.Volume + 3 : 100; });
         }
 
         private Base.CommandBase _allVolMinDown = null;
@@ -1937,7 +1939,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void AllVolMinDown(object obj)
         {
             FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
-            { aZeileVM.aPlayTitel.VolumeMin = aZeileVM.aPlayTitel.VolumeMin - 3 >= 0 ? aZeileVM.aPlayTitel.VolumeMin - 3 : 0; });
+            { aZeileVM.aPlayTitelVolumeMin = aZeileVM.aPlayTitel.VolumeMin - 3 >= 0 ? aZeileVM.aPlayTitel.VolumeMin - 3 : 0; });
         }
 
         private Base.CommandBase _allVolMaxDown = null;
@@ -1953,7 +1955,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void AllVolMaxDown(object obj)
         {
             FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
-            { aZeileVM.aPlayTitel.VolumeMax = aZeileVM.aPlayTitel.VolumeMax - 3 >= 0 ? aZeileVM.aPlayTitel.VolumeMax - 3 : 0; });
+            { aZeileVM.aPlayTitelVolumeMax = aZeileVM.aPlayTitel.VolumeMax - 3 >= 0 ? aZeileVM.aPlayTitel.VolumeMax - 3 : 0; });
         }
 
         private Base.CommandBase _allVolMinUp = null;
@@ -1969,7 +1971,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void AllVolMinUp(object obj)
         {
             FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
-            { aZeileVM.aPlayTitel.VolumeMin = aZeileVM.aPlayTitel.VolumeMin + 3 <= 100 ? aZeileVM.aPlayTitel.VolumeMin + 3 : 100; });
+            { aZeileVM.aPlayTitelVolumeMin = aZeileVM.aPlayTitel.VolumeMin + 3 <= 100 ? aZeileVM.aPlayTitel.VolumeMin + 3 : 100; });
         }
 
         private Base.CommandBase _allVolMaxUp = null;
@@ -1985,7 +1987,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void AllVolMaxUp(object obj)
         {
             FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
-            { aZeileVM.aPlayTitel.VolumeMax = aZeileVM.aPlayTitel.VolumeMax + 3 <= 100 ? aZeileVM.aPlayTitel.VolumeMax + 3 : 100; });
+            { aZeileVM.aPlayTitelVolumeMax = aZeileVM.aPlayTitel.VolumeMax + 3 <= 100 ? aZeileVM.aPlayTitel.VolumeMax + 3 : 100; });
         }
 
         [DependentProperty("SelectedEditorItem")]
@@ -2007,7 +2009,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 }
                 return _isVolumeChangeChecked;
             }
-            set { OnChanged(); }
+            set {
+                      OnChanged("IsVolumeChangeChecked");}
         }
 
         private Base.CommandBase _onAllVolumeChange = null;
@@ -2024,7 +2027,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         {
             bool ziel = !IsVolumeChangeChecked;
             FilteredLbEditorAudioZeilenListe.ForEach(delegate(AudioZeileVM aZeileVM)
-            { aZeileVM.aPlayTitel.VolumeChange = ziel; aZeileVM.aPlayTitelVolumeChange = ziel; });
+            {
+                aZeileVM.aPlayTitel.VolumeChange = ziel;
+                aZeileVM.aPlayTitelVolumeChange = ziel;
+            });
             OnChanged("IsVolumeChangeChecked");
         }
 
