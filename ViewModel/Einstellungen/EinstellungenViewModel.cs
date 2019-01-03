@@ -19,6 +19,37 @@ using MeisterGeister.View.Settings;
 
 namespace MeisterGeister.ViewModel.Settings
 {
+    //TODO: Farben dürfen nicht statisch von Farbe 1 auf Farbe 2 wechseln, sondern müssen Übergänge bekommen (via Gradient)
+    public static class GradientStopCollectionExtensions
+    {
+        public static Color GetRelativeColor(this GradientStopCollection gsc, double offset)
+        {
+            GradientStop before = gsc.Where(w => w.Offset == gsc.Min(m => m.Offset)).First();
+            GradientStop after = gsc.Where(w => w.Offset == gsc.Max(m => m.Offset)).First();
+
+            foreach (var gs in gsc)
+            {
+                if (gs.Offset < offset && gs.Offset > before.Offset)
+                {
+                    before = gs;
+                }
+                if (gs.Offset > offset && gs.Offset < after.Offset)
+                {
+                    after = gs;
+                }
+            }
+
+            var color = new Color();
+
+            color.ScA = (float)((offset - before.Offset) * (after.Color.ScA - before.Color.ScA) / (after.Offset - before.Offset) + before.Color.ScA);
+            color.ScR = (float)((offset - before.Offset) * (after.Color.ScR - before.Color.ScR) / (after.Offset - before.Offset) + before.Color.ScR);
+            color.ScG = (float)((offset - before.Offset) * (after.Color.ScG - before.Color.ScG) / (after.Offset - before.Offset) + before.Color.ScG);
+            color.ScB = (float)((offset - before.Offset) * (after.Color.ScB - before.Color.ScB) / (after.Offset - before.Offset) + before.Color.ScB);
+
+            return color;
+        }
+    }
+
     public class EinstellungenViewModel : Base.ViewModelBase
     {
         public List<string> lstDeviceID
@@ -598,7 +629,6 @@ namespace MeisterGeister.ViewModel.Settings
 
 
         #region HUE Lampen
-
 
         public class LightProcess
         {
