@@ -934,7 +934,7 @@
                                                                 <ViewGeneral:MultipleColorSlider.Style>
                                                                     <Style TargetType="ViewGeneral:MultipleColorSlider">
                                                                         <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
+                                                                            <!--<DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
@@ -948,6 +948,9 @@
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
+                                                                            </DataTrigger>-->
+                                                                            <DataTrigger Binding="{Binding doLoop}" Value="True">
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[0].Color}" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -1051,6 +1054,12 @@
                                                             </DataTemplate>                                                            
                                                         </DataGridTemplateColumn.CellTemplate>                                                        
                                                     </DataGridTemplateColumn>
+
+                                                    <DataGridTextColumn
+                                                        Width="55"
+                                                        Binding="{Binding Path=Color}"
+                                                        Header="Color"
+                                                        IsReadOnly="True" />            
                                                     <DataGridTextColumn Width="100" Binding="{Binding Path=Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Dauer [ms]" />
                                                 </DataGrid.Columns>
                                             </DataGrid>

@@ -207,7 +207,7 @@ namespace MeisterGeister.View.General
             targetSlider.LowerValue = .1d * value;
             targetSlider.Upper1Value = .5 * value;
             targetSlider.Upper2Value = .7 * value;
-            targetSlider.Upper3Value = .9 * value;
+            targetSlider.Upper3Value =  value;
             return value;
         }
 
@@ -221,8 +221,8 @@ namespace MeisterGeister.View.General
                 value;
             targetSlider.LowerValueProcent =
                 (targetSlider.ColorWechsel >= 3) ?
-                (valReturn + (targetSlider.Upper1Value- valReturn )/ 2) / targetSlider.Maximum:
-                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
+                valReturn / targetSlider.Maximum: //+ (targetSlider.Upper1Value- valReturn )/ 2)
+                valReturn / targetSlider.Maximum; //+ (targetSlider.Maximum - valReturn) / 2) 
             
             return valReturn;
         }
@@ -239,13 +239,13 @@ namespace MeisterGeister.View.General
 
             targetSlider.LowerValueProcent =
                 (targetSlider.ColorWechsel >= 3) ?
-                (targetSlider.LowerValue + (valReturn - targetSlider.LowerValue) / 2) / targetSlider.Maximum :
-                (targetSlider.LowerValue + (targetSlider.Maximum - targetSlider.LowerValue) / 2) / targetSlider.Maximum;
+                targetSlider.LowerValue  / targetSlider.Maximum : //+ (valReturn - targetSlider.LowerValue) / 2)
+                targetSlider.LowerValue  / targetSlider.Maximum;//+ (targetSlider.Maximum - targetSlider.LowerValue) / 2)
 
             targetSlider.Upper1ValueProcent =
                 (targetSlider.ColorWechsel >= 4) ?
-                (valReturn + (targetSlider.Upper2Value - valReturn) / 2) / targetSlider.Maximum :
-                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
+                valReturn / targetSlider.Maximum :
+                valReturn / targetSlider.Maximum;
 
             return valReturn;
 
@@ -259,13 +259,13 @@ namespace MeisterGeister.View.General
             
             targetSlider.Upper1ValueProcent =
                 (targetSlider.ColorWechsel >= 4) ?
-                (targetSlider.Upper1Value + (valReturn - targetSlider.Upper1Value) / 2) / targetSlider.Maximum :
-                (targetSlider.Upper1Value + (targetSlider.Maximum - targetSlider.Upper1Value) / 2) / targetSlider.Maximum;
+                targetSlider.Upper1Value / targetSlider.Maximum :
+                targetSlider.Upper1Value / targetSlider.Maximum;
             
             targetSlider.Upper2ValueProcent =
                 (targetSlider.ColorWechsel >= 5) ?
-                (valReturn + (targetSlider.Upper3Value - valReturn) / 2) / targetSlider.Maximum :
-                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
+                valReturn / targetSlider.Maximum :
+                valReturn / targetSlider.Maximum;
 
             return valReturn;
         }
@@ -278,11 +278,11 @@ namespace MeisterGeister.View.General
             
             targetSlider.Upper2ValueProcent =
                 (targetSlider.ColorWechsel >= 5) ?
-                (targetSlider.Upper2Value + (valReturn - targetSlider.Upper2Value) / 2) / targetSlider.Maximum :
-                (targetSlider.Upper2Value + (targetSlider.Maximum - targetSlider.Upper2Value) / 2) / targetSlider.Maximum;
+                targetSlider.Upper2Value / targetSlider.Maximum :
+                targetSlider.Upper2Value / targetSlider.Maximum;
             
             targetSlider.Upper3ValueProcent =
-                (valReturn + (targetSlider.Maximum - valReturn) / 2) / targetSlider.Maximum;
+                valReturn / targetSlider.Maximum;
 
             return valReturn;
         }
