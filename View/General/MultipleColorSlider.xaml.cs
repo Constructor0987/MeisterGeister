@@ -211,6 +211,7 @@ namespace MeisterGeister.View.General
             return value;
         }
 
+        //1. Slider von links
         private static object LowerValueCoerceValueCallback(DependencyObject target, object valueObject)
         {
             MultipleColorSlider targetSlider = (MultipleColorSlider)target;
@@ -221,9 +222,8 @@ namespace MeisterGeister.View.General
                 value;
             targetSlider.LowerValueProcent =
                 (targetSlider.ColorWechsel >= 3) ?
-                valReturn / targetSlider.Maximum: //+ (targetSlider.Upper1Value- valReturn )/ 2)
-                valReturn / targetSlider.Maximum; //+ (targetSlider.Maximum - valReturn) / 2) 
-            
+                valReturn / targetSlider.Maximum: 
+                valReturn / targetSlider.Maximum; 
             return valReturn;
         }
 

@@ -934,6 +934,41 @@
                                                                 <ViewGeneral:MultipleColorSlider.Style>
                                                                     <Style TargetType="ViewGeneral:MultipleColorSlider">
                                                                         <Style.Triggers>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="2" />
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
+                                                                            </MultiDataTrigger>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="3" />
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
+                                                                            </MultiDataTrigger>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="4" />
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
+                                                                            </MultiDataTrigger>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="5" />
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
+                                                                            </MultiDataTrigger>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="6" />
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
+                                                                            </MultiDataTrigger>
                                                                             <!--<DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
                                                                             </DataTrigger>

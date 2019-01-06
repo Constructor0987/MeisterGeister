@@ -280,7 +280,7 @@
             IsSnapToTickEnabled="{Binding ElementName=_multipleColorSliderControl, Path=IsSnapToTickEnabled}"
             TickFrequency="{Binding ElementName=_multipleColorSliderControl, Path=TickFrequency}"
             TickPlacement="{Binding ElementName=_multipleColorSliderControl, Path=TickPlacement}"
-            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}" Style="{DynamicResource SliderStyle1}"  />
+            Ticks="{Binding ElementName=_multipleColorSliderControl, Path=Ticks}" Style="{DynamicResource SliderStyle1}" />
 
         <Slider 
             Visibility="{Binding ElementName=_multipleColorSliderControl, Path=ColorWechsel, UpdateSourceTrigger=PropertyChanged, 

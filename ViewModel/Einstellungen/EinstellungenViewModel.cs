@@ -21,35 +21,35 @@ using System.Threading;
 namespace MeisterGeister.ViewModel.Settings
 {
     //TODO: Farben dürfen nicht statisch von Farbe 1 auf Farbe 2 wechseln, sondern müssen Übergänge bekommen (via Gradient)
-    public static class GradientStopCollectionExtensions
-    {
-        public static Color GetRelativeColor(this GradientStopCollection gsc, double offset)
-        {
-            GradientStop before = gsc.Where(w => w.Offset == gsc.Min(m => m.Offset)).First();
-            GradientStop after = gsc.Where(w => w.Offset == gsc.Max(m => m.Offset)).First();
+    //public static class GradientStopCollectionExtensions
+    //{
+    //    public static Color GetRelativeColor(this GradientStopCollection gsc, double offset)
+    //    {
+    //        GradientStop before = gsc.Where(w => w.Offset == gsc.Min(m => m.Offset)).First();
+    //        GradientStop after = gsc.Where(w => w.Offset == gsc.Max(m => m.Offset)).First();
 
-            foreach (var gs in gsc)
-            {
-                if (gs.Offset < offset && gs.Offset > before.Offset)
-                {
-                    before = gs;
-                }
-                if (gs.Offset > offset && gs.Offset < after.Offset)
-                {
-                    after = gs;
-                }
-            }
+    //        foreach (var gs in gsc)
+    //        {
+    //            if (gs.Offset < offset && gs.Offset > before.Offset)
+    //            {
+    //                before = gs;
+    //            }
+    //            if (gs.Offset > offset && gs.Offset < after.Offset)
+    //            {
+    //                after = gs;
+    //            }
+    //        }
 
-            var color = new Color();
+    //        var color = new Color();
 
-            color.ScA = (float)((offset - before.Offset) * (after.Color.ScA - before.Color.ScA) / (after.Offset - before.Offset) + before.Color.ScA);
-            color.ScR = (float)((offset - before.Offset) * (after.Color.ScR - before.Color.ScR) / (after.Offset - before.Offset) + before.Color.ScR);
-            color.ScG = (float)((offset - before.Offset) * (after.Color.ScG - before.Color.ScG) / (after.Offset - before.Offset) + before.Color.ScG);
-            color.ScB = (float)((offset - before.Offset) * (after.Color.ScB - before.Color.ScB) / (after.Offset - before.Offset) + before.Color.ScB);
+    //        color.ScA = (float)((offset - before.Offset) * (after.Color.ScA - before.Color.ScA) / (after.Offset - before.Offset) + before.Color.ScA);
+    //        color.ScR = (float)((offset - before.Offset) * (after.Color.ScR - before.Color.ScR) / (after.Offset - before.Offset) + before.Color.ScR);
+    //        color.ScG = (float)((offset - before.Offset) * (after.Color.ScG - before.Color.ScG) / (after.Offset - before.Offset) + before.Color.ScG);
+    //        color.ScB = (float)((offset - before.Offset) * (after.Color.ScB - before.Color.ScB) / (after.Offset - before.Offset) + before.Color.ScB);
 
-            return color;
-        }
-    }
+    //        return color;
+    //    }
+    //}
 
     public class EinstellungenViewModel : Base.ViewModelBase
     {
@@ -713,15 +713,15 @@ namespace MeisterGeister.ViewModel.Settings
             public int? Brightness { get; set; }
         }
 
-        public class HUETheme
+        public class HUETheme : Base.ToolViewModelBase
         {
-            public string Name { get; set; }
+            public override string Name { get; set; }
 
             private int _komplettDauer;
             public int KomplettDauer
             {
                 get { return _komplettDauer; }
-                set { _komplettDauer = value;
+                set { Set(ref _komplettDauer, value);
                     if (lstLightProcess != null)
                         foreach (LightProcess lPro in lstLightProcess)
                     { lPro.KomplettDauer = value; }
@@ -732,7 +732,8 @@ namespace MeisterGeister.ViewModel.Settings
             public LightProcess LightProcessSelected
             {
                 get { return _lightProcessSelected; }
-                set { _lightProcessSelected = value;
+                set {
+                    Set(ref _lightProcessSelected, value);
                 }
             }
 
@@ -742,15 +743,43 @@ namespace MeisterGeister.ViewModel.Settings
                 get { return _lstLightProcess; }
                 set
                 {
-                    _lstLightProcess = value;
+                    Set(ref _lstLightProcess, value);
                     if (value !=null)
                         foreach (LightProcess lPro in value)
                     { lPro.KomplettDauer = KomplettDauer; }
                 }
             }
             public List<Light> lstLights { get; set; }
-            
-            public bool doLoop { get; set; }
+
+            private bool _doLoop;
+            public bool doLoop
+            {
+                get { return _doLoop; }
+                set
+                {
+                    //if (value && !_doLoop && lstLightProcess != null)
+                    //{
+                    //    List<LightProcess> lstLL = new List<LightProcess>();
+                    //    lstLL.AddRange(lstLightProcess);
+                    //    lstLL.Add(
+                    //        new LightProcess() {
+                    //            Phase = lstLightProcess.Count,
+                    //            Color = lstLightProcess[0].Color,
+                    //            DauerProzent = 1,
+                    //            Dauer = KomplettDauer,
+                    //            KomplettDauer = KomplettDauer });
+                    //    lstLightProcess = lstLL;
+                    //}
+                    //if (!value && _doLoop && lstLightProcess != null)
+                    //{
+                    //    List<LightProcess> lstLL = new List<LightProcess>();
+                    //    lstLL.AddRange(lstLightProcess);
+                    //    lstLL.RemoveAt(lstLL.Count - 1);
+                    //    lstLightProcess = lstLL;
+                    //}
+                    Set(ref _doLoop, value);                    
+                }
+            }
 
             public bool doStrobe { get; set; }
 
@@ -777,7 +806,7 @@ namespace MeisterGeister.ViewModel.Settings
                 get { return _addLightToTheme; }
                 set
                 {
-                    _addLightToTheme = value;
+                    Set(ref _addLightToTheme, value);
                     List<Light> lst = new List<Light>();
                     if (lstLights != null)
                         lst.AddRange(lstLights);
