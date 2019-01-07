@@ -74,6 +74,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public const string BÖIGERWIND_MOD = "BöigerWind";
         public const string STARKERBÖIGERWIND_MOD = "StarkerBöigerWind";
         public const string POS_SELBST_MOD = "PositionSelbst";
+        public const string SCHUSS2_MOD = "Schuss2";
+        public const string EIGENE_MOD = "Eigene";
 
         public const string DECKUNG_MOD = "Deckung";
         public const string UNSICHTBAR_MOD = "Unsichtbar";
@@ -98,6 +100,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected FernkampfModifikator<bool> _steilNachUnten;
         protected FernkampfModifikator<bool> _steilNachOben;
         protected FernkampfModifikator<int> _wind;
+        protected FernkampfModifikator<bool> _schuss2;
 
         protected FernkampfModifikator<Größe> _größe;
         protected FernkampfModifikator<bool> _unsichtbar;
@@ -110,6 +113,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected FernkampfModifikator<int> _nahkampf;
         protected FernkampfModifikator<int> _handgemenge;
         protected FernkampfModifikator<int> _zielen;
+        protected FernkampfModifikator<int> _eigene;
         protected FernkampfModifikator<int> _ansage;
 
         protected FernkampfModifikator<int> _pferdBewegung;
@@ -210,6 +214,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 _zielen.Value = 1;
             if (loadPre)
                 _zielen.Value = ((FernkampfModifikator<int>)Ausführender.PreFernkampfMods[ZIELEN_MOD]).Value;
+
+            _eigene = new FernkampfModifikator<int>(this);
+            _eigene.GetMod = EigeneMod;
+            mods.Add(EIGENE_MOD, _eigene);
+
+            _schuss2 = new FernkampfModifikator<bool>(this);
+            _schuss2.GetMod = Schuss2Mod;
+            mods.Add(SCHUSS2_MOD, _schuss2);
 
             _ansage = new FernkampfModifikator<int>(this);
             if (loadPre)
@@ -625,6 +637,29 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             VerbleibendeDauer = Dauer;
 
             return mod;
+        }
+
+        private int Schuss2Mod(IFernkampfwaffe waffe, bool value)
+        {
+            int mod = 0;
+            if (value)
+            {
+                if (waffe == null || waffe.Talent == null ||
+                    waffe.Talent == FernkampfWaffeSelected.Talent &&
+                    (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024" || //"Bogen"
+                            waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000015" //"Armbrust" 
+                    ))
+                    mod = 4;
+                else
+                    mod = 2;
+            }
+            return mod;
+
+        }
+
+        private int EigeneMod(IFernkampfwaffe waffe, int value)
+        {
+            return value;
         }
 
         private int maxAnsage = 10;
