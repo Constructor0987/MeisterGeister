@@ -974,7 +974,9 @@ namespace MeisterGeister.View.Bodenplan
                                 if (menuitem.Name == "miKämpferAttacke" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferAttacke"))
                                 {
                                     if (VM.miWaffeSelected == null)
-                                        VM.miWaffeSelected = (((ListBox)sender).SelectedItem as Held).Nahkampfwaffen.FirstOrDefault();
+                                        VM.miWaffeSelected =(((ListBox)sender).SelectedItem is Held)?                                            
+                                            (((ListBox)sender).SelectedItem as Held).Nahkampfwaffen.FirstOrDefault():                              
+                                            null;
                                     mi.UmwandelnAttacke.Execute(VM.miWaffeSelected);
                                 }
 
