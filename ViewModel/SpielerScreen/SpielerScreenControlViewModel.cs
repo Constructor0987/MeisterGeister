@@ -11,6 +11,7 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MeisterGeister.View.SpielerScreen;
+using MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.ViewModel.SpielerScreen
 {
@@ -143,6 +144,12 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 _isImageStretch = value;
                 OnChanged("IsImageStretch");
             }
+        }
+
+        public bool IsUnterordnerEinbeziehen
+        {
+            get { return Einstellungen.SpielerScreenUnterordnerEinbeziehen; }
+            set { Einstellungen.SpielerScreenUnterordnerEinbeziehen = value; OnChanged("IsUnterordnerEinbeziehen"); }
         }
 
         private bool _isPointerVisible = false;
@@ -563,7 +570,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private void SelectImage(string path)
         {
             System.Windows.Threading.DispatcherOperation op =
-                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (System.Threading.ThreadStart)delegate()
+                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (System.Threading.ThreadStart)delegate ()
                 {
                     try
                     {
@@ -620,15 +627,19 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
             PathNotFound = false;
 
-            string[] filesBmp = Directory.GetFiles(pfad, "*.bmp");
-            string[] filesGif = Directory.GetFiles(pfad, "*.gif");
-            string[] filesJpg = Directory.GetFiles(pfad, "*.jpg");
-            string[] filesJpeg = Directory.GetFiles(pfad, "*.jpeg");
-            string[] filesJpe = Directory.GetFiles(pfad, "*.jpe");
-            string[] filesJfif = Directory.GetFiles(pfad, "*.jfif");
-            string[] filesPng = Directory.GetFiles(pfad, "*.png");
-            string[] filesTif = Directory.GetFiles(pfad, "*.tif");
-            string[] filesTiff = Directory.GetFiles(pfad, "*.tiff");
+            SearchOption dirOption = SearchOption.TopDirectoryOnly;
+            if (IsUnterordnerEinbeziehen)
+                dirOption = SearchOption.AllDirectories;
+
+            string[] filesBmp = Directory.GetFiles(pfad, "*.bmp", dirOption);
+            string[] filesGif = Directory.GetFiles(pfad, "*.gif", dirOption);
+            string[] filesJpg = Directory.GetFiles(pfad, "*.jpg", dirOption);
+            string[] filesJpeg = Directory.GetFiles(pfad, "*.jpeg", dirOption);
+            string[] filesJpe = Directory.GetFiles(pfad, "*.jpe", dirOption);
+            string[] filesJfif = Directory.GetFiles(pfad, "*.jfif", dirOption);
+            string[] filesPng = Directory.GetFiles(pfad, "*.png", dirOption);
+            string[] filesTif = Directory.GetFiles(pfad, "*.tif", dirOption);
+            string[] filesTiff = Directory.GetFiles(pfad, "*.tiff", dirOption);
 
             List<ImageItem> fileList = new List<ImageItem>();
             AddImages(fileList, filesBmp);
@@ -813,7 +824,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private string _suchtext = string.Empty;
         private string _name = string.Empty;
         public string Name
-        { 
+        {
             get
             {
                 return _name;
