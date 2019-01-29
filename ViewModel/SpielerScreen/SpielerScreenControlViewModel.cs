@@ -149,7 +149,12 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         public bool IsUnterordnerEinbeziehen
         {
             get { return Einstellungen.SpielerScreenUnterordnerEinbeziehen; }
-            set { Einstellungen.SpielerScreenUnterordnerEinbeziehen = value; OnChanged("IsUnterordnerEinbeziehen"); }
+            set
+            {
+                Einstellungen.SpielerScreenUnterordnerEinbeziehen = value;
+                ReLoadImages();
+                OnChanged("IsUnterordnerEinbeziehen");
+            }
         }
 
         private bool _isPointerVisible = false;
@@ -554,8 +559,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private void LoadImage()
         {
             FileInfo fInfo = new FileInfo(SelectedImagePath);
-            if (DirectoryPath != fInfo.DirectoryName)
-                DirectoryPath = fInfo.DirectoryName;
+            
             try
             {
                 // Bild
@@ -661,7 +665,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private void AddImages(List<ImageItem> fileList, string[] files)
         {
             foreach (string file in files)
-                fileList.Add(new ImageItem(file));
+                fileList.Add(new ImageItem(file, DirectoryPath));
         }
 
         // TODO: Der Laserpointer sollte überarbeitet werden, da das Feature 'quick & dirty' implementiert ist
@@ -849,10 +853,13 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
-        public ImageItem(string file)
+        public ImageItem(string file, string rootDir)
         {
             Pfad = file;
-            _name = Path.GetFileNameWithoutExtension(file);
+            string dirTags = file.Remove(0, rootDir.Length + 1)
+                .Replace(Path.GetFileName(file), string.Empty)
+                .Replace("\\", " \\ "); // Unterverzeihnisse als Namenstags hinzufügen
+            _name = dirTags + Path.GetFileNameWithoutExtension(file);
             IsInSlideShow = true;
 
             SetSuchtext();
