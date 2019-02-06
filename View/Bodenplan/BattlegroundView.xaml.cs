@@ -968,6 +968,7 @@ namespace MeisterGeister.View.Bodenplan
                                             VM.miWaffeSelected = (((ListBox)sender).SelectedItem as Held).Fernkampfwaffen.FirstOrDefault();
                                         else
                                             VM.miWaffeSelected = Global.CurrentKampf.SelectedKämpfer.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+
                                     mi.UmwandelnFernkampf.Execute(VM.miWaffeSelected);
                                 }
 

@@ -169,7 +169,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Sichtstufe Sicht
         {
             get { return sicht; }
-            set
+            set 
             {
                 Set(ref sicht, value);
                 foreach (ManöverInfo mi in InitiativListe)
@@ -198,11 +198,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             OnChanged("SortedInitiativListe");
             List<ManöverInfo> Smi = new List<Logic.ManöverInfo>();
             Smi.AddRange(SortedInitiativListe);
+
             foreach (ManöverInfo mi in AktuelleAktionen)
             {
                 //Es werden nur aktive Manöver ausgeführt (also keine Paraden)
                 if (!mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
                      mi.Manöver.Aktion();
+                if (mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver))
+                {
+                    if (mi.Manöver.Typ == ManöverTyp.Aktion)
+                    {
+                        //TODO: Check wann die Zahl ausgeblendet werden sollte
+                        if (mi.Manöver.VerbleibendeDauer == 0)
+                        {
+                            ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = null;                            
+                        }
+                        else
+                            ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = mi.Manöver.VerbleibendeDauer;
+                    }
+                }
             }
 
             ZeitImKampf next = default(ZeitImKampf);
@@ -268,8 +282,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 AktIniKämpfer = lstKämpferGleicheIni[0];
             else
                 AktIniKämpfer = null;
-            
-            if (AktIniKämpfer != null) 
+
+            if (AktIniKämpfer != null)
                 ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = true;
 
             if (lstMI.Count > 1)

@@ -59,6 +59,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        private Nullable<int> _aktVerbleibendeDauer = null;
+        public Nullable<int> AktVerbleibendeDauer
+        {
+            get { return _aktVerbleibendeDauer; }
+            set { Set(ref _aktVerbleibendeDauer, value); }
+        }
+
         public bool IsAnDerReihe
         {
             get { return _isAnDerReihe; }

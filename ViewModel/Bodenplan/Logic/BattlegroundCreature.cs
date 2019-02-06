@@ -40,6 +40,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private readonly double _imageOriginalWidth = 80;
         private KämpferInfo _ki = null;
         private Thickness _marginCreatureAktionsbuttons = new Thickness() { Left = 80, Top = -31, Right = 0, Bottom = 0 };
+        private Thickness _marginCreatureLangAkt = new Thickness() { Left = 80, Top = 80, Right = 6, Bottom = 0 };
 
         private Thickness _marginCreatureATPAaktionen = new Thickness() { Left = -5, Top = 80, Right = 6, Bottom = 0 };
 
@@ -180,7 +181,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _marginCreatureAktionsbuttons = value;
-                OnChanged("MarginCreatureAktionsbuttons");
+                OnChanged(nameof(MarginCreatureAktionsbuttons));
+            }
+        }
+        public Thickness MarginCreatureLangAkt
+        {
+            get { return _marginCreatureLangAkt; }
+
+            set
+            {
+                _marginCreatureLangAkt = value;
+                OnChanged(nameof(MarginCreatureLangAkt));
             }
         }
 
@@ -191,7 +202,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _marginCreatureATPAaktionen = value;
-                OnChanged("MarginCreatureATPAaktionen");
+                OnChanged(nameof(MarginCreatureATPAaktionen));
             }
         }
 

@@ -143,7 +143,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     _kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             }
         }
-        
+
         private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
         public btnHotkeyVM SpeedbtnAudio
         {
@@ -451,6 +451,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             { return Angriffsaktionen >= 2? Angriffsaktionen: 2; }
         }
 
+        public bool IgnoreChgAktionen = false;
+
         private int _angriffsaktionen = 1;
         [DependentProperty("Initiative")]
         public int Angriffsaktionen
@@ -466,7 +468,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     mi = Global.CurrentKampf.Kampf.InitiativListe.LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == this.Kämpfer);
                 }
-                if (mi != null && mi.Manöver.GetType() != typeof(Manöver.Attacke))
+                if (mi != null && !IgnoreChgAktionen && mi.Manöver.GetType() != typeof(Manöver.Attacke))
                 {
                     if (ViewHelper.ConfirmYesNoCancel("Längerfristige Handlung unterbrechen", "Durch die Änderung der Aktionen wird die längerfristige Handlung unterbrochen." + Environment.NewLine + Environment.NewLine +
                         this.Kämpfer.Name + " will ein " + (
@@ -483,6 +485,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         "Diese Handlung würde noch " + mi.Manöver.VerbleibendeDauer + " Aktionen dauern." + Environment.NewLine + Environment.NewLine +
                         "Soll die Handlung unterbrochen werden?") != 2) return;
 
+                    ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = null;
                     mi.Manöver.VerbleibendeDauer = 0;
                     Global.CurrentKampf.Kampf.SortedInitiativListe =
                         Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase);
@@ -883,20 +886,27 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         yield return new ManöverInfo(new Attacke(this), Math.Max(i * 4, 8), kampfrunde);
                 }
             }
-
-            var längerfristig = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
+            bool skip1Abwehr = false;
+            var längerfristig = AngriffsManöver.Where(mi => mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver) 
+            || mi.Manöver.GetType() == typeof(Manöver.Zauber) 
+            || (mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) && mi.Manöver.Dauer >=2)).OrderBy(mi => mi.Start).FirstOrDefault();
             if (längerfristig != null)
             {
-                //    yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
+                //TODO: Check Ob die 2 Akt als aktive Aktion genutzt werden kann
+                if (längerfristig.End.Kampfrunde == kampfrunde && längerfristig.Manöver.VerbleibendeDauer == 1 && Abwehraktionen > 0)
+                {
+                    yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
+                    
+                    skip1Abwehr = true;
+                }
             }
 
             //Debug.WriteLine(String.Format("KR {1}: Manöver erstellen: {0}", DateTime.Now - dtstart, kampfrunde));
 
             //Parade-Manöver setzen
             AbwehrManöver.Clear();
-            for (int i = 0; i < Abwehraktionen; i++)
+            for (int i = 0; i < Abwehraktionen -(skip1Abwehr ? 1 : 0); i++)
                 AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));
-
             
         }
         #endregion

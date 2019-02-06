@@ -944,15 +944,6 @@
                                                                 Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}"
                                                                 ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
                                                         </StackPanel>
-
-                                                        <TextBlock
-                                                            Width="14"
-                                                            Margin="-60,0,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Center"
-                                                            FontSize="9"
-                                                            FontWeight="Bold"
-                                                            Text="{Binding ki.AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" />
                                                     </Grid>
 
                                                     <!--  Aktionsbuttons rechts  -->
@@ -1113,6 +1104,84 @@
                                                             </MenuItem.ItemTemplate>
                                                         </MenuItem>
                                                     </Grid>
+
+
+                                                    <!-- Längerfristige Handlungen -->
+                                                    <!--<Grid    
+                                                        Margin="{Binding MarginCreatureLangAkt}"
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        HorizontalAlignment="Right" 
+                                                        VerticalAlignment="Bottom"--> 
+                                                        <!--Width="35" 
+                                                        Height="22" 
+                                                        Background="#FFE0E07C">--> 
+
+                                                       <!--<Grid.Style>
+                                                            <Style TargetType="Grid">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                <Style.Triggers>
+                                                                    -->
+                                                        <!--<DataTrigger Binding="{Binding ki.AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding ki.AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding ki.AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>--><!--
+                                                                    <DataTrigger Binding="{Binding AktVerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Grid.Style>-->
+                                                        <!--<Image 
+                                                            Margin="-1" 
+                                                            HorizontalAlignment="Left">
+                                                            <Image.Style>
+                                                                <Style TargetType="Image">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding ki.AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
+                                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Fernkampf.png" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding ki.AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
+                                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Magie.png" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding ki.AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
+                                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Kalender.png" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Image.Style>
+                                                        </Image>-->
+
+                                                    <TextBlock 
+                                                            
+                                                        Margin="{Binding MarginCreatureLangAkt}"
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        HorizontalAlignment="Right" 
+                                                        VerticalAlignment="Bottom" 
+                                                        Background="#FFE0E07C"                                                           
+                                                        Text="{Binding AktVerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}"                                                             
+                                                        Width="35" 
+                                                        Height="22"
+                                                        FontSize="20" 
+                                                        FontWeight="Bold"  >
+                                                        <!--<TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding AktVerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>-->
+                                                    </TextBlock>
+                                                    <!--</Grid>-->
+
                                                 </Canvas>
 
                                                 <ControlTemplate.Triggers>
