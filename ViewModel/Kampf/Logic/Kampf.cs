@@ -211,7 +211,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         //TODO: Check wann die Zahl ausgeblendet werden sollte
                         if (mi.Manöver.VerbleibendeDauer == 0)
                         {
-                            ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = null;                            
+                       //     ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = null;                            
                         }
                         else
                             ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = mi.Manöver.VerbleibendeDauer;
@@ -374,12 +374,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (lstToRemove.Count > 0)
                 InitiativListe.RemoveRange(lstToRemove);
 
-            ZeitImKampf zik = new ZeitImKampf(Kampfrunde, 
-                neueManöver.Count > 0 ? neueManöver[0].Start.InitiativPhase:99
-                );
-            List<ManöverInfo> lstLangeHandlungen = InitiativListe.Where(t => t.Start.Kampfrunde < Kampfrunde).ToList();
+            //ZeitImKampf zik = new ZeitImKampf(Kampfrunde, 
+            //    neueManöver.Count > 0 ? neueManöver[0].Start.InitiativPhase:99
+            //    );
+            //List<ManöverInfo> lstLangeHandlungen = InitiativListe.Where(t => t.Start.Kampfrunde < Kampfrunde).ToList();
 
-            lstLangeHandlungen.ForEach(delegate (ManöverInfo mi) { mi.Start = zik; });
+         //   lstLangeHandlungen.ForEach(delegate (ManöverInfo mi) { mi.Start = zik; });
 
 
 

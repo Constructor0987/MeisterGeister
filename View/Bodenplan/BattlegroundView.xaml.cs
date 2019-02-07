@@ -951,7 +951,13 @@ namespace MeisterGeister.View.Bodenplan
                         {
                             ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
                                 .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
+                                .Where(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer)
+                                .FirstOrDefault(t => t.Aktionszeiten.Contains(Global.CurrentKampf.Kampf.AktuelleAktionszeit));
+                            if (mi == null)
+                                mi = Global.CurrentKampf.Kampf.InitiativListe
+                                .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
                                 .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
+
                             if (mi != null)
                             {
                                 VM.miWaffeSelected = menuitem.CommandParameter as IWaffe;

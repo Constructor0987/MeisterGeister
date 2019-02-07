@@ -887,16 +887,33 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
             }
             bool skip1Abwehr = false;
-            var längerfristig = AngriffsManöver.Where(mi => mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver) 
-            || mi.Manöver.GetType() == typeof(Manöver.Zauber) 
-            || (mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) && mi.Manöver.Dauer >=2)).OrderBy(mi => mi.Start).FirstOrDefault();
+            var längerfristig = AngriffsManöver.Where(
+                mi => mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver) 
+                || mi.Manöver.GetType() == typeof(Manöver.Zauber) 
+                || (mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) && mi.Manöver.Dauer >=2)
+                ).OrderBy(mi => mi.Start).FirstOrDefault();
             if (längerfristig != null)
             {
-                //TODO: Check Ob die 2 Akt als aktive Aktion genutzt werden kann
-                if (längerfristig.End.Kampfrunde == kampfrunde && längerfristig.Manöver.VerbleibendeDauer == 1 && Abwehraktionen > 0)
+                if (längerfristig.End.Kampfrunde == kampfrunde)
                 {
-                    yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
-                    
+                    ManöverInfo mi = new ManöverInfo(new Attacke(this), 0, kampfrunde);
+                    mi.Manöver = längerfristig.Manöver;
+
+                    //In der 1.Akt muss die längerfristige Handlung aktiv werden, die 2. Akt wird ebenfalls als aktive Aktion freigeschaltet
+                    if (längerfristig.Manöver.VerbleibendeDauer == 1 && Abwehraktionen > 0)
+                    {
+                        mi.Manöver.Dauer = 1;
+                        yield return new ManöverInfo(mi.Manöver, 0, kampfrunde);
+                        yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
+                    }
+                    else
+                    //Die Längerfristige Handlung Endet in der KR - daher muss die 2. Akt ein aktives Manöver werden
+                    if (this.Aktionen >= 2 && längerfristig.Manöver.VerbleibendeDauer == 2)
+                    {
+                        mi.Manöver.Dauer = 1;
+                        mi.Manöver.VerbleibendeDauer = 1;
+                        yield return new ManöverInfo(mi.Manöver, 8, kampfrunde);
+                    }
                     skip1Abwehr = true;
                 }
             }
