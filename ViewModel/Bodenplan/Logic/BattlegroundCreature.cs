@@ -25,7 +25,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
         public double _objectSize = 1;
-        private double _creatureAktionsbuttonsPos = 140;
+        private double _creatureAktionsbuttonsPos = 112;//140;
         private double _creatureHeight = 80;
         private double _creatureNameX = 90;
         private double _creatureNameY = 90;
@@ -42,7 +42,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private Thickness _marginCreatureAktionsbuttons = new Thickness() { Left = 80, Top = -31, Right = 0, Bottom = 0 };
         private Thickness _marginCreatureLangAkt = new Thickness() { Left = 80, Top = 80, Right = 6, Bottom = 0 };
 
-        private Thickness _marginCreatureATPAaktionen = new Thickness() { Left = -5, Top = 80, Right = 6, Bottom = 0 };
+        private Thickness _marginCreatureATPAaktionen = new Thickness() { Left = -15, Top = 80, Right = 16, Bottom = 0 };
 
         private double _midCreatureX = 0;
 
@@ -164,7 +164,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 {
                     _ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
                 }
-
+                
                 return _ki;
             }
 
@@ -600,9 +600,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureHeight = _imageOriginalHeigth * factor;
             CreatureWidth = _imageOriginalWidth * factor;
             MarginCreatureAktionsbuttons = new Thickness() { Left = CreatureWidth, Top = -31, Right = 0, Bottom = 0 };
-            CreatureAktionsbuttonsPos = Math.Max(130, 30 + CreatureHeight + 30 + 2 * factor);
+            CreatureAktionsbuttonsPos = Math.Max(112, 30 + CreatureHeight + 2 * factor);//130, 30 + CreatureHeight + 30 + 2 * factor);
 
-            MarginCreatureATPAaktionen = new Thickness() { Left = -5, Top = CreatureWidth, Right = 6, Bottom = 0 };
+            MarginCreatureATPAaktionen = new Thickness() { Left = -15, Top = CreatureWidth, Right = 16, Bottom = 0 };
             SightAreaLength = CreatureWidth + 40;
         }
 

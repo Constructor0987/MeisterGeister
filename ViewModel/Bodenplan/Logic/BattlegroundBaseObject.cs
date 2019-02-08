@@ -59,6 +59,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+       // private List<ManöverInfo> lstAktManöverInfo = new 
+
         private Nullable<int> _aktVerbleibendeDauer = null;
         public Nullable<int> AktVerbleibendeDauer
         {

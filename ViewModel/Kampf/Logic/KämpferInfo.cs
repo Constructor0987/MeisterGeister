@@ -915,16 +915,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         yield return new ManöverInfo(mi.Manöver, 8, kampfrunde);
                     }
                     skip1Abwehr = true;
+
+                    ((Wesen)mi.Kampf.AktIniKämpfer.Kämpfer).AktVerbleibendeDauer = längerfristig.Manöver.VerbleibendeDauer;
                 }
             }
-
             //Debug.WriteLine(String.Format("KR {1}: Manöver erstellen: {0}", DateTime.Now - dtstart, kampfrunde));
 
             //Parade-Manöver setzen
             AbwehrManöver.Clear();
             for (int i = 0; i < Abwehraktionen -(skip1Abwehr ? 1 : 0); i++)
-                AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));
-            
+                AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));            
         }
         #endregion
 

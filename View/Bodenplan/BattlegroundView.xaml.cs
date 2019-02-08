@@ -33,7 +33,7 @@ namespace MeisterGeister.View.Bodenplan
             InitializeComponent();
             Global.CurrentKampf.BodenplanView = this;
             VM = new BattlegroundViewModel();
-
+            
             AddPictureButtons();
             AddFogOfWar();
             VM.KampfVM = Global.CurrentKampf;
