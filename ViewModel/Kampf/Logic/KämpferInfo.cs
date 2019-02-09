@@ -927,7 +927,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     {
                         mi.Manöver.Dauer = 1;
                         mi.Manöver.VerbleibendeDauer = 1;
-                        yield return new ManöverInfo(mi.Manöver, 0, kampfrunde);
+                        yield return new ManöverInfo(mi.Manöver, 8, kampfrunde);
                     }
                     skip1Abwehr = true;
                     ((Wesen)mi.Kampf.AktIniKämpfer.Kämpfer).AktVerbleibendeDauer = längerfristig.Manöver.VerbleibendeDauer;
