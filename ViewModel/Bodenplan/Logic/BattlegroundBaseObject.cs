@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
 using System;
 using System.Xml.Serialization;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -59,7 +60,12 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-       // private List<ManöverInfo> lstAktManöverInfo = new 
+        private ManöverInfo _aktManöverInfo;
+        public ManöverInfo AktManöverInfo
+        { 
+            get { return _aktManöverInfo; }
+            set { Set(ref _aktManöverInfo, value); }}
+
 
         private Nullable<int> _aktVerbleibendeDauer = null;
         public Nullable<int> AktVerbleibendeDauer

@@ -14,6 +14,7 @@ using System.Windows;
 using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -897,7 +898,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (längerfristig.End.Kampfrunde == kampfrunde)
                 {
                     ManöverInfo mi = new ManöverInfo(new Attacke(this), 0, kampfrunde);
-                    mi.Manöver = längerfristig.Manöver;
+
+                    if (längerfristig.Manöver.GetType() == typeof(Manöver.FernkampfManöver))
+                    {
+                        mi.Manöver = new Manöver.FernkampfManöver(this, 
+                            (IFernkampfwaffe)(längerfristig.Manöver as Manöver.FernkampfManöver).FernkampfWaffeSelected);            
+                    }
+                    else
+                    if (längerfristig.Manöver.GetType() == typeof(Manöver.Zauber))
+                    {
+                        mi.Manöver = new Manöver.Zauber(this,
+                            (Held_Zauber)(längerfristig.Manöver as Manöver.Zauber).Held_Zauber);
+                    }
+               //     mi.Start = längerfristig.End;
+               //     mi.Manöver.Dauer = 1;
 
                     //In der 1.Akt muss die längerfristige Handlung aktiv werden, die 2. Akt wird ebenfalls als aktive Aktion freigeschaltet
                     if (längerfristig.Manöver.VerbleibendeDauer == 1 && Abwehraktionen > 0)
@@ -915,7 +929,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         yield return new ManöverInfo(mi.Manöver, 8, kampfrunde);
                     }
                     skip1Abwehr = true;
-
                     ((Wesen)mi.Kampf.AktIniKämpfer.Kämpfer).AktVerbleibendeDauer = längerfristig.Manöver.VerbleibendeDauer;
                 }
             }

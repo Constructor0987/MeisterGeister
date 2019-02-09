@@ -1119,7 +1119,7 @@
                                                             <Style TargetType="Grid">
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding AktVerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}" >
+                                                                    <DataTrigger Binding="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" Value="0" >
                                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -1129,13 +1129,13 @@
                                                             <Image.Style>
                                                                 <Style TargetType="Image">
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding AktManöverInfo, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
+                                                                        <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
                                                                             <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Fernkampf.png" />
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding AktManöverInfo, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
+                                                                        <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
                                                                             <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Magie.png" />
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding AktManöverInfo, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
+                                                                        <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
                                                                             <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Kalender.png" />
                                                                         </DataTrigger>
                                                                     </Style.Triggers>
@@ -1148,7 +1148,7 @@
                                                             HorizontalAlignment="Left" 
                                                             VerticalAlignment="Center"    
                                                             Padding="8,0"
-                                                            Text="{Binding AktVerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}"                                                             
+                                                            Text="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}"                                                             
                                                             Width="28" 
                                                             FontSize="18" 
                                                             FontWeight="Bold" />

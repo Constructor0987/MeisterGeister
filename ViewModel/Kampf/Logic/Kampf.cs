@@ -200,6 +200,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
             foreach (ManöverInfo mi in AktuelleAktionen)
             {
+                ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktManöverInfo = mi;
+
                 //Es werden nur aktive Manöver ausgeführt (also keine Paraden)
                 if (!mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
                      mi.Manöver.Aktion();
@@ -365,8 +367,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ki.VerbrauchteAngriffsaktionen = 0;
                 ki.VerbrauchteFreieAktionen = 0;
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
-                //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)  
-                
+                //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)                  
             }
             List<ManöverInfo> lstToRemove = InitiativListe.Where(t => t.End.Kampfrunde < Kampfrunde).ToList();
             if (lstToRemove.Count > 0)
