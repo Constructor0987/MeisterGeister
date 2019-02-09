@@ -910,13 +910,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         mi.Manöver = new Manöver.Zauber(this,
                             (Held_Zauber)(längerfristig.Manöver as Manöver.Zauber).Held_Zauber);
                     }
-               //     mi.Start = längerfristig.End;
-               //     mi.Manöver.Dauer = 1;
-
+                    //Nur 1 Aktion für das Würfeln der längerfriatige Handlung
+                    mi.Start = längerfristig.End;
+                    mi.End = längerfristig.End;
                     //In der 1.Akt muss die längerfristige Handlung aktiv werden, die 2. Akt wird ebenfalls als aktive Aktion freigeschaltet
                     if (längerfristig.Manöver.VerbleibendeDauer == 1 && Abwehraktionen > 0)
                     {
                         mi.Manöver.Dauer = 1;
+                        mi.Manöver.VerbleibendeDauer = 1;
                         yield return new ManöverInfo(mi.Manöver, 0, kampfrunde);
                         yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
                     }
@@ -926,7 +927,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     {
                         mi.Manöver.Dauer = 1;
                         mi.Manöver.VerbleibendeDauer = 1;
-                        yield return new ManöverInfo(mi.Manöver, 8, kampfrunde);
+                        yield return new ManöverInfo(mi.Manöver, 0, kampfrunde);
                     }
                     skip1Abwehr = true;
                     ((Wesen)mi.Kampf.AktIniKämpfer.Kämpfer).AktVerbleibendeDauer = längerfristig.Manöver.VerbleibendeDauer;

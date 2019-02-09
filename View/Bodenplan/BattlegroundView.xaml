@@ -1106,22 +1106,30 @@
                                                         </MenuItem>
                                                     </Grid>
 
-
                                                     <!-- Längerfristige Handlungen -->
-                                                    <Grid 
+                                                    <Grid
                                                         Margin="{Binding MarginCreatureLangAkt}"
                                                         Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
                                                         Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        
-                                                        
-                                                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="40" Height="20" Background="#FFE0E07C" >
+                                                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="40" Height="20" Background="#CFE0E07C" >
                                                         <Grid.Style>
                                                             <Style TargetType="Grid">
-                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                <Setter Property="Visibility" Value="Collapsed" />
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" Value="0" >
-                                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                                    </DataTrigger>
+                                                                    <MultiDataTrigger>
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition 
+                                                                                Binding="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, 
+                                                                            UpdateSourceTrigger=PropertyChanged, 
+                                                                            Converter={StaticResource IsEqualOrGreaterThanConverter1}, 
+                                                                            ConverterParameter='1'}" Value="True"/>
+                                                                            <Condition 
+                                                                                Binding="{Binding AktManöverInfo.DauerInKampfaktionen, 
+                                                                                Converter={StaticResource IsEqualOrGreaterThanConverter1},
+                                                                                ConverterParameter='1'}" Value="True"/>
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                    </MultiDataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Grid.Style>
@@ -1152,33 +1160,7 @@
                                                             Width="28" 
                                                             FontSize="18" 
                                                             FontWeight="Bold" />
-
                                                     </Grid>
-
-
-                                                    <!--<TextBlock                                                             
-                                                        Margin="{Binding MarginCreatureLangAkt}"
-                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        HorizontalAlignment="Right" 
-                                                        VerticalAlignment="Bottom" 
-                                                        Background="#FFE0E07C"     
-                                                        Padding="8,0"
-                                                        Text="{Binding AktVerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}"                                                             
-                                                        Width="28" 
-                                                        Height="20"
-                                                        FontSize="18" 
-                                                        FontWeight="Bold" >
-                                                        --><!--<TextBlock.Style>
-                                                            <Style TargetType="TextBlock">
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding AktVerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>--><!--
-                                                    </TextBlock>-->
                                                 </Canvas>
 
                                                 <ControlTemplate.Triggers>

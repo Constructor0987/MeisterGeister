@@ -40,7 +40,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private readonly double _imageOriginalWidth = 80;
         private KämpferInfo _ki = null;
         private Thickness _marginCreatureAktionsbuttons = new Thickness() { Left = 80, Top = -31, Right = 0, Bottom = 0 };
-        private Thickness _marginCreatureLangAkt = new Thickness() { Left = 80, Top = 80, Right = 6, Bottom = 0 };
+        private Thickness _marginCreatureLangAkt = new Thickness() { Left = 80 - 40, Top = 80 - 20, Right = 6, Bottom = 0 };
 
         private Thickness _marginCreatureATPAaktionen = new Thickness() { Left = -15, Top = 80, Right = 16, Bottom = 0 };
 
@@ -601,6 +601,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureWidth = _imageOriginalWidth * factor;
             MarginCreatureAktionsbuttons = new Thickness() { Left = CreatureWidth, Top = -31, Right = 0, Bottom = 0 };
             CreatureAktionsbuttonsPos = Math.Max(112, 30 + CreatureHeight + 2 * factor);//130, 30 + CreatureHeight + 30 + 2 * factor);
+            MarginCreatureLangAkt = new Thickness() { Left = CreatureWidth-40, Top = CreatureHeight-20, Right = 6, Bottom = 0 };
 
             MarginCreatureATPAaktionen = new Thickness() { Left = -15, Top = CreatureWidth, Right = 16, Bottom = 0 };
             SightAreaLength = CreatureWidth + 40;

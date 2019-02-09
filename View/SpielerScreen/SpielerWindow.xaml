@@ -5,10 +5,9 @@
     xmlns:Kampf="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-    xmlns:kampfInfo="clr-namespace:MeisterGeister.View.Kampf"
+    xmlns:KampfManöver="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
     xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
     xmlns:s="clr-namespace:MeisterGeister.View.SpielerScreen"
-    xmlns:vmBoden="clr-namespace:MeisterGeister.ViewModel.Bodenplan"
     Title="DSA MeisterGeister - Spieler Informationen"
     Width="850"
     Height="559"
@@ -25,6 +24,7 @@
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter" />
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1" />
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
+        <Kampf:DataTypeConverter x:Key="DataTypeConverter1" />
 
         <Style TargetType="ProgressBar">
             <Setter Property="Template">
@@ -427,6 +427,63 @@
                                                     </Style>
                                                 </Image.Style>
                                             </Image>
+
+
+                                            <!-- Längerfristige Handlungen -->
+                                            <Grid 
+                                                Margin="{Binding MarginCreatureLangAkt}"
+                                                Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"    
+                                                HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="40" Height="20" Background="#FFE0E07C" >
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition 
+                                                                                Binding="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, 
+                                                                            UpdateSourceTrigger=PropertyChanged, 
+                                                                            Converter={StaticResource IsEqualOrGreaterThanConverter1}, 
+                                                                            ConverterParameter='1'}" Value="True"/>
+                                                                    <Condition 
+                                                                                Binding="{Binding AktManöverInfo.DauerInKampfaktionen, 
+                                                                                Converter={StaticResource IsEqualOrGreaterThanConverter1},
+                                                                                ConverterParameter='1'}" Value="True"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                                <Image Margin="-1" HorizontalAlignment="Left">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
+                                                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Fernkampf.png" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
+                                                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Magie.png" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
+                                                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Kalender.png" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <TextBlock  
+                                                    Margin="10,0,0,0"         
+                                                    HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Center"    
+                                                    Padding="8,0"
+                                                    Text="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}"                                                             
+                                                    Width="28" 
+                                                    FontSize="18" 
+                                                    FontWeight="Bold" />
+                                            </Grid>
 
                                             <Canvas.Effect>
                                                 <DropShadowEffect
