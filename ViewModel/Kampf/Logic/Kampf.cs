@@ -215,7 +215,57 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         else
                             ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = mi.Manöver.VerbleibendeDauer;
                     }
-                }
+
+                    //Neuer Fernangriff innerhalb der aktiven KR -> 1aktive Aktion zum Ende
+                    if (mi.Start.Kampfrunde == mi.End.Kampfrunde &&
+                        mi.Start.InitiativPhase != mi.End.InitiativPhase)
+                        //&&
+                        //mi.Aktionszeiten.Where(t => t.InitiativPhase == mi.End.InitiativPhase).Count()==1)
+                    {
+                        if (this.InitiativListe.Where(t => t.Aktionszeiten.Contains(new ZeitImKampf(mi.AktKampfrunde, mi.End.InitiativPhase)))
+                            .Where(z => z.Manöver.Ausführender == mi.Manöver.Ausführender).Count() == 1)
+                        {
+                            ManöverInfo minfo = new ManöverInfo(new Attacke(mi.Manöver.Ausführender), 0, mi.AktKampfrunde);
+                            if (mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver))
+                            {
+                                minfo.Manöver = new Manöver.FernkampfManöver(mi.Manöver.Ausführender,
+                                    (IFernkampfwaffe)(mi.Manöver as Manöver.FernkampfManöver).FernkampfWaffeSelected);
+                            }
+                            else
+                            if (mi.Manöver.GetType() == typeof(Manöver.Zauber))
+                            {
+                                minfo.Manöver = new Manöver.Zauber(mi.Manöver.Ausführender,
+                                    (Held_Zauber)(mi.Manöver as Manöver.Zauber).Held_Zauber);
+                            }
+                            //Nur 1 Aktion für das Würfeln der längerfriatige Handlung
+                            minfo.Start = mi.End;
+                            minfo.End = mi.End;
+                            //In der 1.Akt muss die längerfristige Handlung aktiv werden, die 2. Akt wird ebenfalls als aktive Aktion freigeschaltet
+
+                            minfo.Manöver.Dauer = 1;
+                            minfo.Manöver.VerbleibendeDauer = 1;
+                            this.InitiativListe.Add(new ManöverInfo(minfo.Manöver, 8, mi.AktKampfrunde));
+                            SortedInitiativListe = InitiativListe != null ?
+                                (Kampfrunde == 0 ?
+                                InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
+                                InitiativListe.Where(a => a.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                                )
+                                : null;
+
+                            //else
+                            ////Die Längerfristige Handlung Endet in der KR - daher muss die 2. Akt ein aktives Manöver werden
+                            //if (mi.Manöver.Ausführender.Aktionen >= 2 && mi.Manöver.VerbleibendeDauer == 2)
+                            //{
+                            //    mi.Manöver.Dauer = 1;
+                            //    mi.Manöver.VerbleibendeDauer = 1;
+                            //    yield return new ManöverInfo(mi.Manöver, 8, mi.AktKampfrunde);
+                            //}
+                            //Parade-Manöver setzen
+                            mi.Manöver.Ausführender.AbwehrManöver.Clear();
+                            break;
+                        }
+                    }
+                }                
             }
 
             ZeitImKampf next = default(ZeitImKampf);
