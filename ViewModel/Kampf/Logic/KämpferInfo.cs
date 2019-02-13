@@ -889,10 +889,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             bool skip1Abwehr = false;
             var längerfristig = AngriffsManöver.Where(
-                mi => mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver) 
-                || mi.Manöver.GetType() == typeof(Manöver.Zauber) 
-                || (mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) && mi.Manöver.Dauer >=2)
-                ).OrderBy(mi => mi.Start).FirstOrDefault();
+                mi => mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver)
+                || mi.Manöver.GetType() == typeof(Manöver.Zauber)
+                || (mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) && mi.Manöver.Dauer >= 2)
+                ).OrderBy(mi => mi.Start).Min();
             if (längerfristig != null)
             {
                 if (längerfristig.End.Kampfrunde == kampfrunde)
