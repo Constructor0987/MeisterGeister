@@ -892,7 +892,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 mi => mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver)
                 || mi.Manöver.GetType() == typeof(Manöver.Zauber)
                 || (mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) && mi.Manöver.Dauer >= 2)
-                ).OrderBy(mi => mi.Start).Min();
+                ).OrderBy(mi => mi.Start).FirstOrDefault(); 
             if (längerfristig != null)
             {
                 if (längerfristig.End.Kampfrunde == kampfrunde)
