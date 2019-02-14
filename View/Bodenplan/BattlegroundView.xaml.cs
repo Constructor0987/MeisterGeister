@@ -33,7 +33,7 @@ namespace MeisterGeister.View.Bodenplan
             InitializeComponent();
             Global.CurrentKampf.BodenplanView = this;
             VM = new BattlegroundViewModel();
-
+            
             AddPictureButtons();
             AddFogOfWar();
             VM.KampfVM = Global.CurrentKampf;
@@ -950,8 +950,14 @@ namespace MeisterGeister.View.Bodenplan
                         else
                         {
                             ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
+                                .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde &&
+                                            z.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer)
+                                .FirstOrDefault(t => t.Aktionszeiten.Contains(Global.CurrentKampf.Kampf.AktuelleAktionszeit));
+                            if (mi == null)
+                                mi = Global.CurrentKampf.Kampf.InitiativListe
                                 .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
                                 .FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer);
+
                             if (mi != null)
                             {
                                 VM.miWaffeSelected = menuitem.CommandParameter as IWaffe;
@@ -968,6 +974,7 @@ namespace MeisterGeister.View.Bodenplan
                                             VM.miWaffeSelected = (((ListBox)sender).SelectedItem as Held).Fernkampfwaffen.FirstOrDefault();
                                         else
                                             VM.miWaffeSelected = Global.CurrentKampf.SelectedKämpfer.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+
                                     mi.UmwandelnFernkampf.Execute(VM.miWaffeSelected);
                                 }
 

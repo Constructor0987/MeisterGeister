@@ -25,7 +25,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
         public double _objectSize = 1;
-        private double _creatureAktionsbuttonsPos = 140;
+        private double _creatureAktionsbuttonsPos = 112;
         private double _creatureHeight = 80;
         private double _creatureNameX = 90;
         private double _creatureNameY = 90;
@@ -40,8 +40,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private readonly double _imageOriginalWidth = 80;
         private KämpferInfo _ki = null;
         private Thickness _marginCreatureAktionsbuttons = new Thickness() { Left = 80, Top = -31, Right = 0, Bottom = 0 };
+        private Thickness _marginCreatureLangAkt = new Thickness() { Left = 80 - 40, Top = 80 - 20, Right = 6, Bottom = 0 };
 
-        private Thickness _marginCreatureATPAaktionen = new Thickness() { Left = -5, Top = 80, Right = 6, Bottom = 0 };
+        private Thickness _marginCreatureATPAaktionen = new Thickness() { Left = -15, Top = 80, Right = 16, Bottom = 0 };
 
         private double _midCreatureX = 0;
 
@@ -81,7 +82,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _creatureAktionsbuttonsPos = value;
-                OnChanged("CreatureAktionsbuttonsPos");
+                OnChanged(nameof(CreatureAktionsbuttonsPos));
             }
         }
 
@@ -98,7 +99,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _creatureNameX = value;
-                OnChanged("CreatureNameX");
+                OnChanged(nameof(CreatureNameX));
             }
         }
 
@@ -109,7 +110,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _creatureNameY = value;
-                OnChanged("CreatureNameY");
+                OnChanged(nameof(CreatureNameY));
             }
         }
 
@@ -139,7 +140,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _creatureX = value;
                 CalculateSightArea();
-                OnChanged("CreatureX");
+                OnChanged(nameof(CreatureX));
             }
         }
 
@@ -151,7 +152,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _creatureY = value;
                 //CalculateSightArea();  //TODO: only on CreatureX Move, cause of too much calculations per pixelmove.
-                OnChanged("CreatureY");
+                OnChanged(nameof(CreatureY));
             }
         }
 
@@ -163,7 +164,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 {
                     _ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
                 }
-
+                
                 return _ki;
             }
 
@@ -180,7 +181,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _marginCreatureAktionsbuttons = value;
-                OnChanged("MarginCreatureAktionsbuttons");
+                OnChanged(nameof(MarginCreatureAktionsbuttons));
+            }
+        }
+        public Thickness MarginCreatureLangAkt
+        {
+            get { return _marginCreatureLangAkt; }
+
+            set
+            {
+                _marginCreatureLangAkt = value;
+                OnChanged(nameof(MarginCreatureLangAkt));
             }
         }
 
@@ -191,7 +202,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _marginCreatureATPAaktionen = value;
-                OnChanged("MarginCreatureATPAaktionen");
+                OnChanged(nameof(MarginCreatureATPAaktionen));
             }
         }
 
@@ -237,7 +248,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _objectSize = value;
                 ScalePicture(value);
-                OnChanged("ObjectSize");
+                OnChanged(nameof(ObjectSize));
             }
         }
 
@@ -266,7 +277,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _sightAreaGeometryData = value;
-                OnChanged("SightAreaGeometryData");
+                OnChanged(nameof(SightAreaGeometryData));
             }
         }
 
@@ -277,7 +288,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _sightAreaLength = value;
-                OnChanged("SightAreaLength");
+                OnChanged(nameof(SightAreaLength));
                 CalculateSightArea();
                 Console.WriteLine("Sight Length: " + value);
             }
@@ -290,7 +301,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _sightLineSektor = value;
-                OnChanged("SightLineSektor");
+                OnChanged(nameof(SightLineSektor));
             }
         }
 
@@ -589,9 +600,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureHeight = _imageOriginalHeigth * factor;
             CreatureWidth = _imageOriginalWidth * factor;
             MarginCreatureAktionsbuttons = new Thickness() { Left = CreatureWidth, Top = -31, Right = 0, Bottom = 0 };
-            CreatureAktionsbuttonsPos = Math.Max(130, 30 + CreatureHeight + 30 + 2 * factor);
+            CreatureAktionsbuttonsPos = Math.Max(112, 30 + CreatureHeight + 2 * factor);
+            MarginCreatureLangAkt = new Thickness() { Left = CreatureWidth-40, Top = CreatureHeight-20, Right = 6, Bottom = 0 };
 
-            MarginCreatureATPAaktionen = new Thickness() { Left = -5, Top = CreatureWidth, Right = 6, Bottom = 0 };
+            MarginCreatureATPAaktionen = new Thickness() { Left = -15, Top = CreatureWidth, Right = 16, Bottom = 0 };
             SightAreaLength = CreatureWidth + 40;
         }
 

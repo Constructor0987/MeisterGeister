@@ -620,6 +620,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             else
                 d = 3 + Ansage + ZielenDauer + SchussDauer;
 
+            if (((Wesen)Ausführender.Kämpfer).AktVerbleibendeDauer != d)
+                ((Wesen)Ausführender.Kämpfer).AktVerbleibendeDauer = d;
+            
             return d;
         }
         

@@ -58,9 +58,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     (Kampfrunde == 0 ?
                     InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
                     InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
-                    )                   //.Start.Kampfrunde
+                    )                  
                     : null;
-                //SortedInitiativListe = value.Where(t => t.Kampf.Kampfrunde == AktuelleAktionszeit.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase); 
             }
         }
 
@@ -169,7 +168,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Sichtstufe Sicht
         {
             get { return sicht; }
-            set
+            set 
             {
                 Set(ref sicht, value);
                 foreach (ManöverInfo mi in InitiativListe)
@@ -198,11 +197,64 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             OnChanged("SortedInitiativListe");
             List<ManöverInfo> Smi = new List<Logic.ManöverInfo>();
             Smi.AddRange(SortedInitiativListe);
+
             foreach (ManöverInfo mi in AktuelleAktionen)
             {
+                ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktManöverInfo = mi;
+
                 //Es werden nur aktive Manöver ausgeführt (also keine Paraden)
                 if (!mi.Manöver.IsAusgeführt && mi.Manöver.Typ == ManöverTyp.Aktion)
                      mi.Manöver.Aktion();
+                if (mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver))
+                {
+                    if (mi.Manöver.Typ == ManöverTyp.Aktion)
+                    {
+                        //Check wann die Zahl ausgeblendet werden sollte
+                        if (mi.Manöver.VerbleibendeDauer == 0)
+                            ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = null;    
+                        else
+                            ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = mi.Manöver.VerbleibendeDauer;
+                    }
+
+                    //Neuer Fernangriff innerhalb der aktiven KR -> 1aktive Aktion zum Ende
+                    if (mi.Start.Kampfrunde == mi.End.Kampfrunde &&
+                        mi.Start.InitiativPhase != mi.End.InitiativPhase)
+                    {
+                        if (this.InitiativListe.Where(t => t.Aktionszeiten.Contains(new ZeitImKampf(mi.AktKampfrunde, mi.End.InitiativPhase)) &&
+                                                           t.Manöver.Ausführender == mi.Manöver.Ausführender).Count() == 1)
+                        {
+                            ManöverInfo minfo = new ManöverInfo(new Attacke(mi.Manöver.Ausführender), 0, mi.AktKampfrunde);
+                            if (mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver))
+                            {
+                                minfo.Manöver = new Manöver.FernkampfManöver(mi.Manöver.Ausführender,
+                                    (IFernkampfwaffe)(mi.Manöver as Manöver.FernkampfManöver).FernkampfWaffeSelected);
+                            }
+                            else
+                            if (mi.Manöver.GetType() == typeof(Manöver.Zauber))
+                            {
+                                minfo.Manöver = new Manöver.Zauber(mi.Manöver.Ausführender,
+                                    (Held_Zauber)(mi.Manöver as Manöver.Zauber).Held_Zauber);
+                            }
+                            //Nur 1 Aktion für das Würfeln der längerfristige Handlung
+                            minfo.Start = mi.End;
+                            minfo.End = mi.End;
+                            //In der 1.Akt muss die längerfristige Handlung aktiv werden, die 2. Akt wird ebenfalls als aktive Aktion freigeschaltet
+
+                            minfo.Manöver.Dauer = 1;
+                            minfo.Manöver.VerbleibendeDauer = 1;
+                            this.InitiativListe.Add(new ManöverInfo(minfo.Manöver, 8, mi.AktKampfrunde));
+                            SortedInitiativListe = InitiativListe != null ?
+                                (Kampfrunde == 0 ?
+                                InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
+                                InitiativListe.Where(a => a.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                                )
+                                : null;                            
+                            //Parade-Manöver setzen
+                            mi.Manöver.Ausführender.AbwehrManöver.Clear();
+                            break;
+                        }
+                    }
+                }                
             }
 
             ZeitImKampf next = default(ZeitImKampf);
@@ -268,8 +320,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 AktIniKämpfer = lstKämpferGleicheIni[0];
             else
                 AktIniKämpfer = null;
-            
-            if (AktIniKämpfer != null) 
+
+            if (AktIniKämpfer != null)
                 ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = true;
 
             if (lstMI.Count > 1)
@@ -354,24 +406,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ki.VerbrauchteAngriffsaktionen = 0;
                 ki.VerbrauchteFreieAktionen = 0;
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
-                //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)                
+                //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)                  
             }
             List<ManöverInfo> lstToRemove = InitiativListe.Where(t => t.End.Kampfrunde < Kampfrunde).ToList();
             if (lstToRemove.Count > 0)
                 InitiativListe.RemoveRange(lstToRemove);
-
-            ZeitImKampf zik = new ZeitImKampf(Kampfrunde, 
-                neueManöver.Count > 0 ? neueManöver[0].Start.InitiativPhase:99
-                );
-            List<ManöverInfo> lstLangeHandlungen = InitiativListe.Where(t => t.Start.Kampfrunde < Kampfrunde).ToList();
-
-            lstLangeHandlungen.ForEach(delegate (ManöverInfo mi) { mi.Start = zik; });
-
-
-
-            //InitiativListe =(List<ManöverInfo>) InitiativListe.Where(t => t.End.Kampfrunde >= Kampfrunde).ToList();
-            //InitiativListe.RemoveAll(((ExtendedObservableCollection < ManöverInfo >)InitiativListe.Where(t => t.AktKampfrunde < Kampfrunde)));// .Where(t => t.End.Kampfrunde < t.AktKampfrunde).ToList());
-
+            
             if (neueManöver.Count > 0)
             {
                 InitiativListe.AddRange(neueManöver);
