@@ -220,8 +220,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     if (mi.Start.Kampfrunde == mi.End.Kampfrunde &&
                         mi.Start.InitiativPhase != mi.End.InitiativPhase)
                     {
-                        if (this.InitiativListe.Where(t => t.Aktionszeiten.Contains(new ZeitImKampf(mi.AktKampfrunde, mi.End.InitiativPhase)))
-                            .Where(z => z.Manöver.Ausführender == mi.Manöver.Ausführender).Count() == 1)
+                        if (this.InitiativListe.Where(t => t.Aktionszeiten.Contains(new ZeitImKampf(mi.AktKampfrunde, mi.End.InitiativPhase)) &&
+                                                           t.Manöver.Ausführender == mi.Manöver.Ausführender).Count() == 1)
                         {
                             ManöverInfo minfo = new ManöverInfo(new Attacke(mi.Manöver.Ausführender), 0, mi.AktKampfrunde);
                             if (mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver))

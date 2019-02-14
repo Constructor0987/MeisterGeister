@@ -950,8 +950,8 @@ namespace MeisterGeister.View.Bodenplan
                         else
                         {
                             ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe
-                                .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde)
-                                .Where(t => t.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer)
+                                .Where(z => z.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde &&
+                                            z.Manöver.Ausführender.Kämpfer == VM.SelectedObject as IKämpfer)
                                 .FirstOrDefault(t => t.Aktionszeiten.Contains(Global.CurrentKampf.Kampf.AktuelleAktionszeit));
                             if (mi == null)
                                 mi = Global.CurrentKampf.Kampf.InitiativListe
