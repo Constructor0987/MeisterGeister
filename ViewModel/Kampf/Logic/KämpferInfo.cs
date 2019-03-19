@@ -18,6 +18,7 @@ using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
+    [Serializable]
     public class KämpferInfo : ViewModelBase, IDisposable
     {
         #region Commands
@@ -145,6 +146,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+
+
         private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
         public btnHotkeyVM SpeedbtnAudio
         {
@@ -240,7 +243,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
                 //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
                 //Dazwischen sollen die Aktionen allerdings neu berechnet werden
-                OnChanged("Initiative");
+                OnChanged(nameof(Initiative));
                 // ????? notwendig                
                 if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
                     Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
@@ -276,7 +279,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void NotifyIndexChanged()
         {
-            OnChanged("Index");
+            OnChanged(nameof(Index));
         }
 
         private Kampf kampf;
@@ -373,6 +376,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public KämpferInfo()
+        { }
+
         public KämpferInfo(IKämpfer k, Kampf kampf)
         {            
             if (k == null)
@@ -428,7 +434,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     else
                         Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
                 }
-                //OnChanged("Aktionen"); absichtlich nicht.
+                //OnChanged(nameof(Aktionen)); absichtlich nicht.
             }
         }
 
@@ -577,13 +583,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return FreieAktionen - VerbrauchteFreieAktionen; }
         }
 
-        private ManöverInfo _aktManöverInfo = null;
-        public ManöverInfo AktManöverInfo
-        {
-            get { return _aktManöverInfo; }
-            set { Set(ref _aktManöverInfo, value); }
-        }
-
         private void AktionenBerechnen()
         {
             int aktionen = 2;
@@ -600,7 +599,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 .Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
             if (längerfristig != null)
             {
-                AktManöverInfo = längerfristig;
+                //AktManöverInfo = längerfristig;
                 if (längerfristig.InitiativeModStart == 0)
                 {
                     Aktionen = aktionen;
@@ -719,7 +718,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
 
-            OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            OnChanged(nameof(Abwehraktionen));
+            OnChanged(nameof(Angriffsaktionen));
+            OnChanged(nameof(Aktionen));
         }
 
         //TODO Kampfstile in Kämpfer verschieben

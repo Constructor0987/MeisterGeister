@@ -32,8 +32,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     {
                         o.RunBeforeXMLSerialization();
                         //Console.WriteLine("SAVE TO XML: " + o.ToString());
-
-                        bboWithoutHeroes.Add(o as BattlegroundBaseObject);//BattlegroundCreature);
+                        bboWithoutHeroes.Add(o as BattlegroundBaseObject);
                     }
                 }
 
@@ -44,14 +43,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     {
                         DataTable dtCreature = CreateStructurCreatureTbl(o as BattlegroundCreature);
                         dtCreature = AddCreatureInfo(dtCreature, o as BattlegroundCreature);
-                        //o.RunBeforeXMLSerialization();
                         //Console.WriteLine("SAVE TO XML: " + o.ToString());
-
                         bboHeroes.Add(dtCreature);
                     }
                 }
-
-
+                
                 //serialize observablecollection in class XmlCollectionHelper to XML File
                 XmlSerializer xs = new XmlSerializer(typeof(XmlCollectionHelper));
                 XmlCollectionHelper xmlH = new XmlCollectionHelper(bboWithoutHeroes);
@@ -429,7 +425,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     [System.Xml.Serialization.XmlInclude(typeof(BattlegroundBaseObject))]
     [System.Xml.Serialization.XmlInclude(typeof(PathLine))]
     [System.Xml.Serialization.XmlInclude(typeof(FilledPathLine))]
-    [System.Xml.Serialization.XmlInclude(typeof(ImageObject))]    
+    [System.Xml.Serialization.XmlInclude(typeof(ImageObject))]
     public class XmlCollectionHelper 
     {
         public ObservableCollection<BattlegroundBaseObject> ObsColl = new ObservableCollection<BattlegroundBaseObject>();

@@ -226,9 +226,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void NotifyKampfaktionenChanged()
         {
-            OnChanged("DauerInKampfaktionen");
-            OnChanged("RestDauerInKampfaktionen");
-            OnChanged("IndexInKampfaktionen");
+            OnChanged(nameof(DauerInKampfaktionen));
+            OnChanged(nameof(RestDauerInKampfaktionen));
+            OnChanged(nameof(IndexInKampfaktionen));
         }
 
         #endregion
@@ -348,7 +348,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     Kampf.PropertyChanged += Kampf_PropertyChanged;
                 }
                 NotifyKampfaktionenChanged();
-                OnChanged("Kampf");
+                OnChanged(nameof(Kampf));
             }
         }
 
@@ -384,7 +384,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     }
                 }
 
-                OnChanged("Manöver");
+                OnChanged(nameof(Manöver));
             }
         }
 
@@ -441,16 +441,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 BerechneStart();
                 BerechneEnd();
-                OnChanged("Aktionszeiten");
+                OnChanged(nameof(Aktionszeiten));
             }
+            // TODO: Beim Ändern auf nameof(xyz) ist aufgefallen, dass Angriffsaktionen nicht (mehr) exisitiert!
             else if (args.PropertyName == "Angriffsaktionen")
-                OnChanged("Angriffsaktionen");
+                 OnChanged("Angriffsaktionen");
         }
 
         private void Kampf_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "AktuelleAktion")
-                OnChanged("IsAktuell");
+                OnChanged(nameof(IsAktuell));
             if (e.PropertyName == "AktuelleAktionszeit")
             {
                 Aktivieren.Invalidate();
