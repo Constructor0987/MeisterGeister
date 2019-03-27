@@ -25,6 +25,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             get { return (bool)((FernkampfModifikator<bool>)mods[AXXELERATUSAKTIV_MOD]).Value; }
         }
 
+        private int _ladezeitOhneSchuss = 0;
+        public int LadeZeitOhneSchuss
+        {
+            get { return _ladezeitOhneSchuss; }
+            set { Set(ref _ladezeitOhneSchuss, value); }
+        }
+
         [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellladenBogen
         {
@@ -46,12 +53,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen, null, false) || IstAxxeleratusAktiv)); }
         }
 
+        private int _schussDauer = 1;
         public int SchussDauer
         {
-            get { return FernkampfWaffeSelected == null? 1: (FernkampfWaffeSelected.Name == "Kurzbogen"? 0: 1); }
+            get { return _schussDauer; }// FernkampfWaffeSelected == null ? 1}//: (FernkampfWaffeSelected.Name == "Kurzbogen"? 0: 1); }
+            set { Set(ref _schussDauer, value); }
         }
 
-        private int _zielenDauer = 0;
+        private int _zielenDauer = 1;
         public int ZielenDauer
         {
             get { return _zielenDauer; }
@@ -568,6 +577,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         private int GetDauer(IFernkampfwaffe waffe, int Zielen, int Ansage)
         {
+            LadeZeitOhneSchuss = FernkampfWaffeSelected != null ? FernkampfWaffeSelected.LadeZeit.Value - 1 : 0;
+
             Held held = Ausführender.Kämpfer as Held;
             int d = 1;
             ZielenDauer = Zielen;
@@ -580,34 +591,65 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             if (waffe != null && waffe.Talent != null)
             {
-                d = waffe.LadeZeit.Value + ZielenDauer + SchussDauer;
+                d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
                 
                 if (held != null && FernkampfWaffeSelected != null)
                 {
+                    //Muss ganz vorne stehen, um die Ausgangsformel zu nutzen
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                         held.HatSonderfertigkeit(Sonderfertigkeit.Scharfschütze + " (" + waffe.Talent.Name + ")"))
                     {
                         ZielenDauer = (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1));
-                        d = waffe.LadeZeit.Value + ZielenDauer + SchussDauer;
+                        d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
                     }
 
-                    if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                        waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024" && //"Bogen" 
-                        (held.HatSonderfertigkeit(Sonderfertigkeit.SchnellladenBogen) || IstAxxeleratusAktiv))
-                        d = d - 1 >= 1 ? d - 1 : 1;
+                    if (waffe.Talent == FernkampfWaffeSelected.Talent && (HatSchnellladenBogen ^ IstAxxeleratusAktiv))
+                    {
+                        if (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024") // Bogen
+                        {
+                            if (waffe.Name != "Kurzbogen")
+                            {
+                                LadeZeitOhneSchuss = Math.Max(LadeZeitOhneSchuss - 1, 1);
+                                d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
+                            }
+                            else
+                            {
+                                LadeZeitOhneSchuss = 0;
+                                d = Math.Max(ZielenDauer + SchussDauer, 1);
+                            }
+                        }
+                        else
+                            d = Math.Max(LadeZeitOhneSchuss + ZielenDauer + SchussDauer, 1);
+                    }
+
+                    if (waffe.Talent == FernkampfWaffeSelected.Talent && (HatSchnellladenBogen && IstAxxeleratusAktiv))
+                    {
+                        if (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024") // Bogen
+                        {
+                            LadeZeitOhneSchuss = Math.Max(LadeZeitOhneSchuss - 2, 0);
+                            if (waffe.Name != "Kurzbogen")
+                            { 
+                                d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
+                            }
+                            else
+                            {
+                                d = 1;
+                            }
+                        }
+                    }
                     else
                         if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                             waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000015" && //"Armbrust" 
                             (held.HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust) || IstAxxeleratusAktiv))
-                            d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
-                        else
+                        d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
+                    else
                             if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                                 held.HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen) &&
                                 (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000379" || //"Wurfbeile" 
                                  waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000380" || //"Wurfmesser"
                                  waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000381" || //"Wurfspeere"
                                  waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000382"))  //"Wurfwaffen" 
-                                d = d - 1 >= 1 ? d - 1 : 1;
+                        d = Math.Max(d - 1, 1);
 
                     if (Ansage > 0)
                     {
