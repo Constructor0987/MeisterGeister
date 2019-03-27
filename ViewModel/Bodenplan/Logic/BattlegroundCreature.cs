@@ -71,8 +71,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             MoveObject(0, 0, false); //for initial position of ZLevel Display
             CreateSightArea();
             ShowLebensbalken = MeisterGeister.Logic.Einstellung.Einstellungen.LebensbalkenImmerAnzeigen || (this as Wesen).IsHeld;
+        }
 
-
+        private ManöverInfo _aktManöverInfo;
+        public ManöverInfo AktManöverInfo
+        {
+            get { return _aktManöverInfo; }
+            set { Set(ref _aktManöverInfo, value); }
         }
 
         public double CreatureAktionsbuttonsPos

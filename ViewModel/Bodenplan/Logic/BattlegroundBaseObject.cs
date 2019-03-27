@@ -13,12 +13,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     public abstract class BattlegroundBaseObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private bool _isNew;
+        private bool _isNew = false;
         private bool _isSelected = false;
         private bool _isAnDerReihe = false;
         private bool _isMoving = false;
         private double _strokethickness = 6;
-        [NonSerialized] private SolidColorBrush _objectColor;
         private Color _objectXMLColor; //needed for xml serialization
         private Color _fillColor;
         private double _opacity = 1;
@@ -56,15 +55,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 if (Set(ref _isSelected, value))
-                    OnChanged("IsSelected");
+                    OnChanged(nameof(IsSelected));
             }
         }
-
-        private ManöverInfo _aktManöverInfo;
-        public ManöverInfo AktManöverInfo
-        { 
-            get { return _aktManöverInfo; }
-            set { Set(ref _aktManöverInfo, value); }}
 
 
         private Nullable<int> _aktVerbleibendeDauer = null;
@@ -96,7 +89,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 if (Set(ref _isSelected, value))
-                    OnChanged("IsHighlighted");
+                    OnChanged(nameof(IsHighlighted));
             }
         }
 
@@ -139,7 +132,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 if(Set(ref _objectXMLColor, value))
-                    OnChanged("ObjectColor");
+                    OnChanged(nameof(ObjectColor));
             }
         }
 
