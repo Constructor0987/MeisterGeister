@@ -443,9 +443,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 BerechneEnd();
                 OnChanged(nameof(Aktionszeiten));
             }
-            // TODO: Beim Ändern auf nameof(xyz) ist aufgefallen, dass Angriffsaktionen nicht (mehr) exisitiert!
-            else if (args.PropertyName == "Angriffsaktionen")
-                 OnChanged("Angriffsaktionen");
         }
 
         private void Kampf_PropertyChanged(object sender, PropertyChangedEventArgs e)
