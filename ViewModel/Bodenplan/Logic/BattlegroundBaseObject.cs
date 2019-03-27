@@ -18,7 +18,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private bool _isAnDerReihe = false;
         private bool _isMoving = false;
         private double _strokethickness = 6;
-        //[NonSerialized] private SolidColorBrush _objectColor;
         private Color _objectXMLColor; //needed for xml serialization
         private Color _fillColor;
         private double _opacity = 1;

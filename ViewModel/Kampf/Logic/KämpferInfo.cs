@@ -434,7 +434,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     else
                         Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
                 }
-                //OnChanged(nameof(Aktionen)); absichtlich nicht.
+                //hier kein OnChanged einbinden
             }
         }
 
@@ -599,7 +599,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 .Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
             if (längerfristig != null)
             {
-                //AktManöverInfo = längerfristig;
                 if (längerfristig.InitiativeModStart == 0)
                 {
                     Aktionen = aktionen;
