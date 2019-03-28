@@ -56,7 +56,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         private int _schussDauer = 1;
         public int SchussDauer
         {
-            get { return _schussDauer; }// FernkampfWaffeSelected == null ? 1}//: (FernkampfWaffeSelected.Name == "Kurzbogen"? 0: 1); }
+            get { return _schussDauer; }
             set { Set(ref _schussDauer, value); }
         }
 
