@@ -11,7 +11,84 @@
         <!-- Wunden und Rüstungsschutz -->
         <Image Margin="0,5,9,0" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" ToolTip="Wunden" Height="28" Width="28" VerticalAlignment="Top" HorizontalAlignment="Left" />
         <Image Margin="0,35,9,0" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png" ToolTip="Rüstungsschutz" Height="28" Width="28" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Height="213" ToolTip="Wunden und Rüstungsschutz" VerticalAlignment="Top" HorizontalAlignment="Right" Width="133"/>
+        <Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Height="213"  VerticalAlignment="Top" HorizontalAlignment="Right" Width="133">
+            <Image.ToolTip>
+                <StackPanel>
+                    <Grid Margin="5,0,0,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="0" Grid.Row="0" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushMU}" />
+                        <Label Grid.Column="0" Grid.Row="0" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <TextBlock Grid.Column="1" Grid.Row="0" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Text="{Binding MU}" VerticalAlignment="Center"  />
+                        <Border Grid.Column="0" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKL}" />
+                        <Label Grid.Column="0" Grid.Row="1" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <Label Grid.Column="1" Grid.Row="1" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Content="{Binding KL}" VerticalAlignment="Center" />
+                        <Border Grid.Column="2" Grid.Row="0" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushIN}" />
+                        <Label Grid.Column="2" Grid.Row="0" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <Label Grid.Column="3" Grid.Row="0" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Content="{Binding IN}" VerticalAlignment="Center" />
+                        <Border Grid.Column="2" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushCH}" />
+                        <Label Grid.Column="2" Grid.Row="1" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <Label Grid.Column="3" Grid.Row="1" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Content="{Binding CH}" VerticalAlignment="Center" />
+                        <Border Grid.Column="4" Grid.Row="0" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushFF}" />
+                        <Label Grid.Column="4" Grid.Row="0" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <Label Grid.Column="5" Grid.Row="0" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Content="{Binding FF}" VerticalAlignment="Center" />
+                        <Border Grid.Column="4" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushGE}" />
+                        <Label Grid.Column="4" Grid.Row="1" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <Label Grid.Column="5" Grid.Row="1" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Content="{Binding GE}" VerticalAlignment="Center" />
+                        <Border Grid.Column="6" Grid.Row="0" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKO}" />
+                        <Label Grid.Column="6" Grid.Row="0" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <Label Grid.Column="7" Grid.Row="0" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Content="{Binding KO}" VerticalAlignment="Center" />
+                        <Border Grid.Column="6" Grid.Row="1" Margin="2,4" CornerRadius="4" Opacity="0.5" Background="{DynamicResource BrushKK}" />
+                        <Label Grid.Column="6" Grid.Row="1" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                        <Label Grid.Column="7" Grid.Row="1" Margin="5,0" HorizontalAlignment="Left" MinWidth="65" Content="{Binding KK}" VerticalAlignment="Center" />
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="GS:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
+
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" MinWidth="65">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding GeschwindigkeitOhneMod}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" Text="{Binding ki.GS,TargetNullValue=0}" VerticalAlignment="Center" FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding GS}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <ViewGeneral:TextBoxModInfo Grid.Row="2" Grid.Column="1" Margin="5,0" ModListe="{Binding ModifikatorenListeGS}" WertName="GS" 
+                            StartWert="{Binding GeschwindigkeitOhneMod}" Wert="{Binding Geschwindigkeit}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Image.ToolTip>
+        </Image>
         <ViewGeneral:IntBox Margin="0,5,9,0" Value="{Binding Path=RS[Gesamt]}" ToolTip="Rüstungsschutz (Gesamt)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
         <ViewGeneral:IntBox Margin="0,9,56,0" Value="{Binding Path=RS[Kopf]}" ToolTip="Rüstungsschutz (Kopf)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
         <ViewGeneral:IntBox Margin="0,61,67,0" Value="{Binding Path=RS[Brust]}" ToolTip="Rüstungsschutz (Brust)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />

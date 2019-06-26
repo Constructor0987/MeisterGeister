@@ -146,6 +146,81 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public string GS
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).Geschwindigkeit.ToString() :
+                    (this.Kämpfer is Gegner ? 
+                    ((this.Kämpfer as Gegner).GegnerBase.GS).ToString() +  "/" +
+                    ((this.Kämpfer as Gegner).GegnerBase.GS2 ?? 0).ToString() + "/" +
+                    ((this.Kämpfer as Gegner).GegnerBase.GS3 ?? 0).ToString() : "");
+            }
+        }
+        public int MU
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).MU ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.MU ?? 0 : 0);
+            }
+        }
+        public int KL
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).KL ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.KL?? 0: 0);
+            }
+        }
+        public int IN
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).IN ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.IN ?? 0 : 0);
+            }
+        }
+        public int CH
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).CH ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.CH ?? 0 : 0);
+            }
+        }
+        public int FF
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).FF ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.FF ?? 0 : 0);
+            }
+        }
+        public int GE
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).GE ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.GE ?? 0 : 0);
+            }
+        }
+        public int KO
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).KO ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.KO : 0);
+            }
+        }
+        public int KK
+        {
+            get
+            {
+                return (this.Kämpfer is Held) ? (this.Kämpfer as Held).KK ?? 0 :
+                    (this.Kämpfer is Gegner ? (this.Kämpfer as Gegner).GegnerBase.KK ?? 0 : 0);
+            }
+        }
 
 
         private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
