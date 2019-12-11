@@ -373,6 +373,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //}
             //Alte Ansagen löschen
             //InitiativListe.LöscheBeendeteManöver();
+            if (Kampfrunde > 0)
+            {
+                string tempPath = System.IO.Path.GetTempPath();
+                Global.CurrentKampf.BodenplanViewModel.SaveBattlegroundToXML(tempPath + "MeisterGeister_Battleground_Letzte_KR.xml", false);
+            }
 
             Kampfrunde++;
 

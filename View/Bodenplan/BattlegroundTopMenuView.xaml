@@ -545,33 +545,42 @@
                                 Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Margin="2,1" Width="110" />-->
                             </Grid>
                             <GroupBox Width="110" Header="Fog-of-War">
-                                <StackPanel Margin="3" Orientation="Horizontal">
-                                    <CheckBox
-                                        Margin="0,5,5,0"
-                                        HorizontalAlignment="Left"
-                                        IsChecked="{Binding useFog}" />
-                                    <StackPanel Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                        <Label
-                                            Margin="-2,0,0,0"
-                                            Padding="0,2,0,0"
-                                            HorizontalAlignment="Center"
-                                            Content="Größe Freifeld" />
-                                        <ViewGeneral:IntBox
-                                            Width="60"
-                                            Height="19"
-                                            MaxValue="5"
-                                            MinValue="1"
-                                            ShowButtons="True"
-                                            Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}">
-                                            <ViewGeneral:IntBox.ToolTip>
-                                                <StackPanel>
-                                                    <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" />
-                                                    <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" />
-                                                </StackPanel>
-                                            </ViewGeneral:IntBox.ToolTip>
-                                        </ViewGeneral:IntBox>
+                                <Grid>
+                                    <StackPanel Margin="0,0,0,-10" HorizontalAlignment="Left" >
+                                        <CheckBox
+                                            Margin="0,0,0,0" Height="17" Content="Fog-of-War" VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"
+                                            IsChecked="{Binding useFog}" />
+                                        <StackPanel Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}"  Margin="25,0,0,0">
+                                            <Label
+                                                Margin="-2,0,0,0"
+                                                Padding="0,2,0,0"
+                                                HorizontalAlignment="Center"
+                                                Content="Größe Freifeld" />
+                                                <ViewGeneral:IntBox
+                                                Width="60"
+                                                Height="19"
+                                                MaxValue="5"
+                                                MinValue="1"
+                                                ShowButtons="True"
+                                                Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}">
+                                                <ViewGeneral:IntBox.ToolTip>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" />
+                                                        <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" />
+                                                    </StackPanel>
+                                                </ViewGeneral:IntBox.ToolTip>
+                                            </ViewGeneral:IntBox>
+
+                                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-25,-20,0,0" Height="22" Width="22" Padding="0"
+                                                ToolTip="Fog-of-War löschen" Command="{Binding OnBtnRenewFogOfWar}" >
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
+                                            </Button>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
+
+
+                                </Grid>
                             </GroupBox>
                             <!--<GroupBox Header="Spieler Screen" Width="110">
                                 <Grid>
@@ -1026,12 +1035,37 @@
                                 <Button
                                     Width="22"
                                     Height="22"
-                                    Margin="10,5,0,0"
+                                    Margin="5,5,0,0"
                                     Padding="0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
                                     Click="Button_LoadXML_Click">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
+                                </Button>
+                                <Button
+                                    Width="22"
+                                    Height="22"
+                                    Margin="5,5,0,0"
+                                    Padding="0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    ToolTip="Laden der letzten KR des letzten Kampfes"
+                                    Click="Button_Load_lastKR_XML_Click">
+                                    <Button.Content>
+                                        <Grid>
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
+                                            <Label Content="TMP" FontSize="6" FontWeight="Bold" FontStyle="Italic" Margin="-2,2,1,-2" RenderTransformOrigin="0.5,0.5" >
+                                                <Label.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform Angle="15.843"/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Label.RenderTransform>
+                                            </Label>
+                                        </Grid>
+                                    </Button.Content>
                                 </Button>
                                 <Button
                                     Width="22"

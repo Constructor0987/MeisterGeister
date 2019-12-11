@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using MeisterGeister.View.General;
 using MeisterGeister.View.SpielerScreen;
 using MeisterGeister.ViewModel.Bodenplan;
 
@@ -154,7 +156,28 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void Button_Reset_Click(object sender, RoutedEventArgs e)
+        private void Button_Load_lastKR_XML_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ViewHelper.Confirm("Laden der letzten KR des letzten Kampfes",
+                "Wollen Sie den momentanen Kampf verwerfen und die letzte KR des letzten Kampfes laden?"))
+                return;
+            string tempPath = System.IO.Path.GetTempPath()+ "MeisterGeister_Battleground_Letzte_KR.xml";
+            if (File.Exists(tempPath))
+            {
+                var vm = DataContext as BattlegroundViewModel;
+                if (vm != null)
+                {
+                    Global.CurrentKampf.Kampf.Kämpfer.Clear();
+                    Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
+                    vm.LoadBattlegroundFromXML(tempPath);
+                    vm.UpdateCreatureLevelToTop();
+                }
+            }
+            else
+                ViewHelper.Popup("Die temporäre Datei "+Environment.NewLine+ tempPath+ Environment.NewLine+ " konnte nicht gefunden werden");
+        }
+
+            private void Button_Reset_Click(object sender, RoutedEventArgs e)
         {
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
