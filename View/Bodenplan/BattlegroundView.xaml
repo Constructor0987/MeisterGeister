@@ -1198,10 +1198,20 @@
                                                 <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                                     <Path
                                                         x:Name="PathLine"
-                                                        Data="{Binding PathGeometryData}"
-                                                        Opacity="{Binding Opacity}"
+                                                        Data="{Binding PathGeometryData}"                                                        
                                                         Stroke="{Binding ObjectColor}"
-                                                        StrokeThickness="{Binding StrokeThickness}" />
+                                                        StrokeThickness="{Binding StrokeThickness}" >
+                                                        <Path.Style>
+                                                            <Style TargetType="Path">
+                                                                <Setter Property="Opacity" Value="{Binding Opacity}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Opacity}" Value=".02">
+                                                                        <Setter Property="Opacity" Value=".2" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Path.Style>
+                                                    </Path>
                                                     <TextBlock
                                                         Canvas.Left="{Binding ZDisplayX}"
                                                         Canvas.Top="{Binding ZDisplayY}"
@@ -1342,7 +1352,18 @@
                                                         Background="Transparent"
                                                         Content="{Binding TextInLabel, UpdateSourceTrigger=PropertyChanged}"
                                                         FontSize="30"
-                                                        Foreground="White" />
+                                                        Foreground="White" >
+                                                        <Label.Style>
+                                                            <Style TargetType="Label">
+                                                                <Setter Property="Opacity" Value="{Binding Opacity}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Opacity}" Value=".02">
+                                                                        <Setter Property="Opacity" Value="1" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Label.Style>
+                                                    </Label>
                                                 </Canvas>
 
                                                 <ControlTemplate.Triggers>
