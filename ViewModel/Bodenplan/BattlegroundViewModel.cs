@@ -222,7 +222,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 ObjectColor = new SolidColorBrush(Colors.DarkBlue),
                 StrokeThickness = th,
-                Opacity = .2,
+                Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar?.02: .2,
                 IsNew = true
             };
             SelectedTempObject = pathline;
@@ -234,7 +234,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = new TextLabel("0 Schritt", x1, y1)
             {
                 IsNew = true,
-                LabelWidth = 200
+                LabelWidth = 200,
+                Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : 1
             };
             BattlegroundObjects.Add(label);
         }

@@ -183,8 +183,8 @@
 
                                             <!--  Lichtquelle  -->
                                             <Ellipse
-                                                Canvas.Left="{Binding ki.MidCreatureX}"
-                                                Canvas.Top="{Binding ki.MidCreatureY}"
+                                                Canvas.Left="{Binding ki.LightCreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                 Width="{Binding ki.LichtquellePixelRadius}"
                                                 Height="{Binding ki.LichtquellePixelRadius}"
                                                 Opacity="0.4"
@@ -331,6 +331,7 @@
                                                 Background="#FF3DD81A"
                                                 Maximum="{Binding LebensenergieMax}"
                                                 Minimum="0"
+                                                Opacity="{Binding Opacity}"
                                                 Orientation="Vertical"
                                                 Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"
                                                 Value="{Binding LebensenergieAktuell}" />
@@ -659,7 +660,9 @@
                                                 Background="Transparent"
                                                 Content="{Binding TextInLabel, UpdateSourceTrigger=PropertyChanged}"
                                                 FontSize="30"
-                                                Foreground="White" />
+                                                Foreground="White"  
+                                                Opacity="{Binding Opacity}"
+                                                />
                                         </Canvas>
 
                                         <ControlTemplate.Triggers>
