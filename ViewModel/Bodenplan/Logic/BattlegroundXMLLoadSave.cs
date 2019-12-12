@@ -20,7 +20,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     public class BattlegroundXMLLoadSave
     {
-        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename, bool SaveWithoutPictures, List<double> fogSettings)
+        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename, bool SaveWithoutPictures, List<double> fogSettings, bool GiveFeedback = true)
         {
             try
             {
@@ -100,7 +100,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     xs.Serialize(wr, xmlH);
                     wr.Close();
                 }
-                ViewHelper.Popup("Datei erfolgreich gespeichert");
+                if (GiveFeedback)
+                    ViewHelper.Popup("Datei erfolgreich gespeichert");
             }
             catch (IOException e)
             {

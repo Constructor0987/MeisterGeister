@@ -422,7 +422,7 @@
                             DragOver="ArenaGrid_DragOver"
                             Drop="ArenaGrid_Drop"
                             GiveFeedback="ArenaGrid_GiveFeedback"
-                            ItemsSource="{Binding BattlegroundObjects}"
+                            ItemsSource="{Binding BattlegroundObjects, UpdateSourceTrigger=PropertyChanged}"
                             MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown"
                             MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp"
                             MouseMove="ArenaGrid_MouseMove"

@@ -1105,6 +1105,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void ClearBattleground()
         {
             BattlegroundObjects.Where(x => !(x is BattlegroundCreature)).ToList().ForEach(x => BattlegroundObjects.Remove(x));
+            BattlegroundObjects.Clear();
+            BackgroundImage = null;
+            BackgroundOffsetX = 0;
+            BackgroundOffsetY = 0;
+            BackgroundOffsetSize = ARENA_GRID_RESOLUTION;
+            FogFreeSize = 1;
+            FogImage = null;
+            FogOffsetSize = ARENA_GRID_RESOLUTION;
+            FogOffsetX = 0;
+            FogOffsetY = 0;
+            FogImageFilename = null;
+            useFog = false;
         }
 
         public void RemoveCreature(IKämpfer creature)
@@ -1607,6 +1619,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BackgroundOffsetX = bgO.ZDisplayX;
                 BackgroundOffsetY = bgO.ZDisplayY;
                 BackgroundOffsetSize = (bgO as ImageObject).ObjectSize;
+                (bgO as BattlegroundBaseObject).IsVisible = false;
             }
 
             BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is ImageObject).Where(t => (t as ImageObject).IsFogPicture).FirstOrDefault();
@@ -1635,6 +1648,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 var img = (System.Drawing.Image)bm;
                 FogImage = wbmap;
                 useFog = true;
+                (bg1 as BattlegroundBaseObject).IsVisible = false;
             }
 
             ObservableCollection<double> lstFogSettings = bg.LoadSettingsFromXML(filename);
@@ -1654,7 +1668,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             RechteckGrid = lstFogSettings[7] == 1;
         }
 
-        public void SaveBattlegroundToXML(string filename)
+        public void SaveBattlegroundToXML(string filename, bool GiveFeedback = true)
         {
             var lstSettings = new List<double>
             {
@@ -1705,7 +1719,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             lstSettings.Add(ScaleKampfGrid);
             lstSettings.Add(RechteckGrid ? 1 : 0);
             var bg = new BattlegroundXMLLoadSave();
-            bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings);
+            bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings, GiveFeedback);
         }
 
         private bool _loadWithoutPictures = false, _saveWithoutPictures = false;
@@ -2056,6 +2070,25 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Commands
 
+
+        public Base.CommandBase OnBtnRenewFogOfWar
+        {
+            get
+            {
+                if (_onBtnRenewFogOfWar == null)
+                {
+                    _onBtnRenewFogOfWar = new Base.CommandBase(RenewFogOfWar, null);
+                }
+                return _onBtnRenewFogOfWar;
+            }
+        }
+
+        private void RenewFogOfWar(object obj)
+        {
+            if (!ViewHelper.Confirm("Fog-of-War erneuern", "Soll der aktuelle Fog-of-War gelöscht und von neuem begonnen werden?")) return;
+            CreateFogOfWar();
+        }
+
         public Base.CommandBase OnBtnCenterMeisterView
         {
             get
@@ -2140,6 +2173,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private Base.CommandBase _onBtnRenewFogOfWar = null;
         private Base.CommandBase _onBtnCenterMeisterView = null;
         private Base.CommandBase _onBtnCenterPlayerView = null;
         private Base.CommandBase _onBtnPosIniWindow = null;
