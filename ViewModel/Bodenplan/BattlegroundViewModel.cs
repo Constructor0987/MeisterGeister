@@ -236,7 +236,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 IsNew = true,
                 LabelWidth = 200,
                 Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : 1
-                //IsVisible = !(SelectedObject as BattlegroundCreature).ki.IstUnsichtbar
             };
             BattlegroundObjects.Add(label);
         }
