@@ -4248,11 +4248,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
         void NeuesTheme(object obj)
-        {
-            if (NeuesKlangThemeInDB("") == null) 
+        { 
+            Audio_Theme aktTh = NeuesKlangThemeInDB("");
+            if (aktTh == null)
                 return;
+            
+            //Nur die notwendigsten Listen neu laden
+            EditorThemeListBoxItemListe = lbiThemeListNeuErstellen();
+            ErwPlayerThemeListe = ThemeErwPlayerListeNeuErstellen();
+            Refresh();
+            FilterThemeEditorPlaylistListe();
+            FilterErwPlayerThemeListe();
 
-            UpdateAlleListen();
+            AktKlangTheme = aktTh;
             OnChanged();
             SelectedEditorThemeItem = FilteredEditorThemeListBoxItemListe.FirstOrDefault(t => t.ATheme == AktKlangTheme);
         }
