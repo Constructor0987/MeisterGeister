@@ -7,7 +7,7 @@
         xmlns:kal="clr-namespace:MeisterGeister.Logic.Kalender"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" xmlns:mg="clr-namespace:MeisterGeister"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MeisterGeister.View.MainView" 
-        Height="650" Width="1045" Closing="Window_Closing" 
+        Height="650" Width="1045" Closing="Window_Closing" KeyDown="Window_KeyDown" 
         Loaded="Window_Loaded" Title="DSA MeisterGeister" Closed="Window_Closed" WindowStartupLocation="CenterScreen"
         TextOptions.TextFormattingMode="Display">
     <Window.Resources>
@@ -496,16 +496,25 @@
                             </Grid>
                         </StackPanel>
 
-                        <GroupBox VerticalAlignment="Center" Margin="10,0,10,0" Height="24" Padding="0,-1,0,-3" >
-                            <StackPanel Orientation="Horizontal">
+                        <Expander VerticalAlignment="Bottom" IsExpanded="True" ForceCursor="False" Margin="5,1,0,5" ExpandDirection="Right" 
+                                ToolTip="Drücke Strg+Alt+ 'Hotkey' um die Hotkey-Playliste abzuspielen oder direkt anklicken" >
+                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                                 <Button Height="20" Background="Black" Width="20" ToolTip="Stoppen aller laufenden Hotkeys" Command="{Binding OnAllHotkeysStop}" VerticalAlignment="Center" >
                                     <Image Source="/Images/Icons/General/stop.png" Margin="-2,-2,-3,-3" />
                                 </Button>
                                 <ViewGeneral:SmallSlider Width="50" MaxValue="100" MinValue="0" UseLayoutRounding="True" Margin="2" HorizontalStyle="True" VerticalAlignment="Center" 
                                     Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"   />
-                                <ComboBox Grid.Column="1" ItemsSource="{Binding hotkeyListUsed}" Width="30"  />
-                            </StackPanel>
-                        </GroupBox>
+                                
+                                <ItemsControl ItemsSource="{Binding hotkeyListUsed, FallbackValue={x:Null}}" Margin="2">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel ItemWidth="30" Margin="0,1,0,-2"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </StackPanel>                         
+                        </Expander> 
+                             
 
                         </StackPanel>
                     <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="8" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">

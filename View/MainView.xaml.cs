@@ -470,6 +470,32 @@ namespace MeisterGeister.View
             }
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        { 
+            try
+            {
+                var alt = e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Alt);
+                var ctrl = e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control);
+                var altGr = alt & ctrl;
+                if (VM.hotkeyListUsed.Count > 0 && altGr)
+                {
+                    string s = Convert.ToString(e.Key);
+                    if (e.Key >= Key.D0 && e.Key <= Key.D9)
+                        s = s.Remove(0, s.Length - 1);
 
+                    AudioPlayer.btnHotkey hkey = VM.hotkeyListUsed.FindAll(t => t.VM.aPlaylistGuid != (Guid.Empty)).
+                        FirstOrDefault(t => Convert.ToChar(t.VM.taste).ToString() == s);
+                    if (hkey != null)
+                    {
+                        e.Handled = true;
+                        hkey.VM.OnBtnClick(hkey.btn);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Auswerten des Tastenklicks ist ein Fehler aufgetreten.", ex);
+            }
+        }
     }
 }
