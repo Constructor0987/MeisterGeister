@@ -78,11 +78,18 @@
                                     <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
-                            <CheckBox Margin="5" Content="Auf Bildschirmgröße anpassen" IsChecked="{Binding IsImageStretch}" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
-                                <CheckBox.ToolTip>
-                                    <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Bild auf maximale Größe vergrößern, andernfalls Origalgröße verwenden. Ist das Bild größer als der Bildschirm, wird es verkleinert." />
-                                </CheckBox.ToolTip>
-                            </CheckBox>
+                            <StackPanel Margin="5">
+                                <CheckBox Content="Unterordner einbeziehen" IsChecked="{Binding IsUnterordnerEinbeziehen}" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
+                                    <CheckBox.ToolTip>
+                                        <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Es werden alle Unterordner des ausgewählten Bilder-Ordners nach Bildern durchsucht." />
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                                <CheckBox Content="Auf Bildschirmgröße anpassen" IsChecked="{Binding IsImageStretch}" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
+                                    <CheckBox.ToolTip>
+                                        <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Bild auf maximale Größe vergrößern, andernfalls Origalgröße verwenden. Ist das Bild größer als der Bildschirm, wird es verkleinert." />
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                            </StackPanel>
                             <ViewGeneral:DoubleBox Margin="5" MinWidth="65" ShowButtons="True" Value="{Binding SlideShowInterval}" ToolTip="Änderungen am Intervall werden beim nächsten Bild übernommen." />
                             <TextBlock Margin="5" Text="(Slide-Show Intervall in Sekunden)" VerticalAlignment="Center" />
                         </StackPanel>

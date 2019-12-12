@@ -625,6 +625,19 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        public static bool SpielerScreenUnterordnerEinbeziehen
+        {
+            get
+            {
+                return GetEinstellung<bool>(nameof(SpielerScreenUnterordnerEinbeziehen));
+            }
+
+            set
+            {
+                SetEinstellung(nameof(SpielerScreenUnterordnerEinbeziehen), value);
+            }
+        }
+
         public static double SlideShowInterval
         {
             get
@@ -862,7 +875,7 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "Regeledition", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "Regeledition", Wert = "" },
 
                 new Model.Einstellung() { Name = "PflanzenwissenIntegrieren", Kontext = "Held", Kategorie = "Hausregel", Typ = "Boolean", Beschreibung = "Held kennt nur bestimmte Pflanzen", Wert = "False" },
-                
+
                 new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
                 new Model.Einstellung() { Name = "AudioInAnderemPfadSuchen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
                 new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
@@ -901,6 +914,8 @@ namespace MeisterGeister.Logic.Einstellung
 
                 new Model.Einstellung() { Name = "HeldenSoftwareOnlineURL", Kontext = "Allgemein", Kategorie = null, Typ = "String", Beschreibung = "URL zu HeldenSoftware-Online", Wert = "https://online.helden-software.de/index.php" },
                 new Model.Einstellung() { Name = "HeldenSoftwareOnlineToken", Kontext = "Allgemein", Kategorie = null, Typ = "String", Beschreibung = "Token zum HeldenSoftware-Online-Account", Wert = null },
+
+                new Model.Einstellung() { Name = "SpielerScreenUnterordnerEinbeziehen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "SpielerInfo-Tool: Unterordner beim Bilder-Laden mit einbeziehen?", Wert = "False" },
 
                 //Versteckte
                 new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = DateTime.Now.ToString() },
