@@ -1287,6 +1287,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 Set(ref _hotkeyListUsed, value);
+                MainViewModel.Instance.hotkeyListUsed = value;
                 ShowHotkeyPanel = ShowHotkeyPanel;                
             }
         }
@@ -7383,7 +7384,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 lstHotKeyUsed.Add(hkey);
             };
 
-            hotkeyListUsed = lstHotKeyUsed;
+            hotkeyListUsed = lstHotKeyUsed;            
             IsAuswahlHotkey = false;
         }
         

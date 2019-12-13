@@ -371,7 +371,7 @@
 
                 <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
                     <StackPanel Margin="0,5,0,0" >
-                        <ItemsControl ItemsSource="{Binding hotkeyListUsed}" >
+                        <ItemsControl ItemsSource="{Binding hotkeyListUsed, UpdateSourceTrigger=PropertyChanged}" >
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="35" Margin="5,0,0,0" />
