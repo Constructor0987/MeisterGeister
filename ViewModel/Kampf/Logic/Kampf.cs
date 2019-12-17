@@ -16,6 +16,7 @@ using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.Model;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
+using System.IO;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -375,8 +376,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //InitiativListe.LöscheBeendeteManöver();
             if (Kampfrunde > 0)
             {
-                string tempPath = System.IO.Path.GetTempPath();
-                Global.CurrentKampf.BodenplanViewModel.SaveBattlegroundToXML(tempPath + "MeisterGeister_Battleground_Letzte_KR.xml", false);
+                string bodenplanPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) +
+                    @"\Daten\Bodenplan\Battleground_Letzte_KR.xml";
+                Global.CurrentKampf.BodenplanViewModel.SaveBattlegroundToXML(bodenplanPath, false);
             }
 
             Kampfrunde++;

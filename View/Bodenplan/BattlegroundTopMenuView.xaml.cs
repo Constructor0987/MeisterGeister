@@ -161,20 +161,22 @@ namespace MeisterGeister.View.Bodenplan
             if (!ViewHelper.Confirm("Laden der letzten KR des letzten Kampfes",
                 "Wollen Sie den momentanen Kampf verwerfen und die letzte KR des letzten Kampfes laden?"))
                 return;
-            string tempPath = System.IO.Path.GetTempPath()+ "MeisterGeister_Battleground_Letzte_KR.xml";
-            if (File.Exists(tempPath))
+            
+            string bodenplanPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + 
+                @"\Daten\Bodenplan\Battleground_Letzte_KR.xml";
+            if (Directory.Exists(Path.GetDirectoryName(bodenplanPath)) && File.Exists(bodenplanPath))
             {
                 var vm = DataContext as BattlegroundViewModel;
                 if (vm != null)
                 {
                     Global.CurrentKampf.Kampf.Kämpfer.Clear();
                     Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
-                    vm.LoadBattlegroundFromXML(tempPath);
+                    vm.LoadBattlegroundFromXML(bodenplanPath);
                     vm.UpdateCreatureLevelToTop();
                 }
             }
             else
-                ViewHelper.Popup("Die temporäre Datei "+Environment.NewLine+ tempPath+ Environment.NewLine+ " konnte nicht gefunden werden");
+                ViewHelper.Popup("Die temporäre Datei "+Environment.NewLine+ bodenplanPath + Environment.NewLine+ " konnte nicht gefunden werden");
         }
 
             private void Button_Reset_Click(object sender, RoutedEventArgs e)
