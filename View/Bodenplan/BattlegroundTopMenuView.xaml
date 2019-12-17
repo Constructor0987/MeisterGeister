@@ -369,11 +369,6 @@
                                 ToolTip="Rasterfarbe" />
                         </Grid>
                     </Border>
-                    <!--<StackPanel Grid.Column="3">
-                        <CheckBox IsChecked="{Binding Freizeichnen}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="5,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" Grid.Column="5" />
-                        <CheckBox Content="Rechteck" Height="16" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="checkBox5_Grid" VerticalAlignment="Top" IsChecked="{Binding RechteckGrid}" Grid.Column="5" />
-                        <CheckBox Content="Hex" Height="16" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" IsChecked="{Binding HexGrid}" Grid.Column="5" />
-                    </StackPanel>-->
                     <Border
                         Grid.Column="1"
                         Margin="2,2,0,0"
