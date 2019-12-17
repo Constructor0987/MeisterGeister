@@ -141,7 +141,7 @@ namespace MeisterGeister {
                         if (DatabaseUpdate.UserDatabaseVersion < 129)
                             msg = string.Format("Update auf die Vorab-Version Release 2.5.2."
                                 + "\nDiese Vorab-Version haben wir erstellt, damit ihr die neuen Features jetzt schon testen und nutzen könnt."
-                                + "\nAllerdings kann es bei der Vorab-Version zu unvorhergesehenem Fehlverhalten oder Absürzen des Programms kommen."
+                                + "\nAllerdings kann es bei der Vorab-Version zu unvorhergesehenem Fehlverhalten oder Abstürzen des Programms kommen."
                                 + "\nNatürlich haben wir versucht alles bislang erkannte zu eliminieren, jedoch kann es sein, dass wir nicht alle "
                                 + "\nVarianten abgefangen haben."
                                 + "\nFalls ihr mit dieser Version nicht zurecht kommt, könnt ihr das erstellte Backup zurückspielen und die "
