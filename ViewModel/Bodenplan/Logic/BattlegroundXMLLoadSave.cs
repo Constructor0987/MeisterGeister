@@ -20,7 +20,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     public class BattlegroundXMLLoadSave
     {
-        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename, bool SaveWithoutPictures, List<double> fogSettings, bool GiveFeedback = true)
+        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename, bool SaveWithoutPictures, List<double> Settings, bool GiveFeedback = true)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     }
                 }
 
-                if (fogSettings.Count != 0)
+                if (Settings.Count != 0)
                 {
                     DataTable dtSettings = new DataTable();
                     dtSettings.TableName = "Settings";
@@ -83,16 +83,41 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Columns.Add("ScaleKampfGrid");
                     dtSettings.Columns.Add("IsRechteckRaster");
 
-                    dtSettings.Rows.Add();
-                    dtSettings.Rows[0]["BackgroundOffsetSize"] = fogSettings[0];
-                    dtSettings.Rows[0]["BackgroundOffsetX"] = fogSettings[1];
-                    dtSettings.Rows[0]["InvBackgroundOffsetY"] = fogSettings[2];
+                    //Zusätzliche Spalten 
+                    dtSettings.Columns.Add("GridColorA");
+                    dtSettings.Columns.Add("GridColorB");
+                    dtSettings.Columns.Add("GridColorG");
+                    dtSettings.Columns.Add("GridColorR");
+                    dtSettings.Columns.Add("ShowSightArea");
+                    dtSettings.Columns.Add("SightAreaLenght");
+                    dtSettings.Columns.Add("ShowCreatureName");
+                    dtSettings.Columns.Add("UseFog");
+                    dtSettings.Columns.Add("AktKampfrunde");
+                    dtSettings.Columns.Add("IsEditorModeEnabled");
 
-                    dtSettings.Rows[0]["PlayerGridOffsetX"] = fogSettings[3];
-                    dtSettings.Rows[0]["PlayerGridOffsetY"] = fogSettings[4];
-                    dtSettings.Rows[0]["ScaleSpielerGrid"] = fogSettings[5];
-                    dtSettings.Rows[0]["ScaleKampfGrid"] = fogSettings[6];
-                    dtSettings.Rows[0]["IsRechteckRaster"] = fogSettings[7];
+                    dtSettings.Rows.Add();
+                    dtSettings.Rows[0]["BackgroundOffsetSize"] = Settings[0];
+                    dtSettings.Rows[0]["BackgroundOffsetX"] = Settings[1];
+                    dtSettings.Rows[0]["InvBackgroundOffsetY"] = Settings[2];
+
+                    dtSettings.Rows[0]["PlayerGridOffsetX"] = Settings[3];
+                    dtSettings.Rows[0]["PlayerGridOffsetY"] = Settings[4];
+                    dtSettings.Rows[0]["ScaleSpielerGrid"] = Settings[5];
+                    dtSettings.Rows[0]["ScaleKampfGrid"] = Settings[6];
+                    dtSettings.Rows[0]["IsRechteckRaster"] = Settings[7];
+
+                    //Zusätzliche Settings speichern
+                    dtSettings.Rows[0]["GridColorA"] = Settings[8];
+                    dtSettings.Rows[0]["GridColorB"] = Settings[9];
+                    dtSettings.Rows[0]["GridColorG"] = Settings[10];
+                    dtSettings.Rows[0]["GridColorR"] = Settings[11];
+
+                    dtSettings.Rows[0]["ShowSightArea"] = Settings[12];
+                    dtSettings.Rows[0]["SightAreaLenght"] = Settings[13];
+                    dtSettings.Rows[0]["ShowCreatureName"] = Settings[14];
+                    dtSettings.Rows[0]["UseFog"] = Settings[15];
+                    dtSettings.Rows[0]["AktKampfrunde"] = Settings[16];
+                    dtSettings.Rows[0]["IsEditorModeEnabled"] = Settings[17];
                     xmlH.AddObsDT(dtSettings);
                 }
                 using (StreamWriter wr = new StreamWriter(filename))
@@ -223,6 +248,22 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             back.Add(Convert.ToDouble(drow["ScaleSpielerGrid"]));
                             back.Add(Convert.ToDouble(drow["ScaleKampfGrid"]));
                             back.Add(Convert.ToDouble(drow["IsRechteckRaster"]));
+
+                            //Zusätzliche Daten laden
+                            if (drow.ItemArray.Length > 8)
+                            {
+                                back.Add(Convert.ToDouble(drow["GridColorA"]));
+                                back.Add(Convert.ToDouble(drow["GridColorB"]));
+                                back.Add(Convert.ToDouble(drow["GridColorG"]));
+                                back.Add(Convert.ToDouble(drow["GridColorR"]));
+
+                                back.Add(Convert.ToDouble(drow["ShowSightArea"]));
+                                back.Add(Convert.ToDouble(drow["SightAreaLenght"]));
+                                back.Add(Convert.ToDouble(drow["ShowCreatureName"]));
+                                back.Add(Convert.ToDouble(drow["UseFog"]));
+                                back.Add(Convert.ToInt32(drow["AktKampfrunde"]));
+                                back.Add(Convert.ToDouble(drow["IsEditorModeEnabled"]));
+                            }
                         }
                     }
                     stream.Close();

@@ -1643,6 +1643,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 var w = wbmap.PixelWidth;
                 FogPixelData = new int[w * h];
                 var widthInByte = 4 * w;
+                (bg1 as ImageObject).ZLevel = 103;
 
                 wbmap.CopyPixels(FogPixelData, widthInByte, 0);
                 System.Drawing.Bitmap bm = BitmapFromWriteableBitmap(wbmap);
@@ -1652,21 +1653,42 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 (bg1 as BattlegroundBaseObject).IsVisible = false;
             }
 
-            ObservableCollection<double> lstFogSettings = bg.LoadSettingsFromXML(filename);
-            if (lstFogSettings.Count == 0)
+            ObservableCollection<double> lstSettings = bg.LoadSettingsFromXML(filename);
+            if (lstSettings.Count == 0)
             {
                 return;
             }
 
-            BackgroundOffsetSize = lstFogSettings[0];
-            BackgroundOffsetX = lstFogSettings[1];
-            InvBackgroundOffsetY = lstFogSettings[2];
+            BackgroundOffsetSize = lstSettings[0];
+            BackgroundOffsetX = lstSettings[1];
+            InvBackgroundOffsetY = lstSettings[2];
 
-            PlayerGridOffsetX = lstFogSettings[3];
-            PlayerGridOffsetY = lstFogSettings[4];
-            ScaleSpielerGrid = lstFogSettings[5];
-            ScaleKampfGrid = lstFogSettings[6];
-            RechteckGrid = lstFogSettings[7] == 1;
+            PlayerGridOffsetX = lstSettings[3];
+            PlayerGridOffsetY = lstSettings[4];
+            ScaleSpielerGrid = lstSettings[5];
+            ScaleKampfGrid = lstSettings[6];
+            RechteckGrid = lstSettings[7] == 1;
+            if (lstSettings.Count <= 8)
+                return;
+            //Zusätzliche Battlemap Settings laden
+            Color gridCol = new Color()
+            {
+                A = Convert.ToByte(lstSettings[8]),
+                B = Convert.ToByte(lstSettings[9]),
+                G = Convert.ToByte(lstSettings[10]),
+                R = Convert.ToByte(lstSettings[11])
+            };
+            GridColor = gridCol;
+            ShowSightArea = lstSettings[12] == 1;
+            SightAreaLenght = lstSettings[13];
+            ShowCreatureName = lstSettings[14] == 1;
+            useFog = lstSettings[15] == 1;
+
+            //Kampf auf KR setzen
+            CurrKampf.KampfNeuStarten();
+            while (CurrKampf.Kampfrunde < lstSettings[16])
+                CurrKampf.NeueKampfrunde();
+            IsEditorModeEnabled = lstSettings[17] == 1;
         }
 
         public void SaveBattlegroundToXML(string filename, bool GiveFeedback = true)
@@ -1705,6 +1727,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         //File.Delete(olfile);
                         ImageObject io = CreateImageObject(FogImageFilename, new Point(FogOffsetX, FogOffsetY));
                         io.IsFogPicture = true;
+                        io.ZLevel = 103;
                         io.IsVisible = false;
                     }
                 }
@@ -1719,6 +1742,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
             lstSettings.Add(ScaleKampfGrid);
             lstSettings.Add(RechteckGrid ? 1 : 0);
+
+            //Zusätzliche 
+            lstSettings.Add(GridColor.A);
+            lstSettings.Add(GridColor.B);
+            lstSettings.Add(GridColor.G);
+            lstSettings.Add(GridColor.R);
+            lstSettings.Add(ShowSightArea ? 1 : 0);
+            lstSettings.Add(SightAreaLenght);
+            lstSettings.Add(ShowCreatureName ? 1 : 0);
+            lstSettings.Add(useFog ? 1 : 0);
+            lstSettings.Add(CurrKampf.Kampfrunde);
+            lstSettings.Add(IsEditorModeEnabled ? 1 : 0);
+
             var bg = new BattlegroundXMLLoadSave();
             bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings, GiveFeedback);
         }
@@ -2050,6 +2086,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             CreateThumbnail(FogImageFilename, FogImage.Clone());
             ImageObject io = CreateImageObject(FogImageFilename, new Point(FogOffsetX, FogOffsetY));
             io.IsFogPicture = true;
+            io.ZLevel = 103;
             io.IsVisible = false;
         }
 
