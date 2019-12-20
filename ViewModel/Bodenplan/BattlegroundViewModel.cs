@@ -119,6 +119,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        public double BewegungZuvor
+        {
+            get { return _bewegungZuvor; }
+            set { Set(ref _bewegungZuvor, value); }
+        }
+
         public bool IsMoving
         {
             get { return _isMoving; }
@@ -480,6 +486,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         //Vielleicht als Enum, wenn mehr als zwei Modi gebraucht werden? JO
         private bool _isEditorModeEnabled = true;
 
+        private double _bewegungZuvor = 0;
+
         private bool _isMoving;
 
         private bool _leftShiftPressed = false;
@@ -494,7 +502,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = BattlegroundObjects.Last(x => x.GetType() == typeof(TextLabel)) as TextLabel;
             label.LabelPositionX = (startPoint.X + endPoint.X - label.LabelWidth) / 2;
             label.LabelPositionY = (startPoint.Y + endPoint.Y - label.LabelHeight) / 2;
-            label.TextInLabel = $"{Math.Round(Math.Sqrt(Math.Pow((endPoint.X - startPoint.X), 2) + Math.Pow((endPoint.Y - startPoint.Y), 2)) / 100, 1).ToString()} Schritt";
+            label.TextInLabel = $"{Math.Round(Math.Sqrt(Math.Pow((endPoint.X - startPoint.X), 2) + Math.Pow((endPoint.Y - startPoint.Y), 2)) / 100 + BewegungZuvor, 1).ToString()} Schritt";
         }
 
         #region Fog

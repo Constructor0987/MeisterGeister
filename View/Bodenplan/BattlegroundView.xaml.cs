@@ -701,8 +701,9 @@ namespace MeisterGeister.View.Bodenplan
                         VM.SelectionChangedUpdateSliders();
                     }
 
-                    if (VM.SelectedObject != null && VM.SelectedObject.IsMoving)
+                    if (VM.SelectedObject != null && VM.SelectedObject.IsMoving && !Keyboard.IsKeyDown(Key.LeftCtrl))
                     {
+                        VM.BewegungZuvor = 0;
                         _x1 = e.GetPosition(ArenaGrid).X;
                         _y1 = e.GetPosition(ArenaGrid).Y;
                         VM.CreateNewTempPathLine(_x1, _y1);
@@ -890,6 +891,7 @@ namespace MeisterGeister.View.Bodenplan
                     }
                     if (VM.InitDnD)
                     {
+                        VM.BewegungZuvor = 0;
                         var x = (VM.SelectedObject as BattlegroundCreature).MidCreatureX + (VM.SelectedObject as BattlegroundCreature).CreatureWidth / 2;
                         var y = (VM.SelectedObject as BattlegroundCreature).MidCreatureY + (VM.SelectedObject as BattlegroundCreature).CreatureHeight / 2;
                         VM.CreateNewTempPathLine(x, y);
@@ -1157,6 +1159,18 @@ namespace MeisterGeister.View.Bodenplan
         {
             VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
             VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+
+            //Mehrfachstrecken der Kämpfer
+            if (VM.SelectedObject != null && VM.SelectedObject.IsMoving && Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                var pathLine = (PathLine)VM.SelectedTempObject;
+                Point startPoint = pathLine.GetStartPoint;
+                Point endPoint = pathLine.GetEndPoint;
+                VM.BewegungZuvor += Math.Round(Math.Sqrt(Math.Pow((endPoint.X - startPoint.X), 2) + Math.Pow((endPoint.Y - startPoint.Y), 2)) / 100, 1);
+
+                VM.CreateNewTempPathLine(endPoint.X, endPoint.Y);
+                VM.CreateNewTempTextLabel(endPoint.X, endPoint.Y);
+            }
         }
 
         private void ArenaGrid_Drop(object sender, DragEventArgs e)
