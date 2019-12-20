@@ -320,8 +320,8 @@
         </TextBlock>
 
         <ViewBodenplan:BattlegroundView Grid.Row="1" Grid.ColumnSpan="3" DataContext="{Binding BodenplanViewModel}"/>
-        <ViewBodenplan:BattlegroundTopMenuView Grid.ColumnSpan="1" Grid.Column="2" DataContext="{Binding BodenplanViewModel}" Margin="0,-3,5,-30" HorizontalAlignment="Right" />
-        <GridSplitter Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
+        <ViewBodenplan:BattlegroundTopMenuView Grid.ColumnSpan="1" Grid.Column="2" DataContext="{Binding BodenplanViewModel}" Margin="6,-3,5,-20" HorizontalAlignment="Left" />
+        <GridSplitter Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="3" Focusable="False" Background="#FFcCcAcA" />
 
         <!--<Border Margin="20,0,0,0" Grid.Row="2" Grid.ColumnSpan="3" Background="{DynamicResource TabItemSelectedBackground}" BorderThickness="2" BorderBrush="{DynamicResource TextBoxBorder}" >
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Padding="0" FontSize="11"  Content="{Binding BodenplanViewModel.InfoText}" Foreground="#FF707070" />

@@ -691,8 +691,17 @@
                             <VisualBrush.Visual>
                                 <Path
                                     Data="{Binding TilePathData}"
-                                    StrokeDashArray="5 3"
-                                    StrokeThickness="3">
+                                    StrokeDashArray="5 3">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="StrokeThickness" Value="3"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RechteckGrid}" Value="true">
+                                                    <Setter Property="StrokeThickness" Value="6"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
                                     <Path.Stroke>
                                         <SolidColorBrush Color="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" />
                                     </Path.Stroke>
