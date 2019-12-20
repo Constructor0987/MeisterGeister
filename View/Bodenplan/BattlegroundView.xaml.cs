@@ -1161,10 +1161,50 @@ namespace MeisterGeister.View.Bodenplan
 
         private void ArenaGrid_Drop(object sender, DragEventArgs e)
         {
-            VM.SelectedObject.IsMoving = false;
+            if (VM.SelectedObject != null)
+            {
+                VM.SelectedObject.IsMoving = false;
+                if (VM.SelectedObject is BattlegroundCreature)
+                    ((BattlegroundCreature)VM.SelectedObject).CalculateSightArea();
+            }
             VM.IsMoving = false;
-            ((BattlegroundCreature)VM.SelectedObject).CalculateSightArea();
             _kämpferCursor = null;
+
+            try
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    List<string> gedroppteDateien = new List<string>();
+                    foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
+                    {
+                        if (File.Exists(s))
+                        {
+                            try
+                            {
+                                var strlength = ("picbutton" + (lstbxPictureButton.Items.Count + 1)).Length - 1;
+                                var buttonNr = lstbxPictureButton.Items.Count + 1;
+                                ImageObject newpic = VM.CreateImageObject(Ressources.Decoder((string)s),
+                                    new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
+                                newpic.ImagePositionX = e.GetPosition(ArenaGrid).X;
+                                newpic.ImagePositionY = e.GetPosition(ArenaGrid).Y;
+                                VM.MoveLastObjectBehindCreatures();
+                            }
+                            catch (Exception ex)
+                            {
+                                ViewHelper.ShowError("Fehler beim Generieren der Bilddatei." + Environment.NewLine + "Bitte überprüfen, ob die Datei existiert:" + Environment.NewLine +
+                                  Ressources.Decoder(Ressources.GetFullApplicationPath() + (string)s), ex);
+                            }
+                        }
+                    }
+                }
+                Mouse.OverrideCursor = null;
+            }
+            catch (Exception ex)
+            {
+                Mouse.OverrideCursor = null;
+                ViewHelper.ShowError("Allgemeiner Fehler" + Environment.NewLine + "Beim Ablegen der Dateien in der Playlist ist ein Fehler aufgetreten.", ex);
+            }
         }
 
         private static class NativeMethods
