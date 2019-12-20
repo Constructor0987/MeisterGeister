@@ -239,58 +239,63 @@
 
                                     <Grid>
                                         <Label Content="Raster"
-                                Margin="5,0,0,0"/>
+                                            Margin="5,0,0,0"/>
                                         <ToggleButton
-                                Width="22"
-                                Height="22"
-                                Margin="10,23,10,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                IsChecked="{Binding RechteckGrid}"
-                                ToolTip="Rechteck Raster benutzen">
+                                            Width="22"
+                                            Height="22"
+                                            Margin="10,23,10,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            IsChecked="{Binding RechteckGrid}"
+                                            ToolTip="Rechteck Raster benutzen">
                                             <ToggleButton.Content>
                                                 <Image
-                                        Margin="-2"
-                                        Source="/DSA MeisterGeister;component/Images/Icons/rechteckig.png"
-                                        Stretch="Fill" />
+                                                    Margin="-2"
+                                                    Source="/DSA MeisterGeister;component/Images/Icons/rechteckig.png"
+                                                    Stretch="Fill" />
                                             </ToggleButton.Content>
                                         </ToggleButton>
                                         <ToggleButton
-                                Width="22"
-                                Height="22"
-                                Margin="35,23,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                IsChecked="{Binding HexGrid}"
-                                ToolTip="Hexfelder benutzen">
+                                            Width="22"
+                                            Height="22"
+                                            Margin="35,23,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            IsChecked="{Binding HexGrid}"
+                                            ToolTip="Hexfelder benutzen">
                                             <ToggleButton.Content>
                                                 <Image
-                                        Margin="-2"
-                                        Source="/DSA MeisterGeister;component/Images/Icons/hex.png"
-                                        Stretch="Fill" />
+                                                    Margin="-2"
+                                                    Source="/DSA MeisterGeister;component/Images/Icons/hex.png"
+                                                    Stretch="Fill" />
                                             </ToggleButton.Content>
                                         </ToggleButton>
 
                                         <Label Content="Farbe"
-                                Margin="65,0,0,0"/>
+                                            Margin="65,0,0,0"/>
                                         <xctk:ColorPicker
-                                Width="22"
-                                Height="22"
-                                Margin="70,23,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}"
-                                ShowDropDownButton="False"
-                                ToolTip="Rasterfarbe" />
+                                            Width="22"
+                                            Height="22"
+                                            Margin="70,23,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}"
+                                            ShowDropDownButton="False"
+                                            ToolTip="Rasterfarbe" />
                                     </Grid>
-
+                                    <Border
+                                        Grid.Column="1"
+                                        Width="1"
+                                        HorizontalAlignment="Left"
+                                        BorderBrush="DarkGray"
+                                        BorderThickness="1" />
                                     <Grid 
-                            Grid.Column="1" >
+                                        Grid.Column="1" >
                                         <Label 
-                            Margin="5,0,0,16"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Padding="0" Height="32" Width="69" >
+                                            Margin="5,0,0,16"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Padding="0" Height="32" Width="69" >
                                             <Label.Content>
                                                 <StackPanel >
                                                     <TextBlock Text="Hintergrund-"/>
@@ -299,61 +304,62 @@
                                             </Label.Content>
                                         </Label>
                                         <Button                            
-                                Width="27"
-                                Height="27"
-                                Margin="80,3,10,20"
-                                Padding="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                            Command="{Binding OnSetBackgroundClick}"
-                            ToolTip="Hintergrundbild festlegen">
+                                            Width="27"
+                                            Height="27"
+                                            Margin="80,3,10,20"
+                                            Padding="0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Command="{Binding OnSetBackgroundClick}"
+                                            ToolTip="Hintergrundbild festlegen">
                                             <Button.Content>
                                                 <Image Margin="2" Source="/Images/Icons/dungeon.png" />
                                             </Button.Content>
                                         </Button>
                                         <Grid
-                            HorizontalAlignment="Left"
-                            Width="220"
-                            Margin="3,0,0,0" >
+                                            HorizontalAlignment="Left"
+                                            Width="220"
+                                            Margin="3,0,0,0" >
                                             <Grid.Style>
                                                 <Style TargetType="Grid">
+                                                    <Setter Property="Visibility" Value="Visible" />
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding BackgroundImage}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        <DataTrigger Binding="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Grid.Style>
 
                                             <Image
-                                Grid.RowSpan="2"
-                                Grid.Column="1"
-                                Height="25"
-                                Margin="0,0,6,0"
-                                HorizontalAlignment="Right"
-                                Source="/Images/Icons/General/y-offset.png" />
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Height="25"
+                                                Margin="0,0,6,0"
+                                                HorizontalAlignment="Right"
+                                                Source="/Images/Icons/General/y-offset.png" />
                                             <Image
-                                Grid.Row="0"
-                                Grid.RowSpan="2"
-                                Height="25"
-                                Margin="145,3,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Source="/Images/Icons/General/x-offset.png" />
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Height="25"
+                                                Margin="145,3,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Source="/Images/Icons/General/x-offset.png" />
 
                                             <Slider
-                                Margin="0,0,5,0"
-                                HorizontalAlignment="Right"
-                                LargeChange="10"
-                                Maximum="15000"
-                                Minimum="-15000"
-                                MouseWheel="sl_MouseWheel"
-                                Orientation="Vertical"
-                                RenderTransformOrigin="0.5,0.5"
-                                SmallChange="1"
-                                Style="{StaticResource SmallVerticalSlider}"
-                                ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                Value="{Binding InvBackgroundOffsetY}">
+                                                Margin="0,0,5,0"
+                                                HorizontalAlignment="Right"
+                                                LargeChange="10"
+                                                Maximum="15000"
+                                                Minimum="-15000"
+                                                MouseWheel="sl_MouseWheel"
+                                                Orientation="Vertical"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                SmallChange="1"
+                                                Style="{StaticResource SmallVerticalSlider}"
+                                                ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                Value="{Binding InvBackgroundOffsetY}">
                                                 <Slider.RenderTransform>
                                                     <TransformGroup>
                                                         <ScaleTransform ScaleX="-1" />
@@ -364,40 +370,50 @@
                                                 </Slider.RenderTransform>
                                             </Slider>
                                             <Slider
-                                Height="12"
-                                MinHeight="5"
-                                Margin="115,18,20,0"
-                                VerticalAlignment="Top"
-                                LargeChange="10"
-                                Maximum="15000"
-                                Minimum="-15000"
-                                MouseWheel="sl_MouseWheel"
-                                SmallChange="1"
-                                Style="{StaticResource SmallHorizontalSlider}"
-                                ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                Value="{Binding BackgroundOffsetX}" />
+                                                Height="12"
+                                                MinHeight="5"
+                                                Margin="115,18,20,0"
+                                                VerticalAlignment="Top"
+                                                LargeChange="10"
+                                                Maximum="15000"
+                                                Minimum="-15000"
+                                                MouseWheel="sl_MouseWheel"
+                                                SmallChange="1"
+                                                Style="{StaticResource SmallHorizontalSlider}"
+                                                ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                Value="{Binding BackgroundOffsetX}" />
                                             <StackPanel 
-                                Margin="30,35,0,0"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Left"
-                                Orientation="Horizontal">
+                                                Margin="5,35,0,0"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Left"
+                                                Orientation="Horizontal">
                                                 <Image
-                                    Height="15"
-                                    HorizontalAlignment="Left"
-                                    Source="/Images/Icons/General/size.png" />
+                                                    Height="15"
+                                                    HorizontalAlignment="Left"
+                                                    Source="/Images/Icons/General/size.png" />
                                                 <Slider
-                                    Width="85"
-                                    Margin="0,2"
-                                    VerticalAlignment="Top"
-                                    LargeChange="10"
-                                    Maximum="20000"
-                                    Minimum="0"
-                                    MouseWheel="sl_MouseWheel"
-                                    Orientation="Horizontal"
-                                    SmallChange="1"
-                                    Style="{StaticResource SmallHorizontalSlider}"
-                                    ToolTip="Größe -  Mausrad drehen um Feinjustierung durchzuführen"
-                                    Value="{Binding BackgroundOffsetSize}" />
+                                                    Width="85"
+                                                    VerticalAlignment="Center"
+                                                    LargeChange="10"
+                                                    Maximum="20000"
+                                                    Minimum="0"
+                                                    MouseWheel="sl_MouseWheel"
+                                                    Orientation="Horizontal"
+                                                    SmallChange="1"
+                                                    Style="{StaticResource SmallHorizontalSlider}"
+                                                    ToolTip="Größe -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                    Value="{Binding BackgroundOffsetSize}" />
+                                                <ViewGeneral:IntBox 
+                                                    Value="{Binding BackgroundOffsetSize}" 
+                                                    IncValue="10"
+                                                    DecValue="10"
+                                                    MinValue="0" 
+                                                    MaxValue="20000" 
+                                                    Padding="0" 
+                                                    ShowButtons="True" 
+                                                    Height="16" 
+                                                    FontSize="11"
+                                                    Width="74" />
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
@@ -564,11 +580,18 @@
                                         ToolTip="Fog-of-War löschen" Command="{Binding OnBtnRenewFogOfWar}" >
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
                                     </Button>
-                                    <Label FontSize="10" Content="Lösche Fog-of-War" 
+                                    <Label FontSize="10"
                                         Margin="24,0,0,0"
                                         Padding="0"
                                         VerticalAlignment="Center"
-                                        HorizontalAlignment="Left" />
+                                        HorizontalAlignment="Left" >
+                                        <Label.Content>
+                                            <StackPanel>
+                                                <TextBlock Text="Fog-of-War"/>
+                                                <TextBlock Text="zurücksetzen"/>
+                                            </StackPanel>
+                                        </Label.Content>
+                                    </Label>
                                     <StackPanel 
                                         Margin="125,0,0,0"
                                         HorizontalAlignment="Left">
@@ -593,8 +616,8 @@
                                         </ViewGeneral:IntBox>
                                     </StackPanel>
                                     <StackPanel Margin="200,0,0,0" VerticalAlignment="Center">
-                                        <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" FontSize="8" FontStyle="Italic" />
-                                        <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" FontSize="8" FontStyle="Italic" />
+                                        <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" FontSize="10" FontStyle="Italic" />
+                                        <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" FontSize="10" FontStyle="Italic" />
                                     </StackPanel>
 
                                 </Grid>
@@ -615,17 +638,17 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="Aktiv" />
                                             <ToggleButton 
-                                    Name="tbtnSpielerScreenActive"
-                                    Width="35"
-                                    Height="30"
-                                    Margin="2,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Background="{x:Null}"
-                                    Click="tbtnSpielerScreenActive_Click"
-                                    Focusable="False"
-                                    IsChecked="{Binding SpielerScreenActive, UpdateSourceTrigger=PropertyChanged}"
-                                    ToolTip="Den Spielern den Bodenplan zeigen." Grid.ColumnSpan="2">
+                                                Name="tbtnSpielerScreenActive"
+                                                Width="35"
+                                                Height="30"
+                                                Margin="2,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Background="{x:Null}"
+                                                Click="tbtnSpielerScreenActive_Click"
+                                                Focusable="False"
+                                                IsChecked="{Binding SpielerScreenActive, UpdateSourceTrigger=PropertyChanged}"
+                                                ToolTip="Den Spielern den Bodenplan zeigen." Grid.ColumnSpan="2">
                                                 <Grid>
                                                     <Image Margin="-2" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
                                                     <Image Margin="0,0,0,5" Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" />
@@ -634,28 +657,28 @@
 
                                         </StackPanel>
                                         <CheckBox
-                                Margin="35,35,0,0"
-                                Padding="1,1,0,0"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Left"
-                                VerticalContentAlignment="Center"
-                                IsChecked="{Binding IsPointerVisible}">
+                                            Margin="35,35,0,0"
+                                            Padding="1,1,0,0"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"
+                                            VerticalContentAlignment="Center"
+                                            IsChecked="{Binding IsPointerVisible}">
                                             <CheckBox.ToolTip>
                                                 <TextBlock
-                                        MaxWidth="200"
-                                        Text="Auf dem Bild einen Zeiger anzeigen."
-                                        TextWrapping="Wrap" />
+                                                    MaxWidth="200"
+                                                    Text="Auf dem Bild einen Zeiger anzeigen."
+                                                    TextWrapping="Wrap" />
                                             </CheckBox.ToolTip>
                                             <CheckBox.Content>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Ellipse
-                                            Width="15"
-                                            Height="15"
-                                            Fill="Yellow"
-                                            Opacity="0.5"
-                                            Stretch="Fill"
-                                            Stroke="Red"
-                                            StrokeThickness="1" />
+                                                        Width="15"
+                                                        Height="15"
+                                                        Fill="Yellow"
+                                                        Opacity="0.5"
+                                                        Stretch="Fill"
+                                                        Stroke="Red"
+                                                        StrokeThickness="1" />
                                                     <Label Content="Marker" Padding="1" FontSize="10"/>
                                                 </StackPanel>
                                             </CheckBox.Content>
@@ -663,59 +686,69 @@
                                     </Grid>
 
                                     <Border
-                            Grid.Column="1"
-                            Width="1"
-                            HorizontalAlignment="Left"
-                            BorderBrush="DarkGray"
-                            BorderThickness="1" />
+                                        Grid.Column="1"
+                                        Width="1"
+                                        HorizontalAlignment="Left"
+                                        BorderBrush="DarkGray"
+                                        BorderThickness="1" />
                                     <Grid
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            Width="190"
-                            Margin="3,0">
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        Width="190"
+                                        Margin="3,0">
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SpielerScreenActive}" Value="false">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
                                         <Image
-                                Grid.RowSpan="2"
-                                Grid.Column="1"
-                                Height="25"
-                                Margin="0,10,6,0"
-                                HorizontalAlignment="Right"
-                                Source="/Images/Icons/General/y-offset.png" />
+                                            Grid.RowSpan="2"
+                                            Grid.Column="1"
+                                            Height="25"
+                                            Margin="0,10,6,0"
+                                            HorizontalAlignment="Right"
+                                            Source="/Images/Icons/General/y-offset.png" />
                                         <Image
-                                Grid.Row="0"
-                                Grid.RowSpan="2"
-                                Height="25"
-                                Margin="120,3,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Source="/Images/Icons/General/x-offset.png" />
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Height="25"
+                                            Margin="120,-5,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Source="/Images/Icons/General/x-offset.png" />
                                         <Button
-                                Width="27"
-                                Height="27"
-                                Margin="10,0,10,20"
-                                Padding="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Command="{Binding OnBtnCenterPlayerView}"
-                                ToolTip="Ansicht des Meister-Bildschirms auf den Spieler-Bildschirm übertragen">
+                                            Width="27"
+                                            Height="27"
+                                            Margin="10,0,10,20"
+                                            Padding="0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Command="{Binding OnBtnCenterPlayerView}"
+                                            ToolTip="Ansicht des Meister-Bildschirms auf den Spieler-Bildschirm übertragen">
                                             <Button.Content>
                                                 <Grid>
                                                     <Image Margin="-1" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
                                                     <Image
-                                            Height="25"
-                                            Margin="2,0,2,5"
-                                            Source="/Images/Icons/General/y-offset.png" />
+                                                        Height="25"
+                                                        Margin="2,0,2,5"
+                                                        Source="/Images/Icons/General/y-offset.png" />
                                                     <Image
-                                            Height="25"
-                                            Margin="0,0,0,5"
-                                            Source="/Images/Icons/General/x-offset.png" />
+                                                        Height="25"
+                                                        Margin="0,0,0,5"
+                                                        Source="/Images/Icons/General/x-offset.png" />
                                                 </Grid>
                                             </Button.Content>
                                         </Button>
                                         <Label Margin="40,0,0,0"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Left"
-                                   Padding="0"
-                                   FontSize="10" >
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Padding="0"
+                                           FontSize="10" >
                                             <Label.Content>
                                                 <StackPanel>
                                                     <TextBlock Text="Zoom"/>
@@ -724,18 +757,18 @@
                                             </Label.Content>
                                         </Label>
                                         <Slider
-                                Margin="0,0,5,0"
-                                HorizontalAlignment="Right"
-                                LargeChange="10"
-                                Maximum="1000"
-                                Minimum="-9000"
-                                MouseWheel="sl_MouseWheel"
-                                Orientation="Vertical"
-                                RenderTransformOrigin="0.5,0.5"
-                                SmallChange="1"
-                                Style="{StaticResource SmallVerticalSlider}"
-                                ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}">
+                                            Margin="0,0,5,0"
+                                            HorizontalAlignment="Right"
+                                            LargeChange="10"
+                                            Maximum="1000"
+                                            Minimum="-9000"
+                                            MouseWheel="sl_MouseWheel"
+                                            Orientation="Vertical"
+                                            RenderTransformOrigin="0.5,0.5"
+                                            SmallChange="1"
+                                            Style="{StaticResource SmallVerticalSlider}"
+                                            ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                            Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}">
                                             <Slider.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform ScaleX="-1" />
@@ -747,73 +780,81 @@
                                         </Slider>
 
                                         <Slider
-                                Height="12"
-                                MinHeight="5"
-                                Margin="95,18,20,0"
-                                VerticalAlignment="Top"
-                                IsDirectionReversed="{Binding InvertPlayerScrolling}"
-                                LargeChange="10"
-                                Maximum="9000"
-                                Minimum="-1000"
-                                MouseWheel="sl_MouseWheel"
-                                SmallChange="1"
-                                Style="{StaticResource SmallHorizontalSlider}"
-                                ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" />
+                                            Height="12"
+                                            MinHeight="5"
+                                            Margin="95,10,20,0"
+                                            VerticalAlignment="Top"
+                                            IsDirectionReversed="{Binding InvertPlayerScrolling}"
+                                            LargeChange="10"
+                                            Maximum="9000"
+                                            Minimum="-1000"
+                                            MouseWheel="sl_MouseWheel"
+                                            SmallChange="1"
+                                            Style="{StaticResource SmallHorizontalSlider}"
+                                            ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                            Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" />
 
                                         <CheckBox
-                                x:Name="chbxPlayerScreenInv"
-                                Margin="110,0,30,9"
-                                FontSize="10"
-                                Padding="1,0"
-                                VerticalAlignment="Bottom"
-                                Content="Invert"
-                                IsChecked="{Binding InvertPlayerScrolling}">
+                                            x:Name="chbxPlayerScreenInv"
+                                            Margin="110,20,0,0"
+                                            Width="45"
+                                            FontSize="10"
+                                            Padding="1,0"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"
+                                            Content="Invert"
+                                            IsChecked="{Binding InvertPlayerScrolling}">
                                             <CheckBox.ToolTip>
                                                 <TextBlock Text="Invertiert den X/Y-Slider für den Spieler-Bildschirm" TextWrapping="Wrap" />
                                             </CheckBox.ToolTip>
                                         </CheckBox>
 
                                         <StackPanel 
-                                Margin="10,30,0,0"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Left"
-                                Orientation="Horizontal">
+                                            Margin="10,35,0,0"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"
+                                            Orientation="Horizontal">
                                             <Image
-                                        Height="15"
-                                        HorizontalAlignment="Left"
-                                        Source="/Images/Icons/General/size.png" />
+                                                Height="15"
+                                                HorizontalAlignment="Left"
+                                                Source="/Images/Icons/General/size.png" />
                                             <Slider
-                                        Width="70"
-                                        Margin="0,2"
-                                        VerticalAlignment="Top"
-                                        LargeChange=".1"
-                                        Maximum="2.5"
-                                        Minimum=".2"
-                                        MouseWheel="slSmall_MouseWheel"
-                                        Orientation="Horizontal"
-                                        SmallChange=".01"
-                                        Style="{StaticResource SmallHorizontalSlider}"
-                                        ToolTip="Größe des Spielerfeldes"
-                                        Value="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" />
+                                                Width="70"
+                                                Margin="0,2"
+                                                VerticalAlignment="Top"
+                                                LargeChange=".1"
+                                                Maximum="2.5"
+                                                Minimum=".2"
+                                                MouseWheel="slSmall_MouseWheel"
+                                                Orientation="Horizontal"
+                                                SmallChange=".01"
+                                                Style="{StaticResource SmallHorizontalSlider}"
+                                                ToolTip="Größe des Spielerfeldes"
+                                                Value="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" />
                                         </StackPanel>
                                     </Grid>
 
+                                    <Border
+                                        Grid.Column="2"
+                                        Width="1"
+                                        HorizontalAlignment="Left"
+                                        BorderBrush="DarkGray"
+                                        BorderThickness="1" />
 
                                     <Grid Grid.Column="2" >
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Content="INI-Tabelle" />
                                             <ToggleButton
-                                        Width="35"
-                                        Height="30"
-                                        Margin="2,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Background="{x:Null}"
-                                        Click="tbtnSpielerIniScreen_Click"
-                                        Focusable="False"
-                                        IsChecked="{Binding IsShowIniKampf, UpdateSourceTrigger=PropertyChanged}"
-                                        ToolTip="Kleine INI-Liste des aktuellen Kampfes zeigen.">
+                                                Width="35"
+                                                Height="30"
+                                                Margin="2,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Background="{x:Null}"
+                                                Click="tbtnSpielerIniScreen_Click"
+                                                Focusable="False"
+                                                IsChecked="{Binding IsShowIniKampf, UpdateSourceTrigger=PropertyChanged}"
+                                                ToolTip="Kleine INI-Liste des aktuellen Kampfes zeigen.">
                                                 <Grid>
                                                     <Image Margin="-2" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
                                                     <Image Margin="9,4,2,10" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
@@ -821,40 +862,40 @@
                                             </ToggleButton>
                                         </StackPanel>
                                         <Label 
-                                Content="Skalierung" 
-                                Margin="2,20,0,0"
-                                FontSize="10" />
+                                            Content="Skalierung" 
+                                            Margin="2,20,0,0"
+                                            FontSize="10" />    
                                         <Slider
-                                Margin="2,42,50,0"
-                                VerticalAlignment="Top"
-                                LargeChange=".1"
-                                Maximum="1.5"
-                                Minimum=".5"
-                                MouseWheel="slSmall_MouseWheel"
-                                Orientation="Horizontal"
-                                SmallChange=".01"
-                                Style="{StaticResource SmallHorizontalSlider}"
-                                ToolTip="Größe des INI-Feldes anpassen"
-                                Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                            Margin="2,42,50,0"
+                                            VerticalAlignment="Top"
+                                            LargeChange=".1"
+                                            Maximum="1.5"
+                                            Minimum=".5"
+                                            MouseWheel="slSmall_MouseWheel"
+                                            Orientation="Horizontal"
+                                            SmallChange=".01"
+                                            Style="{StaticResource SmallHorizontalSlider}"
+                                            ToolTip="Größe des INI-Feldes anpassen"
+                                            Value="{Binding ScaleKampfGrid, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                         <Button
-                                Name="btnPosIniWindow"
-                                Width="22"
-                                Height="17"
-                                Margin="58,30,0,0"
-                                Padding="1"
-                                Command="{Binding onBtnPosIniWindow}"
-                                Tag="{Binding PosIniWindow}">
+                                            Name="btnPosIniWindow"
+                                            Width="22"
+                                            Height="17"
+                                            Margin="58,30,0,0"
+                                            Padding="1"
+                                            Command="{Binding onBtnPosIniWindow}"
+                                            Tag="{Binding PosIniWindow}">
                                             <Grid
-                                        Width="20"
-                                        Height="15"
-                                        Background="#FF494949">
+                                                Width="20"
+                                                Height="15"
+                                                Background="#FF494949">
                                                 <Rectangle
-                                            Name="rectIniPos"
-                                            Width="7"
-                                            Height="7"
-                                            Fill="White"
-                                            Stroke="Black"
-                                            ToolTip="Klicken um die Ini-Anzeige in andere Ecke zu verschieben">
+                                                    Name="rectIniPos"
+                                                    Width="7"
+                                                    Height="7"
+                                                    Fill="White"
+                                                    Stroke="Black"
+                                                    ToolTip="Klicken um die Ini-Anzeige in andere Ecke zu verschieben">
                                                     <Rectangle.Style>
                                                         <Style TargetType="Rectangle">
                                                             <Style.Triggers>

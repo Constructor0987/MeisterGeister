@@ -2288,6 +2288,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BackgroundImage = ViewHelper.ChooseFile("Hintergrundbild setzen", "", false, new string[9] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff" });
             if (string.IsNullOrEmpty(BackgroundImage))
             {
+                BattlegroundObjects.Remove(BattlegroundObjects.Where(t => t is ImageObject && (t as ImageObject).IsBackgroundPicture).FirstOrDefault());
                 return;
             }
 
