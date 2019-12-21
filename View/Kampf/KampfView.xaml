@@ -267,7 +267,6 @@
             </Expander.Header>-->
 
         <Kampf:InitiativListe VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="0,0,0,-28" />
-
         <TextBlock HorizontalAlignment="Left" FontSize="16" Foreground="#FF5B646C" Margin="55,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Column="0" >
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
@@ -323,6 +322,7 @@
         <ViewBodenplan:BattlegroundTopMenuView Grid.ColumnSpan="1" Grid.Column="2" DataContext="{Binding BodenplanViewModel}" Margin="0,-3,5,-30" HorizontalAlignment="Right" />
         <GridSplitter Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" ResizeDirection="Columns" Width="5" />
 
+        <Label Content="{Binding LabelInfo, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.ColumnSpan="2" Margin="15,0,0,-25" VerticalAlignment="Bottom" />
         <!--<Border Margin="20,0,0,0" Grid.Row="2" Grid.ColumnSpan="3" Background="{DynamicResource TabItemSelectedBackground}" BorderThickness="2" BorderBrush="{DynamicResource TextBoxBorder}" >
             <Label HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Padding="0" FontSize="11"  Content="{Binding BodenplanViewModel.InfoText}" Foreground="#FF707070" />
         </Border>-->
