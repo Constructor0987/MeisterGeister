@@ -18,6 +18,7 @@ using MeisterGeister.View.Kampf;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.ViewModel.SpielerScreen;
 using WPFExtensions.Controls;
 using Application = System.Windows.Application;
 
@@ -44,6 +45,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 catch
                 { }
             }
+            ReLoadImages();
         }
 
         private IWaffe _miWaffeSelected = null;
@@ -496,6 +498,97 @@ namespace MeisterGeister.ViewModel.Bodenplan
             label.LabelPositionY = (startPoint.Y + endPoint.Y - label.LabelHeight) / 2;
             label.TextInLabel = $"{Math.Round(Math.Sqrt(Math.Pow((endPoint.X - startPoint.X), 2) + Math.Pow((endPoint.Y - startPoint.Y), 2)) / 100, 1).ToString()} Schritt";
         }
+
+        #region Thumbnails Images
+
+        private List<ImageItem> _images = null;
+        public List<ImageItem> Images
+        {
+            get { return _images; }
+            set { Set(ref _images, value); }
+        }
+
+        private List<ImageItem> _filteredImages = null;
+        public List<ImageItem> FilteredImages
+        {
+            get { return _filteredImages; }
+            set { Set(ref _filteredImages, value); }
+        }
+
+        private string _suchText = string.Empty;
+        public string SuchText
+        {
+            get { return _suchText; }
+            set
+            {
+                Set(ref _suchText, value);
+                FilterListe();
+            }
+        }
+        
+        public void LoadImagesFromDir(string pfad)
+        {
+            if (string.IsNullOrWhiteSpace(pfad) || !Directory.Exists(pfad))
+            {
+                return;
+            }
+
+            SearchOption dirOption = SearchOption.AllDirectories;
+
+            string[] filesBmp = Directory.GetFiles(pfad, "*.bmp", dirOption);
+            string[] filesGif = Directory.GetFiles(pfad, "*.gif", dirOption);
+            string[] filesJpg = Directory.GetFiles(pfad, "*.jpg", dirOption);
+            string[] filesJpeg = Directory.GetFiles(pfad, "*.jpeg", dirOption);
+            string[] filesJpe = Directory.GetFiles(pfad, "*.jpe", dirOption);
+            string[] filesJfif = Directory.GetFiles(pfad, "*.jfif", dirOption);
+            string[] filesPng = Directory.GetFiles(pfad, "*.png", dirOption);
+            string[] filesTif = Directory.GetFiles(pfad, "*.tif", dirOption);
+            string[] filesTiff = Directory.GetFiles(pfad, "*.tiff", dirOption);
+
+            List<ImageItem> fileList = new List<ImageItem>();
+            AddImages(fileList, filesBmp, pfad);
+            AddImages(fileList, filesBmp, pfad);
+            AddImages(fileList, filesGif, pfad);
+            AddImages(fileList, filesJpg, pfad);
+            AddImages(fileList, filesJpeg, pfad);
+            AddImages(fileList, filesJpe, pfad);
+            AddImages(fileList, filesJfif, pfad);
+            AddImages(fileList, filesPng, pfad);
+            AddImages(fileList, filesTif, pfad);
+            AddImages(fileList, filesTiff, pfad);
+
+            Images = fileList.OrderBy(img => img.Name).ToList();
+            FilterListe();
+        }
+
+        private void AddImages(List<ImageItem> fileList, string[] files, string DirectoryPath)
+        {
+            foreach (string file in files)
+                fileList.Add(new ImageItem(file, DirectoryPath));
+        }
+
+        private void FilterListe()
+        {
+            if (Images == null)
+                return;
+
+            string suchText = SuchText.ToLower().Trim();
+            string[] suchWorte = suchText.Split(' ');
+
+            if (suchText == string.Empty) // kein Suchwort
+                FilteredImages = Images.AsParallel().OrderBy(n => n.Name).ToList();
+            else if (suchWorte.Length == 1) // nur ein Suchwort
+                FilteredImages = Images.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
+            else // mehrere Suchwörter
+                FilteredImages = Images.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+        }
+
+        private void ReLoadImages(object sender = null)
+        {
+            LoadImagesFromDir(String.IsNullOrEmpty(Ressources.GetFullApplicationPath()) ? "Daten\\Bodenplan" : Ressources.GetFullApplicationPath()+ "Daten\\Bodenplan");
+        }
+
+        #endregion
 
         #region Fog
 
@@ -2108,6 +2201,16 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Commands
 
+        private Base.CommandBase onReLoadImages = null;
+        public Base.CommandBase OnReLoadImages
+        {
+            get
+            {
+                if (onReLoadImages == null)
+                    onReLoadImages = new Base.CommandBase(ReLoadImages, null);
+                return onReLoadImages;
+            }
+        }
 
         public Base.CommandBase OnBtnRenewFogOfWar
         {
