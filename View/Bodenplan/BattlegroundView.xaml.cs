@@ -17,6 +17,7 @@ using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
+using MeisterGeister.ViewModel.SpielerScreen;
 using Microsoft.Win32.SafeHandles;
 
 namespace MeisterGeister.View.Bodenplan
@@ -1204,6 +1205,25 @@ namespace MeisterGeister.View.Bodenplan
             {
                 Mouse.OverrideCursor = null;
                 ViewHelper.ShowError("Allgemeiner Fehler" + Environment.NewLine + "Beim Ablegen der Dateien in der Playlist ist ein Fehler aufgetreten.", ex);
+            }
+        }
+
+        private void _listBoxDirectory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((e.Source as ListBox).SelectedItem == null) return;
+            ImageItem iItem = e.AddedItems[0] as ImageItem;
+            try
+            {
+                if (iItem != null)
+                {
+                    VM.CreateImageObject(iItem.Pfad, new Point(VM.CurrentMousePositionX, VM.CurrentMousePositionY));
+                }
+                (e.Source as ListBox).SelectedItem = null;
+            }
+            catch (Exception ex)
+            {
+                ViewHelper.ShowError("Fehler beim Generieren der Bilddatei." + Environment.NewLine + "Bitte überprüfen, ob die Datei existiert:" + Environment.NewLine +
+                  Ressources.Decoder(Ressources.GetFullApplicationPath() + iItem != null? iItem.Pfad: "Unbekannter Pfad"), ex);
             }
         }
 

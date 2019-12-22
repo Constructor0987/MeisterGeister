@@ -32,7 +32,22 @@
         <ViewGeneral:MerkmaleListeToBrushColor x:Key="MerkmaleListeToBrushColor1" />
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
         <BitmapImage x:Key="FragezeichenBild" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
+        <ViewGeneral:LoadCachedImageConverter x:Key="LoadCachedImageConverter" />
 
+        <DataTemplate x:Key="ImageListBoxItemTemplate">
+            <Grid ToolTip="{Binding Pfad}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="32" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                </Grid.RowDefinitions>
+                <Image Grid.Column="1" Source="{Binding Pfad, IsAsync=True, Converter={StaticResource LoadCachedImageConverter}}" />
+                <TextBlock Grid.Column="2" Text="{Binding Name}" Margin="4,0,0,0" />
+            </Grid>
+        </DataTemplate>
         <Style TargetType="ProgressBar">
             <Setter Property="Template">
                 <Setter.Value>
@@ -359,7 +374,17 @@
                                 Click="ButtonBildhinzun_Click"
                                 Content="Bild hinzu" />
 
+                            <StackPanel Orientation="Horizontal" Margin="80,0,0,3">
+                                <Image Margin="1" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchfilter" />
+                                <TextBox Margin="1,3" Width="50" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchfilter" />
+                            </StackPanel>
+                            <Button 
+                                HorizontalAlignment="Right"
+                                Command="{Binding OnReLoadImages}" >
+                                <Image Source="/Images/Icons/General/refresh.png"/>
+                            </Button>
                             <ListBox
+                                Visibility="Collapsed"
                                 x:Name="lstbxPictureButton"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
@@ -368,6 +393,17 @@
                                 Margin="0,0,3,0"
                                 VerticalAlignment="Top"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                            <ListBox 
+                                Grid.Column="0"    
+                                Grid.Row="1"                             
+                                Margin="6" 
+                                Name="_listBoxDirectory" 
+                                ItemsSource="{Binding FilteredImages}" 
+                                Background="Transparent" 
+                                ToolTip="Ordner-Inhalt" 
+                                ItemTemplate="{StaticResource ImageListBoxItemTemplate}" 
+                                Focusable="False"
+                                SelectionChanged="_listBoxDirectory_SelectionChanged" />
                         </Grid>
                     </Expander>
                 </Grid>
