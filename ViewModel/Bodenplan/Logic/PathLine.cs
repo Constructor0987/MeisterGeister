@@ -44,6 +44,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        private Point _getEndPoint = new Point();
+        public Point GetEndPoint
+        {
+            get { return _getEndPoint; }
+            set { Set(ref _getEndPoint, value); }
+        }
+
         private Point _getStartPoint = new Point();
         public Point GetStartPoint
         {
@@ -57,6 +64,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             ZDisplayX = p.X + 10;
             ZDisplayY = p.Y + 10;
             GetStartPoint = p;
+            GetEndPoint = p;
             _pathFigure.StartPoint = p;
             _pathSegmentCollection.Add(new LineSegment(p, true));
             _pathFigure.Segments = _pathSegmentCollection;
@@ -72,6 +80,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             l.IsSmoothJoin = true;
             _pathSegmentCollection.Add(l);
             OnChanged("PathGeometryData");
+            GetEndPoint = p;
         }
 
         
@@ -81,6 +90,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             ZDisplayX = p.X+10;
             ZDisplayY = p.Y+10;
             OnChanged("PathGeometryData");
+            GetStartPoint = p;
         }
 
         
@@ -88,6 +98,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             ((LineSegment)_pathSegmentCollection[_pathSegmentCollection.Count - 1]).Point = p;
             OnChanged("PathGeometryData");
+            GetEndPoint = p;
         }
 
 

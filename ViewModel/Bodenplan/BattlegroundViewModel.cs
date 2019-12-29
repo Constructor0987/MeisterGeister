@@ -121,6 +121,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        public double BewegungZuvor
+        {
+            get { return _bewegungZuvor; }
+            set { Set(ref _bewegungZuvor, value); }
+        }
+
         public bool IsMoving
         {
             get { return _isMoving; }
@@ -259,6 +265,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 SelectedTempObject.IsNew = true;
                 SelectedTempObject = null;
                 RemoveNewObjects();
+                Global.CurrentKampf.LabelInfo = null;
             }
             SelectedTempObject = null;
         }
@@ -482,6 +489,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         //Vielleicht als Enum, wenn mehr als zwei Modi gebraucht werden? JO
         private bool _isEditorModeEnabled = true;
 
+        private double _bewegungZuvor = 0;
+
         private bool _isMoving;
 
         private bool _leftShiftPressed = false;
@@ -496,7 +505,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = BattlegroundObjects.Last(x => x.GetType() == typeof(TextLabel)) as TextLabel;
             label.LabelPositionX = (startPoint.X + endPoint.X - label.LabelWidth) / 2;
             label.LabelPositionY = (startPoint.Y + endPoint.Y - label.LabelHeight) / 2;
-            label.TextInLabel = $"{Math.Round(Math.Sqrt(Math.Pow((endPoint.X - startPoint.X), 2) + Math.Pow((endPoint.Y - startPoint.Y), 2)) / 100, 1).ToString()} Schritt";
+            label.TextInLabel = (BerechneLänge(startPoint, endPoint) + BewegungZuvor).ToString() + " Schritt";
+            Global.CurrentKampf.LabelInfo = "Strg-Taste klicken für Richtungswechsel";
+        }
+
+        public double BerechneLänge(Point StartPunkt, Point EndPunkt)
+        {
+            return
+                Math.Round(Math.Sqrt(Math.Pow((EndPunkt.X - StartPunkt.X), 2) + Math.Pow((EndPunkt.Y - StartPunkt.Y), 2)) / 100, 1);
         }
 
         #region Thumbnails Images
@@ -1211,6 +1227,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             FogOffsetY = 0;
             FogImageFilename = null;
             useFog = false;
+            Global.CurrentKampf.Kampf.Kämpfer.Clear();
         }
 
         public void RemoveCreature(IKämpfer creature)

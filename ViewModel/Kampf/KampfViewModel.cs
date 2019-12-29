@@ -34,6 +34,13 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private string _labelInfo = null;
+        public string LabelInfo
+        {
+            get { return _labelInfo; }
+            set { Set(ref _labelInfo, value); }
+        }
+
         public View.Bodenplan.BattlegroundView BodenplanView
         {
             get { return _bodenplanView; }

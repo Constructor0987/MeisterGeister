@@ -671,7 +671,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                if (VM.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
+                if (VM.FogFreimachen && Keyboard.Modifiers == ModifierKeys.Control && VM.FogPixelData != null)
                 {
                     VM.SelectedObject = null;
                     WriteableBitmap wbmap = VM.FogImage;
@@ -702,8 +702,9 @@ namespace MeisterGeister.View.Bodenplan
                         VM.SelectionChangedUpdateSliders();
                     }
 
-                    if (VM.SelectedObject != null && VM.SelectedObject.IsMoving)
+                    if (VM.SelectedObject != null && VM.SelectedObject.IsMoving && !(Keyboard.Modifiers == ModifierKeys.Control))
                     {
+                        VM.BewegungZuvor = 0;
                         _x1 = e.GetPosition(ArenaGrid).X;
                         _y1 = e.GetPosition(ArenaGrid).Y;
                         VM.CreateNewTempPathLine(_x1, _y1);
@@ -820,7 +821,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                VM.FogFreimachen = (VM.useFog && Keyboard.IsKeyDown(Key.LeftCtrl));
+                VM.FogFreimachen = (VM.useFog && Keyboard.Modifiers == ModifierKeys.Control);
 
                 if (VM.FogFreimachen && VM.FogPixelData != null)
                 {
@@ -891,6 +892,7 @@ namespace MeisterGeister.View.Bodenplan
                     }
                     if (VM.InitDnD)
                     {
+                        VM.BewegungZuvor = 0;
                         var x = (VM.SelectedObject as BattlegroundCreature).MidCreatureX + (VM.SelectedObject as BattlegroundCreature).CreatureWidth / 2;
                         var y = (VM.SelectedObject as BattlegroundCreature).MidCreatureY + (VM.SelectedObject as BattlegroundCreature).CreatureHeight / 2;
                         VM.CreateNewTempPathLine(x, y);
@@ -927,7 +929,7 @@ namespace MeisterGeister.View.Bodenplan
             {
                 _mouseClickedOnCreature = false;
                 //STRG - Abfragen um return zu setzen
-                if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                if (Keyboard.Modifiers == ModifierKeys.Control)
                 {
                     return;
                 }
@@ -1065,7 +1067,7 @@ namespace MeisterGeister.View.Bodenplan
                 e.Handled = true;
                 if (VM != null)
                 {
-                    if (VM.FogFreimachen && Keyboard.IsKeyDown(Key.LeftCtrl) && VM.FogPixelData != null)
+                    if (VM.FogFreimachen && Keyboard.Modifiers == ModifierKeys.Control && VM.FogPixelData != null)
                     {
                         WriteableBitmap wbmap = VM.FogImage;
                         var newX = (int)VM.CurrentMousePositionX / 10;
@@ -1158,6 +1160,18 @@ namespace MeisterGeister.View.Bodenplan
         {
             VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
             VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
+
+            //Mehrfachstrecken der Kämpfer
+            if (VM.SelectedObject != null && VM.SelectedObject.IsMoving && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                var pathLine = (PathLine)VM.SelectedTempObject;
+                Point startPoint = pathLine.GetStartPoint;
+                Point endPoint = pathLine.GetEndPoint;
+                VM.BewegungZuvor += VM.BerechneLänge(startPoint, endPoint);
+
+                VM.CreateNewTempPathLine(endPoint.X, endPoint.Y);
+                VM.CreateNewTempTextLabel(endPoint.X, endPoint.Y);
+            }
         }
 
         private void ArenaGrid_Drop(object sender, DragEventArgs e)
