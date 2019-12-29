@@ -7,6 +7,7 @@ using System.Linq;
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel.Basar.Logic;
 using MeisterGeister.ViewModel.Helden.Logic;
+using MeisterGeister.ViewModel.Inventar;
 using MeisterGeister.ViewModel.Inventar.Logic;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using DependentProperty = MeisterGeister.Model.Extensions.DependentProperty;
@@ -4106,8 +4107,9 @@ namespace MeisterGeister.Model
         }
 
         // TODO: Diese Add-Logik sollte mit dem Importer und dem InventarViewModel homogenisiert werden, sodass alle Stellen diese Methode verwenden
-        public void AddInventar(IHandelsgut gegenstand, int anzahl = 1)
+        public Held_Inventar AddInventar(IHandelsgut gegenstand, int anzahl = 1)
         {
+            Held_Inventar hi = null;
             // In Held_Ausrüstung oder Held_inventar hinzufügen, bzw anzahl erhöhen.
             if (gegenstand is IAusrüstung)
             {
@@ -4139,7 +4141,7 @@ namespace MeisterGeister.Model
                     }
                 }
 
-                Held_Inventar hi = Held_Inventar.Where(hhi => hhi.InventarGUID == i.InventarGUID).FirstOrDefault();
+                hi = Held_Inventar.Where(hhi => hhi.InventarGUID == i.InventarGUID).FirstOrDefault();
 
                 if (hi == null)
                 {
@@ -4156,10 +4158,12 @@ namespace MeisterGeister.Model
                 else
                 {
                     hi.Anzahl += anzahl;
+                    hi = null;
                 }
             }
 
             BerechneAusruestungsGewicht();
+            return hi;
         }
 
         #endregion //Public Methoden
