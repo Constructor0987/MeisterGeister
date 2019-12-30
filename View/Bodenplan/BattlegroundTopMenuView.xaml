@@ -435,128 +435,128 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <CheckBox
-                                Name="checkBox4"
-                                Height="16"
-                                Margin="2,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Content="Namen"
-                                IsChecked="{Binding ShowCreatureName}" />
+                                            Name="checkBox4"
+                                            Height="16"
+                                            Margin="2,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Content="Namen"
+                                            IsChecked="{Binding ShowCreatureName}" />
                                         <CheckBox
-                                x:Name="checkBoxSichtLine"
-                                Grid.Column="1"
-                                Height="16"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Content="Sicht"
-                                IsChecked="{Binding ShowSightArea}"
-                                ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Helden und Gegnern" />
+                                            x:Name="checkBoxSichtLine"
+                                            Grid.Column="1"
+                                            Height="16"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Content="Sicht"
+                                            IsChecked="{Binding ShowSightArea}"
+                                            ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Helden und Gegnern" />
 
                                         <Slider
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Margin="10,0"
-                                VerticalAlignment="Top"
-                                LargeChange="50"
-                                Maximum="1200"
-                                Minimum="100"
-                                SmallChange="50"
-                                Style="{StaticResource SmallHorizontalSlider}"
-                                TickFrequency="50"
-                                TickPlacement="BottomRight"
-                                Ticks="100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200"
-                                Value="{Binding SightAreaLenght}" />
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="10,0"
+                                            VerticalAlignment="Top"
+                                            LargeChange="50"
+                                            Maximum="1200"
+                                            Minimum="100"
+                                            SmallChange="50"
+                                            Style="{StaticResource SmallHorizontalSlider}"
+                                            TickFrequency="50"
+                                            TickPlacement="BottomRight"
+                                            Ticks="100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200"
+                                            Value="{Binding SightAreaLenght}" />
 
 
                                         <Button
-                                Grid.Row="2"
-                                Grid.ColumnSpan="2"
-                                Width="120"
-                                Height="20"
-                                Margin="0,0"
-                                Padding="0"
-                                HorizontalAlignment="Center"
-                                Command="{Binding OnBtnCenterMeisterView}"
-                                Content="Meister Screen Center"
-                                ToolTip="Auf Spieler zentrieren" />
+                                            Grid.Row="2"
+                                            Grid.ColumnSpan="2"
+                                            Width="120"
+                                            Height="20"
+                                            Margin="0,0"
+                                            Padding="0"
+                                            HorizontalAlignment="Center"
+                                            Command="{Binding OnBtnCenterMeisterView}"
+                                            Content="Meister Screen Center"
+                                            ToolTip="Auf Spieler zentrieren" />
 
                                     </Grid>
                                 </Border>
 
                                 <Border
-                        Margin="20,0,0,0"
-                        HorizontalAlignment="Left"
-                        BorderBrush="Silver"
-                        BorderThickness="1">
+                                    Margin="20,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Silver"
+                                    BorderThickness="1">
                                     <StackPanel>
                                         <Label Margin="0,-5,0,0" Content="Neuplazierung der Kämpfer" />
                                         <StackPanel Orientation="Horizontal">
                                             <Button
-                                    Width="22"
-                                    Height="22"
-                                    Margin="5,0"
-                                    Padding="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Click="ButtonStickHeroes_Click">
+                                                Width="22"
+                                                Height="22"
+                                                Margin="5,0"
+                                                Padding="0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Click="ButtonStickHeroes_Click">
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Helden.png" />
                                             </Button>
                                             <Button
-                                    Width="22"
-                                    Height="22"
-                                    Margin="5,0"
-                                    Padding="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Click="ButtonSticCreatues_Click">
+                                                Width="22"
+                                                Height="22"
+                                                Margin="5,0"
+                                                Padding="0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Click="ButtonSticCreatues_Click">
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Gegner.png" />
                                             </Button>
 
                                             <TextBox
-                                Height="22"
-                                MinWidth="90"
-                                Margin="10,0"
-                                Padding="0"
-                                VerticalAlignment="Top"
-                                FontFamily="Comic Sans MS"
-                                FontSize="12"
-                                FontWeight="Bold"
-                                IsEnabled="False"
-                                RenderTransformOrigin="0.5,0.5"
-                                Text="{Binding CurrentlySelectedCreature}"
-                                TextAlignment="Center"
-                                TextWrapping="Wrap" />
+                                                Height="22"
+                                                MinWidth="90"
+                                                Margin="10,0"
+                                                Padding="0"
+                                                VerticalAlignment="Top"
+                                                FontFamily="Comic Sans MS"
+                                                FontSize="12"
+                                                FontWeight="Bold"
+                                                IsEnabled="False"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Text="{Binding CurrentlySelectedCreature}"
+                                                TextAlignment="Center"
+                                                TextWrapping="Wrap" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
 
                                 <Border
-                        Margin="20,0,0,0"
-                        HorizontalAlignment="Left"
-                        BorderBrush="Silver"
-                        BorderThickness="1">
+                                    Margin="20,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Silver"
+                                    BorderThickness="1">
                                     <Grid Margin="0,0,-1,0">
                                         <Label Margin="0,-5,0,0" Content="Sichtbare Layer" />
                                         <CheckBox
-                            Name="checkBox2"
-                            Height="16"
-                            Margin="3,20,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Content="Alle Z Anzeigen"
-                            IsChecked="{Binding IgnorZLevel}"
-                            ToolTip="Ignoriert die Z Level Auswahl und zeigt alle Elemente an." />
+                                            Name="checkBox2"
+                                            Height="16"
+                                            Margin="3,20,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Content="Alle Z Anzeigen"
+                                            IsChecked="{Binding IgnorZLevel}"
+                                            ToolTip="Ignoriert die Z Level Auswahl und zeigt alle Elemente an." />
 
                                         <xctk:CheckListBox
-                                Name="checkListBox1"
-                                Height="45"
-                                MinWidth="80"
-                                Margin="115,4,5,0"
-                                VerticalAlignment="Top"
-                                ItemsSource="{Binding PossibleZLevels}"
-                                SelectedValue="{Binding VisibleZLevels}"
-                                ToolTip="Wähle aus welche Z Level sichtbar sein sollen." />
+                                            Name="checkListBox1"
+                                            Height="45"
+                                            MinWidth="80"
+                                            Margin="115,2,5,0"
+                                            VerticalAlignment="Top"
+                                            ItemsSource="{Binding PossibleZLevels, UpdateSourceTrigger=PropertyChanged}"
+                                            SelectedValue="{Binding VisibleZLevels}"
+                                            ToolTip="Wähle aus welche Z Level sichtbar sein sollen." />
                                     </Grid>
                                 </Border>
                             </StackPanel>

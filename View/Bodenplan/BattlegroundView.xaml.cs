@@ -149,7 +149,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                lstbxPictureButton.Items.Clear();
+                //lstbxPictureButton.Items.Clear();
                 var appPath = Ressources.GetFullApplicationPath();
                 var picurls = Ressources.GetPictureUrls();
                 for (var i = 0; i < picurls.Count(); i++)
@@ -196,7 +196,7 @@ namespace MeisterGeister.View.Bodenplan
                             }
                         };
 
-                    lstbxPictureButton.Items.Add(b);
+                    //lstbxPictureButton.Items.Add(b);
                 }
             }
             catch (Exception)
@@ -303,6 +303,7 @@ namespace MeisterGeister.View.Bodenplan
                 }
                 Directory.SetCurrentDirectory(aktDir);
                 AddPictureButtons();
+                VM.LoadImagesFromDir(String.IsNullOrEmpty(Ressources.GetFullApplicationPath()) ? "Daten\\Bodenplan" : Ressources.GetFullApplicationPath() + "Daten\\Bodenplan");
             }
             catch (Exception ex)
             { ViewHelper.ShowError("Fehler beim Hinzufügen eines neuen Bildes", ex); }
@@ -539,15 +540,15 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void ToggleFilledLinePathButton()
-        {
-            FilledPathLineButton.IsChecked = (!Convert.ToBoolean(FilledPathLineButton.IsChecked));
-        }
+        //private void ToggleFilledLinePathButton()
+        //{
+        //    FilledPathLineButton.IsChecked = (!Convert.ToBoolean(FilledPathLineButton.IsChecked));
+        //}
 
-        private void ToggleLinePathButton()
-        {
-            PathLineButton.IsChecked = (!Convert.ToBoolean(PathLineButton.IsChecked));
-        }
+        //private void ToggleLinePathButton()
+        //{
+        //    PathLineButton.IsChecked = (!Convert.ToBoolean(PathLineButton.IsChecked));
+        //}
 
         private void View_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -717,7 +718,10 @@ namespace MeisterGeister.View.Bodenplan
                         _y1 = e.GetPosition(ArenaGrid).Y;
                         VM.CreatingNewLine = true;
                         VM.CreateNewPathLine(_x1, _y1);
+                        Global.CurrentKampf.LabelInfo =
+                            "Shift - Taste drücken oder gedrückt halten für angrenzende Linie";
                         e.Handled = true;
+
                     }
                     else if (VM.CreateFilledLine)
                     {
@@ -725,6 +729,8 @@ namespace MeisterGeister.View.Bodenplan
                         _y1 = e.GetPosition(ArenaGrid).Y;
                         VM.CreatingNewFilledLine = true;
                         VM.CreateNewFilledLine(_x1, _y1);
+                        Global.CurrentKampf.LabelInfo =
+                            "Shift - Taste drücken oder gedrückt halten für Flächenzeichnung";
                         e.Handled = true;
                     }
                 }
@@ -752,6 +758,7 @@ namespace MeisterGeister.View.Bodenplan
                     VM.CreatingNewLine = false;
                     VM.CreatingNewFilledLine = false;
                     VM.MoveLastObjectBehindCreatures();
+                    Global.CurrentKampf.LabelInfo = null;
                 }
                 else if (VM.SelectedObject != null)
                 {
@@ -1197,8 +1204,8 @@ namespace MeisterGeister.View.Bodenplan
                         {
                             try
                             {
-                                var strlength = ("picbutton" + (lstbxPictureButton.Items.Count + 1)).Length - 1;
-                                var buttonNr = lstbxPictureButton.Items.Count + 1;
+                                var strlength = ("picbutton" + (VM.BattlegroundObjects.Count )).Length - 1;
+                                var buttonNr = VM.BattlegroundObjects.Count;
                                 ImageObject newpic = VM.CreateImageObject(Ressources.Decoder((string)s),
                                     new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
                                 newpic.ImagePositionX = e.GetPosition(ArenaGrid).X;
@@ -1230,7 +1237,10 @@ namespace MeisterGeister.View.Bodenplan
             {
                 if (iItem != null)
                 {
-                    VM.CreateImageObject(iItem.Pfad, new Point(VM.CurrentMousePositionX, VM.CurrentMousePositionY));
+                    Point p = new Point(
+                        VM.CurrentMousePositionX,
+                        VM.CurrentMousePositionY);
+                    VM.CreateImageObject(iItem.Pfad, p);
                 }
                 (e.Source as ListBox).SelectedItem = null;
             }

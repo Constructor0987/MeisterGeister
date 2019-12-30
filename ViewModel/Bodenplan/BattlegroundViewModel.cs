@@ -1259,6 +1259,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (Set(ref _ignorZLevel, value))
                 {
                     Ressources.SetVisibilityDependetOnZLevelSelection(ref _battlegroundObjects, VisibleZLevels, IgnorZLevel);
+                    if (!value)
+                        VisibleZLevels = "";
+                    else
+                        VisibleZLevels = string.Join(",", PossibleZLevels);
+                    
                 }
             }
         }
@@ -1518,6 +1523,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (_selectedObject != null && _selectedObject.IsMoving)
                 {
+                    if (Global.CurrentKampf.LabelInfo != null)
+                        Global.CurrentKampf.LabelInfo = null;
                     return;
                 }
 
@@ -1525,8 +1532,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _selectedObject = value;
                 if (SelectedObject is BattlegroundCreature)
                 {
-                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
+                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
+                    Global.CurrentKampf.LabelInfo = null;
                 }
+                else
+                    Global.CurrentKampf.LabelInfo = "Objekt: Verschieben über Maus, Drehen mit Rechtsklick, Entfernen mit der Entf.-Taste";
 
                 if (SelectedObject != null)
                 {
@@ -2004,6 +2014,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (Set(ref _zeichenModus, value))
                 {
+                    if (value == ZeichenModus.Linie || value == ZeichenModus.Fläche)
+                    {
+                        if (SelectedColor.ToString() == "#00FFFFFF")
+                            SelectedColor = Colors.DarkGray;
+                        if (value == ZeichenModus.Fläche && SelectedFillColor.ToString() == "#00FFFFFF")
+                            SelectedFillColor = Colors.LightGray;
+                        Global.CurrentKampf.LabelInfo =
+                            value == ZeichenModus.Linie ?
+                            "Linie zeichnen: ziehe mit der Maus eine Linie auf die Battlemap":
+                            "Fläche zeichnen: halte die linke Maustaste gedückt um die Flächenzeichnung zu beginnen";
+                    }
+                    else
+                        Global.CurrentKampf.LabelInfo = null;
+
                     //eventuell aktionen ausführen, wie Bild platzieren
                     //oder Properties auf dem model umsetzen wie CreateLine = true
                 }
