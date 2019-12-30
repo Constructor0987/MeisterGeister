@@ -259,20 +259,24 @@
                 </ColumnDefinition.Style>
             </ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <!--<TextBlock 
+        <TextBlock 
+            Name="tbInfoHeldenEinfügen"
             HorizontalAlignment="Left" FontSize="16" Foreground="#FF5B646C" Margin="55,0,0,0" VerticalAlignment="Bottom" FontWeight="Bold"
-            Text="Helden / Gegner einfügen">
+            Text="Helden / Gegner / Objekte einfügen">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Setter Property="Visibility" Value="Visible"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding BodenplanViewModel.BattlegroundObjects, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger Binding="{Binding BodenplanViewModel.BattlegroundObjects.Count, 
+                            UpdateSourceTrigger=PropertyChanged, 
+                            Converter={StaticResource IsEqualOrGreaterThanConverter1},
+                            ConverterParameter='1'}"  Value="true">
+                            <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style>
-        </TextBlock>-->
+        </TextBlock>
         <!--Bodenplan-->
         <!--<Expander x:Name="expBodenplan" ExpandDirection="Right" IsExpanded="True" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
                   Background="{StaticResource Background2}" BorderThickness="3" MinHeight="130" Padding="5">
