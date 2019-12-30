@@ -608,7 +608,7 @@
                         <ComboBox Grid.Column="1" ItemsSource="{Binding RuestungListe}" SelectedItem="{Binding SelectedRuestung}" Margin="5,0,0,0" DisplayMemberPath="Name" IsEditable="True">
                             <ComboBox.InputBindings>
                                 <KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
-                            </ComboBox.InputBindings>                            
+                            </ComboBox.InputBindings>
                         </ComboBox>
                         <Button Grid.Column="2" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddRuestung}" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
@@ -640,8 +640,6 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-
-
                 </Expander>
 
                 <!-- Sonstiges -->
@@ -652,8 +650,32 @@
                             <TextBlock Style="{StaticResource TextTitel}" Text="Sonstiges"/>
                         </StackPanel>
                     </Expander.Header>
-
-                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" SelectedValue="{Binding SelectedSonstiges,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Neuer Gegenstand:" Style="{DynamicResource Label}" Margin="0,0,5,0"/>
+                            <TextBox Grid.Column="1" Text="{Binding NeuerGegenstand, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" >
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" />
+                                </TextBox.InputBindings>
+                            </TextBox>
+                        <Button Grid.Column="2" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddGegenstand}" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                        </Button>
+                        <DataGrid 
+                            Margin="0,5,0,0"
+                            Grid.ColumnSpan="3" 
+                            Grid.Row="1" 
+                            ItemsSource="{Binding HeldSonstigesImInventar}" 
+                            SelectedValue="{Binding SelectedSonstiges,Mode=TwoWay}" 
+                            ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
                             <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
@@ -662,6 +684,8 @@
                             <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    
+                    </Grid>
                 </Expander>
 
                 <!--Waffensets-->
