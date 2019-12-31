@@ -802,8 +802,8 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             if (!string.IsNullOrEmpty(NeuerGegenstand) && SelectedHeld != null && !IsReadOnly)
             {
-                Handelsgut handelsgut = new Handelsgut() { Name = NeuerGegenstand, Gewicht = 40 };
-
+                Handelsgut handelsgut = new Handelsgut() { Name = NeuerGegenstand, Gewicht = 40, ME = "Unze", HandelsgutGUID = Guid.NewGuid() };
+                Global.ContextHandelsgut.HandelsgüterListe.Add(handelsgut);
                 Held_Inventar hi = SelectedHeld.AddInventar(handelsgut);
                 //ist Null wenn Gegenstand schon vorhanden war
                 if (hi != null)
@@ -819,6 +819,7 @@ namespace MeisterGeister.ViewModel.Inventar
                     SelectedHeld.BerechneBehinderung();
 
                 SelectedHeld.BerechneAusruestungsGewicht();
+                Global.ContextHandelsgut.Save();
                 NeuerGegenstand = null;
             }
         }
