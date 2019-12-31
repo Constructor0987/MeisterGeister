@@ -72,6 +72,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private List<Model.Trageort> trageortListe = new List<Model.Trageort>();
 
         private string neuerGegenstand = null;
+        private int neuerGegenstandGewicht = 40;
         //Zuordnungen
         private ExtendedObservableCollection<Model.Held_Ausrüstung> heldAusrüstungen = new ExtendedObservableCollection<Model.Held_Ausrüstung>();
 
@@ -412,6 +413,15 @@ namespace MeisterGeister.ViewModel.Inventar
                 Set(ref neuerGegenstand, value);
             }
         }
+        public int NeuerGegenstandGewicht
+        {
+            get { return neuerGegenstandGewicht; }
+            set
+            {
+                Set(ref neuerGegenstandGewicht, value);
+            }
+        }
+        
         public List<Model.Trageort> TrageortListe
         {
             get { return trageortListe; }
@@ -802,7 +812,13 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             if (!string.IsNullOrEmpty(NeuerGegenstand) && SelectedHeld != null && !IsReadOnly)
             {
-                Handelsgut handelsgut = new Handelsgut() { Name = NeuerGegenstand, Gewicht = 40, ME = "Unze", HandelsgutGUID = Guid.NewGuid() };
+                Handelsgut handelsgut = new Handelsgut()
+                {
+                    Name = NeuerGegenstand,
+                    Gewicht = NeuerGegenstandGewicht,
+                    ME = "Unze",
+                    HandelsgutGUID = Guid.NewGuid()
+                };
                 Global.ContextHandelsgut.HandelsgüterListe.Add(handelsgut);
                 Held_Inventar hi = SelectedHeld.AddInventar(handelsgut);
                 //ist Null wenn Gegenstand schon vorhanden war
@@ -821,6 +837,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 SelectedHeld.BerechneAusruestungsGewicht();
                 Global.ContextHandelsgut.Save();
                 NeuerGegenstand = null;
+                NeuerGegenstandGewicht = 40;
             }
         }
 
