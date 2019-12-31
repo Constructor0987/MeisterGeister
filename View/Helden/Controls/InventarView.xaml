@@ -576,7 +576,6 @@
                 </Expander>
 
                 <!-- Rüstung -->
-
                 <Expander>
                     <Expander.Style>
                         <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
@@ -629,7 +628,7 @@
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Style.Setters>
-                                                <Setter Property="ToolTip" Value="'0' eintragen zum Löschen"></Setter>
+                                                <Setter Property="ToolTip" Value="'0' eintragen zum Löschen" />
                                             </Style.Setters>
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -655,20 +654,39 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Neuer Gegenstand:" Style="{DynamicResource Label}" Margin="0,0,5,0"/>
-                            <TextBox Grid.Column="1" Text="{Binding NeuerGegenstand, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" >
-                            <TextBox.InputBindings>
-                                <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition  />
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="35"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Neuer Gegenstand:" Style="{DynamicResource Label}" Margin="0,0,5,0"/>
+                            <TextBox HorizontalAlignment="Stretch" 
+                                     VerticalContentAlignment="Center"
+                                     Grid.Column="1" 
+                                     Text="{Binding NeuerGegenstand, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" >
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" />
                                 </TextBox.InputBindings>
                             </TextBox>
-                        <Button Grid.Column="2" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddGegenstand}" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-                        </Button>
+                            <TextBlock Grid.Column="2" Text="Gewicht:" Style="{DynamicResource Label}" Margin="0,0,5,0" />
+                            <ViewGeneral:IntBox 
+                                Value="{Binding NeuerGegenstandGewicht, UpdateSourceTrigger=PropertyChanged}"
+                                MinValue="0" 
+                                MaxValue="999" 
+                                Grid.Column="3" 
+                                HorizontalAlignment="Right" 
+                                Width="50" >
+                                <ViewGeneral:IntBox.InputBindings>
+                                    <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" />
+                                </ViewGeneral:IntBox.InputBindings>
+                            </ViewGeneral:IntBox>
+                            <Button Grid.Column="4" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddGegenstand}" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                            </Button>
+                        </Grid>
                         <DataGrid 
                             Margin="0,5,0,0"
                             Grid.ColumnSpan="3" 
@@ -680,7 +698,7 @@
                             <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
                             <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="False"/>
-                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="False"/>
                             <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                         </DataGrid.Columns>
                     </DataGrid>
