@@ -872,7 +872,8 @@ namespace MeisterGeister.Logic.Einstellung
             {
                 new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Jingle beim Start deaktivieren", Wert = "False" },
                 new Model.Einstellung() { Name = "ShowChangeLog", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "ChangeLog beim Start anzeigen", Wert = "True" },
-                new Model.Einstellung() { Name = "Regeledition", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "Regeledition", Wert = "" },
+                //Regedition als Standard auf DSA 4.1 stellen
+                new Model.Einstellung() { Name = "Regeledition", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "Regeledition", Wert = "DSA 4.1" },
 
                 new Model.Einstellung() { Name = "PflanzenwissenIntegrieren", Kontext = "Held", Kategorie = "Hausregel", Typ = "Boolean", Beschreibung = "Held kennt nur bestimmte Pflanzen", Wert = "False" },
 
