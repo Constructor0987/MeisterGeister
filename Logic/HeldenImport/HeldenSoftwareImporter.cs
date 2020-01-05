@@ -1312,11 +1312,11 @@ namespace MeisterGeister.Logic.HeldenImport
                                     }
                                     else if (mchild.Name == "preis")
                                     {
-                                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), out preis);
+                                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out preis);
                                     }
                                     else if (mchild.Name == "gewicht")
                                     {
-                                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), out gewicht);
+                                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out gewicht);
                                     }
                                 }
                         }
