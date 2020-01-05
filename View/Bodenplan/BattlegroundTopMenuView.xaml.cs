@@ -20,16 +20,11 @@ namespace MeisterGeister.View.Bodenplan
         public BattlegroundTopMenuView()
         {
             InitializeComponent();
-            VM = new BattlegroundViewModel
-            {
-                KampfVM = Global.CurrentKampf
-            };
         }
 
-        public BattlegroundViewModel VM
+        private BattlegroundViewModel BattlegroundVM
         {
-            get { return DataContext as BattlegroundViewModel; }
-            set { DataContext = value; }
+            get { return Global.CurrentKampf.BodenplanViewModel; }
         }
 
         public double VisualisationWidth
@@ -114,70 +109,6 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void Button_SaveXML_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new Microsoft.Win32.SaveFileDialog
-            {
-                FileName = "Battleground_" + System.DateTime.Now.ToShortDateString(), // Default file name
-                DefaultExt = ".xml",
-                Filter = "XML Files (.xml)|*.xml"
-            };
-            var result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
-                {
-                    vm.SaveBattlegroundToXML(dlg.FileName);
-                }
-            }
-        }
-
-        private void Button_LoadXML_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new Microsoft.Win32.OpenFileDialog
-            {
-                DefaultExt = ".xml",
-                Filter = "XML Files (.xml)|*.xml"
-            };
-            var result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
-                {
-                    Global.CurrentKampf.Kampf.Kämpfer.Clear();
-                    Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
-                    vm.LoadBattlegroundFromXML(dlg.FileName);
-                    vm.UpdateCreatureLevelToTop();
-                }
-            }
-        }
-
-        private void Button_Load_lastKR_XML_Click(object sender, RoutedEventArgs e)
-        {
-            if (!ViewHelper.Confirm("Laden der letzten KR des letzten Kampfes",
-                "Wollen Sie den momentanen Kampf verwerfen und die letzte KR des letzten Kampfes laden?"))
-                return;
-            
-            string bodenplanPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + 
-                @"\Daten\Bodenplan\Battleground_Letzte_KR.xml";
-            if (Directory.Exists(Path.GetDirectoryName(bodenplanPath)) && File.Exists(bodenplanPath))
-            {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
-                {
-                    Global.CurrentKampf.Kampf.Kämpfer.Clear();
-                    Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
-                    vm.LoadBattlegroundFromXML(bodenplanPath);
-                    vm.UpdateCreatureLevelToTop();
-                }
-            }
-            else
-                ViewHelper.Popup("Die temporäre Datei "+Environment.NewLine+ bodenplanPath + Environment.NewLine+ " konnte nicht gefunden werden");
-        }
 
             private void Button_Reset_Click(object sender, RoutedEventArgs e)
         {
@@ -213,9 +144,9 @@ namespace MeisterGeister.View.Bodenplan
                 CreateKampfWindow();
             }
             else
-                if (VM.KampfWindow != null)
+                if (BattlegroundVM.KampfWindow != null)
             {
-                VM.KampfWindow.Close();
+                BattlegroundVM.KampfWindow.Close();
             }
         }
 
@@ -223,77 +154,79 @@ namespace MeisterGeister.View.Bodenplan
         {
             var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
 
-            infoView.grdMain.LayoutTransform = new ScaleTransform(VM.ScaleKampfGrid, VM.ScaleKampfGrid);
-            VM.KampfWindow = new Window();
+            infoView.grdMain.LayoutTransform = new ScaleTransform(BattlegroundVM.ScaleKampfGrid, BattlegroundVM.ScaleKampfGrid);
+            BattlegroundVM.KampfWindow = new Window();
 
             //SizeToContent auf Width setzt den Screen auf minimale Breite
             if (Global.CurrentKampf.Kampf.Kampfrunde <= 1)
             {
-                VM.KampfWindow.SizeToContent = SizeToContent.Width;
+                BattlegroundVM.KampfWindow.SizeToContent = SizeToContent.Width;
             }
             else
             {
-                VM.KampfWindow.Width = VM.IniWidthStart != 0 ? VM.IniWidthStart : 426 * VM.ScaleKampfGrid;
+                BattlegroundVM.KampfWindow.Width = 
+                    BattlegroundVM.IniWidthStart != 0 ?
+                    BattlegroundVM.IniWidthStart : 
+                    426 * BattlegroundVM.ScaleKampfGrid;
             }
 
-            VM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
+            BattlegroundVM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
             {
-                if (VM != null)
+                if (BattlegroundVM != null)
                 {
-                    VM.IsShowIniKampf = false;
+                    BattlegroundVM.IsShowIniKampf = false;
                 }
-
-                VM.KampfWindow = null;
+                BattlegroundVM.KampfWindow = null;
             };
             infoView.scrViewer.MouseEnter += (object sender, MouseEventArgs e) => { MouseIsOverScrViewer = true; };
             infoView.scrViewer.MouseLeave += (object sender, MouseEventArgs e) => { MouseIsOverScrViewer = false; };
-            VM.KampfWindow.SizeChanged += (object sender, SizeChangedEventArgs e) =>
+            BattlegroundVM.KampfWindow.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
                 if ((System.Windows.Forms.Screen.AllScreens.Length > 1 &&
-                     VM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
+                     BattlegroundVM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
                         System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width * .5) ||
                     (System.Windows.Forms.Screen.AllScreens.Length == 1 &&
-                     VM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width * .5))
+                     BattlegroundVM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width * .5))
                 {
-                    VM.KampfWindow.Left = (System.Windows.Forms.Screen.AllScreens.Length > 1) ?
+                    BattlegroundVM.KampfWindow.Left = (System.Windows.Forms.Screen.AllScreens.Length > 1) ?
                         System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
-                        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - VM.KampfWindow.Width +
+                        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - BattlegroundVM.KampfWindow.Width +
                         (e.PreviousSize.Width - e.NewSize.Width) :
 
-                        System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width - VM.KampfWindow.Width;
+                        System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width - BattlegroundVM.KampfWindow.Width;
                     if (System.Windows.Forms.Screen.AllScreens.Length > 1 &&
                         Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive)
                     {
                         Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width =
-                            System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - VM.KampfWindow.Width;
+                            System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - BattlegroundVM.KampfWindow.Width;
                     }
                 }
-                VM.SetIniWindowWidth();
+                BattlegroundVM.SetIniWindowWidth();
 
-                if (VM.IniWidthStart != Math.Round(VM.KampfWindow.Width / VM.ScaleKampfGrid))
+                if (BattlegroundVM.IniWidthStart != Math.Round(BattlegroundVM.KampfWindow.Width / BattlegroundVM.ScaleKampfGrid))
                 {
-                    VM.IniWidthStart = Math.Round(VM.KampfWindow.Width / VM.ScaleKampfGrid);
+                    BattlegroundVM.IniWidthStart = Math.Round(BattlegroundVM.KampfWindow.Width / BattlegroundVM.ScaleKampfGrid);
                 }
             };
-            if (VM.SpielerScreenWindow != null)
+            if (BattlegroundVM.SpielerScreenWindow != null)
             {
-                VM.SpielerScreenWindow.Topmost = false;
+                BattlegroundVM.SpielerScreenWindow.Topmost = false;
             }
 
-            VM.KampfWindow.Topmost = true;
-            VM.KampfWindow.Content = infoView;
-            VM.KampfWindow.Show();
+            BattlegroundVM.KampfWindow.Topmost = true;
+            BattlegroundVM.KampfWindow.Content = infoView;
+            BattlegroundVM.KampfWindow.Show();
             // SizeToContent muss auf Height gestellt werden, damit die Höhe an die Anz. Kämpfer
             // angepasst wird
-            VM.KampfWindow.SizeToContent = SizeToContent.Height;
+            BattlegroundVM.KampfWindow.SizeToContent = SizeToContent.Height;
 
             // SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
-            VM.KampfWindow.SizeToContent = SizeToContent.Manual;
-            VM.KampfWindow.WindowStyle = WindowStyle.None;
+            BattlegroundVM.KampfWindow.SizeToContent = SizeToContent.Manual;
+            BattlegroundVM.KampfWindow.WindowStyle = WindowStyle.None;
 
-            VM.SetIniWindowPosition();
+            BattlegroundVM.SetIniWindowPosition();
 
-            VM.IsShowIniKampf = true;
+            BattlegroundVM.IsShowIniKampf = true;
         }
 
         private void tbtnSpielerScreenActive_Click(object sender, RoutedEventArgs e)
@@ -311,7 +244,7 @@ namespace MeisterGeister.View.Bodenplan
             {
                 if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanViewModel != null)
                 {
-                    if (VM.SpielerScreenActive)
+                    if (BattlegroundVM.SpielerScreenActive)
                     {
                         tbtnSpielerScreenActive.RaiseEvent(new RoutedEventArgs(ToggleButton.ClickEvent));
                     }

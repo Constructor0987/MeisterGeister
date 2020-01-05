@@ -55,20 +55,8 @@ namespace MeisterGeister.ViewModel.Kampf
 
         public BattlegroundViewModel BodenplanViewModel
         {
-            get
-            {
-                if (_bodenplanViewModel == null)
-                {
-                    BodenplanViewModel = new BattlegroundViewModel();
-                }
-
-                return _bodenplanViewModel;
-            }
-
-            private set
-            {
-                Set(ref _bodenplanViewModel, value);
-            }
+            get { return _bodenplanViewModel; }
+            set { Set(ref _bodenplanViewModel, value); }
         }
 
         public ICollection<IWesenPlaylist> WesenPlaylist
@@ -370,11 +358,8 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     ki = new KämpferInfo(held, Kampf);
                     Kampf.Kämpfer.Add(held);
+                    BodenplanViewModel.AddCreature(held);
                 }
-            }
-            if (BodenplanViewModel != null)
-            {
-                BodenplanViewModel.AddAllCreatures();
             }
         }
 
@@ -401,12 +386,10 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void ShowGegnerView(object obj)
         {
+            //Gegner werden hinzugefügt und ebenfalls die BattlegroundCreatures
             showGegnerView?.Invoke(Kampf);
-
-            if (BodenplanViewModel != null)
-            {
-                BodenplanViewModel.AddAllCreatures();
-            }
+            
+            BodenplanViewModel.CenterMeisterView(null);
         }
 
         private void ShowBodenplanView(object obj)

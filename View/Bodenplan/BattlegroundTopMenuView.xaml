@@ -932,24 +932,24 @@
                                   MinHeight="50">
                                 <StackPanel Orientation="Horizontal">
                                     <Button
-                                Width="22"
-                                Height="22"
-                                Margin="5,5,0,0"
-                                Padding="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Click="Button_LoadXML_Click">
+                                        Width="22"
+                                        Height="22"
+                                        Margin="5,5,0,0"
+                                        Padding="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Command="{Binding OnLoadXML_Battlemap}">
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
                                     </Button>
                                     <Button
-                                Width="22"
-                                Height="22"
-                                Margin="5,5,0,0"
-                                Padding="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                ToolTip="Laden der letzten KR des letzten Kampfes"
-                                Click="Button_Load_lastKR_XML_Click">
+                                        Width="22"
+                                        Height="22"
+                                        Margin="5,5,0,0"
+                                        Padding="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        ToolTip="Laden der letzten KR des letzten Kampfes"
+                                        Command="{Binding OnLoadLastKRXML_Battlemap}">
                                         <Button.Content>
                                             <Grid>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
@@ -967,32 +967,32 @@
                                         </Button.Content>
                                     </Button>
                                     <Button
-                                Width="22"
-                                Height="22"
-                                Margin="10,5,0,0"
-                                Padding="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Click="Button_SaveXML_Click">
+                                        Width="22"
+                                        Height="22"
+                                        Margin="10,5,0,0"
+                                        Padding="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Command="{Binding OnSaveXML_Battlemap}">
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/speichern.png" />
                                     </Button>
                                 </StackPanel>
                                 <CheckBox
-                            Height="16"
-                            Margin="13,28,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Content="ohne Bilder"
-                            FontSize="10"
-                            IsChecked="{Binding LSWithoutPictures}" />
+                                    Height="16"
+                                    Margin="13,28,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Content="ohne Bilder"
+                                    FontSize="10"
+                                    IsChecked="{Binding LSWithoutPictures}" />
                                 <Button
-                            Width="75"
-                            Height="22"
-                            Margin="110,10,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Click="Button_Reset_Click"
-                            Content="Reset" />
+                                    Width="75"
+                                    Height="22"
+                                    Margin="110,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Click="Button_Reset_Click"
+                                    Content="Reset" />
                             </Grid>
                         </TabItem>
                     </TabControl>
