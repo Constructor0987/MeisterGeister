@@ -65,8 +65,8 @@ namespace MeisterGeister.View.Kampf
                     _kampf.Kämpfer.Add(gegner, 2);
 
                     // zur Arena hinzufügen
-                    //if (_kampf.Bodenplan != null)
-                    //    ((BattlegroundViewModel)_kampf.Bodenplan.battlegroundView1.DataContext).AddEnemy(gegner);
+                    if (_kampf.Bodenplan.VM != null)
+                        _kampf.Bodenplan.VM.AddCreature(gegner);
                 }
 
                 // Arena neu zeichnen

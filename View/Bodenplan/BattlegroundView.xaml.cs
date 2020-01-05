@@ -37,7 +37,6 @@ namespace MeisterGeister.View.Bodenplan
             
             AddPictureButtons();
             AddFogOfWar();
-            VM.KampfVM = Global.CurrentKampf;
         }
 
         public double VisualisationHeight

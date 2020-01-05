@@ -46,6 +46,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 { }
             }
             ReLoadImages();
+            Global.CurrentKampf.BodenplanViewModel = this;
+
         }
 
         private IWaffe _miWaffeSelected = null;
@@ -1081,33 +1083,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _doChangeModPositionSelbst; }
             set { Set(ref _doChangeModPositionSelbst, value); }
         }
-
-        public KampfViewModel KampfVM
-        {
-            get { return _kampfVM; }
-
-            set
-            {
-                if (object.Equals(_kampfVM, value))
-                {
-                    return;
-                }
-
-                if (KampfVM != null)
-                {
-                    _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
-                    RemoveCreatureAll();
-                }
-                _kampfVM = value;
-                if (KampfVM != null)
-                {
-                    _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
-                    AddAllCreatures();
-                }
-                UpdateCreaturesFromChangedKampferlist();
-            }
-        }
-
+        
         public void UpdateCreaturesFromChangedKampferlist()
         {
             foreach (KämpferInfo k in Global.CurrentKampf.Kampf.Kämpfer)
@@ -1202,8 +1178,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if (((Wesen)kämpfer).IsHeld)
             {
-                ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
-                BattlegroundObjects.Add(((Held)kämpfer));
+                if (BattlegroundObjects.FirstOrDefault(t => t is Held && ((Held)t).HeldGUID == ((Held)kämpfer).HeldGUID) == null)
+                {
+                    ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
+                    BattlegroundObjects.Add(((Held)kämpfer));
+                }
             }
             else
             {
@@ -1787,7 +1766,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             PlayerGridOffsetY = lstSettings[4];
             ScaleSpielerGrid = lstSettings[5];
             ScaleKampfGrid = lstSettings[6];
+            //lstSettings 1 = Recheck,   0 = Hex,   -1 = none
             RechteckGrid = lstSettings[7] == 1;
+            HexGrid = lstSettings[7] == 0;
             if (lstSettings.Count <= 8)
                 return;
             //Zusätzliche Battlemap Settings laden
@@ -1861,7 +1842,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
 
             lstSettings.Add(ScaleKampfGrid);
-            lstSettings.Add(RechteckGrid ? 1 : 0);
+            lstSettings.Add(RechteckGrid ? 1 : HexGrid? 0: -1);
 
             //Zusätzliche 
             lstSettings.Add(GridColor.A);
@@ -2242,6 +2223,91 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region Commands
 
+        private Base.CommandBase onSaveXML_Battlemap = null;
+        public Base.CommandBase OnSaveXML_Battlemap
+        {
+            get
+            {
+                if (onSaveXML_Battlemap == null)
+                    onSaveXML_Battlemap = new Base.CommandBase(SaveXML_Battlemap, null);
+                return onSaveXML_Battlemap;
+            }
+        }
+
+        private void SaveXML_Battlemap(object sender)
+        {
+            var dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                FileName = "Battleground_" + System.DateTime.Now.ToShortDateString(), // Default file name
+                DefaultExt = ".xml",
+                Filter = "XML Files (.xml)|*.xml"
+            };
+            var result = dlg.ShowDialog();
+
+            if (result == true)
+                SaveBattlegroundToXML(dlg.FileName);
+        }
+
+        private Base.CommandBase onLoadXML_Battlemap = null;
+        public Base.CommandBase OnLoadXML_Battlemap
+        {
+            get
+            {
+                if (onLoadXML_Battlemap == null)
+                    onLoadXML_Battlemap = new Base.CommandBase(LoadXML_Battlemap, null);
+                return onLoadXML_Battlemap;
+            }
+        }
+
+        private void LoadXML_Battlemap(object sender)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".xml",
+                Filter = "XML Files (.xml)|*.xml"
+            };
+            var result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                Global.CurrentKampf.Kampf.Kämpfer.Clear();
+                Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
+                LoadBattlegroundFromXML(dlg.FileName);
+                UpdateCreatureLevelToTop();
+            }
+        }
+
+
+        private Base.CommandBase onLoadLastKRXML_Battlemap = null;
+        public Base.CommandBase OnLoadLastKRXML_Battlemap
+        {
+            get
+            {
+                if (onLoadLastKRXML_Battlemap == null)
+                    onLoadLastKRXML_Battlemap = new Base.CommandBase(LoadLastKRXML_Battlemap, null);
+                return onLoadLastKRXML_Battlemap;
+            }
+        }
+
+        private void LoadLastKRXML_Battlemap(object sender)
+        {
+            if (!ViewHelper.Confirm("Laden der letzten KR des letzten Kampfes",
+                "Wollen Sie den momentanen Kampf verwerfen und die letzte KR des letzten Kampfes laden?"))
+                return;
+
+            string bodenplanPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) +
+                @"\Daten\Bodenplan\Battleground_Letzte_KR.xml";
+            if (Directory.Exists(Path.GetDirectoryName(bodenplanPath)) && File.Exists(bodenplanPath))
+            {
+                Global.CurrentKampf.Kampf.Kämpfer.Clear();
+                Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
+                LoadBattlegroundFromXML(bodenplanPath);
+                UpdateCreatureLevelToTop();
+            }
+            else
+                ViewHelper.Popup("Die temporäre Datei " + Environment.NewLine + bodenplanPath + Environment.NewLine + " konnte nicht gefunden werden");
+        }
+
         private Base.CommandBase onReLoadImages = null;
         public Base.CommandBase OnReLoadImages
         {
@@ -2378,7 +2444,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             SetIniWindowPosition();
         }
 
-        private void CenterMeisterView(object obj)
+        public void CenterMeisterView(object obj)
         {
             MeisterZoom = 1;
             if (Global.ContextHeld.HeldenGruppeListe.Count == 0)
