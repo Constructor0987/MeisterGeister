@@ -1186,7 +1186,36 @@ namespace MeisterGeister.View.Bodenplan
             {
                 VM.SelectedObject.IsMoving = false;
                 if (VM.SelectedObject is BattlegroundCreature)
+                {
+                    BattlegroundBaseObject bgObj = VM.SelectedObject;
                     ((BattlegroundCreature)VM.SelectedObject).CalculateSightArea();
+                    //int posLicht = VM.BattlegroundObjects.IndexOf( 
+                    //    VM.BattlegroundObjects.FirstOrDefault(t => t is LichtquelleObject));
+                    //var aktSelected = ArenaGrid.SelectedItem;
+                    
+                    //for (int i = 0; i < ArenaGrid.Items.Count; i++)
+                    //{
+                    //    if (ArenaGrid.Items[i].GetType().BaseType == typeof(Held) ||
+                    //        ArenaGrid.Items[i].GetType().BaseType == typeof(GegnerBase))
+                    //    {
+                    //        ArenaGrid.SelectedItem = ArenaGrid.Items[i];
+                    //        int PosOfLicht = ArenaGrid.Items.CurrentPosition;
+                    //        ArenaGrid.Items.MoveCurrentToFirst();
+                    //        //ArenaGrid.Items.Remove(ArenaGrid.Items[i]);
+                    //        //ArenaGrid.Items.Add(Licht);
+                    //        //ArenaGrid.SelectedItem = ;
+                    //        //ArenaGrid.Items.MoveCurrentToLast();
+                    //        //ArenaGrid.SelectedItem = aktSelected;
+                    //    }
+                    //    else
+                    //    if (ArenaGrid.Items[i] != aktSelected)
+                    //    {
+                    //        //ArenaGrid.SelectedItem = ArenaGrid.Items[i];
+                    //        //ArenaGrid.Items.MoveCurrentToFirst();
+                    //    }
+
+                    //}
+                }
             }
             VM.IsMoving = false;
             _kämpferCursor = null;

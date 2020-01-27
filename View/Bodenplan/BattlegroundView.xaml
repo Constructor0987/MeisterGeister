@@ -444,7 +444,7 @@
                             SelectedItem="{Binding SelectedObject, Mode=TwoWay}"
                             SelectionChanged="ArenaGrid_SelectionChanged"
                             SelectionMode="Single">
-                            <!--    -->
+                            
                             <ListBox.Style>
                                 <Style TargetType="ListBox">
                                     <Style.Triggers>
@@ -455,6 +455,7 @@
                                 </Style>
                             </ListBox.Style>
                             <ListBox.Resources>
+
 
                                 <!--  Datatemplate BattlegroundCreature (Hero & Enemy)  -->
                                 <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
@@ -697,12 +698,12 @@
                                                     </Canvas.Effect>
 
                                                     <!--  Lichtquelle  -->
-                                                    <Ellipse
+                                                    <!--<Ellipse
                                                         Canvas.Left="{Binding ki.LightCreatureX, UpdateSourceTrigger=PropertyChanged}"
                                                         Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                         Width="{Binding ki.LichtquellePixelRadius}"
                                                         Height="{Binding ki.LichtquellePixelRadius}"
-                                                        Opacity="0.4"
+                                                        Opacity="0.25"
                                                         Stroke="#FFF0FC00"
                                                         StrokeThickness="2">
                                                         <Ellipse.Fill>
@@ -720,7 +721,7 @@
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Ellipse.Style>
-                                                    </Ellipse>
+                                                    </Ellipse>-->
 
                                                     <!--  SightArea  -->
                                                     <Path
@@ -1296,6 +1297,54 @@
                                     </Thumb>
                                 </DataTemplate>
 
+                                <!--  Datatemplate Lichquellen  -->
+                                <DataTemplate DataType="{x:Type model:LichtquelleObject}">
+                                    <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                    <Ellipse                                                        
+                                                        Canvas.Left="{Binding ki.LightCreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding ki.LichtquellePixelRadius, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding ki.LichtquellePixelRadius, UpdateSourceTrigger=PropertyChanged}"
+                                                        Opacity="0.5"
+                                                        Stroke="#FFF0FC00"
+                                                        StrokeThickness="2">
+                                                        <Ellipse.Fill>
+                                                            <RadialGradientBrush>
+                                                                <GradientStop Offset="1" Color="Transparent" />
+                                                                <GradientStop Offset=".8" Color="#FFF0FC00" />
+                                                            </RadialGradientBrush>
+                                                        </Ellipse.Fill>
+                                                        <Ellipse.Style>
+                                                            <Style TargetType="{x:Type Ellipse}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ki.LichtquellePixel, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Ellipse.Style>
+                                                    </Ellipse>
+                                                </Canvas>
+
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="25"
+                                                                    ShadowDepth="10"
+                                                                    Color="Yellow" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
                                 <!--  Datatemplate IMAGEOBJECT  -->
                                 <DataTemplate DataType="{x:Type model:ImageObject}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
@@ -1394,6 +1443,7 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
+                                
                             </ListBox.Resources>
 
                             <ListBox.Background>

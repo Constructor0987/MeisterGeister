@@ -146,6 +146,8 @@ namespace MeisterGeister.View.Bodenplan
             else
                 if (BattlegroundVM.KampfWindow != null)
             {
+                //Setze den Tag um das Fenster zu schließen, bei == null bleibt es offen (Fensterwechsel)
+                BattlegroundVM.KampfWindow.Tag = true;
                 BattlegroundVM.KampfWindow.Close();
             }
         }
@@ -172,6 +174,12 @@ namespace MeisterGeister.View.Bodenplan
 
             BattlegroundVM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
             {
+                if (BattlegroundVM.KampfWindow != null && 
+                    BattlegroundVM.KampfWindow.Tag == null)
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 if (BattlegroundVM != null)
                 {
                     BattlegroundVM.IsShowIniKampf = false;

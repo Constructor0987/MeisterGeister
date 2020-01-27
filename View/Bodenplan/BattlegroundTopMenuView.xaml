@@ -227,199 +227,6 @@
                     </Grid.ColumnDefinitions>
                     <TabControl 
                         Width="600">
-                        <TabItem Header="Hintergrund">
-                            <Grid
-                                MinHeight="50">
-                                <Grid HorizontalAlignment="Left">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="130"/>
-                                        <ColumnDefinition Width="300"/>
-                                        <ColumnDefinition Width="0*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid>
-                                        <Label Content="Raster"
-                                            Margin="5,0,0,0"/>
-                                        <ToggleButton
-                                            Width="22"
-                                            Height="22"
-                                            Margin="10,23,10,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            IsChecked="{Binding RechteckGrid}"
-                                            ToolTip="Rechteck Raster benutzen">
-                                            <ToggleButton.Content>
-                                                <Image
-                                                    Margin="-2"
-                                                    Source="/DSA MeisterGeister;component/Images/Icons/rechteckig.png"
-                                                    Stretch="Fill" />
-                                            </ToggleButton.Content>
-                                        </ToggleButton>
-                                        <ToggleButton
-                                            Width="22"
-                                            Height="22"
-                                            Margin="35,23,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            IsChecked="{Binding HexGrid}"
-                                            ToolTip="Hexfelder benutzen">
-                                            <ToggleButton.Content>
-                                                <Image
-                                                    Margin="-2"
-                                                    Source="/DSA MeisterGeister;component/Images/Icons/hex.png"
-                                                    Stretch="Fill" />
-                                            </ToggleButton.Content>
-                                        </ToggleButton>
-
-                                        <Label Content="Farbe"
-                                            Margin="65,0,0,0"/>
-                                        <xctk:ColorPicker
-                                            Width="22"
-                                            Height="22"
-                                            Margin="70,23,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}"
-                                            ShowDropDownButton="False"
-                                            ToolTip="Rasterfarbe" />
-                                    </Grid>
-                                    <Border
-                                        Grid.Column="1"
-                                        Width="1"
-                                        HorizontalAlignment="Left"
-                                        BorderBrush="DarkGray"
-                                        BorderThickness="1" />
-                                    <Grid 
-                                        Grid.Column="1" >
-                                        <Label 
-                                            Margin="5,0,0,16"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Padding="0" Height="32" Width="69" >
-                                            <Label.Content>
-                                                <StackPanel >
-                                                    <TextBlock Text="Hintergrund-"/>
-                                                    <TextBlock Text="bild laden" HorizontalAlignment="Right" />
-                                                </StackPanel>
-                                            </Label.Content>
-                                        </Label>
-                                        <Button                            
-                                            Width="27"
-                                            Height="27"
-                                            Margin="80,3,10,20"
-                                            Padding="0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Command="{Binding OnSetBackgroundClick}"
-                                            ToolTip="Hintergrundbild festlegen">
-                                            <Button.Content>
-                                                <Image Margin="2" Source="/Images/Icons/dungeon.png" />
-                                            </Button.Content>
-                                        </Button>
-                                        <Grid
-                                            HorizontalAlignment="Left"
-                                            Width="220"
-                                            Margin="3,0,0,0" >
-                                            <Grid.Style>
-                                                <Style TargetType="Grid">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Grid.Style>
-
-                                            <Image
-                                                Grid.RowSpan="2"
-                                                Grid.Column="1"
-                                                Height="25"
-                                                Margin="0,0,6,0"
-                                                HorizontalAlignment="Right"
-                                                Source="/Images/Icons/General/y-offset.png" />
-                                            <Image
-                                                Grid.Row="0"
-                                                Grid.RowSpan="2"
-                                                Height="25"
-                                                Margin="145,3,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Top"
-                                                Source="/Images/Icons/General/x-offset.png" />
-
-                                            <Slider
-                                                Margin="0,0,5,0"
-                                                HorizontalAlignment="Right"
-                                                LargeChange="10"
-                                                Maximum="15000"
-                                                Minimum="-15000"
-                                                MouseWheel="sl_MouseWheel"
-                                                Orientation="Vertical"
-                                                RenderTransformOrigin="0.5,0.5"
-                                                SmallChange="1"
-                                                Style="{StaticResource SmallVerticalSlider}"
-                                                ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                                Value="{Binding InvBackgroundOffsetY}">
-                                                <Slider.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform ScaleX="-1" />
-                                                        <SkewTransform />
-                                                        <RotateTransform />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Slider.RenderTransform>
-                                            </Slider>
-                                            <Slider
-                                                Height="12"
-                                                MinHeight="5"
-                                                Margin="115,18,20,0"
-                                                VerticalAlignment="Top"
-                                                LargeChange="10"
-                                                Maximum="15000"
-                                                Minimum="-15000"
-                                                MouseWheel="sl_MouseWheel"
-                                                SmallChange="1"
-                                                Style="{StaticResource SmallHorizontalSlider}"
-                                                ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                                Value="{Binding BackgroundOffsetX}" />
-                                            <StackPanel 
-                                                Margin="5,35,0,0"
-                                                VerticalAlignment="Top"
-                                                HorizontalAlignment="Left"
-                                                Orientation="Horizontal">
-                                                <Image
-                                                    Height="15"
-                                                    HorizontalAlignment="Left"
-                                                    Source="/Images/Icons/General/size.png" />
-                                                <Slider
-                                                    Width="85"
-                                                    VerticalAlignment="Center"
-                                                    LargeChange="10"
-                                                    Maximum="20000"
-                                                    Minimum="0"
-                                                    MouseWheel="sl_MouseWheel"
-                                                    Orientation="Horizontal"
-                                                    SmallChange="1"
-                                                    Style="{StaticResource SmallHorizontalSlider}"
-                                                    ToolTip="Größe -  Mausrad drehen um Feinjustierung durchzuführen"
-                                                    Value="{Binding BackgroundOffsetSize}" />
-                                                <ViewGeneral:IntBox 
-                                                    Value="{Binding BackgroundOffsetSize}" 
-                                                    IncValue="10"
-                                                    DecValue="10"
-                                                    MinValue="0" 
-                                                    MaxValue="20000" 
-                                                    Padding="0" 
-                                                    ShowButtons="True" 
-                                                    Height="16" 
-                                                    FontSize="11"
-                                                    Width="74" />
-                                            </StackPanel>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </TabItem>
                         <TabItem Header="Allgemein">
                             <StackPanel Orientation="Horizontal" MinHeight="50" >
                                 <Border Margin="10,0,0,0">
@@ -560,69 +367,6 @@
                                     </Grid>
                                 </Border>
                             </StackPanel>
-                        </TabItem>
-                        <TabItem Header="Fog-of-War" >
-                            <Grid MinHeight="50">
-                                <CheckBox
-                                    Margin="5,0,0,0" 
-                                    Height="17" 
-                                    Content="Aktiv"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding useFog}" />
-                                <Grid 
-                                    Margin="80,0,0,0"
-                                    Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}" >
-                                    <Button 
-                                        HorizontalAlignment="Left" 
-                                        Height="22" 
-                                        Width="22" 
-                                        Padding="0"
-                                        ToolTip="Fog-of-War löschen" Command="{Binding OnBtnRenewFogOfWar}" >
-                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
-                                    </Button>
-                                    <Label FontSize="10"
-                                        Margin="24,0,0,0"
-                                        Padding="0"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left" >
-                                        <Label.Content>
-                                            <StackPanel>
-                                                <TextBlock Text="Fog-of-War"/>
-                                                <TextBlock Text="zurücksetzen"/>
-                                            </StackPanel>
-                                        </Label.Content>
-                                    </Label>
-                                    <StackPanel 
-                                        Margin="125,0,0,0"
-                                        HorizontalAlignment="Left">
-                                        <Label
-                                            Margin="-2,0,0,0"
-                                            Padding="0,2,0,0"
-                                            HorizontalAlignment="Center"
-                                            Content="Größe Freifeld" />
-                                            <ViewGeneral:IntBox
-                                                Width="60"
-                                                Height="19"
-                                                MaxValue="5"
-                                                MinValue="1"
-                                                ShowButtons="True"
-                                                Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}">
-                                            <ViewGeneral:IntBox.ToolTip>
-                                                <StackPanel>
-                                                    <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" />
-                                                    <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" />
-                                                </StackPanel>
-                                            </ViewGeneral:IntBox.ToolTip>
-                                        </ViewGeneral:IntBox>
-                                    </StackPanel>
-                                    <StackPanel Margin="200,0,0,0" VerticalAlignment="Center">
-                                        <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" FontSize="10" FontStyle="Italic" />
-                                        <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" FontSize="10" FontStyle="Italic" />
-                                    </StackPanel>
-
-                                </Grid>
-                            </Grid>
-
                         </TabItem>
                         <TabItem Header="Spieler-Ansicht">
                             <Grid
@@ -926,6 +670,262 @@
 
                             </Grid>
 
+                        </TabItem>
+                        <TabItem Header="Fog-of-War" >
+                            <Grid MinHeight="50">
+                                <CheckBox
+                                    Margin="5,0,0,0" 
+                                    Height="17" 
+                                    Content="Aktiv"
+                                    HorizontalAlignment="Left"
+                                    IsChecked="{Binding useFog}" />
+                                <Grid 
+                                    Margin="80,0,0,0"
+                                    Visibility="{Binding useFog, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                                    <Button 
+                                        HorizontalAlignment="Left" 
+                                        Height="22" 
+                                        Width="22" 
+                                        Padding="0"
+                                        ToolTip="Fog-of-War löschen" Command="{Binding OnBtnRenewFogOfWar}" >
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
+                                    </Button>
+                                    <Label FontSize="10"
+                                        Margin="24,0,0,0"
+                                        Padding="0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left" >
+                                        <Label.Content>
+                                            <StackPanel>
+                                                <TextBlock Text="Fog-of-War"/>
+                                                <TextBlock Text="zurücksetzen"/>
+                                            </StackPanel>
+                                        </Label.Content>
+                                    </Label>
+                                    <StackPanel 
+                                        Margin="125,0,0,0"
+                                        HorizontalAlignment="Left">
+                                        <Label
+                                            Margin="-2,0,0,0"
+                                            Padding="0,2,0,0"
+                                            HorizontalAlignment="Center"
+                                            Content="Größe Freifeld" />
+                                            <ViewGeneral:IntBox
+                                                Width="60"
+                                                Height="19"
+                                                MaxValue="5"
+                                                MinValue="1"
+                                                ShowButtons="True"
+                                                Value="{Binding FogFreeSize, UpdateSourceTrigger=PropertyChanged}">
+                                            <ViewGeneral:IntBox.ToolTip>
+                                                <StackPanel>
+                                                    <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" />
+                                                    <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" />
+                                                </StackPanel>
+                                            </ViewGeneral:IntBox.ToolTip>
+                                        </ViewGeneral:IntBox>
+                                    </StackPanel>
+                                    <StackPanel Margin="200,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="Nebel entfernen:   Gedrückte 'Strg'-Taste und linke Maustaste" FontSize="10" FontStyle="Italic" />
+                                        <TextBlock Text="Nebel hinzufügen: Gedrückte 'Strg'-Taste und rechte Maustaste" FontSize="10" FontStyle="Italic" />
+                                    </StackPanel>
+
+                                </Grid>
+                            </Grid>
+
+                        </TabItem>
+                        <TabItem Header="Hintergrund">
+                            <Grid
+                                MinHeight="50">
+                                <Grid HorizontalAlignment="Left">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="0*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Label Content="Raster"
+                                            Margin="5,0,0,0"/>
+                                        <ToggleButton
+                                            Width="22"
+                                            Height="22"
+                                            Margin="10,23,10,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            IsChecked="{Binding RechteckGrid}"
+                                            ToolTip="Rechteck Raster benutzen">
+                                            <ToggleButton.Content>
+                                                <Image
+                                                    Margin="-2"
+                                                    Source="/DSA MeisterGeister;component/Images/Icons/rechteckig.png"
+                                                    Stretch="Fill" />
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
+                                        <ToggleButton
+                                            Width="22"
+                                            Height="22"
+                                            Margin="35,23,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            IsChecked="{Binding HexGrid}"
+                                            ToolTip="Hexfelder benutzen">
+                                            <ToggleButton.Content>
+                                                <Image
+                                                    Margin="-2"
+                                                    Source="/DSA MeisterGeister;component/Images/Icons/hex.png"
+                                                    Stretch="Fill" />
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
+
+                                        <Label Content="Farbe"
+                                            Margin="65,0,0,0"/>
+                                        <xctk:ColorPicker
+                                            Width="22"
+                                            Height="22"
+                                            Margin="70,23,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}"
+                                            ShowDropDownButton="False"
+                                            ToolTip="Rasterfarbe" />
+                                    </Grid>
+                                    <Border
+                                        Grid.Column="1"
+                                        Width="1"
+                                        HorizontalAlignment="Left"
+                                        BorderBrush="DarkGray"
+                                        BorderThickness="1" />
+                                    <Grid 
+                                        Grid.Column="1" >
+                                        <Label 
+                                            Margin="5,0,0,16"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Padding="0" Height="32" Width="69" >
+                                            <Label.Content>
+                                                <StackPanel >
+                                                    <TextBlock Text="Hintergrund-"/>
+                                                    <TextBlock Text="bild laden" HorizontalAlignment="Right" />
+                                                </StackPanel>
+                                            </Label.Content>
+                                        </Label>
+                                        <Button                            
+                                            Width="27"
+                                            Height="27"
+                                            Margin="80,3,10,20"
+                                            Padding="0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Command="{Binding OnSetBackgroundClick}"
+                                            ToolTip="Hintergrundbild festlegen">
+                                            <Button.Content>
+                                                <Image Margin="2" Source="/Images/Icons/dungeon.png" />
+                                            </Button.Content>
+                                        </Button>
+                                        <Grid
+                                            HorizontalAlignment="Left"
+                                            Width="220"
+                                            Margin="3,0,0,0" >
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+
+                                            <Image
+                                                Grid.RowSpan="2"
+                                                Grid.Column="1"
+                                                Height="25"
+                                                Margin="0,0,6,0"
+                                                HorizontalAlignment="Right"
+                                                Source="/Images/Icons/General/y-offset.png" />
+                                            <Image
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Height="25"
+                                                Margin="145,3,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Source="/Images/Icons/General/x-offset.png" />
+
+                                            <Slider
+                                                Margin="0,0,5,0"
+                                                HorizontalAlignment="Right"
+                                                LargeChange="10"
+                                                Maximum="15000"
+                                                Minimum="-15000"
+                                                MouseWheel="sl_MouseWheel"
+                                                Orientation="Vertical"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                SmallChange="1"
+                                                Style="{StaticResource SmallVerticalSlider}"
+                                                ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                Value="{Binding InvBackgroundOffsetY}">
+                                                <Slider.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="-1" />
+                                                        <SkewTransform />
+                                                        <RotateTransform />
+                                                        <TranslateTransform />
+                                                    </TransformGroup>
+                                                </Slider.RenderTransform>
+                                            </Slider>
+                                            <Slider
+                                                Height="12"
+                                                MinHeight="5"
+                                                Margin="115,18,20,0"
+                                                VerticalAlignment="Top"
+                                                LargeChange="10"
+                                                Maximum="15000"
+                                                Minimum="-15000"
+                                                MouseWheel="sl_MouseWheel"
+                                                SmallChange="1"
+                                                Style="{StaticResource SmallHorizontalSlider}"
+                                                ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                Value="{Binding BackgroundOffsetX}" />
+                                            <StackPanel 
+                                                Margin="5,35,0,0"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Left"
+                                                Orientation="Horizontal">
+                                                <Image
+                                                    Height="15"
+                                                    HorizontalAlignment="Left"
+                                                    Source="/Images/Icons/General/size.png" />
+                                                <Slider
+                                                    Width="85"
+                                                    VerticalAlignment="Center"
+                                                    LargeChange="10"
+                                                    Maximum="20000"
+                                                    Minimum="0"
+                                                    MouseWheel="sl_MouseWheel"
+                                                    Orientation="Horizontal"
+                                                    SmallChange="1"
+                                                    Style="{StaticResource SmallHorizontalSlider}"
+                                                    ToolTip="Größe -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                    Value="{Binding BackgroundOffsetSize}" />
+                                                <ViewGeneral:IntBox 
+                                                    Value="{Binding BackgroundOffsetSize}" 
+                                                    IncValue="10"
+                                                    DecValue="10"
+                                                    MinValue="0" 
+                                                    MaxValue="20000" 
+                                                    Padding="0" 
+                                                    ShowButtons="True" 
+                                                    Height="16" 
+                                                    FontSize="11"
+                                                    Width="74" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Laden/Speichern">
                             <Grid Margin="0,0,9,0"
