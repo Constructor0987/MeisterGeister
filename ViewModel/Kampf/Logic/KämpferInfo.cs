@@ -15,6 +15,7 @@ using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Bodenplan.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -145,8 +146,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     _kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             }
         }
-
-
 
         private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
         public btnHotkeyVM SpeedbtnAudio
@@ -334,10 +333,48 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 Set(ref _lichtquellePixel, value);
-                Bodenplan.Logic.BattlegroundCreature bgC = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
-                    .Where(t => t is Bodenplan.Logic.BattlegroundCreature)
-                    .FirstOrDefault(s => (s as Bodenplan.Logic.BattlegroundCreature).ki == this) as Bodenplan.Logic.BattlegroundCreature);
 
+                Bodenplan.Logic.BattlegroundCreature bgC = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
+                .Where(t => t is Bodenplan.Logic.BattlegroundCreature)
+                .FirstOrDefault(s => (s as Bodenplan.Logic.BattlegroundCreature).ki == this) as Bodenplan.Logic.BattlegroundCreature);
+
+                Bodenplan.Logic.LichtquelleObject lichtObj =
+                    Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
+                        .Where(t => t is Bodenplan.Logic.LichtquelleObject)
+                        .Where(t => (t as Bodenplan.Logic.LichtquelleObject).iKämpfer == Global.CurrentKampf.BodenplanViewModel.SelectedObject as IKämpfer).FirstOrDefault() as Bodenplan.Logic.LichtquelleObject;
+
+                if (value != 0)
+                {
+                    bool istNeu = false;
+                    if (lichtObj == null)
+                    {
+                        istNeu = true;
+                        lichtObj = new Bodenplan.Logic.LichtquelleObject();
+                    }
+                    BattlegroundCreature bgCreature = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
+                        .Where(t => t is BattlegroundCreature)
+                        .FirstOrDefault(t => (t as BattlegroundCreature).ki == this) as BattlegroundCreature;
+                    KämpferInfo kämpInfo = bgCreature.ki;
+                    lichtObj.ki = kämpInfo;
+
+                    lichtObj.LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
+                    lichtObj.LightCreatureX = bgC.CreatureX - LichtquellePixel;
+                    lichtObj.LightCreatureY = bgC.CreatureY - LichtquellePixel;
+
+                    if (istNeu)
+                    {
+                        var firstCreature = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.FirstOrDefault(t => t is BattlegroundCreature);
+                        int index = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.IndexOf(firstCreature);
+                        Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Add(lichtObj);
+                        Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Move(
+                            Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Count - 1, index);
+                    }
+                }
+                else
+                {
+                    if (lichtObj != null)
+                        Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Remove(lichtObj);
+                }
                 LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
                 LightCreatureX = bgC.CreatureX - LichtquellePixel;
                 LightCreatureY = bgC.CreatureY - LichtquellePixel;
@@ -376,7 +413,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     KampfManöver<IWaffe> manöver = mi.Manöver as KampfManöver<IWaffe>;
                     if (manöver != null)
-                        ((ManöverModifikator<Position, IWaffe>)manöver.Mods["PositionSelbst"]).Value = value.Value; //KampfManöver<IWaffe>.POS_SELBST_MOD
+                        ((ManöverModifikator<Position, IWaffe>)manöver.Mods["PositionSelbst"]).Value = value.Value; 
                 }
             }
         }
