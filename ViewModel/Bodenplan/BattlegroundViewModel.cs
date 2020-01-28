@@ -287,15 +287,24 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if (SelectedObject != null)
             {
-                SelectedObject.MoveObject(xNew - xOld, yNew - yOld, false);
+                if (!HeldenInFormationBewegen)
+                    SelectedObject.MoveObject(xNew - xOld, yNew - yOld, false);
+                else
+                    BattlegroundObjects.Where(t => t as Held != null).ToList()
+                        .ForEach(delegate (BattlegroundBaseObject bgObject)
+                        { bgObject.MoveObject(xNew - xOld, yNew - yOld, false); });
+
             }
         }
+        public void MoveAllHelden(double xDelta, double yDelta)
+        {
+        }
 
-        /// <summary>
-        /// brings selected Object to Top and calls UpdateCreatureLevelToTop
-        /// </summary>
-        /// <param name="toTop"></param>
-        public void MoveSelectedObjectToTop(bool toTop)
+            /// <summary>
+            /// brings selected Object to Top and calls UpdateCreatureLevelToTop
+            /// </summary>
+            /// <param name="toTop"></param>
+            public void MoveSelectedObjectToTop(bool toTop)
         {
             if (SelectedObject == null)
             {
@@ -932,6 +941,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return Global.CurrentKampf.SelectedManöver; }
         }
 
+        public bool HeldenInFormationBewegen
+        {
+            get { return _heldenInFormationBewegen; }
+            set { Set(ref _heldenInFormationBewegen, value); }
+        }
+
         public bool SpielerScreenActive
         {
             get { return _spielerScreenActive; }
@@ -1007,6 +1022,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private double _scaleSpielerGrid = 1;
 
         private bool _spielerScreenActive = false;
+
+        private bool _heldenInFormationBewegen = false;
 
         private Window _spielerScreenWindow = null;
 
