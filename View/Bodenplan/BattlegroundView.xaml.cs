@@ -603,12 +603,13 @@ namespace MeisterGeister.View.Bodenplan
 
                         var factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureY) / (VM.SelectedObject as BattlegroundCreature).CreatureHeight;
                         var minusY = (int)((VM.SelectedObject as BattlegroundCreature).CreatureHeight * (factorY * ArenaScrollViewer.Zoom));
-
+                        
                         SetCursorPos((int)curMousePosScreen.X - minusX, (int)curMousePosScreen.Y - minusY);
-
-                        VM.SelectedObject.MoveObject(VM.CurrentMousePositionX, VM.CurrentMousePositionY, true);
+                        
+                        VM.MoveObject(VM.SelectedObject.ZDisplayX, VM.SelectedObject.ZDisplayY, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
                         _xMovingOld = VM.CurrentMousePositionX;
                         _yMovingOld = VM.CurrentMousePositionY;
+                        VM.SelectedObject.MoveObject(VM.CurrentMousePositionX, VM.CurrentMousePositionY, true);
 
                         //Get DPI Scaling from MainProgramm
                         Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
@@ -646,8 +647,10 @@ namespace MeisterGeister.View.Bodenplan
                         VM.MoveWhileDrawing(
                             (VM.SelectedObject as BattlegroundCreature).MidCreatureX + (VM.SelectedObject as BattlegroundCreature).CreatureWidth / 2,
                             (VM.SelectedObject as BattlegroundCreature).MidCreatureY + (VM.SelectedObject as BattlegroundCreature).CreatureHeight / 2, false);
-
+                        
                         VM.MoveObject(_xMovingOld, _yMovingOld, VM.CurrentMousePositionX, VM.CurrentMousePositionY);
+                        
+
                         _xMovingOld = VM.CurrentMousePositionX;
                         _yMovingOld = VM.CurrentMousePositionY;
                     }

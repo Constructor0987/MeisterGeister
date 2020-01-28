@@ -484,8 +484,32 @@
                                     </Grid>
                                 </Border>
 
+
                                 <Border
-                                    Margin="20,0,0,0"
+                                    Margin="20,0,20,0"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="Silver"
+                                    BorderThickness="1">
+                                    <Grid  >
+                                        <ToggleButton
+                                            Focusable="False"
+                                            Background="Transparent"
+                                            Width="27"
+                                            Height="27"
+                                            Margin="10,10,10,10"
+                                            Padding="0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            IsChecked="{Binding HeldenInFormationBewegen}"
+                                            ToolTip="Helden in Formation bewegen">
+                                            <Image
+                                                Height="25"
+                                                Margin="0,0,0,5"
+                                                Source="/Images/Icons/helden_kopieren.png" />
+                                        </ToggleButton>
+                                    </Grid>
+                                </Border>
+                                <Border
                                     HorizontalAlignment="Left"
                                     BorderBrush="Silver"
                                     BorderThickness="1">
