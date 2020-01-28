@@ -351,7 +351,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         istNeu = true;
                         lichtObj = new Bodenplan.Logic.LichtquelleObject();
                     }
-                    //       lichtObj.iKämpfer = Global.CurrentKampf.BodenplanViewModel.SelectedObject as IKämpfer;
                     BattlegroundCreature bgCreature = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
                         .Where(t => t is BattlegroundCreature)
                         .FirstOrDefault(t => (t as BattlegroundCreature).ki == this) as BattlegroundCreature;
@@ -414,7 +413,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     KampfManöver<IWaffe> manöver = mi.Manöver as KampfManöver<IWaffe>;
                     if (manöver != null)
-                        ((ManöverModifikator<Position, IWaffe>)manöver.Mods["PositionSelbst"]).Value = value.Value; //KampfManöver<IWaffe>.POS_SELBST_MOD
+                        ((ManöverModifikator<Position, IWaffe>)manöver.Mods["PositionSelbst"]).Value = value.Value; 
                 }
             }
         }

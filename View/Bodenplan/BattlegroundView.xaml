@@ -456,7 +456,6 @@
                             </ListBox.Style>
                             <ListBox.Resources>
 
-
                                 <!--  Datatemplate BattlegroundCreature (Hero & Enemy)  -->
                                 <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
                                     <Thumb DragDelta="Thumb_Drag">
@@ -696,32 +695,6 @@
                                                             ShadowDepth="10"
                                                             Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, UpdateSourceTrigger=PropertyChanged}" />
                                                     </Canvas.Effect>
-
-                                                    <!--  Lichtquelle  -->
-                                                    <!--<Ellipse
-                                                        Canvas.Left="{Binding ki.LightCreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        Width="{Binding ki.LichtquellePixelRadius}"
-                                                        Height="{Binding ki.LichtquellePixelRadius}"
-                                                        Opacity="0.25"
-                                                        Stroke="#FFF0FC00"
-                                                        StrokeThickness="2">
-                                                        <Ellipse.Fill>
-                                                            <RadialGradientBrush>
-                                                                <GradientStop Offset="1" Color="Transparent" />
-                                                                <GradientStop Offset=".8" Color="#FFF0FC00" />
-                                                            </RadialGradientBrush>
-                                                        </Ellipse.Fill>
-                                                        <Ellipse.Style>
-                                                            <Style TargetType="{x:Type Ellipse}">
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
-                                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Ellipse.Style>
-                                                    </Ellipse>-->
 
                                                     <!--  SightArea  -->
                                                     <Path
@@ -1087,7 +1060,6 @@
                                                             <MenuItem.ItemTemplate>
                                                                 <DataTemplate>
                                                                     <TextBlock FontSize="{Binding DataContext.FontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Text="{Binding Zauber.Name}" />
-                                                                    <!--</StackPanel>-->
                                                                 </DataTemplate>
                                                             </MenuItem.ItemTemplate>
                                                         </MenuItem>

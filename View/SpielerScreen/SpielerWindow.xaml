@@ -44,13 +44,6 @@
                                 BorderBrush="Gray"
                                 BorderThickness="1"
                                 CornerRadius="1">
-                                <!--<Border.Background>
-                                    <LinearGradientBrush>
-                                        <GradientStop Color="Red" Offset="0" />
-                                        <GradientStop Color="Yellow" Offset="0.2" />
-                                        <GradientStop Color="#FF1FF31F" Offset="0.867" />
-                                    </LinearGradientBrush>
-                                </Border.Background>-->
                             </Border>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -202,9 +195,6 @@
                                                             <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
                                                                 <Setter Property="Visibility" Value="Collapsed" />
                                                             </DataTrigger>
-                                                            <!--<DataTrigger Binding="{Binding IsMoving}" Value="True">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>-->
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Ellipse.Style>

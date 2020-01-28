@@ -148,7 +148,6 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                //lstbxPictureButton.Items.Clear();
                 var appPath = Ressources.GetFullApplicationPath();
                 var picurls = Ressources.GetPictureUrls();
                 for (var i = 0; i < picurls.Count(); i++)
@@ -194,8 +193,6 @@ namespace MeisterGeister.View.Bodenplan
                                   Ressources.Decoder(Ressources.GetFullApplicationPath() + (string)b.Tag), ex);
                             }
                         };
-
-                    //lstbxPictureButton.Items.Add(b);
                 }
             }
             catch (Exception)
@@ -538,16 +535,6 @@ namespace MeisterGeister.View.Bodenplan
                 return;
             }
         }
-
-        //private void ToggleFilledLinePathButton()
-        //{
-        //    FilledPathLineButton.IsChecked = (!Convert.ToBoolean(FilledPathLineButton.IsChecked));
-        //}
-
-        //private void ToggleLinePathButton()
-        //{
-        //    PathLineButton.IsChecked = (!Convert.ToBoolean(PathLineButton.IsChecked));
-        //}
 
         private void View_Unloaded(object sender, RoutedEventArgs e)
         {

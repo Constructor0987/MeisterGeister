@@ -93,12 +93,6 @@
                                     Fill="{TemplateBinding Foreground}"
                                     Placement="Bottom"
                                     Visibility="Collapsed" />
-                                <!--<Border x:Name="TrackBackground"  BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4.0" Grid.Row="1">
-                                    <Canvas Margin="-6,-1">
-                                        <Rectangle Visibility="Hidden" x:Name="PART_SelectionRange" Height="4.0" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
-                                            Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" StrokeThickness="1.0" />
-                                    </Canvas>
-                                </Border>-->
                                 <Border
                                     x:Name="TrackBackground"
                                     Grid.Row="1"
@@ -158,12 +152,6 @@
                                     Fill="{TemplateBinding Foreground}"
                                     Placement="Bottom"
                                     Visibility="Collapsed" />
-                                <!--<Border x:Name="TrackBackground"  BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4.0" Grid.Row="1">
-                                    <Canvas Margin="-6,-1">
-                                        <Rectangle Visibility="Hidden" x:Name="PART_SelectionRange" Height="4.0" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
-                                            Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" StrokeThickness="1.0" />
-                                    </Canvas>
-                                </Border>-->
                                 <Border
                                     x:Name="TrackBackground"
                                     Grid.Column="1"
