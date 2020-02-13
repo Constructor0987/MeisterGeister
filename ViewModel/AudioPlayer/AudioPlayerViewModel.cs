@@ -1167,6 +1167,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set { Set(ref _grpObjecte, value); }
         }
 
+        private MainViewModel _mainVM = null;
+        public MainViewModel MainVM
+        {
+            get { return _mainVM; }
+            set { Set(ref _mainVM, value); }
+        }
+
         private Audio_Playlist _dropZielPlaylist = null;
         public Audio_Playlist DropZielPlaylist
         {
@@ -1287,7 +1294,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 Set(ref _hotkeyListUsed, value);
-                MainViewModel.Instance.hotkeyListUsed = value;
+                if (Global.MainVM.hotkeyListUsed != value)
+                    Global.MainVM.hotkeyListUsed = value;
                 ShowHotkeyPanel = ShowHotkeyPanel;                
             }
         }

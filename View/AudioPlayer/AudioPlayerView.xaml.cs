@@ -223,9 +223,7 @@ namespace MeisterGeister.View.AudioPlayer
 
             slPlaylistVolume.Value = Einstellungen.GeneralGeräuscheVolume;
             slBGVolume.Value = Einstellungen.GeneralMusikVolume;
-            slHotkey.Value = Einstellungen.GeneralHotkeyVolume;
-
-            DataContextChanged += AudioPlayerView_DataContextChanged;
+            DataContextChanged += AudioPlayerView_DataContextChanged;            
         }
 
         void AudioPlayerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

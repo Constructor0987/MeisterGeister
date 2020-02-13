@@ -332,7 +332,7 @@
                                         <Binding Path="StdPadAufC" />
                                     </MultiBinding>
                                 </DataTrigger.Binding>
-                                <Setter Property="Height" Value="56" />
+                                <Setter Property="Height" Value="26" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -346,121 +346,6 @@
             <ColumnDefinition Width="766*" />
             <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
-
-        <GroupBox Header="Hotkeys" VerticalAlignment="Bottom" Margin="10,-38,10,0" Height="60" Padding="0,-1,0,-3" 
-            Visibility="{Binding ShowHotkeyPanel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="55" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="35" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
-                    <Button Height="30" Style="{StaticResource GlasButton}" Background="Black" Width="30" ToolTip="Stoppen aller laufenden Hotkeys" 
-                            Command="{Binding OnAllHotkeysStop}" >
-                        <Image Source="/Images/Icons/General/stop.png" Margin="5,6,4,4" />
-                    </Button>
-                    <Slider Width="22" Maximum="100" Minimum="0" Name="slHotkey" UseLayoutRounding="True" SmallChange="1" LargeChange="10" Orientation="Vertical" Margin="2" 
-                            Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"                             
-                            MouseWheel="slVolume_MouseWheel" >
-                        <Slider.ToolTip>
-                            <TextBlock Text="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0}% }" />
-                        </Slider.ToolTip>
-                    </Slider>
-                </StackPanel>
-
-                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
-                    <StackPanel Margin="0,5,0,0" >
-                        <ItemsControl ItemsSource="{Binding hotkeyListUsed, UpdateSourceTrigger=PropertyChanged}" >
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="35" Margin="5,0,0,0" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-
-                    </StackPanel>
-                </ScrollViewer>
-                <Button Name="btnHotkeysLöschen" Grid.Column="2" VerticalAlignment="Center" Height="25" Width="25" ToolTip="Alle Hotkeys löschen" Margin="5,0" 
-                        Command="{Binding OnAlleHotkeysEntfenrnen}" >
-                    <Image Source="/Images/Icons/General/entf_all.png" Style="{StaticResource ImageEnabled}" />
-                </Button>
-
-            </Grid>
-        </GroupBox>
-
-        <Button Grid.Column="1" Height="42" Width="42" ToolTip="Audio Speed-Buttons verwalten" HorizontalAlignment="Left" 
-                        Click="btnAudioSpeedButtonWesenZuweisen_Click" Focusable="False" Background="{x:Null}"  VerticalAlignment="Top" >
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="0,0,60,-20"/>
-                    <Style.Triggers>
-                        <DataTrigger Value="True">
-                            <DataTrigger.Binding>
-                                <MultiBinding Converter="{StaticResource MultiBooleanORConverter1}" >
-                                    <Binding Path="hotkeyListUsed.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter='1' />
-                                    <Binding Path="StdPadAufC" />
-                                </MultiBinding>
-                            </DataTrigger.Binding>
-                            <Setter Property="Margin" Value="0,0,60,0" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <!--Visibility="{Binding AktKlangPlaylist, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"-->
-            <Button.Content>
-                <Grid>
-                    <Image Source="/Images/Icons/gegner.png" Margin="0,3,5,0" />
-                    <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
-                    <Image Source="/Images/Icons/General/speaker.png" Style="{StaticResource ImageEnabled}" Margin="-10,0,-10,-10" Opacity=".5" />
-                </Grid>
-            </Button.Content>
-        </Button>
-
-        <Button Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Left" Margin="48,5,0,0" Grid.RowSpan="3" Focusable="False" VerticalAlignment="Top"
-                ToolTip="Alle Listen Updaten (kann einige Sekunden in Anspruch nehmen)" 
-                Command="{Binding OnBtnAllUpdateClick}" Background="{x:Null}" >
-            <Image Source="/Images/Icons/General/refresh.png" Margin="0"  />
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=tiEditor, Path=IsSelected}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-
-        <Image Grid.Column="1" Height="30" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Source="/Images/Icons/General/info.png"
-               Visibility="{Binding StdPadAufC, Converter={StaticResource BooleanToVisibilityConverter1}}" Grid.RowSpan="2">
-            <Image.ToolTip>
-                <TextBlock>
-                    Es ist ein Standard-Verzeichnis auf den Hauptpfad C gefunden worden ('C:\').<LineBreak />
-                    <LineBreak /> 
-                    Dies verlängert evtl. die Ladezeiten!<LineBreak />
-                    <LineBreak />
-                    Bitte wähle ein spezifischeres Verzeichnis.<LineBreak />
-                    (z.B. 'C:\DSA-Musik')
-                </TextBlock>
-            </Image.ToolTip>
-            <Image.Style>
-                <Style TargetType="Image">
-                    <Setter Property="Margin" Value="10,0,10,-20"/>
-                    <Style.Triggers>
-                        <DataTrigger Value="True">
-                            <DataTrigger.Binding>
-                                <MultiBinding Converter="{StaticResource MultiBooleanORConverter1}" >
-                                    <Binding Path="hotkeyListUsed.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter='1' />
-                                    <Binding Path="StdPadAufC" />
-                                </MultiBinding>
-                            </DataTrigger.Binding>
-                            <Setter Property="Margin" Value="10,0,10,0" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Image.Style>
-        </Image>
         <TabControl Margin="12,0,3,0" Name="tcAudioPlayer"  Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3" SelectionChanged="tcAudioPlayer_SelectionChanged" >
             <TabItem Header="Editor" Name="tiEditor" >
                 <Grid Background="{StaticResource Background1}">
@@ -1228,6 +1113,10 @@
                                                 <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
 
+                                            <Button Name="btnHotkeysLöschen" Grid.Column="2" VerticalAlignment="Center" Height="25" Width="25" ToolTip="Alle Hotkeys löschen" Margin="5,0" 
+                                                 Command="{Binding OnAlleHotkeysEntfenrnen}" >
+                                                <Image Source="/Images/Icons/General/entf_all.png" Style="{StaticResource ImageEnabled}" />
+                                            </Button>
 
                                             <!--<StackPanel Orientation="Horizontal" Margin="2,0,0,0" 
                                                 Visibility="{Binding AktKlangPlaylist.Key, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
@@ -2622,5 +2511,78 @@
                 </Grid>
             </TabItem>
         </TabControl>
-    </Grid>
+   
+        <Button Grid.Column="1" Grid.RowSpan="2" Height="42" Width="42" ToolTip="Audio Speed-Buttons verwalten" HorizontalAlignment="Left" 
+                        Click="btnAudioSpeedButtonWesenZuweisen_Click" Focusable="False" Background="{x:Null}"  VerticalAlignment="Top" >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="0,0,60,-20"/>
+                    <Style.Triggers>
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding>
+                                <MultiBinding Converter="{StaticResource MultiBooleanORConverter1}" >
+                                    <Binding Path="hotkeyListUsed.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter='1' />
+                                    <Binding Path="StdPadAufC" />
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+                            <Setter Property="Margin" Value="0,0,60,0" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <!--Visibility="{Binding AktKlangPlaylist, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"-->
+            <Button.Content>
+                <Grid>
+                    <Image Source="/Images/Icons/gegner.png" Margin="0,3,5,0" />
+                    <Image Source="/Images/Icons/helden.png" Margin="5,-2,-5,6" />
+                    <Image Source="/Images/Icons/General/speaker.png" Style="{StaticResource ImageEnabled}" Margin="-10,0,-10,-10" Opacity=".5" />
+                </Grid>
+            </Button.Content>
+        </Button>
+
+        <Button Grid.Column="1" Grid.RowSpan="2" Height="30" Width="30"  HorizontalAlignment="Left" Margin="48,5,0,0" Grid.RowSpan="3" Focusable="False" VerticalAlignment="Top"
+                ToolTip="Alle Listen Updaten (kann einige Sekunden in Anspruch nehmen)" 
+                Command="{Binding OnBtnAllUpdateClick}" Background="{x:Null}" >
+            <Image Source="/Images/Icons/General/refresh.png" Margin="0"  />
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=tiEditor, Path=IsSelected}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <Image Grid.Column="1" Grid.RowSpan="2" Height="30" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Source="/Images/Icons/General/info.png"
+               Visibility="{Binding StdPadAufC, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+            <Image.ToolTip>
+                <TextBlock>
+                    Es ist ein Standard-Verzeichnis auf den Hauptpfad C gefunden worden ('C:\').<LineBreak />
+                    <LineBreak /> 
+                    Dies verlängert evtl. die Ladezeiten!<LineBreak />
+                    <LineBreak />
+                    Bitte wähle ein spezifischeres Verzeichnis.<LineBreak />
+                    (z.B. 'C:\DSA-Musik')
+                </TextBlock>
+            </Image.ToolTip>
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Setter Property="Margin" Value="10,0,10,-20"/>
+                    <Style.Triggers>
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding>
+                                <MultiBinding Converter="{StaticResource MultiBooleanORConverter1}" >
+                                    <Binding Path="hotkeyListUsed.Count" Converter="{StaticResource IsEqualOrGreaterThanConverter1}" ConverterParameter='1' />
+                                    <Binding Path="StdPadAufC" />
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+                            <Setter Property="Margin" Value="10,0,10,0" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+         </Grid>
 </UserControl>
