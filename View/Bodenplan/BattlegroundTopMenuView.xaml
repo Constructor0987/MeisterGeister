@@ -213,7 +213,7 @@
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="0" />
                     </Grid.ColumnDefinitions>
-                    <TabControl 
+                    <TabControl Name="tcTopMenuView"
                         Width="600">
                         <TabItem Header="Allgemein">
                             <StackPanel Orientation="Horizontal" MinHeight="50" >
@@ -386,7 +386,7 @@
                                 <Grid HorizontalAlignment="Left">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="150" />
-                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200*"/>
                                         <ColumnDefinition Width="115" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
@@ -450,7 +450,7 @@
                                     <Grid
                                         Grid.Column="1"
                                         HorizontalAlignment="Left"
-                                        Width="190"
+                                        Width="250"
                                         Margin="3,0">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
@@ -473,7 +473,7 @@
                                             Grid.Row="0"
                                             Grid.RowSpan="2"
                                             Height="25"
-                                            Margin="120,-5,0,0"
+                                            Margin="185,-5,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Source="/Images/Icons/General/x-offset.png" />
@@ -496,7 +496,7 @@
                                                     <Image
                                                         Height="25"
                                                         Margin="0,0,0,5"
-                                                        Source="/Images/Icons/General/x-offset.png" />
+                                                        Source="/Images/Icons/General/suchen.png" />
                                                 </Grid>
                                             </Button.Content>
                                         </Button>
@@ -512,6 +512,22 @@
                                                 </StackPanel>
                                             </Label.Content>
                                         </Label>
+                                        
+                                        <Grid HorizontalAlignment="Left" Margin="100,0,0,0" Height="45" Width="45">
+                                            <Image Margin="-1" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
+                                            <Image
+                                                Height="25"
+                                                Margin="2,0,2,8"
+                                                Source="/Images/Icons/General/y-offset.png" />
+                                            <Image
+                                                Height="25"
+                                                Margin="0,0,0,8"
+                                                Source="/Images/Icons/General/x-offset.png" />
+                                        </Grid>
+                                        <TextBox HorizontalAlignment="Left" ToolTip="Verschiebe mit den Pfeiltasten den Spieler-Bildschirm, Esc-Taste zum Beenden"
+                                            Foreground="Transparent" Background="Transparent" MaxLength="1" Margin="108,10,0,17" 
+                                                 Width="29" Focusable="True" PreviewKeyDown="TextBox_KeyDown" />
+
                                         <Slider
                                             Margin="0,0,5,0"
                                             HorizontalAlignment="Right"
@@ -538,7 +554,7 @@
                                         <Slider
                                             Height="12"
                                             MinHeight="5"
-                                            Margin="95,10,20,0"
+                                            Margin="155,10,20,0"
                                             VerticalAlignment="Top"
                                             IsDirectionReversed="{Binding InvertPlayerScrolling}"
                                             LargeChange="10"
@@ -552,7 +568,7 @@
 
                                         <CheckBox
                                             x:Name="chbxPlayerScreenInv"
-                                            Margin="110,20,0,0"
+                                            Margin="160,20,0,0"
                                             Width="45"
                                             FontSize="10"
                                             Padding="1,0"
@@ -620,7 +636,7 @@
                                         <Label 
                                             Content="Skalierung" 
                                             Margin="2,20,0,0"
-                                            FontSize="10" />    
+                                            FontSize="10" />
                                         <Slider
                                             Margin="2,42,50,0"
                                             VerticalAlignment="Top"
@@ -722,7 +738,7 @@
                                             Padding="0,2,0,0"
                                             HorizontalAlignment="Center"
                                             Content="Größe Freifeld" />
-                                            <ViewGeneral:IntBox
+                                        <ViewGeneral:IntBox
                                                 Width="60"
                                                 Height="19"
                                                 MaxValue="5"

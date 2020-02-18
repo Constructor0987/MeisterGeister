@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -12,6 +13,19 @@ using MeisterGeister.ViewModel.Bodenplan;
 
 namespace MeisterGeister.View.Bodenplan
 {
+
+    public enum MouseDirection
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right,
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight,
+    }
     /// <summary>
     /// Interaction logic for BattlegroundTopMenuView.xaml
     /// </summary>
@@ -135,6 +149,176 @@ namespace MeisterGeister.View.Bodenplan
             {
                 vm.StickEnemies();
             }
+        }
+
+        private void Button_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+
+        public static Point GetMousePosition()
+        {
+            var w32Mouse = new Win32Point();
+            GetCursorPos(ref w32Mouse);
+            return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
+        [DllImport("User32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public int X;
+            public int Y;
+        };
+
+
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(double X, double Y);
+        [DllImport("User32.dll")]
+        static extern bool GetCursorPos(out Point lpPoint);
+
+        private Point _playerScreenMoveMousePos = new Point(0, 0);
+        public Point PlayerScreenMoveMousePos
+        {
+            get { return _playerScreenMoveMousePos; }
+            set { _playerScreenMoveMousePos = value; }
+        }
+
+        private Point _playerScreenMoveMousePos1 = new Point(0, 0);
+        public Point PlayerScreenMoveMousePos1
+        {
+            get { return _playerScreenMoveMousePos1; }
+            set { _playerScreenMoveMousePos1 = value; }
+        }
+
+        public MouseDirection GetMouseDirection(Point pre, Point cur)
+        {
+            // Mouse moved up
+            if ((pre.X == cur.X) && (pre.Y > cur.Y))
+            {
+                BattlegroundVM.PlayerGridOffsetY -= 3;
+                return MouseDirection.Up;
+            }
+
+            // Mouse moved down
+            if ((pre.X == cur.X) && (pre.Y < cur.Y))
+            {
+                BattlegroundVM.PlayerGridOffsetY += 3;
+                return MouseDirection.Down;
+            }
+
+            // Mouse moved left
+            if ((pre.X > cur.X) && (pre.Y == cur.Y))
+            {
+                BattlegroundVM.PlayerGridOffsetX -= 3;
+                return MouseDirection.Left;
+            }
+
+            // Mouse moved right
+            if ((pre.X < cur.X) && (pre.Y == cur.Y))
+            {
+                BattlegroundVM.PlayerGridOffsetX += 3;
+                return MouseDirection.Right;
+            }
+
+            // Mouse moved diagonally up-right
+            if ((pre.X < cur.X) && (pre.Y > cur.Y))
+            {
+                //BattlegroundVM.PlayerGridOffsetY -= 3;
+                //BattlegroundVM.PlayerGridOffsetX += 3;
+                return MouseDirection.TopRight;
+            }
+
+            // Mouse moved diagonally up-left
+            if ((pre.X > cur.X) && (pre.Y > cur.Y))
+            {
+                //BattlegroundVM.PlayerGridOffsetY -= 3;
+                //BattlegroundVM.PlayerGridOffsetX -= 3;
+                return MouseDirection.TopLeft;
+            }
+
+            // Mouse moved diagonally down-right
+            if ((pre.X < cur.X) && (pre.Y < cur.Y))
+            {
+                //BattlegroundVM.PlayerGridOffsetY += 3;
+                //BattlegroundVM.PlayerGridOffsetX += 3;
+                return MouseDirection.BottomRight;
+            }
+
+            // Mouse moved diagonally down-left
+            if ((pre.X > cur.X) && (pre.Y < cur.Y))
+            {
+                //BattlegroundVM.PlayerGridOffsetY -= 3;
+                //BattlegroundVM.PlayerGridOffsetX -= 3;
+                return MouseDirection.BottomLeft;
+            }
+
+            // Mouse didn't move
+            return MouseDirection.None;
+        }
+
+        static System.Windows.Point pre = new System.Windows.Point();
+        static System.Windows.Point cur = new System.Windows.Point();
+
+        private void btnPlayerScreenMove_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point preMousePos = GetMousePosition();
+                (sender as Button).Tag = 1;
+                Point pt = e.GetPosition(this);
+                if (PlayerScreenMoveMousePos1 == new Point(0, 0))
+                {
+                    Point pointToScreen = PointToScreen(pt);
+                    PlayerScreenMoveMousePos1 = new Point(
+                        Convert.ToInt32(pointToScreen.X),
+                        Convert.ToInt32(pointToScreen.Y));
+                    SetCursorPos(
+                        Convert.ToInt32(PlayerScreenMoveMousePos1.X),
+                        Convert.ToInt32(PlayerScreenMoveMousePos1.Y));
+                    return;
+                }
+                cur = PointToScreen(pt);
+                bool mouseMoved = (pre != cur);
+
+                MouseDirection direction = MouseDirection.None;
+                if (mouseMoved && (sender as Button).Tag != null)
+                {
+                    direction = GetMouseDirection(pre, cur);
+
+                    pre = cur;
+                    SetCursorPos(preMousePos.X, preMousePos.Y);
+                }                
+            }
+            else
+            {
+                (sender as Button).Tag = null;
+                PlayerScreenMoveMousePos1 = new Point(0, 0);
+                pre = PointToScreen(e.GetPosition(this));
+            }
+            
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                tcTopMenuView.Focus();
+            if (e.Key == Key.Left || e.Key == Key.NumPad4 || e.Key == Key.NumPad1 || e.Key == Key.NumPad7)
+                BattlegroundVM.PlayerGridOffsetX = BattlegroundVM.PlayerGridOffsetX + (BattlegroundVM.InvertPlayerScrolling? 100: -100);
+            if (e.Key == Key.Right || e.Key == Key.NumPad6 || e.Key == Key.NumPad3 || e.Key == Key.NumPad9)
+                BattlegroundVM.PlayerGridOffsetX = BattlegroundVM.PlayerGridOffsetX + (BattlegroundVM.InvertPlayerScrolling ? -100 : 100);
+            if (e.Key == Key.Up || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
+                BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? -100 : 100);
+            if (e.Key == Key.Down || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || e.Key == Key.NumPad7)
+                BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? 100 : -100);
+            (sender as TextBox).Text = "";
+
         }
 
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
