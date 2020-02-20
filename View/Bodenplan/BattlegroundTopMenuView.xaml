@@ -526,7 +526,7 @@
                                         </Grid>
                                         <TextBox HorizontalAlignment="Left" ToolTip="Verschiebe mit den Pfeiltasten den Spieler-Bildschirm, Esc-Taste zum Beenden"
                                             Foreground="Transparent" Background="Transparent" MaxLength="1" Margin="108,10,0,17" 
-                                                 Width="29" Focusable="True" PreviewKeyDown="TextBox_KeyDown" />
+                                                 Width="29" Focusable="True" PreviewKeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
 
                                         <Slider
                                             Margin="0,0,5,0"

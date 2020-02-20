@@ -191,6 +191,16 @@ namespace MeisterGeister.View.Bodenplan
 
         }
 
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Global.CurrentKampf.LabelInfo = "Pfeil-Tasten oder Num-Lock-Tasten benutzen um den Spieler Bildschirm zu verschieben";
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Global.CurrentKampf.LabelInfo = null;
+        }
+
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
         {
             if (((ToggleButton)e.OriginalSource).IsChecked == true)
