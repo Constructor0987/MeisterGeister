@@ -397,8 +397,7 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_VorNachteil.First().VorNachteil.WithoutUpdate(),
                     h => h.Held_Zauber,
                     h => h.Held_Zauber.First().Zauber.WithoutUpdate(),
-                    h => h.Held_Zauber.First().Zauber.Zauber_Setting.First().WithoutUpdate()
-                    
+                    h => h.Held_Zauber.First().Zauber.Zauber_Setting.First().WithoutUpdate()                    
                 );
                 Save(); //TODO ??: Besser wäre ein check, ob was überschrieben wird und ein Aufruf, des Save aus dem UI
                 var newheld = Context.Held.Where(h => h.HeldGUID == output.HeldGUID).FirstOrDefault();
