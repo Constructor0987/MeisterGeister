@@ -2068,7 +2068,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _pointerVisibility; }
             set { Set(ref _pointerVisibility, value); }
         }
-
+        
         public void SetPointer(object parameter)
         {
             if (parameter == null || !(parameter is Grid))

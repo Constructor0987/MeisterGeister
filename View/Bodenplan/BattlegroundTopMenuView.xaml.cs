@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -12,6 +13,19 @@ using MeisterGeister.ViewModel.Bodenplan;
 
 namespace MeisterGeister.View.Bodenplan
 {
+
+    public enum MouseDirection
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right,
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight,
+    }
     /// <summary>
     /// Interaction logic for BattlegroundTopMenuView.xaml
     /// </summary>
@@ -135,6 +149,56 @@ namespace MeisterGeister.View.Bodenplan
             {
                 vm.StickEnemies();
             }
+        }
+
+        private void Button_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+
+        public static Point GetMousePosition()
+        {
+            var w32Mouse = new Win32Point();
+            GetCursorPos(ref w32Mouse);
+            return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
+        [DllImport("User32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public int X;
+            public int Y;
+        };
+        
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                tcTopMenuView.Focus();
+            if (e.Key == Key.Left || e.Key == Key.NumPad4 || e.Key == Key.NumPad1 || e.Key == Key.NumPad7)
+                BattlegroundVM.PlayerGridOffsetX = BattlegroundVM.PlayerGridOffsetX + (BattlegroundVM.InvertPlayerScrolling? 100: -100);
+            if (e.Key == Key.Right || e.Key == Key.NumPad6 || e.Key == Key.NumPad3 || e.Key == Key.NumPad9)
+                BattlegroundVM.PlayerGridOffsetX = BattlegroundVM.PlayerGridOffsetX + (BattlegroundVM.InvertPlayerScrolling ? -100 : 100);
+            if (e.Key == Key.Up || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || e.Key == Key.NumPad7)
+                BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? -100 : 100);
+            if (e.Key == Key.Down || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
+                BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? 100 : -100);
+            (sender as TextBox).Text = "";
+
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Global.CurrentKampf.LabelInfo = "Pfeil-Tasten oder Num-Lock-Tasten benutzen um den Spieler Bildschirm zu verschieben";
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Global.CurrentKampf.LabelInfo = null;
         }
 
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)

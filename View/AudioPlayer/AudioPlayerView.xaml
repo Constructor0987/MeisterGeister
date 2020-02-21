@@ -2540,7 +2540,7 @@
             </Button.Content>
         </Button>
 
-        <Button Grid.Column="1" Grid.RowSpan="2" Height="30" Width="30"  HorizontalAlignment="Left" Margin="48,5,0,0" Grid.RowSpan="3" Focusable="False" VerticalAlignment="Top"
+        <Button Grid.Column="1" Grid.RowSpan="2" Height="30" Width="30"  HorizontalAlignment="Left" Margin="48,5,0,0" Focusable="False" VerticalAlignment="Top"
                 ToolTip="Alle Listen Updaten (kann einige Sekunden in Anspruch nehmen)" 
                 Command="{Binding OnBtnAllUpdateClick}" Background="{x:Null}" >
             <Image Source="/Images/Icons/General/refresh.png" Margin="0"  />
