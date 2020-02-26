@@ -341,6 +341,14 @@ namespace MeisterGeister
             }
         }
 
+        private static MainViewModel mainVM = null;
+        public static MainViewModel MainVM
+        {
+            get { return mainVM; }
+            set { mainVM = value; }
+        }
+
+
         /// <summary>
         /// Der aktuell geöffnete Kampf.
         /// </summary>
