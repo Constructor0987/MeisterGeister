@@ -6951,7 +6951,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                     if (grpobj.NochZuSpielen.Count > 1)
                                     {
                                         int loops = 0;
-                                        while (!grpobj._listZeile.First(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]).istStandby &&
+                                        while (grpobj._listZeile.Count > 0 &&
+                                            grpobj._listZeile.FirstOrDefault(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]) != null &&
+                                            !grpobj._listZeile.First(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]).istStandby &&
                                                (grpobj._listZeile.FindAll(t => t.istStandby).Count != 0) && 
                                                loops < 10 * grpobj.NochZuSpielen.Count)                         // sicher gehen, dass kein unendlich-Loop entsteht
                                         {
