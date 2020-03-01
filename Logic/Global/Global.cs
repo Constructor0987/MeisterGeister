@@ -51,6 +51,7 @@ namespace MeisterGeister
             set { _contextMenuLink = value; }
         }
 
+
         #endregion //CONTEXTE
 
         #region //EIGENSCHAFTSMETHODEN
@@ -340,14 +341,6 @@ namespace MeisterGeister
                 SelectedHeld = ContextHeld.Liste<Held>().Where(h => h.HeldGUID == value).FirstOrDefault();
             }
         }
-
-        private static MainViewModel mainVM = null;
-        public static MainViewModel MainVM
-        {
-            get { return mainVM; }
-            set { mainVM = value; }
-        }
-
 
         /// <summary>
         /// Der aktuell geöffnete Kampf.

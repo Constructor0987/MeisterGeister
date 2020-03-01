@@ -88,12 +88,12 @@ namespace MeisterGeister.Model
         
         public static void Export(List<Audio_Playlist> aPlaylistListe, string pfad, bool batch = false)
         {
+            //MUSS JEDES MAL AUSGEFÜHRT WERDEN, DA SONST DER EXPORT FEHLERHAFT IST
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
+            //////////////////////////////////////////////////////////////////////
+
             foreach (Audio_Playlist aPlaylist in aPlaylistListe)
             {
-                //MUSS JEDES MAL AUSGEFÜHRT WERDEN, DA SONST DER EXPORT FEHLERHAFT IST
-                Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-                //////////////////////////////////////////////////////////////////////
-
                 Global.SetIsBusy(true, string.Format("Playliste '" + aPlaylist.Name + "' wird exportiert"));
 
                 string datei = pfad + "\\Playlist_" + ViewHelper.GetValidFilename(aPlaylist.Name) + ".xml";
