@@ -825,6 +825,7 @@
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
+    <Compile Include="View\General\IsEqualConverter.cs" />
     <Compile Include="View\General\SmallSlider.xaml.cs">
       <DependentUpon>SmallSlider.xaml</DependentUpon>
     </Compile>

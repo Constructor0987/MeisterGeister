@@ -21,6 +21,7 @@
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <ViewGeneral:IsEqualConverter x:Key="IsEqualConverter1"/>
         <KampfLogic:DoubleToIntConverter x:Key="DoubleToIntConverter1"/>
         <KampfLogic:DoubleSichtConverter x:Key="sichtConverter"/>
         <KampfLogic:DoubleLichtConverter x:Key="lichtConverter"/>
@@ -164,30 +165,36 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Kampf.Licht}"/>
                 <Image Grid.Row="1" Source="/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png"/>
-                <Slider Grid.Row="1" Grid.Column="1" Width="75" TickPlacement="BottomRight" Minimum="0" Maximum="4" Interval="1" Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}" Focusable="False"/>
+                <Slider Name="sldLicht" Grid.Row="1" Grid.Column="1" Width="75" TickPlacement="BottomRight" Minimum="0" Maximum="4" Interval="1" 
+                        Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}" 
+                        Focusable="False">
+                    <Slider.Style>
+                        <Style TargetType="Slider">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Tageslicht">
+                                    <Setter Property="ToolTip" Value="keine Erschwernis" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Dämmerung">
+                                    <Setter Property="ToolTip" Value="Erschwernis +2 (auch Dunst, Nebel)" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Mondlicht">
+                                    <Setter Property="ToolTip" Value="Erschwernis +4" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Sternenlicht">
+                                    <Setter Property="ToolTip" Value="Erschwernis +6" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Finsternis">
+                                    <Setter Property="ToolTip" Value="Erschwernis +8 (auch Unsichtbares Ziel)" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Slider.Style>
+                </Slider>
                 <Image Grid.Row="1" Grid.Column="2" Source="/DSA MeisterGeister;component/Images/Madamal/mada20.jpg"/>
             </Grid>
-            <!--<Grid Margin="4,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Kampf.Sicht}"/>
-                --><!--<Image Grid.Row="1" Source="/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png"/>--><!--
-                <Border Grid.Row="1" Height="20" Width="20" Background="LightBlue" />
-                <Slider Grid.Row="1" Grid.Column="1" Width="45" TickPlacement="BottomRight" Minimum="0" Maximum="2" Interval="1" Value="{Binding Kampf.Sicht,Converter={StaticResource sichtConverter}}"/>
-
-                <Border Grid.Row="1" Grid.Column="2" Height="20" Width="20" Background="LightGray" />
-                --><!--<Image Grid.Row="1" Grid.Column="2" Source="/DSA MeisterGeister;component/Images/Madamal/mada20.jpg"/>--><!--
-            </Grid>-->
         </StackPanel>
 
         <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.ColumnSpan="2" 
