@@ -1787,13 +1787,21 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     MusikAktiv.aPlaylist = BGPlayer.AktPlaylist;
 
                     BGPosition = 0;
+                    bool schonInNOKListe = false;
                     if (BGPlayerAktPlaylistTitel == null)
                         //Falls nicht gefunden, neuen Titel abspielen
                         SpieleNeuenMusikTitel(Guid.Empty);
                     else
-                        SpieleNeuenMusikTitel((Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID);
-
-                    if (BGPlayer.MusikNOK.Contains((Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID))
+                    {
+                        if (!BGPlayer.MusikNOK.Contains((Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID))
+                        {
+                            SpieleNeuenMusikTitel((Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID);
+                        }
+                        else
+                            schonInNOKListe = true;
+                    }
+                    if (!schonInNOKListe &&
+                        BGPlayer.MusikNOK.Contains((Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID))
                     {
                         value.Background = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0));         // Brushes.Red;
                         Audio_Playlist_Titel aPlayTitel = BGPlayer.AktPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)((Audio_Playlist_Titel)value.Tag).Audio_TitelGUID);
@@ -6943,7 +6951,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                     if (grpobj.NochZuSpielen.Count > 1)
                                     {
                                         int loops = 0;
-                                        while (!grpobj._listZeile.First(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]).istStandby &&
+                                        while (grpobj._listZeile.Count > 0 &&
+                                            grpobj._listZeile.FirstOrDefault(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]) != null &&
+                                            !grpobj._listZeile.First(t => t.aPlaylistTitel.Audio_TitelGUID == grpobj.NochZuSpielen[neuPos]).istStandby &&
                                                (grpobj._listZeile.FindAll(t => t.istStandby).Count != 0) && 
                                                loops < 10 * grpobj.NochZuSpielen.Count)                         // sicher gehen, dass kein unendlich-Loop entsteht
                                         {
@@ -7363,6 +7373,29 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             List<string> result = new List<string>(stringList);
             // Alle Elemente entfernen, die vorher schonmal aufgetreten sind (und dabei mitzählen, dass sie aufgetreten sind)
             result.RemoveAll(x => (stringOccurence[x]++ > 0));
+
+            // Existierende Unterordner löschen
+            for (int i = 0; i < stringOccurence.Count; i++)
+            {
+                for (int rest = i + 1; rest < stringOccurence.Count; rest++)
+                {
+                    if (stringList[rest] == "")
+                        continue;
+                    if (stringList[rest].StartsWith(stringList[i]))
+                    {
+                        result.Remove(stringList[rest]);
+                        continue;
+                    }
+                    else
+
+                    if (stringList[i].StartsWith(stringList[rest]))
+                    {
+                        result.Remove(stringList[i]);
+                        continue;
+                    }
+                }
+            }
+
             return result;
         } 
 
