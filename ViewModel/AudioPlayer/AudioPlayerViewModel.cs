@@ -7360,6 +7360,38 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             rowErstellt++;
         }
 
+        public List<string> CheckNetzwerkPfade(List<string> stringList)
+        {
+            // Dictionary das mitzählt, wie oft ein Element bereits vorkam
+            Dictionary<string, int> stringOccurence = new Dictionary<string, int>();
+            // Mit 0 initialisieren
+            foreach (string s in stringList)
+                stringOccurence[s] = 0;
+
+            // Kopie erzeugen
+            List<string> result = new List<string>(stringList);
+            
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (result[i].StartsWith(@"\\"))
+                {
+                    if (!Directory.Exists(result[i]))
+                    {
+                        int back = ViewHelper.ConfirmYesNoCancel("Netzwerkpfad nicht gefunden",
+                            "Netzwerkpfad '" + result[i] + "' konnte nicht gefunden werden." + Environment.NewLine + Environment.NewLine +
+                            "Um keine Verzögerung während des Abspielens zu bekommen, sollte der Netzwerkpfad ausgeschlossen werden.");
+                        if (back == 0)
+                            return result;
+                        if (back == 2)
+                        {
+                            result.Remove(stringList[i]);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
         // behält die Reihenfolge bei
         private static List<string> ohneDoppelte(List<string> stringList)
         {
@@ -7394,8 +7426,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                         continue;
                     }
                 }
-            }
-
+            }            
             return result;
         } 
 
