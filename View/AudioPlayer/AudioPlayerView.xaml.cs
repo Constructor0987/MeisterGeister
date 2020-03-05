@@ -4,42 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Timers;
 using ComboBox = System.Windows.Controls.ComboBox;
-using System.Threading;
-using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
-using System.Xml;
 using System.IO;
-using System.Windows.Markup;
-using System.ComponentModel;
 using System.Windows.Interop;
 using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Windows.Interactivity;
-using System.Collections.ObjectModel;
 
 // Eigene Usings
 using MeisterGeister.Logic.Einstellung;
-using MeisterGeister.Logic.General;
 using MeisterGeister.View.General;
-using MeisterGeister.View.Windows;
-using Global = MeisterGeister.Global;
 using MeisterGeister.Model;
-using MeisterGeister.View.AudioPlayer;
 using VM = MeisterGeister.ViewModel.AudioPlayer;
-using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using Un4seen.Bass;
-//using Meta.Vlc.Wpf;
 
 namespace MeisterGeister.View.AudioPlayer
 {
@@ -371,6 +352,9 @@ namespace MeisterGeister.View.AudioPlayer
 
                 if (Einstellungen.ShowPlaylistFavorite && !MeisterGeister.ViewModel.MainViewModel.Instance.ShowFavPlaylist)
                     MeisterGeister.ViewModel.MainViewModel.Instance.ShowFavPlaylist = true;
+
+
+                VM.stdPfad = VM.CheckNetzwerkPfade(VM.stdPfad);
 
                 rbEditorMusik.Focus();
             }
