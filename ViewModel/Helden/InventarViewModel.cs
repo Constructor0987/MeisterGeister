@@ -234,7 +234,7 @@ namespace MeisterGeister.ViewModel.Inventar
             set
             {
                 selectedNahkampfwaffeTalent = value;
-                if (value.Talentname != FILTERDEAKTIVIEREN)
+                if (value != null && value.Talentname != FILTERDEAKTIVIEREN)
                 {
                     NahkampfwaffeListe = Global.ContextInventar.WaffeListe.Where(w => w.Talent.Contains(value)).OrderBy(w => w.Name).ToList();
                 }
