@@ -967,12 +967,17 @@ namespace MeisterGeister.View.Bodenplan
 
                                 if (menuitem.Name == "miKämpferFernkampf" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferFernkampf"))
                                 {
-                                    
+
                                     if (VM.miWaffeSelected == null)
                                         if (((ListBox)sender).SelectedItem as Held != null)
                                             VM.miWaffeSelected = (((ListBox)sender).SelectedItem as Held).Fernkampfwaffen.FirstOrDefault();
                                         else
-                                            VM.miWaffeSelected = Global.CurrentKampf.SelectedKämpfer.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+                                        {
+                                            if (Global.CurrentKampf.SelectedKämpfer != null)
+                                                VM.miWaffeSelected = Global.CurrentKampf.SelectedKämpfer.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+                                            else if (menuitem.DataContext.GetType() == typeof(Gegner))
+                                                VM.miWaffeSelected = ((Gegner)menuitem.DataContext).Fernkampfwaffen.FirstOrDefault();
+                                        }
 
                                     mi.UmwandelnFernkampf.Execute(VM.miWaffeSelected);
                                 }
