@@ -35,22 +35,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellladenBogen
         {
-            get { return (Ausführender.Kämpfer is Held && 
-                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenBogen, null, false) || IstAxxeleratusAktiv)); }
+            get { return Ausführender.Kämpfer is Held && 
+                    (Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenBogen, null, false); }
         }
 
         [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellladenArmbrust
         {
-            get { return (Ausführender.Kämpfer is Held && 
-                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust, null, false) || IstAxxeleratusAktiv)); }
+            get { return Ausführender.Kämpfer is Held && 
+                    (Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust, null, false); }
         }
 
         [DependentProperty("IstAxxeleratusAktiv")]
         public bool HatSchnellziehen
         {
-            get { return (Ausführender.Kämpfer is Held && 
-                    ((Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen, null, false) || IstAxxeleratusAktiv)); }
+            get { return Ausführender.Kämpfer is Held && 
+                    (Ausführender.Kämpfer as Held).HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen, null, false); }
         }
 
         private int _schussDauer = 1;
@@ -132,7 +132,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             base.InitMods(waffe);
             bool loadStd = Ausführender.PreFernkampfMods == null || Ausführender.PreFernkampfWaffe != waffe as IFernkampfwaffe;
-            bool loadPre = Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;
+            bool loadPre = waffe != null && Ausführender.PreFernkampfMods != null && Ausführender.PreFernkampfWaffe != null && Ausführender.PreFernkampfWaffe.Name == waffe.Name;
 
             _licht = new FernkampfModifikator<Lichtstufe>(this);
             if (loadStd)
@@ -580,7 +580,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             LadeZeitOhneSchuss = FernkampfWaffeSelected != null ? FernkampfWaffeSelected.LadeZeit.Value - 1 : 0;
 
             Held held = Ausführender.Kämpfer as Held;
-            int d = 1;
+            int d;
             ZielenDauer = Zielen;
             AnsageDauer = waffe == null || waffe.Talent == null? Ansage :
                  // mit Meisterschütze nur 1 Aktion hinzu
@@ -591,76 +591,44 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             if (waffe != null && waffe.Talent != null)
             {
-                d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
-                
                 if (held != null && FernkampfWaffeSelected != null)
                 {
                     //Muss ganz vorne stehen, um die Ausgangsformel zu nutzen
                     if (waffe.Talent == FernkampfWaffeSelected.Talent &&
                         held.HatSonderfertigkeit(Sonderfertigkeit.Scharfschütze + " (" + waffe.Talent.Name + ")"))
-                    {
-                        ZielenDauer = (Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1));
-                        d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
-                    }
+                        ZielenDauer = Zielen == 0 ? 0 : (Zielen - 2 >= 1 ? Zielen - 2 : 1);
 
-                    if (waffe.Talent == FernkampfWaffeSelected.Talent && (HatSchnellladenBogen ^ IstAxxeleratusAktiv))
+                    if (waffe.Talent == FernkampfWaffeSelected.Talent)
                     {
                         if (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024") // Bogen
                         {
-                            if (waffe.Name != "Kurzbogen")
-                            {
+                            if (HatSchnellladenBogen ^ IstAxxeleratusAktiv)
+                                LadeZeitOhneSchuss = Math.Max(LadeZeitOhneSchuss - 1, 0);
+                            else if (HatSchnellladenBogen && IstAxxeleratusAktiv)
+                                LadeZeitOhneSchuss = Math.Max(LadeZeitOhneSchuss - 2, 0);
+                        }
+                        else if (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000015") //"Armbrust"
+                        {
+                            if (HatSchnellladenArmbrust)
+                                LadeZeitOhneSchuss = Math.Max((int)Math.Round(LadeZeitOhneSchuss * .75), 1);
+
+                            if (IstAxxeleratusAktiv)
                                 LadeZeitOhneSchuss = Math.Max(LadeZeitOhneSchuss - 1, 1);
-                                d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
-                            }
-                            else
-                            {
-                                LadeZeitOhneSchuss = 0;
-                                d = Math.Max(ZielenDauer + SchussDauer, 1);
-                            }
                         }
-                        else
-                            d = Math.Max(LadeZeitOhneSchuss + ZielenDauer + SchussDauer, 1);
+                        else if (HatSchnellziehen &&
+                              (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000379" || //"Wurfbeile" 
+                               waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000380" || //"Wurfmesser"
+                               waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000381" || //"Wurfspeere"
+                               waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000382"))  //"Wurfwaffen" 
+                            LadeZeitOhneSchuss = 1;
                     }
-
-                    if (waffe.Talent == FernkampfWaffeSelected.Talent && (HatSchnellladenBogen && IstAxxeleratusAktiv))
-                    {
-                        if (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000024") // Bogen
-                        {
-                            LadeZeitOhneSchuss = Math.Max(LadeZeitOhneSchuss - 2, 0);
-                            if (waffe.Name != "Kurzbogen")
-                            { 
-                                d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer;
-                            }
-                            else
-                            {
-                                d = 1;
-                            }
-                        }
-                    }
-                    else
-                        if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                            waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000015" && //"Armbrust" 
-                            (held.HatSonderfertigkeit(Sonderfertigkeit.SchnellladenArmbrust) || IstAxxeleratusAktiv))
-                        d = (int)Math.Round(d * .75 > 1 ? d * .75 : 1);
-                    else
-                            if (waffe.Talent == FernkampfWaffeSelected.Talent &&
-                                held.HatSonderfertigkeit(Sonderfertigkeit.Schnellziehen) &&
-                                (waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000379" || //"Wurfbeile" 
-                                 waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000380" || //"Wurfmesser"
-                                 waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000381" || //"Wurfspeere"
-                                 waffe.Talent.TalentGUID.StringConvert() == "00000000-0000-0000-007A-000000000382"))  //"Wurfwaffen" 
-                        d = Math.Max(d - 1, 1);
-
-                    if (Ansage > 0)
-                    {
-                        d += AnsageDauer;
-                    }
-                    else
-                        AnsageDauer = 0;
-                }                
+                }
+                d = LadeZeitOhneSchuss + ZielenDauer + SchussDauer + AnsageDauer;
             }
+            else if (waffe != null)
+                d = LadeZeitOhneSchuss + Ansage + ZielenDauer + SchussDauer - (IstAxxeleratusAktiv ? 1 : 0); //kein passendes Talent zur Waffe
             else
-                d = 3 + Ansage + ZielenDauer + SchussDauer;
+                d = 100; //keine Waffe
 
             if (((Wesen)Ausführender.Kämpfer).AktVerbleibendeDauer != d)
                 ((Wesen)Ausführender.Kämpfer).AktVerbleibendeDauer = d;

@@ -251,7 +251,7 @@ namespace MeisterGeister.ViewModel.Inventar
             set
             {
                 selectedFernkampfwaffeTalent = value;
-                if (value.Talentname != FILTERDEAKTIVIEREN)
+                if (value != null && value.Talentname != FILTERDEAKTIVIEREN)
                 {
                     FernkampfwaffeListe = Global.ContextInventar.FernkampfwaffeListe.Where(w => w.Talent.Contains(value)).OrderBy(w => w.Name).ToList();
                 }
