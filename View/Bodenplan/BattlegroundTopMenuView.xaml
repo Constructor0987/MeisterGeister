@@ -762,196 +762,265 @@
                             </Grid>
 
                         </TabItem>
-                        <TabItem Header="Hintergrund">
+                        <TabItem Header="Hintergrund" >
                             <Grid
                                 MinHeight="50">
                                 <Grid HorizontalAlignment="Left">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="60"/>
                                         <ColumnDefinition Width="300"/>
                                         <ColumnDefinition Width="0*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Grid>
-                                        <Label Content="Raster"
-                                            Margin="5,0,0,0"/>
-                                        <ToggleButton
+                                    <GroupBox Header="Raster" Margin="0,-5,0,0">
+                                        <Grid>
+                                            <ToggleButton
                                             Width="22"
                                             Height="22"
-                                            Margin="10,23,10,0"
+                                            Margin="10,8,10,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             IsChecked="{Binding RechteckGrid}"
                                             ToolTip="Rechteck Raster benutzen">
-                                            <ToggleButton.Content>
-                                                <Image
+                                                <ToggleButton.Content>
+                                                    <Image
                                                     Margin="-2"
                                                     Source="/DSA MeisterGeister;component/Images/Icons/rechteckig.png"
                                                     Stretch="Fill" />
-                                            </ToggleButton.Content>
-                                        </ToggleButton>
-                                        <ToggleButton
+                                                </ToggleButton.Content>
+                                            </ToggleButton>
+                                            <ToggleButton
                                             Width="22"
                                             Height="22"
-                                            Margin="35,23,0,0"
+                                            Margin="35,8,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             IsChecked="{Binding HexGrid}"
                                             ToolTip="Hexfelder benutzen">
-                                            <ToggleButton.Content>
-                                                <Image
+                                                <ToggleButton.Content>
+                                                    <Image
                                                     Margin="-2"
                                                     Source="/DSA MeisterGeister;component/Images/Icons/hex.png"
                                                     Stretch="Fill" />
-                                            </ToggleButton.Content>
-                                        </ToggleButton>
+                                                </ToggleButton.Content>
+                                            </ToggleButton>
 
-                                        <Label Content="Farbe"
-                                            Margin="65,0,0,0"/>
-                                        <xctk:ColorPicker
+                                            <Label Content="Farbe"
+                                            Margin="65,-12,0,0"/>
+                                            <xctk:ColorPicker
                                             Width="22"
                                             Height="22"
-                                            Margin="70,23,0,0"
+                                            Margin="70,8,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             SelectedColor="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}"
                                             ShowDropDownButton="False"
                                             ToolTip="Rasterfarbe" />
-                                    </Grid>
+                                        </Grid>
+                                    </GroupBox>
                                     <Border
                                         Grid.Column="1"
                                         Width="1"
                                         HorizontalAlignment="Left"
                                         BorderBrush="DarkGray"
                                         BorderThickness="1" />
-                                    <Grid 
-                                        Grid.Column="1" >
-                                        <Label 
-                                            Margin="5,0,0,16"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Padding="0" Height="32" Width="69" >
-                                            <Label.Content>
-                                                <StackPanel >
-                                                    <TextBlock Text="Hintergrund-"/>
-                                                    <TextBlock Text="bild laden" HorizontalAlignment="Right" />
-                                                </StackPanel>
-                                            </Label.Content>
-                                        </Label>
-                                        <Button                            
-                                            Width="27"
-                                            Height="27"
-                                            Margin="80,3,10,20"
-                                            Padding="0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Command="{Binding OnSetBackgroundClick}"
-                                            ToolTip="Hintergrundbild festlegen">
-                                            <Button.Content>
-                                                <Image Margin="2" Source="/Images/Icons/dungeon.png" />
-                                            </Button.Content>
-                                        </Button>
-                                        <Grid
-                                            HorizontalAlignment="Left"
-                                            Width="220"
-                                            Margin="3,0,0,0" >
-                                            <Grid.Style>
-                                                <Style TargetType="Grid">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Grid.Style>
-
-                                            <Image
-                                                Grid.RowSpan="2"
-                                                Grid.Column="1"
-                                                Height="25"
-                                                Margin="0,0,6,0"
-                                                HorizontalAlignment="Right"
-                                                Source="/Images/Icons/General/y-offset.png" />
-                                            <Image
-                                                Grid.Row="0"
-                                                Grid.RowSpan="2"
-                                                Height="25"
-                                                Margin="145,3,0,0"
+                                    <GroupBox Header="Bild/Video" Margin="0, -5,0,0" Grid.Column="2">
+                                        <Grid  >
+                                            <Button                            
+                                                Width="27"
+                                                Height="27"
+                                                Margin="5,3,10,20"
+                                                Padding="0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
-                                                Source="/Images/Icons/General/x-offset.png" />
+                                                Command="{Binding OnSetBackgroundClick}"
+                                                ToolTip="Hintergrundbild festlegen">
+                                                <Button.Content>
+                                                    <Image Margin="2" Source="/Images/Icons/dungeon.png" />
+                                                </Button.Content>
+                                            </Button>
 
-                                            <Slider
-                                                Margin="0,0,5,0"
-                                                HorizontalAlignment="Right"
-                                                LargeChange="10"
-                                                Maximum="15000"
-                                                Minimum="-15000"
-                                                MouseWheel="sl_MouseWheel"
-                                                Orientation="Vertical"
-                                                RenderTransformOrigin="0.5,0.5"
-                                                SmallChange="1"
-                                                Style="{StaticResource SmallVerticalSlider}"
-                                                ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                                Value="{Binding InvBackgroundOffsetY}">
-                                                <Slider.RenderTransform>
-                                                    <TransformGroup>
-                                                        <ScaleTransform ScaleX="-1" />
-                                                        <SkewTransform />
-                                                        <RotateTransform />
-                                                        <TranslateTransform />
-                                                    </TransformGroup>
-                                                </Slider.RenderTransform>
-                                            </Slider>
-                                            <Slider
-                                                Height="12"
-                                                MinHeight="5"
-                                                Margin="115,18,20,0"
-                                                VerticalAlignment="Top"
-                                                LargeChange="10"
-                                                Maximum="15000"
-                                                Minimum="-15000"
-                                                MouseWheel="sl_MouseWheel"
-                                                SmallChange="1"
-                                                Style="{StaticResource SmallHorizontalSlider}"
-                                                ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                                Value="{Binding BackgroundOffsetX}" />
-                                            <StackPanel 
-                                                Margin="5,35,0,0"
-                                                VerticalAlignment="Top"
+                                            <ToggleButton        
+                                                Name="tbBackgroundMp4Mute"
+                                                Background="Transparent"
+                                                Width="27"
+                                                Height="27" 
+                                                Margin="230,23,0,0"
+                                                Padding="0"
                                                 HorizontalAlignment="Left"
-                                                Orientation="Horizontal">
-                                                <Image
-                                                    Height="15"
-                                                    HorizontalAlignment="Left"
-                                                    Source="/Images/Icons/General/size.png" />
+                                                VerticalAlignment="Top"
+                                                Focusable="False"
+                                                IsChecked="{Binding BackgroundMp4Mute}"
+                                                ToolTip="Hintergrundvideo stumm">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="ToggleButton">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HasMP4Background}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                                <ToggleButton.Content>
+                                                    <Image Margin="1,1,-1,-1">
+                                                        <Image.Style>
+                                                            <Style TargetType="Image">
+                                                                <Setter Property="Source" Value="/Images/Icons/General/speaker.png"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding BackgroundMp4Mute}" Value="True">
+                                                                        <Setter Property="Source" Value="/Images/Icons/General/speaker-mute.png"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Image.Style>
+                                                    </Image>
+                                                </ToggleButton.Content>
+                                            </ToggleButton>
+
+                                            <GroupBox Header="Sichtbarkeit" BorderThickness="0" 
+                                                  VerticalAlignment="Top"
+                                                  Height="35"
+                                                Margin="200,-5,0,0">
+                                                <GroupBox.Style>
+                                                    <Style TargetType="GroupBox">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HasMP4Background, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </GroupBox.Style>
+
                                                 <Slider
-                                                    Width="85"
-                                                    VerticalAlignment="Center"
-                                                    LargeChange="10"
-                                                    Maximum="20000"
+                                                    Height="12"
+                                                    MinHeight="5"
+                                                    Width="60"
+                                                    VerticalAlignment="Top"
+                                                    Maximum="1"
                                                     Minimum="0"
+                                                    SmallChange=".01" 
+                                                    LargeChange=".01"
+                                                    Style="{StaticResource SmallHorizontalSlider}"
+                                                    ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                    Value="{Binding BackgroundMp4Opacity, UpdateSourceTrigger=PropertyChanged}" />
+                                            </GroupBox>
+
+                                            <Grid
+                                                HorizontalAlignment="Left"
+                                                Width="160"
+                                                Margin="3,0,0,0" >
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullOrEmptyConverter}}" Value="true">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+
+                                                <Image
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="1"
+                                                    Height="25"
+                                                    Margin="0,0,6,0"
+                                                    HorizontalAlignment="Right"
+                                                    Source="/Images/Icons/General/y-offset.png" />
+                                                <Image
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Height="25"
+                                                    Margin="65,3,0,0"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top"
+                                                    Source="/Images/Icons/General/x-offset.png" />
+
+                                                <Slider
+                                                    Margin="0,0,5,0"
+                                                    HorizontalAlignment="Right"
+                                                    LargeChange="10"
+                                                    Maximum="15000"
+                                                    Minimum="-15000"
                                                     MouseWheel="sl_MouseWheel"
-                                                    Orientation="Horizontal"
+                                                    Orientation="Vertical"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    SmallChange="1"
+                                                    Style="{StaticResource SmallVerticalSlider}"
+                                                    ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                    Value="{Binding InvBackgroundOffsetY}">
+                                                    <Slider.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform ScaleX="-1" />
+                                                            <SkewTransform />
+                                                            <RotateTransform />
+                                                            <TranslateTransform />
+                                                        </TransformGroup>
+                                                    </Slider.RenderTransform>
+                                                </Slider>
+                                                <Slider
+                                                    Height="12"
+                                                    MinHeight="5"
+                                                    Margin="35,18,00,0"
+                                                    Width="85"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top"
+                                                    LargeChange="10"
+                                                    Maximum="15000"
+                                                    Minimum="-15000"
+                                                    MouseWheel="sl_MouseWheel"
                                                     SmallChange="1"
                                                     Style="{StaticResource SmallHorizontalSlider}"
-                                                    ToolTip="Größe -  Mausrad drehen um Feinjustierung durchzuführen"
-                                                    Value="{Binding BackgroundOffsetSize}" />
-                                                <ViewGeneral:IntBox 
-                                                    Value="{Binding BackgroundOffsetSize}" 
-                                                    IncValue="10"
-                                                    DecValue="10"
-                                                    MinValue="0" 
-                                                    MaxValue="20000" 
-                                                    Padding="0" 
-                                                    ShowButtons="True" 
-                                                    Height="16" 
-                                                    FontSize="11"
-                                                    Width="74" />
-                                            </StackPanel>
+                                                    ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                    Value="{Binding BackgroundOffsetX}" />
+                                                    <StackPanel 
+                                                        Margin="5,35,0,0"
+                                                        VerticalAlignment="Top"
+                                                        HorizontalAlignment="Left"
+                                                        Orientation="Horizontal">
+                                                    <Image
+                                                        Height="15"
+                                                        HorizontalAlignment="Left"
+                                                        Source="/Images/Icons/General/size.png" />
+                                                    <Slider
+                                                        Width="65"
+                                                        VerticalAlignment="Center"
+                                                        LargeChange="10"
+                                                        Maximum="20000"
+                                                        Minimum="0"
+                                                        MouseWheel="sl_MouseWheel"
+                                                        Orientation="Horizontal"
+                                                        SmallChange="1"
+                                                        Style="{StaticResource SmallHorizontalSlider}"
+                                                        ToolTip="Größe -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                        Value="{Binding BackgroundOffsetSize}" />
+                                                    <ViewGeneral:IntBox 
+                                                        Value="{Binding BackgroundOffsetSize}" 
+                                                        ShowButtons="False"
+                                                        IncValue="10"
+                                                        DecValue="10"
+                                                        MinValue="0" 
+                                                        MaxValue="20000" 
+                                                        Padding="0" 
+                                                        Height="16" 
+                                                        FontSize="11"
+                                                        Width="50" />
+                                                </StackPanel>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
+                                    </GroupBox>
+
+                                    <GroupBox Header="Farbe" Margin="0,-5,0,0" Grid.Column="1">
+                                        <xctk:ColorPicker                                            
+                                            Width="22"
+                                            Height="22"
+                                            SelectedColor="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged, FallbackValue=#FF367536}"
+                                            ShowDropDownButton="False"
+                                            ToolTip="Hintergrundfarbe" />
+                                    </GroupBox>
                                 </Grid>
                             </Grid>
                         </TabItem>

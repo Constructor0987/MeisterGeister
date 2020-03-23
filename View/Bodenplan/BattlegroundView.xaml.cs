@@ -967,12 +967,17 @@ namespace MeisterGeister.View.Bodenplan
 
                                 if (menuitem.Name == "miKämpferFernkampf" || (_openMenuItem != null && _openMenuItem.Name == "miKämpferFernkampf"))
                                 {
-                                    
+
                                     if (VM.miWaffeSelected == null)
                                         if (((ListBox)sender).SelectedItem as Held != null)
                                             VM.miWaffeSelected = (((ListBox)sender).SelectedItem as Held).Fernkampfwaffen.FirstOrDefault();
                                         else
-                                            VM.miWaffeSelected = Global.CurrentKampf.SelectedKämpfer.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+                                        {
+                                            if (Global.CurrentKampf.SelectedKämpfer != null)
+                                                VM.miWaffeSelected = Global.CurrentKampf.SelectedKämpfer.Kämpfer.Fernkampfwaffen.FirstOrDefault();
+                                            else if (menuitem.DataContext.GetType() == typeof(Gegner))
+                                                VM.miWaffeSelected = ((Gegner)menuitem.DataContext).Fernkampfwaffen.FirstOrDefault();
+                                        }
 
                                     mi.UmwandelnFernkampf.Execute(VM.miWaffeSelected);
                                 }
@@ -1241,6 +1246,20 @@ namespace MeisterGeister.View.Bodenplan
                 ViewHelper.ShowError("Fehler beim Generieren der Bilddatei." + Environment.NewLine + "Bitte überprüfen, ob die Datei existiert:" + Environment.NewLine +
                   Ressources.Decoder(Ressources.GetFullApplicationPath() + iItem != null? iItem.Pfad: "Unbekannter Pfad"), ex);
             }
+        }
+
+        private void VideoObject1_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            if(VM.BackgroundMP4LoadedBehavior == MediaState.Pause)
+            {
+                ((MediaElement)sender).Position = new TimeSpan(0);
+                VM.BackgroundMP4LoadedBehavior = MediaState.Play;
+                while(((MediaElement)sender).Position == new TimeSpan(0))
+                { }
+                //ArenaScrollViewer.Background = Color.FromScRgb
+            }
+
+            VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
         }
 
         private static class NativeMethods
