@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf;
+using MeisterGeister.ViewModel.Karte;
 using MeisterGeister.ViewModel.SpielerScreen;
 
 namespace MeisterGeister.View.SpielerScreen
@@ -251,6 +252,11 @@ namespace MeisterGeister.View.SpielerScreen
 
         public static void SetBodenplanView()
         {
+        }
+
+        public static void SetKarteView(KarteViewModel model)
+        {
+            SetContent(model);
         }
 
         internal static void ReOpen()

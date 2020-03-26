@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MeisterGeister.View.SpielerScreen;
 using MeisterGeister.Logic.Einstellung;
+using System.Windows;
+using MeisterGeister.ViewModel.Karte;
+using MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.ViewModel.SpielerScreen
 {
@@ -812,6 +815,29 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             SlideShowMove();
             if (_slideShowInterval * 1000 != _slideShowTimer.Interval)
                 _slideShowTimer.Interval = _slideShowInterval * 1000;
+        }
+
+        private Base.CommandBase onShowSpielerInfo = null;
+        public Base.CommandBase OnShowSpielerInfo
+        {
+            get
+            {
+                if (onShowSpielerInfo == null)
+                    onShowSpielerInfo = new Base.CommandBase(ShowSpielerInfo, null);
+                return onShowSpielerInfo;
+            }
+        }
+        private void ShowSpielerInfo(object sender)
+        {
+            foreach (ToolViewModelBase b in Global.MainVM.OpenTools)
+            {
+                if (b.GetType() == typeof(KarteViewModel))
+                {
+                    SpielerWindow.SetKarteView(((KarteViewModel)b));
+                    SlideShowStop();
+                    return;
+                }
+            }
         }
 
         #endregion
