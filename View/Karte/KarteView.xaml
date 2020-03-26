@@ -13,8 +13,8 @@
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:Converters="clr-namespace:WPFExtensions.Converters;assembly=WPFExtensions" x:Class="MeisterGeister.View.Karte.KarteView"
-             mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="1000"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="1000"             
              SizeChanged="UserControl_SizeChanged" x:Name="view">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>

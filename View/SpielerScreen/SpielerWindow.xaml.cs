@@ -129,7 +129,7 @@ namespace MeisterGeister.View.SpielerScreen
         }
 
         public static void SetContent(object info)
-        {
+        {            
             Instance.Content = info;
             Instance.IsKampfInfoModus = (info is Kampf.KampfInfoView);
 
@@ -256,7 +256,18 @@ namespace MeisterGeister.View.SpielerScreen
 
         public static void SetKarteView(KarteViewModel model)
         {
-            SetContent(model);
+
+            var infoView = new Karte.KarteView(model);
+            //if (Global.CurrentKampf != null)
+            //{
+             //   var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
+            //    SetContent(infoView);
+            //}
+
+            SetContent(infoView);
+        //    SetContent(model);
+   //         model.ZoomControlSize = MapScrollViewer.RenderSize;
+            model.Refresh();
         }
 
         internal static void ReOpen()

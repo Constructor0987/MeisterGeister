@@ -26,6 +26,23 @@ namespace MeisterGeister.View.Karte
         private WrappingConverter dereGlobusToMapConverter;
         private WrappingConverter mapToDereGlobusConverter;
 
+
+        public KarteView(ViewModel.Karte.KarteViewModel karteVM)
+        {
+            dereGlobusToMapConverter = new WrappingConverter();
+            mapToDereGlobusConverter = new WrappingConverter();
+            this.Resources.Add("DereGlobusToMapConverter", dereGlobusToMapConverter);
+            this.Resources.Add("MapToDereGlobusConverter", mapToDereGlobusConverter);
+            InitializeComponent();
+            //VM = new KarteViewModel();
+            DataContextChanged += KarteView_DataContextChanged;
+
+            dTmr.Tick += new EventHandler(dTmr_Tick);
+            dTmr.Interval = new TimeSpan(0, 0, 0, 0, 50);
+
+            this.DataContext = karteVM;
+        }
+
         public KarteView()
         {
             dereGlobusToMapConverter = new WrappingConverter();
