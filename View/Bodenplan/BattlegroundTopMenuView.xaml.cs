@@ -200,6 +200,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             Global.CurrentKampf.LabelInfo = null;
         }
+        
 
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
         {

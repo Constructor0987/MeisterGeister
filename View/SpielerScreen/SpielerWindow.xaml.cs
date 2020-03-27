@@ -391,5 +391,11 @@ namespace MeisterGeister.View.SpielerScreen
                 WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             }
         }
+
+        private void VideoObject1_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            ((MediaElement)sender).Position = new TimeSpan(1);
+            //((MediaElement)sender).Play();
+        }
     }
 }

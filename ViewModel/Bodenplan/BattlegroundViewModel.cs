@@ -191,9 +191,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             imageobject._imageOriginalWidth = imageobject.ImageWidth;
             imageobject._imageOriginalHeigth = imageobject.ImageHeight;
+
             imageobject.ObjectSize = ObjectSize;
             BattlegroundObjects.Add(imageobject);
             return imageobject;
+        }
+
+
+        public MP4Object CreateVideoObject(string vidurl, Point p)
+        {
+            var melement = new MP4Object(vidurl, 0, 0);
+
+            melement.ObjectSize = ObjectSize;
+            BattlegroundObjects.Add(melement);
+            return melement;
         }
 
         public void CreateNewFilledLine(double x1, double y1)
@@ -232,7 +243,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 ObjectColor = new SolidColorBrush(Colors.DarkBlue),
                 StrokeThickness = th,
-                Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar?.02: .2,
+                Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : .2,
                 IsNew = true
             };
             SelectedTempObject = pathline;
@@ -300,11 +311,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
         }
 
-            /// <summary>
-            /// brings selected Object to Top and calls UpdateCreatureLevelToTop
-            /// </summary>
-            /// <param name="toTop"></param>
-            public void MoveSelectedObjectToTop(bool toTop)
+        /// <summary>
+        /// brings selected Object to Top and calls UpdateCreatureLevelToTop
+        /// </summary>
+        /// <param name="toTop"></param>
+        public void MoveSelectedObjectToTop(bool toTop)
         {
             if (SelectedObject == null)
             {
@@ -552,7 +563,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 FilterListe();
             }
         }
-        
+
         public void LoadImagesFromDir(string pfad)
         {
             if (string.IsNullOrWhiteSpace(pfad) || !Directory.Exists(pfad))
@@ -612,7 +623,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private void ReLoadImages(object sender = null)
         {
-            LoadImagesFromDir(String.IsNullOrEmpty(Ressources.GetFullApplicationPath()) ? "Daten\\Bodenplan" : Ressources.GetFullApplicationPath()+ "Daten\\Bodenplan");
+            LoadImagesFromDir(String.IsNullOrEmpty(Ressources.GetFullApplicationPath()) ? "Daten\\Bodenplan" : Ressources.GetFullApplicationPath() + "Daten\\Bodenplan");
         }
 
         #endregion
@@ -623,6 +634,43 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get { return _arenaGrid; }
             set { Set(ref _arenaGrid, value); }
+        }
+
+        private MediaState _backgroundMP4LoadedBehavior = MediaState.Play;
+        public MediaState BackgroundMP4LoadedBehavior
+        { 
+            get { return _backgroundMP4LoadedBehavior; }
+            set { Set(ref _backgroundMP4LoadedBehavior, value); }
+        }
+
+        private Color _backgroundColor = Color.FromScRgb(0xFF, 0x36, 0x75, 0x36);
+        public Color BackgroundColor
+        {
+            get { return _backgroundColor; }
+            set
+            {
+                Set(ref _backgroundColor, value);
+                BackgroundBrush = new SolidColorBrush(value);
+            }
+        }
+
+        private Brush _backgroundBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x36, 0x75, 0x36));
+        public Brush BackgroundBrush
+        {
+            get { return _backgroundBrush; }
+            set { Set(ref _backgroundBrush, value); }
+        }
+
+        public bool HasMP4Background
+        {
+            get { return _hasMP4Background; }
+            set { Set(ref _hasMP4Background, value); }
+        }
+
+        public bool BackgroundMp4Mute
+        {
+            get { return _backgroundMp4Mute; }
+            set { Set(ref _backgroundMp4Mute, value); }
         }
 
         public string BackgroundFilename
@@ -857,6 +905,16 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     bgO.ZDisplayY = BackgroundOffsetY;
                     (bgO as ImageObject).ObjectSize = BackgroundOffsetSize;
                 }
+                else
+                {
+                    BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                    if (bg1 != null)
+                    {
+                        bg1.ZDisplayX = BackgroundOffsetX;
+                        bg1.ZDisplayY = BackgroundOffsetY;
+                        (bg1 as MP4Object).ObjectSize = BackgroundOffsetSize;
+                    }
+                }
             }
         }
 
@@ -975,6 +1033,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private Grid _arenaGrid = new Grid();
         private string _backgroundFilename;
+        private bool _hasMP4Background;
+        private bool _backgroundMp4Mute;
         private string _backgroundImage;
         private double _backgroundOffsetSize = ARENA_GRID_RESOLUTION;
         private double _backgroundOffsetX = 0;
@@ -1100,7 +1160,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _doChangeModPositionSelbst; }
             set { Set(ref _doChangeModPositionSelbst, value); }
         }
-        
+
         public void UpdateCreaturesFromChangedKampferlist()
         {
             foreach (KämpferInfo k in Global.CurrentKampf.Kampf.Kämpfer)
@@ -1259,7 +1319,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         VisibleZLevels = "";
                     else
                         VisibleZLevels = string.Join(",", PossibleZLevels);
-                    
+
                 }
             }
         }
@@ -1399,6 +1459,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     {
                         return ((ImageObject)SelectedObject).ObjectSize;
                     }
+                    if (SelectedObject is MP4Object)
+                    {
+                        return ((MP4Object)SelectedObject).ObjectSize;
+                    }
 
                     if (SelectedObject is BattlegroundCreature)
                     {
@@ -1425,11 +1489,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Set(ref _objectSize, value);
             }
         }
+        private double _backgroundMp4Opacity = 1;
+        public double BackgroundMp4Opacity
+        { 
+            get { return _backgroundMp4Opacity; }
+            set { Set(ref _backgroundMp4Opacity, value); }
+        }
 
-        public double Opacity
+
+    public double Opacity
         {
             get { return SelectedObject != null ? SelectedObject.Opacity : 1; }
-
             set
             {
                 if (SelectedObject != null)
@@ -1738,6 +1808,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BackgroundOffsetSize = (bgO as ImageObject).ObjectSize;
                 (bgO as BattlegroundBaseObject).IsVisible = false;
             }
+            else
+            {
+                BattlegroundBaseObject bg0MP4 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg0MP4 != null)
+                {
+                    BackgroundImage = (bg0MP4 as MP4Object).VideoUrl;
+                    BackgroundOffsetX = bg0MP4.ZDisplayX;
+                    BackgroundOffsetY = bg0MP4.ZDisplayY;
+                    BackgroundOffsetSize = (bg0MP4 as MP4Object).ObjectSize;
+                    (bg0MP4 as BattlegroundBaseObject).IsVisible = false;
+                }
+            }
 
             BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is ImageObject).Where(t => (t as ImageObject).IsFogPicture).FirstOrDefault();
             if (bg1 != null)
@@ -1889,7 +1971,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public Color GridColor
         {
             get { return gridColor; }
-
             set
             {
                 Set(ref gridColor, value);
@@ -2449,6 +2530,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private Base.CommandBase _onBtnUmwandelnSonstiges = null;
 
         private Base.CommandBase _onSetBackgroundClick = null;
+        private Base.CommandBase _onVideoTestClick = null;
 
         private void BtnPosIniWindow(object obj)
         {
@@ -2509,21 +2591,40 @@ namespace MeisterGeister.ViewModel.Bodenplan
             PlayerGridOffsetX = (x1);
             PlayerGridOffsetY = (-y2);
         }
+        
 
         private void SetBackgroundClick(object obj)
         {
-            BackgroundImage = ViewHelper.ChooseFile("Hintergrundbild setzen", "", false, new string[9] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff" });
+            HasMP4Background = false;
+            //Löschen vorhandener Background-Objekte
+            BattlegroundObjects.Remove(BattlegroundObjects.Where(t => t is ImageObject && (t as ImageObject).IsBackgroundPicture).FirstOrDefault());            
+            BattlegroundObjects.Remove(BattlegroundObjects.Where(t => t is MP4Object && (t as MP4Object).IsBackgroundPicture).FirstOrDefault());
+
+            BackgroundImage = ViewHelper.ChooseFile("Hintergrundbild setzen", "", false, new string[10] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff", "mp4" });
+            
+            BackgroundMP4LoadedBehavior = MediaState.Play;
             if (string.IsNullOrEmpty(BackgroundImage))
             {
-                BattlegroundObjects.Remove(BattlegroundObjects.Where(t => t is ImageObject && (t as ImageObject).IsBackgroundPicture).FirstOrDefault());
+                BackgroundImage = null;
                 return;
             }
 
             BackgroundFilename = new FileInfo(BackgroundImage).Name ?? "";
             BackgroundOffsetX = 0;
-            ImageObject io = CreateImageObject(BackgroundImage, new Point(BackgroundOffsetX, BackgroundOffsetY));
-            io.IsBackgroundPicture = true;
-            io.IsVisible = false;
+            if (!BackgroundImage.ToLower().EndsWith(".mp4"))
+            {
+                ImageObject io = CreateImageObject(BackgroundImage, new Point(BackgroundOffsetX, BackgroundOffsetY));
+                io.IsBackgroundPicture = true;
+                io.IsVisible = false;
+            }
+            else
+            //Viedeo-Datei ausgewählt
+            {
+                MP4Object me = CreateVideoObject(BackgroundImage, new Point(BackgroundOffsetX, BackgroundOffsetY));
+                me.IsBackgroundPicture = true;
+                me.IsVisible = false;
+                HasMP4Background = true;
+            }
         }
 
         private void UmwandelnAttacke(object obj)

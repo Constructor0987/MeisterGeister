@@ -393,7 +393,7 @@
                     x:Name="ArenaScrollViewer"
                     Grid.Column="1"
                     VerticalAlignment="Bottom"
-                    Background="#FF367536"
+                    Background="{Binding BackgroundBrush, UpdateSourceTrigger=PropertyChanged}"
                     LimitToContent="True"
                     MaxZoom="2"
                     MaxZoomDelta="2"
@@ -416,6 +416,20 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Source="{Binding BackgroundImage}" />
+                        <MediaElement                            
+                            x:Name="VideoObject1"
+                            Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Opacity="{Binding BackgroundMp4Opacity}"
+                            RenderTransformOrigin="0.5,0.5"
+                            IsMuted="{Binding BackgroundMp4Mute, UpdateSourceTrigger=PropertyChanged}"
+                            Source="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
+                            LoadedBehavior="{Binding BackgroundMP4LoadedBehavior,UpdateSourceTrigger=PropertyChanged}"
+                            MediaOpened="VideoObject1_MediaOpened"
+                            UnloadedBehavior="Close">
+                        </MediaElement>
                         <Image
                             x:Name="imgFog"
                             Width="10000"
@@ -444,7 +458,7 @@
                             SelectedItem="{Binding SelectedObject, Mode=TwoWay}"
                             SelectionChanged="ArenaGrid_SelectionChanged"
                             SelectionMode="Single">
-                            
+
                             <ListBox.Style>
                                 <Style TargetType="ListBox">
                                     <Style.Triggers>
@@ -1269,7 +1283,7 @@
                                     </Thumb>
                                 </DataTemplate>
 
-                                <!--  Datatemplate Lichquellen  -->
+                                <!--  Datatemplate Lichtquellen  -->
                                 <DataTemplate DataType="{x:Type model:LichtquelleObject}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
                                         <Thumb.Template>
@@ -1415,7 +1429,37 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
-                                
+
+
+                                <!--  Datatemplate MP4OBJECT  -->
+                                <DataTemplate DataType="{x:Type model:MP4Object}">
+                                    <Thumb DragDelta="Thumb_Drag" 
+                                           Visibility="Collapsed"
+                                           IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <!--<Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" >
+                                                    <MediaElement
+                                                        LoadedBehavior="Manual"
+                                                        UnloadedBehavior="Manual"
+                                                        BufferingEnded="VideoObject1_BufferingEnded"
+                                                        Loaded="VideoObject1_Loaded"
+                                                        x:Name="VideoObject1"
+                                                        Canvas.Left="{Binding ZDisplayX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding ZDisplayY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding VideoWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding VideoHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                        VerticalAlignment="Top"
+                                                        Opacity="{Binding Opacity}"
+                                                        RenderTransformOrigin="0.5,0.5"
+                                                        Source="{Binding VideoUrl}"
+                                                        MediaEnded="VideoObject1_MediaEnded" >
+                                                    </MediaElement>
+                                                </Canvas>-->
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
                             </ListBox.Resources>
 
                             <ListBox.Background>

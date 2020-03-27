@@ -105,7 +105,7 @@
 
         <Grid
             Name="grdBodenplan"
-            Background="#FF367536"
+            Background="{Binding BackgroundBrush, UpdateSourceTrigger=PropertyChanged}"
             Visibility="Collapsed">
             <Grid.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" ScaleY="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" />
@@ -132,7 +132,18 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Source="{Binding BackgroundImage}" />
-
+                <MediaElement                            
+                        x:Name="VideoObject1"
+                        Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Opacity="{Binding BackgroundMp4Opacity}"
+                        RenderTransformOrigin="0.5,0.5"
+                        Source="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
+                        IsMuted="{Binding BackgroundMp4Mute, UpdateSourceTrigger=PropertyChanged}"
+                        MediaEnded="VideoObject1_MediaEnded" >
+                </MediaElement>
                 <ListBox
                     Name="ArenaGrid2"
                     Width="10000"
@@ -670,6 +681,9 @@
                                     </ControlTemplate>
                                 </Thumb.Template>
                             </Thumb>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:MP4Object}">
                         </DataTemplate>
                     </ListBox.Resources>
 

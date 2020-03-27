@@ -1248,6 +1248,20 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
+        private void VideoObject1_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            if(VM.BackgroundMP4LoadedBehavior == MediaState.Pause)
+            {
+                ((MediaElement)sender).Position = new TimeSpan(0);
+                VM.BackgroundMP4LoadedBehavior = MediaState.Play;
+                while(((MediaElement)sender).Position == new TimeSpan(0))
+                { }
+                //ArenaScrollViewer.Background = Color.FromScRgb
+            }
+
+            VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
+        }
+
         private static class NativeMethods
         {
             [DllImport("user32.dll")]
