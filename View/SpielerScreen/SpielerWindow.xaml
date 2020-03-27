@@ -133,7 +133,7 @@
                     VerticalAlignment="Top"
                     Source="{Binding BackgroundImage}" />
                 <MediaElement                            
-                        x:Name="VideoObject1"
+                        x:Name="MP4BattlemapBackgroundSpieler"
                         Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}"
                         Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}"
                         HorizontalAlignment="Left"
@@ -142,7 +142,8 @@
                         RenderTransformOrigin="0.5,0.5"
                         Source="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
                         IsMuted="{Binding BackgroundMp4Mute, UpdateSourceTrigger=PropertyChanged}"
-                        MediaEnded="VideoObject1_MediaEnded" >
+                        MediaOpened="MP4BattlemapBackgroundSpieler_MediaOpened"
+                        MediaEnded="MP4BattlemapBackgroundSpieler_MediaEnded" >
                 </MediaElement>
                 <ListBox
                     Name="ArenaGrid2"

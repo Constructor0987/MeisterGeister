@@ -891,6 +891,33 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _meisterZoomTransY, value); }
         }
 
+        private int _backgroundMp4MaxPosition = 999;
+        public int BackgroundMp4MaxPosition
+        {
+            get { return _backgroundMp4MaxPosition; }
+            set { Set(ref _backgroundMp4MaxPosition, value); }
+        }
+        private int _backgroundMp4MinPosition = 0;
+        public int BackgroundMp4MinPosition
+        {
+            get { return _backgroundMp4MinPosition; }
+            set { Set(ref _backgroundMp4MinPosition, value); }
+        }
+
+        private int _backgroundMp4Lenght = 999;
+        public int BackgroundMp4Lenght
+        {
+            get { return _backgroundMp4Lenght; }
+            set { Set(ref _backgroundMp4Lenght, value); }
+        }
+
+        private double _backgroundMp4Speed = 1;
+        public double BackgroundMp4Speed
+        {
+            get { return _backgroundMp4Speed; }
+            set { Set(ref _backgroundMp4Speed, value); }
+        }
+
         public Thickness OffsetBackgroudMargin
         {
             get { return _offsetBackgroudMargin; }
@@ -1489,6 +1516,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Set(ref _objectSize, value);
             }
         }
+
         private double _backgroundMp4Opacity = 1;
         public double BackgroundMp4Opacity
         { 
