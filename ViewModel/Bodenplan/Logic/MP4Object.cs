@@ -21,6 +21,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public double _videoOriginalHeigth = 10000;
         private double _objectSize = 1;
         private double _rotateAngle = 0;
+        private TimeSpan _minPosition;
+        private TimeSpan _maxPosition;
+        private TimeSpan _videoLength;
+        private double _videoSpeed;
 
         private bool isBackgroundPicture = false;
         private bool isFogPicture = false;
@@ -126,6 +130,24 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 _videoHeight = value;
                 OnChanged(nameof(VideoHeight));
             }
+        }
+
+        public double VideoSpeed
+        {
+            get { return _videoSpeed; }
+            set { Set(ref _videoSpeed, value); }
+        }
+
+        public TimeSpan MaxPosition
+        {
+            get { return _maxPosition; }
+            set { Set(ref _maxPosition, value); }
+        }
+
+        public TimeSpan MinPosition
+        {
+            get { return _minPosition; }
+            set { Set(ref _minPosition, value); }
         }
 
         public String VideoUrl

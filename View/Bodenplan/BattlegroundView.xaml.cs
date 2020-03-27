@@ -1253,6 +1253,7 @@ namespace MeisterGeister.View.Bodenplan
             if(VM.BackgroundMP4LoadedBehavior == MediaState.Pause)
             {
                 ((MediaElement)sender).Position = new TimeSpan(0);
+                
                 VM.BackgroundMP4LoadedBehavior = MediaState.Play;
                 while(((MediaElement)sender).Position == new TimeSpan(0))
                 { }
@@ -1260,6 +1261,9 @@ namespace MeisterGeister.View.Bodenplan
             }
 
             VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
+            VM.BackgroundMp4Lenght = Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds);
+            VM.BackgroundMp4MinPosition = 0;
+            VM.BackgroundMp4MaxPosition = VM.BackgroundMp4Lenght;
         }
 
         private static class NativeMethods

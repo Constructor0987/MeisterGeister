@@ -769,7 +769,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="130"/>
                                         <ColumnDefinition Width="60"/>
-                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="400"/>
                                         <ColumnDefinition Width="0*" />
                                     </Grid.ColumnDefinitions>
 
@@ -826,7 +826,7 @@
                                         BorderBrush="DarkGray"
                                         BorderThickness="1" />
                                     <GroupBox Header="Bild/Video" Margin="0, -5,0,0" Grid.Column="2">
-                                        <Grid  >
+                                        <Grid>
                                             <Button                            
                                                 Width="27"
                                                 Height="27"
@@ -881,6 +881,7 @@
 
                                             <GroupBox Header="Sichtbarkeit" BorderThickness="0" 
                                                   VerticalAlignment="Top"
+                                                      HorizontalAlignment="Left"
                                                   Height="35"
                                                 Margin="200,-5,0,0">
                                                 <GroupBox.Style>
@@ -904,8 +905,102 @@
                                                     SmallChange=".01" 
                                                     LargeChange=".01"
                                                     Style="{StaticResource SmallHorizontalSlider}"
-                                                    ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
+                                                    ToolTip="Sichtbarkeit des Videos zwischen einstellen"
                                                     Value="{Binding BackgroundMp4Opacity, UpdateSourceTrigger=PropertyChanged}" />
+                                            </GroupBox>
+
+                                            <GroupBox Header="Geschwindigkeit" 
+                                                      BorderThickness="0" 
+                                                      HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
+                                                  Height="35"
+                                                Margin="280,-5,0,0">
+                                                <GroupBox.Style>
+                                                    <Style TargetType="GroupBox">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HasMP4Background, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </GroupBox.Style>
+
+                                                <Slider
+                                                    Height="12"
+                                                    MinHeight="5"
+                                                    Width="60"
+                                                    VerticalAlignment="Top"
+                                                    Maximum="2"
+                                                    Minimum="0"
+                                                    SmallChange=".001" 
+                                                    LargeChange=".001"
+                                                    Style="{StaticResource SmallHorizontalSlider}"
+                                                    ToolTip="Sichtbarkeit des Videos zwischen einstellen"
+                                                    ValueChanged="Slider_ValueChanged"
+                                                    Value="{Binding BackgroundMp4Speed, UpdateSourceTrigger=PropertyChanged}" />
+                                            </GroupBox>
+
+
+                                            <GroupBox Header="Start[sec]" 
+                                                      BorderThickness="0" 
+                                                      HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
+                                                  Height="35"
+                                                Margin="260,24,0,0">
+                                                <GroupBox.Style>
+                                                    <Style TargetType="GroupBox">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HasMP4Background, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </GroupBox.Style>
+
+                                                <ViewGeneral:IntBox 
+                                                    ShowButtons="False"
+                                                    IncValue="10"
+                                                    DecValue="10"
+                                                    MinValue="0" 
+                                                    MaxValue="{Binding BackgroundMp4MaxPosition, UpdateSourceTrigger=PropertyChanged}"
+                                                    Padding="0" 
+                                                    Height="16" 
+                                                    FontSize="11"
+                                                    Value="{Binding BackgroundMp4MinPosition, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="50" />
+                                            </GroupBox>
+
+
+                                            <GroupBox Header="End [sec]" 
+                                                      BorderThickness="0" 
+                                                      HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
+                                                  Height="35"
+                                                Margin="320,24,0,0">
+                                                <GroupBox.Style>
+                                                    <Style TargetType="GroupBox">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding HasMP4Background, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </GroupBox.Style>
+
+                                                <ViewGeneral:IntBox 
+                                                    ShowButtons="False"
+                                                    IncValue="10"
+                                                    DecValue="10"
+                                                    MinValue="{Binding BackgroundMp4MinPosition, UpdateSourceTrigger=PropertyChanged}"
+                                                    MaxValue="{Binding BackgroundMp4Lenght, UpdateSourceTrigger=PropertyChanged}"
+                                                    Padding="0" 
+                                                    Height="16" 
+                                                    FontSize="11"
+                                                    Value="{Binding BackgroundMp4MaxPosition, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="50" />
                                             </GroupBox>
 
                                             <Grid

@@ -418,6 +418,7 @@
                             Source="{Binding BackgroundImage}" />
                         <MediaElement                            
                             x:Name="VideoObject1"
+                            SpeedRatio="1"
                             Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}"
                             Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}"
                             HorizontalAlignment="Left"
@@ -426,8 +427,8 @@
                             RenderTransformOrigin="0.5,0.5"
                             IsMuted="{Binding BackgroundMp4Mute, UpdateSourceTrigger=PropertyChanged}"
                             Source="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
-                            LoadedBehavior="{Binding BackgroundMP4LoadedBehavior,UpdateSourceTrigger=PropertyChanged}"
                             MediaOpened="VideoObject1_MediaOpened"
+                            LoadedBehavior="{Binding BackgroundMP4LoadedBehavior,UpdateSourceTrigger=PropertyChanged}"
                             UnloadedBehavior="Close">
                         </MediaElement>
                         <Image

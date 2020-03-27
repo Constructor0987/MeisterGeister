@@ -200,7 +200,11 @@ namespace MeisterGeister.View.Bodenplan
         {
             Global.CurrentKampf.LabelInfo = null;
         }
-        
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Global.CurrentKampf.BodenplanView.VideoObject1.SpeedRatio = e.NewValue;            
+        }
 
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
         {
