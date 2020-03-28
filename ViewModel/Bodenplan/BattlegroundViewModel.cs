@@ -964,10 +964,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     if (bg1 != null)
                     {
                         bg1.ZDisplayX = BackgroundOffsetX;
-                        bg1.ZDisplayY = BackgroundOffsetY;
+                        bg1.ZDisplayY = BackgroundOffsetY;                        
+                        (bg1 as MP4Object).VideoPositionX = BackgroundOffsetX;
+                        (bg1 as MP4Object).VideoPositionY = BackgroundOffsetY;
                         (bg1 as MP4Object).ObjectSize = BackgroundOffsetSize;
                     }
                 }
+                if (InvBackgroundOffsetY != BackgroundOffsetY * (-1))
+                    InvBackgroundOffsetY = BackgroundOffsetY * (-1);
             }
         }
 
