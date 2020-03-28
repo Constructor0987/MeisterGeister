@@ -188,12 +188,28 @@ namespace MeisterGeister.View.Bodenplan
             if (e.Key == Key.Down || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
                 BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? 100 : -100);
             (sender as TextBox).Text = "";
-
         }
+
+
+        private void TextBoxHintergrund_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                tcTopMenuView.Focus();
+            if (e.Key == Key.Left || e.Key == Key.NumPad4 || e.Key == Key.NumPad1 || e.Key == Key.NumPad7)
+                BattlegroundVM.BackgroundOffsetX = BattlegroundVM.BackgroundOffsetX + (-100);
+            if (e.Key == Key.Right || e.Key == Key.NumPad6 || e.Key == Key.NumPad3 || e.Key == Key.NumPad9)
+                BattlegroundVM.BackgroundOffsetX = BattlegroundVM.BackgroundOffsetX + (100);
+            if (e.Key == Key.Up || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || e.Key == Key.NumPad7)
+                BattlegroundVM.BackgroundOffsetY = BattlegroundVM.BackgroundOffsetY + (-100);
+            if (e.Key == Key.Down || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
+                BattlegroundVM.BackgroundOffsetY = BattlegroundVM.BackgroundOffsetY + (100);
+            (sender as TextBox).Text = "";
+        }
+        
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            Global.CurrentKampf.LabelInfo = "Pfeil-Tasten oder Num-Lock-Tasten benutzen um den Spieler Bildschirm zu verschieben";
+            Global.CurrentKampf.LabelInfo = ((TextBox)sender).Tag.ToString();
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)

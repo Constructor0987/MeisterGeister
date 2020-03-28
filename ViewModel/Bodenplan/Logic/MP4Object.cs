@@ -21,10 +21,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public double _videoOriginalHeigth = 10000;
         private double _objectSize = 1;
         private double _rotateAngle = 0;
-        private TimeSpan _minPosition;
-        private TimeSpan _maxPosition;
-        private TimeSpan _videoLength;
-        private double _videoSpeed;
+        private double _minPosition;
+        private double _maxPosition;
+        private double _videoLenght;
+        private double _videoSpeedRatio;
+        private bool _ismute;
 
         private bool isBackgroundPicture = false;
         private bool isFogPicture = false;
@@ -132,19 +133,32 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public double VideoSpeed
+        public bool IsMute
         {
-            get { return _videoSpeed; }
-            set { Set(ref _videoSpeed, value); }
+            get { return _ismute; }
+            set { Set(ref _ismute, value); }
         }
 
-        public TimeSpan MaxPosition
+
+        public double VideoSpeedRatio
+        {
+            get { return _videoSpeedRatio; }
+            set { Set(ref _videoSpeedRatio, value); }
+        }
+
+        public double MaxPosition
         {
             get { return _maxPosition; }
             set { Set(ref _maxPosition, value); }
         }
 
-        public TimeSpan MinPosition
+        public double VideoLenght
+        {
+            get { return _videoLenght; }
+            set { Set(ref _videoLenght, value); }
+        }
+
+        public double MinPosition
         {
             get { return _minPosition; }
             set { Set(ref _minPosition, value); }
@@ -178,8 +192,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public override void RunAfterXMLDeserialization()
         {
-            var vidname = VideoUrl.Split('\\');
-            VideoUrl = Ressources.GetFullApplicationPathForPictures() + vidname[vidname.Length - 1];
+          
         }
         
 

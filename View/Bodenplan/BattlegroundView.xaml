@@ -423,12 +423,12 @@
                             Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            Opacity="{Binding BackgroundMp4Opacity}"
+                            Opacity="{Binding BackgroundMp4Opacity, UpdateSourceTrigger=PropertyChanged}"
                             RenderTransformOrigin="0.5,0.5"
                             IsMuted="{Binding BackgroundMp4Mute, UpdateSourceTrigger=PropertyChanged}"
                             Source="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
                             MediaOpened="VideoObject1_MediaOpened"
-                            LoadedBehavior="{Binding BackgroundMP4LoadedBehavior,UpdateSourceTrigger=PropertyChanged}"
+                            LoadedBehavior="{Binding BackgroundMP4LoadedBehavior, UpdateSourceTrigger=PropertyChanged}"
                             UnloadedBehavior="Close">
                         </MediaElement>
                         <Image

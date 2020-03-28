@@ -1248,22 +1248,18 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void VideoObject1_MediaOpened(object sender, RoutedEventArgs e)
+        public void VideoObject1_MediaOpened(object sender, RoutedEventArgs e)
         {
             if(VM.BackgroundMP4LoadedBehavior == MediaState.Pause)
             {
                 ((MediaElement)sender).Position = new TimeSpan(0);
-                
+
                 VM.BackgroundMP4LoadedBehavior = MediaState.Play;
                 while(((MediaElement)sender).Position == new TimeSpan(0))
-                { }
-                //ArenaScrollViewer.Background = Color.FromScRgb
+                {  }
             }
-
             VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
             VM.BackgroundMp4Lenght = Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds);
-            VM.BackgroundMp4MinPosition = 0;
-            VM.BackgroundMp4MaxPosition = VM.BackgroundMp4Lenght;
         }
 
         private static class NativeMethods
