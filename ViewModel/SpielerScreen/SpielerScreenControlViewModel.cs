@@ -817,23 +817,23 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 _slideShowTimer.Interval = _slideShowInterval * 1000;
         }
 
-        private Base.CommandBase onShowSpielerInfo = null;
-        public Base.CommandBase OnShowSpielerInfo
+        private Base.CommandBase onShowMap = null;
+        public Base.CommandBase OnShowMap
         {
             get
             {
-                if (onShowSpielerInfo == null)
-                    onShowSpielerInfo = new Base.CommandBase(ShowSpielerInfo, null);
-                return onShowSpielerInfo;
+                if (onShowMap == null)
+                    onShowMap = new Base.CommandBase(ShowMap, null);
+                return onShowMap;
             }
         }
-        private void ShowSpielerInfo(object sender)
+        private void ShowMap(object sender)
         {
             foreach (ToolViewModelBase b in Global.MainVM.OpenTools)
             {
                 if (b.GetType() == typeof(KarteViewModel))
                 {
-                    SpielerWindow.SetKarteView(((KarteViewModel)b));
+                    SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)(((KarteViewModel)b).zoomControl)));
                     SlideShowStop();
                     return;
                 }
@@ -924,5 +924,4 @@ namespace MeisterGeister.ViewModel.SpielerScreen
     }
 
     #endregion
-
 }

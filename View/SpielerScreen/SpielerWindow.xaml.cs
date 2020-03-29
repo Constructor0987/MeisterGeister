@@ -250,26 +250,6 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        public static void SetBodenplanView()
-        {
-        }
-
-        public static void SetKarteView(KarteViewModel model)
-        {
-
-            var infoView = new Karte.KarteView(model);
-            //if (Global.CurrentKampf != null)
-            //{
-             //   var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
-            //    SetContent(infoView);
-            //}
-
-            SetContent(infoView);
-        //    SetContent(model);
-   //         model.ZoomControlSize = MapScrollViewer.RenderSize;
-            model.Refresh();
-        }
-
         internal static void ReOpen()
         {
             Close();
