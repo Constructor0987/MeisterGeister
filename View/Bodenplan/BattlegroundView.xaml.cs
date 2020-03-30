@@ -37,6 +37,8 @@ namespace MeisterGeister.View.Bodenplan
             
             AddPictureButtons();
             AddFogOfWar();
+
+        //    VM.BackgroundColor = Color.FromArgb(255, 55, 88, 55);
         }
 
         public double VisualisationHeight
@@ -1255,16 +1257,19 @@ namespace MeisterGeister.View.Bodenplan
                 ((MediaElement)sender).Position = new TimeSpan(0);
 
                 VM.BackgroundMP4LoadedBehavior = MediaState.Play;
-                while(((MediaElement)sender).Position == new TimeSpan(0))
+                VM.BackgroundMp4Mute = true;
+                while (((MediaElement)sender).Position <= new TimeSpan(0,0,0,0,50))
                 {  }
             }
             VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
-            VM.BackgroundMp4Lenght =
+            VM.BackgroundMp4Length =
                 Convert.ToInt32(((MediaElement)sender).NaturalDuration != Duration.Automatic?
                 Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds):
                 999);
+            VM.BackgroundMp4MinPosition = 0;
+            VM.BackgroundMp4MaxPosition = VM.BackgroundMp4Length;
         }
-
+        
         private static class NativeMethods
         {
             [DllImport("user32.dll")]

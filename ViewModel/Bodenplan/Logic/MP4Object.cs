@@ -23,7 +23,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _rotateAngle = 0;
         private double _minPosition;
         private double _maxPosition;
-        private double _videoLenght;
+        private double _videoLength;
         private double _videoSpeedRatio;
         private bool _ismute;
 
@@ -152,10 +152,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set { Set(ref _maxPosition, value); }
         }
 
-        public double VideoLenght
+        public double VideoLength
         {
-            get { return _videoLenght; }
-            set { Set(ref _videoLenght, value); }
+            get { return _videoLength; }
+            set { Set(ref _videoLength, value); }
         }
 
         public double MinPosition

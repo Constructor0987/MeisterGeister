@@ -92,7 +92,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Columns.Add("GridColorG");
                     dtSettings.Columns.Add("GridColorR");
                     dtSettings.Columns.Add("ShowSightArea");
-                    dtSettings.Columns.Add("SightAreaLenght");
+                    dtSettings.Columns.Add("SightAreaLength");
                     dtSettings.Columns.Add("ShowCreatureName");
                     dtSettings.Columns.Add("UseFog");
                     dtSettings.Columns.Add("AktKampfrunde");
@@ -122,7 +122,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Rows[0]["GridColorR"] = Settings[11];
 
                     dtSettings.Rows[0]["ShowSightArea"] = Settings[12];
-                    dtSettings.Rows[0]["SightAreaLenght"] = Settings[13];
+                    dtSettings.Rows[0]["SightAreaLength"] = Settings[13];
                     dtSettings.Rows[0]["ShowCreatureName"] = Settings[14];
                     dtSettings.Rows[0]["UseFog"] = Settings[15];
                     dtSettings.Rows[0]["AktKampfrunde"] = Settings[16];
@@ -274,7 +274,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                 back.Add(Convert.ToDouble(drow["GridColorR"]));
 
                                 back.Add(Convert.ToDouble(drow["ShowSightArea"]));
-                                back.Add(Convert.ToDouble(drow["SightAreaLenght"]));
+                                back.Add(Convert.ToDouble(drow["SightAreaLength"]));
                                 back.Add(Convert.ToDouble(drow["ShowCreatureName"]));
                                 back.Add(Convert.ToDouble(drow["UseFog"]));
                                 back.Add(Convert.ToInt32(drow["AktKampfrunde"]));

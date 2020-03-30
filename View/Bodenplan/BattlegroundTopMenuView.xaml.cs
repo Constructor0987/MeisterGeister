@@ -221,6 +221,31 @@ namespace MeisterGeister.View.Bodenplan
         {
             Global.CurrentKampf.BodenplanView.VideoObject1.SpeedRatio = e.NewValue;            
         }
+        
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //      cpBackgroundColor.SelectedColor = Color.FromArgb(BattlegroundVM.BackgroundColor.A, BattlegroundVM.BackgroundColor.R, BattlegroundVM.BackgroundColor.G, BattlegroundVM.BackgroundColor.B);
+        //    cpBackgroundColor.SelectedColor = Colors.Green;
+
+        //          cpBackgroundColor.SelectedColor = BattlegroundVM.BackgroundColor;
+        }
+
+        private void CpBackgroundColor_Loaded(object sender, RoutedEventArgs e)
+        {
+       //     BattlegroundVM.BackgroundColor.ScRBattlegroundVM.BackgroundColor.ScR
+            //cpBackgroundColor.SelectedColor = Color.FromArgb(
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScA),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScR),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScG),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScB));
+            //,
+            //    .FromARgb(54, 117, 54);
+       //         BattlegroundVM.BackgroundColor.ScA,
+                //BattlegroundVM.BackgroundColor.ScR,
+                //BattlegroundVM.BackgroundColor.ScG,
+                //BattlegroundVM.BackgroundColor.ScB);
+
+        }
 
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
         {

@@ -653,7 +653,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BackgroundBrush = new SolidColorBrush(value);
             }
         }
-
+        
         private Brush _backgroundBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x36, 0x75, 0x36));
         public Brush BackgroundBrush
         {
@@ -920,14 +920,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        private int _backgroundMp4Lenght = 999;
-        public int BackgroundMp4Lenght
+        private int _backgroundMp4Length = 999;
+        public int BackgroundMp4Length
         {
-            get { return _backgroundMp4Lenght; }
-            set { Set(ref _backgroundMp4Lenght, value);
+            get { return _backgroundMp4Length; }
+            set { Set(ref _backgroundMp4Length, value);
                 BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
                 if (bg1 != null)
-                    (bg1 as MP4Object).VideoLenght = Convert.ToDouble(value);
+                    (bg1 as MP4Object).VideoLength = Convert.ToDouble(value);
             }
         }
 
@@ -1467,21 +1467,21 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        public double SightAreaLenght
+        public double SightAreaLength
         {
-            get { return _sightAreaLenght; }
+            get { return _sightAreaLength; }
 
             set
             {
-                if (Set(ref _sightAreaLenght, value))
+                if (Set(ref _sightAreaLength, value))
                 {
-                    Ressources.SetNewSightAreaLength(ref _battlegroundObjects, SightAreaLenght);
+                    Ressources.SetNewSightAreaLength(ref _battlegroundObjects, SightAreaLength);
                 }
             }
         }
 
         private bool _showSightArea = true;
-        private double _sightAreaLenght = 120;
+        private double _sightAreaLength = 120;
 
         #endregion Sichtbereich-Optionen
 
@@ -1883,7 +1883,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     BackgroundOffsetX = bg0MP4.ZDisplayX;
                     BackgroundOffsetY = bg0MP4.ZDisplayY;
                     BackgroundOffsetSize = (bg0MP4 as MP4Object).ObjectSize;
-                    BackgroundMp4Lenght = Convert.ToInt32((bg0MP4 as MP4Object).VideoLenght);
+                    BackgroundMp4Length = Convert.ToInt32((bg0MP4 as MP4Object).VideoLength);
                     BackgroundMp4MinPosition = Convert.ToInt32((bg0MP4 as MP4Object).MinPosition);
                     BackgroundMp4MaxPosition = Convert.ToInt32((bg0MP4 as MP4Object).MaxPosition);
                     BackgroundMp4Mute = (bg0MP4 as MP4Object).IsMute;
@@ -1952,7 +1952,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             };
             GridColor = gridCol;
             ShowSightArea = lstSettings[12] == 1;
-            SightAreaLenght = lstSettings[13];
+            SightAreaLength = lstSettings[13];
             ShowCreatureName = lstSettings[14] == 1;
             useFog = lstSettings[15] == 1;
 
@@ -2033,7 +2033,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             lstSettings.Add(GridColor.G);
             lstSettings.Add(GridColor.R);
             lstSettings.Add(ShowSightArea ? 1 : 0);
-            lstSettings.Add(SightAreaLenght);
+            lstSettings.Add(SightAreaLength);
             lstSettings.Add(ShowCreatureName ? 1 : 0);
             lstSettings.Add(useFog ? 1 : 0);
             lstSettings.Add(CurrKampf.Kampfrunde);
@@ -2694,7 +2694,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BackgroundImage = ViewHelper.ChooseFile("Hintergrundbild setzen", "", false, new string[10] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff", "mp4" });
 
                 BackgroundMp4MinPosition = 0;
-                BackgroundMp4MaxPosition = BackgroundMp4Lenght;
+                BackgroundMp4MaxPosition = BackgroundMp4Length;
             }
             else
             {
