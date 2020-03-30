@@ -43,7 +43,7 @@ namespace MeisterGeister.View.Karte
 
         void KarteView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            (DataContext as KarteViewModel).zoomControl = this.FindName("MapScrollViewer") as ZoomControl;
+            VM.MapZoomControl = MapScrollViewer;
 
             if(e.OldValue is KarteViewModel)
             {

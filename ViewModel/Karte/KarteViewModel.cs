@@ -227,11 +227,11 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref mapConverter, value); }
         }
 
-        private ZoomControl _zoomControl;
-        public ZoomControl zoomControl
+        private ZoomControl _mapZoomControl;
+        public ZoomControl MapZoomControl
         {
-            get { return _zoomControl; }
-            set {_zoomControl = value; }
+            get { return _mapZoomControl; }
+            set { Set(ref _mapZoomControl, value); }
         }
         #endregion
 

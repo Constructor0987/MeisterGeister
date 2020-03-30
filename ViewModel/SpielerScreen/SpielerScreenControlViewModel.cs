@@ -833,7 +833,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             {
                 if (b.GetType() == typeof(KarteViewModel))
                 {
-                    SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)(((KarteViewModel)b).zoomControl)));
+                    SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)(((KarteViewModel)b).MapZoomControl)));
                     SlideShowStop();
                     return;
                 }
