@@ -1439,24 +1439,6 @@
                                            IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
                                         <Thumb.Template>
                                             <ControlTemplate TargetType="{x:Type Thumb}">
-                                                <!--<Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" >
-                                                    <MediaElement
-                                                        LoadedBehavior="Manual"
-                                                        UnloadedBehavior="Manual"
-                                                        BufferingEnded="VideoObject1_BufferingEnded"
-                                                        Loaded="VideoObject1_Loaded"
-                                                        x:Name="VideoObject1"
-                                                        Canvas.Left="{Binding ZDisplayX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding ZDisplayY, UpdateSourceTrigger=PropertyChanged}"
-                                                        Width="{Binding VideoWidth, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="{Binding VideoHeight, UpdateSourceTrigger=PropertyChanged}"
-                                                        VerticalAlignment="Top"
-                                                        Opacity="{Binding Opacity}"
-                                                        RenderTransformOrigin="0.5,0.5"
-                                                        Source="{Binding VideoUrl}"
-                                                        MediaEnded="VideoObject1_MediaEnded" >
-                                                    </MediaElement>
-                                                </Canvas>-->
                                             </ControlTemplate>
                                         </Thumb.Template>
                                     </Thumb>
