@@ -1259,7 +1259,10 @@ namespace MeisterGeister.View.Bodenplan
                 {  }
             }
             VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
-            VM.BackgroundMp4Lenght = Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds);
+            VM.BackgroundMp4Lenght =
+                Convert.ToInt32(((MediaElement)sender).NaturalDuration != Duration.Automatic?
+                Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds):
+                999);
         }
 
         private static class NativeMethods
