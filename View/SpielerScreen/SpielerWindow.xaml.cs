@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf;
+using MeisterGeister.ViewModel.Karte;
 using MeisterGeister.ViewModel.SpielerScreen;
 
 namespace MeisterGeister.View.SpielerScreen
@@ -131,7 +132,7 @@ namespace MeisterGeister.View.SpielerScreen
         }
 
         public static void SetContent(object info)
-        {
+        {            
             Instance.Content = info;
             Instance.IsKampfInfoModus = (info is Kampf.KampfInfoView);
 
@@ -250,10 +251,6 @@ namespace MeisterGeister.View.SpielerScreen
                 var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
                 SetContent(infoView);
             }
-        }
-
-        public static void SetBodenplanView()
-        {
         }
 
         internal static void ReOpen()

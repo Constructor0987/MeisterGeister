@@ -240,6 +240,12 @@
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/stop.png" Margin="4,6,4,14" Visibility="{Binding SlideShowRunning, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 </Grid>
             </Button>
+            <Button Grid.Column="1" Grid.Row="3" Margin="2" Height="45" Command="{Binding OnShowMap}" Width="45" ToolTip="Den Spielern die Karte zeigen.">
+                <Grid>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/kartenzeichnen.png" Margin="4,6,4,14" />
+                </Grid>
+            </Button>
             <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Width="90" Height="60" BorderBrush="Black" BorderThickness="1">
                 <Rectangle Name="_spielerWindowVorschau" />
             </Border>

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MeisterGeister.View.SpielerScreen;
 using MeisterGeister.Logic.Einstellung;
+using System.Windows;
+using MeisterGeister.ViewModel.Karte;
+using MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.ViewModel.SpielerScreen
 {
@@ -814,6 +817,29 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 _slideShowTimer.Interval = _slideShowInterval * 1000;
         }
 
+        private Base.CommandBase onShowMap = null;
+        public Base.CommandBase OnShowMap
+        {
+            get
+            {
+                if (onShowMap == null)
+                    onShowMap = new Base.CommandBase(ShowMap, null);
+                return onShowMap;
+            }
+        }
+        private void ShowMap(object sender)
+        {
+            foreach (ToolViewModelBase b in Global.MainVM.OpenTools)
+            {
+                if (b.GetType() == typeof(KarteViewModel))
+                {
+                    SpielerWindow.SetContent(View.General.ViewHelper.GetImageFromControl((FrameworkElement)(((KarteViewModel)b).MapZoomControl)));
+                    SlideShowStop();
+                    return;
+                }
+            }
+        }
+
         #endregion
 
     }
@@ -898,5 +924,4 @@ namespace MeisterGeister.ViewModel.SpielerScreen
     }
 
     #endregion
-
 }
