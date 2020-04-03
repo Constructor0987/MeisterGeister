@@ -186,7 +186,6 @@
     </UserControl.Resources>
     <Grid>
         <Grid.Resources>
-            <!--<ViewGeneral:ColorFromScRgbToArgbConverter x:Key="ColorFromScRgbToArgbConverter1" />-->
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
             <ViewGeneral:EnumItemsSource x:Key="ZeichenValues" Type="{x:Type model:ZeichenModus}" />

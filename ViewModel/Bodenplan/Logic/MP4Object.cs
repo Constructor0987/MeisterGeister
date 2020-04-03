@@ -13,19 +13,19 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     public class MP4Object : BattlegroundBaseObject
     {
         private string _videoUrl;
-        private double _videoWidth = 1000;
-        private double _videoHeight = 1000;
+        private double _videoWidth = 10000;
+        private double _videoHeight = 10000;
         private double _videoPositionX = 50;
         private double _videoPositionY = 50;
         public double _videoOriginalWidth = 10000;
         public double _videoOriginalHeigth = 10000;
-        private double _objectSize = 1;
+        private double _objectSize = 5000;
         private double _rotateAngle = 0;
         private double _minPosition;
         private double _maxPosition;
         private double _videoLength;
-        private double _videoSpeedRatio;
-        private bool _ismute;
+        private double _videoSpeedRatio = 1;
+        private bool _ismute = false;
 
         private bool isBackgroundPicture = false;
         private bool isFogPicture = false;

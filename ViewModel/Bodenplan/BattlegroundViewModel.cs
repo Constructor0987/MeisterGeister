@@ -208,8 +208,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public MP4Object CreateVideoObject(string vidurl, Point p)
         {
             var melement = new MP4Object(vidurl, 0, 0);
-
-            melement.ObjectSize = ObjectSize;
             BattlegroundObjects.Add(melement);
             return melement;
         }
