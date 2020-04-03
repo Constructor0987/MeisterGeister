@@ -188,12 +188,28 @@ namespace MeisterGeister.View.Bodenplan
             if (e.Key == Key.Down || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
                 BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? 100 : -100);
             (sender as TextBox).Text = "";
-
         }
+
+
+        private void TextBoxHintergrund_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                tcTopMenuView.Focus();
+            if (e.Key == Key.Left || e.Key == Key.NumPad4 || e.Key == Key.NumPad1 || e.Key == Key.NumPad7)
+                BattlegroundVM.BackgroundOffsetX = BattlegroundVM.BackgroundOffsetX + (-100);
+            if (e.Key == Key.Right || e.Key == Key.NumPad6 || e.Key == Key.NumPad3 || e.Key == Key.NumPad9)
+                BattlegroundVM.BackgroundOffsetX = BattlegroundVM.BackgroundOffsetX + (100);
+            if (e.Key == Key.Up || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || e.Key == Key.NumPad7)
+                BattlegroundVM.BackgroundOffsetY = BattlegroundVM.BackgroundOffsetY + (-100);
+            if (e.Key == Key.Down || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
+                BattlegroundVM.BackgroundOffsetY = BattlegroundVM.BackgroundOffsetY + (100);
+            (sender as TextBox).Text = "";
+        }
+        
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            Global.CurrentKampf.LabelInfo = "Pfeil-Tasten oder Num-Lock-Tasten benutzen um den Spieler Bildschirm zu verschieben";
+            Global.CurrentKampf.LabelInfo = ((TextBox)sender).Tag.ToString();
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -204,6 +220,31 @@ namespace MeisterGeister.View.Bodenplan
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Global.CurrentKampf.BodenplanView.VideoObject1.SpeedRatio = e.NewValue;            
+        }
+        
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //      cpBackgroundColor.SelectedColor = Color.FromArgb(BattlegroundVM.BackgroundColor.A, BattlegroundVM.BackgroundColor.R, BattlegroundVM.BackgroundColor.G, BattlegroundVM.BackgroundColor.B);
+        //    cpBackgroundColor.SelectedColor = Colors.Green;
+
+        //          cpBackgroundColor.SelectedColor = BattlegroundVM.BackgroundColor;
+        }
+
+        private void CpBackgroundColor_Loaded(object sender, RoutedEventArgs e)
+        {
+       //     BattlegroundVM.BackgroundColor.ScRBattlegroundVM.BackgroundColor.ScR
+            //cpBackgroundColor.SelectedColor = Color.FromArgb(
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScA),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScR),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScG),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScB));
+            //,
+            //    .FromARgb(54, 117, 54);
+       //         BattlegroundVM.BackgroundColor.ScA,
+                //BattlegroundVM.BackgroundColor.ScR,
+                //BattlegroundVM.BackgroundColor.ScG,
+                //BattlegroundVM.BackgroundColor.ScB);
+
         }
 
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)

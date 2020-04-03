@@ -28,7 +28,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 ObservableCollection<BattlegroundBaseObject> bboWithoutHeroes = new ObservableCollection<BattlegroundBaseObject>();
                 foreach (var o in bbo)
                 {
-                    if (!(o is BattlegroundCreature) && ((o is ImageObject && !SaveWithoutPictures) || (!(o is ImageObject))))
+                    if (!(o is BattlegroundCreature) && 
+                        ((o is ImageObject && !SaveWithoutPictures) || 
+                        (!(o is ImageObject))||
+                        (!(o is MP4Object))))
                     {
                         o.RunBeforeXMLSerialization();
                         //Console.WriteLine("SAVE TO XML: " + o.ToString());
@@ -89,11 +92,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Columns.Add("GridColorG");
                     dtSettings.Columns.Add("GridColorR");
                     dtSettings.Columns.Add("ShowSightArea");
-                    dtSettings.Columns.Add("SightAreaLenght");
+                    dtSettings.Columns.Add("SightAreaLength");
                     dtSettings.Columns.Add("ShowCreatureName");
                     dtSettings.Columns.Add("UseFog");
                     dtSettings.Columns.Add("AktKampfrunde");
                     dtSettings.Columns.Add("IsEditorModeEnabled");
+
+                    //Background Color
+                    dtSettings.Columns.Add("BackgroundColorA");
+                    dtSettings.Columns.Add("BackgroundColorB");
+                    dtSettings.Columns.Add("BackgroundColorG");
+                    dtSettings.Columns.Add("BackgroundColorR");
 
                     dtSettings.Rows.Add();
                     dtSettings.Rows[0]["BackgroundOffsetSize"] = Settings[0];
@@ -113,11 +122,18 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Rows[0]["GridColorR"] = Settings[11];
 
                     dtSettings.Rows[0]["ShowSightArea"] = Settings[12];
-                    dtSettings.Rows[0]["SightAreaLenght"] = Settings[13];
+                    dtSettings.Rows[0]["SightAreaLength"] = Settings[13];
                     dtSettings.Rows[0]["ShowCreatureName"] = Settings[14];
                     dtSettings.Rows[0]["UseFog"] = Settings[15];
                     dtSettings.Rows[0]["AktKampfrunde"] = Settings[16];
                     dtSettings.Rows[0]["IsEditorModeEnabled"] = Settings[17];
+
+                    //BackgroundColor
+                    dtSettings.Rows[0]["BackgroundColorA"] = Settings[18];
+                    dtSettings.Rows[0]["BackgroundColorB"] = Settings[19];
+                    dtSettings.Rows[0]["BackgroundColorG"] = Settings[20];
+                    dtSettings.Rows[0]["BackgroundColorR"] = Settings[21];
+
                     xmlH.AddObsDT(dtSettings);
                 }
                 using (StreamWriter wr = new StreamWriter(filename))
@@ -258,11 +274,19 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                 back.Add(Convert.ToDouble(drow["GridColorR"]));
 
                                 back.Add(Convert.ToDouble(drow["ShowSightArea"]));
-                                back.Add(Convert.ToDouble(drow["SightAreaLenght"]));
+                                back.Add(Convert.ToDouble(drow["SightAreaLength"]));
                                 back.Add(Convert.ToDouble(drow["ShowCreatureName"]));
                                 back.Add(Convert.ToDouble(drow["UseFog"]));
                                 back.Add(Convert.ToInt32(drow["AktKampfrunde"]));
                                 back.Add(Convert.ToDouble(drow["IsEditorModeEnabled"]));
+                            }
+
+                            if (drow.ItemArray.Length > 18)
+                            {
+                                back.Add(Convert.ToDouble(drow["BackgroundColorA"]));
+                                back.Add(Convert.ToDouble(drow["BackgroundColorB"]));
+                                back.Add(Convert.ToDouble(drow["BackgroundColorG"]));
+                                back.Add(Convert.ToDouble(drow["BackgroundColorR"]));
                             }
                         }
                     }
@@ -468,6 +492,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     [System.Xml.Serialization.XmlInclude(typeof(PathLine))]
     [System.Xml.Serialization.XmlInclude(typeof(FilledPathLine))]
     [System.Xml.Serialization.XmlInclude(typeof(ImageObject))]
+    [System.Xml.Serialization.XmlInclude(typeof(MP4Object))]
     public class XmlCollectionHelper 
     {
         public ObservableCollection<BattlegroundBaseObject> ObsColl = new ObservableCollection<BattlegroundBaseObject>();

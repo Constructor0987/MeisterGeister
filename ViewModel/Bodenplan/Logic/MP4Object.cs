@@ -13,18 +13,19 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     public class MP4Object : BattlegroundBaseObject
     {
         private string _videoUrl;
-        private double _videoWidth = 1000;
-        private double _videoHeight = 1000;
+        private double _videoWidth = 10000;
+        private double _videoHeight = 10000;
         private double _videoPositionX = 50;
         private double _videoPositionY = 50;
         public double _videoOriginalWidth = 10000;
         public double _videoOriginalHeigth = 10000;
-        private double _objectSize = 1;
+        private double _objectSize = 5000;
         private double _rotateAngle = 0;
-        private TimeSpan _minPosition;
-        private TimeSpan _maxPosition;
-        private TimeSpan _videoLength;
-        private double _videoSpeed;
+        private double _minPosition;
+        private double _maxPosition;
+        private double _videoLength;
+        private double _videoSpeedRatio = 1;
+        private bool _ismute = false;
 
         private bool isBackgroundPicture = false;
         private bool isFogPicture = false;
@@ -132,19 +133,32 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public double VideoSpeed
+        public bool IsMute
         {
-            get { return _videoSpeed; }
-            set { Set(ref _videoSpeed, value); }
+            get { return _ismute; }
+            set { Set(ref _ismute, value); }
         }
 
-        public TimeSpan MaxPosition
+
+        public double VideoSpeedRatio
+        {
+            get { return _videoSpeedRatio; }
+            set { Set(ref _videoSpeedRatio, value); }
+        }
+
+        public double MaxPosition
         {
             get { return _maxPosition; }
             set { Set(ref _maxPosition, value); }
         }
 
-        public TimeSpan MinPosition
+        public double VideoLength
+        {
+            get { return _videoLength; }
+            set { Set(ref _videoLength, value); }
+        }
+
+        public double MinPosition
         {
             get { return _minPosition; }
             set { Set(ref _minPosition, value); }
@@ -178,8 +192,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public override void RunAfterXMLDeserialization()
         {
-            var vidname = VideoUrl.Split('\\');
-            VideoUrl = Ressources.GetFullApplicationPathForPictures() + vidname[vidname.Length - 1];
+          
         }
         
 

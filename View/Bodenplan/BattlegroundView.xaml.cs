@@ -37,6 +37,8 @@ namespace MeisterGeister.View.Bodenplan
             
             AddPictureButtons();
             AddFogOfWar();
+
+        //    VM.BackgroundColor = Color.FromArgb(255, 55, 88, 55);
         }
 
         public double VisualisationHeight
@@ -1248,24 +1250,35 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void VideoObject1_MediaOpened(object sender, RoutedEventArgs e)
+        public void VideoObject1_MediaOpened(object sender, RoutedEventArgs e)
         {
             if(VM.BackgroundMP4LoadedBehavior == MediaState.Pause)
             {
                 ((MediaElement)sender).Position = new TimeSpan(0);
-                
+
                 VM.BackgroundMP4LoadedBehavior = MediaState.Play;
-                while(((MediaElement)sender).Position == new TimeSpan(0))
-                { }
-                //ArenaScrollViewer.Background = Color.FromScRgb
+                VM.BackgroundMp4Mute = true;
+                while (((MediaElement)sender).Position <= new TimeSpan(0,0,0,0,50))
+                {  }
             }
-
             VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
-            VM.BackgroundMp4Lenght = Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds);
-            VM.BackgroundMp4MinPosition = 0;
-            VM.BackgroundMp4MaxPosition = VM.BackgroundMp4Lenght;
+            
+            if (VM.BackgroundMp4Length !=
+                Convert.ToInt32(((MediaElement)sender).NaturalDuration != Duration.Automatic ?
+                Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds) :
+                999))
+                VM.BackgroundMp4Length =
+                    Convert.ToInt32(((MediaElement)sender).NaturalDuration != Duration.Automatic?
+                    Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds):
+                    999);
+            if (!VM.IsLoading)
+            {
+                VM.BackgroundMp4MinPosition = 0;
+                VM.BackgroundMp4MaxPosition = VM.BackgroundMp4Length;
+            }
+            VM.IsLoading = false;
         }
-
+        
         private static class NativeMethods
         {
             [DllImport("user32.dll")]
