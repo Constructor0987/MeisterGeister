@@ -696,7 +696,6 @@
                                         </Button>
                                     </Grid>
                                 </Grid>
-
                             </Grid>
 
                         </TabItem>
@@ -844,6 +843,16 @@
 
 
                                             <Grid HorizontalAlignment="Left" Margin="160,0,0,0" Height="45" Width="45">
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding BackgroundImage, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
                                                 <Image Margin="-1" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
                                                 <Image
                                                 Height="25"
@@ -853,12 +862,13 @@
                                                 Height="25"
                                                 Margin="0,0,0,8"
                                                 Source="/Images/Icons/General/x-offset.png" />
-                                            </Grid>
-                                            <TextBox HorizontalAlignment="Left" ToolTip="Verschiebe mit den Pfeiltasten den Spieler-Bildschirm, Esc-Taste zum Beenden"
-                                            Foreground="Transparent" Background="Transparent" MaxLength="1" Margin="168,10,0,17" 
-                                                     Tag="Pfeil-Tasten oder Num-Lock-Tasten benutzen um den Hintergrund zu verschieben"
-                                                 Width="29" Focusable="True" PreviewKeyDown="TextBoxHintergrund_KeyDown" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
+                                                <TextBox HorizontalAlignment="Left" ToolTip="Verschiebe mit den Pfeiltasten den Spieler-Bildschirm, Esc-Taste zum Beenden"
+                                                        Foreground="Transparent" Background="Transparent" MaxLength="1" Margin="8,5,0,10" 
+                                                         Tag="Pfeil-Tasten oder Num-Lock-Tasten benutzen um den Hintergrund zu verschieben"
+                                                     Width="29" Focusable="True" PreviewKeyDown="TextBoxHintergrund_KeyDown" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
 
+                                            </Grid>
+                                            
 
                                             <ToggleButton        
                                                 Name="tbBackgroundMp4Mute"
@@ -1126,13 +1136,13 @@
                                     </GroupBox>
 
                                     <GroupBox Header="Farbe" Margin="0,-5,0,0" Grid.Column="1">
-                                        <xctk:ColorPicker    
+                                        <xctk:ColorPicker
                                             Name="cpBackgroundColor"
                                             Width="22"
                                             Height="22"
                                             Loaded="CpBackgroundColor_Loaded"
                                             ShowDropDownButton="False"
-                                            SelectedColor="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged, FallbackValue='#FF367536'}"
+                                            SelectedColor="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}"
                                             ToolTip="Hintergrundfarbe" />
                                     </GroupBox>
                                 </Grid>

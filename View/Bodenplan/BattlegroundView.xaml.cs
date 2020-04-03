@@ -1262,12 +1262,21 @@ namespace MeisterGeister.View.Bodenplan
                 {  }
             }
             VM.BackgroundMP4LoadedBehavior = MediaState.Pause;
-            VM.BackgroundMp4Length =
-                Convert.ToInt32(((MediaElement)sender).NaturalDuration != Duration.Automatic?
-                Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds):
-                999);
-            VM.BackgroundMp4MinPosition = 0;
-            VM.BackgroundMp4MaxPosition = VM.BackgroundMp4Length;
+            
+            if (VM.BackgroundMp4Length !=
+                Convert.ToInt32(((MediaElement)sender).NaturalDuration != Duration.Automatic ?
+                Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds) :
+                999))
+                VM.BackgroundMp4Length =
+                    Convert.ToInt32(((MediaElement)sender).NaturalDuration != Duration.Automatic?
+                    Convert.ToInt32(((MediaElement)sender).NaturalDuration.TimeSpan.TotalSeconds):
+                    999);
+            if (!VM.IsLoading)
+            {
+                VM.BackgroundMp4MinPosition = 0;
+                VM.BackgroundMp4MaxPosition = VM.BackgroundMp4Length;
+            }
+            VM.IsLoading = false;
         }
         
         private static class NativeMethods
