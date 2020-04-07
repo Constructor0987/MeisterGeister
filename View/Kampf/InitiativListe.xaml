@@ -238,7 +238,7 @@
 
                                         <DockPanel>
                                             <TextBlock Text="Kampfstil: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                                            <ComboBox DockPanel.Dock="Right" SelectedValuePath="Stil" SelectedValue="{Binding Kampfstil}">
+                                            <ComboBox DockPanel.Dock="Right" SelectedValuePath="Stil" SelectedValue="{Binding Manöver.Ausführender.Kampfstil, UpdateSourceTrigger=PropertyChanged}">
                                                 <ComboBox.ItemsSource>
                                                     <Kampf:KampfstilListe/>
                                                 </ComboBox.ItemsSource>
@@ -250,9 +250,6 @@
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
-                                                <ComboBox.ToolTip>
-                                                    <TextBlock Text="{Binding Kampfstil}"/>
-                                                </ComboBox.ToolTip>
                                             </ComboBox>
                                         </DockPanel>
 
