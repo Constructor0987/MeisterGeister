@@ -484,9 +484,8 @@
                                                                     VerticalAlignment="Center"
                                                                     DockPanel.Dock="Left"
                                                                     Text="Position: " />
-                                                                <ComboBox DockPanel.Dock="Right" ItemsSource="{StaticResource PositionenValues}" />
-                                                                <!--  ToDo: Prüfen, was der SelectedValue sein könnte -> BattlegroundCreature hat keine Position als Property  -->
-                                                                <!--  SelectedValue="{Binding Path=Position, Converter={StaticResource PositionenValues}}" />  -->
+                                                                <ComboBox DockPanel.Dock="Right" ItemsSource="{StaticResource PositionenValues}"
+                                                                    SelectedValue="{Binding Path=ki.Kämpfer.Position, Converter={StaticResource PositionenValues}}"/>
                                                             </DockPanel>
 
                                                             <DockPanel>
@@ -496,7 +495,7 @@
                                                                     Text="Kampfstil: " />
                                                                 <ComboBox
                                                                     DockPanel.Dock="Right"
-                                                                    SelectedValue="{Binding Kampfstil}"
+                                                                    SelectedValue="{Binding ki.Kampfstil, UpdateSourceTrigger=PropertyChanged}"
                                                                     SelectedValuePath="Stil">
                                                                     <ComboBox.ItemsSource>
                                                                         <kampflogic:KampfstilListe />
@@ -512,9 +511,6 @@
                                                                             </StackPanel>
                                                                         </DataTemplate>
                                                                     </ComboBox.ItemTemplate>
-                                                                    <ComboBox.ToolTip>
-                                                                        <TextBlock Text="{Binding Kampfstil}" />
-                                                                    </ComboBox.ToolTip>
                                                                 </ComboBox>
                                                             </DockPanel>
 
