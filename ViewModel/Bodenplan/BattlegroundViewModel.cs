@@ -113,6 +113,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _initDnD, value); }
         }
 
+        public bool InitLineal
+        {
+            get { return _initLineal; }
+            set { Set(ref _initLineal, value); }
+        }
+
         public bool IsEditorModeEnabled
         {
             get { return _isEditorModeEnabled; }
@@ -255,6 +261,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BattlegroundObjects.Add(pathline);
         }
 
+        public void CreateNewTempLinealLine(double x1, double y1)
+        {
+            var pathline = new PathLine(new Point(x1, y1))
+            {
+                ObjectColor = new SolidColorBrush(Colors.DarkBlue),
+                StrokeThickness = 10,
+                Opacity = .2,
+                IsNew = true
+            };
+            SelectedTempObject = pathline;
+            BattlegroundObjects.Add(pathline);
+        }
+
         public void CreateNewTempTextLabel(double x1, double y1)
         {
             var label = new TextLabel("0 Schritt", x1, y1)
@@ -262,6 +281,16 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 IsNew = true,
                 LabelWidth = 200,
                 Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : 1
+            };
+            BattlegroundObjects.Add(label);
+        }
+        public void CreateNewTempLinealLabel(double x1, double y1)
+        {
+            var label = new TextLabel("0 Schritt", x1, y1)
+            {
+                IsNew = true,
+                LabelWidth = 200,
+                Opacity = 1
             };
             BattlegroundObjects.Add(label);
         }
@@ -368,15 +397,22 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 }
                 else if (SelectedTempObject is PathLine)
                 {
-                    var pathLine = (PathLine)SelectedTempObject;
-                    var endPoint = new Point(x2, y2);
-                    Point startPoint = pathLine.GetStartPoint;
-
-                    pathLine.ChangeLastPoint(endPoint);
-
-                    SetBewegungslaenge(startPoint, endPoint);
+                    AlterPathLine(x2, y2);
                 }
             }
+        }
+
+        public void AlterPathLine(double x2, double y2)
+        {
+            Console.WriteLine(x2 + ", " + y2);
+
+            var pathLine = (PathLine)SelectedTempObject;
+            var endPoint = new Point(x2, y2);
+            Point startPoint = pathLine.GetStartPoint;
+
+            pathLine.ChangeLastPoint(endPoint);
+
+            SetBewegungslaenge(startPoint, endPoint);
         }
 
         public void RemoveNewObjects()
@@ -512,6 +548,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private bool _freizeichnen = false;
 
         private bool _initDnD;
+
+        private bool _initLineal = true;
 
         //Vielleicht als Enum, wenn mehr als zwei Modi gebraucht werden? JO
         private bool _isEditorModeEnabled = true;
@@ -1067,6 +1105,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _heldenInFormationBewegen, value); }
         }
 
+        public bool LinealAktiv
+        {
+            get { return _linealAktiv; }
+            set { 
+                Set(ref _linealAktiv, value);
+                if (!value)
+                {
+                    FinishCurrentTempPathLine();
+                }
+            }
+        }
+
         public bool SpielerScreenActive
         {
             get { return _spielerScreenActive; }
@@ -1146,6 +1196,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private bool _spielerScreenActive = false;
 
         private bool _heldenInFormationBewegen = false;
+
+        private bool _linealAktiv;
 
         private Window _spielerScreenWindow = null;
 
@@ -1576,7 +1628,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
 
-    public double Opacity
+        public double Opacity
         {
             get { return SelectedObject != null ? SelectedObject.Opacity : 1; }
             set

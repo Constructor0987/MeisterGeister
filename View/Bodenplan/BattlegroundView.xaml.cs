@@ -658,7 +658,6 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-
         private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -819,6 +818,12 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
+                if (VM.LinealAktiv && !VM.InitLineal)
+                {
+                    VM.AlterPathLine(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y);
+                    return;
+                }
+
                 VM.FogFreimachen = (VM.useFog && Keyboard.Modifiers == ModifierKeys.Control);
 
                 if (VM.FogFreimachen && VM.FogPixelData != null)
@@ -1095,12 +1100,27 @@ namespace MeisterGeister.View.Bodenplan
                         return;
                     }
 
-                    if (VM.SelectedObject == null)
+                    if (VM.SelectedObject == null || VM.LinealAktiv)
                     {
-                        return;
-                    }
+                        if (VM.InitLineal)
+                        {
+                            VM.BewegungZuvor = 0;
+                            var x = VM.CurrentMousePositionX;
+                            var y = VM.CurrentMousePositionY;
+                            VM.CreateNewTempLinealLine(x, y);
+                            VM.CreateNewTempLinealLabel(x, y);
 
-                    if (VM.SelectedObject is Wesen)
+                            VM.InitLineal = false;
+                            e.Handled = true;
+                        }
+                        else
+                        {
+                            VM.InitLineal = true;
+                            e.Handled = true;
+                        }
+                    return;
+                    }
+                    else if (VM.SelectedObject is Wesen)
                     {
                         ((BattlegroundCreature)VM.SelectedObject).CalculateNewSightLineSektor(
                             new Point(e.GetPosition(ArenaGrid).X,
