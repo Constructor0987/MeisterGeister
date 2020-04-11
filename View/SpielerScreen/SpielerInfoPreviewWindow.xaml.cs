@@ -67,8 +67,12 @@ namespace MeisterGeister.View.SpielerScreen
 
         public void SetVisualBrush()
         {
-            double width = VM.SpielerScreen.Bounds.Width;
-            double height = VM.SpielerScreen.Bounds.Height;
+            double width = (VM == null) ?
+                SpielerScreenControlViewModel.Instance.SpielerScreen.Bounds.Width :
+                VM.SpielerScreen.Bounds.Width;
+            double height = (VM == null) ?
+                SpielerScreenControlViewModel.Instance.SpielerScreen.Bounds.Height :
+                VM.SpielerScreen.Bounds.Height;
             Height = height * 0.2 + 39 + 26; // Fenstergröße entspricht 20% des 2. Bildschirm
             Width = width * 0.2;
             if (Width < 370)
