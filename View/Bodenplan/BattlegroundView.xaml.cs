@@ -1100,7 +1100,7 @@ namespace MeisterGeister.View.Bodenplan
                         return;
                     }
 
-                    if (VM.SelectedObject == null || VM.LinealAktiv)
+                    if (VM.LinealAktiv)
                     {
                         if (VM.InitLineal)
                         {
@@ -1118,7 +1118,11 @@ namespace MeisterGeister.View.Bodenplan
                             VM.InitLineal = true;
                             e.Handled = true;
                         }
-                    return;
+                        return;
+                    }
+                    else if (VM.SelectedObject == null)
+                    {
+                        return;
                     }
                     else if (VM.SelectedObject is Wesen)
                     {
