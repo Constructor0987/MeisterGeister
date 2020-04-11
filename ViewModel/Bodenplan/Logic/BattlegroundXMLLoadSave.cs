@@ -274,6 +274,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                 back.Add(Convert.ToDouble(drow["GridColorR"]));
 
                                 back.Add(Convert.ToDouble(drow["ShowSightArea"]));
+                            }
+                            if (drow.ItemArray.Length > 13)
+                            {
                                 back.Add(Convert.ToDouble(drow["SightAreaLength"]));
                                 back.Add(Convert.ToDouble(drow["ShowCreatureName"]));
                                 back.Add(Convert.ToDouble(drow["UseFog"]));
