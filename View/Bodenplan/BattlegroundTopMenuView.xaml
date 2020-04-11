@@ -310,12 +310,30 @@
                                             Padding="0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
-                                            IsChecked="{Binding LinealAktiv}"
-                                            ToolTip="Abstände messen (mit Rechtsklick)">
+                                            IsChecked="{Binding LinealAktiv}" >
                                             <Image
                                                 Height="25"
                                                 Margin="0,0,0,5"
                                                 Source="/Images/Icons/masse.png" />
+                                            <ToggleButton.ToolTip>
+                                                <StackPanel>
+                                                    <TextBlock Text="Abstände messen (mit Rechtsklick)" />
+                                                    <TextBlock Text="Rechtsklick auf Icon um die Farbe zu ändern" />
+                                                </StackPanel>
+                                            </ToggleButton.ToolTip>
+                                            <ToggleButton.ContextMenu>                                                
+                                                <ContextMenu>
+                                                    <xctk:ColorPicker
+                                                        DisplayColorAndName ="True"
+                                                        Width="250"
+                                                        Height="30"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
+                                                        SelectedColor="{Binding LinealColor, UpdateSourceTrigger=PropertyChanged}"
+                                                        ShowDropDownButton="True"
+                                                        ToolTip="Linealfarbe" />
+                                                </ContextMenu>
+                                            </ToggleButton.ContextMenu>
                                         </ToggleButton>
                                     </Grid>
                                 </Border>

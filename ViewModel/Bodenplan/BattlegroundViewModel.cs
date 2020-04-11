@@ -265,7 +265,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             var pathline = new PathLine(new Point(x1, y1))
             {
-                ObjectColor = new SolidColorBrush(Colors.DarkBlue),
+                ObjectColor = new SolidColorBrush(LinealColor),
                 StrokeThickness = 10,
                 Opacity = .2,
                 IsNew = true
@@ -2119,6 +2119,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
         /// <summary>
         /// Farbe des HexGrids bzw des RechteckGrids
         /// </summary>
+        private Color _linealColor = Colors.DarkBlue;
+        public Color LinealColor
+        {
+            get { return _linealColor; }
+            set { Set(ref _linealColor, value); }
+        }
+
+
+        /// <summary>
+        /// Farbe des HexGrids bzw des RechteckGrids
+        /// </summary>
         public Color GridColor
         {
             get { return gridColor; }
@@ -2593,6 +2604,29 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 return onReLoadImages;
             }
         }
+        private Base.CommandBase _onBtnLinealFarbeAnpassen = null;
+        public Base.CommandBase OnBtnLinealFarbeAnpassen
+        {
+            get
+            {
+                if (_onBtnLinealFarbeAnpassen == null)
+                {
+                    _onBtnLinealFarbeAnpassen = new Base.CommandBase(LinealFarbeAnpassen, null);
+                }
+                return _onBtnLinealFarbeAnpassen;
+            }
+        }
+
+        private void LinealFarbeAnpassen(object obj)
+        {
+            Xceed.Wpf.Toolkit.ColorPicker colorPicker = new Xceed.Wpf.Toolkit.ColorPicker();
+            colorPicker.DisplayColorAndName = true;
+            colorPicker.IsOpen = true;
+            colorPicker.SelectedColor = Colors.Red;
+            colorPicker.ShowAdvancedButton = true;
+
+        }
+
 
         public Base.CommandBase OnBtnRenewFogOfWar
         {
