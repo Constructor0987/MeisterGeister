@@ -1113,6 +1113,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (!value)
                 {
                     FinishCurrentTempPathLine();
+                    InitLineal = true;
                 }
             }
         }
