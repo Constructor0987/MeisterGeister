@@ -3566,6 +3566,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 
                 if (allFiles.Count > 0)
                 {
+                    //Falls Playlist läuft, Abfrage zum stoppen oder Abbruch des Prozesses
+                    if (!CheckPlaylistRunningBeforeEdit(AktKlangPlaylist))
+                    {
+                        Global.SetIsBusy(false);
+                        return;
+                    }
+
                     if (ViewHelper.ConfirmYesNoCancel("Hinzufügen von Musiktitel aus dem Verzeichnis", "Es wurden insgesamt " + allFiles.Count +
                         " Dateien gefunden, die noch nicht in der Playliste eingetragen sind." + Environment.NewLine +
                         "Sollen diese integriert werden?") == 2)
@@ -4300,7 +4307,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                             setTitelStdPfad_AufrufeHintereinander = 0;
                         }
 
-                            bezugsDir = (titelliste[0].Pfad + @"\" + titelliste[0].Datei).LastIndexOf(@"\") != -1 ?
+                        bezugsDir = (titelliste[0].Pfad + @"\" + titelliste[0].Datei).LastIndexOf(@"\") != -1 ?
                             (titelliste[0].Pfad + @"\" + titelliste[0].Datei).Substring(0, (titelliste[0].Pfad + @"\" + titelliste[0].Datei).LastIndexOf(@"\")) :
                             titelliste[0].Pfad + @"\" + titelliste[0].Datei;
 
@@ -4324,6 +4331,15 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 if (Directory.Exists(bezugsDir))
                     Environment.CurrentDirectory = bezugsDir != "" ? bezugsDir : s;
                 List<string> files = ViewHelper.ChooseFiles("Musiktitel auswählen", "", true, validExt);
+
+                //Falls Playlist läuft, Abfrage zum stoppen oder Abbruch des Prozesses
+                if (files.Count > 0 &&
+                    !CheckPlaylistRunningBeforeEdit(AktKlangPlaylist))
+                {
+                    Mouse.OverrideCursor = null;
+                    Global.SetIsBusy(false);
+                    return;
+                }
                 Environment.CurrentDirectory = s;
 
                 // Öffnen bestätigt
@@ -7534,7 +7550,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
             // AktKlangPlaylist == null also neue Playliste anlegen
             if (aPlaylist == null)
-                aPlaylist = NeueKlangPlaylistInDB(NeuerPlaylistName); //NeueKlangPlaylistInDB(AktKlangPlaylist.Name);
+                aPlaylist = NeueKlangPlaylistInDB(NeuerPlaylistName);
 
             if (files != null && files.Count >= 0)
             foreach (string dateihinzu in files)
@@ -7858,8 +7874,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     }
                 }
             }
-            //Update wir nach der Routine durchgeführt
-            //UpdateAlleListen();  
         }
 
         private void PlaylistenImportieren(List<string> dateien)
@@ -8436,6 +8450,45 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         #region //---- Funktionen ----
 
+        public bool CheckPlaylistRunningBeforeEdit(Audio_Playlist aPlaylist)
+        {
+            bool isrunning =
+               ((BGPlayer.AktPlaylist != null &&
+                 !MusikAktivIsPaused &&
+                 aPlaylist.Audio_PlaylistGUID == BGPlayer.AktPlaylist.Audio_PlaylistGUID) ||
+
+                (SelectedMusikPlaylistItem != null &&
+                 !MusikAktivIsPaused && 
+                 aPlaylist.Audio_PlaylistGUID == SelectedMusikPlaylistItem.VM.aPlaylist.Audio_PlaylistGUID) ||
+
+                (MusikAktiv.aPlaylist != null && aPlaylist.Audio_PlaylistGUID == MusikAktiv.aPlaylist.Audio_PlaylistGUID) ||
+
+                ErwPlayerGeräuscheListItemListe.
+                    FindAll(s => s.tbtnCheck.IsChecked.Value).Select(t => t.VM.aPlaylist.Audio_PlaylistGUID).ToList().Contains(aPlaylist.Audio_PlaylistGUID));
+
+            if (isrunning && ViewHelper.Confirm("Playliste läuft - Stoppen?", "Die zu ändernde Playliste läuft aktuell." + Environment.NewLine +
+                "Um die Playliste zu ändern muss sie zunächst beendet werden." + Environment.NewLine + Environment.NewLine +
+                "Soll die Playliste gestoppt und die Änderung fortgesetzt werden?"))
+            {
+                if (aPlaylist.Hintergrundmusik)
+                {
+                    //Stopp Hintergrundplayliste
+                    btnBGStoppen(null);
+                    return true;
+                }
+                else
+                {
+                    //Stopp Geräuscheplayliste
+                    MusikZeile mZeile = ErwPlayerGeräuscheListItemListe.FirstOrDefault(t => t.VM.aPlaylist.Audio_PlaylistGUID == aPlaylist.Audio_PlaylistGUID);
+                    if (mZeile != null)
+                        mZeile.tbtnCheck.IsChecked = false;
+
+                    return true;
+                }
+                return false;
+            }
+            return true;
+        }
 
         public Nullable<double> getTitelLänge(Audio_Titel aTitel)
         {
