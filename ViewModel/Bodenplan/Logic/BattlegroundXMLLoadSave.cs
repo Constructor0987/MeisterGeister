@@ -31,13 +31,25 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     if (!(o is BattlegroundCreature) && 
                         ((o is ImageObject && !SaveWithoutPictures) || 
                         (!(o is ImageObject))||
-                        (!(o is MP4Object))))
+                        (!(o is MP4Object)))&&
+                        (!(o is LichtquelleObject)))
                     {
                         o.RunBeforeXMLSerialization();
                         //Console.WriteLine("SAVE TO XML: " + o.ToString());
                         bboWithoutHeroes.Add(o as BattlegroundBaseObject);
                     }
                 }
+
+                //foreach (var o in bbo)
+                //{
+                //    if (o is LichtquelleObject)
+                //    {
+                //        o.RunBeforeXMLSerialization();
+                //        //Console.WriteLine("SAVE TO XML: " + o.ToString());
+                //        bboWithoutHeroes.Add(o as LichtquelleObject);
+                //    }
+                //}
+
 
                 ObservableCollection<DataTable> bboHeroes = new ObservableCollection<DataTable>();
                 foreach (var o in bbo)

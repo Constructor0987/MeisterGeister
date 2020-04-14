@@ -1,30 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Xml.Serialization;
 using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
+    [Serializable]
     public class LichtquelleObject : BattlegroundBaseObject
     {
-        private double _lichtquelleWidth = 100;
-        private double _lichtquelleHeight = 100;
-        private double _lichtquellePositionX = 50;
-        private double _lichtquellePositionY = 50;
-        public double _lichtquelleOriginalWidth = 100;
-        public double _lichtquelleOriginalHeigth = 100;
-        private double _objectSize = 1;
-        private double _rotateAngle = 0;
-        private IKämpfer _ikämpfer = null;
-
-        private bool isBackgroundPicture = false;
-        private bool isFogPicture = false;
+        private double _lichtquelleOriginalWidth = 100;
+        private double _lichtquelleOriginalHeigth = 100;
 
         private double _lightCreatureX = 0;
         public double LightCreatureX
@@ -32,6 +16,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _lightCreatureX; }
             set { Set(ref _lightCreatureX, value); }
         }
+
         private double _lightCreatureY = 0;
         public double LightCreatureY
         {
@@ -46,20 +31,24 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set { Set(ref _lichtquellePixelRadius, value); }
         }
 
-        public LichtquelleObject()
-        {}
-
-        public KämpferInfo _ki;
+        [NonSerialized]
+        private KämpferInfo _ki;
+        [XmlIgnore]
         public KämpferInfo ki
         {
             get { return _ki; }
             set { Set(ref _ki, value); }
         }
+
+        private IKämpfer _ikämpfer = null;
         public IKämpfer iKämpfer
         {
             get { return _ikämpfer; }
             set { Set(ref _ikämpfer, value); }
         }
+
+        public LichtquelleObject()
+        {}
 
         public LichtquelleObject(String urlpath, double x, double y)
         {
@@ -69,7 +58,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             LichquelleWidth = _lichtquelleOriginalWidth;
             LichquelleHeight = _lichtquelleOriginalHeigth;
             
-
             ZDisplayX = x - 10;
             ZDisplayY = y - 10;
         }
@@ -77,29 +65,24 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         //Objectname
         public override string ObjectName
         {
-            get { return "Bildobjekt"; }
+            get { return "Lichtquellenobjekt"; }
         }
 
+        private bool isBackgroundPicture = false;
         public bool IsBackgroundPicture
         {
             get { return isBackgroundPicture; }
-            set
-            {
-                isBackgroundPicture = value;
-                OnChanged("IsBackgroundPicture");
-            }
+            set { Set(ref isBackgroundPicture, value); }
         }
 
+        private bool isFogPicture = false;
         public bool IsFogPicture
         {
             get { return isFogPicture; }
-            set
-            {
-                isFogPicture = value;
-                OnChanged("IsFogPicture");
-            }
+            set { Set(ref isFogPicture, value); }
         }
 
+        private double _objectSize = 1;
         public double ObjectSize
         {
             get { return _objectSize; }
@@ -111,56 +94,41 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        private double _rotateAngle = 0;
         public double RotateAngle
         {
             get { return _rotateAngle; }
-            set
-            {
-                _rotateAngle = value;
-                OnChanged("RotateAngle");
-            }
+            set { Set(ref _rotateAngle, value); }
         }
 
+        private double _lichtquellePositionX = 50;
         public double LichquellePositionX
         {
             get { return _lichtquellePositionX; }
-            set
-            {
-                _lichtquellePositionX = value;
-                OnChanged("ImagePositionX");
-            }
+            set { Set(ref _lichtquellePositionX, value); }
         }
 
+        private double _lichtquellePositionY = 50;
         public double LichquellePositionY
         {
             get { return _lichtquellePositionY; }
-            set
-            {
-                _lichtquellePositionY = value;
-                OnChanged("ImagePositionY");
-            }
+            set { Set(ref _lichtquellePositionY, value); }
         }
 
+        private double _lichtquelleWidth = 100;
         public double LichquelleWidth
         {
             get { return _lichtquelleWidth; }
-            set
-            {
-                _lichtquelleWidth = value;
-                OnChanged("ImageWidth");
-            }
+            set { Set(ref _lichtquelleWidth, value); }
         }
+
+        private double _lichtquelleHeight = 100;
         public double LichquelleHeight
         {
             get { return _lichtquelleHeight; }
-            set
-            {
-                _lichtquelleHeight = value;
-                OnChanged("ImageHeight");
-            }
+            set { Set(ref _lichtquelleHeight, value); }
         }
        
-
         public override void MoveObject(double deltaX, double deltaY, bool stickAtCursor)
         {
             LichquellePositionX = LichquellePositionX + deltaX;
@@ -183,8 +151,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public override void RunAfterXMLDeserialization()
         {
+
         }
-        
+
         public void CalculateNewDirection(System.Windows.Point currentMousePos)
         {
             //rotates images per leftclick for 45°
