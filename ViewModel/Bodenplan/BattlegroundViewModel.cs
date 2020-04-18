@@ -1374,13 +1374,37 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
                     BattlegroundObjects.Add(((Held)kämpfer));
+
+                    //ToDo: Initiative in der Manöverliste aktuelisieren
+
+                    //Set Aktuelle Initiative auf geladenen Wert
+                    //KämpferInfo kiCurrKampf = CurrKampf.Kämpfer.Where(
+                    //    t => ((Wesen)t.Kämpfer).IsHeld &&
+                    //         t.Kämpfer.Name == ((Held)kämpfer).Name).FirstOrDefault(
+                    //    t => ((Held)t.Kämpfer).HeldGUID == ((Held)kämpfer).HeldGUID);
+
+                    //kiCurrKampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
                 }
             }
             else
             {
                 ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
+
+                //ToDo: Initiative in der Manöverliste aktuelisieren
+
+                //Set Aktuelle Initiative auf geladenen Wert
+                //KämpferInfo kiCurrKampf = CurrKampf.Kämpfer.Where(
+                //    t => !((Wesen)t.Kämpfer).IsHeld &&
+                //    t.Kämpfer.Name == ((Gegner)kämpfer).Name).FirstOrDefault(
+                //    t => ((Gegner)t.Kämpfer).GegnerBaseGUID == ((Gegner)kämpfer).GegnerBaseGUID);
+
+                //kiCurrKampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
             }
+            //Lichtquelle nach Generierung des Kämpfers erstellen
+            if (((Wesen)kämpfer).ki.LichtquelleMeter > 0)
+                ((Wesen)kämpfer).ki.LichtquelleMeter = ((Wesen)kämpfer).ki.LichtquelleMeter;
+
         }
 
         public void ClearBattleground()
@@ -1928,6 +1952,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         ((bgOb as BattlegroundCreature) as Gegner).LoadBattlegroundPortrait((bgOb as BattlegroundCreature).PortraitFileName, false);
                         ((bgOb as BattlegroundCreature) as Gegner).Position = GetPositionFromImage((bgOb as BattlegroundCreature).CreaturePosition);
                     }
+
                 }
             }
 
