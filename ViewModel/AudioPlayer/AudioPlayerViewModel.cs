@@ -4332,9 +4332,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     Environment.CurrentDirectory = bezugsDir != "" ? bezugsDir : s;
                 List<string> files = ViewHelper.ChooseFiles("Musiktitel auswählen", "", true, validExt);
 
+                //Prozess abbrechen wenn kein File ausgewählt wurde,
                 //Falls Playlist läuft, Abfrage zum stoppen oder Abbruch des Prozesses
-                if (files.Count > 0 &&
-                    !CheckPlaylistRunningBeforeEdit(AktKlangPlaylist))
+                if (files == null ||
+                    (files.Count > 0 &&
+                    !CheckPlaylistRunningBeforeEdit(AktKlangPlaylist)))
                 {
                     Mouse.OverrideCursor = null;
                     Global.SetIsBusy(false);
@@ -8467,8 +8469,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     FindAll(s => s.tbtnCheck.IsChecked.Value).Select(t => t.VM.aPlaylist.Audio_PlaylistGUID).ToList().Contains(aPlaylist.Audio_PlaylistGUID));
 
             if (isrunning && ViewHelper.Confirm("Playliste läuft - Stoppen?", "Die zu ändernde Playliste läuft aktuell." + Environment.NewLine +
-                "Um die Playliste zu ändern muss sie zunächst beendet werden." + Environment.NewLine + Environment.NewLine +
-                "Soll die Playliste gestoppt und die Änderung fortgesetzt werden?"))
+                "Um die Playliste zu ändern sollte sie zunächst beendet werden." + Environment.NewLine + Environment.NewLine +
+
+                "Soll die Playliste vorher gestoppt werden bevor die Änderung erfolgt?" + Environment.NewLine+ 
+                "Falls du mit 'Nein' anwortest, wird keine automatische Aktualisierung durchgeführt und könnte ggf. zu einer Fehlermeldung führen."))
             {
                 if (aPlaylist.Hintergrundmusik)
                 {
