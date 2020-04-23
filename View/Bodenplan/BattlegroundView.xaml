@@ -470,7 +470,6 @@
                                 </Style>
                             </ListBox.Style>
                             <ListBox.Resources>
-
                                 <!--  Datatemplate BattlegroundCreature (Hero & Enemy)  -->
                                 <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
                                     <Thumb DragDelta="Thumb_Drag">
@@ -1311,7 +1310,6 @@
                                                         </Ellipse.Style>
                                                     </Ellipse>
                                                 </Canvas>
-
                                                 <ControlTemplate.Triggers>
                                                     <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                         <Setter Property="Effect">
@@ -1328,6 +1326,7 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
+                                
                                 <!--  Datatemplate IMAGEOBJECT  -->
                                 <DataTemplate DataType="{x:Type model:ImageObject}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
@@ -1426,7 +1425,6 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
-
 
                                 <!--  Datatemplate MP4OBJECT  -->
                                 <DataTemplate DataType="{x:Type model:MP4Object}">

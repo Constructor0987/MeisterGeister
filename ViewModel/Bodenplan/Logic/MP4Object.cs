@@ -193,8 +193,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public override void RunAfterXMLDeserialization()
         {
           
-        }
-        
+        }        
 
         public void CalculateNewDirection(System.Windows.Point currentMousePos)
         {
