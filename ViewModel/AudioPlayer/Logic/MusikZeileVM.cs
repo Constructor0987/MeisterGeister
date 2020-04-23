@@ -482,7 +482,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 grpobj.wartezeitTimer.Stop();
             grpobj.wartezeitTimer.Tag = null;
             System.Diagnostics.Debug.WriteLine("1");
-            if (grpobj != null)// && grpobj.wirdAbgespielt)
+            if (grpobj != null)
             {
                 if (grpobj == null)
                     return;
@@ -511,13 +511,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                             grpobj.mZeileVM.grpobj._listZeile[i].aData.Stop();
                             grpobj.mZeileVM.grpobj._listZeile[i].aData.Close();
                         }
-                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.istPause = true);
-                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Pause());
-                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.istStandby = true); //true ?
-                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.istLaufend = false);
-                        //aPlayerVM.CheckPlayStandbySongs(grpobj);
-                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Stop());
-                        //grpobj.mZeileVM.grpobj._listZeile.All(t => t.aData.Close());
                         grpobj.mZeileVM.Min1SongWirdGespielt = null;
                         aPlayerVM._GrpObjecte.Remove(grpobj);
                         System.Diagnostics.Debug.WriteLine("7");

@@ -700,19 +700,14 @@ namespace MeisterGeister.View.AudioPlayer
                     //Prozess beenden wenn unglütige Ablage oder ViewModel bereits entfernt
                     System.Collections.IList lstItems = (System.Collections.IList)e.Data.GetData("meineAudioZeilenListe");
                     
-                        //var coll = lstItems.Cast<List<AudioZeile>>();
-                    //lstItems = ((System.Collections.IList)e.Data.GetData("meineAudioZeilenListe")).Cast<AudioZeile>();
-
                     Audio_Playlist zielPlaylist = VM.DropZielPlaylist != null ?
                         VM.DropZielPlaylist : VM.AktKlangPlaylist;
-                        //(e.Data.GetData("meineAudioZeilenListe") as AudioZeile).VM.aPlayTitel.Audio_Playlist;
-
-                        
+                                            
                     if (VM.audioZeileMouseOverDropped == -1 ||
-                        (lstItems == null || lstItems.Count == 0)) //e.Data.GetData("meineAudioZeilenListe") as ItemCollection) == null)
+                        (lstItems == null || lstItems.Count == 0))
                         return;
 
-                    foreach (AudioZeileVM aZeileVM in lstItems)// e.Data.GetData("meineAudioZeilenListe") as  ItemCollection)
+                    foreach (AudioZeileVM aZeileVM in lstItems)
                         AZeileAblegen(null, aZeileVM,
                             zielPlaylist,
                             e,
@@ -728,6 +723,14 @@ namespace MeisterGeister.View.AudioPlayer
                         if (e.Data.GetDataPresent(DataFormats.FileDrop))
                         {
                             List<string> gedroppteDateien = new List<string>();
+
+                            //Falls Playlist läuft, Abfrage zum stoppen oder Abbruch des Prozesses
+                            if (((string[])e.Data.GetData(DataFormats.FileDrop, false)).Length > 0)
+                                if (!VM.CheckPlaylistRunningBeforeEdit(VM.AktKlangPlaylist))
+                                {
+                                    Mouse.OverrideCursor = null;
+                                    return;
+                                }
                             foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
                             {
                                 if (Directory.Exists(s))
