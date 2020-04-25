@@ -636,23 +636,6 @@ namespace MeisterGeister.Logic.HeldenImport
 
             Global.ContextHeld.UpdateList<Held>();
 
-
-            if (held_exist != null && lstPflanze.Count > 0)
-            {
-                foreach (Pflanze p in lstPflanze)
-                {
-                    Held_Pflanze hPflanze = new Held_Pflanze();
-                    hPflanze.HeldGUID = _held.HeldGUID;
-                    hPflanze.ID = Guid.NewGuid();
-                    hPflanze.PflanzeGUID = p.PflanzeGUID;
-                    hPflanze.Bekannt = true;
-                    Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze);
-                    _held.Held_Pflanze.Add(hPflanze);
-                }
-            }
-            Global.ContextHeld.UpdateList<Held>();
-
-
             result.Held = _held;
             result.ImportLogs = _importLog;
             return result;
