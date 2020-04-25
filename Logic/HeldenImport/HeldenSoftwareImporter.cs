@@ -377,7 +377,6 @@ namespace MeisterGeister.Logic.HeldenImport
         {
             // Import-Log erzeugen
             HeldenImportResult result = Import(_xmlDoc, newGuid);
-            result.Held = Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == result.Held.HeldGUID).FirstOrDefault();
 
             return result;
         }
@@ -408,6 +407,10 @@ namespace MeisterGeister.Logic.HeldenImport
                 heldGuid = newGuid;
             _held.HeldGUID = heldGuid;
             _held.Name = name;
+
+            Held held_exist = newGuid == Guid.Empty?
+                Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == _held.HeldGUID).FirstOrDefault():
+                null;
 
             // TODO: Regelsystem evtl. aus der XML-Datei ermitteln
             if (string.IsNullOrEmpty(_held.Regelsystem)) // falls keine Regeledition gesetzt, DSA 4.1 annehmen
@@ -476,6 +479,10 @@ namespace MeisterGeister.Logic.HeldenImport
             if (bild != null)
             {
                 _held.Bild = bild.Attributes["value"].Value;
+            }
+            if (held_exist != null)
+            {
+                _held.Bild = held_exist.Bild;
             }
 
             // Eigenschaften
@@ -592,13 +599,60 @@ namespace MeisterGeister.Logic.HeldenImport
             // Inventar
             ImportInventar(_xmlDoc, _held, _importLog);
 
+            //Held_Pflanzen aus altem Helden
+            List<Pflanze> lstPflanze = new List<Pflanze>();
+            if (held_exist != null)
+            {
+                lstPflanze.AddRange(held_exist.Held_Pflanze.Select(t => t.Pflanze));
+            }
+
+            if (held_exist != null)
+            {
+                _held.Spieler = held_exist.Spieler;
+                _held.Notizen = held_exist.Notizen;
+                _held.Kampfwerte = held_exist.Kampfwerte;
+            }
+
+            if (held_exist != null && lstPflanze.Count > 0)
+            {
+                foreach (Pflanze p in lstPflanze)
+                {
+                    Held_Pflanze hPflanze = new Held_Pflanze();
+                    hPflanze.HeldGUID = _held.HeldGUID;
+                    hPflanze.ID = Guid.NewGuid();
+                    hPflanze.PflanzeGUID = p.PflanzeGUID;
+                    hPflanze.Bekannt = true;
+                    Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze);
+                    _held.Held_Pflanze.Add(hPflanze);
+                }
+            }
+
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
             if (!serializer.InsertOrUpdateHeld(_held))
             {
                 //FEHLER! Held konnte nicht in die Datenbank eingefügt werden.
                 throw new Exception("Held konnte nicht in die Datenbank eingefügt werden.");
             }
+
             Global.ContextHeld.UpdateList<Held>();
+
+
+            if (held_exist != null && lstPflanze.Count > 0)
+            {
+                foreach (Pflanze p in lstPflanze)
+                {
+                    Held_Pflanze hPflanze = new Held_Pflanze();
+                    hPflanze.HeldGUID = _held.HeldGUID;
+                    hPflanze.ID = Guid.NewGuid();
+                    hPflanze.PflanzeGUID = p.PflanzeGUID;
+                    hPflanze.Bekannt = true;
+                    Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze);
+                    _held.Held_Pflanze.Add(hPflanze);
+                }
+            }
+            Global.ContextHeld.UpdateList<Held>();
+
+
             result.Held = _held;
             result.ImportLogs = _importLog;
             return result;

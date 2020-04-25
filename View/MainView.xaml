@@ -177,7 +177,12 @@
             </StatusBarItem>
         </StatusBar>
             <Grid Grid.Column="1">
-                <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" ViewGeneral:TabContent.IsCached="True" ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}" Margin="0,4,0.143,-4.286">
+                <TabControl Drop="TabItem_Drop" 
+                            PreviewMouseMove="TabItem_PreviewMouseMove" 
+                            x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" 
+                            ViewGeneral:TabContent.IsCached="True"
+                            ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}" 
+                            Margin="0,4,0.143,-4.286">
                 <!--<TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected}"/>

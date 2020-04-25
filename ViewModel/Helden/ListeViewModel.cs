@@ -342,11 +342,8 @@ namespace MeisterGeister.ViewModel.Helden
             }
 
             if (existing != null && overwrite && (isHeldenblatt || isHeldenSoftware))
-            { // MeisterGeister spezifische Daten beim Reimport übernehmen
-                importHeld.Spieler = existing.Spieler;
-                importHeld.Notizen = existing.Notizen;
-                importHeld.Kampfwerte = existing.Kampfwerte;
-                importHeld.Held_Pflanze = existing.Held_Pflanze;
+            { 
+                // MeisterGeister spezifische Daten beim Reimport übernehmen
                 if (importHeld.CheckEnergieständeAbwechend(existing)
                     && ConfirmYesNoCancel("Energiestände & Wunden", "Sollen die aktuellen Energiestände und Wunden beibehalten werden?") == 2)
                 {
@@ -365,9 +362,19 @@ namespace MeisterGeister.ViewModel.Helden
                 }
             }
 
-            MainViewModel.Instance.Helden.Add(importHeld);
+            if (overwrite)
+            {
+                if (existing != null)
+                {
+                    MainViewModel.Instance.Helden.Remove(existing);
+                    HeldListe.Refresh();
+                }
+                MainViewModel.Instance.Helden.Add(importHeld);
+            }
+                
             HeldListe.Refresh();
             SortHeldListe();
+            Global.ContextHeld.UpdateList<Held>();
 
             return importHeld;
         }
