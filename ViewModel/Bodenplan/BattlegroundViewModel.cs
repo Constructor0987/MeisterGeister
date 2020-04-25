@@ -2048,7 +2048,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             useFog = lstSettings[15] == 1;
 
             //Kampf auf KR setzen
-            CurrKampf.KampfNeuStarten();
+            CurrKampf.KampfNeuStarten(false);
             while (CurrKampf.Kampfrunde < lstSettings[16])
                 CurrKampf.NeueKampfrunde();
             IsEditorModeEnabled = lstSettings[17] == 1;

@@ -410,6 +410,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                    (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
                                 }
                                 else
                                 {
@@ -441,9 +442,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                         (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
                                         (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                         (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                        if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer) != null)
+                                            Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer).Initiative = Convert.ToInt32(drow["Initiative"]);
                                     }
                                 }
-                                (bObj as BattlegroundCreature).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+
                                 try
                                 { 
                                     (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
