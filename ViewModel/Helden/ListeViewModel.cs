@@ -263,8 +263,8 @@ namespace MeisterGeister.ViewModel.Helden
                     ShowError("Beim Import ist ein Fehler aufgetreten.", ex);
                 }
 #endif
-                Global.ContextHeld.Save();
-                Global.ContextHeld.UpdateList<Held>();
+                //Global.ContextHeld.Save();
+                //Global.ContextHeld.UpdateList<Held>();
                 Global.SetIsBusy(false);
             }
         }
