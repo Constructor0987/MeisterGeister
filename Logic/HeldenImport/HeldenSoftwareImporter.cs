@@ -599,7 +599,7 @@ namespace MeisterGeister.Logic.HeldenImport
             // Inventar
             ImportInventar(_xmlDoc, _held, _importLog);
 
-            //Held_Pflanzen aus altem Helden
+            // Pflanzen aus altem Helden
             List<Pflanze> lstPflanze = new List<Pflanze>();
             if (held_exist != null)
             {
@@ -617,14 +617,17 @@ namespace MeisterGeister.Logic.HeldenImport
             {
                 foreach (Pflanze p in lstPflanze)
                 {
-                    Held_Pflanze hPflanze = new Held_Pflanze();
-                    hPflanze.HeldGUID = _held.HeldGUID;
-                    hPflanze.ID = Guid.NewGuid();
-                    hPflanze.PflanzeGUID = p.PflanzeGUID;
-                    hPflanze.Bekannt = true;
-                    Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze);
-                    _held.Held_Pflanze.Add(hPflanze);
+                    Held_Pflanze hp = new Held_Pflanze();
+                    hp.HeldGUID = _held.HeldGUID;
+                    hp.PflanzeGUID = p.PflanzeGUID;
+                    hp.Bekannt = true;
                 }
+            //    while (held_exist.Held_Pflanze.Count > 0)
+            //    {
+            //        Held_Pflanze hp = held_exist.Held_Pflanze.ToList()[0];
+            //        held_exist.Held_Pflanze.Remove(hp);
+            //        _held.Held_Pflanze.Add(hp);
+            //    }
             }
 
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);

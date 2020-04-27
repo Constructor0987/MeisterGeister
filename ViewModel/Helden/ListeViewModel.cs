@@ -263,7 +263,8 @@ namespace MeisterGeister.ViewModel.Helden
                     ShowError("Beim Import ist ein Fehler aufgetreten.", ex);
                 }
 #endif
-
+                Global.ContextHeld.Save();
+                Global.ContextHeld.UpdateList<Held>();
                 Global.SetIsBusy(false);
             }
         }
@@ -341,6 +342,7 @@ namespace MeisterGeister.ViewModel.Helden
                 importHeld = Held.Import(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
             }
 
+            List<Pflanze> lstPflanze = new List<Pflanze>();
             if (existing != null && overwrite && (isHeldenblatt || isHeldenSoftware))
             { 
                 // MeisterGeister spezifische Daten beim Reimport übernehmen
@@ -360,21 +362,33 @@ namespace MeisterGeister.ViewModel.Helden
                     importHeld.WundenBrust = existing.WundenBrust;
                     importHeld.WundenKopf = existing.WundenKopf;
                 }
+                SelectedHeld = existing;
+
+                //lstPflanze.AddRange(existing.Held_Pflanze.Select(t => t.Pflanze));
+
+
+                //if (lstPflanze.Count > 0)
+                //{
+                //    while (existing.Held_Pflanze.Count > 0)
+                //    {
+                //        Held_Pflanze hp = existing.Held_Pflanze.ToList()[0];
+                //        existing.Held_Pflanze.Remove(hp);
+                //        Global.ContextHeld.UpdateList<Held_Pflanze>();
+                //        importHeld.Held_Pflanze.Add(hp);
+                //    }
+                //}
+                DeleteHeld(true);
+            //    Global.ContextHeld.Save();
             }
 
             if (overwrite)
             {
-                if (existing != null)
-                {
-                    MainViewModel.Instance.Helden.Remove(existing);
-                    HeldListe.Refresh();
-                }
                 MainViewModel.Instance.Helden.Add(importHeld);
             }
                 
             HeldListe.Refresh();
             SortHeldListe();
-            Global.ContextHeld.UpdateList<Held>();
+          //  importHeld.UpdateLists;
 
             return importHeld;
         }
@@ -469,9 +483,10 @@ namespace MeisterGeister.ViewModel.Helden
         private void DeleteHeld(object sender)
         {
             Held h = SelectedHeld;
-            if (h != null && !IsReadOnly)
+            if (h != null && 
+                (!IsReadOnly || ((sender is bool) && ((bool)sender) == true)))
             {
-                if (Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
+                if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
                     && Global.ContextHeld.Delete<Held>(h))
                 {
                     //Liste aktualisieren

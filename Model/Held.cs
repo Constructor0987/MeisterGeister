@@ -3906,7 +3906,11 @@ namespace MeisterGeister.Model
                 {
                     ha.SpezGewicht = null;
                 }
-
+                if (ha.Trageort == null && ha.TrageortGUID != Guid.Empty)
+                {
+                    Global.ContextHeld.Update<Held>(this);
+                    ha.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == ha.TrageortGUID).FirstOrDefault();
+                }
                 var effGewicht = ha.Trageort.TragkraftFaktor * (ha.SpezGewicht == null ? ha.Ausrüstung.Gewicht : ha.SpezGewicht.Value);
                 if (ha.Ausrüstung.Rüstung != null && ha.Angelegt)
                 {
