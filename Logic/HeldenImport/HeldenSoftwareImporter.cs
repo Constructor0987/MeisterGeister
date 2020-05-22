@@ -587,7 +587,6 @@ namespace MeisterGeister.Logic.HeldenImport
             // Vor-/Nachteile
             ImportVorNachteile(_xmlDoc, _held, _importLog);
 
-            _held.AstralenergieAktuell = _held.AstralenergieMax;
             // Sonderfertigkeiten
             ImportSonderfertigkeiten(_xmlDoc, _held, _importLog);
 
@@ -600,17 +599,50 @@ namespace MeisterGeister.Logic.HeldenImport
             // Inventar
             ImportInventar(_xmlDoc, _held, _importLog);
 
+            _held.AstralenergieAktuell = _held.AstralenergieMax;
             // Pflanzen aus altem Helden
             List<Pflanze> lstPflanze = new List<Pflanze>();
             if (held_exist != null)
             {
                 lstPflanze.AddRange(held_exist.Held_Pflanze.Select(t => t.Pflanze));
 
+
                 if (lstPflanze.Count > 0)
                 {
                     foreach (Pflanze p in lstPflanze)
                     {
-                        _held.Held_Pflanze.Add(held_exist.Held_Pflanze.First());
+
+                        Global.ContextZooBot.Delete<Held_Pflanze>(held_exist.Held_Pflanze.FirstOrDefault(t => t.PflanzeGUID == p.PflanzeGUID));
+                        if (held_exist.Held_Pflanze.FirstOrDefault(t => t.PflanzeGUID == p.PflanzeGUID) != null)
+                            held_exist.Held_Pflanze.Remove(held_exist.Held_Pflanze.FirstOrDefault(t => t.PflanzeGUID == p.PflanzeGUID));
+                        //NotifyRefresh();
+
+                        Held_Pflanze hp = new Held_Pflanze();
+                        hp.HeldGUID = _held.HeldGUID;
+                        hp.ID = Guid.NewGuid();
+                        hp.PflanzeGUID = p.PflanzeGUID;
+                        hp.Bekannt = true;
+                        _held.Held_Pflanze.Add(hp);
+              //          if (Global.ContextZooBot.Insert<Held_Pflanze>(hp))
+                        { }
+
+                        //    Held_Talent ht = new Held_Talent();
+                        //    ht.HeldGUID = _held.HeldGUID;
+                        //    ht.TalentGUID = t.TalentGUID;
+                        //    ht.TaW = wert;
+                        //    ht.ZuteilungAT = atZuteilung;
+                        //    ht.ZuteilungPA = paZuteilung;
+                        //    if (_held.Held_Talent.Any(_ht => ht.TalentGUID == _ht.TalentGUID))
+                        //    {
+                        //        AddImportLog(ImportTypen.Talent, talentName, wert, _importLog);
+                        //        continue;
+                        //    }
+                        //    _held.Held_Talent.Add(ht);
+                        //}
+
+
+
+                        //_held.Held_Pflanze.Add(held_exist.Held_Pflanze.First());
 
 
                   //      Held_Pflanze hPflanze = new Held_Pflanze();
