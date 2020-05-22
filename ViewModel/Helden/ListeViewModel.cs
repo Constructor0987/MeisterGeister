@@ -265,6 +265,13 @@ namespace MeisterGeister.ViewModel.Helden
 #endif
                 //Global.ContextHeld.Save();
                 //Global.ContextHeld.UpdateList<Held>();
+                Global.ContextHeld.UpdateList<Held>();
+                Global.ContextHeld.UpdateList<Held_Rüstung>();
+                Global.ContextHeld.UpdateList<Held_Inventar>();
+                Global.ContextHeld.UpdateList<Held_Pflanze>();
+                Global.ContextHeld.Update<Held>(h);
+
+                //           Global.ContextHeld.Save();
                 Global.SetIsBusy(false);
             }
         }
@@ -342,7 +349,6 @@ namespace MeisterGeister.ViewModel.Helden
                 importHeld = Held.Import(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
             }
 
-            List<Pflanze> lstPflanze = new List<Pflanze>();
             if (existing != null && overwrite && (isHeldenblatt || isHeldenSoftware))
             { 
                 // MeisterGeister spezifische Daten beim Reimport übernehmen

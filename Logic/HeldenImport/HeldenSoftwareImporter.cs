@@ -587,6 +587,7 @@ namespace MeisterGeister.Logic.HeldenImport
             // Vor-/Nachteile
             ImportVorNachteile(_xmlDoc, _held, _importLog);
 
+            _held.AstralenergieAktuell = _held.AstralenergieMax;
             // Sonderfertigkeiten
             ImportSonderfertigkeiten(_xmlDoc, _held, _importLog);
 
@@ -604,6 +605,30 @@ namespace MeisterGeister.Logic.HeldenImport
             if (held_exist != null)
             {
                 lstPflanze.AddRange(held_exist.Held_Pflanze.Select(t => t.Pflanze));
+
+                if (lstPflanze.Count > 0)
+                {
+                    foreach (Pflanze p in lstPflanze)
+                    {
+                        _held.Held_Pflanze.Add(held_exist.Held_Pflanze.First());
+
+
+                  //      Held_Pflanze hPflanze = new Held_Pflanze();
+                  //      hPflanze.HeldGUID = _held.HeldGUID;
+                  //      hPflanze.ID = Guid.NewGuid();
+                  //      hPflanze.PflanzeGUID = p.PflanzeGUID;
+                  //      hPflanze.Bekannt = true;
+                  //      if (Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze))
+                  //      {
+                  //          //UnbekanntePflanzenListe.Remove(PflanzeAuswahl);
+                  ////          OnChanged("BekannteHeldenPflanzen");
+                  //      }
+                  //      else
+                  //      {
+                  //          //throw new Exception("Datenbankfehler" + Environment.NewLine + "Beim Erstellen einer neuen bekannten Pflanze ist ein Fehler aufgetreten.");
+                  //      }
+                    }
+                }
             }
 
             if (held_exist != null)
@@ -613,22 +638,12 @@ namespace MeisterGeister.Logic.HeldenImport
                 _held.Kampfwerte = held_exist.Kampfwerte;
             }
 
-            if (held_exist != null && lstPflanze.Count > 0)
-            {
-                foreach (Pflanze p in lstPflanze)
-                {
-                    Held_Pflanze hp = new Held_Pflanze();
-                    hp.HeldGUID = _held.HeldGUID;
-                    hp.PflanzeGUID = p.PflanzeGUID;
-                    hp.Bekannt = true;
-                }
             //    while (held_exist.Held_Pflanze.Count > 0)
             //    {
             //        Held_Pflanze hp = held_exist.Held_Pflanze.ToList()[0];
             //        held_exist.Held_Pflanze.Remove(hp);
             //        _held.Held_Pflanze.Add(hp);
             //    }
-            }
 
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
             if (!serializer.InsertOrUpdateHeld(_held))
