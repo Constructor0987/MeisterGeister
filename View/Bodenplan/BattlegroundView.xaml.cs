@@ -540,7 +540,7 @@ namespace MeisterGeister.View.Bodenplan
 
         private void View_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (VM.KampfWindow != null)
+            if (VM != null && VM.KampfWindow != null)
             {
                 VM.KampfWindow.Close();
             }
@@ -1037,6 +1037,19 @@ namespace MeisterGeister.View.Bodenplan
                             VM.SelectedObject.IsMoving = false;
                         }
 
+                        //Duplicator geklickjt ?
+
+
+                        ImageDuplicator id = ((DependencyObject)e.OriginalSource).FindAnchestor<ImageDuplicator>();
+
+                        if (id != null)
+                        {
+
+                            e.Handled = true;
+                            return;
+                        }
+
+                        //else
                         var o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
                         VM.SelectedObject = o;
                         _mouseClickedOnCreature = true;
@@ -1302,7 +1315,12 @@ namespace MeisterGeister.View.Bodenplan
             }
             VM.IsLoading = false;
         }
-        
+
+        private void ImageDuplicator_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
         private static class NativeMethods
         {
             [DllImport("user32.dll")]

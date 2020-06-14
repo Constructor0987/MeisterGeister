@@ -1769,6 +1769,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     SelectedObject.IsSelected = true;
                     if (SelectedObject is BattlegroundCreature)
                     {
+                        Global.CurrentKampf.SelectedManöverInfo = null;
                         Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe
                             .FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
