@@ -63,15 +63,6 @@ namespace MeisterGeister.View.Kampf
             }
         }
 
-        private void ImageDuplicator_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void ImageDuplicator_MouseEnter(object sender, MouseEventArgs e)
-        {
-
-        }
 
         //private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         //{

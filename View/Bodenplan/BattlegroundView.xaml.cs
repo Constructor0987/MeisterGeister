@@ -1316,10 +1316,6 @@ namespace MeisterGeister.View.Bodenplan
             VM.IsLoading = false;
         }
 
-        private void ImageDuplicator_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
 
         private static class NativeMethods
         {
