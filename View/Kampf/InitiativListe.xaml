@@ -429,6 +429,36 @@
                                             </ComboBox>
                                         </DockPanel>
 
+                                        <MenuItem Command="{Binding Manöver.Ausführender.INIneu}" >
+                                            <MenuItem.Header >
+                                                <TextBlock>
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.IsHeld}" Value="true">
+                                                                    <Setter Property="Text" Value="INI neu würfeln" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.IsHeld}" Value="false">
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <MultiBinding StringFormat="{}INI neu würfeln ({0}+{1} = {2})">
+                                                                                <Binding Path="Manöver.Ausführender.Kämpfer.INIBasis" UpdateSourceTrigger="PropertyChanged" />
+                                                                                <Binding Path="Manöver.Ausführender.Kämpfer.INIZufall" UpdateSourceTrigger="PropertyChanged" />
+                                                                                <Binding Path="Manöver.Ausführender.Initiative" UpdateSourceTrigger="PropertyChanged" />
+                                                                            </MultiBinding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </MenuItem.Header>
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/wuerfel.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
                                         <MenuItem Header="Passiv im Kampf" Command="{Binding Manöver.Ausführender.Passiv}">
                                             <MenuItem.Icon>
                                                 <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png"/>
