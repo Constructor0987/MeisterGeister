@@ -78,6 +78,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        private CommandBase iniNeu;
+        public CommandBase INIneu
+        {
+            get
+            {
+                if (iniNeu == null)
+                    iniNeu = new CommandBase((o) => INIneuWürfeln(), null);
+                return iniNeu;                
+            }
+        }
+
+        public void INIneuWürfeln()
+        {
+            Initiative = Kämpfer.Initiative();
+        }
+
         private CommandBase passiv;
         public CommandBase Passiv
         {
