@@ -2797,39 +2797,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
             CenterPlayerView(null);
         }
 
-        private void CenterPlayerView(object obj)
+        public void CenterPlayerView(object obj)
         {
-            double x1 = ARENA_GRID_RESOLUTION;
-            double y1 = ARENA_GRID_RESOLUTION;
-            double x2 = ARENA_GRID_RESOLUTION;
-            double y2 = ARENA_GRID_RESOLUTION;
+            double totalWidth = SpielerScreenWindow.ActualWidth / ScaleSpielerGrid;
+            double totalHeight = SpielerScreenWindow.ActualHeight / ScaleSpielerGrid;
 
-            foreach (Held h in Global.ContextHeld.HeldenGruppeListe)
-            {
-                if (h.CreatureX < x1)
-                {
-                    x1 = h.CreatureX - h.CreatureWidth;
-                }
+            double PlayerOffX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min()) / 2;
+            double PlayerOffY = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min()) / 2;
 
-                if (h.CreatureY < y1)
-                {
-                    y1 = h.CreatureY + h.CreatureHeight;
-                }
-
-                if (h.CreatureX > x2)
-                {
-                    x2 = h.CreatureX + h.CreatureWidth;
-                }
-
-                if (h.CreatureY < y2)
-                {
-                    y2 = h.CreatureY - h.CreatureHeight;
-                }
-            }
-            PlayerGridOffsetX = (x1);
-            PlayerGridOffsetY = (-y2);
+            PlayerGridOffsetX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min() - (totalWidth / 2 - PlayerOffX));
+            PlayerGridOffsetY = (-(Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min() - (totalHeight / 2 - PlayerOffY)));
         }
-        
+
 
         private void SetBackgroundClick(object obj)
         {
