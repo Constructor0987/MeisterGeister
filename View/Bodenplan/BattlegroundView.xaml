@@ -478,6 +478,33 @@
                                                 <Canvas x:Name="canvasCreature">
                                                     <Canvas.ContextMenu>
                                                         <ContextMenu>
+                                                            <MenuItem Visibility="{Binding ki.WesenPlaylist.Count, FallbackValue=0, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" >
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="22" Margin="0,1,0,0" />
+                                                                </MenuItem.Icon>
+                                                                <MenuItem.Header>
+                                                                    <ItemsControl ItemsSource="{Binding ki.WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                                                        <ItemsControl.ItemsPanel>
+                                                                            <ItemsPanelTemplate>
+                                                                                <WrapPanel ItemWidth="26" />
+                                                                            </ItemsPanelTemplate>
+                                                                        </ItemsControl.ItemsPanel>
+                                                                        <ItemsControl.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <Button Width="24" Tag="{Binding}" Focusable="False" Height="24" ToolTip="{Binding Audio_Playlist.Name}"
+                                                                                    Command="{Binding Path=SelectedItem.ki.OnWesenPlaylistClick, FallbackValue={x:Null}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, UpdateSourceTrigger=PropertyChanged}"
+                                                                                    CommandParameter="{Binding}" >
+                                                                                    <Button.Content>
+                                                                                        <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
+                                                                                    </Button.Content>
+                                                                                </Button>
+                                                                            </DataTemplate>
+                                                                        </ItemsControl.ItemTemplate>
+                                                                    </ItemsControl>
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                            <Separator Visibility="{Binding ki.WesenPlaylist.Count, FallbackValue=0, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" />
+
                                                             <DockPanel>
                                                                 <TextBlock
                                                                     VerticalAlignment="Center"
