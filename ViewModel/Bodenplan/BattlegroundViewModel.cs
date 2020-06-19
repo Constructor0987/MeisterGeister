@@ -2794,11 +2794,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             MeisterZoomTransX = -xMin;
             MeisterZoomTransY = -yMin;
             MeisterZoom = .5;
-            CenterPlayerView(null);
+            if (SpielerScreenWindow != null)
+                CenterPlayerView(null);
         }
 
         public void CenterPlayerView(object obj)
-        {
+        {            
             double totalWidth = SpielerScreenWindow.ActualWidth / ScaleSpielerGrid;
             double totalHeight = SpielerScreenWindow.ActualHeight / ScaleSpielerGrid;
 
