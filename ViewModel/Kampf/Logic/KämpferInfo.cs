@@ -68,13 +68,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void DeleteKämpfer()
         {
-            IKämpfer kämpfer = Global.CurrentKampf.SelectedKämpfer.Kämpfer;
-            if (kämpfer != null && ViewHelper.Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", kämpfer.Name)))
+            if (Kämpfer != null && ViewHelper.Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", Kämpfer.Name)))
             {                
                 if (Global.CurrentKampf.BodenplanViewModel != null)
-                    Global.CurrentKampf.BodenplanViewModel.RemoveCreature(kämpfer);
-                Global.CurrentKampf.Kampf.Kämpfer.Remove(kämpfer);
-               // Kampf.Kämpfer.Remove(kämpfer);
+                    Global.CurrentKampf.BodenplanViewModel.RemoveCreature(Kämpfer);
+                Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
             }
         }
 
