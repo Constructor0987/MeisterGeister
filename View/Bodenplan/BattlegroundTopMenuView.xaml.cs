@@ -356,6 +356,7 @@ namespace MeisterGeister.View.Bodenplan
                     SpielerWindow.Close();
                     Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive = true;
                     SpielerWindow.Show();
+                    BattlegroundVM.CenterPlayerView(null);
                 }
             }
             else

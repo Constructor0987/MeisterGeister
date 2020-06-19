@@ -518,7 +518,7 @@
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Command="{Binding OnBtnCenterPlayerView}"
-                                            ToolTip="Ansicht des Meister-Bildschirms auf den Spieler-Bildschirm übertragen">
+                                            ToolTip="Ansicht alle Spieler Charaktere auf den Spieler-Bildschirm zentrieren">
                                             <Button.Content>
                                                 <Grid>
                                                     <Image Margin="-1" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
