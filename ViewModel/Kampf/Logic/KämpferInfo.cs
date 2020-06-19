@@ -73,7 +73,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (Global.CurrentKampf.BodenplanViewModel != null)
                     Global.CurrentKampf.BodenplanViewModel.RemoveCreature(Kämpfer);
                 Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
-               // Kampf.Kämpfer.Remove(kämpfer);
             }
         }
 
