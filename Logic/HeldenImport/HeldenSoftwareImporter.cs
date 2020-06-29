@@ -583,7 +583,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _held.AusdauerAktuell = _held.AusdauerMax;
             _held.KarmaenergieAktuell = _held.KarmaenergieMax;
             _held.AstralenergieAktuell = _held.AstralenergieMax;
-
+            
             // Vor-/Nachteile
             ImportVorNachteile(_xmlDoc, _held, _importLog);
 
@@ -600,6 +600,9 @@ namespace MeisterGeister.Logic.HeldenImport
             ImportInventar(_xmlDoc, _held, _importLog);
 
             _held.AstralenergieAktuell = _held.AstralenergieMax;
+            if (held_exist != null)
+                _held.AE_Aktuell = held_exist.AE_Aktuell;
+
             // Pflanzen aus altem Helden
             List<Pflanze> lstPflanze = new List<Pflanze>();
             if (held_exist != null)
@@ -622,6 +625,7 @@ namespace MeisterGeister.Logic.HeldenImport
                         hp.ID = Guid.NewGuid();
                         hp.PflanzeGUID = p.PflanzeGUID;
                         hp.Bekannt = true;
+
                         _held.Held_Pflanze.Add(hp);
               //          if (Global.ContextZooBot.Insert<Held_Pflanze>(hp))
                         { }
@@ -660,6 +664,7 @@ namespace MeisterGeister.Logic.HeldenImport
                   //          //throw new Exception("Datenbankfehler" + Environment.NewLine + "Beim Erstellen einer neuen bekannten Pflanze ist ein Fehler aufgetreten.");
                   //      }
                     }
+                    Global.ContextZooBot.UpdateList<Held_Pflanze>();
                 }
             }
 
@@ -668,6 +673,8 @@ namespace MeisterGeister.Logic.HeldenImport
                 _held.Spieler = held_exist.Spieler;
                 _held.Notizen = held_exist.Notizen;
                 _held.Kampfwerte = held_exist.Kampfwerte;
+
+                _held.AE_Aktuell = held_exist.AE_Aktuell;
             }
 
             //    while (held_exist.Held_Pflanze.Count > 0)

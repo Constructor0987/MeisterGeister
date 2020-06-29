@@ -487,9 +487,10 @@ namespace MeisterGeister.ViewModel.Helden
                 if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
                     && Global.ContextHeld.Delete<Held>(h))
                 {
-                    //Liste aktualisieren
+                    //Liste aktualisieren                    
                     MainViewModel.Instance.Helden.Remove(h);
                     HeldListe.Refresh();
+                    SelectedHeld = null;
                     SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
                 }
             }

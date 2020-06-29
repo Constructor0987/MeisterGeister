@@ -1988,7 +1988,7 @@ namespace MeisterGeister.Model
         {
             Held_Talent ret = null;
             var maxtaw = int.MinValue;
-            foreach (Model.Held_Talent ht in Held_Talent.Where(h => (exactMatch && h.Talent.Talentname == talentName)
+            foreach (Model.Held_Talent ht in Held_Talent.Where(h => (exactMatch && h.Talent != null && h.Talent.Talentname == talentName)
             || (!exactMatch && h.Talent.Talentname.StartsWith(talentName))))
             {
                 var _taw = ht.TaW ?? 0;
