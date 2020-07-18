@@ -8,6 +8,7 @@ using MeisterGeister.Model.Extensions;
 
 using Q42.HueApi;
 using Q42.HueApi.Interfaces;
+
 using Q42.HueApi.ColorConverters.Original;
 using Q42.HueApi.ColorConverters.OriginalWithModel;
 using Q42.HueApi.ColorConverters.HSB;
@@ -17,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using MeisterGeister.View.Settings;
 using System.Threading;
+using System.Windows;
 
 namespace MeisterGeister.ViewModel.Settings
 {
@@ -988,6 +990,9 @@ namespace MeisterGeister.ViewModel.Settings
 
         public LocalHueClient Client = null;
         string appKey = "H3ZWpfbrmLp3-Fx3AuMT-sqhyt51Q2a1IYFdKefQ";
+
+
+
 
         private async void InitHUEGateway()
         {

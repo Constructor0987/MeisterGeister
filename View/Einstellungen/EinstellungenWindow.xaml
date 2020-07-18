@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mg="clr-namespace:MeisterGeister"
-    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings"
-    Title="Einstellungen"
+    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings" xmlns:color="clr-namespace:MeisterGeister.View.Settings"
+        Title="Einstellungen"
     Width="850"
     Height="500"
     d:DataContext="{d:DesignData /SampleData/EinstellungenSampleData.xaml}"
@@ -870,6 +870,27 @@
                                                 IsReadOnly="True" />
                                         </DataGrid.Columns>
                                     </DataGrid>
+
+
+                                    <!--<Grid >
+                                        <StackPanel Orientation="Vertical" Margin="10,20,10,20">
+                                            <TextBlock FontSize="25" Foreground="Blue">Philips Hue Lightbulb Control Center v.0.0.1</TextBlock>
+                                            <Button Content="Init HUE" Click="Button_Click" Width="80" Height="24"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                
+                                                <ToggleButton x:Name="toggle_Power" Checked="toggle_Power_Checked" Unchecked="toggle_Power_Checked" >Light 1 Power Control</ToggleButton>
+                                                <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                                                    <TextBlock>Light 1 Brightness</TextBlock>
+                                                    <Slider x:Name="slider_Brightness" Minimum="0" Maximum="255" Width="500" HorizontalAlignment="Left" ValueChanged="Slider_Brightness_ValueChanged" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <TextBlock>Light 1 Color</TextBlock>
+                                            <color:ColorPicker x:Name="color_Picker" Width="500" Height="300" HorizontalAlignment="Left" BorderBrush="Black" MouseUp="color_Picker_MouseUp" />
+
+                                            --><!--DataContextChanged="color_Picker_DataContextChanged"  SelectedColorChanged="Color_Picker_SelectedColorChanged"--><!--
+                                        </StackPanel>
+
+                                    </Grid>-->
                                 </Grid>
                             </Border>
                         </TabItem>
@@ -914,7 +935,7 @@
                                         
                                         ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
                                         SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" >
-                                        <ListBox.ItemTemplate>
+                                        <!--<ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
                                                     <Grid>
@@ -969,7 +990,7 @@
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
                                                                             </MultiDataTrigger>
-                                                                            <!--<DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
+                                                                            --><!--<DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
@@ -983,7 +1004,7 @@
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
-                                                                            </DataTrigger>-->
+                                                                            </DataTrigger>--><!--
                                                                             <DataTrigger Binding="{Binding doLoop}" Value="True">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[0].Color}" />
                                                                             </DataTrigger>
@@ -996,7 +1017,7 @@
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>
-                                        </ListBox.ItemTemplate>
+                                        </ListBox.ItemTemplate>-->
                                     </ListBox>
 
                                     
