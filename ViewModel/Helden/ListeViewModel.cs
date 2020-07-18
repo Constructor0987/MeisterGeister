@@ -252,8 +252,8 @@ namespace MeisterGeister.ViewModel.Helden
                 SelectedHeld = h;
 
                 // Liste aktualisieren!
-                heldListe = null;
-                OnChanged(nameof(HeldListe));
+  //              heldListe = null;
+  //              OnChanged(nameof(HeldListe));
 
                 MainViewModel.Instance.InvalidateHelden();
 #if !DEBUG
@@ -385,6 +385,8 @@ namespace MeisterGeister.ViewModel.Helden
             }
                 
             HeldListe.Refresh();
+
+            MainViewModel.Instance.HeldenGruppe.Refresh();
             SortHeldListe();
           //  importHeld.UpdateLists;
 
@@ -484,12 +486,14 @@ namespace MeisterGeister.ViewModel.Helden
             if (h != null && 
                 (!IsReadOnly || ((sender is bool) && ((bool)sender) == true)))
             {
-                if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
-                    && Global.ContextHeld.Delete<Held>(h))
+                if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name)))
                 {
+                    if (!Global.ContextHeld.Delete<Held>(h))
+                        Global.ContextHeld.Delete<Held>(((MainViewModel.Instance.HeldenGruppe).SourceCollection as List<Held>).FirstOrDefault(t => t.Name == h.Name));
                     //Liste aktualisieren                    
                     MainViewModel.Instance.Helden.Remove(h);
                     HeldListe.Refresh();
+                    MainViewModel.Instance.HeldenGruppe.Refresh();
                     SelectedHeld = null;
                     SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
                 }
@@ -505,6 +509,7 @@ namespace MeisterGeister.ViewModel.Helden
                 Global.ContextHeld.DeleteAll<Held>();
                 MainViewModel.Instance.Helden.Clear();
                 HeldListe.Refresh();
+                MainViewModel.Instance.HeldenGruppe.Refresh();
 
                 SelectedHeld = null;
 
