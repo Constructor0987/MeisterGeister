@@ -989,7 +989,7 @@ namespace MeisterGeister.ViewModel.Settings
         }
 
         public LocalHueClient Client = null;
-        string appKey = "H3ZWpfbrmLp3-Fx3AuMT-sqhyt51Q2a1IYFdKefQ";
+        string appKey = null;
 
 
 
@@ -1063,13 +1063,34 @@ namespace MeisterGeister.ViewModel.Settings
             string ip = HUEGWSelected.IpAddress.ToString();
 
             Client = new LocalHueClient(ip);
-            if (appKey == null)
+            appKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
+
+            if (string.IsNullOrEmpty(appKey))
             {
+                MeisterGeister.View.General.ViewHelper.Popup("Das Gateway wurde mit der MeisterGeister Version noch nicht gekoppelt." + Environment.NewLine + Environment.NewLine +
+                    "Bitte klicke nach dem bestätigen dieser Meldung innerhalb von 10 Sekunden den Button auf dem Gateway");
                 //Register your application
                 //Link button drücken zum Registrieren !!!
-                appKey = await Client.RegisterAsync("MGmeetsHUE", "PC");
-                // "H3ZWpfbrmLp3-Fx3AuMT-sqhyt51Q2a1IYFdKefQ"
-                //Save the app key for later use
+                //Make sure the user has pressed the button on the bridge before calling RegisterAsync
+                //It will throw an LinkButtonNotPressedException if the user did not press the button
+                bool pressed = false;
+                int start = Environment.TickCount;
+                while (!pressed && Environment.TickCount - start < 10000)
+                {
+                    try
+                    {
+                        appKey = await Client.RegisterAsync("MGmeetsHUE", "PC");
+                        //Save the app key for next use
+                        MeisterGeister.Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_Registerkey", appKey);
+                        pressed = true;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+                if (string.IsNullOrEmpty(appKey))
+                    return;
             }
             else
             {
