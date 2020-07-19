@@ -19,6 +19,12 @@ using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.Logic.Kalender;
 using MeisterGeister.View.AudioPlayer;
+using MeisterGeister.View.Settings;
+using Q42.HueApi.Interfaces;
+using Q42.HueApi;
+using Q42.HueApi.Models.Bridge;
+using MeisterGeister.View.General;
+using static MeisterGeister.ViewModel.Settings.EinstellungenViewModel;
 
 namespace MeisterGeister.ViewModel
 {
@@ -33,6 +39,7 @@ namespace MeisterGeister.ViewModel
             ShowFavPlaylist = Einstellungen.ShowPlaylistFavorite &&
                 (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null);
             UpdateHotkeyUsed();
+            LoadHUE();
             Einstellungen.EinstellungChanged += Einstellungen_EinstellungChanged;                     
         }
 
@@ -519,6 +526,59 @@ namespace MeisterGeister.ViewModel
             {
                 Set(ref _hotkeyVolume, value);
                 Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", _hotkeyVolume);
+            }
+        }
+
+        private List<string> _lstHUEDeviceID = new List<string>();
+        public List<string> lstHUEDeviceID
+        {
+            get { return _lstHUEDeviceID; }
+            set { Set(ref _lstHUEDeviceID, value); }
+        }
+        private List<Light> _lstHUELights = new List<Light>();
+        public List<Light> lstHUELights
+        {
+            get { return _lstHUELights; }
+            set { Set(ref _lstHUELights, value); }
+        }
+
+        private List<HUETheme> _lstHUEThemes = new List<HUETheme>();
+        public List<HUETheme> lstHUEThemes
+        {
+            get { return _lstHUEThemes; }
+            set { Set(ref _lstHUEThemes, value); }
+        }
+
+        public LocalHueClient Client = null;
+        public async void LoadHUE()
+        {
+            string HUE_ID = Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_GatewayID");
+            string HUE_Regkey = Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
+            if (!string.IsNullOrEmpty(HUE_ID) && !string.IsNullOrEmpty(HUE_Regkey))
+            {
+                try
+                {
+                    IBridgeLocator locator = new HttpBridgeLocator();
+                    var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
+
+                    LocatedBridge HUEBridge = bridgeIPs.Where(t => t.BridgeId == HUE_ID).FirstOrDefault();
+                    if (HUEBridge == null)
+                        return;
+
+                    Client = new LocalHueClient(HUEBridge.IpAddress);
+                    Client.Initialize(HUE_Regkey);
+
+                    //Search for new lights
+                    await Client.SearchNewLightsAsync(lstHUEDeviceID);
+                    //Get all lights
+                    var resultLights = await Client.GetLightsAsync();
+                    lstHUELights = resultLights as List<Light>;
+                }
+                catch (Exception ex)
+                {
+                    Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_GatewayID", null);
+                    //Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_Registerkey", null);
+                }
             }
         }
 

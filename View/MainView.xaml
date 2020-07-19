@@ -59,6 +59,7 @@
             </StackPanel>
         </DataTemplate>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
+        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <Style x:Key="ImageEnabled" TargetType="Image">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -507,6 +508,115 @@
                             </StackPanel>
                         </GroupBox>
 
+                            <GroupBox VerticalAlignment="Center" Margin="10,-2" Height="28" Padding="0,-1,0,-1" >
+                                <GroupBox.Style>
+                                    <Style TargetType="GroupBox" >
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding lstHUELights.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='1'}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </GroupBox.Style>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="HUE-Lampen"  Margin="5,0,10,0"/>
+                                    <ComboBox Grid.Column="1" ItemsSource="{Binding lstHUELights}" Width="130" DisplayMemberPath="Name" Margin="0,2,0,-3" />
+                                    <ComboBox
+                                        Margin="10,0,0,-3"
+                                        Background="Transparent"
+                                        MinWidth="100"
+                                        FontSize="14"
+                                        ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                        
+                                        ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" >
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <StackPanel Orientation="Horizontal" >
+                                                        <ViewGeneral:MultipleColorSlider Width="140" Height="24" Minimum="0" Padding="0"
+                                                                Maximum="{Binding KomplettDauer}" 
+                                                                ColorWechsel="{Binding lstLightProcess.Count, UpdateSourceTrigger=PropertyChanged}"
+                                                                StartColor="{Binding lstLightProcess[0].Color}"
+                                                                FirstColor="{Binding lstLightProcess[1].Color}"
+                                                                SecondColor="{Binding lstLightProcess[2].Color}"
+                                                                ThirdColor="{Binding lstLightProcess[3].Color}"
+                                                                FourthColor="{Binding lstLightProcess[4].Color}"
+                                                                LowerValue="{Binding lstLightProcess[0].Dauer, Mode=TwoWay}"
+                                                                Upper1Value="{Binding lstLightProcess[1].Dauer, Mode=TwoWay}"
+                                                                Upper2Value="{Binding lstLightProcess[2].Dauer, Mode=TwoWay}"
+                                                                Upper3Value="{Binding lstLightProcess[3].Dauer, Mode=TwoWay}"  >
+                                                            <ViewGeneral:MultipleColorSlider.Style>
+                                                                <Style TargetType="ViewGeneral:MultipleColorSlider">
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                <Condition Binding="{Binding lstLightProcess.Count}" Value="2" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                <Condition Binding="{Binding lstLightProcess.Count}" Value="3" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                <Condition Binding="{Binding lstLightProcess.Count}" Value="4" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                <Condition Binding="{Binding lstLightProcess.Count}" Value="5" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding doLoop}" Value="False" />
+                                                                                <Condition Binding="{Binding lstLightProcess.Count}" Value="6" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
+                                                                        </MultiDataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="4">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="5">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding doLoop}" Value="True">
+                                                                            <Setter Property="EndColor" Value="{Binding lstLightProcess[0].Color}" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ViewGeneral:MultipleColorSlider.Style>
+                                                        </ViewGeneral:MultipleColorSlider>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <Button Height="24" Width="24" Margin="5,2,0,-3" >
+                                        <Image Source="/Images/Icons/General/play.png" Stretch="Fill" />
+                                    </Button>
+                                </StackPanel>
+                            </GroupBox>
                         </StackPanel>
                     <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="8" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
                         <Border.Background>

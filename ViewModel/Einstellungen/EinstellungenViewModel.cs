@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using MeisterGeister.View.Settings;
 using System.Threading;
 using System.Windows;
+using MeisterGeister.View;
 
 namespace MeisterGeister.ViewModel.Settings
 {
@@ -964,6 +965,7 @@ namespace MeisterGeister.ViewModel.Settings
                 Set(ref _lstHUEThemes, value);
                 if (value != null)
                     HUEThemeSelected = value[0];
+                MainViewModel.Instance.lstHUEThemes = value;
             }
         }
 
@@ -978,7 +980,12 @@ namespace MeisterGeister.ViewModel.Settings
         public LocatedBridge HUEGWSelected
         {
             get { return _HUEGWSelected; }
-            set { Set(ref _HUEGWSelected, value); }
+            set 
+            { 
+                Set(ref _HUEGWSelected, value);
+                if (value != null)
+                    Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_GatewayID", value.BridgeId);
+            }
         }
 
         private List<LocatedBridge> _lstHUEGaterways = new List<LocatedBridge>();
@@ -994,13 +1001,11 @@ namespace MeisterGeister.ViewModel.Settings
 
 
 
-        private async void InitHUEGateway()
+        public async void InitHUEGateway()
         {
             try
             {
-                //m_Initialized = false;
                 HUEProgress = "Q42Hue attempting to initialize ..";
-
                 IBridgeLocator locator = new HttpBridgeLocator();
 
                 var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
@@ -1048,6 +1053,7 @@ namespace MeisterGeister.ViewModel.Settings
                 List<LightCommand> lstLightCmd = new List<LightCommand>();
                 //lstHUELights.ForEach(q => lstLightCmd.Add(new LightCommand() { Light = q, LightCmd = new LightCommand() }));
                 lstHUELightCmd = lstLightCmd;
+                MainViewModel.Instance.lstHUELights = value;
             }
         }
 
@@ -1064,6 +1070,7 @@ namespace MeisterGeister.ViewModel.Settings
 
             Client = new LocalHueClient(ip);
             appKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
+            //4nuWDIXoZ0EMPxMBXhQFagf5bOsK-XcEc7DzS8G1
 
             if (string.IsNullOrEmpty(appKey))
             {
@@ -1097,13 +1104,10 @@ namespace MeisterGeister.ViewModel.Settings
                 //If you already registered an appname, you can initialize the HueClient with the app's key:
                 Client.Initialize(appKey);
             }
-
             //Search for new lights
             await Client.SearchNewLightsAsync(lstDeviceID);
-
             //Get all lights
             var resultLights = await Client.GetLightsAsync();
-
 
             lstHUELights = resultLights as List<Light>;
         }

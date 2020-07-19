@@ -935,7 +935,7 @@
                                         
                                         ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
                                         SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" >
-                                        <!--<ListBox.ItemTemplate>
+                                        <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
                                                     <Grid>
@@ -990,7 +990,7 @@
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
                                                                             </MultiDataTrigger>
-                                                                            --><!--<DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
+                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
@@ -1004,7 +1004,7 @@
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
-                                                                            </DataTrigger>--><!--
+                                                                            </DataTrigger>
                                                                             <DataTrigger Binding="{Binding doLoop}" Value="True">
                                                                                 <Setter Property="EndColor" Value="{Binding lstLightProcess[0].Color}" />
                                                                             </DataTrigger>
@@ -1017,7 +1017,7 @@
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>
-                                        </ListBox.ItemTemplate>-->
+                                        </ListBox.ItemTemplate>
                                     </ListBox>
 
                                     
