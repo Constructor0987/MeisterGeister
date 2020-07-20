@@ -25,6 +25,7 @@ using Q42.HueApi;
 using Q42.HueApi.Models.Bridge;
 using MeisterGeister.View.General;
 using static MeisterGeister.ViewModel.Settings.EinstellungenViewModel;
+using MeisterGeister.ViewModel.Settings;
 
 namespace MeisterGeister.ViewModel
 {
@@ -535,6 +536,24 @@ namespace MeisterGeister.ViewModel
             get { return _lstHUEDeviceID; }
             set { Set(ref _lstHUEDeviceID, value); }
         }
+        private Light _HUELightSelected = new Light();
+        public Light HUELightSelected
+        {
+            get { return _HUELightSelected; }
+            set 
+            { 
+                Set(ref _HUELightSelected, value); 
+                if (value != null)
+                {
+                    State hueLightState = value.State;
+                    if (hueLightState.On)
+                    {
+
+                    }
+                }
+            }
+        }
+
         private List<Light> _lstHUELights = new List<Light>();
         public List<Light> lstHUELights
         {
@@ -542,6 +561,13 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _lstHUELights, value); }
         }
 
+
+        private HUETheme _HUEThemeSelected;
+        public HUETheme HUEThemeSelected
+        {
+            get { return _HUEThemeSelected; }
+            set { Set(ref _HUEThemeSelected, value); }
+        }
         private List<HUETheme> _lstHUEThemes = new List<HUETheme>();
         public List<HUETheme> lstHUEThemes
         {
@@ -597,7 +623,64 @@ namespace MeisterGeister.ViewModel
             };
             hotkeyListUsed = lstHotKeyUsed;
         }
-        
+        private Base.CommandBase _onBtnHUEOnOff = null;
+        public Base.CommandBase OnBtnHUEOnOff
+        {
+            get
+            {
+                if (_onBtnHUEOnOff == null)
+                    _onBtnHUEOnOff = new Base.CommandBase(HUEOnOff, null);
+                return _onBtnHUEOnOff;
+            }
+        }
+        void HUEOnOff(object obj)
+        {
+            if (HUELightSelected == null)
+                return;
+
+            State actState = HUELightSelected.State;
+            actState.On = !actState.On;
+        }
+
+        private Base.CommandBase _onBtnDoHUETheme = null;
+        public Base.CommandBase OnBtnDoHUETheme
+        {
+            get
+            {
+                if (_onBtnDoHUETheme == null)
+                    _onBtnDoHUETheme = new Base.CommandBase(DoHUETheme, null);
+                return _onBtnDoHUETheme;
+            }
+        }
+        void DoHUETheme(object obj)
+        {
+            if (HUEThemeSelected == null)
+                return;
+            HUEThemeSelected.lstLights = new List<Light>();
+            HUEThemeSelected.lstLights.Add(HUELightSelected);
+
+            if (!HUEThemeSelected.isRunning)
+            {
+                //gCol.Clear();
+                //gCol.Add(new GradientStop(HUEThemeSelected.lstLightProcess[0].Color, 0));
+                //for (var i = 1; i < HUEThemeSelected.lstLightProcess.Count; i++)
+                //{
+                //    gCol.Add(new GradientStop(HUEThemeSelected.lstLightProcess[i].Color, HUEThemeSelected.lstLightProcess[i - 1].DauerProzent));
+                //}
+                HUEThemeSelected.actLightProcess = null;
+                HUEThemeSelected.StartTime = Environment.TickCount;
+                //ThemeToDo.actLightProcess = 0;
+                HUEThemeSelected.isRunning = true;
+                HUEThemeSelected._timer.Start();
+            }
+            else
+            {
+                HUEThemeSelected._timer.Stop();
+                HUEThemeSelected.isRunning = false;
+            }
+        }
+
+
         private Base.CommandBase _onAllHotkeysStop = null;
         public Base.CommandBase OnAllHotkeysStop
         {

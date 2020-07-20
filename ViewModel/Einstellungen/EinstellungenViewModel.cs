@@ -527,6 +527,8 @@ namespace MeisterGeister.ViewModel.Settings
             {
                 HUETheme aktTheme = new Settings.EinstellungenViewModel.HUETheme();
                 aktTheme = HUEThemeSelected;
+                if (aktTheme.vm == null)
+                    aktTheme.vm = this;
                 HUEThemeSelected.LightProcessSelected.Color = colorDialog.SelectedColor;
 
                 List<HUETheme> lst = new List<Settings.EinstellungenViewModel.HUETheme>();
@@ -849,6 +851,7 @@ namespace MeisterGeister.ViewModel.Settings
                     command.TransitionTime = new TimeSpan(0, 0, 0, 0,
                         (int)lstLightProcess[0].KomplettDauer / lstLightProcess.Count);
                     //Once you have composed your command, send it to one or more lights
+                    
                     vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
                     Console.WriteLine(StartTime + ":  START    " +lstLightProcess[actLightProcess.Value].Color.R + " " +
                         lstLightProcess[actLightProcess.Value].Color.G + " " +
@@ -951,7 +954,10 @@ namespace MeisterGeister.ViewModel.Settings
         public HUETheme HUEThemeSelected
         {
             get { return _HUEThemeSelected; }
-            set { Set(ref _HUEThemeSelected, value); }
+            set { Set(ref _HUEThemeSelected, value);
+                if (value != null && value.vm == null)
+                    value.vm = this;
+            }
         }
 
         private List<HUETheme> _lstHUEThemes = new List<HUETheme>();

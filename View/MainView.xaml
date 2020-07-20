@@ -521,14 +521,13 @@
                                 </GroupBox.Style>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="HUE-Lampen"  Margin="5,0,10,0"/>
-                                    <ComboBox Grid.Column="1" ItemsSource="{Binding lstHUELights}" Width="130" DisplayMemberPath="Name" Margin="0,2,0,-3" />
+                                    <ComboBox Grid.Column="1" ItemsSource="{Binding lstHUELights}" Width="130" DisplayMemberPath="Name" Margin="0,2,0,-3" SelectedItem="{Binding HUELightSelected}" />
                                     <ComboBox
                                         Margin="10,0,0,-3"
                                         Background="Transparent"
                                         MinWidth="100"
                                         FontSize="14"
-                                        ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                        
+                                        ItemContainerStyle="{DynamicResource ListBoxItemStretch}"                                        
                                         ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
                                         SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" >
                                         <ComboBox.ItemTemplate>
@@ -612,9 +611,27 @@
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
-                                    <Button Height="24" Width="24" Margin="5,2,0,-3" >
-                                        <Image Source="/Images/Icons/General/play.png" Stretch="Fill" />
-                                    </Button>
+                                    <ToggleButton Height="24" Width="24" Margin="5,2,0,-3" Command="{Binding OnBtnDoHUETheme}">
+                                        <ToggleButton.Style>
+                                            <Style TargetType="ToggleButton">
+                                                <Setter Property="Content" >
+                                                    <Setter.Value>
+                                                        <Image Source="/Images/Icons/General/play.png" Stretch="Fill" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HUEThemeSelected.isRunning, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                        <Setter Property="Content" >
+                                                            <Setter.Value>
+                                                                <Image Source="/Images/Icons/General/stop.png" Stretch="Fill" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style> 
+                                        </ToggleButton.Style>
+                                    </ToggleButton>
+                                    <ToggleButton x:Name="tbtnHUEONOFF" Content="On/Off" Command="{Binding OnBtnHUEOnOff}" Height="24" Margin="5,2,0,-3"/>
                                 </StackPanel>
                             </GroupBox>
                         </StackPanel>
