@@ -1005,6 +1005,19 @@ namespace MeisterGeister.ViewModel.Settings
         string appKey = null;
 
 
+        static EinstellungenViewModel instance;
+        public static EinstellungenViewModel Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new EinstellungenViewModel();
+                }
+                return EinstellungenViewModel.instance;
+            }
+            private set { EinstellungenViewModel.instance = value; }
+        }
 
 
         public async void InitHUEGateway()

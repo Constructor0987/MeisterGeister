@@ -23,9 +23,15 @@ using MeisterGeister.View.Settings;
 using Q42.HueApi.Interfaces;
 using Q42.HueApi;
 using Q42.HueApi.Models.Bridge;
+using Q42.HueApi.ColorConverters.Original;
+using Q42.HueApi.ColorConverters.OriginalWithModel;
+using Q42.HueApi.ColorConverters.HSB;
+using Q42.HueApi.ColorConverters;
+
 using MeisterGeister.View.General;
 using static MeisterGeister.ViewModel.Settings.EinstellungenViewModel;
 using MeisterGeister.ViewModel.Settings;
+using System.Windows.Media;
 
 namespace MeisterGeister.ViewModel
 {
@@ -510,23 +516,98 @@ namespace MeisterGeister.ViewModel
 
         #endregion
 
-        #region Hotkeys
+        #region HUE Lampen
 
-        private List<btnHotkey> _hotkeyListUsed = new List<btnHotkey>();
-        public List<btnHotkey> hotkeyListUsed
+        /// <summary>
+        /// Gets or privately sets the Selected Color.
+        /// </summary>
+        private Color selectedColor = Colors.Transparent;
+        public Color SelectedColor
         {
-            get { return _hotkeyListUsed; }
-            set { Set(ref _hotkeyListUsed, value); }
-        }
-
-        private int _hotkeyVolume = Einstellungen.GeneralHotkeyVolume;
-        public int HotkeyVolume
-        {
-            get { return _hotkeyVolume; }
+            get { return selectedColor; }
             set
             {
-                Set(ref _hotkeyVolume, value);
-                Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", _hotkeyVolume);
+                if (selectedColor != value)
+                {
+                    this.selectedColor = value;
+                    CreateAlphaLinearBrush();
+                    //  UpdateTextBoxes();
+                    //  UpdateInk();
+                }
+            }
+        }
+
+        LinearGradientBrush _alphaBrush = new LinearGradientBrush();
+        LinearGradientBrush alphaBrush
+        {
+            get { return _alphaBrush; }
+            set { Set(ref _alphaBrush, value); }
+        }
+
+        /// <summary>
+        /// Creates a new LinearGradientBrush background for the Alpha area slider.  This is based on the current color.
+        /// </summary>
+        private void CreateAlphaLinearBrush()
+        {
+            Color startColor = Color.FromArgb((byte)0, SelectedColor.R, SelectedColor.G, SelectedColor.B);
+            Color endColor = Color.FromArgb((byte)255, SelectedColor.R, SelectedColor.G, SelectedColor.B);
+            alphaBrush = new LinearGradientBrush(startColor, endColor, new System.Windows.Point(0, 0), new System.Windows.Point(1, 0));
+        }
+
+        private double _hueLampeSaettigung = 255;
+        public double HUELampeSaettigung
+        {
+            get { return _hueLampeSaettigung; }
+            set 
+            { 
+                Set(ref _hueLampeSaettigung, value);
+
+                if (HUELightSelected != null && Client != null)
+                {
+                    List<Light> lstLights = lstHUELights.Where(t => t.Id == HUELightSelected.Id).ToList();
+                    if (lstLights.Count == 0) return;
+                    //Control the lights                
+                    LightCommand command = new LightCommand();
+
+                    //   command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+                    //    command.Brightness = (byte)HUELampeBrightness;
+                    if (HUELampeBrightness != 0)
+                        command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+                    command.Saturation = (byte)value;
+                    //Or send it to all lights
+                    //   hueClient.SendCommandAsync(command);
+                    Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                }
+            }
+        }
+        private double _hueLampeBrightness = 255;
+        public double HUELampeBrightness
+        {
+            get { return _hueLampeBrightness; }
+            set 
+            { 
+                Set(ref _hueLampeBrightness, value);
+
+                if (HUELightSelected != null && Client != null)
+                {
+                    List<Light> lstLights = lstHUELights.Where(t => t.Id == HUELightSelected.Id).ToList();
+                    if (lstLights.Count == 0)
+                        return;
+                    //Control the lights                
+                    LightCommand command = new LightCommand();
+                    //      command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+                    if (value != 0)
+                    {
+                        command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+                        command.Brightness = (byte)value;
+                    }
+                    else
+                        command.TurnOff();
+               //     command.Saturation = (byte)HUELampeSaettigung;
+                    //Or send it to all lights
+                    //   hueClient.SendCommandAsync(command);
+                    Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                }
             }
         }
 
@@ -540,9 +621,9 @@ namespace MeisterGeister.ViewModel
         public Light HUELightSelected
         {
             get { return _HUELightSelected; }
-            set 
-            { 
-                Set(ref _HUELightSelected, value); 
+            set
+            {
+                Set(ref _HUELightSelected, value);
                 if (value != null)
                 {
                     State hueLightState = value.State;
@@ -608,21 +689,14 @@ namespace MeisterGeister.ViewModel
             }
         }
 
-        public void UpdateHotkeyUsed()
+        public async void UpdateHUE()
         {
-            if (Global.ContextAudio.PlaylistListe == null) return;
-            List<btnHotkey> lstHotKeyUsed = new List<btnHotkey>();
-
-            foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe.FindAll(t => t.Key != null).OrderBy(tt => tt.Key))
-            {
-                btnHotkey hkey = new btnHotkey();
-                hkey.VM.aPlaylistGuid = aPlaylist.Audio_PlaylistGUID;
-                hkey.VM.taste = (char)aPlaylist.Key[0];
-                hkey.VM.aPlaylist = aPlaylist;
-                lstHotKeyUsed.Add(hkey);
-            };
-            hotkeyListUsed = lstHotKeyUsed;
+            //Get all lights
+            var resultLights = await Client.GetLightsAsync();
+            lstHUELights = resultLights as List<Light>;
         }
+
+
         private Base.CommandBase _onBtnHUEOnOff = null;
         public Base.CommandBase OnBtnHUEOnOff
         {
@@ -680,6 +754,44 @@ namespace MeisterGeister.ViewModel
             }
         }
 
+
+        #endregion
+
+        #region Hotkeys
+
+        private List<btnHotkey> _hotkeyListUsed = new List<btnHotkey>();
+        public List<btnHotkey> hotkeyListUsed
+        {
+            get { return _hotkeyListUsed; }
+            set { Set(ref _hotkeyListUsed, value); }
+        }
+
+        private int _hotkeyVolume = Einstellungen.GeneralHotkeyVolume;
+        public int HotkeyVolume
+        {
+            get { return _hotkeyVolume; }
+            set
+            {
+                Set(ref _hotkeyVolume, value);
+                Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", _hotkeyVolume);
+            }
+        }
+
+        public void UpdateHotkeyUsed()
+        {
+            if (Global.ContextAudio.PlaylistListe == null) return;
+            List<btnHotkey> lstHotKeyUsed = new List<btnHotkey>();
+
+            foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe.FindAll(t => t.Key != null).OrderBy(tt => tt.Key))
+            {
+                btnHotkey hkey = new btnHotkey();
+                hkey.VM.aPlaylistGuid = aPlaylist.Audio_PlaylistGUID;
+                hkey.VM.taste = (char)aPlaylist.Key[0];
+                hkey.VM.aPlaylist = aPlaylist;
+                lstHotKeyUsed.Add(hkey);
+            };
+            hotkeyListUsed = lstHotKeyUsed;
+        }
 
         private Base.CommandBase _onAllHotkeysStop = null;
         public Base.CommandBase OnAllHotkeysStop
