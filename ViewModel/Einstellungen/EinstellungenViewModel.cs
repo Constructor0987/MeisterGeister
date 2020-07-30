@@ -517,12 +517,12 @@ namespace MeisterGeister.ViewModel.Settings
                 HUEThemeSelected = lstHUEThemes[0];
 
             HUEColorDialog colorDialog = new HUEColorDialog();
-            
-         //   colorDialog.colorPicker .Client = Client;
+
+            //   colorDialog.colorPicker .Client = Client;
             colorDialog.SelectedColor = HUEThemeSelected.LightProcessSelected.Color;
             //   colorDialog.SelectedColor = (SolidColorBrush)HUEThemeSelected.LightProcessSelected.Color);//, HUEThemeSelected.LightProcessSelected.Color.G, HUEThemeSelected.LightProcessSelected.Color.B);//((SolidColorBrush))// HUEThemeSelected.lstLightProcess[0].Color.ToString();// this.RectColorPicked.Fill).Color;
             colorDialog.Owner = obj as EinstellungenWindow;
-            
+
             if (colorDialog.ShowDialog().Value)
             {
                 HUETheme aktTheme = new Settings.EinstellungenViewModel.HUETheme();
@@ -563,12 +563,6 @@ namespace MeisterGeister.ViewModel.Settings
 
             if (!ThemeToDo.isRunning)
             {
-                //gCol.Clear();
-                //gCol.Add(new GradientStop(HUEThemeSelected.lstLightProcess[0].Color, 0));
-                //for (var i = 1; i < HUEThemeSelected.lstLightProcess.Count; i++)
-                //{
-                //    gCol.Add(new GradientStop(HUEThemeSelected.lstLightProcess[i].Color, HUEThemeSelected.lstLightProcess[i - 1].DauerProzent));
-                //}
                 ThemeToDo.vm = this;
                 ThemeToDo.actLightProcess = null;
                 ThemeToDo.StartTime = Environment.TickCount;
@@ -595,7 +589,7 @@ namespace MeisterGeister.ViewModel.Settings
                 lstLightProcess = new List<LightProcess>() {
                     new LightProcess() { Brightness= 100, Color = Colors.Red, DauerProzent= .25, Phase=0 },
                     new LightProcess() { Brightness= 100, Color = Colors.Yellow, DauerProzent= .5, Phase=1 },
-                    new LightProcess() { Brightness= 100, Color = Colors.Blue, DauerProzent= .75, Phase=2 } }                
+                    new LightProcess() { Brightness= 100, Color = Colors.Blue, DauerProzent= .75, Phase=2 } }
             });
             lstHUEThemes = lst;
         }
@@ -619,7 +613,7 @@ namespace MeisterGeister.ViewModel.Settings
             if (HUEThemeSelected.lstLightProcess != null)
                 lst.AddRange(HUEThemeSelected.lstLightProcess);
             lst.Add(new LightProcess() { Phase = lst.Count,
-                DauerProzent = lst.Count == 0? .5: (lst[lst.Count-1].DauerProzent + 1) /2,
+                DauerProzent = lst.Count == 0 ? .5 : (lst[lst.Count - 1].DauerProzent + 1) / 2,
                 Dauer = HUEThemeSelected.KomplettDauer * (lst.Count == 0 ? .5 : (lst[lst.Count - 1].DauerProzent + 1) / 2),
                 KomplettDauer = HUEThemeSelected.KomplettDauer,
                 Color = Colors.AliceBlue,
@@ -674,6 +668,11 @@ namespace MeisterGeister.ViewModel.Settings
                 EinstellungListe = Global.ContextHeld.Liste<Model.Einstellung>().Where(e => e.Kategorie != "Versteckt").OrderBy(h => h.Name).Select(e => EinstellungItem.GetTypedEinstellungItem(e)).ToList();
                 settingListe = Global.ContextHeld.Liste<Model.Setting>().ToList();
                 LiteraturListe = Global.ContextHeld.Liste<Model.Literatur>().OrderBy(h => h.Name).Select(e => new LiteraturItem(e)).ToList();
+
+                lstHUEGateways = MainViewModel.Instance.lstHUEGateways;
+                HUEGWSelected = MainViewModel.Instance.HUEGWSelected;
+                lstHUELights = MainViewModel.Instance.lstHUELights;
+                Client = MainViewModel.Instance.Client;
             }
         }
 
@@ -729,7 +728,7 @@ namespace MeisterGeister.ViewModel.Settings
                 set { Set(ref _komplettDauer, value);
                     if (lstLightProcess != null)
                         foreach (LightProcess lPro in lstLightProcess)
-                    { lPro.KomplettDauer = value; }
+                        { lPro.KomplettDauer = value; }
                 }
             }
 
@@ -749,9 +748,9 @@ namespace MeisterGeister.ViewModel.Settings
                 set
                 {
                     Set(ref _lstLightProcess, value);
-                    if (value !=null)
+                    if (value != null)
                         foreach (LightProcess lPro in value)
-                    { lPro.KomplettDauer = KomplettDauer; }
+                        { lPro.KomplettDauer = KomplettDauer; }
                 }
             }
             public List<Light> lstLights { get; set; }
@@ -782,7 +781,7 @@ namespace MeisterGeister.ViewModel.Settings
                     //    lstLL.RemoveAt(lstLL.Count - 1);
                     //    lstLightProcess = lstLL;
                     //}
-                    Set(ref _doLoop, value);                    
+                    Set(ref _doLoop, value);
                 }
             }
 
@@ -836,7 +835,7 @@ namespace MeisterGeister.ViewModel.Settings
 
                     //if (doStrobe)
                     //command.Alert = Alert.Once;
-                    
+
                     //Turn the light on and set a Hex color for the command (see the section about Color Converters)
                     command.TurnOn().SetColor(new RGBColor(
                         lstLightProcess[actLightProcess.Value].Color.R,
@@ -851,11 +850,11 @@ namespace MeisterGeister.ViewModel.Settings
                     command.TransitionTime = new TimeSpan(0, 0, 0, 0,
                         (int)lstLightProcess[0].KomplettDauer / lstLightProcess.Count);
                     //Once you have composed your command, send it to one or more lights
-                    
+
                     vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
-                    Console.WriteLine(StartTime + ":  START    " +lstLightProcess[actLightProcess.Value].Color.R + " " +
+                    Console.WriteLine(StartTime + ":  START    " + lstLightProcess[actLightProcess.Value].Color.R + " " +
                         lstLightProcess[actLightProcess.Value].Color.G + " " +
-                        lstLightProcess[actLightProcess.Value].Color.B + "    "  );
+                        lstLightProcess[actLightProcess.Value].Color.B + "    ");
 
                     //Abwarten bis Erste Farbe gesetzt ist
                     Thread.Sleep(lstLightProcess[0].KomplettDauer / lstLightProcess.Count);
@@ -871,7 +870,7 @@ namespace MeisterGeister.ViewModel.Settings
                         command.TransitionTime = new TimeSpan(0, 0, 0, 0,
                             (int)lstLightProcess[actLightProcess.Value].Dauer);
                         vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
-                    }                  
+                    }
                     return;
                 }
 
@@ -881,8 +880,8 @@ namespace MeisterGeister.ViewModel.Settings
                     TimeGone > lstLightProcess[actLightProcess.Value].Dauer)
                 {
                     actLightProcess++;
-                    if (actLightProcess >= lstLightProcess.Count-1)
-                    { 
+                    if (actLightProcess >= lstLightProcess.Count - 1)
+                    {
                         if (!doLoop)
                         {
                             isRunning = false;
@@ -896,7 +895,7 @@ namespace MeisterGeister.ViewModel.Settings
                             lstLightProcess[0].Color.B));
 
                         command.TransitionTime = new TimeSpan(0, 0, 0, 0,
-                            lstLightProcess[0].KomplettDauer - (int)lstLightProcess[actLightProcess.Value-1].Dauer);
+                            lstLightProcess[0].KomplettDauer - (int)lstLightProcess[actLightProcess.Value - 1].Dauer);
 
                         vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
 
@@ -914,26 +913,26 @@ namespace MeisterGeister.ViewModel.Settings
 
                     StartTime = Environment.TickCount;
                     command.SetColor(new RGBColor(
-                        lstLightProcess[actLightProcess.Value+1].Color.R,
-                        lstLightProcess[actLightProcess.Value+1].Color.G,
-                        lstLightProcess[actLightProcess.Value+1].Color.B));
-                    
+                        lstLightProcess[actLightProcess.Value + 1].Color.R,
+                        lstLightProcess[actLightProcess.Value + 1].Color.G,
+                        lstLightProcess[actLightProcess.Value + 1].Color.B));
+
                     command.TransitionTime = new TimeSpan(0, 0, 0, 0,
-                        actLightProcess == 0? (int)lstLightProcess[actLightProcess.Value].Dauer :
-                        (int)(lstLightProcess[actLightProcess.Value].Dauer - lstLightProcess[actLightProcess.Value-1].Dauer));
+                        actLightProcess == 0 ? (int)lstLightProcess[actLightProcess.Value].Dauer :
+                        (int)(lstLightProcess[actLightProcess.Value].Dauer - lstLightProcess[actLightProcess.Value - 1].Dauer));
 
                     vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
 
-                    Console.WriteLine(TimeGone + ": CYCLE " + TimeGone + "   " + 
-                        lstLightProcess[actLightProcess.Value+1].Color.R + " " +
-                        lstLightProcess[actLightProcess.Value+1].Color.G + " " +
-                        lstLightProcess[actLightProcess.Value+1].Color.B + "    " +
-                        lstLightProcess[actLightProcess.Value+1].Brightness);
+                    Console.WriteLine(TimeGone + ": CYCLE " + TimeGone + "   " +
+                        lstLightProcess[actLightProcess.Value + 1].Color.R + " " +
+                        lstLightProcess[actLightProcess.Value + 1].Color.G + " " +
+                        lstLightProcess[actLightProcess.Value + 1].Color.B + "    " +
+                        lstLightProcess[actLightProcess.Value + 1].Brightness);
 
                     if (actLightProcess >= lstLightProcess.Count - 1)
                         actLightProcess = 0;
                     return;
-                }                
+                }
             }
 
             private async void ToAll()
@@ -986,11 +985,12 @@ namespace MeisterGeister.ViewModel.Settings
         public LocatedBridge HUEGWSelected
         {
             get { return _HUEGWSelected; }
-            set 
-            { 
+            set
+            {
                 Set(ref _HUEGWSelected, value);
                 if (value != null)
                     Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_GatewayID", value.BridgeId);
+                MainViewModel.Instance.HUEGWSelected = value;
             }
         }
 
@@ -998,10 +998,18 @@ namespace MeisterGeister.ViewModel.Settings
         public List<LocatedBridge> lstHUEGateways
         {
             get { return _lstHUEGaterways; }
-            set { Set(ref _lstHUEGaterways, value); }
+            set
+            {
+                Set(ref _lstHUEGaterways, value);
+                MainViewModel.Instance.lstHUEGateways = value;
+            }
         }
-
-        public LocalHueClient Client = null;
+        private LocalHueClient _client = null;
+        public LocalHueClient Client
+        {
+            get { return _client; }            
+            set { Set(ref _client, value); }
+        }
         string appKey = null;
 
 

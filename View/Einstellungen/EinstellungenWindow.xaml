@@ -849,7 +849,7 @@
                                         RowHeight="33">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn
-                                                Width="55"
+                                                Width="45"
                                                 Binding="{Binding Id}"
                                                 Header="ID"
                                                 IsReadOnly="True" />
@@ -868,33 +868,22 @@
                                                 Binding="{Binding Type}"
                                                 Header="Type"
                                                 IsReadOnly="True" />
+                                            <DataGridTextColumn
+                                                Width="120"
+                                                Binding="{Binding SoftwareVersion}"
+                                                Header="Software Version"
+                                                IsReadOnly="True" />
+                                            <DataGridTextColumn
+                                                Width="180"
+                                                Binding="{Binding ProductId}"
+                                                Header="Product-ID"
+                                                IsReadOnly="True" />
                                         </DataGrid.Columns>
                                     </DataGrid>
-
-
-                                    <!--<Grid >
-                                        <StackPanel Orientation="Vertical" Margin="10,20,10,20">
-                                            <TextBlock FontSize="25" Foreground="Blue">Philips Hue Lightbulb Control Center v.0.0.1</TextBlock>
-                                            <Button Content="Init HUE" Click="Button_Click" Width="80" Height="24"/>
-                                            <StackPanel Orientation="Horizontal">
-                                                
-                                                <ToggleButton x:Name="toggle_Power" Checked="toggle_Power_Checked" Unchecked="toggle_Power_Checked" >Light 1 Power Control</ToggleButton>
-                                                <StackPanel Orientation="Vertical" Margin="15,0,0,0">
-                                                    <TextBlock>Light 1 Brightness</TextBlock>
-                                                    <Slider x:Name="slider_Brightness" Minimum="0" Maximum="255" Width="500" HorizontalAlignment="Left" ValueChanged="Slider_Brightness_ValueChanged" />
-                                                </StackPanel>
-                                            </StackPanel>
-                                            <TextBlock>Light 1 Color</TextBlock>
-                                            <color:ColorPicker x:Name="color_Picker" Width="500" Height="300" HorizontalAlignment="Left" BorderBrush="Black" MouseUp="color_Picker_MouseUp" />
-
-                                            --><!--DataContextChanged="color_Picker_DataContextChanged"  SelectedColorChanged="Color_Picker_SelectedColorChanged"--><!--
-                                        </StackPanel>
-
-                                    </Grid>-->
                                 </Grid>
                             </Border>
                         </TabItem>
-                        <TabItem Header="Themes">
+                        <TabItem Header="HUE-Programme">
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -923,7 +912,7 @@
                                         Margin="0,1"
                                         HorizontalAlignment="Left"
                                         Command="{Binding onbtnNeuesHUETheme}"
-                                        Content="Neues Theme" />
+                                        Content="Neues Programm" />
 
                                     <ListBox
                                         Name="_listBoxThemes"
@@ -1080,14 +1069,9 @@
                                             </Grid.ColumnDefinitions>
 
                                             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                                                <Label Content="Theme Name" />
-                                                <TextBox MinWidth="150"
+                                                <Label Content="Name" />
+                                                <TextBox MinWidth="120"
                                                         Text="{Binding HUEThemeSelected.Name, UpdateSourceTrigger=PropertyChanged}" />
-                                                <ComboBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="1" Width="Auto" Height="25" Margin="20,0,0,0"
-                                                VerticalAlignment="Top" DisplayMemberPath="Name"
-                                                MinWidth="10"
-                                                ItemsSource="{Binding lstHUELights}"
-                                                SelectedValue="{Binding HUEThemeSelected.AddLightToTheme}" />
                                             </StackPanel>
                                             <DataGrid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"
                                                 ItemsSource="{Binding HUEThemeSelected.lstLightProcess, UpdateSourceTrigger=PropertyChanged}"
@@ -1121,24 +1105,53 @@
                                             </DataGrid>
                                         </Grid>
                                     </Grid>
-                                            
-                                    <Button
-                                        Grid.Row="3"
-                                        Width="100"
-                                        HorizontalAlignment="Left"
-                                        Command="{Binding onBtnDoTheme}"
-                                        CommandParameter="{Binding HUEThemeSelected}"
-                                        Content="Test Theme">
-                                        <Button.Style>
-                                            <Style TargetType="Button">
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Left">
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding HUEThemeSelected}" Value="{x:Null}">
                                                         <Setter Property="Visibility" Value="Hidden" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </Button.Style>
-                                    </Button>
+                                        </StackPanel.Style>
+                                        <Button
+                                            Width="100"
+                                            HorizontalAlignment="Left"
+                                            Command="{Binding onBtnDoTheme}"
+                                            CommandParameter="{Binding HUEThemeSelected}">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Content" >
+                                                        <Setter.Value>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/play.png" />
+                                                                <Label Content="Teste Programm" />
+                                                            </StackPanel>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HUEThemeSelected.isRunning, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                            <Setter Property="Content" >
+                                                                <Setter.Value>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pause.png" />
+                                                                        <Label Content="Teste Programm" />
+                                                                    </StackPanel>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                        <ComboBox Grid.Row="3" Width="Auto" Height="30" Margin="130,0,0,0" VerticalContentAlignment="Center"
+                                                        HorizontalAlignment="Left" DisplayMemberPath="Name"
+                                                        MinWidth="150" MaxWidth="200"
+                                                        ItemsSource="{Binding lstHUELights}"
+                                                        SelectedValue="{Binding HUEThemeSelected.AddLightToTheme}" />
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                         </TabItem>

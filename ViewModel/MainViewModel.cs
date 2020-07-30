@@ -642,6 +642,19 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _lstHUELights, value); }
         }
 
+        private List<LocatedBridge> _lstHUEGaterways = new List<LocatedBridge>();
+        public List<LocatedBridge> lstHUEGateways
+        {
+            get { return _lstHUEGaterways; }
+            set { Set(ref _lstHUEGaterways, value); }
+        }
+
+        private LocatedBridge _HUEGWSelected = null;
+        public LocatedBridge HUEGWSelected
+        {
+            get { return _HUEGWSelected; }
+            set { Set(ref _HUEGWSelected, value); }
+        }
 
         private HUETheme _HUEThemeSelected;
         public HUETheme HUEThemeSelected
@@ -667,11 +680,12 @@ namespace MeisterGeister.ViewModel
                 {
                     IBridgeLocator locator = new HttpBridgeLocator();
                     var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
+                    lstHUEGateways = bridgeIPs.ToList();
 
                     LocatedBridge HUEBridge = bridgeIPs.Where(t => t.BridgeId == HUE_ID).FirstOrDefault();
                     if (HUEBridge == null)
                         return;
-
+                    HUEGWSelected = HUEBridge;
                     Client = new LocalHueClient(HUEBridge.IpAddress);
                     Client.Initialize(HUE_Regkey);
 
@@ -684,7 +698,6 @@ namespace MeisterGeister.ViewModel
                 catch (Exception ex)
                 {
                     Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_GatewayID", null);
-                    //Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_Registerkey", null);
                 }
             }
         }

@@ -660,6 +660,16 @@
 
 
             <Expander ExpandDirection="Left" HorizontalAlignment="Left" Margin="-1,50,0,50" Height="500" VerticalAlignment="Top" Grid.Column="1">
+                <Expander.Style>
+                    <Style  TargetType="Expander">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding lstHUELights.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='1'}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Expander.Style>
                 <Expander.Header>
                     <TextBlock Style="{StaticResource TextTitel}" Text="HUE-Lampensteuerung" HorizontalAlignment="Center"/>
                 </Expander.Header>
