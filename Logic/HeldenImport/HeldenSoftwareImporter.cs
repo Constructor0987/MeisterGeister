@@ -665,6 +665,7 @@ namespace MeisterGeister.Logic.HeldenImport
                   //      }
                     }
                     Global.ContextZooBot.UpdateList<Held_Pflanze>();
+                    Global.ContextHeld.UpdateList<Held_Pflanze>();
                 }
             }
 

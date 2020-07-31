@@ -44,7 +44,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         public List<Held_Pflanze> BekannteHeldenPflanzen
         {
-            get { return SelectedHeld.Held_Pflanze.OrderBy(t => t.Pflanze.Name).ToList(); }
+            get { return SelectedHeld?.Held_Pflanze.OrderBy(t => t.Pflanze.Name).ToList(); }
         }
 
         private List<Pflanze> _filteredPflanzenListe = new List<Pflanze>();

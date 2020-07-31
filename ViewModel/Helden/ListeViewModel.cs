@@ -249,6 +249,7 @@ namespace MeisterGeister.ViewModel.Helden
                 {
 #endif
                 Held h = ImportHeld(pfad);
+                SelectedHeld = null;
                 SelectedHeld = h;
 
                 // Liste aktualisieren!
@@ -489,7 +490,7 @@ namespace MeisterGeister.ViewModel.Helden
                 if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name)))
                 {
                     if (!Global.ContextHeld.Delete<Held>(h))
-                        Global.ContextHeld.Delete<Held>(((MainViewModel.Instance.HeldenGruppe).SourceCollection as List<Held>).FirstOrDefault(t => t.Name == h.Name));
+                        Global.ContextHeld.Delete<Held>((Held)(MainViewModel.Instance.HeldenGruppe).CurrentItem);//;((MainViewModel.Instance.HeldenGruppe).SourceCollection as List<Held>).FirstOrDefault(t => t.Name == h.Name));
                     //Liste aktualisieren                    
                     MainViewModel.Instance.Helden.Remove(h);
                     HeldListe.Refresh();
