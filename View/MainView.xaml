@@ -102,7 +102,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" MinHeight="260"/>
+                <RowDefinition Height="auto" MinHeight="265"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -588,7 +588,7 @@
                     </Style>
                 </GridSplitter.Style>
             </GridSplitter>
-            <Expander x:Name="expHUE" ExpandDirection="Right" HorizontalAlignment="Left" Margin="0,50,0,0" 
+            <Expander x:Name="expHUE" ExpandDirection="Right" HorizontalAlignment="Left" Margin="0,55,0,0" 
                       Visibility="{Binding lstHUELights.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" 
                       Grid.Column="1" Width="322" >
                 <Expander.Header>
