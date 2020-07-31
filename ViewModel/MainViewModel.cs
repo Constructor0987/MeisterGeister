@@ -562,9 +562,9 @@ namespace MeisterGeister.ViewModel
             { 
                 Set(ref _hueLampeSaettigung, value);
 
-                if (HUELightSelected != null && Client != null)
+                if (HUELightsSelected.Count != 0 && Client != null)
                 {
-                    List<Light> lstLights = lstHUELights.Where(t => t.Id == HUELightSelected.Id).ToList();
+                    List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
                     if (lstLights.Count == 0) return;
                     //Control the lights                
                     LightCommand command = new LightCommand();
@@ -588,24 +588,20 @@ namespace MeisterGeister.ViewModel
             { 
                 Set(ref _hueLampeBrightness, value);
 
-                if (HUELightSelected != null && Client != null)
+                if (HUELightsSelected.Count != 0 && Client != null)
                 {
-                    List<Light> lstLights = lstHUELights.Where(t => t.Id == HUELightSelected.Id).ToList();
+                    List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
                     if (lstLights.Count == 0)
                         return;
                     //Control the lights                
                     LightCommand command = new LightCommand();
-                    //      command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
-                    if (value != 0)
+                    if (value > 1)
                     {
                         command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                         command.Brightness = (byte)value;
                     }
                     else
                         command.TurnOff();
-               //     command.Saturation = (byte)HUELampeSaettigung;
-                    //Or send it to all lights
-                    //   hueClient.SendCommandAsync(command);
                     Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
                 }
             }
@@ -617,22 +613,11 @@ namespace MeisterGeister.ViewModel
             get { return _lstHUEDeviceID; }
             set { Set(ref _lstHUEDeviceID, value); }
         }
-        private Light _HUELightSelected = new Light();
-        public Light HUELightSelected
+        private List<Light> _HUELightsSelected = new List<Light>();
+        public List<Light> HUELightsSelected
         {
-            get { return _HUELightSelected; }
-            set
-            {
-                Set(ref _HUELightSelected, value);
-                if (value != null)
-                {
-                    State hueLightState = value.State;
-                    if (hueLightState.On)
-                    {
-
-                    }
-                }
-            }
+            get { return _HUELightsSelected; }
+            set { Set(ref _HUELightsSelected, value); }
         }
 
         private List<Light> _lstHUELights = new List<Light>();
@@ -722,11 +707,14 @@ namespace MeisterGeister.ViewModel
         }
         void HUEOnOff(object obj)
         {
-            if (HUELightSelected == null)
+            if (HUELightsSelected == null)
                 return;
 
-            State actState = HUELightSelected.State;
-            actState.On = !actState.On;
+            HUELightsSelected.ForEach(delegate (Light hue)
+            {
+                State actState = hue.State;
+                actState.On = !actState.On;
+            });            
         }
 
         private Base.CommandBase _onBtnDoHUETheme = null;
@@ -744,7 +732,7 @@ namespace MeisterGeister.ViewModel
             if (HUEThemeSelected == null)
                 return;
             HUEThemeSelected.lstLights = new List<Light>();
-            HUEThemeSelected.lstLights.Add(HUELightSelected);
+            HUEThemeSelected.lstLights.AddRange(HUELightsSelected);
 
             if (!HUEThemeSelected.isRunning)
             {

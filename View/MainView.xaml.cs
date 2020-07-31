@@ -485,7 +485,7 @@ namespace MeisterGeister.View
         {
             IsMouseDown = true;
             UpdateColor();
-            if (VM.HUELightSelected != null && VM.Client != null)//.IsChecked.Value)// && hueClient != null)
+            if (VM.HUELightsSelected.Count != 0 && VM.Client != null)//.IsChecked.Value)// && hueClient != null)
             {
                 //Control the lights                
                 LightCommand command = new LightCommand();
@@ -493,7 +493,7 @@ namespace MeisterGeister.View
                 command.Brightness = (byte)BrightnessSlider.Value;
                 //Or send it to all lights
                 //     hueClient.SendCommandAsync(command);
-                VM.Client.SendCommandAsync(command, VM.lstHUELights.Where(t => t.Id == VM.HUELightSelected.Id).Select(t => t.Id).ToList());
+                VM.Client.SendCommandAsync(command, VM.lstHUELights.Where(t => VM.HUELightsSelected.Select(z=> z.Id).Contains(t.Id)).Select(t => t.Id).ToList());
             }
         }
 
@@ -549,6 +549,21 @@ namespace MeisterGeister.View
         private void HUESlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void lvHUE_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<Light> HUEListSelectedItems = new List<Light>();
+
+            foreach (Light item in (e.Source as ListView).SelectedItems)
+                HUEListSelectedItems.Add(item);
+
+            VM.HUELightsSelected = HUEListSelectedItems;
         }
     }
 }

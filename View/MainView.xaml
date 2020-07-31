@@ -60,6 +60,7 @@
         </DataTemplate>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <Style x:Key="ImageEnabled" TargetType="Image">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -92,7 +93,7 @@
                             <Setter Property="Width" Value="Auto" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ShowFavPlaylist, UpdateSourceTrigger=PropertyChanged}" Value="False" >
-                                    <Setter Property="Width" Value="0" />                                    
+                                    <Setter Property="Width" Value="0" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -100,9 +101,13 @@
                 </ColumnDefinition>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" MinHeight="260"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
             <Grid Margin="0,0,1,0" 
-                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2" >
                 <Border BorderThickness="1" BorderBrush= "{DynamicResource TabControlNormalBorderBrush}" >
                     <Grid AllowDrop="True" MinWidth="45" >
                         <Grid.RowDefinitions>
@@ -167,77 +172,79 @@
                     </Grid>
                 </Border>
             </Grid>
-            
-            <GridSplitter Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" Margin="1,0,0,0"
-                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            
-            <StatusBar Name="_statusBar" Visibility="Collapsed" DockPanel.Dock="Bottom" Grid.ColumnSpan="2">
+
+            <GridSplitter Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5"
+                Visibility="{Binding ShowFavPlaylist,Converter={StaticResource BooleanToVisibilityConverter1},Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2" />
+
+            <StatusBar Name="_statusBar" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <StatusBarItem>
                     <TextBlock Name="_statusInfoTextBox" />
                 </StatusBarItem>
             </StatusBar>
-            <Grid Grid.Column="1">
+                        
+            
+            <Grid Grid.Column="1" Grid.RowSpan="2">
                 <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" ViewGeneral:TabContent.IsCached="True" ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}" Margin="0,4,0.143,-4.286">
-                <!--<TabControl.Resources>
+                    <!--<TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
                     </Style>
                 </TabControl.Resources>-->
-                <TabControl.Style>
-                    <Style TargetType="{x:Type TabControl}">
-                        <Setter Property="ItemsSource" Value="{Binding OpenTools}" />
-                        <Setter Property="SelectedIndex" Value="{Binding SelectedTabIndex}" />
-                        <!--<Setter Property="ContentTemplateSelector" Value="{StaticResource ToolViewSelector}" />-->
-                        <Setter Property="ItemTemplate" Value="{StaticResource ClosableTabItemTemplate}" />
-                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                        <Setter Property="Padding" Value="4,4,4,4"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
-                        <Setter Property="Background" Value="#F9F9F9"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type TabControl}">
-                                    <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                    <TabControl.Style>
+                        <Style TargetType="{x:Type TabControl}">
+                            <Setter Property="ItemsSource" Value="{Binding OpenTools}" />
+                            <Setter Property="SelectedIndex" Value="{Binding SelectedTabIndex}" />
+                            <!--<Setter Property="ContentTemplateSelector" Value="{StaticResource ToolViewSelector}" />-->
+                            <Setter Property="ItemTemplate" Value="{StaticResource ClosableTabItemTemplate}" />
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            <Setter Property="Padding" Value="4,4,4,4"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
+                            <Setter Property="Background" Value="#F9F9F9"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TabControl}">
+                                        <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <DockPanel>
-                                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,5,0,0">
-                                                <Image Margin="5,0,0,0" Source="/Images/Icons/helden.png" Width="24"/>
-                                                <Grid Margin="5,0,5,0" Width="200" VerticalAlignment="Center">
-                                                    <ViewGeneral:NullItemSelectorAdapter ItemsSource="{Binding HeldenGruppe, UpdateSourceTrigger=PropertyChanged}" NullItem="{Binding NSC}">
-                                                        <ComboBox x:Name="comboBox"
+                                            <DockPanel>
+                                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,5,0,0">
+                                                    <Image Margin="5,0,0,0" Source="/Images/Icons/helden.png" Width="24"/>
+                                                    <Grid Margin="5,0,5,0" Width="200" VerticalAlignment="Center">
+                                                        <ViewGeneral:NullItemSelectorAdapter ItemsSource="{Binding HeldenGruppe, UpdateSourceTrigger=PropertyChanged}" NullItem="{Binding NSC}">
+                                                            <ComboBox x:Name="comboBox"
                                                                   FontWeight="Bold" Focusable="False"
                                                                   SelectedItem="{Binding SelectedHeld, UpdateSourceTrigger=PropertyChanged}">
-                                                            <ComboBox.Resources>
-                                                                <DataTemplate DataType="{x:Type model:Held}">
-                                                                    <TextBlock Text="{Binding Name}" />
-                                                                </DataTemplate>
-                                                            </ComboBox.Resources>
-                                                        </ComboBox>
-                                                    </ViewGeneral:NullItemSelectorAdapter>
-                                                    <TextBlock FontWeight="Bold" Text="NSC" VerticalAlignment="Center" Margin="5,0,0,0" IsHitTestVisible="False">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding ElementName=comboBox,Path=SelectedItem}" Value="{x:Null}">
-                                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </StackPanel>
+                                                                <ComboBox.Resources>
+                                                                    <DataTemplate DataType="{x:Type model:Held}">
+                                                                        <TextBlock Text="{Binding Name}" />
+                                                                    </DataTemplate>
+                                                                </ComboBox.Resources>
+                                                            </ComboBox>
+                                                        </ViewGeneral:NullItemSelectorAdapter>
+                                                        <TextBlock FontWeight="Bold" Text="NSC" VerticalAlignment="Center" Margin="5,0,0,0" IsHitTestVisible="False">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding ElementName=comboBox,Path=SelectedItem}" Value="{x:Null}">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </StackPanel>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Right">
                                                     <Menu Background="Transparent" IsMainMenu="False">
                                                         <MenuItem>
@@ -450,29 +457,29 @@
                                                 <TextBlock DockPanel.Dock="Left" Text="{Binding AktuellesDatum, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextTitel}" VerticalAlignment="Center"/>
                                             </DockPanel>
 
-                                        <TabPanel Grid.Column="1" DockPanel.Dock="Left" x:Name="HeaderPanel" IsItemsHost="true" Margin="2,2,2,0" KeyboardNavigation.TabIndex="1" VerticalAlignment="Bottom" Panel.ZIndex="1"/>
+                                            <TabPanel Grid.Column="1" DockPanel.Dock="Left" x:Name="HeaderPanel" IsItemsHost="true" Margin="2,2,2,0" KeyboardNavigation.TabIndex="1" VerticalAlignment="Bottom" Panel.ZIndex="1"/>
 
-                                        <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+                                            <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
                                                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
-                                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                        </Border>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsEnabled" Value="false">
-                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Style>
-                <!--<TabItem Name="_tabAdd" ToolTip="Tool öffnen...">
+                                                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                            </Border>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsEnabled" Value="false">
+                                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Style>
+                    <!--<TabItem Name="_tabAdd" ToolTip="Tool öffnen...">
                     <TabItem.Header>
                         <Image Source="/Images/Icons/General/add.png" Stretch="Fill" Height="18" Width="18" />
                     </TabItem.Header>
                 </TabItem>-->
-            </TabControl>
+                </TabControl>
 
                 <Border x:Name="Menue" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="40" CornerRadius="0,0,30,30" RenderTransformOrigin="0.5,0.5" Margin="0" Background="{DynamicResource Background1}">
                     <Border.RenderTransform>
@@ -508,7 +515,7 @@
                                 </StackPanel>
                             </GroupBox>
 
-                                <GroupBox VerticalAlignment="Center" Margin="10,-2" Height="28" Padding="0,-1,0,-1" >
+                            <!--<GroupBox VerticalAlignment="Center" Margin="10,-2" Height="28" Padding="0,-1,0,-1" >
                                     <GroupBox.Style>
                                         <Style TargetType="GroupBox" >
                                             <Setter Property="IsEnabled" Value="False"/>
@@ -531,96 +538,7 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-
-                                        <!--<ComboBox
-                                            Margin="10,0,0,-3"
-                                            Background="Transparent"
-                                            MinWidth="100"
-                                            FontSize="14"
-                                            ItemContainerStyle="{DynamicResource ListBoxItemStretch}"                                        
-                                            ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}"
-                                            SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" >
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <StackPanel Orientation="Horizontal" >
-                                                            <ViewGeneral:MultipleColorSlider Width="140" Height="24" Minimum="0" Padding="0"
-                                                                    Maximum="{Binding KomplettDauer}" 
-                                                                    ColorWechsel="{Binding lstLightProcess.Count, UpdateSourceTrigger=PropertyChanged}"
-                                                                    StartColor="{Binding lstLightProcess[0].Color}"
-                                                                    FirstColor="{Binding lstLightProcess[1].Color}"
-                                                                    SecondColor="{Binding lstLightProcess[2].Color}"
-                                                                    ThirdColor="{Binding lstLightProcess[3].Color}"
-                                                                    FourthColor="{Binding lstLightProcess[4].Color}"
-                                                                    LowerValue="{Binding lstLightProcess[0].Dauer, Mode=TwoWay}"
-                                                                    Upper1Value="{Binding lstLightProcess[1].Dauer, Mode=TwoWay}"
-                                                                    Upper2Value="{Binding lstLightProcess[2].Dauer, Mode=TwoWay}"
-                                                                    Upper3Value="{Binding lstLightProcess[3].Dauer, Mode=TwoWay}"  >
-                                                                <ViewGeneral:MultipleColorSlider.Style>
-                                                                    <Style TargetType="ViewGeneral:MultipleColorSlider">
-                                                                        <Style.Triggers>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
-                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="2" />
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
-                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="3" />
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
-                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="4" />
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
-                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="5" />
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding doLoop}" Value="False" />
-                                                                                    <Condition Binding="{Binding lstLightProcess.Count}" Value="6" />
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
-                                                                            </MultiDataTrigger>
-                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="2">
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[1].Color}" />
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="3">
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[2].Color}" />
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="4">
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[3].Color}" />
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="5">
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[4].Color}" />
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding lstLightProcess.Count}" Value="6">
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[5].Color}" />
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding doLoop}" Value="True">
-                                                                                <Setter Property="EndColor" Value="{Binding lstLightProcess[0].Color}" />
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </ViewGeneral:MultipleColorSlider.Style>
-                                                            </ViewGeneral:MultipleColorSlider>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>-->
+#
                                         <ToggleButton Height="24" Width="24" Margin="5,2,0,-3" Command="{Binding OnBtnDoHUETheme}">
                                             <ToggleButton.Style>
                                                 <Style TargetType="ToggleButton">
@@ -643,8 +561,8 @@
                                         </ToggleButton>
                                         <ToggleButton x:Name="tbtnHUEONOFF" Content="On/Off" Command="{Binding OnBtnHUEOnOff}" Height="24" Margin="5,2,0,-3"/>
                                     </StackPanel>
-                                </GroupBox>
-                            </StackPanel>
+                                </GroupBox>-->
+                        </StackPanel>
                         <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="8" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
                             <Border.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -658,18 +576,21 @@
                 </Border>
             </Grid>
 
-
-            <Expander ExpandDirection="Left" HorizontalAlignment="Left" Margin="-1,50,0,50" Height="500" VerticalAlignment="Top" Grid.Column="1">
-                <Expander.Style>
-                    <Style  TargetType="Expander">
-                        <Setter Property="Visibility" Value="Collapsed"/>
+            <GridSplitter ResizeDirection="Rows" Height="5" Grid.Row="1" Grid.Column="1" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <GridSplitter.Style>
+                    <Style TargetType="GridSplitter">
+                        <Setter Property="Width" Value="0"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding lstHUELights.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='1'}" Value="True">
-                                <Setter Property="Visibility" Value="Visible"/>
+                            <DataTrigger Binding="{Binding ElementName=expHUE, Path=IsExpanded}" Value="True">
+                                <Setter Property="Width" Value="302"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Expander.Style>
+                </GridSplitter.Style>
+            </GridSplitter>
+            <Expander x:Name="expHUE" ExpandDirection="Right" HorizontalAlignment="Left" Margin="0,50,0,0" 
+                      Visibility="{Binding lstHUELights.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" 
+                      Grid.Column="1" Width="322" >
                 <Expander.Header>
                     <TextBlock Style="{StaticResource TextTitel}" Text="HUE-Lampensteuerung" HorizontalAlignment="Center"/>
                 </Expander.Header>
@@ -681,8 +602,7 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
-                                <RowDefinition />
-                                <RowDefinition/>
+                                <RowDefinition MinHeight="60" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -809,7 +729,7 @@
                                 </Border>
                             </StackPanel>
                             <StackPanel Grid.Row="3" Grid.ColumnSpan="2">
-                                <Label Content="Helligkeit" Padding="0,2,0,0"/>                                
+                                <Label Content="Helligkeit (0=aus)" Padding="0,2,0,0"/>
                                 <Border x:Name="BrightnessBorder"
                                         Background="{Binding alphaBrush}"
                                     BorderBrush="Black"
@@ -851,7 +771,7 @@
                                     MouseUp="CanvasImage_MouseUp"
                                     MouseMove="CanvasImage_MouseMove"                        
                                         >
-                                    
+
                                     <!---->
                                     <Ellipse x:Name="ellipsePixel"
                                        Width="8"
@@ -859,15 +779,14 @@
                                        Stroke="Black"
                                        Fill="White"
                                        Canvas.Left="0"
-                                       Canvas.Top="0"/>         
+                                       Canvas.Top="0"/>
                                 </Canvas>
                             </Grid>
 
 
-                            <ListView Grid.Row="4" Margin="0,10,0,0" FontSize="14"
+                            <ListView x:Name="lvHUE" Grid.Row="4" Margin="0,10,0,0" FontSize="14" VerticalAlignment="Top"
                                       ItemsSource="{Binding lstHUELights, UpdateSourceTrigger=PropertyChanged}" 
-                                      DisplayMemberPath="Name" SelectedItem="{Binding HUELightSelected}" />
-
+                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUE_SelectionChanged" />
                         </Grid>
                     </Border>
                 </Grid>
