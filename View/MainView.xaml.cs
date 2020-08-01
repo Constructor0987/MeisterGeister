@@ -578,8 +578,6 @@ namespace MeisterGeister.View
                 ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Auswerten des Tastenklicks ist ein Fehler aufgetreten.", ex);
             }
         }
-    }
-        }
 
         private void lvHUE_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
