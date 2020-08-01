@@ -367,7 +367,7 @@ namespace MeisterGeister.Model.Service
                 DeleteHeldData(held);
                 Held output = Context.AttachObjectGraph(held,
                     h => h.Held_Pflanze,
-                    h => h.Held_Pflanze.First().Pflanze.WithoutUpdate(),
+                    h => h.Held_Pflanze.First().Pflanze,
                     h => h.Held_Munition,
                     h => h.Held_Inventar,
                     h => h.Held_Inventar.First().Inventar,

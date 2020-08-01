@@ -377,7 +377,6 @@ namespace MeisterGeister.Logic.HeldenImport
         {
             // Import-Log erzeugen
             HeldenImportResult result = Import(_xmlDoc, newGuid);
-            result.Held = Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == result.Held.HeldGUID).FirstOrDefault();
 
             return result;
         }
@@ -408,6 +407,10 @@ namespace MeisterGeister.Logic.HeldenImport
                 heldGuid = newGuid;
             _held.HeldGUID = heldGuid;
             _held.Name = name;
+
+            Held held_exist = newGuid == Guid.Empty?
+                Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == _held.HeldGUID).FirstOrDefault():
+                null;
 
             // TODO: Regelsystem evtl. aus der XML-Datei ermitteln
             if (string.IsNullOrEmpty(_held.Regelsystem)) // falls keine Regeledition gesetzt, DSA 4.1 annehmen
@@ -476,6 +479,10 @@ namespace MeisterGeister.Logic.HeldenImport
             if (bild != null)
             {
                 _held.Bild = bild.Attributes["value"].Value;
+            }
+            if (held_exist != null)
+            {
+                _held.Bild = held_exist.Bild;
             }
 
             // Eigenschaften
@@ -576,7 +583,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _held.AusdauerAktuell = _held.AusdauerMax;
             _held.KarmaenergieAktuell = _held.KarmaenergieMax;
             _held.AstralenergieAktuell = _held.AstralenergieMax;
-
+            
             // Vor-/Nachteile
             ImportVorNachteile(_xmlDoc, _held, _importLog);
 
@@ -592,13 +599,101 @@ namespace MeisterGeister.Logic.HeldenImport
             // Inventar
             ImportInventar(_xmlDoc, _held, _importLog);
 
+            _held.AstralenergieAktuell = _held.AstralenergieMax;
+            if (held_exist != null)
+                _held.AE_Aktuell = held_exist.AE_Aktuell;
+
+            // Pflanzen aus altem Helden
+            List<Pflanze> lstPflanze = new List<Pflanze>();
+            if (held_exist != null)
+            {
+                lstPflanze.AddRange(held_exist.Held_Pflanze.Select(t => t.Pflanze));
+
+
+                if (lstPflanze.Count > 0)
+                {
+                    foreach (Pflanze p in lstPflanze)
+                    {
+
+                        Global.ContextZooBot.Delete<Held_Pflanze>(held_exist.Held_Pflanze.FirstOrDefault(t => t.PflanzeGUID == p.PflanzeGUID));
+                        if (held_exist.Held_Pflanze.FirstOrDefault(t => t.PflanzeGUID == p.PflanzeGUID) != null)
+                            held_exist.Held_Pflanze.Remove(held_exist.Held_Pflanze.FirstOrDefault(t => t.PflanzeGUID == p.PflanzeGUID));
+                        //NotifyRefresh();
+
+                        Held_Pflanze hp = new Held_Pflanze();
+                        hp.HeldGUID = _held.HeldGUID;
+                        hp.ID = Guid.NewGuid();
+                        hp.PflanzeGUID = p.PflanzeGUID;
+                        hp.Bekannt = true;
+
+                        _held.Held_Pflanze.Add(hp);
+              //          if (Global.ContextZooBot.Insert<Held_Pflanze>(hp))
+                        { }
+
+                        //    Held_Talent ht = new Held_Talent();
+                        //    ht.HeldGUID = _held.HeldGUID;
+                        //    ht.TalentGUID = t.TalentGUID;
+                        //    ht.TaW = wert;
+                        //    ht.ZuteilungAT = atZuteilung;
+                        //    ht.ZuteilungPA = paZuteilung;
+                        //    if (_held.Held_Talent.Any(_ht => ht.TalentGUID == _ht.TalentGUID))
+                        //    {
+                        //        AddImportLog(ImportTypen.Talent, talentName, wert, _importLog);
+                        //        continue;
+                        //    }
+                        //    _held.Held_Talent.Add(ht);
+                        //}
+
+
+
+                        //_held.Held_Pflanze.Add(held_exist.Held_Pflanze.First());
+
+
+                  //      Held_Pflanze hPflanze = new Held_Pflanze();
+                  //      hPflanze.HeldGUID = _held.HeldGUID;
+                  //      hPflanze.ID = Guid.NewGuid();
+                  //      hPflanze.PflanzeGUID = p.PflanzeGUID;
+                  //      hPflanze.Bekannt = true;
+                  //      if (Global.ContextZooBot.Insert<Held_Pflanze>(hPflanze))
+                  //      {
+                  //          //UnbekanntePflanzenListe.Remove(PflanzeAuswahl);
+                  ////          OnChanged("BekannteHeldenPflanzen");
+                  //      }
+                  //      else
+                  //      {
+                  //          //throw new Exception("Datenbankfehler" + Environment.NewLine + "Beim Erstellen einer neuen bekannten Pflanze ist ein Fehler aufgetreten.");
+                  //      }
+                    }
+                    Global.ContextZooBot.UpdateList<Held_Pflanze>();
+                    Global.ContextHeld.UpdateList<Held_Pflanze>();
+                }
+            }
+
+            if (held_exist != null)
+            {
+                _held.Spieler = held_exist.Spieler;
+                _held.Notizen = held_exist.Notizen;
+                _held.Kampfwerte = held_exist.Kampfwerte;
+
+                _held.AE_Aktuell = held_exist.AE_Aktuell;
+            }
+
+            //    while (held_exist.Held_Pflanze.Count > 0)
+            //    {
+            //        Held_Pflanze hp = held_exist.Held_Pflanze.ToList()[0];
+            //        held_exist.Held_Pflanze.Remove(hp);
+            //        _held.Held_Pflanze.Add(hp);
+            //    }
+
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
             if (!serializer.InsertOrUpdateHeld(_held))
             {
                 //FEHLER! Held konnte nicht in die Datenbank eingefügt werden.
                 throw new Exception("Held konnte nicht in die Datenbank eingefügt werden.");
             }
+
             Global.ContextHeld.UpdateList<Held>();
+
             result.Held = _held;
             result.ImportLogs = _importLog;
             return result;

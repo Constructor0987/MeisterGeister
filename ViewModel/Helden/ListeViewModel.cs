@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Logic.HeldenImport;
 using MeisterGeister.Model;
+using MeisterGeister.View.General;
 using MeisterGeister.View.Helden;
 using MeisterGeister.View.Windows;
 
@@ -249,6 +251,7 @@ namespace MeisterGeister.ViewModel.Helden
                 {
 #endif
                 Held h = ImportHeld(pfad);
+                SelectedHeld = null;
                 SelectedHeld = h;
 
                 // Liste aktualisieren!
@@ -263,8 +266,14 @@ namespace MeisterGeister.ViewModel.Helden
                     ShowError("Beim Import ist ein Fehler aufgetreten.", ex);
                 }
 #endif
-
+               
                 Global.SetIsBusy(false);
+
+                if (ViewHelper.Confirm("Neustart erforderlich", "Ungeachtet von der Anzeigeliste der Helden, sollte unbedingt die Software neu gestartet werden, um die Helden korrekt zu laden.\r\n\r\n" +
+                    "Wenn noch mehr Änderungen der Heldenliste durchgeführt werden soll, kann das Neustarten danach erfolgen.\r\n\r\nSoll die Software jetzt beendet werden?"))
+                {
+                    Application.Current.Shutdown();
+                }
             }
         }
 
@@ -342,11 +351,8 @@ namespace MeisterGeister.ViewModel.Helden
             }
 
             if (existing != null && overwrite && (isHeldenblatt || isHeldenSoftware))
-            { // MeisterGeister spezifische Daten beim Reimport übernehmen
-                importHeld.Spieler = existing.Spieler;
-                importHeld.Notizen = existing.Notizen;
-                importHeld.Kampfwerte = existing.Kampfwerte;
-                importHeld.Held_Pflanze = existing.Held_Pflanze;
+            { 
+                // MeisterGeister spezifische Daten beim Reimport übernehmen
                 if (importHeld.CheckEnergieständeAbwechend(existing)
                     && ConfirmYesNoCancel("Energiestände & Wunden", "Sollen die aktuellen Energiestände und Wunden beibehalten werden?") == 2)
                 {
@@ -363,11 +369,35 @@ namespace MeisterGeister.ViewModel.Helden
                     importHeld.WundenBrust = existing.WundenBrust;
                     importHeld.WundenKopf = existing.WundenKopf;
                 }
+                SelectedHeld = existing;
+
+                //lstPflanze.AddRange(existing.Held_Pflanze.Select(t => t.Pflanze));
+
+
+                //if (lstPflanze.Count > 0)
+                //{
+                //    while (existing.Held_Pflanze.Count > 0)
+                //    {
+                //        Held_Pflanze hp = existing.Held_Pflanze.ToList()[0];
+                //        existing.Held_Pflanze.Remove(hp);
+                //        Global.ContextHeld.UpdateList<Held_Pflanze>();
+                //        importHeld.Held_Pflanze.Add(hp);
+                //    }
+                //}
+                DeleteHeld(true);
+            //    Global.ContextHeld.Save();
             }
 
-            MainViewModel.Instance.Helden.Add(importHeld);
+            if (overwrite)
+            {
+                MainViewModel.Instance.Helden.Add(importHeld);
+            }
+                
             HeldListe.Refresh();
+
+            MainViewModel.Instance.HeldenGruppe.Refresh();
             SortHeldListe();
+          //  importHeld.UpdateLists;
 
             return importHeld;
         }
@@ -461,18 +491,28 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void DeleteHeld(object sender)
         {
-            Held h = SelectedHeld;
-            if (h != null && !IsReadOnly)
+            try
             {
-                if (Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
-                    && Global.ContextHeld.Delete<Held>(h))
+                Held h = SelectedHeld;
+                if (h != null &&
+                    (!IsReadOnly || ((sender is bool) && ((bool)sender) == true)))
                 {
-                    //Liste aktualisieren
-                    MainViewModel.Instance.Helden.Remove(h);
-                    HeldListe.Refresh();
-                    SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
+                    if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name)))
+                    {
+                        if (!Global.ContextHeld.Delete<Held>(h))
+                            Global.ContextHeld.Delete<Held>((Held)(MainViewModel.Instance.HeldenGruppe).CurrentItem);
+                                                                                                                     
+                        //Liste aktualisieren                    
+                        MainViewModel.Instance.Helden.Remove(h);
+                        HeldListe.Refresh();
+                        MainViewModel.Instance.HeldenGruppe.Refresh();
+                        SelectedHeld = null;
+                        SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
+                    }
                 }
             }
+            catch (Exception)
+            { }
         }
 
         private void DeleteHeldAll(object sender)
@@ -484,6 +524,7 @@ namespace MeisterGeister.ViewModel.Helden
                 Global.ContextHeld.DeleteAll<Held>();
                 MainViewModel.Instance.Helden.Clear();
                 HeldListe.Refresh();
+                MainViewModel.Instance.HeldenGruppe.Refresh();
 
                 SelectedHeld = null;
 
