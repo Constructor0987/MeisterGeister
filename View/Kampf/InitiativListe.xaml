@@ -21,7 +21,6 @@
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
-        <ViewGeneral:IsEqualConverter x:Key="IsEqualConverter1"/>
         <KampfLogic:DoubleToIntConverter x:Key="DoubleToIntConverter1"/>
         <KampfLogic:DoubleSichtConverter x:Key="sichtConverter"/>
         <KampfLogic:DoubleLichtConverter x:Key="lichtConverter"/>

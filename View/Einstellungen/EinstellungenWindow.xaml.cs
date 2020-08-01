@@ -5,11 +5,17 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.View.AudioPlayer;
 using MeisterGeister.View.General;
 using MeisterGeister.View.Windows;
 using MeisterGeister.ViewModel.Settings;
+using Q42.HueApi;
+using Q42.HueApi.ColorConverters;
+using Q42.HueApi.ColorConverters.HSB;
+using Q42.HueApi.Interfaces;
 
 // Eigene Usings
 using GeneralLogic = MeisterGeister.Logic.General;
@@ -219,5 +225,45 @@ namespace MeisterGeister.View.Settings
         private void _rbtnSpieldauerBerechnen_Checked(object sender, RoutedEventArgs e)
         {
         }
+
+
+        //private void Timer_Tick(object sender, object e)
+        //{
+        //    //stop timer
+        //    _timer.Stop();
+
+        //    //execute queue commands
+        //    if (_commandQueue.Count > 0)
+        //    {
+        //        foreach (var cmd in _commandQueue)
+        //        {
+        //            //fire and forget
+        //            _client.SendCommandAsync(cmd.Value, _lightList);
+        //        }
+        //    }
+
+        //    //clear queue
+        //    _commandQueue.Clear();
+
+        //    //start timer back up again
+        //    _timer.Start();
+        //}
+
+        ////helper method to queue light commands for execution
+        //private void QueueCommand(string commandType, LightCommand cmd)
+        //{
+        //    if (_commandQueue.ContainsKey(commandType))
+        //    {
+        //        //replace with most recent
+        //        _commandQueue[commandType] = cmd;
+        //    }
+        //    else
+        //    {
+        //        _commandQueue.Add(commandType, cmd);
+        //    }
+
+        //}
+
     }
+
 }

@@ -167,9 +167,8 @@
     <Reference Include="NAudio">
       <HintPath>packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NVorbis">
       <HintPath>packages\NVorbis.0.8.4.0\lib\NVorbis.dll</HintPath>
@@ -178,10 +177,8 @@
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="Q42.HueApi, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Q42.HueApi.3.6.3\lib\netstandard1.1\Q42.HueApi.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+    <Reference Include="Q42.HueApi, Version=3.15.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Q42.HueApi.3.15.4\lib\net45\Q42.HueApi.dll</HintPath>
     </Reference>
     <Reference Include="Q42.HueApi.ColorConverters, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Q42.HueApi.ColorConverters.3.6.0\lib\netstandard1.1\Q42.HueApi.ColorConverters.dll</HintPath>
@@ -826,7 +823,9 @@
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
-    <Compile Include="View\General\IsEqualConverter.cs" />
+    <Compile Include="View\General\MultipleColorSlider.xaml.cs">
+      <DependentUpon>MultipleColorSlider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\SmallSlider.xaml.cs">
       <DependentUpon>SmallSlider.xaml</DependentUpon>
     </Compile>
@@ -1659,6 +1658,10 @@
     <Page Include="View\General\DereGlobusLinkControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\MultipleColorSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\General\SmallSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
