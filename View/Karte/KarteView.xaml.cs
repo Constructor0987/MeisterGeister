@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MeisterGeister.ViewModel.Karte;
 using DgSuche;
 using System.Windows.Threading;
+using WPFExtensions.Controls;
 
 namespace MeisterGeister.View.Karte
 {
@@ -42,6 +43,8 @@ namespace MeisterGeister.View.Karte
 
         void KarteView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            VM.MapZoomControl = MapScrollViewer;
+
             if(e.OldValue is KarteViewModel)
             {
                 (e.OldValue as KarteViewModel).PropertyChanged -= VM_PropertyChanged;

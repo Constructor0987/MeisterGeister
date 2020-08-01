@@ -13,8 +13,8 @@
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:Converters="clr-namespace:WPFExtensions.Converters;assembly=WPFExtensions" x:Class="MeisterGeister.View.Karte.KarteView"
-             mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="1000"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="1000"             
              SizeChanged="UserControl_SizeChanged" x:Name="view">
     <UserControl.Resources>
         <Karte:MGIconZoomConverter x:Key="MGIconZoomConverter"/>
@@ -332,7 +332,10 @@
                             <Karte:KoordinatenControl Value="{Binding HeldenGlobusPosition}" Format="Dezimalminuten" />
                         </Button>
                         <Button Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="26" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=MapScrollViewer}" ToolTip="Kartenausschnitt im Spieler-Fenster anzeigen.">
-                            <Image Source="/Images/Icons/General/screen.png" />
+                            <Grid>
+                                <Image Source="/Images/Icons/General/screen.png" />
+                                <Image Source="/Images/Icons/kartenzeichnen.png" Margin="3,3,3,7" />
+                            </Grid>
                         </Button>
                         <ComboBox ItemsSource="{Binding Karten}" SelectedItem="{Binding SelectedKarte}" ToolTip="Aktuelle Karte">
                             <ComboBox.ItemTemplate>

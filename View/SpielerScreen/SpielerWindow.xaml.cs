@@ -8,9 +8,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf;
+using MeisterGeister.ViewModel.Karte;
 using MeisterGeister.ViewModel.SpielerScreen;
 
 namespace MeisterGeister.View.SpielerScreen
@@ -88,6 +90,8 @@ namespace MeisterGeister.View.SpielerScreen
 
         public bool IsKampfInfoModus { get; set; }
 
+        public DispatcherTimer _timerVideoUpdate = new DispatcherTimer();
+
         public static new void Show()
         {
             ((Window)Instance).Show();
@@ -128,7 +132,7 @@ namespace MeisterGeister.View.SpielerScreen
         }
 
         public static void SetContent(object info)
-        {
+        {            
             Instance.Content = info;
             Instance.IsKampfInfoModus = (info is Kampf.KampfInfoView);
 
@@ -249,10 +253,6 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        public static void SetBodenplanView()
-        {
-        }
-
         internal static void ReOpen()
         {
             Close();
@@ -348,6 +348,9 @@ namespace MeisterGeister.View.SpielerScreen
                 WindowState = System.Windows.WindowState.Normal;
                 WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             }
+
+            _timerVideoUpdate.Interval = TimeSpan.FromMilliseconds(200);
+            _timerVideoUpdate.Tick += new EventHandler(_timerVideoUpdate_Tick);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -390,6 +393,25 @@ namespace MeisterGeister.View.SpielerScreen
                 WindowState = System.Windows.WindowState.Normal;
                 WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             }
+        }
+
+        private void MP4BattlemapBackgroundSpieler_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            ((MediaElement)sender).Position = TimeSpan.FromSeconds(Global.CurrentKampf.BodenplanViewModel.BackgroundMp4MinPosition);
+        }
+
+        private void MP4BattlemapBackgroundSpieler_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            ((MediaElement)sender).Position = TimeSpan.FromSeconds(Global.CurrentKampf.BodenplanViewModel.BackgroundMp4MinPosition);
+            ((MediaElement)sender).SpeedRatio = Global.CurrentKampf.BodenplanView.VideoObject1.SpeedRatio;
+            _timerVideoUpdate.Start();
+        }
+
+        public void _timerVideoUpdate_Tick(object sender, EventArgs e)
+        {            
+            if (MP4BattlemapBackgroundSpieler.Position >= TimeSpan.FromSeconds(Global.CurrentKampf.BodenplanViewModel.BackgroundMp4MaxPosition))
+                MP4BattlemapBackgroundSpieler.Position = TimeSpan.FromSeconds(Global.CurrentKampf.BodenplanViewModel.BackgroundMp4MinPosition);
+            MP4BattlemapBackgroundSpieler.SpeedRatio = Global.CurrentKampf.BodenplanView.VideoObject1.SpeedRatio;
         }
     }
 }

@@ -14,9 +14,12 @@ using System.Windows;
 using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
+using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Bodenplan.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
+    [Serializable]
     public class KämpferInfo : ViewModelBase, IDisposable
     {
         #region Commands
@@ -73,6 +76,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Global.CurrentKampf.Kampf.Kämpfer.Remove(kämpfer);
                // Kampf.Kämpfer.Remove(kämpfer);
             }
+        }
+
+        private CommandBase iniNeu;
+        public CommandBase INIneu
+        {
+            get
+            {
+                if (iniNeu == null)
+                    iniNeu = new CommandBase((o) => INIneuWürfeln(), null);
+                return iniNeu;                
+            }
+        }
+
+        public void INIneuWürfeln()
+        {
+            Initiative = Kämpfer.Initiative();
         }
 
         private CommandBase passiv;
@@ -143,7 +162,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     _kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             }
         }
-        
+
         private btnHotkeyVM _speedbtnAudio = new btnHotkeyVM();
         public btnHotkeyVM SpeedbtnAudio
         {
@@ -229,20 +248,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 _initiative = value;
-                int bonus = Math.Max((int)Math.Floor((_initiative - 11) / 10.0), 0);
-                FreieAktionen = 2 + bonus;
-                Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
-                if (bonus > 0)
-                    Kämpfer.Modifikatoren.Add(new Mod.PABonusDurchHoheIni(bonus));
-                //Wenn INI < 0 -> Kämpfer verliert eine (Angriffs)Aktion
-                AktionenBerechnen();
+                try
+                {
+                    int bonus = Math.Max((int)Math.Floor((_initiative - 11) / 10.0), 0);
+                    FreieAktionen = 2 + bonus;
+                    Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
+                    if (bonus > 0)
+                        Kämpfer.Modifikatoren.Add(new Mod.PABonusDurchHoheIni(bonus));
+                    //Wenn INI < 0 -> Kämpfer verliert eine (Angriffs)Aktion
+                    AktionenBerechnen();
 
-                //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
-                //Dazwischen sollen die Aktionen allerdings neu berechnet werden
-                OnChanged("Initiative");
-                // ????? notwendig                
-                if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
-                    Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
+                    //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
+                    //Dazwischen sollen die Aktionen allerdings neu berechnet werden
+                    OnChanged(nameof(Initiative));
+                    // ????? notwendig                
+                    if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
+                        Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
+                }
+                catch (Exception ex)
+                { ShowError("Beim Ändern der Initiative ist ein Fehler aufgetreten.", ex); }
             }
         }
         #endregion
@@ -275,7 +299,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void NotifyIndexChanged()
         {
-            OnChanged("Index");
+            OnChanged(nameof(Index));
         }
 
         private Kampf kampf;
@@ -325,13 +349,61 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 Set(ref _lichtquellePixel, value);
+
                 Bodenplan.Logic.BattlegroundCreature bgC = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
                     .Where(t => t is Bodenplan.Logic.BattlegroundCreature)
                     .FirstOrDefault(s => (s as Bodenplan.Logic.BattlegroundCreature).ki == this) as Bodenplan.Logic.BattlegroundCreature);
 
-                LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
-                LightCreatureX = bgC.CreatureX - LichtquellePixel;
-                LightCreatureY = bgC.CreatureY - LichtquellePixel;
+                Bodenplan.Logic.LichtquelleObject lichtObj =
+                    Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
+                        .Where(t => t is Bodenplan.Logic.LichtquelleObject)
+                        .Where(t => (t as Bodenplan.Logic.LichtquelleObject).iKämpfer == Global.CurrentKampf.BodenplanViewModel.SelectedObject as IKämpfer).FirstOrDefault() as Bodenplan.Logic.LichtquelleObject;
+
+                if (value != 0)
+                {
+                    BattlegroundCreature bgCreature = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
+                        .Where(t => t is BattlegroundCreature)
+                        .FirstOrDefault(t => (t as BattlegroundCreature).ki == this) as BattlegroundCreature;
+
+
+                    //Nur ein Lichquellenobject erzeugen, wenn auch ein Kämpfer existiert. 
+                    //Ist dies nicht der Fall sind wir im Lade-Zyklus. Die Lichtquelle wird dann nach allen Kämpfern erstellt
+                    if (bgCreature == null)
+                        return;
+
+                    bool istNeu = false;
+                    if (lichtObj == null)
+                    {
+                        istNeu = true;
+                        lichtObj = new Bodenplan.Logic.LichtquelleObject();
+                    }
+                    KämpferInfo kämpInfo = bgCreature.ki;
+                    lichtObj.ki = kämpInfo;
+
+                    lichtObj.LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
+                    lichtObj.LightCreatureX = bgC.CreatureX - LichtquellePixel;
+                    lichtObj.LightCreatureY = bgC.CreatureY - LichtquellePixel;
+
+                    if (istNeu)
+                    {
+                        var firstCreature = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.FirstOrDefault(t => t is BattlegroundCreature);
+                        int index = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.IndexOf(firstCreature);
+                        Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Add(lichtObj);
+                        Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Move(
+                            Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Count - 1, index);
+                    }
+                }
+                else
+                {
+                    if (lichtObj != null)
+                        Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Remove(lichtObj);
+                }
+                if (bgC != null)
+                {
+                    LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
+                    LightCreatureX = bgC.CreatureX - LichtquellePixel;
+                    LightCreatureY = bgC.CreatureY - LichtquellePixel;
+                }
 
                 if (LichtquelleMeter != value / 100) LichtquelleMeter = value / 100;                
             }
@@ -367,10 +439,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     KampfManöver<IWaffe> manöver = mi.Manöver as KampfManöver<IWaffe>;
                     if (manöver != null)
-                        ((ManöverModifikator<Position, IWaffe>)manöver.Mods["PositionSelbst"]).Value = value.Value; //KampfManöver<IWaffe>.POS_SELBST_MOD
+                        ((ManöverModifikator<Position, IWaffe>)manöver.Mods["PositionSelbst"]).Value = value.Value; 
                 }
             }
         }
+
+        public KämpferInfo()
+        { }
 
         public KämpferInfo(IKämpfer k, Kampf kampf)
         {            
@@ -427,7 +502,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     else
                         Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
                 }
-                //OnChanged("Aktionen"); absichtlich nicht.
+                //hier kein OnChanged einbinden
             }
         }
 
@@ -451,6 +526,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             { return Angriffsaktionen >= 2? Angriffsaktionen: 2; }
         }
 
+        public bool IgnoreChgAktionen = false;
+
         private int _angriffsaktionen = 1;
         [DependentProperty("Initiative")]
         public int Angriffsaktionen
@@ -466,7 +543,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     mi = Global.CurrentKampf.Kampf.InitiativListe.LastOrDefault(t => t.Manöver.Ausführender.Kämpfer == this.Kämpfer);
                 }
-                if (mi != null && mi.Manöver.GetType() != typeof(Manöver.Attacke))
+                if (mi != null && !IgnoreChgAktionen && mi.Manöver.GetType() != typeof(Manöver.Attacke))
                 {
                     if (ViewHelper.ConfirmYesNoCancel("Längerfristige Handlung unterbrechen", "Durch die Änderung der Aktionen wird die längerfristige Handlung unterbrochen." + Environment.NewLine + Environment.NewLine +
                         this.Kämpfer.Name + " will ein " + (
@@ -483,6 +560,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         "Diese Handlung würde noch " + mi.Manöver.VerbleibendeDauer + " Aktionen dauern." + Environment.NewLine + Environment.NewLine +
                         "Soll die Handlung unterbrochen werden?") != 2) return;
 
+                    ((Wesen)mi.Manöver.Ausführender.Kämpfer).AktVerbleibendeDauer = null;
                     mi.Manöver.VerbleibendeDauer = 0;
                     Global.CurrentKampf.Kampf.SortedInitiativListe =
                         Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase);
@@ -573,13 +651,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return FreieAktionen - VerbrauchteFreieAktionen; }
         }
 
-        private ManöverInfo _aktManöverInfo = null;
-        public ManöverInfo AktManöverInfo
-        {
-            get { return _aktManöverInfo; }
-            set { Set(ref _aktManöverInfo, value); }
-        }
-
         private void AktionenBerechnen()
         {
             int aktionen = 2;
@@ -596,7 +667,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 .Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
             if (längerfristig != null)
             {
-                AktManöverInfo = längerfristig;
                 if (längerfristig.InitiativeModStart == 0)
                 {
                     Aktionen = aktionen;
@@ -715,7 +785,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
 
-            OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            OnChanged(nameof(Abwehraktionen));
+            OnChanged(nameof(Angriffsaktionen));
+            OnChanged(nameof(Aktionen));
         }
 
         //TODO Kampfstile in Kämpfer verschieben
@@ -883,21 +955,58 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         yield return new ManöverInfo(new Attacke(this), Math.Max(i * 4, 8), kampfrunde);
                 }
             }
-
-            var längerfristig = AngriffsManöver.Where(mi => mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Start).FirstOrDefault();
+            bool skip1Abwehr = false;
+            var längerfristig = AngriffsManöver.Where(
+                mi => mi.Manöver.GetType() == typeof(Manöver.FernkampfManöver)
+                || mi.Manöver.GetType() == typeof(Manöver.Zauber)
+                || (mi.Manöver.GetType() == typeof(Manöver.SonstigesManöver) && mi.Manöver.Dauer >= 2)
+                ).OrderBy(mi => mi.Start).FirstOrDefault(); 
             if (längerfristig != null)
             {
-                //    yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
-            }
+                if (längerfristig.End.Kampfrunde == kampfrunde)
+                {
+                    ManöverInfo mi = new ManöverInfo(new Attacke(this), 0, kampfrunde);
 
+                    if (längerfristig.Manöver.GetType() == typeof(Manöver.FernkampfManöver))
+                    {
+                        mi.Manöver = new Manöver.FernkampfManöver(this, 
+                            (IFernkampfwaffe)(längerfristig.Manöver as Manöver.FernkampfManöver).FernkampfWaffeSelected);            
+                    }
+                    else
+                    if (längerfristig.Manöver.GetType() == typeof(Manöver.Zauber))
+                    {
+                        mi.Manöver = new Manöver.Zauber(this,
+                            (Held_Zauber)(längerfristig.Manöver as Manöver.Zauber).Held_Zauber);
+                    }
+                    //Nur 1 Aktion für das Würfeln der längerfriatige Handlung
+                    mi.Start = längerfristig.End;
+                    mi.End = längerfristig.End;
+                    //In der 1.Akt muss die längerfristige Handlung aktiv werden, die 2. Akt wird ebenfalls als aktive Aktion freigeschaltet
+                    if (längerfristig.Manöver.VerbleibendeDauer == 1 && Abwehraktionen > 0)
+                    {
+                        mi.Manöver.Dauer = 1;
+                        mi.Manöver.VerbleibendeDauer = 1;
+                        yield return new ManöverInfo(mi.Manöver, 0, kampfrunde);
+                        yield return new ManöverInfo(new Attacke(this), 8, kampfrunde);
+                    }
+                    else
+                    //Die Längerfristige Handlung Endet in der KR - daher muss die 2. Akt ein aktives Manöver werden
+                    if (this.Aktionen >= 2 && längerfristig.Manöver.VerbleibendeDauer == 2)
+                    {
+                        mi.Manöver.Dauer = 1;
+                        mi.Manöver.VerbleibendeDauer = 1;
+                        yield return new ManöverInfo(mi.Manöver, 8, kampfrunde);
+                    }
+                    skip1Abwehr = true;
+                    ((Wesen)mi.Kampf.AktIniKämpfer.Kämpfer).AktVerbleibendeDauer = längerfristig.Manöver.VerbleibendeDauer;
+                }
+            }
             //Debug.WriteLine(String.Format("KR {1}: Manöver erstellen: {0}", DateTime.Now - dtstart, kampfrunde));
 
             //Parade-Manöver setzen
             AbwehrManöver.Clear();
-            for (int i = 0; i < Abwehraktionen; i++)
-                AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));
-
-            
+            for (int i = 0; i < Abwehraktionen -(skip1Abwehr ? 1 : 0); i++)
+                AbwehrManöver.Add(new ManöverInfo(new Parade(this), 0, Kampf.Kampfrunde));            
         }
         #endregion
 

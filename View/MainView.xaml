@@ -7,10 +7,11 @@
         xmlns:kal="clr-namespace:MeisterGeister.Logic.Kalender"
         xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" xmlns:mg="clr-namespace:MeisterGeister"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MeisterGeister.View.MainView" 
-        Height="650" Width="1045" Closing="Window_Closing" 
+        Height="650" Width="1045" Closing="Window_Closing" KeyDown="Window_KeyDown" 
         Loaded="Window_Loaded" Title="DSA MeisterGeister" Closed="Window_Closed" WindowStartupLocation="CenterScreen"
         TextOptions.TextFormattingMode="Display">
     <Window.Resources>
+        <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <Storyboard x:Key="MenuPopOut" x:Name="PopIn">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="Menue">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
@@ -504,76 +505,39 @@
                                 </Grid>
                             </StackPanel>
 
-                            <GroupBox VerticalAlignment="Center" Margin="10,0,10,0" Height="24" Padding="0,-1,0,-3" >
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Height="20" Background="Black" Width="20" ToolTip="Stoppen aller laufenden Hotkeys" Command="{Binding OnAllHotkeysStop}" VerticalAlignment="Center" >
-                                        <Image Source="/Images/Icons/General/stop.png" Margin="-2,-2,-3,-3" />
-                                    </Button>
-                                    <ViewGeneral:SmallSlider Width="50" MaxValue="100" MinValue="0" UseLayoutRounding="True" Margin="2" HorizontalStyle="True" VerticalAlignment="Center" 
-                                        Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"   />
-                                    <ComboBox Grid.Column="1" ItemsSource="{Binding hotkeyListUsed}" Width="30"  />
-                                </StackPanel>
-                            </GroupBox>
+                            <Expander VerticalAlignment="Bottom" IsExpanded="True" ForceCursor="False" Margin="5,1,0,5" ExpandDirection="Right"
+                                  Visibility="{Binding hotkeyListUsed.Count, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}"
+                                ToolTip="Drücke Strg+Alt+ 'Hotkey' um die Hotkey-Playliste abzuspielen oder direkt anklicken" >
+                                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                                <Button Height="20" Background="Black" Width="20" ToolTip="Stoppen aller laufenden Hotkeys" Command="{Binding OnAllHotkeysStop}" VerticalAlignment="Center" >
+                                    <Image Source="/Images/Icons/General/stop.png" Margin="-2,-2,-3,-3" />
+                                </Button>
+                                <ViewGeneral:SmallSlider Width="50" MaxValue="100" MinValue="0" UseLayoutRounding="True" Margin="2" HorizontalStyle="True" VerticalAlignment="Center" 
+                                    Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"   />
+                                
+                                <ItemsControl ItemsSource="{Binding hotkeyListUsed, FallbackValue={x:Null},UpdateSourceTrigger=PropertyChanged}" Margin="2">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel ItemWidth="30" Margin="0,1,0,-2"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </StackPanel>                         
+                        </Expander> 
+                             
 
-                            <!--<GroupBox VerticalAlignment="Center" Margin="10,-2" Height="28" Padding="0,-1,0,-1" >
-                                    <GroupBox.Style>
-                                        <Style TargetType="GroupBox" >
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding lstHUELights.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='1'}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </GroupBox.Style>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Content="HUE-Lampen"  Margin="5,0,10,0"/>
-
-                                        <ComboBox Grid.Column="1" ItemsSource="{Binding lstHUELights,UpdateSourceTrigger=PropertyChanged}" Width="130" Margin="0,2,0,-3" SelectedItem="{Binding HUELightSelected}" >
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <CheckBox IsChecked="{Binding State.On}" Content="{Binding Name}" />
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-#
-                                        <ToggleButton Height="24" Width="24" Margin="5,2,0,-3" Command="{Binding OnBtnDoHUETheme}">
-                                            <ToggleButton.Style>
-                                                <Style TargetType="ToggleButton">
-                                                    <Setter Property="Content" >
-                                                        <Setter.Value>
-                                                            <Image Source="/Images/Icons/General/play.png" Stretch="Fill" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding HUEThemeSelected.isRunning, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                                            <Setter Property="Content" >
-                                                                <Setter.Value>
-                                                                    <Image Source="/Images/Icons/General/stop.png" Stretch="Fill" />
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style> 
-                                            </ToggleButton.Style>
-                                        </ToggleButton>
-                                        <ToggleButton x:Name="tbtnHUEONOFF" Content="On/Off" Command="{Binding OnBtnHUEOnOff}" Height="24" Margin="5,2,0,-3"/>
-                                    </StackPanel>
-                                </GroupBox>-->
-                        </StackPanel>
-                        <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="8" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
-                            <Border.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#7FAC854C" Offset="0.745"/>
-                                    <GradientStop/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <TextBlock Text="Hier klicken, um das Menü zu öffnen/schließen!" ToolTip="Hier klicken, um das Menü zu öffnen/schließen!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" />
-                        </Border>
-                    </Grid>
-                </Border>
+                    </StackPanel>
+                    <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="8" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#7FAC854C" Offset="0.745"/>
+                                <GradientStop/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <TextBlock Text="Hier klicken, um das Menü zu öffnen/schließen!" ToolTip="Hier klicken, um das Menü zu öffnen/schließen!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" />
+                    </Border>
+                </Grid>
+            </Border>
             </Grid>
 
             <GridSplitter ResizeDirection="Rows" Height="5" Grid.Row="1" Grid.Column="1" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">

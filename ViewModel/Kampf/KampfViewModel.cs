@@ -34,6 +34,13 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private string _labelInfo = null;
+        public string LabelInfo
+        {
+            get { return _labelInfo; }
+            set { Set(ref _labelInfo, value); }
+        }
+
         public View.Bodenplan.BattlegroundView BodenplanView
         {
             get { return _bodenplanView; }
@@ -48,19 +55,38 @@ namespace MeisterGeister.ViewModel.Kampf
 
         public BattlegroundViewModel BodenplanViewModel
         {
-            get
-            {
-                if (_bodenplanViewModel == null)
+            get { return _bodenplanViewModel; }
+            set { Set(ref _bodenplanViewModel, value); }
+        }
+
+        public List<GegnerBase> lstGegnerBase
+        {
+            get { return Global.ContextHeld.Liste<GegnerBase>().OrderBy(h => h.Name).ToList(); }
+        }
+
+        private GegnerBase _gegnerToAdd = null;
+        public GegnerBase GegnerToAdd
+        {
+            get { return _gegnerToAdd; }
+            set 
+            { 
+                Set(ref _gegnerToAdd, value);
+                if (value != null)
                 {
-                    BodenplanViewModel = new BattlegroundViewModel();
+                    Gegner gegner = new Gegner(value);
+                    var gegner_name = gegner.Name;
+                    int j = 1;
+                    while (_kampf.Kämpfer.Any(k => k.Kämpfer.Name == gegner_name))
+                        gegner_name = String.Format("{0} ({1})", gegner.Name, ++j);
+                    gegner.Name = gegner_name;
+                    Global.ContextHeld.Insert<Gegner>(gegner);
+                    _kampf.Kämpfer.Add(gegner, 2);
+
+                    // zur Arena hinzufügen
+                    if (_kampf.Bodenplan.VM != null)
+                        _kampf.Bodenplan.VM.AddCreature(gegner);
+                    GegnerToAdd = null;
                 }
-
-                return _bodenplanViewModel;
-            }
-
-            private set
-            {
-                Set(ref _bodenplanViewModel, value);
             }
         }
 
@@ -363,11 +389,8 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     ki = new KämpferInfo(held, Kampf);
                     Kampf.Kämpfer.Add(held);
+                    BodenplanViewModel.AddCreature(held);
                 }
-            }
-            if (BodenplanViewModel != null)
-            {
-                BodenplanViewModel.AddAllCreatures();
             }
         }
 
@@ -394,12 +417,10 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void ShowGegnerView(object obj)
         {
+            //Gegner werden hinzugefügt und ebenfalls die BattlegroundCreatures
             showGegnerView?.Invoke(Kampf);
-
-            if (BodenplanViewModel != null)
-            {
-                BodenplanViewModel.AddAllCreatures();
-            }
+            
+            BodenplanViewModel.CenterMeisterView(null);
         }
 
         private void ShowBodenplanView(object obj)

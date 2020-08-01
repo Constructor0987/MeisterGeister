@@ -576,7 +576,6 @@
                 </Expander>
 
                 <!-- Rüstung -->
-
                 <Expander>
                     <Expander.Style>
                         <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
@@ -608,7 +607,7 @@
                         <ComboBox Grid.Column="1" ItemsSource="{Binding RuestungListe}" SelectedItem="{Binding SelectedRuestung}" Margin="5,0,0,0" DisplayMemberPath="Name" IsEditable="True">
                             <ComboBox.InputBindings>
                                 <KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
-                            </ComboBox.InputBindings>                            
+                            </ComboBox.InputBindings>
                         </ComboBox>
                         <Button Grid.Column="2" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddRuestung}" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
@@ -629,7 +628,7 @@
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Style.Setters>
-                                                <Setter Property="ToolTip" Value="'0' eintragen zum Löschen"></Setter>
+                                                <Setter Property="ToolTip" Value="'0' eintragen zum Löschen" />
                                             </Style.Setters>
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -640,8 +639,6 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-
-
                 </Expander>
 
                 <!-- Sonstiges -->
@@ -652,16 +649,61 @@
                             <TextBlock Style="{StaticResource TextTitel}" Text="Sonstiges"/>
                         </StackPanel>
                     </Expander.Header>
-
-                    <DataGrid ItemsSource="{Binding HeldSonstigesImInventar}" SelectedValue="{Binding SelectedSonstiges,Mode=TwoWay}" ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition  />
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="35"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Neuer Gegenstand:" Style="{DynamicResource Label}" Margin="0,0,5,0"/>
+                            <TextBox HorizontalAlignment="Stretch" 
+                                     VerticalContentAlignment="Center"
+                                     Grid.Column="1" 
+                                     Text="{Binding NeuerGegenstand, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" >
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" />
+                                </TextBox.InputBindings>
+                            </TextBox>
+                            <TextBlock Grid.Column="2" Text="Gewicht:" Style="{DynamicResource Label}" Margin="0,0,5,0" />
+                            <ViewGeneral:IntBox 
+                                Value="{Binding NeuerGegenstandGewicht, UpdateSourceTrigger=PropertyChanged}"
+                                MinValue="0" 
+                                MaxValue="999" 
+                                Grid.Column="3" 
+                                HorizontalAlignment="Right" 
+                                Width="50" >
+                                <ViewGeneral:IntBox.InputBindings>
+                                    <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" />
+                                </ViewGeneral:IntBox.InputBindings>
+                            </ViewGeneral:IntBox>
+                            <Button Grid.Column="4" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddGegenstand}" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                            </Button>
+                        </Grid>
+                        <DataGrid 
+                            Margin="0,5,0,0"
+                            Grid.ColumnSpan="3" 
+                            Grid.Row="1" 
+                            ItemsSource="{Binding HeldSonstigesImInventar}" 
+                            SelectedValue="{Binding SelectedSonstiges,Mode=TwoWay}" 
+                            ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
                             <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                             <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="False"/>
-                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="False"/>
                             <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    
+                    </Grid>
                 </Expander>
 
                 <!--Waffensets-->

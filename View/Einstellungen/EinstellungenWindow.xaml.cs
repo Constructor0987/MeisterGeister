@@ -45,6 +45,9 @@ namespace MeisterGeister.View.Settings
             _checkboxSpieldauerBerechnen.IsChecked = Einstellungen.AudioSpieldauerBerechnen;
             _checkboxInAnderemPfadSuchen.IsChecked = Einstellungen.AudioInAnderemPfadSuchen;
             _sldFading.Value = Einstellungen.Fading;
+#if !DEBUG
+            tbiHUELampen.Visibility = Visibility.Collapsed;
+#endif
         }
 
         public EinstellungenViewModel VM

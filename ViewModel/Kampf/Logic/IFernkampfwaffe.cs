@@ -20,5 +20,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int? TPSehrWeit { get; }
 
         int? LadeZeit { get; }
+
     }
 }

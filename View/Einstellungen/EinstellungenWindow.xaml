@@ -353,10 +353,10 @@
                                         Margin="5"
                                         VerticalAlignment="Center"
                                         Text="{Binding Regeledition}" />
-                                    <Button
+                                    <!--<Button
                                         Margin="5"
                                         Command="{Binding OnSetRegeledition}"
-                                        Content="Regeledition ändern..." />
+                                        Content="Regeledition ändern..." />-->
                                 </StackPanel>
                                 <StackPanel
                                     Margin="4"

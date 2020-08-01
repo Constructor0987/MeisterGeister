@@ -20,7 +20,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     public class BattlegroundXMLLoadSave
     {
-        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename, bool SaveWithoutPictures, List<double> fogSettings)
+        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename, bool SaveWithoutPictures, List<double> Settings, bool GiveFeedback = true)
         {
             try
             {
@@ -28,14 +28,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 ObservableCollection<BattlegroundBaseObject> bboWithoutHeroes = new ObservableCollection<BattlegroundBaseObject>();
                 foreach (var o in bbo)
                 {
-                    if (!(o is BattlegroundCreature) && ((o is ImageObject && !SaveWithoutPictures) || (!(o is ImageObject))))
+                    if (!(o is BattlegroundCreature) && 
+                        ((o is ImageObject && !SaveWithoutPictures) || 
+                        (!(o is ImageObject)) ||
+                        (!(o is MP4Object))) &&
+                        (!(o is LichtquelleObject)))
                     {
                         o.RunBeforeXMLSerialization();
-                        //Console.WriteLine("SAVE TO XML: " + o.ToString());
-
-                        bboWithoutHeroes.Add(o as BattlegroundBaseObject);//BattlegroundCreature);
+                        bboWithoutHeroes.Add(o as BattlegroundBaseObject);
                     }
                 }
+
 
                 ObservableCollection<DataTable> bboHeroes = new ObservableCollection<DataTable>();
                 foreach (var o in bbo)
@@ -44,14 +47,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     {
                         DataTable dtCreature = CreateStructurCreatureTbl(o as BattlegroundCreature);
                         dtCreature = AddCreatureInfo(dtCreature, o as BattlegroundCreature);
-                        //o.RunBeforeXMLSerialization();
-                        //Console.WriteLine("SAVE TO XML: " + o.ToString());
-
                         bboHeroes.Add(dtCreature);
                     }
                 }
-
-
+                
                 //serialize observablecollection in class XmlCollectionHelper to XML File
                 XmlSerializer xs = new XmlSerializer(typeof(XmlCollectionHelper));
                 XmlCollectionHelper xmlH = new XmlCollectionHelper(bboWithoutHeroes);
@@ -73,7 +72,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     }
                 }
 
-                if (fogSettings.Count != 0)
+                if (Settings.Count != 0)
                 {
                     DataTable dtSettings = new DataTable();
                     dtSettings.TableName = "Settings";
@@ -87,16 +86,54 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Columns.Add("ScaleKampfGrid");
                     dtSettings.Columns.Add("IsRechteckRaster");
 
-                    dtSettings.Rows.Add();
-                    dtSettings.Rows[0]["BackgroundOffsetSize"] = fogSettings[0];
-                    dtSettings.Rows[0]["BackgroundOffsetX"] = fogSettings[1];
-                    dtSettings.Rows[0]["InvBackgroundOffsetY"] = fogSettings[2];
+                    //Zusätzliche Spalten 
+                    dtSettings.Columns.Add("GridColorA");
+                    dtSettings.Columns.Add("GridColorB");
+                    dtSettings.Columns.Add("GridColorG");
+                    dtSettings.Columns.Add("GridColorR");
+                    dtSettings.Columns.Add("ShowSightArea");
+                    dtSettings.Columns.Add("SightAreaLength");
+                    dtSettings.Columns.Add("ShowCreatureName");
+                    dtSettings.Columns.Add("UseFog");
+                    dtSettings.Columns.Add("AktKampfrunde");
+                    dtSettings.Columns.Add("IsEditorModeEnabled");
 
-                    dtSettings.Rows[0]["PlayerGridOffsetX"] = fogSettings[3];
-                    dtSettings.Rows[0]["PlayerGridOffsetY"] = fogSettings[4];
-                    dtSettings.Rows[0]["ScaleSpielerGrid"] = fogSettings[5];
-                    dtSettings.Rows[0]["ScaleKampfGrid"] = fogSettings[6];
-                    dtSettings.Rows[0]["IsRechteckRaster"] = fogSettings[7];
+                    //Background Color
+                    dtSettings.Columns.Add("BackgroundColorA");
+                    dtSettings.Columns.Add("BackgroundColorB");
+                    dtSettings.Columns.Add("BackgroundColorG");
+                    dtSettings.Columns.Add("BackgroundColorR");
+
+                    dtSettings.Rows.Add();
+                    dtSettings.Rows[0]["BackgroundOffsetSize"] = Settings[0];
+                    dtSettings.Rows[0]["BackgroundOffsetX"] = Settings[1];
+                    dtSettings.Rows[0]["InvBackgroundOffsetY"] = Settings[2];
+
+                    dtSettings.Rows[0]["PlayerGridOffsetX"] = Settings[3];
+                    dtSettings.Rows[0]["PlayerGridOffsetY"] = Settings[4];
+                    dtSettings.Rows[0]["ScaleSpielerGrid"] = Settings[5];
+                    dtSettings.Rows[0]["ScaleKampfGrid"] = Settings[6];
+                    dtSettings.Rows[0]["IsRechteckRaster"] = Settings[7];
+
+                    //Zusätzliche Settings speichern
+                    dtSettings.Rows[0]["GridColorA"] = Settings[8];
+                    dtSettings.Rows[0]["GridColorB"] = Settings[9];
+                    dtSettings.Rows[0]["GridColorG"] = Settings[10];
+                    dtSettings.Rows[0]["GridColorR"] = Settings[11];
+
+                    dtSettings.Rows[0]["ShowSightArea"] = Settings[12];
+                    dtSettings.Rows[0]["SightAreaLength"] = Settings[13];
+                    dtSettings.Rows[0]["ShowCreatureName"] = Settings[14];
+                    dtSettings.Rows[0]["UseFog"] = Settings[15];
+                    dtSettings.Rows[0]["AktKampfrunde"] = Settings[16];
+                    dtSettings.Rows[0]["IsEditorModeEnabled"] = Settings[17];
+
+                    //BackgroundColor
+                    dtSettings.Rows[0]["BackgroundColorA"] = Settings[18];
+                    dtSettings.Rows[0]["BackgroundColorB"] = Settings[19];
+                    dtSettings.Rows[0]["BackgroundColorG"] = Settings[20];
+                    dtSettings.Rows[0]["BackgroundColorR"] = Settings[21];
+
                     xmlH.AddObsDT(dtSettings);
                 }
                 using (StreamWriter wr = new StreamWriter(filename))
@@ -104,7 +141,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     xs.Serialize(wr, xmlH);
                     wr.Close();
                 }
-                ViewHelper.Popup("Datei erfolgreich gespeichert");
+                if (GiveFeedback)
+                    ViewHelper.Popup("Datei erfolgreich gespeichert");
             }
             catch (IOException e)
             {
@@ -153,8 +191,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneKopf"] = (o as IKämpfer).WundenByZone[Trefferzone.Kopf];
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneRücken"] = (o as IKämpfer).WundenByZone[Trefferzone.Rücken];
 
-            dt.Rows[dt.Rows.Count - 1]["Initiative"] = (o as Wesen).ki.Initiative;
-            dt.Rows[dt.Rows.Count - 1]["GUID"] = (o is Gegner) ? (o as Gegner).GegnerBaseGUID : (o as Held).HeldGUID; 
+            dt.Rows[dt.Rows.Count - 1]["Initiative"] = (o as BattlegroundCreature).ki.Initiative;
+            dt.Rows[dt.Rows.Count - 1]["GUID"] = (o is Gegner) ? (o as Gegner).GegnerBaseGUID : (o as Held).HeldGUID;
+            dt.Rows[dt.Rows.Count - 1]["LichtquelleMeter"] = (o as BattlegroundCreature).ki.LichtquelleMeter;
+            dt.Rows[dt.Rows.Count - 1]["IstUnsichtbar"] = (o as BattlegroundCreature).ki.IstUnsichtbar;
             return dt;
         }
 
@@ -198,6 +238,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
             dt.Columns.Add("Initiative");
             dt.Columns.Add("GUID");
+            dt.Columns.Add("LichtquelleMeter");
+            dt.Columns.Add("IstUnsichtbar");
             return dt;
         }
 
@@ -226,6 +268,33 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             back.Add(Convert.ToDouble(drow["ScaleSpielerGrid"]));
                             back.Add(Convert.ToDouble(drow["ScaleKampfGrid"]));
                             back.Add(Convert.ToDouble(drow["IsRechteckRaster"]));
+
+                            //Zusätzliche Daten laden
+                            if (drow.ItemArray.Length > 8)
+                            {
+                                back.Add(Convert.ToDouble(drow["GridColorA"]));
+                                back.Add(Convert.ToDouble(drow["GridColorB"]));
+                                back.Add(Convert.ToDouble(drow["GridColorG"]));
+                                back.Add(Convert.ToDouble(drow["GridColorR"]));
+
+                                back.Add(Convert.ToDouble(drow["ShowSightArea"]));
+                            }
+                            if (drow.ItemArray.Length > 13)
+                            {
+                                back.Add(Convert.ToDouble(drow["SightAreaLength"]));
+                                back.Add(Convert.ToDouble(drow["ShowCreatureName"]));
+                                back.Add(Convert.ToDouble(drow["UseFog"]));
+                                back.Add(Convert.ToInt32(drow["AktKampfrunde"]));
+                                back.Add(Convert.ToDouble(drow["IsEditorModeEnabled"]));
+                            }
+
+                            if (drow.ItemArray.Length > 18)
+                            {
+                                back.Add(Convert.ToDouble(drow["BackgroundColorA"]));
+                                back.Add(Convert.ToDouble(drow["BackgroundColorB"]));
+                                back.Add(Convert.ToDouble(drow["BackgroundColorG"]));
+                                back.Add(Convert.ToDouble(drow["BackgroundColorR"]));
+                            }
                         }
                     }
                     stream.Close();
@@ -316,6 +385,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             if (drow.ItemArray.Length > 12)
                             {
                                 (bObj as BattlegroundCreature).SightLineSektor = Convert.ToInt32(drow["SightLineSektor"]);
+
                                 (bObj as IKämpfer).HinweisText = drow["HinweisText"].ToString();
                                 (bObj as BattlegroundCreature).ObjectSize = Convert.ToDouble(drow["ObjectSize"]);
 
@@ -340,11 +410,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                    (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
                                 }
                                 else
                                 {
                                     if (!HeldWerteAnpassen.HasValue)
-                                        HeldWerteAnpassen = ViewHelper.Confirm("Heldenwerte abpassen", "Die Battlemap-Datei enthält Werte der Helden." + Environment.NewLine + Environment.NewLine +
+                                        HeldWerteAnpassen = ViewHelper.Confirm("Heldenwerte anpassen", "Die Battlemap-Datei enthält Werte der Helden." + Environment.NewLine +
+                                            "Hierzu gehören aktuelle LeP, KaP, AuD, AsP, Anführer-Info und Wunden." + Environment.NewLine + Environment.NewLine +
                                             "Sollen die Werte der Battlemap-Datei benutzt werden?" + Environment.NewLine + Environment.NewLine + 
                                             "ACHTUNG!  Diese überschreiben die aktuellen Heldenwerte der enthaltenen Helden");
                                     if (HeldWerteAnpassen.Value)
@@ -370,14 +442,23 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                         (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
                                         (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                         (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                        if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer) != null)
+                                            Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer).Initiative = Convert.ToInt32(drow["Initiative"]);
                                     }
                                 }
-                                (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+
+                                try
+                                { 
+                                    (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
+                                    (bObj as Wesen).ki.IstUnsichtbar = Convert.ToBoolean(drow["IstUnsichtbar"]);
+                                }
+                                catch { }
                             }
                         }
                     }
                     stream.Close();
                     Global.CurrentKampf.BodenplanViewModel.AddAllCreatures();
+
                     return loadedFile.ObsColl;
                 }
             }
@@ -429,7 +510,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
     [System.Xml.Serialization.XmlInclude(typeof(BattlegroundBaseObject))]
     [System.Xml.Serialization.XmlInclude(typeof(PathLine))]
     [System.Xml.Serialization.XmlInclude(typeof(FilledPathLine))]
-    [System.Xml.Serialization.XmlInclude(typeof(ImageObject))]    
+    [System.Xml.Serialization.XmlInclude(typeof(ImageObject))]
+    [System.Xml.Serialization.XmlInclude(typeof(MP4Object))]
     public class XmlCollectionHelper 
     {
         public ObservableCollection<BattlegroundBaseObject> ObsColl = new ObservableCollection<BattlegroundBaseObject>();

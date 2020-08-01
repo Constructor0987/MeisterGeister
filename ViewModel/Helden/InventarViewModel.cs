@@ -15,6 +15,8 @@ using System.Windows.Data;
 using System.ComponentModel;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.Specialized;
+using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Basar.Logic;
 
 namespace MeisterGeister.ViewModel.Inventar
 {
@@ -69,6 +71,8 @@ namespace MeisterGeister.ViewModel.Inventar
         private List<Model.Rüstung> ruestungListe = new List<Model.Rüstung>();
         private List<Model.Trageort> trageortListe = new List<Model.Trageort>();
 
+        private string neuerGegenstand = null;
+        private int neuerGegenstandGewicht = 40;
         //Zuordnungen
         private ExtendedObservableCollection<Model.Held_Ausrüstung> heldAusrüstungen = new ExtendedObservableCollection<Model.Held_Ausrüstung>();
 
@@ -86,6 +90,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private Base.CommandBase onAddFernkampfwaffe;
         private Base.CommandBase onAddSchild;
         private Base.CommandBase onAddRuestung;
+        private Base.CommandBase onAddGegenstand;
         private Base.CommandBase addSet;
         private Base.CommandBase equipAllSets;
         private Base.CommandBase unequipAllSets;
@@ -229,7 +234,7 @@ namespace MeisterGeister.ViewModel.Inventar
             set
             {
                 selectedNahkampfwaffeTalent = value;
-                if (value.Talentname != FILTERDEAKTIVIEREN)
+                if (value != null && value.Talentname != FILTERDEAKTIVIEREN)
                 {
                     NahkampfwaffeListe = Global.ContextInventar.WaffeListe.Where(w => w.Talent.Contains(value)).OrderBy(w => w.Name).ToList();
                 }
@@ -246,7 +251,7 @@ namespace MeisterGeister.ViewModel.Inventar
             set
             {
                 selectedFernkampfwaffeTalent = value;
-                if (value.Talentname != FILTERDEAKTIVIEREN)
+                if (value != null && value.Talentname != FILTERDEAKTIVIEREN)
                 {
                     FernkampfwaffeListe = Global.ContextInventar.FernkampfwaffeListe.Where(w => w.Talent.Contains(value)).OrderBy(w => w.Name).ToList();
                 }
@@ -400,6 +405,23 @@ namespace MeisterGeister.ViewModel.Inventar
                 Set(ref ruestungListe, value);
             }
         }
+        public string NeuerGegenstand
+        {
+            get { return neuerGegenstand; }
+            set
+            {
+                Set(ref neuerGegenstand, value);
+            }
+        }
+        public int NeuerGegenstandGewicht
+        {
+            get { return neuerGegenstandGewicht; }
+            set
+            {
+                Set(ref neuerGegenstandGewicht, value);
+            }
+        }
+        
         public List<Model.Trageort> TrageortListe
         {
             get { return trageortListe; }
@@ -459,6 +481,10 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             get { return onAddRuestung; }
         }
+        public Base.CommandBase OnAddGegenstand
+        {
+            get { return onAddGegenstand; }
+        }
         public Base.CommandBase AddSet
         {
             get { return addSet; }
@@ -504,6 +530,7 @@ namespace MeisterGeister.ViewModel.Inventar
             onAddFernkampfwaffe = new Base.CommandBase(o => AddFernkampfwaffe(), null);
             onAddSchild = new Base.CommandBase(o => AddSchild(), null);
             onAddRuestung = new Base.CommandBase(o => AddRuestung(), null);
+            onAddGegenstand = new Base.CommandBase(o => AddGegenstand(), null);
             addSet = new Base.CommandBase(o => AddAusrüstungsset(), null);
             equipAllSets = new Base.CommandBase(o => AlleSetsAnlegen(), null);
             unequipAllSets = new Base.CommandBase(o => AlleSetsAblegen(), null);
@@ -779,6 +806,38 @@ namespace MeisterGeister.ViewModel.Inventar
                     SelectedHeld.BerechneBehinderung();
 
                 SelectedHeld.BerechneAusruestungsGewicht();
+            }
+        }
+        void AddGegenstand()
+        {
+            if (!string.IsNullOrEmpty(NeuerGegenstand) && SelectedHeld != null && !IsReadOnly)
+            {
+                Handelsgut handelsgut = new Handelsgut()
+                {
+                    Name = NeuerGegenstand,
+                    Gewicht = NeuerGegenstandGewicht,
+                    ME = "Unze",
+                    HandelsgutGUID = Guid.NewGuid()
+                };
+                Global.ContextHandelsgut.HandelsgüterListe.Add(handelsgut);
+                Held_Inventar hi = SelectedHeld.AddInventar(handelsgut);
+                //ist Null wenn Gegenstand schon vorhanden war
+                if (hi != null)
+                { 
+                    InventarItem value = new InventarItem(hi, hi.Inventar);
+                    value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
+                    HeldSonstigesImInventar.Add(value);
+                }
+            
+                if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
+                    SelectedHeld.BerechneRüstungswerte();
+                if (E.BEBerechnung == 0)
+                    SelectedHeld.BerechneBehinderung();
+
+                SelectedHeld.BerechneAusruestungsGewicht();
+                Global.ContextHandelsgut.Save();
+                NeuerGegenstand = null;
+                NeuerGegenstandGewicht = 40;
             }
         }
 

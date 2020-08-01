@@ -4,42 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Timers;
 using ComboBox = System.Windows.Controls.ComboBox;
-using System.Threading;
-using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
-using System.Xml;
 using System.IO;
-using System.Windows.Markup;
-using System.ComponentModel;
 using System.Windows.Interop;
 using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Windows.Interactivity;
-using System.Collections.ObjectModel;
 
 // Eigene Usings
 using MeisterGeister.Logic.Einstellung;
-using MeisterGeister.Logic.General;
 using MeisterGeister.View.General;
-using MeisterGeister.View.Windows;
-using Global = MeisterGeister.Global;
 using MeisterGeister.Model;
-using MeisterGeister.View.AudioPlayer;
 using VM = MeisterGeister.ViewModel.AudioPlayer;
-using MeisterGeister.ViewModel.Base;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using Un4seen.Bass;
-//using Meta.Vlc.Wpf;
 
 namespace MeisterGeister.View.AudioPlayer
 {
@@ -223,9 +204,7 @@ namespace MeisterGeister.View.AudioPlayer
 
             slPlaylistVolume.Value = Einstellungen.GeneralGeräuscheVolume;
             slBGVolume.Value = Einstellungen.GeneralMusikVolume;
-            slHotkey.Value = Einstellungen.GeneralHotkeyVolume;
-
-            DataContextChanged += AudioPlayerView_DataContextChanged;
+            DataContextChanged += AudioPlayerView_DataContextChanged;            
         }
 
         void AudioPlayerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -373,6 +352,9 @@ namespace MeisterGeister.View.AudioPlayer
 
                 if (Einstellungen.ShowPlaylistFavorite && !MeisterGeister.ViewModel.MainViewModel.Instance.ShowFavPlaylist)
                     MeisterGeister.ViewModel.MainViewModel.Instance.ShowFavPlaylist = true;
+
+
+                VM.stdPfad = VM.CheckNetzwerkPfade(VM.stdPfad);
 
                 rbEditorMusik.Focus();
             }
@@ -718,19 +700,14 @@ namespace MeisterGeister.View.AudioPlayer
                     //Prozess beenden wenn unglütige Ablage oder ViewModel bereits entfernt
                     System.Collections.IList lstItems = (System.Collections.IList)e.Data.GetData("meineAudioZeilenListe");
                     
-                        //var coll = lstItems.Cast<List<AudioZeile>>();
-                    //lstItems = ((System.Collections.IList)e.Data.GetData("meineAudioZeilenListe")).Cast<AudioZeile>();
-
                     Audio_Playlist zielPlaylist = VM.DropZielPlaylist != null ?
                         VM.DropZielPlaylist : VM.AktKlangPlaylist;
-                        //(e.Data.GetData("meineAudioZeilenListe") as AudioZeile).VM.aPlayTitel.Audio_Playlist;
-
-                        
+                                            
                     if (VM.audioZeileMouseOverDropped == -1 ||
-                        (lstItems == null || lstItems.Count == 0)) //e.Data.GetData("meineAudioZeilenListe") as ItemCollection) == null)
+                        (lstItems == null || lstItems.Count == 0))
                         return;
 
-                    foreach (AudioZeileVM aZeileVM in lstItems)// e.Data.GetData("meineAudioZeilenListe") as  ItemCollection)
+                    foreach (AudioZeileVM aZeileVM in lstItems)
                         AZeileAblegen(null, aZeileVM,
                             zielPlaylist,
                             e,
@@ -746,6 +723,14 @@ namespace MeisterGeister.View.AudioPlayer
                         if (e.Data.GetDataPresent(DataFormats.FileDrop))
                         {
                             List<string> gedroppteDateien = new List<string>();
+
+                            //Falls Playlist läuft, Abfrage zum stoppen oder Abbruch des Prozesses
+                            if (((string[])e.Data.GetData(DataFormats.FileDrop, false)).Length > 0)
+                                if (!VM.CheckPlaylistRunningBeforeEdit(VM.AktKlangPlaylist))
+                                {
+                                    Mouse.OverrideCursor = null;
+                                    return;
+                                }
                             foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
                             {
                                 if (Directory.Exists(s))

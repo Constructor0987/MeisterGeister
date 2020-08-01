@@ -829,6 +829,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
         }
         void AudioZeileRemove(object obj)
         {
+            //Falls Playlist läuft, Abfrage zum stoppen oder Abbruch des Prozesses
+            if (!PlayerVM.CheckPlaylistRunningBeforeEdit(PlayerVM.AktKlangPlaylist))
+            {
+                Mouse.OverrideCursor = null;
+                Global.SetIsBusy(false);
+                return;
+            }
+
             Global.ContextAudio.RemoveTitelFromPlaylist(aPlayTitel);
             PlayerVM.LbEditorAudioZeilenListe.Remove(this);
             PlayerVM.LadeFilteredAudioZeilen();

@@ -124,14 +124,14 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public static void SetNewSightAreaLength(ref ObservableCollection<BattlegroundBaseObject> bol, double sightAreaLenght)
+        public static void SetNewSightAreaLength(ref ObservableCollection<BattlegroundBaseObject> bol, double sightAreaLength)
         {
             if (bol == null) return;
             foreach (var bo in bol)
             {
                 if (bo is ViewModel.Kampf.Logic.Wesen)
                 {
-                    ((BattlegroundCreature)bo).SightAreaLength = sightAreaLenght;
+                    ((BattlegroundCreature)bo).SightAreaLength = sightAreaLength;
                 }
             }
         }

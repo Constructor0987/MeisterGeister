@@ -18,6 +18,7 @@ using MeisterGeister.View.Kampf;
 using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.ViewModel.SpielerScreen;
 using WPFExtensions.Controls;
 using Application = System.Windows.Application;
 
@@ -44,6 +45,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 catch
                 { }
             }
+            ReLoadImages();
+            Global.CurrentKampf.BodenplanViewModel = this;
+
         }
 
         private IWaffe _miWaffeSelected = null;
@@ -109,6 +113,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _initDnD, value); }
         }
 
+        public bool InitLineal
+        {
+            get { return _initLineal; }
+            set { Set(ref _initLineal, value); }
+        }
+
         public bool IsEditorModeEnabled
         {
             get { return _isEditorModeEnabled; }
@@ -117,6 +127,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 Set(ref _isEditorModeEnabled, value);
             }
+        }
+
+        public double BewegungZuvor
+        {
+            get { return _bewegungZuvor; }
+            set { Set(ref _bewegungZuvor, value); }
         }
 
         public bool IsMoving
@@ -160,6 +176,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private bool _isLoading = false;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { Set(ref _isLoading, value); }
+        }
+
         public ImageObject CreateImageObject(string picurl, Point p)
         {
             var brush = new ImageBrush
@@ -181,9 +204,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             imageobject._imageOriginalWidth = imageobject.ImageWidth;
             imageobject._imageOriginalHeigth = imageobject.ImageHeight;
+
             imageobject.ObjectSize = ObjectSize;
             BattlegroundObjects.Add(imageobject);
             return imageobject;
+        }
+
+
+        public MP4Object CreateVideoObject(string vidurl, Point p)
+        {
+            var melement = new MP4Object(vidurl, 0, 0);
+            BattlegroundObjects.Add(melement);
+            return melement;
         }
 
         public void CreateNewFilledLine(double x1, double y1)
@@ -222,6 +254,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 ObjectColor = new SolidColorBrush(Colors.DarkBlue),
                 StrokeThickness = th,
+                Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : .2,
+                IsNew = true
+            };
+            SelectedTempObject = pathline;
+            BattlegroundObjects.Add(pathline);
+        }
+
+        public void CreateNewTempLinealLine(double x1, double y1)
+        {
+            var pathline = new PathLine(new Point(x1, y1))
+            {
+                ObjectColor = new SolidColorBrush(LinealColor),
+                StrokeThickness = 10,
                 Opacity = .2,
                 IsNew = true
             };
@@ -234,7 +279,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = new TextLabel("0 Schritt", x1, y1)
             {
                 IsNew = true,
-                LabelWidth = 200
+                LabelWidth = 200,
+                Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : 1
+            };
+            BattlegroundObjects.Add(label);
+        }
+        public void CreateNewTempLinealLabel(double x1, double y1)
+        {
+            var label = new TextLabel("0 Schritt", x1, y1)
+            {
+                IsNew = true,
+                LabelWidth = 200,
+                Opacity = 1
             };
             BattlegroundObjects.Add(label);
         }
@@ -256,6 +312,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 SelectedTempObject.IsNew = true;
                 SelectedTempObject = null;
                 RemoveNewObjects();
+                Global.CurrentKampf.LabelInfo = null;
             }
             SelectedTempObject = null;
         }
@@ -275,8 +332,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if (SelectedObject != null)
             {
-                SelectedObject.MoveObject(xNew - xOld, yNew - yOld, false);
+                if (!HeldenInFormationBewegen)
+                    SelectedObject.MoveObject(xNew - xOld, yNew - yOld, false);
+                else
+                    BattlegroundObjects.Where(t => t as Held != null).ToList()
+                        .ForEach(delegate (BattlegroundBaseObject bgObject)
+                        { bgObject.MoveObject(xNew - xOld, yNew - yOld, false); });
+
             }
+        }
+        public void MoveAllHelden(double xDelta, double yDelta)
+        {
         }
 
         /// <summary>
@@ -331,15 +397,22 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 }
                 else if (SelectedTempObject is PathLine)
                 {
-                    var pathLine = (PathLine)SelectedTempObject;
-                    var endPoint = new Point(x2, y2);
-                    Point startPoint = pathLine.GetStartPoint;
-
-                    pathLine.ChangeLastPoint(endPoint);
-
-                    SetBewegungslaenge(startPoint, endPoint);
+                    AlterPathLine(x2, y2);
                 }
             }
+        }
+
+        public void AlterPathLine(double x2, double y2)
+        {
+            Console.WriteLine(x2 + ", " + y2);
+
+            var pathLine = (PathLine)SelectedTempObject;
+            var endPoint = new Point(x2, y2);
+            Point startPoint = pathLine.GetStartPoint;
+
+            pathLine.ChangeLastPoint(endPoint);
+
+            SetBewegungslaenge(startPoint, endPoint);
         }
 
         public void RemoveNewObjects()
@@ -476,8 +549,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private bool _initDnD;
 
+        private bool _initLineal = true;
+
         //Vielleicht als Enum, wenn mehr als zwei Modi gebraucht werden? JO
         private bool _isEditorModeEnabled = true;
+
+        private double _bewegungZuvor = 0;
 
         private bool _isMoving;
 
@@ -493,8 +570,106 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = BattlegroundObjects.Last(x => x.GetType() == typeof(TextLabel)) as TextLabel;
             label.LabelPositionX = (startPoint.X + endPoint.X - label.LabelWidth) / 2;
             label.LabelPositionY = (startPoint.Y + endPoint.Y - label.LabelHeight) / 2;
-            label.TextInLabel = $"{Math.Round(Math.Sqrt(Math.Pow((endPoint.X - startPoint.X), 2) + Math.Pow((endPoint.Y - startPoint.Y), 2)) / 100, 1).ToString()} Schritt";
+            label.TextInLabel = (BerechneLänge(startPoint, endPoint) + BewegungZuvor).ToString() + " Schritt";
+            Global.CurrentKampf.LabelInfo = "Strg-Taste klicken für Richtungswechsel";
         }
+
+        public double BerechneLänge(Point StartPunkt, Point EndPunkt)
+        {
+            return
+                Math.Round(Math.Sqrt(Math.Pow((EndPunkt.X - StartPunkt.X), 2) + Math.Pow((EndPunkt.Y - StartPunkt.Y), 2)) / 100, 1);
+        }
+
+        #region Thumbnails Images
+
+        private List<ImageItem> _images = null;
+        public List<ImageItem> Images
+        {
+            get { return _images; }
+            set { Set(ref _images, value); }
+        }
+
+        private List<ImageItem> _filteredImages = null;
+        public List<ImageItem> FilteredImages
+        {
+            get { return _filteredImages; }
+            set { Set(ref _filteredImages, value); }
+        }
+
+        private string _suchText = string.Empty;
+        public string SuchText
+        {
+            get { return _suchText; }
+            set
+            {
+                Set(ref _suchText, value);
+                FilterListe();
+            }
+        }
+
+        public void LoadImagesFromDir(string pfad)
+        {
+            if (string.IsNullOrWhiteSpace(pfad) || !Directory.Exists(pfad))
+            {
+                return;
+            }
+
+            SearchOption dirOption = SearchOption.AllDirectories;
+
+            string[] filesBmp = Directory.GetFiles(pfad, "*.bmp", dirOption);
+            string[] filesGif = Directory.GetFiles(pfad, "*.gif", dirOption);
+            string[] filesJpg = Directory.GetFiles(pfad, "*.jpg", dirOption);
+            string[] filesJpeg = Directory.GetFiles(pfad, "*.jpeg", dirOption);
+            string[] filesJpe = Directory.GetFiles(pfad, "*.jpe", dirOption);
+            string[] filesJfif = Directory.GetFiles(pfad, "*.jfif", dirOption);
+            string[] filesPng = Directory.GetFiles(pfad, "*.png", dirOption);
+            string[] filesTif = Directory.GetFiles(pfad, "*.tif", dirOption);
+            string[] filesTiff = Directory.GetFiles(pfad, "*.tiff", dirOption);
+
+            List<ImageItem> fileList = new List<ImageItem>();
+            AddImages(fileList, filesBmp, pfad);
+            AddImages(fileList, filesBmp, pfad);
+            AddImages(fileList, filesGif, pfad);
+            AddImages(fileList, filesJpg, pfad);
+            AddImages(fileList, filesJpeg, pfad);
+            AddImages(fileList, filesJpe, pfad);
+            AddImages(fileList, filesJfif, pfad);
+            AddImages(fileList, filesPng, pfad);
+            AddImages(fileList, filesTif, pfad);
+            AddImages(fileList, filesTiff, pfad);
+
+            Images = fileList.OrderBy(img => img.Name).ToList();
+            FilterListe();
+        }
+
+        private void AddImages(List<ImageItem> fileList, string[] files, string DirectoryPath)
+        {
+            foreach (string file in files)
+                fileList.Add(new ImageItem(file, DirectoryPath));
+        }
+
+        private void FilterListe()
+        {
+            if (Images == null)
+                return;
+
+            string suchText = SuchText.ToLower().Trim();
+            string[] suchWorte = suchText.Split(' ');
+
+            if (suchText == string.Empty) // kein Suchwort
+                FilteredImages = Images.AsParallel().OrderBy(n => n.Name).ToList();
+            else if (suchWorte.Length == 1) // nur ein Suchwort
+                FilteredImages = Images.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
+            else // mehrere Suchwörter
+                FilteredImages = Images.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+        }
+
+        private void ReLoadImages(object sender = null)
+        {
+            LoadImagesFromDir(String.IsNullOrEmpty(Ressources.GetFullApplicationPath()) ? "Daten\\Bodenplan" : Ressources.GetFullApplicationPath() + "Daten\\Bodenplan");
+        }
+
+        #endregion
 
         #region Fog
 
@@ -502,6 +677,47 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get { return _arenaGrid; }
             set { Set(ref _arenaGrid, value); }
+        }
+
+        private MediaState _backgroundMP4LoadedBehavior = MediaState.Play;
+        public MediaState BackgroundMP4LoadedBehavior
+        { 
+            get { return _backgroundMP4LoadedBehavior; }
+            set { Set(ref _backgroundMP4LoadedBehavior, value); }
+        }
+
+        private Color _backgroundColor = Color.FromArgb(0xFF, 0x36, 0x75, 0x36);
+        public Color BackgroundColor
+        {
+            get { return _backgroundColor; }
+            set
+            {
+                Set(ref _backgroundColor, value);
+                BackgroundBrush = new SolidColorBrush(value);
+            }
+        }
+        
+        private Brush _backgroundBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x36, 0x75, 0x36));
+        public Brush BackgroundBrush
+        {
+            get { return _backgroundBrush; }
+            set { Set(ref _backgroundBrush, value); }
+        }
+
+        public bool HasMP4Background
+        {
+            get { return _hasMP4Background; }
+            set { Set(ref _hasMP4Background, value); }
+        }
+
+        public bool BackgroundMp4Mute
+        {
+            get { return _backgroundMp4Mute; }
+            set { Set(ref _backgroundMp4Mute, value);
+                BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg1 != null)
+                    (bg1 as MP4Object).IsMute = value;
+            }
         }
 
         public string BackgroundFilename
@@ -722,6 +938,55 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _meisterZoomTransY, value); }
         }
 
+        private int _backgroundMp4MaxPosition = 999;
+        public int BackgroundMp4MaxPosition
+        {
+            get { return _backgroundMp4MaxPosition; }
+            set
+            {
+                Set(ref _backgroundMp4MaxPosition, value);
+                BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg1 != null)
+                    (bg1 as MP4Object).MaxPosition = Convert.ToDouble(value);
+            }
+        }
+        private int _backgroundMp4MinPosition = 0;
+        public int BackgroundMp4MinPosition
+        {
+            get { return _backgroundMp4MinPosition; }
+            set
+            {
+                Set(ref _backgroundMp4MinPosition, value);
+                BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg1 != null)
+                    (bg1 as MP4Object).MinPosition = Convert.ToDouble(value);
+            }
+        }
+
+        private int _backgroundMp4Length = 999;
+        public int BackgroundMp4Length
+        {
+            get { return _backgroundMp4Length; }
+            set { Set(ref _backgroundMp4Length, value);
+                BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg1 != null)
+                    (bg1 as MP4Object).VideoLength = Convert.ToDouble(value);
+            }
+        }
+
+        private double _backgroundMp4Speed = 1;
+        public double BackgroundMp4Speed
+        {
+            get { return _backgroundMp4Speed; }
+            set
+            {
+                Set(ref _backgroundMp4Speed, value);
+                BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg1 != null)
+                    (bg1 as MP4Object).VideoSpeedRatio = value;
+            }
+        }
+
         public Thickness OffsetBackgroudMargin
         {
             get { return _offsetBackgroudMargin; }
@@ -736,6 +1001,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     bgO.ZDisplayY = BackgroundOffsetY;
                     (bgO as ImageObject).ObjectSize = BackgroundOffsetSize;
                 }
+                else
+                {
+                    BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                    if (bg1 != null)
+                    {
+                        bg1.ZDisplayX = BackgroundOffsetX;
+                        bg1.ZDisplayY = BackgroundOffsetY;                        
+                        (bg1 as MP4Object).VideoPositionX = BackgroundOffsetX;
+                        (bg1 as MP4Object).VideoPositionY = BackgroundOffsetY;
+                        (bg1 as MP4Object).ObjectSize = BackgroundOffsetSize;
+                    }
+                }
+                if (InvBackgroundOffsetY != BackgroundOffsetY * (-1))
+                    InvBackgroundOffsetY = BackgroundOffsetY * (-1);
             }
         }
 
@@ -820,6 +1099,25 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return Global.CurrentKampf.SelectedManöver; }
         }
 
+        public bool HeldenInFormationBewegen
+        {
+            get { return _heldenInFormationBewegen; }
+            set { Set(ref _heldenInFormationBewegen, value); }
+        }
+
+        public bool LinealAktiv
+        {
+            get { return _linealAktiv; }
+            set { 
+                Set(ref _linealAktiv, value);
+                if (!value)
+                {
+                    FinishCurrentTempPathLine();
+                    InitLineal = true;
+                }
+            }
+        }
+
         public bool SpielerScreenActive
         {
             get { return _spielerScreenActive; }
@@ -848,6 +1146,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private Grid _arenaGrid = new Grid();
         private string _backgroundFilename;
+        private bool _hasMP4Background;
+        private bool _backgroundMp4Mute;
         private string _backgroundImage;
         private double _backgroundOffsetSize = ARENA_GRID_RESOLUTION;
         private double _backgroundOffsetX = 0;
@@ -895,6 +1195,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private double _scaleSpielerGrid = 1;
 
         private bool _spielerScreenActive = false;
+
+        private bool _heldenInFormationBewegen = false;
+
+        private bool _linealAktiv;
 
         private Window _spielerScreenWindow = null;
 
@@ -970,32 +1274,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get { return _doChangeModPositionSelbst; }
             set { Set(ref _doChangeModPositionSelbst, value); }
-        }
-
-        public KampfViewModel KampfVM
-        {
-            get { return _kampfVM; }
-
-            set
-            {
-                if (object.Equals(_kampfVM, value))
-                {
-                    return;
-                }
-
-                if (KampfVM != null)
-                {
-                    _kampfVM.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
-                    RemoveCreatureAll();
-                }
-                _kampfVM = value;
-                if (KampfVM != null)
-                {
-                    _kampfVM.Kampf.Kämpfer.CollectionChanged += OnKämpferListeChanged;
-                    AddAllCreatures();
-                }
-                UpdateCreaturesFromChangedKampferlist();
-            }
         }
 
         public void UpdateCreaturesFromChangedKampferlist()
@@ -1092,19 +1370,69 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if (((Wesen)kämpfer).IsHeld)
             {
-                ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
-                BattlegroundObjects.Add(((Held)kämpfer));
+                if (BattlegroundObjects.FirstOrDefault(t => t is Held && ((Held)t).HeldGUID == ((Held)kämpfer).HeldGUID) == null)
+                {
+                    ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
+                    BattlegroundObjects.Add(((Held)kämpfer));
+
+                    //ToDo: Initiative in der Manöverliste aktuelisieren
+
+                    //Set Aktuelle Initiative auf geladenen Wert
+                    //KämpferInfo kiCurrKampf = CurrKampf.Kämpfer.Where(
+                    //    t => ((Wesen)t.Kämpfer).IsHeld &&
+                    //         t.Kämpfer.Name == ((Held)kämpfer).Name).FirstOrDefault(
+                    //    t => ((Held)t.Kämpfer).HeldGUID == ((Held)kämpfer).HeldGUID);
+
+                    //kiCurrKampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
+                }
             }
             else
             {
                 ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
+
+                //ToDo: Initiative in der Manöverliste aktuelisieren
+
+                //Set Aktuelle Initiative auf geladenen Wert
+                //KämpferInfo kiCurrKampf = CurrKampf.Kämpfer.Where(
+                //    t => !((Wesen)t.Kämpfer).IsHeld &&
+                //    t.Kämpfer.Name == ((Gegner)kämpfer).Name).FirstOrDefault(
+                //    t => ((Gegner)t.Kämpfer).GegnerBaseGUID == ((Gegner)kämpfer).GegnerBaseGUID);
+
+                //kiCurrKampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
             }
+            //Lichtquelle nach Generierung des Kämpfers erstellen
+            if (((Wesen)kämpfer).ki.LichtquelleMeter > 0)
+                ((Wesen)kämpfer).ki.LichtquelleMeter = ((Wesen)kämpfer).ki.LichtquelleMeter;
+
         }
 
         public void ClearBattleground()
         {
             BattlegroundObjects.Where(x => !(x is BattlegroundCreature)).ToList().ForEach(x => BattlegroundObjects.Remove(x));
+            BattlegroundObjects.Clear();
+            BackgroundImage = null;
+            BackgroundFilename = null;
+            BackgroundColor = Color.FromArgb(0xFF, 0x36, 0x75, 0x36);
+            BackgroundMp4Length = 999;
+            BackgroundMp4MaxPosition = 999;
+            BackgroundMp4MinPosition = 0;
+            BackgroundMp4Mute = false;
+            BackgroundMp4Opacity = 1;
+            BackgroundMp4Speed = 1;
+            BackgroundOffsetX = 0;
+            BackgroundOffsetY = 0;
+            BackgroundOffsetSize = ARENA_GRID_RESOLUTION;
+            HasMP4Background = false;
+
+            FogFreeSize = 1;
+            FogImage = null;
+            FogOffsetSize = ARENA_GRID_RESOLUTION;
+            FogOffsetX = 0;
+            FogOffsetY = 0;
+            FogImageFilename = null;
+            useFog = false;
+            Global.CurrentKampf.Kampf.Kämpfer.Clear();
         }
 
         public void RemoveCreature(IKämpfer creature)
@@ -1136,6 +1464,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (Set(ref _ignorZLevel, value))
                 {
                     Ressources.SetVisibilityDependetOnZLevelSelection(ref _battlegroundObjects, VisibleZLevels, IgnorZLevel);
+                    if (!value)
+                        VisibleZLevels = "";
+                    else
+                        VisibleZLevels = string.Join(",", PossibleZLevels);
+
                 }
             }
         }
@@ -1224,21 +1557,21 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        public double SightAreaLenght
+        public double SightAreaLength
         {
-            get { return _sightAreaLenght; }
+            get { return _sightAreaLength; }
 
             set
             {
-                if (Set(ref _sightAreaLenght, value))
+                if (Set(ref _sightAreaLength, value))
                 {
-                    Ressources.SetNewSightAreaLength(ref _battlegroundObjects, SightAreaLenght);
+                    Ressources.SetNewSightAreaLength(ref _battlegroundObjects, SightAreaLength);
                 }
             }
         }
 
         private bool _showSightArea = true;
-        private double _sightAreaLenght = 120;
+        private double _sightAreaLength = 120;
 
         #endregion Sichtbereich-Optionen
 
@@ -1275,6 +1608,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     {
                         return ((ImageObject)SelectedObject).ObjectSize;
                     }
+                    if (SelectedObject is MP4Object)
+                    {
+                        return ((MP4Object)SelectedObject).ObjectSize;
+                    }
 
                     if (SelectedObject is BattlegroundCreature)
                     {
@@ -1302,10 +1639,23 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private double _backgroundMp4Opacity = 1;
+        public double BackgroundMp4Opacity
+        { 
+            get { return _backgroundMp4Opacity; }
+            set
+            {
+                Set(ref _backgroundMp4Opacity, value);
+                BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg1 != null)
+                    (bg1 as MP4Object).Opacity = value;
+            }
+        }
+
+
         public double Opacity
         {
             get { return SelectedObject != null ? SelectedObject.Opacity : 1; }
-
             set
             {
                 if (SelectedObject != null)
@@ -1395,6 +1745,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (_selectedObject != null && _selectedObject.IsMoving)
                 {
+                    if (Global.CurrentKampf.LabelInfo != null)
+                        Global.CurrentKampf.LabelInfo = null;
                     return;
                 }
 
@@ -1402,8 +1754,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _selectedObject = value;
                 if (SelectedObject is BattlegroundCreature)
                 {
-                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
+                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
+                    Global.CurrentKampf.LabelInfo = null;
                 }
+                else
+                    Global.CurrentKampf.LabelInfo = "Objekt: Verschieben über Maus, Drehen mit Rechtsklick, Entfernen mit der Entf.-Taste";
 
                 if (SelectedObject != null)
                 {
@@ -1414,6 +1769,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     SelectedObject.IsSelected = true;
                     if (SelectedObject is BattlegroundCreature)
                     {
+                        Global.CurrentKampf.SelectedManöverInfo = null;
                         Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe
                             .FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
@@ -1568,7 +1924,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
             foreach (BattlegroundBaseObject element in ocloaded)
             {
-                if (!(element is ImageObject && LoadWithoutPictures))
+                if (!((element is ImageObject || element is MP4Object) && LoadWithoutPictures))
                 {
                     System.Console.WriteLine("LOAD FROM XML: " + element.ToString());
                     BattlegroundObjects.Add(element);
@@ -1597,6 +1953,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         ((bgOb as BattlegroundCreature) as Gegner).LoadBattlegroundPortrait((bgOb as BattlegroundCreature).PortraitFileName, false);
                         ((bgOb as BattlegroundCreature) as Gegner).Position = GetPositionFromImage((bgOb as BattlegroundCreature).CreaturePosition);
                     }
+
                 }
             }
 
@@ -1607,6 +1964,25 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BackgroundOffsetX = bgO.ZDisplayX;
                 BackgroundOffsetY = bgO.ZDisplayY;
                 BackgroundOffsetSize = (bgO as ImageObject).ObjectSize;
+                (bgO as BattlegroundBaseObject).IsVisible = false;
+            }
+            else
+            {
+                BattlegroundBaseObject bg0MP4 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg0MP4 != null)
+                {
+                    OnSetBackgroundClick.Execute((bg0MP4 as MP4Object));                     
+                    BackgroundOffsetX = bg0MP4.ZDisplayX;
+                    BackgroundOffsetY = bg0MP4.ZDisplayY;
+                    BackgroundOffsetSize = (bg0MP4 as MP4Object).ObjectSize;
+                    BackgroundMp4Length = Convert.ToInt32((bg0MP4 as MP4Object).VideoLength);
+                    BackgroundMp4MinPosition = Convert.ToInt32((bg0MP4 as MP4Object).MinPosition);
+                    BackgroundMp4MaxPosition = Convert.ToInt32((bg0MP4 as MP4Object).MaxPosition);
+                    BackgroundMp4Mute = (bg0MP4 as MP4Object).IsMute;
+                    BackgroundMp4Opacity = (bg0MP4 as MP4Object).Opacity;
+                    BackgroundMp4Speed = (bg0MP4 as MP4Object).VideoSpeedRatio;
+                    (bg0MP4 as BattlegroundBaseObject).IsVisible = false;
+                }
             }
 
             BattlegroundBaseObject bg1 = BattlegroundObjects.Where(t => t is ImageObject).Where(t => (t as ImageObject).IsFogPicture).FirstOrDefault();
@@ -1629,32 +2005,69 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 var w = wbmap.PixelWidth;
                 FogPixelData = new int[w * h];
                 var widthInByte = 4 * w;
+                (bg1 as ImageObject).ZLevel = 103;
 
                 wbmap.CopyPixels(FogPixelData, widthInByte, 0);
                 System.Drawing.Bitmap bm = BitmapFromWriteableBitmap(wbmap);
                 var img = (System.Drawing.Image)bm;
                 FogImage = wbmap;
                 useFog = true;
+                (bg1 as BattlegroundBaseObject).IsVisible = false;
             }
 
-            ObservableCollection<double> lstFogSettings = bg.LoadSettingsFromXML(filename);
-            if (lstFogSettings.Count == 0)
+            ObservableCollection<double> lstSettings = bg.LoadSettingsFromXML(filename);
+            if (lstSettings.Count == 0)
             {
                 return;
             }
 
-            BackgroundOffsetSize = lstFogSettings[0];
-            BackgroundOffsetX = lstFogSettings[1];
-            InvBackgroundOffsetY = lstFogSettings[2];
+            BackgroundOffsetSize = lstSettings[0];
+            BackgroundOffsetX = lstSettings[1];
+            InvBackgroundOffsetY = lstSettings[2];
 
-            PlayerGridOffsetX = lstFogSettings[3];
-            PlayerGridOffsetY = lstFogSettings[4];
-            ScaleSpielerGrid = lstFogSettings[5];
-            ScaleKampfGrid = lstFogSettings[6];
-            RechteckGrid = lstFogSettings[7] == 1;
+            PlayerGridOffsetX = lstSettings[3];
+            PlayerGridOffsetY = lstSettings[4];
+            ScaleSpielerGrid = lstSettings[5];
+            ScaleKampfGrid = lstSettings[6];
+            //lstSettings 1 = Recheck,   0 = Hex,   -1 = none
+            RechteckGrid = lstSettings[7] == 1;
+            HexGrid = lstSettings[7] == 0;
+            if (lstSettings.Count <= 8)
+                return;
+            //Zusätzliche Battlemap Settings laden
+            Color gridCol = new Color()
+            {
+                A = Convert.ToByte(lstSettings[8]),
+                B = Convert.ToByte(lstSettings[9]),
+                G = Convert.ToByte(lstSettings[10]),
+                R = Convert.ToByte(lstSettings[11])
+            };
+            GridColor = gridCol;
+            ShowSightArea = lstSettings[12] == 1;
+            SightAreaLength = lstSettings[13];
+            ShowCreatureName = lstSettings[14] == 1;
+            useFog = lstSettings[15] == 1;
+
+            //Kampf auf KR setzen
+            CurrKampf.KampfNeuStarten(false);
+            while (CurrKampf.Kampfrunde < lstSettings[16])
+                CurrKampf.NeueKampfrunde();
+            IsEditorModeEnabled = lstSettings[17] == 1;
+
+            //Background Color
+            if (lstSettings.Count <= 18)
+                return;
+            Color backCol = new Color()
+            {
+                A = Convert.ToByte(lstSettings[18]),
+                B = Convert.ToByte(lstSettings[19]),
+                G = Convert.ToByte(lstSettings[20]),
+                R = Convert.ToByte(lstSettings[21])
+            };
+            BackgroundColor = backCol;
         }
 
-        public void SaveBattlegroundToXML(string filename)
+        public void SaveBattlegroundToXML(string filename, bool GiveFeedback = true)
         {
             var lstSettings = new List<double>
             {
@@ -1690,22 +2103,38 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         //File.Delete(olfile);
                         ImageObject io = CreateImageObject(FogImageFilename, new Point(FogOffsetX, FogOffsetY));
                         io.IsFogPicture = true;
+                        io.ZLevel = 103;
                         io.IsVisible = false;
                     }
                 }
-                lstSettings.Add(PlayerGridOffsetX);
-                lstSettings.Add(PlayerGridOffsetY);
-                lstSettings.Add(ScaleSpielerGrid);
-            }
-            else
-            {
-                lstSettings.AddRange(new List<double>() { 0, 0, 0 });
             }
 
+            lstSettings.Add(PlayerGridOffsetX);
+            lstSettings.Add(PlayerGridOffsetY);
+            lstSettings.Add(ScaleSpielerGrid);
+
             lstSettings.Add(ScaleKampfGrid);
-            lstSettings.Add(RechteckGrid ? 1 : 0);
+            lstSettings.Add(RechteckGrid ? 1 : HexGrid? 0: -1);
+
+            //Zusätzliche 
+            lstSettings.Add(GridColor.A);
+            lstSettings.Add(GridColor.B);
+            lstSettings.Add(GridColor.G);
+            lstSettings.Add(GridColor.R);
+            lstSettings.Add(ShowSightArea ? 1 : 0);
+            lstSettings.Add(SightAreaLength);
+            lstSettings.Add(ShowCreatureName ? 1 : 0);
+            lstSettings.Add(useFog ? 1 : 0);
+            lstSettings.Add(CurrKampf.Kampfrunde);
+            lstSettings.Add(IsEditorModeEnabled ? 1 : 0);
+            //Background Color
+            lstSettings.Add(BackgroundColor.A);
+            lstSettings.Add(BackgroundColor.B);
+            lstSettings.Add(BackgroundColor.G);
+            lstSettings.Add(BackgroundColor.R);
+
             var bg = new BattlegroundXMLLoadSave();
-            bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings);
+            bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings, GiveFeedback);
         }
 
         private bool _loadWithoutPictures = false, _saveWithoutPictures = false;
@@ -1717,10 +2146,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
         /// <summary>
         /// Farbe des HexGrids bzw des RechteckGrids
         /// </summary>
+        private Color _linealColor = Colors.DarkBlue;
+        public Color LinealColor
+        {
+            get { return _linealColor; }
+            set { Set(ref _linealColor, value); }
+        }
+
+
+        /// <summary>
+        /// Farbe des HexGrids bzw des RechteckGrids
+        /// </summary>
         public Color GridColor
         {
             get { return gridColor; }
-
             set
             {
                 Set(ref gridColor, value);
@@ -1843,6 +2282,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (Set(ref _zeichenModus, value))
                 {
+                    if (value == ZeichenModus.Linie || value == ZeichenModus.Fläche)
+                    {
+                        if (SelectedColor.ToString() == "#00FFFFFF")
+                            SelectedColor = Colors.DarkGray;
+                        if (value == ZeichenModus.Fläche && SelectedFillColor.ToString() == "#00FFFFFF")
+                            SelectedFillColor = Colors.LightGray;
+                        Global.CurrentKampf.LabelInfo =
+                            value == ZeichenModus.Linie ?
+                            "Linie zeichnen: ziehe mit der Maus eine Linie auf die Battlemap":
+                            "Fläche zeichnen: halte die linke Maustaste gedückt um die Flächenzeichnung zu beginnen";
+                    }
+                    else
+                        Global.CurrentKampf.LabelInfo = null;
+
                     //eventuell aktionen ausführen, wie Bild platzieren
                     //oder Properties auf dem model umsetzen wie CreateLine = true
                 }
@@ -1885,7 +2338,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _pointerVisibility; }
             set { Set(ref _pointerVisibility, value); }
         }
-
+        
         public void SetPointer(object parameter)
         {
             if (parameter == null || !(parameter is Grid))
@@ -2035,6 +2488,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             CreateThumbnail(FogImageFilename, FogImage.Clone());
             ImageObject io = CreateImageObject(FogImageFilename, new Point(FogOffsetX, FogOffsetY));
             io.IsFogPicture = true;
+            io.ZLevel = 103;
             io.IsVisible = false;
         }
 
@@ -2055,6 +2509,169 @@ namespace MeisterGeister.ViewModel.Bodenplan
         #endregion Sticky Stuff, der gerade nicht richtig funktioniert
 
         #region Commands
+
+        private Base.CommandBase onSaveXML_Battlemap = null;
+        public Base.CommandBase OnSaveXML_Battlemap
+        {
+            get
+            {
+                if (onSaveXML_Battlemap == null)
+                    onSaveXML_Battlemap = new Base.CommandBase(SaveXML_Battlemap, null);
+                return onSaveXML_Battlemap;
+            }
+        }
+
+        private void SaveXML_Battlemap(object sender)
+        {
+            var dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                FileName = "Battleground_" + System.DateTime.Now.ToShortDateString(), // Default file name
+                DefaultExt = ".xml",
+                Filter = "XML Files (.xml)|*.xml"
+            };
+            var result = dlg.ShowDialog();
+
+            if (result == true)
+                SaveBattlegroundToXML(dlg.FileName);
+        }
+
+        private Base.CommandBase onLoadXML_Battlemap = null;
+        public Base.CommandBase OnLoadXML_Battlemap
+        {
+            get
+            {
+                if (onLoadXML_Battlemap == null)
+                    onLoadXML_Battlemap = new Base.CommandBase(LoadXML_Battlemap, null);
+                return onLoadXML_Battlemap;
+            }
+        }
+
+        private void LoadXML_Battlemap(object sender)
+        {
+            var result = false;
+            var filename = sender ?? null;
+            if (sender == null)
+            {
+                var dlg = new Microsoft.Win32.OpenFileDialog
+                {
+                    DefaultExt = ".xml",
+                    Filter = "XML Files (.xml)|*.xml"
+                };
+                result = dlg.ShowDialog() ?? false;
+                if (result)
+                    filename = dlg.FileName;
+            }
+            else
+                result = true;
+
+            if (result == true)
+            {
+                IsLoading = true;
+                Global.CurrentKampf.Kampf.Kämpfer.Clear();
+                Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
+                BackgroundImage = null;
+                LoadBattlegroundFromXML(filename as string);
+                UpdateCreatureLevelToTop();
+                BattlegroundBaseObject bg0MP4 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                if (bg0MP4 != null)
+                    SetBackgroundClick(bg0MP4);
+                    //IsLoadingwird im View auf False zurückgesetzt
+                else
+                    IsLoading = false;
+            }
+        }
+
+
+        private Base.CommandBase onLoadLastKRXML_Battlemap = null;
+        public Base.CommandBase OnLoadLastKRXML_Battlemap
+        {
+            get
+            {
+                if (onLoadLastKRXML_Battlemap == null)
+                    onLoadLastKRXML_Battlemap = new Base.CommandBase(LoadLastKRXML_Battlemap, null);
+                return onLoadLastKRXML_Battlemap;
+            }
+        }
+
+        private void LoadLastKRXML_Battlemap(object sender)
+        {
+            if (!ViewHelper.Confirm("Laden der letzten KR des letzten Kampfes",
+                "Wollen Sie den momentanen Kampf verwerfen und die letzte KR des letzten Kampfes laden?"))
+                return;
+
+            string bodenplanPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) +
+                @"\Daten\Bodenplan\Battleground_Letzte_KR.xml";
+            if (Directory.Exists(Path.GetDirectoryName(bodenplanPath)) && File.Exists(bodenplanPath))
+            {
+                LoadXML_Battlemap(bodenplanPath);
+                //IsLoading = true;
+                //Global.CurrentKampf.Kampf.Kämpfer.Clear();
+                //Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
+                //BackgroundImage = null;
+                //LoadBattlegroundFromXML(bodenplanPath);
+                //UpdateCreatureLevelToTop();
+                //BattlegroundBaseObject bg0MP4 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
+                //if (bg0MP4 != null)
+                //    SetBackgroundClick(bg0MP4);
+                ////IsLoadingwird im View auf False zurückgesetzt
+                //else
+                //    IsLoading = false;
+            }
+            else
+                ViewHelper.Popup("Die temporäre Datei " + Environment.NewLine + bodenplanPath + Environment.NewLine + " konnte nicht gefunden werden");
+        }
+
+        private Base.CommandBase onReLoadImages = null;
+        public Base.CommandBase OnReLoadImages
+        {
+            get
+            {
+                if (onReLoadImages == null)
+                    onReLoadImages = new Base.CommandBase(ReLoadImages, null);
+                return onReLoadImages;
+            }
+        }
+        private Base.CommandBase _onBtnLinealFarbeAnpassen = null;
+        public Base.CommandBase OnBtnLinealFarbeAnpassen
+        {
+            get
+            {
+                if (_onBtnLinealFarbeAnpassen == null)
+                {
+                    _onBtnLinealFarbeAnpassen = new Base.CommandBase(LinealFarbeAnpassen, null);
+                }
+                return _onBtnLinealFarbeAnpassen;
+            }
+        }
+
+        private void LinealFarbeAnpassen(object obj)
+        {
+            Xceed.Wpf.Toolkit.ColorPicker colorPicker = new Xceed.Wpf.Toolkit.ColorPicker();
+            colorPicker.DisplayColorAndName = true;
+            colorPicker.IsOpen = true;
+            colorPicker.SelectedColor = Colors.Red;
+            colorPicker.ShowAdvancedButton = true;
+
+        }
+
+
+        public Base.CommandBase OnBtnRenewFogOfWar
+        {
+            get
+            {
+                if (_onBtnRenewFogOfWar == null)
+                {
+                    _onBtnRenewFogOfWar = new Base.CommandBase(RenewFogOfWar, null);
+                }
+                return _onBtnRenewFogOfWar;
+            }
+        }
+
+        private void RenewFogOfWar(object obj)
+        {
+            if (!ViewHelper.Confirm("Fog-of-War erneuern", "Soll der aktuelle Fog-of-War gelöscht und von neuem begonnen werden?")) return;
+            CreateFogOfWar();
+        }
 
         public Base.CommandBase OnBtnCenterMeisterView
         {
@@ -2140,6 +2757,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private Base.CommandBase _onBtnRenewFogOfWar = null;
         private Base.CommandBase _onBtnCenterMeisterView = null;
         private Base.CommandBase _onBtnCenterPlayerView = null;
         private Base.CommandBase _onBtnPosIniWindow = null;
@@ -2150,6 +2768,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private Base.CommandBase _onBtnUmwandelnSonstiges = null;
 
         private Base.CommandBase _onSetBackgroundClick = null;
+        private Base.CommandBase _onVideoTestClick = null;
 
         private void BtnPosIniWindow(object obj)
         {
@@ -2162,7 +2781,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             SetIniWindowPosition();
         }
 
-        private void CenterMeisterView(object obj)
+        public void CenterMeisterView(object obj)
         {
             MeisterZoom = 1;
             if (Global.ContextHeld.HeldenGruppeListe.Count == 0)
@@ -2175,55 +2794,67 @@ namespace MeisterGeister.ViewModel.Bodenplan
             MeisterZoomTransX = -xMin;
             MeisterZoomTransY = -yMin;
             MeisterZoom = .5;
-            CenterPlayerView(null);
+            if (SpielerScreenWindow != null)
+                CenterPlayerView(null);
         }
 
-        private void CenterPlayerView(object obj)
-        {
-            double x1 = ARENA_GRID_RESOLUTION;
-            double y1 = ARENA_GRID_RESOLUTION;
-            double x2 = ARENA_GRID_RESOLUTION;
-            double y2 = ARENA_GRID_RESOLUTION;
+        public void CenterPlayerView(object obj)
+        {            
+            double totalWidth = SpielerScreenWindow.ActualWidth / ScaleSpielerGrid;
+            double totalHeight = SpielerScreenWindow.ActualHeight / ScaleSpielerGrid;
 
-            foreach (Held h in Global.ContextHeld.HeldenGruppeListe)
-            {
-                if (h.CreatureX < x1)
-                {
-                    x1 = h.CreatureX - h.CreatureWidth;
-                }
+            double PlayerOffX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min()) / 2;
+            double PlayerOffY = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min()) / 2;
 
-                if (h.CreatureY < y1)
-                {
-                    y1 = h.CreatureY + h.CreatureHeight;
-                }
-
-                if (h.CreatureX > x2)
-                {
-                    x2 = h.CreatureX + h.CreatureWidth;
-                }
-
-                if (h.CreatureY < y2)
-                {
-                    y2 = h.CreatureY - h.CreatureHeight;
-                }
-            }
-            PlayerGridOffsetX = (x1);
-            PlayerGridOffsetY = (-y2);
+            PlayerGridOffsetX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min() - (totalWidth / 2 - PlayerOffX));
+            PlayerGridOffsetY = (-(Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min() - (totalHeight / 2 - PlayerOffY)));
         }
+
 
         private void SetBackgroundClick(object obj)
         {
-            BackgroundImage = ViewHelper.ChooseFile("Hintergrundbild setzen", "", false, new string[9] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff" });
+            if (obj == null) //Button von User gedrückt
+            {
+                HasMP4Background = false;
+                //Löschen vorhandener Background-Objekte
+                BattlegroundObjects.Remove(BattlegroundObjects.Where(t => t is ImageObject && (t as ImageObject).IsBackgroundPicture).FirstOrDefault());            
+                BattlegroundObjects.Remove(BattlegroundObjects.Where(t => t is MP4Object && (t as MP4Object).IsBackgroundPicture).FirstOrDefault());
+
+                BackgroundImage = ViewHelper.ChooseFile("Hintergrundbild setzen", "", false, new string[10] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff", "mp4" });
+
+                BackgroundMp4MinPosition = 0;
+                BackgroundMp4MaxPosition = BackgroundMp4Length;
+            }
+            else
+            {
+                BackgroundImage = (obj as MP4Object).VideoUrl;
+            }
+
+            BackgroundMP4LoadedBehavior = MediaState.Play;
             if (string.IsNullOrEmpty(BackgroundImage))
             {
+                BackgroundImage = null;
                 return;
             }
 
             BackgroundFilename = new FileInfo(BackgroundImage).Name ?? "";
-            BackgroundOffsetX = 0;
-            ImageObject io = CreateImageObject(BackgroundImage, new Point(BackgroundOffsetX, BackgroundOffsetY));
-            io.IsBackgroundPicture = true;
-            io.IsVisible = false;
+            if (!BackgroundImage.ToLower().EndsWith(".mp4"))
+            {
+                ImageObject io = CreateImageObject(BackgroundImage, new Point(BackgroundOffsetX, BackgroundOffsetY));
+                io.IsBackgroundPicture = true;
+                io.IsVisible = false;
+            }
+            else
+            //Video-Datei ausgewählt
+            {
+                if (obj == null)//Button von User gedrückt
+                {
+                    MP4Object me = CreateVideoObject(BackgroundImage, new Point(BackgroundOffsetX, BackgroundOffsetY));
+                    me.IsBackgroundPicture = true;
+                    me.IsVisible = false;
+                }
+                HasMP4Background = true;
+            }
         }
 
         private void UmwandelnAttacke(object obj)

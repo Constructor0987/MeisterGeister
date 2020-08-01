@@ -51,6 +51,7 @@ namespace MeisterGeister
             set { _contextMenuLink = value; }
         }
 
+
         #endregion //CONTEXTE
 
         #region //EIGENSCHAFTSMETHODEN
@@ -198,7 +199,12 @@ namespace MeisterGeister
                 OnZeitpunktChanged();
             }
         }
-
+        private static MainViewModel _mainVM = null;
+        public static MainViewModel MainVM
+        {
+            get { return _mainVM; }
+            set { _mainVM = value; }
+        }
         public static string AktuellesDatum
         {
             get { return Global.aktuellesDatum; }

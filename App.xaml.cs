@@ -136,12 +136,22 @@ namespace MeisterGeister {
                 switch (DatabaseUpdate.PerformDatabaseUpdate()) {
                     case DatabaseUpdateResult.DatenbankVersionOK:
                         break;
-                    case DatabaseUpdateResult.DatenbankUpdateOK:
-                        msg = string.Format("Es wurde ein Update Ihrer Datenbank durchgeführt, da Ihre Version veraltet war!"
+                    case DatabaseUpdateResult.DatenbankUpdateOK:                        
+                        //Neues Release auf Vorab-Version - HINWEISTEXT
+                        if (DatabaseUpdate.UserDatabaseVersion < 129)
+                            msg = string.Format("Update auf die Vorab-Version Release 2.5.2."
+                                + "\nDiese Vorab-Version haben wir erstellt, damit ihr die neuen Features jetzt schon testen und nutzen könnt."
+                                + "\nAllerdings kann es bei der Vorab-Version zu unvorhergesehenem Fehlverhalten oder Abstürzen des Programms kommen."
+                                + "\nNatürlich haben wir versucht alles bislang erkannte zu eliminieren, jedoch kann es sein, dass wir nicht alle "
+                                + "\nVarianten abgefangen haben."
+                                + "\nFalls ihr mit dieser Version nicht zurecht kommt, könnt ihr das erstellte Backup zurückspielen und die "
+                                + "\nvorherige Version nutzen." + "\n\n");
+
+                        msg += string.Format("Es wurde ein Update Ihrer Datenbank durchgeführt, da Ihre Version veraltet war!"
                             + "\nBitte starten Sie die Anwendung neu.\n\nBisherige Datenbank-Version: {0}\nNeue Datenbank-Version: {1}"
                             + "\n\nEs wurde ein Backup der Datenbank im Daten-Verzeichnis erstellt.", DatabaseUpdate.UserDatabaseVersion, DatabaseUpdate.DatenbankVersionAktuell);
                         msgWin = new MsgWindow("Datenbank Update", msg, false);
-                        msgWin.ShowDialog();
+                        msgWin.ShowDialog();                        
 
                         // nicht mehr benötigte Dateien aus früheren Versionen löschen bzw. verschieben
                         DatabaseUpdate.CleanUpDirectory();

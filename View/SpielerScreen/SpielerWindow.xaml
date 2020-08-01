@@ -5,10 +5,9 @@
     xmlns:Kampf="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-    xmlns:kampfInfo="clr-namespace:MeisterGeister.View.Kampf"
+    xmlns:KampfManöver="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
     xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
     xmlns:s="clr-namespace:MeisterGeister.View.SpielerScreen"
-    xmlns:vmBoden="clr-namespace:MeisterGeister.ViewModel.Bodenplan"
     Title="DSA MeisterGeister - Spieler Informationen"
     Width="850"
     Height="559"
@@ -25,6 +24,7 @@
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter" />
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1" />
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
+        <Kampf:DataTypeConverter x:Key="DataTypeConverter1" />
 
         <Style TargetType="ProgressBar">
             <Setter Property="Template">
@@ -44,13 +44,6 @@
                                 BorderBrush="Gray"
                                 BorderThickness="1"
                                 CornerRadius="1">
-                                <!--<Border.Background>
-                                    <LinearGradientBrush>
-                                        <GradientStop Color="Red" Offset="0" />
-                                        <GradientStop Color="Yellow" Offset="0.2" />
-                                        <GradientStop Color="#FF1FF31F" Offset="0.867" />
-                                    </LinearGradientBrush>
-                                </Border.Background>-->
                             </Border>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -112,7 +105,7 @@
 
         <Grid
             Name="grdBodenplan"
-            Background="#FF367536"
+            Background="{Binding BackgroundBrush, UpdateSourceTrigger=PropertyChanged}"
             Visibility="Collapsed">
             <Grid.LayoutTransform>
                 <ScaleTransform ScaleX="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" ScaleY="{Binding ScaleSpielerGrid, UpdateSourceTrigger=PropertyChanged}" />
@@ -139,7 +132,19 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Source="{Binding BackgroundImage}" />
-
+                <MediaElement                            
+                        x:Name="MP4BattlemapBackgroundSpieler"
+                        Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="{Binding OffsetBackgroudMargin, UpdateSourceTrigger=PropertyChanged}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Opacity="{Binding BackgroundMp4Opacity}"
+                        RenderTransformOrigin="0.5,0.5"
+                        Source="{Binding BackgroundImage, UpdateSourceTrigger=PropertyChanged}"
+                        IsMuted="{Binding BackgroundMp4Mute, UpdateSourceTrigger=PropertyChanged}"
+                        MediaOpened="MP4BattlemapBackgroundSpieler_MediaOpened"
+                        MediaEnded="MP4BattlemapBackgroundSpieler_MediaEnded" >
+                </MediaElement>
                 <ListBox
                     Name="ArenaGrid2"
                     Width="10000"
@@ -183,11 +188,11 @@
 
                                             <!--  Lichtquelle  -->
                                             <Ellipse
-                                                Canvas.Left="{Binding ki.MidCreatureX}"
-                                                Canvas.Top="{Binding ki.MidCreatureY}"
+                                                Canvas.Left="{Binding ki.LightCreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                 Width="{Binding ki.LichtquellePixelRadius}"
                                                 Height="{Binding ki.LichtquellePixelRadius}"
-                                                Opacity="0.4"
+                                                Opacity="0.25"
                                                 Stroke="#FFF0FC00"
                                                 StrokeThickness="2">
                                                 <Ellipse.Fill>
@@ -200,9 +205,6 @@
                                                     <Style TargetType="{x:Type Ellipse}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding ki.LichtquellePixel}" Value="0">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsMoving}" Value="True">
                                                                 <Setter Property="Visibility" Value="Collapsed" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -331,6 +333,7 @@
                                                 Background="#FF3DD81A"
                                                 Maximum="{Binding LebensenergieMax}"
                                                 Minimum="0"
+                                                Opacity="{Binding Opacity}"
                                                 Orientation="Vertical"
                                                 Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"
                                                 Value="{Binding LebensenergieAktuell}" />
@@ -427,6 +430,63 @@
                                                     </Style>
                                                 </Image.Style>
                                             </Image>
+
+
+                                            <!-- Längerfristige Handlungen -->
+                                            <Grid 
+                                                Margin="{Binding MarginCreatureLangAkt}"
+                                                Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"    
+                                                HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="40" Height="20" Background="#FFE0E07C" >
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition 
+                                                                                Binding="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, 
+                                                                            UpdateSourceTrigger=PropertyChanged, 
+                                                                            Converter={StaticResource IsEqualOrGreaterThanConverter1}, 
+                                                                            ConverterParameter='1'}" Value="True"/>
+                                                                    <Condition 
+                                                                                Binding="{Binding AktManöverInfo.DauerInKampfaktionen, 
+                                                                                Converter={StaticResource IsEqualOrGreaterThanConverter1},
+                                                                                ConverterParameter='1'}" Value="True"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                                <Image Margin="-1" HorizontalAlignment="Left">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
+                                                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Fernkampf.png" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
+                                                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Magie.png" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding AktManöverInfo.Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
+                                                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Kalender.png" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <TextBlock  
+                                                    Margin="10,0,0,0"         
+                                                    HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Center"    
+                                                    Padding="8,0"
+                                                    Text="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}"                                                             
+                                                    Width="28" 
+                                                    FontSize="18" 
+                                                    FontWeight="Bold" />
+                                            </Grid>
 
                                             <Canvas.Effect>
                                                 <DropShadowEffect
@@ -602,7 +662,9 @@
                                                 Background="Transparent"
                                                 Content="{Binding TextInLabel, UpdateSourceTrigger=PropertyChanged}"
                                                 FontSize="30"
-                                                Foreground="White" />
+                                                Foreground="White"  
+                                                Opacity="{Binding Opacity}"
+                                                />
                                         </Canvas>
 
                                         <ControlTemplate.Triggers>
@@ -621,6 +683,9 @@
                                 </Thumb.Template>
                             </Thumb>
                         </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:MP4Object}">
+                        </DataTemplate>
                     </ListBox.Resources>
 
                     <ListBox.Background>
@@ -631,8 +696,17 @@
                             <VisualBrush.Visual>
                                 <Path
                                     Data="{Binding TilePathData}"
-                                    StrokeDashArray="5 3"
-                                    StrokeThickness="3">
+                                    StrokeDashArray="5 3">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="StrokeThickness" Value="3"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RechteckGrid}" Value="true">
+                                                    <Setter Property="StrokeThickness" Value="6"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
                                     <Path.Stroke>
                                         <SolidColorBrush Color="{Binding GridColor, UpdateSourceTrigger=PropertyChanged}" />
                                     </Path.Stroke>

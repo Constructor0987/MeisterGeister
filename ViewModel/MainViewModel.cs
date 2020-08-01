@@ -40,6 +40,7 @@ namespace MeisterGeister.ViewModel
 
         private MainViewModel() : base(View.General.ViewHelper.ShowError)
         {
+            Global.MainVM = this;
             App.Queue.ProgressChanged += Queue_ProgressChanged;
             BuildMenu();
             OpenTabs();

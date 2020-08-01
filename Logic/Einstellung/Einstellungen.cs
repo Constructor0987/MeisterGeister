@@ -625,6 +625,19 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        public static bool SpielerScreenUnterordnerEinbeziehen
+        {
+            get
+            {
+                return GetEinstellung<bool>(nameof(SpielerScreenUnterordnerEinbeziehen));
+            }
+
+            set
+            {
+                SetEinstellung(nameof(SpielerScreenUnterordnerEinbeziehen), value);
+            }
+        }
+
         public static double SlideShowInterval
         {
             get
@@ -859,10 +872,11 @@ namespace MeisterGeister.Logic.Einstellung
             {
                 new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Jingle beim Start deaktivieren", Wert = "False" },
                 new Model.Einstellung() { Name = "ShowChangeLog", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "ChangeLog beim Start anzeigen", Wert = "True" },
-                new Model.Einstellung() { Name = "Regeledition", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "Regeledition", Wert = "" },
+                //Regedition als Standard auf DSA 4.1 stellen
+                new Model.Einstellung() { Name = "Regeledition", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "Regeledition", Wert = "DSA 4.1" },
 
                 new Model.Einstellung() { Name = "PflanzenwissenIntegrieren", Kontext = "Held", Kategorie = "Hausregel", Typ = "Boolean", Beschreibung = "Held kennt nur bestimmte Pflanzen", Wert = "False" },
-                
+
                 new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
                 new Model.Einstellung() { Name = "AudioInAnderemPfadSuchen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
                 new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
@@ -904,6 +918,8 @@ namespace MeisterGeister.Logic.Einstellung
 
                 new Model.Einstellung() { Name = "HUE_GatewayID", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "HUE Lampen-Steuerung zu MeisterGeister - Gateway ID", Wert = null },
                 new Model.Einstellung() { Name = "HUE_Registerkey", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "HUE Lampen-Steuerung zu MeisterGeister - Register-Key", Wert = null },
+
+                new Model.Einstellung() { Name = "SpielerScreenUnterordnerEinbeziehen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "SpielerInfo-Tool: Unterordner beim Bilder-Laden mit einbeziehen?", Wert = "False" },
 
                 //Versteckte
                 new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = DateTime.Now.ToString() },

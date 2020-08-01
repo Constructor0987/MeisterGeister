@@ -67,5 +67,6 @@ namespace MeisterGeister.View.General
             for (int i = 0; i < control.ImagePathList.Count; i++)
                 control.ImagePathList[i] = (string)e.NewValue;
         }
+
     }
 }

@@ -362,11 +362,11 @@
                     <Image Grid.Column="2" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" Margin="0,5,16,5" HorizontalAlignment="Right" />
 
 
-                    <CheckBox Grid.Column="2" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,1,6" ToolTip="Lautstärke der Klangzeile automatisch variieren" 
+                    <CheckBox Grid.Column="2" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" ToolTip="Lautstärke der Klangzeile automatisch variieren" 
                               IsChecked="{Binding aPlayTitelVolumeChange, UpdateSourceTrigger=PropertyChanged}" 
                               Command="{Binding OnVolumeChange}"/>
 
-                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMin}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
+                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMin, UpdateSourceTrigger=PropertyChanged}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
                         Grid.Column="3" HorizontalContentAlignment="Stretch" Margin="2,1" 
                         vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
                         <ViewGeneral:IntBox.ToolTip>
@@ -377,7 +377,7 @@
                         </ViewGeneral:IntBox.ToolTip>
                     </ViewGeneral:IntBox>
 
-                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
+                    <ViewGeneral:IntBox Value="{Binding aPlayTitel.VolumeMax, UpdateSourceTrigger=PropertyChanged}" MinValue="0" MaxValue="100" IncWheel="3" DecWheel="3" ShowButtons="True" 
                         Grid.Column="4" HorizontalContentAlignment="Stretch" Margin="2,1" 
                         vm:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" >
                         <ViewGeneral:IntBox.ToolTip>
@@ -400,7 +400,7 @@
                         </Slider.ToolTip>
                     </Slider>
 
-                    <CheckBox Grid.Column="2" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,7,1,7" ToolTip="Pausezeiten der Klangzeile automatisch variieren" 
+                    <CheckBox Grid.Column="2" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Pausezeiten der Klangzeile automatisch variieren" 
                               IsChecked="{Binding aPlayTitelPauseChange, UpdateSourceTrigger=PropertyChanged}"
                               Command="{Binding OnPauseChange}"/>
 
@@ -521,7 +521,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
                         <ColumnDefinition Width="48" />
-                        <ColumnDefinition Width="65" />
+                        <ColumnDefinition Width="65*" />
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="60" />
                         <ColumnDefinition Width="*" MinWidth="115" />
@@ -551,9 +551,9 @@
                                         <Setter Property="Content" >
                                             <Setter.Value>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding aPlayTitel.VolumeMin}" />
+                                                    <TextBlock Text="{Binding aPlayTitel.VolumeMin, UpdateSourceTrigger=PropertyChanged}" />
                                                     <TextBlock Text="-" />
-                                                    <TextBlock Text="{Binding aPlayTitel.VolumeMax}" />
+                                                    <TextBlock Text="{Binding aPlayTitel.VolumeMax, UpdateSourceTrigger=PropertyChanged}" />
                                                 </StackPanel>
                                             </Setter.Value>
                                         </Setter>

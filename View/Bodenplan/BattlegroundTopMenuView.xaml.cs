@@ -1,15 +1,31 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using MeisterGeister.View.General;
 using MeisterGeister.View.SpielerScreen;
 using MeisterGeister.ViewModel.Bodenplan;
 
 namespace MeisterGeister.View.Bodenplan
 {
+
+    public enum MouseDirection
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right,
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight,
+    }
     /// <summary>
     /// Interaction logic for BattlegroundTopMenuView.xaml
     /// </summary>
@@ -18,16 +34,11 @@ namespace MeisterGeister.View.Bodenplan
         public BattlegroundTopMenuView()
         {
             InitializeComponent();
-            VM = new BattlegroundViewModel
-            {
-                KampfVM = Global.CurrentKampf
-            };
         }
 
-        public BattlegroundViewModel VM
+        private BattlegroundViewModel BattlegroundVM
         {
-            get { return DataContext as BattlegroundViewModel; }
-            set { DataContext = value; }
+            get { return Global.CurrentKampf.BodenplanViewModel; }
         }
 
         public double VisualisationWidth
@@ -112,49 +123,8 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void Button_SaveXML_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new Microsoft.Win32.SaveFileDialog
-            {
-                FileName = "Battleground_" + System.DateTime.Now.ToShortDateString(), // Default file name
-                DefaultExt = ".xml",
-                Filter = "XML Files (.xml)|*.xml"
-            };
-            var result = dlg.ShowDialog();
 
-            if (result == true)
-            {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
-                {
-                    vm.SaveBattlegroundToXML(dlg.FileName);
-                }
-            }
-        }
-
-        private void Button_LoadXML_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new Microsoft.Win32.OpenFileDialog
-            {
-                DefaultExt = ".xml",
-                Filter = "XML Files (.xml)|*.xml"
-            };
-            var result = dlg.ShowDialog();
-
-            if (result == true)
-            {
-                var vm = DataContext as BattlegroundViewModel;
-                if (vm != null)
-                {
-                    Global.CurrentKampf.Kampf.Kämpfer.Clear();
-                    Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
-                    vm.LoadBattlegroundFromXML(dlg.FileName);
-                    vm.UpdateCreatureLevelToTop();
-                }
-            }
-        }
-
-        private void Button_Reset_Click(object sender, RoutedEventArgs e)
+            private void Button_Reset_Click(object sender, RoutedEventArgs e)
         {
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
@@ -181,6 +151,102 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
+        private void Button_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+
+        public static Point GetMousePosition()
+        {
+            var w32Mouse = new Win32Point();
+            GetCursorPos(ref w32Mouse);
+            return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
+        [DllImport("User32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetCursorPos(ref Win32Point pt);
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public int X;
+            public int Y;
+        };
+        
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                tcTopMenuView.Focus();
+            if (e.Key == Key.Left || e.Key == Key.NumPad4 || e.Key == Key.NumPad1 || e.Key == Key.NumPad7)
+                BattlegroundVM.PlayerGridOffsetX = BattlegroundVM.PlayerGridOffsetX + (BattlegroundVM.InvertPlayerScrolling? 100: -100);
+            if (e.Key == Key.Right || e.Key == Key.NumPad6 || e.Key == Key.NumPad3 || e.Key == Key.NumPad9)
+                BattlegroundVM.PlayerGridOffsetX = BattlegroundVM.PlayerGridOffsetX + (BattlegroundVM.InvertPlayerScrolling ? -100 : 100);
+            if (e.Key == Key.Up || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || e.Key == Key.NumPad7)
+                BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? -100 : 100);
+            if (e.Key == Key.Down || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
+                BattlegroundVM.PlayerGridOffsetY = BattlegroundVM.PlayerGridOffsetY + (BattlegroundVM.InvertPlayerScrolling ? 100 : -100);
+            (sender as TextBox).Text = "";
+        }
+
+
+        private void TextBoxHintergrund_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                tcTopMenuView.Focus();
+            if (e.Key == Key.Left || e.Key == Key.NumPad4 || e.Key == Key.NumPad1 || e.Key == Key.NumPad7)
+                BattlegroundVM.BackgroundOffsetX = BattlegroundVM.BackgroundOffsetX + (-100);
+            if (e.Key == Key.Right || e.Key == Key.NumPad6 || e.Key == Key.NumPad3 || e.Key == Key.NumPad9)
+                BattlegroundVM.BackgroundOffsetX = BattlegroundVM.BackgroundOffsetX + (100);
+            if (e.Key == Key.Up || e.Key == Key.NumPad8 || e.Key == Key.NumPad9 || e.Key == Key.NumPad7)
+                BattlegroundVM.BackgroundOffsetY = BattlegroundVM.BackgroundOffsetY + (-100);
+            if (e.Key == Key.Down || e.Key == Key.NumPad2 || e.Key == Key.NumPad1 || e.Key == Key.NumPad3)
+                BattlegroundVM.BackgroundOffsetY = BattlegroundVM.BackgroundOffsetY + (100);
+            (sender as TextBox).Text = "";
+        }
+        
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Global.CurrentKampf.LabelInfo = ((TextBox)sender).Tag.ToString();
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Global.CurrentKampf.LabelInfo = null;
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Global.CurrentKampf.BodenplanView.VideoObject1.SpeedRatio = e.NewValue;            
+        }
+        
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //      cpBackgroundColor.SelectedColor = Color.FromArgb(BattlegroundVM.BackgroundColor.A, BattlegroundVM.BackgroundColor.R, BattlegroundVM.BackgroundColor.G, BattlegroundVM.BackgroundColor.B);
+        //    cpBackgroundColor.SelectedColor = Colors.Green;
+
+        //          cpBackgroundColor.SelectedColor = BattlegroundVM.BackgroundColor;
+        }
+
+        private void CpBackgroundColor_Loaded(object sender, RoutedEventArgs e)
+        {
+       //     BattlegroundVM.BackgroundColor.ScRBattlegroundVM.BackgroundColor.ScR
+            //cpBackgroundColor.SelectedColor = Color.FromArgb(
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScA),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScR),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScG),
+            //    Convert.ToByte(BattlegroundVM.BackgroundColor.ScB));
+            //,
+            //    .FromARgb(54, 117, 54);
+       //         BattlegroundVM.BackgroundColor.ScA,
+                //BattlegroundVM.BackgroundColor.ScR,
+                //BattlegroundVM.BackgroundColor.ScG,
+                //BattlegroundVM.BackgroundColor.ScB);
+
+        }
+
         private void tbtnSpielerIniScreen_Click(object sender, RoutedEventArgs e)
         {
             if (((ToggleButton)e.OriginalSource).IsChecked == true)
@@ -188,9 +254,11 @@ namespace MeisterGeister.View.Bodenplan
                 CreateKampfWindow();
             }
             else
-                if (VM.KampfWindow != null)
+                if (BattlegroundVM.KampfWindow != null)
             {
-                VM.KampfWindow.Close();
+                //Setze den Tag um das Fenster zu schließen, bei == null bleibt es offen (Fensterwechsel)
+                BattlegroundVM.KampfWindow.Tag = true;
+                BattlegroundVM.KampfWindow.Close();
             }
         }
 
@@ -198,77 +266,85 @@ namespace MeisterGeister.View.Bodenplan
         {
             var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
 
-            infoView.grdMain.LayoutTransform = new ScaleTransform(VM.ScaleKampfGrid, VM.ScaleKampfGrid);
-            VM.KampfWindow = new Window();
+            infoView.grdMain.LayoutTransform = new ScaleTransform(BattlegroundVM.ScaleKampfGrid, BattlegroundVM.ScaleKampfGrid);
+            BattlegroundVM.KampfWindow = new Window();
 
             //SizeToContent auf Width setzt den Screen auf minimale Breite
             if (Global.CurrentKampf.Kampf.Kampfrunde <= 1)
             {
-                VM.KampfWindow.SizeToContent = SizeToContent.Width;
+                BattlegroundVM.KampfWindow.SizeToContent = SizeToContent.Width;
             }
             else
             {
-                VM.KampfWindow.Width = VM.IniWidthStart != 0 ? VM.IniWidthStart : 426 * VM.ScaleKampfGrid;
+                BattlegroundVM.KampfWindow.Width = 
+                    BattlegroundVM.IniWidthStart != 0 ?
+                    BattlegroundVM.IniWidthStart : 
+                    426 * BattlegroundVM.ScaleKampfGrid;
             }
 
-            VM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
+            BattlegroundVM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
             {
-                if (VM != null)
+                if (BattlegroundVM.KampfWindow != null && 
+                    BattlegroundVM.KampfWindow.Tag == null)
                 {
-                    VM.IsShowIniKampf = false;
+                    e.Cancel = true;
+                    return;
                 }
-
-                VM.KampfWindow = null;
+                if (BattlegroundVM != null)
+                {
+                    BattlegroundVM.IsShowIniKampf = false;
+                }
+                BattlegroundVM.KampfWindow = null;
             };
             infoView.scrViewer.MouseEnter += (object sender, MouseEventArgs e) => { MouseIsOverScrViewer = true; };
             infoView.scrViewer.MouseLeave += (object sender, MouseEventArgs e) => { MouseIsOverScrViewer = false; };
-            VM.KampfWindow.SizeChanged += (object sender, SizeChangedEventArgs e) =>
+            BattlegroundVM.KampfWindow.SizeChanged += (object sender, SizeChangedEventArgs e) =>
             {
                 if ((System.Windows.Forms.Screen.AllScreens.Length > 1 &&
-                     VM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
+                     BattlegroundVM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
                         System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width * .5) ||
                     (System.Windows.Forms.Screen.AllScreens.Length == 1 &&
-                     VM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width * .5))
+                     BattlegroundVM.KampfWindow.Left > System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width * .5))
                 {
-                    VM.KampfWindow.Left = (System.Windows.Forms.Screen.AllScreens.Length > 1) ?
+                    BattlegroundVM.KampfWindow.Left = (System.Windows.Forms.Screen.AllScreens.Length > 1) ?
                         System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width +
-                        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - VM.KampfWindow.Width +
+                        System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - BattlegroundVM.KampfWindow.Width +
                         (e.PreviousSize.Width - e.NewSize.Width) :
 
-                        System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width - VM.KampfWindow.Width;
+                        System.Windows.Forms.Screen.AllScreens[0].WorkingArea.Width - BattlegroundVM.KampfWindow.Width;
                     if (System.Windows.Forms.Screen.AllScreens.Length > 1 &&
                         Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive)
                     {
                         Global.CurrentKampf.BodenplanViewModel.SpielerScreenWindow.Width =
-                            System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - VM.KampfWindow.Width;
+                            System.Windows.Forms.Screen.AllScreens[1].WorkingArea.Width - BattlegroundVM.KampfWindow.Width;
                     }
                 }
-                VM.SetIniWindowWidth();
+                BattlegroundVM.SetIniWindowWidth();
 
-                if (VM.IniWidthStart != Math.Round(VM.KampfWindow.Width / VM.ScaleKampfGrid))
+                if (BattlegroundVM.IniWidthStart != Math.Round(BattlegroundVM.KampfWindow.Width / BattlegroundVM.ScaleKampfGrid))
                 {
-                    VM.IniWidthStart = Math.Round(VM.KampfWindow.Width / VM.ScaleKampfGrid);
+                    BattlegroundVM.IniWidthStart = Math.Round(BattlegroundVM.KampfWindow.Width / BattlegroundVM.ScaleKampfGrid);
                 }
             };
-            if (VM.SpielerScreenWindow != null)
+            if (BattlegroundVM.SpielerScreenWindow != null)
             {
-                VM.SpielerScreenWindow.Topmost = false;
+                BattlegroundVM.SpielerScreenWindow.Topmost = false;
             }
 
-            VM.KampfWindow.Topmost = true;
-            VM.KampfWindow.Content = infoView;
-            VM.KampfWindow.Show();
+            BattlegroundVM.KampfWindow.Topmost = true;
+            BattlegroundVM.KampfWindow.Content = infoView;
+            BattlegroundVM.KampfWindow.Show();
             // SizeToContent muss auf Height gestellt werden, damit die Höhe an die Anz. Kämpfer
             // angepasst wird
-            VM.KampfWindow.SizeToContent = SizeToContent.Height;
+            BattlegroundVM.KampfWindow.SizeToContent = SizeToContent.Height;
 
             // SizeToContent muss wieder auf Manual gesetzt werden da das Window sonst immer größer wird
-            VM.KampfWindow.SizeToContent = SizeToContent.Manual;
-            VM.KampfWindow.WindowStyle = WindowStyle.None;
+            BattlegroundVM.KampfWindow.SizeToContent = SizeToContent.Manual;
+            BattlegroundVM.KampfWindow.WindowStyle = WindowStyle.None;
 
-            VM.SetIniWindowPosition();
+            BattlegroundVM.SetIniWindowPosition();
 
-            VM.IsShowIniKampf = true;
+            BattlegroundVM.IsShowIniKampf = true;
         }
 
         private void tbtnSpielerScreenActive_Click(object sender, RoutedEventArgs e)
@@ -280,13 +356,14 @@ namespace MeisterGeister.View.Bodenplan
                     SpielerWindow.Close();
                     Global.CurrentKampf.BodenplanViewModel.SpielerScreenActive = true;
                     SpielerWindow.Show();
+                    BattlegroundVM.CenterPlayerView(null);
                 }
             }
             else
             {
                 if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanViewModel != null)
                 {
-                    if (VM.SpielerScreenActive)
+                    if (BattlegroundVM.SpielerScreenActive)
                     {
                         tbtnSpielerScreenActive.RaiseEvent(new RoutedEventArgs(ToggleButton.ClickEvent));
                     }

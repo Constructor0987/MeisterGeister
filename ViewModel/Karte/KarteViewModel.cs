@@ -19,6 +19,7 @@ using MeisterGeister.ViewModel.Karte.Logic;
 using System.Windows.Input;
 using MeisterGeister.Logic.General.AStar;
 using System.Diagnostics;
+using WPFExtensions.Controls;
 
 namespace MeisterGeister.ViewModel.Karte
 {
@@ -68,7 +69,7 @@ namespace MeisterGeister.ViewModel.Karte
             InitializeOrte();
             this.PropertyChanged += KarteViewModel_PropertyChanged;
         }
-        
+
         public override void RegisterEvents()
         {
             base.RegisterEvents();
@@ -170,7 +171,7 @@ namespace MeisterGeister.ViewModel.Karte
             HeldenPosition = p;
             if (firstLoad)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action<object>(CenterOnHelden), null); 
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action<object>(CenterOnHelden), null);
                 firstLoad = false;
             }
         }
@@ -224,6 +225,13 @@ namespace MeisterGeister.ViewModel.Karte
         {
             get { return mapConverter; }
             set { Set(ref mapConverter, value); }
+        }
+
+        private ZoomControl _mapZoomControl;
+        public ZoomControl MapZoomControl
+        {
+            get { return _mapZoomControl; }
+            set { Set(ref _mapZoomControl, value); }
         }
         #endregion
 
