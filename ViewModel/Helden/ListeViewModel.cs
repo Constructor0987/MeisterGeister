@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Logic.HeldenImport;
 using MeisterGeister.Model;
+using MeisterGeister.View.General;
 using MeisterGeister.View.Helden;
 using MeisterGeister.View.Windows;
 
@@ -253,8 +255,8 @@ namespace MeisterGeister.ViewModel.Helden
                 SelectedHeld = h;
 
                 // Liste aktualisieren!
-  //              heldListe = null;
-  //              OnChanged(nameof(HeldListe));
+                heldListe = null;
+                OnChanged(nameof(HeldListe));
 
                 MainViewModel.Instance.InvalidateHelden();
 #if !DEBUG
@@ -266,6 +268,12 @@ namespace MeisterGeister.ViewModel.Helden
 #endif
                
                 Global.SetIsBusy(false);
+
+                if (ViewHelper.Confirm("Neustart erforderlich", "Ungeachtet von der Anzeigeliste der Helden, sollte unbedingt die Software neu gestartet werden, um die Helden korrekt zu laden.\r\n\r\n" +
+                    "Wenn noch mehr Änderungen der Heldenliste durchgeführt werden soll, kann das Neustarten danach erfolgen.\r\n\r\nSoll die Software jetzt beendet werden?"))
+                {
+                    Application.Current.Shutdown();
+                }
             }
         }
 
@@ -483,22 +491,28 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void DeleteHeld(object sender)
         {
-            Held h = SelectedHeld;
-            if (h != null && 
-                (!IsReadOnly || ((sender is bool) && ((bool)sender) == true)))
+            try
             {
-                if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name)))
+                Held h = SelectedHeld;
+                if (h != null &&
+                    (!IsReadOnly || ((sender is bool) && ((bool)sender) == true)))
                 {
-                    if (!Global.ContextHeld.Delete<Held>(h))
-                        Global.ContextHeld.Delete<Held>((Held)(MainViewModel.Instance.HeldenGruppe).CurrentItem);//;((MainViewModel.Instance.HeldenGruppe).SourceCollection as List<Held>).FirstOrDefault(t => t.Name == h.Name));
-                    //Liste aktualisieren                    
-                    MainViewModel.Instance.Helden.Remove(h);
-                    HeldListe.Refresh();
-                    MainViewModel.Instance.HeldenGruppe.Refresh();
-                    SelectedHeld = null;
-                    SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
+                    if (((sender is bool) && ((bool)sender) == true) || Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name)))
+                    {
+                        if (!Global.ContextHeld.Delete<Held>(h))
+                            Global.ContextHeld.Delete<Held>((Held)(MainViewModel.Instance.HeldenGruppe).CurrentItem);
+                                                                                                                     
+                        //Liste aktualisieren                    
+                        MainViewModel.Instance.Helden.Remove(h);
+                        HeldListe.Refresh();
+                        MainViewModel.Instance.HeldenGruppe.Refresh();
+                        SelectedHeld = null;
+                        SelectedHeld = HeldListe.SourceCollection.Cast<Held>().FirstOrDefault();
+                    }
                 }
             }
+            catch (Exception)
+            { }
         }
 
         private void DeleteHeldAll(object sender)
