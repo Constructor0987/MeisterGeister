@@ -59,6 +59,37 @@ namespace MeisterGeister.ViewModel.Kampf
             set { Set(ref _bodenplanViewModel, value); }
         }
 
+        public List<GegnerBase> lstGegnerBase
+        {
+            get { return Global.ContextHeld.Liste<GegnerBase>().OrderBy(h => h.Name).ToList(); }
+        }
+
+        private GegnerBase _gegnerToAdd = null;
+        public GegnerBase GegnerToAdd
+        {
+            get { return _gegnerToAdd; }
+            set 
+            { 
+                Set(ref _gegnerToAdd, value);
+                if (value != null)
+                {
+                    Gegner gegner = new Gegner(value);
+                    var gegner_name = gegner.Name;
+                    int j = 1;
+                    while (_kampf.Kämpfer.Any(k => k.Kämpfer.Name == gegner_name))
+                        gegner_name = String.Format("{0} ({1})", gegner.Name, ++j);
+                    gegner.Name = gegner_name;
+                    Global.ContextHeld.Insert<Gegner>(gegner);
+                    _kampf.Kämpfer.Add(gegner, 2);
+
+                    // zur Arena hinzufügen
+                    if (_kampf.Bodenplan.VM != null)
+                        _kampf.Bodenplan.VM.AddCreature(gegner);
+                    GegnerToAdd = null;
+                }
+            }
+        }
+
         public ICollection<IWesenPlaylist> WesenPlaylist
         {
             get

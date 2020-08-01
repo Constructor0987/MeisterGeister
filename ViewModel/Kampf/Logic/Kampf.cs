@@ -441,7 +441,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Log(string.Format("Kampfrunde {0} gestartet", Kampfrunde));
         }
 
-        public void KampfNeuStarten()
+        public void KampfNeuStarten(bool INIneuberechnen = true)
         {
             KampfEnde();
             AktuelleAktionszeit = default(ZeitImKampf);
@@ -449,11 +449,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         
             Kampfrunde = 0;
 
-            // INI neu ermitteln
-            foreach (KämpferInfo kämpferInfo in Kämpfer)
+            if (INIneuberechnen)
             {
-                if (kämpferInfo != null)
-                    kämpferInfo.Initiative = kämpferInfo.Kämpfer.Initiative();
+                // INI neu ermitteln
+                foreach (KämpferInfo kämpferInfo in Kämpfer)
+                {
+                    if (kämpferInfo != null)
+                        kämpferInfo.Initiative = kämpferInfo.Kämpfer.Initiative();
+                }
             }
 
             // KR abschließen

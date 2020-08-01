@@ -57,110 +57,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         #region //---- EIGENSCHAFTEN ----
 
-        /*
-        public bool Changed
-        {
-            get { return _changed; }
-            set { _changed = value; }
-        }
-
-        public double TotalTimePlylist
-        {
-            get { return _totalTimePlylist; }
-            set { _totalTimePlylist = value; }
-        }
-
-        public double Vol_PlaylistMod
-        {
-            get { return _vol_PlaylistMod; }
-            set { _vol_PlaylistMod = value; }
-        }
-
-        public DateTime LastVolUpdate
-        {
-            get { return _lastVolUpdate; }
-            set { _lastVolUpdate = value; }
-        }
-
-        public uint SollBtnGedrueckt
-        {
-            get { return _sollBtnGedrueckt; }
-            set { _sollBtnGedrueckt = value; }
-        }
-
-        public List<Audio_Playlist_Titel> APlaylistTitel
-        {
-            get { return _aPlaylistTitel; }
-            set { _aPlaylistTitel = value; }
-        }
-
-        public int ObjGruppe
-        {
-            get { return _objGruppe; }
-            set { _objGruppe = value; }
-        }
-
-        public UInt16 AnzVolChange
-        {
-            get { return _anzVolChange; }
-            set { _anzVolChange = value; }
-        }
-
-        public UInt16 AnzPauseChange
-        {
-            get { return _anzPauseChange; }
-            set { _anzPauseChange = value; }
-        }
-
-        public string PPlaylistName
-        {
-            get { return _playlistName; }
-            set { _playlistName = value; }
-        }
-
-        public bool IstMusik
-        {
-            get { return _istMusik; }
-            set { _istMusik = value; }
-        }
-
-        public List<AudioPlayerViewModel.KlangZeile> ListZeile
-        {
-            get { return _listZeile; }
-            set { _listZeile = value; }
-        }
-
-        public bool WirdAbgespielt
-        {
-            get { return _wirdAbgespielt; }
-            set { _wirdAbgespielt = value; }
-        }
-
-        public List<Guid> NochZuSpielen
-        {
-            get { return _nochZuSpielen; }
-            set { _nochZuSpielen = value; }
-        }
-
-        public List<UInt16> Gespielt
-        {
-            get { return _gespielt; }
-            set { _gespielt = value; }
-        }
-
-        public Nullable<double> Force_Volume
-        {
-            get { return _force_Volume; }
-            set { _force_Volume = value; }
-        }
-
-        public bool visuell
-        {
-            get { return _visuell; }
-            set { _visuell = value; }
-        }
-          
-         */
 
         [DependentProperty("Reihenfolge")]
         public bool IstErsteZeile
@@ -431,6 +327,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
             {
                 if (ViewHelper.ConfirmYesNoCancel("Löschen der Playlist", "Wollen Sie wirklich die ausgewählte Playlist  '" + APlaylist.Name + "'  löschen.") == 2)
                 {
+                    //Falls Playlist läuft, Abfrage zum stoppen oder Abbruch des Prozesses
+                    if (!PlayerVM.CheckPlaylistRunningBeforeEdit(APlaylist))
+                    {
+                        Global.SetIsBusy(false);
+                        return;
+                    }
+
                     bool aPlaylistWarHintergrund = APlaylist.Hintergrundmusik;
                     Global.SetIsBusy(true, string.Format("Playlist '" + ViewHelper.GetValidFilename(APlaylist.Name) + "' wird gelöscht..."));
                     List<lbEditorItemVM> lbPlaylist = PlayerVM.EditorListBoxItemListe;

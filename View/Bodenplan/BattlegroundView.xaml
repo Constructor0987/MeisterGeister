@@ -470,7 +470,6 @@
                                 </Style>
                             </ListBox.Style>
                             <ListBox.Resources>
-
                                 <!--  Datatemplate BattlegroundCreature (Hero & Enemy)  -->
                                 <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
                                     <Thumb DragDelta="Thumb_Drag">
@@ -479,6 +478,33 @@
                                                 <Canvas x:Name="canvasCreature">
                                                     <Canvas.ContextMenu>
                                                         <ContextMenu>
+                                                            <MenuItem Visibility="{Binding ki.WesenPlaylist.Count, FallbackValue=0, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" >
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="22" Margin="0,1,0,0" />
+                                                                </MenuItem.Icon>
+                                                                <MenuItem.Header>
+                                                                    <ItemsControl ItemsSource="{Binding ki.WesenPlaylist, UpdateSourceTrigger=PropertyChanged}" Background="{x:Null}" >
+                                                                        <ItemsControl.ItemsPanel>
+                                                                            <ItemsPanelTemplate>
+                                                                                <WrapPanel ItemWidth="26" />
+                                                                            </ItemsPanelTemplate>
+                                                                        </ItemsControl.ItemsPanel>
+                                                                        <ItemsControl.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <Button Width="24" Tag="{Binding}" Focusable="False" Height="24" ToolTip="{Binding Audio_Playlist.Name}"
+                                                                                    Command="{Binding Path=SelectedItem.ki.OnWesenPlaylistClick, FallbackValue={x:Null}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, UpdateSourceTrigger=PropertyChanged}"
+                                                                                    CommandParameter="{Binding}" >
+                                                                                    <Button.Content>
+                                                                                        <Image Source="{Binding Icon,UpdateSourceTrigger=PropertyChanged}" Margin="-3" />
+                                                                                    </Button.Content>
+                                                                                </Button>
+                                                                            </DataTemplate>
+                                                                        </ItemsControl.ItemTemplate>
+                                                                    </ItemsControl>
+                                                                </MenuItem.Header>
+                                                            </MenuItem>
+                                                            <Separator Visibility="{Binding ki.WesenPlaylist.Count, FallbackValue=0, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" />
+
                                                             <DockPanel>
                                                                 <TextBlock
                                                                     VerticalAlignment="Center"
@@ -514,6 +540,36 @@
                                                                 </ComboBox>
                                                             </DockPanel>
 
+                                                            <MenuItem Command="{Binding ki.INIneu}" >
+                                                                <MenuItem.Header >
+                                                                    <TextBlock>
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="true">
+                                                                                        <Setter Property="Text" Value="INI neu würfeln" />
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding ki.Kämpfer.IsHeld}" Value="false">
+                                                                                        <Setter Property="Text">
+                                                                                            <Setter.Value>
+                                                                                                <MultiBinding StringFormat="{}INI neu würfeln ({0}+{1} = {2})">
+                                                                                                    <Binding Path="ki.Kämpfer.INIBasis" UpdateSourceTrigger="PropertyChanged" />
+                                                                                                    <Binding Path="ki.Kämpfer.INIZufall" UpdateSourceTrigger="PropertyChanged" />
+                                                                                                    <Binding Path="ki.Initiative" UpdateSourceTrigger="PropertyChanged" />
+                                                                                                </MultiBinding>
+                                                                                            </Setter.Value>
+                                                                                        </Setter>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                </MenuItem.Header>
+                                                                <MenuItem.Icon>
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/wuerfel.png" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            
                                                             <MenuItem Command="{Binding ki.Passiv}" Header="Passiv im Kampf">
                                                                 <MenuItem.Icon>
                                                                     <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png" />
@@ -940,7 +996,7 @@
                                                                 Padding="0"
                                                                 VerticalAlignment="Top"
                                                                 Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}"
-                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png"      />
                                                         </StackPanel>
                                                     </Grid>
 
@@ -1311,7 +1367,6 @@
                                                         </Ellipse.Style>
                                                     </Ellipse>
                                                 </Canvas>
-
                                                 <ControlTemplate.Triggers>
                                                     <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                         <Setter Property="Effect">
@@ -1328,6 +1383,7 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
+                                
                                 <!--  Datatemplate IMAGEOBJECT  -->
                                 <DataTemplate DataType="{x:Type model:ImageObject}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
@@ -1426,7 +1482,6 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
-
 
                                 <!--  Datatemplate MP4OBJECT  -->
                                 <DataTemplate DataType="{x:Type model:MP4Object}">

@@ -916,6 +916,9 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "HeldenSoftwareOnlineURL", Kontext = "Allgemein", Kategorie = null, Typ = "String", Beschreibung = "URL zu HeldenSoftware-Online", Wert = "https://online.helden-software.de/index.php" },
                 new Model.Einstellung() { Name = "HeldenSoftwareOnlineToken", Kontext = "Allgemein", Kategorie = null, Typ = "String", Beschreibung = "Token zum HeldenSoftware-Online-Account", Wert = null },
 
+                new Model.Einstellung() { Name = "HUE_GatewayID", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "HUE Lampen-Steuerung zu MeisterGeister - Gateway ID", Wert = null },
+                new Model.Einstellung() { Name = "HUE_Registerkey", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "HUE Lampen-Steuerung zu MeisterGeister - Register-Key", Wert = null },
+
                 new Model.Einstellung() { Name = "SpielerScreenUnterordnerEinbeziehen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "SpielerInfo-Tool: Unterordner beim Bilder-Laden mit einbeziehen?", Wert = "False" },
 
                 //Versteckte

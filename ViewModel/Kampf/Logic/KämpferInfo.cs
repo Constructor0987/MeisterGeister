@@ -68,14 +68,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void DeleteKämpfer()
         {
-            IKämpfer kämpfer = Global.CurrentKampf.SelectedKämpfer.Kämpfer;
-            if (kämpfer != null && ViewHelper.Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", kämpfer.Name)))
+            if (Kämpfer != null && ViewHelper.Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", Kämpfer.Name)))
             {                
                 if (Global.CurrentKampf.BodenplanViewModel != null)
-                    Global.CurrentKampf.BodenplanViewModel.RemoveCreature(kämpfer);
-                Global.CurrentKampf.Kampf.Kämpfer.Remove(kämpfer);
-               // Kampf.Kämpfer.Remove(kämpfer);
+                    Global.CurrentKampf.BodenplanViewModel.RemoveCreature(Kämpfer);
+                Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
             }
+        }
+
+        private CommandBase iniNeu;
+        public CommandBase INIneu
+        {
+            get
+            {
+                if (iniNeu == null)
+                    iniNeu = new CommandBase((o) => INIneuWürfeln(), null);
+                return iniNeu;                
+            }
+        }
+
+        public void INIneuWürfeln()
+        {
+            Initiative = Kämpfer.Initiative();
         }
 
         private CommandBase passiv;
@@ -335,8 +349,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Set(ref _lichtquellePixel, value);
 
                 Bodenplan.Logic.BattlegroundCreature bgC = (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
-                .Where(t => t is Bodenplan.Logic.BattlegroundCreature)
-                .FirstOrDefault(s => (s as Bodenplan.Logic.BattlegroundCreature).ki == this) as Bodenplan.Logic.BattlegroundCreature);
+                    .Where(t => t is Bodenplan.Logic.BattlegroundCreature)
+                    .FirstOrDefault(s => (s as Bodenplan.Logic.BattlegroundCreature).ki == this) as Bodenplan.Logic.BattlegroundCreature);
 
                 Bodenplan.Logic.LichtquelleObject lichtObj =
                     Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
@@ -345,15 +359,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
                 if (value != 0)
                 {
+                    BattlegroundCreature bgCreature = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
+                        .Where(t => t is BattlegroundCreature)
+                        .FirstOrDefault(t => (t as BattlegroundCreature).ki == this) as BattlegroundCreature;
+
+
+                    //Nur ein Lichquellenobject erzeugen, wenn auch ein Kämpfer existiert. 
+                    //Ist dies nicht der Fall sind wir im Lade-Zyklus. Die Lichtquelle wird dann nach allen Kämpfern erstellt
+                    if (bgCreature == null)
+                        return;
+
                     bool istNeu = false;
                     if (lichtObj == null)
                     {
                         istNeu = true;
                         lichtObj = new Bodenplan.Logic.LichtquelleObject();
                     }
-                    BattlegroundCreature bgCreature = Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects
-                        .Where(t => t is BattlegroundCreature)
-                        .FirstOrDefault(t => (t as BattlegroundCreature).ki == this) as BattlegroundCreature;
                     KämpferInfo kämpInfo = bgCreature.ki;
                     lichtObj.ki = kämpInfo;
 
@@ -375,9 +396,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     if (lichtObj != null)
                         Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Remove(lichtObj);
                 }
-                LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
-                LightCreatureX = bgC.CreatureX - LichtquellePixel;
-                LightCreatureY = bgC.CreatureY - LichtquellePixel;
+                if (bgC != null)
+                {
+                    LichtquellePixelRadius = 10 + value + value + bgC.CreatureWidth;
+                    LightCreatureX = bgC.CreatureX - LichtquellePixel;
+                    LightCreatureY = bgC.CreatureY - LichtquellePixel;
+                }
 
                 if (LichtquelleMeter != value / 100) LichtquelleMeter = value / 100;                
             }

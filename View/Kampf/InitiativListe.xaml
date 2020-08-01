@@ -21,7 +21,6 @@
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
-        <ViewGeneral:IsEqualConverter x:Key="IsEqualConverter1"/>
         <KampfLogic:DoubleToIntConverter x:Key="DoubleToIntConverter1"/>
         <KampfLogic:DoubleSichtConverter x:Key="sichtConverter"/>
         <KampfLogic:DoubleLichtConverter x:Key="lichtConverter"/>
@@ -119,24 +118,200 @@
             <RowDefinition Height="95"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="320"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!--Buttons-->
         <StackPanel Orientation="Horizontal" x:Name="buttons" VerticalAlignment="Top" Height="40" >
-            <StackPanel HorizontalAlignment="Left" Width="20">
-                <Button ToolTip="Helden einfügen" Command="{Binding OnAddHelden}" Focusable="False">
+            <StackPanel HorizontalAlignment="Left" Width="37">
+                <Button ToolTip="Helden einfügen" Command="{Binding OnAddHelden}" Focusable="False" Width="20" HorizontalAlignment="Left">
                     <Button.Content>
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="-4" />
                     </Button.Content>
                 </Button>
-                <Button ToolTip="Gegner einfügen" Command="{Binding OnShowGegnerView}" Focusable="False">
+                <StackPanel Orientation="Horizontal" Height="20" Width="37">
+                <Button ToolTip="Gegner-Fenster öffnen um Gegner einzufügen" Command="{Binding OnShowGegnerView}" Focusable="False">
                     <Button.Content>
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" Margin="-4" />
                     </Button.Content>
                 </Button>
+                    <ComboBox Width="17" ItemsSource="{Binding lstGegnerBase}" SelectedItem="{Binding GegnerToAdd}" DisplayMemberPath="Name" Focusable="False" >
+                        <!-- Da das erstmalige Öffnen der ComboBox mit ToolTip zu lange dauert wird dies erst einmal auskommentiert 
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}">
+                                    <TextBlock.ToolTip>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid Margin="5,5,5,0" Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="60*"/>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="40*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="5" Width="80" Height="80">
+                                                    <Image>
+                                                        <Image.Source>
+                                                            <Binding Path="Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                                                <Binding.FallbackValue>
+                                                                    <ImageSource>
+                                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                    </ImageSource>
+                                                                </Binding.FallbackValue>
+                                                                <Binding.TargetNullValue>
+                                                                    <ImageSource>
+                                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                    </ImageSource>
+                                                                </Binding.TargetNullValue>
+                                                            </Binding>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </Border>
+                                                <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
+                                                <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+                                                <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
+                                                <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" />
+
+                                            </Grid>
+                                            <Grid Margin="5,0,5,5" Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <DockPanel Grid.Row="0" Grid.Column="0">
+                                                    <Label DockPanel.Dock="Left" Content="LE:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Firebrick" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="0" Grid.Column="1" MinWidth="40" HorizontalAlignment="Left" Text="{Binding LE}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <DockPanel Grid.Row="0" Grid.Column="2">
+                                                    <Label   DockPanel.Dock="Left" Content="AU:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="SteelBlue" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="0" Grid.Column="3" MinWidth="40" HorizontalAlignment="Left" Text="{Binding AU}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <DockPanel Grid.Row="1" Grid.Column="0">
+                                                    <Label   DockPanel.Dock="Left" Content="AE:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="BlueViolet" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="1" Grid.Column="1" MinWidth="40" HorizontalAlignment="Left" Text="{Binding AE}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <DockPanel Grid.Row="1" Grid.Column="2">
+                                                    <Label   DockPanel.Dock="Left" Content="KE:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Gold" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="1" Grid.Column="3" MinWidth="40" HorizontalAlignment="Left" Text="{Binding KE}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <Label   Grid.Row="0" Grid.Column="4" Content="Literatur:" />
+                                                <Grid Grid.Row="0" Grid.Column="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" TextWrapping="Wrap" Text="{Binding Literatur, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="300" />
+                                                </Grid>
+                                                <Label   Grid.Row="1" Grid.Column="4" Content="Setting:" />
+                                                <TextBox Grid.Row="1" Grid.Column="5" TextWrapping="Wrap" Text="{Binding Setting, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="300" />
+                                            </Grid>
+
+                                            <Grid Margin="5,0,5,5" Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="335*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="91*"/>
+                                                    <ColumnDefinition Width="92*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
+                                                <TextBox Grid.Row="2" Grid.Column="1" Width="40" HorizontalAlignment="Left" Text="{Binding INIBasis}" HorizontalContentAlignment="Center" Margin="2,2,0,2" Height="Auto" />
+                                                <Label   Grid.Row="2" Grid.Column="3" Content="INI-Zufall:" />
+                                                <TextBox Grid.Row="2" Grid.Column="4" Margin="2,2,0,2" Width="40" HorizontalAlignment="Left" >
+                                                    <Binding Path="INIZufall">
+                                                        <Binding.ValidationRules>
+                                                            <ViewGeneral:WürfelValidationRule />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox>
+                                                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" ToolTip="Globale Kampfwerte" VerticalAlignment="Center" Margin="0,1,0,0" Height="26">
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_02.png" Height="16" Width="16" />
+                                                    <Label  Content=":" />
+                                                </StackPanel>
+                                                <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="324">
+                                                    <TextBox MinWidth="40" HorizontalAlignment="Left" Text="{Binding AT}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="16" Width="16" Margin="0,0,8,0" />
+                                                    <TextBox MinWidth="40" HorizontalAlignment="Left" Text="{Binding PA}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="16" Width="16" Margin="0,0,8,0" />
+                                                    <TextBox MinWidth="40" HorizontalAlignment="Left" Text="{Binding FK}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="16" Width="16" Margin="0,0,8,0" />
+                                                </WrapPanel>
+
+                                                <Label   Grid.Row="3" Grid.Column="3" Content="KO:" />
+                                                <TextBox Grid.Row="3" Grid.Column="4" MinWidth="40" HorizontalAlignment="Left" Text="{Binding KO}" HorizontalContentAlignment="Center" Margin="2,2,0,2" Height="Auto" Width="80" />
+                                                <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
+                                                <TextBox Grid.Row="4" Grid.Column="1" Margin="2" MinWidth="80" HorizontalAlignment="Left" Text="{Binding RS[Gesamt]}" HorizontalContentAlignment="Center" />
+                                              
+                                                <Label   Grid.Row="4" Grid.Column="3" Content="MR:" />
+                                                <Grid Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding MRGeist}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <TextBox Grid.Column="1" Text="{Binding MRKörper}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                </Grid>
+                                                <Label Grid.Row="5" Grid.Column="0" Content="GS:" />
+                                                <Grid Grid.Row="5" Grid.Column="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding GS}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding GS2}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                    <TextBox Grid.Column="2" Text="{Binding GS3}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                </Grid>
+                                                <Label Grid.Row="5" Grid.Column="3" Content="Aktionen:" />
+                                                <TextBox Grid.Row="5" Grid.Column="4" MinWidth="40" HorizontalAlignment="Left" Text="{Binding Aktionen}" HorizontalContentAlignment="Center" Margin="2,2,0,2"  Width="40" />
+
+                                                <DockPanel Grid.Row="5" Grid.Column="5" >
+                                                    <Label Grid.Column="2" Grid.Row="7"  Content="SO:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                                    <TextBox Grid.Column="3" Grid.Row="7"  HorizontalAlignment="Left" MinWidth="35" Text="{Binding SO}" VerticalAlignment="Center"   />
+                                                </DockPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>-->
+                    </ComboBox>
+                </StackPanel>
             </StackPanel>
             <Button Width="20" Height="20" Margin="0,0,9,0" ToolTip="Liste leeren" Command="{Binding OnDeleteAllKämpfer}" Focusable="False">
                 <Button.Content>
@@ -252,6 +427,36 @@
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
                                         </DockPanel>
+
+                                        <MenuItem Command="{Binding Manöver.Ausführender.INIneu}" >
+                                            <MenuItem.Header >
+                                                <TextBlock>
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.IsHeld}" Value="true">
+                                                                    <Setter Property="Text" Value="INI neu würfeln" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.IsHeld}" Value="false">
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <MultiBinding StringFormat="{}INI neu würfeln ({0}+{1} = {2})">
+                                                                                <Binding Path="Manöver.Ausführender.Kämpfer.INIBasis" UpdateSourceTrigger="PropertyChanged" />
+                                                                                <Binding Path="Manöver.Ausführender.Kämpfer.INIZufall" UpdateSourceTrigger="PropertyChanged" />
+                                                                                <Binding Path="Manöver.Ausführender.Initiative" UpdateSourceTrigger="PropertyChanged" />
+                                                                            </MultiBinding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </MenuItem.Header>
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/wuerfel.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
 
                                         <MenuItem Header="Passiv im Kampf" Command="{Binding Manöver.Ausführender.Passiv}">
                                             <MenuItem.Icon>

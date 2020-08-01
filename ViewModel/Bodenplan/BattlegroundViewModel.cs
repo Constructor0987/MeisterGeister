@@ -1374,13 +1374,37 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
                     BattlegroundObjects.Add(((Held)kämpfer));
+
+                    //ToDo: Initiative in der Manöverliste aktuelisieren
+
+                    //Set Aktuelle Initiative auf geladenen Wert
+                    //KämpferInfo kiCurrKampf = CurrKampf.Kämpfer.Where(
+                    //    t => ((Wesen)t.Kämpfer).IsHeld &&
+                    //         t.Kämpfer.Name == ((Held)kämpfer).Name).FirstOrDefault(
+                    //    t => ((Held)t.Kämpfer).HeldGUID == ((Held)kämpfer).HeldGUID);
+
+                    //kiCurrKampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
                 }
             }
             else
             {
                 ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
+
+                //ToDo: Initiative in der Manöverliste aktuelisieren
+
+                //Set Aktuelle Initiative auf geladenen Wert
+                //KämpferInfo kiCurrKampf = CurrKampf.Kämpfer.Where(
+                //    t => !((Wesen)t.Kämpfer).IsHeld &&
+                //    t.Kämpfer.Name == ((Gegner)kämpfer).Name).FirstOrDefault(
+                //    t => ((Gegner)t.Kämpfer).GegnerBaseGUID == ((Gegner)kämpfer).GegnerBaseGUID);
+
+                //kiCurrKampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
             }
+            //Lichtquelle nach Generierung des Kämpfers erstellen
+            if (((Wesen)kämpfer).ki.LichtquelleMeter > 0)
+                ((Wesen)kämpfer).ki.LichtquelleMeter = ((Wesen)kämpfer).ki.LichtquelleMeter;
+
         }
 
         public void ClearBattleground()
@@ -1745,6 +1769,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     SelectedObject.IsSelected = true;
                     if (SelectedObject is BattlegroundCreature)
                     {
+                        Global.CurrentKampf.SelectedManöverInfo = null;
                         Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe
                             .FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
@@ -1928,6 +1953,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         ((bgOb as BattlegroundCreature) as Gegner).LoadBattlegroundPortrait((bgOb as BattlegroundCreature).PortraitFileName, false);
                         ((bgOb as BattlegroundCreature) as Gegner).Position = GetPositionFromImage((bgOb as BattlegroundCreature).CreaturePosition);
                     }
+
                 }
             }
 
@@ -2023,7 +2049,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             useFog = lstSettings[15] == 1;
 
             //Kampf auf KR setzen
-            CurrKampf.KampfNeuStarten();
+            CurrKampf.KampfNeuStarten(false);
             while (CurrKampf.Kampfrunde < lstSettings[16])
                 CurrKampf.NeueKampfrunde();
             IsEditorModeEnabled = lstSettings[17] == 1;
@@ -2768,42 +2794,22 @@ namespace MeisterGeister.ViewModel.Bodenplan
             MeisterZoomTransX = -xMin;
             MeisterZoomTransY = -yMin;
             MeisterZoom = .5;
-            CenterPlayerView(null);
+            if (SpielerScreenWindow != null)
+                CenterPlayerView(null);
         }
 
-        private void CenterPlayerView(object obj)
-        {
-            double x1 = ARENA_GRID_RESOLUTION;
-            double y1 = ARENA_GRID_RESOLUTION;
-            double x2 = ARENA_GRID_RESOLUTION;
-            double y2 = ARENA_GRID_RESOLUTION;
+        public void CenterPlayerView(object obj)
+        {            
+            double totalWidth = SpielerScreenWindow.ActualWidth / ScaleSpielerGrid;
+            double totalHeight = SpielerScreenWindow.ActualHeight / ScaleSpielerGrid;
 
-            foreach (Held h in Global.ContextHeld.HeldenGruppeListe)
-            {
-                if (h.CreatureX < x1)
-                {
-                    x1 = h.CreatureX - h.CreatureWidth;
-                }
+            double PlayerOffX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min()) / 2;
+            double PlayerOffY = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min()) / 2;
 
-                if (h.CreatureY < y1)
-                {
-                    y1 = h.CreatureY + h.CreatureHeight;
-                }
-
-                if (h.CreatureX > x2)
-                {
-                    x2 = h.CreatureX + h.CreatureWidth;
-                }
-
-                if (h.CreatureY < y2)
-                {
-                    y2 = h.CreatureY - h.CreatureHeight;
-                }
-            }
-            PlayerGridOffsetX = (x1);
-            PlayerGridOffsetY = (-y2);
+            PlayerGridOffsetX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min() - (totalWidth / 2 - PlayerOffX));
+            PlayerGridOffsetY = (-(Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min() - (totalHeight / 2 - PlayerOffY)));
         }
-        
+
 
         private void SetBackgroundClick(object obj)
         {

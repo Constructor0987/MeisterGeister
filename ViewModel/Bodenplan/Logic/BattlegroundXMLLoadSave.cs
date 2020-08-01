@@ -30,14 +30,15 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 {
                     if (!(o is BattlegroundCreature) && 
                         ((o is ImageObject && !SaveWithoutPictures) || 
-                        (!(o is ImageObject))||
-                        (!(o is MP4Object))))
+                        (!(o is ImageObject)) ||
+                        (!(o is MP4Object))) &&
+                        (!(o is LichtquelleObject)))
                     {
                         o.RunBeforeXMLSerialization();
-                        //Console.WriteLine("SAVE TO XML: " + o.ToString());
                         bboWithoutHeroes.Add(o as BattlegroundBaseObject);
                     }
                 }
+
 
                 ObservableCollection<DataTable> bboHeroes = new ObservableCollection<DataTable>();
                 foreach (var o in bbo)
@@ -46,7 +47,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     {
                         DataTable dtCreature = CreateStructurCreatureTbl(o as BattlegroundCreature);
                         dtCreature = AddCreatureInfo(dtCreature, o as BattlegroundCreature);
-                        //Console.WriteLine("SAVE TO XML: " + o.ToString());
                         bboHeroes.Add(dtCreature);
                     }
                 }
@@ -191,8 +191,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneKopf"] = (o as IKämpfer).WundenByZone[Trefferzone.Kopf];
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneRücken"] = (o as IKämpfer).WundenByZone[Trefferzone.Rücken];
 
-            dt.Rows[dt.Rows.Count - 1]["Initiative"] = (o as Wesen).ki.Initiative;
-            dt.Rows[dt.Rows.Count - 1]["GUID"] = (o is Gegner) ? (o as Gegner).GegnerBaseGUID : (o as Held).HeldGUID; 
+            dt.Rows[dt.Rows.Count - 1]["Initiative"] = (o as BattlegroundCreature).ki.Initiative;
+            dt.Rows[dt.Rows.Count - 1]["GUID"] = (o is Gegner) ? (o as Gegner).GegnerBaseGUID : (o as Held).HeldGUID;
+            dt.Rows[dt.Rows.Count - 1]["LichtquelleMeter"] = (o as BattlegroundCreature).ki.LichtquelleMeter;
+            dt.Rows[dt.Rows.Count - 1]["IstUnsichtbar"] = (o as BattlegroundCreature).ki.IstUnsichtbar;
             return dt;
         }
 
@@ -236,6 +238,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
             dt.Columns.Add("Initiative");
             dt.Columns.Add("GUID");
+            dt.Columns.Add("LichtquelleMeter");
+            dt.Columns.Add("IstUnsichtbar");
             return dt;
         }
 
@@ -381,6 +385,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             if (drow.ItemArray.Length > 12)
                             {
                                 (bObj as BattlegroundCreature).SightLineSektor = Convert.ToInt32(drow["SightLineSektor"]);
+
                                 (bObj as IKämpfer).HinweisText = drow["HinweisText"].ToString();
                                 (bObj as BattlegroundCreature).ObjectSize = Convert.ToDouble(drow["ObjectSize"]);
 
@@ -405,11 +410,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                    (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
                                 }
                                 else
                                 {
                                     if (!HeldWerteAnpassen.HasValue)
-                                        HeldWerteAnpassen = ViewHelper.Confirm("Heldenwerte abpassen", "Die Battlemap-Datei enthält Werte der Helden." + Environment.NewLine + Environment.NewLine +
+                                        HeldWerteAnpassen = ViewHelper.Confirm("Heldenwerte anpassen", "Die Battlemap-Datei enthält Werte der Helden." + Environment.NewLine +
+                                            "Hierzu gehören aktuelle LeP, KaP, AuD, AsP, Anführer-Info und Wunden." + Environment.NewLine + Environment.NewLine +
                                             "Sollen die Werte der Battlemap-Datei benutzt werden?" + Environment.NewLine + Environment.NewLine + 
                                             "ACHTUNG!  Diese überschreiben die aktuellen Heldenwerte der enthaltenen Helden");
                                     if (HeldWerteAnpassen.Value)
@@ -435,14 +442,23 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                         (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
                                         (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                         (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
+                                        if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer) != null)
+                                            Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer).Initiative = Convert.ToInt32(drow["Initiative"]);
                                     }
                                 }
-                                (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+
+                                try
+                                { 
+                                    (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
+                                    (bObj as Wesen).ki.IstUnsichtbar = Convert.ToBoolean(drow["IstUnsichtbar"]);
+                                }
+                                catch { }
                             }
                         }
                     }
                     stream.Close();
                     Global.CurrentKampf.BodenplanViewModel.AddAllCreatures();
+
                     return loadedFile.ObsColl;
                 }
             }

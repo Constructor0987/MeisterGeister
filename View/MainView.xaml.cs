@@ -23,6 +23,14 @@ using MeisterGeister.ViewModel;
 using System.ComponentModel;
 using Un4seen.Bass;
 
+
+using Q42.HueApi;
+using Q42.HueApi.ColorConverters.Original;
+using Q42.HueApi.ColorConverters.OriginalWithModel;
+using Q42.HueApi.ColorConverters.HSB;
+using Q42.HueApi.ColorConverters;
+using MeisterGeister.ViewModel.Settings;
+
 namespace MeisterGeister.View
 {
 
@@ -470,6 +478,79 @@ namespace MeisterGeister.View
             }
         }
 
+        #region ---- HUE - LAMPE ----
+        private Boolean IsMouseDown = false;
+
+        private void CanvasImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            IsMouseDown = true;
+            UpdateColor();
+            if (VM.HUELightsSelected.Count != 0 && VM.Client != null)//.IsChecked.Value)// && hueClient != null)
+            {
+                //Control the lights                
+                LightCommand command = new LightCommand();
+                command.TurnOn().SetColor(new RGBColor(VM.SelectedColor.R, VM.SelectedColor.G, VM.SelectedColor.B));
+                command.Brightness = (byte)BrightnessSlider.Value;
+                //Or send it to all lights
+                //     hueClient.SendCommandAsync(command);
+                VM.Client.SendCommandAsync(command, VM.lstHUELights.Where(t => VM.HUELightsSelected.Select(z=> z.Id).Contains(t.Id)).Select(t => t.Id).ToList());
+            }
+        }
+
+        private void CanvasImage_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            IsMouseDown = false;
+            //UpdateColor();
+        }
+
+        private void CanvasImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsMouseDown)
+                UpdateColor();
+        }
+
+
+        /// <summary>
+        /// Sets a new Selected Color based on the color of the pixel under the mouse pointer.
+        /// </summary>
+        private void UpdateColor()
+        {
+            // Test to ensure we do not get bad mouse positions along the edges
+            int imageX = (int)Mouse.GetPosition(canvasImage).X;
+            int imageY = (int)Mouse.GetPosition(canvasImage).Y;
+            if ((imageX < 0) || (imageY < 0) || (imageX > ColorImage.Width - 1) || (imageY > ColorImage.Height - 1))
+                return;
+            // Get the single pixel under the mouse into a bitmap and copy it to a byte array
+            CroppedBitmap cb = new CroppedBitmap(ColorImage.Source as BitmapSource, new Int32Rect(imageX, imageY, 1, 1));
+            byte[] pixels = new byte[4];
+            cb.CopyPixels(pixels, 4, 0);
+            // Update the mouse cursor position and the Selected Color
+            ellipsePixel.SetValue(Canvas.LeftProperty, (double)(Mouse.GetPosition(canvasImage).X - (ellipsePixel.Width / 2.0)));
+            ellipsePixel.SetValue(Canvas.TopProperty, (double)(Mouse.GetPosition(canvasImage).Y - (ellipsePixel.Width / 2.0)));
+            canvasImage.InvalidateVisual();
+            // Set the Selected Color based on the cursor pixel and Alpha Slider value
+            VM.SelectedColor = Color.FromArgb((byte)BrightnessSlider.Value, pixels[2], pixels[1], pixels[0]);
+        }
+
+        private void HUESlider_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            int change = e.Delta / Math.Abs(e.Delta);
+            ((Slider)sender).Value = ((Slider)sender).Value + (double)change*10;
+        }
+
+
+        #endregion
+
+        private void SaettigungSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void HUESlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         { 
             try
@@ -496,6 +577,16 @@ namespace MeisterGeister.View
             {
                 ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Auswerten des Tastenklicks ist ein Fehler aufgetreten.", ex);
             }
+        }
+
+        private void lvHUE_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<Light> HUEListSelectedItems = new List<Light>();
+
+            foreach (Light item in (e.Source as ListView).SelectedItems)
+                HUEListSelectedItems.Add(item);
+
+            VM.HUELightsSelected = HUEListSelectedItems;
         }
     }
 }
