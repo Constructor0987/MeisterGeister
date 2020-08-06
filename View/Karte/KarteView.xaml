@@ -209,6 +209,11 @@
                                     <Image Source="pack://application:,,,/Images/Icons/General/info.png" Width="25"/>
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Header="Maßstab hier setzen" ToolTip="Zeichnet den Maßstab an diese Position" Command="{Binding PlacementTarget.DataContext.OnMassstabSetzen, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" CommandParameter="{Binding (General:TrackBehavior.OpenLocation), RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}">
+                                <MenuItem.Icon>
+                                    <Image Source="pack://application:,,,/Images/Icons/masse.png" Width="25"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </ContextMenu>
                     </Canvas.ContextMenu>
                     <Image Source="{Binding SelectedKarte.Bildpfad}" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" />
@@ -218,6 +223,108 @@
                            Canvas.Left="{Binding HeldenX}" 
                            Canvas.Top="{Binding HeldenYMinusPinHeight}" />
 
+                    <!-- Maßstab zeichnen -->
+                    <Grid Canvas.Left="{Binding MasstabOffsetX}" Canvas.Top="{Binding MasstabOffsetY}" Opacity=".7" >
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedKarte.Name}" Value="Aventurien">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>                        
+                        <Line X1="0" 
+                          Y1="20" 
+                          X2="357" 
+                          Y2="20" 
+                          Stroke="Black" 
+                          StrokeThickness="15" 
+                          StrokeDashArray="2.375 2.375" />
+                        <Line X1="0" 
+                          Y1="13" 
+                          X2="357" 
+                          Y2="13" 
+                          Stroke="Black"
+                          StrokeThickness="2" />
+                        <Line X1="0" 
+                          Y1="28" 
+                          X2="357" 
+                          Y2="28" 
+                          Stroke="Black"
+                          StrokeThickness="2" />
+                        <Line X1="0" 
+                          Y1="0" 
+                          X2="0" 
+                          Y2="10" 
+                          Stroke="Black"
+                          StrokeThickness="1" />
+                        <Line X1="0" 
+                          Y1="5" 
+                          X2="138" 
+                          Y2="5" 
+                          Stroke="Black"
+                          StrokeThickness="1" />
+                        <Line X1="223" 
+                          Y1="5" 
+                          X2="357" 
+                          Y2="5" 
+                          Stroke="Black"
+                          StrokeThickness="1" />
+                        <Line X1="357" 
+                          Y1="0" 
+                          X2="357" 
+                          Y2="10" 
+                          Stroke="Black"
+                          StrokeThickness="1" />
+                        <Label Content="100 Meilen" 
+                           FontSize="15"
+                           FontWeight="Bold"
+                           Margin="0,-12,0,0" 
+                           Width="360" 
+                           TextOptions.TextFormattingMode="Ideal" 
+                           HorizontalContentAlignment="Center" />
+                    </Grid>
+                    <Grid Canvas.Left="{Binding MasstabOffsetX}" Canvas.Top="{Binding MasstabOffsetY}" Opacity=".7" >
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedKarte.Name}" Value="Myranor">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Line X1="0" 
+                          Y1="30" 
+                          X2="985" 
+                          Y2="30" 
+                          Stroke="Black" 
+                          StrokeThickness="35" 
+                          StrokeDashArray="5.62 5.62" />
+                        <Line X1="0" 
+                          Y1="13" 
+                          X2="983" 
+                          Y2="13" 
+                          Stroke="Black"
+                          StrokeThickness="5" />
+                        <Line X1="0" 
+                          Y1="47" 
+                          X2="983" 
+                          Y2="47" 
+                          Stroke="Black"
+                          StrokeThickness="5" />
+                        
+                        <Label Content="500 Meilen" 
+                           FontSize="35"
+                           FontWeight="Bold"
+                           Margin="0,-38,0,0" 
+                           Width="980" 
+                           TextOptions.TextFormattingMode="Ideal" 
+                           HorizontalContentAlignment="Center" />
+                    </Grid>
 
                     <ItemsControl ItemsSource="{Binding Lines}">
                         <ItemsControl.Resources>

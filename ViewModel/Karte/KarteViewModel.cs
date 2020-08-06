@@ -66,6 +66,7 @@ namespace MeisterGeister.ViewModel.Karte
                 DownloadKarten();
             //TODO Karte anhand HeldenLon und HeldenLat bestimmen
             SelectedKarte = karten[0];
+            SetMaßstab();
             InitializeOrte();
             this.PropertyChanged += KarteViewModel_PropertyChanged;
         }
@@ -209,6 +210,7 @@ namespace MeisterGeister.ViewModel.Karte
                     DereGlobusToMapConverter = selectedKarte.DereGlobusToMapConverter;
                     MapToDereGlobusConverter = selectedKarte.MapToDereGlobusConverter;
                     SetHeldenPositionFromGlobusPosition();
+                    SetMaßstab();
                 }
             }
         }
@@ -234,6 +236,35 @@ namespace MeisterGeister.ViewModel.Karte
             set { Set(ref _mapZoomControl, value); }
         }
         #endregion
+
+        private Point masstabOffset = new Point();
+        public Point MasstabOffset
+        {
+            get { return masstabOffset; }
+            set { Set(ref masstabOffset, value);
+                OnChanged("MasstabOffsetX");
+                OnChanged("MasstabOffsetY");
+            }
+        }
+
+        public int MasstabOffsetX
+        {
+            get { return (int)Math.Round(MasstabOffset.X, MidpointRounding.AwayFromZero); }
+            set
+            {
+                masstabOffset.X = value;
+                MasstabOffset = masstabOffset;
+            }
+        }
+        public int MasstabOffsetY
+        {
+            get { return (int)Math.Round(MasstabOffset.Y, MidpointRounding.AwayFromZero); }
+            set
+            {
+                masstabOffset.Y = value;
+                MasstabOffset = masstabOffset;
+            }
+        }
 
         #region Heldenposition auf der Karte und in Dereglobus-Koordinaten
         private Point heldenPosition = new Point();
@@ -686,6 +717,15 @@ namespace MeisterGeister.ViewModel.Karte
             return new Point((startingPoint.X + endingPoint.X) / 2, (startingPoint.Y + endingPoint.Y) / 2);
         }
 
+        private void SetMaßstab()
+        {
+            if (SelectedKarte.Name == "Aventurien")
+                MasstabOffset = new Point(6695, 10800);
+            else
+                if (SelectedKarte.Name == "Myranor")
+                MasstabOffset = new Point(8005, 7900);
+        }
+
         #endregion
 
         #endregion
@@ -699,6 +739,24 @@ namespace MeisterGeister.ViewModel.Karte
                 if (findRouteCommand == null)
                     findRouteCommand = new CommandBase(FindRoute, null);
                 return findRouteCommand;
+            }
+        }
+
+        private CommandBase onMassstabSetzen;
+        public CommandBase OnMassstabSetzen
+        {
+            get {
+                if(onMassstabSetzen == null)
+                    onMassstabSetzen = new CommandBase(MassstabSetzen, null);
+                return onMassstabSetzen; 
+            }
+        }
+
+        private void MassstabSetzen(object args)
+        {
+            if (args is Point)
+            {
+                MasstabOffset = (Point)args;
             }
         }
 
