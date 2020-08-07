@@ -3921,7 +3921,7 @@ namespace MeisterGeister.Model
             }
             foreach (Held_Inventar hi in Held_Inventar)
             {
-                g += hi.Trageort.TragkraftFaktor * (hi.Inventar.Gewicht ?? 0) * (hi.Anzahl ?? 0);
+                g += (hi.Trageort.TragkraftFaktor * (hi.Inventar.Gewicht ?? 0) * (hi.Anzahl ?? 0)) / (hi.Angelegt? 2:1);
             }
             foreach (Held_Munition hm in Held_Munition)
             {

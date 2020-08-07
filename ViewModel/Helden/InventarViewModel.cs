@@ -84,13 +84,13 @@ namespace MeisterGeister.ViewModel.Inventar
         private CollectionViewSource heldRuestungImInventar;
 
         private ExtendedObservableCollection<InventarItem> heldSonstigesImInventar = new ExtendedObservableCollection<InventarItem>();
+        private ExtendedObservableCollection<InventarItem> heldSonstigeKleidungImInventar = new ExtendedObservableCollection<InventarItem>();
 
         //Commands
         private Base.CommandBase onAddNahkampfwaffe;
         private Base.CommandBase onAddFernkampfwaffe;
         private Base.CommandBase onAddSchild;
         private Base.CommandBase onAddRuestung;
-        private Base.CommandBase onAddGegenstand;
         private Base.CommandBase addSet;
         private Base.CommandBase equipAllSets;
         private Base.CommandBase unequipAllSets;
@@ -455,6 +455,15 @@ namespace MeisterGeister.ViewModel.Inventar
         {
             get { return heldRuestungImInventar.View; }
         }
+        public ExtendedObservableCollection<InventarItem> HeldSonstigeKleidungImInventar
+        {
+            get { return heldSonstigeKleidungImInventar; }
+            set
+            {
+                heldSonstigeKleidungImInventar = value;
+                OnChanged("HeldSonstigeKleidungImInventar");
+            }
+        }
         public ExtendedObservableCollection<InventarItem> HeldSonstigesImInventar
         {
             get { return heldSonstigesImInventar; }
@@ -480,10 +489,6 @@ namespace MeisterGeister.ViewModel.Inventar
         public Base.CommandBase OnAddRuestung
         {
             get { return onAddRuestung; }
-        }
-        public Base.CommandBase OnAddGegenstand
-        {
-            get { return onAddGegenstand; }
         }
         public Base.CommandBase AddSet
         {
@@ -530,7 +535,6 @@ namespace MeisterGeister.ViewModel.Inventar
             onAddFernkampfwaffe = new Base.CommandBase(o => AddFernkampfwaffe(), null);
             onAddSchild = new Base.CommandBase(o => AddSchild(), null);
             onAddRuestung = new Base.CommandBase(o => AddRuestung(), null);
-            onAddGegenstand = new Base.CommandBase(o => AddGegenstand(), null);
             addSet = new Base.CommandBase(o => AddAusrüstungsset(), null);
             equipAllSets = new Base.CommandBase(o => AlleSetsAnlegen(), null);
             unequipAllSets = new Base.CommandBase(o => AlleSetsAblegen(), null);
@@ -745,18 +749,38 @@ namespace MeisterGeister.ViewModel.Inventar
             SelectedHeld = Global.SelectedHeld;
             heldAusrüstungen.Clear();
             heldSonstigesImInventar.Clear();
+            heldSonstigeKleidungImInventar.Clear();
             heldAusrüstungssets.Clear();
 
             if (SelectedHeld != null)
             {
                 heldAusrüstungen.AddRange(SelectedHeld.Held_Ausrüstung);
+
+                //Sonstige Kleidung / Held_Inventar
+                foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe
+                    .Where(hw => hw.HeldGUID == Global.SelectedHeldGUID &&
+                                 hw.Inventar != null &&
+                                 hw.Inventar.Kategorie != null && hw.Inventar.Kategorie.StartsWith("Kleidung"))
+                    .OrderBy(i => i.Inventar.Name))
+                {
+                    InventarItem value = new InventarItem(item, item.Inventar);
+                    value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
+
+                    HeldSonstigeKleidungImInventar.Add(value);
+                }
+
                 //Sonstiges / Held_Inventar
-                foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Inventar != null).OrderBy(i => i.Inventar.Name))
+                foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe
+                    .Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && 
+                                 hw.Inventar != null &&
+                                 (hw.Inventar.Kategorie == null || hw.Inventar.Kategorie != null && !hw.Inventar.Kategorie.StartsWith("Kleidung")))
+                    .OrderBy(i => i.Inventar.Name))
                 {
                     InventarItem value = new InventarItem(item, item.Inventar);
                     value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
                     HeldSonstigesImInventar.Add(value);
                 }
+
                 if (E.BEBerechnung == 0)
                     SelectedHeld.BerechneBehinderung();
 
@@ -765,8 +789,53 @@ namespace MeisterGeister.ViewModel.Inventar
             }
         }
 
+
+        private Base.CommandBase onAddGegenstand = null;
+        public Base.CommandBase OnAddGegenstand
+        {
+            get
+            {
+                if (onAddGegenstand == null)
+                    onAddGegenstand = new Base.CommandBase(AddGegenstand, null);
+                return onAddGegenstand;
+            }
+        }
+
+        private Base.CommandBase onSetAsKleidung = null;
+        public Base.CommandBase OnSetAsKleidung
+        {
+            get
+            {
+                if (onSetAsKleidung == null)
+                    onSetAsKleidung = new Base.CommandBase(SetAsKleidung, null);
+                return onSetAsKleidung;
+            }
+        }
+
+        private void SetAsKleidung(object args)
+        {
+            SelectedSonstiges.EntityHI.Inventar.Kategorie = "Kleidung";
+            SelectedHeldChanged(this, new EventArgs());
+        }
+
+        private Base.CommandBase onSetAsSonstiges = null;
+        public Base.CommandBase OnSetAsSonstiges
+        {
+            get
+            {
+                if (onSetAsSonstiges == null)
+                    onSetAsSonstiges = new Base.CommandBase(SetAsSonstiges, null);
+                return onSetAsSonstiges;
+            }
+        }
+
+        private void SetAsSonstiges(object args)
+        {
+            SelectedSonstiges.EntityHI.Inventar.Kategorie = null;
+            SelectedHeldChanged(this, new EventArgs());
+        }
         //--ADD
-        void AddNahkampfwaffe()
+            void AddNahkampfwaffe()
         {
             if (SelectedNahkampfwaffe != null && SelectedHeld != null && !IsReadOnly)
             {
@@ -808,7 +877,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
-        void AddGegenstand()
+        void AddGegenstand(object sender)
         {
             if (!string.IsNullOrEmpty(NeuerGegenstand) && SelectedHeld != null && !IsReadOnly)
             {
@@ -826,7 +895,14 @@ namespace MeisterGeister.ViewModel.Inventar
                 { 
                     InventarItem value = new InventarItem(hi, hi.Inventar);
                     value.RemoveItem += (s, ev) => { RemoveAusruestung(s); };
-                    HeldSonstigesImInventar.Add(value);
+                    if (sender == null)
+                        HeldSonstigesImInventar.Add(value);
+                    else
+                    {
+                        hi.Inventar.Kategorie = "Kleidung";
+                        hi.Trageort = trageortListe.Where(t => t.TrageortGUID == Trageorte.Oberkörper).FirstOrDefault();
+                        HeldSonstigeKleidungImInventar.Add(value);                        
+                    }
                 }
             
                 if (E.RSBerechnung == 0 || E.RSBerechnung == 3)
@@ -848,10 +924,16 @@ namespace MeisterGeister.ViewModel.Inventar
             {
                 if ((sender as InventarItem) != null)
                 {
+                    ExtendedObservableCollection<InventarItem> lstInv = HeldSonstigesImInventar;
                     InventarItem item = HeldSonstigesImInventar.Where(value => value == (sender as InventarItem)).FirstOrDefault();
+                    if (item == null)
+                    {
+                        item = HeldSonstigeKleidungImInventar.Where(value => value == (sender as InventarItem)).FirstOrDefault();
+                        lstInv = HeldSonstigeKleidungImInventar;
+                    }
                     if (item != null)
                     {
-                        foreach (var invItem in HeldSonstigesImInventar)
+                        foreach (var invItem in lstInv)
                         {
                             if (invItem.EntityI.InventarGUID == item.EntityI.InventarGUID)
                             {
@@ -859,12 +941,14 @@ namespace MeisterGeister.ViewModel.Inventar
                                     break;
                                 item.EntityHI.Anzahl--;
                                 OnChanged("HeldSonstigesImInventar");
+                                OnChanged("HeldSonstigeKleidungImInventar");
                                 SelectedHeld.BerechneAusruestungsGewicht();
                                 return;
                             }
                         }
-                        HeldSonstigesImInventar.Remove(item);
+                        lstInv.Remove(item);
                         OnChanged("HeldSonstigesImInventar");
+                        OnChanged("HeldSonstigeKleidungImInventar");
                         Global.ContextInventar.HeldZuInventarListe.Remove(item.EntityHI);
                         Global.ContextInventar.RemoveInventarVonHeld(item.EntityHI);
                         SelectedHeld.BerechneAusruestungsGewicht();
@@ -1036,7 +1120,7 @@ namespace MeisterGeister.ViewModel.Inventar
             set
             {
                 EntityHI.Trageort = value;
-                OnChanged("Trageort");
+                OnChanged(nameof(Trageort));
             }
         }
 
