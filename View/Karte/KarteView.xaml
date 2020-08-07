@@ -478,28 +478,47 @@
                                                       Visibility="{Binding IsShowStages, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                         </WrapPanel>
                                     </GroupBox>
+                                    <Button Grid.Row="1" Height="25" Command="{Binding FindRouteCommand}"  Margin="0,3,2,0" 
+                                        ToolTip="Route suchen." x:Name="btnFindRoute">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/Icons/Karte/way2.png" />
+                                            <TextBlock Text="Route suchen" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
-                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1" Margin="0,0,0,0" Grid.RowSpan="2">
                                     <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Afoot" 
                                     IsChecked="{Binding SelectedTravelType, ConverterParameter=Afoot, Converter={StaticResource enumConverter}, Mode=TwoWay}" >
                                         <Image Source="/Images/Icons/Karte/man-silhouette1.png" Height="24"/>
                                     </RadioButton>
-                                    <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Horse" Margin="0,7,0,0"
+                                    <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Horse" Margin="0,3,0,0"
                                     IsChecked="{Binding SelectedTravelType, ConverterParameter=Horse, Converter={StaticResource enumConverter}, Mode=TwoWay}">
                                         <Image Source="/Images/Icons/Karte/horse123.png" Height="24"/>
                                     </RadioButton>
-                                    <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Carriage" Margin="0,7,0,0" 
+                                    <RadioButton Style="{StaticResource RadioButtonToggleStyle}" GroupName="Carriage" Margin="0,3,0,0" 
                                     IsChecked="{Binding SelectedTravelType, ConverterParameter=Carriage, Converter={StaticResource enumConverter}, Mode=TwoWay}">
                                         <Image Source="/Images/Icons/Karte/transport460.png" Height="24"/>
                                     </RadioButton>
+
+                                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Height="24" Margin="0,7,0,0" 
+                                            Command="{Binding ClearRouteCommand}" ToolTip="Route löschen." Background="Transparent" >
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Lines.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter='1',UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Images/Icons/Karte/way2.png" />
+                                            <Image Source="/Images/Icons/General/entf_01.png" Margin="-24,-3,0,-4" Opacity=".9" />
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
                             </Grid>
-                            <Button VerticalAlignment="Top" Height="25" Command="{Binding FindRouteCommand}" ToolTip="Route suchen." x:Name="btnFindRoute">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="/Images/Icons/Karte/way2.png" />
-                                    <TextBlock Text="Route suchen" Margin="5,0,0,0"/>
-                                </StackPanel>
-                            </Button>
                             <StackPanel Orientation="Vertical" Background="White">
                                 <StackPanel.Style>
                                     <Style TargetType="{x:Type StackPanel}">

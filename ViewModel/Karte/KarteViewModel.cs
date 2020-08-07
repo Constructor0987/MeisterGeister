@@ -647,6 +647,13 @@ namespace MeisterGeister.ViewModel.Karte
                 CenterOn(RouteEnding.Location);
         }
 
+        private void ClearRoute(object args)
+        {
+            Global.SetIsBusy(true, "Lösche Route...");
+            this.Lines = null;
+            Global.SetIsBusy(false);            
+        }
+
         private void FindRoute(object args)
         {
             if (RouteStarting != null && RouteEnding != null)
@@ -742,6 +749,16 @@ namespace MeisterGeister.ViewModel.Karte
             }
         }
 
+        private CommandBase clearRouteCommand;
+        public CommandBase ClearRouteCommand
+        {
+            get
+            {
+                if (clearRouteCommand == null)
+                    clearRouteCommand = new CommandBase(ClearRoute, null);
+                return clearRouteCommand;
+            }
+        }
         private CommandBase onMassstabSetzen;
         public CommandBase OnMassstabSetzen
         {
