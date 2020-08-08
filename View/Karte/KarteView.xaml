@@ -26,6 +26,7 @@
         </DataTemplate>
         <General:EnumToBooleanConverter x:Key="enumConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <General:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
     </UserControl.Resources>
     <Border BorderThickness="0" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent" >
