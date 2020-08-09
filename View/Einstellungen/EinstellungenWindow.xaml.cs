@@ -226,6 +226,14 @@ namespace MeisterGeister.View.Settings
         {
         }
 
+        private void btnSzeneRemove(object sender, RoutedEventArgs e)
+        {
+            List<EinstellungenViewModel.HUESzene> lstHZ = new List<EinstellungenViewModel.HUESzene>();
+            lstHZ.AddRange(Global.MainVM.lstHUESzenen);
+            lstHZ.Remove(VM.SelHUESzene);
+            Global.MainVM.lstHUESzenen = lstHZ;;
+        }
+
 
         //private void Timer_Tick(object sender, object e)
         //{

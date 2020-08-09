@@ -508,24 +508,33 @@
                                   Visibility="{Binding hotkeyListUsed.Count, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}"
                                 ToolTip="Drücke Strg+Alt+ 'Hotkey' um die Hotkey-Playliste abzuspielen oder direkt anklicken" >
                                 <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                                <Button Height="20" Background="Black" Width="20" ToolTip="Stoppen aller laufenden Hotkeys" Command="{Binding OnAllHotkeysStop}" VerticalAlignment="Center" >
-                                    <Image Source="/Images/Icons/General/stop.png" Margin="-2,-2,-3,-3" />
-                                </Button>
-                                <ViewGeneral:SmallSlider Width="50" MaxValue="100" MinValue="0" UseLayoutRounding="True" Margin="2" HorizontalStyle="True" VerticalAlignment="Center" 
-                                    Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"   />
-                                
-                                <ItemsControl ItemsSource="{Binding hotkeyListUsed, FallbackValue={x:Null},UpdateSourceTrigger=PropertyChanged}" Margin="2">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel ItemWidth="30" Margin="0,1,0,-2"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
-                            </StackPanel>                         
-                        </Expander> 
-                             
+                                    <Button Height="20" Background="Black" Width="20" ToolTip="Stoppen aller laufenden Hotkeys" Command="{Binding OnAllHotkeysStop}" VerticalAlignment="Center" >
+                                        <Image Source="/Images/Icons/General/stop.png" Margin="-2,-2,-3,-3" />
+                                    </Button>
+                                    <ViewGeneral:SmallSlider Width="50" MaxValue="100" MinValue="0" UseLayoutRounding="True" Margin="2" HorizontalStyle="True" VerticalAlignment="Center" 
+                                        Value="{Binding HotkeyVolume, UpdateSourceTrigger=PropertyChanged}"   />
 
-                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding hotkeyListUsed, FallbackValue={x:Null},UpdateSourceTrigger=PropertyChanged}" Margin="2">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel ItemWidth="30" Margin="0,1,0,-2"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Expander>
+
+
+                            <Expander VerticalAlignment="Bottom" IsExpanded="True" ForceCursor="False" Margin="5,1,0,5" ExpandDirection="Right"
+                                  Visibility="{Binding hotkeyListUsed.Count, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}"
+                                ToolTip="Drücke Strg+Alt+ 'Hotkey' um die Hotkey-Playliste abzuspielen oder direkt anklicken" >
+                                <ComboBox ItemsSource="{Binding lstHUESzenen}" SelectedItem="{Binding HUESzeneSelected}" DisplayMemberPath="Name">
+                                    
+                                </ComboBox>
+                            </Expander>
+
+
+                        </StackPanel>
                     <Border x:Name="MenuAktivateBorder" Margin="10,0,10,0" CornerRadius="0,0,15,15" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="8" MouseLeftButtonUp="MenuAktivateBorder_MouseLeftButtonUp">
                         <Border.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

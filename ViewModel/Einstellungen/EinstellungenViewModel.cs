@@ -56,6 +56,65 @@ namespace MeisterGeister.ViewModel.Settings
 
     public class EinstellungenViewModel : Base.ViewModelBase
     {
+        public class LightColor
+        {
+            public Light light { get; set; }
+            public Color color { get; set; }
+        }
+        public class HUESzene
+        {
+            public string Name { get; set; }
+            private List<LightColor> _lstLightColor = new List<LightColor>();
+            public List<LightColor> lstLightColor
+            {
+                get { return _lstLightColor; }
+                set { _lstLightColor = value; }
+            }
+        }
+
+        private LightColor _lightColorSelected = new LightColor();
+        public LightColor LightColorSelected
+        {
+            get { return _lightColorSelected; }
+            set { _lightColorSelected = value; }
+        }
+
+        private HUESzene _selHUESzene = new HUESzene();
+        public HUESzene SelHUESzene
+        {
+            get { return _selHUESzene; }
+            set 
+            {
+                Set(ref _selHUESzene, value);
+                if (value == null)
+                    return;
+                List<Light> LightsLeft = new List<Light>();
+                if (value.lstLightColor.Count == 0)
+                    LightsLeft.AddRange(lstHUELights);
+                else
+                    LightsLeft.AddRange(lstHUELights.Where(t => !value.lstLightColor.Select(z => z.light).ToList().Contains(t)).ToList());
+                lstHUELightsLeft = LightsLeft;
+            }
+        }
+
+        private List<HUESzene> _lstHUESzenen = Global.MainVM.lstHUESzenen;
+        public List<HUESzene> lstHUESzenen
+        { 
+            get { return _lstHUESzenen; }
+            set
+            {
+                Set(ref _lstHUESzenen, value);
+                Global.MainVM.lstHUESzenen = value;
+            }
+        }
+
+        private string _hUESzeneName = null;
+        public string HUESzeneName
+        {
+            get { return _hUESzeneName; }
+            set { Set(ref _hUESzeneName, value); }
+        }
+
         public Color GetRelativeColor(GradientStopCollection gsc, double offset)
         {
             GradientStop before = gsc.Where(w => w.Offset == gsc.Min(m => m.Offset)).First();
@@ -93,6 +152,18 @@ namespace MeisterGeister.ViewModel.Settings
 
         #region Property
 
+        public Base.CommandBase onBtnSelectHUESzeneColor
+        {
+            get
+            {
+                if (_onBtnSelectHUESzeneColor == null)
+                {
+                    _onBtnSelectHUESzeneColor = new Base.CommandBase(SelectHUESzeneColor, null);
+                }
+
+                return _onBtnSelectHUESzeneColor;
+            }
+        }
         public Base.CommandBase onBtnSelectHUEColor
         {
             get
@@ -169,6 +240,59 @@ namespace MeisterGeister.ViewModel.Settings
 
                 return _onBtnHUEGWsuchen;
             }
+        }
+
+        private Base.CommandBase _nBtnAddLightToSzene = null;
+        public Base.CommandBase OnBtnAddLightToSzene
+        {
+            get
+            {
+                if (_nBtnAddLightToSzene == null)
+                {
+                    _nBtnAddLightToSzene = new Base.CommandBase(AddLightToSzene, null);
+                }
+                return _nBtnAddLightToSzene;
+            }
+        }
+
+        public void AddLightToSzene(object obj)
+        {
+            if (cmbxSelHUE == null)
+                return;
+            List<LightColor> lstLC = new List<LightColor>();
+            lstLC.AddRange(SelHUESzene.lstLightColor);
+            lstLC.Add(new LightColor() { light = cmbxSelHUE, color = Colors.White } );
+            SelHUESzene.lstLightColor = lstLC;
+            cmbxSelHUE = null;
+
+            lstHUELightsLeft = lstHUELights.Where(t => !SelHUESzene.lstLightColor.Select(z => z.light).ToList().Contains(t)).ToList();
+            OnChanged(nameof(SelHUESzene));
+        }
+
+        private Base.CommandBase _onBtnAddHUESzene = null;
+        public Base.CommandBase OnBtnAddHUESzene
+        {
+            get
+            {
+                if (_onBtnAddHUESzene == null)
+                {
+                    _onBtnAddHUESzene = new Base.CommandBase(AddHUESzene, null);
+                }
+
+                return _onBtnAddHUESzene;
+            }
+        }
+
+        public void AddHUESzene(object obj)
+        {
+            List<HUESzene> lstSzenen = new List<HUESzene>();
+            lstSzenen.AddRange(lstHUESzenen);
+            HUESzene newHUESzene = new HUESzene();
+            newHUESzene.Name = HUESzeneName;
+            lstSzenen.Add(newHUESzene);
+            HUESzeneName = null;
+            lstHUESzenen = lstSzenen;
+            SelHUESzene = newHUESzene;
         }
 
         public Base.CommandBase onBtnActivateHUEGW
@@ -491,6 +615,8 @@ namespace MeisterGeister.ViewModel.Settings
         }
 
         private Base.CommandBase _onBtnSelectHUEColor = null;
+
+        private Base.CommandBase _onBtnSelectHUESzeneColor = null;
         private Base.CommandBase _onBtnDoTheme = null;
 
         private Base.CommandBase _onbtnNeuesHUETheme = null;
@@ -511,6 +637,23 @@ namespace MeisterGeister.ViewModel.Settings
 
         private List<Model.Setting> settingListe;
 
+        private void SelectHUESzeneColor(object obj)
+        {
+            HUESzene hSzene = new HUESzene();
+            hSzene = SelHUESzene;
+
+            HUEColorDialog colorDialog = new HUEColorDialog();
+            colorDialog.TestLight = LightColorSelected.light;
+            colorDialog.SelectedColor = LightColorSelected.color;
+            colorDialog.Owner = obj as EinstellungenWindow;
+
+            if (colorDialog.ShowDialog().Value)
+            {
+                LightColorSelected.color = colorDialog.SelectedColor;
+                SelHUESzene = null;
+                SelHUESzene = hSzene;
+            }
+        }
         private void SelectHUEColor(object obj)
         {
             if (HUEThemeSelected == null)
@@ -537,7 +680,6 @@ namespace MeisterGeister.ViewModel.Settings
                 //RectColorPicked.Fill = new SolidColorBrush(colorDialog.SelectedColor);
                 //SendColorToLamps(colorDialog.SelectedColor);
             }
-
         }
 
 
@@ -1068,6 +1210,13 @@ namespace MeisterGeister.ViewModel.Settings
             set { Set(ref _lstHUELightCmd, value); }
         }
 
+        private List<Light> _lstHUELightsLeft = new List<Light>();
+        public List<Light> lstHUELightsLeft
+        {
+            get { return _lstHUELightsLeft; }
+            set { Set(ref _lstHUELightsLeft, value); }
+        }
+
         private List<Light> _lstHUELights = new List<Light>();
         public List<Light> lstHUELights
         {
@@ -1082,6 +1231,13 @@ namespace MeisterGeister.ViewModel.Settings
                 lstHUELightCmd = lstLightCmd;
                 MainViewModel.Instance.lstHUELights = value;
             }
+        }
+
+        private Light _cmbxSelHUE = new Light();
+        public Light cmbxSelHUE
+        {
+            get { return _cmbxSelHUE; }
+            set { Set(ref _cmbxSelHUE, value); }
         }
 
         private Light _selectedHUELight = new Light();

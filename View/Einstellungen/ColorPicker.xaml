@@ -125,7 +125,7 @@
 
       <!-- TextBoxes, Column 2-->
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,0,28,0">
-                <CheckBox Content="Update Lamp" Name="chbxUpdateLamp" Checked="chbxUpdateLamp_Checked"  />
+                <CheckBox Content="Lampe setzen" FontWeight="Bold" VerticalContentAlignment="Center" Margin="0,5" Name="chbxUpdateLamp" Checked="chbxUpdateLamp_Checked"  />
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
           <Label Content="A" Margin="5,0,0,0" HorizontalAlignment="Left"
                             Foreground="Black" FontWeight="Bold" VerticalAlignment="Center"/>
@@ -236,10 +236,9 @@
                 Margin="10,5,10,5">
             <Slider x:Name="BrightnessSlider"
                     Orientation="Horizontal"
+                    IsMoveToPointEnabled="True"
                     Minimum="0"
-                    Maximum="255"
-                    SmallChange="1"
-                    LargeChange="25"
+                    Maximum="255"                     
                     VerticalAlignment="Center"
                     Margin="5"
                     Value="255"

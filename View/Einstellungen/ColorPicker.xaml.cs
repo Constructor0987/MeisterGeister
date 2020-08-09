@@ -12,6 +12,9 @@ using Q42.HueApi.ColorConverters.Original;
 using Q42.HueApi.ColorConverters.OriginalWithModel;
 using Q42.HueApi.ColorConverters.HSB;
 using Q42.HueApi.ColorConverters;
+using System.Linq;
+using System.Windows.Documents;
+using System.Collections.Generic;
 
 namespace MeisterGeister.View.Settings
 {
@@ -48,7 +51,13 @@ namespace MeisterGeister.View.Settings
         #endregion
 
         #region Public Properties
-        
+
+        private Light _testLight = null;
+        public Light TestLight
+        {
+            get { return _testLight; }
+            set { _testLight = value; }
+        }
 
     /// <summary>
     /// Gets or privately sets the Selected Color.
@@ -118,9 +127,13 @@ namespace MeisterGeister.View.Settings
             LightCommand command = new LightCommand();
             command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                 command.Brightness = (byte)BrightnessSlider.Value;
+
+            List<string> lst = new List<string>();
+            lst.Add(TestLight.Id);
+            Global.MainVM.Client.SendCommandAsync(command, lst);
             //Or send it to all lights
-           //     hueClient.SendCommandAsync(command);
-        }
+            //     hueClient.SendCommandAsync(command);
+            }
 }
 
     /// <summary>
@@ -253,9 +266,14 @@ namespace MeisterGeister.View.Settings
                 LightCommand command = new LightCommand();
                 command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                 command.Brightness = (byte)BrightnessSlider.Value;
+
+                List<string> lst = new List<string>();
+                lst.Add(TestLight.Id);
+                Global.MainVM.Client.SendCommandAsync(command, lst);
                 //Or send it to all lights
-             //   hueClient.SendCommandAsync(command);
+                //   hueClient.SendCommandAsync(command);
             }
+            SelectedColor = new Color() { A = (byte)BrightnessSlider.Value, R = SelectedColor.R, G = SelectedColor.G, B = SelectedColor.B };
         }
 
 
