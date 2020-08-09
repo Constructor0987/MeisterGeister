@@ -1139,6 +1139,10 @@ namespace MeisterGeister.View.Bodenplan
                     }
                     else if (VM.SelectedObject is Wesen)
                     {
+                        //Beim Öffnen eines Kontext-Menüs Sichfeld nicht ändern
+                        if ((Mouse.DirectlyOver is System.Windows.Shapes.Rectangle) && ((Mouse.DirectlyOver as System.Windows.Shapes.Rectangle).DataContext is Wesen) ||
+                            (Mouse.DirectlyOver is Image) && ((Mouse.DirectlyOver as Image).DataContext is Wesen))
+                        { return; }
                         ((BattlegroundCreature)VM.SelectedObject).CalculateNewSightLineSektor(
                             new Point(e.GetPosition(ArenaGrid).X,
                             e.GetPosition(ArenaGrid).Y), VM.RechteckGrid);

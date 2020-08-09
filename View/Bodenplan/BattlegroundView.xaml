@@ -996,7 +996,7 @@
                                                                 Padding="0"
                                                                 VerticalAlignment="Top"
                                                                 Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}"
-                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png"      />
+                                                                ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
                                                         </StackPanel>
                                                     </Grid>
 
@@ -1018,25 +1018,24 @@
                                                             </Style>
                                                         </Grid.Style>
                                                         <Grid.RowDefinitions>
-                                                            <RowDefinition />
-                                                            <RowDefinition />
-                                                            <RowDefinition />
-                                                            <RowDefinition />
+                                                            <RowDefinition Height="1*" MaxHeight="60"/>
+                                                            <RowDefinition Height="1*" MaxHeight="60"/>
+                                                            <RowDefinition Height="1*" MaxHeight="60"/>
+                                                            <RowDefinition Height="1*" MaxHeight="60"/>
                                                         </Grid.RowDefinitions>
 
                                                         <MenuItem
                                                             x:Name="miKämpferAttacke"
                                                             Grid.Row="0"
-                                                            Width="27"
-                                                            Height="27"
-                                                            HorizontalAlignment="Center"
+                                                            Margin="2,2,1,1"
+                                                            HorizontalAlignment="Left"
+                                                            Width="{Binding ElementName=miKämpferAttacke, Path=ActualHeight,UpdateSourceTrigger=PropertyChanged}"
                                                             BorderThickness="1"
                                                             Command="{Binding DataContext.OnBtnUmwandelnAttacke, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                                                             CommandParameter="{Binding}">
                                                             <MenuItem.Icon>
                                                                 <Image
-                                                                    MaxWidth="24"
-                                                                    Margin="-1,-3,-3,-3"
+                                                                    Margin="2"
                                                                     Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
                                                             </MenuItem.Icon>
                                                             <MenuItem.ItemTemplate>
@@ -1049,9 +1048,9 @@
                                                         <MenuItem
                                                             x:Name="miKämpferFernkampf"
                                                             Grid.Row="1"
-                                                            Width="27"
-                                                            Height="27"
-                                                            HorizontalAlignment="Center"
+                                                            Margin="2,2,1,1"
+                                                            Width="{Binding ElementName=miKämpferFernkampf, Path=ActualHeight}"
+                                                            HorizontalAlignment="Left"
                                                             BorderThickness="1">
                                                             <MenuItem.Style>
                                                                 <Style TargetType="{x:Type MenuItem}">
@@ -1072,8 +1071,7 @@
                                                             </MenuItem.Style>
                                                             <MenuItem.Icon>
                                                                 <Image
-                                                                    MaxWidth="24"
-                                                                    Margin="-1,-3,-3,-3"
+                                                                    Margin="2"
                                                                     Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" />
                                                             </MenuItem.Icon>
                                                             <MenuItem.ItemContainerStyle>
@@ -1092,9 +1090,9 @@
                                                         <MenuItem
                                                             x:Name="miKämpferZauber"
                                                             Grid.Row="2"
-                                                            Width="27"
-                                                            Height="27"
-                                                            HorizontalAlignment="Center"
+                                                            Margin="2,2,1,1"
+                                                            Width="{Binding ElementName=miKämpferZauber, Path=ActualHeight}"
+                                                            HorizontalAlignment="Left"
                                                             Background="Transparent"
                                                             BorderThickness="1"
                                                             Visibility="{Binding ki.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -1112,8 +1110,7 @@
                                                             </MenuItem.Style>
                                                             <MenuItem.Icon>
                                                                 <Image
-                                                                    MaxWidth="24"
-                                                                    Margin="-1,-3,-3,-3"
+                                                                    Margin="2"
                                                                     Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" />
                                                             </MenuItem.Icon>
                                                             <MenuItem.ItemContainerStyle>
@@ -1123,7 +1120,6 @@
                                                                     <Setter Property="Icon" Value="{x:Null}" />
                                                                 </Style>
                                                             </MenuItem.ItemContainerStyle>
-
                                                             <MenuItem.ItemTemplate>
                                                                 <DataTemplate>
                                                                     <TextBlock FontSize="{Binding DataContext.FontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Text="{Binding Zauber.Name}" />
@@ -1134,14 +1130,13 @@
                                                         <MenuItem
                                                             x:Name="miKämpferSonstiges"
                                                             Grid.Row="3"
-                                                            Width="27"
-                                                            Height="27"
-                                                            HorizontalAlignment="Center"
+                                                            Margin="2,2,1,1"
+                                                            Width="{Binding ElementName=miKämpferSonstiges, UpdateSourceTrigger=PropertyChanged, Path=ActualHeight}"
+                                                            HorizontalAlignment="Left"
                                                             BorderThickness="1">
                                                             <MenuItem.Icon>
                                                                 <Image
-                                                                    MaxWidth="24"
-                                                                    Margin="-1,-3,-3,-3"
+                                                                    Margin="2"
                                                                     Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" />
                                                             </MenuItem.Icon>
                                                             <MenuItem.ItemContainerStyle>
@@ -1172,9 +1167,9 @@
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition 
                                                                                 Binding="{Binding AktManöverInfo.Manöver.VerbleibendeDauer, 
-                                                                            UpdateSourceTrigger=PropertyChanged, 
-                                                                            Converter={StaticResource IsEqualOrGreaterThanConverter1}, 
-                                                                            ConverterParameter='1'}" Value="True"/>
+                                                                                UpdateSourceTrigger=PropertyChanged, 
+                                                                                Converter={StaticResource IsEqualOrGreaterThanConverter1}, 
+                                                                                ConverterParameter='1'}" Value="True"/>
                                                                             <Condition 
                                                                                 Binding="{Binding AktManöverInfo.DauerInKampfaktionen, 
                                                                                 Converter={StaticResource IsEqualOrGreaterThanConverter1},
