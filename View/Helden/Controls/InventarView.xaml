@@ -641,12 +641,96 @@
                     </Grid>
                 </Expander>
 
-                <!-- Sonstiges -->
+                <!-- sonstige Kleidung -->
+                <Expander>
+                    <Expander.Style>
+                        <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding HeldSonstigeKleidungImInventar}" Value="False">
+                                    <Setter Property="IsExpanded" Value="True"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Expander.Style>
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="20">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png"/>
+                            <TextBlock Style="{StaticResource TextTitel}" Text="sonstige Kleidung"/>
+                        </StackPanel>
+                    </Expander.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Neue Kleidung:" Style="{DynamicResource Label}" Margin="5,0"/>
+                        <TextBox HorizontalAlignment="Stretch" 
+                                    VerticalContentAlignment="Center"
+                                    Grid.Column="1" 
+                                    Text="{Binding NeuerGegenstand, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" >
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <TextBlock Grid.Column="2" Text="Gewicht:" Style="{DynamicResource Label}" Margin="0,0,5,0" />
+                        <ViewGeneral:IntBox 
+                            Value="{Binding NeuerGegenstandGewicht, UpdateSourceTrigger=PropertyChanged}"
+                            MinValue="0" 
+                            MaxValue="999" 
+                            Grid.Column="3" 
+                            HorizontalAlignment="Right" 
+                            Width="50" >
+                            <ViewGeneral:IntBox.InputBindings>
+                                <KeyBinding Key="Enter"  Command="{Binding OnAddGegenstand}" CommandParameter="Kleidung" />
+                            </ViewGeneral:IntBox.InputBindings>
+                        </ViewGeneral:IntBox>
+                        <Button Grid.Column="4" Padding="0" Margin="8,0,0,0" Command="{Binding OnAddGegenstand}" CommandParameter="Kleidung" VerticalAlignment="Center" MaxHeight="24" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                        </Button>
+                        <DataGrid ItemsSource="{Binding HeldSonstigeKleidungImInventar}" SelectedValue="{Binding SelectedSonstiges,Mode=TwoWay}" 
+                                  Grid.Row="1" 
+                                  Grid.ColumnSpan="5"
+                                ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False" Margin="0,5,0,0">
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Als sonstigen Gegenstand definieren" VerticalContentAlignment="Center" Command="{Binding OnSetAsSonstiges}">
+                                        <MenuItem.Icon>
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="20"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="30" HeaderTemplate="{StaticResource angelegtTemplate}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding EntityHI.Angelegt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="SelectedAusrüstung_Click"  />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
+                                <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityHI.Inventar.Gewicht}" IsReadOnly="False"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityHI.Inventar.Name}"/>
+                                <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Expander>
+                
+                <!-- Sonstige Gegenstände -->
                 <Expander IsExpanded="{Binding IsSonstigesVorhanden,Mode=TwoWay}">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxHeight="20">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
-                            <TextBlock Style="{StaticResource TextTitel}" Text="Sonstiges"/>
+                            <TextBlock Style="{StaticResource TextTitel}" Text="Sonstige Gegenstände"/>
                         </StackPanel>
                     </Expander.Header>
                     <Grid>
@@ -662,7 +746,7 @@
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition Width="35"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Neuer Gegenstand:" Style="{DynamicResource Label}" Margin="0,0,5,0"/>
+                            <TextBlock Text="Neuer Gegenstand:" Style="{DynamicResource Label}" Margin="5,0"/>
                             <TextBox HorizontalAlignment="Stretch" 
                                      VerticalContentAlignment="Center"
                                      Grid.Column="1" 
@@ -694,14 +778,23 @@
                             ItemsSource="{Binding HeldSonstigesImInventar}" 
                             SelectedValue="{Binding SelectedSonstiges,Mode=TwoWay}" 
                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
-                            <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
-                            <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="False"/>
-                            <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="False"/>
-                            <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Als sonstige Kleidung definieren" VerticalContentAlignment="Center" Command="{Binding OnSetAsKleidung}">
+                                        <MenuItem.Icon>
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" Height="20"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
+                                <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
+                                <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="False"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="False"/>
+                                <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     
                     </Grid>
                 </Expander>
