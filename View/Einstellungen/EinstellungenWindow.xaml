@@ -883,7 +883,103 @@
                                 </Grid>
                             </Border>
                         </TabItem>
-                        <TabItem Header="HUE-Programme">
+                        <TabItem Header="HUE-Szene">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250*"/>
+                                    <ColumnDefinition Width="190" />
+                                    <ColumnDefinition Width="389*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border Grid.RowSpan="3"  Background="LightGray" />
+                                <Border Margin="2,2,2,0">
+                                    <StackPanel Orientation="Horizontal" Margin="2">
+                                        <TextBox Width="200" Text="{Binding HUESzeneName}" Margin="5,0" />
+                                        <Button Command="{Binding OnBtnAddHUESzene}" IsEnabled="{Binding szeneName, Converter={StaticResource InverseBooleanConverter1}}">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                                <ListView ItemsSource="{Binding lstHUESzenen, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelHUESzene, UpdateSourceTrigger=PropertyChanged}" 
+                                          Grid.Row="1" Grid.RowSpan="2" Margin="5,0,5,5" >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="{Binding Name}" Width="200"/>
+                                                    <Button Width="20" Height="20" Grid.Column="1" Click="btnSzeneRemove">
+                                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Margin="-2" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+
+                                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding lstHUELightsLeft}" SelectedItem="{Binding cmbxSelHUE}" DisplayMemberPath="Name" />
+                                <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Width="30" Command="{Binding OnBtnAddLightToSzene}" >
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                                </Button>
+                                <DataGrid
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    CanUserAddRows="False"
+                                    ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}"
+                                    ItemsSource="{Binding SelHUESzene.lstLightColor, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedItem="{Binding LightColorSelected, UpdateSourceTrigger=PropertyChanged}"
+                                    RowHeight="33" Grid.ColumnSpan="2">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                                Width="45"
+                                                Binding="{Binding light.Id}"
+                                                Header="ID"
+                                                IsReadOnly="True" />
+                                        <DataGridTextColumn
+                                                Width="150"
+                                                Binding="{Binding light.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Header="Name"
+                                                IsReadOnly="True" />
+                                        <DataGridTextColumn
+                                                Width="150"
+                                                Binding="{Binding light.Type}"
+                                                Header="Type"
+                                                IsReadOnly="True" />
+                                        <DataGridTemplateColumn Header="Color" Width="100">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Height="26" 
+                                                                            Command="{Binding DataContext.onBtnSelectHUESzeneColor, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                                                            CommandParameter="{Binding ElementName=EinstellungWnd}">
+                                                            <Button.Content>
+                                                                <Border Padding="0" Height="22" Margin="-2" CornerRadius="3" Width="50" Background="{Binding Path=color, Converter={StaticResource ColorToSolidColorBrushConverter1}}" >
+                                                                    <Label Content="Ändern" VerticalContentAlignment="Center" Padding="0" HorizontalAlignment="Center" />
+                                                                </Border>
+                                                            </Button.Content>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            
+                                            <!--<DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border Margin="2" Height="22" CornerRadius="3" Width="95" Background="{Binding Path=color, Converter={StaticResource ColorToSolidColorBrushConverter1}}" >
+                                                        <Button Content="Color"
+                                                            Width="90"
+                                                            Background="Transparent"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>-->
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </TabItem>
+
+                        <!--<TabItem Header="HUE-Programme">
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -896,7 +992,7 @@
                                         <RowDefinition Height="30*" />
                                         <RowDefinition Height="30" />
                                     </Grid.RowDefinitions>
-                                    <!--<ListBox ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
+                                    --><!--<ListBox ItemsSource="{Binding lstHUEThemes, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding HUEThemeSelected, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                                         <ListBox.Template>
                                             <ControlTemplate TargetType="ListBox">
                                                 <WrapPanel MinHeight="25" ItemWidth="30">
@@ -904,7 +1000,7 @@
                                                 </WrapPanel>
                                             </ControlTemplate>
                                         </ListBox.Template>
-                                    </ListBox>-->
+                                    </ListBox>--><!--
                                     <Button
                                         Grid.Row="1"
                                         Width="110"
@@ -1009,7 +1105,7 @@
                                         </ListBox.ItemTemplate>
                                     </ListBox>
 
-                                    
+
                                     <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"/>
@@ -1038,19 +1134,19 @@
                                         <Button Grid.Row="0" Grid.Column="1" Width="27" Height="27" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,0,0,0"
                                                 Command="{Binding DataContext.onbtnRemoveHUEProcess, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                                                 CommandParameter="{Binding}" >
-                                                    <Style TargetType="Button">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding lstLightProcess.Count }" Value="1">
-                                                                <Setter Property="IsEnabled" Value="False" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                    <Button.Template>
-                                                        <ControlTemplate>
-                                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
-                                                        </ControlTemplate>
-                                                    </Button.Template>
-                                                </Button>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding lstLightProcess.Count }" Value="1">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
 
                                         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" >
                                             <CheckBox Content="Wiederholen" IsChecked="{Binding HUEThemeSelected.doLoop}"  />
@@ -1091,15 +1187,15 @@
                                                                         </Border>
                                                                     </Button.Content>
                                                                 </Button>
-                                                            </DataTemplate>                                                            
-                                                        </DataGridTemplateColumn.CellTemplate>                                                        
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
 
                                                     <DataGridTextColumn
                                                         Width="55"
                                                         Binding="{Binding Path=Color}"
                                                         Header="Color"
-                                                        IsReadOnly="True" />            
+                                                        IsReadOnly="True" />
                                                     <DataGridTextColumn Width="100" Binding="{Binding Path=Dauer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Dauer [ms]" />
                                                 </DataGrid.Columns>
                                             </DataGrid>
@@ -1154,7 +1250,7 @@
                                     </StackPanel>
                                 </Grid>
                             </Border>
-                        </TabItem>
+                        </TabItem>-->
                     </TabControl>
                 </TabItem>
 

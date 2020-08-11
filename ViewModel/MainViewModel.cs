@@ -628,6 +628,39 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _lstHUELights, value); }
         }
 
+        private List<HUESzene> _lstHUESzenen = new List<HUESzene>();
+        public List<HUESzene> lstHUESzenen
+        {
+            get { return _lstHUESzenen; }
+            set { Set(ref _lstHUESzenen, value); }
+        }
+
+        private HUESzene _hUESzeneSelected = null;
+        public HUESzene HUESzeneSelected
+        {
+            get { return _hUESzeneSelected; }
+            set 
+            { 
+                Set(ref _hUESzeneSelected, value);
+                if (value == null)
+                    return;
+                foreach (LightColor LC in value.lstLightColor)
+                {
+                    if (LC.color != null)
+                    {
+                        //Control the lights                
+                        LightCommand command = new LightCommand();
+                        command.TurnOn().SetColor(new RGBColor(LC.color.R, LC.color.G, LC.color.B));
+                        command.Brightness = (byte)LC.color.A;
+
+                        List<string> lst = new List<string>();
+                        lst.Add(LC.light.Id);
+                        Global.MainVM.Client.SendCommandAsync(command, lst);
+                    }
+                }
+            }
+        }
+
         private List<LocatedBridge> _lstHUEGaterways = new List<LocatedBridge>();
         public List<LocatedBridge> lstHUEGateways
         {

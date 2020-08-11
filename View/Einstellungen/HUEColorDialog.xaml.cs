@@ -46,14 +46,22 @@ namespace MeisterGeister.View.Settings
       set { colorPicker.InitialColor = value; }
     }
 
-    #endregion
+    private Light _testLight = null;
+    public Light TestLight
+    {
+        get { return colorPicker.TestLight; }
+        set { colorPicker.TestLight = value; }
+    }
 
-    #region Event Handlers
 
-    /// <summary>
-    /// Close ColorDialog, accepting color selection.
-    /// </summary>
-    private void btnOK_Click(object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Close ColorDialog, accepting color selection.
+        /// </summary>
+        private void btnOK_Click(object sender, RoutedEventArgs e)
     {
       DialogResult = true;
     }
