@@ -72,11 +72,32 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
+        private HUE_LampeColor _lightColorSelectedDB = new HUE_LampeColor();
+        public HUE_LampeColor LightColorSelectedDB
+        {
+            get { return _lightColorSelectedDB; }
+            set { _lightColorSelectedDB = value; }
+        }
+
         private LightColor _lightColorSelected = new LightColor();
         public LightColor LightColorSelected
         {
             get { return _lightColorSelected; }
-            set { _lightColorSelected = value; }
+            set 
+            { 
+                _lightColorSelected = value;
+                if (value == null)
+                    LightColorSelectedDB = null;
+                else
+                    LightColorSelectedDB = Global.ContextHUE.LampeColorListe.Where(t => t.Lampenname == value.light.Name).FirstOrDefault();
+            }
+        }
+
+        private HUE_Szene _selHUESzeneDB = new HUE_Szene();
+        public HUE_Szene SelHUESzeneDB
+        {
+            get { return _selHUESzeneDB; }
+            set { _selHUESzeneDB = value; }
         }
 
         private HUESzene _selHUESzene = new HUESzene();
@@ -86,8 +107,14 @@ namespace MeisterGeister.ViewModel.Settings
             set 
             {
                 Set(ref _selHUESzene, value);
+
                 if (value == null)
+                {
+                    SelHUESzeneDB = null;
                     return;
+                }
+                SelHUESzeneDB = Global.ContextHUE.SzenenListe.Where(t => t.Name == value.Name).FirstOrDefault();
+
                 List<Light> LightsLeft = new List<Light>();
                 if (value.lstLightColor.Count == 0)
                     LightsLeft.AddRange(lstHUELights);
@@ -262,6 +289,9 @@ namespace MeisterGeister.ViewModel.Settings
             List<LightColor> lstLC = new List<LightColor>();
             lstLC.AddRange(SelHUESzene.lstLightColor);
             lstLC.Add(new LightColor() { light = cmbxSelHUE, color = Colors.White } );
+
+            Global.ContextHUE.AddLampenColorToSzene(SelHUESzeneDB, cmbxSelHUE.Name, Colors.White.ToString());
+
             SelHUESzene.lstLightColor = lstLC;
             cmbxSelHUE = null;
 
@@ -293,6 +323,9 @@ namespace MeisterGeister.ViewModel.Settings
             HUESzeneName = null;
             lstHUESzenen = lstSzenen;
             SelHUESzene = newHUESzene;
+
+            HUE_Szene hSzene = null;
+            Global.ContextHUE.AddSzene(HUESzeneName, out hSzene);
         }
 
         public Base.CommandBase onBtnActivateHUEGW
@@ -650,9 +683,37 @@ namespace MeisterGeister.ViewModel.Settings
             if (colorDialog.ShowDialog().Value)
             {
                 LightColorSelected.color = colorDialog.SelectedColor;
+                LightColorSelectedDB.Color = ColorToHexString(LightColorSelected.color);
+
                 SelHUESzene = null;
                 SelHUESzene = hSzene;
             }
+        }
+
+        #region -- Data Members --
+        static char[] hexDigits = {
+         '0', '1', '2', '3', '4', '5', '6', '7',
+         '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        #endregion
+
+        /// <summary>
+        /// Convert a .NET Color to a hex string.
+        /// </summary>
+        /// <returns>ex: "FFFFFF", "AB12E9"</returns>
+        public static string ColorToHexString(Color color)
+        {
+            byte[] bytes = new byte[3];
+            bytes[0] = color.R;
+            bytes[1] = color.G;
+            bytes[2] = color.B;
+            char[] chars = new char[bytes.Length * 2];
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                int b = bytes[i];
+                chars[i * 2] = hexDigits[b >> 4];
+                chars[i * 2 + 1] = hexDigits[b & 0xF];
+            }
+            return new string(chars);
         }
         private void SelectHUEColor(object obj)
         {

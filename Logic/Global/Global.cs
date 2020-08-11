@@ -28,6 +28,7 @@ namespace MeisterGeister
         public static Service.HandelsgutService ContextHandelsgut;
         public static Service.NscService ContextNsc;
         public static Service.NamenService ContextNamen;
+        public static Service.HUEService ContextHUE;
         public static Service.NotizService ContextNotizen;
         public static Service.VorNachteilService ContextVorNachteil;
         public static Service.ZauberService ContextZauber;
@@ -403,6 +404,7 @@ namespace MeisterGeister
             ContextHandelsgut = new Service.HandelsgutService();
             ContextNsc = new Service.NscService();
             ContextNamen = new Service.NamenService();
+            ContextHUE = new Service.HUEService();
             ContextNotizen = new Service.NotizService();
             ContextZauber = new Service.ZauberService();
             ContextZooBot = new Service.ZooBotService();

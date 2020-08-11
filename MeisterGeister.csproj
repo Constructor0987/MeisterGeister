@@ -347,6 +347,8 @@
     <Compile Include="Model\Alchimierezept_Setting_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\HUE_LampeColor.cs" />
+    <Compile Include="Model\HUE_Szene.cs" />
     <Compile Include="Model\HUELight.cs" />
     <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Audio_Playlist_Poco.cs">
@@ -432,6 +434,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GegnerBase_Zauber.cs" />
+    <Compile Include="Model\HUE_LampeColor_Poco.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HUE_Szene_Poco.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Kreatur_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -604,6 +612,7 @@
     <Compile Include="Model\Schild_Poco.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Service\HUEService.cs" />
     <Compile Include="Model\Service\GeoService.cs" />
     <Compile Include="Model\Service\PflanzeService.cs" />
     <Compile Include="Model\Service\ZooBotService.cs" />
@@ -820,6 +829,7 @@
     <Compile Include="View\Einstellungen\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\ColorStringToSolidColorBrushConverter.cs" />
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
@@ -2770,6 +2780,7 @@
     <Resource Include="Images\Icons\Aventurien_icon.png" />
     <Resource Include="Images\Icons\Myranor_icon.png" />
     <Resource Include="Images\Icons\fliehen.png" />
+    <Content Include="Daten\Updateskripte\UpdateTo_V0131.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

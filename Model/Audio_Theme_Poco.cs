@@ -164,10 +164,53 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<bool> _favorite;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<System.Guid> HUE_SzeneGUID
+        {
+            get { return _hUE_SzeneGUID; }
+            set
+            {
+                try
+                {
+                    _settingFK = true;
+                    if (_hUE_SzeneGUID != value)
+                    {
+                        if (HUE_Szene != null && HUE_Szene.HUE_SzeneGUID != value)
+                        {
+                            HUE_Szene = null;
+                        }
+                        _hUE_SzeneGUID = value;
+                    }
+                }
+                finally
+                {
+                    _settingFK = false;
+                }
+            }
+    
+        }
+        private Nullable<System.Guid> _hUE_SzeneGUID;
 
         #endregion
 
         #region Navigation Properties
+    
+    	[DataMember]
+        public virtual HUE_Szene HUE_Szene
+        {
+            get { return _hUE_Szene; }
+            set
+            {
+                if (!ReferenceEquals(_hUE_Szene, value))
+                {
+                    var previousValue = _hUE_Szene;
+                    _hUE_Szene = value;
+                    FixupHUE_Szene(previousValue);
+                }
+            }
+        }
+        private HUE_Szene _hUE_Szene;
     
     	[DataMember]
         public virtual ICollection<Audio_Playlist> Audio_Playlist
@@ -271,6 +314,33 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private bool _settingFK = false;
+    
+        private void FixupHUE_Szene(HUE_Szene previousValue)
+        {
+    		OnChanged("HUE_Szene");
+            if (previousValue != null && previousValue.Audio_Theme.Contains(this))
+            {
+                previousValue.Audio_Theme.Remove(this);
+            }
+    
+            if (HUE_Szene != null)
+            {
+                if (!HUE_Szene.Audio_Theme.Contains(this))
+                {
+                    HUE_Szene.Audio_Theme.Add(this);
+                }
+                if (HUE_SzeneGUID != HUE_Szene.HUE_SzeneGUID)
+                {
+                    HUE_SzeneGUID = HUE_Szene.HUE_SzeneGUID;
+                }
+            }
+            else if (!_settingFK)
+            {
+                HUE_SzeneGUID = null;
+            }
+        }
     
         private void FixupAudio_Playlist(object sender, NotifyCollectionChangedEventArgs e)
         {
