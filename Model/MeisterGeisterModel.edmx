@@ -59,12 +59,7 @@
     <EntitySet Name="Held_Zauber" EntityType="DatabaseDSAModel.Store.Held_Zauber" store:Type="Tables" />
     <EntitySet Name="HUE_LampeColor" EntityType="DatabaseDSAModel.Store.HUE_LampeColor" store:Type="Tables" />
     <EntitySet Name="HUE_Szene" EntityType="DatabaseDSAModel.Store.HUE_Szene" store:Type="Tables" />
-    <EntitySet Name="HUE_Szene_LampeColor" EntityType="DatabaseDSAModel.Store.HUE_Szene_LampeColor" store:Type="Tables" store:Name="HUE_Szene_LampeColor">
-      <DefiningQuery>SELECT 
-[HUE_Szene_LampeColor].[HUE_SzeneGUID] AS [HUE_SzeneGUID], 
-[HUE_Szene_LampeColor].[HUE_LampeColorGUID] AS [HUE_LampeColorGUID]
-FROM [HUE_Szene_LampeColor] AS [HUE_Szene_LampeColor]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="HUE_Szene_LampeColor" EntityType="DatabaseDSAModel.Store.HUE_Szene_LampeColor" store:Type="Tables" />
     <EntitySet Name="Inventar" EntityType="DatabaseDSAModel.Store.Inventar" store:Type="Tables" />
     <EntitySet Name="Kampfregel" EntityType="DatabaseDSAModel.Store.Kampfregel" store:Type="Tables" />
     <EntitySet Name="Kreatur" EntityType="DatabaseDSAModel.Store.Kreatur" store:Type="Tables" />
@@ -163,14 +158,6 @@ FROM [HUE_Szene_LampeColor] AS [HUE_Szene_LampeColor]</DefiningQuery>
     <AssociationSet Name="FK__Held_Modifikator__0000000000000AAB" Association="DatabaseDSAModel.Store.FK__Held_Modifikator__0000000000000AAB">
       <End Role="Modifikator" EntitySet="Modifikator" />
       <End Role="Held_Modifikator" EntitySet="Held_Modifikator" />
-    </AssociationSet>
-    <AssociationSet Name="FK__HUE_Szene_LampeColor__0000000000001238" Association="DatabaseDSAModel.Store.FK__HUE_Szene_LampeColor__0000000000001238">
-      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
-      <End Role="HUE_Szene_LampeColor" EntitySet="HUE_Szene_LampeColor" />
-    </AssociationSet>
-    <AssociationSet Name="FK__HUE_Szene_LampeColor__000000000000123C" Association="DatabaseDSAModel.Store.FK__HUE_Szene_LampeColor__000000000000123C">
-      <End Role="HUE_LampeColor" EntitySet="HUE_LampeColor" />
-      <End Role="HUE_Szene_LampeColor" EntitySet="HUE_Szene_LampeColor" />
     </AssociationSet>
     <AssociationSet Name="FK__Kreatur__0000000000000BCF" Association="DatabaseDSAModel.Store.FK__Kreatur__0000000000000BCF">
       <End Role="Beschwörbares" EntitySet="Beschwörbares" />
@@ -395,6 +382,14 @@ FROM [HUE_Szene_LampeColor] AS [HUE_Szene_LampeColor]</DefiningQuery>
     <AssociationSet Name="fk_HeldMunition_TrageortGUID" Association="DatabaseDSAModel.Store.fk_HeldMunition_TrageortGUID">
       <End Role="Trageort" EntitySet="Trageort" />
       <End Role="Held_Munition" EntitySet="Held_Munition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HUE_Szene_LampeColor_HUE_LampeColor" Association="DatabaseDSAModel.Store.FK_HUE_Szene_LampeColor_HUE_LampeColor">
+      <End Role="HUE_LampeColor" EntitySet="HUE_LampeColor" />
+      <End Role="HUE_Szene_LampeColor" EntitySet="HUE_Szene_LampeColor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HUE_Szene_LampeColor_HUE_Szene" Association="DatabaseDSAModel.Store.FK_HUE_Szene_LampeColor_HUE_Szene">
+      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
+      <End Role="HUE_Szene_LampeColor" EntitySet="HUE_Szene_LampeColor" />
     </AssociationSet>
     <AssociationSet Name="fk_KulturName_Kultur" Association="DatabaseDSAModel.Store.fk_KulturName_Kultur">
       <End Role="Kultur" EntitySet="Kultur" />
@@ -1316,9 +1311,6 @@ FROM [HUE_Szene_LampeColor] AS [HUE_Szene_LampeColor]</DefiningQuery>
     <Property Name="HUE_SzeneGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="254" />
   </EntityType>
-  <!--Während der Generierung sind Fehler aufgetreten:
-Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.
--->
   <EntityType Name="HUE_Szene_LampeColor">
     <Key>
       <PropertyRef Name="HUE_SzeneGUID" />
@@ -2104,34 +2096,6 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__HUE_Szene_LampeColor__0000000000001238">
-    <End Role="HUE_Szene" Type="DatabaseDSAModel.Store.HUE_Szene" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="HUE_Szene_LampeColor" Type="DatabaseDSAModel.Store.HUE_Szene_LampeColor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="HUE_Szene">
-        <PropertyRef Name="HUE_SzeneGUID" />
-      </Principal>
-      <Dependent Role="HUE_Szene_LampeColor">
-        <PropertyRef Name="HUE_SzeneGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__HUE_Szene_LampeColor__000000000000123C">
-    <End Role="HUE_LampeColor" Type="DatabaseDSAModel.Store.HUE_LampeColor" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="HUE_Szene_LampeColor" Type="DatabaseDSAModel.Store.HUE_Szene_LampeColor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="HUE_LampeColor">
-        <PropertyRef Name="HUE_LampeColorGUID" />
-      </Principal>
-      <Dependent Role="HUE_Szene_LampeColor">
-        <PropertyRef Name="HUE_LampeColorGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Kreatur__0000000000000BCF">
     <End Role="Beschwörbares" Type="DatabaseDSAModel.Store.Beschwörbares" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -2903,6 +2867,34 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
       </Principal>
       <Dependent Role="Held_Munition">
         <PropertyRef Name="TrageortGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HUE_Szene_LampeColor_HUE_LampeColor">
+    <End Role="HUE_LampeColor" Type="DatabaseDSAModel.Store.HUE_LampeColor" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="HUE_Szene_LampeColor" Type="DatabaseDSAModel.Store.HUE_Szene_LampeColor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HUE_LampeColor">
+        <PropertyRef Name="HUE_LampeColorGUID" />
+      </Principal>
+      <Dependent Role="HUE_Szene_LampeColor">
+        <PropertyRef Name="HUE_LampeColorGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HUE_Szene_LampeColor_HUE_Szene">
+    <End Role="HUE_Szene" Type="DatabaseDSAModel.Store.HUE_Szene" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="HUE_Szene_LampeColor" Type="DatabaseDSAModel.Store.HUE_Szene_LampeColor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HUE_Szene">
+        <PropertyRef Name="HUE_SzeneGUID" />
+      </Principal>
+      <Dependent Role="HUE_Szene_LampeColor">
+        <PropertyRef Name="HUE_SzeneGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3987,8 +3979,8 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
       <End Role="Schild" EntitySet="Schild" />
     </AssociationSet>
     <AssociationSet Name="HUE_Szene_LampeColor" Association="DatabaseDSAModel.HUE_Szene_LampeColor">
-      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
       <End Role="HUE_LampeColor" EntitySet="HUE_LampeColor" />
+      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
     </AssociationSet>
     <AssociationSet Name="Landschaftsgruppe_Landschaft" Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft">
       <End Role="Landschaft" EntitySet="Landschaft" />
@@ -6797,8 +6789,8 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
     <End Role="Schild" Type="DatabaseDSAModel.Schild" Multiplicity="0..1" />
   </Association>
   <Association Name="HUE_Szene_LampeColor">
-    <End Role="HUE_Szene" Type="DatabaseDSAModel.HUE_Szene" Multiplicity="*" />
     <End Role="HUE_LampeColor" Type="DatabaseDSAModel.HUE_LampeColor" Multiplicity="*" />
+    <End Role="HUE_Szene" Type="DatabaseDSAModel.HUE_Szene" Multiplicity="*" />
   </Association>
   <Association Name="Landschaftsgruppe_Landschaft">
     <End Role="Landschaft" Type="DatabaseDSAModel.Landschaft" Multiplicity="*" />
@@ -8202,11 +8194,11 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="HUE_Szene_LampeColor" TypeName="DatabaseDSAModel.HUE_Szene_LampeColor" StoreEntitySet="HUE_Szene_LampeColor">
-      <EndProperty Name="HUE_Szene">
-        <ScalarProperty Name="HUE_SzeneGUID" ColumnName="HUE_SzeneGUID" />
-      </EndProperty>
       <EndProperty Name="HUE_LampeColor">
         <ScalarProperty Name="HUE_LampeColorGUID" ColumnName="HUE_LampeColorGUID" />
+      </EndProperty>
+      <EndProperty Name="HUE_Szene">
+        <ScalarProperty Name="HUE_SzeneGUID" ColumnName="HUE_SzeneGUID" />
       </EndProperty>
     </AssociationSetMapping>
     <AssociationSetMapping Name="Landschaftsgruppe_Landschaft" TypeName="DatabaseDSAModel.Landschaftsgruppe_Landschaft" StoreEntitySet="Landschaftsgruppe_Landschaft">
@@ -8241,29 +8233,29 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="9ab9ae0c920b42d9b934926a6a4bec50" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="2.75" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="7.25" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="5" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="9.5" PointY="14.625" IsExpanded="true" />
+      <Diagram DiagramId="bcb47c695a0a4e25a001af822ae01c7b" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="2.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="7.25" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="9.5" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="13.75" PointY="21.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="16" PointY="17.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="70.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_WesenIcon" Width="1.5" PointX="8.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_WesenIcon" Width="1.5" PointX="2.75" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="42.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="16" PointY="30.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstungsset" Width="1.5" PointX="3.75" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Beschwörbares" Width="1.5" PointX="21" PointY="29.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Dämon" Width="1.5" PointX="23.25" PointY="27.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="25.5" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="9.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="4.75" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="23.25" PointY="30.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="19.75" PointY="53.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="44.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fortbewegung" Width="1.5" PointX="3.75" PointY="74.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Fortbewegung" Width="1.5" PointX="3.75" PointY="77.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fortbewegung_Modifikation" Width="1.5" PointX="6" PointY="69.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="62.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="21" PointY="35.375" IsExpanded="true" />
@@ -8290,8 +8282,8 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="9" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Waffe" Width="1.5" PointX="10.5" PointY="37" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="3" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_LampeColor" Width="1.5" PointX="6" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_Szene" Width="1.5" PointX="3.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_LampeColor" Width="1.5" PointX="1.5" PointY="73.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_Szene" Width="1.5" PointX="3.75" PointY="73.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="21.75" PointY="50" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="23.25" PointY="32.75" IsExpanded="true" />
@@ -8300,13 +8292,13 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
         <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="70.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="73.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="11.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="5.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="6.75" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="57.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="3.75" PointY="37" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition_Setting" Width="1.5" PointX="16" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="13.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="15.75" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="20.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="8.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="10.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="5.75" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ort" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="61.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="16" PointY="37.5" IsExpanded="true" />
@@ -8325,15 +8317,15 @@ Warnung 6002: Für Tabelle/Sicht 'HUE_Szene_LampeColor' ist kein Primärschlüss
         <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="47" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="53.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="39.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="10.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="13.75" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="6.75" PointY="46.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil_Auswahl" Width="1.5" PointX="21.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil_Auswahl" Width="1.5" PointX="15.75" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="8.25" PointY="40.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Weg" Width="1.5" PointX="7.25" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Wegtyp" Width="1.5" PointX="2.75" PointY="66.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="0.75" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="19" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="3" PointY="77" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="3" PointY="80" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="16.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="19" PointY="15.25" IsExpanded="true" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" ManuallyRouted="false" />

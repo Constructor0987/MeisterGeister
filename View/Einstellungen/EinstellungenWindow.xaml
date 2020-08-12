@@ -904,14 +904,15 @@
                                         </Button>
                                     </StackPanel>
                                 </Border>
-                                <ListView ItemsSource="{Binding lstHUESzenen, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelHUESzene, UpdateSourceTrigger=PropertyChanged}" 
+                                <ListView x:Name="lvHUESzene"
+                                    ItemsSource="{Binding lstHUESzenen, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelHUESzene, UpdateSourceTrigger=PropertyChanged}" 
                                           Grid.Row="1" Grid.RowSpan="2" Margin="5,0,5,5" >
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <Border >
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label Content="{Binding Name}" Width="200"/>
-                                                    <Button Width="20" Height="20" Grid.Column="1" Click="btnSzeneRemove">
+                                                    <Button Width="20" Height="20" Grid.Column="1" Click="btnSzeneRemove" Tag="{Binding ElementName=lvHUESzene, Path=SelectedItem}">
                                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Margin="-2" />
                                                     </Button>
                                                 </StackPanel>

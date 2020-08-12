@@ -11,5 +11,11 @@ namespace MeisterGeister.Model
         {
             HUE_SzeneGUID = Guid.NewGuid();
         }
+
+        public static void UpdateLists()
+        {
+            Global.ContextHUE.UpdateList<HUE_Szene>();
+            Model.HUE_Szene.UpdateLists();
+        }
     }
 }

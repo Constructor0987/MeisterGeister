@@ -20,6 +20,7 @@ using MeisterGeister.View.Settings;
 using System.Threading;
 using System.Windows;
 using MeisterGeister.View;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.ViewModel.Settings
 {
@@ -87,9 +88,9 @@ namespace MeisterGeister.ViewModel.Settings
             { 
                 _lightColorSelected = value;
                 if (value == null)
-                    LightColorSelectedDB = null;
+                    LightColorSelectedDB = null; 
                 else
-                    LightColorSelectedDB = Global.ContextHUE.LampeColorListe.Where(t => t.Lampenname == value.light.Name).FirstOrDefault();
+                    LightColorSelectedDB = SelHUESzeneDB.HUE_LampeColor.Where(t => t.Lampenname == value.light.Name).FirstOrDefault();
             }
         }
 
@@ -115,6 +116,15 @@ namespace MeisterGeister.ViewModel.Settings
                 }
                 SelHUESzeneDB = Global.ContextHUE.SzenenListe.Where(t => t.Name == value.Name).FirstOrDefault();
 
+                List<LightColor> lstLC = new List<LightColor>();
+                foreach(HUE_LampeColor aLampeColorDB in SelHUESzeneDB.HUE_LampeColor)
+                {
+                    lstLC.Add(new LightColor() { light = lstHUELights
+                        .Where(t => t.Name == aLampeColorDB.Lampenname).FirstOrDefault(),
+                        color = (Color)ColorConverter.ConvertFromString(aLampeColorDB.Color) });
+                }
+                SelHUESzene.lstLightColor = lstLC;
+                OnChanged(nameof(SelHUESzene));
                 List<Light> LightsLeft = new List<Light>();
                 if (value.lstLightColor.Count == 0)
                     LightsLeft.AddRange(lstHUELights);
@@ -290,7 +300,7 @@ namespace MeisterGeister.ViewModel.Settings
             lstLC.AddRange(SelHUESzene.lstLightColor);
             lstLC.Add(new LightColor() { light = cmbxSelHUE, color = Colors.White } );
 
-            Global.ContextHUE.AddLampenColorToSzene(SelHUESzeneDB, cmbxSelHUE.Name, Colors.White.ToString());
+            SelHUESzeneDB.HUE_LampeColor.Add(Global.ContextHUE.AddLampenColorToSzene(cmbxSelHUE.Name, Colors.White.ToString()));
 
             SelHUESzene.lstLightColor = lstLC;
             cmbxSelHUE = null;
@@ -315,6 +325,11 @@ namespace MeisterGeister.ViewModel.Settings
 
         public void AddHUESzene(object obj)
         {
+            if (HUESzeneName == null || lstHUESzenen.Count(t => t.Name == HUESzeneName) > 0)
+            {
+                ViewHelper.Popup("Bitte einen nicht vorhandenen Szenen-Namen eingeben.");
+                return;
+            }
             List<HUESzene> lstSzenen = new List<HUESzene>();
             lstSzenen.AddRange(lstHUESzenen);
             HUESzene newHUESzene = new HUESzene();
@@ -324,8 +339,15 @@ namespace MeisterGeister.ViewModel.Settings
             lstHUESzenen = lstSzenen;
             SelHUESzene = newHUESzene;
 
-            HUE_Szene hSzene = null;
-            Global.ContextHUE.AddSzene(HUESzeneName, out hSzene);
+            HUE_Szene aSzeneDB = new HUE_Szene();
+            aSzeneDB.Name = newHUESzene.Name;
+
+            if (Global.ContextHUE.Insert<HUE_Szene>(aSzeneDB))               //erfolgreich hinzugefügt
+            {
+                Global.ContextAudio.Update<HUE_Szene>(aSzeneDB);
+                SelHUESzeneDB = aSzeneDB;
+            }
+    //        Global.ContextHUE.AddSzene(HUESzeneName, out hSzene);
         }
 
         public Base.CommandBase onBtnActivateHUEGW
@@ -683,8 +705,9 @@ namespace MeisterGeister.ViewModel.Settings
             if (colorDialog.ShowDialog().Value)
             {
                 LightColorSelected.color = colorDialog.SelectedColor;
-                LightColorSelectedDB.Color = ColorToHexString(LightColorSelected.color);
+                LightColorSelectedDB.Color = "#" + ColorToHexString(LightColorSelected.color);
 
+                Global.ContextHUE.Update<HUE_LampeColor>(LightColorSelectedDB);
                 SelHUESzene = null;
                 SelHUESzene = hSzene;
             }
@@ -702,10 +725,11 @@ namespace MeisterGeister.ViewModel.Settings
         /// <returns>ex: "FFFFFF", "AB12E9"</returns>
         public static string ColorToHexString(Color color)
         {
-            byte[] bytes = new byte[3];
-            bytes[0] = color.R;
-            bytes[1] = color.G;
-            bytes[2] = color.B;
+            byte[] bytes = new byte[4];
+            bytes[0] = color.A;
+            bytes[1] = color.R;
+            bytes[2] = color.G;
+            bytes[3] = color.B;
             char[] chars = new char[bytes.Length * 2];
             for (int i = 0; i < bytes.Length; i++)
             {
@@ -876,6 +900,25 @@ namespace MeisterGeister.ViewModel.Settings
                 HUEGWSelected = MainViewModel.Instance.HUEGWSelected;
                 lstHUELights = MainViewModel.Instance.lstHUELights;
                 Client = MainViewModel.Instance.Client;
+
+                //Create HUE-Szene aus Datenbankä
+                List<HUESzene> lstSzene = new List<HUESzene>();
+                Global.ContextHUE.SzenenListe.ForEach(delegate( HUE_Szene hSzeneDB)
+                {
+                    HUESzene hSzene = new HUESzene();
+                    hSzene.Name = hSzeneDB.Name;
+
+                    hSzeneDB.HUE_LampeColor.ToList().ForEach(delegate (HUE_LampeColor aLampeColorDB) {
+                        LightColor aColorLight = new LightColor();
+                        aColorLight.light = lstHUELights.Where(t => t.Name == aLampeColorDB.Lampenname).FirstOrDefault();
+                        string ColorS = aLampeColorDB.Color;
+                        aColorLight.color = (Color)ColorConverter.ConvertFromString(ColorS);
+                      //  System.Drawing.ColorTranslator.FromHtml(ColorS);
+                    });
+                    lstSzene.Add(hSzene);
+
+                 });
+                lstHUESzenen = lstSzene;
             }
         }
 

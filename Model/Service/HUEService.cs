@@ -39,6 +39,8 @@ namespace MeisterGeister.Model.Service {
         {
             get { return Liste<HUE_LampeColor>(); }
         }
+
+
         #endregion
 
         #region //----- KONSTRUKTOR ----
@@ -72,19 +74,34 @@ namespace MeisterGeister.Model.Service {
             return Insert<HUE_Szene>(aSzene);
         }
 
-        public bool AddLampenColorToSzene(HUE_Szene aSzene, string aName, string aColor)
+        public HUE_LampeColor AddLampenColorToSzene(string aName, string aColor)
         {
             HUE_LampeColor aLampecolor = new HUE_LampeColor();
-            aLampecolor.HUE_LampeColorGUID = Guid.NewGuid();
+     //       aLampecolor.HUE_LampeColorGUID = Guid.NewGuid();
             aLampecolor.Lampenname = aName;
             aLampecolor.Color = aColor;
 
             Insert<HUE_LampeColor>(aLampecolor);
-            aSzene.HUE_LampeColor.Add(aLampecolor);
-            return true;
+            Update<HUE_LampeColor>(aLampecolor);
+            return aLampecolor;
         }
 
         // Add & Remove
+
+        //public List<HUE_Szene_LampeColor> LoadLampeColor_BySzene(HUE_Szene aSzene, Audio_Titel aTitel)
+        //{
+        //    var tmp = aPlaylist.Audio_Playlist_Titel
+        //        .Where(pt => pt.Audio_TitelGUID == aTitel.Audio_TitelGUID)
+        //            .ToList();
+        //    return tmp;
+        //}
+
+        //public bool AddTitelToPlaylist(Audio_Playlist aPlaylist, Audio_Titel aTitel)
+        //{
+        //    Audio_Playlist_Titel tmp;
+        //    return AddTitelToPlaylist(aPlaylist, aTitel, out tmp);
+        //}
+
 
         #endregion
 
