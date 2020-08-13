@@ -32,11 +32,79 @@ using MeisterGeister.View.General;
 using static MeisterGeister.ViewModel.Settings.EinstellungenViewModel;
 using MeisterGeister.ViewModel.Settings;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace MeisterGeister.ViewModel
 {
     public class MainViewModel : Base.ViewModelBase
     {
+
+        #region -- HUE running ---
+
+        #region --- HUE Command
+
+        //command keys for queue
+        private const string ON_OFF = "ON_OFF";
+        private const string BRIGHTNESS = "BRIGHTNESS";
+        private const string COLOR = "COLOR";
+
+        private Dictionary<string, LightCommand> _commandQueue;
+        DispatcherTimer _timer; //timer for queue
+
+        #endregion
+
+
+        private void Timer_Tick(object sender, object e)
+        {
+            //stop timer
+            _timer.Stop();
+
+            //execute queue commands
+            if (_commandQueue.Count > 0)
+            {
+                foreach (var cmd in _commandQueue)
+                {
+                    List<string> lstLights = cmd.Key.Split('|').ToList();
+                    lstLights.RemoveAt(0);
+                    //fire and forget
+                    Client.SendCommandAsync(cmd.Value, lstLights);
+                }
+            }
+
+            //clear queue
+            _commandQueue.Clear();
+            //start timer back up again
+            _timer.Start();
+        }
+
+        //helper method to queue light commands for execution
+        public void QueueCommand(string commandType, LightCommand cmd, List<string> lstLights)
+        {
+            if (_commandQueue == null && Client != null)
+            {
+                //initialize command queue
+                _commandQueue = new Dictionary<string, LightCommand>();
+
+                //intilialize command queue timer (avoid sending too many commands per second)
+                _timer = new DispatcherTimer();
+                _timer.Interval = TimeSpan.FromSeconds(0.5);
+                _timer.Tick += Timer_Tick;
+                _timer.Start();
+            }
+            if (_commandQueue == null)
+                return;
+            if (_commandQueue.ContainsKey(commandType))
+            {
+                //replace with most recent
+                _commandQueue[commandType] = cmd;
+            }
+            else
+            {
+                _commandQueue.Add(commandType + "|" +string.Join("|", lstLights), cmd);
+            }
+        }
+
+        #endregion
 
         private MainViewModel() : base(View.General.ViewHelper.ShowError)
         {
@@ -48,6 +116,7 @@ namespace MeisterGeister.ViewModel
                 (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null);
             UpdateHotkeyUsed();
             LoadHUE();
+
             Einstellungen.EinstellungChanged += Einstellungen_EinstellungChanged;                     
         }
 
@@ -655,7 +724,9 @@ namespace MeisterGeister.ViewModel
 
                         List<string> lst = new List<string>();
                         lst.Add(LC.light.Id);
-                        Global.MainVM.Client.SendCommandAsync(command, lst);
+
+                        QueueCommand(COLOR, command, lst);
+            //            Global.MainVM.Client.SendCommandAsync(command, lst);
                     }
                 }
             }
@@ -688,7 +759,13 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _lstHUEThemes, value); }
         }
 
-        public LocalHueClient Client = null;
+        private LocalHueClient _client = null;
+        public LocalHueClient Client
+        {
+            get { return _client; }
+            set { Set(ref _client, value); }
+        }
+
         public async void LoadHUE()
         {
             string HUE_ID = Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_GatewayID");
