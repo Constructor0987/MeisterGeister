@@ -397,7 +397,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as Gegner).KarmaenergieAktuell = Convert.ToInt32(drow["KarmaenergieAktuell"]);
                                     (bObj as Gegner).AusdauerAktuell = Convert.ToInt32(drow["AusdauerAktuell"]);
                                     (bObj as Gegner).AstralenergieAktuell = Convert.ToInt32(drow["AstralenergieAktuell"]);
-                                    (bObj as Gegner).KämpferTempName = drow["KämpferTempName"].ToString();
+
+                                    if (drow.Table.Columns.Contains("KämpferTempName"))
+                                        (bObj as Gegner).KämpferTempName = drow["KämpferTempName"].ToString();
                                     (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
 
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = true;
