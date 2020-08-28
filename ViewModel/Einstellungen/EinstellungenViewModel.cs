@@ -21,6 +21,9 @@ using System.Threading;
 using System.Windows;
 using MeisterGeister.View;
 using MeisterGeister.View.General;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Windows.Media.Animation;
 
 namespace MeisterGeister.ViewModel.Settings
 {
@@ -612,6 +615,7 @@ namespace MeisterGeister.ViewModel.Settings
                 lstHUEGateways = MainVM.lstHUEGateways;
                 HUEGWSelected = MainVM.HUEGWSelected;
                 lstHUELights = MainVM.lstHUELights;
+                AppKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
 
                 //Create HUE-Szene aus Datenbankä
                 List<HUESzene> lstSzene = new List<HUESzene>();
@@ -1341,31 +1345,67 @@ namespace MeisterGeister.ViewModel.Settings
             set { Set(ref _selectedHUELight, value); }
         }
 
+        private string _appKey = null;
+        public string AppKey
+        {
+            get { return _appKey; }
+            set { Set(ref _appKey, value); }
+        }
+
         private async void _ActivateHUE()
         {
             string ip = HUEGWSelected.IpAddress.ToString();
-
             MainVM.Client = new LocalHueClient(ip);
             appKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
             //4nuWDIXoZ0EMPxMBXhQFagf5bOsK-XcEc7DzS8G1
 
+            if (!string.IsNullOrEmpty(appKey))
+            {
+                Ping pingSender = new Ping();
+                // Create a buffer of 32 bytes of data to be transmitted.
+                string data = "HUETestPing_by_MeisterGeister_123_Hello_test_123";
+                byte[] buffer = Encoding.ASCII.GetBytes(data);
+                // Wait 2 seconds for a reply.
+                int timeout = 2000;
+
+                // Set options for transmission:
+                // The data can go through 64 gateways or routers
+                // before it is destroyed, and the data packet
+                // cannot be fragmented.
+                PingOptions options = new PingOptions(64, true);
+                // Send the request.
+                ErneuterPing:
+                PingReply reply = pingSender.Send(ip, timeout, buffer, options);
+                if (!string.IsNullOrEmpty(appKey) && reply.Status != IPStatus.Success)
+                {
+                    int back = ViewHelper.ConfirmYesNoCancel("Gespeichertes Gateway nciht erkannt", "Das Gateway mit der IP= " + ip + " wurde zu einem vorherigen Start gespeichert, konnte jedoch nicht " +
+                        "im Netzwerk gefunden werden.\n\r \n\rKlicke 'Ja' wenn ein neues Gateway gesucht werden soll. Falls das vorherige erneut gesucht werden soll, klicke 'Nein'");
+                    if (back == 1)
+                        goto ErneuterPing;
+                    if (back == 0)
+                        return;
+                } else
+                    appKey = null;
+            }
+
             if (string.IsNullOrEmpty(appKey))
             {
                 MeisterGeister.View.General.ViewHelper.Popup("Das Gateway wurde mit der MeisterGeister Version noch nicht gekoppelt." + Environment.NewLine + Environment.NewLine +
-                    "Bitte klicke nach dem bestätigen dieser Meldung innerhalb von 10 Sekunden den Button auf dem Gateway");
+                    "Bitte klicke nach dem bestätigen dieser Meldung innerhalb von 15 Sekunden den Button auf dem Gateway");
                 //Register your application
                 //Link button drücken zum Registrieren !!!
                 //Make sure the user has pressed the button on the bridge before calling RegisterAsync
                 //It will throw an LinkButtonNotPressedException if the user did not press the button
                 bool pressed = false;
                 int start = Environment.TickCount;
-                while (!pressed && Environment.TickCount - start < 10000)
+                while (!pressed && Environment.TickCount - start < 15000)
                 {
                     try
                     {
                         appKey = await MainVM.Client.RegisterAsync("MGmeetsHUE", "PC");
                         //Save the app key for next use
                         MeisterGeister.Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_Registerkey", appKey);
+                        AppKey = appKey;
                         pressed = true;
                     }
                     catch (Exception ex)

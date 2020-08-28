@@ -822,6 +822,11 @@
                                         IsEnabled="{Binding lstHUEGateways.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}"
                                         ItemsSource="{Binding lstHUEGateways}"
                                         SelectedItem="{Binding HUEGWSelected}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Width="150"
+                                        HorizontalAlignment="Left"
+                                        Content="{Binding AppKey, UpdateSourceTrigger=PropertyChanged}" />
 
                                     <Button
                                         Grid.Column="1"
