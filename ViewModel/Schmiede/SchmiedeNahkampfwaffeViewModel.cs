@@ -8,6 +8,8 @@ using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
 using MeisterGeister.ViewModel.Schmiede.Logic;
+using MeisterGeister.ViewModel.Basar.Logic;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
@@ -50,10 +52,39 @@ namespace MeisterGeister.ViewModel.Schmiede
         private Nahkampfwaffenverbesserung _selectedNahkampfwaffeMaterial;
         private Techniken _nahkampfwaffeTechnikListe;
         private Nahkampfwaffenverbesserung _selectedNahkampfwaffeTechnik;
-        
+
+        public Model.Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
+                OnChanged("HeldTalentwerte");
+            }
+        }
         #endregion
 
         #region //---- COMMANDS ----
+
+        private Base.CommandBase onAddInventar = null;
+        public Base.CommandBase OnAddInventar
+        {
+            get
+            {
+                if (onAddInventar == null)
+                    onAddInventar = new Base.CommandBase(AddInventar, null);
+                return onAddInventar;
+            }
+        }
+        private void AddInventar(object sender)
+        {
+            SelectedHeld.AddInventar(ErstellteNahkampfwaffe);
+
+            SelectedHeld.Held_Ausrüstung.ToList();
+            MeisterGeister.View.General.ViewHelper.Popup(string.Format("{0}x '{1}' zum Inventar von '{2}' hinzugefügt.", 1, _selectedNahkampfwaffe.Name, SelectedHeld.Name));
+        }
+
         private Base.CommandBase onAddZuNotizen = null;
         public Base.CommandBase OnAddZuNotizen
         {
@@ -69,6 +100,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (_selectedNahkampfwaffe != null && _erstellteNahkampfwaffe != null)
             {
                 string fromschmiede = "\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n";
+                fromschmiede += Global.SelectedHeld.Name + " erstellt in der Schmiede eine Nahkampfwaffe: \n";
                 fromschmiede += _erstellteNahkampfwaffe.ToString("l");
                 Global.ContextNotizen.NotizAllgemein.AppendText(fromschmiede);
             }
