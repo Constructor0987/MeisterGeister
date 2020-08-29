@@ -92,7 +92,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             ErstellteNahkampfwaffe.Talent = waffeTalent;
             SelectedHeld.AddInventar(ErstellteNahkampfwaffe);
             MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurde die Nahkampfwaffe '{0}' zum Inventar hinzugefügt.", ErstellteNahkampfwaffe.Name));
-            Refresh();
+            Refresh(); 
         }
 
         private Base.CommandBase onAddZuNotizen = null;
