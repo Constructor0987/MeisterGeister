@@ -40,6 +40,7 @@ namespace MeisterGeister.ViewModel.Schmiede
         private int _tawSchmiedMod;
         private int _probeDauerNApprox;
 
+
         private Model.Waffe _erstellteNahkampfwaffe;
 
         //Listen + SelectedItems
@@ -79,10 +80,19 @@ namespace MeisterGeister.ViewModel.Schmiede
         }
         private void AddInventar(object sender)
         {
-            SelectedHeld.AddInventar(ErstellteNahkampfwaffe);
+            List<Talent> HeldWaffeTalent = new List<Talent>();
+            HeldWaffeTalent.AddRange(ErstellteNahkampfwaffe.Talent);
 
-            SelectedHeld.Held_Ausrüstung.ToList();
-            MeisterGeister.View.General.ViewHelper.Popup(string.Format("{0}x '{1}' zum Inventar von '{2}' hinzugefügt.", 1, _selectedNahkampfwaffe.Name, SelectedHeld.Name));
+            List<Talent> waffeTalent = new List<Talent>();
+            foreach(Talent talent in ErstellteNahkampfwaffe.Talent)
+            {
+                Model.Talent tal = Global.ContextHeld.TalentListe.FirstOrDefault(t => t.TalentGUID == talent.TalentGUID);
+                waffeTalent.Add(tal);
+            }
+            ErstellteNahkampfwaffe.Talent = waffeTalent;
+            SelectedHeld.AddInventar(ErstellteNahkampfwaffe);
+            MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurde die Nahkampfwaffe '{0}' zum Inventar hinzugefügt.", ErstellteNahkampfwaffe.Name));
+            Refresh();
         }
 
         private Base.CommandBase onAddZuNotizen = null;
@@ -403,7 +413,26 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public void Refresh()
         {
-            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
+            // Waffe und Einstellungen zurücksetzen
+            Talent oldTalent = SelectedNahkampfwaffeTalent;
+            Waffe oldWaffe = SelectedNahkampfwaffe;
+
+            SelectedNahkampfwaffeTalent = NahkampfwaffeTalentListe.FirstOrDefault(t => t != SelectedNahkampfwaffeTalent);
+            SelectedNahkampfwaffe = NahkampfwaffeListe.FirstOrDefault(t => t != SelectedNahkampfwaffe);
+
+            SelectedNahkampfwaffeTalent = oldTalent;
+            SelectedNahkampfwaffe = oldWaffe;
+
+            TpVerbesserung = 0;
+            BfVerbesserung = 0;
+            IniVerbesserung = false;
+            AtWmVerbesserung = false;
+            PaWmVerbesserung = false;
+            TawSchmied = 12;
+            TawSchmiedMod = 0;
+
+            SelectedNahkampfwaffeMaterial = NahkampfwaffeMaterialListe.First();
+            SelectedNahkampfwaffeTechnik = NahkampfwaffeTechnikListe.First();
         }
 
         private void BerechneNicwinscheApproximation()
