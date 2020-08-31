@@ -9,6 +9,7 @@ using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
 using MeisterGeister.ViewModel.Schmiede.Logic;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
@@ -73,9 +74,63 @@ namespace MeisterGeister.ViewModel.Schmiede
         private Techniken _fernkampfwaffeTechnikListe;
         private Nahkampfwaffenverbesserung _selectedFernkampfwaffeTechnik;
 
+        public Model.Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
+                OnChanged("HeldTalentwerte");
+            }
+        }
         #endregion
 
         #region //---- COMMANDS ----
+
+        private Base.CommandBase onAddInventar = null;
+        public Base.CommandBase OnAddInventar
+        {
+            get
+            {
+                if (onAddInventar == null)
+                    onAddInventar = new Base.CommandBase(AddInventar, null);
+                return onAddInventar;
+            }
+        }
+        private void AddInventar(object sender)
+        {
+            Ausrüstung a = ErstellteFernkampfwaffe.Ausrüstung;
+            ErstellteFernkampfwaffe.FernkampfwaffeGUID = Guid.NewGuid();
+            ErstellteFernkampfwaffe.Ausrüstung = a;
+            ErstellteFernkampfwaffe.Held_Fernkampfwaffe = _selectedFernkampfwaffe.Held_Fernkampfwaffe;
+            ErstellteFernkampfwaffe.Held_Munition = _selectedFernkampfwaffe.Held_Munition;
+            ErstellteFernkampfwaffe.Talent = _selectedFernkampfwaffe.Talent;
+            //                                                            // ErstellteFernkampfwaffe.Ausrüstung = _selectedFernkampfwaffe.Ausrüstung;
+            //ErstellteFernkampfwaffe.Ausrüstung = _erstellteFernkampfwaffe.Ausrüstung;
+
+            //Model.Ausrüstung ausr = Global.ContextInventar.Clone<Model.Ausrüstung>(_selectedFernkampfwaffe.Ausrüstung);
+            //ErstellteFernkampfwaffe.Ausrüstung = ausr;
+            //ErstellteFernkampfwaffe.Ausrüstung.AusrüstungGUID = Guid.NewGuid();
+            //ErstellteFernkampfwaffe.Ausrüstung.AusrüstungGUID = _selectedFernkampfwaffe.FernkampfwaffeGUID;
+
+            //List<Talent> HeldWaffeTalent = new List<Talent>();
+            //HeldWaffeTalent.AddRange(ErstellteFernkampfwaffe.Talent);
+
+            //List<Talent> waffeTalent = new List<Talent>();
+            //foreach (Talent talent in ErstellteFernkampfwaffe.Talent)
+            //{
+            //    Model.Talent tal = Global.ContextHeld.TalentListe.FirstOrDefault(t => t.TalentGUID == talent.TalentGUID);
+            //    waffeTalent.Add(tal);
+            //}
+            if (FkVerbesserung != 0)
+                ErstellteFernkampfwaffe.Bemerkung = "FK-Erleíchterung " + FkVerbesserung;
+  //          ErstellteFernkampfwaffe.Talent = waffeTalent;
+            SelectedHeld.AddInventar(ErstellteFernkampfwaffe);
+            MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurde die Fernkampfwaffe '{0}' zum Inventar hinzugefügt.", ErstellteFernkampfwaffe.Name));
+            Refresh();
+        }
+
         private Base.CommandBase onAddZuNotizen = null;
         public Base.CommandBase OnAddZuNotizen
         {
@@ -438,13 +493,14 @@ namespace MeisterGeister.ViewModel.Schmiede
                 _selectedFernkampfwaffe = value;
                 OnChanged("SelectedFernkampfwaffe");
                 _erstellteFernkampfwaffe = Global.ContextInventar.Clone<Model.Fernkampfwaffe>(_selectedFernkampfwaffe);
-                _erstellteFernkampfwaffe.FernkampfwaffeGUID = Guid.Empty;
+                _erstellteFernkampfwaffe.FernkampfwaffeGUID = Guid.NewGuid();// Guid.Empty;
                 Model.Ausrüstung ausr = Global.ContextInventar.Clone<Model.Ausrüstung>(_selectedFernkampfwaffe.Ausrüstung);
                 ausr.AusrüstungGUID = Guid.Empty;
                 _erstellteFernkampfwaffe.Ausrüstung = ausr;
                 ausr.Fernkampfwaffe = _erstellteFernkampfwaffe;
                 foreach (var item in _selectedFernkampfwaffe.Ausrüstung.Ausrüstung_Setting)
                     _erstellteFernkampfwaffe.Ausrüstung.Ausrüstung_Setting.Add(Global.ContextInventar.Clone<Model.Ausrüstung_Setting>(item));
+
                 //Prüfen, ob FK-Waffe auch NK-Waffe ist
                 if (_selectedFernkampfwaffe.Ausrüstung.Waffe != null)
                 {
@@ -645,7 +701,28 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public void Refresh()
         {
-            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
+            // Waffe und Einstellungen zurücksetzen
+            Talent oldTalent = SelectedFernkampfwaffeTalent;
+            Fernkampfwaffe oldWaffe = SelectedFernkampfwaffe;
+
+            SelectedFernkampfwaffeTalent = FernkampfwaffeTalentListe.FirstOrDefault(t => t != SelectedFernkampfwaffeTalent);
+            SelectedFernkampfwaffe = FernkampfwaffeListe.FirstOrDefault(t => t != SelectedFernkampfwaffe);
+
+            SelectedFernkampfwaffeTalent = oldTalent;
+            SelectedFernkampfwaffe = oldWaffe;
+
+            TpVerbesserung = 0;
+            BfVerbesserung = 0;
+            FkVerbesserung = 0;
+            KkVerbesserung = false;
+            IniVerbesserung = false;
+            AtWmVerbesserung = false;
+            PaWmVerbesserung = false;
+            TawSchmied = 12;
+            TawSchmiedMod = 0;
+
+            SelectedFernkampfwaffeMaterial = FernkampfwaffeMaterialListe.First();
+            SelectedFernkampfwaffeTechnik = FernkampfwaffeTechnikListe.First();
         }
 
         private void BerechneSichtbarkeitErstellungsoptionen()

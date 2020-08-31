@@ -4051,10 +4051,10 @@ namespace MeisterGeister.Model
                     hf = Global.ContextHeld.New<Held_Fernkampfwaffe>();
                 }
 
-                hf.FernkampfwaffeGUID = a.Fernkampfwaffe.FernkampfwaffeGUID;
+                hf.FernkampfwaffeGUID = a.Fernkampfwaffe.FernkampfwaffeGUID;  //AusrüstungGUID = FK_GUID  = 00000000-0000-0000-0002-000000000001
                 if (!detached)
                 {
-                    hf.Fernkampfwaffe = a.Fernkampfwaffe;
+                    hf.Fernkampfwaffe = a.Fernkampfwaffe;                    
                 }
 
                 Talent t = Held_Fernkampfwaffe.GetBestesTalent(this, a.Fernkampfwaffe);
@@ -4068,7 +4068,15 @@ namespace MeisterGeister.Model
                     hf.Talent = t;
                 }
 
-                hf.FKErleichterung = 0;
+                if (a.Fernkampfwaffe.Bemerkung != null &&
+                        a.Fernkampfwaffe.Bemerkung.StartsWith("FK-Erleíchterung"))
+                {
+                    int FKleichter = 0;
+                    if (int.TryParse(a.Fernkampfwaffe.Bemerkung.Substring(17, 1), out FKleichter))
+                        hf.FKErleichterung = FKleichter;
+                }
+                else
+                    hf.FKErleichterung = 0;
                 hf.KKErleichterung = false;
                 hf.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
                 ha.Held_Fernkampfwaffe = hf;

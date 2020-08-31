@@ -88,6 +88,16 @@
                     <TextBlock Text="Werte der Waffe" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Grid>
+                    <Button 
+                        IsEnabled="false"
+                        Height="24" Width="24" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,50,10"
+                            Command="{Binding OnAddInventar}"
+                            ToolTip="Ins Inventar des Helden übertragen." >
+                        <Grid>
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="18" Margin="-2,-2,2,2" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
+                        </Grid>
+                    </Button>
                     <Button Grid.ZIndex="1" Height="24" Margin="10" Width="24" Command="{Binding OnAddZuNotizen}" HorizontalAlignment="Right" Name="_buttonSave" VerticalAlignment="Top">
                         <Button.Content>
                             <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
@@ -97,13 +107,14 @@
                         </Button.ToolTip>
                     </Button>
                     <StackPanel>
-                        <TextBlock Margin="20,10" FontWeight="Bold" Text="{Binding Path=ErstellteFernkampfwaffe.Name}" />
+                        <TextBox Margin="20,10" Background="Transparent" Width="250" HorizontalAlignment="Left" FontWeight="Bold" Text="{Binding Path=ErstellteFernkampfwaffe.Name}" />
                         <StackPanel Orientation="Horizontal" Margin="20,10">
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
                         </StackPanel>
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -119,6 +130,7 @@
                             <TextBlock Text="Reichweite" Margin="10,0" FontWeight="Bold" TextAlignment="Center" Grid.Column="2" />
                             <TextBlock Text="TP / Reichweite" Margin="10,0" FontWeight="Bold" TextAlignment="Center" Grid.Column="3" />
                             <TextBlock Text="Laden" Margin="10,0" FontWeight="Bold" TextAlignment="Center" Grid.Column="4" />
+                            <TextBlock Text="FK-Erleichterung" Margin="10,0" FontWeight="Bold" TextAlignment="Center" Grid.Column="5" />
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.TPString}" Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="0" />
                             <TextBlock Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="1">
                                 <TextBlock.Text>
@@ -131,6 +143,7 @@
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Reichweiten}" Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="2" />
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.TPReichweiten}" Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="3" />
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Laden}" Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="4" />
+                            <TextBlock Text="{Binding Path=FkVerbesserung}" Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="5" />
                         </Grid>
                         <Grid Margin="10" Visibility="{Binding Path=AnzeigenNahkampfwerte}">
                             <Grid.ColumnDefinitions>
