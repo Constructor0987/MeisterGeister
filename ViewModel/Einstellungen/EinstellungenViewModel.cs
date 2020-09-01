@@ -1085,7 +1085,7 @@ namespace MeisterGeister.ViewModel.Settings
                     command = new LightCommand();
 
                     //if (doStrobe)
-                    //command.Alert = Alert.Once;
+                    //command.Alert = Alert.Once; 
 
                     //Turn the light on and set a Hex color for the command (see the section about Color Converters)
                     command.TurnOn().SetColor(new RGBColor(
