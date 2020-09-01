@@ -4068,8 +4068,21 @@ namespace MeisterGeister.Model
                     hf.Talent = t;
                 }
 
-                hf.FKErleichterung = 0;
-                hf.KKErleichterung = false;
+                if (a.Fernkampfwaffe.Ausrüstung.Bemerkung != null && a.Fernkampfwaffe.Ausrüstung.Bemerkung.Length > 17)
+                {
+                    int fkLeichter = 0;
+                    if (int.TryParse(a.Fernkampfwaffe.Ausrüstung.Bemerkung.Substring(17, 1), out fkLeichter))
+                        hf.FKErleichterung = fkLeichter;
+                    else
+                        hf.FKErleichterung = 0;
+                }
+                else
+                    hf.FKErleichterung = 0;
+
+                if (a.Fernkampfwaffe.Ausrüstung.Bemerkung != null && a.Fernkampfwaffe.Ausrüstung.Bemerkung.Contains("KK-Erleichterung"))
+                    hf.KKErleichterung = true;
+                else
+                    hf.KKErleichterung = false;
                 hf.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
                 ha.Held_Fernkampfwaffe = hf;
             }

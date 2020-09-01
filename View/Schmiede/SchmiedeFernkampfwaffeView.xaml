@@ -7,15 +7,15 @@
 			 xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
 			 Background="{StaticResource Background1}"
 			 Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignHeight="457.5" d:DesignWidth="728">
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="300*" />
-			<ColumnDefinition Width="450*" />
-		</Grid.ColumnDefinitions>
-		<GridSplitter Grid.Column="0" Background="DarkGray" Width="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300*" />
+            <ColumnDefinition Width="450*" />
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="0" Background="DarkGray" Width="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" />
 
-		<StackPanel Grid.Column="0">
-			<Expander Margin="5" IsExpanded="True">
+        <StackPanel Grid.Column="0">
+            <Expander Margin="5" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Auswahl der Waffe" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -38,7 +38,7 @@
                     </ComboBox>
                 </StackPanel>
             </Expander>
-			<Expander Margin="5" IsExpanded="True">
+            <Expander Margin="5" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Verbesserungen" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -80,10 +80,10 @@
                     </StackPanel>
                 </StackPanel>
             </Expander>
-		</StackPanel>
+        </StackPanel>
 
-		<StackPanel Grid.Column="1">
-			<Expander Margin="5" IsExpanded="True">
+        <StackPanel Grid.Column="1">
+            <Expander Margin="5" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Werte der Waffe" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -96,8 +96,17 @@
                             <TextBlock Height="Auto" Width="350" TextWrapping="Wrap">Waffe in Notiz 'Allgemein' speichern.</TextBlock>
                         </Button.ToolTip>
                     </Button>
+
+                    <Button Height="24" Width="24" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,50,10"
+                            Command="{Binding OnAddInventar}"
+                            ToolTip="Ins Inventar des Helden übertragen." >
+                        <Grid>
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="18" Margin="-2,-2,2,2" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
+                        </Grid>
+                    </Button>
                     <StackPanel>
-                        <TextBlock Margin="20,10" FontWeight="Bold" Text="{Binding Path=ErstellteFernkampfwaffe.Name}" />
+                        <TextBox Margin="20,10,155,10" Background="Transparent"  FontWeight="Bold" Text="{Binding Path=ErstellteFernkampfwaffe.Name}" />
                         <StackPanel Orientation="Horizontal" Margin="20,10">
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
                             <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
@@ -175,7 +184,7 @@
                     </StackPanel>
                 </Grid>
             </Expander>
-			<Expander Margin="5" IsExpanded="True">
+            <Expander Margin="5" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Herstellung der Waffe" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -194,7 +203,7 @@
                     </StackPanel>
                 </StackPanel>
             </Expander>
-			<Expander Margin="5" IsExpanded="True">
+            <Expander Margin="5" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="erwartete Dauer der Herstellung" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -213,7 +222,7 @@
                     </StackPanel>
                 </StackPanel>
             </Expander>
-		</StackPanel>
+        </StackPanel>
 
-	</Grid>
+    </Grid>
 </UserControl>
