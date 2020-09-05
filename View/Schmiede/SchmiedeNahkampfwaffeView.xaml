@@ -89,7 +89,7 @@
                     </Button>
                     <StackPanel>
                         <TextBox Background="Transparent" Margin="20,10" Width="250" FontWeight="Bold" Text="{Binding ErstellteNahkampfwaffe.Name, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
-                        <StackPanel Orientation="Horizontal" Margin="20,0">
+                            <StackPanel Orientation="Horizontal" Margin="20,0">
                             <TextBlock Text="{Binding ErstellteNahkampfwaffe.Preis, StringFormat=\{0\} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
                             <TextBlock Text="{Binding ErstellteNahkampfwaffe.Gewicht, StringFormat=\{0\} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
                         </StackPanel>

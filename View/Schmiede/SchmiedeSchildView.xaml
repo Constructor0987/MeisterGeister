@@ -46,16 +46,8 @@
                             <TextBlock Height="Auto" Width="350" TextWrapping="Wrap">Waffe in Notiz 'Allgemein' speichern.</TextBlock>
                         </Button.ToolTip>
                     </Button>
-                    <Button Height="24" Width="24" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,50,10"
-                            Command="{Binding OnAddInventar}"
-                            ToolTip="Ins Inventar des Helden übertragen." >
-                        <Grid>
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="18" Margin="-2,-2,2,2" />
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
-                        </Grid>
-                    </Button>
                     <StackPanel>
-                        <TextBlock Margin="20,10,80,10" FontWeight="Bold" Text="{Binding SelectedSchild.Name}" />
+                        <TextBlock Margin="20,10" FontWeight="Bold" Text="{Binding SelectedSchild.Name}" />
                         <StackPanel Orientation="Horizontal" Margin="20,0">
                             <TextBlock Text="{Binding SelectedSchild.Preis, StringFormat=Preis: \{0\} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
                             <TextBlock Text="{Binding SelectedSchild.Gewicht, StringFormat=Gewicht: \{0\} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />

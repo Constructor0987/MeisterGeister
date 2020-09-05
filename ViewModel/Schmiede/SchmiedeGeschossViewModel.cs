@@ -9,7 +9,6 @@ using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
 using MeisterGeister.ViewModel.Schmiede.Logic;
-using MeisterGeister.ViewModel.Basar.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
@@ -57,16 +56,6 @@ namespace MeisterGeister.ViewModel.Schmiede
         private Model.Munition _selectedMunition;
         private List<Model.Munition> _munitionListe = new List<Model.Munition>();
 
-        public Model.Held SelectedHeld
-        {
-            get { return Global.SelectedHeld; }
-            set
-            {
-                Global.SelectedHeld = value;
-                OnChanged();
-                OnChanged("HeldTalentwerte");
-            }
-        }
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
@@ -76,7 +65,7 @@ namespace MeisterGeister.ViewModel.Schmiede
         public int Anzahl
         {
             get { return _anzahl; }
-            set
+            private set
             {
                 if (value < 1)
                     value = 1;
@@ -377,65 +366,6 @@ namespace MeisterGeister.ViewModel.Schmiede
         #endregion
 
         #region //---- EVENTS ----
-
-        private Base.CommandBase onAddInventar = null;
-        public Base.CommandBase OnAddInventar
-        {
-            get
-            {
-                if (onAddInventar == null)
-                    onAddInventar = new Base.CommandBase(AddInventar, null);
-                return onAddInventar;
-            }
-        }
-        private void AddInventar(object sender)
-        {
-            List<MeisterGeister.Model.Handelsgut> lstHG = Global.ContextHandelsgut.HandelsgüterListe
-                .Where(t => t is IHandelsgut &&
-                t.Kategorie == "Waffenzubehör" &&
-                t.Name.Contains(SelectedFernkampfwaffe.Name)).ToList();
-            lstHG = lstHG.Where(t => t.Name.Contains(SelectedMunition.Name)).ToList();
-
-            if (lstHG.Count > 0)
-            {
-                if (GeschossHärten)
-                {
-                    MeisterGeister.Model.Handelsgut hg = new Model.Handelsgut();
-                    hg.HandelsgutGUID = Guid.NewGuid();
-                    hg.Name = string.Format("gehärteter {0} ({1})", SelectedMunition.Name, SelectedFernkampfwaffe.Name);
-                    hg.Preis = SelectedFernkampfwaffe.Munitionspreis.ToString();
-                    hg.Literatur = SelectedMunition.Literatur;
-                    hg.Tags = SelectedFernkampfwaffe.Munitionsart;
-                    hg.Bemerkung = SelectedMunition.Bemerkungen;
-                    hg.Kategorie = SelectedFernkampfwaffe.Kategorie;
-                    hg.Gewicht = SelectedFernkampfwaffe.Munitionsgewicht;
-                    SelectedHeld.AddInventar(hg, Anzahl);
-                    MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurden {0} Geschosse vom Typ '{1}' zum Inventar hinzugefügt.", Anzahl, hg.Name));
-                }
-                else
-                {
-                    SelectedHeld.AddInventar(lstHG.First(), Anzahl);
-                    MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurden {0} Geschosse vom Typ '{1}' zum Inventar hinzugefügt.", Anzahl, lstHG.First().Name));
-                }
-            }
-            else
-            {
-                MeisterGeister.Model.Handelsgut hg = new Model.Handelsgut();
-                hg.HandelsgutGUID = Guid.NewGuid();
-                hg.Name = string.Format((GeschossHärten? "gehärteter ":"") + "{0} ({1})", SelectedMunition.Name, SelectedFernkampfwaffe.Name);
-                hg.Preis = SelectedFernkampfwaffe.Munitionspreis.ToString();
-                hg.Bemerkung = SelectedMunition.Bemerkungen;
-                hg.Literatur = SelectedMunition.Literatur;
-                hg.Tags = SelectedFernkampfwaffe.Munitionsart;
-                hg.Kategorie = SelectedFernkampfwaffe.Kategorie;
-                hg.Gewicht = SelectedFernkampfwaffe.Munitionsgewicht;
-                hg.Bemerkung = SelectedFernkampfwaffe.Bemerkung;
-
-                SelectedHeld.AddInventar(hg, Anzahl);
-                MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurden {0} Geschosse vom Typ '{1}' zum Inventar hinzugefügt.", Anzahl, hg.Name));
-            }
-            Refresh();
-        }
 
         #endregion
 
