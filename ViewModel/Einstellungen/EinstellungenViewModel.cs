@@ -600,6 +600,13 @@ namespace MeisterGeister.ViewModel.Settings
             LoadDaten();
         }
 
+        private List<HUE_Szene> _hueSzenenListe = new List<HUE_Szene>();
+        public List<HUE_Szene> HueSzenenListe
+        {
+            get { return _hueSzenenListe; }
+            set { Set(ref _hueSzenenListe, value); }
+        }
+
         #endregion Constructor
 
         #region Public Methods
@@ -619,24 +626,32 @@ namespace MeisterGeister.ViewModel.Settings
 
                 //Create HUE-Szene aus Datenbankä
                 List<HUESzene> lstSzene = new List<HUESzene>();
-                Global.ContextHUE.SzenenListe.ForEach(delegate( HUE_Szene hSzeneDB)
-                {
-                    HUESzene hSzene = new HUESzene();
-                    hSzene.Name = hSzeneDB.Name;
+                //try
+                //{
+                //    if (Global.ContextHUE.SzenenListe.Count > 0)
+                //        Global.ContextHUE.SzenenListe.ForEach(delegate (HUE_Szene hSzeneDB)
+                //        {
+                //            HUESzene hSzene = new HUESzene();
+                //            hSzene.Name = hSzeneDB.Name;
 
-                    hSzeneDB.HUE_LampeColor.ToList().ForEach(delegate (HUE_LampeColor aLampeColorDB) {
-                        LightColor aColorLight = new LightColor();
-                        aColorLight.light = lstHUELights.Where(t => t.Name == aLampeColorDB.Lampenname).FirstOrDefault();
-                        string ColorS = aLampeColorDB.Color;
-                        aColorLight.color = (Color)ColorConverter.ConvertFromString(ColorS);
+                //            hSzeneDB.HUE_LampeColor.ToList().ForEach(delegate (HUE_LampeColor aLampeColorDB)
+                //            {
+                //                LightColor aColorLight = new LightColor();
+                //                aColorLight.light = lstHUELights.Where(t => t.Name == aLampeColorDB.Lampenname).FirstOrDefault();
+                //                string ColorS = aLampeColorDB.Color;
+                //                aColorLight.color = (Color)ColorConverter.ConvertFromString(ColorS);
 
-                        //  System.Drawing.ColorTranslator.FromHtml(ColorS);
-                        hSzene.lstLightColor.Add(aColorLight);
-                    });
-                    lstSzene.Add(hSzene);
+                //                //  System.Drawing.ColorTranslator.FromHtml(ColorS);
+                //                hSzene.lstLightColor.Add(aColorLight);
+                //            });
+                //            lstSzene.Add(hSzene);
 
-                 });
-                lstHUESzenen = lstSzene;
+                //        });
+                //}
+                //finally
+                //{
+                //    lstHUESzenen = lstSzene;
+                //}
             }
         }
 
