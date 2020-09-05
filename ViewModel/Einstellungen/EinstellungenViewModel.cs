@@ -618,7 +618,7 @@ namespace MeisterGeister.ViewModel.Settings
                 AppKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
 
                 //Create HUE-Szene aus Datenbankä
-                List<HUESzene> lstSzene = new List<HUESzene>();
+                List<HUESzene> lstSzene = new List<HUESzene>(); 
                 Global.ContextHUE.SzenenListe.ForEach(delegate( HUE_Szene hSzeneDB)
                 {
                     HUESzene hSzene = new HUESzene();
