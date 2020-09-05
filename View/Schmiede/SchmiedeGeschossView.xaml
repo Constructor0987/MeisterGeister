@@ -38,7 +38,16 @@
                     </ComboBox>
                 </StackPanel>
             </Expander>
-			<Expander Margin="5" IsExpanded="True">
+            <Expander Margin="5" IsExpanded="True">
+                <Expander.Style>
+                    <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}"  >
+                        <Style.Triggers >
+                            <DataTrigger Binding="{Binding SelectedFernkampfwaffe, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Expander.Style>
                 <Expander.Header>
                     <TextBlock Text="Auswahl des Geschosses" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -57,6 +66,7 @@
                 <Expander.Header>
                     <TextBlock Text="Werte des Geschosses" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
+                <Grid>
                 <StackPanel>
                     <TextBlock Margin="20,10" FontWeight="Bold" Text="{Binding Path=SelectedMunition.Name}" />
                     <StackPanel Orientation="Horizontal" Margin="20,0,20,10">
@@ -64,6 +74,28 @@
                         <TextBlock Text="{Binding Path=SelectedFernkampfwaffe.Munitionsgewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
                     </StackPanel>
                 </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,50,10">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedFernkampfwaffe, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <Label Content="Anzahl" />
+                        <ViewGeneral:IntBox Value="{Binding Anzahl}" Width="60" ShowButtons="True" MinValue="1" MaxValue="99" Margin="0,0,5,0"/>
+                        <Button Height="24" Width="24" 
+                        Command="{Binding OnAddInventar}"
+                        ToolTip="Ins Inventar des Helden übertragen." >
+                    <Grid>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="18" Margin="-2,-2,2,2" />
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
+                    </Grid>
+                </Button>
+                    </StackPanel>
+                </Grid>
             </Expander>
 			<Expander Margin="5" IsExpanded="True">
                 <Expander.Header>
