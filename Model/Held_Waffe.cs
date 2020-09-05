@@ -29,7 +29,11 @@ namespace MeisterGeister.Model
                 return w.Talent.FirstOrDefault();
             var ht = h.Kampftalente.Where(t => w.Talent != null && w.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
             if (ht == null)
-                return null;
+            {
+                ht = h.Kampftalente.Where(t => w.Talent != null && w.Talent.Select(g => g.TalentGUID).ToList().Contains(t.Talent.TalentGUID)).OrderByDescending(t => t.TaW).FirstOrDefault();
+                if (ht == null)
+                    return null;
+            }
             return ht.Talent;
         }
 

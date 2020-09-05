@@ -9,6 +9,7 @@ using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
 using MeisterGeister.ViewModel.Schmiede.Logic;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
@@ -438,9 +439,10 @@ namespace MeisterGeister.ViewModel.Schmiede
                 _selectedFernkampfwaffe = value;
                 OnChanged("SelectedFernkampfwaffe");
                 _erstellteFernkampfwaffe = Global.ContextInventar.Clone<Model.Fernkampfwaffe>(_selectedFernkampfwaffe);
-                _erstellteFernkampfwaffe.FernkampfwaffeGUID = Guid.Empty;
                 Model.Ausrüstung ausr = Global.ContextInventar.Clone<Model.Ausrüstung>(_selectedFernkampfwaffe.Ausrüstung);
-                ausr.AusrüstungGUID = Guid.Empty;
+
+                _erstellteFernkampfwaffe.FernkampfwaffeGUID = Guid.NewGuid();// Guid.Empty;
+                ausr.AusrüstungGUID = _erstellteFernkampfwaffe.FernkampfwaffeGUID;// Guid.NewGuid();// Guid.Empty;
                 _erstellteFernkampfwaffe.Ausrüstung = ausr;
                 ausr.Fernkampfwaffe = _erstellteFernkampfwaffe;
                 foreach (var item in _selectedFernkampfwaffe.Ausrüstung.Ausrüstung_Setting)
@@ -597,6 +599,16 @@ namespace MeisterGeister.ViewModel.Schmiede
             }
         }
 
+        public Model.Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
+                OnChanged("HeldTalentwerte");
+            }
+        }
         //Commands
 
         #endregion
@@ -645,7 +657,28 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public void Refresh()
         {
-            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
+            // Waffe und Einstellungen zurücksetzen
+            Talent oldTalent = SelectedFernkampfwaffeTalent;
+            Fernkampfwaffe oldWaffe = SelectedFernkampfwaffe;
+
+            SelectedFernkampfwaffeTalent = FernkampfwaffeTalentListe.FirstOrDefault(t => t != SelectedFernkampfwaffeTalent);
+            SelectedFernkampfwaffe = FernkampfwaffeListe.FirstOrDefault(t => t != SelectedFernkampfwaffe);
+
+            SelectedFernkampfwaffeTalent = oldTalent;
+            SelectedFernkampfwaffe = oldWaffe;
+            
+            FkVerbesserung = 0;
+            KkVerbesserung = false;
+            TpVerbesserung = 0;
+            BfVerbesserung = 0;
+            IniVerbesserung = false;
+            AtWmVerbesserung = false;
+            PaWmVerbesserung = false;
+            TawSchmied = 12;
+            TawSchmiedMod = 0;
+
+            SelectedFernkampfwaffeMaterial = FernkampfwaffeMaterialListe.First();
+            SelectedFernkampfwaffeTechnik = FernkampfwaffeTechnikListe.First();
         }
 
         private void BerechneSichtbarkeitErstellungsoptionen()
@@ -735,6 +768,49 @@ namespace MeisterGeister.ViewModel.Schmiede
         #endregion
 
         #region //---- EVENTS ----
+
+        private Base.CommandBase onAddInventar = null;
+        public Base.CommandBase OnAddInventar
+        {
+            get
+            {
+                if (onAddInventar == null)
+                    onAddInventar = new Base.CommandBase(AddInventar, null);
+                return onAddInventar;
+            }
+        }
+
+        private void AddInventar(object sender)
+        {
+            List<Talent> HeldWaffeTalent = new List<Talent>();
+            HeldWaffeTalent.AddRange(ErstellteFernkampfwaffe.Talent);
+
+            List<Talent> waffeTalent = new List<Talent>();
+            foreach (Talent talent in ErstellteFernkampfwaffe.Talent)
+            {
+                Model.Talent tal = Global.ContextHeld.TalentListe.FirstOrDefault(t => t.TalentGUID == talent.TalentGUID);
+                waffeTalent.Add(tal);
+            }
+            ErstellteFernkampfwaffe.Talent = waffeTalent;
+
+            string Verbesserungen = FkVerbesserung != 0 ? "FK-Verbesserung +" + FkVerbesserung.ToString() : null;
+            if (KkVerbesserung)
+            {
+                if (Verbesserungen != null)
+                    Verbesserungen += "\nKK-Erleichterung";
+                else
+                    Verbesserungen = "KK-Erleichterung";
+            }
+
+            if (Verbesserungen != null && ErstellteFernkampfwaffe.Ausrüstung != null)
+                ErstellteFernkampfwaffe.Ausrüstung.Bemerkung = Verbesserungen;
+            SelectedHeld.AddInventar(ErstellteFernkampfwaffe);
+
+            MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurde die Fernkampfwaffe '{0}' zum Inventar hinzugefügt.", ErstellteFernkampfwaffe.Name));
+            Refresh();
+        }
+
+
         public void ActiveSettingsChanged(object sender, EventArgs e)
         {
             FernkampfwaffeMaterialListe = new Materialien();

@@ -29,9 +29,38 @@ namespace MeisterGeister.ViewModel.Schmiede
         private Model.Schild _selectedSchild;
         private List<Model.Schild> _schildListe = new List<Model.Schild>();
 
+        public Model.Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
+                OnChanged("HeldTalentwerte");
+            }
+        }
         #endregion
 
         #region //---- COMMANDS ----
+
+        private Base.CommandBase onAddInventar = null;
+        public Base.CommandBase OnAddInventar
+        {
+            get
+            {
+                if (onAddInventar == null)
+                    onAddInventar = new Base.CommandBase(AddInventar, null);
+                return onAddInventar;
+            }
+        }
+        private void AddInventar(object sender)
+        {
+            SelectedHeld.AddInventar(SelectedSchild);
+            MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurde das Schild '{0}' zum Inventar hinzugefügt.", SelectedSchild.Name));
+            Refresh();
+        }
+
+
         private Base.CommandBase onAddZuNotizen = null;
         public Base.CommandBase OnAddZuNotizen
         {
@@ -44,7 +73,7 @@ namespace MeisterGeister.ViewModel.Schmiede
         }
         private void AddZuNotizen(object sender)
         {
-            if (_selectedSchild != null )
+            if (_selectedSchild != null)
             {
                 string fromschmiede = "\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n";
                 fromschmiede += _selectedSchild.ToString("l");
@@ -80,8 +109,10 @@ namespace MeisterGeister.ViewModel.Schmiede
             get { return _tawSchmied; }
             set
             {
-                if (value < 0) value = 0;
-                if (value == _tawSchmied) return;
+                if (value < 0)
+                    value = 0;
+                if (value == _tawSchmied)
+                    return;
                 _tawSchmied = value;
                 OnChanged("TawSchmied");
                 BerechneNicwinscheApproximation();
@@ -97,7 +128,8 @@ namespace MeisterGeister.ViewModel.Schmiede
                     value = -7;
                 else if (value > 7)
                     value = 7;
-                if (value == _tawSchmiedMod) return;
+                if (value == _tawSchmiedMod)
+                    return;
                 _tawSchmiedMod = value;
                 OnChanged("TawSchmiedMod");
                 BerechneNicwinscheApproximation();
@@ -110,7 +142,8 @@ namespace MeisterGeister.ViewModel.Schmiede
             get { return _selectedSchild; }
             set
             {
-                if (value == null) return;
+                if (value == null)
+                    return;
                 _selectedSchild = value;
                 OnChanged("SelectedSchild");
                 BerechneSchild();
@@ -149,7 +182,8 @@ namespace MeisterGeister.ViewModel.Schmiede
         private void Init()
         {
             // Schilde - keine Parierwaffen
-            if (Global.ContextInventar!=null) {
+            if (Global.ContextInventar != null)
+            {
                 SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => (w.Typ == "S" || w.SchildGUID.ToString().CompareTo(GUIDBUCKLER) == 0 || w.SchildGUID.ToString().CompareTo(GUIDBUCKLERVOLLMETAL) == 0) && !SchildListe.Contains(w)).OrderBy(w => w.Name));
             }
             OnChanged("SchildListe");
@@ -163,16 +197,19 @@ namespace MeisterGeister.ViewModel.Schmiede
         private void BerechneNicwinscheApproximation()
         {
             int tapStern = TawSchmied - TawSchmiedMod;
-            if (tapStern > TawSchmied) tapStern = TawSchmied;
+            if (tapStern > TawSchmied)
+                tapStern = TawSchmied;
             tapStern /= 2;
-            if (tapStern < 1) tapStern = 1;
+            if (tapStern < 1)
+                tapStern = 1;
             tapStern = ProbePunkte * 2 / tapStern;
             ProbeDauerNApprox = (tapStern > 0) ? tapStern : 1;
         }
 
         private void BerechneSchild()
         {
-            if (_selectedSchild == null) return;
+            if (_selectedSchild == null)
+                return;
             ProbePunkte = _selectedSchild.WMPA * 3;
             BerechneNicwinscheApproximation();
         }
