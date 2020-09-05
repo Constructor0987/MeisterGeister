@@ -466,7 +466,7 @@ namespace MeisterGeister.ViewModel.Basar
             {
                 BasarItem item = (BasarItem)sender;
                 int anzahl = (int)Math.Ceiling(Anzahl);
-                SelectedHeld.AddInventar(item.Item, anzahl);
+                SelectedHeld.AddInventar(item.Item as MeisterGeister.Model.Fernkampfwaffe, anzahl);
                 PopUp(string.Format("{0}x '{1}' zum Inventar von '{2}' hinzugefügt.", anzahl, item.Name, SelectedHeld.Name));
             }
         }
