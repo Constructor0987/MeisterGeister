@@ -823,11 +823,12 @@
                                         ItemsSource="{Binding lstHUEGateways}"
                                         SelectedItem="{Binding HUEGWSelected}" />
                                     <Label
-                                        Grid.Column="1"
-                                        Width="150"
+                                        FontSize="8"
+                                        Grid.Column="2"
+                                        Grid.Row="1"
                                         HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
                                         Content="{Binding AppKey, UpdateSourceTrigger=PropertyChanged}" />
-
                                     <Button
                                         Grid.Column="1"
                                         Width="100"
