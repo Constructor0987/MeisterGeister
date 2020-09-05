@@ -39,9 +39,37 @@ namespace MeisterGeister.ViewModel.Schmiede
         private List<Model.Rüstung> _rüstungListe = new List<Model.Rüstung>();
         private List<String> _rüstungTypenListe = new List<string>();
 
+        public Model.Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
+                OnChanged("HeldTalentwerte");
+            }
+        }
         #endregion
 
         #region //---- COMMANDS ----
+
+        private Base.CommandBase onAddInventar = null;
+        public Base.CommandBase OnAddInventar
+        {
+            get
+            {
+                if (onAddInventar == null)
+                    onAddInventar = new Base.CommandBase(AddInventar, null);
+                return onAddInventar;
+            }
+        }
+        private void AddInventar(object sender)
+        {
+            SelectedHeld.AddInventar(SelectedRüstung);
+            MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurde die Rüstung '{0}' zum Inventar hinzugefügt.", SelectedRüstung.Name));
+            Refresh();
+        }
+
         private Base.CommandBase onAddZuNotizen = null;
         public Base.CommandBase OnAddZuNotizen
         {

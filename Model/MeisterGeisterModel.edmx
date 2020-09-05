@@ -1,4 +1,4 @@
-﻿<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
 <edmx:Runtime>
 <edmx:StorageModels>
 <Schema Namespace="DatabaseDSAModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
@@ -57,9 +57,6 @@
     <EntitySet Name="Held_VorNachteil" EntityType="DatabaseDSAModel.Store.Held_VorNachteil" store:Type="Tables" />
     <EntitySet Name="Held_Waffe" EntityType="DatabaseDSAModel.Store.Held_Waffe" store:Type="Tables" />
     <EntitySet Name="Held_Zauber" EntityType="DatabaseDSAModel.Store.Held_Zauber" store:Type="Tables" />
-    <EntitySet Name="HUE_LampeColor" EntityType="DatabaseDSAModel.Store.HUE_LampeColor" store:Type="Tables" />
-    <EntitySet Name="HUE_Szene" EntityType="DatabaseDSAModel.Store.HUE_Szene" store:Type="Tables" />
-    <EntitySet Name="HUE_Szene_LampeColor" EntityType="DatabaseDSAModel.Store.HUE_Szene_LampeColor" store:Type="Tables" />
     <EntitySet Name="Inventar" EntityType="DatabaseDSAModel.Store.Inventar" store:Type="Tables" />
     <EntitySet Name="Kampfregel" EntityType="DatabaseDSAModel.Store.Kampfregel" store:Type="Tables" />
     <EntitySet Name="Kreatur" EntityType="DatabaseDSAModel.Store.Kreatur" store:Type="Tables" />
@@ -107,10 +104,6 @@
     <EntitySet Name="Zauber_Variante" EntityType="DatabaseDSAModel.Store.Zauber_Variante" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen" EntityType="DatabaseDSAModel.Store.Zauberzeichen" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen_Setting" EntityType="DatabaseDSAModel.Store.Zauberzeichen_Setting" store:Type="Tables" />
-    <AssociationSet Name="FK__Audio_Theme__0000000000001265" Association="DatabaseDSAModel.Store.FK__Audio_Theme__0000000000001265">
-      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
-      <End Role="Audio_Theme" EntitySet="Audio_Theme" />
-    </AssociationSet>
     <AssociationSet Name="FK__Beschwörbares__0000000000000B97" Association="DatabaseDSAModel.Store.FK__Beschwörbares__0000000000000B97">
       <End Role="GegnerBase" EntitySet="GegnerBase" />
       <End Role="Beschwörbares" EntitySet="Beschwörbares" />
@@ -382,14 +375,6 @@
     <AssociationSet Name="fk_HeldMunition_TrageortGUID" Association="DatabaseDSAModel.Store.fk_HeldMunition_TrageortGUID">
       <End Role="Trageort" EntitySet="Trageort" />
       <End Role="Held_Munition" EntitySet="Held_Munition" />
-    </AssociationSet>
-    <AssociationSet Name="FK_HUE_Szene_LampeColor_HUE_LampeColor" Association="DatabaseDSAModel.Store.FK_HUE_Szene_LampeColor_HUE_LampeColor">
-      <End Role="HUE_LampeColor" EntitySet="HUE_LampeColor" />
-      <End Role="HUE_Szene_LampeColor" EntitySet="HUE_Szene_LampeColor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_HUE_Szene_LampeColor_HUE_Szene" Association="DatabaseDSAModel.Store.FK_HUE_Szene_LampeColor_HUE_Szene">
-      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
-      <End Role="HUE_Szene_LampeColor" EntitySet="HUE_Szene_LampeColor" />
     </AssociationSet>
     <AssociationSet Name="fk_KulturName_Kultur" Association="DatabaseDSAModel.Store.fk_KulturName_Kultur">
       <End Role="Kultur" EntitySet="Kultur" />
@@ -688,7 +673,6 @@
     <Property Name="NurGeräusche" Type="bit" Nullable="false" />
     <Property Name="Kategorie" Type="nvarchar" MaxLength="500" />
     <Property Name="Favorite" Type="bit" />
-    <Property Name="HUE_SzeneGUID" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="Audio_Theme_Playlist">
     <Key>
@@ -1296,29 +1280,6 @@
     <Property Name="Bemerkung" Type="nvarchar" MaxLength="300" />
     <Property Name="Hauszauber" Type="bit" />
   </EntityType>
-  <EntityType Name="HUE_LampeColor">
-    <Key>
-      <PropertyRef Name="HUE_LampeColorGUID" />
-    </Key>
-    <Property Name="HUE_LampeColorGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Lampenname" Type="nvarchar" Nullable="false" MaxLength="254" />
-    <Property Name="Color" Type="nvarchar" MaxLength="32" />
-  </EntityType>
-  <EntityType Name="HUE_Szene">
-    <Key>
-      <PropertyRef Name="HUE_SzeneGUID" />
-    </Key>
-    <Property Name="HUE_SzeneGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="254" />
-  </EntityType>
-  <EntityType Name="HUE_Szene_LampeColor">
-    <Key>
-      <PropertyRef Name="HUE_SzeneGUID" />
-      <PropertyRef Name="HUE_LampeColorGUID" />
-    </Key>
-    <Property Name="HUE_SzeneGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="HUE_LampeColorGUID" Type="uniqueidentifier" Nullable="false" />
-  </EntityType>
   <EntityType Name="Inventar">
     <Key>
       <PropertyRef Name="InventarGUID" />
@@ -1914,20 +1875,6 @@
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
     <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
-  <Association Name="FK__Audio_Theme__0000000000001265">
-    <End Role="HUE_Szene" Type="DatabaseDSAModel.Store.HUE_Szene" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Audio_Theme" Type="DatabaseDSAModel.Store.Audio_Theme" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="HUE_Szene">
-        <PropertyRef Name="HUE_SzeneGUID" />
-      </Principal>
-      <Dependent Role="Audio_Theme">
-        <PropertyRef Name="HUE_SzeneGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Beschwörbares__0000000000000B97">
     <End Role="GegnerBase" Type="DatabaseDSAModel.Store.GegnerBase" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -2870,34 +2817,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_HUE_Szene_LampeColor_HUE_LampeColor">
-    <End Role="HUE_LampeColor" Type="DatabaseDSAModel.Store.HUE_LampeColor" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="HUE_Szene_LampeColor" Type="DatabaseDSAModel.Store.HUE_Szene_LampeColor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="HUE_LampeColor">
-        <PropertyRef Name="HUE_LampeColorGUID" />
-      </Principal>
-      <Dependent Role="HUE_Szene_LampeColor">
-        <PropertyRef Name="HUE_LampeColorGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_HUE_Szene_LampeColor_HUE_Szene">
-    <End Role="HUE_Szene" Type="DatabaseDSAModel.Store.HUE_Szene" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="HUE_Szene_LampeColor" Type="DatabaseDSAModel.Store.HUE_Szene_LampeColor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="HUE_Szene">
-        <PropertyRef Name="HUE_SzeneGUID" />
-      </Principal>
-      <Dependent Role="HUE_Szene_LampeColor">
-        <PropertyRef Name="HUE_SzeneGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_KulturName_Kultur">
     <End Role="Kultur" Type="DatabaseDSAModel.Store.Kultur" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -3536,8 +3455,6 @@
     <EntitySet Name="Held_VorNachteil" EntityType="DatabaseDSAModel.Held_VorNachteil" />
     <EntitySet Name="Held_Waffe" EntityType="DatabaseDSAModel.Held_Waffe" />
     <EntitySet Name="Held_Zauber" EntityType="DatabaseDSAModel.Held_Zauber" />
-    <EntitySet Name="HUE_LampeColor" EntityType="DatabaseDSAModel.HUE_LampeColor" />
-    <EntitySet Name="HUE_Szene" EntityType="DatabaseDSAModel.HUE_Szene" />
     <EntitySet Name="Inventar" EntityType="DatabaseDSAModel.Inventar" />
     <EntitySet Name="Kampfregel" EntityType="DatabaseDSAModel.Kampfregel" />
     <EntitySet Name="Kreatur" EntityType="DatabaseDSAModel.Kreatur" />
@@ -3629,10 +3546,6 @@
     <AssociationSet Name="fk_Audio_Playlist_Titel_Titel" Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel">
       <End Role="Audio_Titel" EntitySet="Audio_Titel" />
       <End Role="Audio_Playlist_Titel" EntitySet="Audio_Playlist_Titel" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Audio_Theme__0000000000001265" Association="DatabaseDSAModel.FK__Audio_Theme__0000000000001265">
-      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
-      <End Role="Audio_Theme" EntitySet="Audio_Theme" />
     </AssociationSet>
     <AssociationSet Name="fk_AusrüstungSetting_Ausrüstung" Association="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung">
       <End Role="Ausrüstung" EntitySet="Ausrüstung" />
@@ -3978,10 +3891,6 @@
       <End Role="Held_BFAusrüstung" EntitySet="Held_BFAusrüstung" />
       <End Role="Schild" EntitySet="Schild" />
     </AssociationSet>
-    <AssociationSet Name="HUE_Szene_LampeColor" Association="DatabaseDSAModel.HUE_Szene_LampeColor">
-      <End Role="HUE_LampeColor" EntitySet="HUE_LampeColor" />
-      <End Role="HUE_Szene" EntitySet="HUE_Szene" />
-    </AssociationSet>
     <AssociationSet Name="Landschaftsgruppe_Landschaft" Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft">
       <End Role="Landschaft" EntitySet="Landschaft" />
       <End Role="Landschaftsgruppe" EntitySet="Landschaftsgruppe" />
@@ -4144,8 +4053,6 @@
     <Property Name="NurGeräusche" Type="Boolean" Nullable="false" />
     <Property Name="Kategorie" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="Favorite" Type="Boolean" />
-    <Property Name="HUE_SzeneGUID" Type="Guid" />
-    <NavigationProperty Name="HUE_Szene" Relationship="DatabaseDSAModel.FK__Audio_Theme__0000000000001265" FromRole="Audio_Theme" ToRole="HUE_Szene" />
     <NavigationProperty Name="Audio_Playlist" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Theme" ToRole="Audio_Playlist" />
     <NavigationProperty Name="Audio_Theme1" Relationship="DatabaseDSAModel.Audio_Theme_Theme" FromRole="Audio_Theme" ToRole="Audio_Theme1" />
     <NavigationProperty Name="Audio_Theme2" Relationship="DatabaseDSAModel.Audio_Theme_Theme" FromRole="Audio_Theme1" ToRole="Audio_Theme" />
@@ -4804,24 +4711,6 @@
     <Property Name="Hauszauber" Type="Boolean" />
     <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.Held_Zauber_HeldFK" FromRole="Held_Zauber" ToRole="Held" />
     <NavigationProperty Name="Zauber" Relationship="DatabaseDSAModel.Zauber_FK" FromRole="Held_Zauber" ToRole="Zauber" />
-  </EntityType>
-  <EntityType Name="HUE_LampeColor">
-    <Key>
-      <PropertyRef Name="HUE_LampeColorGUID" />
-    </Key>
-    <Property Name="HUE_LampeColorGUID" Type="Guid" Nullable="false" />
-    <Property Name="Lampenname" Type="String" Nullable="false" MaxLength="254" Unicode="true" FixedLength="false" />
-    <Property Name="Color" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="HUE_Szene" Relationship="DatabaseDSAModel.HUE_Szene_LampeColor" FromRole="HUE_LampeColor" ToRole="HUE_Szene" />
-  </EntityType>
-  <EntityType Name="HUE_Szene">
-    <Key>
-      <PropertyRef Name="HUE_SzeneGUID" />
-    </Key>
-    <Property Name="HUE_SzeneGUID" Type="Guid" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="254" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="Audio_Theme" Relationship="DatabaseDSAModel.FK__Audio_Theme__0000000000001265" FromRole="HUE_Szene" ToRole="Audio_Theme" />
-    <NavigationProperty Name="HUE_LampeColor" Relationship="DatabaseDSAModel.HUE_Szene_LampeColor" FromRole="HUE_Szene" ToRole="HUE_LampeColor" />
   </EntityType>
   <EntityType Name="Inventar">
     <Key>
@@ -5633,20 +5522,6 @@
       </Principal>
       <Dependent Role="Audio_Playlist_Titel">
         <PropertyRef Name="Audio_TitelGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Audio_Theme__0000000000001265">
-    <End Role="HUE_Szene" Type="DatabaseDSAModel.HUE_Szene" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Audio_Theme" Type="DatabaseDSAModel.Audio_Theme" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="HUE_Szene">
-        <PropertyRef Name="HUE_SzeneGUID" />
-      </Principal>
-      <Dependent Role="Audio_Theme">
-        <PropertyRef Name="HUE_SzeneGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -6788,10 +6663,6 @@
     <End Role="Held_BFAusrüstung" Type="DatabaseDSAModel.Held_BFAusrüstung" Multiplicity="*" />
     <End Role="Schild" Type="DatabaseDSAModel.Schild" Multiplicity="0..1" />
   </Association>
-  <Association Name="HUE_Szene_LampeColor">
-    <End Role="HUE_LampeColor" Type="DatabaseDSAModel.HUE_LampeColor" Multiplicity="*" />
-    <End Role="HUE_Szene" Type="DatabaseDSAModel.HUE_Szene" Multiplicity="*" />
-  </Association>
   <Association Name="Landschaftsgruppe_Landschaft">
     <End Role="Landschaft" Type="DatabaseDSAModel.Landschaft" Multiplicity="*" />
     <End Role="Landschaftsgruppe" Type="DatabaseDSAModel.Landschaftsgruppe" Multiplicity="*" />
@@ -6942,7 +6813,6 @@
           <ScalarProperty Name="NurGeräusche" ColumnName="NurGeräusche" />
           <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
           <ScalarProperty Name="Favorite" ColumnName="Favorite" />
-          <ScalarProperty Name="HUE_SzeneGUID" ColumnName="HUE_SzeneGUID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7522,23 +7392,6 @@
           <ScalarProperty Name="Repräsentation" ColumnName="Repräsentation" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
           <ScalarProperty Name="Hauszauber" ColumnName="Hauszauber" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="HUE_LampeColor">
-      <EntityTypeMapping TypeName="DatabaseDSAModel.HUE_LampeColor">
-        <MappingFragment StoreEntitySet="HUE_LampeColor">
-          <ScalarProperty Name="HUE_LampeColorGUID" ColumnName="HUE_LampeColorGUID" />
-          <ScalarProperty Name="Lampenname" ColumnName="Lampenname" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="HUE_Szene">
-      <EntityTypeMapping TypeName="DatabaseDSAModel.HUE_Szene">
-        <MappingFragment StoreEntitySet="HUE_Szene">
-          <ScalarProperty Name="HUE_SzeneGUID" ColumnName="HUE_SzeneGUID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -8193,14 +8046,6 @@
         <ScalarProperty Name="SchildGUID" ColumnName="SchildGUID" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="HUE_Szene_LampeColor" TypeName="DatabaseDSAModel.HUE_Szene_LampeColor" StoreEntitySet="HUE_Szene_LampeColor">
-      <EndProperty Name="HUE_LampeColor">
-        <ScalarProperty Name="HUE_LampeColorGUID" ColumnName="HUE_LampeColorGUID" />
-      </EndProperty>
-      <EndProperty Name="HUE_Szene">
-        <ScalarProperty Name="HUE_SzeneGUID" ColumnName="HUE_SzeneGUID" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="Landschaftsgruppe_Landschaft" TypeName="DatabaseDSAModel.Landschaftsgruppe_Landschaft" StoreEntitySet="Landschaftsgruppe_Landschaft">
       <EndProperty Name="Landschaft">
         <ScalarProperty Name="LandschaftGUID" ColumnName="LandschaftGUID" />
@@ -8232,205 +8077,5 @@
 <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
-<edmx:Diagrams >
-      <Diagram DiagramId="bcb47c695a0a4e25a001af822ae01c7b" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="2.75" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="7.25" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="5" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="9.5" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="13.75" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="16" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="0.75" PointY="70.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_WesenIcon" Width="1.5" PointX="2.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="42.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="16" PointY="30.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstungsset" Width="1.5" PointX="3.75" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Beschwörbares" Width="1.5" PointX="21" PointY="29.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon" Width="1.5" PointX="23.25" PointY="27.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Dämon_Domäne" Width="1.5" PointX="25.5" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="4.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Elementarwesen" Width="1.5" PointX="23.25" PointY="30.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="19.75" PointY="53.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="3.75" PointY="44.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fortbewegung" Width="1.5" PointX="3.75" PointY="77.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fortbewegung_Modifikation" Width="1.5" PointX="6" PointY="69.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gebiet" Width="1.5" PointX="1.5" PointY="62.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="21" PointY="35.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Modifikator" Width="1.5" PointX="23.25" PointY="46.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="18.75" PointY="32.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="21" PointY="45.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Audio_Playlist" Width="1.5" PointX="21" PointY="23.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="24" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Zauber" Width="1.5" PointX="24" PointY="23.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="13.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="16" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="22.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Audio_Playlist" Width="1.5" PointX="3" PointY="29.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="6" PointY="28.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_BFAusrüstung" Width="1.5" PointX="8.25" PointY="37.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Fernkampfwaffe" Width="1.5" PointX="11.25" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="3" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Modifikator" Width="1.5" PointX="3" PointY="33.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="6" PointY="25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Pflanze" Width="1.5" PointX="6" PointY="33.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Rüstung" Width="1.5" PointX="11.25" PointY="25.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="9" PointY="29.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="9" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="9" PointY="33.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Waffe" Width="1.5" PointX="10.5" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="3" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_LampeColor" Width="1.5" PointX="1.5" PointY="73.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_Szene" Width="1.5" PointX="3.75" PointY="73.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="21.75" PointY="50" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="23.25" PointY="32.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="21" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaft" Width="1.5" PointX="3.75" PointY="70.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Landschaftsgruppe" Width="1.5" PointX="6" PointY="73.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="11.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="6.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Modifikator" Width="1.5" PointX="0.75" PointY="57.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="3.75" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Munition_Setting" Width="1.5" PointX="16" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="8.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="10.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="5.75" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ort" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze" Width="1.5" PointX="3.75" PointY="61.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Ernte" Width="1.5" PointX="16" PointY="37.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Typ" Width="1.5" PointX="6" PointY="67" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Pflanze_Verbreitung" Width="1.5" PointX="6" PointY="62.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Polygon" Width="1.5" PointX="3.75" PointY="57" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="18.75" PointY="22.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="22" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="21" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="9" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="13.5" PointY="37.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="13.75" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="6.75" PointY="21.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="16" PointY="20.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Strecke" Width="1.5" PointX="5" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="47" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="53.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="39.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="13.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="6.75" PointY="46.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil_Auswahl" Width="1.5" PointX="15.75" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="8.25" PointY="40.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Weg" Width="1.5" PointX="7.25" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Wegtyp" Width="1.5" PointX="2.75" PointY="66.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="0.75" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="19" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="3" PointY="80" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="16.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="19" PointY="15.25" IsExpanded="true" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerEreignis_Szene" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachEreignis" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonEreignis" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachSzene" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonSzene" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Alchimierezept" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK_GegnerBase_Audio_Playlist_Audio_Playlist" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK_Held_Audio_Playlist_Audio_Playlist" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Audio_Theme__0000000000001265" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Rüstung_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Schild_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Waffe_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Beschwörbares__0000000000000B97" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Dämon__0000000000000BA7" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Elementarwesen__0000000000000BC6" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Kreatur__0000000000000BCF" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Dämon_Domäne__0000000000000BB6" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Fernkampfwaffe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Fortbewegung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Fortbewegung_Modifikation_Wegtyp" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000ACC" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Gegner_Modifikator__0000000000000AD0" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__GegnerBase_Zauber__0000000000000FC4" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK_GegnerBase_Audio_Playlist_GegnerBase" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__GegnerBase_Zauber__0000000000000FC0" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Handelsgut" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Ernte_Handelsgut" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AA7" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK_Held_Audio_Playlist_Held" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Pflanze_HeldGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Held" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Held" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Held" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_HeldFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_HeldFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Zauber_HeldFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_BFAusrüstung_Held_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Held_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Rüstung_Held_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_TrageortGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Waffe_Held_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Fernkampfwaffe_Talent" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Inventar" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Held_Modifikator__0000000000000AAB" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Munition" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_TrageortGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Pflanze_PflanzeGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Rüstung_Rüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Talent_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Waffe_Talent" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Held_Waffe_Waffe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Zauber_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_KulturName_Kultur" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Kultur" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Verbreitung_LandschaftGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Munition_Setting_Munition" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Munition_Setting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Strecke_Ort_Start" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Strecke_Ort_Ziel" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Ernte_PflanzeGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Typ_Pflanze" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Pflanze_Verbreitung_PflanzeGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Rasse" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Rasse" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_SonderfertigkeitSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_SonderfertigkeitSetting_Sonderfertigkeit" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK_Zauberzeichen_Sonderfertigkeit" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Strecke_Wegtyp" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Weg_Strecke" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Gruppe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Zauber_Variante__0000000000000A6D" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberSetting_Zauber" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Zauberzeichen" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Playlist" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Gebiet_Polygon" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Ausrüstung_Ausrüstungsset" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Schild" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.HUE_Szene_LampeColor" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Landschaftsgruppe_Landschaft" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Pflanze_Gebiet" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" ManuallyRouted="false" />
-      </Diagram>
-    </edmx:Diagrams>
+<edmx:Diagrams />
 </edmx:Designer></edmx:Edmx>
