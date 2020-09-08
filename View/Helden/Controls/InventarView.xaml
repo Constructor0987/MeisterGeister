@@ -370,7 +370,7 @@
                                   ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False" Margin="0,5,0,0">
                             <!--Talent-->
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}" HeaderTemplate="{StaticResource angelegtTemplate}" />
+                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HeaderTemplate="{StaticResource angelegtTemplate}" />
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
@@ -455,7 +455,7 @@
                         <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" Grid.ColumnSpan="5" Grid.Row="1"
                                   ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False" Margin="0,5,0,0">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
@@ -560,7 +560,7 @@
                         <DataGrid ItemsSource="{Binding HeldSchildImInventar}" SelectedValue="{Binding SelectedAusrüstung,Mode=TwoWay}" Grid.Row="1" Grid.ColumnSpan="3"
                                   ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False" Margin="0,5,0,0">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt,Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
+                                <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
