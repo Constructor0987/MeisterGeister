@@ -33,6 +33,8 @@ using static MeisterGeister.ViewModel.Settings.EinstellungenViewModel;
 using MeisterGeister.ViewModel.Settings;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Q42.HueApi.Models.Groups;
+using Q42.HueApi.Models;
 
 namespace MeisterGeister.ViewModel
 {
@@ -690,12 +692,57 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _HUELightsSelected, value); }
         }
 
+        private List<Group> _hUEGroups = new List<Group>();
+        public List<Group> HUEGroupsSelected
+        {
+            get { return _hUEGroups; }
+            set { Set(ref _hUEGroups, value); }
+        }
+
         private List<Light> _lstHUELights = new List<Light>();
         public List<Light> lstHUELights
         {
             get { return _lstHUELights; }
             set { Set(ref _lstHUELights, value); }
         }
+
+        private List<Group> _lstHUEGroups = new List<Group>();
+        public List<Group> lstHUEGroups
+        {
+            get { return _lstHUEGroups; }
+            set { Set(ref _lstHUEGroups, value); }
+        }
+
+        private List<Scene> _lstHUEScenes = new List<Scene>();
+        public List<Scene> lstHUEScenes
+        {
+            get { return _lstHUEScenes; }
+            set { Set(ref _lstHUEScenes, value); }
+        }
+
+        private bool _hUELampenSelected = false;
+        public bool HUELampenSelected
+        {
+            get { return _hUELampenSelected; }
+            set
+            {
+                Set(ref _hUELampenSelected, value);
+                if (value)
+                    HUEGruppenSelected = false;
+            }
+        }
+
+        private bool _hUEGruppenSelected = false;
+        public bool HUEGruppenSelected
+        {
+            get { return _hUEGruppenSelected; }
+            set
+            {
+                Set(ref _hUEGruppenSelected, value);
+                if (value)
+                    HUELampenSelected = false;
+            }
+}
 
         private List<HUESzene> _lstHUESzenen = new List<HUESzene>();
         public List<HUESzene> lstHUESzenen
@@ -789,7 +836,14 @@ namespace MeisterGeister.ViewModel
                     await Client.SearchNewLightsAsync(lstHUEDeviceID);
                     //Get all lights
                     var resultLights = await Client.GetLightsAsync();
+                    //Get all Scenes
+                    var resultScene = await MainVM.Client.GetScenesAsync();
+                    //Get all Groups
+                    var resultGroups = await MainVM.Client.GetGroupsAsync();
+
                     lstHUELights = resultLights as List<Light>;
+                    lstHUEGroups = resultGroups as List<Group>;
+                    lstHUEScenes = resultScene as List<Scene>;
                 }
                 catch (Exception ex)
                 {

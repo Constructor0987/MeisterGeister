@@ -8,6 +8,7 @@ using MeisterGeister.Model.Extensions;
 
 using Q42.HueApi;
 using Q42.HueApi.Interfaces;
+using Q42.HueApi.Models.Groups;
 
 using Q42.HueApi.ColorConverters.Original;
 using Q42.HueApi.ColorConverters.OriginalWithModel;
@@ -24,6 +25,7 @@ using MeisterGeister.View.General;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Media.Animation;
+using Q42.HueApi.Models;
 
 namespace MeisterGeister.ViewModel.Settings
 {
@@ -622,6 +624,7 @@ namespace MeisterGeister.ViewModel.Settings
                 lstHUEGateways = MainVM.lstHUEGateways;
                 HUEGWSelected = MainVM.HUEGWSelected;
                 lstHUELights = MainVM.lstHUELights;
+                lstHUEGroups = MainVM.lstHUEGroups;
                 AppKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
 
                 //Create HUE-Szene aus Datenbankä
@@ -1346,6 +1349,20 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
+        private List<Group> _lstHUEGroups = new List<Group>();
+        public List<Group> lstHUEGroups
+        {
+            get { return _lstHUEGroups; }
+            set { Set(ref _lstHUEGroups, value); }
+        }
+
+        private List<Scene> _lstScene = new List<Scene>();
+        public List<Scene> lstScene
+        {
+            get { return _lstScene; }
+            set { Set(ref _lstScene, value); }
+        }
+
         private Light _cmbxSelHUE = new Light();
         public Light cmbxSelHUE
         {
@@ -1373,6 +1390,7 @@ namespace MeisterGeister.ViewModel.Settings
             MainVM.Client = new LocalHueClient(ip);
             appKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
             //4nuWDIXoZ0EMPxMBXhQFagf5bOsK-XcEc7DzS8G1
+            //u-CNmYbLPrl0bAzMHD-EuQTXuuqMvnlhSVUezpLO
 
             if (!string.IsNullOrEmpty(appKey))
             {
@@ -1393,14 +1411,16 @@ namespace MeisterGeister.ViewModel.Settings
                 PingReply reply = pingSender.Send(ip, timeout, buffer, options);
                 if (!string.IsNullOrEmpty(appKey) && reply.Status != IPStatus.Success)
                 {
-                    int back = ViewHelper.ConfirmYesNoCancel("Gespeichertes Gateway nciht erkannt", "Das Gateway mit der IP= " + ip + " wurde zu einem vorherigen Start gespeichert, konnte jedoch nicht " +
+                    int back = ViewHelper.ConfirmYesNoCancel("Gespeichertes Gateway nicht erkannt", "Das Gateway mit der IP= " + ip + " wurde zu einem vorherigen Start gespeichert, konnte jedoch nicht " +
                         "im Netzwerk gefunden werden.\n\r \n\rKlicke 'Ja' wenn ein neues Gateway gesucht werden soll. Falls das vorherige erneut gesucht werden soll, klicke 'Nein'");
                     if (back == 1)
                         goto ErneuterPing;
                     if (back == 0)
                         return;
-                } else
-                    appKey = null;
+                } 
+                //else
+                //    if (reply.Status == IPStatus.Success)
+                //    appKey = null;
             }
 
             if (string.IsNullOrEmpty(appKey))
@@ -1440,8 +1460,14 @@ namespace MeisterGeister.ViewModel.Settings
             await MainVM.Client.SearchNewLightsAsync(lstDeviceID);
             //Get all lights
             var resultLights = await MainVM.Client.GetLightsAsync();
+            //Get all Scenes
+            var resultScene = await MainVM.Client.GetScenesAsync();
+            //Get all Groups
+            var resultGroups = await MainVM.Client.GetGroupsAsync();
 
             lstHUELights = resultLights as List<Light>;
+            lstHUEGroups = resultGroups as List<Group>;
+            lstScene = resultScene as List<Scene>;
         }
 
 

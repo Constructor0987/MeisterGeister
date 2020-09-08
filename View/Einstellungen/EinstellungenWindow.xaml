@@ -889,7 +889,7 @@
                                 </Grid>
                             </Border>
                         </TabItem>
-                        <TabItem Header="HUE-Szene">
+                        <TabItem Header="HUE-Szene" Visibility="Collapsed">
                             <Grid >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="250*"/>
