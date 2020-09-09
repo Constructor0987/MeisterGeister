@@ -143,6 +143,20 @@ namespace MeisterGeister.ViewModel.Settings
 
         #region Property
 
+        private Base.CommandBase _onBtnHUEGWDeSelect;
+        public Base.CommandBase OnBtnHUEGWDeSelect
+        {
+            get
+            {
+                if (_onBtnHUEGWDeSelect == null)
+                {
+                    _onBtnHUEGWDeSelect = new Base.CommandBase(HUEGWDeSelect, null);
+                }
+
+                return _onBtnHUEGWDeSelect;
+            }
+        }
+
         public Base.CommandBase onBtnSelectHUESzeneColor
         {
             get
@@ -796,6 +810,21 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
+        private void HUEGWDeSelect(object obj)
+        {
+            if (!ViewHelper.Confirm("HUE-Gateway-Informationen löschen", "Wollen Sie wirklich die HUE-Gateway-Informationen aus der Datenbank entfernen?\n\n" +
+                "Ein erneutes Kopplen mit dem Gateway ist natürlich später immer noch möglich, \nerfordert allerdings ein ernetes Betätigen des Gateway-Buttons"))
+                return;
+            lstHUEGateways = new List<LocatedBridge>();
+            HUEGWSelected = null;
+            lstHUELights = new List<Light>();
+            lstHUEGroups = new List<Group>();
+            MainVM.Client = null;
+            AppKey = null;
+            Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_Registerkey", null);
+            Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_GatewayID", null);
+        }
+
         private void SelectHUESzeneColor(object obj)
         {
             HUESzene hSzene = new HUESzene();
@@ -1353,7 +1382,9 @@ namespace MeisterGeister.ViewModel.Settings
         public List<Group> lstHUEGroups
         {
             get { return _lstHUEGroups; }
-            set { Set(ref _lstHUEGroups, value); }
+            set { Set(ref _lstHUEGroups, value);
+                MainViewModel.Instance.lstHUEGroups = value;
+            }
         }
 
         private List<Scene> _lstScene = new List<Scene>();
@@ -1425,8 +1456,9 @@ namespace MeisterGeister.ViewModel.Settings
 
             if (string.IsNullOrEmpty(appKey))
             {
-                MeisterGeister.View.General.ViewHelper.Popup("Das Gateway wurde mit der MeisterGeister Version noch nicht gekoppelt." + Environment.NewLine + Environment.NewLine +
-                    "Bitte klicke nach dem bestätigen dieser Meldung innerhalb von 15 Sekunden den Button auf dem Gateway");
+                if (!MeisterGeister.View.General.ViewHelper.Confirm("HUE-Gateway-Kopplung erforderlich", "Das Gateway wurde mit der MeisterGeister Version noch nicht gekoppelt." + Environment.NewLine + Environment.NewLine +
+                    "Bitte bestätige dieses Fenster und betätige innerhalb von 15 Sekunden den Button auf dem Gateway.\n\n"+
+                    "Willst du dein Gerät nun mit dem HUE-Gateway koppeln?")) return;
                 //Register your application
                 //Link button drücken zum Registrieren !!!
                 //Make sure the user has pressed the button on the bridge before calling RegisterAsync

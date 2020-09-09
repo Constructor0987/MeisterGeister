@@ -829,10 +829,26 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Content="{Binding AppKey, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button Grid.Column="1" 
+                                        HorizontalAlignment="Left" 
+                                            ToolTip="Entfernen der Gateway Informationen"
+                                            Margin="175,2,0,2" Height="25" Width="25"
+                                            Command="{Binding OnBtnHUEGWDeSelect}">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding AppKey, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Margin="-3" />
+                                    </Button>
                                     <Button
                                         Grid.Column="1"
                                         Width="100"
-                                        Margin="175,2,0,2"
+                                        Margin="215,2,0,2"
                                         HorizontalAlignment="Left"
                                         Command="{Binding onBtnActivateHUEGW}"
                                         Content="Aktivieren">

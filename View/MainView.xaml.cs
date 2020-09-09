@@ -605,30 +605,30 @@ namespace MeisterGeister.View
             }
         }
 
-        private void lvHUE_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void lvHUELights_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            List<Group> HUEListGruppenSelected = new List<Group>();
+            VM.HUELampenSelected = true;
             List<Light> HUEListLampenSelected = new List<Light>();
 
             foreach (var item in (e.Source as ListView).SelectedItems)
             {
                 if (item is Light)
                     HUEListLampenSelected.Add(item as Light);
-                if (item is Group)
-                    HUEListGruppenSelected.Add(item as Group);
-
             }
-            if (HUEListLampenSelected.Count > 0)
-            {
-                VM.HUELightsSelected = HUEListLampenSelected;
-                VM.HUELampenSelected = true;
-            }
-            if (HUEListGruppenSelected.Count > 0)
-            {
-                VM.HUEGroupsSelected  = HUEListGruppenSelected;
-                VM.HUEGruppenSelected = true;
-            }
+            VM.HUELightsSelected = HUEListLampenSelected;
         }
 
+        private void lvHUEGruppen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VM.HUEGruppenSelected = true;
+            List<Group> HUEListGruppenSelected = new List<Group>();
+
+            foreach (var item in (e.Source as ListView).SelectedItems)
+            {
+                if (item is Group)
+                    HUEListGruppenSelected.Add(item as Group);
+            }
+            VM.HUEGroupsSelected = HUEListGruppenSelected;
+        }
     }
 }

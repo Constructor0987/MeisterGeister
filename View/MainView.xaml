@@ -755,12 +755,12 @@
                                 <ListView x:Name="lvHUE" Grid.Row="4" Margin="0,25,0,5" FontSize="10" VerticalAlignment="Top" MaxHeight="150"
                                       ItemsSource="{Binding lstHUELights, UpdateSourceTrigger=PropertyChanged}" 
                                           ScrollViewer.VerticalScrollBarVisibility="Auto"  
-                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUE_SelectionChanged" />
+                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUELights_SelectionChanged" />
                                 <Label Content="HUE-Gruppen" Grid.Row="4" Grid.Column="1"/>
                                 <ListView x:Name="lvHUEGroups" Grid.Column="1" Grid.Row="4" Margin="0,25,0,5" FontSize="10" VerticalAlignment="Top" MaxHeight="150"
                                       ItemsSource="{Binding lstHUEGroups, UpdateSourceTrigger=PropertyChanged}" 
                                           ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUE_SelectionChanged" />
+                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUEGruppen_SelectionChanged" />
                             </Grid>
                         </Border>
                     </Grid>
