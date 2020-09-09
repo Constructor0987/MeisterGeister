@@ -634,21 +634,28 @@ namespace MeisterGeister.ViewModel
             { 
                 Set(ref _hueLampeSaettigung, value);
 
-                if (HUELightsSelected.Count != 0 && Client != null)
+                if (Client != null)
                 {
-                    List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
-                    if (lstLights.Count == 0) return;
                     //Control the lights                
                     LightCommand command = new LightCommand();
 
-                    //   command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
-                    //    command.Brightness = (byte)HUELampeBrightness;
-                    if (HUELampeBrightness != 0)
-                        command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+        //            if (HUELampeBrightness != 0)
+        //                command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                     command.Saturation = (byte)value;
-                    //Or send it to all lights
-                    //   hueClient.SendCommandAsync(command);
-                    Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+
+                    if (HUELampenSelected && HUELightsSelected.Count != 0)
+                    {
+                        List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
+                        if (lstLights.Count == 0)
+                            return;
+                        Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                    }
+                    else
+                    if (HUEGruppenSelected && lstHUEGroups.Count != 0)
+                    {
+                        foreach (string hgString in lstHUEGroups.Where(t => HUEGroupsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList())
+                            Client.SendGroupCommandAsync(command, hgString);
+                    }
                 }
             }
         }
@@ -660,21 +667,31 @@ namespace MeisterGeister.ViewModel
             { 
                 Set(ref _hueLampeBrightness, value);
 
-                if (HUELightsSelected.Count != 0 && Client != null)
+                if (Client != null)
                 {
-                    List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
-                    if (lstLights.Count == 0)
-                        return;
                     //Control the lights                
                     LightCommand command = new LightCommand();
                     if (value > 1)
                     {
-                        command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+          //              command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                         command.Brightness = (byte)value;
                     }
                     else
                         command.TurnOff();
-                    Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+
+                    if (HUELampenSelected && HUELightsSelected.Count != 0)
+                    {
+                        List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
+                        if (lstLights.Count == 0)
+                            return;
+                        Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                    }
+                    else
+                    if (HUEGruppenSelected && lstHUEGroups.Count != 0)
+                    {
+                        foreach (string hgString in lstHUEGroups.Where(t => HUEGroupsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList())
+                            Client.SendGroupCommandAsync(command, hgString);
+                    }
                 }
             }
         }

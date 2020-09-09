@@ -487,26 +487,22 @@ namespace MeisterGeister.View
         {
             IsMouseDown = true;
             UpdateColor();
-            if (VM.HUELampenSelected && VM.HUELightsSelected.Count != 0 && VM.Client != null)
+            if (VM.Client != null)
             {
                 //Control the lights                
                 LightCommand command = new LightCommand();
                 command.TurnOn().SetColor(new RGBColor(VM.SelectedColor.R, VM.SelectedColor.G, VM.SelectedColor.B));
                 command.Brightness = (byte)BrightnessSlider.Value;
-                //Or send it to all lights
-                //     hueClient.SendCommandAsync(command);
-                VM.Client.SendCommandAsync(command, VM.lstHUELights.Where(t => VM.HUELightsSelected.Select(z=> z.Id).Contains(t.Id)).Select(t => t.Id).ToList());
-            }
-            else
-            if (VM.HUEGruppenSelected && VM.lstHUEGroups.Count != 0 && VM.Client != null)
-            {
-                //Control the Groups                
-                LightCommand command = new LightCommand();
-                command.TurnOn().SetColor(new RGBColor(VM.SelectedColor.R, VM.SelectedColor.G, VM.SelectedColor.B));
-                command.Brightness = (byte)BrightnessSlider.Value;
-
-                foreach (string hgString in VM.lstHUEGroups.Where(t => VM.HUEGroupsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList())
-                    VM.Client.SendGroupCommandAsync(command, hgString);
+                if (VM.HUELampenSelected && VM.HUELightsSelected.Count != 0 )
+                {
+                    VM.Client.SendCommandAsync(command, VM.lstHUELights.Where(t => VM.HUELightsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList());
+                }
+                else
+                if (VM.HUEGruppenSelected && VM.lstHUEGroups.Count != 0 && VM.Client != null)
+                {
+                    foreach (string hgString in VM.lstHUEGroups.Where(t => VM.HUEGroupsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList())
+                        VM.Client.SendGroupCommandAsync(command, hgString);
+                }
             }
         }
 
