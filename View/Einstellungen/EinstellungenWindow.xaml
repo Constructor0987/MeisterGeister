@@ -905,7 +905,7 @@
                                 </Grid>
                             </Border>
                         </TabItem>
-                        <TabItem Header="HUE-Szene" Visibility="Collapsed">
+                        <!--<TabItem Header="HUE-Szene" Visibility="Collapsed">
                             <Grid >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="250*"/>
@@ -987,7 +987,7 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             
-                                            <!--<DataGridTemplateColumn.CellTemplate>
+                                            --><!--<DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <Border Margin="2" Height="22" CornerRadius="3" Width="95" Background="{Binding Path=color, Converter={StaticResource ColorToSolidColorBrushConverter1}}" >
                                                         <Button Content="Color"
@@ -995,12 +995,12 @@
                                                             Background="Transparent"/>
                                                     </Border>
                                                 </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>-->
+                                            </DataGridTemplateColumn.CellTemplate>--><!--
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
-                        </TabItem>
+                        </TabItem>-->
 
                         <!--<TabItem Header="HUE-Programme">
                             <Border Style="{DynamicResource ControlContentBorder}">

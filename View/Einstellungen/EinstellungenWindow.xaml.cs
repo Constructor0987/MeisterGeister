@@ -226,21 +226,21 @@ namespace MeisterGeister.View.Settings
         {
         }
 
-        private void btnSzeneRemove(object sender, RoutedEventArgs e)
-        {
-            EinstellungenViewModel.HUESzene selHUESzene = ((Button)sender).Tag as EinstellungenViewModel.HUESzene;
-            if (selHUESzene != null)
-            {             
-                List<EinstellungenViewModel.HUESzene> lstHZ = new List<EinstellungenViewModel.HUESzene>();
-                lstHZ.AddRange(Global.MainVM.lstHUESzenen);
+        //private void btnSzeneRemove(object sender, RoutedEventArgs e)
+        //{
+        //    EinstellungenViewModel.HUESzene selHUESzene = ((Button)sender).Tag as EinstellungenViewModel.HUESzene;
+        //    if (selHUESzene != null)
+        //    {             
+        //        List<EinstellungenViewModel.HUESzene> lstHZ = new List<EinstellungenViewModel.HUESzene>();
+        //        lstHZ.AddRange(Global.MainVM.lstHUESzenen);
 
-                Global.ContextHUE.SzenenListe.Remove(Global.ContextHUE.SzenenListe.Where(t => t.Name == selHUESzene.Name).FirstOrDefault());
+        //        Global.ContextHUE.SzenenListe.Remove(Global.ContextHUE.SzenenListe.Where(t => t.Name == selHUESzene.Name).FirstOrDefault());
 
-                lstHZ.Remove(selHUESzene);
-                Global.MainVM.lstHUESzenen = lstHZ;
-            }
+        //        lstHZ.Remove(selHUESzene);
+        //        Global.MainVM.lstHUESzenen = lstHZ;
+        //    }
 
-        }
+        //}
 
 
         //private void Timer_Tick(object sender, object e)

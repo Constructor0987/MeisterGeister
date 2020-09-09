@@ -761,46 +761,46 @@ namespace MeisterGeister.ViewModel
             }
 }
 
-        private List<HUESzene> _lstHUESzenen = new List<HUESzene>();
-        public List<HUESzene> lstHUESzenen
-        {
-            get { return _lstHUESzenen; }
-            set { Set(ref _lstHUESzenen, value); }
-        }
+        //private List<HUESzene> _lstHUESzenen = new List<HUESzene>();
+        //public List<HUESzene> lstHUESzenen
+        //{
+        //    get { return _lstHUESzenen; }
+        //    set { Set(ref _lstHUESzenen, value); }
+        //}
 
-        private HUESzene _hUESzeneSelected = null;
-        public HUESzene HUESzeneSelected
-        {
-            get { return _hUESzeneSelected; }
-            set 
-            { 
-                Set(ref _hUESzeneSelected, value);
-                if (value == null)
-                    return;
-                foreach (LightColor LC in value.lstLightColor)
-                {
-                    if (LC.color != null)
-                    {
-                        //Control the lights                
-                        LightCommand command = new LightCommand();
-                        command.TurnOn().SetColor(new RGBColor(LC.color.R, LC.color.G, LC.color.B));
-                        command.Brightness = (byte)LC.color.A;
+        //private HUESzene _hUESzeneSelected = null;
+        //public HUESzene HUESzeneSelected
+        //{
+        //    get { return _hUESzeneSelected; }
+        //    set 
+        //    { 
+        //        Set(ref _hUESzeneSelected, value);
+        //        if (value == null)
+        //            return;
+        //        foreach (LightColor LC in value.lstLightColor)
+        //        {
+        //            if (LC.color != null)
+        //            {
+        //                //Control the lights                
+        //                LightCommand command = new LightCommand();
+        //                command.TurnOn().SetColor(new RGBColor(LC.color.R, LC.color.G, LC.color.B));
+        //                command.Brightness = (byte)LC.color.A;
 
-                        List<string> lst = new List<string>();
-                        lst.Add(LC.light.Id);
+        //                List<string> lst = new List<string>();
+        //                lst.Add(LC.light.Id);
 
-                        QueueCommand(COLOR, command, lst);
-            //            Global.MainVM.Client.SendCommandAsync(command, lst);
-                    }
-                }
-            }
-        }
+        //                QueueCommand(COLOR, command, lst);
+        //    //            Global.MainVM.Client.SendCommandAsync(command, lst);
+        //            }
+        //        }
+        //    }
+        //}
 
-        private List<LocatedBridge> _lstHUEGaterways = new List<LocatedBridge>();
+        private List<LocatedBridge> _lstHUEGateways = new List<LocatedBridge>();
         public List<LocatedBridge> lstHUEGateways
         {
-            get { return _lstHUEGaterways; }
-            set { Set(ref _lstHUEGaterways, value); }
+            get { return _lstHUEGateways; }
+            set { Set(ref _lstHUEGateways, value); }
         }
 
         private LocatedBridge _HUEGWSelected = null;
