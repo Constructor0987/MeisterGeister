@@ -360,6 +360,18 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Held_Zauber> _held_Zauber;
     
+        public ObjectSet<HUE_LampeColor> HUE_LampeColor
+        {
+            get { return _hUE_LampeColor  ?? (_hUE_LampeColor = CreateObjectSet<HUE_LampeColor>("HUE_LampeColor")); }
+        }
+        private ObjectSet<HUE_LampeColor> _hUE_LampeColor;
+    
+        public ObjectSet<HUE_Szene> HUE_Szene
+        {
+            get { return _hUE_Szene  ?? (_hUE_Szene = CreateObjectSet<HUE_Szene>("HUE_Szene")); }
+        }
+        private ObjectSet<HUE_Szene> _hUE_Szene;
+    
         public ObjectSet<Inventar> Inventar
         {
             get { return _inventar  ?? (_inventar = CreateObjectSet<Inventar>("Inventar")); }
@@ -725,6 +737,10 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Held_Waffe;
     		if(typeof(T) == typeof(Held_Zauber))
     				return (ObjectSet<T>)(Object)Held_Zauber;
+    		if(typeof(T) == typeof(HUE_LampeColor))
+    				return (ObjectSet<T>)(Object)HUE_LampeColor;
+    		if(typeof(T) == typeof(HUE_Szene))
+    				return (ObjectSet<T>)(Object)HUE_Szene;
     		if(typeof(T) == typeof(Inventar))
     				return (ObjectSet<T>)(Object)Inventar;
     		if(typeof(T) == typeof(Kampfregel))
@@ -914,6 +930,10 @@ namespace MeisterGeister.Model
     				return Held_Waffe;
     		if(t == typeof(Held_Zauber))
     				return Held_Zauber;
+    		if(t == typeof(HUE_LampeColor))
+    				return HUE_LampeColor;
+    		if(t == typeof(HUE_Szene))
+    				return HUE_Szene;
     		if(t == typeof(Inventar))
     				return Inventar;
     		if(t == typeof(Kampfregel))

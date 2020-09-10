@@ -32,11 +32,81 @@ using MeisterGeister.View.General;
 using static MeisterGeister.ViewModel.Settings.EinstellungenViewModel;
 using MeisterGeister.ViewModel.Settings;
 using System.Windows.Media;
+using System.Windows.Threading;
+using Q42.HueApi.Models.Groups;
+using Q42.HueApi.Models;
 
 namespace MeisterGeister.ViewModel
 {
     public class MainViewModel : Base.ViewModelBase
     {
+
+        #region -- HUE running ---
+
+        #region --- HUE Command
+
+        //command keys for queue
+        private const string ON_OFF = "ON_OFF";
+        private const string BRIGHTNESS = "BRIGHTNESS";
+        private const string COLOR = "COLOR";
+
+        private Dictionary<string, LightCommand> _commandQueue;
+        DispatcherTimer _timer; //timer for queue
+
+        #endregion
+
+
+        private void Timer_Tick(object sender, object e)
+        {
+            //stop timer
+            _timer.Stop();
+
+            //execute queue commands
+            if (_commandQueue.Count > 0)
+            {
+                foreach (var cmd in _commandQueue)
+                {
+                    List<string> lstLights = cmd.Key.Split('|').ToList();
+                    lstLights.RemoveAt(0);
+                    //fire and forget
+                    Client.SendCommandAsync(cmd.Value, lstLights);
+                }
+            }
+
+            //clear queue
+            _commandQueue.Clear();
+            //start timer back up again
+            _timer.Start();
+        }
+
+        //helper method to queue light commands for execution
+        public void QueueCommand(string commandType, LightCommand cmd, List<string> lstLights)
+        {
+            if (_commandQueue == null && Client != null)
+            {
+                //initialize command queue
+                _commandQueue = new Dictionary<string, LightCommand>();
+
+                //intilialize command queue timer (avoid sending too many commands per second)
+                _timer = new DispatcherTimer();
+                _timer.Interval = TimeSpan.FromSeconds(0.5);
+                _timer.Tick += Timer_Tick;
+                _timer.Start();
+            }
+            if (_commandQueue == null)
+                return;
+            if (_commandQueue.ContainsKey(commandType))
+            {
+                //replace with most recent
+                _commandQueue[commandType] = cmd;
+            }
+            else
+            {
+                _commandQueue.Add(commandType + "|" +string.Join("|", lstLights), cmd);
+            }
+        }
+
+        #endregion
 
         private MainViewModel() : base(View.General.ViewHelper.ShowError)
         {
@@ -48,6 +118,7 @@ namespace MeisterGeister.ViewModel
                 (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null);
             UpdateHotkeyUsed();
             LoadHUE();
+
             Einstellungen.EinstellungChanged += Einstellungen_EinstellungChanged;                     
         }
 
@@ -563,21 +634,28 @@ namespace MeisterGeister.ViewModel
             { 
                 Set(ref _hueLampeSaettigung, value);
 
-                if (HUELightsSelected.Count != 0 && Client != null)
+                if (Client != null)
                 {
-                    List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
-                    if (lstLights.Count == 0) return;
                     //Control the lights                
                     LightCommand command = new LightCommand();
 
-                    //   command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
-                    //    command.Brightness = (byte)HUELampeBrightness;
-                    if (HUELampeBrightness != 0)
-                        command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+        //            if (HUELampeBrightness != 0)
+        //                command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                     command.Saturation = (byte)value;
-                    //Or send it to all lights
-                    //   hueClient.SendCommandAsync(command);
-                    Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+
+                    if (HUELampenSelected && HUELightsSelected.Count != 0)
+                    {
+                        List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
+                        if (lstLights.Count == 0)
+                            return;
+                        Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                    }
+                    else
+                    if (HUEGruppenSelected && lstHUEGroups.Count != 0)
+                    {
+                        foreach (string hgString in lstHUEGroups.Where(t => HUEGroupsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList())
+                            Client.SendGroupCommandAsync(command, hgString);
+                    }
                 }
             }
         }
@@ -589,21 +667,31 @@ namespace MeisterGeister.ViewModel
             { 
                 Set(ref _hueLampeBrightness, value);
 
-                if (HUELightsSelected.Count != 0 && Client != null)
+                if (Client != null)
                 {
-                    List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
-                    if (lstLights.Count == 0)
-                        return;
                     //Control the lights                
                     LightCommand command = new LightCommand();
                     if (value > 1)
                     {
-                        command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+          //              command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                         command.Brightness = (byte)value;
                     }
                     else
                         command.TurnOff();
-                    Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+
+                    if (HUELampenSelected && HUELightsSelected.Count != 0)
+                    {
+                        List<Light> lstLights = lstHUELights.Where(t => HUELightsSelected.Select(z => z.Id).Contains(t.Id)).ToList();
+                        if (lstLights.Count == 0)
+                            return;
+                        Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                    }
+                    else
+                    if (HUEGruppenSelected && lstHUEGroups.Count != 0)
+                    {
+                        foreach (string hgString in lstHUEGroups.Where(t => HUEGroupsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList())
+                            Client.SendGroupCommandAsync(command, hgString);
+                    }
                 }
             }
         }
@@ -621,6 +709,13 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _HUELightsSelected, value); }
         }
 
+        private List<Group> _hUEGroups = new List<Group>();
+        public List<Group> HUEGroupsSelected
+        {
+            get { return _hUEGroups; }
+            set { Set(ref _hUEGroups, value); }
+        }
+
         private List<Light> _lstHUELights = new List<Light>();
         public List<Light> lstHUELights
         {
@@ -628,44 +723,84 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _lstHUELights, value); }
         }
 
-        private List<HUESzene> _lstHUESzenen = new List<HUESzene>();
-        public List<HUESzene> lstHUESzenen
+        private List<Group> _lstHUEGroups = new List<Group>();
+        public List<Group> lstHUEGroups
         {
-            get { return _lstHUESzenen; }
-            set { Set(ref _lstHUESzenen, value); }
+            get { return _lstHUEGroups; }
+            set { Set(ref _lstHUEGroups, value); }
         }
 
-        private HUESzene _hUESzeneSelected = null;
-        public HUESzene HUESzeneSelected
+        private List<Scene> _lstHUEScenes = new List<Scene>();
+        public List<Scene> lstHUEScenes
         {
-            get { return _hUESzeneSelected; }
-            set 
-            { 
-                Set(ref _hUESzeneSelected, value);
-                if (value == null)
-                    return;
-                foreach (LightColor LC in value.lstLightColor)
-                {
-                    if (LC.color != null)
-                    {
-                        //Control the lights                
-                        LightCommand command = new LightCommand();
-                        command.TurnOn().SetColor(new RGBColor(LC.color.R, LC.color.G, LC.color.B));
-                        command.Brightness = (byte)LC.color.A;
+            get { return _lstHUEScenes; }
+            set { Set(ref _lstHUEScenes, value); }
+        }
 
-                        List<string> lst = new List<string>();
-                        lst.Add(LC.light.Id);
-                        Global.MainVM.Client.SendCommandAsync(command, lst);
-                    }
-                }
+        private bool _hUELampenSelected = false;
+        public bool HUELampenSelected
+        {
+            get { return _hUELampenSelected; }
+            set
+            {
+                Set(ref _hUELampenSelected, value);
+                if (value)
+                    HUEGruppenSelected = false;
             }
         }
 
-        private List<LocatedBridge> _lstHUEGaterways = new List<LocatedBridge>();
+        private bool _hUEGruppenSelected = false;
+        public bool HUEGruppenSelected
+        {
+            get { return _hUEGruppenSelected; }
+            set
+            {
+                Set(ref _hUEGruppenSelected, value);
+                if (value)
+                    HUELampenSelected = false;
+            }
+}
+
+        //private List<HUESzene> _lstHUESzenen = new List<HUESzene>();
+        //public List<HUESzene> lstHUESzenen
+        //{
+        //    get { return _lstHUESzenen; }
+        //    set { Set(ref _lstHUESzenen, value); }
+        //}
+
+        //private HUESzene _hUESzeneSelected = null;
+        //public HUESzene HUESzeneSelected
+        //{
+        //    get { return _hUESzeneSelected; }
+        //    set 
+        //    { 
+        //        Set(ref _hUESzeneSelected, value);
+        //        if (value == null)
+        //            return;
+        //        foreach (LightColor LC in value.lstLightColor)
+        //        {
+        //            if (LC.color != null)
+        //            {
+        //                //Control the lights                
+        //                LightCommand command = new LightCommand();
+        //                command.TurnOn().SetColor(new RGBColor(LC.color.R, LC.color.G, LC.color.B));
+        //                command.Brightness = (byte)LC.color.A;
+
+        //                List<string> lst = new List<string>();
+        //                lst.Add(LC.light.Id);
+
+        //                QueueCommand(COLOR, command, lst);
+        //    //            Global.MainVM.Client.SendCommandAsync(command, lst);
+        //            }
+        //        }
+        //    }
+        //}
+
+        private List<LocatedBridge> _lstHUEGateways = new List<LocatedBridge>();
         public List<LocatedBridge> lstHUEGateways
         {
-            get { return _lstHUEGaterways; }
-            set { Set(ref _lstHUEGaterways, value); }
+            get { return _lstHUEGateways; }
+            set { Set(ref _lstHUEGateways, value); }
         }
 
         private LocatedBridge _HUEGWSelected = null;
@@ -688,7 +823,13 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _lstHUEThemes, value); }
         }
 
-        public LocalHueClient Client = null;
+        private LocalHueClient _client = null;
+        public LocalHueClient Client
+        {
+            get { return _client; }
+            set { Set(ref _client, value); }
+        }
+
         public async void LoadHUE()
         {
             string HUE_ID = Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_GatewayID");
@@ -712,7 +853,14 @@ namespace MeisterGeister.ViewModel
                     await Client.SearchNewLightsAsync(lstHUEDeviceID);
                     //Get all lights
                     var resultLights = await Client.GetLightsAsync();
+                    //Get all Scenes
+                    var resultScene = await MainVM.Client.GetScenesAsync();
+                    //Get all Groups
+                    var resultGroups = await MainVM.Client.GetGroupsAsync();
+
                     lstHUELights = resultLights as List<Light>;
+                    lstHUEGroups = resultGroups as List<Group>;
+                    lstHUEScenes = resultScene as List<Scene>;
                 }
                 catch (Exception ex)
                 {

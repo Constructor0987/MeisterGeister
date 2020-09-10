@@ -8,6 +8,7 @@ using MeisterGeister.Model.Extensions;
 
 using Q42.HueApi;
 using Q42.HueApi.Interfaces;
+using Q42.HueApi.Models.Groups;
 
 using Q42.HueApi.ColorConverters.Original;
 using Q42.HueApi.ColorConverters.OriginalWithModel;
@@ -20,6 +21,11 @@ using MeisterGeister.View.Settings;
 using System.Threading;
 using System.Windows;
 using MeisterGeister.View;
+using MeisterGeister.View.General;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Windows.Media.Animation;
+using Q42.HueApi.Models;
 
 namespace MeisterGeister.ViewModel.Settings
 {
@@ -56,57 +62,68 @@ namespace MeisterGeister.ViewModel.Settings
 
     public class EinstellungenViewModel : Base.ViewModelBase
     {
-        public class LightColor
-        {
-            public Light light { get; set; }
-            public Color color { get; set; }
-        }
-        public class HUESzene
-        {
-            public string Name { get; set; }
-            private List<LightColor> _lstLightColor = new List<LightColor>();
-            public List<LightColor> lstLightColor
-            {
-                get { return _lstLightColor; }
-                set { _lstLightColor = value; }
-            }
-        }
+        //command keys for queue
+        private const string ON_OFF = "ON_OFF";
+        private const string BRIGHTNESS = "BRIGHTNESS";
+        private const string COLOR = "COLOR";
 
-        private LightColor _lightColorSelected = new LightColor();
-        public LightColor LightColorSelected
-        {
-            get { return _lightColorSelected; }
-            set { _lightColorSelected = value; }
-        }
+        public static MainViewModel MainVM
+        { get { return MainViewModel.Instance; } }
 
-        private HUESzene _selHUESzene = new HUESzene();
-        public HUESzene SelHUESzene
-        {
-            get { return _selHUESzene; }
-            set 
-            {
-                Set(ref _selHUESzene, value);
-                if (value == null)
-                    return;
-                List<Light> LightsLeft = new List<Light>();
-                if (value.lstLightColor.Count == 0)
-                    LightsLeft.AddRange(lstHUELights);
-                else
-                    LightsLeft.AddRange(lstHUELights.Where(t => !value.lstLightColor.Select(z => z.light).ToList().Contains(t)).ToList());
-                lstHUELightsLeft = LightsLeft;
-            }
-        }
+        //public class LightColor
+        //{
+        //    public Light light { get; set; }
+        //    public Color color { get; set; }
+        //}
+        //public class HUESzene
+        //{
+        //    public string Name { get; set; }
+        //    private List<LightColor> _lstLightColor = new List<LightColor>();
+        //    public List<LightColor> lstLightColor
+        //    {
+        //        get { return _lstLightColor; }
+        //        set { _lstLightColor = value; }
+        //    }
+        //}
 
-        private List<HUESzene> _lstHUESzenen = Global.MainVM.lstHUESzenen;
-        public List<HUESzene> lstHUESzenen
-        { 
-            get { return _lstHUESzenen; }
-            set
-            {
-                Set(ref _lstHUESzenen, value);
-                Global.MainVM.lstHUESzenen = value;
-            }
-        }
+        //private HUE_LampeColor _lightColorSelectedDB = new HUE_LampeColor();
+        //public HUE_LampeColor LightColorSelectedDB
+        //{
+        //    get { return _lightColorSelectedDB; }
+        //    set { _lightColorSelectedDB = value; }
+        //}
+
+        //private LightColor _lightColorSelected = new LightColor();
+        //public LightColor LightColorSelected
+        //{
+        //    get { return _lightColorSelected; }
+        //    set 
+        //    { 
+        //        _lightColorSelected = value;
+        //        if (value == null)
+        //            LightColorSelectedDB = null; 
+        //        else
+        //            LightColorSelectedDB = SelHUESzeneDB.HUE_LampeColor.Where(t => t.Lampenname == value.light.Name).FirstOrDefault();
+        //    }
+        //}
+
+        //private HUE_Szene _selHUESzeneDB = new HUE_Szene();
+        //public HUE_Szene SelHUESzeneDB
+        //{
+        //    get { return _selHUESzeneDB; }
+        //    set { _selHUESzeneDB = value; }
+        //}
+
+        //private List<HUESzene> _lstHUESzenen = Global.MainVM.lstHUESzenen;
+        //public List<HUESzene> lstHUESzenen
+        //{ 
+        //    get { return _lstHUESzenen; }
+        //    set
+        //    {
+        //        Set(ref _lstHUESzenen, value);
+        //        Global.MainVM.lstHUESzenen = value;
+        //    }
+        //}
 
         private string _hUESzeneName = null;
         public string HUESzeneName
@@ -115,32 +132,6 @@ namespace MeisterGeister.ViewModel.Settings
             set { Set(ref _hUESzeneName, value); }
         }
 
-        public Color GetRelativeColor(GradientStopCollection gsc, double offset)
-        {
-            GradientStop before = gsc.Where(w => w.Offset == gsc.Min(m => m.Offset)).First();
-            GradientStop after = gsc.Where(w => w.Offset == gsc.Max(m => m.Offset)).First();
-
-            foreach (var gs in gsc)
-            {
-                if (gs.Offset < offset && gs.Offset > before.Offset)
-                {
-                    before = gs;
-                }
-                if (gs.Offset > offset && gs.Offset < after.Offset)
-                {
-                    after = gs;
-                }
-            }
-
-            var color = new Color();
-
-            color.ScA = (float)((offset - before.Offset) * (after.Color.ScA - before.Color.ScA) / (after.Offset - before.Offset) + before.Color.ScA);
-            color.ScR = (float)((offset - before.Offset) * (after.Color.ScR - before.Color.ScR) / (after.Offset - before.Offset) + before.Color.ScR);
-            color.ScG = (float)((offset - before.Offset) * (after.Color.ScG - before.Color.ScG) / (after.Offset - before.Offset) + before.Color.ScG);
-            color.ScB = (float)((offset - before.Offset) * (after.Color.ScB - before.Color.ScB) / (after.Offset - before.Offset) + before.Color.ScB);
-
-            return color;
-        }
 
         public List<string> lstDeviceID
         {
@@ -152,18 +143,32 @@ namespace MeisterGeister.ViewModel.Settings
 
         #region Property
 
-        public Base.CommandBase onBtnSelectHUESzeneColor
+        private Base.CommandBase _onBtnHUEGWDeSelect;
+        public Base.CommandBase OnBtnHUEGWDeSelect
         {
             get
             {
-                if (_onBtnSelectHUESzeneColor == null)
+                if (_onBtnHUEGWDeSelect == null)
                 {
-                    _onBtnSelectHUESzeneColor = new Base.CommandBase(SelectHUESzeneColor, null);
+                    _onBtnHUEGWDeSelect = new Base.CommandBase(HUEGWDeSelect, null);
                 }
 
-                return _onBtnSelectHUESzeneColor;
+                return _onBtnHUEGWDeSelect;
             }
         }
+
+        //public Base.CommandBase onBtnSelectHUESzeneColor
+        //{
+        //    get
+        //    {
+        //        if (_onBtnSelectHUESzeneColor == null)
+        //        {
+        //            _onBtnSelectHUESzeneColor = new Base.CommandBase(SelectHUESzeneColor, null);
+        //        }
+
+        //        return _onBtnSelectHUESzeneColor;
+        //    }
+        //}
         public Base.CommandBase onBtnSelectHUEColor
         {
             get
@@ -242,71 +247,18 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
-        private Base.CommandBase _nBtnAddLightToSzene = null;
-        public Base.CommandBase OnBtnAddLightToSzene
-        {
-            get
-            {
-                if (_nBtnAddLightToSzene == null)
-                {
-                    _nBtnAddLightToSzene = new Base.CommandBase(AddLightToSzene, null);
-                }
-                return _nBtnAddLightToSzene;
-            }
-        }
-
-        public void AddLightToSzene(object obj)
-        {
-            if (cmbxSelHUE == null)
-                return;
-            List<LightColor> lstLC = new List<LightColor>();
-            lstLC.AddRange(SelHUESzene.lstLightColor);
-            lstLC.Add(new LightColor() { light = cmbxSelHUE, color = Colors.White } );
-            SelHUESzene.lstLightColor = lstLC;
-            cmbxSelHUE = null;
-
-            lstHUELightsLeft = lstHUELights.Where(t => !SelHUESzene.lstLightColor.Select(z => z.light).ToList().Contains(t)).ToList();
-            OnChanged(nameof(SelHUESzene));
-        }
-
-        private Base.CommandBase _onBtnAddHUESzene = null;
-        public Base.CommandBase OnBtnAddHUESzene
-        {
-            get
-            {
-                if (_onBtnAddHUESzene == null)
-                {
-                    _onBtnAddHUESzene = new Base.CommandBase(AddHUESzene, null);
-                }
-
-                return _onBtnAddHUESzene;
-            }
-        }
-
-        public void AddHUESzene(object obj)
-        {
-            List<HUESzene> lstSzenen = new List<HUESzene>();
-            lstSzenen.AddRange(lstHUESzenen);
-            HUESzene newHUESzene = new HUESzene();
-            newHUESzene.Name = HUESzeneName;
-            lstSzenen.Add(newHUESzene);
-            HUESzeneName = null;
-            lstHUESzenen = lstSzenen;
-            SelHUESzene = newHUESzene;
-        }
-
-        public Base.CommandBase onBtnActivateHUEGW
-        {
-            get
-            {
-                if (_onBtnActivateHUEGW == null)
-                {
-                    _onBtnActivateHUEGW = new Base.CommandBase(ActivateHUEGW, null);
-                }
-
-                return _onBtnActivateHUEGW;
-            }
-        }
+        //private Base.CommandBase _nBtnAddLightToSzene = null;
+        //public Base.CommandBase OnBtnAddLightToSzene
+        //{
+        //    get
+        //    {
+        //        if (_nBtnAddLightToSzene == null)
+        //        {
+        //            _nBtnAddLightToSzene = new Base.CommandBase(AddLightToSzene, null);
+        //        }
+        //        return _nBtnAddLightToSzene;
+        //    }
+        //}
 
         public string Regeledition
         {
@@ -609,10 +561,7 @@ namespace MeisterGeister.ViewModel.Settings
         }
 
         public List<LiteraturItem> LiteraturListe
-        {
-            get;
-            set;
-        }
+        { get; set; }
 
         private Base.CommandBase _onBtnSelectHUEColor = null;
 
@@ -637,22 +586,270 @@ namespace MeisterGeister.ViewModel.Settings
 
         private List<Model.Setting> settingListe;
 
-        private void SelectHUESzeneColor(object obj)
+
+        #region -- Data Members --
+        static char[] hexDigits = {
+         '0', '1', '2', '3', '4', '5', '6', '7',
+         '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        #endregion
+
+        private void SetRegeledition(object obj)
         {
-            HUESzene hSzene = new HUESzene();
-            hSzene = SelHUESzene;
-
-            HUEColorDialog colorDialog = new HUEColorDialog();
-            colorDialog.TestLight = LightColorSelected.light;
-            colorDialog.SelectedColor = LightColorSelected.color;
-            colorDialog.Owner = obj as EinstellungenWindow;
-
-            if (colorDialog.ShowDialog().Value)
+            var regWin = new View.Windows.RegeleditionWindow
             {
-                LightColorSelected.color = colorDialog.SelectedColor;
-                SelHUESzene = null;
-                SelHUESzene = hSzene;
+                Owner = System.Windows.Application.Current.MainWindow
+            };
+            var dlgResult = regWin.ShowDialog();
+            regWin = null;
+            if (dlgResult == true)
+            {
+                System.Windows.Application.Current.Shutdown();
             }
+        }
+
+        #endregion Property
+
+        #region Constructor
+
+        public EinstellungenViewModel()
+        {
+            LoadDaten();
+        }
+
+        #endregion Constructor
+
+        #region Public Methods
+
+        public void LoadDaten()
+        {
+            if (Global.ContextHeld != null)
+            {
+                EinstellungListe = Global.ContextHeld.Liste<Model.Einstellung>().Where(e => e.Kategorie != "Versteckt").OrderBy(h => h.Name).Select(e => EinstellungItem.GetTypedEinstellungItem(e)).ToList();
+                settingListe = Global.ContextHeld.Liste<Model.Setting>().ToList();
+                LiteraturListe = Global.ContextHeld.Liste<Model.Literatur>().OrderBy(h => h.Name).Select(e => new LiteraturItem(e)).ToList();
+
+                lstHUEGateways = MainVM.lstHUEGateways;
+                HUEGWSelected = MainVM.HUEGWSelected;
+                lstHUELights = MainVM.lstHUELights;
+                lstHUEGroups = MainVM.lstHUEGroups;
+                AppKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
+
+                ////Create HUE-Szene aus Datenbankä
+                //List<HUESzene> lstSzene = new List<HUESzene>(); 
+                //Global.ContextHUE.SzenenListe.ForEach(delegate( HUE_Szene hSzeneDB)
+                //{
+                //    HUESzene hSzene = new HUESzene();
+                //    hSzene.Name = hSzeneDB.Name;
+
+                //    hSzeneDB.HUE_LampeColor.ToList().ForEach(delegate (HUE_LampeColor aLampeColorDB) {
+                //        LightColor aColorLight = new LightColor();
+                //        aColorLight.light = lstHUELights.Where(t => t.Name == aLampeColorDB.Lampenname).FirstOrDefault();
+                //        string ColorS = aLampeColorDB.Color;
+                //        aColorLight.color = (Color)ColorConverter.ConvertFromString(ColorS);
+
+                //        //  System.Drawing.ColorTranslator.FromHtml(ColorS);
+                //        hSzene.lstLightColor.Add(aColorLight);
+                //    });
+                //    lstSzene.Add(hSzene);
+
+                // });
+                //lstHUESzenen = lstSzene;
+            }
+        }
+
+        #endregion Public Methods
+
+
+        #region HUE Lampen
+
+
+        //private HUESzene _selHUESzene = new HUESzene();
+        //public HUESzene SelHUESzene
+        //{
+        //    get { return _selHUESzene; }
+        //    set
+        //    {
+        //        Set(ref _selHUESzene, value);
+
+        //        if (value == null)
+        //        {
+        //            SelHUESzeneDB = null;
+        //            return;
+        //        }
+        //        SelHUESzeneDB = Global.ContextHUE.SzenenListe.Where(t => t.Name == value.Name).FirstOrDefault();
+
+        //        List<LightColor> lstLC = new List<LightColor>();
+        //        foreach (HUE_LampeColor aLampeColorDB in SelHUESzeneDB.HUE_LampeColor)
+        //        {
+        //            lstLC.Add(new LightColor()
+        //            {
+        //                light = lstHUELights
+        //                .Where(t => t.Name == aLampeColorDB.Lampenname).FirstOrDefault(),
+        //                color = (Color)ColorConverter.ConvertFromString(aLampeColorDB.Color)
+        //            });
+        //        }
+        //        SelHUESzene.lstLightColor = lstLC;
+        //        OnChanged(nameof(SelHUESzene));
+        //        List<Light> LightsLeft = new List<Light>();
+        //        if (value.lstLightColor.Count == 0)
+        //            LightsLeft.AddRange(lstHUELights);
+        //        else
+        //            LightsLeft.AddRange(lstHUELights.Where(t => !value.lstLightColor.Select(z => z.light).ToList().Contains(t)).ToList());
+        //        lstHUELightsLeft = LightsLeft;
+        //    }
+        //}
+        public Color GetRelativeColor(GradientStopCollection gsc, double offset)
+        {
+            GradientStop before = gsc.Where(w => w.Offset == gsc.Min(m => m.Offset)).First();
+            GradientStop after = gsc.Where(w => w.Offset == gsc.Max(m => m.Offset)).First();
+
+            foreach (var gs in gsc)
+            {
+                if (gs.Offset < offset && gs.Offset > before.Offset)
+                {
+                    before = gs;
+                }
+                if (gs.Offset > offset && gs.Offset < after.Offset)
+                {
+                    after = gs;
+                }
+            }
+
+            var color = new Color();
+
+            color.ScA = (float)((offset - before.Offset) * (after.Color.ScA - before.Color.ScA) / (after.Offset - before.Offset) + before.Color.ScA);
+            color.ScR = (float)((offset - before.Offset) * (after.Color.ScR - before.Color.ScR) / (after.Offset - before.Offset) + before.Color.ScR);
+            color.ScG = (float)((offset - before.Offset) * (after.Color.ScG - before.Color.ScG) / (after.Offset - before.Offset) + before.Color.ScG);
+            color.ScB = (float)((offset - before.Offset) * (after.Color.ScB - before.Color.ScB) / (after.Offset - before.Offset) + before.Color.ScB);
+
+            return color;
+        }
+        //public void AddLightToSzene(object obj)
+        //{
+        //    if (cmbxSelHUE == null)
+        //        return;
+        //    List<LightColor> lstLC = new List<LightColor>();
+        //    lstLC.AddRange(SelHUESzene.lstLightColor);
+        //    lstLC.Add(new LightColor() { light = cmbxSelHUE, color = Colors.White });
+
+        //    SelHUESzeneDB.HUE_LampeColor.Add(Global.ContextHUE.AddLampenColorToSzene(cmbxSelHUE.Name, Colors.White.ToString()));
+
+        //    SelHUESzene.lstLightColor = lstLC;
+        //    cmbxSelHUE = null;
+
+        //    lstHUELightsLeft = lstHUELights.Where(t => !SelHUESzene.lstLightColor.Select(z => z.light).ToList().Contains(t)).ToList();
+        //    OnChanged(nameof(SelHUESzene));
+        //}
+
+        //private Base.CommandBase _onBtnAddHUESzene = null;
+        //public Base.CommandBase OnBtnAddHUESzene
+        //{
+        //    get
+        //    {
+        //        if (_onBtnAddHUESzene == null)
+        //        {
+        //            _onBtnAddHUESzene = new Base.CommandBase(AddHUESzene, null);
+        //        }
+
+        //        return _onBtnAddHUESzene;
+        //    }
+        //}
+
+        //public void AddHUESzene(object obj)
+        //{
+        //    if (HUESzeneName == null || lstHUESzenen.Count(t => t.Name == HUESzeneName) > 0)
+        //    {
+        //        ViewHelper.Popup("Bitte einen nicht vorhandenen Szenen-Namen eingeben.");
+        //        return;
+        //    }
+        //    List<HUESzene> lstSzenen = new List<HUESzene>();
+        //    lstSzenen.AddRange(lstHUESzenen);
+        //    HUESzene newHUESzene = new HUESzene();
+        //    newHUESzene.Name = HUESzeneName;
+        //    lstSzenen.Add(newHUESzene);
+        //    HUESzeneName = null;
+        //    lstHUESzenen = lstSzenen;
+        //    SelHUESzene = newHUESzene;
+
+        //    HUE_Szene aSzeneDB = new HUE_Szene();
+        //    aSzeneDB.Name = newHUESzene.Name;
+
+        //    if (Global.ContextHUE.Insert<HUE_Szene>(aSzeneDB))               //erfolgreich hinzugefügt
+        //    {
+        //        Global.ContextAudio.Update<HUE_Szene>(aSzeneDB);
+        //        SelHUESzeneDB = aSzeneDB;
+        //    }
+        //    //        Global.ContextHUE.AddSzene(HUESzeneName, out hSzene);
+        //}
+
+        public Base.CommandBase onBtnActivateHUEGW
+        {
+            get
+            {
+                if (_onBtnActivateHUEGW == null)
+                {
+                    _onBtnActivateHUEGW = new Base.CommandBase(ActivateHUEGW, null);
+                }
+
+                return _onBtnActivateHUEGW;
+            }
+        }
+
+        private void HUEGWDeSelect(object obj)
+        {
+            if (!ViewHelper.Confirm("HUE-Gateway-Informationen löschen", "Wollen Sie wirklich die HUE-Gateway-Informationen aus der Datenbank entfernen?\n\n" +
+                "Ein erneutes Kopplen mit dem Gateway ist natürlich später immer noch möglich, \nerfordert allerdings ein ernetes Betätigen des Gateway-Buttons"))
+                return;
+            lstHUEGateways = new List<LocatedBridge>();
+            HUEGWSelected = null;
+            lstHUELights = new List<Light>();
+            lstHUEGroups = new List<Group>();
+            MainVM.Client = null;
+            AppKey = null;
+            Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_Registerkey", null);
+            Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_GatewayID", null);
+        }
+
+        //private void SelectHUESzeneColor(object obj)
+        //{
+        //    HUESzene hSzene = new HUESzene();
+        //    hSzene = SelHUESzene;
+
+        //    HUEColorDialog colorDialog = new HUEColorDialog();
+        //    colorDialog.TestLight = LightColorSelected.light;
+        //    colorDialog.SelectedColor = LightColorSelected.color;
+        //    colorDialog.Owner = obj as EinstellungenWindow;
+
+        //    if (colorDialog.ShowDialog().Value)
+        //    {
+        //        LightColorSelected.color = colorDialog.SelectedColor;
+        //        LightColorSelectedDB.Color = "#" + ColorToHexString(LightColorSelected.color);
+
+        //        Global.ContextHUE.Update<HUE_LampeColor>(LightColorSelectedDB);
+        //        SelHUESzene = null;
+        //        SelHUESzene = hSzene;
+        //    }
+        //}
+
+        /// <summary>
+        /// Convert a .NET Color to a hex string.
+        /// </summary>
+        /// <returns>ex: "FFFFFF", "AB12E9"</returns>
+        public static string ColorToHexString(Color color)
+        {
+            byte[] bytes = new byte[4];
+            bytes[0] = color.A;
+            bytes[1] = color.R;
+            bytes[2] = color.G;
+            bytes[3] = color.B;
+            char[] chars = new char[bytes.Length * 2];
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                int b = bytes[i];
+                chars[i * 2] = hexDigits[b >> 4];
+                chars[i * 2 + 1] = hexDigits[b & 0xF];
+            }
+            return new string(chars);
         }
         private void SelectHUEColor(object obj)
         {
@@ -681,19 +878,6 @@ namespace MeisterGeister.ViewModel.Settings
                 //SendColorToLamps(colorDialog.SelectedColor);
             }
         }
-
-
-        //private GradientStopCollection _gCol = new GradientStopCollection();
-        //public GradientStopCollection gCol
-        //{
-        //    get { return _gCol; }
-        //    set
-        //    {
-        //        _gCol = value;
-        //        OnChanged("gCol");
-        //        //Set(ref _gCol, return);
-        //    }
-        //}
 
         List<HUETheme> RunningThemes = new List<HUETheme>();
 
@@ -754,12 +938,15 @@ namespace MeisterGeister.ViewModel.Settings
             HUEThemeSelected = lstHUEThemes[lstHUEThemes.Count - 1];
             if (HUEThemeSelected.lstLightProcess != null)
                 lst.AddRange(HUEThemeSelected.lstLightProcess);
-            lst.Add(new LightProcess() { Phase = lst.Count,
+            lst.Add(new LightProcess()
+            {
+                Phase = lst.Count,
                 DauerProzent = lst.Count == 0 ? .5 : (lst[lst.Count - 1].DauerProzent + 1) / 2,
                 Dauer = HUEThemeSelected.KomplettDauer * (lst.Count == 0 ? .5 : (lst[lst.Count - 1].DauerProzent + 1) / 2),
                 KomplettDauer = HUEThemeSelected.KomplettDauer,
                 Color = Colors.AliceBlue,
-                Brightness = 255 });
+                Brightness = 255
+            });
 
             //((HUETheme)obj).lstLightProcess = lst;
             HUEThemeSelected.lstLightProcess = lst;
@@ -776,52 +963,6 @@ namespace MeisterGeister.ViewModel.Settings
             _ActivateHUE();
         }
 
-        private void SetRegeledition(object obj)
-        {
-            var regWin = new View.Windows.RegeleditionWindow
-            {
-                Owner = System.Windows.Application.Current.MainWindow
-            };
-            var dlgResult = regWin.ShowDialog();
-            regWin = null;
-            if (dlgResult == true)
-            {
-                System.Windows.Application.Current.Shutdown();
-            }
-        }
-
-        #endregion Property
-
-        #region Constructor
-
-        public EinstellungenViewModel()
-        {
-            LoadDaten();
-        }
-
-        #endregion Constructor
-
-        #region Public Methods
-
-        public void LoadDaten()
-        {
-            if (Global.ContextHeld != null)
-            {
-                EinstellungListe = Global.ContextHeld.Liste<Model.Einstellung>().Where(e => e.Kategorie != "Versteckt").OrderBy(h => h.Name).Select(e => EinstellungItem.GetTypedEinstellungItem(e)).ToList();
-                settingListe = Global.ContextHeld.Liste<Model.Setting>().ToList();
-                LiteraturListe = Global.ContextHeld.Liste<Model.Literatur>().OrderBy(h => h.Name).Select(e => new LiteraturItem(e)).ToList();
-
-                lstHUEGateways = MainViewModel.Instance.lstHUEGateways;
-                HUEGWSelected = MainViewModel.Instance.HUEGWSelected;
-                lstHUELights = MainViewModel.Instance.lstHUELights;
-                Client = MainViewModel.Instance.Client;
-            }
-        }
-
-        #endregion Public Methods
-
-
-        #region HUE Lampen
 
         public class LightProcess
         {
@@ -943,7 +1084,7 @@ namespace MeisterGeister.ViewModel.Settings
 
             private async void regHUE()
             {
-                vm.appKey = await vm.Client.RegisterAsync("MGmeetsHUE", "PC");
+                vm.appKey = await MainVM.Client.RegisterAsync("MGmeetsHUE", "PC");
             }
 
             private Light _addLightToTheme = null;
@@ -993,7 +1134,7 @@ namespace MeisterGeister.ViewModel.Settings
                         (int)lstLightProcess[0].KomplettDauer / lstLightProcess.Count);
                     //Once you have composed your command, send it to one or more lights
 
-                    vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                    MainVM.QueueCommand(COLOR, command, lstLights.Select(t => t.Id).ToList());
                     Console.WriteLine(StartTime + ":  START    " + lstLightProcess[actLightProcess.Value].Color.R + " " +
                         lstLightProcess[actLightProcess.Value].Color.G + " " +
                         lstLightProcess[actLightProcess.Value].Color.B + "    ");
@@ -1011,7 +1152,8 @@ namespace MeisterGeister.ViewModel.Settings
                             lstLightProcess[actLightProcess.Value + 1].Color.B));
                         command.TransitionTime = new TimeSpan(0, 0, 0, 0,
                             (int)lstLightProcess[actLightProcess.Value].Dauer);
-                        vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                        MainVM.QueueCommand(COLOR, command, lstLights.Select(t => t.Id).ToList());
+                        //MainViewModel.Instance.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
                     }
                     return;
                 }
@@ -1039,7 +1181,7 @@ namespace MeisterGeister.ViewModel.Settings
                         command.TransitionTime = new TimeSpan(0, 0, 0, 0,
                             lstLightProcess[0].KomplettDauer - (int)lstLightProcess[actLightProcess.Value - 1].Dauer);
 
-                        vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                        MainVM.QueueCommand(COLOR, command, lstLights.Select(t => t.Id).ToList());
 
                         Console.WriteLine(TimeGone + ": CYCLE " + TimeGone + "   " +
                             lstLightProcess[0].Color.R + " " +
@@ -1063,7 +1205,7 @@ namespace MeisterGeister.ViewModel.Settings
                         actLightProcess == 0 ? (int)lstLightProcess[actLightProcess.Value].Dauer :
                         (int)(lstLightProcess[actLightProcess.Value].Dauer - lstLightProcess[actLightProcess.Value - 1].Dauer));
 
-                    vm.Client.SendCommandAsync(command, lstLights.Select(t => t.Id).ToList());
+                    MainVM.QueueCommand(COLOR, command, lstLights.Select(t => t.Id).ToList());
 
                     Console.WriteLine(TimeGone + ": CYCLE " + TimeGone + "   " +
                         lstLightProcess[actLightProcess.Value + 1].Color.R + " " +
@@ -1075,12 +1217,6 @@ namespace MeisterGeister.ViewModel.Settings
                         actLightProcess = 0;
                     return;
                 }
-            }
-
-            private async void ToAll()
-            {
-                //Or send it to all lights
-                var result = await vm.Client.SendCommandAsync(command);
             }
 
             public HUETheme()
@@ -1145,12 +1281,6 @@ namespace MeisterGeister.ViewModel.Settings
                 Set(ref _lstHUEGaterways, value);
                 MainViewModel.Instance.lstHUEGateways = value;
             }
-        }
-        private LocalHueClient _client = null;
-        public LocalHueClient Client
-        {
-            get { return _client; }            
-            set { Set(ref _client, value); }
         }
         string appKey = null;
 
@@ -1233,6 +1363,22 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
+        private List<Group> _lstHUEGroups = new List<Group>();
+        public List<Group> lstHUEGroups
+        {
+            get { return _lstHUEGroups; }
+            set { Set(ref _lstHUEGroups, value);
+                MainViewModel.Instance.lstHUEGroups = value;
+            }
+        }
+
+        private List<Scene> _lstScene = new List<Scene>();
+        public List<Scene> lstScene
+        {
+            get { return _lstScene; }
+            set { Set(ref _lstScene, value); }
+        }
+
         private Light _cmbxSelHUE = new Light();
         public Light cmbxSelHUE
         {
@@ -1247,31 +1393,71 @@ namespace MeisterGeister.ViewModel.Settings
             set { Set(ref _selectedHUELight, value); }
         }
 
+        private string _appKey = null;
+        public string AppKey
+        {
+            get { return _appKey; }
+            set { Set(ref _appKey, value); }
+        }
+
         private async void _ActivateHUE()
         {
             string ip = HUEGWSelected.IpAddress.ToString();
-
-            Client = new LocalHueClient(ip);
+            MainVM.Client = new LocalHueClient(ip);
             appKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
             //4nuWDIXoZ0EMPxMBXhQFagf5bOsK-XcEc7DzS8G1
+            //u-CNmYbLPrl0bAzMHD-EuQTXuuqMvnlhSVUezpLO
+
+            if (!string.IsNullOrEmpty(appKey))
+            {
+                Ping pingSender = new Ping();
+                // Create a buffer of 32 bytes of data to be transmitted.
+                string data = "HUETestPing_by_MeisterGeister_123_Hello_test_123";
+                byte[] buffer = Encoding.ASCII.GetBytes(data);
+                // Wait 2 seconds for a reply.
+                int timeout = 2000;
+
+                // Set options for transmission:
+                // The data can go through 64 gateways or routers
+                // before it is destroyed, and the data packet
+                // cannot be fragmented.
+                PingOptions options = new PingOptions(64, true);
+                // Send the request.
+                ErneuterPing:
+                PingReply reply = pingSender.Send(ip, timeout, buffer, options);
+                if (!string.IsNullOrEmpty(appKey) && reply.Status != IPStatus.Success)
+                {
+                    int back = ViewHelper.ConfirmYesNoCancel("Gespeichertes Gateway nicht erkannt", "Das Gateway mit der IP= " + ip + " wurde zu einem vorherigen Start gespeichert, konnte jedoch nicht " +
+                        "im Netzwerk gefunden werden.\n\r \n\rKlicke 'Ja' wenn ein neues Gateway gesucht werden soll. Falls das vorherige erneut gesucht werden soll, klicke 'Nein'");
+                    if (back == 1)
+                        goto ErneuterPing;
+                    if (back == 0)
+                        return;
+                } 
+                //else
+                //    if (reply.Status == IPStatus.Success)
+                //    appKey = null;
+            }
 
             if (string.IsNullOrEmpty(appKey))
             {
-                MeisterGeister.View.General.ViewHelper.Popup("Das Gateway wurde mit der MeisterGeister Version noch nicht gekoppelt." + Environment.NewLine + Environment.NewLine +
-                    "Bitte klicke nach dem bestätigen dieser Meldung innerhalb von 10 Sekunden den Button auf dem Gateway");
+                if (!MeisterGeister.View.General.ViewHelper.Confirm("HUE-Gateway-Kopplung erforderlich", "Das Gateway wurde mit der MeisterGeister Version noch nicht gekoppelt." + Environment.NewLine + Environment.NewLine +
+                    "Bitte bestätige dieses Fenster und betätige innerhalb von 15 Sekunden den Button auf dem Gateway.\n\n"+
+                    "Willst du dein Gerät nun mit dem HUE-Gateway koppeln?")) return;
                 //Register your application
                 //Link button drücken zum Registrieren !!!
                 //Make sure the user has pressed the button on the bridge before calling RegisterAsync
                 //It will throw an LinkButtonNotPressedException if the user did not press the button
                 bool pressed = false;
                 int start = Environment.TickCount;
-                while (!pressed && Environment.TickCount - start < 10000)
+                while (!pressed && Environment.TickCount - start < 15000)
                 {
                     try
                     {
-                        appKey = await Client.RegisterAsync("MGmeetsHUE", "PC");
+                        appKey = await MainVM.Client.RegisterAsync("MGmeetsHUE", "PC");
                         //Save the app key for next use
                         MeisterGeister.Logic.Einstellung.Einstellungen.SetEinstellung<string>("HUE_Registerkey", appKey);
+                        AppKey = appKey;
                         pressed = true;
                     }
                     catch (Exception ex)
@@ -1285,14 +1471,20 @@ namespace MeisterGeister.ViewModel.Settings
             else
             {
                 //If you already registered an appname, you can initialize the HueClient with the app's key:
-                Client.Initialize(appKey);
+                MainVM.Client.Initialize(appKey);
             }
             //Search for new lights
-            await Client.SearchNewLightsAsync(lstDeviceID);
+            await MainVM.Client.SearchNewLightsAsync(lstDeviceID);
             //Get all lights
-            var resultLights = await Client.GetLightsAsync();
+            var resultLights = await MainVM.Client.GetLightsAsync();
+            //Get all Scenes
+            var resultScene = await MainVM.Client.GetScenesAsync();
+            //Get all Groups
+            var resultGroups = await MainVM.Client.GetGroupsAsync();
 
             lstHUELights = resultLights as List<Light>;
+            lstHUEGroups = resultGroups as List<Group>;
+            lstScene = resultScene as List<Scene>;
         }
 
 

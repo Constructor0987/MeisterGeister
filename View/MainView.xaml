@@ -578,7 +578,7 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox
+                                <!--<ComboBox
                                      IsEnabled="False"
                                     Height="25"
                                     Margin="5,0,0,-3"
@@ -668,9 +668,9 @@
                                             </Grid>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                </ComboBox>-->
                                 <StackPanel Grid.Row="1" Margin="0,10">
-                                    <Label Content="Geschwindigkeit" Padding="0,2,0,0" Foreground="DarkGray" />
+                                    <!--<Label Content="Geschwindigkeit" Padding="0,2,0,0" Foreground="DarkGray" />
                                     <Border Background="{Binding alphaBrush}"
                                             IsEnabled="False"
                                     BorderBrush="DarkGray"
@@ -679,7 +679,7 @@
                                     CornerRadius="5"
                                     Margin="5,2">
                                         <Slider Minimum="1" Maximum="100" />
-                                    </Border>
+                                    </Border>-->
                                     <Label Content="Sättigung" Padding="0,10,0,0"/>
                                     <Border Background="{Binding alphaBrush}"
                                     BorderBrush="Black"
@@ -751,11 +751,16 @@
                                        Canvas.Top="0"/>
                                     </Canvas>
                                 </Grid>
-
-                                <ListView x:Name="lvHUE" Grid.Row="4" Margin="0,10,0,5" FontSize="14" VerticalAlignment="Top" MaxHeight="150"
+                                <Label Content="HUE-Lampen" Grid.Row="4" />
+                                <ListView x:Name="lvHUE" Grid.Row="4" Margin="0,25,0,5" FontSize="10" VerticalAlignment="Top" MaxHeight="150"
                                       ItemsSource="{Binding lstHUELights, UpdateSourceTrigger=PropertyChanged}" 
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto"  
+                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUELights_SelectionChanged" />
+                                <Label Content="HUE-Gruppen" Grid.Row="4" Grid.Column="1"/>
+                                <ListView x:Name="lvHUEGroups" Grid.Column="1" Grid.Row="4" Margin="0,25,0,5" FontSize="10" VerticalAlignment="Top" MaxHeight="150"
+                                      ItemsSource="{Binding lstHUEGroups, UpdateSourceTrigger=PropertyChanged}" 
                                           ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUE_SelectionChanged" />
+                                      DisplayMemberPath="Name" SelectionMode="Multiple" SelectionChanged="lvHUEGruppen_SelectionChanged" />
                             </Grid>
                         </Border>
                     </Grid>

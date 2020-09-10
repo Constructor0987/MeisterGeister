@@ -30,6 +30,8 @@ using Q42.HueApi.ColorConverters.OriginalWithModel;
 using Q42.HueApi.ColorConverters.HSB;
 using Q42.HueApi.ColorConverters;
 using MeisterGeister.ViewModel.Settings;
+using Q42.HueApi.Models.Groups;
+using Newtonsoft.Json;
 
 namespace MeisterGeister.View
 {
@@ -485,17 +487,41 @@ namespace MeisterGeister.View
         {
             IsMouseDown = true;
             UpdateColor();
-            if (VM.HUELightsSelected.Count != 0 && VM.Client != null)//.IsChecked.Value)// && hueClient != null)
+            if (VM.Client != null)
             {
                 //Control the lights                
                 LightCommand command = new LightCommand();
                 command.TurnOn().SetColor(new RGBColor(VM.SelectedColor.R, VM.SelectedColor.G, VM.SelectedColor.B));
                 command.Brightness = (byte)BrightnessSlider.Value;
-                //Or send it to all lights
-                //     hueClient.SendCommandAsync(command);
-                VM.Client.SendCommandAsync(command, VM.lstHUELights.Where(t => VM.HUELightsSelected.Select(z=> z.Id).Contains(t.Id)).Select(t => t.Id).ToList());
+                if (VM.HUELampenSelected && VM.HUELightsSelected.Count != 0 )
+                {
+                    VM.Client.SendCommandAsync(command, VM.lstHUELights.Where(t => VM.HUELightsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList());
+                }
+                else
+                if (VM.HUEGruppenSelected && VM.lstHUEGroups.Count != 0 && VM.Client != null)
+                {
+                    foreach (string hgString in VM.lstHUEGroups.Where(t => VM.HUEGroupsSelected.Select(z => z.Id).Contains(t.Id)).Select(t => t.Id).ToList())
+                        VM.Client.SendGroupCommandAsync(command, hgString);
+                }
             }
         }
+
+        ///// <summary>
+        ///// Send command to a group
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="group"></param>
+        ///// <returns></returns>
+        //public Task<HueResults> SendGroupCommandAsync(LightCommand command, string group = "0")
+        //{
+        //    if (command == null)
+        //        throw new ArgumentNullException("command");
+
+        //    string jsonCommand = JsonConvert.SerializeObject(command, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+
+        //    return SendGroupCommandAsync(jsonCommand, group);
+        //}
+
 
         private void CanvasImage_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -579,14 +605,30 @@ namespace MeisterGeister.View
             }
         }
 
-        private void lvHUE_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void lvHUELights_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            List<Light> HUEListSelectedItems = new List<Light>();
+            VM.HUELampenSelected = true;
+            List<Light> HUEListLampenSelected = new List<Light>();
 
-            foreach (Light item in (e.Source as ListView).SelectedItems)
-                HUEListSelectedItems.Add(item);
+            foreach (var item in (e.Source as ListView).SelectedItems)
+            {
+                if (item is Light)
+                    HUEListLampenSelected.Add(item as Light);
+            }
+            VM.HUELightsSelected = HUEListLampenSelected;
+        }
 
-            VM.HUELightsSelected = HUEListSelectedItems;
+        private void lvHUEGruppen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VM.HUEGruppenSelected = true;
+            List<Group> HUEListGruppenSelected = new List<Group>();
+
+            foreach (var item in (e.Source as ListView).SelectedItems)
+            {
+                if (item is Group)
+                    HUEListGruppenSelected.Add(item as Group);
+            }
+            VM.HUEGroupsSelected = HUEListGruppenSelected;
         }
     }
 }

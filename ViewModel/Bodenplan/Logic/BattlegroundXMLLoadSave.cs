@@ -171,6 +171,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["ZLevel"] = o.ZLevel;
             dt.Rows[dt.Rows.Count - 1]["SightLineSektor"] = o.SightLineSektor;
             dt.Rows[dt.Rows.Count - 1]["HinweisText"] = (o as IKämpfer).HinweisText;
+            dt.Rows[dt.Rows.Count - 1]["KämpferTempName"] = (o is Gegner) ? (o as Gegner).KämpferTempName: null;
             dt.Rows[dt.Rows.Count - 1]["ObjectSize"] = o.ObjectSize;
 
             dt.Rows[dt.Rows.Count - 1]["LebensenergieAktuell"] = (o is Gegner) ? (o as Gegner).LebensenergieAktuell : (o as Held).LebensenergieAktuell;
@@ -216,6 +217,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Columns.Add("ZLevel");
             dt.Columns.Add("SightLineSektor");
             dt.Columns.Add("HinweisText");
+            dt.Columns.Add("KämpferTempName");
             dt.Columns.Add("ObjectSize");
 
             dt.Columns.Add("LebensenergieAktuell");
@@ -395,6 +397,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as Gegner).KarmaenergieAktuell = Convert.ToInt32(drow["KarmaenergieAktuell"]);
                                     (bObj as Gegner).AusdauerAktuell = Convert.ToInt32(drow["AusdauerAktuell"]);
                                     (bObj as Gegner).AstralenergieAktuell = Convert.ToInt32(drow["AstralenergieAktuell"]);
+
+                                    if (drow.Table.Columns.Contains("KämpferTempName"))
+                                        (bObj as Gegner).KämpferTempName = drow["KämpferTempName"].ToString();
                                     (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
 
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = true;
