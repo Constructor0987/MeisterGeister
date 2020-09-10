@@ -9,6 +9,7 @@ using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
 using MeisterGeister.ViewModel.Schmiede.Logic;
+using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
@@ -56,16 +57,84 @@ namespace MeisterGeister.ViewModel.Schmiede
         private Model.Munition _selectedMunition;
         private List<Model.Munition> _munitionListe = new List<Model.Munition>();
 
+        public Model.Held SelectedHeld
+        {
+            get { return Global.SelectedHeld; }
+            set
+            {
+                Global.SelectedHeld = value;
+                OnChanged();
+                OnChanged("HeldTalentwerte");
+            }
+        }
         #endregion
 
-        #region //---- EIGENSCHAFTEN ----
+        #region //---- COMMANDS ----
 
+        private Base.CommandBase onAddInventar = null;
+        public Base.CommandBase OnAddInventar
+        {
+            get
+            {
+                if (onAddInventar == null)
+                    onAddInventar = new Base.CommandBase(AddInventar, null);
+                return onAddInventar;
+            }
+        }
+        private void AddInventar(object sender)
+        {
+            List<Handelsgut> lstHG = Global.ContextHandelsgut.HandelsgüterListe.Where(t => 
+                t is Handelsgut &&
+                t.Name.Contains(SelectedFernkampfwaffe.Name) &&
+                t.Name.Contains(SelectedMunition.Name)).ToList();
+
+
+            if (lstHG.Count > 0)
+            {
+                if (GeschossHärten)
+                {
+                    Handelsgut hg = new Handelsgut();
+                    hg.HandelsgutGUID = Guid.NewGuid();
+
+                    hg.Name = string.Format((GeschossHärten ? "gehärteter " : "") + "{0} ({1})", SelectedMunition.Name, SelectedFernkampfwaffe.Name);
+                    hg.Tags = "Munition";
+                    hg.Literatur = SelectedMunition.Literatur;
+                    hg.Kategorie = SelectedMunition.Art;
+                    hg.Gewicht = SelectedFernkampfwaffe.Munitionsgewicht;
+                    hg.Bemerkung = SelectedFernkampfwaffe.Bemerkung;
+
+                    SelectedHeld.AddInventar(hg, Anzahl);
+                    MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurden {0} Geschosse '{1}' zum Inventar hinzugefügt.", Anzahl, hg.Name));
+                }
+                else
+                {
+                    SelectedHeld.AddInventar(lstHG.First(), Anzahl);
+                    MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurden {0} Geschosse '{1}' zum Inventar hinzugefügt.", Anzahl, lstHG.First().Name));
+                }
+            }
+            else
+            {
+                Handelsgut hg = new Handelsgut();
+                hg.HandelsgutGUID = Guid.NewGuid();
+
+                hg.Name = string.Format((GeschossHärten?"gehärteter ": "") +"{0} ({1})", SelectedMunition.Name, SelectedFernkampfwaffe.Name);
+                hg.Tags = "Munition";
+                hg.Literatur = SelectedMunition.Literatur;
+                hg.Kategorie = SelectedMunition.Art;
+                hg.Gewicht = SelectedFernkampfwaffe.Munitionsgewicht;
+                hg.Bemerkung = SelectedFernkampfwaffe.Bemerkung;
+
+                SelectedHeld.AddInventar(hg, Anzahl);
+                MeisterGeister.View.General.ViewHelper.Popup(string.Format(SelectedHeld.Name + " wurden {0} Geschosse '{1}' zum Inventar hinzugefügt.", Anzahl, hg.Name));
+            }
+            Refresh();
+        }
         //Felder
 
         public int Anzahl
         {
             get { return _anzahl; }
-            private set
+            set
             {
                 if (value < 1)
                     value = 1;

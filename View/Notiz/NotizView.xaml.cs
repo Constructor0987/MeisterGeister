@@ -59,7 +59,7 @@ namespace MeisterGeister.View.Notiz
                     oldNotizObject = e.RemovedItems[0];
 
                 // aktuelles FlowDocument in RichtTextBox anzeigen
-                Model.Notizen notiz = VM.SelectedNotiz.EntityNotiz;
+                Model.Notizen notiz = VM.SelectedNotiz?.EntityNotiz;
                 if (notiz != null)
                 {
                     if (oldNotizObject != null)
