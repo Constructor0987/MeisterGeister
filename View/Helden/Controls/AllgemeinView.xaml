@@ -173,6 +173,7 @@
                         <Border.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding OnSelectImage}" />
                         </Border.InputBindings>
+                            
                         <Image>
                             <Image.Source>
                                 <Binding Path="SelectedHeld.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
