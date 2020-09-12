@@ -69,7 +69,17 @@
                                     </Style.Triggers>
                                 </Style>
                             </StackPanel.Style>
-                            <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" Text="{Binding ki.GS,TargetNullValue=0}" VerticalAlignment="Center" FontWeight="Bold" />
+
+                            <TextBlock HorizontalAlignment="Left" 
+                                       VerticalAlignment="Center" FontWeight="Bold" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} / {1} / {2}">
+                                        <Binding Path="GS" TargetNullValue="0" />
+                                        <Binding Path="GS2" TargetNullValue="0" />
+                                        <Binding Path="GS3" TargetNullValue="0" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
                             <StackPanel.Style>
