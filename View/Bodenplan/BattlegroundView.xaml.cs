@@ -866,6 +866,16 @@ namespace MeisterGeister.View.Bodenplan
                     VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
                     VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
 
+                    Point transform = ArenaGridTop.TransformToVisual((Visual)ArenaGridTop.Parent).Transform(new Point());
+
+                    //Obere Ecke herausfinden
+                    VM.CurrentMiddleVisPoint = new Point(-transform.X / ArenaScrollViewer.Zoom, -transform.Y / ArenaScrollViewer.Zoom);
+                    //Mittlerer Punkt (Annäherung - da keine Funktion z.Zt. bekannt um die untere rechte Ecke zu ermitteln
+                    VM.CurrentMiddleVisPoint = new Point(
+                        -transform.X / ArenaScrollViewer.Zoom + 5 * 100 / ArenaScrollViewer.Zoom, 
+                        -transform.Y / ArenaScrollViewer.Zoom + 2 * 100 / ArenaScrollViewer.Zoom);
+
+
                     //Set new Position for sticked Wesen
                     var tempstick = VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).ToList();
                     if (tempstick.Any())

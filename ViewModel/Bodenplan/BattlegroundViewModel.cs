@@ -85,6 +85,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private Point _currentMiddleVisPoint = new Point(0, 0);
+        public Point CurrentMiddleVisPoint
+        {
+            get { return _currentMiddleVisPoint; }
+            set { Set(ref _currentMiddleVisPoint, value); }
+        }
         public double CurrentMousePositionX
         {
             get { return _currentMousePositionX; }
@@ -1375,6 +1381,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
                     BattlegroundObjects.Add(((Held)kämpfer));
 
+                    (((Held)kämpfer) as BattlegroundCreature).SetNewPosition();
                     //ToDo: Initiative in der Manöverliste aktuelisieren
 
                     //Set Aktuelle Initiative auf geladenen Wert
