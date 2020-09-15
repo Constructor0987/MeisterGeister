@@ -822,18 +822,18 @@
                                         IsEnabled="{Binding lstHUEGateways.Count, Converter={StaticResource IsEqualOrGreaterThanConverter1}, ConverterParameter=1}"
                                         ItemsSource="{Binding lstHUEGateways}"
                                         SelectedItem="{Binding HUEGWSelected}" />
-                                    <Label
-                                        FontSize="8"
-                                        Grid.Column="2"
-                                        Grid.Row="1"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Content="{Binding AppKey, UpdateSourceTrigger=PropertyChanged}" />
                                     <Button Grid.Column="1" 
                                         HorizontalAlignment="Left" 
-                                            ToolTip="Entfernen der Gateway Informationen"
                                             Margin="175,2,0,2" Height="25" Width="25"
                                             Command="{Binding OnBtnHUEGWDeSelect}">
+                                        <Button.ToolTip>
+                                            <StackPanel>
+                                                <TextBlock Text="Entfernen der Gateway Informationen"/>
+                                                <TextBlock Text=""/>
+                                                <TextBlock Text="App-Key"/>
+                                                <TextBlock Text="{Binding AppKey}"/>
+                                            </StackPanel>
+                                        </Button.ToolTip>
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
