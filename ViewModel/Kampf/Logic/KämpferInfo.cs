@@ -245,7 +245,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             set
             {
-                _initiative = value;
+                _initiative = Math.Max(0, value);
                 try
                 {
                     int bonus = Math.Max((int)Math.Floor((_initiative - 11) / 10.0), 0);
