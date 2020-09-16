@@ -390,6 +390,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onShowCharakter = null;
+        public Base.CommandBase OnShowCharakter
+        {
+            get
+            {
+                if (onShowCharakter == null)
+                    onShowCharakter = new Base.CommandBase(ShowCharakter, null);
+                return onShowCharakter;
+            }
+        }
+
         private Base.CommandBase onShowImage = null;
         public Base.CommandBase OnShowImage
         {
@@ -535,6 +546,11 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        public void ShowCharakter(object sender = null)
+        {
+            SpielerWindow.SetImage(Global.SelectedHeld.Bild, (IsImageStretch == true) ? Stretch.Uniform : Stretch.None);
+            SlideShowStop();
+        }
         public void ShowImage(object sender = null)
         {
             SpielerWindow.SetImage(SelectedImagePath, (IsImageStretch == true) ? Stretch.Uniform : Stretch.None);
