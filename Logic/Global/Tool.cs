@@ -215,14 +215,14 @@ namespace MeisterGeister
             });
             if (Global.INTERN) // im Release-Modus ausblenden
             {
-                ToolListe.Add("HUE Lampensteuerung", new Tool()
-                {
-                    Name = "HUE Lampe",
-                    Icon = "/DSA%20MeisterGeister;component/Images/Icons/lampen_hue.png",
-                    MenuGruppe = "Wege des Meisters",
-                    ViewType = typeof(View.LampenHUE.HUELampenView),
-                    ViewModelType = typeof(ViewModel.LampenHUE.HUELampenViewModel)
-                });
+                //ToolListe.Add("HUE Lampensteuerung", new Tool()
+                //{
+                //    Name = "HUE Lampe",
+                //    Icon = "/DSA%20MeisterGeister;component/Images/Icons/lampen_hue.png",
+                //    MenuGruppe = "Wege des Meisters",
+                //    ViewType = typeof(View.LampenHUE.HUELampenView),
+                //    ViewModelType = typeof(ViewModel.LampenHUE.HUELampenViewModel)
+                //});
                 ToolListe.Add("Abenteuer", new Tool()
                 {
                     Name = "Abenteuer",
