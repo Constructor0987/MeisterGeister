@@ -60,14 +60,24 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private int _sightLineSektor = 4;
 
         //600;
-        private Random r;
+        [ThreadStatic]
+        private static Random r = new Random();
 
         public BattlegroundCreature()
         {
+            SetNewPosition();
+        }
+
+        public void SetNewPosition()
+        {
+            if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanViewModel != null)
+            {
+                CreatureX = Global.CurrentKampf.BodenplanViewModel.CurrentMiddleVisPoint.X;
+                CreatureY = Global.CurrentKampf.BodenplanViewModel.CurrentMiddleVisPoint.Y;
+            }
             r = new Random();
-            CreatureX += r.Next(0, 500);
-            r = new Random();
-            CreatureY += r.Next(0, 500);
+            CreatureX += r.Next(0, 500) - 250;
+            CreatureY += r.Next(0, 500) - 250;
             MoveObject(0, 0, false); //for initial position of ZLevel Display
             CreateSightArea();
             ShowLebensbalken = MeisterGeister.Logic.Einstellung.Einstellungen.LebensbalkenImmerAnzeigen || (this as Wesen).IsHeld;
