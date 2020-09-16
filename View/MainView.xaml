@@ -534,13 +534,13 @@
                             </Expander>
 
 
-                            <Expander VerticalAlignment="Bottom" IsExpanded="True" ForceCursor="False" Margin="5,1,0,5" ExpandDirection="Right"
-                                  Visibility="{Binding hotkeyListUsed.Count, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}"
+                            <!--<Expander VerticalAlignment="Bottom" IsExpanded="True" ForceCursor="False" Margin="5,1,0,5" ExpandDirection="Right"
+                                  Visibility="{Binding hotkeyListUsed.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}"
                                 ToolTip="Drücke Strg+Alt+ 'Hotkey' um die Hotkey-Playliste abzuspielen oder direkt anklicken" >
                                 <ComboBox ItemsSource="{Binding lstHUESzenen}" SelectedItem="{Binding HUESzeneSelected}" DisplayMemberPath="Name">
 
                                 </ComboBox>
-                            </Expander>
+                            </Expander>-->
 
 
                         </StackPanel>
@@ -559,7 +559,7 @@
 
                 <Expander x:Name="expHUE" ExpandDirection="Down" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"
                       ToolTip="HUE Lampensteuerung - schnelles setting"
-                      Visibility="{Binding lstHUELights.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}" 
+                          Visibility="{Binding lstHUELights.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsEqualOrGreaterThanVisibleConverter1}, ConverterParameter='1'}"                     
                       Grid.Column="1" Width="322" >
                     <Expander.Header>
                         <TextBlock Style="{StaticResource TextTitel}" Text="HUE-Lampensteuerung" HorizontalAlignment="Center"/>

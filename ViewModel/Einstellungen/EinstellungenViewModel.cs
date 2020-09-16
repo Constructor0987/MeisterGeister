@@ -1324,6 +1324,8 @@ namespace MeisterGeister.ViewModel.Settings
                 else
                 {
                     HUEProgress = "Q42Hue Error: Could not find bridge!";
+                    ViewHelper.Popup("Es konnte keine HUE-Bridge gefunden werden.\n\nStellen Sie sicher, dass die Bridge eingeschaltet und \n" +
+                        "das Netzwerk erreichbar ist.");
                 }
             }
             catch (Exception ex)
