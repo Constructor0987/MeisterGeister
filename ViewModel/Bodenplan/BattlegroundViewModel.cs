@@ -85,7 +85,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        private Point _currentMiddleVisPoint = new Point(0, 0);
+        private Point _currentMiddleVisPoint = new Point(5000, 5000);
         public Point CurrentMiddleVisPoint
         {
             get { return _currentMiddleVisPoint; }

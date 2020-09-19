@@ -218,7 +218,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         protected int CheckWasserkampf(int mod, Wassertiefe tiefe, Held ausführender, INahkampfwaffe waffe)
         {
-            if (ausführender == null)
+            if (ausführender == null || waffe == null)
                 return mod;
 
             //Kampf im Wasser

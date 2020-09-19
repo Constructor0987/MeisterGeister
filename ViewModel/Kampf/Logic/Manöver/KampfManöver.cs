@@ -69,7 +69,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         protected bool KämpftMitTalent(TWaffe waffe, params string[] talente)
         {
-            if (waffe.Talent == null)
+            if (waffe == null || waffe.Talent == null)
                 return false;
             return talente.Contains(waffe.Talent.Name);
         }
