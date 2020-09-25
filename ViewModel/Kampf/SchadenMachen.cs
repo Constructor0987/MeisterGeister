@@ -31,55 +31,60 @@ namespace MeisterGeister.ViewModel.Kampf
 
         public void Execute(int schaden, Trefferzone zone = Trefferzone.Zufall, bool verletzend = false, bool keineWunden = false, bool ausdauerschaden = false, bool ignoriertRüstung = false)
         {
-            zone = Trefferzone == Trefferzone.Zufall ? TrefferzonenHelper.ZufallsZone() : Trefferzone;
-
-            int rs = 0;
-            if (!ignoriertRüstung)
-                rs = kämpfer.RS[zone];
-            int spa = 0;
-            int sp = Math.Max(schaden - rs, 0);
-            if (ausdauerschaden)
+            try
             {
-                spa = sp;
-                if (AusdauerschadenMachtKeinenEchtenSchaden)
-                    sp = 0;
-                else
-                    sp = (int)Math.Round(spa / 2.0, MidpointRounding.AwayFromZero);
-            }
-            kämpfer.LebensenergieAktuell -= sp;
-            kämpfer.AusdauerAktuell -= spa;
+                zone = Trefferzone == Trefferzone.Zufall ? TrefferzonenHelper.ZufallsZone() : Trefferzone;
 
-            //Log(string.Format("Treffer bei '{0}': {1} SP ({2} TP, RS {3}) in Zone {4}", k.Name, sp, tp, rs, zone));
-
-            if (!keineWunden)
-            {
-                int wsmod = -(verletzend ? 2 : 0) + (ausdauerschaden ? 2 : 0);
-                int wunden = 0;
-                if (sp > kämpfer.Wundschwelle3 + wsmod)
-                    wunden = 3;
-                else if (sp > kämpfer.Wundschwelle2 + wsmod)
-                    wunden = 2;
-                else if (sp > kämpfer.Wundschwelle + wsmod)
-                    wunden = 1;
-                kämpfer.Wunden[zone] += wunden;
-
-                if (wunden > 0)
+                int rs = 0;
+                if (!ignoriertRüstung)
+                    rs = kämpfer.RS[zone];
+                int spa = 0;
+                int sp = Math.Max(schaden - rs, 0);
+                if (ausdauerschaden)
                 {
-                    //Log(string.Format("Wunde(n) bei '{0}': {1} Wunde(n) in Zone {2}", k.Name, wunden, zone));
+                    spa = sp;
+                    if (AusdauerschadenMachtKeinenEchtenSchaden)
+                        sp = 0;
+                    else
+                        sp = (int)Math.Round(spa / 2.0, MidpointRounding.AwayFromZero);
                 }
-            }
+                kämpfer.LebensenergieAktuell -= sp;
+                kämpfer.AusdauerAktuell -= spa;
 
-            // bei Tieren und wenn nur noch 1/3 der LeP -> Meisterhinweis "Flüchtet im Normalfall"
-            if (kämpfer.LebensenergieAktuell > 0 && kämpfer.LebensenergieMax != 0 &&
-                kämpfer.LebensenergieAktuell <= kämpfer.LebensenergieMax /3 && 
-                kämpfer is IGegnerBase && (kämpfer as IGegnerBase).Tags.Contains("Tier"))
-            {
-                if (!Fliehen)
-                    View.General.ViewHelper.Popup("Meister-Hinweis:" + Environment.NewLine + Environment.NewLine + "Das Tier flieht im Normalfall, da die LeP unter 1/3 der Gesamt-LeP liegen.");
-                Fliehen = true;
-            }
+                //Log(string.Format("Treffer bei '{0}': {1} SP ({2} TP, RS {3}) in Zone {4}", k.Name, sp, tp, rs, zone));
 
-            LetzteTrefferzone = zone;
+                if (!keineWunden)
+                {
+                    int wsmod = -(verletzend ? 2 : 0) + (ausdauerschaden ? 2 : 0);
+                    int wunden = 0;
+                    if (sp > kämpfer.Wundschwelle3 + wsmod)
+                        wunden = 3;
+                    else if (sp > kämpfer.Wundschwelle2 + wsmod)
+                        wunden = 2;
+                    else if (sp > kämpfer.Wundschwelle + wsmod)
+                        wunden = 1;
+                    kämpfer.Wunden[zone] += wunden;
+
+                    if (wunden > 0)
+                    {
+                        //Log(string.Format("Wunde(n) bei '{0}': {1} Wunde(n) in Zone {2}", k.Name, wunden, zone));
+                    }
+                }
+
+                // bei Tieren und wenn nur noch 1/3 der LeP -> Meisterhinweis "Flüchtet im Normalfall"
+                if (kämpfer.LebensenergieAktuell > 0 && kämpfer.LebensenergieMax != 0 &&
+                    kämpfer.LebensenergieAktuell <= kämpfer.LebensenergieMax / 3 &&
+                    kämpfer is IGegnerBase && (kämpfer as IGegnerBase).Tags.Contains("Tier"))
+                {
+                    if (!Fliehen)
+                        View.General.ViewHelper.Popup("Meister-Hinweis:" + Environment.NewLine + Environment.NewLine + "Das Tier flieht im Normalfall, da die LeP unter 1/3 der Gesamt-LeP liegen.");
+                    Fliehen = true;
+                }
+
+                LetzteTrefferzone = zone;
+            }
+            catch (Exception ex)
+            { View.General.ViewHelper.ShowError("Leider ist beim Ausführen der Schaden machen Prozedur ein Fehler aufgetreten.", ex); }
         }
 
         private bool fliehen = false;
