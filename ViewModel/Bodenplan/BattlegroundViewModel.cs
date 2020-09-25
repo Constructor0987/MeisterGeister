@@ -1381,7 +1381,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
                     BattlegroundObjects.Add(((Held)kämpfer));
 
-                    (((Held)kämpfer) as BattlegroundCreature).SetNewPosition();
+                    if (!IsLoading)
+                        (((Held)kämpfer) as BattlegroundCreature).SetNewPosition();
                     //ToDo: Initiative in der Manöverliste aktuelisieren
 
                     //Set Aktuelle Initiative auf geladenen Wert

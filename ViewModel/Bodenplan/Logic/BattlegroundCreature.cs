@@ -153,7 +153,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
             set
             {
-                _creatureX = value;
+                _creatureX = Math.Max(0, value);
                 CalculateSightArea();
                 OnChanged(nameof(CreatureX));
             }
@@ -165,7 +165,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
             set
             {
-                _creatureY = value;
+                _creatureY = Math.Max(0, value);
                 //CalculateSightArea();  //TODO: only on CreatureX Move, cause of too much calculations per pixelmove.
                 OnChanged(nameof(CreatureY));
             }
