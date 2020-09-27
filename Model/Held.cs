@@ -30,7 +30,16 @@ namespace MeisterGeister.Model
             UpdateHinweis = string.Empty;
             HinweisText = string.Empty;
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+            PropertyChanged += Held_PropertyChanged;
             SetDefaultValues();
+        }
+
+        private void Held_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "AktiveHeldengruppe" && Global.MainVM != null)
+            {
+                Global.MainVM.HeldenGruppe.Refresh();
+            }
         }
 
         public bool keineWeiterenAuswirkungenBeiWunden
@@ -4192,6 +4201,7 @@ namespace MeisterGeister.Model
         public void Dispose()
         {
             PropertyChanged -= DependentProperty.PropagateINotifyProperyChanged;
+            PropertyChanged -= Held_PropertyChanged;
         }
 
         #endregion IDisposable
