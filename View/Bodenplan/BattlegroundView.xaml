@@ -569,7 +569,7 @@
                                                                     <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/wuerfel.png" />
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
-                                                            
+
                                                             <MenuItem Command="{Binding ki.Passiv}" Header="Passiv im Kampf">
                                                                 <MenuItem.Icon>
                                                                     <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png" />
@@ -1378,7 +1378,7 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
-                                
+
                                 <!--  Datatemplate IMAGEOBJECT  -->
                                 <DataTemplate DataType="{x:Type model:ImageObject}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
@@ -1489,8 +1489,46 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
-                            </ListBox.Resources>
 
+                                <!-- Spieler Monitotr Rectangle-->
+                                <DataTemplate DataType="{x:Type model:RectangleObject}">
+                                    <Thumb DragDelta="Thumb_Drag" 
+                                           IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                                                        Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                    <Rectangle Stroke="Black" StrokeThickness="6"
+                                                        x:Name="Rectangle1"
+                                                        Canvas.Left="{Binding RectPositionX}"
+                                                        Canvas.Top="{Binding RectPositionY}"
+                                                        
+                                                        Width="{Binding RectWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding RectHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                        VerticalAlignment="Top"
+                                                        RenderTransformOrigin="0.5,0.5"
+                                                        Stretch="Fill">
+                                                    </Rectangle>
+                                                </Canvas>
+
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect
+                                                                    BlurRadius="25"
+                                                                    ShadowDepth="10"
+                                                                    Color="Yellow" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                            
                             <ListBox.Background>
                                 <!--  Hexgrid  -->
                                 <VisualBrush

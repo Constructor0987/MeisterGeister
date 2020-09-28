@@ -824,6 +824,12 @@ namespace MeisterGeister.View.Bodenplan
                     return;
                 }
 
+                if (VM.SpielerKastenAktiv && !VM.InitSpielerKasten)
+                {
+                    VM.AlterRectangle(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y);
+                    return;
+                }
+
                 VM.FogFreimachen = (VM.useFog && Keyboard.Modifiers == ModifierKeys.Control);
 
                 if (VM.FogFreimachen && VM.FogPixelData != null)
@@ -865,13 +871,6 @@ namespace MeisterGeister.View.Bodenplan
                 {
                     VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
                     VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
-
-                    Point transform = ArenaGridTop.TransformToVisual((Visual)ArenaGridTop.Parent).Transform(new Point());
-
-                    //Obere Ecke herausfinden
-                    VM.CurrentMiddleVisPoint = new Point(
-                        -transform.X / ArenaScrollViewer.Zoom + 5 * 100 / ArenaScrollViewer.Zoom, 
-                        -transform.Y / ArenaScrollViewer.Zoom + 2 * 100 / ArenaScrollViewer.Zoom);
 
                     //Set new Position for sticked Wesen
                     var tempstick = VM.BattlegroundObjects.Where(x => x is Wesen && x.IsSticked).ToList();
@@ -946,6 +945,32 @@ namespace MeisterGeister.View.Bodenplan
 
                 if (VM != null)
                 {
+                    if (VM.SpielerKastenAktiv)
+                    {
+                        if (VM.InitSpielerKasten)
+                        {
+                            VM.BewegungZuvor = 0;
+                            var x = VM.CurrentMousePositionX;
+                            var y = VM.CurrentMousePositionY;
+                            VM.CreateNewTempRectangle(x, y);
+
+                            VM.InitSpielerKasten = false;
+                            e.Handled = true;
+                        }
+                        else
+                        {
+                            Rect r = new Rect(
+                                (VM.SelectedTempObject as RectangleObject).RectPositionX, (VM.SelectedTempObject as RectangleObject).RectPositionY,
+                                (VM.SelectedTempObject as RectangleObject).RectWidth, (VM.SelectedTempObject as RectangleObject).RectHeight);
+                            VM.InitSpielerKasten = true;
+                            VM.SetSpielerZoom(r);
+                            VM.FinishCurrentTempRectangle();
+                            VM.SpielerKastenAktiv = false;
+                            e.Handled = true;
+                        }
+                        return;
+                    }
+
                     if (VM.IsPointerVisible)
                     {
                         VM.SetPointer(ArenaGridTop);

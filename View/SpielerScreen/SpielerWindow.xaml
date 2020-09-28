@@ -684,8 +684,10 @@
                             </Thumb>
                         </DataTemplate>
 
-                        <DataTemplate DataType="{x:Type model:MP4Object}">
-                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type model:MP4Object}" />
+
+                        <!--  Datatemplate RECTANGLE-OBJECT  -->
+                        <DataTemplate DataType="{x:Type model:RectangleObject}"/>
                     </ListBox.Resources>
 
                     <ListBox.Background>

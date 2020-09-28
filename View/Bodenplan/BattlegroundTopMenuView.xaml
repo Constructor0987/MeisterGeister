@@ -495,21 +495,6 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <Image
-                                            Grid.RowSpan="2"
-                                            Grid.Column="1"
-                                            Height="25"
-                                            Margin="0,10,6,0"
-                                            HorizontalAlignment="Right"
-                                            Source="/Images/Icons/General/y-offset.png" />
-                                        <Image
-                                            Grid.Row="0"
-                                            Grid.RowSpan="2"
-                                            Height="25"
-                                            Margin="185,-5,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Source="/Images/Icons/General/x-offset.png" />
                                         <Button
                                             Width="27"
                                             Height="27"
@@ -545,8 +530,27 @@
                                                 </StackPanel>
                                             </Label.Content>
                                         </Label>
+
+                                        <ToggleButton
+                                            IsChecked="{Binding SpielerKastenAktiv}"
+                                            Focusable="False"
+                                            Background="Transparent"
+                                            Width="45"
+                                            Height="45"
+                                            Margin="100,2,0,0"
+                                            Padding="0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            ToolTip="Spieler-Rahmen ziehen">
+                                            <ToggleButton.Content>
+                                                <Grid>
+                                                    <Image Margin="-1" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" Opacity=".8" />
+                                                    <Image Margin="-1,-6,0,0" Height="20" Width="20" Source="/DSA MeisterGeister;component/Images/Icons/General/size.png" />
+                                                </Grid>
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
                                         
-                                        <Grid HorizontalAlignment="Left" Margin="100,0,0,0" Height="45" Width="45">
+                                        <Grid HorizontalAlignment="Left" Margin="200,0,0,0" Height="45" Width="45">
                                             <Image Margin="-1" Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
                                             <Image
                                                 Height="25"
@@ -558,51 +562,13 @@
                                                 Source="/Images/Icons/General/x-offset.png" />
                                         </Grid>
                                         <TextBox HorizontalAlignment="Left" ToolTip="Verschiebe mit den Pfeiltasten den Spieler-Bildschirm, Esc-Taste zum Beenden"
-                                            Foreground="Transparent" Background="Transparent" MaxLength="1" Margin="108,10,0,17" 
+                                            Foreground="Transparent" Background="Transparent" MaxLength="1" Margin="208,10,0,17" 
                                                  Tag="Pfeil-Tasten oder Num-Lock-Tasten benutzen um den Spieler Bildschirm zu verschieben"
                                                  Width="29" Focusable="True" PreviewKeyDown="TextBox_KeyDown" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
 
-                                        <Slider
-                                            Margin="0,0,5,0"
-                                            HorizontalAlignment="Right"
-                                            LargeChange="10"
-                                            Maximum="1000"
-                                            Minimum="-9000"
-                                            MouseWheel="sl_MouseWheel"
-                                            Orientation="Vertical"
-                                            RenderTransformOrigin="0.5,0.5"
-                                            SmallChange="1"
-                                            Style="{StaticResource SmallVerticalSlider}"
-                                            ToolTip="Y-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                            Value="{Binding PlayerGridOffsetY, UpdateSourceTrigger=PropertyChanged}">
-                                            <Slider.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleX="-1" />
-                                                    <SkewTransform />
-                                                    <RotateTransform />
-                                                    <TranslateTransform />
-                                                </TransformGroup>
-                                            </Slider.RenderTransform>
-                                        </Slider>
-
-                                        <Slider
-                                            Height="12"
-                                            MinHeight="5"
-                                            Margin="155,10,20,0"
-                                            VerticalAlignment="Top"
-                                            IsDirectionReversed="{Binding InvertPlayerScrolling}"
-                                            LargeChange="10"
-                                            Maximum="9000"
-                                            Minimum="-1000"
-                                            MouseWheel="sl_MouseWheel"
-                                            SmallChange="1"
-                                            Style="{StaticResource SmallHorizontalSlider}"
-                                            ToolTip="X-Offset -  Mausrad drehen um Feinjustierung durchzuführen"
-                                            Value="{Binding PlayerGridOffsetX, UpdateSourceTrigger=PropertyChanged}" />
-
                                         <CheckBox
                                             x:Name="chbxPlayerScreenInv"
-                                            Margin="160,20,0,0"
+                                            Margin="160,32,0,0"
                                             Width="45"
                                             FontSize="10"
                                             Padding="1,0"
