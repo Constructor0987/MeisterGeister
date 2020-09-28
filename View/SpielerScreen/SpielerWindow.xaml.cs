@@ -197,14 +197,22 @@ namespace MeisterGeister.View.SpielerScreen
                     Stretch = stretch
                 };
 
-                var bmi = new BitmapImage();
-                bmi.BeginInit();
-                bmi.UriSource = new Uri(pfad, UriKind.Relative);
-                bmi.EndInit();
+                if (pfad != null && pfad.StartsWith("/DSA MeisterGeister;component"))
+                {
+                    string bildS = Global.SelectedHeld.Bild.Replace(
+                        "/DSA MeisterGeister;component", "pack://application:,,,/DSA MeisterGeister;component");
+                    img.Source = new BitmapImage(new Uri(bildS));
+                }
+                else
+                {
+                    var bmi = new BitmapImage();
+                    bmi.BeginInit();
+                    bmi.UriSource = new Uri(pfad, UriKind.Relative);
+                    bmi.EndInit();
 
-                bmi.Freeze();		// freeze image source, used to move it across the thread
-                img.Source = bmi;
-
+                    bmi.Freeze();       // freeze image source, used to move it across the thread
+                    img.Source = bmi;
+                }
                 var pointer = new SpielerPointer();
 
                 var pointerMarginBinding = new Binding("PointerMarginSpieler")
