@@ -38,7 +38,9 @@ namespace MeisterGeister.Model
         {
             if (e.PropertyName == "AktiveHeldengruppe" && Global.MainVM != null)
             {
+                Held oldHeld = Global.SelectedHeld;
                 Global.MainVM.HeldenGruppe.Refresh();
+                Global.SelectedHeld = oldHeld;
             }
         }
 
