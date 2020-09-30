@@ -949,6 +949,7 @@ namespace MeisterGeister.View.Bodenplan
                     {
                         if (VM.InitSpielerKasten)
                         {
+                            //Kasten zeichnen Beginn
                             VM.BewegungZuvor = 0;
                             var x = VM.CurrentMousePositionX;
                             var y = VM.CurrentMousePositionY;
@@ -959,18 +960,21 @@ namespace MeisterGeister.View.Bodenplan
                         }
                         else
                         {
-                            Rect r = new Rect(
-                                (VM.SelectedTempObject as RectangleObject).RectPositionX, (VM.SelectedTempObject as RectangleObject).RectPositionY,
-                                (VM.SelectedTempObject as RectangleObject).RectWidth, (VM.SelectedTempObject as RectangleObject).RectHeight);
-                            VM.InitSpielerKasten = true;
-                            VM.SetSpielerZoom(r);
+                            //Kasten zeichnen Beginn beenden
+                            if (VM.SelectedTempObject != null)
+                            {
+                                Rect r = new Rect(
+                                    (VM.SelectedTempObject as RectangleObject).RectPositionX, (VM.SelectedTempObject as RectangleObject).RectPositionY,
+                                    (VM.SelectedTempObject as RectangleObject).RectWidth, (VM.SelectedTempObject as RectangleObject).RectHeight);
+                                VM.InitSpielerKasten = true;
+                                VM.SetSpielerZoom(r);
+                            }
                             VM.FinishCurrentTempRectangle();
                             VM.SpielerKastenAktiv = false;
                             e.Handled = true;
                         }
                         return;
                     }
-
                     if (VM.IsPointerVisible)
                     {
                         VM.SetPointer(ArenaGridTop);
@@ -1100,7 +1104,7 @@ namespace MeisterGeister.View.Bodenplan
         private void ArenaGrid_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             try
-            {
+            {                
                 VM.IsMoving = false;
                 if (VM.SelectedObject != null)
                 {
@@ -1119,7 +1123,7 @@ namespace MeisterGeister.View.Bodenplan
             {
                 e.Handled = true;
                 if (VM != null)
-                {
+                {                    
                     if (VM.FogFreimachen && Keyboard.Modifiers == ModifierKeys.Control && VM.FogPixelData != null)
                     {
                         WriteableBitmap wbmap = VM.FogImage;

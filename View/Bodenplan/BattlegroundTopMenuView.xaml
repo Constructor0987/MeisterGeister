@@ -532,6 +532,7 @@
                                         </Label>
 
                                         <ToggleButton
+                                            BorderThickness="0"
                                             IsChecked="{Binding SpielerKastenAktiv}"
                                             Focusable="False"
                                             Background="Transparent"

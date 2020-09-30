@@ -348,7 +348,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 SelectedTempObject = null;
                 RemoveNewObjects();
             }
-            SelectedTempObject = null;
         }
         public void FinishCurrentTempPathLine()
         {
@@ -359,7 +358,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 RemoveNewObjects();
                 Global.CurrentKampf.LabelInfo = null;
             }
-            SelectedTempObject = null;
         }
 
         public void MoveLastObjectBehindCreatures()
@@ -453,7 +451,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (SelectedTempObject == null)
                     return;
-                Console.WriteLine(x2 + ", " + y2);
 
                 var rect = (RectangleObject)SelectedTempObject;
                 var endPoint = new Point(x2, y2);
@@ -465,8 +462,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void AlterPathLine(double x2, double y2)
         {
-            Console.WriteLine(x2 + ", " + y2);
-
             var pathLine = (PathLine)SelectedTempObject;
             var endPoint = new Point(x2, y2);
             Point startPoint = pathLine.GetStartPoint;
