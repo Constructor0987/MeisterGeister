@@ -119,6 +119,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _initDnD, value); }
         }
 
+        public bool _initSpielerKasten = true;
+        public bool InitSpielerKasten
+        {
+            get { return _initSpielerKasten; }
+            set { Set(ref _initSpielerKasten, value); }
+        }
         public bool InitLineal
         {
             get { return _initLineal; }
@@ -267,6 +273,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BattlegroundObjects.Add(pathline);
         }
 
+        public void CreateNewTempRectangle(double x1, double y1)
+        {
+            var rect = new RectangleObject(new Point(x1, y1), new Point(x1, y1))
+            {
+
+                ObjectColor = new SolidColorBrush(LinealColor),
+                StrokeThickness = 10,
+                Opacity = .2,
+                IsNew = true
+            };
+            SelectedTempObject = rect;
+            BattlegroundObjects.Add(rect);
+        }
+
         public void CreateNewTempLinealLine(double x1, double y1)
         {
             var pathline = new PathLine(new Point(x1, y1))
@@ -310,7 +330,25 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 RemoveNewObjects();
             }
         }
+        public void SetSpielerZoom(Rect t)
+        {
+            double ScaleWidth = SpielerScreenWindow.ActualWidth / t.Width;
+            double ScaleHeight = SpielerScreenWindow.ActualHeight / t.Height;
+            ScaleSpielerGrid = Math.Min(ScaleWidth, ScaleHeight) * .95;
 
+            PlayerGridOffsetX = t.X;
+            PlayerGridOffsetY = -t.Y;
+        }
+
+        public void FinishCurrentTempRectangle()
+        {
+            if (SelectedTempObject != null && SelectedTempObject is RectangleObject)
+            {
+                SelectedTempObject.IsNew = true;
+                SelectedTempObject = null;
+                RemoveNewObjects();
+            }
+        }
         public void FinishCurrentTempPathLine()
         {
             if (SelectedTempObject != null && SelectedTempObject is PathLine)
@@ -320,7 +358,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 RemoveNewObjects();
                 Global.CurrentKampf.LabelInfo = null;
             }
-            SelectedTempObject = null;
         }
 
         public void MoveLastObjectBehindCreatures()
@@ -408,10 +445,23 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        public void AlterRectangle(double x2, double y2)
+        {
+            try
+            {
+                if (SelectedTempObject == null)
+                    return;
+
+                var rect = (RectangleObject)SelectedTempObject;
+                var endPoint = new Point(x2, y2);
+
+                rect.ChangeLastPoint(endPoint);
+            }
+            catch { }
+        }
+
         public void AlterPathLine(double x2, double y2)
         {
-            Console.WriteLine(x2 + ", " + y2);
-
             var pathLine = (PathLine)SelectedTempObject;
             var endPoint = new Point(x2, y2);
             Point startPoint = pathLine.GetStartPoint;
@@ -1097,8 +1147,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public double ScaleSpielerGrid
         {
             get { return _scaleSpielerGrid; }
-            set { Set(ref _scaleSpielerGrid, Math.Round(value < .2 ? .2 : value, 2)); }
+            set { Set(ref _scaleSpielerGrid, Math.Round(value < .1 ? .1 : value, 14)); }
         }
+
 
         public Kampf.Logic.ManöverInfo SelManöver
         {
@@ -1111,6 +1162,21 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set { Set(ref _heldenInFormationBewegen, value); }
         }
 
+
+        public bool _spielerKastenAktiv = false;
+        public bool SpielerKastenAktiv
+        {
+            get { return _spielerKastenAktiv; }
+            set
+            {
+                Set(ref _spielerKastenAktiv, value);
+                if (!value)
+                {
+                    FinishCurrentTempRectangle();
+                    InitSpielerKasten = true;
+                }
+            }
+        }
         public bool LinealAktiv
         {
             get { return _linealAktiv; }
@@ -2811,11 +2877,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
             double totalWidth = SpielerScreenWindow.ActualWidth / ScaleSpielerGrid;
             double totalHeight = SpielerScreenWindow.ActualHeight / ScaleSpielerGrid;
 
-            double PlayerOffX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min()) / 2;
-            double PlayerOffY = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min()) / 2;
+            double PlayerOffX = Global.ContextHeld.HeldenGruppeListe.Count == 0? 0:
+                (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min()) / 2;
+            double PlayerOffY = Global.ContextHeld.HeldenGruppeListe.Count == 0? 0:
+                (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Max() - Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min()) / 2;
 
-            PlayerGridOffsetX = (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min() - (totalWidth / 2 - PlayerOffX));
-            PlayerGridOffsetY = (-(Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min() - (totalHeight / 2 - PlayerOffY)));
+            PlayerGridOffsetX = Global.ContextHeld.HeldenGruppeListe.Count == 0? 0:
+            (Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureX).Min() - (totalWidth / 2 - PlayerOffX));
+            PlayerGridOffsetY = Global.ContextHeld.HeldenGruppeListe.Count == 0? 0:
+                (-(Global.ContextHeld.HeldenGruppeListe.Select(t => t.CreatureY).Min() - (totalHeight / 2 - PlayerOffY)));
         }
 
 

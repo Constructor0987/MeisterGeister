@@ -699,6 +699,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\LichtquelleObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\MP4Object.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\PositionToImageConverter.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\RectangleObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\TextLabel.cs" />
     <Compile Include="ViewModel\Einstellungen\ermitteleUeberlastung.cs" />
     <Compile Include="ViewModel\Einstellungen\ermittleBehinderung.cs" />
