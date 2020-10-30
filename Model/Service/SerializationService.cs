@@ -68,6 +68,7 @@ namespace MeisterGeister.Model.Service
             LoadHeldUserData();
             LoadGegnerUserData();
             LoadAudioUserData();
+            LoadHUELampeColorUserData();
         }
 
         private bool heldLoaded = false;
@@ -151,6 +152,21 @@ namespace MeisterGeister.Model.Service
             audioLoaded = true;
         }
 
+
+        bool hueLCLoaded = false;
+        private void LoadHUELampeColorUserData()
+        {
+            if (hueLCLoaded)
+                return;
+            var queries = new IQueryable<object>[] {
+                from a in Context.HUE_LampeColor select a,
+                from a in Context.HUE_Szene select a
+            };
+            IEnumerable<object> results;
+            foreach (IQueryable<object> q in queries)
+                results = q.ToList();
+            hueLCLoaded = true;
+        }
 
         #region Insert/Update/Delete/Save/New/Discard
         public virtual bool Insert<T>(T aModelObject) where T : class
@@ -942,6 +958,28 @@ namespace MeisterGeister.Model.Service
             return true;
         }
         
+        public bool DeleteHUELampeColorData(HUE_LampeColor a)
+        {
+            LoadHUELampeColorUserData();
+            if(a==null)
+                return false;
+            if (Context.HUE_LampeColor.Where(h => h.HUE_LampeColorGUID == a.HUE_LampeColorGUID).Count() == 0)
+                return true;
+            List<object> toDelete = new List<object>();
+
+            try
+            {
+                foreach (object o in toDelete)
+                    Context.DeleteObject(o);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public bool DeleteAudioData(Audio_Theme a)
         {
             LoadAudioUserData();

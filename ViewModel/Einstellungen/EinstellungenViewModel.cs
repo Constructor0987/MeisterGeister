@@ -1378,7 +1378,9 @@ namespace MeisterGeister.ViewModel.Settings
         public List<Scene> lstScene
         {
             get { return _lstScene; }
-            set { Set(ref _lstScene, value); }
+            set { Set(ref _lstScene, value);
+                MainViewModel.Instance.lstHUEScenes = value;
+            }
         }
 
         private Light _cmbxSelHUE = new Light();

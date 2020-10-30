@@ -2781,7 +2781,8 @@
     <Resource Include="Images\Icons\Aventurien_icon.png" />
     <Resource Include="Images\Icons\Myranor_icon.png" />
     <Resource Include="Images\Icons\fliehen.png" />
-    <Content Include="Daten\Updateskripte\UpdateTo_V0131.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0131.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0132.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

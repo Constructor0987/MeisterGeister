@@ -689,6 +689,7 @@
     <Property Name="Kategorie" Type="nvarchar" MaxLength="500" />
     <Property Name="Favorite" Type="bit" />
     <Property Name="HUE_SzeneGUID" Type="uniqueidentifier" />
+    <Property Name="HUE_Scene" Type="nvarchar" MaxLength="64" />
   </EntityType>
   <EntityType Name="Audio_Theme_Playlist">
     <Key>
@@ -1301,8 +1302,6 @@
       <PropertyRef Name="HUE_LampeColorGUID" />
     </Key>
     <Property Name="HUE_LampeColorGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Lampenname" Type="nvarchar" Nullable="false" MaxLength="254" />
-    <Property Name="Color" Type="nvarchar" MaxLength="32" />
   </EntityType>
   <EntityType Name="HUE_Szene">
     <Key>
@@ -4145,6 +4144,7 @@
     <Property Name="Kategorie" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="Favorite" Type="Boolean" />
     <Property Name="HUE_SzeneGUID" Type="Guid" />
+    <Property Name="HUE_Scene" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="HUE_Szene" Relationship="DatabaseDSAModel.FK__Audio_Theme__0000000000001265" FromRole="Audio_Theme" ToRole="HUE_Szene" />
     <NavigationProperty Name="Audio_Playlist" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Theme" ToRole="Audio_Playlist" />
     <NavigationProperty Name="Audio_Theme1" Relationship="DatabaseDSAModel.Audio_Theme_Theme" FromRole="Audio_Theme" ToRole="Audio_Theme1" />
@@ -4810,8 +4810,6 @@
       <PropertyRef Name="HUE_LampeColorGUID" />
     </Key>
     <Property Name="HUE_LampeColorGUID" Type="Guid" Nullable="false" />
-    <Property Name="Lampenname" Type="String" Nullable="false" MaxLength="254" Unicode="true" FixedLength="false" />
-    <Property Name="Color" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="HUE_Szene" Relationship="DatabaseDSAModel.HUE_Szene_LampeColor" FromRole="HUE_LampeColor" ToRole="HUE_Szene" />
   </EntityType>
   <EntityType Name="HUE_Szene">
@@ -6943,6 +6941,7 @@
           <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
           <ScalarProperty Name="Favorite" ColumnName="Favorite" />
           <ScalarProperty Name="HUE_SzeneGUID" ColumnName="HUE_SzeneGUID" />
+          <ScalarProperty Name="HUE_Scene" ColumnName="HUE_Scene" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7529,8 +7528,6 @@
       <EntityTypeMapping TypeName="DatabaseDSAModel.HUE_LampeColor">
         <MappingFragment StoreEntitySet="HUE_LampeColor">
           <ScalarProperty Name="HUE_LampeColorGUID" ColumnName="HUE_LampeColorGUID" />
-          <ScalarProperty Name="Lampenname" ColumnName="Lampenname" />
-          <ScalarProperty Name="Color" ColumnName="Color" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -8233,7 +8230,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="bcb47c695a0a4e25a001af822ae01c7b" Name="Diagram1">
+      <Diagram DiagramId="b06c6190436848fc85b80ec21c93d3cb" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="2.75" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="7.25" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="5" PointY="11.75" IsExpanded="true" />
@@ -8282,8 +8279,8 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="9" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Waffe" Width="1.5" PointX="10.5" PointY="37" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="3" PointY="21.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_LampeColor" Width="1.5" PointX="1.5" PointY="73.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_Szene" Width="1.5" PointX="3.75" PointY="73.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_LampeColor" Width="1.5" PointX="1.5" PointY="74.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.HUE_Szene" Width="1.5" PointX="3.75" PointY="74" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="21.75" PointY="50" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kreatur" Width="1.5" PointX="23.25" PointY="32.75" IsExpanded="true" />

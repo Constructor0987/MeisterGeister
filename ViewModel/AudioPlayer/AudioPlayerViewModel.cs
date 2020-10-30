@@ -32,6 +32,11 @@ using MeisterGeister.ViewModel.Base;
 using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Fx;
 using System.Windows.Interop;
+using Q42.HueApi.ColorConverters.Original;
+using Q42.HueApi;
+using Q42.HueApi.ColorConverters;
+using Q42.HueApi.Models.Groups;
+using Q42.HueApi.Models;
 
 namespace MeisterGeister.ViewModel.AudioPlayer
 {
@@ -1398,6 +1403,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 Set(ref _aktKlangTheme, value);
+                if (Global.MainVM.Client != null)
+                    HUESceneSelected = (value == null || string.IsNullOrEmpty(value.HUE_Scene)) ? 
+                        null :
+                        lstHUEScenes.FirstOrDefault(t => t.Id == value.HUE_Scene);
                 LadeAudioZeilen();
             }
         }
@@ -1861,7 +1870,153 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     Einstellungen.SetEinstellung<int>("GeneralGeräuscheVolume", (int)Math.Round(value));
             }
         }
-        
+
+        public List<Scene> lstHUEScenes
+        {
+            get { return Global.MainVM.lstHUEScenes; }
+        }
+
+        private Scene _hUESceneSelected = null;
+        public Scene HUESceneSelected
+        {
+            get { return _hUESceneSelected; }
+            set 
+            { 
+                Set(ref _hUESceneSelected, value);
+                if (value != null)
+                    AktKlangTheme.HUE_Scene = value.Id;
+                Global.ContextHUE.Update<Audio_Theme>(AktKlangTheme);
+            }
+        }
+
+
+        private Base.CommandBase _onBtnClearHUEScene = null;
+        public Base.CommandBase OnBtnClearHUEScene
+        {
+            get
+            {
+                if (_onBtnClearHUEScene == null)
+                    _onBtnClearHUEScene = new Base.CommandBase(ClearHUEScene, null);
+                return _onBtnClearHUEScene;
+            }
+        }
+        void ClearHUEScene(object obj)
+        {
+            AktKlangTheme.HUE_Scene = null;
+            HUESceneSelected = null;
+            Global.ContextHUE.Update<Audio_Theme>(AktKlangTheme);
+        }
+
+
+            //private Base.CommandBase _onBtnSetHUEtoTheme = null;
+            //public Base.CommandBase OnBtnSetHUEtoTheme
+            //{
+            //    get
+            //    {
+            //        if (_onBtnSetHUEtoTheme == null)
+            //            _onBtnSetHUEtoTheme = new Base.CommandBase(SetHUEtoTheme, null);
+            //        return _onBtnSetHUEtoTheme;
+            //    }
+            //}
+            //void SetHUEtoTheme(object obj)
+            //{
+            //    if (AktKlangTheme.HUE_SzeneGUID == null)
+            //    {
+            //        //             HUE hueLC
+
+            //        HUE_Szene hueS = new HUE_Szene();
+
+            //        for(int i = 0; i < Global.MainVM.HUELightsSelected.Count; i++)
+            //        {
+            //            HUE_LampeColor HUELC = new HUE_LampeColor();
+            //            HUELC.HUE_ID = Global.MainVM.HUELightsSelected[i].Id;
+            //            HUELC.IsHUEGroup = false;
+            //            HUELC.Brightness = Global.MainVM.HUELightsSelected[i].State.Brightness;
+            //            HUELC.Saturation = Global.MainVM.HUELightsSelected[i].State.Saturation.Value;
+            //            HUELC.ColorTemperature = Global.MainVM.HUELightsSelected[i].State.ColorTemperature;
+            //            HUELC.ColorCoordinates1 = Global.MainVM.HUELightsSelected[i].State.ColorCoordinates[0];// = 0.1874,   0.207
+            //            HUELC.ColorCoordinates2 = Global.MainVM.HUELightsSelected[i].State.ColorCoordinates[1];
+
+            //            string hex = Global.MainVM.HUELightsSelected[i].ToRGBColor().ToHex();
+
+            //            Q42.HueApi.ColorConverters.RGBColor HUErgb = Global.MainVM.HUELightsSelected[i].State.ToRGBColor();
+            //            //       Global.MainVM.HUELightsSelected[i].State
+            //            //Q42.HueApi.ColorConverters.RGBColor HUErgb = Global.MainVM.HUELightsSelected[i].ToRGBColor();
+
+            //            //string GRGhex = HUErgb.ToHex();
+            //            //byte[] RGB = StrToByteArray(GRGhex);
+            //            //HUELC.R = RGB[0];
+            //            //HUELC.G = RGB[1];
+            //            //HUELC.B = RGB[2];
+            //            HUELC.R = HUErgb.R;
+            //            HUELC.G = HUErgb.G;
+            //            HUELC.B = HUErgb.B;
+
+            //            Global.ContextHUE.Update<HUE_LampeColor>(HUELC);
+
+            //            hueS.HUE_LampeColor.Add(HUELC);
+            //        }
+
+            //        for (int i = 0; i < Global.MainVM.HUEGroupsSelected.Count; i++)
+            //        {
+            //            HUE_LampeColor HUELC = new HUE_LampeColor();
+            //            HUELC.HUE_ID = Global.MainVM.HUEGroupsSelected[i].Id;
+
+            //            HUELC.R = (double)Global.MainVM.SelectedColor.R;
+            //            HUELC.G = (double)Global.MainVM.SelectedColor.G;
+            //            HUELC.B = (double)Global.MainVM.SelectedColor.B;
+            //            HUELC.IsHUEGroup = true;
+            //            HUELC.Brightness = Global.MainVM.HUELampeBrightness;
+            //            HUELC.Saturation = Global.MainVM.HUELampeSaettigung;
+
+            //            Global.ContextHUE.Insert<HUE_LampeColor>(HUELC);
+
+            //            hueS.HUE_LampeColor.Add(HUELC);
+            //        }
+
+            //        Global.ContextHUE.Update<HUE_Szene>(hueS);
+            //        AktKlangTheme.HUE_Szene = hueS;
+            //        Global.ContextAudio.Update<Audio_Theme>(AktKlangTheme);
+            //    }
+            //    else
+            //    {
+            //        //Finde alle DB HUESzene_LCGUID und lösche
+            //        Guid huelcGUID = Guid.NewGuid();
+            //        foreach (HUE_LampeColor hueLC in AktKlangTheme.HUE_Szene.HUE_LampeColor)
+            //        {
+            //            HUE_LampeColor.Delete(hueLC);
+            //            huelcGUID = hueLC.HUE_LampeColorGUID;
+            //        }
+
+            //        AktKlangTheme.HUE_Szene.HUE_LampeColor.Clear();
+            //        while (Global.ContextHUE.Liste<HUE_LampeColor>().Where(t => t.HUE_LampeColorGUID == huelcGUID).FirstOrDefault() != null)
+            //        {
+            //            Global.ContextHUE.Delete<HUE_LampeColor>(
+            //                Global.ContextHUE.Liste<HUE_LampeColor>().Where(t => t.HUE_LampeColorGUID == huelcGUID).FirstOrDefault());
+
+            //        }
+            //        Global.ContextHUE.Delete<HUE_Szene>(AktKlangTheme.HUE_Szene);
+
+            //        Global.ContextHUE.Delete<HUE_Szene>(AktKlangTheme.HUE_Szene);
+            //        AktKlangTheme.HUE_Szene = null;
+            //        Global.ContextAudio.Update<Audio_Theme>(AktKlangTheme);
+            //    }
+            //}
+
+            public static byte[] StrToByteArray(string str)
+        {
+            Dictionary<string, byte> hexindex = new Dictionary<string, byte>();
+            for (int i = 0; i <= 255; i++)
+                hexindex.Add(i.ToString("X2"), (byte)i);
+
+            List<byte> hexres = new List<byte>();
+            for (int i = 0; i < str.Length; i += 2)
+                hexres.Add(hexindex[str.Substring(i, 2)]);
+
+            return hexres.ToArray();
+        }
+
+
         private Base.CommandBase _onBtnAllUpdateClick = null;
         public Base.CommandBase OnBtnAllUpdateClick
         {
@@ -3965,7 +4120,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void BGSpeakerMuting(object obj)
         {
             BGPlayer.isMuted =! BGPlayer.isMuted;
-            BGPlayer.BG.ForEach(delegate(Musik m) { if (m.aData.audioStream != 0) m.aData.mute(BGPlayer.isMuted); }); // .mPlayer.IsMuted = BGPlayer.isMuted
+            BGPlayer.BG.ForEach(delegate(Musik m) { if (m.aData?.audioStream != 0) m.aData?.mute(BGPlayer.isMuted); }); // .mPlayer.IsMuted = BGPlayer.isMuted
             //if (BGPlayer.BG[0].audioStream != 0)
             //    BGPlayer.BG[0].mPlayer.IsMuted = BGPlayer.isMuted;
             //if (BGPlayer.BG[1].audioStream != 0)
@@ -6502,7 +6657,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         private void GetMusikGeneralInfo()
         {
             FileInfo file = new FileInfo(MusikAktiv.aData.getFilename());// .mPlayer.Source.LocalPath);
-            Stream str = file.OpenRead();
+            System.IO.Stream str = file.OpenRead();
             byte[] bytes = new byte[128];
             str.Seek(-128, SeekOrigin.End);
             int numBytesToRead = 128;
@@ -6885,7 +7040,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             try
             {
                 int laufende = grpobj._listZeile.FindAll(t => t.istLaufend).Count;
-                if (!grpobj.visuell)
+                if (!grpobj.visuell && grpobj.mZeileVM != null)
                 {
                     if (grpobj._listZeile.Count(t => t.istLaufend) > 0 &&
                         grpobj._listZeile.Count(t => t.istWartezeit) == 0)
@@ -8438,6 +8593,59 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                 if (((ToggleButton)sender).IsChecked.Value)
                 {
+                    if (!string.IsNullOrEmpty(aTheme.HUE_Scene))
+                    {
+                        Scene s = lstHUEScenes.FirstOrDefault(t => t.Id == aTheme.HUE_Scene);
+                        if (s != null)
+                        {
+                            var command = new SceneCommand { Scene = s.Id };
+                            Global.MainVM.Client.SendGroupCommandAsync(command, s.Group);
+                        }
+                    }
+                    //if (aTheme.HUE_SzeneGUID != null && Global.MainVM.lstHUELights.Count > 0)
+                    //{
+                    //    if (Global.MainVM.Client != null)
+                    //    {
+                    //        foreach (HUE_LampeColor hue_LC in aTheme.HUE_Szene.HUE_LampeColor)
+                    //        {
+                    //            if (hue_LC.IsHUEGroup)
+                    //            {
+                    //                Group grp = Global.MainVM.lstHUEGroups.Where(t => t.Id == hue_LC.HUE_ID).FirstOrDefault();
+                    //                if (grp != null)
+                    //                {
+                    //                    //Control the lights                
+                    //                    LightCommand command = new LightCommand();
+
+                    //                    command.Brightness = (byte)hue_LC.Brightness;
+                    //                    command.Saturation = (byte)hue_LC.Saturation;
+                    //                    Q42.HueApi.ColorConverters.RGBColor rgb = new RGBColor() { R = hue_LC.R, G = hue_LC.G, B = hue_LC.B };
+                    //                    command.TurnOn().SetColor(rgb);
+                    //                    Global.MainVM.Client.SendGroupCommandAsync(command, hue_LC.HUE_ID);
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                Light grp = Global.MainVM.lstHUELights.Where(t => t.Id == hue_LC.HUE_ID).FirstOrDefault();
+                    //                if (grp != null)
+                    //                {
+                    //                    //Control the lights                
+                    //                    LightCommand command = new LightCommand();
+                    //      //              command.ColorCoordinates = new double[] { hue_LC.ColorCoordinates1.Value, hue_LC.ColorCoordinates2.Value};
+                    //     //               command.ColorTemperature = hue_LC.ColorTemperature.Value;
+                    //              //      command.Saturation = Convert.ToInt32(hue_LC.Saturation);
+                    //                    //  Q42.HueApi.ColorConverters.RGBColor rgb = new RGBColor() { R = hue_LC.R, G = hue_LC.G, B = hue_LC.B };
+                    //                    //  command.TurnOn().SetColor(rgb);
+                    //                    //  command.On = true;
+                    //                    command.SetColor(new RGBColor() { R = hue_LC.R, G = hue_LC.G, B = hue_LC.B });
+                    //                    command.Brightness = (byte)hue_LC.Brightness;
+                    //                    Global.MainVM.Client.SendCommandAsync(command, new List<string> { hue_LC.HUE_ID });
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                        
+                    //}
+
                     AktErwPlayerTheme = aTheme;
                     if (!aTheme.NurGeräusche)
                     {

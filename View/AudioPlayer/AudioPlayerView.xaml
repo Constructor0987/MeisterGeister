@@ -661,9 +661,7 @@
                             <TextBox HorizontalAlignment="Stretch" FontWeight="Bold" ToolTip="Name des Themes" Height="25" Grid.Column="1" Background="{x:Null}" ForceCursor="True" 
                                     Text="{Binding AktKlangTheme.Name}" 
                                      KeyDown="TextBox_KeyDown" PreviewKeyDown="TextBox_PreviewKeyDown" 
-                                    vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                            <Image Width="22" Grid.Column="2" Source="/Images/Icons/General/refresh.png" Visibility="Hidden" />
-
+                                    vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />                            
                         </Grid>
                     </Border>
 
@@ -767,7 +765,7 @@
                                         <TextBlock Text="Fav-Leiste" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </ToggleButton.Content>
-                            </ToggleButton>
+                            </ToggleButton>                            
                         </Grid>
                     </Border>
                     
@@ -849,33 +847,79 @@
                                     </MultiBinding>
                                 </StackPanel.Visibility>
 
-                                <Border Name="brgEditorThemeKategorieBackground" HorizontalAlignment="Left" Width="317" Height="38" Margin="0,-6,60,10" Style="{DynamicResource ControlContentBorder}" >
-                                    <Border.Visibility>
-                                        <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                                            <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
-                                            <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
-                                        </MultiBinding>
-                                    </Border.Visibility>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="60" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Content="Kategorie" VerticalAlignment="Center" />
-                                        <Border Name="brdThemeKategorie" Grid.Column="1" Height="25" Margin="10,0" CornerRadius="5" ToolTip="Kategorie" >
-                                            <Border.Background>
-                                                <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
-                                                    <GradientStop Color="Beige" Offset="0" />
-                                                    <GradientStop Color="#FFFFFFC7" Offset="1" />
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBox Name="tboxThemeKategorie" Cursor="Pen" Padding="2,0" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" 
-                                        ToolTip="Kategorie des Themes" 
-                                        Text="{Binding AktKlangTheme.Kategorie}" 
-                                        vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
+                                <StackPanel Orientation="Horizontal" Margin="0,-6,60,10" >
+                                    <Border Name="brgEditorThemeKategorieBackground" HorizontalAlignment="Left" Width="257" Height="38"  Style="{DynamicResource ControlContentBorder}" >
+                                        <Border.Visibility>
+                                            <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                                                <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                                <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
+                                            </MultiBinding>
+                                        </Border.Visibility>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Content="Kategorie" VerticalAlignment="Center" />
+                                            <Border Name="brdThemeKategorie" Grid.Column="1" Height="25" Margin="10,0" CornerRadius="5" ToolTip="Kategorie" >
+                                                <Border.Background>
+                                                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                                                        <GradientStop Color="Beige" Offset="0" />
+                                                        <GradientStop Color="#FFFFFFC7" Offset="1" />
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <TextBox Name="tboxThemeKategorie" Cursor="Pen" Padding="2,0" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" 
+                                            ToolTip="Kategorie des Themes" 
+                                            Text="{Binding AktKlangTheme.Kategorie}" 
+                                            vmAudioPlayer:FocusExtension.IsFocused="{Binding ShowHotkeyPanel, Mode=TwoWay}" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+
+
+                                    <Border Name="brgEditorThemeHUE" 
+                                            HorizontalAlignment="Left" Width="280" Height="38" Margin="10,0" Style="{DynamicResource ControlContentBorder}" >
+                                        <Border.Visibility>
+                                            <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                                                <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
+                                                <Binding Path="SelectedEditorThemeItem" Converter="{StaticResource IsNullOrEmptyToBoolConverter1}" />
+                                            </MultiBinding>
+                                        </Border.Visibility>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="240" />
+                                                <ColumnDefinition Width="40" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/Lampen_hue.png"  
+                                                   Margin="2,0"
+                                                   Height="22" HorizontalAlignment="Left"/>
+                                            <Label 
+                                                   HorizontalAlignment="Left"
+                                                   Margin="25,0,0,0"
+                                                   VerticalAlignment="Center" >
+                                                <Label.Content>
+                                                    <StackPanel>
+                                                        <TextBlock Text="HUE-" Margin="0,-3" Padding="0"/>
+                                                        <TextBlock Text="Scene" Margin="0,-3" Padding="0"/>
+                                                    </StackPanel>
+                                                </Label.Content>
+                                            </Label>
+                                            <ComboBox ItemsSource="{Binding lstHUEScenes, UpdateSourceTrigger=PropertyChanged}" 
+                                                      SelectedItem="{Binding HUESceneSelected, UpdateSourceTrigger=PropertyChanged}"
+                                                      Height="25"
+                                                      Margin="65,0,0,0"
+                                                      DisplayMemberPath="Name"/>
+                                            <Button Grid.Column="1" 
+                                                    Margin="2" 
+                                                    Width="25"
+                                                    Height="25"
+                                                    ToolTip="HUE Scene entfernen"
+                                                    Command="{Binding OnBtnClearHUEScene}" >
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png"   />
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
 
                                 <Expander Name="expEditorThemesMusik" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" >
                                     <Expander.Header>
