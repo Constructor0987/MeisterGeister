@@ -35,6 +35,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Q42.HueApi.Models.Groups;
 using Q42.HueApi.Models;
+using MeisterGeister.ViewModel.AudioPlayer;
 
 namespace MeisterGeister.ViewModel
 {
@@ -737,7 +738,12 @@ namespace MeisterGeister.ViewModel
         public List<Scene> lstHUEScenes
         {
             get { return _lstHUEScenes; }
-            set { Set(ref _lstHUEScenes, value); }
+            set 
+            { 
+                Set(ref _lstHUEScenes, value);
+                if (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null)
+                    ((OpenTools.FirstOrDefault(t => t.Name == "Audio")) as AudioPlayer.AudioPlayerViewModel).lstHUEScenes = value;
+            }
         }
 
         private bool _hUEAudioIntegration = true;

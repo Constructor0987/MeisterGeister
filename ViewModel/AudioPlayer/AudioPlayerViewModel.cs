@@ -1871,9 +1871,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
+        private List<Scene> _lstHUEScenes = Global.MainVM.lstHUEScenes;
         public List<Scene> lstHUEScenes
         {
-            get { return Global.MainVM.lstHUEScenes; }
+            get { return _lstHUEScenes;  }
+            set { Set(ref _lstHUEScenes, value); }
         }
 
         private Scene _hUESceneSelected = null;

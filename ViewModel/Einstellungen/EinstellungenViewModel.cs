@@ -1379,7 +1379,7 @@ namespace MeisterGeister.ViewModel.Settings
         {
             get { return _lstScene; }
             set { Set(ref _lstScene, value);
-                MainViewModel.Instance.lstHUEScenes = value;
+                MainViewModel.Instance.lstHUEScenes = value;                
             }
         }
 
