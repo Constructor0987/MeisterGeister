@@ -1406,6 +1406,7 @@ namespace MeisterGeister.ViewModel.Settings
 
         private async void _ActivateHUE()
         {
+            
             string ip = HUEGWSelected.IpAddress.ToString();
             MainVM.Client = new LocalHueClient(ip);
             appKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
@@ -1438,9 +1439,6 @@ namespace MeisterGeister.ViewModel.Settings
                     if (back == 0)
                         return;
                 } 
-                //else
-                //    if (reply.Status == IPStatus.Success)
-                //    appKey = null;
             }
 
             if (string.IsNullOrEmpty(appKey))
@@ -1452,10 +1450,20 @@ namespace MeisterGeister.ViewModel.Settings
                 //Link button drücken zum Registrieren !!!
                 //Make sure the user has pressed the button on the bridge before calling RegisterAsync
                 //It will throw an LinkButtonNotPressedException if the user did not press the button
+                HUEInitWindow hueInit = new HUEInitWindow();
+                hueInit.Topmost = true;
+                hueInit.Show();
+
                 bool pressed = false;
                 int start = Environment.TickCount;
                 while (!pressed && Environment.TickCount - start < 15000)
                 {
+                    if (hueInit != null)
+                    {
+                        string newCdown = (Math.Round((15000 - (double)(Environment.TickCount - start)) / 1000)).ToString();
+                        if (newCdown != hueInit.lblCountdown.Content.ToString())
+                            hueInit.lblCountdown.Content = newCdown;
+                    }
                     try
                     {
                         appKey = await MainVM.Client.RegisterAsync("MGmeetsHUE", "PC");
@@ -1469,6 +1477,11 @@ namespace MeisterGeister.ViewModel.Settings
 
                     }
                 }
+                if (hueInit != null)
+                {
+                    hueInit.Close();
+                }
+
                 if (string.IsNullOrEmpty(appKey))
                     return;
             }

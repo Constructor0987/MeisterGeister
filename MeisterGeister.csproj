@@ -824,6 +824,9 @@
     <Compile Include="View\Bodenplan\SpielerPointer.xaml.cs">
       <DependentUpon>SpielerPointer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Einstellungen\HUEInitWindow.xaml.cs">
+      <DependentUpon>HUEInitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Einstellungen\HUEColorDialog.xaml.cs">
       <DependentUpon>HUEColorDialog.xaml</DependentUpon>
     </Compile>
@@ -1651,6 +1654,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Bodenplan\SpielerPointer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Einstellungen\HUEInitWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2784,6 +2791,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0131.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0132.sql" />
     <Resource Include="Images\Icons\HUE_Circle.png" />
+    <Resource Include="Images\Icons\HUE-Bridge_Init.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
