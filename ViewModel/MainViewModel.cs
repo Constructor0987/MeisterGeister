@@ -671,6 +671,7 @@ namespace MeisterGeister.ViewModel
                     LightCommand command = new LightCommand();
                     if (value > 1)
                     {
+                        command.TurnOn();
                         command.Brightness = (byte)value;
                     }
                     else

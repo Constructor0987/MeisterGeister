@@ -37,6 +37,7 @@ using Q42.HueApi;
 using Q42.HueApi.ColorConverters;
 using Q42.HueApi.Models.Groups;
 using Q42.HueApi.Models;
+using System.Security.Cryptography.Xml;
 
 namespace MeisterGeister.ViewModel.AudioPlayer
 {
@@ -1396,6 +1397,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             get { return _aktErwPlayerTheme; }
             set { Set(ref _aktErwPlayerTheme, value); }
         }
+
         private Audio_Theme _aktKlangTheme;
         public Audio_Theme AktKlangTheme
         {
@@ -1403,7 +1405,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 Set(ref _aktKlangTheme, value);
-                if (Global.MainVM.Client != null)
+                if (Global.MainVM.Client != null &&
+                    Global.MainVM.HUEAudioIntegration)
                     HUESceneSelected = (value == null || string.IsNullOrEmpty(value.HUE_Scene)) ? 
                         null :
                         lstHUEScenes.FirstOrDefault(t => t.Id == value.HUE_Scene);
@@ -1508,7 +1511,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 if (_bgPlayerAktPlaylistTitel != value && value != null)
-                {
+                {  
                     if (value.Wiederholungen != null) wiederholungenLeft = value.Wiederholungen.Value;
                     else
                         wiederholungenLeft = 1;
@@ -8595,62 +8598,23 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                 if (((ToggleButton)sender).IsChecked.Value)
                 {
-                    if (!string.IsNullOrEmpty(aTheme.HUE_Scene))
+                    if (Global.MainVM.Client != null &&
+                        Global.MainVM.HUEAudioIntegration &&
+                        !string.IsNullOrEmpty(aTheme.HUE_Scene))
                     {
                         Scene s = lstHUEScenes.FirstOrDefault(t => t.Id == aTheme.HUE_Scene);
                         if (s != null)
                         {
+
                             var command = new SceneCommand { Scene = s.Id };
                             Global.MainVM.Client.SendGroupCommandAsync(command, s.Group);
                         }
                     }
-                    //if (aTheme.HUE_SzeneGUID != null && Global.MainVM.lstHUELights.Count > 0)
-                    //{
-                    //    if (Global.MainVM.Client != null)
-                    //    {
-                    //        foreach (HUE_LampeColor hue_LC in aTheme.HUE_Szene.HUE_LampeColor)
-                    //        {
-                    //            if (hue_LC.IsHUEGroup)
-                    //            {
-                    //                Group grp = Global.MainVM.lstHUEGroups.Where(t => t.Id == hue_LC.HUE_ID).FirstOrDefault();
-                    //                if (grp != null)
-                    //                {
-                    //                    //Control the lights                
-                    //                    LightCommand command = new LightCommand();
-
-                    //                    command.Brightness = (byte)hue_LC.Brightness;
-                    //                    command.Saturation = (byte)hue_LC.Saturation;
-                    //                    Q42.HueApi.ColorConverters.RGBColor rgb = new RGBColor() { R = hue_LC.R, G = hue_LC.G, B = hue_LC.B };
-                    //                    command.TurnOn().SetColor(rgb);
-                    //                    Global.MainVM.Client.SendGroupCommandAsync(command, hue_LC.HUE_ID);
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                Light grp = Global.MainVM.lstHUELights.Where(t => t.Id == hue_LC.HUE_ID).FirstOrDefault();
-                    //                if (grp != null)
-                    //                {
-                    //                    //Control the lights                
-                    //                    LightCommand command = new LightCommand();
-                    //      //              command.ColorCoordinates = new double[] { hue_LC.ColorCoordinates1.Value, hue_LC.ColorCoordinates2.Value};
-                    //     //               command.ColorTemperature = hue_LC.ColorTemperature.Value;
-                    //              //      command.Saturation = Convert.ToInt32(hue_LC.Saturation);
-                    //                    //  Q42.HueApi.ColorConverters.RGBColor rgb = new RGBColor() { R = hue_LC.R, G = hue_LC.G, B = hue_LC.B };
-                    //                    //  command.TurnOn().SetColor(rgb);
-                    //                    //  command.On = true;
-                    //                    command.SetColor(new RGBColor() { R = hue_LC.R, G = hue_LC.G, B = hue_LC.B });
-                    //                    command.Brightness = (byte)hue_LC.Brightness;
-                    //                    Global.MainVM.Client.SendCommandAsync(command, new List<string> { hue_LC.HUE_ID });
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                        
-                    //}
 
                     AktErwPlayerTheme = aTheme;
                     if (!aTheme.NurGeräusche)
                     {
+                        AktKlangTheme = aTheme;
                         foreach (grdThemeButton grdTbtn in ErwPlayerThemeListe)
                         {
                             if (grdTbtn.tbtnTheme.IsChecked.Value &&

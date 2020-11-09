@@ -2783,6 +2783,7 @@
     <Resource Include="Images\Icons\fliehen.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0131.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0132.sql" />
+    <Resource Include="Images\Icons\HUE_Circle.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

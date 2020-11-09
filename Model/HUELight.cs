@@ -13,6 +13,6 @@ namespace MeisterGeister.Model
         {
 
         }
-                
+
     }
 }

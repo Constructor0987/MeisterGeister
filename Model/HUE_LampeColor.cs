@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using MeisterGeister.View.Settings;
 using MeisterGeister.ViewModel;
 using Q42.HueApi;
+using Q42.HueApi.Interfaces;
 
 namespace MeisterGeister.Model
 {
@@ -197,5 +199,10 @@ namespace MeisterGeister.Model
                 return q1;
             }
         }
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
     }
 }
