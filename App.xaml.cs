@@ -11,13 +11,16 @@ using MessageBox = System.Windows.MessageBox;
 using System.Xml;
 using System.Windows.Media.Imaging;
 using System.Threading;
+using System.Globalization;
+using System.Windows.Markup;
+using Microsoft.Win32;
+using System.Diagnostics;
+using System.Linq;
+
 // Eigene Usings
 using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Logic.General;
 using MeisterGeister.View.Windows;
-using System.Globalization;
-using System.Windows.Markup;
-using Microsoft.Win32;
 
 namespace MeisterGeister {
     /// <summary>
@@ -42,7 +45,20 @@ namespace MeisterGeister {
             }
         }
 
+
         public App() {
+
+            // Überprüfen, ob MeisterGeister bereits läuft
+            Process proc = Process.GetCurrentProcess();
+            int count = Process.GetProcesses().Where(p => p.ProcessName == proc.ProcessName).Count();
+
+            if (count > 1)
+            {
+                MessageBox.Show("MeisterGeister ist schon gestartet. \nProzess wird beendet...");
+                App.Current.Shutdown();
+                return;
+            }
+
 
             LogInfo log = Logger.PerformanceLogStart("Programmstart");
 
@@ -522,5 +538,6 @@ namespace MeisterGeister {
             e.Handled = true;
             Shutdown();
         }
+
     }
 }
