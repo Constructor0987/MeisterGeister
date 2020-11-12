@@ -1404,9 +1404,15 @@ namespace MeisterGeister.ViewModel.Settings
             set { Set(ref _appKey, value); }
         }
 
-        private async void _ActivateHUE()
+        private bool _windowClosed = false;
+        public bool WindowClosed 
         {
-            
+            get { return _windowClosed; }
+            set { Set(ref _windowClosed, value); }
+        }
+
+        private async void _ActivateHUE()
+        {            
             string ip = HUEGWSelected.IpAddress.ToString();
             MainVM.Client = new LocalHueClient(ip);
             appKey = MeisterGeister.Logic.Einstellung.Einstellungen.GetEinstellung<string>("HUE_Registerkey");
@@ -1450,20 +1456,16 @@ namespace MeisterGeister.ViewModel.Settings
                 //Link button drücken zum Registrieren !!!
                 //Make sure the user has pressed the button on the bridge before calling RegisterAsync
                 //It will throw an LinkButtonNotPressedException if the user did not press the button
+                WindowClosed = false;
                 HUEInitWindow hueInit = new HUEInitWindow();
+                hueInit.Closed += new EventHandler(hueInit_Closed);
                 hueInit.Topmost = true;
                 hueInit.Show();
 
                 bool pressed = false;
                 int start = Environment.TickCount;
-                while (!pressed && Environment.TickCount - start < 15000)
+                while (!pressed && Environment.TickCount - start < 15000 && !WindowClosed)
                 {
-                    if (hueInit != null)
-                    {
-                        string newCdown = (Math.Round((15000 - (double)(Environment.TickCount - start)) / 1000)).ToString();
-                        if (newCdown != hueInit.lblCountdown.Content.ToString())
-                            hueInit.lblCountdown.Content = newCdown;
-                    }
                     try
                     {
                         appKey = await MainVM.Client.RegisterAsync("MGmeetsHUE", "PC");
@@ -1472,10 +1474,7 @@ namespace MeisterGeister.ViewModel.Settings
                         AppKey = appKey;
                         pressed = true;
                     }
-                    catch (Exception ex)
-                    {
-
-                    }
+                    catch {}
                 }
                 if (hueInit != null)
                 {
@@ -1504,6 +1503,10 @@ namespace MeisterGeister.ViewModel.Settings
             lstScene = resultScene as List<Scene>;
         }
 
+        void hueInit_Closed(object sender, EventArgs e)
+        {
+            WindowClosed = true;
+        }
 
         #endregion HUE Lampen
     }
