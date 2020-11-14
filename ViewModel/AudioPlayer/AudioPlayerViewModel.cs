@@ -7903,6 +7903,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     List<string> aThemesGuid = new List<string>();
                     List<string> lstNotInclude = new List<string>();
                     bool nurGeräusch = false;
+                    string HUEScene = null;
                     while (textReader.Read())
                     {
                         XmlDocument doc = new XmlDocument();
@@ -7912,10 +7913,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                             for (int i = 0; i < textReader.AttributeCount; i++)
                             {
+                                if (textReader.Name == "HUEScene")
+                                {
+                                    HUEScene = textReader.Value;
+                                }
                                 if (textReader.Name == "IstNurGeräuschTheme")
                                 {
                                     nurGeräusch = Convert.ToBoolean(textReader.Value);
-                                    break;
                                 }
                                 textReader.MoveToNextAttribute();
                             }
@@ -8057,6 +8061,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                                 if (AktKlangTheme != null)
                                 {
                                     AktKlangTheme.NurGeräusche = nurGeräusch;
+                                    AktKlangTheme.HUE_Scene = HUEScene;
                                     foreach (string aPlyLstGuid in aPlayListsGuid)
                                     {
                                         Audio_Playlist aPlayList = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID.ToString() == aPlyLstGuid);
@@ -8392,6 +8397,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
                     textWriter.WriteStartAttribute("IstNurGeräuschTheme");
                     textWriter.WriteValue(aTheme.NurGeräusche);
+                    textWriter.WriteEndAttribute();
+                    textWriter.WriteStartAttribute("HUEScene");
+                    textWriter.WriteValue(aTheme.HUE_Scene);
                     textWriter.WriteEndAttribute();
 
                     foreach (Audio_Playlist aPlaylist in aTheme.Audio_Playlist)
