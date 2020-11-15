@@ -74,17 +74,17 @@ namespace MeisterGeister.Model.Service {
             return Insert<HUE_Szene>(aSzene);
         }
 
-        public HUE_LampeColor AddLampenColorToSzene(string aName, string aColor)
-        {
-            HUE_LampeColor aLampecolor = new HUE_LampeColor();
-     //       aLampecolor.HUE_LampeColorGUID = Guid.NewGuid();
-            aLampecolor.Lampenname = aName;
-            aLampecolor.Color = aColor;
+     //   public HUE_LampeColor AddLampenColorToSzene(string aName, string aColor)
+     //   {
+     //       HUE_LampeColor aLampecolor = new HUE_LampeColor();
+     ////       aLampecolor.HUE_LampeColorGUID = Guid.NewGuid();
+     //       aLampecolor.Lampenname = aName;
+     //       aLampecolor.Color = aColor;
 
-            Insert<HUE_LampeColor>(aLampecolor);
-            Update<HUE_LampeColor>(aLampecolor);
-            return aLampecolor;
-        }
+     //       Insert<HUE_LampeColor>(aLampecolor);
+     //       Update<HUE_LampeColor>(aLampecolor);
+     //       return aLampecolor;
+     //   }
 
         // Add & Remove
 

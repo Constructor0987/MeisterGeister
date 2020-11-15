@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="40*" MinWidth="40" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25" />
+                    <RowDefinition Height="22" />
                 </Grid.RowDefinitions>
 
                 <Image Name="imgIcon" Stretch="Fill" Tag="0" >
@@ -42,11 +42,11 @@
                         </Style>
                     </Image.Style>
                 </Image>
-                <Label Content="{Binding Path=APlaylist.Name}" Grid.Column="1" FontSize="14" Padding="5,2,5,5" />
+                <Label Content="{Binding Path=APlaylist.Name}" Grid.Column="1" FontSize="14" Padding="5,0,5,2" />
             </Grid>
-            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,25,0"
+            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,30,0"
                         MouseEnter="spnlSubObject_MouseEnter" MouseLeave="spnlSubObject_MouseLeave" >
-                <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Exportieren der Playlist" 
+                <Button Padding="0" Width="20" Cursor="Hand" ToolTip="Exportieren der Playlist" 
                                 Command="{Binding OnBtnExportLbEditor}" >
                     <Button.Visibility>
                         <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
@@ -56,7 +56,7 @@
                     </Button.Visibility>
                     <Image Source="/Images/Icons/General/export.png"/>
                 </Button>
-                <Button Padding="0" Width="22" Cursor="Hand" ToolTip="Löschen der Playlist" 
+                <Button Padding="0" Width="20" Cursor="Hand" ToolTip="Löschen der Playlist" 
                                 Command="{Binding OnBtnLöschenLbEditor}" >
                     <Button.Visibility>
                         <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >

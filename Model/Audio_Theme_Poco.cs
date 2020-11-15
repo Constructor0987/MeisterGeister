@@ -191,6 +191,18 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<System.Guid> _hUE_SzeneGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string HUE_Scene
+        {
+            get { return _hUE_Scene; }
+            set
+    		{ 
+    			Set(ref _hUE_Scene, value);
+    		}
+    
+        }
+        private string _hUE_Scene;
 
         #endregion
 

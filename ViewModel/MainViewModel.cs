@@ -35,6 +35,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Q42.HueApi.Models.Groups;
 using Q42.HueApi.Models;
+using MeisterGeister.ViewModel.AudioPlayer;
 
 namespace MeisterGeister.ViewModel
 {
@@ -638,9 +639,6 @@ namespace MeisterGeister.ViewModel
                 {
                     //Control the lights                
                     LightCommand command = new LightCommand();
-
-        //            if (HUELampeBrightness != 0)
-        //                command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
                     command.Saturation = (byte)value;
 
                     if (HUELampenSelected && HUELightsSelected.Count != 0)
@@ -673,7 +671,7 @@ namespace MeisterGeister.ViewModel
                     LightCommand command = new LightCommand();
                     if (value > 1)
                     {
-          //              command.TurnOn().SetColor(new RGBColor(SelectedColor.R, SelectedColor.G, SelectedColor.B));
+                        command.TurnOn();
                         command.Brightness = (byte)value;
                     }
                     else
@@ -709,6 +707,13 @@ namespace MeisterGeister.ViewModel
             set { Set(ref _HUELightsSelected, value); }
         }
 
+        private List<Scene> _hUEScenes = new List<Scene>();
+        public List<Scene> HUEScenenSelected
+        {
+            get { return _hUEScenes; }
+            set { Set(ref _hUEScenes, value); }
+        }
+
         private List<Group> _hUEGroups = new List<Group>();
         public List<Group> HUEGroupsSelected
         {
@@ -734,7 +739,19 @@ namespace MeisterGeister.ViewModel
         public List<Scene> lstHUEScenes
         {
             get { return _lstHUEScenes; }
-            set { Set(ref _lstHUEScenes, value); }
+            set 
+            { 
+                Set(ref _lstHUEScenes, value);
+                if (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null)
+                    ((OpenTools.FirstOrDefault(t => t.Name == "Audio")) as AudioPlayer.AudioPlayerViewModel).lstHUEScenes = value;
+            }
+        }
+
+        private bool _hUEAudioIntegration = true;
+        public bool HUEAudioIntegration
+        {
+            get { return _hUEAudioIntegration; }
+            set{Set(ref _hUEAudioIntegration, value);}
         }
 
         private bool _hUELampenSelected = false;
@@ -745,7 +762,9 @@ namespace MeisterGeister.ViewModel
             {
                 Set(ref _hUELampenSelected, value);
                 if (value)
+                {
                     HUEGruppenSelected = false;
+                }
             }
         }
 
@@ -757,9 +776,11 @@ namespace MeisterGeister.ViewModel
             {
                 Set(ref _hUEGruppenSelected, value);
                 if (value)
+                {
                     HUELampenSelected = false;
+                }
             }
-}
+        }
 
         //private List<HUESzene> _lstHUESzenen = new List<HUESzene>();
         //public List<HUESzene> lstHUESzenen
@@ -854,7 +875,7 @@ namespace MeisterGeister.ViewModel
                     //Get all lights
                     var resultLights = await Client.GetLightsAsync();
                     //Get all Scenes
-                    var resultScene = await MainVM.Client.GetScenesAsync();
+                    var resultScene = await Client.GetScenesAsync();
                     //Get all Groups
                     var resultGroups = await MainVM.Client.GetGroupsAsync();
 

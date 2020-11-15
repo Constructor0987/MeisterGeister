@@ -92,30 +92,6 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _hUE_LampeColorGUID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Lampenname
-        {
-            get { return _lampenname; }
-            set
-    		{ 
-    			Set(ref _lampenname, value);
-    		}
-    
-        }
-        private string _lampenname;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Color
-        {
-            get { return _color; }
-            set
-    		{ 
-    			Set(ref _color, value);
-    		}
-    
-        }
-        private string _color;
 
         #endregion
 

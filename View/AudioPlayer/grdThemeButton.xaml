@@ -61,11 +61,12 @@
                 </StackPanel>
             </ToggleButton.Content>
         </ToggleButton>
-        <CheckBox Name="chkbxPlus" ToolTip="Nur Geräusche des Themes hinzufügen" HorizontalAlignment="Right" 
-                  VerticalAlignment="Top" Margin="3,5,3,3" FlowDirection="RightToLeft" 
-                  IsChecked="{Binding Theme.NurGeräusche}" Padding="4,1,0,0"
-                  Visibility="{Binding ForceVolumeVis, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
-            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="20" Width="20" Margin="-5,-2,0,-5"/>
-        </CheckBox>
+        <Grid HorizontalAlignment="Right" ToolTip="Nur Geräusche des Themes hinzufügen"
+              Visibility="{Binding ForceVolumeVis, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}">
+            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="20" Width="20" Margin="-5,-2,15,-5"/>
+            <CheckBox Name="chkbxPlus" HorizontalAlignment="Right" 
+                      VerticalAlignment="Top" Margin="0,5,0,0" 
+                      IsChecked="{Binding Theme.NurGeräusche}" Padding="2,1,0,0" />
+        </Grid>
     </Grid>
 </UserControl>

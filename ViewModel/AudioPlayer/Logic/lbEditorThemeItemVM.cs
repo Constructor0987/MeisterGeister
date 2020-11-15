@@ -440,6 +440,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
                     textWriter.WriteStartAttribute("IstNurGeräuschTheme");
                     textWriter.WriteValue(aTheme.NurGeräusche);
+                    textWriter.WriteEndAttribute();                    
+                    textWriter.WriteStartAttribute("HUEScene");
+                    textWriter.WriteValue(aTheme.HUE_Scene);
                     textWriter.WriteEndAttribute();
 
                     foreach (Audio_Playlist aPlaylist in aTheme.Audio_Playlist)

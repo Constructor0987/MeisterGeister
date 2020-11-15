@@ -502,16 +502,19 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                     if (!grpobj.aPlaylist.Hintergrundmusik && !grpobj.aPlaylist.Fading)
                     {
                         System.Diagnostics.Debug.WriteLine("6");
-                        for (int i = 0; i < grpobj.mZeileVM.grpobj._listZeile.Count; i++)
+                        if (grpobj.mZeileVM != null)
                         {
-                            grpobj.mZeileVM.grpobj._listZeile[i].istPause = true;
-                            grpobj.mZeileVM.grpobj._listZeile[i].aData.Pause();
-                            grpobj.mZeileVM.grpobj._listZeile[i].istStandby = false;
-                            grpobj.mZeileVM.grpobj._listZeile[i].istLaufend = false;
-                            grpobj.mZeileVM.grpobj._listZeile[i].aData.Stop();
-                            grpobj.mZeileVM.grpobj._listZeile[i].aData.Close();
+                            for (int i = 0; i < grpobj.mZeileVM.grpobj._listZeile.Count; i++)
+                            {
+                                grpobj.mZeileVM.grpobj._listZeile[i].istPause = true;
+                                grpobj.mZeileVM.grpobj._listZeile[i].aData.Pause();
+                                grpobj.mZeileVM.grpobj._listZeile[i].istStandby = false;
+                                grpobj.mZeileVM.grpobj._listZeile[i].istLaufend = false;
+                                grpobj.mZeileVM.grpobj._listZeile[i].aData.Stop();
+                                grpobj.mZeileVM.grpobj._listZeile[i].aData.Close();
+                            }
+                            grpobj.mZeileVM.Min1SongWirdGespielt = null;
                         }
-                        grpobj.mZeileVM.Min1SongWirdGespielt = null;
                         aPlayerVM._GrpObjecte.Remove(grpobj);
                         System.Diagnostics.Debug.WriteLine("7");
                         aPlayerVM.CheckPlayStandbySongs(grpobj);

@@ -32,6 +32,7 @@ using Q42.HueApi.ColorConverters;
 using MeisterGeister.ViewModel.Settings;
 using Q42.HueApi.Models.Groups;
 using Newtonsoft.Json;
+using Q42.HueApi.Models;
 
 namespace MeisterGeister.View
 {
@@ -629,6 +630,32 @@ namespace MeisterGeister.View
                     HUEListGruppenSelected.Add(item as Group);
             }
             VM.HUEGroupsSelected = HUEListGruppenSelected;
+        }
+
+        private void lvHUEScenen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<Scene> HUEListScenenSelected = new List<Scene>();
+
+            foreach (var item in (e.Source as ListView).SelectedItems)
+            {
+                if (item is Scene)
+                    HUEListScenenSelected.Add(item as Scene);
+            }
+            VM.HUEScenenSelected = HUEListScenenSelected;
+        }
+
+        private void btnSceneGo_Click(object sender, RoutedEventArgs e)
+        {
+            if (VM.Client != null)
+            {
+                foreach (Scene s in VM.HUEScenenSelected)
+                {
+                    var command = new SceneCommand { Scene = s.Id };
+                    VM.Client.SendGroupCommandAsync(command, s.Group);
+                }
+            }
+
+            lvHUEScenes.SelectedIndex = -1;
         }
     }
 }
