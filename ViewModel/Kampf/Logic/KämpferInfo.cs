@@ -582,8 +582,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
                 }
-                //.RaiseEvent(new RoutedEventArgs(si))
-                //VM.KampfWindow.SizeChanged
+                OnChanged(nameof(AbwehraktionenÜbrig));
+                OnChanged(nameof(AngriffsaktionenÜbrig));
             }
         }
 
