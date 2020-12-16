@@ -809,6 +809,8 @@
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilderArgs.cs" />
     <Compile Include="Logic\Karte\TravelService.cs" />
     <Compile Include="ViewModel\Karte\Logic\TravelType.cs" />
+    <Compile Include="ViewModel\MeisterSpicker\Logic\MeisterSpickerItem.cs" />
+    <Compile Include="ViewModel\MeisterSpicker\MeisterSpickerViewModel.cs" />
     <Compile Include="View\AudioPlayer\FavAudioPlaylist.xaml.cs">
       <DependentUpon>FavAudioPlaylist.xaml</DependentUpon>
     </Compile>
@@ -837,6 +839,7 @@
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />
     <Compile Include="View\General\DictionaryValueConverter.cs" />
+    <Compile Include="View\General\IsNullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="View\General\MultipleColorSlider.xaml.cs">
       <DependentUpon>MultipleColorSlider.xaml</DependentUpon>
     </Compile>
@@ -1235,6 +1238,9 @@
       <DependentUpon>PflanzenSucheGezieltView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\PflanzeVerbreitungListViewConverter.cs" />
+    <Compile Include="View\MeisterSpicker\MeisterSpickerView.xaml.cs">
+      <DependentUpon>MeisterSpickerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Menu\Logic\ToolViewSelector.cs" />
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
       <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
@@ -1872,6 +1878,10 @@
     <Page Include="View\Karte\PflanzenSucheGezieltView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MeisterSpicker\MeisterSpickerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml">
       <Generator>MSBuild:Compile</Generator>
