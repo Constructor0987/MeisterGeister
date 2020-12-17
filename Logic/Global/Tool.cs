@@ -1,7 +1,9 @@
 ﻿using ImpromptuInterface;
+using MeisterGeister.Daten;
 using MeisterGeister.ViewModel.Base;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
@@ -174,6 +176,18 @@ namespace MeisterGeister
                 ViewType = typeof(View.Almanach.AlmanachView),
                 ViewModelType = typeof(ViewModel.Almanach.AlmanachViewModel)
             });
+            if (Global.INTERN &&
+                File.Exists(DatabaseTools.DATABASE_FOLDER + "MeisterSpicker.mdb"))// im Release-Modus ausblenden
+            {
+                ToolListe.Add("Meister-Spicker", new Tool()
+                {
+                    Name = "Meister-Spicker",
+                    Icon = "/DSA%20MeisterGeister;component/Images/Icons/Foliant.png",
+                    MenuGruppe = "Wege des Meisters",
+                    ViewType = typeof(View.MeisterSpicker.MeisterSpickerView),
+                    ViewModelType = typeof(ViewModel.MeisterSpicker.MeisterSpickerViewModel)
+                });
+            }
             ToolListe.Add("Alchimie", new Tool()
             {
                 Name = "Alchimie",
