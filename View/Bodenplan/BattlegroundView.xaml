@@ -570,7 +570,43 @@
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
 
-                                                            <MenuItem Command="{Binding ki.Passiv}" Header="Passiv im Kampf">
+                                                            <!--<MenuItem
+                                                                Header="Zauber wirken"
+                                                                Visibility="{Binding ki.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                                <MenuItem.Style>
+                                                                    <Style TargetType="{x:Type MenuItem}">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsHeld}" Value="False">
+                                                                                <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding IsHeld}" Value="True">
+                                                                                <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Held_Zauber}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </MenuItem.Style>
+                                                                
+                                                                <MenuItem.ItemContainerStyle>
+                                                                    <Style TargetType="{x:Type MenuItem}">
+                                                                        <Setter Property="Command" Value="{Binding DataContext.SelManöver.UmwandelnZauber, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                                        <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                        <Setter Property="Icon" Value="{x:Null}" />
+                                                                    </Style>
+                                                                </MenuItem.ItemContainerStyle>
+                                                                <MenuItem.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Zauber.Name}" />
+                                                                    </DataTemplate>
+                                                                </MenuItem.ItemTemplate>
+                                                                <MenuItem.Icon>
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" />
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>-->
+
+                                                            <MenuItem Header="Passiv im Kampf"
+                                                                  Command="{Binding ki.Passiv}" 
+                                                                  IsCheckable="True" 
+                                                                  IsChecked="{Binding ki.IstPassiv}" >
                                                                 <MenuItem.Icon>
                                                                     <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png" />
                                                                 </MenuItem.Icon>
@@ -971,31 +1007,31 @@
                                                             Margin="-50,0,0,0"
                                                             VerticalAlignment="Bottom"
                                                             IsSnapToTickEnabled="True"
-                                                            Maximum="{Binding ki.Aktionen, UpdateSourceTrigger=PropertyChanged}"
+                                                            Maximum="{Binding ki.Aktionen}"
                                                             Minimum="0"
                                                             ToolTip="Aktionen umwandeln"
-                                                            Value="{Binding ki.Angriffsaktionen, UpdateSourceTrigger=PropertyChanged}" />
+                                                            Value="{Binding ki.Angriffsaktionen}" />
                                                         <StackPanel Margin="35,0,-3,0" Orientation="Horizontal" >
                                                             <ViewGeneral:ImageDuplicator
                                                                 Padding="0" 
                                                                 VerticalAlignment="Top"
-                                                                Anzahl="{Binding ki.VerbrauchteAngriffsaktionen, UpdateSourceTrigger=PropertyChanged}"
+                                                                Anzahl="{Binding ki.VerbrauchteAngriffsaktionen}"
                                                                 ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
                                                             <ViewGeneral:ImageDuplicator
                                                                 Padding="0"
                                                                 VerticalAlignment="Top"
-                                                                Anzahl="{Binding ki.AngriffsaktionenÜbrig, UpdateSourceTrigger=PropertyChanged}"
+                                                                Anzahl="{Binding ki.AngriffsaktionenÜbrig}"
                                                                 ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
 
                                                             <ViewGeneral:ImageDuplicator
                                                                 Padding="0" 
                                                                 VerticalAlignment="Top"
-                                                                Anzahl="{Binding ki.VerbrauchteAbwehraktionen, UpdateSourceTrigger=PropertyChanged}"
+                                                                Anzahl="{Binding ki.VerbrauchteAbwehraktionen}"
                                                                 ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
                                                             <ViewGeneral:ImageDuplicator
                                                                 Padding="0"
                                                                 VerticalAlignment="Top"
-                                                                Anzahl="{Binding ki.AbwehraktionenÜbrig, UpdateSourceTrigger=PropertyChanged}"
+                                                                Anzahl="{Binding ki.AbwehraktionenÜbrig}"
                                                                 ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
                                                         </StackPanel>
                                                     </Grid>

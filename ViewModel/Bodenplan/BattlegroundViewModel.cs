@@ -521,27 +521,45 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         break;
                     }
             }
+            if (KampfWindow == null)
+            {
+                return;
+            }
+
+
+            int xPoint = 0, yPoint = 0;
+            System.Windows.Forms.Screen SpielerScreen = null;
+            foreach (System.Windows.Forms.Screen objActualScreen in System.Windows.Forms.Screen.AllScreens.ToList())
+            {
+                if (!objActualScreen.Primary)
+                    SpielerScreen = objActualScreen;
+            }
+            if (SpielerScreen != null)
+            {
+                xPoint = SpielerScreen.Bounds.Location.X + 20;
+                yPoint = SpielerScreen.Bounds.Location.Y + 20;
+            }
+
             var maxRight = Math.Max(
                  Screen.AllScreens[0].WorkingArea.Width / dx,
                  Screen.AllScreens.Length > 1 ?
                      Screen.AllScreens[1].WorkingArea.Right / dx : 0);
 
-            var minRight = Screen.AllScreens.Length == 1 ? 0 : Screen.AllScreens[1].WorkingArea.Left / dx;
-
-            if (KampfWindow == null)
-            {
-                return;
-            }
+            var minRight = SpielerScreen.Bounds.Location.X / dx;
 
             KampfWindow.SizeToContent = SizeToContent.Manual;
 
             KampfWindow.Left = (((h == System.Windows.HorizontalAlignment.Left) ? minRight :
                 maxRight - ((KampfWindow.MinWidth > KampfWindow.Width) ? KampfWindow.MinWidth : KampfWindow.Width)));
 
-            KampfWindow.Top = (((v == System.Windows.VerticalAlignment.Top) ? 0 :
-                (Screen.AllScreens.Length == 1 ?
-                    Screen.AllScreens[0].WorkingArea.Height / dy :
-                    Screen.AllScreens[1].WorkingArea.Height / dy) - KampfWindow.ActualHeight));
+            //KampfWindow.Top = (((v == System.Windows.VerticalAlignment.Top) ? 0 :
+            //    (Screen.AllScreens.Length == 1 ?
+            //        Screen.AllScreens[0].WorkingArea.Height / dy :
+            //        Screen.AllScreens[1].WorkingArea.Height / dy) - KampfWindow.ActualHeight));
+
+            KampfWindow.Top = (v != System.Windows.VerticalAlignment.Top) ?
+               Screen.AllScreens.ToList().FirstOrDefault(t => t.Primary).WorkingArea.Height  - KampfWindow.ActualHeight : 
+                yPoint / dy ;
         }
 
         public void SetIniWindowWidth(bool doWindowMove = false)
@@ -2641,6 +2659,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
             if (result == true)
             {
                 IsLoading = true;
+                if (Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
+                {
+                    Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf = false;
+                    Global.CurrentKampf.BodenplanViewModel.KampfWindow.Tag = true;
+                    Global.CurrentKampf.BodenplanViewModel.KampfWindow.Close();
+                }
+                Global.CurrentKampf.Kampf.lstKämpferGleicheIni.Clear();
+                Global.CurrentKampf.Kampf.AktIniKämpfer = null;
                 Global.CurrentKampf.Kampf.Kämpfer.Clear();
                 Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
                 BackgroundImage = null;
