@@ -61,7 +61,33 @@
                     <TextBlock Text="MeisterSpicker-Einträge" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Menu>
+                        <Button ToolTip="Neuen Eintrag hinzufügen" Width="22" Height="22" Padding="0" Margin="-5,1"
+                                Command="{Binding onBtnDatasetNew}">
+                            <Grid>
+                                <Image Source="/Images/Icons/General/copy.png" Width="20" Height="20" Margin="-3" />
+                                <Image Source="/Images/Icons/General/add.png" Width="14" Height="14" Margin="0,-6,-6,0" />
+                            </Grid>
+                        </Button>
+                        <ToggleButton ToolTip="Aktueller Eintrag ändern" Width="22" Height="22" Margin="-5,1"
+                                      IsChecked="{Binding DataSetCanChange}" >
+                            <Grid>
+                                <Image Source="/Images/Icons/General/copy.png" Width="20" Height="20" Margin="-3" />
+                                <Image Source="/Images/Icons/General/feder.png" Width="20" Height="20" Margin="-3" />
+                            </Grid>
+                        </ToggleButton>
+                        <Button ToolTip="Aktueller Eintrag löschen" Width="22" Height="22" Margin="-5,1"
+                                Command="{Binding onBtnDatasetDelete}">
+                            <Image Source="/Images/Icons/General/entf_01.png" Width="20" Height="20" Margin="-3" />
+                        </Button>
+                    </Menu>
                     <DataGrid  
+                        
+                        Grid.Row="1"
                         ItemsSource="{Binding SpickerDataView, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SpickerDataViewSelected, UpdateSourceTrigger=PropertyChanged}"
                         CanUserReorderColumns="False"
@@ -104,14 +130,18 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <GroupBox Header="Gegenstand" Grid.ColumnSpan="2" Margin="2,0,0,0">
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.Gegenstand}" MinHeight="22" />
+                    <DataGridCell Content="{Binding SpickerDataViewSelected.Gegenstand}" 
+                                  IsEditing="{Binding DataSetCanChange}" 
+                                  MinHeight="22" />
                 </GroupBox>
                 <StackPanel Grid.Row="1">
                     <GroupBox Header="Preis" Height="45" VerticalAlignment="Top" Margin="2,0,0,0">
-                        <DataGridCell Content="{Binding SpickerDataViewSelected.Preis}" />
+                        <DataGridCell Content="{Binding SpickerDataViewSelected.Preis}" 
+                                  IsEditing="{Binding DataSetCanChange}" />
                     </GroupBox>
                     <GroupBox Header="Gewicht" Height="45" VerticalAlignment="Top" Margin="2,0,0,0">
-                        <DataGridCell Content="{Binding SpickerDataViewSelected.Gewicht}" />
+                        <DataGridCell Content="{Binding SpickerDataViewSelected.Gewicht}" 
+                                  IsEditing="{Binding DataSetCanChange}" />
                     </GroupBox>
                 </StackPanel>
                 <GroupBox Header="Qualität" Grid.Row="1" Grid.Column="1" Margin="5,0,2,0">
@@ -125,7 +155,8 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <DataGridCell Content="{Binding SpickerDataViewSelected.Qualität}" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
-                                      ToolTip="{Binding SpickerDataViewSelected.Qualität}">
+                                      ToolTip="{Binding SpickerDataViewSelected.Qualität}"
+                                  IsEditing="{Binding DataSetCanChange}" >
                             <DataGridCell.Style>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -177,12 +208,18 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F1}" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F6}" Grid.Row="1" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F7}" Grid.Row="2" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F8}" Grid.Row="3" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F9}" Grid.Row="4" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.M1}" Grid.Row="5" />
+                    <DataGridCell Content="{Binding SpickerDataViewSelected.F1}" 
+                                  IsEditing="{Binding DataSetCanChange}" />
+                    <DataGridCell Content="{Binding SpickerDataViewSelected.F6}" 
+                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="1" />
+                    <DataGridCell Content="{Binding SpickerDataViewSelected.F7}" 
+                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="2" />
+                    <DataGridCell Content="{Binding SpickerDataViewSelected.F8}" 
+                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="3" />
+                    <DataGridCell Content="{Binding SpickerDataViewSelected.F9}" 
+                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="4" />
+                    <DataGridCell Content="{Binding SpickerDataViewSelected.M1}"
+                                  IsEditing="{Binding DataSetCanChange}"  Grid.Row="5" />
                 </Grid>
             </ScrollViewer>
         </Expander>
