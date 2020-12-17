@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
              mc:Ignorable="d" Background="{StaticResource Background1}"
              d:DesignHeight="389" d:DesignWidth="695" Unloaded="UserControl_Unloaded" >
     <UserControl.Resources>
@@ -86,7 +87,6 @@
                         </Button>
                     </Menu>
                     <DataGrid  
-                        
                         Grid.Row="1"
                         ItemsSource="{Binding SpickerDataView, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SpickerDataViewSelected, UpdateSourceTrigger=PropertyChanged}"
@@ -130,18 +130,23 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <GroupBox Header="Gegenstand" Grid.ColumnSpan="2" Margin="2,0,0,0">
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.Gegenstand}" 
-                                  IsEditing="{Binding DataSetCanChange}" 
-                                  MinHeight="22" />
+                    <TextBox 
+                            Text="{Binding SpickerDataViewSelected.Gegenstand}" 
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
                 </GroupBox>
                 <StackPanel Grid.Row="1">
                     <GroupBox Header="Preis" Height="45" VerticalAlignment="Top" Margin="2,0,0,0">
-                        <DataGridCell Content="{Binding SpickerDataViewSelected.Preis}" 
-                                  IsEditing="{Binding DataSetCanChange}" />
+                        <TextBox 
+                            Text="{Binding SpickerDataViewSelected.Preis}" 
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
                     </GroupBox>
                     <GroupBox Header="Gewicht" Height="45" VerticalAlignment="Top" Margin="2,0,0,0">
-                        <DataGridCell Content="{Binding SpickerDataViewSelected.Gewicht}" 
-                                  IsEditing="{Binding DataSetCanChange}" />
+                        <TextBox 
+                            Text="{Binding SpickerDataViewSelected.Gewicht}"
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
                     </GroupBox>
                 </StackPanel>
                 <GroupBox Header="Qualität" Grid.Row="1" Grid.Column="1" Margin="5,0,2,0">
@@ -154,16 +159,20 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <DataGridCell Content="{Binding SpickerDataViewSelected.Qualität}" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
+                        <!--<DataGridCell Content="{Binding SpickerDataViewSelected.Qualität}" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
                                       ToolTip="{Binding SpickerDataViewSelected.Qualität}"
-                                  IsEditing="{Binding DataSetCanChange}" >
-                            <DataGridCell.Style>
-                                <Style TargetType="DataGridCell">
+                                  IsEditing="{Binding DataSetCanChange}" >-->
+                        <TextBox Grid.ColumnSpan="2" HorizontalAlignment="Center" 
+                            Text="{Binding SpickerDataViewSelected.Qualität}" 
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" >
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
                                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
                                 </Style>
-                            </DataGridCell.Style>
-                        </DataGridCell>
+                            </TextBox.Style>
+                        </TextBox>
                         <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,2,65,0" HorizontalAlignment="Right"
                                         Visibility="{Binding SpickerDataViewSelected.Qualität, Converter={StaticResource IsNullOrEmptyToVisibilityConverter1 }}">
                             <Label Content="*" FontSize="9" Padding="0" HorizontalAlignment="Right"/>
@@ -208,18 +217,30 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F1}" 
-                                  IsEditing="{Binding DataSetCanChange}" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F6}" 
-                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="1" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F7}" 
-                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="2" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F8}" 
-                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="3" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.F9}" 
-                                  IsEditing="{Binding DataSetCanChange}" Grid.Row="4" />
-                    <DataGridCell Content="{Binding SpickerDataViewSelected.M1}"
-                                  IsEditing="{Binding DataSetCanChange}"  Grid.Row="5" />
+                    <TextBox 
+                            Text="{Binding SpickerDataViewSelected.F1}"
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
+                    <TextBox Grid.Row="1"
+                            Text="{Binding SpickerDataViewSelected.F6}"
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
+                    <TextBox  Grid.Row="2"
+                            Text="{Binding SpickerDataViewSelected.F7}"
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
+                    <TextBox  Grid.Row="3"
+                            Text="{Binding SpickerDataViewSelected.F8}"
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
+                    <TextBox  Grid.Row="4"
+                            Text="{Binding SpickerDataViewSelected.F9}"
+                            Background="{Binding BackgroundChangeColor}" 
+                                PreviewKeyDown="tbDatabase_PreviewKeyDown" />
+                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="5" 
+                              Text="{Binding SpickerDataViewSelected.M1}"
+                            Background="{Binding BackgroundChangeColor}" 
+                            PreviewKeyDown="tbDatabase_PreviewKeyDown" />
                 </Grid>
             </ScrollViewer>
         </Expander>

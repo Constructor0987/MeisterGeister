@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Windows.Controls;
+using System.Windows.Media;
 using MeisterGeister.Daten;
 using MeisterGeister.View.General;
 //Eigene usings
@@ -72,7 +73,38 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
         public DataRowView SpickerDataViewSelected
         {
             get { return _spickerDataViewSelected; }
-            set { Set(ref _spickerDataViewSelected, value); }
+            set
+            {
+                if (DataChanged)
+                {
+                    if (ViewHelper.Confirm("Daten geändert", "Der Datensatz wurde geändert.\n\nSollen die Änderungen übernommen werden?"))
+                    {
+                        string delQuery = string.Format("UPDATE Tabelle1 SET Gegenstand='{0}', Preis='{1}', Gewicht='{2}', Qualität='{3}', M1='{4}' WHERE ID={5}",
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Gegenstand")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Preis")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Gewicht")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Qualität")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("M1")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("ID")]);
+                        string ConString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + DatabaseTools.DATABASE_FOLDER + "MeisterSpicker.mdb";
+                        con.Close();
+                        CreateOleDbCommand(delQuery, ConString);
+                        con.Open();
+                    }
+                    else
+                    {
+                        DataRowView preDRow = _spickerDataViewSelected;
+                        con.Close();
+                        DataChanged = false;
+                        Init();
+                        _spickerDataViewSelected = preDRow;
+                        OnChanged(nameof(SpickerDataViewSelected));
+                    }
+                    DataChanged = false;
+                    DataSetCanChange = false;
+                }
+                Set(ref _spickerDataViewSelected, value); 
+            }
         }
 
         private DataView _spickerDataView = new DataView();
@@ -85,7 +117,18 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
         public bool DataSetCanChange
         {
             get { return _dataSetCanChange; }
-            set { Set(ref _dataSetCanChange, value); }
+            set 
+            { 
+                Set(ref _dataSetCanChange, value);
+                BackgroundChangeColor = value ? new SolidColorBrush(Colors.LightPink) : new SolidColorBrush(Colors.Transparent);
+            }
+        }
+
+        private bool _dataChanged = false;
+        public bool DataChanged
+        {
+            get { return _dataChanged; }
+            set { Set(ref _dataChanged, value); }
         }
         public string SuchTextGegenstand
         {
@@ -104,6 +147,13 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
                 Set(ref _suchTextBeschreibung, value);
                 FilterListe();
             }
+        }
+
+        private SolidColorBrush _backgroundChangeColor = new SolidColorBrush(Colors.Transparent);
+        public SolidColorBrush BackgroundChangeColor
+        {
+            get { return _backgroundChangeColor; }
+            set { Set(ref _backgroundChangeColor, value); }
         }
 
         #region //---- LISTEN ----
