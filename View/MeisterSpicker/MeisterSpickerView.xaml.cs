@@ -49,5 +49,15 @@ namespace MeisterGeister.View.MeisterSpicker
             if (VM.con != null)
                 VM.con.Close();
         }
+
+        private void tbDatabase_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!VM.DataSetCanChange)
+            {
+                e.Handled = true;
+                return;
+            }
+            VM.DataChanged = true;
+        }
     }
 }
