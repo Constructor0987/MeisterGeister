@@ -48,6 +48,14 @@ namespace MeisterGeister
                 ViewType = typeof(View.Kampf.KampfView),
                 ViewModelType = typeof(ViewModel.Kampf.KampfViewModel)
             });
+            ToolListe.Add("Foundry", new Tool()
+            {
+                Name = "FoundryVTT",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png",
+                MenuGruppe = "Wege des Kampfes",
+                ViewType = typeof(View.Foundry.FoundryView),
+                ViewModelType = typeof(ViewModel.Foundry.FoundryViewModel)
+            });
             ToolListe.Add("Gegner", new Tool()
             {
                 Name = "Gegner",

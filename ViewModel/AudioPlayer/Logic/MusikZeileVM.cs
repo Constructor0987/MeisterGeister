@@ -672,9 +672,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
                 }
                 if (worker.WorkerReportsProgress)
                 {
-                    MyTimer.start_timer();
                     SpinWait.SpinUntil(() => { return model.APlaylistTitel.Audio_Titel != null; }, 1000);
-                    MyTimer.stop_timer("Worker_DoWork");
                     if (model.APlaylistTitel.Audio_Titel != null)
                     {
                         if (!File.Exists(model.APlaylistTitel.Audio_Titel.Pfad + "\\" + model.APlaylistTitel.Audio_Titel.Datei))

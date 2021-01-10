@@ -809,6 +809,7 @@
     <Compile Include="ViewModel\Karte\Logic\RoutingPointBuilderArgs.cs" />
     <Compile Include="Logic\Karte\TravelService.cs" />
     <Compile Include="ViewModel\Karte\Logic\TravelType.cs" />
+    <Compile Include="ViewModel\Foundry\FoundryViewModel.cs" />
     <Compile Include="ViewModel\MeisterSpicker\Logic\MeisterSpickerItem.cs" />
     <Compile Include="ViewModel\MeisterSpicker\MeisterSpickerViewModel.cs" />
     <Compile Include="View\AudioPlayer\FavAudioPlaylist.xaml.cs">
@@ -1238,6 +1239,9 @@
       <DependentUpon>PflanzenSucheGezieltView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Karte\PflanzeVerbreitungListViewConverter.cs" />
+    <Compile Include="View\Foundry\FoundryView.xaml.cs">
+      <DependentUpon>FoundryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MeisterSpicker\MeisterSpickerView.xaml.cs">
       <DependentUpon>MeisterSpickerView.xaml</DependentUpon>
     </Compile>
@@ -1878,6 +1882,10 @@
     <Page Include="View\Karte\PflanzenSucheGezieltView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Foundry\FoundryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MeisterSpicker\MeisterSpickerView.xaml">
       <Generator>MSBuild:Compile</Generator>

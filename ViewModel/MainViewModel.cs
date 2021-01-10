@@ -42,6 +42,7 @@ namespace MeisterGeister.ViewModel
     public class MainViewModel : Base.ViewModelBase
     {
 
+
         #region -- HUE running ---
 
         #region --- HUE Command

@@ -1,0 +1,198 @@
+﻿<UserControl x:Class="MeisterGeister.View.Foundry.FoundryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             mc:Ignorable="d" Background="{StaticResource Background1}"
+             d:DesignHeight="589" d:DesignWidth="695" >
+    <UserControl.Resources>
+        <ViewGeneral:IsNullOrEmptyToVisibilityConverter x:Key="IsNullOrEmptyToVisibilityConverter1" />
+    </UserControl.Resources>
+
+    <Grid MinWidth="500">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="263*"/>
+            <ColumnDefinition Width="432*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Suchfeld und Komplette Datenbank -->
+
+        <!-- Generelle Infos -->
+        <Expander Margin="3,3,3,2" IsExpanded="True" Grid.Row="1" >
+            <Expander.Header>
+                <TextBlock Text="Generelle Informationen" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="166*"/>
+                    <ColumnDefinition Width="113*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <GroupBox Header="Gegenstand" Grid.ColumnSpan="3" Margin="2,0,0,0">
+                    <Button Content="Export Helden" Width="100" Command="{Binding OnBtnExportHelden}" />
+                </GroupBox>
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,81.5" Grid.RowSpan="2">
+                </StackPanel>
+            </Grid>
+        </Expander>
+
+        <Expander Margin="3,3,3,2" IsExpanded="True" Grid.Row="1" Grid.Column="1" >
+            <Expander.Header>
+                <TextBlock Text="Generelle Settings" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ComboBox Height="26" ItemsSource="{Binding lstHeldArgument.h}" SelectedItem="{Binding SelectedDBHeld}" DisplayMemberPath="Name" />
+                <TabControl Grid.Row="1">
+                    <TabItem Header="Charakter">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Label Content="Token Name"/>
+                                <Label Content="Display Name"/>
+                                <Label Content="Represented Actor"/>
+                                <Label Content="Link Actor Data"/>
+                                <Label Content="Token Disposition"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding TokenName}" Height="26"/>
+                                <ComboBox ItemsSource="{Binding lstDisplayName}" SelectedItem="{Binding DisplayName}" Height="26" />
+                                <ComboBox ItemsSource="{Binding lstRepresentedName}" SelectedItem="{Binding RepresentedName}" Height="26" />
+                                <CheckBox IsChecked="{Binding LinkActorData}" Height="26" VerticalContentAlignment="Center" />
+                                <ComboBox ItemsSource="{Binding lstTokenDisposition}" SelectedItem="{Binding TokenDisposition}" Height="26" />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Bild">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Label Content="Token Image Pfad"/>
+                                <Label Content="Weite (Grid Unit)"/>
+                                <Label Content="Höhe (Grid Unit)"/>
+                                <Label Content="Scalierung (Ratio)"/>
+                                <Label Content="Mirror Image Horizontal"/>
+                                <Label Content="Mirror Image Vertikal"/>
+                                <Label Content="Tint Farbe"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" Height="26">
+                                    <TextBlock Text="{Binding TokenImagePfad}" Height="26" Margin="0,0,10,0"/>
+                                    <Button Content="..." />
+                                </StackPanel>
+                                <ViewGeneral:IntBox Width="60" MinValue="1" MaxValue="100" Value="{Binding GridWidth}" Height="26" />
+                                <ViewGeneral:IntBox Width="60" MinValue="1" MaxValue="100" Value="{Binding GridHeight}" Height="26" />
+                                <Slider Value="{Binding ScaleRadio}" Minimum="0.2" Maximum="3" SmallChange=".1" LargeChange=".1" Height="26"  />
+                                <CheckBox IsChecked="{Binding MirrorImgHorizontal}" Height="26" VerticalContentAlignment="Center" />
+                                <CheckBox IsChecked="{Binding MirrorImgVertical}" Height="26" VerticalContentAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" Height="26">
+                                    <TextBlock Text="{Binding TokenImagePfad}" Width="75" Margin="0,0,10,0"/>
+                                    <Button Content="Farbe wählen" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Position">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Label Content="Elevation (Pixel)"/>
+                                <Label Content="Rotation (Grad)"/>
+                                <Label Content="Rotation sperren"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="360" Value="{Binding Elevation}" Height="26" />
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="360" Value="{Binding Rotation}" Height="26" />
+                                <CheckBox IsChecked="{Binding RotationSperren}" Height="26" VerticalContentAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Sichtbarkeit">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Label Content="Ist Sichtbar"/>
+                                <Label Content="Dim Sichtbarkeit (Distanz)"/>
+                                <Label Content="Helligkeit Sichtbarkeit (Distanz)"/>
+                                <Label Content="Sichtwinkel (Grad)"/>
+                                <Label Content="Dim Lichtradius (Distanz)"/>
+                                <Label Content="Dim Helligkeit Lichtradius (Distanz)"/>
+                                <Label Content="Emissionswinkel (Grad)"/>
+                                <Label Content="Lichtfarbe"/>
+                                <Label Content="Farbidensität"/>
+                                <Label Content="Licht Animation"/>
+                                <Label Content="Animationsgeschwindigkeit"/>
+                                <Label Content="Animationsidensität"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <CheckBox IsChecked="{Binding IstSichtbar}" Height="26" VerticalContentAlignment="Center" />
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="100" Value="{Binding DimSichtbarkeit}" Height="26" />
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="100" Value="{Binding HelligkeitSichtbarkeit}" Height="26" />
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="360" Value="{Binding Sichtwinkel}" Height="26" />
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="100" Value="{Binding DimLichtradius}" Height="26" />
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="100" Value="{Binding DimHelligkeitSichtbarkeit}" Height="26" />
+                                <ViewGeneral:IntBox Width="60" MinValue="0" MaxValue="360" Value="{Binding Emissionswinkel}" Height="26" />
+                                <StackPanel Orientation="Horizontal" Height="26">
+                                    <TextBlock Text="{Binding Lichtfarbe}" Width="75" Margin="0,0,10,0"/>
+                                    <Button Content="Farbe wählen" />
+                                </StackPanel>
+                                <Slider Value="{Binding Farbidensität}" Minimum="0" Maximum="1" SmallChange=".1" LargeChange=".1" Height="26"  />
+                                <ComboBox ItemsSource="{Binding lstLichtAnimation}" SelectedItem="{Binding LichtAnimation}" Height="26" />
+                                <Slider Value="{Binding Animationsgeschwindigkeit}" Minimum="1" Maximum="10" SmallChange="1" LargeChange="1" Height="26"  />
+                                <Slider Value="{Binding Animationsidensität}" Minimum="1" Maximum="10" SmallChange="1" LargeChange="1" Height="26"  />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Ressourcen">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Label Content="Zeichne Balken"/>
+                                <Label Content="Balken 1 Attribute"/>
+                                <Label Content="Balken 1 Daten"/>
+                                <Label Content="Balken 2 Attribute"/>
+                                <Label Content="Balken 2 Daten"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <ComboBox ItemsSource="{Binding lstZeichneBalken}" SelectedItem="{Binding ZeichneBalken}" Height="26" />
+                                <ComboBox ItemsSource="{Binding lstBalken1Attribute}" SelectedItem="{Binding Balken1Attribute}" Height="26" />
+                                <TextBlock Text="{Binding Balken1Daten}" Height="26" />
+                                <ComboBox ItemsSource="{Binding lstBalken2Attribute}" SelectedItem="{Binding Balken2Attribute}" Height="26" />
+                                <TextBlock Text="{Binding Balken2Daten}" Height="26" />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Expander>
+    </Grid>
+</UserControl>
