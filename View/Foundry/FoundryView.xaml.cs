@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CefSharp;
+using MeisterGeister.View.General;
 // Eigene Usings
 using VM = MeisterGeister.ViewModel.Foundry;
 
@@ -38,10 +40,10 @@ namespace MeisterGeister.View.Foundry
         public FoundryView()
         {
             InitializeComponent();
-    //        StandardWpfBrowser.ObjectForScripting = new ObjectForScriptingHelper();
 
-           // VM = new VM.MeisterSpickerViewModel();
-
+            VM = new VM.FoundryViewModel();
+            Grid.SetRow(VM.cWebBrowser, 0);
+            grdBrowser.Children.Add(VM.cWebBrowser);
         }
 
         /// <summary>
@@ -58,5 +60,29 @@ namespace MeisterGeister.View.Foundry
             set { DataContext = value; }
         }
 
+       
+        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            KeyEvent k = new KeyEvent();
+            k.WindowsKeyCode = 0x18;   //Space KEY
+            VM.cWebBrowser.GetBrowser().GetHost().SendKeyEvent(k);
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string localURL = ViewHelper.InputDialog("Server IP Adresse", "Bitte gebe den kompletten Internet-Link ein.\n\nUnter 'Game Settings'->" +
+                "'Invitation Links' kann per Mausklick die Adresse in die ZWischenablage gespeichert werden", VM.LocalUri);
+            VM.LocalUri = localURL;
+            VM.cWebBrowser.Address = localURL;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string inetURL =ViewHelper.InputDialog("Server IP Adresse", "Bitte gebe den kompletten Internet-Link ein.\n\nUnter 'Game Settings'->" +
+                "'Invitation Links' kann per Mausklick die Adresse in die ZWischenablage gespeichert werden", VM.InetUri);
+            VM.InetUri = inetURL;
+            VM.cWebBrowser.Address = inetURL;
+        }
     }
 }

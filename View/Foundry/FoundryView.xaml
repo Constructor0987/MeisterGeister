@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
-
+             xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+             xmlns:cef="clr-namespace:CefSharp;assembly=CefSharp.Core"
              mc:Ignorable="d" Background="{StaticResource Background1}"
              d:DesignHeight="589" d:DesignWidth="695" >
 
@@ -16,20 +17,24 @@
             <TabItem Header="Im-/Export">
                 <Grid MinWidth="500">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="263*"/>
-                        <ColumnDefinition Width="432*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
+                    <GroupBox Header="FoundryVTT - Pfad" Grid.ColumnSpan="3" Margin="2,0,0,0">
+                        <TextBox Text="{Binding FoundryPfad}" IsReadOnly="True" />
+                    </GroupBox>
                     <!-- Suchfeld und Komplette Datenbank -->
 
                     <!-- Generelle Infos -->
-                    <Expander Margin="3,3,3,2" IsExpanded="True" >
+                    <Expander Margin="3,3,3,2" IsExpanded="True" Grid.Row="1" >
                         <Expander.Header>
-                            <TextBlock Text="Generelle Informationen" Style="{DynamicResource TextTitel}" />
+                            <TextBlock Text="Kämpfer Informationen" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -44,9 +49,6 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <GroupBox Header="Pfad" Grid.ColumnSpan="3" Margin="2,0,0,0">
-                                <TextBox Text="{Binding FoundryPfad}" />
-                            </GroupBox>
 
                             <GroupBox Header="Vorhandene Welten" Grid.ColumnSpan="3" Grid.Row="1" Margin="2,0,0,0">
                                 <ComboBox ItemsSource="{Binding lstWorlds}" SelectedItem="{Binding SelectedWorld}" />
@@ -70,13 +72,22 @@
                                 </StackPanel>
                             </GroupBox>
 
-                            <GroupBox Header="Playlist-Export" Grid.ColumnSpan="3" Grid.Row="3" Margin="2,10,0,0">
+                        </Grid>
+                    </Expander>
+
+                    <Expander Margin="3,3,3,2" IsExpanded="True" Grid.Column="1" Grid.Row="1" >
+                        <Expander.Header>
+                            <TextBlock Text="Playlist Informationen" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Grid>
+
+                            <GroupBox Header="Playlisten-Export" Grid.ColumnSpan="3" Grid.Row="3" Margin="2,10,0,0">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,5" 
-                                    ToolTip="Alle Standard-Pfad werden durch den angegebenen Foundry-Pfad ersetzt ">
-                                        <ListBox ItemsSource="{Binding stdPfad}" IsEnabled="False" Width="105"  MaxHeight="80" />
+                                        ToolTip="Alle Standard-Pfad werden durch den angegebenen Foundry-Pfad ersetzt ">
+                                        <ListBox ItemsSource="{Binding stdPfad}" IsEnabled="False" Width="205"  MaxHeight="80" />
                                         <Label Content="=>" VerticalAlignment="Center" />
-                                        <TextBox Text="{Binding NameSounds}" Width="105" VerticalAlignment="Center"/>
+                                        <TextBox Text="{Binding NameSounds}" Width="205" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
                                     <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
@@ -89,8 +100,33 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Foundry Browser">
-                
+            <TabItem Name="tiBrowser" >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Padding="0" Height="20" Width="20" Click="Button_Click" 
+                                Visibility="{Binding ElementName=tiBrowser, Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                            <Image Margin="-4"
+                            Cursor="Hand" ToolTip="Verbinde im lokalen Netzwerk"
+                            Source="/Images/Icons/network.png" MouseLeftButtonUp="Image_MouseLeftButtonUp" Height="20" Width="20" />
+                        </Button>
+                        <Button Padding="0" Height="20" Width="20" Click="Button_Click_1" 
+                                Visibility="{Binding ElementName=tiBrowser, Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                            <Image Margin="0"
+                            Cursor="Hand" ToolTip="Verbinde über das Internet"
+                            Source="/Images/Icons/INet.png" MouseLeftButtonUp="Image_MouseLeftButtonUp" Height="18" Width="18" />
+                        </Button>
+                        <TextBlock Text="Foundry Browser" VerticalAlignment="Center"/>
+                        <Image
+                            Cursor="Hand" ToolTip="Klicken zum aktualisieren der Foundry Webseite"
+                            Visibility="{Binding ElementName=tiBrowser, Path=IsSelected, Converter={StaticResource BooleanToVisibilityConverter1}}"
+                            Source="/Images/Icons/General/refresh.png" MouseLeftButtonUp="Image_MouseLeftButtonUp" Height="20" Width="20" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid x:Name="grdBrowser">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

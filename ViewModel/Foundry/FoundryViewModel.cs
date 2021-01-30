@@ -22,6 +22,10 @@ namespace MeisterGeister.ViewModel.Foundry
     public class FoundryViewModel : Base.ToolViewModelBase
     {
 
+        //TODO:  Helden: Bars -Always visible, Lep, AsP
+        //TODO:  Foundry Pfad vom User definierbar, read Options, set Web-Connection (lokal oder Inet auswählbar)
+        //TODO:  SpielerScreen: Zeige WebBrowser
+
         public class MyTimer
         {
             static int start = 0;
@@ -341,7 +345,36 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _lstWorlds; }
             set { Set(ref _lstWorlds, value); }
         }
+        private int _portNo = 0;
+        public int PortNo
+        {
+            get { return _portNo; }
+            set { Set(ref _portNo, value); }
+        }
 
+        private CefSharp.Wpf.ChromiumWebBrowser _cWebBrowser = new CefSharp.Wpf.ChromiumWebBrowser();
+        public CefSharp.Wpf.ChromiumWebBrowser cWebBrowser
+        {
+            get { return _cWebBrowser; }
+            set 
+            { 
+                Set(ref _cWebBrowser, value);
+                cWebBrowser.Address = LocalUri;
+            }
+        }
+
+        private string _localUri = "http://192.168.178.181:30000/";
+        public string LocalUri
+        {
+            get { return _localUri; }
+            set { Set(ref _localUri, value); }
+        }
+        private string _inetUri = "http://1.2.3.4:30000/";
+        public string InetUri
+        {
+            get { return _inetUri; }
+            set { Set(ref _inetUri, value); }
+        }
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -349,11 +382,17 @@ namespace MeisterGeister.ViewModel.Foundry
         public FoundryViewModel()
         {
             string appFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string path = appFolderPath +  @"\FoundryVTT\Data\";
+            string path = appFolderPath +  @"\FoundryVTT\Config\";
 
             if (Directory.Exists(path))
             {
-                FoundryPfad = path;
+                string OptionsPfad = path;
+                ReadFoundryOptions(path);
+            }
+            else
+            {
+                PopUp(string.Format("Foundry scheint nicht installiert zu sein, da das Verzeichnis {0} nicht existiert", path));
+                return;
             }
 
             Init();
@@ -437,6 +476,33 @@ namespace MeisterGeister.ViewModel.Foundry
         #endregion
 
         #region //---- INSTANZMETHODEN ----
+
+
+        private void ReadFoundryOptions(string path)
+        {
+            string optionsfilepath = path + @"\options.json";
+            if (File.Exists(optionsfilepath))
+            {
+                string FileData = File.ReadAllText(optionsfilepath).Trim();
+                List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
+
+                string portLine = lstFileData.FirstOrDefault(t => t.StartsWith("  \"port\":"));
+                portLine = portLine.Trim().TrimEnd(new Char[] { ',' });
+                int portNo = 0;
+                int.TryParse(portLine.Substring(portLine.IndexOf(":") + 1), out portNo);
+                PortNo = portNo;
+
+                string dataPathLine = lstFileData.FirstOrDefault(t => t.StartsWith("  \"dataPath\":"));
+                dataPathLine = dataPathLine.Trim().TrimEnd(new Char[] { ',' }).Trim();
+                string dataPath = dataPathLine.Substring(dataPathLine.IndexOf(":") + 1).Trim().Trim(new Char[] { '"' });
+                dataPath = dataPath.Replace("/", @"\");
+                dataPath += @"\Data\";
+                FoundryPfad = dataPath;
+            }
+            else
+                FoundryPfad = null;
+        }
+
         public void GetGegnerData()
         {
             lstGegnerArgument.Clear();

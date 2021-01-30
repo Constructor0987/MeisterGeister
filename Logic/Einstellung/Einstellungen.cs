@@ -920,7 +920,7 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "HUE_Registerkey", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "HUE Lampen-Steuerung zu MeisterGeister - Register-Key", Wert = null },
 
                 new Model.Einstellung() { Name = "SpielerScreenUnterordnerEinbeziehen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "SpielerInfo-Tool: Unterordner beim Bilder-Laden mit einbeziehen?", Wert = "False" },
-
+                
                 //Versteckte
                 new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = DateTime.Now.ToString() },
                 new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
