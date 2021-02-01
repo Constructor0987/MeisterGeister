@@ -480,6 +480,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             OnChanged(nameof(StrokeThickness));
             OnChanged(nameof(ObjectSize));
+            //OnChanged(nameof(TokenOversize));
+            OnChanged(nameof(TokenOversizeMod));
             OnChanged(nameof(Opacity));
             OnChanged(nameof(ZLevel));
         }
@@ -1444,7 +1446,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (BattlegroundObjects.FirstOrDefault(t => t is Held && ((Held)t).HeldGUID == ((Held)kämpfer).HeldGUID) == null)
                 {
-                    ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
+                    ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Token?? ((Held)kämpfer).Bild, true);
                     BattlegroundObjects.Add(((Held)kämpfer));
 
                     if (!IsLoading)
@@ -1462,7 +1464,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             else
             {
-                ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
+                ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Token?? ((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
 
                 //ToDo: Initiative in der Manöverliste aktuelisieren
@@ -1830,6 +1832,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
                     Global.CurrentKampf.LabelInfo = null;
+                    //TokenOversizeMod = (SelectedObject is Held) ? (SelectedObject as Held).TokenOversize?? 1 :
+                    //    (SelectedObject as Gegner).TokenOversize?? 1;
                 }
                 else
                     Global.CurrentKampf.LabelInfo = "Objekt: Verschieben über Maus, Drehen mit Rechtsklick, Entfernen mit der Entf.-Taste";
@@ -2843,6 +2847,42 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private Base.CommandBase _onSetBackgroundClick = null;
         private Base.CommandBase _onVideoTestClick = null;
+
+        private double _tokenOverszízeMod = 1;
+        public double TokenOversizeMod
+        {
+            get
+            {
+                if (SelectedObject != null)
+                {
+                    if (SelectedObject is BattlegroundCreature)
+                    {
+                        return ((BattlegroundCreature)SelectedObject).TokenOversizeMod;
+                    }
+                }
+                return _tokenOverszízeMod;
+            }
+
+            set
+            {
+                if (SelectedObject != null)
+                {
+                    if (SelectedObject is BattlegroundCreature)
+                    {
+                        ((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;
+                        //((Wesen)SelectedObject).TokenOversize = value;
+                        ((BattlegroundCreature)SelectedObject).ki.Kämpfer.TokenSizeMod = value;
+                        if (SelectedObject is Held)
+                        {
+                            ((Held)SelectedObject).TokenOversize = value;
+                            Global.ContextHeld.Update<Held>((SelectedObject as Held));
+                        }
+                    }
+                }
+                Set(ref _tokenOverszízeMod, value);
+            }
+        }
+
 
         private void BtnPosIniWindow(object obj)
         {

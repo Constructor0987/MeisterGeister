@@ -534,6 +534,54 @@ namespace MeisterGeister.Model
     
         }
         private int _fK;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Token
+        {
+            get { return _token; }
+            set
+    		{ 
+    			Set(ref _token, value);
+    		}
+    
+        }
+        private string _token;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> TokenSizeX
+        {
+            get { return _tokenSizeX; }
+            set
+    		{ 
+    			Set(ref _tokenSizeX, value);
+    		}
+    
+        }
+        private Nullable<int> _tokenSizeX;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> TokenSizeY
+        {
+            get { return _tokenSizeY; }
+            set
+    		{ 
+    			Set(ref _tokenSizeY, value);
+    		}
+    
+        }
+        private Nullable<int> _tokenSizeY;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> TokenOversize
+        {
+            get { return _tokenOversize; }
+            set
+    		{ 
+    			Set(ref _tokenOversize, value);
+    		}
+    
+        }
+        private Nullable<double> _tokenOversize;
 
         #endregion
 

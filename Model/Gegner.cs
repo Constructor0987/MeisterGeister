@@ -57,7 +57,14 @@ namespace MeisterGeister.Model
             Bild = gegnerBase.Bild;
             Bemerkung = gegnerBase.Bemerkung;
         }
-        
+
+
+        private double _tokenSizeMod = 1;
+        public double TokenSizeMod
+        {
+            get { return _tokenSizeMod; }
+            set { Set(ref _tokenSizeMod, value); }
+        }
 
         private bool _keineWeiterenAuswirkungenBeiWunden = false;
         public bool keineWeiterenAuswirkungenBeiWunden
