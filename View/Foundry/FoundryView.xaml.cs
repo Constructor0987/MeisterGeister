@@ -41,9 +41,7 @@ namespace MeisterGeister.View.Foundry
         {
             InitializeComponent();
 
-            VM = new VM.FoundryViewModel();
-            Grid.SetRow(VM.cWebBrowser, 0);
-            grdBrowser.Children.Add(VM.cWebBrowser);
+           // VM = new VM.FoundryViewModel();
         }
 
         /// <summary>
@@ -65,24 +63,38 @@ namespace MeisterGeister.View.Foundry
         {
             KeyEvent k = new KeyEvent();
             k.WindowsKeyCode = 0x18;   //Space KEY
-            VM.cWebBrowser.GetBrowser().GetHost().SendKeyEvent(k);
+            if (VM != null)
+                VM.cWebBrowser.GetBrowser().GetHost().SendKeyEvent(k);
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string localURL = ViewHelper.InputDialog("Server IP Adresse", "Bitte gebe den kompletten Internet-Link ein.\n\nUnter 'Game Settings'->" +
-                "'Invitation Links' kann per Mausklick die Adresse in die ZWischenablage gespeichert werden", VM.LocalUri);
-            VM.LocalUri = localURL;
-            VM.cWebBrowser.Address = localURL;
+            if (VM != null)
+            {
+                string localURL = ViewHelper.InputDialog("Server IP Adresse", "Bitte gebe den kompletten Internet-Link ein.\n\nUnter 'Game Settings'->" +
+                    "'Invitation Links' kann per Mausklick die Adresse in die ZWischenablage gespeichert werden", VM.LocalUri);
+                VM.LocalUri = localURL;
+                VM.cWebBrowser.Address = localURL;
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            string inetURL =ViewHelper.InputDialog("Server IP Adresse", "Bitte gebe den kompletten Internet-Link ein.\n\nUnter 'Game Settings'->" +
+            if (VM != null)
+            {
+                string inetURL = ViewHelper.InputDialog("Server IP Adresse", "Bitte gebe den kompletten Internet-Link ein.\n\nUnter 'Game Settings'->" +
                 "'Invitation Links' kann per Mausklick die Adresse in die ZWischenablage gespeichert werden", VM.InetUri);
-            VM.InetUri = inetURL;
-            VM.cWebBrowser.Address = inetURL;
+                VM.InetUri = inetURL;
+                VM.cWebBrowser.Address = inetURL;
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            Grid.SetRow(VM.cWebBrowser, 0);
+            grdBrowser.Children.Add(VM.cWebBrowser);
         }
     }
 }

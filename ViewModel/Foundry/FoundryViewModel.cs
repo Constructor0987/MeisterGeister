@@ -16,6 +16,8 @@ using MeisterGeister.View.General;
 //Eigene usings
 using MeisterGeister.ViewModel.MeisterSpicker.Logic;
 using Base = MeisterGeister.ViewModel.Base;
+using System.Net;
+using MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.ViewModel.Foundry
 {
@@ -66,6 +68,172 @@ namespace MeisterGeister.ViewModel.Foundry
         List<HeldenArgument> lstHeldArgument = new List<HeldenArgument>();
         List<PlaylistArgument> lstPListArgument = new List<PlaylistArgument>();
 
+        private void ChangePath(string vonS, string inS)
+        {
+            if (GegnerPortraitPfad == null) return;
+            string neu = null;
+            neu = GegnerPortraitPfad.Replace(vonS, inS);
+            if (neu != GegnerPortraitPfad)
+            {
+                GegnerPortraitPfad = neu;
+                Einstellungen.SetEinstellung<string>("FoundryGegnerPortraitPfad", GegnerPortraitPfad);
+            }
+            neu = HeldPortraitPfad.Replace(vonS, inS);
+            if (neu != HeldPortraitPfad)
+            {
+                HeldPortraitPfad = neu;
+                Einstellungen.SetEinstellung<string>("FoundryHeldPortraitPfad", HeldPortraitPfad);
+            }
+            neu = GegnerTokenPfad.Replace(vonS, inS);
+            if (neu != GegnerTokenPfad)
+            {
+                GegnerTokenPfad = neu;
+                Einstellungen.SetEinstellung<string>("FoundryGegnerTokenPfad", GegnerTokenPfad);
+            }
+            neu = HeldTokenPfad.Replace(vonS, inS);
+            if (neu != HeldTokenPfad)
+            {
+                HeldTokenPfad = neu;
+                Einstellungen.SetEinstellung<string>("FoundryHeldTokenPfad", HeldTokenPfad);
+            }            
+        }
+
+        private bool _isLokalInstalliert = false;
+        public bool IsLocalInstalliert
+        {
+            get { return _isLokalInstalliert; }
+            set 
+            { 
+                Set(ref _isLokalInstalliert, value);
+                if (!value)
+                {
+                    FoundryPfad = FTPAdresse + "/Data/";
+                    ReadFoundryOptions(string.Format("{0}/config/options.json", FTPAdresse));
+
+                    ChangePath(@"\", "/");
+                }
+                else
+                {
+                    FoundryPfad = localFoundryPfad;
+                    string appFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    string path = appFolderPath + @"\FoundryVTT\Config\";
+                    if (Directory.Exists(path))
+                        ReadFoundryOptions(path + @"\options.json");
+
+                    ChangePath("/", @"\");
+                }
+            }
+        }
+
+        #region //---- FTP ----
+
+        private string _ftpAdresse = "ftp://195.114.11.154:21";
+        public string FTPAdresse
+        {
+            get { return _ftpAdresse; }
+            set 
+            { 
+                Set(ref _ftpAdresse, value);
+                Einstellungen.SetEinstellung("FoundryFTPAdresse", value);
+            }
+        }
+
+        private string _ftpUser = "juergen";
+        public string FTPUser
+        {
+            get { return _ftpUser; }
+            set 
+            { 
+                Set(ref _ftpUser, value);
+                Einstellungen.SetEinstellung("FoundryFTPUser", value);
+            }
+        }
+
+        private string _ftpPasswort= "FoundryVTT2021";
+        public string FTPPasswort
+        {
+            get { return _ftpPasswort; }
+            set 
+            { 
+                Set(ref _ftpPasswort, value);
+                Einstellungen.SetEinstellung("FoundryFTPPasswort", value);
+            }
+        }
+
+        private string _testDatei = @"C:\temp\Test.txt";
+        public string TestDatei
+        {
+            get { return _testDatei; }
+            set { Set(ref _testDatei, value); }
+        }
+
+
+        private Base.CommandBase _onBtnFTPConfig = null;
+        public Base.CommandBase OnBtnFTPConfig
+        {
+            get
+            {
+                if (_onBtnFTPConfig == null)
+                    _onBtnFTPConfig = new Base.CommandBase(FTPConfig, null);
+                return _onBtnFTPConfig;
+            }
+        }
+        private void FTPConfig(object sender)
+        {
+            string back = ViewHelper.InputDialog("FTP-Adresse", "Gebe die FTP-Adresse zu dem Server ein", FTPAdresse);
+            if (!string.IsNullOrEmpty(back))
+                FTPAdresse = back;
+            back = ViewHelper.InputDialog("FTP-User", "Gebe den FTP-Usernamen zu dem Server ein", FTPUser);
+            if (!string.IsNullOrEmpty(back))
+                FTPUser = back;
+            back = ViewHelper.InputDialog("FTP-Passwort", "Gebe das FTP-Passwort zu dem Server ein", "");
+            if (!string.IsNullOrEmpty(back))
+                FTPPasswort = back;
+        }
+
+
+        private Base.CommandBase _onBtnConnectFTP = null;
+        public Base.CommandBase OnBtnConnectFTP
+        {
+            get
+            {
+                if (_onBtnConnectFTP == null)
+                    _onBtnConnectFTP = new Base.CommandBase(ConnectFTP, null);
+                return _onBtnConnectFTP;
+            }
+        }
+        private void ConnectFTP(object sender)
+        {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(FTPAdresse + "/Data/worlds/test.txt");
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+
+            request.Credentials = new NetworkCredential(FTPUser,FTPPasswort, "");
+
+
+            // Copy the contents of the file to the request stream.
+            byte[] fileContents;
+            using (StreamReader sourceStream = new StreamReader(TestDatei))
+            {
+                fileContents = Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
+            }
+
+            request.ContentLength = fileContents.Length;
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(fileContents, 0, fileContents.Length);
+            }
+
+            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+            {
+                Console.WriteLine($"Upload File Complete, status {response.StatusDescription}");
+            }
+        }
+
+
+        #endregion
+
+        #region //---- Classes ----
 
         public class PlaylistArgument
         {
@@ -182,6 +350,81 @@ namespace MeisterGeister.ViewModel.Foundry
             { get; set; }
         }
 
+        #endregion
+
+
+        private string _gegnerPortraitPfad = null;
+        public string GegnerPortraitPfad
+        {
+            get { return _gegnerPortraitPfad; }
+            set 
+            {
+                string prevalue = value;
+                if (prevalue != null && !prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
+                    prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
+                Set(ref _gegnerPortraitPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryGegnerPortraitPfad", GegnerPortraitPfad);
+            }
+        }
+
+
+        private string _heldPortraitPfad = null;
+        public string HeldPortraitPfad
+        {
+            get { return _heldPortraitPfad; }
+            set
+            {
+                string prevalue = value;
+                if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
+                    prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
+                Set(ref _heldPortraitPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryHeldPortraitPfad", HeldPortraitPfad);
+            }
+        }
+
+        private string _gegnerTokenPfad = null;
+        public string GegnerTokenPfad
+        {
+            get { return _gegnerTokenPfad; }
+            set
+            {
+                string prevalue = value;
+                if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
+                    prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
+                Set(ref _gegnerTokenPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryGegnerTokenPfad", GegnerTokenPfad);
+            }
+        }
+
+        private string _heldTokenPfad = null;
+        public string HeldTokenPfad
+        {
+            get { return _heldTokenPfad; }
+            set
+            {
+                string prevalue = value;
+                if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
+                    prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
+                Set(ref _heldTokenPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryHeldTokenPfad", HeldTokenPfad);
+            }
+        }
+
+        private string _musikPfad = null;
+        public string MusikPfad
+        {
+            get { return _musikPfad; }
+            set
+            {
+                string prevalue = value;
+                if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
+                    prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
+                Set(ref _musikPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryMusikPfad", MusikPfad);
+            }
+        }
+
+
         private Held _selectedDBHeld = null;
         public Held SelectedDBHeld
         {
@@ -245,21 +488,20 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _tokenDisposition, value); }
         }
 
+        private string _localFoundryPfad = null;
+        public string localFoundryPfad
+        {
+            get { return _localFoundryPfad; }
+            set { Set(ref _localFoundryPfad, value); }
+        }
+
+
         private string _foundryPfad = null;
         public string FoundryPfad
         {
             get { return _foundryPfad; }
             set { Set(ref _foundryPfad, value); }
         }
-
-
-        private string _nameSounds = "Musik";
-        public string NameSounds
-        {
-            get { return _nameSounds; }
-            set { Set(ref _nameSounds, value); }
-        }
-
 
         private string _playlistStatus = null;
         public string PlaylistStatus
@@ -288,11 +530,17 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _copyTitelFile, value); }
         }
 
-        private folder _selectedFolder= null;
-        public folder SelectedFolder
+        private folder _selectedHeldenFolder= null;
+        public folder SelectedHeldenFolder
         {
-            get { return _selectedFolder; }
-            set { Set(ref _selectedFolder, value); }
+            get { return _selectedHeldenFolder; }
+            set { Set(ref _selectedHeldenFolder, value); }
+        }
+        private folder _selectedGegnerFolder= null;
+        public folder SelectedGegnerFolder
+        {
+            get { return _selectedGegnerFolder; }
+            set { Set(ref _selectedGegnerFolder, value); }
         }
 
         private string _selectedWorld = null;
@@ -305,7 +553,10 @@ namespace MeisterGeister.ViewModel.Foundry
 
                 if (value != null)
                 {
-                    GetActorFolders(string.Format(@"{0}\worlds\{1}\data\folders.db", FoundryPfad, value));
+                    if (IsLocalInstalliert)
+                        GetActorFolders(string.Format(@"{0}worlds\{1}\data\folders.db", FoundryPfad, value));
+                    else
+                        GetActorFolders(string.Format("{0}worlds/{1}/data/folders.db", FoundryPfad, value));
                 }
             }
         }
@@ -381,19 +632,34 @@ namespace MeisterGeister.ViewModel.Foundry
 
         public FoundryViewModel()
         {
-            string appFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string path = appFolderPath +  @"\FoundryVTT\Config\";
+            FTPAdresse = Einstellungen.GetEinstellung<string>("FoundryFTPAdresse");
+            FTPUser = Einstellungen.GetEinstellung<string>("FoundryFTPUser");
+            FTPPasswort = Einstellungen.GetEinstellung<string>("FoundryFTPPasswort");
 
-            if (Directory.Exists(path))
+            IsLocalInstalliert = Einstellungen.GetEinstellung<bool>("IsLocalInstalliert");
+            if (IsLocalInstalliert)
+                FoundryPfad = localFoundryPfad;
+            else
+                FoundryPfad = FTPAdresse + "/data/";
+
+            if (IsLocalInstalliert)
             {
-                string OptionsPfad = path;
-                ReadFoundryOptions(path);
+                string appFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string path = appFolderPath + @"\FoundryVTT\Config\";
+
+                if (Directory.Exists(path))
+                    ReadFoundryOptions(path + @"\options.json");
             }
             else
             {
-                PopUp(string.Format("Foundry scheint nicht installiert zu sein, da das Verzeichnis {0} nicht existiert", path));
-                return;
+                ReadFoundryOptions(FTPAdresse + "/config/options.json");
             }
+
+            GegnerPortraitPfad = Einstellungen.GetEinstellung<string>("FoundryGegnerPortraitPfad");
+            HeldPortraitPfad = Einstellungen.GetEinstellung<string>("FoundryHeldPortraitPfad");
+            GegnerTokenPfad = Einstellungen.GetEinstellung<string>("FoundryGegnerTokenPfad");
+            HeldTokenPfad = Einstellungen.GetEinstellung<string>("FoundryHeldTokenPfad");
+            MusikPfad = Einstellungen.GetEinstellung<string>("FoundryMusikPfad");
 
             Init();
             lstRepresentedName.AddRange(lstHeldArgument.Select(t => t.h.Name));
@@ -414,15 +680,104 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _stdPfad, value); }
         }
 
+        private FtpWebRequest _listRequest = null;
+        public FtpWebRequest listRequest
+        {
+            get { return _listRequest; }
+            set { Set(ref _listRequest, value); }
+        }
+
         #endregion
 
         #region //---- Funktionen ----
+        void ListFtpDirectory(string url, string rootPath, bool onlyDir, NetworkCredential credentials, List<string> list)
+        {
+            StreamReader listReader = null;
+            var listRequest = (FtpWebRequest)WebRequest.Create(url + rootPath);
+            listRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            listRequest.Credentials = credentials;
+            listRequest.KeepAlive = false;
+            listRequest.UsePassive = true;
+            listRequest.Timeout= 4000;
+
+            var lines = new List<string>();
+            try
+            {
+                using (var listResponse = (FtpWebResponse)listRequest.GetResponse())
+                using (var listStream = listResponse.GetResponseStream())
+                using (listReader = new StreamReader(listStream))
+                {
+                    while (!listReader.EndOfStream)
+                    {
+                        lines.Add(listReader.ReadLine());
+                        if (onlyDir)
+                        {
+                            string[] tokens =
+                                lines.Last().Split(new[] { ' ' }, 9, StringSplitOptions.RemoveEmptyEntries);
+                            string permissions = tokens[0];
+                            string name = tokens[8];
+                            if (permissions[0] == 'd')
+                                list.Add(name);
+                        }
+                    }
+                }
+
+                if (!onlyDir)
+                {
+                    foreach (string line in lines)
+                    {
+                        string[] tokens =
+                            line.Split(new[] { ' ' }, 9, StringSplitOptions.RemoveEmptyEntries);
+                        string name = tokens[8];
+                        string permissions = tokens[0];
+
+                        string filePath = rootPath + name;
+
+                        if (permissions[0] == 'd')
+                        {
+                            ListFtpDirectory(url, filePath + "/", onlyDir, credentials, list);
+                        }
+                        else
+                        {
+                            list.Add(filePath);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                ViewHelper.ShowError(string.Format("Beim Lesen der FTP Seite {0} ist ein Fehler aufgetreten", url + rootPath), ex);
+            }
+            finally
+            {
+                if (listReader != null)
+                    listReader.Close();
+            }
+        }
+        private void LoadWorldsFolder()
+        {
+            if (IsLocalInstalliert)
+            {
+                lstWorlds.Clear();
+                string worldPfad = FoundryPfad + @"worlds";
+                List<string> lstFullDir = Directory.GetDirectories(worldPfad).ToList();
+                lstFullDir.ForEach(delegate (string s)
+                { lstWorlds.Add(new Uri(s).Segments.Last().ToUpper()); });
+            }
+            else
+            {
+                List<string> list = new List<string>();
+                NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                ListFtpDirectory(FTPAdresse + "/data/worlds/", "", true, credentials, list);
+                lstWorlds = list;
+            }
+        }
 
         private void GetActorFolders(string filepath)
         {
-            if (File.Exists(filepath))
-            {
-                string FileData = File.ReadAllText(filepath).Trim();
+            string FileData = GetFileData(filepath);
+
+            if (FileData != null)
+            { 
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
                 List<folder> lst = new List<folder>();
 
@@ -444,7 +799,7 @@ namespace MeisterGeister.ViewModel.Foundry
                         name = nameF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
                         typ = typF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
                         sorting = sortingF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
-                        color = colorF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
+                        color = colorF?.Split(new Char[] { ':' }).Last().Replace("\"", ""),
                         _id = _idF.Split(new Char[] { ':' }).Last().Replace("\"", "")
                     });
                 }
@@ -452,22 +807,71 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
+        private void SetFileData(string file, string daten, bool datenInFile = false)
+        {
+            if (IsLocalInstalliert)
+                File.WriteAllText(file, daten);
+            else
+            {
+                string tempDatei = null;
+                if (!datenInFile)
+                {
+                    tempDatei = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\tempData.txt";
+                    File.WriteAllText(tempDatei, daten);
+                }
+                else
+                    tempDatei = daten;
+
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(file);
+                request.Credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+
+                using (Stream fileStream = File.OpenRead(tempDatei))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
+                    fileStream.CopyTo(ftpStream);
+                }
+
+                if (!datenInFile)
+                    File.Delete(tempDatei);
+            }
+        }
+        private string GetFileData(string filepath)
+        {
+            string FileData = null;
+            if (IsLocalInstalliert)
+            {
+                if (File.Exists(filepath))
+                    FileData = File.ReadAllText(filepath).Trim();
+            }
+            else
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(filepath);
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                request.Credentials = new NetworkCredential(FTPUser, FTPPasswort, "");
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
+                FileData = reader.ReadToEnd().Trim();
+                Console.WriteLine($"Download Complete, status {response.StatusDescription}");
+                reader.Close();
+                response.Close();
+            }
+            return FileData;
+        }
         private string GetUserID(string filepath, string username)
         {
             char A = (char)34;
             string id = null;
-            if (File.Exists(filepath))
-            {
-                string FileData = File.ReadAllText(filepath).Trim();
+            string FileData = GetFileData(filepath);
+
+            if (FileData != null)
+            { 
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
-
                 string uLine = lstFileData.FirstOrDefault(t => t.Contains(A + "name" + A + ":" + A + username + A));
-
                 string d = uLine.Substring(1, uLine.Length - 3);
                 List<string> line = d.Split(new Char[] { ',' }).ToList();
-
                 string _idF = line.FirstOrDefault(t => t.StartsWith(A + "_id" + A + ":"));
-
                 id = _idF.Substring(7, _idF.Length - 8);
             }
             return id;
@@ -477,13 +881,11 @@ namespace MeisterGeister.ViewModel.Foundry
 
         #region //---- INSTANZMETHODEN ----
 
-
-        private void ReadFoundryOptions(string path)
+        private void ReadFoundryOptions(string filepath)
         {
-            string optionsfilepath = path + @"\options.json";
-            if (File.Exists(optionsfilepath))
-            {
-                string FileData = File.ReadAllText(optionsfilepath).Trim();
+            string FileData = GetFileData(filepath);
+            if (FileData != null)
+            { 
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
 
                 string portLine = lstFileData.FirstOrDefault(t => t.StartsWith("  \"port\":"));
@@ -492,51 +894,105 @@ namespace MeisterGeister.ViewModel.Foundry
                 int.TryParse(portLine.Substring(portLine.IndexOf(":") + 1), out portNo);
                 PortNo = portNo;
 
-                string dataPathLine = lstFileData.FirstOrDefault(t => t.StartsWith("  \"dataPath\":"));
-                dataPathLine = dataPathLine.Trim().TrimEnd(new Char[] { ',' }).Trim();
-                string dataPath = dataPathLine.Substring(dataPathLine.IndexOf(":") + 1).Trim().Trim(new Char[] { '"' });
-                dataPath = dataPath.Replace("/", @"\");
-                dataPath += @"\Data\";
-                FoundryPfad = dataPath;
+                if (IsLocalInstalliert)
+                {
+                    string dataPathLine = lstFileData.FirstOrDefault(t => t.StartsWith("  \"dataPath\":"));
+                    dataPathLine = dataPathLine.Trim().TrimEnd(new Char[] { ',' }).Trim();
+                    string dataPath = dataPathLine.Substring(dataPathLine.IndexOf(":") + 1).Trim().Trim(new Char[] { '"' });
+                    dataPath = dataPath.Replace("/", @"\");
+                    dataPath += @"\data\";
+                    FoundryPfad = dataPath;
+                    localFoundryPfad = FoundryPfad;
+                }
             }
             else
                 FoundryPfad = null;
         }
+        private void BildSpeichern(string bildDateiname, string WesenPfad, string MGPfad, List<string> lstFTPGegnerPics, List<string> lstDateienKopiert)
+        {
+            if (!string.IsNullOrEmpty(bildDateiname) && !lstDateienKopiert.Contains(bildDateiname))
+            {
+                string charBild = bildDateiname;
+                string srcCharFilename = System.IO.Path.GetFileName(charBild);
+                if (bildDateiname.StartsWith("/"))
+                {
+                    BitmapImage bmpi1 = new BitmapImage(new Uri("pack://application:,,," + bildDateiname));
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        PngBitmapEncoder enc = new PngBitmapEncoder();
+                        enc.Frames.Add(BitmapFrame.Create(bmpi1));
 
+                        FileStream fs = null;
+                        if (IsLocalInstalliert)
+                        {
+                            if (!File.Exists(FoundryPfad + srcCharFilename) || OverwritePictureFile)
+                                fs = File.Open(FoundryPfad + srcCharFilename, FileMode.Create);
+                        }
+                        else
+                        {
+                            //Speichern temporär ins MG-Verzeichnis 
+                            if (!lstFTPGegnerPics.Contains(srcCharFilename) || OverwritePictureFile)
+                                fs = File.Open(MGPfad + srcCharFilename, FileMode.Create);
+                        }
+                        if (fs != null)
+                        {
+                            enc.Save(fs);
+                            fs.Close();
+                        }
+                        if (!IsLocalInstalliert)
+                        {
+                            if (!lstFTPGegnerPics.Contains(srcCharFilename) || OverwritePictureFile)
+                                SetFileData(FoundryPfad + WesenPfad + System.IO.Path.GetFileName(charBild), MGPfad + srcCharFilename, true);
+                            File.Delete(MGPfad + srcCharFilename);
+                        }
+                    }
+                }
+                else
+                if (File.Exists(charBild))
+                {
+                    if (IsLocalInstalliert)
+                    {
+                        if (!File.Exists(FoundryPfad + srcCharFilename) || OverwritePictureFile)
+                        {
+                            File.Copy(charBild, FoundryPfad + srcCharFilename, OverwritePictureFile);
+                        }
+                    }
+                    else
+                    {
+                        if (!lstFTPGegnerPics.Contains(srcCharFilename) || OverwritePictureFile)
+                        {
+                            SetFileData(FoundryPfad + WesenPfad + System.IO.Path.GetFileName(charBild), charBild, true);
+                        }
+                    }
+                }
+                lstDateienKopiert.Add(charBild);
+            }
+        }
         public void GetGegnerData()
         {
             lstGegnerArgument.Clear();
             MyTimer.start_timer();
             List<string> lstPicKopiert = new List<string>();
+            List<string> lstTokenKopiert = new List<string>();
+            string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+
+            List<string> lstFTPGegnerPics = new List<string>();
+            if (!IsLocalInstalliert)
+            {
+                List<string> list = new List<string>();
+                NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                ListFtpDirectory(FoundryPfad + GegnerPortraitPfad, "", false, credentials, list);
+                lstFTPGegnerPics = list;
+            }
+
             foreach (GegnerBase g in lstGegnerBase)
             {
-                if (!string.IsNullOrEmpty(g.Bild))
-                {
-                    string charBild = g.Bild;
+                BildSpeichern(g.Bild, GegnerPortraitPfad, MGPfad, lstFTPGegnerPics, lstPicKopiert);
+                BildSpeichern(g.Bild, GegnerTokenPfad, MGPfad, lstFTPGegnerPics, lstTokenKopiert);
 
-                    if (g.Bild.StartsWith("/") &&
-                        OverwritePictureFile &&
-                        !lstPicKopiert.Contains(g.Bild))
-                    {
-                        BitmapImage bmpi1 = new BitmapImage(new Uri("pack://application:,,,"+g.Bild));
-                        using (MemoryStream outStream = new MemoryStream())
-                        {
-                            PngBitmapEncoder enc = new PngBitmapEncoder();
-                            enc.Frames.Add(BitmapFrame.Create(bmpi1));
-
-                            lstPicKopiert.Add(charBild);
-                            FileStream fs = File.Open(FoundryPfad + System.IO.Path.GetFileName(charBild), FileMode.Create);
-                            enc.Save(fs);
-                            fs.Close();
-                        }
-                    } 
-                    else
-                    if (File.Exists(charBild) &&
-                            !File.Exists(FoundryPfad + System.IO.Path.GetFileName(charBild)))
-                    {
-                        File.Copy(charBild, FoundryPfad + System.IO.Path.GetFileName(charBild), OverwritePictureFile);
-                    }
-                }
+                string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null: (GegnerPortraitPfad + System.IO.Path.GetFileName(g.Bild));
+                //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
+                string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad + System.IO.Path.GetFileName(g.Bild));
 
                 char A = (char)34; // (new Char[] { '"' });
                                        //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
@@ -628,11 +1084,10 @@ namespace MeisterGeister.ViewModel.Foundry
                     gArg.lstArguments.Add(new dbArgument { Prefix = "}}}," });
 
                     //Folder
-                    if (SelectedFolder != null && !string.IsNullOrEmpty(SelectedFolder.name))
+                    if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
                     {
-                        gArg.lstArguments.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedFolder._id, Suffix = "\"," });
+                        gArg.lstArguments.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
                     }
-
 
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
 
@@ -641,13 +1096,22 @@ namespace MeisterGeister.ViewModel.Foundry
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
                     gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
 
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(g.Bild) ? "icons/svg/mystery-man.svg" : System.IO.Path.GetFileName(g.Bild)), Suffix = A + "," });
+                //Portrait Image
+                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = 
+                        (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+                         GetFilenamePortrait), Suffix = A + "," });
+                    
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
                     gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(g.Bild) ? "icons/svg/mystery-man.svg" : System.IO.Path.GetFileName(g.Bild)), Suffix = A + "," });
+                    
+                //Token Image
+                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = 
+                        (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+                        GetFilenameToken), Suffix = A + "," });
+                    
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
                     gArg.lstArguments.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
@@ -685,146 +1149,174 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
                 MyTimer.stop_timer("Gegner-DB-Argument");
         }
-        public void Init()
+        public void GetHeldenData()
         {
             lstHeldArgument.Clear();
             MyTimer.start_timer();
+
+            List<string> lstPicKopiert = new List<string>();
+            List<string> lstTokenKopiert = new List<string>();
+            string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+
+            List<string> lstFTPHeldenPics = new List<string>();
+            if (!IsLocalInstalliert)
+            {
+                List<string> list = new List<string>();
+                NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                ListFtpDirectory(FoundryPfad + HeldPortraitPfad, "", false, credentials, list);
+                lstFTPHeldenPics = list;
+            }
+
             foreach (Held h in Global.ContextHeld.HeldenGruppeListe.Where(t => t.AktiveHeldengruppe.Value))
             {
+                BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
+                BildSpeichern(h.Bild, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
+
+                string GetFilenamePortrait = string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad + System.IO.Path.GetFileName(h.Bild));
+                //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
+                string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad + System.IO.Path.GetFileName(h.Bild));
+
                 char A = (char)34; // (new Char[] { '"' });
                 //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
-                string id = h.HeldGUID.ToString().Substring(19,17).Replace("-","");
+                string id = h.HeldGUID.ToString().Substring(19, 17).Replace("-", "");
                 HeldenArgument hArg = new HeldenArgument();
                 hArg.h = h;
                 hArg.lstArguments = new List<dbArgument>();
-                hArg.lstArguments.Add(new dbArgument { Prefix = "{"+A+"_id"+A+":\"", ArgString = id, Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"name"+A+":\"", ArgString = h.Name, Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"permission"+A+":{\"default"+A+":", ArgString = "0,\"3WHJiGe2LNC2VNeR"+A+":", Suffix = "3}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"type"+A+":\"", ArgString = "character", Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"data"+A+":{\"biography"+A+":\"", ArgString = "", Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"stats"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"health"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.LebensenergieAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"min"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"max"+A+":", ArgString = h.LebensenergieMax.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"endurance"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.AusdauerAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"min"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"max"+A+":", ArgString = h.AusdauerMax.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"astral"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.AstralenergieAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"min"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"max"+A+":", ArgString = h.AstralenergieMax.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"karmal"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.KarmaenergieAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"min"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"max"+A+":", ArgString = h.KarmaenergieMax.ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.LebensenergieAktuell.ToString(), Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.LebensenergieMax.ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AusdauerAktuell.ToString(), Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AusdauerMax.ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AstralenergieAktuell.ToString(), Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AstralenergieMax.ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.KarmaenergieAktuell.ToString(), Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.KarmaenergieMax.ToString(), Suffix = "}," });
 
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"magic_resistance" + A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.Magieresistenz.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"speed"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.Geschwindigkeit.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"INI"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.Initiative(false).ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"AT"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = (h.AT ?? 0).ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"PA"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = (h.PA ?? 0).ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"FK"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.FernkampfBasis.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"WS"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"value"+A+":", ArgString = h.Wundschwelle.ToString(), Suffix = "}" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Magieresistenz.ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Geschwindigkeit.ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Initiative(false).ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.AT ?? 0).ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.PA ?? 0).ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.FernkampfBasis.ToString(), Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Wundschwelle.ToString(), Suffix = "}" });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"attributes"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"MU"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.MU ?? 0).ToString() });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.MU ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"KL"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.KL ?? 0).ToString() });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KL ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"IN"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.IN ?? 0).ToString()});
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.IN ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"CH"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.CH ?? 0).ToString()});
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.CH ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"FF"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.FF ?? 0).ToString()});
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.FF ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"GE"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.GE ?? 0).ToString()});
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.GE ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"KO"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.KO ?? 0).ToString()});
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KO ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"KK"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"start"+A+":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"mod"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"current"+A+":", ArgString = (h.KK ?? 0).ToString()});
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KK ?? 0).ToString() });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}}}," });
 
                 //Folder
-                if (SelectedFolder != null && !string.IsNullOrEmpty(SelectedFolder.name))
+                if (SelectedHeldenFolder != null && !string.IsNullOrEmpty(SelectedHeldenFolder.name))
                 {
-                    hArg.lstArguments.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedFolder._id, Suffix = "\"," });
+                    hArg.lstArguments.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedHeldenFolder._id, Suffix = "\"," });
                 }
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
 
-
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"sort"+A+":", ArgString = "100001", Suffix = "," });
-
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"flags"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"core"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"sourceId"+A+":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A+"}" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
 
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"img"+A+":\"", ArgString = (string.IsNullOrEmpty(h.Bild)? "icons/svg/mystery-man.svg": System.IO.Path.GetFileName(h.Bild)), Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"token"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"flags"+A+":{" });
+                //Portrait Image
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = 
+                    (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+                     GetFilenamePortrait), Suffix = A + ","});
+
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"name"+A+":\"", ArgString = h.Name, Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"displayName"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"img"+A+":\"", ArgString = (string.IsNullOrEmpty(h.Bild) ? "icons/svg/mystery-man.svg" : System.IO.Path.GetFileName(h.Bild)), Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"tint"+A+":", ArgString = "null", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"width"+A+":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"height"+A+":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"scale"+A+":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"lockRotation"+A+":", ArgString = "false", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"vision"+A+":", ArgString = "true", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"dimSight"+A+":", ArgString = "20", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"brightSight"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"dimLight"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"brightLight"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"sightAngle"+A+":", ArgString = "180", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"lightAngle"+A+":", ArgString = "180", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"lightAlpha" + A+":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"lightAnimation"+A+":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"speed"+A+":", ArgString = "5", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"intensity"+A+":", ArgString = "5" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+
+                //Token Image
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString =
+                    (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+                    GetFilenameToken),Suffix = A + "," });
+
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "true", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "20", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "180", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "180", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"actorId"+A+":\"", ArgString = id, Suffix = A+"," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"actorLink"+A+":", ArgString = "false", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"disposition"+A+":", ArgString = "-1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"displayBars"+A+":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"bar1"+A+":{", ArgString = "", Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"bar2"+A+":{", ArgString = "", Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"randomImg"+A+":", ArgString = "false", Suffix = "" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"items"+A+":[", ArgString = "", Suffix = "]," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A+"effects"+A+":[", ArgString = "", Suffix = "]" });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
+                hArg.lstArguments.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
                 hArg.lstArguments.Add(new dbArgument { Prefix = "}" });
 
                 hArg.outcome = "";
@@ -834,14 +1326,106 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstHeldArgument.Add(hArg);
             }
             MyTimer.stop_timer("Helden-DB-Argument");
+        }
+        public void Init()
+        {
             //Read Worlds
-            if (string.IsNullOrEmpty(FoundryPfad) || !Directory.Exists(FoundryPfad))
+            if (string.IsNullOrEmpty(FoundryPfad) ||
+                (IsLocalInstalliert && !Directory.Exists(FoundryPfad)))
                 return;
 
-            lstWorlds.Clear();
-            string worldPfad = FoundryPfad + @"\worlds";
-            List<string> lstFullDir = Directory.GetDirectories(worldPfad).ToList();
-            lstFullDir.ForEach(delegate (string s){ lstWorlds.Add(new Uri(s).Segments.Last().ToUpper()); });
+            LoadWorldsFolder();
+        }
+        private void CreateFolder(object sender)
+        {
+            if (SelectedWorld == null)
+            {
+                ViewHelper.Popup("Wähle zuerst eine Welt");
+                return;
+            }
+            string newFolder = ViewHelper.InputDialog("Erstelle Actor Verzeichnis", "Gebe den Namen des neuen Verzeichnisses\nfür die Actor ein", "");
+            
+            if (string.IsNullOrEmpty(newFolder))
+                return;
+            if (lstFolders.FirstOrDefault(t => t.name == newFolder) != null)
+            {
+                ViewHelper.Popup(string.Format("Das Verzeichnis {0} existiert bereits.\nFunktion abgebrochen", newFolder));
+                return;
+            }
+            char A = (char)34; // (new Char[] { '"' });
+            string _id = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
+            
+            string outdata = "{"+A+"name:"+A+ newFolder + A + "," + A + "type" + A + ":" + A + "Actor" + A + "," + A + "sort" + A + 
+                ":null," + A + "flags" + A + ":{}," + A + "parent" + A + ":null," + A + "sorting" + A + ":" + A + "a" + A + 
+                "," + A + "color" + A + ":" + A + A + "," + A + "_id" + A + ":" + A + _id + A + "}\n";
+
+            if (IsLocalInstalliert)
+            {
+                string foldersFilePath = FoundryPfad + @"worlds\" + SelectedWorld + @"\data\folders.db";
+                File.AppendAllText(foldersFilePath, outdata);
+            }
+            else
+            {
+                string foldersFilePath = FoundryPfad + @"worlds/" + SelectedWorld + "/data/folders.db";
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(foldersFilePath);
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                request.Credentials = new NetworkCredential(FTPUser, FTPPasswort, "");
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
+
+                string FileData = reader.ReadToEnd();
+                Console.WriteLine($"Download Complete, status {response.StatusDescription}");
+                reader.Close();
+                response.Close();
+
+                FileData += outdata;
+                FtpWebRequest request2 = (FtpWebRequest)WebRequest.Create(foldersFilePath);
+                request2.Method = WebRequestMethods.Ftp.UploadFile;
+                request2.Credentials = new NetworkCredential(FTPUser, FTPPasswort, "");
+
+                // convert contents to byte.
+                byte[] fileContents = Encoding.ASCII.GetBytes(FileData);
+                request.ContentLength = fileContents.Length;
+
+                using (Stream requestStream = request2.GetRequestStream())
+                {
+                    requestStream.Write(fileContents, 0, fileContents.Length);
+                }
+                using (response = (FtpWebResponse)request2.GetResponse())
+                {
+                    Console.WriteLine($"Upload File Complete, status {response.StatusDescription}");
+                }
+            }
+            List<folder> lst = new List<folder>();
+            lst.AddRange(lstFolders);
+            lst.Add(new folder() { name = newFolder, color = "", sorting="a", typ="Actor", _id = _id });
+            lstFolders = lst;
+
+            ViewHelper.Popup("Verzeichnis erstellt");
+        }
+        private bool PathExists(string path)
+        {
+            if (IsLocalInstalliert)
+            {
+                return Directory.Exists(path);
+            }
+            else
+            {
+                // NACH DEM AUFRUF GIBR ES EINE EXCEPTION BEIM NÄCHSTEN ANFRAGEN DER FTP SEITE!!
+                try
+                {
+                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(path);
+                    request.Method = WebRequestMethods.Ftp.ListDirectory;
+                    request.Credentials = new NetworkCredential(FTPUser, FTPPasswort, "");
+                    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                    return true;
+                }
+                catch (WebException ex)
+                {
+                    return false;
+                }
+            }
         }
         #endregion
 
@@ -856,39 +1440,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 return _onBtnCreateFolder;
             }
         }
-        private void CreateFolder(object sender)
-        {
-            if (SelectedWorld == null)
-                PopUp("Wähle zuerst eine Welt");
-            string newFolder = ViewHelper.InputDialog("Erstelle Actor Verzeichnis", "Gebe den Namen des neuen Verzeichnisses\nfür die Actor ein", "");
-            
-            if (string.IsNullOrEmpty(newFolder))
-                return;
-            if (lstFolders.FirstOrDefault(t => t.name == newFolder) != null)
-            {
-                ViewHelper.Popup(string.Format("Das Verzeichnis {0} existiert bereits.\nFunktion abgebrochen", newFolder));
-                return;
-            }
-
-            char A = (char)34; // (new Char[] { '"' });
-            string _id = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
-            
-            //   {"name":"Spieler","type":"Actor","sort":null,"flags":{},"parent":null,"sorting":"a","color":"#15e411","_id":"sDEv0Pj4fs14VezG"}
-            string outdata = "{"+A+"name:"+A+ newFolder + A + "," + A + "type" + A + ":" + A + "Actor" + A + "," + A + "sort" + A + 
-                ":null," + A + "flags" + A + ":{}," + A + "parent" + A + ":null," + A + "sorting" + A + ":" + A + "a" + A + 
-                "," + A + "color" + A + ":" + A + A + "," + A + "_id" + A + ":" + A + _id + A + "}\n";
-
-            string foldersFilePath = FoundryPfad + @"\worlds\" + SelectedWorld + @"\data\folders.db";
-
-            File.AppendAllText(foldersFilePath, outdata);
-            List<folder> lst = new List<folder>();
-            lst.AddRange(lstFolders);
-            lst.Add(new folder() { name = newFolder, color = "", sorting="a", typ="Actor", _id = _id });
-            lstFolders = lst;
-
-            ViewHelper.Popup("Verzeichnis erstellt");
-        }
-
+        
         private Base.CommandBase _onBtnExportGegner = null;
         public Base.CommandBase OnBtnExportGegner
         {
@@ -901,48 +1453,76 @@ namespace MeisterGeister.ViewModel.Foundry
         }
         private void ExportGegner(object sender)
         {
-            if (SelectedWorld == null)
-                PopUp("Wähle zuerst eine Welt");
-            if (SelectedFolder.name == "" && !ViewHelper.Confirm("Export der Gegner", "Die Gegner-Datenbank wird ins das Hauptverzeichnis exportiert\n" +
-                "Wir empfehlen hier dringend zuvor ein Verzeichnis zu erstellen, um Gegner, NSC und Helden zu separieren\n\nSollen die Gegner in das" +
-                "Hauptverzeichnis exportiert werden?"))
-                return;
-
-            MyTimer.start_timer();
-
-            GetGegnerData();
-
-            List<string> lstErsetzt = new List<string>();
-            string A = (new Char[] { '"' }).ToString();
-            //Open actors.db
-            string worldPath = FoundryPfad + @"\worlds\" + SelectedWorld + @"\data\";
-            string actorFile = worldPath + "actors.db";
-            if (File.Exists(actorFile))
+            try
             {
-                string oldFileData = File.ReadAllText(actorFile);
-                List<string> lstFileData = oldFileData.Split(new Char[] { '\n' }).ToList();
-                string newFileDataAdd = "";
-                //Check Held vorhanden -> Ja = Zeile löschen
-                foreach (GegnerArgument garg in lstGegnerArgument)
+                if (SelectedWorld == null)
                 {
-                    Nullable<int> pos = lstFileData.IndexOf(lstFileData.Where(t => t.Contains("name\":\"" + garg.g.Name + "\",")).FirstOrDefault());
-                    if (pos != null && pos != -1)
-                    {
-                        lstFileData.RemoveAt(pos.Value);
-                        lstErsetzt.Add(garg.g.Name);
-                    }
-
-                    newFileDataAdd += "\n" + garg.outcome;
+                    ViewHelper.Popup("Wähle zuerst eine Welt");
+                    return;
                 }
-                string newFile = string.Join("\n", lstFileData);
-                newFile += newFileDataAdd;
+                if ((SelectedGegnerFolder == null || SelectedGegnerFolder.name == "") &&
+                    !ViewHelper.Confirm("Export der Gegner", "Die Gegner-Datenbank wird ins das Hauptverzeichnis exportiert\n" +
+                    "Wir empfehlen hier dringend zuvor ein Verzeichnis zu erstellen, um Gegner, NSC und Helden zu separieren\n\nSollen die Gegner in das " +
+                    "Hauptverzeichnis exportiert werden?"))
+                    return;
 
-                //Held einfügen
-                File.WriteAllText(actorFile, newFile);
+                //if (!PathExists(FoundryPfad + GegnerPortraitPfad) || !PathExists(FoundryPfad + GegnerTokenPfad))
+                //{
+                //    ViewHelper.Popup(string.Format("Nicht alle Pfade sind vorhanden.\nBitte überprüfe folgende Pfade:\n\n* {0}\n* {1}",
+                //        FoundryPfad + GegnerPortraitPfad, FoundryPfad + GegnerTokenPfad));
+                //    return;
+                //}
+
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait); 
+                MyTimer.start_timer();
+                GetGegnerData();
+
+                List<string> lstErsetzt = new List<string>();
+                string A = (new Char[] { '"' }).ToString();
+
+                //Open actors.db
+                string actorsPath = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                string FileData = GetFileData(actorsPath);
+                if (FileData != null)
+                {
+                    List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList(); //oldFileData
+                    string newFileDataAdd = "";
+                    //Check Gegner vorhanden -> Ja = Zeile löschen und ersetzen
+                    foreach (GegnerArgument garg in lstGegnerArgument)
+                    {
+                        Nullable<int> pos = lstFileData.IndexOf(lstFileData.Where(t => t.Contains("name\":\"" + garg.g.Name + "\",")).FirstOrDefault());
+                        if (pos != null && pos != -1)
+                        {
+                            lstFileData.RemoveAt(pos.Value);
+                            lstErsetzt.Add(garg.g.Name);
+                        }
+                        newFileDataAdd += "\n" + garg.outcome;
+                    }
+                    string newFile = string.Join("\n", lstFileData);
+                    newFile += newFileDataAdd;
+
+                    //Gegner einfügen
+                    SetFileData(actorsPath, newFile);
+                    MyTimer.stop_timer("");
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert",
+                        lstGegnerArgument.Count, lstErsetzt.Count));
+                }
+                else
+                {
+
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
+                        "folgendem Pfad sein:\n" + actorsPath);
+                }
             }
+            finally
+            {
 
-            MyTimer.stop_timer("");
-
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+            }
         }
 
         private Base.CommandBase _onBtnExportHelden = null;
@@ -955,59 +1535,77 @@ namespace MeisterGeister.ViewModel.Foundry
                 return _onBtnExportHelden;
             }
         }
+
         private void ExportHelden(object sender)
         {
+            try
+            { 
             if (SelectedWorld == null)
-                PopUp("Wähle zuerst eine Welt");
-            if (SelectedFolder.name == "" && !ViewHelper.Confirm("Export der Helden", "Die Helden werden ins das Hauptverzeichnis exportiert\n" +
+            {
+                ViewHelper.Popup("Wähle zuerst eine Welt");
+                return;
+            }
+            if ((SelectedHeldenFolder == null || SelectedHeldenFolder.name == "") && 
+                !ViewHelper.Confirm("Export der Helden", "Die Helden werden ins das Hauptverzeichnis exportiert\n" +
                 "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um Helden, NSC und Gegner zu separieren\n\nSollen die Helden in das" +
                 "Hauptverzeichnis exportiert werden?"))
                 return;
 
-            MyTimer.start_timer();
-            Init();
+            //if (!PathExists(FoundryPfad + HeldPortraitPfad) || !PathExists(FoundryPfad + HeldTokenPfad))
+            //{ 
+            //    ViewHelper.Popup(string.Format("Nicht alle Pfade sind vorhanden.\nBitte überprüfe folgende Pfade:\n\n* {0}\n* {1}",
+            //        FoundryPfad + HeldPortraitPfad, FoundryPfad + HeldTokenPfad));
+            //    return;
+            //}
 
-            foreach (HeldenArgument harg in lstHeldArgument)
-            {
-                if (harg.h.Bild == "")
-                    continue;
-                string charBild = harg.h.Bild;
-                if (!File.Exists(FoundryPfad + System.IO.Path.GetFileName(charBild)))
-                {
-                    File.Copy(charBild, FoundryPfad + System.IO.Path.GetFileName(charBild), OverwritePictureFile);
-                }
-            }
+            System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
+            MyTimer.start_timer();
+            GetHeldenData();
+            //Init();
+
             List<string> lstErsetzt = new List<string>();
             string A = (new Char[] { '"' }).ToString();
+
             //Open actors.db
-            string worldPath = FoundryPfad + @"\worlds\" + SelectedWorld + @"\data\";
-            string actorFile = worldPath + "actors.db";
-            if (File.Exists(actorFile))
-            {
-                string oldFileData = File.ReadAllText(actorFile);
-                List<string> lstFileData = oldFileData.Split(new Char[] { '\n' }).ToList();
-                string newFileDataAdd = "";
-                //Check Held vorhanden -> Ja = Zeile löschen
-                foreach (HeldenArgument harg in lstHeldArgument)
+            string actorsPath = IsLocalInstalliert ?
+                FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
+                FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+            string FileData = GetFileData(actorsPath);
+                if (FileData != null)
                 {
-                    Nullable<int> pos = lstFileData.IndexOf(lstFileData.Where(t => t.Contains("name\":\""+ harg.h.Name + "\",")).FirstOrDefault());
-                    if (pos != null && pos != -1)
+                    List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
+                    string newFileDataAdd = "";
+                    //Check Held vorhanden -> Ja = Zeile löschen und ersetzen
+                    foreach (HeldenArgument harg in lstHeldArgument)
                     {
-                        lstFileData.RemoveAt(pos.Value);
-                        lstErsetzt.Add(harg.h.Name);
+                        Nullable<int> pos = lstFileData.IndexOf(lstFileData.Where(t => t.Contains("name\":\"" + harg.h.Name + "\",")).FirstOrDefault());
+                        if (pos != null && pos != -1)
+                        {
+                            lstFileData.RemoveAt(pos.Value);
+                            lstErsetzt.Add(harg.h.Name);
+                        }
+                        newFileDataAdd += "\n" + harg.outcome;
                     }
+                    string newFile = string.Join("\n", lstFileData);
+                    newFile += newFileDataAdd;
 
-                    newFileDataAdd += "\n" + harg.outcome;
+                    //Held einfügen
+                    SetFileData(actorsPath, newFile);
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                    ViewHelper.Popup(MyTimer.stop_timer("Refresh Helden-Daten aktualisiert in") + "\n\nAlle Helden wurden eingefügt.\n" +
+                        "Folgende Helden wurden ersetzt:\n" +(lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * "+t).ToList()): ""));
                 }
-                string newFile = string.Join("\n", lstFileData);
-                newFile += newFileDataAdd;
-
-                //Held einfügen
-                File.WriteAllText(actorFile, newFile);
+                else
+                {
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
+                    "folgendem Pfad sein:\n" + actorsPath);
+                }
             }
-
-            PopUp(MyTimer.stop_timer("Refresh Helden-Daten aktualisiert in") +
-                "\n\nAlle Helden wurden eingefügt.\n" + (lstErsetzt.Count>0?string.Join(", ", lstErsetzt) + " wurden ersetzt": ""));
+            finally
+            {
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+            }
         }
 
 
@@ -1026,12 +1624,12 @@ namespace MeisterGeister.ViewModel.Foundry
             MyTimer.start_timer();
             System.Globalization.CultureInfo en = new System.Globalization.CultureInfo("en-US", false);
             int anzTotalTitel = 0;
-            if (!Directory.Exists(string.Format(@"{0}\{1}", FoundryPfad, NameSounds)))
-                Directory.CreateDirectory(string.Format(@"{0}\{1}", FoundryPfad, NameSounds));
+            if (!Directory.Exists(string.Format(@"{0}{1}", FoundryPfad, MusikPfad)))
+                Directory.CreateDirectory(string.Format(@"{0}{1}", FoundryPfad, MusikPfad));
 
             List<PlaylistArgument> lstPArg = new List<PlaylistArgument>();
 
-            string GMid = GetUserID(string.Format(@"{0}\worlds\{1}\data\users.db", FoundryPfad,SelectedWorld), "Gamemaster");
+            string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
 
             PlaylistStatus = "Alle Playlisten werden exportiert ...";
             foreach (Audio_Playlist aPlaylist in lstPlaylists)
@@ -1054,7 +1652,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 //List<Audio_Playlist_Titel> lstTitel = new List<Audio_Playlist_Titel>();
                 foreach (Audio_Playlist_Titel aTitel in aPlaylist.Audio_Playlist_Titel.OrderBy(t => t.Audio_Titel.Name))
                 {
-                    string MGpathFile = aTitel.Audio_Titel.Pfad +@"\" + aTitel.Audio_Titel.Datei;
+                    string MGpathFile = aTitel.Audio_Titel.Pfad + @"\" + aTitel.Audio_Titel.Datei;
                     if (!File.Exists(MGpathFile)) continue;
 
                     PlaylistStatus = string.Format("Export '{0}' {1} of {2} ...", aPlaylist.Name, current, anzTitel);
@@ -1064,12 +1662,12 @@ namespace MeisterGeister.ViewModel.Foundry
                     sArg.lstArg.Add("{" + A + "_id" +A+":"+A+ aTitelTeilGuid+ A );
                     sArg.lstArg.Add( A + "flags" + A + ":{}");
 
-                    stdPfad.ForEach(delegate (string s) {
+                    stdPfad.ForEach((Action<string>)delegate (string s) {
                         if (MGpathFile.StartsWith(s))
-                            MGpathFile = MGpathFile.Replace(s, NameSounds); });
+                            MGpathFile = MGpathFile.Replace(s, (string)this.MusikPfad); });
                     string zielPfad = FoundryPfad + MGpathFile;
                     MGpathFile = MGpathFile.Replace(@"\","/");
-                    if (!MGpathFile.StartsWith(NameSounds))
+                    if (!MGpathFile.StartsWith(MusikPfad))
                         continue;
 
                     sArg.lstArg.Add(A + "path" + A+":"+A+ MGpathFile+ A );
@@ -1099,7 +1697,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
 
             //Open playlists.db
-            string worldPath = FoundryPfad + @"\worlds\" + SelectedWorld + @"\data\";
+            string worldPath = FoundryPfad + @"worlds\" + SelectedWorld + @"\data\";
             string playlistsFile = worldPath + "playlists.db";
             if (OverwritePlaylistFile)
                 File.Delete(playlistsFile);
@@ -1110,8 +1708,6 @@ namespace MeisterGeister.ViewModel.Foundry
 
             //Playlisten einfügen
             File.WriteAllText(playlistsFile, newFileData);
-
-
 
             PlaylistStatus = null;
             string stop = MyTimer.stop_timer("");
