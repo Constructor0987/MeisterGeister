@@ -332,12 +332,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
         public void SetSpielerZoom(Rect t)
         {
-            double ScaleWidth = SpielerScreenWindow.ActualWidth / t.Width;
-            double ScaleHeight = SpielerScreenWindow.ActualHeight / t.Height;
-            ScaleSpielerGrid = Math.Min(ScaleWidth, ScaleHeight) * .95;
+            if (SpielerScreenWindow != null)
+            {
+                double ScaleWidth = SpielerScreenWindow.ActualWidth / t.Width;
+                double ScaleHeight = SpielerScreenWindow.ActualHeight / t.Height;
+                ScaleSpielerGrid = Math.Min(ScaleWidth, ScaleHeight) * .95;
 
-            PlayerGridOffsetX = t.X;
-            PlayerGridOffsetY = -t.Y;
+                PlayerGridOffsetX = t.X;
+                PlayerGridOffsetY = -t.Y;
+            }
         }
 
         public void FinishCurrentTempRectangle()
@@ -1447,10 +1450,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (BattlegroundObjects.FirstOrDefault(t => t is Held && ((Held)t).HeldGUID == ((Held)kämpfer).HeldGUID) == null)
                 {
                     ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Token?? ((Held)kämpfer).Bild, true);
+
                     BattlegroundObjects.Add(((Held)kämpfer));
 
                     if (!IsLoading)
                         (((Held)kämpfer) as BattlegroundCreature).SetNewPosition();
+
+                    (((Held)kämpfer) as BattlegroundCreature).TokenOversizeMod = ((Held)kämpfer).TokenOversize?? 1;
                     //ToDo: Initiative in der Manöverliste aktuelisieren
 
                     //Set Aktuelle Initiative auf geladenen Wert
@@ -1464,9 +1470,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             else
             {
+                if (((Gegner)kämpfer).Token == null && ((Gegner)kämpfer).GegnerBase.Token != null)
+                {
+                    ((Gegner)kämpfer).Token = ((Gegner)kämpfer).GegnerBase.Token;
+                    ((Gegner)kämpfer).TokenOversize = ((Gegner)kämpfer).GegnerBase.TokenOversize;
+                }
                 ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Token?? ((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
 
+                (((Gegner)kämpfer) as BattlegroundCreature).TokenOversizeMod = ((Gegner)kämpfer).TokenOversize ?? 1;
                 //ToDo: Initiative in der Manöverliste aktuelisieren
 
                 //Set Aktuelle Initiative auf geladenen Wert
@@ -1832,8 +1844,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
                     Global.CurrentKampf.LabelInfo = null;
-                    //TokenOversizeMod = (SelectedObject is Held) ? (SelectedObject as Held).TokenOversize?? 1 :
-                    //    (SelectedObject as Gegner).TokenOversize?? 1;
                 }
                 else
                     Global.CurrentKampf.LabelInfo = "Objekt: Verschieben über Maus, Drehen mit Rechtsklick, Entfernen mit der Entf.-Taste";
@@ -2871,11 +2881,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     {
                         ((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;
                         //((Wesen)SelectedObject).TokenOversize = value;
-                        ((BattlegroundCreature)SelectedObject).ki.Kämpfer.TokenSizeMod = value;
+                        //((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;// .ki.Kämpfer.TokenSizeMod = value;
                         if (SelectedObject is Held)
                         {
                             ((Held)SelectedObject).TokenOversize = value;
                             Global.ContextHeld.Update<Held>((SelectedObject as Held));
+                        }
+                        else
+                        if (SelectedObject is Gegner)
+                        {
+                            ((Gegner)SelectedObject).TokenOversize = value;
+                            Global.ContextHeld.Update<Gegner>((SelectedObject as Gegner));
                         }
                     }
                 }

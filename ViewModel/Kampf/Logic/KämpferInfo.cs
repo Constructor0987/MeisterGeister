@@ -307,8 +307,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref kampf, value); }
         }
 
-
-
         private bool _istUnsichtbar = false;
         public bool IstUnsichtbar
         {

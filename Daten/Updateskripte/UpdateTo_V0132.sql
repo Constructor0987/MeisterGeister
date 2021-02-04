@@ -14,3 +14,12 @@ GO
 ALTER TABLE [Gegner] ADD [TokenSizeY] int DEFAULT 1;
 GO
 ALTER TABLE [Gegner] ADD [TokenOversize] float DEFAULT 1;
+
+GO
+ALTER TABLE [GegnerBase] ADD [Token] nvarchar(500);
+GO
+ALTER TABLE [GegnerBase] ADD [TokenSizeX] int DEFAULT 1; 
+GO
+ALTER TABLE [GegnerBase] ADD [TokenSizeY] int DEFAULT 1;
+GO
+ALTER TABLE [GegnerBase] ADD [TokenOversize] float DEFAULT 1;

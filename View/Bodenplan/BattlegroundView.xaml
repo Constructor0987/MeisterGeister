@@ -331,7 +331,7 @@
                                         Grid.Column="1">
                                         <Slider Orientation="Vertical" Height="100" Minimum=".2" Maximum="3" SmallChange=".1" LargeChange=".3"
                                                 ToolTip="{Binding TokenOversizeMod}"
-                                                Value="{Binding TokenOversizeMod, Mode=TwoWay}" />
+                                                Value="{Binding TokenOversizeMod, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>

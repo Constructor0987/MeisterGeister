@@ -44,7 +44,16 @@ namespace MeisterGeister.Model
             }
         }
 
-        private  double _tokenSizeMod = 1;
+        //private double _tokenOversize = 1;
+        //public double TokenOversize
+        //{
+        //    get { return TokenSizeMod; }
+
+        //    set { Set(ref TokenSizeMod, value);
+        //    }
+        //}
+
+        private double _tokenSizeMod = 1;
         public double TokenSizeMod
         {
             get { return _tokenSizeMod; }

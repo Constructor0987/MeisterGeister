@@ -85,7 +85,8 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <!-- Name, AE, AU, Bemerkung, Beschwörung, Beschwörungskosten, Bild, GS, GS2, GS3, GW, INIBasis, INIZufall, Jagd, KE, KO, Kontrolle, LE, Literatur, MRGeist, MRKörper, PA, RSx, Setting, Tags, Aktionen  -->
-                            <Border   Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="5" Width="80" Height="80" Cursor="Hand">
+                            <StackPanel Grid.RowSpan="3" >
+                            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="5" Width="80" Height="80" Cursor="Hand">
                                 <Border.ToolTip>
                                     <StackPanel>
                                         <TextBlock Text="{Binding SelectedGegnerBase.Bild}" />
@@ -111,7 +112,39 @@
                                         </Binding>
                                     </Image.Source>
                                 </Image>
-                            </Border>
+                                </Border>
+                                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="5" Width="80" Height="80" Cursor="Hand">
+                                    <Border.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding SelectedGegnerBase.Token}" />
+                                            <TextBlock Text="Klicken um ein Token einzufügen..." />
+                                        </StackPanel>
+                                    </Border.ToolTip>
+                                    <Border.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding OnSelectToken}" />
+                                    </Border.InputBindings>
+                                    <Image>
+                                        <Image.Source>
+                                            <Binding Path="SelectedGegnerBase.Token" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                                <Binding.FallbackValue>
+                                                    <ImageSource>
+                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                    </ImageSource>
+                                                </Binding.FallbackValue>
+                                                <Binding.TargetNullValue>
+                                                    <ImageSource>
+                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                    </ImageSource>
+                                                </Binding.TargetNullValue>
+                                            </Binding>
+                                        </Image.Source>
+                                    </Image>
+                                </Border>
+                                <Slider ToolTip="{Binding SelectedGegnerBase.TokenOversize}" 
+                                        TickFrequency=".1"
+                                        Minimum=".1" Maximum="3" Orientation="Horizontal"
+                                        Value="{Binding SelectedGegnerBase.TokenOversize, StringFormat='{}{0.0#}', FallbackValue=1}" />
+                            </StackPanel>
                             <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
                             <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding SelectedGegnerBase.Name, UpdateSourceTrigger=PropertyChanged}" Margin="2">
                                 <TextBox.ToolTip>

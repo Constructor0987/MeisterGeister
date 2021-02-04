@@ -404,6 +404,19 @@ namespace MeisterGeister.View.General
             win.Show();
         }
 
+        public static string SelectToken()
+        {
+            string path = null;
+            if (System.Threading.Thread.CurrentThread.GetApartmentState() == System.Threading.ApartmentState.STA)
+            {
+                View.General.SelectImageDialog dlg = new SelectImageDialog();
+                dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+                bool? result = dlg.ShowDialog();
+                if (result == true)
+                    path = dlg.SelectedPath;
+            }
+            return path;
+        }
         public static string SelectImage()
         {
             string path = null;

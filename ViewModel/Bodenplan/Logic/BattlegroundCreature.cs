@@ -327,11 +327,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        private double _rotateImageCenterXY = 40;
+    //    private double _rotateImageCenterXY = 40;
         public double RotateImageCenterXY
         {
-            get { return _rotateImageCenterXY; }
-            set { Set(ref _rotateImageCenterXY, value); }
+            get { return TokenOversizeMod * 40; }// _rotateImageCenterXY;
+      //      set { Set(ref _rotateImageCenterXY, value); }
         }
 
         public double TokenOversizeMod
@@ -344,7 +344,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 OnChanged(nameof(TokenOversizeMod));
                 OnChanged(nameof(CreatureXPic));
                 OnChanged(nameof(CreatureYPic));
-                RotateImageCenterXY = 40 * value;
+                OnChanged(nameof(RotateImageCenterXY));
+              //  RotateImageCenterXY = 40 * value;
             }
         }
         public string PortraitFileName

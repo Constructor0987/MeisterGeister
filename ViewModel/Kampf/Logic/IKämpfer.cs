@@ -19,7 +19,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region Bodenplan
         string Bild { get; }
         string Token { get; }
-        double TokenOversize { get; set; }
+    //    double TokenOversize { get; set; }
 
         Position Position { get; set; }
         #endregion
