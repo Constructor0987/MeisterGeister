@@ -585,12 +585,15 @@ namespace MeisterGeister.View.Bodenplan
                 {
                     if (_kämpferCursor == null && _kämpferPoint != null)
                     {
-                        Point curMousePosScreen = GetMousePosition();
+                        //TODO: Muss noch angepasst werden wegen (VM.SelectedObject as BattlegroundCreature).TokenOversizeMod 
 
-                        var factorX = (VM.CurrentMousePositionX - (VM.SelectedObject as BattlegroundCreature).CreatureXPic) / (VM.SelectedObject as BattlegroundCreature).CreatureWidthPic;
+                        Point curMousePosScreen = GetMousePosition();
+                        var factorX = (VM.CurrentMousePositionX - (VM.SelectedObject as BattlegroundCreature).CreatureXPic) / 
+                            ((VM.SelectedObject as BattlegroundCreature).CreatureWidthPic* (VM.SelectedObject as BattlegroundCreature).TokenOversizeMod);
                         var minusX = (int)((VM.SelectedObject as BattlegroundCreature).CreatureWidthPic * (factorX * ArenaScrollViewer.Zoom));
 
-                        var factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureYPic) / (VM.SelectedObject as BattlegroundCreature).CreatureHeightPic;
+                        var factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureYPic) / 
+                            ((VM.SelectedObject as BattlegroundCreature).CreatureHeightPic * (VM.SelectedObject as BattlegroundCreature).TokenOversizeMod);
                         var minusY = (int)((VM.SelectedObject as BattlegroundCreature).CreatureHeightPic * (factorY * ArenaScrollViewer.Zoom));
                         
                         SetCursorPos((int)curMousePosScreen.X - minusX, (int)curMousePosScreen.Y - minusY);

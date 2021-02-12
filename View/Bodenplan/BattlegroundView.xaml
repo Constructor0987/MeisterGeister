@@ -330,8 +330,11 @@
                                         Grid.Row="2"
                                         Grid.Column="1">
                                         <Slider Orientation="Vertical" Height="100" Minimum=".2" Maximum="3" SmallChange=".1" LargeChange=".3"
-                                                ToolTip="{Binding TokenOversizeMod}"
-                                                Value="{Binding TokenOversizeMod, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                Value="{Binding TokenOversizeMod, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+                                            <Slider.ToolTip>
+                                                <TextBlock Text="{Binding TokenOversizeMod, StringFormat={}{0:0.##} }" />
+                                            </Slider.ToolTip>
+                                        </Slider>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>

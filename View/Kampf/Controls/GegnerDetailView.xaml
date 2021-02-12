@@ -140,10 +140,21 @@
                                         </Image.Source>
                                     </Image>
                                 </Border>
-                                <Slider ToolTip="{Binding SelectedGegnerBase.TokenOversize}" 
-                                        TickFrequency=".1"
+                                <Slider TickFrequency=".1"
                                         Minimum=".1" Maximum="3" Orientation="Horizontal"
-                                        Value="{Binding SelectedGegnerBase.TokenOversize, StringFormat='{}{0.0#}', FallbackValue=1}" />
+                                        Value="{Binding SelectedGegnerBase.TokenOversize, StringFormat='{}{0.0#}', FallbackValue=1}" >
+                                    <Slider.ToolTip>
+                                        <TextBlock Text="{Binding SelectedGegnerBase.TokenOversize, StringFormat={}{0:0.##} }" />
+                                    </Slider.ToolTip>
+                                </Slider>
+                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
+                                    <Label Content="TokenX" />
+                                    <ViewGeneral:IntBox Value="{Binding SelectedGegnerBase.TokenSizeX}" Width="60" ShowButtons="True" MinValue="1" MaxValue="5" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
+                                    <Label Content="TokenY" />
+                                    <ViewGeneral:IntBox Value="{Binding SelectedGegnerBase.TokenSizeY}" Width="60" ShowButtons="True" MinValue="1" MaxValue="5" />
+                                </StackPanel>
                             </StackPanel>
                             <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
                             <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding SelectedGegnerBase.Name, UpdateSourceTrigger=PropertyChanged}" Margin="2">
