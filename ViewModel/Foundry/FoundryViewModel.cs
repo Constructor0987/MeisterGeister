@@ -467,6 +467,13 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _representedName, value); }
         }
 
+        private bool _dsa41Version = false;
+        public bool DSA41Version
+        {
+            get { return _dsa41Version; }
+            set { Set(ref _dsa41Version, value); }
+        }
+
         private bool _linkActorData = false;
         public bool LinkActorData
         {
@@ -841,8 +848,15 @@ namespace MeisterGeister.ViewModel.Foundry
             string FileData = null;
             if (IsLocalInstalliert)
             {
-                if (File.Exists(filepath))
-                    FileData = File.ReadAllText(filepath).Trim();
+                try
+                {
+                    if (File.Exists(filepath))
+                        FileData = File.ReadAllText(filepath).Trim();
+                }
+                catch (Exception ex)
+                {
+                    ViewHelper.ShowError("Beim Schreiben der Datei ist ein Fehler aufgetreten", ex);
+                }
             }
             else
             {
@@ -968,6 +982,966 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstDateienKopiert.Add(charBild);
             }
         }
+
+        private List<dbArgument> SetDSA41Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id)
+        {
+            List<dbArgument> lstArg = new List<dbArgument>();
+            char A = (char)34;
+
+            //gArg.lstArguments = new List<dbArgument>();
+            lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = ((int)g.KO / 2).ToString(), Suffix = "}" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.MU ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KL ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.IN ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.CH ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.FF ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.GE ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = g.KO.ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KK ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}}}," });
+
+            //Folder
+            if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
+            {
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
+            }
+
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+
+            //Portrait Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+                 GetFilenamePortrait),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+
+            //Token Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+                GetFilenameToken),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
+            lstArg.Add(new dbArgument { Prefix = "}" });
+
+            return lstArg;
+
+        }
+
+        private List<dbArgument> SetDSA41Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id)
+        {
+
+            List<dbArgument> lstArg = new List<dbArgument>();
+            char A = (char)34;
+
+            lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.LebensenergieAktuell.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.LebensenergieMax.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AusdauerAktuell.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AusdauerMax.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AstralenergieAktuell.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AstralenergieMax.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.KarmaenergieAktuell.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.KarmaenergieMax.ToString(), Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Magieresistenz.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Geschwindigkeit.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Initiative(false).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.AT ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.PA ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.FernkampfBasis.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Wundschwelle.ToString(), Suffix = "}" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.MU ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KL ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.IN ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.CH ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.FF ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.GE ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KO ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KK ?? 0).ToString() });
+            lstArg.Add(new dbArgument { Prefix = "}}}," });
+
+            //Folder
+            if (SelectedHeldenFolder != null && !string.IsNullOrEmpty(SelectedHeldenFolder.name))
+            {
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedHeldenFolder._id, Suffix = "\"," });
+            }
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+
+            //Portrait Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+                 GetFilenamePortrait),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+
+            //Token Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+                GetFilenameToken),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "true", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "20", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "180", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "180", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
+            lstArg.Add(new dbArgument { Prefix = "}" });
+
+            return lstArg;
+
+
+            //hArg.outcome = "";
+            //foreach (dbArgument arg in lstArg)
+            //{ hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
+
+            //lstHeldArgument.Add(hArg);
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            ////gArg.lstArguments = new List<dbArgument>();
+            //lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
+
+            //lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = ((int)g.KO / 2).ToString(), Suffix = "}" });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.MU ?? 0).ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KL ?? 0).ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.IN ?? 0).ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.CH ?? 0).ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.FF ?? 0).ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.GE ?? 0).ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = g.KO.ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KK ?? 0).ToString() });
+            //lstArg.Add(new dbArgument { Prefix = "}}}," });
+
+            ////Folder
+            //if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
+            //{
+            //    lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
+            //}
+
+            //lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
+
+            //lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+
+            ////Portrait Image
+            //lstArg.Add(new dbArgument
+            //{
+            //    Prefix = A + "img" + A + ":\"",
+            //    ArgString =
+            //    (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+            //     GetFilenamePortrait),
+            //    Suffix = A + ","
+            //});
+
+            //lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+
+            ////Token Image
+            //lstArg.Add(new dbArgument
+            //{
+            //    Prefix = A + "img" + A + ":\"",
+            //    ArgString =
+            //    (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+            //    GetFilenameToken),
+            //    Suffix = A + ","
+            //});
+
+            //lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+            //lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
+            //lstArg.Add(new dbArgument { Prefix = "}," });
+            //lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
+            //lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
+            //lstArg.Add(new dbArgument { Prefix = "}" });
+
+            //return lstArg;
+
+        }
+
+
+        private List<dbArgument> AddGegnerArgument(string eigenschaft, string color, int? wert, string lastEigenschaft = ",")
+        {
+            List<dbArgument> addArg = new List<dbArgument>();
+            char A = (char)34;
+
+            addArg.Add(new dbArgument { Prefix = A + eigenschaft + A + ":{" });
+            addArg.Add(new dbArgument { Prefix = A + "label" + A + ":" + A + "CHAR."+ eigenschaft.ToUpper() + A, Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "abrev" + A + ":" + A + "CHARAbbrev."+ eigenschaft.ToUpper() + A, Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "color" + A + ":" + A + color + A, Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "species" + A + ":0", Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "initial" + A + ":" + (wert??0), Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "modifier" + A + ":0" , Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "advances" + A + ":" + 0, Suffix = "}" + lastEigenschaft });
+            return addArg;
+        }
+
+        private List<dbArgument> AddGegnerStatus(string status, string Iinitial, string Ivalue, string Iadvances, string Imodifier, string Icurrent, string last = ",")
+        {
+            List<dbArgument> addArg = new List<dbArgument>();
+            char A = (char)34;
+
+            addArg.Add(new dbArgument { Prefix = A + status + A + ":{" });
+            if (Iinitial != null)
+                addArg.Add(new dbArgument { Prefix = A + "initial" + A + ":", ArgString = Iinitial, Suffix = "," });
+            if (Ivalue != null && status != "speed")
+                addArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Ivalue, Suffix = "," });
+            if (Iadvances != null)
+                addArg.Add(new dbArgument { Prefix = A + "advances" + A + ":", ArgString = Iadvances, Suffix = "," });
+            if (Imodifier != null)
+                addArg.Add(new dbArgument { Prefix = A + "modifier" + A + ":", ArgString = Imodifier, Suffix = "," });
+            if (Ivalue != null && status == "speed")
+                addArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Ivalue, Suffix = "," });
+            if (Icurrent != null)
+                addArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = Icurrent, Suffix = "," });
+            
+            addArg.Last().Suffix = last;
+            return addArg;
+        }
+
+        private List<dbArgument> AddStats(string stat, int? Svalue = null, int? Smin = null, int? Smax = null, string last = ",")
+        {
+            List<dbArgument> addArg = new List<dbArgument>();
+            char A = (char)34;
+
+            addArg.Add(new dbArgument { Prefix = A + stat + A + ":{" });
+            if (Svalue != null)
+                addArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Svalue.ToString(), Suffix = "," });
+            if (Smin != null)
+                addArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = Smin.ToString(), Suffix = "," });
+            if (Smax != null)
+                addArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = Smax.ToString(), Suffix = "}," });
+            if (last != ",")
+                addArg.Last().Suffix = last;
+            return addArg;
+        }
+
+        private List<dbArgument> AddAttributes(string attrib, int? Astart = null, int? Amod = null, int? Acurrent = null, string last = ",")
+        {
+            List<dbArgument> addArg = new List<dbArgument>();
+            char A = (char)34;
+
+            addArg.Add(new dbArgument { Prefix = A + attrib + A + ":{" });
+            addArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = (Astart ?? 0).ToString(), Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = (Amod ?? 0).ToString(), Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (Acurrent ?? 0).ToString(), Suffix = "}," });
+
+            if (last != ",")
+                addArg.Last().Suffix = last;
+            return addArg;
+        }
+        private List<dbArgument> SetDSA5Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id)
+        {
+            List<dbArgument> lstArg = new List<dbArgument>();
+            char A = (char)34;
+
+            //gArg.lstArguments = new List<dbArgument>();
+            lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+           // lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "characteristics" + A + ":{" });
+
+            lstArg.AddRange(AddGegnerArgument("mu", "#b3241a", g.MU));
+            lstArg.AddRange(AddGegnerArgument("kl", "#8259a3", g.KL));
+            lstArg.AddRange(AddGegnerArgument("in", "#388834", g.IN));
+            lstArg.AddRange(AddGegnerArgument("ch", "#0d0d0d", g.CH));
+            lstArg.AddRange(AddGegnerArgument("ff", "#d5b467", g.FF));
+            lstArg.AddRange(AddGegnerArgument("ge", "#688ec4", g.GE));
+            lstArg.AddRange(AddGegnerArgument("ko", "#fbf5ea", g.KO));
+            lstArg.AddRange(AddGegnerArgument("kk", "#d6a878", g.KK, "},"));
+
+            lstArg.Add(new dbArgument { Prefix = A + "status" + A + ":{" });
+            lstArg.AddRange(AddGegnerStatus("wounds", "0", g.LE.ToString(), "0", (g.LE - g.KO*2).ToString() , g.LE.ToString(), "},"));
+            lstArg.AddRange(AddGegnerStatus("astralenergy", "0", g.AE.ToString(), "0", "0", g.AE.ToString(), "},"));
+            lstArg.AddRange(AddGegnerStatus("karmaenergy", "0", g.KE.ToString(), "0", "0", g.KE.ToString(), "},"));
+            lstArg.AddRange(AddGegnerStatus("soulpower", "0", "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("toughness", "0", "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("dodge", null, "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("fatePoints", null, "0", null, "0", "0", "},"));                            //Schicksalspunkte
+            lstArg.AddRange(AddGegnerStatus("speed", g.GS.ToString(), "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("initiative", null, g.INIBasis.ToString(), null, "0", g.INIBasis.ToString(), "},"));
+            lstArg.Add(new dbArgument { Prefix = A + "size" + A + ":{" + A + "value" + A + ":" , ArgString = A+ "average" + A, Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "details" + A + ":{" });
+            {
+                lstArg.Add(new dbArgument { Prefix = A + "species" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "gender" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "career" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "socialstate" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "family" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "age" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "haircolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "eyecolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "distinguishingmark" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "biography" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "notes" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "experience" + A + ":{" + A + "total" + A + ":0,"  + A+"spent"+A+":0", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "Home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}}," });
+            }
+
+            lstArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{" +A+"value"+A+":"+A+"-"+A, Suffix="},"});
+            lstArg.Add(new dbArgument { Prefix = A + "tradition" + A + ":{" +A+"value"+A+":"+A+A, Suffix="},"});
+            lstArg.Add(new dbArgument { Prefix = A + "feature" + A + ":{" +A+"value"+A+":"+A+A, Suffix="},"});
+            lstArg.Add(new dbArgument { Prefix = A + "happyTalents" + A + ":{" +A+"value"+A+":"+A+A, Suffix="},"});
+            lstArg.Add(new dbArgument { Prefix = A + "freeLanguagePoints" + A + ":{" +A+"value"+A+":0,"+A+"used"+A+":0", Suffix="},"});
+            lstArg.Add(new dbArgument { Prefix = A + "sheetLocked" + A + ":{" +A+"value"+A+":"+"false", Suffix="},"});
+
+            lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
+            lstArg.AddRange(AddStats("health", g.LE, 0, g.LE));
+            lstArg.AddRange(AddStats("endurance", g.AU, 0, g.AU));
+            lstArg.AddRange(AddStats("astral", g.AE, 0, g.AE));
+            lstArg.AddRange(AddStats("karmal", g.KE, 0, g.KE));
+            lstArg.AddRange(AddStats("magic_resistance", g.MRGeist,null,null,"},"));
+            lstArg.AddRange(AddStats("speed", (int)g.GS, null, null, "},"));
+            lstArg.AddRange(AddStats("INI", g.INIBasis, null, null, "},"));
+            lstArg.AddRange(AddStats("AT", g.AT, null, null, "},"));
+            lstArg.AddRange(AddStats("PA", g.PA, null, null, "},"));
+            lstArg.AddRange(AddStats("FK", g.FK, null, null, "},"));
+            lstArg.AddRange(AddStats("WS", Convert.ToInt32(g.KO/2),null,null,"}},"));
+
+            lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
+            lstArg.AddRange(AddAttributes("MU", g.MU, 0, g.MU));
+            lstArg.AddRange(AddAttributes("KL", g.KL, 0, g.KL));
+            lstArg.AddRange(AddAttributes("IN", g.IN, 0, g.IN));
+            lstArg.AddRange(AddAttributes("CH", g.CH, 0, g.CH));
+            lstArg.AddRange(AddAttributes("FF", g.FF, 0, g.FF));
+            lstArg.AddRange(AddAttributes("GE", g.GE, 0, g.GE));
+            lstArg.AddRange(AddAttributes("KO", g.KO, 0, g.KO));
+            lstArg.AddRange(AddAttributes("KK", g.KK, 0, g.KK,"}}},"));
+
+            //Folder
+            if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
+            {
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
+            }
+
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+
+            //Portrait Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+                 GetFilenamePortrait),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+
+            //Token Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+                GetFilenameToken),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = A+""+A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "" });
+
+            //Add all Talente
+
+            // end Talente
+
+            lstArg.Add(new dbArgument { Prefix = "]," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
+            lstArg.Add(new dbArgument { Prefix = "}" });
+
+            return lstArg;
+
+        }
+
+
+        private List<dbArgument> SetDSA5Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id)
+        {
+            List<dbArgument> lstArg = new List<dbArgument>();
+            char A = (char)34;
+
+            //gArg.lstArguments = new List<dbArgument>();
+            lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+            // lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "characteristics" + A + ":{" });
+
+            lstArg.AddRange(AddGegnerArgument("mu", "#b3241a", h.MU));
+            lstArg.AddRange(AddGegnerArgument("kl", "#8259a3", h.KL));
+            lstArg.AddRange(AddGegnerArgument("in", "#388834", h.IN));
+            lstArg.AddRange(AddGegnerArgument("ch", "#0d0d0d", h.CH));
+            lstArg.AddRange(AddGegnerArgument("ff", "#d5b467", h.FF));
+            lstArg.AddRange(AddGegnerArgument("ge", "#688ec4", h.GE));
+            lstArg.AddRange(AddGegnerArgument("ko", "#fbf5ea", h.KO));
+            lstArg.AddRange(AddGegnerArgument("kk", "#d6a878", h.KK, "},"));
+
+            lstArg.Add(new dbArgument { Prefix = A + "status" + A + ":{" });
+            lstArg.AddRange(AddGegnerStatus("wounds", "0", h.LebensenergieAktuell.ToString(), "0", (h.LebensenergieMax - h.KO * 2).ToString(), h.LebensenergieMax.ToString(), "},"));
+            lstArg.AddRange(AddGegnerStatus("astralenergy", "0", h.AstralenergieAktuell.ToString(), "0", "0", h.AstralenergieMax.ToString(), "},"));
+            lstArg.AddRange(AddGegnerStatus("karmaenergy", "0", h.KarmaenergieAktuell.ToString(), "0", "0", h.KarmaenergieMax.ToString(), "},"));
+            lstArg.AddRange(AddGegnerStatus("soulpower", "0", "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("toughness", "0", "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("dodge", null, "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("fatePoints", null, "0", null, "0", "0", "},"));                            //Schicksalspunkte
+            lstArg.AddRange(AddGegnerStatus("speed", h.Geschwindigkeit.ToString(), "0", null, "0", null, "},"));
+            lstArg.AddRange(AddGegnerStatus("initiative", null, h.InitiativeBasis.ToString(), null, "0", h.InitiativeMax().ToString(), "},"));
+            lstArg.Add(new dbArgument { Prefix = A + "size" + A + ":{" + A + "value" + A + ":", ArgString = A + "average" + A, Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "details" + A + ":{" });
+            {
+                lstArg.Add(new dbArgument { Prefix = A + "species" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "gender" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "career" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "socialstate" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "family" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "age" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "haircolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "eyecolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "distinguishingmark" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "biography" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "notes" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "experience" + A + ":{" + A + "total" + A + ":0," + A + "spent" + A + ":0", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "Home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}}," });
+            }
+
+            lstArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{" + A + "value" + A + ":" + A + "-" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "tradition" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "feature" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "happyTalents" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "freeLanguagePoints" + A + ":{" + A + "value" + A + ":0," + A + "used" + A + ":0", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "sheetLocked" + A + ":{" + A + "value" + A + ":" + "false", Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
+            lstArg.AddRange(AddStats("health", h.LebensenergieAktuell, 0, h.LebensenergieMax));
+            lstArg.AddRange(AddStats("endurance", h.AusdauerAktuell, 0, h.AusdauerMax));
+            lstArg.AddRange(AddStats("astral", h.AstralenergieAktuell, 0, h.AstralenergieMax));
+            lstArg.AddRange(AddStats("karmal", h.KarmaenergieAktuell, 0, h.KarmaenergieMax));
+            lstArg.AddRange(AddStats("magic_resistance", h.MRGeist, null, null, "},"));
+            lstArg.AddRange(AddStats("speed", (int)h.Geschwindigkeit, null, null, "},"));
+            lstArg.AddRange(AddStats("INI", h.InitiativeBasis, null, null, "},"));
+            lstArg.AddRange(AddStats("AT", h.AT, null, null, "},"));
+            lstArg.AddRange(AddStats("PA", h.PA, null, null, "},"));
+            lstArg.AddRange(AddStats("FK", h.Fernkampf, null, null, "},"));
+            lstArg.AddRange(AddStats("WS", Convert.ToInt32( h.KO / 2), null, null, "}},"));
+
+            lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
+            lstArg.AddRange(AddAttributes("MU", h.MU, 0, h.MU));
+            lstArg.AddRange(AddAttributes("KL", h.KL, 0, h.KL));
+            lstArg.AddRange(AddAttributes("IN", h.IN, 0, h.IN));
+            lstArg.AddRange(AddAttributes("CH", h.CH, 0, h.CH));
+            lstArg.AddRange(AddAttributes("FF", h.FF, 0, h.FF));
+            lstArg.AddRange(AddAttributes("GE", h.GE, 0, h.GE));
+            lstArg.AddRange(AddAttributes("KO", h.KO, 0, h.KO));
+            lstArg.AddRange(AddAttributes("KK", h.KK, 0, h.KK, "}}},"));
+
+            //Folder
+            if (SelectedHeldenFolder != null && !string.IsNullOrEmpty(SelectedHeldenFolder.name))
+            {
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedHeldenFolder._id, Suffix = "\"," });
+            }
+
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+
+            //Portrait Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+                 GetFilenamePortrait),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+
+            //Token Image
+            lstArg.Add(new dbArgument
+            {
+                Prefix = A + "img" + A + ":\"",
+                ArgString =
+                (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+                GetFilenameToken),
+                Suffix = A + ","
+            });
+
+            lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = A + "" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
+            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "" });
+
+            //Add all Talente
+            int i = 1;
+            foreach(Held_Talent ht in h.Held_Talent)
+            {
+                if (ht.Talent.Talentgruppe.Kurzname == "Kampf" ||
+                    ht.Talent.Talentgruppe.Kurzname == "Ritualkenntnis" ||
+                    ht.Talent.Talentgruppe.Kurzname == "Meta")
+                    continue;
+                lstArg.AddRange(GetArgumenteHeldTalent(ht, i));
+                i++;
+            }
+
+            lstArg.Last().Suffix = "}";
+
+            // end Talente
+
+            lstArg.Add(new dbArgument { Prefix = "]," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
+            lstArg.Add(new dbArgument { Prefix = "}" });
+
+            return lstArg;
+
+        }
+        private List<dbArgument> GetArgumenteHeldTalent(Held_Talent ht, int sortNo)
+        {
+            List<dbArgument> lstArg = new List<dbArgument>();
+            string GruppenTyp =
+                ht.Talent.Talentgruppe.Kurzname == "Kampf" ? "combat" :
+                ht.Talent.Talentgruppe.Kurzname == "Körper" ? "body" :
+                ht.Talent.Talentgruppe.Kurzname == "Gesellschaft" ? "social" :
+                ht.Talent.Talentgruppe.Kurzname == "Natur" ? "nature" :
+                ht.Talent.Talentgruppe.Kurzname == "Wissen" ? "knowledge" :
+                ht.Talent.Talentgruppe.Kurzname == "Handwerk" ? "trade" :
+                ht.Talent.Talentgruppe.Kurzname == "Sprachen/Schriften" ? "knowledge" :
+                ht.Talent.Talentgruppe.Kurzname == "Meta" ? "meta" :
+                ht.Talent.Talentgruppe.Kurzname == "Gabe" ? "gift" :
+                ht.Talent.Talentgruppe.Kurzname == "Ritualkenntnis" ? "ritual" :
+                ht.Talent.Talentgruppe.Kurzname == "Liturgiekenntnis" ? "liturg" : "";
+            char A = (char)34;
+            string id = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
+            //gArg.lstArguments = new List<dbArgument>();
+            lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = ht.Talentname, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "skill", Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":", ArgString="{" });
+            lstArg.Add(new dbArgument { Prefix = A + "group" + A + ":{", ArgString = A+ "value"+A+":\""+GruppenTyp+A+","+ A+"type"+A+":"+A+"String"+A+","+A+"label"+A+":\"Skillgroup", Suffix = A + "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "talentValue" + A + ":{\"", ArgString = "value" + A + ":" + ht.TaW + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "Fw", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "characteristic1" + A + ":{\"", ArgString = "value" + A + ":\"" + ht.Talent.Eigenschaft1.ToLower() + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Characteristic1", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "characteristic2" + A + ":{\"", ArgString = "value" + A + ":\"" + ht.Talent.Eigenschaft2.ToLower() + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Characteristic2", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "characteristic3" + A + ":{\"", ArgString = "value" + A + ":\"" + ht.Talent.Eigenschaft3.ToLower() + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Characteristic3", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "RPr" + A + ":{\"", ArgString = "value" + A + ":\"maybe" + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Routinecheck", Suffix = A + "}," });
+            string be = string.IsNullOrEmpty(ht.Talent.eBE)? "no" : ht.Talent.eBE;
+            lstArg.Add(new dbArgument { Prefix = A + "burden" + A + ":{\"", ArgString = "value" + A + ":\""+ be + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Burden", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Description", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "gmdescription" + A + ":{\"", ArgString = "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Description", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "Rpr" + A + ":{\"", ArgString = "value" + A + ":\"maybe" + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Routinecheck", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "StF" + A + ":{\"", ArgString = "value" + A + ":\"" +ht.Talent.Steigerung, Suffix = A + "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = (sortNo*100000).ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{\""+"sourceId"+A+":"+A+ "Item.W0KTljWMKO7otAZR"+A+"}},"+A+"img"+A+":\""+ "icons/tools/hand/spinning-wheel-brown.webp",Suffix= A+","});
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[]", Suffix="}," });
+
+            return lstArg;
+        }
+        /*           
+             {"_id":"JDDZiwiT2Myr1BjE",
+            "name":"Betören",
+            "type":"skill",
+            "data":
+                {
+                "group":{"value":"social","type":"String","label":"Skillgroup"},
+                "talentValue":{"value":0,"type":"Number","label":"Fw"},
+                "characteristic1":{"value":"mu","type":"String","label":"Characteristic1"},
+                "characteristic2":{"value":"ch","type":"String","label":"Characteristic2"},
+                "characteristic3":{"value":"ch","type":"String","label":"Characteristic3"},
+                "RPr":{"value":"no","type":"String","label":"Routinecheck"},
+                "burden":{"value":"maybe","type":"String","label":"Burden"},
+                "description":{"type":"String","label":"Description","value":""},
+                "gmdescription":{"type":"String","label":"Description","value":""},
+                "Rpr":{"value":"no","type":"String","label":"Routinecheck"},
+                "StF":{"value":"B"}
+                },
+            "sort":100000,
+            "flags":{"core":{"sourceId":"Item.W0KTljWMKO7otAZR"}},"img":"icons/tools/hand/spinning-wheel-brown.webp",
+            "effects":[]},
+             */
+
         public void GetGegnerData()
         {
             lstGegnerArgument.Clear();
@@ -984,170 +1958,33 @@ namespace MeisterGeister.ViewModel.Foundry
                 ListFtpDirectory(FoundryPfad + GegnerPortraitPfad, "", false, credentials, list);
                 lstFTPGegnerPics = list;
             }
-
             foreach (GegnerBase g in lstGegnerBase)
             {
                 BildSpeichern(g.Bild, GegnerPortraitPfad, MGPfad, lstFTPGegnerPics, lstPicKopiert);
                 BildSpeichern(g.Bild, GegnerTokenPfad, MGPfad, lstFTPGegnerPics, lstTokenKopiert);
 
-                string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null: (GegnerPortraitPfad + System.IO.Path.GetFileName(g.Bild));
+                string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null: (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
                 //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
-                string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad + System.IO.Path.GetFileName(g.Bild));
+                string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
 
-                char A = (char)34; // (new Char[] { '"' });
-                                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
-                    string id = g.GegnerBaseGUID.ToString().Substring(19, 17).Replace("-", "");
+                //char A = (char)34; // (new Char[] { '"' });
+                //                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
+                string id = g.GegnerBaseGUID.ToString().Substring(19, 17).Replace("-", "");
 
-                    GegnerArgument gArg = new GegnerArgument();
-                    gArg.g = g;
-                    gArg.lstArguments = new List<dbArgument>();
+                GegnerArgument gArg = new GegnerArgument();
+                gArg.g = g;
+                gArg.lstArguments = new List<dbArgument>();
+                if( DSA41Version)
+                    gArg.lstArguments.AddRange(SetDSA41Arguments(g, GetFilenamePortrait, GetFilenameToken, id));
+                else
+                    gArg.lstArguments.AddRange(SetDSA5Arguments(g, GetFilenamePortrait, GetFilenameToken, id));
+                gArg.outcome = "";
+                foreach (dbArgument arg in gArg.lstArguments)
+                { gArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
 
-                    gArg.lstArguments = new List<dbArgument>();
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
-
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue?g.MRKörper.Value:0, g.MRGeist).ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = ((int)g.KO/2).ToString(), Suffix = "}" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.MU ?? 0).ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KL ?? 0).ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.IN ?? 0).ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.CH ?? 0).ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.FF ?? 0).ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.GE ?? 0).ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = g.KO.ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KK ?? 0).ToString() });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}}}," });
-
-                    //Folder
-                    if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
-                    {
-                        gArg.lstArguments.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
-                    }
-
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
-
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-
-                //Portrait Image
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = 
-                        (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
-                         GetFilenamePortrait), Suffix = A + "," });
-                    
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
-                    
-                //Token Image
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = 
-                        (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
-                        GetFilenameToken), Suffix = A + "," });
-                    
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
-                    gArg.lstArguments.Add(new dbArgument { Prefix = "}" });
-
-                    gArg.outcome = "";
-                    foreach (dbArgument arg in gArg.lstArguments)
-                    { gArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
-
-                    lstGegnerArgument.Add(gArg);
-                }
-                MyTimer.stop_timer("Gegner-DB-Argument");
+                lstGegnerArgument.Add(gArg);
+            }
+            MyTimer.stop_timer("Gegner-DB-Argument");
         }
         public void GetHeldenData()
         {
@@ -1172,158 +2009,26 @@ namespace MeisterGeister.ViewModel.Foundry
                 BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
                 BildSpeichern(h.Bild, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
 
-                string GetFilenamePortrait = string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad + System.IO.Path.GetFileName(h.Bild));
+                string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\","/") + System.IO.Path.GetFileName(h.Bild)));
                 //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
-                string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad + System.IO.Path.GetFileName(h.Bild));
+                string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild));
 
                 char A = (char)34; // (new Char[] { '"' });
                 //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
                 string id = h.HeldGUID.ToString().Substring(19, 17).Replace("-", "");
+
                 HeldenArgument hArg = new HeldenArgument();
                 hArg.h = h;
                 hArg.lstArguments = new List<dbArgument>();
-                hArg.lstArguments.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.LebensenergieAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.LebensenergieMax.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AusdauerAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AusdauerMax.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AstralenergieAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AstralenergieMax.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.KarmaenergieAktuell.ToString(), Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.KarmaenergieMax.ToString(), Suffix = "}," });
-
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Magieresistenz.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Geschwindigkeit.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Initiative(false).ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.AT ?? 0).ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.PA ?? 0).ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.FernkampfBasis.ToString(), Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Wundschwelle.ToString(), Suffix = "}" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.MU ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KL ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.IN ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.CH ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.FF ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.GE ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KO ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KK ?? 0).ToString() });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}}}," });
-
-                //Folder
-                if (SelectedHeldenFolder != null && !string.IsNullOrEmpty(SelectedHeldenFolder.name))
-                {
-                    hArg.lstArguments.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedHeldenFolder._id, Suffix = "\"," });
-                }
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
-
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-
-                //Portrait Image
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = 
-                    (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
-                     GetFilenamePortrait), Suffix = A + ","});
-
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
-
-                //Token Image
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString =
-                    (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
-                    GetFilenameToken),Suffix = A + "," });
-
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "true", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "20", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "180", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "180", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
-                hArg.lstArguments.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
-                hArg.lstArguments.Add(new dbArgument { Prefix = "}" });
-
+                if (DSA41Version)
+                    hArg.lstArguments.AddRange(SetDSA41Arguments(h, GetFilenamePortrait, GetFilenameToken, id));
+                else
+                    hArg.lstArguments.AddRange(SetDSA5Arguments(h, GetFilenamePortrait, GetFilenameToken, id));
                 hArg.outcome = "";
                 foreach (dbArgument arg in hArg.lstArguments)
                 { hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
 
-                lstHeldArgument.Add(hArg);
+                lstHeldArgument.Add(hArg);                
             }
             MyTimer.stop_timer("Helden-DB-Argument");
         }
@@ -1466,13 +2171,6 @@ namespace MeisterGeister.ViewModel.Foundry
                     "Hauptverzeichnis exportiert werden?"))
                     return;
 
-                //if (!PathExists(FoundryPfad + GegnerPortraitPfad) || !PathExists(FoundryPfad + GegnerTokenPfad))
-                //{
-                //    ViewHelper.Popup(string.Format("Nicht alle Pfade sind vorhanden.\nBitte überprüfe folgende Pfade:\n\n* {0}\n* {1}",
-                //        FoundryPfad + GegnerPortraitPfad, FoundryPfad + GegnerTokenPfad));
-                //    return;
-                //}
-
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait); 
                 MyTimer.start_timer();
                 GetGegnerData();
@@ -1512,7 +2210,6 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
                 else
                 {
-
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                     ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
                         "folgendem Pfad sein:\n" + actorsPath);
@@ -1520,7 +2217,6 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             finally
             {
-
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
             }
         }

@@ -85,6 +85,13 @@
                                     <Label Content="Gegner" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold"/>
                                     <Label Content="Helden" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold"/>
 
+                                    <GroupBox Header="Foundry DSA Version" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Width="150" Height="40">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
+                                            <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
+                                        </StackPanel>
+                                    </GroupBox>
+
                                     <Label Content="Verzeichnis" Grid.Row="1" />
                                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" >
                                         <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedGegnerFolder}" DisplayMemberPath="name" Width="125"/>
