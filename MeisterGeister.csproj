@@ -2802,6 +2802,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0132.sql" />
     <Resource Include="Images\Icons\HUE_Circle.png" />
     <Resource Include="Images\Icons\HUE-Bridge_Init.png" />
+    <Content Include="Daten\Updateskripte\UpdateTo_V0133.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

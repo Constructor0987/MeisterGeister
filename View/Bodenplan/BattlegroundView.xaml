@@ -325,6 +325,17 @@
                                             ShowDropDownButton="False"
                                             ToolTip="Füllfarbe" />
                                     </StackPanel>
+
+                                    <StackPanel
+                                        Grid.Row="2"
+                                        Grid.Column="1">
+                                        <Slider Orientation="Vertical" Height="100" Minimum=".2" Maximum="3" SmallChange=".1" LargeChange=".3"
+                                                Value="{Binding TokenOversizeMod, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+                                            <Slider.ToolTip>
+                                                <TextBlock Text="{Binding TokenOversizeMod, StringFormat={}{0:0.##} }" />
+                                            </Slider.ToolTip>
+                                        </Slider>
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
@@ -787,24 +798,26 @@
                                                         </Path.Style>
                                                     </Path>
 
-                                                    <!--  Frame for Heroe Picture  -->
-                                                    <Rectangle
-                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
-                                                        RadiusX="12"
-                                                        RadiusY="12"
-                                                        Stroke="#FF5D5757"
-                                                        ToolTip="{Binding Name}">
-                                                        <Rectangle.Fill>
-                                                            <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill">
+                                                    <!--  Frame for Heroe Picture  -->                                                  
+                                                    <Border  x:Name="brdCreaturePic"
+                                                        Canvas.Left="{Binding CreatureXPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureYPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding CreatureWidthPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureHeightPic, UpdateSourceTrigger=PropertyChanged}">
+                                                        <Border.RenderTransform>
+                                                            <RotateTransform 
+                                                                CenterX="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}" 
+                                                                CenterY="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}"
+                                                                Angle="{Binding RotateImageDegrees, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </Border.RenderTransform>
+                                                        <Border.Background>
+                                                            <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill" >
                                                                 <ImageBrush.ImageSource>
-                                                                    <Binding
-                                                                        Converter="{StaticResource ImagePathConverter}"
-                                                                        IsAsync="True"
-                                                                        Mode="OneWay"
-                                                                        Path="Bild">
+                                                                    <Binding 
+                                                                            Converter="{StaticResource ImagePathConverter}"
+                                                                            IsAsync="True" 
+                                                                            Mode="OneWay"
+                                                                            Path="BattleToken">
                                                                         <Binding.FallbackValue>
                                                                             <ImageSource>
                                                                                 /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
@@ -818,7 +831,17 @@
                                                                     </Binding>
                                                                 </ImageBrush.ImageSource>
                                                             </ImageBrush>
-                                                        </Rectangle.Fill>
+                                                        </Border.Background>
+                                                    </Border>
+                                                    <Rectangle
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                        RadiusX="12"
+                                                        RadiusY="12"
+                                                        Stroke="#FF5D5757"
+                                                        ToolTip="{Binding Name}">                                                       
                                                     </Rectangle>
 
                                                     <!--  -Z-Level  -->
@@ -1576,6 +1599,7 @@
                         </ListBox>
 
                         <s:SpielerPointer Margin="{Binding PointerMargin, UpdateSourceTrigger=PropertyChanged}" />
+
                     </Grid>
                 </wpfxc:ZoomControl>
             </Grid>
