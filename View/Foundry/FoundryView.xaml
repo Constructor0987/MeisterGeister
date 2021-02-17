@@ -32,9 +32,9 @@
 
                         <GroupBox Header="FoundryVTT - Pfad" Margin="2,0,0,0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Text="{Binding FoundryPfad}" Width="400" IsReadOnly="True" />
-                                <Button Command="{Binding OnBtnFTPConfig}" ToolTip="FTP-Zugang einstellen"
-                                        Visibility="{Binding IsLocalInstalliert, Converter={StaticResource InverseBooleanToVisibilityConverter1}}" >
+                                <TextBox Text="{Binding FoundryPfad, UpdateSourceTrigger=PropertyChanged}" Width="400" IsReadOnly="True" />
+                                <Button Command="{Binding OnBtnFTPConfig}" ToolTip="FTP-Zugang einstellen" >
+                                    <!--Visibility="{Binding IsLocalInstalliert, Converter={StaticResource InverseBooleanToVisibilityConverter1}}" >-->
                                     <Image Source="/Images/Icons/mechanik.png" Margin="-3"/>
                                 </Button>
                             </StackPanel>
@@ -42,7 +42,7 @@
                     </StackPanel>
 
                     <GroupBox Header="Vorhandene Welten" Grid.Row="1" Margin="20,0,0,0" Width="300">
-                        <ComboBox ItemsSource="{Binding lstWorlds}" SelectedItem="{Binding SelectedWorld}" />
+                        <ComboBox ItemsSource="{Binding lstWorlds, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedWorld}" />
                     </GroupBox>
 
                     <!-- Suchfeld und Komplette Datenbank -->
@@ -140,7 +140,7 @@
                                         ToolTip="Alle Standard-Pfad werden durch den angegebenen Foundry-Pfad ersetzt ">
                                         <ListBox ItemsSource="{Binding stdPfad}" IsEnabled="False" Width="205"  MaxHeight="80" />
                                         <Label Content="=>" VerticalAlignment="Center" />
-                                        <TextBox Text="{Binding NameSounds}" Width="205" VerticalAlignment="Center"/>
+                                        <TextBox Text="{Binding MusikPfad}" Width="205" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
                                     <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
