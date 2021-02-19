@@ -1819,7 +1819,7 @@ namespace MeisterGeister.ViewModel.Foundry
             AddKampfTalent(addArg, g, "Dolche", "Dolche", "D", "ge", g.PA, g.AT, 0, "melee");
             AddKampfTalent(addArg, g, "Fechtwaffen", "Fechtwaffen", "E", "ge", g.PA, g.AT, 0, "melee");
             AddKampfTalent(addArg, g, "Hiebwaffen", "Hiebwaffen", "D", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Spießwaffen", "Infanteriewaffen", "D", "kk", g.PA, g.AT, 0, "melee");
+            AddKampfTalent(addArg, g, "Spiesswaffen", "Infanteriewaffen", "D", "kk", g.PA, g.AT, 0, "melee");
             AddKampfTalent(addArg, g, "Kettenstäbe", "Kettenstäbe", "E", "ff", g.PA, g.AT, 0, "melee");
             AddKampfTalent(addArg, g, "Kettenwaffen", "Kettenwaffen", "D", "kk", g.PA, g.AT, 0, "melee");
             AddKampfTalent(addArg, g, "Lanzen", "Lanzenreiten", "E", "kk", g.PA, g.AT, 0, "melee");
