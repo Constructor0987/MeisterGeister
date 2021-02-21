@@ -230,7 +230,7 @@
                             <ListBox Name="_listBoxFeiertageVorschau" ItemTemplate="{StaticResource FeiertagListTemplate}" Background="Transparent" BorderThickness="0" Opacity="0.5" />
                         </StackPanel>
                     </Expander>
-                    <Expander Name="_expanderKalenderTest" Grid.Row="3" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                    <Expander Name="_expanderKalenderTest" Grid.Row="3" Margin="2" IsExpanded="False" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                         <Expander.Header>
                             <TextBlock Text="KalenderTest" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
