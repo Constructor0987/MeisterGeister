@@ -169,6 +169,13 @@ namespace MeisterGeister.View.General
                         energieMax = SelectedKämpfer.LebensenergieMax;
                         _labelInfo.Content = SelectedKämpfer.LebensenergieStatus;
                         _labelInfo.ToolTip = SelectedKämpfer.LebensenergieStatusDetails;
+                        if (SelectedKämpfer.LebensenergieAktuell <= 0 && Global.CurrentKampf != null)
+                            Global.CurrentKampf.Kampf.Kämpfer.Remove(SelectedKämpfer);
+                        else
+                            if (SelectedKämpfer.LebensenergieAktuell > 0 && 
+                            Global.CurrentKampf != null &&
+                            Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == SelectedKämpfer) == null)
+                            Global.CurrentKampf.Kampf.Kämpfer.Add(SelectedKämpfer);
                         break;
                     case EnergieEnum.Ausdauer:
                         energieAktuell = SelectedKämpfer.AusdauerAktuell;

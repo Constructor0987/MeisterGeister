@@ -59,7 +59,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (entfernen == null)
-                    entfernen = new CommandBase((o) => DeleteKämpfer(), null); //Kampf.Kämpfer.Remove(this), null);
+                    entfernen = new CommandBase((o) => DeleteKämpfer(), null);
 
                 return entfernen;
                 
@@ -418,7 +418,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public bool IstImKampf
         {
             get { return _istImKampf; }
-            set { Set(ref _istImKampf, value); }
+            set 
+            { 
+                Set(ref _istImKampf, value);
+                if (!value)
+                {
+                    Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
+                }
+                else
+                    Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
+            }
         }
 
         private bool _istAnführer = false;
