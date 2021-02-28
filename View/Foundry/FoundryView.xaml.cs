@@ -98,5 +98,10 @@ namespace MeisterGeister.View.Foundry
                 grdBrowser.Children.Add(VM.cWebBrowser);
             }
         }
+
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            VM.InitWaffen();
+        }
     }
 }

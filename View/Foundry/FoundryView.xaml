@@ -15,7 +15,7 @@
     <Grid>
         <TabControl>
             <TabItem Header="Im-/Export">
-                <Grid MinWidth="500">
+                <Grid MinWidth="500" Background="{StaticResource Background2}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="45"/>
                         <RowDefinition Height="45"/>
@@ -48,108 +48,205 @@
                     <!-- Suchfeld und Komplette Datenbank -->
 
                     <!-- Generelle Infos -->
-                    <Expander Margin="3,3,3,2" IsExpanded="True" Grid.Row="2" >
-                        <Expander.Header>
-                            <TextBlock Text="Kämpfer Informationen" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60*"/>
-                                <ColumnDefinition Width="166*"/>
-                                <ColumnDefinition Width="113*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                    <TabControl Grid.Row="2">
+                        <TabItem Header="Gegner" >
+                            <Grid Background="{StaticResource BackgroundMenu}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="166*"/>
+                                    <ColumnDefinition Width="113*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                            <GroupBox Header="Kämpfer-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="2,10,0,0">
-                                <Grid Margin="0,5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Label Content="Gegner" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold"/>
-                                    <Label Content="Helden" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                <GroupBox Header="Kämpfer-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10">
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="197*"/>
+                                            <ColumnDefinition Width="197*"/>
+                                            <ColumnDefinition Width="196*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
 
-                                    <GroupBox Header="Foundry DSA Version" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Width="150" Height="40">
-                                        <StackPanel Orientation="Horizontal">
-                                            <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
-                                            <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
+                                        <GroupBox Header="Foundry DSA Version" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="150" Height="40" Margin="0,5">
+                                            <StackPanel Orientation="Horizontal">
+                                                <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
+                                                <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
+                                            </StackPanel>
+                                        </GroupBox>
+
+                                        <Label Content="Verzeichnis" Grid.Row="1" />
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Left" Margin="10,0" >
+                                            <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedGegnerFolder}" DisplayMemberPath="name" Width="125"/>
+                                            <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
+                                            Command="{Binding OnBtnCreateFolder}" >
+                                                <Image Source="/Images/Icons/General/add.png" />
+                                            </Button>
                                         </StackPanel>
-                                    </GroupBox>
 
-                                    <Label Content="Verzeichnis" Grid.Row="1" />
-                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" >
-                                        <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedGegnerFolder}" DisplayMemberPath="name" Width="125"/>
-                                        <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                            Command="{Binding OnBtnCreateFolder}" >
-                                            <Image Source="/Images/Icons/General/add.png" />
-                                        </Button>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" >
-                                        <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedHeldenFolder}" DisplayMemberPath="name" Width="125"/>
-                                        <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                            Command="{Binding OnBtnCreateFolder}" >
-                                            <Image Source="/Images/Icons/General/add.png" />
-                                        </Button>
-                                    </StackPanel>
+                                        <Label Content="Portait-Pfad" Grid.Row="2"/>
+                                        <!--<ComboBox ItemsSource="{Binding lstWorldFolders}" SelectedItem="{Binding GegnerPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>-->
+                                        <TextBox Text="{Binding GegnerPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
 
-                                    <Label Content="Portait-Pfad" Grid.Row="2"/>
-                                    <!--<ComboBox ItemsSource="{Binding lstWorldFolders}" SelectedItem="{Binding GegnerPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>-->
-                                    <TextBox Text="{Binding GegnerPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
-                                    <TextBox Text="{Binding HeldPortraitPfad}" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="10,2"/>
+                                        <Label Content="Token-Pfad" Grid.Row="3"/>
+                                        <TextBox Text="{Binding GegnerTokenPfad}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
 
-                                    <Label Content="Token-Pfad" Grid.Row="3"/>
-                                    <TextBox Text="{Binding GegnerTokenPfad}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
-                                    <TextBox Text="{Binding HeldTokenPfad}" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="10,2"/>
+                                        <Button Content="Export Gegner" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportGegner}" />
 
-                                    <Button Content="Export Gegner" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportGegner}" />
-                                    <Button Content="Export Helden" Margin="0,10,0,0" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportHelden}" />
-
-                                    <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
+                                        <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
                                               Content="Vorhandene Bilddateien überschreiben" />
 
-                                </Grid>
-                            </GroupBox>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Helden" Height="23" VerticalAlignment="Top" >
+                            <Grid Background="{StaticResource BackgroundMenu}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="166*"/>
+                                    <ColumnDefinition Width="113*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                        </Grid>
-                    </Expander>
+                                <GroupBox Header="Kämpfer-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10">
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="197*"/>
+                                            <ColumnDefinition Width="197*"/>
+                                            <ColumnDefinition Width="196*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
 
-                    <Expander Margin="3,3,3,2" IsExpanded="True" Grid.Column="1" Grid.Row="3" >
-                        <Expander.Header>
-                            <TextBlock Text="Playlist Informationen" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Grid>
-                            <GroupBox Header="Playlisten-Export" Grid.ColumnSpan="3" Grid.Row="3" Margin="2,10,0,0">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5" 
+                                        <GroupBox Header="Foundry DSA Version" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="150" Height="40" Margin="0,5">
+                                            <StackPanel Orientation="Horizontal">
+                                                <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
+                                                <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
+                                            </StackPanel>
+                                        </GroupBox>
+
+                                        <Label Content="Verzeichnis" Grid.Row="1" />
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
+                                            <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedHeldenFolder}" DisplayMemberPath="name" Width="125"/>
+                                            <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
+                                            Command="{Binding OnBtnCreateFolder}" >
+                                                <Image Source="/Images/Icons/General/add.png" />
+                                            </Button>
+                                        </StackPanel>
+
+                                        <Label Content="Portait-Pfad" Grid.Row="2"/>
+                                        <!--<ComboBox ItemsSource="{Binding lstWorldFolders}" SelectedItem="{Binding GegnerPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>-->
+                                        <TextBox Text="{Binding HeldPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
+
+                                        <Label Content="Token-Pfad" Grid.Row="3"/>
+                                        <TextBox Text="{Binding HeldTokenPfad}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
+                                        <Button Content="Export Helden" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportHelden}" />
+
+                                        <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
+                                              Content="Vorhandene Bilddateien überschreiben" />
+
+                                    </Grid>
+                                </GroupBox>
+
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Playlisten" Height="26" Margin="-2,-2,-1.5,-1" VerticalAlignment="Bottom">
+
+                            <Grid Background="{StaticResource BackgroundMenu}">
+                                <GroupBox Header="Playlisten-Export" Grid.ColumnSpan="3" Grid.Row="3" Margin="20,10">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,5" 
                                         ToolTip="Alle Standard-Pfad werden durch den angegebenen Foundry-Pfad ersetzt ">
-                                        <ListBox ItemsSource="{Binding stdPfad}" IsEnabled="False" Width="205"  MaxHeight="80" />
-                                        <Label Content="=>" VerticalAlignment="Center" />
-                                        <TextBox Text="{Binding MusikPfad}" Width="205" VerticalAlignment="Center"/>
+                                            <ListBox ItemsSource="{Binding stdPfad}" IsEnabled="False" Width="205"  MaxHeight="80" />
+                                            <Label Content="=>" VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding MusikPfad}" Width="205" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
+                                        <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
+                                        <CheckBox IsChecked="{Binding CopyTitelFile}" Content="Kopiere alle Musik-Dateien nach Foundry" />
+                                        <Label Content="{Binding PlaylistStatus, UpdateSourceTrigger=PropertyChanged}" Height="30" />
                                     </StackPanel>
-                                    <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
-                                    <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
-                                    <CheckBox IsChecked="{Binding CopyTitelFile}" Content="Kopiere alle Musik-Dateien nach Foundry" />
-                                    <Label Content="{Binding PlaylistStatus, UpdateSourceTrigger=PropertyChanged}" Height="30" />
-                                </StackPanel>
-                            </GroupBox>
-                        </Grid>
-                    </Expander>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Waffen" GotFocus="TabItem_GotFocus" >
+                            <Grid Background="{StaticResource BackgroundMenu}">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="166*"/>
+                                    <ColumnDefinition Width="113*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <GroupBox Header="Waffen-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10">
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="197*"/>
+                                            <ColumnDefinition Width="197*"/>
+                                            <ColumnDefinition Width="196*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Content="Verzeichnis" Grid.Row="1" />
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
+                                            <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedWaffenFolder}" DisplayMemberPath="name" Width="125"/>
+                                            <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
+                                            Command="{Binding OnBtnCreateFolder}" >
+                                                <Image Source="/Images/Icons/General/add.png" />
+                                            </Button>
+                                        </StackPanel>
+                                        <!--<ComboBox ItemsSource="{Binding lstWorldFolders}" SelectedItem="{Binding GegnerPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>-->
+                                        <Button Content="Export Waffen" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportWaffen}" />
+
+                                        <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
+                                              Content="Vorhandene Bilddateien überschreiben" />
+
+                                    </Grid>
+                                </GroupBox>
+
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
                 </Grid>
 
             </TabItem>

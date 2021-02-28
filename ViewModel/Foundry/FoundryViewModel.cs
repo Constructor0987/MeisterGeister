@@ -20,6 +20,7 @@ namespace MeisterGeister.ViewModel.Foundry
         //TODO:  Foundry Pfad vom User definierbar, read Options, set Web-Connection (lokal oder Inet auswählbar)
         //TODO:  SpielerScreen: Zeige WebBrowser
 
+        #region //---- Classes ----
         public class MyTimer
         {
             static int start = 0;
@@ -53,11 +54,23 @@ namespace MeisterGeister.ViewModel.Foundry
             public string color { get; set; }
             public string _id { get; set; }
         }
+        public class WaffeTalent
+        {
+            public string DSA5Gruppe { get; set; }
+            public string DSA4Gruppe { get; set; }
+            public string StF { get; set; }
+            public string guidvalue { get; set; }
+            public string wtype { get; set; }
+            public string img{ get; set; }
+        }
+
+        #endregion
 
         #region //---- Variablen ----
 
         List<GegnerArgument> lstGegnerArgument = new List<GegnerArgument>();
         List<HeldenArgument> lstHeldArgument = new List<HeldenArgument>();
+        List<GegenstandArgument> lstWaffenArgument = new List<GegenstandArgument>();
         List<PlaylistArgument> lstPListArgument = new List<PlaylistArgument>();
 
         private void ChangePath(string vonS, string inS)
@@ -348,6 +361,18 @@ namespace MeisterGeister.ViewModel.Foundry
             { get; set; }
         }
 
+        public class GegenstandArgument
+        {
+            public string name
+            { get; set; }
+            public List<dbArgument> lstArguments
+            { get; set; }
+            public string img
+            { get; set; }
+            public string outcome
+            { get; set; }
+        }
+
         #endregion
 
 
@@ -535,6 +560,13 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _copyTitelFile, value); }
         }
 
+        private folder _selectedWaffenFolder = null;
+        public folder SelectedWaffenFolder
+        {
+            get { return _selectedWaffenFolder; }
+            set { Set(ref _selectedWaffenFolder, value); }
+        }
+
         private folder _selectedHeldenFolder= null;
         public folder SelectedHeldenFolder
         {
@@ -577,6 +609,35 @@ namespace MeisterGeister.ViewModel.Foundry
         #endregion
 
         #region //---- LISTEN ----
+
+        private List<WaffeTalent> lstWTalent = new List<WaffeTalent>()
+        {
+            new WaffeTalent{ DSA5Gruppe = "Anderthalbhänder", DSA4Gruppe = "Anderthalbhänder", StF = "E", guidvalue = "kk", wtype = "melee" , img = "meleeweapon/Anderthalbhaender2H.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Armbrüste", DSA4Gruppe = "Armbrust", StF = "C", guidvalue = "ff", wtype = "range", img = "rangeweapon/LeichteArmbrust.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Belagerungswaffen", DSA4Gruppe = "Belagerungswaffen",StF =  "D", guidvalue = "ko", wtype = "melee" , img = "rangeweapon/Stein.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Blasrohre", DSA4Gruppe = "Blasrohr",StF =  "D", guidvalue = "ff", wtype = "range", img = "rangeweapon/Stein.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Bögen",DSA4Gruppe =  "Bogen",StF =  "E", guidvalue = "ff", wtype = "range", img = "rangeweapon/Kurzbogen.webp.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Diskusse", DSA4Gruppe = "Diskus", StF =  "D", guidvalue = "ff", wtype = "range", img = "rangeweapon/Stein.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Dolche", DSA4Gruppe = "Dolche",StF =  "D", guidvalue = "ge", wtype = "melee", img = "meleeweapon/Dolch.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Fechtwaffen", DSA4Gruppe = "Fechtwaffen", StF = "E",guidvalue =  "ge", wtype = "melee", img = "meleeweapon/Rapier.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Hiebwaffen", DSA4Gruppe = "Hiebwaffen",StF =  "D",guidvalue =  "kk", wtype = "melee", img = "meleeweapon/Streitkolben.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Spiesswaffen",DSA4Gruppe =  "Infanteriewaffen",StF =  "D", guidvalue = "kk", wtype = "melee", img = "meleeweapon/Kriegslanze.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Kettenstäbe", DSA4Gruppe = "Kettenstäbe", StF = "E", guidvalue = "ff", wtype = "melee", img = "meleeweapon/Dschadra2H.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Kettenwaffen", DSA4Gruppe = "Kettenwaffen", StF = "D", guidvalue = "kk", wtype = "melee", img = "meleeweapon/Dschadra2H.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Lanzen", DSA4Gruppe = "Lanzenreiten",StF =  "E",guidvalue =  "kk", wtype = "melee", img = "meleeweapon/Kriegslanze.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Peitschen", DSA4Gruppe = "Peitsche", StF = "E", guidvalue = "ff", wtype = "melee", img = "meleeweapon/Dolch.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Raufen",DSA4Gruppe =  "Raufen", StF = "C", guidvalue = "ge", wtype = "melee", img = "meleeweapon/Dolch.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Ringen", DSA4Gruppe = "Ringen", StF = "D", guidvalue = "ge", wtype = "melee", img = "meleeweapon/Dolch.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Säbel", DSA4Gruppe = "Säbel", StF = "D", guidvalue = "ge", wtype = "melee", img = "meleeweapon/Saebel.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Schleudern", DSA4Gruppe = "Schleuder", StF = "E", guidvalue = "ff", wtype = "range", img = "rangeweapon/Stein.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Schwerter", DSA4Gruppe = "Schwerter",StF =  "E", guidvalue = "kk", wtype = "melee", img = "meleeweapon/Barbarenschwert.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Speere", DSA4Gruppe = "Speere", StF = "D", guidvalue = "ff", wtype = "melee", img = "meleeweapon/Speer2H.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Wurfwaffen", DSA4Gruppe = "Wurfbeile",StF =  "D", guidvalue = "ff", wtype = "range", img = "rangeweapon/Wurfbeil.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Wurfwaffen",DSA4Gruppe =  "Wurfmesser",StF =  "C", guidvalue = "ff", wtype = "range", img = "rangeweapon/Messer.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Wurfwaffen",DSA4Gruppe =  "Wurfspeere",StF =  "C", guidvalue = "ff", wtype = "range", img = "rangeweapon/Wurfspeer.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Zweihandflegel", DSA4Gruppe = "Zweihandflegel",StF =  "D", guidvalue = "kk", wtype = "melee", img = "meleeweapon/Zwergenschlaegel2H.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Zweihandhiebwaffen", DSA4Gruppe = "Zweihand-Hiebwaffen", StF = "D", guidvalue = "kk", wtype = "melee", img = "meleeweapon/Barbarenstreitaxt2H.webp"},
+            new WaffeTalent{ DSA5Gruppe = "Zweihandschwerter/-säbel", DSA4Gruppe = "Zweihandschwerter/-säbel", StF = "E", guidvalue = "kk", wtype = "melee", img = "meleeweapon/Rondrakamm2H.webp"} };
 
         public List<GegnerBase> lstGegnerBase
         {
@@ -1804,74 +1865,25 @@ namespace MeisterGeister.ViewModel.Foundry
             addArg.Add(new dbArgument { Prefix = A + "effect" + A + ":", ArgString = "[]" });
             addArg.Add(new dbArgument { Suffix = "}," });
         }
+               
 
         private List<dbArgument> AddKampftalenteArgument(GegnerBase g)
         {
             List<dbArgument> addArg = new List<dbArgument>();
-            char A = (char)34;
-
-            AddKampfTalent(addArg, g, "Anderthalbhänder", "Anderthalbhänder", "E", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Armbrüste", "Armbrust", "C", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Belagerungswaffen", "Belagerungswaffen", "D", "ko", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Blasrohre", "Blasrohr", "D", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Bögen", "Bogen", "E", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Diskusse", "Diskus", "D", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Dolche", "Dolche", "D", "ge", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Fechtwaffen", "Fechtwaffen", "E", "ge", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Hiebwaffen", "Hiebwaffen", "D", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Spiesswaffen", "Infanteriewaffen", "D", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Kettenstäbe", "Kettenstäbe", "E", "ff", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Kettenwaffen", "Kettenwaffen", "D", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Lanzen", "Lanzenreiten", "E", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Peitschen", "Peitsche", "E", "ff", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Raufen", "Raufen", "C", "ge", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Ringen", "Ringen", "D", "ge", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Säbel", "Säbel", "D", "ge", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Schleudern", "Schleuder", "E", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Schwerter", "Schwerter", "E", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Speere", "Speere", "D", "ff", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Wurfwaffen", "Wurfbeile", "D", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Wurfwaffen", "Wurfmesser", "C", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Wurfwaffen", "Wurfspeere", "C", "ff", g.PA, g.AT, 0, "range");
-            AddKampfTalent(addArg, g, "Zweihandflegel", "Zweihandflegel", "D", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Zweihandhiebwaffen", "Zweihand-Hiebwaffen", "D", "kk", g.PA, g.AT, 0, "melee");
-            AddKampfTalent(addArg, g, "Zweihandschwerter/-säbel", "Zweihandschwerter/-säbel", "E", "kk", g.PA, g.AT, 0, "melee");
-
+            foreach (WaffeTalent w in lstWTalent)
+            {
+                AddKampfTalent(addArg, g, w.DSA5Gruppe,w.DSA4Gruppe, w.StF,w.guidvalue, g.PA, g.AT, 0, w.wtype);
+            };
             return addArg;
         }
 
         private List<dbArgument> AddKampftalenteArgument(Held h)
         {
             List<dbArgument> addArg = new List<dbArgument>();
-            char A = (char)34;
-
-            AddKampfTalent(addArg, h, "Anderthalbhänder", "Anderthalbhänder", "E", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Armbrüste", "Armbrust", "C", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Belagerungswaffen", "Belagerungswaffen", "D", "ko", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Blasrohre", "Blasrohr", "D", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Bögen", "Bogen", "E", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Diskusse", "Diskus", "D", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Dolche", "Dolche", "D", "ge", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Fechtwaffen", "Fechtwaffen", "E", "ge", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Hiebwaffen", "Hiebwaffen", "D", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Spießwaffen", "Infanteriewaffen", "D", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Kettenstäbe", "Kettenstäbe", "E", "ff", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Kettenwaffen", "Kettenwaffen", "D", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Lanzen", "Lanzenreiten", "E", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Peitschen", "Peitsche", "E", "ff", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Raufen", "Raufen", "C", "ge", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Ringen", "Ringen", "D", "ge", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Säbel", "Säbel", "D", "ge", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Schleudern", "Schleuder", "E", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Schwerter", "Schwerter", "E", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Speere", "Speere", "D", "ff", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Wurfwaffen", "Wurfbeile", "D", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Wurfwaffen", "Wurfmesser", "C", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Wurfwaffen", "Wurfspeere", "C", "ff", h.ParadeBasis , h.AttackeBasis, 0, "range");
-            AddKampfTalent(addArg, h, "Zweihandflegel", "Zweihandflegel", "D", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Zweihandhiebwaffen", "Zweihand-Hiebwaffen", "D", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-            AddKampfTalent(addArg, h, "Zweihandschwerter/-säbel", "Zweihandschwerter/-säbel", "E", "kk", h.ParadeBasis , h.AttackeBasis, 0, "melee");
-
+            foreach (WaffeTalent w in lstWTalent)
+            {
+                AddKampfTalent(addArg, h, w.DSA5Gruppe, w.DSA4Gruppe, w.StF, w.guidvalue, h.ParadeBasis, h.AttackeBasis, 0, w.wtype);
+            };
             return addArg;
         }
         private List<dbArgument> AddMoneyArgument(int Du, int Si, int He, int Kr)
@@ -2454,6 +2466,99 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             MyTimer.stop_timer("Gegner-DB-Argument");
         }
+
+
+        public void GetWaffenData()
+        {
+            List<dbArgument> lstWaffen = new List<dbArgument>();
+            lstWaffenArgument.Clear();
+            MyTimer.start_timer();
+
+            string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+
+
+            int i = 100001;
+            string wname = "";
+            foreach (Waffe w in WaffeListe.OrderBy(t => t.Name))
+            {
+                List<dbArgument> lstArg = new List<dbArgument>();
+                char A = (char)34;
+                string id = w.WaffeGUID.ToString().Substring(19, 17).Replace("-", "");
+                wname = w.Name;
+                lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+                lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = w.Name, Suffix = A + "," });
+                lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+                lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "meleeweapon", Suffix = A + "," });
+                lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+                lstArg.Add(new dbArgument { Prefix = A + "price" + A + ":{\"", ArgString = "value" + A + ":" + w.Preis, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "quantity" + A + ":{\"", ArgString = "value" + A + ":1", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{\"", ArgString = "value" + A + ":" + w.Gewicht, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "effect" + A + ":{\"", ArgString = "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A + w.Bemerkung + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "gmdescription" + A + ":{\"", ArgString = "value" + A + ":" + A + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "damage" + A + ":{\"", ArgString = "value" + A + ":" +A+ w.TPWürfelAnzahl + "W" + w.TPWürfel + "+" + w.TPBonus+A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "atmod" + A + ":{\"", ArgString = "value" + A + ":0, " + A + "offhandMod" + A + ":0", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "pamod" + A + ":{\"", ArgString = "value" + A + ":0, " + A + "offhandMod" + A + ":0", Suffix = "}," });
+                string dk = w.DK == null ? "medium" : w.DK.Contains("H") ? "short" : w.DK.Contains("N") ? "medium" : w.DK.Contains("S") ? "long" : w.DK.Contains("P") ? "wide" : "medium";
+                lstArg.Add(new dbArgument { Prefix = A + "reach" + A + ":{\"", ArgString = "value" + A + ":" + A+dk+A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "damageThreshold" + A + ":{\"", ArgString = "value" + A + ":15", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{\"", ArgString = "value" + A + ":"+A+(w.Talent.FirstOrDefault()?.Eigenschaft1?.ToLower() ?? "kk" )+ A, Suffix = "}," });
+
+                string talentName = w.Talent.FirstOrDefault()?.Talentname ?? "Säbel";
+                lstArg.Add(new dbArgument { Prefix = A + "combatskill" + A + ":{\"", ArgString = "value" + A + ":" + A + talentName + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "worn" + A + ":{\"", ArgString = "value" + A + ":false," + A + "offhand" + A + ":false", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "structure" + A + ":{\"", ArgString = "max" + A + ":0," + A + "value" + A + ":0", Suffix = "}}," });
+                string folderID = SelectedWaffenFolder == null ? "null" : (A + SelectedWaffenFolder._id + A);
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = folderID, Suffix = "," });
+                lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = i.ToString(), Suffix = "," });
+                i += 100000;
+                lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{}", Suffix = "," });
+
+                WaffeTalent wTal = lstWTalent.FirstOrDefault(t => t.DSA5Gruppe == talentName) ?? 
+                    lstWTalent.FirstOrDefault(t => t.DSA5Gruppe == "Dolche");
+                lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":", ArgString = A + "modules/dsa5-core/icons/"+ wTal.img + A, Suffix = "," });
+                lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[]", Suffix = "" });
+                lstArg.Add(new dbArgument { Suffix = "}" });
+
+                string outc = "";
+                foreach (dbArgument arg in lstArg)
+                { outc += arg.Prefix + arg.ArgString + arg.Suffix; }
+                lstWaffenArgument.Add(new GegenstandArgument() { name = wname, lstArguments = lstArg, outcome = outc });
+            }
+
+            /*
+            {
+            "_id":"izjsgG8kF5KhV2cu",
+            "name":"Säbel (5/3)",
+            "permission":{"default":0,"hFA4LmVDgAz6jW3o":3,"gNZOk6idrMy6uSkk":3},
+            "type":"meleeweapon",
+            "data":{
+            "price":{"value":180},
+            "quantity":{"value":1},
+            "weight":{"value":0.75},
+            "effect":{"value":""},
+            "description":{"value":"<p>Waffenvorteil: Von einem Reittier aus geführt, bekommt der Träger des Säbels einen Bonus von +1 TP.</p><p>Waffennachteil: Gegen Rüstungen mit RS 4 oder höher richtet die Waffe –1 TP an.</p>"},
+            "gmdescription":{"value":""},
+            "damage":{"value":"1W6+3"},
+            "atmod":{"value":5,"offhandMod":0},
+            "pamod":{"value":3,"offhandMod":0},
+            "reach":{"value":"medium"},
+            "damageThreshold":{"value":15},
+            "guidevalue":{"value":"ge/kk"},
+            "combatskill":{"value":"Säbel"},
+            "worn":{"value":false,"offhand":false},
+            "structure":{"max":0,"value":0}
+            },
+            "folder":null,
+            "sort":500001,
+            "flags":{"exportSource":{"world":"juergen-dsa-1","system":"dsa5","coreVersion":"0.7.9","systemVersion":"1.1.3"}},
+            "img":"modules/dsa5-core/icons/meleeweapon/Saebel.webp",
+            "effects":[]
+            }
+            */
+            
+        }
+
         public void GetHeldenData()
         {
             lstHeldArgument.Clear();
@@ -2499,6 +2604,17 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstHeldArgument.Add(hArg);                
             }
             MyTimer.stop_timer("Helden-DB-Argument");
+        }
+
+        public void InitWaffen()
+        {
+            if (WaffeListe.Count == 0)
+            //HandelsgutListe = Global.ContextHandelsgut == null ? new List<Model.Handelsgut>() : Global.ContextHandelsgut.HandelsgüterListe;
+            WaffeListe = Global.ContextInventar == null ? new List<Model.Waffe>() : Global.ContextInventar.WaffeListe;
+            //FernkampfwaffeListe = Global.ContextInventar == null ? new List<Model.Fernkampfwaffe>() : Global.ContextInventar.FernkampfwaffeListe;
+            //SchildListe = Global.ContextInventar == null ? new List<Model.Schild>() : Global.ContextInventar.SchildListe;
+            //RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.RuestungListe;
+
         }
         public void Init()
         {
@@ -2713,6 +2829,92 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
+        private List<Model.Waffe> _waffeListe = new List<Waffe>();
+        public List<Model.Waffe> WaffeListe
+        {
+            get { return _waffeListe; }
+            set { Set(ref _waffeListe, value); }
+        }
+
+        private Base.CommandBase _onBtnExportWaffen = null;
+        public Base.CommandBase OnBtnExportWaffen
+        {
+            get
+            {
+                if (_onBtnExportWaffen == null)
+                    _onBtnExportWaffen = new Base.CommandBase(ExportWaffen, null);
+                return _onBtnExportWaffen;
+            }
+        }
+
+        private void ExportWaffen(object sender)
+        {
+            try
+            {
+                if (SelectedWorld == null)
+                {
+                    ViewHelper.Popup("Wähle zuerst eine Welt");
+                    return;
+                }
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
+
+
+                if ((SelectedWaffenFolder == null || SelectedWaffenFolder.name == "") &&
+                    !ViewHelper.Confirm("Export der Waffen", "Die Waffen werden ins das Hauptverzeichnis exportiert\n" +
+                    "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um alle Gegenstände zu separieren\n\nSollen die Waffen trotzdem in das" +
+                    "Hauptverzeichnis exportiert werden?"))
+                    return;
+
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
+
+                GetWaffenData();
+
+                List<string> lstErsetzt = new List<string>();
+                string A = (new Char[] { '"' }).ToString();
+
+                //Open actors.db
+                string actorsPath = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\items.db" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/items.db";
+                string FileData = GetFileData(actorsPath);
+                if (FileData != null)
+                {
+                    List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
+                    string newFileDataAdd = "";
+                    //Check Held vorhanden -> Ja = Zeile löschen und ersetzen
+                    foreach (GegenstandArgument dbArg in lstWaffenArgument)
+                    {
+                        Nullable<int> pos = lstFileData.IndexOf(lstFileData.Where(t => t.Contains("name\":\"" + dbArg.name + "\",")).FirstOrDefault());
+                        if (pos != null && pos != -1)
+                        {
+                            lstFileData.RemoveAt(pos.Value);
+                            lstErsetzt.Add(dbArg.name);
+                        }
+                        newFileDataAdd += "\n" + dbArg.outcome;
+                    }
+                    string newFile = string.Join("\n", lstFileData);
+                    newFile += newFileDataAdd;
+
+                    //Waffen einfügen
+                    SetFileData(actorsPath, newFile);
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                    ViewHelper.Popup(MyTimer.stop_timer("Refresh Waffen-Daten aktualisiert in") + "\n\nAlle Waffen wurden eingefügt.\n" );
+                }
+                else
+                {
+                    System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
+                    "folgendem Pfad sein:\n" + actorsPath);
+                }
+            }
+            finally
+            {
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+            }
+
+
+        }
+
         private Base.CommandBase _onBtnExportHelden = null;
         public Base.CommandBase OnBtnExportHelden
         {
@@ -2728,37 +2930,37 @@ namespace MeisterGeister.ViewModel.Foundry
         {
             try
             { 
-            if (SelectedWorld == null)
-            {
-                ViewHelper.Popup("Wähle zuerst eine Welt");
-                return;
-            }
-            if ((SelectedHeldenFolder == null || SelectedHeldenFolder.name == "") && 
-                !ViewHelper.Confirm("Export der Helden", "Die Helden werden ins das Hauptverzeichnis exportiert\n" +
-                "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um Helden, NSC und Gegner zu separieren\n\nSollen die Helden in das" +
-                "Hauptverzeichnis exportiert werden?"))
-                return;
+                if (SelectedWorld == null)
+                {
+                    ViewHelper.Popup("Wähle zuerst eine Welt");
+                    return;
+                }
+                if ((SelectedHeldenFolder == null || SelectedHeldenFolder.name == "") && 
+                    !ViewHelper.Confirm("Export der Helden", "Die Helden werden ins das Hauptverzeichnis exportiert\n" +
+                    "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um Helden, NSC und Gegner zu separieren\n\nSollen die Helden in das" +
+                    "Hauptverzeichnis exportiert werden?"))
+                    return;
 
-            //if (!PathExists(FoundryPfad + HeldPortraitPfad) || !PathExists(FoundryPfad + HeldTokenPfad))
-            //{ 
-            //    ViewHelper.Popup(string.Format("Nicht alle Pfade sind vorhanden.\nBitte überprüfe folgende Pfade:\n\n* {0}\n* {1}",
-            //        FoundryPfad + HeldPortraitPfad, FoundryPfad + HeldTokenPfad));
-            //    return;
-            //}
+                //if (!PathExists(FoundryPfad + HeldPortraitPfad) || !PathExists(FoundryPfad + HeldTokenPfad))
+                //{ 
+                //    ViewHelper.Popup(string.Format("Nicht alle Pfade sind vorhanden.\nBitte überprüfe folgende Pfade:\n\n* {0}\n* {1}",
+                //        FoundryPfad + HeldPortraitPfad, FoundryPfad + HeldTokenPfad));
+                //    return;
+                //}
 
-            System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
-            MyTimer.start_timer();
-            GetHeldenData();
-            //Init();
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
+                MyTimer.start_timer();
+                GetHeldenData();
+                //Init();
 
-            List<string> lstErsetzt = new List<string>();
-            string A = (new Char[] { '"' }).ToString();
+                List<string> lstErsetzt = new List<string>();
+                string A = (new Char[] { '"' }).ToString();
 
-            //Open actors.db
-            string actorsPath = IsLocalInstalliert ?
-                FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
-                FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
-            string FileData = GetFileData(actorsPath);
+                //Open actors.db
+                string actorsPath = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                string FileData = GetFileData(actorsPath);
                 if (FileData != null)
                 {
                     List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
@@ -2943,6 +3145,6 @@ namespace MeisterGeister.ViewModel.Foundry
         "playing":false}
 
          */
-        #endregion
-    }
+                #endregion
+            }
 }
