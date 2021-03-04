@@ -454,7 +454,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         { }
 
         public KämpferInfo(IKämpfer k, Kampf kampf)
-        {            
+        {             
             if (k == null)
                 throw new ArgumentNullException("IKämpfer k darf nicht null sein.");
             if (kampf == null)
