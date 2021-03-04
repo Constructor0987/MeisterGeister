@@ -25,7 +25,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         // Felder
         private bool _isInSlideShowAll = true;
         private string _textToShow = string.Empty;
-        private string _bildschirmInfo = "1 Bildschirm";
+        private string _bildschirmInfo = "x Bildschirm";
         private string _directoryPath = string.Empty;
         private string _selectedImagePath = string.Empty;
         private string _currentSlideShowImage = string.Empty;
@@ -476,8 +476,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         public void Init()
         {
-            // Bildschirminfos_bildschirmInfo = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
-
+            _bildschirmInfo = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
+            
             // Letzten Bilderpfad laden
             DirectoryPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
 

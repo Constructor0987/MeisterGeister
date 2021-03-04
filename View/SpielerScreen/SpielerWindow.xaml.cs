@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -283,6 +284,18 @@ namespace MeisterGeister.View.SpielerScreen
                 xPoint = VM.SpielerScreen.Bounds.Location.X + 20;
                 yPoint = VM.SpielerScreen.Bounds.Location.Y + 20;
             }
+            else
+            {
+                System.Windows.Forms.Screen SpielerScreen = null; 
+                foreach (System.Windows.Forms.Screen objActualScreen in System.Windows.Forms.Screen.AllScreens.ToList())
+                {
+                    if (!objActualScreen.Primary)
+                        SpielerScreen = objActualScreen;
+                }
+                if (SpielerScreen != null)
+                xPoint = SpielerScreen.Bounds.Location.X + 20;
+                yPoint = SpielerScreen.Bounds.Location.Y + 20;
+            }
             WindowStartupLocation = WindowStartupLocation.Manual;
             Left = Convert.ToDouble(xPoint);
             Top = Convert.ToDouble(yPoint);
@@ -379,6 +392,7 @@ namespace MeisterGeister.View.SpielerScreen
                 SpielerWindowClosed(null, new EventArgs());
             }
 
+            _timerVideoUpdate.Stop();
             if (VMBoden != null && //= Global.CurrentKampf.BodenplanViewModel
                 grdStandard.Visibility == Visibility.Collapsed &&
                 grdBodenplan.Visibility == Visibility.Visible)
