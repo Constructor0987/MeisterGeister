@@ -1844,6 +1844,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     if (SelectedObject is BattlegroundCreature)
                     {
                         Global.CurrentKampf.SelectedManöverInfo = null;
+                        if (Global.CurrentKampf.SelectedKämpfer != null)
                         Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe
                             .FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
@@ -1862,6 +1863,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                                 BattlegroundObjects.Move(indexObj, lastPos);
                             }
                         }
+                        if (SelectedObject as BattlegroundCreature != null)
                         Global.CurrentKampf.SelectedKämpfer = (SelectedObject as BattlegroundCreature).ki;
                     }
                 }
