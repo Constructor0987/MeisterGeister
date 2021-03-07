@@ -39,9 +39,10 @@ namespace MeisterGeister.ViewModel.Helden {
             
         }
 
-        public AllgemeinViewModel(Func<string> selectImage)
+        public AllgemeinViewModel(Func<string> selectImage, Func<string> selectToken)
         {
             this.selectImage = selectImage;
+            this.selectToken = selectToken;
         }
 
         #endregion
@@ -89,7 +90,30 @@ namespace MeisterGeister.ViewModel.Helden {
 
         #endregion
 
-        #region Select Image
+        #region Select Image/Token
+
+        private Func<string> selectToken;
+
+        private Base.CommandBase onSelectToken = null;
+        public Base.CommandBase OnSelectToken
+        {
+            get
+            {
+                if (onSelectToken == null)
+                    onSelectToken = new Base.CommandBase(SelectToken, null);
+                return onSelectToken;
+            }
+        }
+
+        private void SelectToken(object args)
+        {
+            if (SelectedHeld != null && selectToken != null)
+            {
+                string path = selectToken();
+                if (path != null)
+                    SelectedHeld.Token = path;
+            }
+        }
 
         private Func<string> selectImage;
 

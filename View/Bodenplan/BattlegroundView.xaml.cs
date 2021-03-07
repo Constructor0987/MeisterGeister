@@ -590,13 +590,16 @@ namespace MeisterGeister.View.Bodenplan
                 {
                     if (_kämpferCursor == null && _kämpferPoint != null)
                     {
+                        //TODO: Muss noch angepasst werden wegen (VM.SelectedObject as BattlegroundCreature).TokenOversizeMod 
+
                         Point curMousePosScreen = GetMousePosition();
+                        var factorX = (VM.CurrentMousePositionX - (VM.SelectedObject as BattlegroundCreature).CreatureXPic) / 
+                            ((VM.SelectedObject as BattlegroundCreature).CreatureWidthPic* (VM.SelectedObject as BattlegroundCreature).TokenOversizeMod);
+                        var minusX = (int)((VM.SelectedObject as BattlegroundCreature).CreatureWidthPic * (factorX * ArenaScrollViewer.Zoom));
 
-                        var factorX = (VM.CurrentMousePositionX - (VM.SelectedObject as BattlegroundCreature).CreatureX) / (VM.SelectedObject as BattlegroundCreature).CreatureWidth;
-                        var minusX = (int)((VM.SelectedObject as BattlegroundCreature).CreatureWidth * (factorX * ArenaScrollViewer.Zoom));
-
-                        var factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureY) / (VM.SelectedObject as BattlegroundCreature).CreatureHeight;
-                        var minusY = (int)((VM.SelectedObject as BattlegroundCreature).CreatureHeight * (factorY * ArenaScrollViewer.Zoom));
+                        var factorY = (VM.CurrentMousePositionY - (VM.SelectedObject as BattlegroundCreature).CreatureYPic) / 
+                            ((VM.SelectedObject as BattlegroundCreature).CreatureHeightPic * (VM.SelectedObject as BattlegroundCreature).TokenOversizeMod);
+                        var minusY = (int)((VM.SelectedObject as BattlegroundCreature).CreatureHeightPic * (factorY * ArenaScrollViewer.Zoom));
                         
                         SetCursorPos((int)curMousePosScreen.X - minusX, (int)curMousePosScreen.Y - minusY);
                         
@@ -612,15 +615,22 @@ namespace MeisterGeister.View.Bodenplan
 
                         var img = new Image
                         {
-                            Width = (VM.SelectedObject as BattlegroundCreature).CreatureWidth * ArenaScrollViewer.Zoom * dx,
-                            Height = (VM.SelectedObject as BattlegroundCreature).CreatureHeight * ArenaScrollViewer.Zoom * dy,
+                            Width = (VM.SelectedObject as BattlegroundCreature).CreatureWidthPic * ArenaScrollViewer.Zoom * dx,
+                            Height = (VM.SelectedObject as BattlegroundCreature).CreatureHeightPic * ArenaScrollViewer.Zoom * dy,
                             Stretch = Stretch.Fill
                         };
                         try
                         {
+                            RotateTransform aRotateTransform = new RotateTransform();
+                            aRotateTransform.CenterX = (VM.SelectedObject as BattlegroundCreature).RotateImageCenterXY;
+                            aRotateTransform.CenterY = (VM.SelectedObject as BattlegroundCreature).RotateImageCenterXY;
+                            aRotateTransform.Angle = (VM.SelectedObject as BattlegroundCreature).RotateImageDegrees;
+                            img.RenderTransform = aRotateTransform;
+
                             if ((VM.SelectedObject as BattlegroundCreature).ki.Kämpfer.Bild != (VM.SelectedObject as BattlegroundCreature).CreatureImage.Tag.ToString())
                                 (VM.SelectedObject as BattlegroundCreature).CreatureImage = (VM.SelectedObject as BattlegroundCreature).SetCreatrueImage(img);
-                            img.Source = (VM.SelectedObject as BattlegroundCreature).CreatureImage.Source;// GetCreatrueImageSource();
+                            img.Source = (VM.SelectedObject as BattlegroundCreature).CreatureImage.Source;
+
                             _kämpferCursor = CreateCursor(img);
                         }
                         catch (Exception ex)

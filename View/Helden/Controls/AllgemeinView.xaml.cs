@@ -26,7 +26,7 @@ namespace MeisterGeister.View.Helden.Controls
         public AllgemeinView()
         {
             this.InitializeComponent();
-            VM = new VM.AllgemeinViewModel(ViewHelper.SelectImage);
+            VM = new VM.AllgemeinViewModel(ViewHelper.SelectImage, ViewHelper.SelectImage);
         }
         #endregion
 

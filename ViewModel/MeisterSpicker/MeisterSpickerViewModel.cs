@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 using MeisterGeister.Daten;
 using MeisterGeister.View.General;
 //Eigene usings
 using MeisterGeister.ViewModel.MeisterSpicker.Logic;
-using Base = MeisterGeister.ViewModel.Base;
 
 namespace MeisterGeister.ViewModel.MeisterSpicker
 {
@@ -48,11 +45,6 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
         private string _suchTextBeschreibung = string.Empty;
 
         // Listen
-        private List<Model.Handelsgut> _handelsgutListe;
-        private List<Model.Waffe> _waffeListe;
-        private List<Model.Fernkampfwaffe> _fernkampfwaffeListe;
-        private List<Model.Schild> _schildListe;
-        private List<Model.Rüstung> _rüstungListe;
         private List<MeisterSpickerItem> _MeisterSpickerItemListe;
         private List<MeisterSpickerItem> _filteredMeisterSpickerItemListe;
 
@@ -81,7 +73,38 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
         public DataRowView SpickerDataViewSelected
         {
             get { return _spickerDataViewSelected; }
-            set { Set(ref _spickerDataViewSelected, value); }
+            set
+            {
+                if (DataChanged)
+                {
+                    if (ViewHelper.Confirm("Daten geändert", "Der Datensatz wurde geändert.\n\nSollen die Änderungen übernommen werden?"))
+                    {
+                        string delQuery = string.Format("UPDATE Tabelle1 SET Gegenstand='{0}', Preis='{1}', Gewicht='{2}', Qualität='{3}', M1='{4}' WHERE ID={5}",
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Gegenstand")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Preis")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Gewicht")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("Qualität")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("M1")],
+                            _spickerDataViewSelected.Row.ItemArray[_spickerDataViewSelected.Row.Table.Columns.IndexOf("ID")]);
+                        string ConString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + DatabaseTools.DATABASE_FOLDER + "MeisterSpicker.mdb";
+                        con.Close();
+                        CreateOleDbCommand(delQuery, ConString);
+                        con.Open();
+                    }
+                    else
+                    {
+                        DataRowView preDRow = _spickerDataViewSelected;
+                        con.Close();
+                        DataChanged = false;
+                        Init();
+                        _spickerDataViewSelected = preDRow;
+                        OnChanged(nameof(SpickerDataViewSelected));
+                    }
+                    DataChanged = false;
+                    DataSetCanChange = false;
+                }
+                Set(ref _spickerDataViewSelected, value); 
+            }
         }
 
         private DataView _spickerDataView = new DataView();
@@ -90,7 +113,23 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
             get { return _spickerDataView; }
             set { Set(ref _spickerDataView, value); }
         }
+        private bool _dataSetCanChange = false;
+        public bool DataSetCanChange
+        {
+            get { return _dataSetCanChange; }
+            set 
+            { 
+                Set(ref _dataSetCanChange, value);
+                BackgroundChangeColor = value ? new SolidColorBrush(Colors.LightPink) : new SolidColorBrush(Colors.Transparent);
+            }
+        }
 
+        private bool _dataChanged = false;
+        public bool DataChanged
+        {
+            get { return _dataChanged; }
+            set { Set(ref _dataChanged, value); }
+        }
         public string SuchTextGegenstand
         {
             get { return _suchTextGegenstand; }
@@ -110,57 +149,14 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
             }
         }
 
+        private SolidColorBrush _backgroundChangeColor = new SolidColorBrush(Colors.Transparent);
+        public SolidColorBrush BackgroundChangeColor
+        {
+            get { return _backgroundChangeColor; }
+            set { Set(ref _backgroundChangeColor, value); }
+        }
+
         #region //---- LISTEN ----
-
-        public List<Model.Handelsgut> HandelsgutListe
-        {
-            get { return _handelsgutListe; }
-            set
-            {
-                _handelsgutListe = value;
-                OnChanged("HandelsgutListe");
-            }
-        }
-
-        public List<Model.Waffe> WaffeListe
-        {
-            get { return _waffeListe; }
-            set
-            {
-                _waffeListe = value;
-                OnChanged("WaffeListe");
-            }
-        }
-
-        public List<Model.Fernkampfwaffe> FernkampfwaffeListe
-        {
-            get { return _fernkampfwaffeListe; }
-            set
-            {
-                _fernkampfwaffeListe = value;
-                OnChanged("FernkampfwaffeListe");
-            }
-        }
-
-        public List<Model.Schild> SchildListe
-        {
-            get { return _schildListe; }
-            set
-            {
-                _schildListe = value;
-                OnChanged("SchildListe");
-            }
-        }
-
-        public List<Model.Rüstung> RüstungListe
-        {
-            get { return _rüstungListe; }
-            set
-            {
-                _rüstungListe = value;
-                OnChanged("RüstungListe");
-            }
-        }
 
         public List<MeisterSpickerItem> MeisterSpickerItemListe
         {
@@ -171,7 +167,6 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
                 OnChanged("MeisterSpickerItemListe");
             }
         }
-
         public List<MeisterSpickerItem> FilteredMeisterSpickerItemListe
         {
             get { return _filteredMeisterSpickerItemListe; }
@@ -251,10 +246,6 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
                             (suchWorte2.Length == 1 ? suchWorte2[0] + "%'" :
                                 (suchWorte2.Length > 1 ? string.Join("%' AND M1 LIKE '%", suchWorte2) + "%'" : "%'"));
                 }
-                //else
-                //    cmd.CommandText = "SELECT * FROM Tabelle1 WHERE M1 LIKE '%" +
-                //    (suchWorte2.Length == 1 ? suchWorte2[0] + "%'" :
-                //        (suchWorte2.Length > 1 ? string.Join("%' AND M1 LIKE '%", suchWorte2) + "%'" : "%'"));
             }
             Refresh();
         }
@@ -267,9 +258,7 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
             {
                 if (con.State != System.Data.ConnectionState.Closed)
                     return;
-                con.ConnectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + DatabaseTools.DATABASE_FOLDER + "MeisterSpicker.mdb";
-
-                cmd = new OleDbCommand();
+                con = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + DatabaseTools.DATABASE_FOLDER + "MeisterSpicker.mdb");
                 if (con.State != ConnectionState.Open)
                     con.Open();
                 cmd.Connection = con;
@@ -288,6 +277,65 @@ namespace MeisterGeister.ViewModel.MeisterSpicker
         }
 
         #region //---- EVENTS ----
+
+        private Base.CommandBase _onBtnDatasetNew = null;
+        public Base.CommandBase onBtnDatasetNew
+        {
+            get
+            {
+                if (_onBtnDatasetNew == null)
+                    _onBtnDatasetNew = new Base.CommandBase(DatasetNew, null);
+                return _onBtnDatasetNew;
+            }
+        }
+        void DatasetNew(object obj)
+        {
+            string neu = "Neuer Gegenstand";
+            string delQuery = "INSERT INTO Tabelle1 (Gegenstand, M1) VALUES ('"+neu+"','neue Beschreibung') ";
+            string ConString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + DatabaseTools.DATABASE_FOLDER + "MeisterSpicker.mdb";
+            con.Close();
+            CreateOleDbCommand(delQuery, ConString);
+            con.Open();
+            SuchTextGegenstand = neu;
+            FilterListe();
+        }
+
+        private Base.CommandBase _onBtnDatasetDelete = null;
+        public Base.CommandBase onBtnDatasetDelete
+        {
+            get
+            {
+                if (_onBtnDatasetDelete == null)
+                    _onBtnDatasetDelete = new Base.CommandBase(DatasetDelete, null);
+                return _onBtnDatasetDelete;
+            }
+        }
+        void DatasetDelete(object obj)
+        {
+            if (SpickerDataViewSelected == null)
+            {
+                ViewHelper.Popup("Bitte erst ein Element auswählen");
+                return;
+            }
+            string delQuery = "DELETE FROM Tabelle1 WHERE ID="+ SpickerDataViewSelected.Row.ItemArray[0] + " ";
+            string ConString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + DatabaseTools.DATABASE_FOLDER + "MeisterSpicker.mdb";
+            con.Close();
+            CreateOleDbCommand(delQuery, ConString);
+            con.Open();
+            ViewHelper.Popup("Eintrag erfolgreich gelöscht!");
+            FilterListe();
+        }
+
+        static private void CreateOleDbCommand(string queryString, string connectionString)
+        {
+            using (OleDbConnection connection = new OleDbConnection(connectionString))
+            {
+                connection.Open();
+                OleDbCommand command = new OleDbCommand(queryString, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
 
         private Base.CommandBase _onBtnDeleteSuchTextGegenstandFilter = null;
         public Base.CommandBase OnBtnDeleteSuchTextGegenstandFilter

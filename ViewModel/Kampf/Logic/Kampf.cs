@@ -190,7 +190,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             KampfLog.Insert(0, string.Format("{0}.{1}: {2}", Kampfrunde, AktuelleAktionszeit.InitiativPhase, msg));
         }
         
-        List<KämpferInfo> lstKämpferGleicheIni = new List<KämpferInfo>();
+        private List<KämpferInfo> _lstKämpferGleicheIni = new List<KämpferInfo>();
+        public List<KämpferInfo> lstKämpferGleicheIni
+        { 
+            get { return _lstKämpferGleicheIni; }
+            set { Set(ref _lstKämpferGleicheIni, value); }
+        }
 
         List<ManöverInfo> lstMI = new List<Logic.ManöverInfo>();
         public void Next()

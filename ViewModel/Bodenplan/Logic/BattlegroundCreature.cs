@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MeisterGeister.Model;
 using MeisterGeister.View.General;
 using MeisterGeister.ViewModel.Kampf.Logic;
 
@@ -27,11 +28,14 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public double _objectSize = 1;
         private double _creatureAktionsbuttonsPos = 112;
         private double _creatureHeight = 80;
+        private double _creatureHeightPic = 80;
         private double _creatureNameX = 90;
         private double _creatureNameY = 90;
         private string _creaturePictureUrl;
         private double _creatureWidth = 80;
+        private double _creatureWidthPic = 80;
         private double _creatureX = 5000;
+        private double _tokenOversizeMod = 1;
 
         //1200;
         private double _creatureY = 5000;
@@ -57,7 +61,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private PathGeometry _sightAreaGeometryData = new PathGeometry();
 
         private double _sightAreaLength = 120;
-        private int _sightLineSektor = 4;
+        private int _sightLineSektor = 1;
 
         //600;
         [ThreadStatic]
@@ -101,12 +105,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public double CreatureHeight
-        {
-            get { return _creatureHeight; }
-            set { Set(ref _creatureHeight, value); }
-        }
-
         public double CreatureNameX
         {
             get { return _creatureNameX; }
@@ -141,10 +139,52 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set { Set(ref _creaturePosition, value); }
         }
 
+        public double CreatureHeight
+        {
+            get { return _creatureHeight; }
+            set { Set(ref _creatureHeight, value); }
+        }
+
         public double CreatureWidth
         {
             get { return _creatureWidth; }
             set { Set(ref _creatureWidth, value); }
+        }
+
+        public double CreatureHeightPic
+        {
+            get { return _creatureHeightPic; }
+            set { Set(ref _creatureHeightPic, value); }
+        }
+
+        public double CreatureWidthPic
+        {
+            get { return _creatureWidthPic; }
+            set { Set(ref _creatureWidthPic, value); }
+        }
+
+        public double CreatureHeightMod
+        {
+            get { 
+                double multi = (ki.Kämpfer is Held) ? (ki.Kämpfer as Held).TokenOversize?? 1:
+                    (ki.Kämpfer as Gegner).TokenOversize?? 1;
+                double wert = multi * (-50);
+                return CreatureHeight * multi; }
+        }
+
+        public double CreatureWidthMod
+        {
+            get
+            {
+                double multi = (ki.Kämpfer is Held) ? (ki.Kämpfer as Held).TokenOversize?? 1:
+                    (ki.Kämpfer as Gegner).TokenOversize?? 1;
+                double wert = multi * (-50);
+                return CreatureWidth * multi;
+            }
+        }
+        public string BattleToken
+        {
+            get { return ki.Kämpfer.Token?? ki.Kämpfer.Bild; }
         }
 
         public double CreatureX
@@ -156,6 +196,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 _creatureX = Math.Max(0, value);
                 CalculateSightArea();
                 OnChanged(nameof(CreatureX));
+                OnChanged(nameof(CreatureXPic));
             }
         }
 
@@ -168,8 +209,27 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 _creatureY = Math.Max(0, value);
                 //CalculateSightArea();  //TODO: only on CreatureX Move, cause of too much calculations per pixelmove.
                 OnChanged(nameof(CreatureY));
+                OnChanged(nameof(CreatureYPic));
             }
         }
+
+        public double CreatureXPic
+        {
+            get { return _creatureX - (CreatureWidthPic - CreatureWidth)/2; }
+        }
+
+        public double CreatureYPic
+        {
+            get { return _creatureY - (CreatureHeightPic - CreatureHeight) / 2; }
+        }
+
+        private double _rotateImageDegrees = 0;
+        public double RotateImageDegrees
+        {
+            get { return _rotateImageDegrees; }
+            set { Set(ref _rotateImageDegrees, value); }
+        }
+
 
         public KämpferInfo ki
         {
@@ -267,6 +327,27 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+    //    private double _rotateImageCenterXY = 40;
+        public double RotateImageCenterXY
+        {
+            get { return TokenOversizeMod * 40; }// _rotateImageCenterXY;
+      //      set { Set(ref _rotateImageCenterXY, value); }
+        }
+
+        public double TokenOversizeMod
+        {
+            get { return _tokenOversizeMod; }
+            set
+            {
+                _tokenOversizeMod = value;
+                ScalePicture(ObjectSize);
+                OnChanged(nameof(TokenOversizeMod));
+                OnChanged(nameof(CreatureXPic));
+                OnChanged(nameof(CreatureYPic));
+                OnChanged(nameof(RotateImageCenterXY));
+              //  RotateImageCenterXY = 40 * value;
+            }
+        }
         public string PortraitFileName
         {
             get { return _portraitFilename; }
@@ -326,6 +407,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             var _a = currentMousePos.X - (CreatureX + CreatureWidth / 2);
             var _b = currentMousePos.Y - (CreatureY + CreatureHeight / 2);
             var _alpha = Math.Atan2(_a, _b) * (180 / Math.PI);
+            RotateImageDegrees =-_alpha;
 
             if (!rectGrid)
             {
@@ -517,14 +599,15 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
                 }
             }
+            
+            ScalePicture(ObjectSize);
             var img = new Image
             {
-                Width = CreatureWidth,
-                Height = CreatureHeight,
+                Width = CreatureWidthPic,
+                Height = CreatureHeightPic,
                 Stretch = Stretch.Fill
             };
             CreatureImage = SetCreatrueImage(img);
-
             //string datei;
             //try
             //{
@@ -568,7 +651,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public Image SetCreatrueImage(Image img)
         {
-            var pic = ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+            var pic = 
+                ki.Kämpfer as Held != null?
+                (((Held)ki.Kämpfer).Token ?? ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png"):
+                ki.Kämpfer as Gegner != null ?
+                (((Gegner)ki.Kämpfer).Token ?? ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png"):
+                "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+
             try
             {
                 if (!pic.ToLower().StartsWith("http"))
@@ -614,6 +703,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             CreatureHeight = _imageOriginalHeigth * factor;
             CreatureWidth = _imageOriginalWidth * factor;
+            double overS = (this is Held) ? 
+                ((Held)this).TokenOversize ?? TokenOversizeMod : 
+                ((Gegner)this).TokenOversize ?? TokenOversizeMod;
+            CreatureHeightPic = CreatureHeight * overS;
+            CreatureWidthPic = CreatureWidth * overS;
             MarginCreatureAktionsbuttons = new Thickness() { Left = CreatureWidth, Top = -31, Right = 0, Bottom = 0 };
             CreatureAktionsbuttonsPos = Math.Max(112, 30 + CreatureHeight + 2 * factor);
             MarginCreatureLangAkt = new Thickness() { Left = CreatureWidth-40, Top = CreatureHeight-20, Right = 6, Bottom = 0 };
