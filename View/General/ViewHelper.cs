@@ -65,6 +65,7 @@ namespace MeisterGeister.View.General
             inBox.Title = caption;
             inBox.Beschreibung = msg;
             inBox.Wert = init;
+            inBox.Height = 250;
             inBox.ShowDialog();
             if (inBox.OK_Click)
                 input = inBox.Wert;

@@ -58,6 +58,7 @@ namespace MeisterGeister.View
     public partial class MainView : Window
     {
 
+
         #region //FELDER
 
         private bool isPopOut = true;

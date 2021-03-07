@@ -921,7 +921,17 @@ namespace MeisterGeister.Logic.Einstellung
 
                 new Model.Einstellung() { Name = "SpielerScreenUnterordnerEinbeziehen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "SpielerInfo-Tool: Unterordner beim Bilder-Laden mit einbeziehen?", Wert = "False" },
 
+                new Model.Einstellung() { Name = "FoundryGegnerPortraitPfad", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "systems/dsa41/portraits/meistergeister" },
+                new Model.Einstellung() { Name = "FoundryHeldPortraitPfad", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "systems/dsa41/portraits/meistergeister" },
+                new Model.Einstellung() { Name = "FoundryGegnerTokenPfad", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "systems/dsa41/tokens/meistergeister" },
+                new Model.Einstellung() { Name = "FoundryHeldTokenPfad", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "systems/dsa41/tokens/meistergeister" },
+                new Model.Einstellung() { Name = "FoundryMusikPfad", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Eigene-Daten/Allgemein/Musik" },
+                
                 //Versteckte
+                new Model.Einstellung() { Name = "FoundryFTPAdresse", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "ftp://195.114.11.154:21/Data" },
+                new Model.Einstellung() { Name = "FoundryFTPUser", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "juergen" },
+                new Model.Einstellung() { Name = "FoundryFTPPasswort", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "FoundryVTT2021" },
+                new Model.Einstellung() { Name = "IsLocalInstalliert", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = DateTime.Now.ToString() },
                 new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "Standort", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Gareth#29.79180235685203#3.735098459067687" },
@@ -941,6 +951,8 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "INTERN", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "SlideShowInterval", Kontext = "SpielerInfo", Kategorie = "Versteckt", Typ = "Double", Beschreibung = "", Wert = "6" },
                 new Model.Einstellung() { Name = "MeisterGeisterID", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = Guid.NewGuid().ToString() }
+            
+            
             };
         }
 
