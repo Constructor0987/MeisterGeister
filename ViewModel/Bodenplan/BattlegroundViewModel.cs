@@ -550,7 +550,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                  Screen.AllScreens.Length > 1 ?
                      Screen.AllScreens[1].WorkingArea.Right / dx : 0);
 
-            var minRight = SpielerScreen.Bounds.Location.X / dx;
+            var minRight = (SpielerScreen != null)?SpielerScreen.Bounds.Location.X:0 / dx;
 
             KampfWindow.SizeToContent = SizeToContent.Manual;
 
