@@ -1973,6 +1973,7 @@ namespace MeisterGeister.ViewModel.Foundry
         {
             List<dbArgument> lstArg = new List<dbArgument>();
             char A = (char)34;
+            char b = (char)92;
 
             //gArg.lstArguments = new List<dbArgument>();
             lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
@@ -2035,7 +2036,11 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "flight" + A + ":{\"", ArgString = "value" + A + ":" + A + g.Jagdreaktion, Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "specialRules" + A + ":{\"", ArgString = "value" + A + ":" + A + g.Verbreitung, Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "conjuringDifficulty" + A + ":{\"", ArgString = "value" + A + ":0" , Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A, Suffix = A + "}," });;// + g.Bemerkung
+            string bemerkungen = (g.Bemerkung == null ? "" : ("<p>" + g.Bemerkung.Replace("\n", "</p>" + b + "n<p>") + "</p>"));
+            if (bemerkungen != null)
+                bemerkungen = bemerkungen.Replace("\r", "");
+
+            lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A + bemerkungen, Suffix = A + "}," });// + g.Bemerkung
             //lstArg.Add(new dbArgument { Prefix = A + "freeLanguagePoints" + A + ":{" +A+"value"+A+":0,"+A+"used"+A+":0", Suffix="},"});
             lstArg.Add(new dbArgument { Prefix = A + "sheetLocked" + A + ":{" +A+"value"+A+":"+"false", Suffix="},"});
             lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}," });
@@ -2483,6 +2488,7 @@ namespace MeisterGeister.ViewModel.Foundry
             {
                 List<dbArgument> lstArg = new List<dbArgument>();
                 char A = (char)34;
+                char b = (char)92;
                 string id = w.WaffeGUID.ToString().Substring(19, 17).Replace("-", "");
                 wname = w.Name;
                 lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
@@ -2494,7 +2500,9 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstArg.Add(new dbArgument { Prefix = A + "quantity" + A + ":{\"", ArgString = "value" + A + ":1", Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{\"", ArgString = "value" + A + ":" + w.Gewicht, Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "effect" + A + ":{\"", ArgString = "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A + w.Bemerkung + A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A + "<p>" +
+                    ((MeisterGeister.ViewModel.Basar.Logic.IHandelsgut)w)?.Bemerkung + "</p>"+ b+"n<p>" + 
+                    w.Bemerkung + "<p>" + A, Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "gmdescription" + A + ":{\"", ArgString = "value" + A + ":" + A + A, Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "damage" + A + ":{\"", ArgString = "value" + A + ":" +A+ w.TPWürfelAnzahl + "W" + w.TPWürfel + "+" + w.TPBonus+A, Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "atmod" + A + ":{\"", ArgString = "value" + A + ":0, " + A + "offhandMod" + A + ":0", Suffix = "}," });
