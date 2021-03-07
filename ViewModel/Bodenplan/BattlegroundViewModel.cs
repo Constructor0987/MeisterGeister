@@ -21,7 +21,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.ViewModel.SpielerScreen;
 using WPFExtensions.Controls;
 using Application = System.Windows.Application;
-
+ 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
     public class BattlegroundViewModel : Base.ViewModelBase, IDisposable
