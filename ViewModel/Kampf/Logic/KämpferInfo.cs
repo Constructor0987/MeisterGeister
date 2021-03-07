@@ -106,6 +106,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public void PassivKämpfer()
         {
             Abwehraktionen = Aktionen;
+            OnChanged(nameof(Angriffsaktionen));
+            IstPassiv = true;
         }
 
         private CommandBase unsichtbar;
@@ -307,6 +309,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref kampf, value); }
         }
 
+        private bool _istPassiv = false;
+        public bool IstPassiv
+        {
+            get { return _istPassiv; }
+            set { Set(ref _istPassiv, value);  }
+        }
 
 
         private bool _istUnsichtbar = false;
@@ -446,7 +454,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         { }
 
         public KämpferInfo(IKämpfer k, Kampf kampf)
-        {            
+        {             
             if (k == null)
                 throw new ArgumentNullException("IKämpfer k darf nicht null sein.");
             if (kampf == null)
@@ -582,6 +590,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
                 }
+                OnChanged(nameof(AngriffsaktionenÜbrig));
+                OnChanged(nameof(VerbrauchteAbwehraktionen));
                 //.RaiseEvent(new RoutedEventArgs(si))
                 //VM.KampfWindow.SizeChanged
             }

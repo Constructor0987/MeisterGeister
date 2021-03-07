@@ -196,6 +196,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["GUID"] = (o is Gegner) ? (o as Gegner).GegnerBaseGUID : (o as Held).HeldGUID;
             dt.Rows[dt.Rows.Count - 1]["LichtquelleMeter"] = (o as BattlegroundCreature).ki.LichtquelleMeter;
             dt.Rows[dt.Rows.Count - 1]["IstUnsichtbar"] = (o as BattlegroundCreature).ki.IstUnsichtbar;
+            dt.Rows[dt.Rows.Count - 1]["Angriffsaktionen"] = (o as BattlegroundCreature).ki.Angriffsaktionen;
+
             return dt;
         }
 
@@ -242,6 +244,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Columns.Add("GUID");
             dt.Columns.Add("LichtquelleMeter");
             dt.Columns.Add("IstUnsichtbar");
+            dt.Columns.Add("Angriffsaktionen");
             return dt;
         }
 
@@ -416,6 +419,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
                                     (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+                                    if (drow.Table.Columns.Contains("Angriffsaktionen"))
+                                        (bObj as Wesen).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
                                 }
                                 else
                                 {
@@ -450,6 +455,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                         if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer) != null)
                                             Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer).Initiative = Convert.ToInt32(drow["Initiative"]);
                                     }
+                                    (bObj as Held).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+                                    if (drow.Table.Columns.Contains("Angriffsaktionen"))
+                                        (bObj as Held).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
                                 }
 
                                 try

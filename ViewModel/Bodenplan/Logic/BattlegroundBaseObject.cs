@@ -75,6 +75,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 Set(ref _isAnDerReihe, value);
                 if (value)
                 {
+                    if (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.IndexOf(this) == -1)
+                        return;
                     if (Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.IndexOf(this) != Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Count - 1)
                         Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Move(
                             Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.IndexOf(this),

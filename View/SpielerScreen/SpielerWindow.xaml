@@ -213,22 +213,25 @@
                                             </Ellipse>
 
                                             <!--  Frame for Heroe Picture  -->
-                                            <Rectangle
-                                                Canvas.Left="{Binding CreatureX}"
-                                                Canvas.Top="{Binding CreatureY}"
-                                                Width="{Binding CreatureWidth}"
-                                                Height="{Binding CreatureHeight}"
-                                                RadiusX="12"
-                                                RadiusY="12"
-                                                ToolTip="{Binding Name}">
-                                                <Rectangle.Fill>
-                                                    <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill">
+                                            <Border  x:Name="brdCreaturePic"
+                                                        Canvas.Left="{Binding CreatureXPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureYPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding CreatureWidthPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureHeightPic, UpdateSourceTrigger=PropertyChanged}">
+                                                <Border.RenderTransform>
+                                                    <RotateTransform 
+                                                    CenterX="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}" 
+                                                    CenterY="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}"
+                                                    Angle="{Binding RotateImageDegrees, UpdateSourceTrigger=PropertyChanged}" />
+                                                </Border.RenderTransform>
+                                                <Border.Background>
+                                                    <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill" >
                                                         <ImageBrush.ImageSource>
-                                                            <Binding
+                                                            <Binding 
                                                                 Converter="{StaticResource ImagePathConverter}"
-                                                                IsAsync="True"
+                                                                IsAsync="True" 
                                                                 Mode="OneWay"
-                                                                Path="Bild">
+                                                                Path="BattleToken">
                                                                 <Binding.FallbackValue>
                                                                     <ImageSource>
                                                                         /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
@@ -242,19 +245,18 @@
                                                             </Binding>
                                                         </ImageBrush.ImageSource>
                                                     </ImageBrush>
-                                                </Rectangle.Fill>
+                                                </Border.Background>
+                                            </Border>
+                                            <Rectangle
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                        RadiusX="12"
+                                                        RadiusY="12"
+                                                        Stroke="#FF5D5757"
+                                                        ToolTip="{Binding Name}">
                                             </Rectangle>
-
-                                            <Image
-                                                Name="ImageObject1"
-                                                Canvas.Left="{Binding CreatureX}"
-                                                Canvas.Top="{Binding CreatureY}"
-                                                Width="{Binding CreatureWidth}"
-                                                Height="{Binding CreatureHeight}"
-                                                VerticalAlignment="Top"
-                                                Opacity="{Binding Opacity}"
-                                                Source="{Binding CreaturePictureUrl}"
-                                                Stretch="Fill" />
 
                                             <TextBlock
                                                 Canvas.Left="{Binding ZDisplayX}"

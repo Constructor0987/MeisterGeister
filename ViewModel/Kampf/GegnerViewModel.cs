@@ -19,15 +19,17 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             SetFromViewHelper();
             this.selectImage = MeisterGeister.View.General.ViewHelper.SelectImage;
+            this.selectToken = MeisterGeister.View.General.ViewHelper.SelectToken;
             this.changeTag = MeisterGeister.View.General.ViewHelper.InputDialog;
 
             LoadDaten();
         }
 
-        public GegnerViewModel(Func<string, string, string, string> input, Func<string> selectImage, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
+        public GegnerViewModel(Func<string, string, string, string> input, Func<string> selectImage, Func<string> selectToken, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
             this.selectImage = selectImage;
+            this.selectToken = selectToken;
             this.changeTag = input;
 
             LoadDaten();
@@ -69,6 +71,30 @@ namespace MeisterGeister.ViewModel.Kampf
                 string path = selectImage();
                 if (path != null)
                     SelectedGegnerBase.Bild = path;
+            }
+        }
+
+
+        private Func<string> selectToken;
+
+        private Base.CommandBase onSelectToken = null;
+        public Base.CommandBase OnSelectToken
+        {
+            get
+            {
+                if (onSelectToken == null)
+                    onSelectToken = new Base.CommandBase(SelectToken, null);
+                return onSelectToken;
+            }
+        }
+
+        private void SelectToken(object args)
+        {
+            if (SelectedGegnerBase != null && selectToken != null)
+            {
+                string path = selectToken();
+                if (path != null)
+                    SelectedGegnerBase.Token = path;
             }
         }
 

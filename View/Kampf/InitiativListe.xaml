@@ -458,7 +458,10 @@
                                             </MenuItem.Icon>
                                         </MenuItem>
 
-                                        <MenuItem Header="Passiv im Kampf" Command="{Binding Manöver.Ausführender.Passiv}">
+                                        <MenuItem Header="Passiv im Kampf" 
+                                                  Command="{Binding Manöver.Ausführender.Passiv}" 
+                                                  IsCheckable="True" 
+                                                  IsChecked="{Binding Manöver.Ausführender.IstPassiv}" >
                                             <MenuItem.Icon>
                                                 <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png"/>
                                             </MenuItem.Icon>

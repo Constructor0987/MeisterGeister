@@ -332,12 +332,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
         public void SetSpielerZoom(Rect t)
         {
-            double ScaleWidth = SpielerScreenWindow.ActualWidth / t.Width;
-            double ScaleHeight = SpielerScreenWindow.ActualHeight / t.Height;
-            ScaleSpielerGrid = Math.Min(ScaleWidth, ScaleHeight) * .95;
+            if (SpielerScreenWindow != null)
+            {
+                double ScaleWidth = SpielerScreenWindow.ActualWidth / t.Width;
+                double ScaleHeight = SpielerScreenWindow.ActualHeight / t.Height;
+                ScaleSpielerGrid = Math.Min(ScaleWidth, ScaleHeight) * .95;
 
-            PlayerGridOffsetX = t.X;
-            PlayerGridOffsetY = -t.Y;
+                PlayerGridOffsetX = t.X;
+                PlayerGridOffsetY = -t.Y;
+            }
         }
 
         public void FinishCurrentTempRectangle()
@@ -480,6 +483,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             OnChanged(nameof(StrokeThickness));
             OnChanged(nameof(ObjectSize));
+            //OnChanged(nameof(TokenOversize));
+            OnChanged(nameof(TokenOversizeMod));
             OnChanged(nameof(Opacity));
             OnChanged(nameof(ZLevel));
         }
@@ -521,27 +526,45 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         break;
                     }
             }
+            if (KampfWindow == null)
+            {
+                return;
+            }
+
+
+            int xPoint = 0, yPoint = 0;
+            System.Windows.Forms.Screen SpielerScreen = null;
+            foreach (System.Windows.Forms.Screen objActualScreen in System.Windows.Forms.Screen.AllScreens.ToList())
+            {
+                if (!objActualScreen.Primary)
+                    SpielerScreen = objActualScreen;
+            }
+            if (SpielerScreen != null)
+            {
+                xPoint = SpielerScreen.Bounds.Location.X + 20;
+                yPoint = SpielerScreen.Bounds.Location.Y + 20;
+            }
+
             var maxRight = Math.Max(
                  Screen.AllScreens[0].WorkingArea.Width / dx,
                  Screen.AllScreens.Length > 1 ?
                      Screen.AllScreens[1].WorkingArea.Right / dx : 0);
 
-            var minRight = Screen.AllScreens.Length == 1 ? 0 : Screen.AllScreens[1].WorkingArea.Left / dx;
-
-            if (KampfWindow == null)
-            {
-                return;
-            }
+            var minRight = SpielerScreen.Bounds.Location.X / dx;
 
             KampfWindow.SizeToContent = SizeToContent.Manual;
 
             KampfWindow.Left = (((h == System.Windows.HorizontalAlignment.Left) ? minRight :
                 maxRight - ((KampfWindow.MinWidth > KampfWindow.Width) ? KampfWindow.MinWidth : KampfWindow.Width)));
 
-            KampfWindow.Top = (((v == System.Windows.VerticalAlignment.Top) ? 0 :
-                (Screen.AllScreens.Length == 1 ?
-                    Screen.AllScreens[0].WorkingArea.Height / dy :
-                    Screen.AllScreens[1].WorkingArea.Height / dy) - KampfWindow.ActualHeight));
+            //KampfWindow.Top = (((v == System.Windows.VerticalAlignment.Top) ? 0 :
+            //    (Screen.AllScreens.Length == 1 ?
+            //        Screen.AllScreens[0].WorkingArea.Height / dy :
+            //        Screen.AllScreens[1].WorkingArea.Height / dy) - KampfWindow.ActualHeight));
+
+            KampfWindow.Top = (v != System.Windows.VerticalAlignment.Top) ?
+               Screen.AllScreens.ToList().FirstOrDefault(t => t.Primary).WorkingArea.Height  - KampfWindow.ActualHeight : 
+                yPoint / dy ;
         }
 
         public void SetIniWindowWidth(bool doWindowMove = false)
@@ -1444,11 +1467,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 if (BattlegroundObjects.FirstOrDefault(t => t is Held && ((Held)t).HeldGUID == ((Held)kämpfer).HeldGUID) == null)
                 {
-                    ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild, true);
+                    ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Token?? ((Held)kämpfer).Bild, true);
+
                     BattlegroundObjects.Add(((Held)kämpfer));
 
                     if (!IsLoading)
                         (((Held)kämpfer) as BattlegroundCreature).SetNewPosition();
+
+                    (((Held)kämpfer) as BattlegroundCreature).TokenOversizeMod = ((Held)kämpfer).TokenOversize?? 1;
                     //ToDo: Initiative in der Manöverliste aktuelisieren
 
                     //Set Aktuelle Initiative auf geladenen Wert
@@ -1462,9 +1488,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             else
             {
-                ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
+                if (((Gegner)kämpfer).Token == null && ((Gegner)kämpfer).GegnerBase.Token != null)
+                {
+                    ((Gegner)kämpfer).Token = ((Gegner)kämpfer).GegnerBase.Token;
+                    ((Gegner)kämpfer).TokenOversize = ((Gegner)kämpfer).GegnerBase.TokenOversize;
+                }
+                ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Token?? ((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
 
+                (((Gegner)kämpfer) as BattlegroundCreature).TokenOversizeMod = ((Gegner)kämpfer).TokenOversize ?? 1;
                 //ToDo: Initiative in der Manöverliste aktuelisieren
 
                 //Set Aktuelle Initiative auf geladenen Wert
@@ -2641,6 +2673,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
             if (result == true)
             {
                 IsLoading = true;
+                if (Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
+                {
+                    Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf = false;
+                    Global.CurrentKampf.BodenplanViewModel.KampfWindow.Tag = true;
+                    Global.CurrentKampf.BodenplanViewModel.KampfWindow.Close();
+                }
+                Global.CurrentKampf.Kampf.lstKämpferGleicheIni.Clear();
+                Global.CurrentKampf.Kampf.AktIniKämpfer = null;
                 Global.CurrentKampf.Kampf.Kämpfer.Clear();
                 Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
                 BackgroundImage = null;
@@ -2843,6 +2883,48 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private Base.CommandBase _onSetBackgroundClick = null;
         private Base.CommandBase _onVideoTestClick = null;
+
+        private double _tokenOverszízeMod = 1;
+        public double TokenOversizeMod
+        {
+            get
+            {
+                if (SelectedObject != null)
+                {
+                    if (SelectedObject is BattlegroundCreature)
+                    {
+                        return ((BattlegroundCreature)SelectedObject).TokenOversizeMod;
+                    }
+                }
+                return _tokenOverszízeMod;
+            }
+
+            set
+            {
+                if (SelectedObject != null)
+                {
+                    if (SelectedObject is BattlegroundCreature)
+                    {
+                        ((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;
+                        //((Wesen)SelectedObject).TokenOversize = value;
+                        //((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;// .ki.Kämpfer.TokenSizeMod = value;
+                        if (SelectedObject is Held)
+                        {
+                            ((Held)SelectedObject).TokenOversize = value;
+                            Global.ContextHeld.Update<Held>((SelectedObject as Held));
+                        }
+                        else
+                        if (SelectedObject is Gegner)
+                        {
+                            ((Gegner)SelectedObject).TokenOversize = value;
+                            Global.ContextHeld.Update<Gegner>((SelectedObject as Gegner));
+                        }
+                    }
+                }
+                Set(ref _tokenOverszízeMod, value);
+            }
+        }
+
 
         private void BtnPosIniWindow(object obj)
         {
