@@ -26,11 +26,11 @@ namespace MeisterGeister.View.General
 
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is T && EqualityComparer<T>.Default.Equals((T)value, True);
+            return value is T && EqualityComparer<T>.Default.Equals((T)value, False);
         }
     }
 
-    public sealed class InverseBooleanToVisibilityConverter : BooleanConverter<Visibility>
+    public sealed class InverseBooleanToVisibilityConverter : InverseBooleanConverter<Visibility>
     {
         public InverseBooleanToVisibilityConverter() :
             base(Visibility.Visible, Visibility.Collapsed) { }

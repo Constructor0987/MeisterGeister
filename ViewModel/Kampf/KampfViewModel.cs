@@ -159,8 +159,10 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     return;
                 }
-
-                Set(ref _selectedKämpfer, value);
+                if (value != null && !value.IstImKampf)
+                    Set(ref _selectedKämpfer, null);
+                else
+                    Set(ref _selectedKämpfer, value);
                 if (value != null)
                 {
                     SelectedManöver = null;

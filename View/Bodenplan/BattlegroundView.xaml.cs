@@ -544,6 +544,11 @@ namespace MeisterGeister.View.Bodenplan
             {
                 VM.KampfWindow.Close();
             }
+            if (VM != null && VM.IsShowIniKampf)
+            {
+                VM.KampfWindow.Tag = true;
+                VM.KampfWindow.Close();
+            }
             VM.Dispose();
         }
 

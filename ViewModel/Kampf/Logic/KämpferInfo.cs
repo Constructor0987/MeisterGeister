@@ -59,7 +59,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (entfernen == null)
-                    entfernen = new CommandBase((o) => DeleteKämpfer(), null); //Kampf.Kämpfer.Remove(this), null);
+                    entfernen = new CommandBase((o) => DeleteKämpfer(), null);
 
                 return entfernen;
                 
@@ -422,6 +422,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref _lichtquellePixelRadius, value); }
         }
 
+        private bool _istImKampf = true;
+        public bool IstImKampf
+        {
+            get { return _istImKampf; }
+            set 
+            { 
+                Set(ref _istImKampf, value);
+                if (!value)
+                {
+                    Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
+                }
+                else
+                    Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
+            }
+        }
+
         private bool _istAnführer = false;
         public bool IstAnführer
         {
@@ -668,6 +684,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (Initiative < 0)
             {
                 aktionen = 1;
+            }
+            if (!IstImKampf)
+            {
+                Aktionen = 0;
+                OnChanged(nameof(Abwehraktionen));
+                OnChanged(nameof(Angriffsaktionen));
+                OnChanged(nameof(Aktionen));
+                return;
             }
 
             //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann hat man maximal 2 Aktionen während die Abwehraktionen verfallen

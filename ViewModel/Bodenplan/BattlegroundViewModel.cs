@@ -21,7 +21,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.ViewModel.SpielerScreen;
 using WPFExtensions.Controls;
 using Application = System.Windows.Application;
-
+ 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
     public class BattlegroundViewModel : Base.ViewModelBase, IDisposable
@@ -550,7 +550,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                  Screen.AllScreens.Length > 1 ?
                      Screen.AllScreens[1].WorkingArea.Right / dx : 0);
 
-            var minRight = SpielerScreen.Bounds.Location.X / dx;
+            var minRight = (SpielerScreen != null)?SpielerScreen.Bounds.Location.X:0 / dx;
 
             KampfWindow.SizeToContent = SizeToContent.Manual;
 
@@ -1876,6 +1876,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     if (SelectedObject is BattlegroundCreature)
                     {
                         Global.CurrentKampf.SelectedManöverInfo = null;
+                        if (Global.CurrentKampf.SelectedKämpfer != null)
                         Global.CurrentKampf.SelectedManöverInfo = Global.CurrentKampf.Kampf.SortedInitiativListe
                             .FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
                     }
@@ -1894,6 +1895,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                                 BattlegroundObjects.Move(indexObj, lastPos);
                             }
                         }
+                        if (SelectedObject as BattlegroundCreature != null)
                         Global.CurrentKampf.SelectedKämpfer = (SelectedObject as BattlegroundCreature).ki;
                     }
                 }

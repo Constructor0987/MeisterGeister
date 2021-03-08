@@ -581,38 +581,13 @@
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
 
-                                                            <!--<MenuItem
-                                                                Header="Zauber wirken"
-                                                                Visibility="{Binding ki.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                                                <MenuItem.Style>
-                                                                    <Style TargetType="{x:Type MenuItem}">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding IsHeld}" Value="False">
-                                                                                <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.GegnerBase.GegnerBase_Zauber}" />
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding IsHeld}" Value="True">
-                                                                                <Setter Property="ItemsSource" Value="{Binding ki.Kämpfer.Held_Zauber}" />
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </MenuItem.Style>
-                                                                
-                                                                <MenuItem.ItemContainerStyle>
-                                                                    <Style TargetType="{x:Type MenuItem}">
-                                                                        <Setter Property="Command" Value="{Binding DataContext.SelManöver.UmwandelnZauber, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
-                                                                        <Setter Property="CommandParameter" Value="{Binding}" />
-                                                                        <Setter Property="Icon" Value="{x:Null}" />
-                                                                    </Style>
-                                                                </MenuItem.ItemContainerStyle>
-                                                                <MenuItem.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <TextBlock Text="{Binding Zauber.Name}" />
-                                                                    </DataTemplate>
-                                                                </MenuItem.ItemTemplate>
+                                                            <MenuItem IsChecked="{Binding ki.IstImKampf}" Header="Aktiv im Kampfgeschehen" 
+                                                                IsCheckable="True">>
                                                                 <MenuItem.Icon>
-                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png" />
+                                                                    <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
                                                                 </MenuItem.Icon>
-                                                            </MenuItem>-->
+                                                            </MenuItem>
+
 
                                                             <MenuItem Header="Passiv im Kampf"
                                                                   Command="{Binding ki.Passiv}" 
@@ -1267,7 +1242,18 @@
                                                             FontSize="18" 
                                                             FontWeight="Bold" />
                                                     </Grid>
+                                                <Rectangle
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                        RadiusX="12"
+                                                        RadiusY="12"
+                                                        Opacity=".5"
+                                                        Visibility="{Binding ki.IstImKampf, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanToVisibilityConverter1}, ConverterParameter='imKampf'}"
+                                                        Fill="LightGray"/>
                                                 </Canvas>
+
 
                                                 <ControlTemplate.Triggers>
                                                     <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">

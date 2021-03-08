@@ -457,7 +457,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (INIneuberechnen)
             {
                 // INI neu ermitteln
-                foreach (KämpferInfo kämpferInfo in Kämpfer)
+                foreach (KämpferInfo kämpferInfo in Kämpfer.Where(t => t.IstImKampf))
                 {
                     if (kämpferInfo != null)
                         kämpferInfo.Initiative = kämpferInfo.Kämpfer.Initiative();

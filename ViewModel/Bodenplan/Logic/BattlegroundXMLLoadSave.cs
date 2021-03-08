@@ -198,6 +198,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["IstUnsichtbar"] = (o as BattlegroundCreature).ki.IstUnsichtbar;
             dt.Rows[dt.Rows.Count - 1]["Angriffsaktionen"] = (o as BattlegroundCreature).ki.Angriffsaktionen;
 
+            dt.Rows[dt.Rows.Count - 1]["IstImKampf"] = (o as BattlegroundCreature).ki.IstImKampf;
             return dt;
         }
 
@@ -245,6 +246,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Columns.Add("LichtquelleMeter");
             dt.Columns.Add("IstUnsichtbar");
             dt.Columns.Add("Angriffsaktionen");
+            dt.Columns.Add("IstImKampf");
             return dt;
         }
 
@@ -464,6 +466,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                 { 
                                     (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
                                     (bObj as Wesen).ki.IstUnsichtbar = Convert.ToBoolean(drow["IstUnsichtbar"]);
+                                    if (drow.Table.Columns.Contains("IstImKampf"))
+                                        (bObj as Wesen).ki.IstImKampf = Convert.ToBoolean(drow["IstImKampf"]);
                                 }
                                 catch { }
                             }

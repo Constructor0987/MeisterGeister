@@ -15,6 +15,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <System:Double x:Key="gridSize">30</System:Double>
+        <System:Double x:Key="gridSizeMinus2">28</System:Double>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter" />
         <KampfLogic:DoubleLichtConverter x:Key="lichtConverter" />
@@ -346,7 +347,7 @@
                         <DataTemplate>
                             <StackPanel
                                 x:Name="stackpanel"
-                                Height="{StaticResource gridSize}"
+                                Height="{StaticResource gridSizeMinus2}"
                                 Background="Transparent"
                                 Orientation="Horizontal">
 
