@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DSA MeisterGeister")]
 [assembly: AssemblyProduct("DSA MeisterGeister")]
-[assembly: AssemblyCopyright("Copyright © MeisterGeister-Team 2010-2019")]
+[assembly: AssemblyCopyright("Copyright © MeisterGeister-Team 2010-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,8 +51,8 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.5.52.1")]
-[assembly: AssemblyFileVersion("2.5.52.1")]
+[assembly: AssemblyVersion("2.5.53.1")]
+[assembly: AssemblyFileVersion("2.5.53.1")]
 
 // Dem Testprojekt den Zugriff auf die Interna erlauben.
 [assembly: InternalsVisibleTo("MeisterGeister_Tests")]

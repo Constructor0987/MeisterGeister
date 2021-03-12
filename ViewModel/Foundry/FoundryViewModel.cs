@@ -190,7 +190,7 @@ namespace MeisterGeister.ViewModel.Foundry
         private void FTPConfig(object sender)
         {
             string back = ViewHelper.InputDialog("FTP-Adresse", "Gebe die FTP-Adresse zu dem Server ein\n\nBeispiel Lokal:      "+ @"C:\FoundryVTT            " +
-                "\nBeispiel Server:    ftp://195.114.11.154:21", FTPAdresse);
+                "\nBeispiel Server:    ftp://195.114.11.154:21/", FTPAdresse);
             if (!string.IsNullOrEmpty(back))
                 FTPAdresse = back;
             back = ViewHelper.InputDialog("FTP-User", "Gebe den FTP-Usernamen zu dem Server ein", FTPUser);
