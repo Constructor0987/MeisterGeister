@@ -3067,6 +3067,17 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)WPFExtensions.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Xceed.Wpf.Toolkit.dll" "$(ProjectDir)publish\$(TargetName)"
 
+   copy "$(TargetDir)cef*.*" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)d3dcompiler_47.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)devtools_resources.pak" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)icudtl.dat" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)lib*.*" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)snapshot_blob.bin" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Sparrow.Chart.Wpf.40.*" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)v8_context_snapshot.bin" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)System.Runtime.InteropServices.RuntimeInformation.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)chrome_elf.dll" "$(ProjectDir)publish\$(TargetName)"
+
    copy "$(TargetDir)Q42.HueApi.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Q42.HueApi.ColorConverters.dll" "$(ProjectDir)publish\$(TargetName)"
    
