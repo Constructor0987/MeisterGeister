@@ -61,7 +61,7 @@ namespace MeisterGeister.ViewModel.Foundry
             public string StF { get; set; }
             public string guidvalue { get; set; }
             public string wtype { get; set; }
-            public string img{ get; set; }
+            public string img { get; set; }
         }
 
         #endregion
@@ -75,7 +75,8 @@ namespace MeisterGeister.ViewModel.Foundry
 
         private void ChangePath(string vonS, string inS)
         {
-            if (GegnerPortraitPfad == null) return;
+            if (GegnerPortraitPfad == null)
+                return;
             string neu = null;
             neu = GegnerPortraitPfad.Replace(vonS, inS);
             if (neu != GegnerPortraitPfad)
@@ -100,14 +101,14 @@ namespace MeisterGeister.ViewModel.Foundry
             {
                 HeldTokenPfad = neu;
                 Einstellungen.SetEinstellung<string>("FoundryHeldTokenPfad", HeldTokenPfad);
-            }            
+            }
         }
 
         private bool _isLokalInstalliert = false;
         public bool IsLocalInstalliert
         {
             get { return _isLokalInstalliert; }
-            set 
+            set
             {
                 bool didChange = _isLokalInstalliert != value;
                 Set(ref _isLokalInstalliert, value);
@@ -140,8 +141,8 @@ namespace MeisterGeister.ViewModel.Foundry
         public string FTPAdresse
         {
             get { return _ftpAdresse; }
-            set 
-            { 
+            set
+            {
                 Set(ref _ftpAdresse, value);
                 Einstellungen.SetEinstellung("FoundryFTPAdresse", value);
             }
@@ -151,19 +152,19 @@ namespace MeisterGeister.ViewModel.Foundry
         public string FTPUser
         {
             get { return _ftpUser; }
-            set 
-            { 
+            set
+            {
                 Set(ref _ftpUser, value);
                 Einstellungen.SetEinstellung("FoundryFTPUser", value);
             }
         }
 
-        private string _ftpPasswort= "FoundryVTT2021";
+        private string _ftpPasswort = "FoundryVTT2021";
         public string FTPPasswort
         {
             get { return _ftpPasswort; }
-            set 
-            { 
+            set
+            {
                 Set(ref _ftpPasswort, value);
                 Einstellungen.SetEinstellung("FoundryFTPPasswort", value);
             }
@@ -189,7 +190,7 @@ namespace MeisterGeister.ViewModel.Foundry
         }
         private void FTPConfig(object sender)
         {
-            string back = ViewHelper.InputDialog("FTP-Adresse", "Gebe die FTP-Adresse zu dem Server ein\n\nBeispiel Lokal:      "+ @"C:\FoundryVTT            " +
+            string back = ViewHelper.InputDialog("FTP-Adresse", "Gebe die FTP-Adresse zu dem Server ein\n\nBeispiel Lokal:      " + @"C:\FoundryVTT            " +
                 "\nBeispiel Server:    ftp://195.114.11.154:21/", FTPAdresse);
             if (!string.IsNullOrEmpty(back))
                 FTPAdresse = back;
@@ -218,7 +219,7 @@ namespace MeisterGeister.ViewModel.Foundry
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(FTPAdresse + "/Data/worlds/test.txt");
             request.Method = WebRequestMethods.Ftp.UploadFile;
 
-            request.Credentials = new NetworkCredential(FTPUser,FTPPasswort, "");
+            request.Credentials = new NetworkCredential(FTPUser, FTPPasswort, "");
 
 
             // Copy the contents of the file to the request stream.
@@ -257,26 +258,26 @@ namespace MeisterGeister.ViewModel.Foundry
 
             public string preArg
             {
-                get 
+                get
                 {
                     char A = (char)34;
-                    string arg = "{" + A + "_id"+A+":" + A + _id + A + "," +
+                    string arg = "{" + A + "_id" + A + ":" + A + _id + A + "," +
                         A + "name" + A + ":" + A + name + A + "," +
                         A + "permission" + A + ":{" + A + "default" + A + ":0," + A + GMid + A + ":3}," +
                         A + "sort" + A + ":" + sort.ToString() + "," +
                         A + "flags" + A + ":{}";
-                    return arg; 
+                    return arg;
                 }
                 //{
-                  //  "_id":"DUBBfsfZPdvWN8Mn",
-        //"name":"neu",
-        //"permission":{"default":0,"gNZOk6idrMy6uSkk":3},
-        //"sort":100001,
-        //"flags":{},
+                //  "_id":"DUBBfsfZPdvWN8Mn",
+                //"name":"neu",
+                //"permission":{"default":0,"gNZOk6idrMy6uSkk":3},
+                //"sort":100001,
+                //"flags":{},
             }
             public class SoundArg
             {
-                public List<string> lstArg {get; set;} 
+                public List<string> lstArg { get; set; }
                 public string lstTitel { get; set; }
             }
 
@@ -305,30 +306,32 @@ namespace MeisterGeister.ViewModel.Foundry
                     char A = (char)34;
                     string arg = A + "mode" + A + ":" + mode.ToString() + "," +
                         A + "playing" + A + ":" + playing + "}";
-                    return arg; }
+                    return arg;
+                }
             }
             public int mode { get; set; }
             public string playing { get; set; }
 
             public string outtext
             {
-                get {
+                get
+                {
                     char A = (char)34;
                     return preArg + "," + A + "sounds" + A + ":[" + string.Join(",", lstSounds.Select(t => t.lstTitel)) + "]," + postArg;
                 }
             }
-            
-        // {"_id":"DUBBfsfZPdvWN8Mn",
-        //"name":"neu",
-        //"permission":{"default":0,"gNZOk6idrMy6uSkk":3},
-        //"sort":100001,
-        //"flags":{},
-        //"sounds":[
-        //        ]
-        
-        //"mode":1,
-        //"playing":false}
-    }
+
+            // {"_id":"DUBBfsfZPdvWN8Mn",
+            //"name":"neu",
+            //"permission":{"default":0,"gNZOk6idrMy6uSkk":3},
+            //"sort":100001,
+            //"flags":{},
+            //"sounds":[
+            //        ]
+
+            //"mode":1,
+            //"playing":false}
+        }
         public class dbArgument
         {
             public string Argument
@@ -380,7 +383,7 @@ namespace MeisterGeister.ViewModel.Foundry
         public string GegnerPortraitPfad
         {
             get { return _gegnerPortraitPfad; }
-            set 
+            set
             {
                 string prevalue = value;
                 if (prevalue != null && !prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
@@ -478,7 +481,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
         private List<string> _lstRepresentedName = new List<string>();
         public List<string> lstRepresentedName
-        { 
+        {
             get { return _lstRepresentedName; }
             set { Set(ref _lstRepresentedName, value); }
         }
@@ -567,13 +570,13 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _selectedWaffenFolder, value); }
         }
 
-        private folder _selectedHeldenFolder= null;
+        private folder _selectedHeldenFolder = null;
         public folder SelectedHeldenFolder
         {
             get { return _selectedHeldenFolder; }
             set { Set(ref _selectedHeldenFolder, value); }
         }
-        private folder _selectedGegnerFolder= null;
+        private folder _selectedGegnerFolder = null;
         public folder SelectedGegnerFolder
         {
             get { return _selectedGegnerFolder; }
@@ -584,8 +587,8 @@ namespace MeisterGeister.ViewModel.Foundry
         public string SelectedWorld
         {
             get { return _selectedWorld; }
-            set 
-            { 
+            set
+            {
                 Set(ref _selectedWorld, value);
 
                 if (value != null)
@@ -673,8 +676,8 @@ namespace MeisterGeister.ViewModel.Foundry
         public CefSharp.Wpf.ChromiumWebBrowser cWebBrowser
         {
             get { return _cWebBrowser; }
-            set 
-            { 
+            set
+            {
                 Set(ref _cWebBrowser, value);
                 cWebBrowser.Address = LocalUri;
             }
@@ -703,7 +706,7 @@ namespace MeisterGeister.ViewModel.Foundry
             FTPPasswort = Einstellungen.GetEinstellung<string>("FoundryFTPPasswort");
 
             IsLocalInstalliert = Einstellungen.GetEinstellung<bool>("IsLocalInstalliert");
-            
+
             Init();
             lstRepresentedName.AddRange(lstHeldArgument.Select(t => t.h.Name));
             lstDisplayName.AddRange(new List<string>() {
@@ -741,7 +744,7 @@ namespace MeisterGeister.ViewModel.Foundry
             listRequest.Credentials = credentials;
             listRequest.KeepAlive = false;
             listRequest.UsePassive = true;
-            listRequest.Timeout= 4000;
+            listRequest.Timeout = 4000;
 
             var lines = new List<string>();
             try
@@ -787,7 +790,8 @@ namespace MeisterGeister.ViewModel.Foundry
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ViewHelper.ShowError(string.Format("Beim Lesen der FTP Seite {0} ist ein Fehler aufgetreten", url + rootPath), ex);
             }
             finally
@@ -822,7 +826,7 @@ namespace MeisterGeister.ViewModel.Foundry
             string FileData = GetFileData(filepath);
 
             if (FileData != null)
-            { 
+            {
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
                 List<folder> lst = new List<folder>();
 
@@ -927,7 +931,7 @@ namespace MeisterGeister.ViewModel.Foundry
             string FileData = GetFileData(filepath);
 
             if (FileData != null)
-            { 
+            {
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
                 string uLine = lstFileData.FirstOrDefault(t => t.Contains(A + "name" + A + ":" + A + username + A));
                 string d = uLine.Substring(1, uLine.Length - 3);
@@ -946,7 +950,7 @@ namespace MeisterGeister.ViewModel.Foundry
         {
             string FileData = GetFileData(filepath);
             if (FileData != null)
-            { 
+            {
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
 
                 string portLine = lstFileData.FirstOrDefault(t => t.StartsWith("  \"port\":"));
@@ -1516,14 +1520,14 @@ namespace MeisterGeister.ViewModel.Foundry
             char A = (char)34;
 
             addArg.Add(new dbArgument { Prefix = A + eigenschaft + A + ":{" });
-            addArg.Add(new dbArgument { Prefix = A + "label" + A + ":" + A + "CHAR."+ eigenschaft.ToUpper() + A, Suffix = "," });
-            addArg.Add(new dbArgument { Prefix = A + "abrev" + A + ":" + A + "CHARAbbrev."+ eigenschaft.ToUpper() + A, Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "label" + A + ":" + A + "CHAR." + eigenschaft.ToUpper() + A, Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "abrev" + A + ":" + A + "CHARAbbrev." + eigenschaft.ToUpper() + A, Suffix = "," });
             addArg.Add(new dbArgument { Prefix = A + "color" + A + ":" + A + color + A, Suffix = "," });
-            addArg.Add(new dbArgument { Prefix = A + "initial" + A + ":" + (wert??0), Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "initial" + A + ":" + (wert ?? 0), Suffix = "," });
             addArg.Add(new dbArgument { Prefix = A + "species" + A + ":0", Suffix = "," });
             addArg.Add(new dbArgument { Prefix = A + "modifier" + A + ":0", Suffix = "," });
             addArg.Add(new dbArgument { Prefix = A + "advances" + A + ":0", Suffix = "," });
-            addArg.Add(new dbArgument { Prefix = A + "value" + A + ":"+(wert??0).ToString(), Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "value" + A + ":" + (wert ?? 0).ToString(), Suffix = "," });
             addArg.Add(new dbArgument { Prefix = A + "bonus" + A + ":0", Suffix = "," });
             addArg.Add(new dbArgument { Prefix = A + "cost" + A + ":" + A + A, Suffix = "," });
             addArg.Add(new dbArgument { Prefix = A + "refund" + A + ":" + A + A, Suffix = "}" + lastEigenschaft });
@@ -1549,8 +1553,8 @@ namespace MeisterGeister.ViewModel.Foundry
             if (Icurrent != null)
                 addArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = Icurrent, Suffix = "," });
 
-                addArg.Add(new dbArgument { Prefix = A + "gearmodifier" + A + ":", ArgString = "0", Suffix = "," });
-            addArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = Icurrent?? Ivalue??"0", Suffix = "}" });
+            addArg.Add(new dbArgument { Prefix = A + "gearmodifier" + A + ":", ArgString = "0", Suffix = "," });
+            addArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = Icurrent ?? Ivalue ?? "0", Suffix = "}" });
 
             addArg.Last().Suffix = last;
             return addArg;
@@ -1592,7 +1596,7 @@ namespace MeisterGeister.ViewModel.Foundry
             List<dbArgument> addArg = new List<dbArgument>();
             char A = (char)34;
 
-            if (g.GegnerBase_Zauber.Count == 0) 
+            if (g.GegnerBase_Zauber.Count == 0)
                 return addArg;
 
             g.GegnerBase_Zauber.ToList().ForEach(delegate (GegnerBase_Zauber gz)
@@ -1614,8 +1618,13 @@ namespace MeisterGeister.ViewModel.Foundry
                 addArg.Add(new dbArgument { Prefix = A + "maintainCost" + A + ":{\"", ArgString = "value" + A + ":" + A + "0", Suffix = A + "}," });
                 addArg.Add(new dbArgument { Prefix = A + "distribution" + A + ":{\"", ArgString = "value" + A + ":" + A + gz.Zauber.Repräsentationen, Suffix = A + "}," });
                 //Spalte F gibt es in DSA 5 nicht
-                addArg.Add(new dbArgument { Prefix = A + "StF" + A + ":{\"", ArgString = "value" + A + ":" + A + 
-                    (gz.Zauber.Komplex != "F" ? gz.Zauber.Komplex : "E"), Suffix = A + "}," });
+                addArg.Add(new dbArgument
+                {
+                    Prefix = A + "StF" + A + ":{\"",
+                    ArgString = "value" + A + ":" + A +
+                    (gz.Zauber.Komplex != "F" ? gz.Zauber.Komplex : "E"),
+                    Suffix = A + "},"
+                });
                 addArg.Add(new dbArgument { Prefix = A + "StF" + A + ":{\"", ArgString = "value" + A + ":" + A + gz.Zauber.Komplex, Suffix = A + "}," });
                 addArg.Add(new dbArgument { Prefix = A + "resistanceModifier" + A + ":{\"", ArgString = "value" + A + ":" + A + "SK", Suffix = A + "}," });
                 addArg.Add(new dbArgument { Prefix = A + "canChangeCastingTime" + A + ":{\"", ArgString = "value" + A + ":" + A + "true", Suffix = A + "}," });
@@ -1663,8 +1672,13 @@ namespace MeisterGeister.ViewModel.Foundry
                 addArg.Add(new dbArgument { Prefix = A + "maintainCost" + A + ":{\"", ArgString = "value" + A + ":" + A + "0", Suffix = A + "}," });
                 addArg.Add(new dbArgument { Prefix = A + "distribution" + A + ":{\"", ArgString = "value" + A + ":" + A + hz.Zauber.Repräsentationen, Suffix = A + "}," });
                 //Spalte F gibt es in DSA 5 nicht
-                addArg.Add(new dbArgument { Prefix = A + "StF" + A + ":{\"", ArgString = "value" + A + ":" + A +
-                    (hz.Zauber.Komplex != "F"? hz.Zauber.Komplex:"E"), Suffix = A + "}," });
+                addArg.Add(new dbArgument
+                {
+                    Prefix = A + "StF" + A + ":{\"",
+                    ArgString = "value" + A + ":" + A +
+                    (hz.Zauber.Komplex != "F" ? hz.Zauber.Komplex : "E"),
+                    Suffix = A + "},"
+                });
                 addArg.Add(new dbArgument { Prefix = A + "resistanceModifier" + A + ":{\"", ArgString = "value" + A + ":" + A + "SK", Suffix = A + "}," });
                 addArg.Add(new dbArgument { Prefix = A + "canChangeCastingTime" + A + ":{\"", ArgString = "value" + A + ":" + A + "true", Suffix = A + "}," });
                 addArg.Add(new dbArgument { Prefix = A + "canChangeCost" + A + ":{\"", ArgString = "value" + A + ":" + A + "true", Suffix = A + "}," });
@@ -1796,10 +1810,10 @@ namespace MeisterGeister.ViewModel.Foundry
                     addArg.Add(new dbArgument { Prefix = A + "traitType" + A + ":{\"", ArgString = "value" + A + ":" + A + "meleeAttack", Suffix = A + "}," });
                     addArg.Add(new dbArgument { Prefix = A + "at" + A + ":{\"", ArgString = "value" + A + ":" + A + nw.AT, Suffix = A + "}," });
                     addArg.Add(new dbArgument { Prefix = A + "pa" + A + ":{\"", ArgString = "value" + A + ":" + A + nw.PA, Suffix = A + "}," });
-                    string dk = nw.Distanzklasse == 0x0? "medium" : 
-                        nw.Distanzklasse.ToString().Contains("H") ? "short" : 
-                        nw.Distanzklasse.ToString().Contains("N") ? "medium" : 
-                        nw.Distanzklasse.ToString().Contains("S") ? "long" : 
+                    string dk = nw.Distanzklasse == 0x0 ? "medium" :
+                        nw.Distanzklasse.ToString().Contains("H") ? "short" :
+                        nw.Distanzklasse.ToString().Contains("N") ? "medium" :
+                        nw.Distanzklasse.ToString().Contains("S") ? "long" :
                         nw.Distanzklasse.ToString().Contains("P") ? "wide" : "medium";
                     addArg.Add(new dbArgument { Prefix = A + "reach" + A + ":{\"", ArgString = "value" + A + ":" + A + dk, Suffix = A + "}," });
                     addArg.Add(new dbArgument { Prefix = A + "damage" + A + ":{\"", ArgString = "value" + A + ":" + A + nw.TPWürfelAnzahl + "W" + nw.TPWürfel + "+" + nw.TPBonus, Suffix = A + "}," });
@@ -1830,9 +1844,9 @@ namespace MeisterGeister.ViewModel.Foundry
             addArg.Add(new dbArgument { Prefix = A + "StF" + A + ":{\"", ArgString = "value" + A + ":" + A + StF + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Advancementfactor", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{\"", ArgString = "value" + A + ":" + A + guidevalue + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Guide value", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "parry" + A + ":{\"", ArgString = "value" + A + ":" + g.PA + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "parryValue", Suffix = A + "}," });
-            addArg.Add(new dbArgument { Prefix = A + "attack" + A + ":{\"", ArgString = "value" + A + ":" +g.AT + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "attackValue", Suffix = A + "}," });
+            addArg.Add(new dbArgument { Prefix = A + "attack" + A + ":{\"", ArgString = "value" + A + ":" + g.AT + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "attackValue", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "talentValue" + A + ":{\"", ArgString = "value" + A + ":0," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "attackValue", Suffix = A + "}," });
-            addArg.Add(new dbArgument { Prefix = A + "weapontype" + A + ":{\"", ArgString = "value" + A + ":" + A + wtype + A + ","  + A + "label" + A + ":" + A + "weapontype"+ A + "," +A+"type" + A + ":" + A + "String" , Suffix = A + "}," });
+            addArg.Add(new dbArgument { Prefix = A + "weapontype" + A + ":{\"", ArgString = "value" + A + ":" + A + wtype + A + "," + A + "label" + A + ":" + A + "weapontype" + A + "," + A + "type" + A + ":" + A + "String", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A, Suffix = A + "}}," });
 
             addArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}," });
@@ -1856,7 +1870,7 @@ namespace MeisterGeister.ViewModel.Foundry
             addArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{\"", ArgString = "value" + A + ":" + A + guidevalue + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Guide value", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "parry" + A + ":{\"", ArgString = "value" + A + ":" + ht.Parade + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "parryValue", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "attack" + A + ":{\"", ArgString = "value" + A + ":" + ht.Attacke + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "attackValue", Suffix = A + "}," });
-            addArg.Add(new dbArgument { Prefix = A + "talentValue" + A + ":{\"", ArgString = "value" + A + ":" + ht.TaW +"," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "attackValue", Suffix = A + "}," });
+            addArg.Add(new dbArgument { Prefix = A + "talentValue" + A + ":{\"", ArgString = "value" + A + ":" + ht.TaW + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "attackValue", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "weapontype" + A + ":{\"", ArgString = "value" + A + ":" + A + wtype + A + "," + A + "label" + A + ":" + A + "weapontype" + A + "," + A + "type" + A + ":" + A + "String", Suffix = A + "}," });
             addArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A, Suffix = A + "}}," });
 
@@ -1865,14 +1879,14 @@ namespace MeisterGeister.ViewModel.Foundry
             addArg.Add(new dbArgument { Prefix = A + "effect" + A + ":", ArgString = "[]" });
             addArg.Add(new dbArgument { Suffix = "}," });
         }
-               
+
 
         private List<dbArgument> AddKampftalenteArgument(GegnerBase g)
         {
             List<dbArgument> addArg = new List<dbArgument>();
             foreach (WaffeTalent w in lstWTalent)
             {
-                AddKampfTalent(addArg, g, w.DSA5Gruppe,w.DSA4Gruppe, w.StF,w.guidvalue, g.PA, g.AT, 0, w.wtype);
+                AddKampfTalent(addArg, g, w.DSA5Gruppe, w.DSA4Gruppe, w.StF, w.guidvalue, g.PA, g.AT, 0, w.wtype);
             };
             return addArg;
         }
@@ -1980,7 +1994,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
             lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "creature", Suffix = A + "," });
-           // lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+            // lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
 
             lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "characteristics" + A + ":{" });
@@ -1995,7 +2009,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.AddRange(AddGegnerArgument("kk", "#d6a878", g.KK, "},"));
 
             lstArg.Add(new dbArgument { Prefix = A + "status" + A + ":{" });
-            lstArg.AddRange(AddGegnerStatus("wounds", (g.KO * 2).ToString(), g.LE.ToString(), "0", (g.LE - g.KO*2).ToString() , g.LE.ToString(), "},"));
+            lstArg.AddRange(AddGegnerStatus("wounds", (g.KO * 2).ToString(), g.LE.ToString(), "0", (g.LE - g.KO * 2).ToString(), g.LE.ToString(), "},"));
             lstArg.AddRange(AddGegnerStatus("astralenergy", g.AE.ToString(), g.AE.ToString(), "0", "0", g.AE.ToString(), "},"));
             lstArg.AddRange(AddGegnerStatus("karmaenergy", g.KE.ToString(), g.KE.ToString(), "0", "0", g.KE.ToString(), "},"));
             lstArg.AddRange(AddGegnerStatus("soulpower", "0", "0", null, "0", null, "},"));
@@ -2004,30 +2018,30 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.AddRange(AddGegnerStatus("fatePoints", null, "0", null, "0", "0", "},"));                            //Schicksalspunkte
             lstArg.AddRange(AddGegnerStatus("speed", g.GS.ToString(), "0", null, "0", null, "},"));
             lstArg.AddRange(AddGegnerStatus("initiative", null, g.INIBasis.ToString(), null, "0", g.INIBasis.ToString(), "},"));
-            lstArg.Add(new dbArgument { Prefix = A + "size" + A + ":{" + A + "value" + A + ":" , ArgString = A+ "average" + A, Suffix = "}}," });
+            lstArg.Add(new dbArgument { Prefix = A + "size" + A + ":{" + A + "value" + A + ":", ArgString = A + "average" + A, Suffix = "}}," });
 
-            lstArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{" +A+"value"+A+":"+A+"-"+A, Suffix="},"});
-            lstArg.Add(new dbArgument { Prefix = A + "tradition" + A + ":{" +A+"value"+A+":"+A+A, Suffix="},"});
-            lstArg.Add(new dbArgument { Prefix = A + "feature" + A + ":{" +A+"value"+A+":"+A+A, Suffix="},"});
-            lstArg.Add(new dbArgument { Prefix = A + "happyTalents" + A + ":{" +A+"value"+A+":"+A+A, Suffix="},"});
+            lstArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{" + A + "value" + A + ":" + A + "-" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "tradition" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "feature" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "happyTalents" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "details" + A + ":{" });
-                lstArg.Add(new dbArgument { Prefix = A + "species" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "gender" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "career" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "socialstate" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "family" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "age" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "haircolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "eyecolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "distinguishingmark" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "biography" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "notes" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "experience" + A + ":{" + A + "total" + A + ":0," + A + "spent" + A + ":0", Suffix = "}}," });
-                lstArg.Add(new dbArgument { Prefix = A + "Home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "species" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "gender" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "career" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "socialstate" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "family" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "age" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "haircolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "eyecolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "distinguishingmark" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "biography" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "notes" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "experience" + A + ":{" + A + "total" + A + ":0," + A + "spent" + A + ":0", Suffix = "}}," });
+            lstArg.Add(new dbArgument { Prefix = A + "Home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
 
             lstArg.Add(new dbArgument { Prefix = A + "actionCount" + A + ":{\"", ArgString = "value" + A + ":" + A + g.Aktionen, Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "count" + A + ":{\"", ArgString = "value" + A + ":" + A + g.Auftreten, Suffix = A + "}," });
@@ -2035,14 +2049,14 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "behaviour" + A + ":{\"", ArgString = "value" + A + ":" + A, Suffix = A + "}," });// + g.Bemerkung
             lstArg.Add(new dbArgument { Prefix = A + "flight" + A + ":{\"", ArgString = "value" + A + ":" + A + g.Jagdreaktion, Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "specialRules" + A + ":{\"", ArgString = "value" + A + ":" + A + g.Verbreitung, Suffix = A + "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "conjuringDifficulty" + A + ":{\"", ArgString = "value" + A + ":0" , Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "conjuringDifficulty" + A + ":{\"", ArgString = "value" + A + ":0", Suffix = "}," });
             string bemerkungen = (g.Bemerkung == null ? "" : ("<p>" + g.Bemerkung.Replace("\n", "</p>" + b + "n<p>") + "</p>"));
             if (bemerkungen != null)
                 bemerkungen = bemerkungen.Replace("\r", "");
 
             lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A + bemerkungen, Suffix = A + "}," });// + g.Bemerkung
             //lstArg.Add(new dbArgument { Prefix = A + "freeLanguagePoints" + A + ":{" +A+"value"+A+":0,"+A+"used"+A+":0", Suffix="},"});
-            lstArg.Add(new dbArgument { Prefix = A + "sheetLocked" + A + ":{" +A+"value"+A+":"+"false", Suffix="},"});
+            lstArg.Add(new dbArgument { Prefix = A + "sheetLocked" + A + ":{" + A + "value" + A + ":" + "false", Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "itemModifiers" + A + ":{", Suffix = "}}," });
 
@@ -2157,7 +2171,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
 
             if (lstArg.Last().Suffix != "")
-                lstArg.Last().Suffix =  "}";
+                lstArg.Last().Suffix = "}";
             //add Std.Talente?
             lstArg.Add(new dbArgument { Prefix = "]," });
 
@@ -2211,24 +2225,24 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "feature" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "happyTalents" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "details" + A + ":{" });
-                lstArg.Add(new dbArgument { Prefix = A + "species" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "gender" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "career" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "socialstate" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "family" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "age" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "haircolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "eyecolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "distinguishingmark" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "biography" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "species" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "gender" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "career" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "socialstate" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "family" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "age" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "haircolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "eyecolor" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "distinguishingmark" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "biography" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
 
-                lstArg.Add(new dbArgument { Prefix = A + "notes" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "experience" + A + ":{" + A + "total" + A + ":0," + A + "spent" + A + ":0", Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "Home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}}," });
+            lstArg.Add(new dbArgument { Prefix = A + "notes" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "experience" + A + ":{" + A + "total" + A + ":0," + A + "spent" + A + ":0", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "Home" + A + ":{" + A + "value" + A + ":" + A + A, Suffix = "}}," });
 
             lstArg.Add(new dbArgument { Prefix = A + "freeLanguagePoints" + A + ":{" + A + "value" + A + ":0," + A + "used" + A + ":0", Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "sheetLocked" + A + ":{" + A + "value" + A + ":" + "false", Suffix = "}," });
@@ -2341,7 +2355,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
             //Add all Talente
             int i = 1;
-            foreach(Held_Talent ht in h.Held_Talent)
+            foreach (Held_Talent ht in h.Held_Talent)
             {
                 if (ht.Talent.Talentgruppe.Kurzname == "Kampf" ||
                     ht.Talent.Talentgruppe.Kurzname == "Ritualkenntnis" ||
@@ -2384,25 +2398,25 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = ht.Talentname, Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "skill", Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":", ArgString="{" });
-            lstArg.Add(new dbArgument { Prefix = A + "group" + A + ":{", ArgString = A+ "value"+A+":\""+GruppenTyp+A+","+ A+"type"+A+":"+A+"String"+A+","+A+"label"+A+":\"Skillgroup", Suffix = A + "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":", ArgString = "{" });
+            lstArg.Add(new dbArgument { Prefix = A + "group" + A + ":{", ArgString = A + "value" + A + ":\"" + GruppenTyp + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":\"Skillgroup", Suffix = A + "}," });
 
             lstArg.Add(new dbArgument { Prefix = A + "talentValue" + A + ":{\"", ArgString = "value" + A + ":" + ht.TaW + "," + A + "type" + A + ":" + A + "Number" + A + "," + A + "label" + A + ":" + A + "Fw", Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "characteristic1" + A + ":{\"", ArgString = "value" + A + ":\"" + ht.Talent.Eigenschaft1.ToLower() + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Characteristic1", Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "characteristic2" + A + ":{\"", ArgString = "value" + A + ":\"" + ht.Talent.Eigenschaft2.ToLower() + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Characteristic2", Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "characteristic3" + A + ":{\"", ArgString = "value" + A + ":\"" + ht.Talent.Eigenschaft3.ToLower() + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Characteristic3", Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "RPr" + A + ":{\"", ArgString = "value" + A + ":\"maybe" + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Routinecheck", Suffix = A + "}," });
-            string be = string.IsNullOrEmpty(ht.Talent.eBE)? "no" : ht.Talent.eBE == "Belastung"?"BE": ht.Talent.eBE;
-            lstArg.Add(new dbArgument { Prefix = A + "burden" + A + ":{\"", ArgString = "value" + A + ":\""+ be + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Burden", Suffix = A + "}," });
+            string be = string.IsNullOrEmpty(ht.Talent.eBE) ? "no" : ht.Talent.eBE == "Belastung" ? "BE" : ht.Talent.eBE;
+            lstArg.Add(new dbArgument { Prefix = A + "burden" + A + ":{\"", ArgString = "value" + A + ":\"" + be + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Burden", Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Description", Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "gmdescription" + A + ":{\"", ArgString = "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Description", Suffix = A + "}," });
             lstArg.Add(new dbArgument { Prefix = A + "Rpr" + A + ":{\"", ArgString = "value" + A + ":\"maybe" + A + "," + A + "type" + A + ":" + A + "String" + A + "," + A + "label" + A + ":" + A + "Routinecheck", Suffix = A + "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "StF" + A + ":{\"", ArgString = "value" + A + ":\"" +ht.Talent.Steigerung, Suffix = A + "}}," });
+            lstArg.Add(new dbArgument { Prefix = A + "StF" + A + ":{\"", ArgString = "value" + A + ":\"" + ht.Talent.Steigerung, Suffix = A + "}}," });
 
-            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = (sortNo*100000).ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = (sortNo * 100000).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{\""+"sourceId"+A+":"+A+ "Item.W0KTljWMKO7otAZR"+A+"}},"+A+"img"+A+":\""+ "icons/tools/hand/spinning-wheel-brown.webp",Suffix= A+","});
-            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[]", Suffix="}," });
+            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{\"" + "sourceId" + A + ":" + A + "Item.W0KTljWMKO7otAZR" + A + "}}," + A + "img" + A + ":\"" + "icons/tools/hand/spinning-wheel-brown.webp", Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[]", Suffix = "}," });
 
             return lstArg;
         }
@@ -2450,7 +2464,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 BildSpeichern(g.Bild, GegnerPortraitPfad, MGPfad, lstFTPGegnerPics, lstPicKopiert);
                 BildSpeichern(g.Bild, GegnerTokenPfad, MGPfad, lstFTPGegnerPics, lstTokenKopiert);
 
-                string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null: (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
+                string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
                 //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
                 string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
 
@@ -2461,7 +2475,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 GegnerArgument gArg = new GegnerArgument();
                 gArg.g = g;
                 gArg.lstArguments = new List<dbArgument>();
-                if( DSA41Version)
+                if (DSA41Version)
                     gArg.lstArguments.AddRange(SetDSA41Arguments(g, GetFilenamePortrait, GetFilenameToken, id));
                 else
                     gArg.lstArguments.AddRange(SetDSA5Arguments(g, GetFilenamePortrait, GetFilenameToken, id));
@@ -2502,17 +2516,22 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstArg.Add(new dbArgument { Prefix = A + "quantity" + A + ":{\"", ArgString = "value" + A + ":1", Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":{\"", ArgString = "value" + A + ":" + w.Gewicht, Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "effect" + A + ":{\"", ArgString = "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":{\"", ArgString = "value" + A + ":" + A + "<p>" +
-                    ((MeisterGeister.ViewModel.Basar.Logic.IHandelsgut)w)?.Bemerkung + "</p>"+ b+"n<p>" + 
-                    w.Bemerkung + "<p>" + A, Suffix = "}," });
+                lstArg.Add(new dbArgument
+                {
+                    Prefix = A + "description" + A + ":{\"",
+                    ArgString = "value" + A + ":" + A + "<p>" +
+                    ((MeisterGeister.ViewModel.Basar.Logic.IHandelsgut)w)?.Bemerkung + "</p>" + b + "n<p>" +
+                    w.Bemerkung + "<p>" + A,
+                    Suffix = "},"
+                });
                 lstArg.Add(new dbArgument { Prefix = A + "gmdescription" + A + ":{\"", ArgString = "value" + A + ":" + A + A, Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "damage" + A + ":{\"", ArgString = "value" + A + ":" +A+ w.TPWürfelAnzahl + "W" + w.TPWürfel + "+" + w.TPBonus+A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "damage" + A + ":{\"", ArgString = "value" + A + ":" + A + w.TPWürfelAnzahl + "W" + w.TPWürfel + "+" + w.TPBonus + A, Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "atmod" + A + ":{\"", ArgString = "value" + A + ":0, " + A + "offhandMod" + A + ":0", Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "pamod" + A + ":{\"", ArgString = "value" + A + ":0, " + A + "offhandMod" + A + ":0", Suffix = "}," });
                 string dk = w.DK == null ? "medium" : w.DK.Contains("H") ? "short" : w.DK.Contains("N") ? "medium" : w.DK.Contains("S") ? "long" : w.DK.Contains("P") ? "wide" : "medium";
-                lstArg.Add(new dbArgument { Prefix = A + "reach" + A + ":{\"", ArgString = "value" + A + ":" + A+dk+A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "reach" + A + ":{\"", ArgString = "value" + A + ":" + A + dk + A, Suffix = "}," });
                 lstArg.Add(new dbArgument { Prefix = A + "damageThreshold" + A + ":{\"", ArgString = "value" + A + ":15", Suffix = "}," });
-                lstArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{\"", ArgString = "value" + A + ":"+A+(w.Talent.FirstOrDefault()?.Eigenschaft1?.ToLower() ?? "kk" )+ A, Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "guidevalue" + A + ":{\"", ArgString = "value" + A + ":" + A + (w.Talent.FirstOrDefault()?.Eigenschaft1?.ToLower() ?? "kk") + A, Suffix = "}," });
 
                 string talentName = w.Talent.FirstOrDefault()?.Talentname ?? "Säbel";
                 lstArg.Add(new dbArgument { Prefix = A + "combatskill" + A + ":{\"", ArgString = "value" + A + ":" + A + talentName + A, Suffix = "}," });
@@ -2524,9 +2543,9 @@ namespace MeisterGeister.ViewModel.Foundry
                 i += 100000;
                 lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{}", Suffix = "," });
 
-                WaffeTalent wTal = lstWTalent.FirstOrDefault(t => t.DSA5Gruppe == talentName) ?? 
+                WaffeTalent wTal = lstWTalent.FirstOrDefault(t => t.DSA5Gruppe == talentName) ??
                     lstWTalent.FirstOrDefault(t => t.DSA5Gruppe == "Dolche");
-                lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":", ArgString = A + "modules/dsa5-core/icons/"+ wTal.img + A, Suffix = "," });
+                lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":", ArgString = A + "modules/dsa5-core/icons/" + wTal.img + A, Suffix = "," });
                 lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[]", Suffix = "" });
                 lstArg.Add(new dbArgument { Suffix = "}" });
 
@@ -2566,7 +2585,7 @@ namespace MeisterGeister.ViewModel.Foundry
             "effects":[]
             }
             */
-            
+
         }
 
         public void GetHeldenData()
@@ -2592,7 +2611,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
                 BildSpeichern(h.Bild, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
 
-                string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\","/") + System.IO.Path.GetFileName(h.Bild)));
+                string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild)));
                 //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
                 string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild));
 
@@ -2611,7 +2630,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 foreach (dbArgument arg in hArg.lstArguments)
                 { hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
 
-                lstHeldArgument.Add(hArg);                
+                lstHeldArgument.Add(hArg);
             }
             MyTimer.stop_timer("Helden-DB-Argument");
         }
@@ -2619,8 +2638,8 @@ namespace MeisterGeister.ViewModel.Foundry
         public void InitWaffen()
         {
             if (WaffeListe.Count == 0)
-            //HandelsgutListe = Global.ContextHandelsgut == null ? new List<Model.Handelsgut>() : Global.ContextHandelsgut.HandelsgüterListe;
-            WaffeListe = Global.ContextInventar == null ? new List<Model.Waffe>() : Global.ContextInventar.WaffeListe;
+                //HandelsgutListe = Global.ContextHandelsgut == null ? new List<Model.Handelsgut>() : Global.ContextHandelsgut.HandelsgüterListe;
+                WaffeListe = Global.ContextInventar == null ? new List<Model.Waffe>() : Global.ContextInventar.WaffeListe;
             //FernkampfwaffeListe = Global.ContextInventar == null ? new List<Model.Fernkampfwaffe>() : Global.ContextInventar.FernkampfwaffeListe;
             //SchildListe = Global.ContextInventar == null ? new List<Model.Schild>() : Global.ContextInventar.SchildListe;
             //RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.RuestungListe;
@@ -2667,7 +2686,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 return;
             }
             string newFolder = ViewHelper.InputDialog("Erstelle Actor Verzeichnis", "Gebe den Namen des neuen Verzeichnisses\nfür die Actor ein", "");
-            
+
             if (string.IsNullOrEmpty(newFolder))
                 return;
             if (lstFolders.FirstOrDefault(t => t.name == newFolder) != null)
@@ -2677,9 +2696,9 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             char A = (char)34; // (new Char[] { '"' });
             string _id = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
-            
-            string outdata = "{"+A+"name:"+A+ newFolder + A + "," + A + "type" + A + ":" + A + "Actor" + A + "," + A + "sort" + A + 
-                ":null," + A + "flags" + A + ":{}," + A + "parent" + A + ":null," + A + "sorting" + A + ":" + A + "a" + A + 
+
+            string outdata = "{" + A + "name:" + A + newFolder + A + "," + A + "type" + A + ":" + A + "Actor" + A + "," + A + "sort" + A +
+                ":null," + A + "flags" + A + ":{}," + A + "parent" + A + ":null," + A + "sorting" + A + ":" + A + "a" + A +
                 "," + A + "color" + A + ":" + A + A + "," + A + "_id" + A + ":" + A + _id + A + "}\n";
 
             if (IsLocalInstalliert)
@@ -2722,7 +2741,7 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             List<folder> lst = new List<folder>();
             lst.AddRange(lstFolders);
-            lst.Add(new folder() { name = newFolder, color = "", sorting="a", typ="Actor", _id = _id });
+            lst.Add(new folder() { name = newFolder, color = "", sorting = "a", typ = "Actor", _id = _id });
             lstFolders = lst;
 
             ViewHelper.Popup("Verzeichnis erstellt");
@@ -2763,7 +2782,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 return _onBtnCreateFolder;
             }
         }
-        
+
         private Base.CommandBase _onBtnExportGegner = null;
         public Base.CommandBase OnBtnExportGegner
         {
@@ -2789,7 +2808,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     "Hauptverzeichnis exportiert werden?"))
                     return;
 
-                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait); 
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
                 MyTimer.start_timer();
                 GetGegnerData();
 
@@ -2908,7 +2927,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     //Waffen einfügen
                     SetFileData(actorsPath, newFile);
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup(MyTimer.stop_timer("Refresh Waffen-Daten aktualisiert in") + "\n\nAlle Waffen wurden eingefügt.\n" );
+                    ViewHelper.Popup(MyTimer.stop_timer("Refresh Waffen-Daten aktualisiert in") + "\n\nAlle Waffen wurden eingefügt.\n");
                 }
                 else
                 {
@@ -2939,13 +2958,13 @@ namespace MeisterGeister.ViewModel.Foundry
         private void ExportHelden(object sender)
         {
             try
-            { 
+            {
                 if (SelectedWorld == null)
                 {
                     ViewHelper.Popup("Wähle zuerst eine Welt");
                     return;
                 }
-                if ((SelectedHeldenFolder == null || SelectedHeldenFolder.name == "") && 
+                if ((SelectedHeldenFolder == null || SelectedHeldenFolder.name == "") &&
                     !ViewHelper.Confirm("Export der Helden", "Die Helden werden ins das Hauptverzeichnis exportiert\n" +
                     "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um Helden, NSC und Gegner zu separieren\n\nSollen die Helden in das" +
                     "Hauptverzeichnis exportiert werden?"))
@@ -2993,7 +3012,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     SetFileData(actorsPath, newFile);
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                     ViewHelper.Popup(MyTimer.stop_timer("Refresh Helden-Daten aktualisiert in") + "\n\nAlle Helden wurden eingefügt.\n" +
-                        "Folgende Helden wurden ersetzt:\n" +(lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * "+t).ToList()): ""));
+                        "Folgende Helden wurden ersetzt:\n" + (lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * " + t).ToList()) : ""));
                 }
                 else
                 {
@@ -3008,6 +3027,64 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
+        public static void MakeFTPDir(string ftpAddress, string pathToCreate, string login, string password, byte[] fileContents, string ftpProxy = null)
+        {
+            FtpWebRequest reqFTP = null;
+            Stream ftpStream = null;
+
+            string[] subDirs = pathToCreate.Split('/');
+
+            string currentDir = string.Format("ftp://{0}", ftpAddress);
+
+            foreach (string subDir in subDirs)
+            {
+                try
+                {
+                    currentDir = currentDir + "/" + subDir;
+                    reqFTP = (FtpWebRequest)FtpWebRequest.Create(currentDir);
+                    reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
+                    reqFTP.UseBinary = true;
+                    reqFTP.Credentials = new NetworkCredential(login, password);
+                    FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
+                    ftpStream = response.GetResponseStream();
+                    ftpStream.Close();
+                    response.Close();
+                }
+                catch (Exception ex)
+                {
+                    //directory already exist I know that is weak but there is no way to check if a folder exist on ftp...
+                }
+            }
+        }
+
+        public static bool DeleteFileOnFtpServer(Uri serverUri, string ftpUsername, string ftpPassword)
+        {
+            try
+            {
+                // The serverUri parameter should use the ftp:// scheme.
+                // It contains the name of the server file that is to be deleted.
+                // Example: ftp://contoso.com/someFile.txt.
+                // 
+
+                if (serverUri.Scheme != Uri.UriSchemeFtp)
+                {
+                    return false;
+                }
+                // Get the object used to communicate with the server.
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+                request.Credentials = new NetworkCredential(ftpUsername, ftpPassword);
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                //Console.WriteLine("Delete status: {0}", response.StatusDescription);
+                response.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
         private Base.CommandBase _onBtnExportPlaylists = null;
         public Base.CommandBase OnBtnExportPlaylists
@@ -3021,24 +3098,40 @@ namespace MeisterGeister.ViewModel.Foundry
         }
         private void ExportPlaylists(object sender)
         {
+            if (SelectedWorld == null)
+            {
+                ViewHelper.Popup("Wähle zuerst eine Welt");
+                return;
+            }
+            Global.SetIsBusy(true, string.Format("Export der Playlisten..."));
+            System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.AppStarting);
             MyTimer.start_timer();
             System.Globalization.CultureInfo en = new System.Globalization.CultureInfo("en-US", false);
             int anzTotalTitel = 0;
-            if (!Directory.Exists(string.Format(@"{0}{1}", FoundryPfad, MusikPfad)))
-                Directory.CreateDirectory(string.Format(@"{0}{1}", FoundryPfad, MusikPfad));
+
+            if (IsLocalInstalliert)
+            {
+                if (!Directory.Exists(string.Format(@"{0}{1}", FoundryPfad, MusikPfad)))
+                    Directory.CreateDirectory(string.Format(@"{0}{1}", FoundryPfad, MusikPfad));
+            }
+            else
+            {
+                MakeFTPDir(FoundryPfad, MusikPfad, FTPUser, FTPPasswort, null, null);
+            }
 
             List<PlaylistArgument> lstPArg = new List<PlaylistArgument>();
-
             string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
 
             PlaylistStatus = "Alle Playlisten werden exportiert ...";
+            Global.SetIsBusy(true, PlaylistStatus);
             foreach (Audio_Playlist aPlaylist in lstPlaylists)
             {
                 PlaylistStatus = string.Format("Export '{0}' ...", aPlaylist.Name);
+                Global.SetIsBusy(true, PlaylistStatus);
                 int anzTitel = aPlaylist.Audio_Playlist_Titel.Count;
                 PlaylistArgument pArg = new PlaylistArgument();
                 char A = (char)34; // (new Char[] { '"' });
-                                    //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
+                                   //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
                 pArg.GMid = GMid;
                 pArg._id = aPlaylist.Audio_PlaylistGUID.ToString().Substring(19, 17).Replace("-", "");
                 pArg.name = aPlaylist.Name;
@@ -3053,29 +3146,32 @@ namespace MeisterGeister.ViewModel.Foundry
                 foreach (Audio_Playlist_Titel aTitel in aPlaylist.Audio_Playlist_Titel.OrderBy(t => t.Audio_Titel.Name))
                 {
                     string MGpathFile = aTitel.Audio_Titel.Pfad + @"\" + aTitel.Audio_Titel.Datei;
-                    if (!File.Exists(MGpathFile)) continue;
+                    if (!File.Exists(MGpathFile))
+                        continue;
 
                     PlaylistStatus = string.Format("Export '{0}' {1} of {2} ...", aPlaylist.Name, current, anzTitel);
                     PlaylistArgument.SoundArg sArg = new PlaylistArgument.SoundArg();
                     sArg.lstArg = new List<string>();
                     string aTitelTeilGuid = aTitel.Audio_TitelGUID.ToString().Substring(19, 17).Replace("-", "");
-                    sArg.lstArg.Add("{" + A + "_id" +A+":"+A+ aTitelTeilGuid+ A );
-                    sArg.lstArg.Add( A + "flags" + A + ":{}");
+                    sArg.lstArg.Add("{" + A + "_id" + A + ":" + A + aTitelTeilGuid + A);
+                    sArg.lstArg.Add(A + "flags" + A + ":{}");
 
-                    stdPfad.ForEach((Action<string>)delegate (string s) {
+                    stdPfad.ForEach((Action<string>)delegate (string s)
+                    {
                         if (MGpathFile.StartsWith(s))
-                            MGpathFile = MGpathFile.Replace(s, (string)this.MusikPfad); });
+                            MGpathFile = MGpathFile.Replace(s, (string)this.MusikPfad);
+                    });
                     string zielPfad = FoundryPfad + MGpathFile;
-                    MGpathFile = MGpathFile.Replace(@"\","/");
+                    MGpathFile = MGpathFile.Replace(@"\", "/");
                     if (!MGpathFile.StartsWith(MusikPfad))
                         continue;
 
-                    sArg.lstArg.Add(A + "path" + A+":"+A+ MGpathFile+ A );
-                    sArg.lstArg.Add(A + "repeat" + A + ":" + "false" );
-                    sArg.lstArg.Add(A + "volume"+A+ ":" +((decimal)(aTitel.Volume/100)).ToString(en));
-                    sArg.lstArg.Add(A + "name"+A + ":" + A+System.IO.Path.GetFileNameWithoutExtension(aTitel.Audio_Titel.Datei) +A );
-                    sArg.lstArg.Add(A + "playing" + A + ":false" );
-                    sArg.lstArg.Add(A + "streaming" + A + ":false}" );
+                    sArg.lstArg.Add(A + "path" + A + ":" + A + MGpathFile + A);
+                    sArg.lstArg.Add(A + "repeat" + A + ":" + "false");
+                    sArg.lstArg.Add(A + "volume" + A + ":" + ((decimal)(aTitel.Volume / 100)).ToString(en));
+                    sArg.lstArg.Add(A + "name" + A + ":" + A + System.IO.Path.GetFileNameWithoutExtension(aTitel.Audio_Titel.Datei) + A);
+                    sArg.lstArg.Add(A + "playing" + A + ":false");
+                    sArg.lstArg.Add(A + "streaming" + A + ":false}");
                     sArg.lstTitel = string.Join(",", sArg.lstArg);
                     pArg.lstSounds.Add(sArg);
 
@@ -3091,70 +3187,73 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
                 lstPArg.Add(pArg);
 
-                if (anzTotalTitel ==100)
+                if (anzTotalTitel >= 100)
                 { }
             }
-
 
             //Open playlists.db
             string worldPath = FoundryPfad + @"worlds\" + SelectedWorld + @"\data\";
             string playlistsFile = worldPath + "playlists.db";
+
+            if (!IsLocalInstalliert)
+                playlistsFile = playlistsFile.Replace(@"\", "/");
             if (OverwritePlaylistFile)
-                File.Delete(playlistsFile);
-            List<string> lstFileData = new List<string>();
-            string oldFileData = (File.Exists(playlistsFile))? File.ReadAllText(playlistsFile): "";
+            {
+                if (IsLocalInstalliert)
+                    File.Delete(playlistsFile);
+                else
+                    DeleteFileOnFtpServer(new Uri(playlistsFile.Replace(@"\", "/")), FTPUser, FTPPasswort);
+            }
 
-            string newFileData = oldFileData + string.Join("\n", lstPArg.Select(t => t.outtext));
 
-            //Playlisten einfügen
-            File.WriteAllText(playlistsFile, newFileData);
+            //*********************************
+
+            Global.SetIsBusy(true, "Daten werden zusammengestellt");
+            List<string> lstErsetzt = new List<string>();
+            string FileData = GetFileData(playlistsFile);
+            if (FileData != null)
+            {
+                List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList(); //oldFileData
+                string newFileDataAdd = "";
+                //Check Playlist vorhanden -> Ja = Zeile löschen und ersetzen
+                int i = 1;
+                foreach (PlaylistArgument parg in lstPArg)
+                {
+                    Global.SetIsBusy(true, "Check auf vorhandene Playlisten " + i);
+                    Nullable<int> pos = lstFileData.IndexOf(lstFileData.Where(t => t.Contains("name\":\"" + parg.name + "\",")).FirstOrDefault());
+                    if (pos != null && pos != -1)
+                    {
+                        lstFileData.RemoveAt(pos.Value);
+                        lstErsetzt.Add(parg.name);
+                    }
+                    newFileDataAdd += "\n" + parg.outtext;
+                    i++;
+                }
+                string newFile = string.Join("\n", lstFileData);
+                newFile += newFileDataAdd;
+
+                Global.SetIsBusy(true, "Speichern der Playlisten");
+                //Playlist einfügen
+                SetFileData(playlistsFile, newFile);
+                MyTimer.stop_timer("");
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                Global.SetIsBusy(false);
+                ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert",
+                    lstPArg.Count, lstErsetzt.Count));
+            }
+            else
+            {
+                Global.SetIsBusy(false);
+                System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
+                ViewHelper.Popup("Die Foundry Datenbank 'playlists.db' konnte nicht gefunden werden.\n\n ");
+            }
+            Global.SetIsBusy(false);
 
             PlaylistStatus = null;
             string stop = MyTimer.stop_timer("");
             PopUp(string.Format("Playlisten erfolgreich übertragen.\nEs wurden {0} in {1} übertragen.", anzTotalTitel, stop));
         }
 
-        /*
-         * 
-         * 
-         {"_id":"DUBBfsfZPdvWN8Mn",
-        "name":"neu",
-        "permission":{"default":0,"gNZOk6idrMy6uSkk":3},
-        "sort":100001,
-        "flags":{},
-        "sounds":[
-        {
-            "_id":"BOTQlxGUhlZFk387",
-            "flags":{},
-            "path":"Musik/_Stra%C3%9Fenmusik/107-peter_balding--as_summer_closes-oma.mp3",
-            "repeat":false,"volume":0.35355339059327373,
-            "name":"107-peter_balding--as_summer_closes-oma",
-            "playing":false,
-            "streaming":false
-        },
-        {
-            "_id":"9w7UzHLKZD0GE3Ao",
-            "flags":{},
-            "path":"Musik/_Stra%C3%9Fenmusik/107-peter_balding--as_summer_closes-oma.mp3",
-            "repeat":false,"volume":0.35355339059327373,
-            "name":"107-peter_balding--as_summer_closes-oma",
-            "playing":false,
-            "streaming":false
-        },
-        {
-            "_id":"hMKrznmD7vhNLDNq",
-            "flags":{},
-            "path":"Musik/_Stra%C3%9Fenmusik/104-miguel_angel_tallante--cruzada-oma.mp3",
-            "repeat":false,
-            "volume":0.35355339059327373,
-            "name":"104-miguel_angel_tallante--cruzada-oma",
-            "playing":false,
-            "streaming":false
-        }],
-        "mode":1,
-        "playing":false}
-
-         */
-                #endregion
-            }
+        #endregion
+    }
 }
