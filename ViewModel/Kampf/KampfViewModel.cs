@@ -391,7 +391,8 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     ki = new KämpferInfo(held, Kampf);
                     Kampf.Kämpfer.Add(held);
-                    BodenplanViewModel.AddCreature(held);
+
+                    BodenplanViewModel.AddCreature(Kampf.Kämpfer.Last().Kämpfer);
                 }
             }
         }
@@ -400,11 +401,13 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             if (Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
             {
-                Kampf.Kämpfer.Clear();
                 if (BodenplanViewModel != null)
                 {
+                    BodenplanViewModel.SelectectedKämpferInfo = null;
+                    BodenplanViewModel.SelectedObject = null;
                     BodenplanViewModel.RemoveCreatureAll();
                 }
+                Kampf.Kämpfer.Clear();
             }
         }
 

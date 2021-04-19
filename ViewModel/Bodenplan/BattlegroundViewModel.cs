@@ -1858,7 +1858,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
                 BattlegroundObjects.ToList().ForEach(x => x.IsHighlighted = false);
                 _selectedObject = value;
-                if (SelectedObject is BattlegroundCreature)
+                if (SelectedObject as BattlegroundCreature != null)
                 {
                     Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
                     Global.CurrentKampf.LabelInfo = null;
@@ -1884,7 +1884,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 OnChanged(nameof(SelectedObject));
                 try
                 {
-                    if (SelectedObject is BattlegroundCreature)
+                    if (SelectedObject as BattlegroundCreature != null)
                     {
                         if (BattlegroundObjects.IndexOf(SelectedObject) != BattlegroundObjects.Count - 1)
                         {
