@@ -361,6 +361,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                         {
                             Global.ContextHeld.Insert<Model.Held>(bObj as Held);
                             Global.CurrentKampf.Kampf.Kämpfer.Add(bObj as Held, 1);
+                            (bObj as Held).ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == bObj as Held);
                         }
                         if (bObj == null && drow.ItemArray.Length > 12)
                         {
@@ -372,6 +373,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
                                 Global.ContextHeld.Insert<Model.Gegner>(gegner);
                                 Global.CurrentKampf.Kampf.Kämpfer.Add(gegner, 2);
+                                gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
                             }                            
                         }
                         if (bObj != null)

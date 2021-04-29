@@ -233,20 +233,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public KämpferInfo ki
         {
-            get
-            {
-                if (_ki == null && Global.CurrentKampf != null && Global.CurrentKampf.Kampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count > 0)
-                {
-                    _ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
-                }
-                
-                return _ki;
-            }
-
-            set
-            {
-                Set(ref _ki, value);
-            }
+            get { return _ki; }
+            set { Set(ref _ki, value); }
         }
 
         public Thickness MarginCreatureAktionsbuttons
@@ -651,7 +639,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public Image SetCreatrueImage(Image img)
         {
-            var pic = 
+            var pic =
+                ki == null?
+                "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png":
                 ki.Kämpfer as Held != null?
                 (((Held)ki.Kämpfer).Token ?? ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png"):
                 ki.Kämpfer as Gegner != null ?

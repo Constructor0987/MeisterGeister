@@ -81,6 +81,7 @@ namespace MeisterGeister.ViewModel.Kampf
                     gegner.Name = gegner_name;
                     Global.ContextHeld.Insert<Gegner>(gegner);
                     _kampf.Kämpfer.Add(gegner, 2);
+                    gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
 
                     // zur Arena hinzufügen
                     if (_kampf.Bodenplan.VM != null)
@@ -151,7 +152,6 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 return _selectedKämpfer;
             }
-
             set
             {
                 if (value != null && _selectedKämpfer != null &&
@@ -347,8 +347,11 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 IKämpfer k = SelectedKämpfer.Kämpfer;
 
+                Global.CurrentKampf.SelectedKämpfer = null;
                 if (Global.CurrentKampf.BodenplanViewModel != null)
                 {
+                    BodenplanViewModel.SelectectedKämpferInfo = null;
+                    BodenplanViewModel.SelectedObject = null;
                     Global.CurrentKampf.BodenplanViewModel.RemoveCreature(k);
                 }
 
@@ -384,14 +387,12 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void AddHelden()
         {
-            KämpferInfo ki = null;
             foreach (Held held in Global.ContextHeld.HeldenGruppeListe)
             {
                 if (!Kampf.Kämpfer.Any(k => k.Kämpfer == held))
                 {
-                    ki = new KämpferInfo(held, Kampf);
-                    Kampf.Kämpfer.Add(held);
-
+                    Kampf.Kämpfer.Add(held);                    
+                    held.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == held);  
                     BodenplanViewModel.AddCreature(Kampf.Kämpfer.Last().Kämpfer);
                 }
             }
@@ -401,6 +402,7 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             if (Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
             {
+                Global.CurrentKampf.SelectedKämpfer = null;
                 if (BodenplanViewModel != null)
                 {
                     BodenplanViewModel.SelectectedKämpferInfo = null;

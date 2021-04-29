@@ -430,14 +430,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get { return _istImKampf; }
             set 
-            { 
-                Set(ref _istImKampf, value);
-                if (!value)
-                {
-                    Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
-                }
+            {
+                if (_istImKampf == value)
+                    Set(ref _istImKampf, value);
                 else
-                    Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
+                {
+                    Set(ref _istImKampf, value);
+                    if (!value)
+                    {
+                        Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
+                    }
+                    else
+                    {
+                        Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
+                        (Kämpfer as Wesen).ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == Kämpfer);
+                    }
+                }
             }
         }
 

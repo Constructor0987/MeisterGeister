@@ -63,6 +63,7 @@ namespace MeisterGeister.View.Kampf
                     gegner.Name = name;
                     Global.ContextHeld.Insert<Model.Gegner>(gegner);
                     _kampf.Kämpfer.Add(gegner, 2);
+                    gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
 
                     // zur Arena hinzufügen
                     if (_kampf.Bodenplan.VM != null)
