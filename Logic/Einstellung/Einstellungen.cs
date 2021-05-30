@@ -928,7 +928,7 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "FoundryMusikPfad", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Eigene-Daten/Allgemein/Musik" },
                 
                 //Versteckte
-                new Model.Einstellung() { Name = "FoundryFTPAdresse", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "ftp://195.114.11.154:21/Data" },
+                new Model.Einstellung() { Name = "FoundryFTPAdresse", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "ftp://195.114.11.154:21" },
                 new Model.Einstellung() { Name = "FoundryFTPUser", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "juergen" },
                 new Model.Einstellung() { Name = "FoundryFTPPasswort", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "FoundryVTT2021" },
                 new Model.Einstellung() { Name = "IsLocalInstalliert", Kontext = "Foundry", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "False" },
