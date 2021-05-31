@@ -91,9 +91,7 @@ namespace MeisterGeister.View.Foundry
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        { 
-            if (VM != null)
-                VM.Refresh();
+        {
             if (grdBrowser.Children.Count == 0)
             {
                 Grid.SetRow(VM.cWebBrowser, 0);
@@ -104,9 +102,6 @@ namespace MeisterGeister.View.Foundry
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {
             VM.InitWaffen();
-
-
         }
-
     }
 }

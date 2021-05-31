@@ -11,9 +11,6 @@ using MeisterGeister.View.General;
 //Eigene usings
 using MeisterGeister.Logic.Einstellung;
 using System.Windows.Forms;
-using System.Threading.Tasks;
-using System.Net.Http;
-using Newtonsoft.Json;
 
 namespace MeisterGeister.ViewModel.Foundry
 {
@@ -150,9 +147,6 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
                 if (didChange)
                     Init();
-
-                if (Einstellungen.GetEinstellung<string>("IsLocalInstalliert") != IsLocalInstalliert.ToString())
-                    Einstellungen.SetEinstellung<string>("IsLocalInstalliert", IsLocalInstalliert.ToString());
             }
         }
 
@@ -164,9 +158,8 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _ftpAdresse; }
             set
             {
-                if (_ftpAdresse != value)
-                    Einstellungen.SetEinstellung("FoundryFTPAdresse", value);
                 Set(ref _ftpAdresse, value);
+                Einstellungen.SetEinstellung("FoundryFTPAdresse", value);
             }
         }
 
@@ -176,9 +169,8 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _ftpUser; }
             set
             {
-                if (_ftpUser != value)
-                    Einstellungen.SetEinstellung("FoundryFTPUser", value);
                 Set(ref _ftpUser, value);
+                Einstellungen.SetEinstellung("FoundryFTPUser", value);
             }
         }
 
@@ -188,9 +180,8 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _ftpPasswort; }
             set
             {
-                if (_ftpPasswort != value)
-                    Einstellungen.SetEinstellung("FoundryFTPPasswort", value);
                 Set(ref _ftpPasswort, value);
+                Einstellungen.SetEinstellung("FoundryFTPPasswort", value);
             }
         }
 
@@ -412,9 +403,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 string prevalue = value;
                 if (prevalue != null && !prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
                     prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
-                if (Einstellungen.GetEinstellung<string>("FoundryGegnerPortraitPfad") != prevalue)
-                    Einstellungen.SetEinstellung<string>("FoundryGegnerPortraitPfad", prevalue);
                 Set(ref _gegnerPortraitPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryGegnerPortraitPfad", GegnerPortraitPfad);
             }
         }
 
@@ -428,9 +418,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 string prevalue = value;
                 if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
                     prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
-                if (Einstellungen.GetEinstellung<string>("FoundryHeldPortraitPfad") != prevalue)
-                    Einstellungen.SetEinstellung<string>("FoundryHeldPortraitPfad", prevalue);
                 Set(ref _heldPortraitPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryHeldPortraitPfad", HeldPortraitPfad);
             }
         }
 
@@ -443,9 +432,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 string prevalue = value;
                 if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
                     prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
-                if (Einstellungen.GetEinstellung<string>("FoundryGegnerTokenPfad") != prevalue)
-                    Einstellungen.SetEinstellung<string>("FoundryGegnerTokenPfad", prevalue);
                 Set(ref _gegnerTokenPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryGegnerTokenPfad", GegnerTokenPfad);
             }
         }
 
@@ -458,9 +446,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 string prevalue = value;
                 if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
                     prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
-                if (Einstellungen.GetEinstellung<string>("FoundryHeldTokenPfad") != prevalue)
-                    Einstellungen.SetEinstellung<string>("FoundryHeldTokenPfad", prevalue);
                 Set(ref _heldTokenPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryHeldTokenPfad", HeldTokenPfad);
             }
         }
 
@@ -473,9 +460,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 string prevalue = value;
                 if (!prevalue.EndsWith("/") && !prevalue.EndsWith(@"\"))
                     prevalue = prevalue + (IsLocalInstalliert ? @"\" : "/");
-                if (Einstellungen.GetEinstellung<string>("FoundryMusikPfad") != prevalue)
-                    Einstellungen.SetEinstellung<string>("FoundryMusikPfad", prevalue);
                 Set(ref _musikPfad, prevalue);
+                Einstellungen.SetEinstellung<string>("FoundryMusikPfad", MusikPfad);
             }
         }
 
@@ -744,8 +730,8 @@ namespace MeisterGeister.ViewModel.Foundry
             LinkActorData = false;
             lstTokenDisposition = new List<string>() { "Neutral", "Friendly", "Hostile" };
             TokenDisposition = lstTokenDisposition.Last();
-            string aVerzeichnisse = Einstellungen.AudioVerzeichnis;
-            stdPfad.AddRange(aVerzeichnisse.Split(new Char[] { '|' }));
+
+            stdPfad.AddRange(MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }));
         }
 
         private List<string> _stdPfad = new List<string>();
@@ -2675,12 +2661,6 @@ namespace MeisterGeister.ViewModel.Foundry
             //RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.RuestungListe;
 
         }
-
-        public void Refresh()
-        {
-
-        }
-
         public void Init()
         {
             if (IsLocalInstalliert)
@@ -2805,189 +2785,9 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
             }
         }
-
-        #endregion
-
-
-        #region //---- JSON Im- Export -----
-
-
-        public class valPermission
-        {
-            public int default_ { get; set; }
-            public int permissionUSER { get; set; }
-        }
-        public class valID
-        {
-            public string _id;
-        }
-        public class valInt
-        {
-            public int value { get; set; }
-        }
-        public class valName
-        {
-            public string name;
-        }
-        public class valString
-        {
-            public string value { get; set; }
-        }
-        public class valMod
-        {
-            public Nullable<int> value { get; set; }
-            public int offhandMod { get; set; }
-        }
-        public class valWorn
-        {
-            public bool value { get; set; }
-            public Nullable<bool> offhand { get; set; }
-            public Nullable<bool> wearable { get; set; }
-        }
-        public class valReach
-        {
-            public string value { get; set; }
-            public string shieldSize { get; set; }
-        }
-
-        public class valStructure
-        {
-            public Nullable<int> max { get; set; }
-            public Nullable<int> value { get; set; }
-        }
-
-        public class dat
-        {
-            public valString price { get; set; }
-            public valInt quantity { get; set; }
-            public valString weight { get; set; }
-            public valString effect { get; set; }
-            public valString description { get; set; }
-            public valString gmdescription { get; set; }
-            public valString equipmentType { get; set; }
-            public valString damage { get; set; }
-            public valMod atmod { get; set; }
-            public valMod pamod { get; set; }
-            public valReach reach { get; set; }
-            public valString damageThreshold { get; set; }
-            public valString guidevalue { get; set; }
-            public valString combatskill { get; set; }
-            public valWorn worn { get; set; }
-            public valStructure structure { get; set; }
-        }
-        public class valFlags
-        { }
-
-        public class Item
-        {
-            public string _id { get; set; }
-            public string name { get; set; }
-            public string permission { get; set; }
-            public string type { get; set; }
-            public dat data { get; set; }
-            public string folder { get; set; }
-            public int sort { get; set; }
-            public valFlags flags { get; set; }
-            public string img { get; set; }
-            public List<valFlags> effects { get; set; }
-        }
-
-        private List<Item> _items = null;
-        public List<Item> items
-        {
-            get { return _items; }
-            set { Set(ref _items, value); }
-        }
-
-        private Base.CommandBase _onBtnJSONImport = null;
-        public Base.CommandBase OnBtnJSONImport
-        {
-            get
-            {
-                if (_onBtnJSONImport == null)
-                    _onBtnJSONImport = new Base.CommandBase(JSONImport, null);
-                return _onBtnJSONImport;
-            }
-        }
-        void JSONImport(object obj)
-        {
-            string json = GetFileData(FoundryPfad + "modules/dsa5-core/packs/coreequipment.db");
-
-            json = "[" + json+ "]";
-            json = json.Replace("}\n", "},\n");
-
-            while (json.Contains("\"permission\":{"))
-            {
-                int startI = json.IndexOf("\"permission\":{") + 13;
-                string per = json.Substring(startI, json.Substring(startI, json.Length - startI).IndexOf("}") + 1);
-
-                json = json.Replace(per, "\"" + per.Replace("\"", "'") + "\"");
-            }
-            items = JsonConvert.DeserializeObject<List<Item>>(json);
-        }
-
-
-        private Base.CommandBase _onBtnJSONExport = null;
-        public Base.CommandBase OnBtnJSONExport
-        {
-            get
-            {
-                if (_onBtnJSONExport == null)
-                    _onBtnJSONExport = new Base.CommandBase(JSONExport, null);
-                return _onBtnJSONExport;
-            }
-        }
-        void JSONExport(object obj)
-        {
-            string json = JsonConvert.SerializeObject(items);
-            json = json.Substring(1, json.Length - 2);
-            //    json = json.Replace("permissionUSER", permissionUSER);
-
-            while (json.Contains("\"permission\":\"{"))
-            {
-                int startI = json.IndexOf("\"permission\":\"{") + 13;
-                string per = json.Substring(startI, json.Substring(startI, json.Length - startI).IndexOf("}") + 2);
-
-                json = json.Replace(per, per.Replace("'", "\"").Substring(1, per.Length - 2));
-            }
-            json = json.Replace("},{", "}\n{");
-
-            //Lösche alle NULL argumente
-
-            while (json.Contains("\":null"))
-            {
-                int i = json.IndexOf("\":null");
-                int end = i + 6;
-                while (json.ElementAt(i).ToString() != ",")
-                    i--;
-                json = json.Remove(i, end - i);
-
-            }
-
-            File.WriteAllText(@"C:\Temp\_LW_D\mat\items_test.db", json);
-        }
-
-
         #endregion
 
         #region //---- EVENTS ----
-        private Base.CommandBase _onBtnWaffenBilder = null;
-        public Base.CommandBase OnBtnWaffenBilder
-        {
-            get
-            {
-                if (_onBtnWaffenBilder == null)
-                    _onBtnWaffenBilder = new Base.CommandBase(WaffenBilder, null);
-                return _onBtnWaffenBilder;
-            }
-        }
-        private void WaffenBilder(object sender)
-        {
-
-
-
-        }
-
         private Base.CommandBase _onBtnCreateFolder = null;
         public Base.CommandBase OnBtnCreateFolder
         {
@@ -3362,7 +3162,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 //List<Audio_Playlist_Titel> lstTitel = new List<Audio_Playlist_Titel>();
                 foreach (Audio_Playlist_Titel aTitel in aPlaylist.Audio_Playlist_Titel.OrderBy(t => t.Audio_Titel.Name))
                 {
-                    string MGpathFile = aTitel.Audio_Titel.Pfad + (aTitel.Audio_Titel.Pfad.EndsWith(@"\") ? "" : @"\") + aTitel.Audio_Titel.Datei;
+                    string MGpathFile = aTitel.Audio_Titel.Pfad + @"\" + aTitel.Audio_Titel.Datei;
+
 
                     if (OnlySrcExisting && !File.Exists(MGpathFile))
                         continue;
@@ -3376,7 +3177,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
                     stdPfad.ForEach((Action<string>)delegate (string s)
                     {
-                        if (MGpathFile.StartsWith(s))
+                        if (s != "" && MGpathFile.StartsWith(s))
                             MGpathFile = MGpathFile.Replace(s, (string)this.MusikPfad);
                     });
                     string zielPfad = FoundryPfad + MGpathFile;
