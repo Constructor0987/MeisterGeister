@@ -181,7 +181,7 @@
                                             <Label Content="{Binding FoundryPfad}" Padding="0" VerticalAlignment="Center" />
                                             <!--<Label Content="{Binding SelectedWorld}" Padding="0" VerticalAlignment="Center" />
                                             <Label Content="/" VerticalAlignment="Center" Padding="0,0,5,0" />-->
-                                            <TextBox Text="{Binding MusikPfad}" Width="205" VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding MusikPfad}" Width="350" VerticalAlignment="Center"/>
                                         </StackPanel>
                                         <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
                                         <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
