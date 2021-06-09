@@ -215,8 +215,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public void CalculateNewDirection(System.Windows.Point currentMousePos)
         {
-            //rotates images per leftclick for 45°
-            RotateAngle += 45;
+            var _a = currentMousePos.X - (ImagePositionX + ImageWidth / 2);
+            var _b = currentMousePos.Y - (ImagePositionY + ImageHeight / 2);
+            var _alpha = Math.Atan2(_a, _b) * (180 / Math.PI);
+            RotateAngle = -_alpha;
         }
     }
 }
