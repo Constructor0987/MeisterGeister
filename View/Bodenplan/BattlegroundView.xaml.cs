@@ -1089,18 +1089,13 @@ namespace MeisterGeister.View.Bodenplan
                         }
 
                         //Duplicator geklickjt ?
-
-
                         ImageDuplicator id = ((DependencyObject)e.OriginalSource).FindAnchestor<ImageDuplicator>();
-
                         if (id != null)
                         {
-
                             e.Handled = true;
                             return;
                         }
 
-                        //else
                         var o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
                         VM.SelectedObject = o;
                         _mouseClickedOnCreature = true;
@@ -1191,7 +1186,9 @@ namespace MeisterGeister.View.Bodenplan
                     else if (VM.SelectedObject is Wesen)
                     {
                         //Beim Öffnen eines Kontext-Menüs Sichfeld nicht ändern
-                        if ((Mouse.DirectlyOver is System.Windows.Shapes.Rectangle) && ((Mouse.DirectlyOver as System.Windows.Shapes.Rectangle).DataContext is Wesen) ||
+                        if ((Mouse.DirectlyOver is Border && (Mouse.DirectlyOver as Border).Name == "brdCreaturePic") ||
+                            (Mouse.DirectlyOver is System.Windows.Shapes.Rectangle) && 
+                            ((Mouse.DirectlyOver as System.Windows.Shapes.Rectangle).DataContext is Wesen) ||
                             (Mouse.DirectlyOver is Image) && ((Mouse.DirectlyOver as Image).DataContext is Wesen))
                         { return; }
                         ((BattlegroundCreature)VM.SelectedObject).CalculateNewSightLineSektor(

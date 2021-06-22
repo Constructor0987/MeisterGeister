@@ -260,7 +260,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
                     //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
                     //Dazwischen sollen die Aktionen allerdings neu berechnet werden
+                    
                     OnChanged(nameof(Initiative));
+                    if (Global.CurrentKampf.SelectedKämpfer == this.Kämpfer)
+                        Global.CurrentKampf.SelectedKämpfer.Initiative = value;
                     // ????? notwendig                
                     if (Global.CurrentKampf.BodenplanViewModel != null && Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
                         Global.CurrentKampf.BodenplanViewModel.SetIniWindowWidth(true);
@@ -427,14 +430,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get { return _istImKampf; }
             set 
-            { 
-                Set(ref _istImKampf, value);
-                if (!value)
-                {
-                    Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
+            {
+                    Set(ref _istImKampf, value);
+                    if (!value)
+                    {
+                        Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
+                    }
+                    else
+                    {
+                    if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t as IKämpfer == Kämpfer) == null)
+                        Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
                 }
-                else
-                    Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
             }
         }
 

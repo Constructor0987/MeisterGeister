@@ -157,6 +157,7 @@ namespace MeisterGeister.View.Arena
                     if (!_kampf.Kämpfer.Kämpfer.Contains(held))
                     {
                         _kampf.Kämpfer.Add(held);
+                         held.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == held);
                         _arenaViewer.Arena.AddHeld(held, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                         _arenaViewer.DrawArena();
                         _heroAdder.SelectedIndex = 0;
@@ -176,6 +177,7 @@ namespace MeisterGeister.View.Arena
                     Model.Gegner gegner = new Model.Gegner(gegnerBase);
                     Global.ContextHeld.Insert<Model.Gegner>(gegner);
                     _kampf.Kämpfer.Add(gegner, 2);
+                     gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
                     _arenaViewer.Arena.AddGegner(gegner, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                     _arenaViewer.DrawArena();
                     _enemyAdder.SelectedIndex = 0;
