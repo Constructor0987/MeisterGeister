@@ -233,8 +233,20 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public KämpferInfo ki
         {
-            get { return _ki; }
-            set { Set(ref _ki, value); }
+            get
+{
+                if (Global.CurrentKampf != null && Global.CurrentKampf.Kampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count > 0)
+                {
+                    _ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
+                }
+                
+                return _ki;
+            }
+
+            set
+            {
+                Set(ref _ki, value);
+            }
         }
 
         public Thickness MarginCreatureAktionsbuttons

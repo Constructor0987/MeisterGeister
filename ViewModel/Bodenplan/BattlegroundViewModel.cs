@@ -599,9 +599,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
             KampfWindow.MinWidth = 430 * ScaleKampfGrid;
 
-            var anzInisInKR = CurrKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == CurrKampf.Kampf.Kampfrunde).Count();
+            var anzInisInKR = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).Count();
             var width1Ini = (((KampfInfoView)KampfWindow.Content).scrViewer.ExtentWidth /
-                CurrKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= CurrKampf.Kampf.Kampfrunde).Count()) * ScaleKampfGrid;
+                Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= Global.CurrentKampf.Kampf.Kampfrunde).Count()) * ScaleKampfGrid;
             KampfWindow.Width = width1Ini * anzInisInKR + 248 * ScaleKampfGrid;
             ((KampfInfoView)KampfWindow.Content).scrViewer.ScrollToRightEnd();
         }
@@ -854,9 +854,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
-        public KampfViewModel CurrKampf
+        public Kampf.Logic.Kampf CurrKampf
         {
-            get { return Global.CurrentKampf; }
+            get { return Global.CurrentKampf.Kampf; }
         }
 
         public int FogFreeSize
@@ -1378,11 +1378,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void UpdateCreaturesFromChangedKampferlist()
         {
-            foreach (KämpferInfo k in CurrKampf.Kampf.Kämpfer)
+            foreach (KämpferInfo k in Global.CurrentKampf.Kampf.Kämpfer)
             {
                 ((Wesen)k.Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
             }
-            foreach (KämpferInfo k in CurrKampf.Kampf.Kämpfer)
+            foreach (KämpferInfo k in Global.CurrentKampf.Kampf.Kämpfer)
             {
                 ((Wesen)k.Kämpfer).PropertyChanged += OnWesenPropertyChanged;
             }
@@ -1449,7 +1449,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             if (e.PropertyName == "Position")
             {
                 DoChangeModPositionSelbst = true;
-                KämpferInfo ki = CurrKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (sender as IKämpfer));
+                KämpferInfo ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (sender as IKämpfer));
             }
         }
 
@@ -1459,7 +1459,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void AddAllCreatures()
         {
-            foreach (KämpferInfo k in CurrKampf.Kampf.Kämpfer)
+            foreach (KämpferInfo k in Global.CurrentKampf.Kampf.Kämpfer)
             {
                 AddCreature(k.Kämpfer);
             }
@@ -1481,14 +1481,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
                     (((Held)kämpfer) as BattlegroundCreature).TokenOversizeMod = ((Held)kämpfer).TokenOversize?? 1;
                     //ToDo: Initiative in der Manöverliste aktuelisieren
-
-                    //Set Aktuelle Initiative auf geladenen Wert
-                    //KämpferInfo kiCurrKampf.Kampf = CurrKampf.Kampf.Kämpfer.Where(
-                    //    t => ((Wesen)t.Kämpfer).IsHeld &&
-                    //         t.Kämpfer.Name == ((Held)kämpfer).Name).FirstOrDefault(
-                    //    t => ((Held)t.Kämpfer).HeldGUID == ((Held)kämpfer).HeldGUID);
-
-                    //kiCurrKampf.Kampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
                 }
             }
             else
@@ -1503,14 +1495,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
                 (((Gegner)kämpfer) as BattlegroundCreature).TokenOversizeMod = ((Gegner)kämpfer).TokenOversize ?? 1;
                 //ToDo: Initiative in der Manöverliste aktuelisieren
-
-                //Set Aktuelle Initiative auf geladenen Wert
-                //KämpferInfo kiCurrKampf.Kampf = CurrKampf.Kampf.Kämpfer.Where(
-                //    t => !((Wesen)t.Kämpfer).IsHeld &&
-                //    t.Kämpfer.Name == ((Gegner)kämpfer).Name).FirstOrDefault(
-                //    t => ((Gegner)t.Kämpfer).GegnerBaseGUID == ((Gegner)kämpfer).GegnerBaseGUID);
-
-                //kiCurrKampf.Kampf.Initiative = ((Wesen)kämpfer).ki.Initiative;
             }
             //Lichtquelle nach Generierung des Kämpfers erstellen
             if (((Wesen)kämpfer).ki.LichtquelleMeter > 0)
@@ -1520,6 +1504,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void ClearBattleground()
         {
+            SelectectedKämpferInfo = null;
+            SelectedObject = null; 
+            Global.CurrentKampf.SelectedKämpfer = null;
             BattlegroundObjects.Where(x => !(x is BattlegroundCreature)).ToList().ForEach(x => BattlegroundObjects.Remove(x));
             BattlegroundObjects.Clear();
             BackgroundImage = null;
@@ -1543,7 +1530,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             FogOffsetY = 0;
             FogImageFilename = null;
             useFog = false;
-            CurrKampf.Kampf.Kämpfer.Clear();
+            RemoveCreatureAll();
+            Global.CurrentKampf.Kampf = new Kampf.Logic.Kampf();
+            Global.CurrentKampf.Kampf.KampfNeuStarten(false);
         }
 
         public void RemoveCreature(IKämpfer creature)
@@ -1863,11 +1852,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
                 BattlegroundObjects.ToList().ForEach(x => x.IsHighlighted = false);
                 _selectedObject = value;
-                if (SelectedObject as BattlegroundCreature != null)
+                if (SelectedObject is BattlegroundCreature)
                 {
-                    if (
-                    Global.CurrentKampf.SelectedKämpfer != CurrKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject)) )
-                        Global.CurrentKampf.SelectedKämpfer = CurrKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
+                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));
                     Global.CurrentKampf.LabelInfo = null;
                 }
                 else
@@ -1880,19 +1867,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     StrokeThickness = SelectedObject.StrokeThickness;
 
                     SelectedObject.IsSelected = true;
-                    if (SelectedObject is BattlegroundCreature)
-                    {
-                        if (Global.CurrentKampf.SelectedManöverInfo != null)
-                            Global.CurrentKampf.SelectedManöverInfo = null;
-                        if (Global.CurrentKampf.SelectedKämpfer != null)
-                        Global.CurrentKampf.SelectedManöverInfo = CurrKampf.Kampf.SortedInitiativListe
-                            .FirstOrDefault(ki => ki.Manöver.Ausführender.Kämpfer == ((IKämpfer)SelectedObject));
-                    }
                 }
                 OnChanged(nameof(SelectedObject));
+                Set(ref _selectedObject, value);
                 try
                 {
-                    if (SelectedObject as BattlegroundCreature != null)
+                    if (SelectedObject is BattlegroundCreature)
                     {
                         if (BattlegroundObjects.IndexOf(SelectedObject) != BattlegroundObjects.Count - 1)
                         {
@@ -2034,7 +2014,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void LoadBattlegroundFromXML(string filename)
         {
             ClearBattleground();
-            CurrKampf.Kampf.Kämpfer.Clear();
+            //CurrKampf.Kampf.Kämpfer.Clear();
 
             var bg = new BattlegroundXMLLoadSave();
             ObservableCollection<BattlegroundBaseObject> ocloaded = bg.LoadMapFromXML(filename, LoadWithoutPictures);
@@ -2166,9 +2146,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
             useFog = lstSettings[15] == 1;
 
             //Kampf auf KR setzen
-            CurrKampf.Kampf.KampfNeuStarten(false);
-            while (CurrKampf.Kampf.Kampfrunde < lstSettings[16])
-                CurrKampf.Kampf.NeueKampfrunde();
+            CurrKampf.KampfNeuStarten(false);
+            while (CurrKampf.Kampfrunde < lstSettings[16])
+                CurrKampf.NeueKampfrunde();
             IsEditorModeEnabled = lstSettings[17] == 1;
 
             //Background Color
@@ -2242,7 +2222,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             lstSettings.Add(SightAreaLength);
             lstSettings.Add(ShowCreatureName ? 1 : 0);
             lstSettings.Add(useFog ? 1 : 0);
-            lstSettings.Add(CurrKampf.Kampf.Kampfrunde);
+            lstSettings.Add(CurrKampf.Kampfrunde);
             lstSettings.Add(IsEditorModeEnabled ? 1 : 0);
             //Background Color
             lstSettings.Add(BackgroundColor.A);
@@ -2690,9 +2670,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     Global.CurrentKampf.BodenplanViewModel.KampfWindow.Tag = true;
                     Global.CurrentKampf.BodenplanViewModel.KampfWindow.Close();
                 }
-                CurrKampf.Kampf.lstKämpferGleicheIni.Clear();
-                CurrKampf.Kampf.AktIniKämpfer = null;
-                CurrKampf.Kampf.Kämpfer.Clear();
+                Global.CurrentKampf.Kampf.lstKämpferGleicheIni.Clear();
+                Global.CurrentKampf.Kampf.AktIniKämpfer = null;
+                Global.CurrentKampf.Kampf.Kämpfer.Clear();
                 Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
                 BackgroundImage = null;
                 LoadBattlegroundFromXML(filename as string);
@@ -3030,7 +3010,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private void UmwandelnAttacke(object obj)
         {
-            ManöverInfo mi = CurrKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
+            ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
             if (mi == null)
             {
                 return;
@@ -3039,12 +3019,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             mi.Manöver.VerbleibendeDauer = 0;
             mi.UmwandelnAttacke.Execute(obj);
             Global.CurrentKampf.SelectedManöver = mi;
-            CurrKampf.Kampf.SelectedManöverInfo = mi;
+            Global.CurrentKampf.Kampf.SelectedManöverInfo = mi;
         }
 
         private void UmwandelnFernkampf(object obj)
         {
-            ManöverInfo mi = CurrKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
+            ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
             if (mi == null)
             {
                 return;
@@ -3055,7 +3035,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private void UmwandelnSonstiges(object obj)
         {
-            ManöverInfo mi = CurrKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
+            ManöverInfo mi = Global.CurrentKampf.Kampf.InitiativListe.FirstOrDefault(t => t.Manöver.Ausführender.Kämpfer == SelectedObject as IKämpfer);
             if (mi == null)
             {
                 return;
@@ -3094,7 +3074,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 // Free any other managed objects here.
                 if (Global.CurrentKampf != null)
                 {
-                    CurrKampf.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
+                    Global.CurrentKampf.Kampf.Kämpfer.CollectionChanged -= OnKämpferListeChanged;
                 }
             }
 

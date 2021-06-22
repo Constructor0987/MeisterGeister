@@ -359,21 +359,39 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                         BattlegroundBaseObject bObj = Global.ContextHeld.HeldenGruppeListe.FirstOrDefault(t => t.ToString() == dt.TableName);
                         if (bObj != null && Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer) == null)
                         {
-                            Global.ContextHeld.Insert<Model.Held>(bObj as Held);
-                            Global.CurrentKampf.Kampf.Kämpfer.Add(bObj as Held, 1);
-                            (bObj as Held).ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == bObj as Held);
+                            Held held = bObj as Held;
+                            //KämpferInfo ki = null;
+                            //if (!Global.CurrentKampf.Kampf.Kämpfer.Any(k => k.Kämpfer == held))
+                            //{
+                            //    ki = new KämpferInfo(held, Global.CurrentKampf.Kampf);
+                            //    Global.CurrentKampf.Kampf.Kämpfer.Add(held);
+                            //    if (Global.CurrentKampf.Kampf.Bodenplan.VM != null)
+                            //        Global.CurrentKampf.Kampf.Bodenplan.VM.AddCreature(held);
+                            //}
+                            bObj = held;
+                            //                   Global.ContextHeld.Insert<Model.Held>(bObj as Held);
+                            //Global.CurrentKampf.Kampf.Kämpfer.Add(bObj as Held, 1);
                         }
                         if (bObj == null && drow.ItemArray.Length > 12)
                         {
                             GegnerBase gb = Global.ContextHeld.Liste<GegnerBase>().FirstOrDefault(t => t.GegnerBaseGUID.ToString() == drow["GUID"].ToString());
                             if (gb != null)
                             {
-                                Gegner gegner = new Model.Gegner(gb);
+                                Gegner gegner = new Gegner(gb);
+                                var gegner_name = gegner.Name;
+                                int j = 1;
+                                while (Global.CurrentKampf.Kampf.Kämpfer.Any(k => k.Kämpfer.Name == gegner_name))
+                                    gegner_name = String.Format("{0} ({1})", gegner.Name, ++j);
+                                gegner.Name = gegner_name;
+                           
+                                //GegnerToAdd = null;
                                 bObj = gegner;
 
-                                Global.ContextHeld.Insert<Model.Gegner>(gegner);
-                                Global.CurrentKampf.Kampf.Kämpfer.Add(gegner, 2);
-                                gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
+
+                        //        Gegner gegner = new Model.Gegner(gb);
+                        //        bObj = gegner;
+                        //        Global.ContextHeld.Insert<Model.Gegner>(gegner);
+                        //        Global.CurrentKampf.Kampf.Kämpfer.Add(gegner, 2);
                             }                            
                         }
                         if (bObj != null)
@@ -407,7 +425,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
                                     if (drow.Table.Columns.Contains("KämpferTempName"))
                                         (bObj as Gegner).KämpferTempName = drow["KämpferTempName"].ToString();
-                                    (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
+                             //       (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
 
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = true;
                                     (bObj as Gegner).Wunden = Convert.ToInt32(drow["Wunden"]);
@@ -422,9 +440,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Kopf] = Convert.ToInt32(drow["WundenByZoneKopf"]);
                                     (bObj as IKämpfer).WundenByZone[Trefferzone.Rücken] = Convert.ToInt32(drow["WundenByZoneRücken"]);
                                     (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = false;
-                                    (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
-                                    if (drow.Table.Columns.Contains("Angriffsaktionen"))
-                                        (bObj as Wesen).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
+//                                    (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+  //                                  if (drow.Table.Columns.Contains("Angriffsaktionen"))
+    //                                    (bObj as Wesen).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
                                 }
                                 else
                                 {
@@ -440,7 +458,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                         (bObj as Held).AusdauerAktuell = Convert.ToInt32(drow["AusdauerAktuell"]);
                                         //(bObj as Held).AusdauerAktuell = Convert.ToInt32(drow["AusdauerMax"]);
                                         (bObj as Held).AstralenergieAktuell = Convert.ToInt32(drow["AstralenergieAktuell"]);
-                                        (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
+                                   //     (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
 
                                         (bObj as IKämpfer).keineWeiterenAuswirkungenBeiWunden = true;
                                         if (drow["Wunden"].ToString() != "")
@@ -459,19 +477,68 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                         if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer) != null)
                                             Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == bObj as IKämpfer).Initiative = Convert.ToInt32(drow["Initiative"]);
                                     }
-                                    (bObj as Held).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
-                                    if (drow.Table.Columns.Contains("Angriffsaktionen"))
-                                        (bObj as Held).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
+//                                    (bObj as Held).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+  //                                  if (drow.Table.Columns.Contains("Angriffsaktionen"))
+    //                                    (bObj as Held).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
                                 }
 
+                        //        try
+                          //      { 
+                          //          (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
+                          //          (bObj as Wesen).ki.IstUnsichtbar = Convert.ToBoolean(drow["IstUnsichtbar"]);
+                          //          if (drow.Table.Columns.Contains("IstImKampf"))
+                          //              (bObj as Wesen).ki.IstImKampf = Convert.ToBoolean(drow["IstImKampf"]);
+                          //      }
+                          //      catch { }
+                            }
+                        }
+
+                        if (bObj is Gegner)
+                        {
+                            Global.ContextHeld.Insert<Gegner>(bObj as Gegner);
+                            Global.CurrentKampf.Kampf.Kämpfer.Add(bObj as Gegner, 2);
+
+                            (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
+                            (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+                            if (drow.Table.Columns.Contains("Angriffsaktionen"))
+                                (bObj as Wesen).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
+
+                            try
+                            {
+                                (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
+                                (bObj as Wesen).ki.IstUnsichtbar = Convert.ToBoolean(drow["IstUnsichtbar"]);
+                                if (drow.Table.Columns.Contains("IstImKampf") && Convert.ToBoolean(drow["IstImKampf"]) == false)
+                                    (bObj as Wesen).ki.IstImKampf = Convert.ToBoolean(drow["IstImKampf"]);
+                            }
+                            catch { }
+                            // zur Arena hinzufügen
+                            //if (Global.CurrentKampf.Kampf.Bodenplan.VM != null)
+                            //    Global.CurrentKampf.Kampf.Bodenplan.VM.AddCreature(bObj as Gegner);
+                        }
+                        else
+                        if (bObj is Held)
+                        {
+                            KämpferInfo ki = null;
+                            if (!Global.CurrentKampf.Kampf.Kämpfer.Any(k => k.Kämpfer == bObj))
+                            {
+                                ki = new KämpferInfo(bObj as Held, Global.CurrentKampf.Kampf);
+                                Global.CurrentKampf.Kampf.Kämpfer.Add(bObj as Held);
+
+                                (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
+                                (bObj as Held).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+                                if (drow.Table.Columns.Contains("Angriffsaktionen"))
+                                    (bObj as Held).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
+
                                 try
-                                { 
+                                {
                                     (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
                                     (bObj as Wesen).ki.IstUnsichtbar = Convert.ToBoolean(drow["IstUnsichtbar"]);
-                                    if (drow.Table.Columns.Contains("IstImKampf"))
+                                    if (drow.Table.Columns.Contains("IstImKampf") && Convert.ToBoolean(drow["IstImKampf"]) == false)
                                         (bObj as Wesen).ki.IstImKampf = Convert.ToBoolean(drow["IstImKampf"]);
                                 }
                                 catch { }
+                                //if (Global.CurrentKampf.Kampf.Bodenplan.VM != null)
+                                //    Global.CurrentKampf.Kampf.Bodenplan.VM.AddCreature(bObj as Held);
                             }
                         }
                     }

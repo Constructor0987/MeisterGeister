@@ -431,10 +431,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _istImKampf; }
             set 
             {
-                if (_istImKampf == value)
-                    Set(ref _istImKampf, value);
-                else
-                {
                     Set(ref _istImKampf, value);
                     if (!value)
                     {
@@ -442,9 +438,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     }
                     else
                     {
+                    if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t as IKämpfer == Kämpfer) == null)
                         Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
-                        (Kämpfer as Wesen).ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == Kämpfer);
-                    }
                 }
             }
         }
