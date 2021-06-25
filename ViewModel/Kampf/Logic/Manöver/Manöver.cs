@@ -289,15 +289,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         protected Manöver(KämpferInfo ausführender, int dauer) : base(ausführender)
-        {
+        {            
             InitPase = true;
             Dauer = VerbleibendeDauer = dauer;
             Init();
-            if (Global.CurrentKampf.BodenplanViewModel != null)
-            { 
-                InitMods(Global.CurrentKampf.BodenplanViewModel.miWaffeSelected);
-                SetDefaultModValues(); 
-            }
+            InitMods(Global.CurrentKampf.BodenplanViewModel.miWaffeSelected);
+            SetDefaultModValues();
             InitPase = false;
         }
 

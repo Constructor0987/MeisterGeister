@@ -642,7 +642,7 @@
                                             Margin="2,42,50,0"
                                             VerticalAlignment="Top"
                                             LargeChange=".1"
-                                            Maximum="1.5"
+                                            Maximum="2.5"
                                             Minimum=".5"
                                             MouseWheel="slSmall_MouseWheel"
                                             Orientation="Horizontal"

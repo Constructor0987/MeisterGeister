@@ -35,8 +35,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Kampf()
         {
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-            Kämpfer = new KämpferInfoListe(this);
-            Kämpfer.CollectionChangedExtended += Kämpfer_CollectionChangedExtended;
+            KämpferIList = new KämpferInfoListe(this);
+            KämpferIList.CollectionChangedExtended += Kämpfer_CollectionChangedExtended;
+            KämpferIListImKampf = new KämpferInfoListe(this);
+            KämpferIListImKampf.CollectionChangedExtended += KämpferImKampf_CollectionChangedExtended;
             InitiativListe = new InitiativListe(this);
             KampfNeuStarten();
         }
@@ -87,19 +89,30 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref _sortedInitiativListe, value); }
         }
 
-        private KämpferInfoListe _kämpfer;
-        public KämpferInfoListe Kämpfer
+
+        private KämpferInfoListe _kämpferIListImKampf;
+        public KämpferInfoListe KämpferIListImKampf
         {
-            get { return _kämpfer; }
+            get { return _kämpferIListImKampf; }
             private set
             {
-                _kämpfer = value;
+                _kämpferIListImKampf = value;
                 SortedInitiativListe = InitiativListe != null ?
                     (Kampfrunde == 0 ?
                     InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
                     InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
                     )
                     : null; //InitiativListe != null ? InitiativListe.Where(t => t.Kampf.Kampfrunde == AktuelleAktionszeit.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase) : null;
+            }
+        }
+
+        private KämpferInfoListe _kämpferIList;
+        public KämpferInfoListe KämpferIList
+        {
+            get { return _kämpferIList; }
+            private set
+            {
+                _kämpferIList = value;
             }
         }
 
@@ -352,6 +365,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }                
         }
 
+
         private string _aktIniLängereHandlung = null;
         public string AktIniLängereHandlung
         {
@@ -392,7 +406,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //Das verhindert dass bei jedem Manöver ein separates Change-Event ausgelöst wird, welches in der GUI Performance kostet
             List<ManöverInfo> neueManöver = new List<ManöverInfo>();
 
-            foreach (KämpferInfo ki in Kämpfer)
+            foreach (KämpferInfo ki in KämpferIListImKampf)
             {
                 //Modifikatoren entfernen
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
@@ -420,10 +434,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)                  
             }
+
+
+            //Alte KR von längerfristigen Handlungen auf akt KR kürzen
+            List<ManöverInfo> lstToLangeAkt = InitiativListe.Where(t => t.Start.Kampfrunde < Kampfrunde && t.End.Kampfrunde > Kampfrunde).ToList();
+            foreach (ManöverInfo mi in lstToLangeAkt)
+            { ZeitImKampf zik = new ZeitImKampf();
+                zik.InitiativPhase = KämpferIListImKampf.First().InitiativeMitKommas;
+                zik.Kampfrunde = Kampfrunde;
+                mi.Start = zik; }
+
+            //Alte Manöver aus der Liste löschen um die Visualiserung auf die akt KR zu setzen
             List<ManöverInfo> lstToRemove = InitiativListe.Where(t => t.End.Kampfrunde < Kampfrunde).ToList();
             if (lstToRemove.Count > 0)
                 InitiativListe.RemoveRange(lstToRemove);
-            
+
+
             if (neueManöver.Count > 0)
             {
                 InitiativListe.AddRange(neueManöver);
@@ -451,13 +477,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             KampfEnde();
             AktuelleAktionszeit = default(ZeitImKampf);
             InitiativListe.Clear();
-                        
+
             Kampfrunde = 0;
 
             if (INIneuberechnen)
             {
-                // INI neu ermitteln
-                foreach (KämpferInfo kämpferInfo in Kämpfer.Where(t => t.IstImKampf))
+                // INI neu ermitteln von allen im Kampf aktivien
+                foreach (KämpferInfo kämpferInfo in KämpferIListImKampf)
                 {
                     if (kämpferInfo != null)
                         kämpferInfo.Initiative = kämpferInfo.Kämpfer.Initiative();
@@ -470,13 +496,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void KampfEnde()
         {
-            foreach (var ki in Kämpfer)
+            foreach (var ki in KämpferIListImKampf)
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampf);
         }
 
         public void Orientieren(IKämpfer k)
         {
-            Orientieren(Kämpfer[k]);
+            Orientieren(KämpferIListImKampf[k]);
         }
 
         public void Orientieren(KämpferInfo ki)
@@ -485,7 +511,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
         }
 
+
         public void Kämpfer_CollectionChangedExtended(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            if (args.Action == NotifyCollectionChangedAction.Remove)
+            {                
+                KämpferIListImKampf.RemoveAll(mi => args.OldItems.Contains(mi.Kämpfer));
+            }
+            else if (args.Action == NotifyCollectionChangedAction.Add)
+            {
+                KämpferIListImKampf.AddRange(args.NewItems.Cast<KämpferInfo>());
+            }
+
+        }
+        public void KämpferImKampf_CollectionChangedExtended(object sender, NotifyCollectionChangedEventArgs args)
         {
             if (args.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -510,12 +549,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             //TODO ??: ich finde diese Lösung noch nicht optimal. Das geht schief, wenn man speichern und laden möchte.
             //Alle Gegenerinstanzen löschen
-            foreach (var k in Kämpfer.Where(ki => ki.Kämpfer is Model.Gegner).Select(ki => ki.Kämpfer))
+            foreach (var k in KämpferIList.Where(ki => ki.Kämpfer is Model.Gegner).Select(ki => ki.Kämpfer))
             {
-                Kämpfer.Remove(k);
+                KämpferIList.Remove(k);
             }
 
-            Kämpfer.CollectionChanged -= Kämpfer_CollectionChangedExtended;
+            KämpferIList.CollectionChanged -= Kämpfer_CollectionChangedExtended;
+            KämpferIListImKampf.CollectionChanged -= Kämpfer_CollectionChangedExtended;
 
             //Alles aus der Ini-Liste löschen damit die Events abgemeldet werden
             while (InitiativListe.Count > 0)

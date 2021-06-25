@@ -310,7 +310,7 @@
 
         <Expander
             Grid.Row="1"
-            Margin="5,5,5,0"
+            Margin="5,5,2,0"
             IsExpanded="True">
             <Expander.Header>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
@@ -336,8 +336,7 @@
                     x:Name="kämpferListe"
                     Grid.Row="1"
                     VerticalAlignment="Top"
-                    ItemsSource="{Binding Kampf.Kämpfer}"
-                    SelectedItem="{Binding SelectedKämpfer}">
+                    ItemsSource="{Binding Kampf.KämpferIListImKampf, UpdateSourceTrigger=PropertyChanged}" >
                     <ListBox.Template>
                         <ControlTemplate TargetType="ListBox">
                             <ItemsPresenter />
@@ -400,11 +399,12 @@
                                         FontWeight="Bold"
                                         Text="{Binding Initiative}" />
                                 </Grid>
+                                <Image Source="{Binding Kämpfer.Bild}" Margin="-3,0,2,0" Width="29" />
 
-                                <TextBlock Width="150" VerticalAlignment="Center">
+                                <TextBlock Width="127" VerticalAlignment="Center" >
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="{Binding Kämpfer.KämpferTempName}" />
+                                            <Setter Property="Text" Value="{Binding Kämpfer.KämpferTempName, UpdateSourceTrigger=PropertyChanged}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Kämpfer.KämpferTempName}" Value="{x:Null}">
                                                     <Setter Property="Text" Value="{Binding Kämpfer.Name}" />
@@ -475,7 +475,7 @@
                     VerticalScrollBarVisibility="Disabled">
                     <Grid Grid.Column="1">
                         <Grid.Resources>
-                            <CollectionViewSource x:Key="kampfrunden" Source="{Binding Kampf.InitiativListe.Aktionszeiten}">
+                            <CollectionViewSource x:Key="kampfrunden" Source="{Binding Kampf.InitiativListe.Aktionszeiten, UpdateSourceTrigger=PropertyChanged}">
                                 <CollectionViewSource.GroupDescriptions>
                                     <PropertyGroupDescription PropertyName="Kampfrunde" />
                                 </CollectionViewSource.GroupDescriptions>
@@ -489,7 +489,7 @@
                         <ItemsControl
                             x:Name="background"
                             Grid.RowSpan="2"
-                            ItemsSource="{Binding Kampf.InitiativListe.Aktionszeiten}">
+                            ItemsSource="{Binding Kampf.InitiativListe.Aktionszeiten, UpdateSourceTrigger=PropertyChanged}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" />
@@ -621,7 +621,7 @@
                             Grid.Row="1"
                             Height="{Binding ElementName=kämpferListe, Path=ActualHeight}"
                             ViewGeneral:ListBoxBehaviour.DeselectOnClick="True"
-                            ItemsSource="{Binding Kampf.InitiativListe}"
+                            ItemsSource="{Binding Kampf.InitiativListe, UpdateSourceTrigger=PropertyChanged}"
                             SelectedItem="{Binding SelectedManöver}">
                             <ListBox.Template>
                                 <ControlTemplate TargetType="ListBox">
@@ -631,9 +631,9 @@
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Grid
-                                        ViewGeneral:GridBehaviour.ColumnCount="{Binding Kampf.InitiativListe.Aktionszeiten.Count}"
+                                        ViewGeneral:GridBehaviour.ColumnCount="{Binding Kampf.InitiativListe.Aktionszeiten.Count, UpdateSourceTrigger=PropertyChanged}"
                                         ViewGeneral:GridBehaviour.ColumnLength="30"
-                                        ViewGeneral:GridBehaviour.RowCount="{Binding Kampf.Kämpfer.Count}"
+                                        ViewGeneral:GridBehaviour.RowCount="{Binding Kampf.KämpferIListImKampf.Count}"
                                         ViewGeneral:GridBehaviour.RowLength="30" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>

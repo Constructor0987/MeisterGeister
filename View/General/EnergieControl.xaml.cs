@@ -170,15 +170,15 @@ namespace MeisterGeister.View.General
                         _labelInfo.Content = SelectedKämpfer.LebensenergieStatus;
                         _labelInfo.ToolTip = SelectedKämpfer.LebensenergieStatusDetails;
                         if (SelectedKämpfer.LebensenergieAktuell <= 0 && Global.CurrentKampf != null)
-                            Global.CurrentKampf.Kampf.Kämpfer.Remove(SelectedKämpfer);
+                            Global.CurrentKampf.Kampf.KämpferIList.Remove(SelectedKämpfer);
                         else
                             if (SelectedKämpfer.LebensenergieAktuell > 0 &&
                             Global.CurrentKampf != null &&
-                            Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == SelectedKämpfer) == null)
+                            Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(t => t.Kämpfer == SelectedKämpfer) == null)
                         {
 
-                            Global.CurrentKampf.Kampf.Kämpfer.Add(SelectedKämpfer);
-                            (SelectedKämpfer as Wesen).ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == SelectedKämpfer);
+                            Global.CurrentKampf.Kampf.KämpferIList.Add(SelectedKämpfer);
+                            (SelectedKämpfer as Wesen).ki = Global.CurrentKampf?.Kampf?.KämpferIList?.FirstOrDefault(t => t.Kämpfer == SelectedKämpfer);
                             if (Global.CurrentKampf.BodenplanViewModel != null)
                                 Global.CurrentKampf.BodenplanViewModel.SelectedObject = null;
                             IKämpfer iK = SelectedKämpfer;

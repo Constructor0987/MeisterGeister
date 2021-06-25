@@ -76,16 +76,15 @@ namespace MeisterGeister.ViewModel.Kampf
                     Gegner gegner = new Gegner(value);
                     var gegner_name = gegner.Name;
                     int j = 1;
-                    while (_kampf.Kämpfer.Any(k => k.Kämpfer.Name == gegner_name))
+                    while (_kampf.KämpferIList.Any(k => k.Kämpfer.Name == gegner_name))
                         gegner_name = String.Format("{0} ({1})", gegner.Name, ++j);
                     gegner.Name = gegner_name;
                     Global.ContextHeld.Insert<Gegner>(gegner);
-                    _kampf.Kämpfer.Add(gegner, 2);
-                    gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
+                    _kampf.KämpferIList.Add(gegner, 2);
 
                     // zur Arena hinzufügen
-                    if (_kampf.Bodenplan.VM != null)
-                        _kampf.Bodenplan.VM.AddCreature(gegner);
+                    if (Global.CurrentKampf.BodenplanViewModel != null)
+                        Global.CurrentKampf.BodenplanViewModel.AddCreature(gegner);
                     GegnerToAdd = null;
                 }
             }
@@ -152,6 +151,7 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 return _selectedKämpfer;
             }
+
             set
             {
                 if (value != null && _selectedKämpfer != null &&
@@ -159,9 +159,9 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     return;
                 }
-                if (value != null && !value.IstImKampf)
-                    Set(ref _selectedKämpfer, null);
-                else
+                //if (value != null && !value.IstImKampf)
+                //    Set(ref _selectedKämpfer, null);
+                //else
                     Set(ref _selectedKämpfer, value);
                 if (value != null)
                 {
@@ -355,7 +355,7 @@ namespace MeisterGeister.ViewModel.Kampf
                     Global.CurrentKampf.BodenplanViewModel.RemoveCreature(k);
                 }
 
-                Global.CurrentKampf.Kampf.Kämpfer.Remove(k);
+                Global.CurrentKampf.Kampf.KämpferIList.Remove(k);
             }
         }
 
@@ -385,18 +385,19 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private Base.CommandBase onNewKampf = null;
 
-        private void AddHelden()
+        private void AddHelden() 
         {
             foreach (Held held in Global.ContextHeld.HeldenGruppeListe)
             {
-                if (!Kampf.Kämpfer.Any(k => k.Kämpfer == held))
+                if (!Kampf.KämpferIList.Any(k => k.Kämpfer == held))
                 {
-                    Kampf.Kämpfer.Add(held);                    
-                    held.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == held);  
-                    BodenplanViewModel.AddCreature(Kampf.Kämpfer.Last().Kämpfer);
+                    Kampf.KämpferIList.Add(held);
+                    held.ki = Global.CurrentKampf?.Kampf?.KämpferIList?.FirstOrDefault(t => t.Kämpfer == held);
+                    BodenplanViewModel.AddCreature(Kampf.KämpferIList.Last().Kämpfer);
                 }
             }
         }
+
 
         private void DeleteAllKämpfer()
         {
@@ -409,7 +410,7 @@ namespace MeisterGeister.ViewModel.Kampf
                     BodenplanViewModel.SelectedObject = null;
                     BodenplanViewModel.RemoveCreatureAll();
                 }
-                Kampf.Kämpfer.Clear();
+                Kampf.KämpferIList.Clear();
             }
         }
 
@@ -452,6 +453,9 @@ namespace MeisterGeister.ViewModel.Kampf
         }
 
         #endregion // ---- COMMANDS ----
+
+
+
     }
 
     public class MultiBooleanAndConverter : System.Windows.Data.IMultiValueConverter

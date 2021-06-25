@@ -42,6 +42,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             SpeedbtnAudio.OnBtnClick(SpeedbtnAudio);
         }
 
+
         private SchadenMachen schadenMachen;
         public SchadenMachen SchadenMachen
         {
@@ -72,7 +73,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {                
                 if (Global.CurrentKampf.BodenplanViewModel != null)
                     Global.CurrentKampf.BodenplanViewModel.RemoveCreature(Kämpfer);
-                Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
+                Global.CurrentKampf.Kampf.KämpferIList.Remove(Kämpfer);
             }
         }
 
@@ -260,8 +261,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
                     //Initiative wird hier erst mit NotifyChanged bekanntgegeben da die Aktionen und Reaktionen davon abhängen
                     //Dazwischen sollen die Aktionen allerdings neu berechnet werden
-                    
                     OnChanged(nameof(Initiative));
+//  ???? CHECK IF NEEDED!!
                     if (Global.CurrentKampf.SelectedKämpfer == this.Kämpfer)
                         Global.CurrentKampf.SelectedKämpfer.Initiative = value;
                     // ????? notwendig                
@@ -296,7 +297,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get
             {
-                return Kampf.Kämpfer.IndexOf(this);
+                return Kampf.KämpferIListImKampf.IndexOf(this);
             }
         }
 
@@ -430,17 +431,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get { return _istImKampf; }
             set 
-            {
-                    Set(ref _istImKampf, value);
-                    if (!value)
-                    {
-                        Global.CurrentKampf.Kampf.Kämpfer.Remove(Kämpfer);
-                    }
-                    else
-                    {
-                    if (Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t as IKämpfer == Kämpfer) == null)
-                        Global.CurrentKampf.Kampf.Kämpfer.Add(Kämpfer);
-                }
+            { 
+                Set(ref _istImKampf, value);
             }
         }
 
@@ -486,7 +478,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Team = 1;
             Initiative = k.Initiative();
             if (k is IGegnerBase)
-                (k as MeisterGeister.Model.Gegner).KämpferTempName = "Gegner " + (kampf.Kämpfer.Where(t => t.Team == 2).ToList().Count + 1);
+                (k as MeisterGeister.Model.Gegner).KämpferTempName = "Gegner " + (kampf.KämpferIList.Where(t => t.Team == 2).ToList().Count + 1);
 
             WesenPlaylist = (k is MeisterGeister.Model.Held) ?
                 new ObservableCollection<IWesenPlaylist>((k as MeisterGeister.Model.Held).Held_Audio_Playlist.AsEnumerable<IWesenPlaylist>()) :
@@ -601,7 +593,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     value = Aktionen;
                 _angriffsaktionen = value;
                 _abwehraktionen = Aktionen - _angriffsaktionen;
-                AktionenNeuSetzen();
+                if (IstImKampf)
+                    AktionenNeuSetzen();
                 Kampf.SortedInitiativListe = Kampf.InitiativListe != null ?
                     (this.Kampf.Kampfrunde == 0 ? //.AktuelleAktionszeit.Kampfrunde
                     Kampf.InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
@@ -632,7 +625,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     value = Aktionen;
                 _abwehraktionen = value;
                 _angriffsaktionen = Aktionen - _abwehraktionen;
-                AktionenNeuSetzen();
+                if (IstImKampf)
+                    AktionenNeuSetzen();
                 Kampf.SortedInitiativListe = Kampf.InitiativListe != null ?
                     (this.Kampf.Kampfrunde == 0?
                     Kampf.InitiativListe.OrderByDescending(t => t.Start.InitiativPhase):
@@ -691,14 +685,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 aktionen = 1;
             }
-            if (!IstImKampf)
-            {
-                Aktionen = 0;
-                OnChanged(nameof(Abwehraktionen));
-                OnChanged(nameof(Angriffsaktionen));
-                OnChanged(nameof(Aktionen));
-                return;
-            }
+            //if (!IstImKampf)
+            //{
+            //    Aktionen = 0;
+            //    OnChanged(nameof(Abwehraktionen));
+            //    OnChanged(nameof(Angriffsaktionen));
+            //    OnChanged(nameof(Aktionen));
+            //    return;
+            //}
 
             //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann hat man maximal 2 Aktionen während die Abwehraktionen verfallen
             var längerfristig = AngriffsManöver.Where(mi => mi.AktKampfrunde == mi.Kampf.Kampfrunde)
@@ -1143,6 +1137,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     k.PropertyChanged -= KämpferInfo_PropertyChanged;
                     _kämpfer_kämpferinfo.Remove(k.Kämpfer);
+                    
                 }
                 lazySort.Do();
             }

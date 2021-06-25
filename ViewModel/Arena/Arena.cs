@@ -93,8 +93,8 @@ namespace MeisterGeister.ViewModel.Arena
             _positionen.Remove(creature);
 
             // aus Kampf entfernen
-            if (_kampf.Kämpfer.Kämpfer.Contains(creature))
-                _kampf.Kämpfer.Remove(creature);
+            if (_kampf.KämpferIList.Kämpfer.Contains(creature))
+                _kampf.KämpferIList.Remove(creature);
         }
 
         public void RemoveCreatureAll()
@@ -158,7 +158,7 @@ namespace MeisterGeister.ViewModel.Arena
             int i = 0;
 
             // Helden einfügen
-            foreach (KämpferInfo kämpferInfo in _kampf.Kämpfer) {
+            foreach (KämpferInfo kämpferInfo in _kampf.KämpferIList) {
                 if (kämpferInfo.Kämpfer is Model.Held)
                 {
                     if (i >= pointList.Count)
@@ -170,7 +170,7 @@ namespace MeisterGeister.ViewModel.Arena
 
             // Gegner einfügen
             i += pointList.Count / 4; // Gegner auf Abstand setzen
-            foreach (KämpferInfo kämpferInfo in _kampf.Kämpfer)
+            foreach (KämpferInfo kämpferInfo in _kampf.KämpferIList)
             {
                 if (kämpferInfo.Kämpfer is Model.Gegner)
                 {

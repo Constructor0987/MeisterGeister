@@ -154,10 +154,9 @@ namespace MeisterGeister.View.Arena
 
                 if (pair != null && !_arenaViewer.Arena.ContainsHeldWidthId(pair.Id)) {
                     Model.Held held = Global.ContextHeld.LoadHeldByGUID(pair.Id);
-                    if (!_kampf.Kämpfer.Kämpfer.Contains(held))
+                    if (!_kampf.KämpferIList.Kämpfer.Contains(held))
                     {
-                        _kampf.Kämpfer.Add(held);
-                         held.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == held);
+                        _kampf.KämpferIList.Add(held);
                         _arenaViewer.Arena.AddHeld(held, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                         _arenaViewer.DrawArena();
                         _heroAdder.SelectedIndex = 0;
@@ -176,8 +175,7 @@ namespace MeisterGeister.View.Arena
                     Model.GegnerBase gegnerBase = Global.ContextHeld.Liste<Model.GegnerBase>().Where(g => g.GegnerBaseGUID == pair.Id).FirstOrDefault();
                     Model.Gegner gegner = new Model.Gegner(gegnerBase);
                     Global.ContextHeld.Insert<Model.Gegner>(gegner);
-                    _kampf.Kämpfer.Add(gegner, 2);
-                     gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
+                    _kampf.KämpferIList.Add(gegner, 2);
                     _arenaViewer.Arena.AddGegner(gegner, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                     _arenaViewer.DrawArena();
                     _enemyAdder.SelectedIndex = 0;
@@ -222,7 +220,7 @@ namespace MeisterGeister.View.Arena
 
             List<Guid> heldIds = new List<Guid>();
             
-            foreach (KämpferInfo kämpferInfo in _kampf.Kämpfer) {
+            foreach (KämpferInfo kämpferInfo in _kampf.KämpferIList) {
                 if (kämpferInfo.Kämpfer is Model.Held)
                 {
                     heldIds.Add(((Model.Held)kämpferInfo.Kämpfer).HeldGUID);        

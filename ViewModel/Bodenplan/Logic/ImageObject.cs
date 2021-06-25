@@ -26,7 +26,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private bool isFogPicture = false;
 
         public ImageObject()
-        {}
+        { }
 
         public ImageObject(String urlpath, double x, double y)
         {
@@ -144,7 +144,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             ImagePositionY = ImagePositionY + deltaY;
             ZDisplayX = ImagePositionX - 10;
             ZDisplayY = ImagePositionY - 10;
-              
+
         }
 
         public void ScalePicture(double factor)
@@ -183,10 +183,14 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             Image image = Image.FromFile(PictureUrl);
             ImageFormat imgformat;
-            if (PictureUrl.EndsWith(".png")) imgformat = ImageFormat.Png;
-            else if (PictureUrl.EndsWith(".jpg") || PictureUrl.EndsWith(".jpeg")) imgformat = ImageFormat.Jpeg;
-            else if (PictureUrl.EndsWith(".bmp")) imgformat = ImageFormat.Bmp;
-            else return ""; //return empty string if not a known pictureformat is found...
+            if (PictureUrl.EndsWith(".png"))
+                imgformat = ImageFormat.Png;
+            else if (PictureUrl.EndsWith(".jpg") || PictureUrl.EndsWith(".jpeg"))
+                imgformat = ImageFormat.Jpeg;
+            else if (PictureUrl.EndsWith(".bmp"))
+                imgformat = ImageFormat.Bmp;
+            else
+                return ""; //return empty string if not a known pictureformat is found...
 
             using (MemoryStream ms = new MemoryStream())
             {
