@@ -92,6 +92,11 @@ namespace MeisterGeister.View.Kampf
             return ga;
         }
 
-
+        private void ZeigeGegnername_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Kampf.Logic.KämpferInfo ki = Global.CurrentKampf.SelectedKämpfer;
+            Model.Gegner g = ki.Kämpfer as MeisterGeister.Model.Gegner;
+            g.KämpferTempName = g.Name;
+        }
     }
 }

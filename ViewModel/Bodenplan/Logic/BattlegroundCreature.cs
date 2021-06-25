@@ -234,10 +234,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public KämpferInfo ki
         {
             get
-{
-                if (Global.CurrentKampf != null && Global.CurrentKampf.Kampf != null && Global.CurrentKampf.Kampf.Kämpfer.Count > 0)
+            {
+                if (Global.CurrentKampf != null && Global.CurrentKampf.Kampf != null && Global.CurrentKampf.Kampf.KämpferIList.Count > 0)
                 {
-                    _ki = Global.CurrentKampf.Kampf.Kämpfer.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
+                    _ki = Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(t => t.Kämpfer == (this as Wesen));
                 }
                 
                 return _ki;
@@ -407,7 +407,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             var _a = currentMousePos.X - (CreatureX + CreatureWidth / 2);
             var _b = currentMousePos.Y - (CreatureY + CreatureHeight / 2);
             var _alpha = Math.Atan2(_a, _b) * (180 / Math.PI);
-            RotateImageDegrees =-_alpha;
+            if (this.BattleToken != this.ki.Kämpfer.Bild )
+                RotateImageDegrees =-_alpha;
 
             if (!rectGrid)
             {
@@ -651,9 +652,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public Image SetCreatrueImage(Image img)
         {
-            var pic =
-                ki == null?
-                "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png":
+            var pic = 
                 ki.Kämpfer as Held != null?
                 (((Held)ki.Kämpfer).Token ?? ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png"):
                 ki.Kämpfer as Gegner != null ?
@@ -666,7 +665,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 {
                     if (!pic.StartsWith("/") && !File.Exists(pic))
                     {
-                        pic = "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+                        pic = (ki.Kämpfer.Bild != null && File.Exists(ki.Kämpfer.Bild))? ki.Kämpfer.Bild:
+                            "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png";
+
                     }
 
                     var src = new ImagePathConverter().Convert(pic, typeof(Image), null, null);

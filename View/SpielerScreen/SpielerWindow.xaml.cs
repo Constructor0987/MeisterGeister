@@ -293,8 +293,10 @@ namespace MeisterGeister.View.SpielerScreen
                         SpielerScreen = objActualScreen;
                 }
                 if (SpielerScreen != null)
-                xPoint = SpielerScreen.Bounds.Location.X + 20;
-                yPoint = SpielerScreen.Bounds.Location.Y + 20;
+                {
+                    xPoint = SpielerScreen.Bounds.Location.X + 20;
+                    yPoint = SpielerScreen.Bounds.Location.Y + 20;
+                }
             }
             WindowStartupLocation = WindowStartupLocation.Manual;
             Left = Convert.ToDouble(xPoint);

@@ -310,7 +310,7 @@
                                                 Visibility="{Binding DataContext.ShowCreatureName, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="{Binding KämpferTempName}" />
+                                                        <Setter Property="Text" Value="{Binding KurzTempname}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding IsHeld}" Value="True">
                                                                 <Setter Property="Text" Value="{Binding Kurzname}" />
@@ -489,8 +489,18 @@
                                                     FontSize="18" 
                                                     FontWeight="Bold" />
                                             </Grid>
+                                            <Rectangle
+                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                        RadiusX="12"
+                                                        RadiusY="12"
+                                                        Opacity=".5"
+                                                        Visibility="{Binding ki.IstImKampf, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanToVisibilityConverter1}, ConverterParameter='imKampf'}"
+                                                        Fill="LightGray"/>
 
-                                            <Canvas.Effect>
+                                        <Canvas.Effect>
                                                 <DropShadowEffect
                                                     BlurRadius="20"
                                                     ShadowDepth="10"

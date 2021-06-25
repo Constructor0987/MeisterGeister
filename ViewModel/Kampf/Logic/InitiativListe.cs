@@ -72,6 +72,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         #region Add and Remove
 
+        public void Add(KämpferInfo ki)
+        {
+            Add(ki.Kämpfer);
+        }
+        public void Add(IKämpfer k)
+        {
+            foreach (ManöverInfo mi in this[k])
+            {
+                Add(mi);
+            }
+        }
+
         public void Remove(KämpferInfo ki)
         {
             Remove(ki.Kämpfer);

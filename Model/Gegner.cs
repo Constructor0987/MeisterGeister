@@ -74,14 +74,6 @@ namespace MeisterGeister.Model
         }
 
 
-        //private ICollection<IWesenPlaylist> _wesenplaylist;
-        //private ICollection<IWesenPlaylist> Wesenplaylist
-        //{
-        //    get { return _wesenplaylist; }
-        //    set { Set(ref _wesenplaylist, value); }
-        //}
-
-
         #region IInitializable
         public void Initialize()
         {
@@ -108,7 +100,27 @@ namespace MeisterGeister.Model
                 if (kurzname.Length <= 18)
                     return kurzname;
                 var m = klammern.Match(kurzname);
-                if(m != null)
+                if (m != null)
+                {
+                    kurzname = klammern.Replace(kurzname, "");
+                    kurzname = kurzname.Substring(0, Math.Min(12, kurzname.Length)) + ".. " + m.Value;
+                }
+                return kurzname;
+            }
+        }
+
+        [DependentProperty("KämpferTempName")]
+        public string KurzTempname
+        {
+            get
+            {
+                string kurzname = KämpferTempName;
+                if (kurzname == null)
+                    return null;
+                if (kurzname.Length <= 18)
+                    return kurzname;
+                var m = klammern.Match(kurzname);
+                if (m != null)
                 {
                     kurzname = klammern.Replace(kurzname, "");
                     kurzname = kurzname.Substring(0, Math.Min(12, kurzname.Length)) + ".. " + m.Value;

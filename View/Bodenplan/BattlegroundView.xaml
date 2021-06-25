@@ -581,7 +581,7 @@
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
 
-                                                            <MenuItem IsChecked="{Binding ki.IstImKampf}" Header="Aktiv im Kampfgeschehen" 
+                                                            <MenuItem IsChecked="{Binding ki.IstImKampf}" Header="Aktiv im Kampfgeschehen" Click="MenuItemIstImKampf_Click" Tag="{Binding ki}"
                                                                 IsCheckable="True">>
                                                                 <MenuItem.Icon>
                                                                     <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
@@ -590,9 +590,7 @@
 
 
                                                             <MenuItem Header="Passiv im Kampf"
-                                                                  Command="{Binding ki.Passiv}" 
-                                                                  IsCheckable="True" 
-                                                                  IsChecked="{Binding ki.IstPassiv}" >
+                                                                  Command="{Binding ki.Passiv}"  >
                                                                 <MenuItem.Icon>
                                                                     <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png" />
                                                                 </MenuItem.Icon>
@@ -950,7 +948,7 @@
                                                                 <Setter Property="Text" Value="{Binding KämpferTempName, FallbackValue=''}" />
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding IsHeld}" Value="False">
-                                                                        <Setter Property="Text" Value="{Binding KämpferTempName}" />
+                                                                        <Setter Property="Text" Value="{Binding KurzTempname}" />
                                                                     </DataTrigger>
                                                                     <DataTrigger Binding="{Binding IsHeld}" Value="True">
                                                                         <Setter Property="Text" Value="{Binding Kurzname}" />
@@ -1000,7 +998,7 @@
                                                         Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                         Margin="{Binding MarginCreatureATPAaktionen}"
                                                         HorizontalAlignment="Left">
-                                                        <Slider
+                                                        <Slider 
                                                             Width="50"
                                                             Margin="-50,0,0,0"
                                                             VerticalAlignment="Bottom"
@@ -1008,7 +1006,7 @@
                                                             Maximum="{Binding ki.Aktionen}"
                                                             Minimum="0"
                                                             ToolTip="Aktionen umwandeln"
-                                                            Value="{Binding ki.Angriffsaktionen}" />
+                                                            Value="{Binding ki.Angriffsaktionen}" ValueChanged="sldAkt_ValueChanged" />
                                                         <StackPanel Margin="35,0,-3,0" Orientation="Horizontal" >
                                                             <ViewGeneral:ImageDuplicator
                                                                 Padding="0" 

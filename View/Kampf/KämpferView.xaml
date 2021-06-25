@@ -158,17 +158,22 @@
             <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="50" Value="{Binding Initiative}" FontWeight="Bold" ShowButtons="True" />
         </DockPanel>
         <StackPanel Grid.Column="1" >
-            <TextBox Text="{Binding Kämpfer.KämpferTempName,FallbackValue={x:Null}}" Height="20" Width="100" VerticalAlignment="Top">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Kämpfer.KämpferTempName}" Value="{x:Null}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </TextBox.Style>
-            </TextBox>
+                </Grid.Style>
+                <Button Width="20" HorizontalAlignment="Left" ToolTip="Name bekannt => Zeige Gegnername" Click="ZeigeGegnername_Click" >
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png" Margin="-3"/>                    
+                </Button>
+                <TextBox Text="{Binding Kämpfer.KämpferTempName, FallbackValue={x:Null}, UpdateSourceTrigger=PropertyChanged}" 
+                         Height="20" Width="100" VerticalAlignment="Top" />
+            </Grid>
             <local:KämpferZonenView Margin="5" DataContext="{Binding Kämpfer}"/>
             
             <!--Helden MR-->

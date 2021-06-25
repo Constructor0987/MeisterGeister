@@ -1089,13 +1089,18 @@ namespace MeisterGeister.View.Bodenplan
                         }
 
                         //Duplicator geklickjt ?
+
+
                         ImageDuplicator id = ((DependencyObject)e.OriginalSource).FindAnchestor<ImageDuplicator>();
+
                         if (id != null)
                         {
+
                             e.Handled = true;
                             return;
                         }
 
+                        //else
                         var o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
                         VM.SelectedObject = o;
                         _mouseClickedOnCreature = true;
@@ -1186,7 +1191,7 @@ namespace MeisterGeister.View.Bodenplan
                     else if (VM.SelectedObject is Wesen)
                     {
                         //Beim Öffnen eines Kontext-Menüs Sichfeld nicht ändern
-                        if ((Mouse.DirectlyOver is Border && (Mouse.DirectlyOver as Border).Name == "brdCreaturePic") ||
+                   if ((Mouse.DirectlyOver is Border && (Mouse.DirectlyOver as Border).Name == "brdCreaturePic") ||
                             (Mouse.DirectlyOver is System.Windows.Shapes.Rectangle) && 
                             ((Mouse.DirectlyOver as System.Windows.Shapes.Rectangle).DataContext is Wesen) ||
                             (Mouse.DirectlyOver is Image) && ((Mouse.DirectlyOver as Image).DataContext is Wesen))
@@ -1368,6 +1373,25 @@ namespace MeisterGeister.View.Bodenplan
             VM.IsLoading = false;
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public Nullable<Position> tempP;
+        private void MenuItemIstImKampf_Click(object sender, RoutedEventArgs e)
+        {
+            bool value = ((MenuItem)sender).IsChecked;
+            if (!value)
+                Global.CurrentKampf.Kampf.KämpferIListImKampf.Remove(((MenuItem)sender).Tag as KämpferInfo);
+            else
+                Global.CurrentKampf.Kampf.KämpferIListImKampf.Add(((MenuItem)sender).Tag as KämpferInfo);
+        }
+
+        private void sldAkt_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            VM.UpdateIniKampfView();
+        }
 
         private static class NativeMethods
         {

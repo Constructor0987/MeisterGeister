@@ -15,7 +15,7 @@ namespace MeisterGeister.View.General
             if (values.Length < 2) return true;
             for (int i=1; i<values.Length; i++)
             {
-                if (!values[i].Equals(values[0]))
+                if (values[i] == null || !values[i].Equals(values[0]))
                     return false;
             }
             return true;

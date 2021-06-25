@@ -58,12 +58,11 @@ namespace MeisterGeister.View.Kampf
                     Model.Gegner gegner = new Model.Gegner(gegnerBase);
                     var name = gegner.Name;
                     int j = 1;
-                    while (_kampf.Kämpfer.Any(k => k.Kämpfer.Name == name))
+                    while (_kampf.KämpferIList.Any(k => k.Kämpfer.Name == name))
                         name = String.Format("{0} ({1})", gegner.Name, ++j);
                     gegner.Name = name;
                     Global.ContextHeld.Insert<Model.Gegner>(gegner);
-                    _kampf.Kämpfer.Add(gegner, 2);
-                    gegner.ki = Global.CurrentKampf?.Kampf?.Kämpfer?.FirstOrDefault(t => t.Kämpfer == gegner);
+                    _kampf.KämpferIList.Add(gegner, 2);
 
                     // zur Arena hinzufügen
                     if (_kampf.Bodenplan.VM != null)
