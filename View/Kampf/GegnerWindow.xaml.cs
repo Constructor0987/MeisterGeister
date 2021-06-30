@@ -65,7 +65,9 @@ namespace MeisterGeister.View.Kampf
                     _kampf.KämpferIList.Add(gegner, 2);
 
                     // zur Arena hinzufügen
-                    if (_kampf.Bodenplan.VM != null)
+                    if (_kampf.Bodenplan == null)
+                        _kampf.Bodenplan = Global.CurrentKampf.BodenplanView;
+                    if ( _kampf .Bodenplan.VM != null)
                         _kampf.Bodenplan.VM.AddCreature(gegner);
                 }
 

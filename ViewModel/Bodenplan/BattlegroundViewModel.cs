@@ -1475,7 +1475,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             if (e.PropertyName == "Position")
             {
                 DoChangeModPositionSelbst = true;
-                KämpferInfo ki = Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(t => t.Kämpfer == (sender as IKämpfer));
+                KämpferInfo ki = Global.CurrentKampf.Kampf.KämpferIListImKampf.FirstOrDefault(t => t.Kämpfer == (sender as IKämpfer));
             }
         }
 
@@ -1882,7 +1882,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _selectedObject = value;
                 if (SelectedObject is BattlegroundCreature)
                 {
-                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
+                    if ((SelectedObject is Gegner))
+
+                        Global.CurrentKampf.SelectedKämpfer =
+                            Global.CurrentKampf.Kampf.KämpferIListImKampf.Where(t => t is Gegner).FirstOrDefault(ki =>
+                            (ki.Kämpfer as Gegner).GegnerGUID == (((IKämpfer)SelectedObject) as Gegner).GegnerGUID);
+                    else
+                    Global.CurrentKampf.SelectedKämpfer = 
+                        Global.CurrentKampf.Kampf.KämpferIListImKampf.FirstOrDefault(ki => 
+                        ki.Kämpfer.Name == ((IKämpfer)SelectedObject).Name);             
                     Global.CurrentKampf.LabelInfo = null;
                 }
                 else
@@ -1911,7 +1919,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                                 BattlegroundObjects.Move(indexObj, lastPos);
                             }
                         }
-                        if (SelectedObject as BattlegroundCreature != null)
+                        //Passiv im Kampf muss Selectierbar sein
+                        if (SelectedObject as BattlegroundCreature != null && Global.CurrentKampf.SelectedKämpfer == null)
                             Global.CurrentKampf.SelectedKämpfer = (SelectedObject as BattlegroundCreature).ki;
                     }
                 }
@@ -2700,6 +2709,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Global.CurrentKampf.Kampf.lstKämpferGleicheIni.Clear();
                 Global.CurrentKampf.Kampf.AktIniKämpfer = null;
                 Global.CurrentKampf.Kampf.KämpferIList.Clear();
+                Global.CurrentKampf.Kampf.KämpferIListImKampf.Clear();
                 Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
                 BackgroundImage = null;
                 LoadBattlegroundFromXML(filename as string);
@@ -3102,6 +3112,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (Global.CurrentKampf != null)
                 {
                     Global.CurrentKampf.Kampf.KämpferIList.CollectionChanged -= OnKämpferListeChanged;
+                    Global.CurrentKampf.Kampf.KämpferIListImKampf.CollectionChanged -= OnKämpferListeChanged;
                 }
             }
 

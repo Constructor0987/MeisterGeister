@@ -627,7 +627,8 @@ namespace MeisterGeister.View.Bodenplan
                             aRotateTransform.Angle = (VM.SelectedObject as BattlegroundCreature).RotateImageDegrees;
                             img.RenderTransform = aRotateTransform;
 
-                            if ((VM.SelectedObject as BattlegroundCreature).ki.Kämpfer.Bild != (VM.SelectedObject as BattlegroundCreature).CreatureImage.Tag.ToString())
+                            if ((VM.SelectedObject as BattlegroundCreature).ki != null &&
+                                (VM.SelectedObject as BattlegroundCreature).ki.Kämpfer.Bild != (VM.SelectedObject as BattlegroundCreature).CreatureImage.Tag?.ToString())
                                 (VM.SelectedObject as BattlegroundCreature).CreatureImage = (VM.SelectedObject as BattlegroundCreature).SetCreatrueImage(img);
                             img.Source = (VM.SelectedObject as BattlegroundCreature).CreatureImage.Source;
 

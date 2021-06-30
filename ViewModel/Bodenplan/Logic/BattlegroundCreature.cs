@@ -652,6 +652,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public Image SetCreatrueImage(Image img)
         {
+            if (ki == null)
+                return img;
             var pic = 
                 ki.Kämpfer as Held != null?
                 (((Held)ki.Kämpfer).Token ?? ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png"):
