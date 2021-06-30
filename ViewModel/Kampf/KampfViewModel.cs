@@ -403,7 +403,7 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             if (Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
             {
-                Global.CurrentKampf.SelectedKämpfer = null;
+                SelectedKämpfer = null;
                 if (BodenplanViewModel != null)
                 {
                     BodenplanViewModel.SelectectedKämpferInfo = null;
@@ -411,6 +411,7 @@ namespace MeisterGeister.ViewModel.Kampf
                     BodenplanViewModel.RemoveCreatureAll();
                 }
                 Kampf.KämpferIList.Clear();
+                Kampf.KämpferIListImKampf.Clear();
             }
         }
 
