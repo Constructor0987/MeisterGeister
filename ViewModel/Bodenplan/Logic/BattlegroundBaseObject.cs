@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 using System;
 using System.Xml.Serialization;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using System.Windows;
+using System.Linq;
+using MeisterGeister.View.Bodenplan;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -81,6 +84,15 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                         Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Move(
                             Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.IndexOf(this),
                             Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Count - 1);
+
+                    if (this is BattlegroundCreature)
+                    {
+                        Global.CurrentKampf.BodenplanViewModel.SetMarkerPos(this as Wesen);
+                    }
+                }
+                else
+                {
+                    Global.CurrentKampf.BodenplanViewModel.SetMarkerPos(null);
                 }
             }
         }

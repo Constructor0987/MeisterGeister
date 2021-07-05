@@ -385,6 +385,12 @@
 
                 <ListBox x:Name="kämpferHorizListe" ItemsSource="{Binding Kampf.SortedInitiativListe, UpdateSourceTrigger=PropertyChanged}" 
                          SelectedItem="{Binding SelectedManöverInfo}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="Left" Command="{Binding OnCreatureLeft}" />
+                        <KeyBinding Key="Right" Command="{Binding OnCreatureRight}" />
+                        <KeyBinding Key="Up" Command="{Binding OnCreatureUp}" />
+                        <KeyBinding Key="Down" Command="{Binding OnCreatureDown}" />
+                    </ListBox.InputBindings>
                     <ListBox.Template>
                         <ControlTemplate TargetType="ListBox">
                             <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>

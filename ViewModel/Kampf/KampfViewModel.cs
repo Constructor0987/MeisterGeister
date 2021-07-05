@@ -5,6 +5,7 @@ using System.Linq;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.AudioPlayer.Logic;
 using MeisterGeister.ViewModel.Bodenplan;
+using MeisterGeister.ViewModel.Bodenplan.Logic;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
 
@@ -187,6 +188,68 @@ namespace MeisterGeister.ViewModel.Kampf
         private KämpferInfo _selectedKämpfer;
 
         #region // ---- COMMANDS ----
+
+        private Base.CommandBase onCreatureLeft = null;
+        public Base.CommandBase OnCreatureLeft
+        {
+            get
+            {
+                if (onCreatureLeft == null)
+                    onCreatureLeft = new Base.CommandBase((o) => CreatureLeft(), null);
+                return onCreatureLeft;
+            }
+        }
+        private Base.CommandBase onCreatureRight = null;
+        public Base.CommandBase OnCreatureRight
+        {
+            get
+            {
+                if (onCreatureRight == null)
+                    onCreatureRight = new Base.CommandBase((o) => CreatureRight(), null);
+                return onCreatureRight;
+            }
+        }
+        private Base.CommandBase onCreatureUp = null;
+        public Base.CommandBase OnCreatureUp
+        {
+            get
+            {
+                if (onCreatureUp == null)
+                    onCreatureUp = new Base.CommandBase((o) => CreatureUp(), null);
+                return onCreatureUp;
+            }
+        }
+        private Base.CommandBase onCreatureDown = null;
+        public Base.CommandBase OnCreatureDown
+        {
+            get
+            {
+                if (onCreatureDown == null)
+                    onCreatureDown = new Base.CommandBase((o) => CreatureDown(), null);
+                return onCreatureDown;
+            }
+        }
+
+        public void CreatureLeft()
+        {
+            if (BodenplanViewModel?.SelectedObject != null && BodenplanViewModel.SelectedObject is BattlegroundCreature)
+                BodenplanViewModel.SelectedObject.MoveObject(-100, 0, false);
+        }
+        public void CreatureRight()
+        {
+            if (BodenplanViewModel?.SelectedObject != null && BodenplanViewModel.SelectedObject is BattlegroundCreature)
+                BodenplanViewModel.SelectedObject.MoveObject(100, 0, false);
+        }
+        public void CreatureUp()
+        {
+            if (BodenplanViewModel?.SelectedObject != null && BodenplanViewModel.SelectedObject is BattlegroundCreature)
+                BodenplanViewModel.SelectedObject.MoveObject(0, -100, false);
+        }
+        public void CreatureDown()
+        {
+            if (BodenplanViewModel?.SelectedObject != null && BodenplanViewModel.SelectedObject is BattlegroundCreature)
+                BodenplanViewModel.SelectedObject.MoveObject(0, 100, false);
+        }
 
         public Base.CommandBase OnAddHelden
         {

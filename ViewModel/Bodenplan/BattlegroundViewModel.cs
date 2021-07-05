@@ -1721,6 +1721,24 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         #region SelectedObject und dessen Eigenschaften und Delete
 
+        public BattlegroundCommand CreatureLeftCommand
+        {
+            get { return _creatureLeftCommand ?? (_creatureLeftCommand = new BattlegroundCommand(CreatureLeft)); }
+        }
+        public BattlegroundCommand CreatureRightCommand
+        {
+            get { return _creatureRightCommand ?? (_creatureRightCommand = new BattlegroundCommand(CreatureRight)); }
+        }
+        public BattlegroundCommand CreatureUpCommand
+        {
+            get { return _creatureUpCommand ?? (_creatureUpCommand = new BattlegroundCommand(CreatureUp)); }
+        }
+        public BattlegroundCommand CreatureDownCommand
+        {
+            get { return _creatureDownCommand ?? (_creatureDownCommand = new BattlegroundCommand(CreatureDown)); }
+        }
+
+
         public BattlegroundCommand DeleteCommand
         {
             get { return _deleteCommand ?? (_deleteCommand = new BattlegroundCommand(Delete)); }
@@ -1865,6 +1883,34 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        public void SetMarkerPos(Wesen bgc)
+        {
+            TurnMarker tm = BattlegroundObjects.FirstOrDefault(t => t is TurnMarker) as TurnMarker;
+            if (bgc == null)
+            {
+                if (tm != null)
+                    tm.Visible = Visibility.Collapsed;
+            }
+            else
+            {
+                if (tm == null)
+                {
+                    TurnMarker turnMarker = new TurnMarker((bgc as Wesen).MidCreatureX - 200 / 2, (bgc as Wesen).MidCreatureY - 200 / 2);
+                    Global.CurrentKampf.BodenplanViewModel.BattlegroundObjects.Add(turnMarker);
+                    tm = turnMarker;
+                    var indexObj = BattlegroundObjects.IndexOf(turnMarker);
+                    BattlegroundObjects.Move(indexObj, 0);
+                }
+                if (tm != null)
+                {
+                    tm.MarkerPositionX = (bgc as Wesen).MidCreatureX - tm.TurnMarkerDurchmesser / 2 + (bgc as Wesen).CreatureWidthPic / 2;
+                    tm.MarkerPositionY = (bgc as Wesen).MidCreatureY - tm.TurnMarkerDurchmesser / 2 + (bgc as Wesen).CreatureHeightPic / 2;
+                    tm.Visible = Visibility.Visible;
+                }
+            }
+
+        }
+
         public BattlegroundBaseObject SelectedObject
         {
             get { return _selectedObject; }
@@ -1882,15 +1928,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _selectedObject = value;
                 if (SelectedObject is BattlegroundCreature)
                 {
-                    if ((SelectedObject is Gegner))
-
-                        Global.CurrentKampf.SelectedKämpfer =
-                            Global.CurrentKampf.Kampf.KämpferIListImKampf.Where(t => t is Gegner).FirstOrDefault(ki =>
-                            (ki.Kämpfer as Gegner).GegnerGUID == (((IKämpfer)SelectedObject) as Gegner).GegnerGUID);
-                    else
-                    Global.CurrentKampf.SelectedKämpfer = 
-                        Global.CurrentKampf.Kampf.KämpferIListImKampf.FirstOrDefault(ki => 
-                        ki.Kämpfer.Name == ((IKämpfer)SelectedObject).Name);             
+                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
                     Global.CurrentKampf.LabelInfo = null;
                 }
                 else
@@ -1951,6 +1989,27 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        public void CreatureLeft()
+        {
+            if (SelectedObject != null && SelectedObject is BattlegroundCreature)
+                SelectedObject.MoveObject(-100, 0, false);
+        }
+        public void CreatureRight()
+        {
+            if (SelectedObject != null && SelectedObject is BattlegroundCreature)
+                SelectedObject.MoveObject(100, 0, false);
+        }
+        public void CreatureUp()
+        {
+            if (SelectedObject != null && SelectedObject is BattlegroundCreature)
+                SelectedObject.MoveObject(0, -100, false);
+        }
+        public void CreatureDown()
+        {
+            if (SelectedObject != null && SelectedObject is BattlegroundCreature)
+                SelectedObject.MoveObject(0, 100, false);
+        }
+
         public void Delete()
         {
             if (SelectedObject != null)
@@ -1978,6 +2037,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void Up()
         { PlayerGridOffsetY = PlayerGridOffsetY + 80 <= 0 ? PlayerGridOffsetY + 80 : 0; }
 
+        private BattlegroundCommand _creatureLeftCommand;
+        private BattlegroundCommand _creatureRightCommand;
+        private BattlegroundCommand _creatureUpCommand;
+        private BattlegroundCommand _creatureDownCommand;
         private BattlegroundCommand _deleteCommand;
 
         private double _objectSize = 1;

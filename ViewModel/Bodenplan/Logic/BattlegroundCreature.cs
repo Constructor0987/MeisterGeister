@@ -638,6 +638,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureNameY = CreatureY - 25;
             MidCreatureX = CreatureX;
             MidCreatureY = CreatureY;
+
+            if (IsAnDerReihe)
+            {
+                Global.CurrentKampf.BodenplanViewModel.SetMarkerPos(this as Wesen);
+            }
         }
 
         public override void RunAfterXMLDeserialization()
@@ -652,8 +657,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public Image SetCreatrueImage(Image img)
         {
-            if (ki == null)
-                return img;
             var pic = 
                 ki.Kämpfer as Held != null?
                 (((Held)ki.Kämpfer).Token ?? ki.Kämpfer.Bild ?? "/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png"):

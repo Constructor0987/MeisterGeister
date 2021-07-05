@@ -719,6 +719,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\PositionToImageConverter.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\RectangleObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\TextLabel.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\TurnMarker.cs" />
     <Compile Include="ViewModel\Einstellungen\ermitteleUeberlastung.cs" />
     <Compile Include="ViewModel\Einstellungen\ermittleBehinderung.cs" />
     <Compile Include="ViewModel\Einstellungen\ermittleRuestung.cs" />
@@ -2832,6 +2833,7 @@
     <Resource Include="Images\Icons\INet.png" />
     <Resource Include="Images\Icons\Netzwerk.png" />
     <Resource Include="Images\Icons\network.png" />
+    <Resource Include="Images\Bodenplan\TurnMarker.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

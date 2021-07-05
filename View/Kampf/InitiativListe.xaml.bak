@@ -1,0 +1,712 @@
+﻿<UserControl x:Class="MeisterGeister.View.Kampf.InitiativListe"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:Kampf="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+             xmlns:KampfManöver="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:View="clr-namespace:MeisterGeister.View.Kampf"             
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:mg="clr-namespace:MeisterGeister"	
+	         xmlns:General="clr-namespace:MeisterGeister.View.General"  	
+             xmlns:model="clr-namespace:MeisterGeister.Model"
+             mc:Ignorable="d" x:Name="iniListe" Background="Transparent"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <General:ImagePathConverter x:Key="ImagePathConverter" />
+        <System:Double x:Key="gridSize">30</System:Double>
+        <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
+        <ViewGeneral:EqualsMultiConverter x:Key="equalsMultiConverter"/>
+        <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <KampfLogic:DoubleToIntConverter x:Key="DoubleToIntConverter1"/>
+        <KampfLogic:DoubleSichtConverter x:Key="sichtConverter"/>
+        <KampfLogic:DoubleLichtConverter x:Key="lichtConverter"/>
+        <KampfLogic:IsIntToBoolConverter x:Key="IsIntToBoolConverter1"/>
+        <KampfLogic:DataTypeConverter x:Key="DataTypeConverter1"/>
+    </UserControl.Resources>
+
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <ContextMenu.Items>
+                <!--<MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" ToolTip="Unter 'Advanced' -> 'A' kann die Transparenz eingestellt werden!">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="Farbe: " VerticalAlignment="Center" />
+                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker" VerticalAlignment="Center">
+                                        <i:Interaction.Triggers>
+                                            <ViewGeneral:HandlingEventTrigger EventName="Click" />
+                                            -->
+                <!--Genügt leider nicht um den MouseUp-Event zuu fangen-->
+                <!--
+                                        </i:Interaction.Triggers>
+                                    </xctk:ColorPicker>
+                                </StackPanel>
+                            </MenuItem.Header>
+                            <MenuItem.Icon>
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
+                            </MenuItem.Icon>
+                        </MenuItem>-->
+                <!--<MenuItem Name="_menuItemKämpferAktuell" Height="28" Command="{Binding OnAktionAusführen}">
+                    <MenuItem.Icon>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Text="Aktion ausführen" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <Separator />
+                <MenuItem Name="_menuItemKämpferInitiaveWürfeln" Height="28" Command="{Binding OnInitiativeWürfeln}">
+                    <MenuItem.Icon>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Text="INI neu würfeln..." />
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem Name="_menuItemKämpferOrientieren" Height="28" Command="{Binding OnOrientieren}">
+                    <MenuItem.Icon>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Text="Orientieren" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <Separator />
+                <MenuItem Name="_menuItemKämpferEntfernen" Height="28" Command="{Binding OnDeleteKämpfer}">
+                    <MenuItem.Icon>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/kämpfer_entf.png" Stretch="Fill" Margin="2" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Text="Kämpfer/Held entfernen" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <Separator />-->
+                <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Command="{Binding OnAddHelden}">
+                    <MenuItem.Icon>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Text="Helden einfügen" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Command="{Binding OnShowGegnerView}">
+                    <MenuItem.Icon>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" Margin="2" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Text="Gegner einfügen..." />
+                    </MenuItem.Header>
+                </MenuItem>
+                <Separator />
+                <MenuItem Name="_menuItemListeLeeren" Height="28" Command="{Binding OnDeleteAllKämpfer}">
+                    <MenuItem.Icon>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="2" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Text="Liste leeren" />
+                    </MenuItem.Header>
+                </MenuItem>
+            </ContextMenu.Items>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="95"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Buttons-->
+        <StackPanel Orientation="Horizontal" x:Name="buttons" VerticalAlignment="Top" Height="40" >
+            <StackPanel HorizontalAlignment="Left" Width="37">
+                <Button ToolTip="Helden einfügen" Command="{Binding OnAddHelden}" Focusable="False" Width="20" HorizontalAlignment="Left">
+                    <Button.Content>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="-4" />
+                    </Button.Content>
+                </Button>
+                <StackPanel Orientation="Horizontal" Height="20" Width="37">
+                <Button ToolTip="Gegner-Fenster öffnen um Gegner einzufügen" Command="{Binding OnShowGegnerView}" Focusable="False">
+                    <Button.Content>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" Margin="-4" />
+                    </Button.Content>
+                </Button>
+                    <ComboBox Width="17" ItemsSource="{Binding lstGegnerBase}" SelectedItem="{Binding GegnerToAdd}" DisplayMemberPath="Name" Focusable="False" >
+                        <!-- Da das erstmalige Öffnen der ComboBox mit ToolTip zu lange dauert wird dies erst einmal auskommentiert 
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}">
+                                    <TextBlock.ToolTip>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid Margin="5,5,5,0" Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="60*"/>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="40*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="5" Width="80" Height="80">
+                                                    <Image>
+                                                        <Image.Source>
+                                                            <Binding Path="Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                                                <Binding.FallbackValue>
+                                                                    <ImageSource>
+                                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                    </ImageSource>
+                                                                </Binding.FallbackValue>
+                                                                <Binding.TargetNullValue>
+                                                                    <ImageSource>
+                                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                                    </ImageSource>
+                                                                </Binding.TargetNullValue>
+                                                            </Binding>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </Border>
+                                                <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
+                                                <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+                                                <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
+                                                <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" />
+
+                                            </Grid>
+                                            <Grid Margin="5,0,5,5" Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <DockPanel Grid.Row="0" Grid.Column="0">
+                                                    <Label DockPanel.Dock="Left" Content="LE:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Firebrick" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="0" Grid.Column="1" MinWidth="40" HorizontalAlignment="Left" Text="{Binding LE}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <DockPanel Grid.Row="0" Grid.Column="2">
+                                                    <Label   DockPanel.Dock="Left" Content="AU:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="SteelBlue" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="0" Grid.Column="3" MinWidth="40" HorizontalAlignment="Left" Text="{Binding AU}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <DockPanel Grid.Row="1" Grid.Column="0">
+                                                    <Label   DockPanel.Dock="Left" Content="AE:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="BlueViolet" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="1" Grid.Column="1" MinWidth="40" HorizontalAlignment="Left" Text="{Binding AE}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <DockPanel Grid.Row="1" Grid.Column="2">
+                                                    <Label   DockPanel.Dock="Left" Content="KE:" />
+                                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Gold" Margin="4" Width="10" />
+                                                </DockPanel>
+                                                <TextBox Grid.Row="1" Grid.Column="3" MinWidth="40" HorizontalAlignment="Left" Text="{Binding KE}" HorizontalContentAlignment="Center" Margin="2" />
+                                                <Label   Grid.Row="0" Grid.Column="4" Content="Literatur:" />
+                                                <Grid Grid.Row="0" Grid.Column="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" TextWrapping="Wrap" Text="{Binding Literatur, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="300" />
+                                                </Grid>
+                                                <Label   Grid.Row="1" Grid.Column="4" Content="Setting:" />
+                                                <TextBox Grid.Row="1" Grid.Column="5" TextWrapping="Wrap" Text="{Binding Setting, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="300" />
+                                            </Grid>
+
+                                            <Grid Margin="5,0,5,5" Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="335*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="64" />
+                                                    <ColumnDefinition Width="91*"/>
+                                                    <ColumnDefinition Width="92*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
+                                                <TextBox Grid.Row="2" Grid.Column="1" Width="40" HorizontalAlignment="Left" Text="{Binding INIBasis}" HorizontalContentAlignment="Center" Margin="2,2,0,2" Height="Auto" />
+                                                <Label   Grid.Row="2" Grid.Column="3" Content="INI-Zufall:" />
+                                                <TextBox Grid.Row="2" Grid.Column="4" Margin="2,2,0,2" Width="40" HorizontalAlignment="Left" >
+                                                    <Binding Path="INIZufall">
+                                                        <Binding.ValidationRules>
+                                                            <ViewGeneral:WürfelValidationRule />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox>
+                                                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" ToolTip="Globale Kampfwerte" VerticalAlignment="Center" Margin="0,1,0,0" Height="26">
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_02.png" Height="16" Width="16" />
+                                                    <Label  Content=":" />
+                                                </StackPanel>
+                                                <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="324">
+                                                    <TextBox MinWidth="40" HorizontalAlignment="Left" Text="{Binding AT}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="16" Width="16" Margin="0,0,8,0" />
+                                                    <TextBox MinWidth="40" HorizontalAlignment="Left" Text="{Binding PA}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="16" Width="16" Margin="0,0,8,0" />
+                                                    <TextBox MinWidth="40" HorizontalAlignment="Left" Text="{Binding FK}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="16" Width="16" Margin="0,0,8,0" />
+                                                </WrapPanel>
+
+                                                <Label   Grid.Row="3" Grid.Column="3" Content="KO:" />
+                                                <TextBox Grid.Row="3" Grid.Column="4" MinWidth="40" HorizontalAlignment="Left" Text="{Binding KO}" HorizontalContentAlignment="Center" Margin="2,2,0,2" Height="Auto" Width="80" />
+                                                <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
+                                                <TextBox Grid.Row="4" Grid.Column="1" Margin="2" MinWidth="80" HorizontalAlignment="Left" Text="{Binding RS[Gesamt]}" HorizontalContentAlignment="Center" />
+                                              
+                                                <Label   Grid.Row="4" Grid.Column="3" Content="MR:" />
+                                                <Grid Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding MRGeist}" HorizontalContentAlignment="Center" Margin="2" />
+                                                    <TextBox Grid.Column="1" Text="{Binding MRKörper}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                </Grid>
+                                                <Label Grid.Row="5" Grid.Column="0" Content="GS:" />
+                                                <Grid Grid.Row="5" Grid.Column="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding GS}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding GS2}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                    <TextBox Grid.Column="2" Text="{Binding GS3}" HorizontalContentAlignment="Center" Margin="2"/>
+                                                </Grid>
+                                                <Label Grid.Row="5" Grid.Column="3" Content="Aktionen:" />
+                                                <TextBox Grid.Row="5" Grid.Column="4" MinWidth="40" HorizontalAlignment="Left" Text="{Binding Aktionen}" HorizontalContentAlignment="Center" Margin="2,2,0,2"  Width="40" />
+
+                                                <DockPanel Grid.Row="5" Grid.Column="5" >
+                                                    <Label Grid.Column="2" Grid.Row="7"  Content="SO:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                                    <TextBox Grid.Column="3" Grid.Row="7"  HorizontalAlignment="Left" MinWidth="35" Text="{Binding SO}" VerticalAlignment="Center"   />
+                                                </DockPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>-->
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+            <Button Width="20" Height="20" Margin="0,0,9,0" ToolTip="Liste leeren" Command="{Binding OnDeleteAllKämpfer}" Focusable="False">
+                <Button.Content>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="-3" />
+                </Button.Content>
+            </Button>
+            <Button ToolTip="Weiter" Command="{Binding OnNext}">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png"/>
+            </Button>
+            <Button ToolTip="Nächste Kampfrunde" Command="{Binding OnNextKampfrunde}" Focusable="False">
+                <Grid>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Margin="8,0,0,0"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" HorizontalAlignment="Left"/>
+                </Grid>
+            </Button>
+            <Button ToolTip="Kampf neustarten" Command="{Binding OnNewKampf}" Focusable="False">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png"/>
+            </Button>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Kampf.Licht}"/>
+                <Image Grid.Row="1" Source="/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png"/>
+                <Slider Name="sldLicht" Grid.Row="1" Grid.Column="1" Width="75" TickPlacement="BottomRight" Minimum="0" Maximum="4" Interval="1" 
+                        Value="{Binding Kampf.Licht,Converter={StaticResource lichtConverter}}" 
+                        Focusable="False">
+                    <Slider.Style>
+                        <Style TargetType="Slider">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Tageslicht">
+                                    <Setter Property="ToolTip" Value="keine Erschwernis" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Dämmerung">
+                                    <Setter Property="ToolTip" Value="Erschwernis +2 (auch Dunst, Nebel)" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Mondlicht">
+                                    <Setter Property="ToolTip" Value="Erschwernis +4" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Sternenlicht">
+                                    <Setter Property="ToolTip" Value="Erschwernis +6" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kampf.Licht}" Value="Finsternis">
+                                    <Setter Property="ToolTip" Value="Erschwernis +8 (auch Unsichtbares Ziel)" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Slider.Style>
+                </Slider>
+                <Image Grid.Row="1" Grid.Column="2" Source="/DSA MeisterGeister;component/Images/Madamal/mada20.jpg"/>
+            </Grid>
+        </StackPanel>
+
+        <ScrollViewer Name="scrViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" Grid.ColumnSpan="2" 
+                      Margin="4,0,5,0" ScrollChanged="scrViewer_ScrollChanged" MouseEnter="scrViewer_MouseEnter" MouseLeave="scrViewer_MouseLeave">
+            <Grid>
+                <Grid.Resources>
+                    <CollectionViewSource Source="{Binding Kampf.InitiativListe.Aktionszeiten}" x:Key="kampfrunden">
+                        <CollectionViewSource.GroupDescriptions>
+                            <PropertyGroupDescription PropertyName="Kampfrunde"/>
+                        </CollectionViewSource.GroupDescriptions>
+                    </CollectionViewSource>
+                </Grid.Resources>
+
+                <ListBox x:Name="kämpferHorizListe" ItemsSource="{Binding Kampf.SortedInitiativListe, UpdateSourceTrigger=PropertyChanged}" 
+                         SelectedItem="{Binding SelectedManöverInfo}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="ListBox">
+                            <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="40" Margin="2,0" >
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsAnDerReihe, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                <Setter Property="Background" Value="#FF0CD8E2" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <DockPanel>
+                                            <TextBlock Text="Position: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                            <ComboBox DockPanel.Dock="Right" ItemsSource="{StaticResource PositionenValues}"
+                                                      SelectedValue="{Binding Path=Manöver.Ausführender.Kämpfer.Position, Converter={StaticResource PositionenValues}}"/>
+                                        </DockPanel>
+
+                                        <DockPanel>
+                                            <TextBlock Text="Kampfstil: " DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                            <ComboBox DockPanel.Dock="Right" SelectedValuePath="Stil" SelectedValue="{Binding Manöver.Ausführender.Kampfstil, UpdateSourceTrigger=PropertyChanged}">
+                                                <ComboBox.ItemsSource>
+                                                    <Kampf:KampfstilListe/>
+                                                </ComboBox.ItemsSource>
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="{Binding Bild}" MaxWidth="24"/>
+                                                            <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DockPanel>
+
+                                        <MenuItem Command="{Binding Manöver.Ausführender.INIneu}" >
+                                            <MenuItem.Header >
+                                                <TextBlock>
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.IsHeld}" Value="true">
+                                                                    <Setter Property="Text" Value="INI neu würfeln" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.IsHeld}" Value="false">
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <MultiBinding StringFormat="{}INI neu würfeln ({0}+{1} = {2})">
+                                                                                <Binding Path="Manöver.Ausführender.Kämpfer.INIBasis" UpdateSourceTrigger="PropertyChanged" />
+                                                                                <Binding Path="Manöver.Ausführender.Kämpfer.INIZufall" UpdateSourceTrigger="PropertyChanged" />
+                                                                                <Binding Path="Manöver.Ausführender.Initiative" UpdateSourceTrigger="PropertyChanged" />
+                                                                            </MultiBinding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </MenuItem.Header>
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wuerfel/wuerfel.png" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Passiv im Kampf" 
+                                                  Command="{Binding Manöver.Ausführender.Passiv}" 
+                                                  IsCheckable="True" 
+                                                  IsChecked="{Binding Manöver.Ausführender.IstPassiv}" >
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Schild.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Ist Unsichtbar" IsCheckable="True" Command="{Binding Manöver.Ausführender.Unsichtbar}"  >
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Meisterperson.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Ist Anführer" IsCheckable="True" Command="{Binding Manöver.Ausführender.Anführer}"  >
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Hat Lichtquelle" >
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/Wetter/Sonne.png"/>
+                                            </MenuItem.Icon>
+
+                                            <MenuItem Header="Keine" IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='0'}" />
+
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='1'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kienspan.png"/>
+                                                        <TextBlock Text="Kienspäne [1-2m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='2'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Binsenlicht.png"/>
+                                                        <TextBlock Text="Binsenlichter [2-3m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='3'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Kerze.png"/>
+                                                        <TextBlock Text="Kerze [3m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='4'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png"/>
+                                                        <TextBlock Text="Laterne [3-4]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='6'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png"/>
+                                                        <TextBlock Text="Pechfackel [4-6m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='7'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Laterne.png"/>
+                                                        <TextBlock Text="Bend-/Sturmlaterne [2-8m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='8'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Fackel.png"/>
+                                                        <TextBlock Text="Fackel [8m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                            <MenuItem IsCheckable="True" 
+                                                IsChecked="{Binding Manöver.Ausführender.LichtquelleMeter, Converter={StaticResource IsIntToBoolConverter1}, ConverterParameter='10'}">
+                                                <MenuItem.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Width="25" MaxHeight="25" Source="/DSA%20MeisterGeister;component/Images/Icons/Lagerfeuer.png"/>
+                                                        <TextBlock Text="Lagerfeuer [10m]" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                                    </StackPanel>
+                                                </MenuItem.Header>
+                                            </MenuItem>
+
+                                            <DockPanel>
+                                                <TextBlock Text="Selbst " DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                                <ViewGeneral:IntBox IncWheel="1" DecWheel="1" DockPanel.Dock="Right" ShowButtons="True" HorizontalContentAlignment="Stretch" Margin="2,0,0,0" 
+                                                    Value="{Binding Manöver.Ausführender.LichtquelleMeter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IncValue="1" DecValue="1" MinValue="0" MaxValue="20" />
+                                            </DockPanel>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Aus Kampf entfernen" Command="{Binding Manöver.Ausführender.Entfernen}">
+                                            <MenuItem.Icon>
+                                                <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
+
+                                <!-- Initiative -->
+                                <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="15" Height="15" >
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png" Margin="-3"/>
+                                    <TextBlock Text="{Binding Start.InitiativPhase, Converter={StaticResource DoubleToIntConverter1}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    <Grid.ToolTip>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" VerticalAlignment="Center" />
+                                            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Manöver.Ausführender.Kämpfer.InitiativeBasis}" VerticalAlignment="Center" />
+                                                <TextBlock Margin="4,6,2,2" Text="- BE " />
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" MaxHeight="20" MaxWidth="20"/>
+                                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Manöver.Ausführender.Kämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="INI gewürfelt:" Margin="0,0,5,2" />
+                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Manöver.Ausführender.Kämpfer.InitiativeWurf}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
+                                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Manöver.Ausführender.Initiative}" />
+                                        </Grid>
+                                    </Grid.ToolTip>
+                                </Grid>
+
+                                <Grid>
+                                    <!--Kämpfer Icon-->
+                                    <Image Margin="-2,0" Stretch="Fill" Width="40" Height="40">
+                                        <Image.Source>
+                                            <Binding Path="Manöver.Ausführender.Kämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
+                                                <Binding.FallbackValue>
+                                                    <ImageSource>
+                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                    </ImageSource>
+                                                </Binding.FallbackValue>
+                                                <Binding.TargetNullValue>
+                                                    <ImageSource>
+                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                    </ImageSource>
+                                                </Binding.TargetNullValue>
+                                            </Binding>
+                                        </Image.Source>
+                                    </Image>
+
+                                    <!-- Längerfristige Handlungen -->
+                                    <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="20" Height="10" Background="#FFE0E07C" >
+                                    <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                        <Image Margin="-1" HorizontalAlignment="Left">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:FernkampfManöver}">
+                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Fernkampf.png" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:Zauber}">
+                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Magie.png" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Manöver, Converter={StaticResource DataTypeConverter1}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Value="{x:Type KampfManöver:SonstigesManöver}">
+                                                            <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Kalender.png" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                        <TextBlock Margin="10,0,0,0" Text="{Binding Manöver.VerbleibendeDauer, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="14" FontSize="9" FontWeight="Bold"  />
+                                    <Grid.ToolTip>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" VerticalAlignment="Center" />
+                                            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Manöver.Ausführender.Kämpfer.InitiativeBasis}" VerticalAlignment="Center" />
+                                                <TextBlock Margin="4,6,2,2" Text="- BE " />
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" MaxHeight="20" MaxWidth="20"/>
+                                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Manöver.Ausführender.Kämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="INI gewürfelt:" Margin="0,0,5,2" />
+                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Manöver.Ausführender.Kämpfer.InitiativeWurf}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
+                                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Manöver.Ausführender.Initiative}" />
+                                        </Grid>
+                                    </Grid.ToolTip>
+                                </Grid>
+                                
+                                </Grid>
+                                
+                                <!--Kämpfername-->
+                                <TextBlock VerticalAlignment="Center" Margin="0,-2" FontSize="8">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{Binding Manöver.Ausführender.Kämpfer.KämpferTempName}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Manöver.Ausführender.Kämpfer.KämpferTempName}" Value="{x:Null}">
+                                                    <Setter Property="Text" Value="{Binding Manöver.Ausführender.Kämpfer.Name}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>                                
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
