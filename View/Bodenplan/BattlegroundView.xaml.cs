@@ -1125,6 +1125,11 @@ namespace MeisterGeister.View.Bodenplan
                 if (VM.SelectedObject != null)
                 {
                     VM.SelectedObject.IsMoving = false;
+                    if (VM.SelectedObject.IsAnDerReihe)
+                    {
+                        if (VM.SelectedObject as Wesen != null)
+                        VM.SetMarkerPos(VM.SelectedObject as Wesen);
+                    }
                 }
 
                 _mouseClickedOnCreature = false;

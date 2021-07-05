@@ -33,7 +33,7 @@
         <model:PositionToImageConverter x:Key="PositionToImageConverter1" />
         <BitmapImage x:Key="FragezeichenBild" UriSource="/DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png" />
         <ViewGeneral:LoadCachedImageConverter x:Key="LoadCachedImageConverter" />
-
+        
         <DataTemplate x:Key="ImageListBoxItemTemplate">
             <Grid ToolTip="{Binding Pfad}">
                 <Grid.ColumnDefinitions>
@@ -86,6 +86,10 @@
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
+        <KeyBinding Key="Left" Command="{Binding CreatureLeftCommand}" />
+        <KeyBinding Key="Right" Command="{Binding CreatureRightCommand}" />
+        <KeyBinding Key="Up" Command="{Binding CreatureUpCommand}" />
+        <KeyBinding Key="Down" Command="{Binding CreatureDownCommand}" />
     </UserControl.InputBindings>
     <Grid>
         <Grid.Resources>
@@ -481,6 +485,49 @@
                                 </Style>
                             </ListBox.Style>
                             <ListBox.Resources>
+                                <!-- Datatemplate Turn Marker  -->
+                                <DataTemplate DataType="{x:Type model:TurnMarker}">
+                                    <Thumb DragDelta="Thumb_Drag" >
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                                                        Visibility="{Binding Visible}">
+                                                    <Image
+                                                        x:Name="turnmarkerImage"     
+                                                        Canvas.Left="{Binding MarkerPositionX}"
+                                                        Canvas.Top="{Binding MarkerPositionY}"
+                                                        Height="{Binding TurnMarkerDurchmesser, FallbackValue=200, TargetNullValue=200}" 
+                                                        Width="{Binding TurnMarkerDurchmesser, FallbackValue=200, TargetNullValue=200}" 
+                                                        VerticalAlignment="Top"
+                                                        Opacity="{Binding Opacity}"
+                                                        RenderTransformOrigin="0.5,0.5"
+                                                        Source="{Binding PictureUrl}" >
+                                                        <Image.RenderTransform>
+                                                            <RotateTransform Angle="{Binding RotateAngle}" />
+                                                        </Image.RenderTransform>
+
+                                                        <Image.Triggers>
+                                                            <EventTrigger RoutedEvent="Image.Loaded">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever">
+                                                                        <DoubleAnimation AutoReverse="False"                          
+                                                                            Duration="0:0:10"
+                                                                            From="0" 
+                                                                            To="360"                                            
+                                                                            RepeatBehavior="Forever"
+                                                                            Storyboard.TargetName="turnmarkerImage"
+                                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" />
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                        </Image.Triggers>
+                                                    </Image>
+                                                </Canvas>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
+
                                 <!--  Datatemplate BattlegroundCreature (Hero & Enemy)  -->
                                 <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
                                     <Thumb DragDelta="Thumb_Drag">
@@ -843,6 +890,7 @@
                                                         </Border.Background>
                                                     </Border>
                                                     <Rectangle
+                                                        x:Name="rectCreature"
                                                         Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
                                                         Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                         Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
@@ -850,7 +898,7 @@
                                                         RadiusX="12"
                                                         RadiusY="12"
                                                         Stroke="#FF5D5757"
-                                                        ToolTip="{Binding Name}">                                                       
+                                                        ToolTip="{Binding Name}">
                                                     </Rectangle>
 
                                                     <!--  -Z-Level  -->
@@ -1240,18 +1288,17 @@
                                                             FontSize="18" 
                                                             FontWeight="Bold" />
                                                     </Grid>
-                                                <Rectangle
-                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
-                                                        RadiusX="12"
-                                                        RadiusY="12"
-                                                        Opacity=".5"
-                                                        Visibility="{Binding ki.IstImKampf, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanToVisibilityConverter1}, ConverterParameter='imKampf'}"
-                                                        Fill="LightGray"/>
+                                                    <Rectangle
+                                                            Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
+                                                            Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                            Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
+                                                            Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
+                                                            RadiusX="12"
+                                                            RadiusY="12"
+                                                            Opacity=".5"
+                                                            Visibility="{Binding ki.IstImKampf, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanToVisibilityConverter1}, ConverterParameter='imKampf'}"
+                                                            Fill="LightGray"/>
                                                 </Canvas>
-
 
                                                 <ControlTemplate.Triggers>
                                                     <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
@@ -1264,17 +1311,20 @@
                                                             </Setter.Value>
                                                         </Setter>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding IsAnDerReihe}" Value="True">
+                                                    <!--<DataTrigger Binding="{Binding IsAnDerReihe}" Value="True">
+                                                        
                                                         <Setter Property="Effect">
                                                             <Setter.Value>
                                                                 <DropShadowEffect
-                                                                    BlurRadius="35"
+                                                                    BlurRadius="90"
                                                                     ShadowDepth="10"
                                                                     Color="#FFC0FCFF" />
                                                             </Setter.Value>
                                                         </Setter>
-                                                    </DataTrigger>
+                                                    </DataTrigger>-->
+                                                    
                                                 </ControlTemplate.Triggers>
+                                                
                                             </ControlTemplate>
                                         </Thumb.Template>
                                     </Thumb>
@@ -1471,7 +1521,7 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
-
+                                
                                 <!--  Datatemplate TextLabel Bewegungslänge  -->
                                 <DataTemplate DataType="{x:Type model:TextLabel}">
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
@@ -1570,6 +1620,9 @@
                                         </Thumb.Template>
                                     </Thumb>
                                 </DataTemplate>
+
+                                
+                        <!--<s:YourTurnMarker Margin="{Binding TurnMarkerMargin, UpdateSourceTrigger=PropertyChanged}" />-->
                             </ListBox.Resources>
                             
                             <ListBox.Background>
@@ -1619,7 +1672,6 @@
                         </ListBox>
 
                         <s:SpielerPointer Margin="{Binding PointerMargin, UpdateSourceTrigger=PropertyChanged}" />
-
                     </Grid>
                 </wpfxc:ZoomControl>
             </Grid>

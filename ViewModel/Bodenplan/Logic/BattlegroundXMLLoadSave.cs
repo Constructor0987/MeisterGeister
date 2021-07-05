@@ -28,7 +28,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 ObservableCollection<BattlegroundBaseObject> bboWithoutHeroes = new ObservableCollection<BattlegroundBaseObject>();
                 foreach (var o in bbo)
                 {
-                    if (!(o is BattlegroundCreature) && 
+                    if (!(o is BattlegroundCreature) &&
+                        !(o is TurnMarker) &&
                         ((o is ImageObject && !SaveWithoutPictures) || 
                         (!(o is ImageObject)) ||
                         (!(o is MP4Object))) &&
