@@ -239,7 +239,7 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             if (BodenplanViewModel?.SelectedObject != null && BodenplanViewModel.SelectedObject is BattlegroundCreature)
                 BodenplanViewModel.SelectedObject.MoveObject(100, 0, false);
-        }
+        } 
         public void CreatureUp()
         {
             if (BodenplanViewModel?.SelectedObject != null && BodenplanViewModel.SelectedObject is BattlegroundCreature)
