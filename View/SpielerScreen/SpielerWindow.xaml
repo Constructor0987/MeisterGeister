@@ -530,18 +530,7 @@
                                                     Width="28" 
                                                     FontSize="18" 
                                                     FontWeight="Bold" />
-                                            </Grid>
-                                            <Rectangle
-                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="{Binding CreatureHeight, UpdateSourceTrigger=PropertyChanged}"
-                                                        RadiusX="12"
-                                                        RadiusY="12"
-                                                        Opacity=".5"
-                                                        Visibility="{Binding ki.IstImKampf, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanToVisibilityConverter1}, ConverterParameter='imKampf'}"
-                                                        Fill="LightGray"/>
-
+                                            </Grid>                                            
                                         <Canvas.Effect>
                                                 <DropShadowEffect
                                                     BlurRadius="20"
