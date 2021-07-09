@@ -44,7 +44,26 @@
                 </Image>
                 <Label Content="{Binding Path=APlaylist.Name}" Grid.Column="1" FontSize="14" Padding="5,0,5,2" />
             </Grid>
-            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,30,0"
+            <StackPanel ToolTip="Reihenfolge ändern" HorizontalAlignment="Right" Width="15" Margin="0,0,30,0" 
+                        MouseEnter="spnlSubObject_MouseEnter" MouseLeave="spnlSubObject_MouseLeave" > 
+                <StackPanel.Visibility>
+                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                        <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
+                        <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
+                        <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
+                        <Binding ElementName="tbtnPlaylistAZ" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
+                    </MultiBinding>
+                </StackPanel.Visibility>
+                <Button Padding="0" Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" Margin="-2,-1" />
+                </Button>
+                <Button Padding="0" Height="11" Command="{Binding OnReihenfolgePListMoveDown, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
+                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" Margin="-2,-1" />
+                </Button>
+            </StackPanel>
+            <StackPanel Name="spnl" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,45,0"
                         MouseEnter="spnlSubObject_MouseEnter" MouseLeave="spnlSubObject_MouseLeave" >
                 <Button Padding="0" Width="20" Cursor="Hand" ToolTip="Exportieren der Playlist" 
                                 Command="{Binding OnBtnExportLbEditor}" >
@@ -65,25 +84,6 @@
                         </MultiBinding>
                     </Button.Visibility>
                     <Image Source="/Images/Icons/General/entf_01.png" />
-                </Button>
-            </StackPanel>
-            <StackPanel ToolTip="Reihenfolge ändern" HorizontalAlignment="Right" Width="15" Margin="0,0,70,0" 
-                        MouseEnter="spnlSubObject_MouseEnter" MouseLeave="spnlSubObject_MouseLeave" > 
-                <StackPanel.Visibility>
-                    <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
-                        <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
-                        <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
-                        <Binding ElementName="spnllbiIcon" Path="IsMouseOver" />
-                        <Binding ElementName="tbtnPlaylistAZ" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
-                    </MultiBinding>
-                </StackPanel.Visibility>
-                <Button Padding="0" Height="11" Command="{Binding OnReihenfolgePListMoveUp, UpdateSourceTrigger=PropertyChanged}"
-                            Visibility="{Binding IstErsteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}" >
-                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" Margin="-2,-1" />
-                </Button>
-                <Button Padding="0" Height="11" Command="{Binding OnReihenfolgePListMoveDown, UpdateSourceTrigger=PropertyChanged}"
-                            Visibility="{Binding IstLetzteZeile, Converter={StaticResource BooleanInverseToVisibilityHiddenConverter1}}">
-                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" Margin="-2,-1" />
                 </Button>
             </StackPanel>
         </Grid>
