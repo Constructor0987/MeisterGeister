@@ -1717,8 +1717,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private bool _showCreatureName = true;
 
-        #endregion Anzeigeoptionen
+        public bool ShowCreaturePos
+        {
+            get { return _showCreaturePos; }
 
+            set
+            {
+                Set(ref _showCreaturePos, value);
+            }
+        }
+
+        private bool _showCreaturePos = true;
+
+        #endregion
         #region SelectedObject und dessen Eigenschaften und Delete
 
         public BattlegroundCommand CreatureLeftCommand
@@ -2261,6 +2272,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 R = Convert.ToByte(lstSettings[21])
             };
             BackgroundColor = backCol;
+            //Pos
+            if (lstSettings.Count <= 22)
+                return;
+
+            ShowCreaturePos = lstSettings[22] == 1;
         }
 
         public void SaveBattlegroundToXML(string filename, bool GiveFeedback = true)
@@ -2328,6 +2344,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             lstSettings.Add(BackgroundColor.B);
             lstSettings.Add(BackgroundColor.G);
             lstSettings.Add(BackgroundColor.R);
+            lstSettings.Add(ShowCreaturePos ? 1 : 0);
 
             var bg = new BattlegroundXMLLoadSave();
             bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings, GiveFeedback);

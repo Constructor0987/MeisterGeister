@@ -237,6 +237,15 @@
                                             Content="Namen"
                                             IsChecked="{Binding ShowCreatureName}" />
                                         <CheckBox
+                                            Height="14"
+                                            Grid.Row="1"
+                                            Margin="2,-4,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Content="Pos"
+                                            IsChecked="{Binding ShowCreaturePos}"
+                                            ToolTip="Ermöglicht das Ein-/Ausblenden der Position von Helden und Gegnern" />
+                                        <CheckBox
                                             x:Name="checkBoxSichtLine"
                                             Grid.Column="1"
                                             Height="16"
@@ -246,6 +255,7 @@
                                             Content="Sicht"
                                             IsChecked="{Binding ShowSightArea}"
                                             ToolTip="Ermöglicht das Ein-/Ausblenden der Sichtbereiche von Helden und Gegnern" />
+                                        
 
                                         <Slider
                                             Grid.Row="1"
