@@ -105,6 +105,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Columns.Add("BackgroundColorG");
                     dtSettings.Columns.Add("BackgroundColorR");
 
+                    //Pos
+                    dtSettings.Columns.Add("ShowCreaturePos");
+
                     dtSettings.Rows.Add();
                     dtSettings.Rows[0]["BackgroundOffsetSize"] = Settings[0];
                     dtSettings.Rows[0]["BackgroundOffsetX"] = Settings[1];
@@ -135,6 +138,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     dtSettings.Rows[0]["BackgroundColorG"] = Settings[20];
                     dtSettings.Rows[0]["BackgroundColorR"] = Settings[21];
 
+                    //Pos
+                    dtSettings.Rows[0]["ShowCreaturePos"] = Settings[22];
                     xmlH.AddObsDT(dtSettings);
                 }
                 using (StreamWriter wr = new StreamWriter(filename))
@@ -171,6 +176,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["ZDisplayY"] = o.ZDisplayY;
             dt.Rows[dt.Rows.Count - 1]["ZLevel"] = o.ZLevel;
             dt.Rows[dt.Rows.Count - 1]["SightLineSektor"] = o.SightLineSektor;
+            dt.Rows[dt.Rows.Count - 1]["RotateImageDegrees"] = o.RotateImageDegrees;
             dt.Rows[dt.Rows.Count - 1]["HinweisText"] = (o as IKämpfer).HinweisText;
             dt.Rows[dt.Rows.Count - 1]["KämpferTempName"] = (o is Gegner) ? (o as Gegner).KämpferTempName: null;
             dt.Rows[dt.Rows.Count - 1]["ObjectSize"] = o.ObjectSize;
@@ -220,6 +226,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Columns.Add("ZDisplayY");
             dt.Columns.Add("ZLevel");
             dt.Columns.Add("SightLineSektor");
+            dt.Columns.Add("RotateImageDegrees");
             dt.Columns.Add("HinweisText");
             dt.Columns.Add("KämpferTempName");
             dt.Columns.Add("ObjectSize");
@@ -302,6 +309,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                 back.Add(Convert.ToDouble(drow["BackgroundColorB"]));
                                 back.Add(Convert.ToDouble(drow["BackgroundColorG"]));
                                 back.Add(Convert.ToDouble(drow["BackgroundColorR"]));
+                            }
+                            if (drow.ItemArray.Length > 22)
+                            {
+                                back.Add(Convert.ToDouble(drow["ShowCreaturePos"]));
                             }
                         }
                     }
@@ -397,12 +408,15 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             if (drow.ItemArray.Length > 12)
                             {
                                 (bObj as BattlegroundCreature).SightLineSektor = Convert.ToInt32(drow["SightLineSektor"]);
+                                if (drow.Table.Columns.Contains("RotateImageDegrees"))
+                                    (bObj as BattlegroundCreature).RotateImageDegrees = Convert.ToDouble(drow["RotateImageDegrees"]);
 
                                 (bObj as IKämpfer).HinweisText = drow["HinweisText"].ToString();
                                 (bObj as BattlegroundCreature).ObjectSize = Convert.ToDouble(drow["ObjectSize"]);
 
                                 if (bObj is Gegner)
                                 {
+                                    Global.ContextHeld.Insert<Gegner>(bObj as Gegner);
                                     (bObj as Gegner).LebensenergieAktuell = Convert.ToInt32(drow["LebensenergieAktuell"]);
                                     (bObj as Gegner).KarmaenergieAktuell = Convert.ToInt32(drow["KarmaenergieAktuell"]);
                                     (bObj as Gegner).AusdauerAktuell = Convert.ToInt32(drow["AusdauerAktuell"]);
@@ -464,7 +478,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
                         if (bObj is Gegner)
                         {
-                            Global.ContextHeld.Insert<Gegner>(bObj as Gegner);
+                       //     Global.ContextHeld.Insert<Gegner>(bObj as Gegner);
                             Global.CurrentKampf.Kampf.KämpferIList.Add(bObj as Gegner, 2);
 
                             (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
@@ -480,6 +494,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                     (bObj as Wesen).ki.IstImKampf = Convert.ToBoolean(drow["IstImKampf"]);
                                 if (!(bObj as Wesen).ki.IstImKampf)
                                     Global.CurrentKampf.Kampf.KämpferIListImKampf.Remove((bObj as Wesen).ki);
+                                if (drow.Table.Columns.Contains("KämpferTempName"))
+                                    (bObj as Gegner).KämpferTempName = Convert.ToString(drow["KämpferTempName"]);
                             }
                             catch { }
                         }

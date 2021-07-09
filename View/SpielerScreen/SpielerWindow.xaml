@@ -415,7 +415,8 @@
                                                 Width="50"
                                                 Height="50"
                                                 Opacity="{Binding Opacity}"
-                                                Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}">
+                                                Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}"
+                                                Visibility="{Binding DataContext.ShowCreaturePos, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
                                                 <Image.Style>
                                                     <Style TargetType="Image">
                                                         <Style.Triggers>

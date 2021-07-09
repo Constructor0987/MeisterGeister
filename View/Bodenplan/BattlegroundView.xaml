@@ -1038,6 +1038,7 @@
                                                         Canvas.Top="{Binding CreatureNameY}"
                                                         Width="50"
                                                         Height="50"
+                                                        Visibility="{Binding DataContext.ShowCreaturePos, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                         Source="{Binding Position, Converter={StaticResource PositionToImageConverter1}, UpdateSourceTrigger=PropertyChanged}" />
 
                                                     <!--  Angriff-Abwehraktionen  -->
