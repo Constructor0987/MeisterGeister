@@ -1396,7 +1396,8 @@ namespace MeisterGeister.View.Bodenplan
 
         private void sldAkt_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            VM.UpdateIniKampfView();
+            if (VM.IsShowIniKampf)
+                VM.UpdateIniKampfView();
         }
 
         private static class NativeMethods
