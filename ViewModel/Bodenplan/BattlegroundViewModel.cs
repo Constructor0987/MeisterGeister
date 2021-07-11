@@ -1939,7 +1939,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _selectedObject = value;
                 if (SelectedObject is BattlegroundCreature)
                 {
-                    Global.CurrentKampf.SelectedKämpfer = Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
+                    Global.CurrentKampf.SelectedKämpfer = 
+                        Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(ki => ki.Kämpfer == ((IKämpfer)SelectedObject));             
                     Global.CurrentKampf.LabelInfo = null;
                 }
                 else
@@ -2258,7 +2259,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             //Kampf auf KR setzen
             CurrKampf.KampfNeuStarten(false);
             while (CurrKampf.Kampfrunde < lstSettings[16])
-                CurrKampf.NeueKampfrunde();
+                CurrKampf.NeueKampfrunde(false);
             IsEditorModeEnabled = lstSettings[17] == 1;
 
             //Background Color
@@ -2789,7 +2790,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Global.CurrentKampf.Kampf.lstKämpferGleicheIni.Clear();
                 Global.CurrentKampf.Kampf.AktIniKämpfer = null;
                 Global.CurrentKampf.Kampf.KämpferIList.Clear();
-                Global.CurrentKampf.Kampf.KämpferIListImKampf.Clear();
+                //Global.CurrentKampf.Kampf.KämpferIListImKampf.Clear();
                 Global.CurrentKampf.BodenplanViewModel.RemoveCreatureAll();
                 BackgroundImage = null;
                 LoadBattlegroundFromXML(filename as string);
@@ -3192,7 +3193,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (Global.CurrentKampf != null)
                 {
                     Global.CurrentKampf.Kampf.KämpferIList.CollectionChanged -= OnKämpferListeChanged;
-                    Global.CurrentKampf.Kampf.KämpferIListImKampf.CollectionChanged -= OnKämpferListeChanged;
                 }
             }
 

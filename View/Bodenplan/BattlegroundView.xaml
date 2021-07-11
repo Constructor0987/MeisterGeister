@@ -628,7 +628,7 @@
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
 
-                                                            <MenuItem IsChecked="{Binding ki.IstImKampf}" Header="Aktiv im Kampfgeschehen" Click="MenuItemIstImKampf_Click" Tag="{Binding ki}"
+                                                            <MenuItem IsChecked="{Binding ki.IstImKampf}" Header="Aktiv im Kampfgeschehen" Tag="{Binding ki}"
                                                                 IsCheckable="True">>
                                                                 <MenuItem.Icon>
                                                                     <Image MaxWidth="24" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />

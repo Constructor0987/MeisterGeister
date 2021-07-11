@@ -297,7 +297,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get
             {
-                return Kampf.KämpferIListImKampf.IndexOf(this);
+                return Kampf.KämpferIListImKampf.ToList().IndexOf(this);
             }
         }
 
@@ -433,6 +433,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set 
             { 
                 Set(ref _istImKampf, value);
+                AktionenNeuSetzen();
+                
+                if (Global.CurrentKampf.BodenplanViewModel.IsShowIniKampf)
+                {
+                    //KampfInfoView komplett neu aufbauen, da ansonsten die Tabelle nicht sauber dargestellt wird
+                    Global.CurrentKampf.BodenplanViewModel.KampfWindow.Content = new MeisterGeister.View.Kampf.KampfInfoView(Global.CurrentKampf);
+                }
+                
+                this.Kampf.SortedInitiativListe = this.Kampf.InitiativListe != null ?
+                (this.Kampf.Kampfrunde == 0 ?
+                this.Kampf.InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
+                this.Kampf.InitiativListe.Where(t => t.AktKampfrunde == this.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                )
+                : null;
             }
         }
 
@@ -685,14 +699,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 aktionen = 1;
             }
-            //if (!IstImKampf)
-            //{
-            //    Aktionen = 0;
-            //    OnChanged(nameof(Abwehraktionen));
-            //    OnChanged(nameof(Angriffsaktionen));
-            //    OnChanged(nameof(Aktionen));
-            //    return;
-            //}
 
             //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann hat man maximal 2 Aktionen während die Abwehraktionen verfallen
             var längerfristig = AngriffsManöver.Where(mi => mi.AktKampfrunde == mi.Kampf.Kampfrunde)
@@ -916,7 +922,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private void AktionenNeuSetzen()
         {
             Kampf.InitiativListe.RemoveAll(mi => mi.Manöver.Ausführender == this && mi.Start.Kampfrunde == Kampf.Kampfrunde);
-            Kampf.InitiativListe.AddRange(StandardAktionenSetzen(Kampf.Kampfrunde));
+            if (this.IstImKampf)
+                Kampf.InitiativListe.AddRange(StandardAktionenSetzen(Kampf.Kampfrunde));
         }
 
         public IEnumerable<ManöverInfo> StandardAktionenSetzen(int kampfrunde)

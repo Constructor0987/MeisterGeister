@@ -627,7 +627,7 @@
                                     <Grid Grid.Column="2" >
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Content="INI-Tabelle" />
-                                            <ToggleButton
+                                            <ToggleButton x:Name="tbtnSpielerIniScreen"
                                                 Width="35"
                                                 Height="30"
                                                 Margin="2,0,0,0"

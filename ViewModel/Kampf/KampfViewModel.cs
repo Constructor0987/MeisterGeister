@@ -474,7 +474,7 @@ namespace MeisterGeister.ViewModel.Kampf
                     BodenplanViewModel.RemoveCreatureAll();
                 }
                 Kampf.KämpferIList.Clear();
-                Kampf.KämpferIListImKampf.Clear();
+           //     Kampf.KämpferIListImKampf.Clear();
             }
         }
 
