@@ -355,7 +355,7 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void CreateKampfWindow()
+        public void CreateKampfWindow()
         {
             var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
 
@@ -1379,20 +1379,6 @@ namespace MeisterGeister.View.Bodenplan
             VM.IsLoading = false;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        public Nullable<Position> tempP;
-        private void MenuItemIstImKampf_Click(object sender, RoutedEventArgs e)
-        {
-            bool value = ((MenuItem)sender).IsChecked;
-            if (!value)
-                Global.CurrentKampf.Kampf.KämpferIListImKampf.Remove(((MenuItem)sender).Tag as KämpferInfo);
-            else
-                Global.CurrentKampf.Kampf.KämpferIListImKampf.Add(((MenuItem)sender).Tag as KämpferInfo);
-        }
 
         private void sldAkt_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {

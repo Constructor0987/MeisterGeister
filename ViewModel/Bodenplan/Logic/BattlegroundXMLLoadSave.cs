@@ -45,7 +45,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 foreach (var o in bbo)
                 {
                     if (o is BattlegroundCreature)
-                    {
+                    {                        
                         DataTable dtCreature = CreateStructurCreatureTbl(o as BattlegroundCreature);
                         dtCreature = AddCreatureInfo(dtCreature, o as BattlegroundCreature);
                         bboHeroes.Add(dtCreature);
@@ -185,8 +185,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["KarmaenergieAktuell"] = (o is Gegner) ? (o as Gegner).KarmaenergieAktuell : (o as Held).KarmaenergieAktuell;
             dt.Rows[dt.Rows.Count - 1]["AusdauerAktuell"] = (o is Gegner) ? (o as Gegner).AusdauerAktuell : (o as Held).AusdauerAktuell;
             dt.Rows[dt.Rows.Count - 1]["AstralenergieAktuell"] = (o is Gegner) ? (o as Gegner).AstralenergieAktuell : (o as Held).AstralenergieAktuell;
-            dt.Rows[dt.Rows.Count - 1]["IstAnführer"] = (o as Wesen).ki.IstAnführer;
-
+            
             dt.Rows[dt.Rows.Count - 1]["Wunden"] = (o is Gegner) ? (o as Gegner).Wunden : (o as Held).Wunden;
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneUnlokalisiert"] = (o as IKämpfer).WundenByZone[Trefferzone.Unlokalisiert];
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneArmL"] = (o as IKämpfer).WundenByZone[Trefferzone.ArmL];
@@ -199,13 +198,19 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneKopf"] = (o as IKämpfer).WundenByZone[Trefferzone.Kopf];
             dt.Rows[dt.Rows.Count - 1]["WundenByZoneRücken"] = (o as IKämpfer).WundenByZone[Trefferzone.Rücken];
 
-            dt.Rows[dt.Rows.Count - 1]["Initiative"] = (o as BattlegroundCreature).ki.Initiative;
             dt.Rows[dt.Rows.Count - 1]["GUID"] = (o is Gegner) ? (o as Gegner).GegnerBaseGUID : (o as Held).HeldGUID;
-            dt.Rows[dt.Rows.Count - 1]["LichtquelleMeter"] = (o as BattlegroundCreature).ki.LichtquelleMeter;
-            dt.Rows[dt.Rows.Count - 1]["IstUnsichtbar"] = (o as BattlegroundCreature).ki.IstUnsichtbar;
-            dt.Rows[dt.Rows.Count - 1]["Angriffsaktionen"] = (o as BattlegroundCreature).ki.Angriffsaktionen;
 
-            dt.Rows[dt.Rows.Count - 1]["IstImKampf"] = (o as BattlegroundCreature).ki.IstImKampf;
+            //Nur Informationen speichern, wenn der Kämpfer noch aktiv sein kann (nicht bei LeP<0)
+            if ((o as BattlegroundCreature).ki != null)
+            {
+                dt.Rows[dt.Rows.Count - 1]["IstAnführer"] = (o as Wesen).ki.IstAnführer;
+                dt.Rows[dt.Rows.Count - 1]["Initiative"] = (o as BattlegroundCreature).ki.Initiative;
+                dt.Rows[dt.Rows.Count - 1]["LichtquelleMeter"] = (o as BattlegroundCreature).ki.LichtquelleMeter;
+                dt.Rows[dt.Rows.Count - 1]["IstUnsichtbar"] = (o as BattlegroundCreature).ki.IstUnsichtbar;
+                dt.Rows[dt.Rows.Count - 1]["Angriffsaktionen"] = (o as BattlegroundCreature).ki.Angriffsaktionen;
+
+                dt.Rows[dt.Rows.Count - 1]["IstImKampf"] = (o as BattlegroundCreature).ki.IstImKampf;
+            }
             return dt;
         }
 
@@ -387,7 +392,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                                 gegner.Name = gegner_name;
                            
                                 bObj = gegner;
-
                             }                            
                         }
                         if (bObj != null)
@@ -478,22 +482,23 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
                         if (bObj is Gegner)
                         {
-                       //     Global.ContextHeld.Insert<Gegner>(bObj as Gegner);
                             Global.CurrentKampf.Kampf.KämpferIList.Add(bObj as Gegner, 2);
-
-                            (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
-                            (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
-                            if (drow.Table.Columns.Contains("Angriffsaktionen"))
-                                (bObj as Wesen).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
 
                             try
                             {
+                                if ((bObj as Wesen).ki == null)
+                                { }
+                                (bObj as Wesen).ki.IstAnführer = Convert.ToBoolean(drow["IstAnführer"]);
+                                (bObj as Wesen).ki.Initiative = Convert.ToInt32(drow["Initiative"]);
+                                if (drow.Table.Columns.Contains("Angriffsaktionen"))
+                                    (bObj as Wesen).ki.Angriffsaktionen = Convert.ToInt32(drow["Angriffsaktionen"]);
+
                                 (bObj as BattlegroundCreature).ki.LichtquelleMeter = Convert.ToDouble(drow["LichtquelleMeter"]);
                                 (bObj as Wesen).ki.IstUnsichtbar = Convert.ToBoolean(drow["IstUnsichtbar"]);
                                 if (drow.Table.Columns.Contains("IstImKampf") && Convert.ToBoolean(drow["IstImKampf"]) == false)
                                     (bObj as Wesen).ki.IstImKampf = Convert.ToBoolean(drow["IstImKampf"]);
-                                if (!(bObj as Wesen).ki.IstImKampf)
-                                    Global.CurrentKampf.Kampf.KämpferIListImKampf.Remove((bObj as Wesen).ki);
+                         //       if (!(bObj as Wesen).ki.IstImKampf)
+                         //           Global.CurrentKampf.Kampf.KämpferIListImKampf.Remove((bObj as Wesen).ki);
                                 if (drow.Table.Columns.Contains("KämpferTempName"))
                                     (bObj as Gegner).KämpferTempName = Convert.ToString(drow["KämpferTempName"]);
                             }

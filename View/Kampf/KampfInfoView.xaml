@@ -633,7 +633,7 @@
                                     <Grid
                                         ViewGeneral:GridBehaviour.ColumnCount="{Binding Kampf.InitiativListe.Aktionszeiten.Count, UpdateSourceTrigger=PropertyChanged}"
                                         ViewGeneral:GridBehaviour.ColumnLength="30"
-                                        ViewGeneral:GridBehaviour.RowCount="{Binding Kampf.KämpferIListImKampf.Count}"
+                                        ViewGeneral:GridBehaviour.RowCount="{Binding Kampf.KämpferIListImKampf.Count, UpdateSourceTrigger=PropertyChanged}"
                                         ViewGeneral:GridBehaviour.RowLength="30" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>

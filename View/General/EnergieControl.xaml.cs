@@ -169,21 +169,28 @@ namespace MeisterGeister.View.General
                         energieMax = SelectedKämpfer.LebensenergieMax;
                         _labelInfo.Content = SelectedKämpfer.LebensenergieStatus;
                         _labelInfo.ToolTip = SelectedKämpfer.LebensenergieStatusDetails;
-                        if (SelectedKämpfer.LebensenergieAktuell <= 0 && Global.CurrentKampf != null)
-                            Global.CurrentKampf.Kampf.KämpferIList.Remove(SelectedKämpfer);
-                        else
-                            if (SelectedKämpfer.LebensenergieAktuell > 0 &&
-                            Global.CurrentKampf != null &&
-                            Global.CurrentKampf.Kampf.KämpferIList.FirstOrDefault(t => t.Kämpfer == SelectedKämpfer) == null)
+                        if (Global.CurrentKampf != null)
                         {
+                            if (SelectedKämpfer.LebensenergieAktuell <= 0)
+                            {
+                                (SelectedKämpfer as Wesen).ki.Abwehraktionen = (SelectedKämpfer as Wesen).ki.Aktionen;
+                            }
+                            else
+                                if (SelectedKämpfer.LebensenergieAktuell > 0 &&
+                                (SelectedKämpfer as Wesen).ki.IstImKampf &&
+                                !(SelectedKämpfer as Wesen).ki.IstPassiv &&
+                                (SelectedKämpfer as Wesen).ki.AbwehraktionenÜbrig > 0 &&
+                                (SelectedKämpfer as Wesen).ki.Angriffsaktionen == 0)
+                            {
+                                (SelectedKämpfer as Wesen).ki.Angriffsaktionen = 1;
+                            }
 
-                            Global.CurrentKampf.Kampf.KämpferIList.Add(SelectedKämpfer);
-                            (SelectedKämpfer as Wesen).ki = Global.CurrentKampf?.Kampf?.KämpferIList?.FirstOrDefault(t => t.Kämpfer == SelectedKämpfer);
-                            if (Global.CurrentKampf.BodenplanViewModel != null)
-                                Global.CurrentKampf.BodenplanViewModel.SelectedObject = null;
-                            IKämpfer iK = SelectedKämpfer;
-                            SelectedKämpfer = null;
-                            SelectedKämpfer = iK;
+                            Global.CurrentKampf.Kampf.SortedInitiativListe = Global.CurrentKampf.Kampf.InitiativListe != null ?
+                                (Global.CurrentKampf.Kampf.Kampfrunde == 0 ?
+                                Global.CurrentKampf.Kampf.InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
+                                Global.CurrentKampf.Kampf.InitiativListe.Where(t => t.AktKampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                                )
+                                : null;
                         }
                         break;
                     case EnergieEnum.Ausdauer:

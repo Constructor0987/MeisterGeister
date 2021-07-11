@@ -262,7 +262,7 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void CreateKampfWindow()
+        public void CreateKampfWindow()
         {
             var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
 
@@ -276,15 +276,15 @@ namespace MeisterGeister.View.Bodenplan
             }
             else
             {
-                BattlegroundVM.KampfWindow.Width = 
+                BattlegroundVM.KampfWindow.Width =
                     BattlegroundVM.IniWidthStart != 0 ?
-                    BattlegroundVM.IniWidthStart : 
+                    BattlegroundVM.IniWidthStart :
                     426 * BattlegroundVM.ScaleKampfGrid;
             }
 
             BattlegroundVM.KampfWindow.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
             {
-                if (BattlegroundVM.KampfWindow != null && 
+                if (BattlegroundVM.KampfWindow != null &&
                     BattlegroundVM.KampfWindow.Tag == null)
                 {
                     e.Cancel = true;

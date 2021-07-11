@@ -39,9 +39,9 @@
             <!-- Lebensenergie -->
             <StackPanel Margin="6,0,0,0" Orientation="Horizontal" DataContext="{Binding Kämpfer}">
                 <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
-                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=LebensenergieMax}" ToolTip="Maximale Lebensenergie" />
+                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding LebensenergieMax}" ToolTip="Maximale Lebensenergie" />
                 <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=LebensenergieAktuell}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" ShowButtons="True" />
+                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding LebensenergieAktuell, UpdateSourceTrigger=PropertyChanged}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" ShowButtons="True" />
                 <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding}" />
             </StackPanel>
             <CheckBox IsChecked="{Binding Kämpfer.ShowLebensbalken}" Content="Lebensbalken" Height="16" HorizontalAlignment="Center" Margin="2,-2,0,0" VerticalAlignment="Center" >

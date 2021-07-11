@@ -37,8 +37,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
             KämpferIList = new KämpferInfoListe(this);
             KämpferIList.CollectionChangedExtended += Kämpfer_CollectionChangedExtended;
-            KämpferIListImKampf = new KämpferInfoListe(this);
-            KämpferIListImKampf.CollectionChangedExtended += KämpferImKampf_CollectionChangedExtended;
             InitiativListe = new InitiativListe(this);
             KampfNeuStarten();
         }
@@ -77,9 +75,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public ManöverInfo SelectedManöverInfo
         {
             get { return _selectedManöverInfo; }
-            set { Set(ref _selectedManöverInfo, value);
-                // value.Manöver.Ausführender.Kämpfer = IKämpfer  as Wesen ==> BattlegroundObjects.where(t => (t as Wesen).IsAnDerReihe)
-            }
+            set { Set(ref _selectedManöverInfo, value); }
         }
 
         private IEnumerable<ManöverInfo> _sortedInitiativListe;
@@ -89,20 +85,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { Set(ref _sortedInitiativListe, value); }
         }
 
-
-        private KämpferInfoListe _kämpferIListImKampf;
-        public KämpferInfoListe KämpferIListImKampf
+        public IEnumerable<KämpferInfo> KämpferIListImKampf
         {
-            get { return _kämpferIListImKampf; }
-            private set
-            {
-                _kämpferIListImKampf = value;
-                SortedInitiativListe = InitiativListe != null ?
-                    (Kampfrunde == 0 ?
-                    InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
-                    InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
-                    )
-                    : null; //InitiativListe != null ? InitiativListe.Where(t => t.Kampf.Kampfrunde == AktuelleAktionszeit.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase) : null;
+            get {
+                var source = KämpferIList.Where(t => t.IstImKampf);
+                return source;
             }
         }
 
@@ -341,8 +328,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 AktIniKämpfer = null;
 
             if (AktIniKämpfer != null)
+            {
                 ((Wesen)AktIniKämpfer.Kämpfer).IsAnDerReihe = true;
-
+                Global.CurrentKampf.BodenplanViewModel.SelectedObject = ((Wesen)AktIniKämpfer.Kämpfer);
+            }
             if (lstMI.Count > 1)
             //Nächsten Kämpfer in der Reihe der Aktuellen INI selektieren
             {
@@ -374,7 +363,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         public Nullable<Position> tempP;
-        public void NeueKampfrunde()
+        public void NeueKampfrunde(bool doSave = true)
         {
             ////Alle Manöver, die noch nicht ausgeführt wurden
             //var nichtAusgeführt = InitiativListe.Where(mi => mi.Ausgeführt == false);
@@ -393,7 +382,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //}
             //Alte Ansagen löschen
             //InitiativListe.LöscheBeendeteManöver();
-            if (Kampfrunde > 0)
+            if (doSave && Kampfrunde > 0)
             {
                 string bodenplanPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) +
                     @"\Daten\Bodenplan\Battleground_Letzte_KR.xml";
@@ -502,7 +491,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void Orientieren(IKämpfer k)
         {
-            Orientieren(KämpferIListImKampf[k]);
+            Orientieren(KämpferIListImKampf.FirstOrDefault(t => t.Kämpfer == k));
         }
 
         public void Orientieren(KämpferInfo ki)
@@ -515,18 +504,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public void Kämpfer_CollectionChangedExtended(object sender, NotifyCollectionChangedEventArgs args)
         {
             if (args.Action == NotifyCollectionChangedAction.Remove)
-            {                
-                KämpferIListImKampf.RemoveAll(mi => args.OldItems.Contains(mi.Kämpfer));
-            }
-            else if (args.Action == NotifyCollectionChangedAction.Add)
-            {
-                KämpferIListImKampf.AddRange(args.NewItems.Cast<KämpferInfo>());
-            }
-
-        }
-        public void KämpferImKampf_CollectionChangedExtended(object sender, NotifyCollectionChangedEventArgs args)
-        {
-            if (args.Action == NotifyCollectionChangedAction.Remove)
             {
                 InitiativListe.RemoveAll(mi => args.OldItems.Contains(mi.Manöver.Ausführender));
             }
@@ -534,15 +511,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 InitiativListe.AddRange(args.NewItems.Cast<KämpferInfo>().SelectMany(ki => ki.StandardAktionenSetzen(Kampfrunde)));
             }
-            //InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
-
-            SortedInitiativListe  = InitiativListe != null ?
-                    (Kampfrunde == 0 ?
-                    InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
-                    InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
-                    )
-                    : null;
-            //= InitiativListe.Where(t => t.Kampf.Kampfrunde == AktuelleAktionszeit.Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase); 
+            SortedInitiativListe = InitiativListe != null ?
+                (Kampfrunde == 0 ?
+                InitiativListe.OrderByDescending(t => t.Start.InitiativPhase) :
+                InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
+                )
+                : null;
         }
 
         public void Dispose()
@@ -551,11 +525,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //Alle Gegenerinstanzen löschen
             foreach (var k in KämpferIList.Where(ki => ki.Kämpfer is Model.Gegner).Select(ki => ki.Kämpfer))
             {
+       //         KämpferIListImKampf.Remove(KämpferIListImKampf.FirstOrDefault(t => t.Kämpfer == k));
                 KämpferIList.Remove(k);
             }
 
             KämpferIList.CollectionChanged -= Kämpfer_CollectionChangedExtended;
-            KämpferIListImKampf.CollectionChanged -= Kämpfer_CollectionChangedExtended;
 
             //Alles aus der Ini-Liste löschen damit die Events abgemeldet werden
             while (InitiativListe.Count > 0)
