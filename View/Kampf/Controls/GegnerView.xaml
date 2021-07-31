@@ -187,12 +187,7 @@
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                         </Button>
                         <Label Content="{Binding FilteredGegnerBaseListe.Count, FallbackValue=0}"/>
-                        <Label Content="Gegner" />
-                        <Button Height="23" Width="25" Visibility="{x:Static mg:Global.INTERN_Visibility}" Command="{Binding OnLadeInterneGegnerDaten}" ToolTip="Interne Gegner laden">
-                            <Border Background="DimGray">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" />
-                            </Border>
-                        </Button>
+                        <Label Content="Gegner" />                        
                     </StackPanel>
                 </Grid>
             </Border>
