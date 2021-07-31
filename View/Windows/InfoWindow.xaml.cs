@@ -52,10 +52,7 @@ namespace MeisterGeister.View.Windows
                 // toggle INTERN Modus
                 Global.INTERN = !Global.INTERN;
                 if (Global.INTERN)
-                {
-                    if (View.General.ViewHelper.Confirm("GegnerDaten laden", "Der INTERN Modus wurde aktiviert.\n Sollen die Gegnerdaten geladen werden?\nIm Anschluss das Programm bitte neu starten."))
-                        Daten.DatabaseUpdate.InterneGegnerDatenEinfügen();
-                }
+                    MessageBox.Show("INTERN Modus wurde aktiviert. Bitte neu starten.");
                 else
                     MessageBox.Show("INTERN Modus wurde deaktiviert. Bitte neu starten.");
             }

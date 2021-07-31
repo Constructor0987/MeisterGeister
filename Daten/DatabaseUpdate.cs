@@ -159,37 +159,6 @@ namespace MeisterGeister.Daten
             return String.Format("ALTER TABLE {0} DROP CONSTRAINT {1}", tableName, keyName);
         }
 
-        public static void InterneGegnerDatenEinfügen(string connectionString = null)
-        {
-            if (String.IsNullOrWhiteSpace(connectionString))
-                connectionString = MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString;
-            // Gegnerskript ausführen
-            SqlCeConnection connection = new SqlCeConnection(connectionString);
-            SqlCeTransaction transaction = null;
-            try
-            {
-                connection.Open();
-                transaction = connection.BeginTransaction();
-
-                // lies die Insert-Befehle aus der Resourcen-Datei
-                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/UpdateGegner.sql", UriKind.Relative)).Stream, Encoding.UTF8);
-                string inserts = reader.ReadToEnd();
-                ExecuteSqlCommands(inserts, "UpdateGegner", connection, transaction, false);
-                if (transaction != null)
-                    transaction.Commit();
-            }
-            catch (Exception)
-            {
-                if (transaction != null)
-                    transaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                if (connection != null)
-                    connection.Close();
-            }
-        }
 
         static void HandelsgüterEinfügen(string connectionString)
         {
