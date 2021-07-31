@@ -621,11 +621,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
             KampfWindow.MinWidth = 430 * ScaleKampfGrid;
 
+            var MaxPA = Global.CurrentKampf.Kampf.KämpferIListImKampf.Count() > 0?
+                Global.CurrentKampf.Kampf.KämpferIListImKampf.Max(t => t.Abwehraktionen): 0;
+
             var anzInisInKR = Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde == Global.CurrentKampf.Kampf.Kampfrunde).Count();
-            var width1Ini = (((KampfInfoView)KampfWindow.Content).scrViewer.ExtentWidth /
-                Global.CurrentKampf.Kampf.InitiativListe.Aktionszeiten.Where(kr => kr.Kampfrunde <= Global.CurrentKampf.Kampf.Kampfrunde).Count()) * ScaleKampfGrid;
-            KampfWindow.Width = width1Ini * anzInisInKR + 248 * ScaleKampfGrid;
-            ((KampfInfoView)KampfWindow.Content).scrViewer.ScrollToRightEnd();
+            var width1Ini = 30;
+            int preSpaltenBreite = 220 + MaxPA * 28;
+            KampfWindow.Width = (width1Ini * anzInisInKR + preSpaltenBreite) * ScaleKampfGrid;
+            ((KampfInfoView)KampfWindow.Content).scrViewer.ScrollToLeftEnd();
         }
 
         /// <summary>

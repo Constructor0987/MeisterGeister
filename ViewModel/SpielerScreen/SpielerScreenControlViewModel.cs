@@ -24,6 +24,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         // Felder
         private bool _isInSlideShowAll = true;
+        private bool _isKampfInfoShow = false;
         private string _textToShow = string.Empty;
         private string _bildschirmInfo = "x Bildschirm";
         private string _directoryPath = string.Empty;
@@ -44,6 +45,13 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
+
+        public bool IsKampfInfoShow
+        {
+            get { return _isKampfInfoShow; }
+            set {
+                Set(ref _isKampfInfoShow, value); }
+        }
 
         public bool IsInSlideShowAll
         {
@@ -528,7 +536,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         public void ShowKampf(object sender = null)
         {
-            SpielerWindow.SetKampfInfoView();
+            IsKampfInfoShow = true;
+            SpielerWindow.SetKampfInfoView(SpielerScreen);
             SlideShowStop();
         }
 

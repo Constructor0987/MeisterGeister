@@ -517,6 +517,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 InitiativListe.Where(t => t.AktKampfrunde == Kampfrunde).OrderByDescending(t => t.Start.InitiativPhase)
                 )
                 : null;
+            OnChanged(nameof(KämpferIListImKampf));         
         }
 
         public void Dispose()

@@ -253,12 +253,21 @@ namespace MeisterGeister.View.SpielerScreen
             catch { }
         }
 
-        public static void SetKampfInfoView()
+        public static void SetKampfInfoView(System.Windows.Forms.Screen SpielerScr = null)
         {
             if (Global.CurrentKampf != null)
             {
                 var infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
+
+                infoView.LayoutTransform = new ScaleTransform(2,2);
                 SetContent(infoView);
+                infoView.UpdateLayout();
+                double höheKämpferlist = Global.CurrentKampf.Kampf.KämpferIListImKampf.Count() * 30  +40+50 + 
+                     infoView.grdMain.RowDefinitions[0].ActualHeight;
+                double transFactor = SpielerScr == null? 2: 
+                    Math.Min(2,  SpielerScr.WorkingArea.Height / (höheKämpferlist * 2));
+                if (transFactor < 2)
+                    infoView.LayoutTransform = new ScaleTransform(transFactor, transFactor);
             }
         }
 
