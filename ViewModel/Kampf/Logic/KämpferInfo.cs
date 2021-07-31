@@ -439,6 +439,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     //KampfInfoView komplett neu aufbauen, da ansonsten die Tabelle nicht sauber dargestellt wird
                     Global.CurrentKampf.BodenplanViewModel.KampfWindow.Content = new MeisterGeister.View.Kampf.KampfInfoView(Global.CurrentKampf);
+                    Global.CurrentKampf.BodenplanViewModel.ScaleKampfGrid = Global.CurrentKampf.BodenplanViewModel.ScaleKampfGrid;
                 }
                 
                 this.Kampf.SortedInitiativListe = this.Kampf.InitiativListe != null ?

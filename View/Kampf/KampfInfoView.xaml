@@ -309,6 +309,7 @@
         </Expander>
 
         <Expander
+            x:Name="exKämpferlist"
             Grid.Row="1"
             Margin="5,5,2,0"
             IsExpanded="True">
@@ -321,10 +322,10 @@
                         Text="Initiative-Liste" />
                 </StackPanel>
             </Expander.Header>
-            <Grid>
+            <Grid x:Name="grdKämpferliste">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition x:Name="grdrowKämpferliste" Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
