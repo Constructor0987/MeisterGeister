@@ -2166,6 +2166,12 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="LICENSE.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Resource Include="Fonts\DSA Symbole G&amp;D v1.6.ttf" />
     <None Include="Model\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -3002,7 +3008,8 @@ if not $(ConfigurationName) == Debug (
    mkdir "$(ProjectDir)publish\$(TargetName)\Images\Karten"
    copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)$(TargetFileName).config" "$(ProjectDir)publish\$(TargetName)"
-   copy "$(TargetDir)README.txt" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)README.md" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)LICENSE.md" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Daten\DatabaseDSA_Standard.sdf" "$(ProjectDir)publish\$(TargetName)\Daten"
    copy "$(TargetDir)Daten\meistergeister.kmz" "$(ProjectDir)publish\$(TargetName)\Daten"
    copy "$(TargetDir)Daten\Helden\Demohelden\*.xml" "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden\"
