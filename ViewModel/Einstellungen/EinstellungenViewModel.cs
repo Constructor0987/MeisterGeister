@@ -26,6 +26,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Media.Animation;
 using Q42.HueApi.Models;
+using System.Net;
 
 namespace MeisterGeister.ViewModel.Settings
 {
@@ -1306,6 +1307,11 @@ namespace MeisterGeister.ViewModel.Settings
             {
                 HUEProgress = "Q42Hue attempting to initialize ..";
                 IBridgeLocator locator = new HttpBridgeLocator();
+
+                //muss integriert werden da es nicht ausreicht, dass man nur das neuere .NET Framework verwendet.
+                //Sofern die Software auf älteren Systemen als Windows 10 verwendet wird, muss dies aktiv gesetzt werden
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
 
