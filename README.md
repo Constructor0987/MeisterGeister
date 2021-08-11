@@ -4,11 +4,11 @@
 *                                        *
 *        DSA MeisterGeister              *
 *                                        *
-*         Version 2.4.3.0                *
+*         Version 2.6.0.0                *
 *                                        *
 ******************************************
 
-Copyright © MeisterGeister-Team 2010-2014
+Copyright © MeisterGeister-Team 2010-2021
 http://www.meistergeister.org/
 Kontakt: info@meistergeister.org
 
@@ -62,8 +62,8 @@ Die Datei 'ImpromptuInterface.dll' unterliegt der Apache License (siehe 'License
 Voraussetzungen
 ******************************************
 
-Microsoft .NET Framework 4.5.1
-http://www.microsoft.com/de-de/download/details.aspx?id=40779
+Microsoft .NET Framework 4.5.2
+https://www.microsoft.com/de-DE/download/details.aspx?id=42642
 
 Microsoft SQL Server Compact 4.0 SP1
 http://www.microsoft.com/de-de/download/details.aspx?id=30709
@@ -73,7 +73,8 @@ Windows Media Player ab Version 10 (für Audio-Funktionen).
 Microsoft Access Database Engine 2010 (für Import von Heldenblatt.ch-Dateien)
 http://www.microsoft.com/de-de/download/details.aspx?id=13255
 
-Das .NET Framework ist eine Plattform für Microsoft Windows Betriebssysteme. Unter Linux funktioniert DSA MeisterGeister leider auf absehbare Zeit nicht, da die Linux-Portierung Mono einige zentrale Komponenten nicht unterstützt.
+Das .NET Framework ist eine Plattform für Microsoft Windows Betriebssysteme. 
+Unter Linux funktioniert DSA MeisterGeister leider auf absehbare Zeit nicht, da die Linux-Portierung Mono einige zentrale Komponenten nicht unterstützt.
 
 
 ******************************************
@@ -82,6 +83,6 @@ Installation
 
 Zur Installation muss die ZIP-Datei lediglich nach dem Download entpackt werden. Das Programm kann danach direkt gestartet werden. Eine Installation ist nicht notwendig.
 
-Es ist zu beachten, dass DSA MeisterGeister in einem Verzeichnis mit Schreib-Rechten liegen muss. Unter Windows Vista und Windows 7 führt dies ggf. dazu, dass DSA MeisterGeister nicht funktioniert, wenn es in den "Programme-Ordner" kopiert wird.
+Es ist zu beachten, dass DSA MeisterGeister in einem Verzeichnis mit Schreib-Rechten liegen muss. Unter Windows Vista und Windows 7 oder höher führt dies ggf. dazu, dass DSA MeisterGeister nicht funktioniert, wenn es in den "Programme-Ordner" kopiert wird.
 
 Bei einem Update darf die Datenbank-Datei "Daten\DatabaseDSA.sdf", in der z.B. die Helden gespeichert sind, nicht ausgetauscht werden, da sonst alle gespeicherten Daten verloren gehen. Die Datenbank wird durch die neue Programm-Version ggf. automatisch aktualisert.
