@@ -162,6 +162,9 @@ rfc/
 #Test Access Database
 *.mdb
 
+#FreeFileSync
+*.ffs_db
+
 # Windows Store app package directory
 AppPackages/
 
