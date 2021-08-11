@@ -159,6 +159,9 @@ csx/
 efc/
 rfc/
 
+#Test Access Database
+*.mdb
+
 # Windows Store app package directory
 AppPackages/
 
