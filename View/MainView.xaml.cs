@@ -658,5 +658,10 @@ namespace MeisterGeister.View
 
             lvHUEScenes.SelectedIndex = -1;
         }
+
+        private void _tabControlMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
