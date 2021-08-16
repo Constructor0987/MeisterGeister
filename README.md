@@ -39,10 +39,14 @@ Thomas Stolz von Orkenspalter (http://www.orkenspalter.de) stellt uns den Webspa
 Lizenzhinweise
 ******************************************
 
-MeisterGeister ist ein nicht-kommerzielles Fan-Projekt zum Pen&Paper Rollenspiel "Das Schwarze Auge". Das Programm darf frei verteilt, jedoch nicht verändert werden.
+MeisterGeister ist ein nicht-kommerzielles Fan-Projekt zum Pen&Paper Rollenspiel "Das Schwarze Auge". 
+Seit August 2021 ist das Programm Open-Source. Das Programm darf somit frei kopiert, verändert und verteilt werden.
+(Bitte hieru die 'LICENSE.md' beachten.)
+Wir bitten alle Änderungen mit dem MeisterGeister-Team zu teilen, damit die gesamte Community von der Verbesserungen, Anpassungen und Neuerungen profitieren kann.
 
 Das Urheberrecht der MeisterGeister-Software und des gesamten Quellcodes und allen darin enthaltenen Dateien liegt beim MeisterGeister-Team (falls nicht anders angegeben):
-Projektgründer: Markus Traut / Projektleiter: Jonas Tampier / Entwickler: Markus Traut, Jürgen Bos, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Matthias Egenolf, Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann.
+
+Projektgründer: Markus Traut / Projektleiter: Jürgen Bos / Entwickler: Jürgen Bos / Tester und Datenaufbereitung: Matthias Egenolf / inaktive Projektleiter: Jonas Tampier / inaktive Entwickler: Markus Traut, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann.
 
 Einige Icon-Grafiken wurden uns freundlicherweise vom DereGlobus-Projekts zur Verfügung gestellt. Diese unterliegen der DereGlobus-Lizenz (http://www.dereglobus.org/lizenz).
 
