@@ -130,6 +130,17 @@ namespace MeisterGeister.ViewModel.Kampf
                     FilterListe();
                     OnChanged("AktiveFilter");
                 }
+                //if (value)
+                //{
+                //    GegnerBaseListe.Where(t => t.GegnerBaseGUID.ToString().StartsWith("00000000-0000-0000-006e-00000010")).ToList()
+                //        .ForEach(delegate (GegnerBase gb){
+                //            GegnerBase doubleGB = GegnerBaseListe.FirstOrDefault(g => g.Name == gb.Name && !g.GegnerBaseGUID.ToString().StartsWith("00000000-0000-0000-006e-00000010"));
+                //            if (doubleGB != null)
+                //            {
+                //                Global.ContextHeld.Delete<GegnerBase>(doubleGB);
+                //            }
+                //        });
+                //}
             }
         }
 

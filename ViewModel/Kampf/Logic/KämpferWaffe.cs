@@ -124,6 +124,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public string BildPfad
+        {
+            get
+            {
+                return _waffe.Pfad;
+            }
+        }
+
         public string Bemerkung
         {
             get
@@ -534,6 +542,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 return _waffe.Name;
             }
         }
+        public string BildPfad
+        {
+            get
+            {
+                return _waffe.Pfad;
+            }
+        }
 
         public int TPWürfel
         {
@@ -683,6 +698,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 return _schild.Name;
             }
         }
+
 
         public string Bemerkung
         {

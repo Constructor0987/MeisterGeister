@@ -1124,6 +1124,19 @@ namespace MeisterGeister.ViewModel.Inventar
             }
         }
 
+        public string Bild
+        {
+            get 
+            { 
+                if (entityI != null && entityI.HandelsgutGUID != null)
+                {
+                    Handelsgut h = Global.ContextHandelsgut.HandelsgüterListe.FirstOrDefault(t => t.HandelsgutGUID == entityI.HandelsgutGUID);
+                    if (h != null)
+                        return h.Pfad;
+                }
+                return null;
+            }
+        }
 
         #endregion
 

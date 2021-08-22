@@ -373,7 +373,21 @@
                                 <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HeaderTemplate="{StaticResource angelegtTemplate}" />
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
-                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Waffe.Pfad, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding Waffe.Pfad}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Width="70" Header="TP" CellTemplate="{StaticResource tpTemplate}" CellEditingTemplate="{StaticResource tpEditTemplate}"/>
                                 <DataGridTextColumn Width="50" Header="TP/KK" IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
@@ -458,7 +472,21 @@
                                 <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
-                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Fernkampfwaffe.Pfad, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding Fernkampfwaffe.Pfad}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Width="70" Header="TP" CellTemplate="{StaticResource tpFernkampfTemplate}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="120" Header="Reichweiten" Binding="{Binding Fernkampfwaffe.Reichweiten}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="80" Header="TP+" Binding="{Binding Fernkampfwaffe.TPReichweiten}"  IsReadOnly="True"/>
@@ -563,7 +591,21 @@
                                 <DataGridCheckBoxColumn Width="30" Binding="{Binding Angelegt, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  HeaderTemplate="{StaticResource angelegtTemplate}"/>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding Ausrüstung.Gewicht}" IsReadOnly="True"/>
-                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Schild.Pfad, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding Schild.Pfad}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Width="50" Header="Größe" Binding="{Binding Schild.Größe}" IsReadOnly="True"/>
                                 <DataGridTemplateColumn Width="30" Header="WM" CellTemplate="{StaticResource wmSchildTemplate}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="30" Header="INI" Binding="{Binding Schild.INI}"/>
@@ -633,7 +675,21 @@
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Rüstung.Pfad, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding Rüstung.Pfad}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Width="30" Header="RS" Binding="{Binding Rüstung.RS}" IsReadOnly="True"/>
                                 <DataGridTextColumn Width="30" Header="BE" Binding="{Binding Rüstung.BE}" IsReadOnly="True"/>
                             </DataGrid.Columns>
@@ -700,7 +756,10 @@
                                 ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}" CanUserAddRows="False" Margin="0,5,0,0">
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Als sonstigen Gegenstand definieren" VerticalContentAlignment="Center" Command="{Binding OnSetAsSonstiges}">
+                                    <MenuItem VerticalContentAlignment="Center" Command="{Binding OnSetAsSonstiges}">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Als sonstigen Gegenstand definieren" VerticalAlignment="Center"/>
+                                        </MenuItem.Header>
                                         <MenuItem.Icon>
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="20"/>
                                         </MenuItem.Icon>
@@ -718,7 +777,21 @@
                                 <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityHI.Inventar.Gewicht}" IsReadOnly="False"/>
-                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityHI.Inventar.Name}"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityHI.Inventar.Name}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Bild, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding Bild}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -780,7 +853,10 @@
                             ViewGeneral:UIElementBehavior.ScrollViewer="{Binding ElementName=scrollViewer}">
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Als sonstige Kleidung definieren" VerticalContentAlignment="Center" Command="{Binding OnSetAsKleidung}">
+                                    <MenuItem VerticalContentAlignment="Center" Command="{Binding OnSetAsKleidung}">
+                                        <MenuItem.Header>
+                                            <TextBlock Text="Als sonstige Kleidung definieren" VerticalAlignment="Center"/>
+                                        </MenuItem.Header>
                                         <MenuItem.Icon>
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" Height="20"/>
                                         </MenuItem.Icon>
@@ -791,7 +867,21 @@
                                 <DataGridTextColumn Width="55" Header="Anzahl" Binding="{Binding EntityHI.Anzahl}"/>
                                 <DataGridTemplateColumn Width="100" Header="Trageort" CellTemplate="{StaticResource trageortTemplate}" CellEditingTemplate="{StaticResource trageortEditTemplate}"/>
                                 <DataGridTextColumn Width="55" Header="Gewicht" Binding="{Binding EntityI.Gewicht}" IsReadOnly="False"/>
-                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="False"/>
+                                <DataGridTextColumn Width="*" Header="Name" Binding="{Binding EntityI.Name}" IsReadOnly="False">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Bild, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding Bild}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn MinWidth="30" CellTemplate="{StaticResource removeButton}"/>
                             </DataGrid.Columns>
                         </DataGrid>

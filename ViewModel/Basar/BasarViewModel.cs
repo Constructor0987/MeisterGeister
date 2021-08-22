@@ -7,7 +7,10 @@ using MeisterGeister.ViewModel.Basar.Logic;
 using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
+using MeisterGeister.ViewModel.SpielerScreen;
 using MeisterGeister.Logic.Umrechner;
+using MeisterGeister.View.General;
+using MeisterGeister.View.SpielerScreen;
 
 namespace MeisterGeister.ViewModel.Basar
 {
@@ -37,6 +40,37 @@ namespace MeisterGeister.ViewModel.Basar
 
         //Commands
         private Base.CommandBase _onGoToBugForum;
+        private Base.CommandBase _onBtnChangeItemPicture;
+
+
+        private List<System.Windows.Forms.Screen> _screenList = System.Windows.Forms.Screen.AllScreens.ToList();
+        public List<System.Windows.Forms.Screen> ScreenList
+        {
+            get { return _screenList; }
+        }
+
+        private System.Windows.Forms.Screen _spielerScreen = null;
+        public System.Windows.Forms.Screen SpielerScreen
+        {
+            get
+            {
+                if (_spielerScreen == null)
+                {
+                    if (ScreenList.Count <= 1)
+                        _spielerScreen = ScreenList.FirstOrDefault();
+                    else
+                    {
+                        foreach (System.Windows.Forms.Screen objActualScreen in ScreenList)
+                        {
+                            if (!objActualScreen.Primary)
+                                _spielerScreen = objActualScreen;
+                        }
+                    }
+                }
+                return _spielerScreen;
+            }
+        }
+
 
         #endregion
 
@@ -262,6 +296,11 @@ namespace MeisterGeister.ViewModel.Basar
             get { return _onGoToBugForum; }
         }
 
+        public Base.CommandBase OnBtnChangeItemPicture
+        {
+            get { return _onBtnChangeItemPicture; }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -272,6 +311,7 @@ namespace MeisterGeister.ViewModel.Basar
             : base(popup, showError)
         {
             _onGoToBugForum = new Base.CommandBase(GoToBugForum, null);
+            _onBtnChangeItemPicture = new Base.CommandBase(ChangeItemPicture, null);
 
             Init();
         }
@@ -305,7 +345,6 @@ namespace MeisterGeister.ViewModel.Basar
             SchildListe = Global.ContextInventar == null ? new List<Model.Schild>() : Global.ContextInventar.SchildListe;
             RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.RuestungListe;
             Währungen = new Währung();
-
             FillBasarListe();
         }
 
@@ -495,11 +534,49 @@ namespace MeisterGeister.ViewModel.Basar
 
         #region //---- EVENTS ----
 
+        void ChangeItemPicture(object sender)
+        {
+            Logic.BasarItem bi = sender as Logic.BasarItem;
+            if (bi != null)
+            {
+                string oldPfad = bi.Item.Pfad;
+                string newPfad = ViewHelper.ChooseFile("Wähle ein Bild", oldPfad ?? "", false,
+                    new string[] { "bmp", "gif", "jpg", "jpeg", "jpe", "jtif", "png", "tif", "tiff" });
+                if (bi.Item is Model.Handelsgut)
+                {
+                    (bi.Item as Model.Handelsgut).Pfad = string.IsNullOrEmpty(newPfad) ? null : newPfad;
+                    Global.ContextHandelsgut.Update<Model.Handelsgut>(bi.Item as Model.Handelsgut);
+                }
+                else
+                if (bi.Item is Model.Waffe)
+                {
+                    (bi.Item as Model.Waffe).Pfad = string.IsNullOrEmpty(newPfad) ? null : newPfad;
+                    Global.ContextHandelsgut.Update<Model.Waffe>(bi.Item as Model.Waffe);
+                }
+                else
+                if (bi.Item is Model.Fernkampfwaffe)
+                {
+                    (bi.Item as Model.Fernkampfwaffe).Pfad = string.IsNullOrEmpty(newPfad) ? null : newPfad;
+                    Global.ContextHandelsgut.Update<Model.Fernkampfwaffe>(bi.Item as Model.Fernkampfwaffe);
+                }
+                else
+                if (bi.Item is Model.Schild)
+                {
+                    (bi.Item as Model.Schild).Pfad = string.IsNullOrEmpty(newPfad) ? null : newPfad;
+                    Global.ContextHandelsgut.Update<Model.Schild>(bi.Item as Model.Schild);
+                }
+                else
+                if (bi.Item is Model.Rüstung)
+                {
+                    (bi.Item as Model.Rüstung).Pfad = string.IsNullOrEmpty(newPfad) ? null : newPfad;
+                    Global.ContextHandelsgut.Update<Model.Rüstung>(bi.Item as Model.Rüstung);
+                }
+            }
+        }
         void SelectedHeldChanged(object sender, EventArgs e)
         {
             SelectedHeld = Global.SelectedHeld;
         }
-
         void GoToBugForum(object sender)
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://forum.meistergeister.org/showthread.php?tid=191"));

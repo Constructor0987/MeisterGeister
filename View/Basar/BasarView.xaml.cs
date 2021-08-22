@@ -27,7 +27,6 @@ namespace MeisterGeister.View.Basar
         public BasarView()
         {
             InitializeComponent();
-            //VM = new VM.BasarViewModel(ViewHelper.Popup, ViewHelper.ShowError);
         }
 
         /// <summary>
@@ -48,6 +47,17 @@ namespace MeisterGeister.View.Basar
         {
             if (VM != null)
                 VM.Refresh();
-        }       
+        }
+
+        private void ShowBildInSpielerScreen_Click(object sender, RoutedEventArgs e)
+        {
+            VM.Logic.BasarItem bi = ((MenuItem)sender).Tag as VM.Logic.BasarItem;
+            if (bi != null && bi.Item.Pfad != null)
+            {
+                bool doStrech = true;
+                SpielerScreen.SpielerWindow.SetImage(bi.Item.Pfad, (doStrech == true) ? Stretch.Uniform : Stretch.None);
+                //SpielerScreen.SpielerWindow.SlideShowStop();
+            }
+        }
     }
 }

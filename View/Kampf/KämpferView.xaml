@@ -243,7 +243,21 @@
                         </StackPanel.Resources>
                         <DataGrid ItemsSource="{Binding Path=Nahkampfwaffen, IsAsync=True}" IsReadOnly="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Waffe" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Waffe" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding BildPfad, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding BildPfad}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>                                    
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn>
                                     <DataGridTemplateColumn.Header>
                                         <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" />
@@ -291,7 +305,21 @@
 
                         <DataGrid ItemsSource="{Binding Path=Fernkampfwaffen, IsAsync=True}" IsReadOnly="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Waffe" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Waffe" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding BildPfad, FallbackValue={x:Null}, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                    <Setter Property="ToolTip" >
+                                                        <Setter.Value >
+                                                            <Image Source="{Binding BildPfad}" Height="100" Width="100" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn>
                                     <DataGridTemplateColumn.Header>
                                         <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" />

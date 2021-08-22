@@ -254,8 +254,9 @@ namespace MeisterGeister.ViewModel.Helden
                 SelectedHeld = null;
                 SelectedHeld = h;
 
-                // Liste aktualisieren!
-                heldListe = null;
+                MainViewModel.Instance.SelectedHeld = h;
+                    // Liste aktualisieren!
+                    heldListe = null;
                 OnChanged(nameof(HeldListe));
 
                 MainViewModel.Instance.InvalidateHelden();
@@ -391,10 +392,25 @@ namespace MeisterGeister.ViewModel.Helden
             if (overwrite)
             {
                 MainViewModel.Instance.Helden.Add(importHeld);
-            }
-                
-            HeldListe.Refresh();
+            MainViewModel.Instance.HeldenGruppe.Refresh();
+            SortHeldListe();
+            // check überschreiben
+            if (existing != null && Global.ContextHeld.Liste<Held>().FirstOrDefault(t => t.Name == existing.Name) != null)
+            {
+                MainViewModel.Instance.Helden.Remove(MainViewModel.Instance.Helden.FirstOrDefault(t => t.Name == existing.Name));
+                HeldListe.Refresh();
+                MainViewModel.Instance.HeldenGruppe.Refresh();
 
+                if (!Global.ContextHeld.Delete<Held>(existing))
+                    Global.ContextHeld.Delete<Held>((Held)(MainViewModel.Instance.HeldenGruppe).CurrentItem);
+
+                if (!Global.ContextHeld.Insert<Held>(importHeld))
+                    Global.ContextHeld.Update<Held>(importHeld);
+            }
+            }
+            //Liste aktualisieren
+            MainViewModel.Instance.Helden.Add(importHeld);
+            HeldListe.Refresh();
             MainViewModel.Instance.HeldenGruppe.Refresh();
             SortHeldListe();
           //  importHeld.UpdateLists;
