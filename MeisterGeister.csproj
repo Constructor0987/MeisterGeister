@@ -2839,6 +2839,8 @@
     <Resource Include="Images\Icons\Netzwerk.png" />
     <Resource Include="Images\Icons\network.png" />
     <Resource Include="Images\Bodenplan\TurnMarker.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0133.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0134.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Resource Include="Images\Icons\General\loading.png" />
     <Content Include="Libs\ArtefaktGenerator.dll" />

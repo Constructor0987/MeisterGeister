@@ -17,6 +17,8 @@ namespace MeisterGeister.ViewModel.Basar.Logic
 
         double? Gewicht { get; }
 
+        string Pfad { get; }
+
         // Mengeneinheit
         string ME { get; }
         

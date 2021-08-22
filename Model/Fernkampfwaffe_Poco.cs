@@ -363,6 +363,18 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<int> _laden;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Pfad
+        {
+            get { return _pfad; }
+            set
+    		{ 
+    			Set(ref _pfad, value);
+    		}
+    
+        }
+        private string _pfad;
 
         #endregion
 

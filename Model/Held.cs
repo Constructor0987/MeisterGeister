@@ -3406,14 +3406,29 @@ namespace MeisterGeister.Model
                 //TODO: Cache?
                 //alle Waffen
                 var waffen = new List<KämpferNahkampfwaffe>();
-                waffen.AddRange(Held_Ausrüstung
-                    .Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null)
-                    .Select(ha => new KämpferNahkampfwaffe(ha)));
-                //Raufen, Ringen
-                var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent(Talente.Raufen, false, out var taw));
-                waffen.Add(raufen);
-                var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent(Talente.Raufen, false, out taw));
-                waffen.Add(ringen);
+                try
+                {
+                    waffen.AddRange(Held_Ausrüstung
+                        .Where(ha => ha.Angelegt && ha.Ausrüstung.Waffe != null)
+                        .Select(ha => new KämpferNahkampfwaffe(ha)));                   
+                }
+                catch (Exception ex)
+                {
+                    //Raufen, Ringen
+                    var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent(Talente.Raufen, false, out var taw));
+                    waffen.Add(raufen);
+                    var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent(Talente.Raufen, false, out taw));
+                    waffen.Add(ringen);
+                    return waffen;
+                }
+                finally
+                {
+                    //Raufen, Ringen
+                    var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent(Talente.Raufen, false, out var taw));
+                    waffen.Add(raufen);
+                    var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent(Talente.Raufen, false, out taw));
+                    waffen.Add(ringen);
+                }
                 return waffen;
             }
         }
@@ -4008,136 +4023,144 @@ namespace MeisterGeister.Model
                 ha.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == ha.TrageortGUID).FirstOrDefault();
             }
 
-            if (a.Waffe != null || a.Schild != null)
+            try
             {
-                var bfa = new Held_BFAusrüstung();
-                if (!detached)
+                if (a.Waffe != null || a.Schild != null)
                 {
-                    bfa = Global.ContextHeld.New<Held_BFAusrüstung>();
+                    var bfa = new Held_BFAusrüstung();
+                    if (!detached)
+                    {
+                        bfa = Global.ContextHeld.New<Held_BFAusrüstung>();
+                    }
+
+                    bfa.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
+                    var bf = 0;
+                    if (a.Waffe != null)
+                    {
+                        var hw = new Held_Waffe();
+                        if (!detached)
+                        {
+                            hw = Global.ContextHeld.New<Held_Waffe>();
+                        }
+
+                        hw.WaffeGUID = a.Waffe.WaffeGUID;
+                        if (!detached)
+                        {
+                            hw.Waffe = a.Waffe;
+                        }
+
+                        hw.TPBonus = a.Waffe.TPBonus;
+                        hw.WMAT = a.Waffe.WMAT ?? 0;
+                        hw.WMPA = a.Waffe.WMPA ?? 0;
+                        hw.INI = a.Waffe.INI ?? 0;
+                        bf = a.Waffe.BF ?? 0;
+                        Talent t = Held_Waffe.GetBestesTalent(this, a.Waffe);
+                        if (t != null)
+                        {
+                            hw.TalentGUID = t.TalentGUID;
+                        }
+
+                        if (!detached)
+                        {
+                            hw.Talent = t;
+                        }
+
+                        hw.HeldAusrüstungGUID = bfa.HeldAusrüstungGUID;
+                        bfa.Held_Waffe = hw;
+                    }
+                    if (a.Schild != null)
+                    {
+                        bf = a.Schild.BF;
+                        if (!detached)
+                        {
+                            bfa.Schild = a.Schild;
+                        }
+                        else
+                        {
+                            var s = new Schild
+                            {
+                                SchildGUID = a.Schild.SchildGUID
+                            };
+                            bfa.Schild = s;
+                        }
+                    }
+                    bfa.StartBF = bfa.BF = bf;
+                    ha.Held_BFAusrüstung = bfa;
                 }
-
-                bfa.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
-                var bf = 0;
-                if (a.Waffe != null)
+                if (a.Fernkampfwaffe != null)
                 {
-                    var hw = new Held_Waffe();
+                    var hf = new Held_Fernkampfwaffe();
                     if (!detached)
                     {
-                        hw = Global.ContextHeld.New<Held_Waffe>();
+                        hf = Global.ContextHeld.New<Held_Fernkampfwaffe>();
                     }
 
-                    hw.WaffeGUID = a.Waffe.WaffeGUID;
+                    hf.FernkampfwaffeGUID = a.Fernkampfwaffe.FernkampfwaffeGUID;
                     if (!detached)
                     {
-                        hw.Waffe = a.Waffe;
+                        hf.Fernkampfwaffe = a.Fernkampfwaffe;
                     }
 
-                    hw.TPBonus = a.Waffe.TPBonus;
-                    hw.WMAT = a.Waffe.WMAT ?? 0;
-                    hw.WMPA = a.Waffe.WMPA ?? 0;
-                    hw.INI = a.Waffe.INI ?? 0;
-                    bf = a.Waffe.BF ?? 0;
-                    Talent t = Held_Waffe.GetBestesTalent(this, a.Waffe);
+                    Talent t = Held_Fernkampfwaffe.GetBestesTalent(this, a.Fernkampfwaffe);
                     if (t != null)
                     {
-                        hw.TalentGUID = t.TalentGUID;
+                        hf.TalentGUID = t.TalentGUID;
                     }
 
                     if (!detached)
                     {
-                        hw.Talent = t;
+                        hf.Talent = t;
                     }
 
-                    hw.HeldAusrüstungGUID = bfa.HeldAusrüstungGUID;
-                    bfa.Held_Waffe = hw;
-                }
-                if (a.Schild != null)
-                {
-                    bf = a.Schild.BF;
-                    if (!detached)
+                    if (a.Fernkampfwaffe.Ausrüstung.Bemerkung != null && a.Fernkampfwaffe.Ausrüstung.Bemerkung.Length > 17)
                     {
-                        bfa.Schild = a.Schild;
+                        int fkLeichter = 0;
+                        if (int.TryParse(a.Fernkampfwaffe.Ausrüstung.Bemerkung.Substring(17, 1), out fkLeichter))
+                            hf.FKErleichterung = fkLeichter;
+                        else
+                            hf.FKErleichterung = 0;
                     }
-                    else
-                    {
-                        var s = new Schild
-                        {
-                            SchildGUID = a.Schild.SchildGUID
-                        };
-                        bfa.Schild = s;
-                    }
-                }
-                bfa.StartBF = bfa.BF = bf;
-                ha.Held_BFAusrüstung = bfa;
-            }
-            if (a.Fernkampfwaffe != null)
-            {
-                var hf = new Held_Fernkampfwaffe();
-                if (!detached)
-                {
-                    hf = Global.ContextHeld.New<Held_Fernkampfwaffe>();
-                }
-
-                hf.FernkampfwaffeGUID = a.Fernkampfwaffe.FernkampfwaffeGUID;
-                if (!detached)
-                {
-                    hf.Fernkampfwaffe = a.Fernkampfwaffe;
-                }
-
-                Talent t = Held_Fernkampfwaffe.GetBestesTalent(this, a.Fernkampfwaffe);
-                if (t != null)
-                {
-                    hf.TalentGUID = t.TalentGUID;
-                }
-
-                if (!detached)
-                {
-                    hf.Talent = t;
-                }
-
-                if (a.Fernkampfwaffe.Ausrüstung.Bemerkung != null && a.Fernkampfwaffe.Ausrüstung.Bemerkung.Length > 17)
-                {
-                    int fkLeichter = 0;
-                    if (int.TryParse(a.Fernkampfwaffe.Ausrüstung.Bemerkung.Substring(17, 1), out fkLeichter))
-                        hf.FKErleichterung = fkLeichter;
                     else
                         hf.FKErleichterung = 0;
-                }
-                else
-                    hf.FKErleichterung = 0;
 
-                if (a.Fernkampfwaffe.Ausrüstung.Bemerkung != null && a.Fernkampfwaffe.Ausrüstung.Bemerkung.Contains("KK-Erleichterung"))
-                    hf.KKErleichterung = true;
-                else
-                    hf.KKErleichterung = false;
-                hf.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
-                ha.Held_Fernkampfwaffe = hf;
+                    if (a.Fernkampfwaffe.Ausrüstung.Bemerkung != null && a.Fernkampfwaffe.Ausrüstung.Bemerkung.Contains("KK-Erleichterung"))
+                        hf.KKErleichterung = true;
+                    else
+                        hf.KKErleichterung = false;
+                    hf.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
+                    ha.Held_Fernkampfwaffe = hf;
+                }
+                if (a.Rüstung != null)
+                {
+                    var hr = new Held_Rüstung();
+                    if (!detached)
+                    {
+                        hr = Global.ContextHeld.New<Held_Rüstung>();
+                    }
+
+                    hr.RüstungGUID = a.Rüstung.RüstungGUID;
+                    if (!detached)
+                    {
+                        hr.Rüstung = a.Rüstung;
+                    }
+
+                    var struktur = (a.Rüstung.RS ?? 0) * 10; //ohne zonen
+                    if (E.RSBerechnung >= 2)
+                    {
+                        struktur = (int)Math.Ceiling((a.Rüstung.gRS ?? 0) * 10); //Trefferzonenmodell
+                    }
+
+                    hr.StartStrukturpunkte = hr.Strukturpunkte = struktur;
+                    hr.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
+                    ha.Held_Rüstung = hr;
+                }
             }
-            if (a.Rüstung != null)
+            catch (Exception ex)
+            { }
+            finally
             {
-                var hr = new Held_Rüstung();
-                if (!detached)
-                {
-                    hr = Global.ContextHeld.New<Held_Rüstung>();
-                }
-
-                hr.RüstungGUID = a.Rüstung.RüstungGUID;
-                if (!detached)
-                {
-                    hr.Rüstung = a.Rüstung;
-                }
-
-                var struktur = (a.Rüstung.RS ?? 0) * 10; //ohne zonen
-                if (E.RSBerechnung >= 2)
-                {
-                    struktur = (int)Math.Ceiling((a.Rüstung.gRS ?? 0) * 10); //Trefferzonenmodell
-                }
-
-                hr.StartStrukturpunkte = hr.Strukturpunkte = struktur;
-                hr.HeldAusrüstungGUID = ha.HeldAusrüstungGUID;
-                ha.Held_Rüstung = hr;
+                Held_Ausrüstung.Add(ha);
             }
-            Held_Ausrüstung.Add(ha);
             return ha;
         }
 

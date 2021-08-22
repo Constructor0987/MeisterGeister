@@ -27,7 +27,8 @@
                         <GradientStop Color="#FFFFFFC7" Offset="1" />
                     </LinearGradientBrush>
                 </Border.Background>
-                <StackPanel>
+                <Grid>
+                    <StackPanel Margin="65,0,0,0">
                     <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
                         <TextBlock Margin="2,2,0,0" Width="250" FontWeight="Bold" Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" />
                         <TextBlock Margin="2,2,0,0" Width="260" Text="{Binding Path=Kategorie}" ToolTip="Kategorie (Mit Doppel-Klick filtern)" VerticalAlignment="Center" TextWrapping="WrapWithOverflow">
@@ -62,7 +63,7 @@
                             <Image.Style>
                                 <Style TargetType="Image">
                                     <Setter Property="Height" Value="20" />
-                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Logos/pinnadel.png" />   
+                                    <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Logos/pinnadel.png" />
                                     <Setter Property="ToolTip">
                                         <Setter.Value>
                                             <StackPanel Orientation="Horizontal">
@@ -73,7 +74,7 @@
                                     </Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding VerbreitungsRegion}" Value="Überregional">
-                                            <Setter Property="Height" Value="28" />    
+                                            <Setter Property="Height" Value="28" />
                                             <Setter Property="Source" Value="/DSA MeisterGeister;component/Images/Icons/Aventurien_icon.png" />
                                             <Setter Property="ToolTip" Value="In ganz Aventurien verfügbar" />
                                         </DataTrigger>
@@ -97,7 +98,34 @@
                         </Border.Background>
                         <TextBlock Padding="4" FontSize="11" FontStyle="Italic" Text="{Binding Path=Bemerkung}" TextWrapping="WrapWithOverflow" />
                     </Border>
-                </StackPanel>
+                    </StackPanel>
+                    <Button Width="60" Height="60" HorizontalAlignment="Left" Background="Transparent"
+                            Command="{Binding DataContext.OnBtnChangeItemPicture, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                            CommandParameter="{Binding}" Focusable="False" >
+                        <Button.ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="Klicken um ein Bild zu ändern/festzulegen" />
+                                <TextBlock Text="Rechtsklick für weitere Funktionen" />
+                            </StackPanel>
+                        </Button.ToolTip>
+                        <Image Source="{Binding Path=Item.Pfad,UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" Margin="-2" />
+                        <Button.ContextMenu>
+                            <ContextMenu >
+                                <MenuItem Click="ShowBildInSpielerScreen_Click" Tag="{Binding}">
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Auf dem SpielerInfo Bildschirm zeigen" VerticalAlignment="Center"/>
+                                    </MenuItem.Header>
+                                    <MenuItem.Icon>
+                                        <Grid Width="25" Height="25">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Margin="4,4,4,8" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu> 
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
             </Border>
         </DataTemplate>
     </UserControl.Resources>
@@ -157,11 +185,8 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Image.Style>
-
                                 </Image>
                             </Grid>
-
-
                         </ToggleButton.Content>
                     </ToggleButton>
 
@@ -190,7 +215,7 @@
         <Grid Grid.Row="2">
             <TextBlock Height="23" Margin="18,0,0,0" HorizontalAlignment="Left" Text="{Binding ElementName=_listBoxWare, Path=ItemsSource.Count, StringFormat='{}{0} Handelsgüter'}" />
             <TextBlock Height="23" Margin="18,0" HorizontalAlignment="Right" ToolTip="Melde fehlerhafte Daten in unserem Forum...">
-                <Hyperlink Command="{Binding OnGoToBugForum}">
+                <Hyperlink Command="{Binding XPath=OnGoToBugForum}">
                     Fehler in den Basar-Daten melden...
                 </Hyperlink>
             </TextBlock>

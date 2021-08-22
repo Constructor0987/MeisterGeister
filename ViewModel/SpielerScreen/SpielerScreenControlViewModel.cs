@@ -510,7 +510,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         private void OpenImage(object sender = null)
         {
-            string pfad = ChooseFile("Bild auswähllen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
+            string pfad = ChooseFile("Bild auswählen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
             if (!String.IsNullOrEmpty(pfad))
                 SelectedImagePath = pfad;
         }
