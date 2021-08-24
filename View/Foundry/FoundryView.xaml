@@ -173,10 +173,8 @@
                                             ToolTip="Alle Standard-Pfad werden durch den angegebenen Foundry-Pfad ersetzt ">
                                     <ListBox ItemsSource="{Binding stdPfad}" IsEnabled="False" Width="300" VerticalAlignment="Center" MaxHeight="80" />
                                     <Label Content="=>" VerticalAlignment="Center" />
-                                    <Label Content="{Binding FoundryPfad}" Padding="0" VerticalAlignment="Center" />
-                                    <Label Content="{Binding SelectedWorld}" Padding="0" VerticalAlignment="Center" />
-                                    <Label Content="/" VerticalAlignment="Center" Padding="0,0,5,0" />
-                                    <TextBox Text="{Binding MusikPfad}" Width="205" VerticalAlignment="Center"/>
+                                    <Label Content="{Binding FoundryPfad}" Padding="0,0,5,0" VerticalAlignment="Center" />
+                                    <TextBox Text="{Binding MusikPfad}" Width="405" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
                                 <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
