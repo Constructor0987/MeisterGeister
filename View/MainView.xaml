@@ -59,6 +59,7 @@
                 </StackPanel.InputBindings>
             </StackPanel>
         </DataTemplate>
+        <ViewGeneral:HUELampsInfoConverter x:Key="HUELampsInfoConverter1"/>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <Style x:Key="ImageEnabled" TargetType="Image">
@@ -671,7 +672,17 @@
                                 <ListView x:Name="lvHUEScenes" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,25,0,5" FontSize="10" VerticalAlignment="Top" MaxHeight="150"
                                       ItemsSource="{Binding lstHUEScenes, UpdateSourceTrigger=PropertyChanged}" 
                                           ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                      DisplayMemberPath="Name" SelectionChanged="lvHUEScenen_SelectionChanged" />
+                                       SelectionChanged="lvHUEScenen_SelectionChanged" >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate DataType="ListViewItem">
+                                            <TextBlock Text="{Binding Name}" >
+                                                <TextBlock.ToolTip>
+                                                    <TextBlock Text="{Binding Name, Converter={StaticResource HUELampsInfoConverter1}}" />
+                                                </TextBlock.ToolTip>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </Grid>
                         </Border>
                     </Grid>

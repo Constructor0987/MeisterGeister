@@ -20,6 +20,7 @@
             </Style.Resources>
         </Style>
 
+        <ViewGeneral:HUELampsInfoConverter x:Key="HUELampsInfoConverter1"/>
         <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
         <vmAudioPlayer:MultiBooleanORConverter x:Key="MultiBooleanORConverter1" />
         <vmAudioPlayer:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
@@ -907,8 +908,17 @@
                                             <ComboBox ItemsSource="{Binding lstHUEScenes, UpdateSourceTrigger=PropertyChanged}" 
                                                       SelectedItem="{Binding HUESceneSelected, UpdateSourceTrigger=PropertyChanged}"
                                                       Height="25"
-                                                      Margin="65,0,0,0"
-                                                      DisplayMemberPath="Name"/>
+                                                      Margin="65,0,0,0" >
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate DataType="ComboBoxItem">
+                                                        <TextBlock Text="{Binding Name}" >
+                                                            <TextBlock.ToolTip>
+                                                                <TextBlock Text="{Binding Name, Converter={StaticResource HUELampsInfoConverter1}}" />
+                                                            </TextBlock.ToolTip>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
                                             <Button Grid.Column="1" 
                                                     Margin="2" 
                                                     Width="25"
