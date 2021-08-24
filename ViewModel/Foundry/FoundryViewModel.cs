@@ -137,7 +137,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
         #region //---- FTP ----
 
-        private string _ftpAdresse = "ftp://195.114.11.154:21";
+        private string _ftpAdresse = "ftp://1.2.3.4:21";
         public string FTPAdresse
         {
             get { return _ftpAdresse; }
@@ -148,7 +148,7 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
-        private string _ftpUser = "juergen";
+        private string _ftpUser = "user";
         public string FTPUser
         {
             get { return _ftpUser; }
@@ -159,7 +159,7 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
-        private string _ftpPasswort = "FoundryVTT2021";
+        private string _ftpPasswort = "passwort";
         public string FTPPasswort
         {
             get { return _ftpPasswort; }
@@ -191,7 +191,7 @@ namespace MeisterGeister.ViewModel.Foundry
         private void FTPConfig(object sender)
         {
             string back = ViewHelper.InputDialog("FTP-Adresse", "Gebe die FTP-Adresse zu dem Server ein\n\nBeispiel Lokal:      " + @"C:\FoundryVTT            " +
-                "\nBeispiel Server:    ftp://195.114.11.154:21/", FTPAdresse);
+                "\nBeispiel Server:    ftp://1.2.3.4:21/", FTPAdresse);
             if (!string.IsNullOrEmpty(back))
                 FTPAdresse = back;
             back = ViewHelper.InputDialog("FTP-User", "Gebe den FTP-Usernamen zu dem Server ein", FTPUser);
@@ -670,17 +670,6 @@ namespace MeisterGeister.ViewModel.Foundry
         {
             get { return _portNo; }
             set { Set(ref _portNo, value); }
-        }
-
-        private CefSharp.Wpf.ChromiumWebBrowser _cWebBrowser = new CefSharp.Wpf.ChromiumWebBrowser();
-        public CefSharp.Wpf.ChromiumWebBrowser cWebBrowser
-        {
-            get { return _cWebBrowser; }
-            set
-            {
-                Set(ref _cWebBrowser, value);
-                cWebBrowser.Address = LocalUri;
-            }
         }
 
         private string _localUri = "http://192.168.178.181:30000/";
@@ -2554,38 +2543,6 @@ namespace MeisterGeister.ViewModel.Foundry
                 { outc += arg.Prefix + arg.ArgString + arg.Suffix; }
                 lstWaffenArgument.Add(new GegenstandArgument() { name = wname, lstArguments = lstArg, outcome = outc });
             }
-
-            /*
-            {
-            "_id":"izjsgG8kF5KhV2cu",
-            "name":"Säbel (5/3)",
-            "permission":{"default":0,"hFA4LmVDgAz6jW3o":3,"gNZOk6idrMy6uSkk":3},
-            "type":"meleeweapon",
-            "data":{
-            "price":{"value":180},
-            "quantity":{"value":1},
-            "weight":{"value":0.75},
-            "effect":{"value":""},
-            "description":{"value":"<p>Waffenvorteil: Von einem Reittier aus geführt, bekommt der Träger des Säbels einen Bonus von +1 TP.</p><p>Waffennachteil: Gegen Rüstungen mit RS 4 oder höher richtet die Waffe –1 TP an.</p>"},
-            "gmdescription":{"value":""},
-            "damage":{"value":"1W6+3"},
-            "atmod":{"value":5,"offhandMod":0},
-            "pamod":{"value":3,"offhandMod":0},
-            "reach":{"value":"medium"},
-            "damageThreshold":{"value":15},
-            "guidevalue":{"value":"ge/kk"},
-            "combatskill":{"value":"Säbel"},
-            "worn":{"value":false,"offhand":false},
-            "structure":{"max":0,"value":0}
-            },
-            "folder":null,
-            "sort":500001,
-            "flags":{"exportSource":{"world":"juergen-dsa-1","system":"dsa5","coreVersion":"0.7.9","systemVersion":"1.1.3"}},
-            "img":"modules/dsa5-core/icons/meleeweapon/Saebel.webp",
-            "effects":[]
-            }
-            */
-
         }
 
         public void GetHeldenData()

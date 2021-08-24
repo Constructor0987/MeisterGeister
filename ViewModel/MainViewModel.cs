@@ -36,13 +36,12 @@ using System.Windows.Threading;
 using Q42.HueApi.Models.Groups;
 using Q42.HueApi.Models;
 using MeisterGeister.ViewModel.AudioPlayer;
+using System.Net;
 
 namespace MeisterGeister.ViewModel
 {
     public class MainViewModel : Base.ViewModelBase
     {
-
-
         #region -- HUE running ---
 
         #region --- HUE Command
@@ -743,8 +742,10 @@ namespace MeisterGeister.ViewModel
             set 
             { 
                 Set(ref _lstHUEScenes, value);
+
                 if (OpenTools.FirstOrDefault(t => t.Name == "Audio") != null)
                     ((OpenTools.FirstOrDefault(t => t.Name == "Audio")) as AudioPlayer.AudioPlayerViewModel).lstHUEScenes = value;
+            
             }
         }
 
@@ -860,6 +861,11 @@ namespace MeisterGeister.ViewModel
             {
                 try
                 {
+                    //muss integriert werden da es nicht ausreicht, dass man nur das neuere .NET Framework verwendet.
+                    //Sofern die Software auf älteren Systemen als Windows 10 verwendet wird, muss dies aktiv gesetzt werden
+                    ServicePointManager.Expect100Continue = true;
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
                     IBridgeLocator locator = new HttpBridgeLocator();
                     var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
                     lstHUEGateways = bridgeIPs.ToList();
