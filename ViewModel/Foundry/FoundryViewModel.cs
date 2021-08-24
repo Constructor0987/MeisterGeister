@@ -672,17 +672,6 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _portNo, value); }
         }
 
-        private CefSharp.Wpf.ChromiumWebBrowser _cWebBrowser = new CefSharp.Wpf.ChromiumWebBrowser();
-        public CefSharp.Wpf.ChromiumWebBrowser cWebBrowser
-        {
-            get { return _cWebBrowser; }
-            set
-            {
-                Set(ref _cWebBrowser, value);
-                cWebBrowser.Address = LocalUri;
-            }
-        }
-
         private string _localUri = "http://192.168.178.181:30000/";
         public string LocalUri
         {

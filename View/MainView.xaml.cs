@@ -367,8 +367,8 @@ namespace MeisterGeister.View
                 CheckForUpdates(false);
 
             // ChangeLog Meldung (nicht ausführen, wenn von IDE ausgeführt)
-            if (System.Diagnostics.Debugger.IsAttached == false && Einstellungen.ShowChangeLog)
-                ViewHelper.ShowBrowserChangeLog(true);
+           // if (System.Diagnostics.Debugger.IsAttached == false && Einstellungen.ShowChangeLog)
+           //     ViewHelper.ShowBrowserChangeLog(true);
 #endif
 
         }
