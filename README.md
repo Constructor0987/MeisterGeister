@@ -8,31 +8,29 @@
 *                                        *
 ******************************************
 
-Copyright © MeisterGeister-Team 2010-2021
+Copyright Â© MeisterGeister-Team 2010-2021
 http://www.meistergeister.org/
 Kontakt: info@meistergeister.org
 
 
 ******************************************
-Über das Tool
+Ãœber das Tool
 ******************************************
 
-DSA MeisterGeister ist eine Software zur Unterstützung des Meisters während der Spielsitzung. Es vereinigt verschiedene Tools, die dem Spielleiter beim Meistern helfen, sodass er sich über das "Handwerkszeug" weniger Gedanken machen muss.
+DSA MeisterGeister ist eine Software zur UnterstÃ¼tzung des Meisters wÃ¤hrend der Spielsitzung. Es vereinigt verschiedene Tools, die dem Spielleiter beim Meistern helfen, sodass er sich Ã¼ber das "Handwerkszeug" weniger Gedanken machen muss.
 
 
 ******************************************
-Partner und Unterstützer
+Partner und UnterstÃ¼tzer
 ******************************************
 
 Silver Style Studios (Herokon-Online)
-Die Silver Style Studios (http://www.silver-style-studios.com/), die Macher des Browser-MMORPG Herokon-Online (https://www.herokon-online.com/), haben die meisten der Icon-Grafiken und Bilder in MeisterGeister für uns erstellt. Für diese Kooperation bedanken wir uns recht herzlich.
+Die Silver Style Studios (http://www.silver-style-studios.com/), die Macher des Browser-MMORPG Herokon-Online (https://www.herokon-online.com/), haben die meisten der Icon-Grafiken und Bilder in MeisterGeister fÃ¼r uns erstellt. FÃ¼r diese Kooperation bedanken wir uns recht herzlich.
 
 DereGlobus-Projekt
-DSA MeisterGeister steht in enger Kooperation mit dem DereGlobus-Projekts (http://www.dereglobus.org/), um die Vorteile beider Projekte miteinander zu verknüpfen.
+DSA MeisterGeister steht in enger Kooperation mit dem DereGlobus-Projekts (http://www.dereglobus.org/), um die Vorteile beider Projekte miteinander zu verknÃ¼pfen.
 
-Für die Implementierung des NSC-Tools wurden uns von Benjamin Ernst (aus seiner Spielhilfe 1001 NSC (http://www.wiki-aventurica.de/wiki/1001NPC)) und Peter Diefenbach (aus seinem DSATool (http://www.pdiefenbach.de/dsatool/)) freundlicherweise ihre umfangreichen Daten zur Verfügung gestellt. Wir bedanken uns sehr für diese Unterstützung!
-
-Thomas Stolz von Orkenspalter (http://www.orkenspalter.de) stellt uns den Webspace für unsere Webseite, Mailsystem und Forum (http://forum.meistergeister.org/) zur Verfügung.
+FÃ¼r die Implementierung des NSC-Tools wurden uns von Benjamin Ernst (aus seiner Spielhilfe 1001 NSC (http://www.wiki-aventurica.de/wiki/1001NPC)) und Peter Diefenbach (aus seinem DSATool (http://www.pdiefenbach.de/dsatool/)) freundlicherweise ihre umfangreichen Daten zur VerfÃ¼gung gestellt. Wir bedanken uns sehr fÃ¼r diese UnterstÃ¼tzung!
 
 
 ******************************************
@@ -40,21 +38,21 @@ Lizenzhinweise
 ******************************************
 
 MeisterGeister ist ein nicht-kommerzielles Fan-Projekt zum Pen&Paper Rollenspiel "Das Schwarze Auge". 
-Seit August 2021 ist das Programm Open-Source. Das Programm darf somit frei kopiert, verändert und verteilt werden.
+Seit August 2021 ist das Programm Open-Source. Das Programm darf somit frei kopiert, verÃ¤ndert und verteilt werden.
 (Bitte hieru die 'LICENSE.md' beachten.)
-Wir bitten alle Änderungen mit dem MeisterGeister-Team zu teilen, damit die gesamte Community von der Verbesserungen, Anpassungen und Neuerungen profitieren kann.
+Wir bitten alle Ã„nderungen mit dem MeisterGeister-Team zu teilen, damit die gesamte Community von der Verbesserungen, Anpassungen und Neuerungen profitieren kann.
 
 Das Urheberrecht der MeisterGeister-Software und des gesamten Quellcodes und allen darin enthaltenen Dateien liegt beim MeisterGeister-Team (falls nicht anders angegeben):
 
-Projektgründer: Markus Traut / Projektleiter: Jürgen Bos / Entwickler: Jürgen Bos / Tester und Datenaufbereitung: Matthias Egenolf / inaktive Projektleiter: Jonas Tampier / inaktive Entwickler: Markus Traut, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann.
+ProjektgrÃ¼nder: Markus Traut / Projektleiter: JÃ¼rgen Bos / Entwickler: JÃ¼rgen Bos / Tester und Datenaufbereitung: Matthias Egenolf / inaktive Projektleiter: Jonas Tampier / inaktive Entwickler: Markus Traut, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann.
 
-Einige Icon-Grafiken wurden uns freundlicherweise vom DereGlobus-Projekts zur Verfügung gestellt. Diese unterliegen der DereGlobus-Lizenz (http://www.dereglobus.org/lizenz).
+Einige Icon-Grafiken wurden uns freundlicherweise vom DereGlobus-Projekts zur VerfÃ¼gung gestellt. Diese unterliegen der DereGlobus-Lizenz (http://www.dereglobus.org/lizenz).
 
 Das Globus- und das Kalender-Tool bindet das 'DG-Suche PlugIn' des DereGlobus-Projekts ein. Es unterliegt der DereGlobus-Lizenz (http://www.dereglobus.org/lizenz).
 
 Das Urheberrecht des 'ArtefaktGenerator' PlugIns liegt bei Mario Rauschenberg (http://www.dsa-hamburg.de/artefaktgen.html).
 
-Das Urheberrecht des 'Ares-Controller' PlugIns liegt bei Jörg Rüdenauer (http://aresrpg.sourceforge.net/).
+Das Urheberrecht des 'Ares-Controller' PlugIns liegt bei JÃ¶rg RÃ¼denauer (http://aresrpg.sourceforge.net/).
 
 
 DAS SCHWARZE AUGE, AVENTURIEN, DERE, MYRANOR, THARUN, UTHURIA und RIESLAND sind eingetragene Marken der Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel Distribution GmbH ist eine Verwendung der genannten Markenzeichen nicht gestattet.
@@ -72,13 +70,13 @@ https://www.microsoft.com/de-DE/download/details.aspx?id=42642
 Microsoft SQL Server Compact 4.0 SP1
 http://www.microsoft.com/de-de/download/details.aspx?id=30709
 
-Windows Media Player ab Version 10 (für Audio-Funktionen).
+Windows Media Player ab Version 10 (fÃ¼r Audio-Funktionen).
 
-Microsoft Access Database Engine 2010 (für Import von Heldenblatt.ch-Dateien)
+Microsoft Access Database Engine 2010 (fÃ¼r Import von Heldenblatt.ch-Dateien)
 http://www.microsoft.com/de-de/download/details.aspx?id=13255
 
-Das .NET Framework ist eine Plattform für Microsoft Windows Betriebssysteme. 
-Unter Linux funktioniert DSA MeisterGeister leider auf absehbare Zeit nicht, da die Linux-Portierung Mono einige zentrale Komponenten nicht unterstützt.
+Das .NET Framework ist eine Plattform fÃ¼r Microsoft Windows Betriebssysteme. 
+Unter Linux funktioniert DSA MeisterGeister leider auf absehbare Zeit nicht, da die Linux-Portierung Mono einige zentrale Komponenten nicht unterstÃ¼tzt.
 
 
 ******************************************
@@ -87,6 +85,6 @@ Installation
 
 Zur Installation muss die ZIP-Datei lediglich nach dem Download entpackt werden. Das Programm kann danach direkt gestartet werden. Eine Installation ist nicht notwendig.
 
-Es ist zu beachten, dass DSA MeisterGeister in einem Verzeichnis mit Schreib-Rechten liegen muss. Unter Windows Vista und Windows 7 oder höher führt dies ggf. dazu, dass DSA MeisterGeister nicht funktioniert, wenn es in den "Programme-Ordner" kopiert wird.
+Es ist zu beachten, dass DSA MeisterGeister in einem Verzeichnis mit Schreib-Rechten liegen muss. Unter Windows Vista und Windows 7 oder hÃ¶her fÃ¼hrt dies ggf. dazu, dass DSA MeisterGeister nicht funktioniert, wenn es in den "Programme-Ordner" kopiert wird.
 
 Bei einem Update darf die Datenbank-Datei "Daten\DatabaseDSA.sdf", in der z.B. die Helden gespeichert sind, nicht ausgetauscht werden, da sonst alle gespeicherten Daten verloren gehen. Die Datenbank wird durch die neue Programm-Version ggf. automatisch aktualisert.
