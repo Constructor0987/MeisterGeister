@@ -21,6 +21,7 @@
         </Style>
 
         <ViewGeneral:HUELampsInfoConverter x:Key="HUELampsInfoConverter1"/>
+        <ViewGeneral:HUEGroupNoToNameConverter x:Key="HUEGroupNoToNameConverter1"/>
         <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
         <vmAudioPlayer:MultiBooleanORConverter x:Key="MultiBooleanORConverter1" />
         <vmAudioPlayer:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
@@ -879,7 +880,7 @@
 
 
                                     <Border Name="brgEditorThemeHUE" 
-                                            HorizontalAlignment="Left" Width="280" Height="38" Margin="10,0" Style="{DynamicResource ControlContentBorder}" >
+                                            HorizontalAlignment="Left" Width="300" Height="38" Margin="10,0" Style="{DynamicResource ControlContentBorder}" >
                                         <Border.Visibility>
                                             <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
                                                 <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" Converter="{StaticResource InvertedBoolenConverter1}" />
@@ -888,7 +889,7 @@
                                         </Border.Visibility>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="240" />
+                                                <ColumnDefinition Width="260" />
                                                 <ColumnDefinition Width="40" />
                                             </Grid.ColumnDefinitions>
                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/Lampen_hue.png"  
@@ -911,10 +912,13 @@
                                                       Margin="65,0,0,0" >
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate DataType="ComboBoxItem">
-                                                        <TextBlock Text="{Binding Name}" >
-                                                            <TextBlock.ToolTip>
-                                                                <TextBlock Text="{Binding Name, Converter={StaticResource HUELampsInfoConverter1}}" />
-                                                            </TextBlock.ToolTip>
+                                                        <TextBlock x:Name="tbHueScene" Tag="{Binding}" ToolTip="{Binding Path=., Converter={StaticResource HUELampsInfoConverter1}}" >
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                                    <Binding Path="Group" Converter="{StaticResource HUEGroupNoToNameConverter1}"/>
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
                                                         </TextBlock>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>

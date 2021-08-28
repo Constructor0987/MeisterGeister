@@ -24,18 +24,6 @@
             <Label Name="lblStdPfad" Padding="5,2" BorderBrush="Black" Background="White" Focusable="True" TextOptions.TextFormattingMode="Display" />
             <Image Name="imgIcon" Source="/Images/Icons/General/entf_01.png" Grid.Column="1" Margin="1" ToolTip="Standard-Pfad entfernen" Tag="0" 
                    Visibility="{Binding ElementName=lblStdPfad, Path=Content, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}}">
-                <!--<Image.Style>
-                    <Style TargetType="Image">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=lblStdPfad, Path=Content, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}}" Value="False" >
-                                <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=lblStdPfad, Path=Content, Converter={StaticResource StringNullOrEmptyToVisibilityConverter1}}" Value="True" >                                
-                                <Setter Property="Visibility" Value="Hidden" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>-->
             </Image>
             <Button Content="..." Height="21" HorizontalAlignment="Right" Name="btnStdPfad" Width="29" Grid.Column="2" ToolTip="Standard-Pfad hinzufügen/ändern" Click="btnStdPfad_Click" />
         </Grid>

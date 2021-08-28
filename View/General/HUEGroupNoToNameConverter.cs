@@ -9,26 +9,25 @@ using Q42.HueApi;
 using Q42.HueApi.Models;
 using MeisterGeister.ViewModel;
 using MeisterGeister.ViewModel.Basar.Logic;
-
+using Q42.HueApi.Models.Groups;
 
 namespace MeisterGeister.View.General
 {
     [ValueConversion(typeof(bool), typeof(bool))]
 
-    public class HUELampsInfoConverter : IValueConverter
+    public class HUEGroupNoToNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             MainViewModel MainVM = MainViewModel.Instance;
-            if (MainVM == null || value == null)
+            if (MainVM == null)
                 return null;
 
-            Scene sc = value as Scene;
-            if (sc == null)
+            Group gr = MainVM.lstHUEGroups.FirstOrDefault(t => t.Id == value as string);
+            if (gr == null)
                 return null;
-            return "Angesteuerte Lampen:\n-------------------------\n" + string.Join("\n",
-                sc.Lights.Select(t => MainVM.lstHUELights.FirstOrDefault(l => l.Id == t).Id + " : " +
-                MainVM.lstHUELights.FirstOrDefault(l => l.Id == t).Name));
+            else
+                return gr.Name + ": ";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
