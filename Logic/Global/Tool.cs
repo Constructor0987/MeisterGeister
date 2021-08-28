@@ -48,6 +48,7 @@ namespace MeisterGeister
                 ViewType = typeof(View.Kampf.KampfView),
                 ViewModelType = typeof(ViewModel.Kampf.KampfViewModel)
             });
+#if (DEBUG)
             ToolListe.Add("Foundry", new Tool()
             {
                 Name = "FoundryVTT",
@@ -56,6 +57,7 @@ namespace MeisterGeister
                 ViewType = typeof(View.Foundry.FoundryView),
                 ViewModelType = typeof(ViewModel.Foundry.FoundryViewModel)
             });
+#endif
             ToolListe.Add("Gegner", new Tool()
             {
                 Name = "Gegner",
@@ -269,9 +271,9 @@ namespace MeisterGeister
         /// </summary>
         public static Dictionary<string, Tool> ToolListe { get; private set; }
 
-        #endregion
+#endregion
 
-        #region //---- METHODEN ----
+#region //---- METHODEN ----
 
         // Konstruktor private, damit Tools nur über das Dictionary abgefrufen werden können
         private Tool() { }
@@ -318,9 +320,9 @@ namespace MeisterGeister
             return toolControl;
         }
 
-        #endregion
+#endregion
 
-        #region //---- EIGENSCHAFTEN ----
+#region //---- EIGENSCHAFTEN ----
 
         /// <summary>
         /// Name des Tools.
@@ -347,7 +349,7 @@ namespace MeisterGeister
         /// </summary>
         public string MenuGruppe { get; private set; }
 
-        #endregion
+#endregion
     }
 
 }

@@ -738,19 +738,15 @@ namespace MeisterGeister.Logic.Einstellung
 
         public static void UpdateEinstellungen()
         {
-            // 21.11.18 (Mira) Auskommentiert, da der Zweck dieser Methode nicht ersichtlich ist. Die
-            // Methode kann komplett entfernt werden, wenn beim Testen und Verwenden der
-            // Einstellungen kein Fehlverhalten festgestellt werden kann.
-
-            //if (Global.IsInitialized)
-            //{
-            //    foreach (Model.Einstellung e in Global.ContextHeld.Liste<Model.Einstellung>())
-            //    {
-            //        CopyDefaultValues(e.Name, e);
-            //        //Global.ContextHeld.Update<Model.Einstellung>(e);
-            //    }
-            //    //Global.ContextHeld.Save();
-            //}
+            if (Global.IsInitialized)
+            {
+                foreach (Model.Einstellung e in Global.ContextHeld.Liste<Model.Einstellung>())
+                {
+                    CopyDefaultValues(e.Name, e);
+                    Global.ContextHeld.Update<Model.Einstellung>(e);
+                }
+                Global.ContextHeld.Save();
+            }
         }
 
         public static T GetEinstellung<T>(string name)

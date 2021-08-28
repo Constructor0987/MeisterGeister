@@ -851,6 +851,7 @@
     <Compile Include="View\Einstellungen\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\HUEGroupNoToNameConverter.cs" />
     <Compile Include="View\General\HUELampsInfoConverter.cs" />
     <Compile Include="View\General\ComboBoxTemplateSelector.cs" />
     <Compile Include="View\General\DialogCloser.cs" />

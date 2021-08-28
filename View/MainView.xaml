@@ -60,6 +60,7 @@
             </StackPanel>
         </DataTemplate>
         <ViewGeneral:HUELampsInfoConverter x:Key="HUELampsInfoConverter1"/>
+        <ViewGeneral:HUEGroupNoToNameConverter x:Key="HUEGroupNoToNameConverter1"/>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
         <Style x:Key="ImageEnabled" TargetType="Image">
@@ -670,15 +671,18 @@
                                 <Button Content="Go" Grid.Row="5" Grid.Column="1" Width="40" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,3,5,0"
                                         Click="btnSceneGo_Click"/>
                                 <ListView x:Name="lvHUEScenes" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,25,0,5" FontSize="10" VerticalAlignment="Top" MaxHeight="150"
-                                      ItemsSource="{Binding lstHUEScenes, UpdateSourceTrigger=PropertyChanged}" 
-                                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      ItemsSource="{Binding lstHUEScenes, UpdateSourceTrigger=PropertyChanged}"  
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                        SelectionChanged="lvHUEScenen_SelectionChanged" >
                                     <ListView.ItemTemplate>
-                                        <DataTemplate DataType="ListViewItem">
-                                            <TextBlock Text="{Binding Name}" >
-                                                <TextBlock.ToolTip>
-                                                    <TextBlock Text="{Binding Name, Converter={StaticResource HUELampsInfoConverter1}}" />
-                                                </TextBlock.ToolTip>
+                                        <DataTemplate DataType="ListViewItem"  >
+                                            <TextBlock x:Name="tbHueScene" Tag="{Binding}" ToolTip="{Binding Path=., Converter={StaticResource HUELampsInfoConverter1}}" >
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0} {1}">
+                                                        <Binding Path="Group" Converter="{StaticResource HUEGroupNoToNameConverter1}"/>
+                                                        <Binding Path="Name" />
+                                                    </MultiBinding>                                                    
+                                                </TextBlock.Text>
                                             </TextBlock>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
