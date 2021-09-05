@@ -33,7 +33,7 @@
                             <SolidColorBrush />
                         </TextBox.Background>
                     </TextBox>
-                    <TextBox Text="Copyright © MeisterGeister-Team 2010-2014" Name="_textBoxCopyright" Margin="5,0,5,0" IsReadOnly="True" BorderThickness="0" TextWrapping="WrapWithOverflow">
+                    <TextBox Text="Copyright © MeisterGeister-Team 2010-2021" Name="_textBoxCopyright" Margin="5,0,5,0" IsReadOnly="True" BorderThickness="0" TextWrapping="WrapWithOverflow">
                         <TextBox.Background>
                             <SolidColorBrush />
                         </TextBox.Background>

@@ -177,6 +177,7 @@ namespace MeisterGeister.View.General
                             }
                             else
                                 if (SelectedKämpfer.LebensenergieAktuell > 0 &&
+                                (SelectedKämpfer as Wesen).ki != null &&
                                 (SelectedKämpfer as Wesen).ki.IstImKampf &&
                                 !(SelectedKämpfer as Wesen).ki.IstPassiv &&
                                 (SelectedKämpfer as Wesen).ki.AbwehraktionenÜbrig > 0 &&
